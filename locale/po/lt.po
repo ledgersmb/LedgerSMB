@@ -29,87 +29,411 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Suma iki"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Ataskaitos"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
 
-#: sql/Pg-database.sql:2876
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Pirkimai"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Pirkimo Skolos"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Pirkimo Operaciją"
+
+#: sql/Pg-database.sql:2908
 #, fuzzy
-msgid "Sessions"
-msgstr "Versija"
+msgid "AP Voucher"
+msgstr "Ištrinti sąskaitą"
 
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Kasa"
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Pardavimai"
 
-#: sql/Pg-database.sql:726
-msgid "Mrs."
-msgstr ""
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Pardavimo Skolos"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Pardavimo Operaciją"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Ištrinti sąskaitą"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Pridėti sąskaitą"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Pridėti rinkinį"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Pridėti rinkinį"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Suma iki"
+
+#: sql/Pg-database.sql:2836
+#, fuzzy
+msgid "Add Business"
+msgstr "Įmonės kodas"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Pridėti rinkinį"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Kontaktas"
+
+#: sql/Pg-database.sql:2804
+#, fuzzy
+msgid "Add Employee"
+msgstr "Darbuotojas"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Pridėti GIFI"
+
+#: sql/Pg-database.sql:2929
+#, fuzzy
+msgid "Add Group"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:2838
+#, fuzzy
+msgid "Add Language"
+msgstr "Kalba"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Pridėti Paslaugą"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Pridėti prekę"
 
-#: sql/Pg-database.sql:802
-msgid "IRC"
+#: sql/Pg-database.sql:2930
+#, fuzzy
+msgid "Add Pricegroup"
+msgstr "Pirkimo užsakymai"
+
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Pridėti Vartotoją"
+
+#: sql/Pg-database.sql:2840
+#, fuzzy
+msgid "Add SIC"
+msgstr "Pridėti GIFI"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Pridėti Paslaugą"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Pridėti prekę"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Pridėti prekę"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Pridėti Operaciją"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
 msgstr ""
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Turtas"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Rinkiniai"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Turtas"
+
+#: sql/Pg-database.sql:810
+msgid "BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Balanso lėntelė"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Užsakymo data"
+
+#: sql/Pg-database.sql:659
+msgid "Billing"
+msgstr ""
+
+#: sql/Pg-database.sql:813
+msgid "Billing BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:812
+msgid "Billing CC"
+msgstr ""
+
+#: sql/Pg-database.sql:811
+msgid "Billing Email"
+msgstr ""
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr ""
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Užsakymo numeris"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+#: sql/Pg-database.sql:2911
 #, fuzzy
-msgid "Shipping"
-msgstr "Pristatymas"
+msgid "Budgets"
+msgstr "Pirkimo užsakymai"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Pardavimo Operaciją"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "C"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Kasa"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Tel."
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Sąskaitų planas"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Čekis"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "GIFI sąrašas"
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
 
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Kontaktas"
+
+#: sql/Pg-database.sql:2847
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Pridėti prekę"
+msgid "Contacts"
+msgstr "Kontaktas"
 
-#: sql/Pg-database.sql:2816
+#: sql/Pg-database.sql:2900
 #, fuzzy
-msgid "Ship"
-msgstr "Pristatyti į"
+msgid "Credit Invoice"
+msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Debetas"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Klientas"
+
+#: sql/Pg-database.sql:2784
+#, fuzzy
+msgid "Customer History"
+msgstr "Klientai"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Sąskaita-faktūra"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Debetas"
+
+#: sql/Pg-database.sql:2833
+#, fuzzy
+msgid "Defaults"
+msgstr "Ištrinti sąskaitą"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Aprašymas"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Aprašymas"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Aprašymas"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Kov"
+
+#: sql/Pg-database.sql:2866
+msgid "Drafts"
+msgstr ""
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "E-paštas"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Darbuotojas"
+
+#: sql/Pg-database.sql:2803
+#, fuzzy
+msgid "Employees"
+msgstr "Darbuotojas"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Redaguoti rinkinį"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Redaguoti sąskaitą"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Faksas"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Pridėti rinkinį"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Bendrasis žurnalas"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Prekės ir Paslaugos"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr ""
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML šablonai"
+
+#: sql/Pg-database.sql:805
+#, fuzzy
+msgid "Home Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+msgid "IRC"
 msgstr ""
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
@@ -118,105 +442,266 @@ msgstr ""
 msgid "Import"
 msgstr "Ataskaitos"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Turtas"
+msgid "Import Batch"
+msgstr "Ataskaitos"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Ataskaitos"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Mokėjimas"
+#: sql/Pg-database.sql:2905
+#, fuzzy
+msgid "Import GIFI"
+msgstr "Redaguoti GIFI"
 
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Turtas"
+#: sql/Pg-database.sql:2773
+#, fuzzy
+msgid "Import Inventory"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Pelno/nuostolio ataskaita"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:2777
+#, fuzzy
+msgid "Inventory Activity"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:2940
+#, fuzzy
+msgid "Inventory and COGS"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Sąskaita-faktūra"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Sąskaitos-faktūros numeris"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Suma"
 
 #: sql/Pg-database.sql:2869
 #, fuzzy
 msgid "LaTeX Templates"
 msgstr "LaTeX šablonai"
 
-#: sql/Pg-database.sql:2866
-msgid "Drafts"
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Kalba"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
 msgstr ""
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Aukščiausias lygis"
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2837
 #, fuzzy
 msgid "List Businesses"
 msgstr "Įmonės kodas"
 
-#: sql/Pg-database.sql:2783
+#: sql/Pg-database.sql:2883
 #, fuzzy
-msgid "Add Contact"
-msgstr "Kontaktas"
+msgid "List Classes"
+msgstr "Rinkiniai"
 
-#: sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "GIFI sąrašas"
+
+#: sql/Pg-database.sql:2839
 #, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Kasos orderiai"
+msgid "List Languages"
+msgstr "Kalba"
 
-#: sql/Pg-database.sql:810
-msgid "BCC"
+#: sql/Pg-database.sql:2841
+#, fuzzy
+msgid "List SIC"
+msgstr "GIFI sąrašas"
+
+#: sql/Pg-database.sql:2877
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "Pridėti prekę"
+
+#: sql/Pg-database.sql:2835
+msgid "List Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Išsijungti"
+
+#: sql/Pg-database.sql:801
+msgid "MSN"
 msgstr ""
 
 #: sql/Pg-database.sql:663
 msgid "Mailing"
 msgstr ""
 
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Pridėti Paslaugą"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
+#: sql/Pg-database.sql:724
+msgid "Miss."
 msgstr ""
 
-#: sql/Pg-database.sql:2884
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Add Assets"
-msgstr "Pridėti rinkinį"
+msgid "Mr."
+msgstr "Kov"
 
-#: sql/Pg-database.sql:3721
-msgid "time"
+#: sql/Pg-database.sql:726
+msgid "Mrs."
 msgstr ""
 
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#: sql/Pg-database.sql:727
 #, fuzzy
-msgid "Vouchers"
-msgstr "Ištrinti sąskaitą"
+msgid "Ms."
+msgstr "Kov"
 
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Kasos orderiai"
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
 
 #: sql/Pg-database.sql:957
 msgid "Non-cash"
 msgstr ""
 
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-#, fuzzy
-msgid "Work Order"
-msgstr "Užsakymas"
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Užsakymo įrašas"
 
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Debetas"
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr ""
 
-#: sql/Pg-database.sql:2911
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
 #, fuzzy
-msgid "Budgets"
+msgid "Packing List"
+msgstr "Įpakavimo sąrašo datos nėra!"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Prekės"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Mokėjimas"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Mokėjimai"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr ""
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Nuostatos"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Kasos orderiai"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Pirkimo užsakymas"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
 msgstr "Pirkimo užsakymai"
+
+#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
+#: sql/Pg-database.sql:2966
+#, fuzzy
+msgid "Quotation"
+msgstr "Sutaikinimas"
+
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+#, fuzzy
+msgid "Quotations"
+msgstr "Sutaikinimas"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr ""
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr ""
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Kasos orderis"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Kasos orderiai"
+
+#: sql/Pg-database.sql:2817
+#, fuzzy
+msgid "Receive"
+msgstr "Pardavimai"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
+#, fuzzy
+msgid "Reconciliation"
+msgstr "Sutaikinimas"
+
+#: sql/Pg-database.sql:2919
+#, fuzzy
+msgid "Recurring Transactions"
+msgstr "Pirkimo Operaciją"
+
+#: sql/Pg-database.sql:547
+msgid "Referral"
+msgstr ""
+
+#: sql/Pg-database.sql:2874
+#, fuzzy
+msgid "Reporting Units"
+msgstr "Ataskaitos"
 
 #: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
 #: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
@@ -225,89 +710,32 @@ msgstr "Pirkimo užsakymai"
 msgid "Reports"
 msgstr "Ataskaitos"
 
-#: sql/Pg-database.sql:2917
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Goods and Services"
-msgstr "Prekės ir Paslaugos"
+msgid "Reverse AR Overpay"
+msgstr "Kasos orderiai"
+
+#: sql/Pg-database.sql:2937
+#, fuzzy
+msgid "Reverse Overpay"
+msgstr "Kasos orderiai"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Mokėjimas"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Kasos orderiai"
 
 #: sql/Pg-database.sql:2477
 msgid "Rounded"
 msgstr ""
 
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
-
-#: sql/Pg-database.sql:2836
-#, fuzzy
-msgid "Add Business"
-msgstr "Įmonės kodas"
-
-#: sql/Pg-database.sql:2785
-#, fuzzy
-msgid "Vendor History"
-msgstr "Tiekėjai"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Pardavimai"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Nuostatos"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr ""
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Pridėti Paslaugą"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Ataskaitos"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-#, fuzzy
-msgid "List Languages"
-msgstr "Kalba"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Sutaikinimas"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Pardavimų užsakymai"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Pirkimo užsakymai"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-#, fuzzy
-msgid "Packing List"
-msgstr "Įpakavimo sąrašo datos nėra!"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "C"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
+#: sql/Pg-database.sql:2871
+msgid "SIC"
 msgstr ""
 
 #: sql/Pg-database.sql:954
@@ -319,592 +747,24 @@ msgstr ""
 msgid "Sale"
 msgstr "Pardavimai"
 
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-#, fuzzy
-msgid "Add Language"
-msgstr "Kalba"
-
-#: sql/Pg-database.sql:659
-msgid "Billing"
-msgstr ""
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Sąskaitos-faktūros numeris"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Pridėti GIFI"
-
-#: sql/Pg-database.sql:2840
-#, fuzzy
-msgid "Add SIC"
-msgstr "Pridėti GIFI"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "E-paštas"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Sistema"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Mokėjimas"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Mokėjimai"
-
-#: sql/Pg-database.sql:813
-msgid "Billing BCC"
-msgstr ""
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Kov"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML šablonai"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Kov"
-
-#: sql/Pg-database.sql:2894
-#, fuzzy
-msgid "Vendor Invoice"
-msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Klientas"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Dabartinis"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr ""
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2777
-#, fuzzy
-msgid "Inventory Activity"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:2880
-#, fuzzy
-msgid "Asset Classes"
-msgstr "Rinkiniai"
-
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Pridėti Vartotoją"
-
-#: sql/Pg-database.sql:2895
-#, fuzzy
-msgid "Debit Note"
-msgstr "Debetas"
-
-#: sql/Pg-database.sql:801
-msgid "MSN"
-msgstr ""
-
-#: sql/Pg-database.sql:2905
-#, fuzzy
-msgid "Import GIFI"
-msgstr "Redaguoti GIFI"
-
-#: sql/Pg-database.sql:2799
-#, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Mokėjimas"
-
-#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
-#: sql/Pg-database.sql:2966
-#, fuzzy
-msgid "Quotation"
-msgstr "Sutaikinimas"
-
-#: sql/Pg-database.sql:2916
-#, fuzzy
-msgid "General Journal"
-msgstr "Bendrasis žurnalas"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Suvestinė"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Kasos orderiai"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Pridėti rinkinį"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Kalba"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Pirkimo Operaciją"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Ataskaitos"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
+#: sql/Pg-database.sql:660
+msgid "Sales"
 msgstr "Pardavimai"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Pridėti prekę"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Kov"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Balanso lėntelė"
-
-#: sql/Pg-database.sql:805
-#, fuzzy
-msgid "Home Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-#, fuzzy
-msgid "Translations"
-msgstr "Operacijos"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Faksas"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Datos Formatas"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Tel."
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Aprašymas"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Sąskaitų planas"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Pirkimo Skolos"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Pridėti prekę"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Išsijungti"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Redaguoti sąskaitą"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Turtas"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
-
-#: sql/Pg-database.sql:2919
-#, fuzzy
-msgid "Recurring Transactions"
-msgstr "Pirkimo Operaciją"
-
-#: sql/Pg-database.sql:547
-msgid "Referral"
-msgstr ""
-
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Pardavimų užsakymas"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr ""
-
-#: sql/Pg-database.sql:2873
-#, fuzzy
-msgid "Type of Business"
-msgstr "Įmonės kodas"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
-#, fuzzy
-msgid "Import Inventory"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:2930
-#, fuzzy
-msgid "Add Pricegroup"
-msgstr "Pirkimo užsakymai"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:2891
-#, fuzzy
-msgid "Depreciation"
-msgstr "Aprašymas"
-
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
-#, fuzzy
-msgid "Depreciate"
-msgstr "Aprašymas"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr ""
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Sąskaita-faktūra"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Kasos orderis"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Sutaikinimas"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-#, fuzzy
-msgid "List SIC"
-msgstr "GIFI sąrašas"
-
-#: sql/Pg-database.sql:811
-msgid "Billing Email"
-msgstr ""
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Pirkimai"
 
 #: sql/Pg-database.sql:2898
 #, fuzzy
 msgid "Sales Invoice"
 msgstr "Pridėti Pardavimo sąskaitą-faktūrą"
 
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Pardavimo Skolos"
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Pardavimų užsakymas"
 
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Užsakymo įrašas"
-
-#: sql/Pg-database.sql:2784
-#, fuzzy
-msgid "Customer History"
-msgstr "Klientai"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Pirkimo užsakymai"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-#, fuzzy
-msgid "Receive"
-msgstr "Pardavimai"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Rinkiniai sandėlyje"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Kontaktas"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Pirkimo užsakymai"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-#, fuzzy
-msgid "Quotations"
-msgstr "Sutaikinimas"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Bandomasis balansas"
-
-#: sql/Pg-database.sql:2929
-#, fuzzy
-msgid "Add Group"
-msgstr "Prekės"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Kasos orderiai"
-
-#: sql/Pg-database.sql:2835
-msgid "List Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Mokėjimas"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-#, fuzzy
-msgid "Employees"
-msgstr "Darbuotojas"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Pridėti rinkinį"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Ištrinti sąskaitą"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Ištrinti sąskaitą"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Pridėti sąskaitą"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Čekis"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr ""
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Sąskaita-faktūra"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Kontaktas"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Suma"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr ""
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Darbuotojas"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Pirkimo užsakymas"
-
-#: sql/Pg-database.sql:2804
-#, fuzzy
-msgid "Add Employee"
-msgstr "Darbuotojas"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Tiekėjas"
-
-#: sql/Pg-database.sql:2833
-#, fuzzy
-msgid "Defaults"
-msgstr "Ištrinti sąskaitą"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Redaguoti rinkinį"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr ""
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Mokėjimai"
-
-#: sql/Pg-database.sql:2937
-#, fuzzy
-msgid "Reverse Overpay"
-msgstr "Kasos orderiai"
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Pardavimų užsakymai"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -913,1808 +773,374 @@ msgstr "Kasos orderiai"
 msgid "Search"
 msgstr "Kovas"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Rinkiniai"
+msgid "Search Assets"
+msgstr "Turtas"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr ""
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Pirkimo užsakymai"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Pridėti Operaciją"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Pirkimo užsakymai"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Mokėjimai"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Nuostatos"
 
-#: sql/Pg-database.sql:812
-msgid "Billing CC"
-msgstr ""
-
-#: sql/Pg-database.sql:955
-msgid "Hourly"
-msgstr ""
-
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Pelno/nuostolio ataskaita"
-
-#: sql/Pg-database.sql:2940
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Inventory and COGS"
-msgstr "Prekės"
+msgid "Sessions"
+msgstr "Versija"
 
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
-msgstr ""
-
-#: sql/Pg-database.sql:2781
+#: sql/Pg-database.sql:2816
 #, fuzzy
-msgid "Batches"
-msgstr "Užsakymo data"
+msgid "Ship"
+msgstr "Pristatyti į"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Aprašymas"
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+#, fuzzy
+msgid "Shipping"
+msgstr "Pristatymas"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
+msgstr ""
+
+#: sql/Pg-database.sql:728
+msgid "Sir."
+msgstr ""
+
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Suvestinė"
+
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Rinkiniai sandėlyje"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Sistema"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Datos Formatas"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr ""
+
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Aukščiausias lygis"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Operacija patvirtinta!"
 
-#~ msgid "Dataset"
-#~ msgstr "Duomenų aibė"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr ""
 
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Sąskaitos"
+msgid "Translations"
+msgstr "Operacijos"
 
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Mokėjimas patvirtintas!"
-
-#~ msgid "Source"
-#~ msgstr "Dokumentas"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Vartotojas išsaugotas!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Kasos orderiai"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "periodui"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Pirkimo Operacijos"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Pastaba"
-
-#~ msgid "Paid"
-#~ msgstr "Apmokėta"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "Nuo"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Tiekėjai išsaugoti"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Sąskaitos-faktūros data"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Operacija patvirtinta!"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Datos Formatas"
-
-#~ msgid "Equity"
-#~ msgstr "Turtas/Nuosavybė"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Išrinkti viską"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Suma"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Sukūrti duomenų aibę"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Prystatimo Data"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Įrašyti į"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Sąskaitos"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Kasos orderiai"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Kontaktas"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adresas"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Vardas"
-
-#~ msgid "On Hand"
-#~ msgstr "Likutis"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Pirkimo Operaciją"
-
-#~ msgid "Login"
-#~ msgstr "Prisijungimas"
-
-#~ msgid "Sell Price"
-#~ msgstr "Pardavimo kaina"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Sąskaita-faktūra"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Audito kontrolė"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Versija"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Pridėti Tiekėja"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Mokėjimai"
-
-#~ msgid "Expense"
-#~ msgstr "Sąnaudos"
-
-#~ msgid "Currency"
-#~ msgstr "Valiūta"
-
-#~ msgid "Liability"
-#~ msgstr "Nuosavybė"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Dalykas"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Bandomasis balansas"
-
-#, fuzzy
-#~ msgid "Startdate"
-#~ msgstr "Užsakymo data"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Numeris"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Sąskaitos tipas"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Vienetas"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Aprašymas"
-
-#~ msgid "Message"
-#~ msgstr "Žinutė"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Klientas"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Kontaktas"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Pridėti rinkinį"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Redaguoti Klientą"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Prisegta"
-
-#~ msgid "as at"
-#~ msgstr "kaip"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Redaguoti vartotoją"
-
-#~ msgid "Number"
-#~ msgstr "Numeris"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Sąskaitų sąrašas"
-
-#~ msgid "Delete"
-#~ msgstr "Ištrinti"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Slaptažodis"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Debetas"
-
-#~ msgid "Post"
-#~ msgstr "Patvirtinti"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Datos Formatas"
-
-#~ msgid "Make"
-#~ msgstr "Gamintojas"
-
-#, fuzzy
-#~ msgid "Till"
-#~ msgstr "Atidaryti"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Aktyvus"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Ištrinti sąskaitą"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Reservinė kopija"
-
-#, fuzzy
-#~ msgid "System Defaults"
-#~ msgstr "Išrinkti viską"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Dabartinis"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Sąskaitos-faktūros numeris"
-
-#~ msgid "Backup"
-#~ msgstr "Reservinė kopija"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Išsaugoti kaip naują"
-
-#~ msgid "Database"
-#~ msgstr "Duomenų bazė"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Sąskaitų sąrašas"
-
-#, fuzzy
-#~ msgid "Code"
-#~ msgstr "Mokesčiai sumokėti"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Uždaryti žurnalus iki"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Kontaktas"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Stilių lentelė"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Prekė"
-
-#, fuzzy
-#~ msgid "Edit Employee"
-#~ msgstr "Darbuotojas"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Debetas"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Numeris"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Vartotojas"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Pastaba"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "E-paštas"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Pristatyti per"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Užsakymas"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Kreditas"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Atnaujinta"
-
-#~ msgid "Taxable"
-#~ msgstr "Apmokestinama"
-
-#~ msgid "Continue"
-#~ msgstr "Tęsti"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Išrinkti viską"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Ištrinti sąskaitą"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Vartotojas"
-
-#~ msgid "COGS"
-#~ msgstr "PPS"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Suma"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Suvestinė"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Viso"
-
-#, fuzzy
-#~ msgid "Serial Number"
-#~ msgstr "Užsakymo numeris"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Data"
-
-#~ msgid "Account"
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Sutaikinimas"
-
-#~ msgid "Active"
-#~ msgstr "Aktyvus"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Užsakymo data"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Sąskaitos tipas"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Pirkimo Operacijos"
-
-#~ msgid "Yes"
-#~ msgstr "Taip"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "Kaina"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Patvirtinti kaip naują"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Debetas"
-
-#~ msgid "Tax Included"
-#~ msgstr "su mokesčiais"
-
-#~ msgid "Drawing"
-#~ msgstr "Briežinys"
-
-#~ msgid "List Price"
-#~ msgstr "Pirkimo kaina"
-
-#~ msgid "No"
-#~ msgstr "Ne"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Viso eilutėje"
-
-#~ msgid "Qty"
-#~ msgstr "Kks"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Atnaujinta"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Įmonės kodas"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Nuostatos"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Užsakymo data"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Project Number"
-#~ msgstr "Projekto numerio nėra!"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Vartotojas"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Reservinė kopija"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Datos Formatas"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Ištrinti Duomenų aibė"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Redaguoti vartotoją"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Priėjimo kontrolė"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Mokesčių sąskaitos"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Surišti sąskaitas"
-
-#~ msgid "All"
-#~ msgstr "Visi"
-
-#~ msgid "From"
-#~ msgstr "Nuo"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Ataskaita..."
-
-#~ msgid "Remaining"
-#~ msgstr "Likutis"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Darbuotojas"
-
-#~ msgid "Model"
-#~ msgstr "Modelis"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Turtas"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Kopijuoti į SP"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Išsaugoti kaip naują"
-
-#~ msgid "Reference"
-#~ msgstr "Nuorodos"
-
-#, fuzzy
-#~ msgid "Contra"
-#~ msgstr "Kontaktas"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Suma iki"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Nuostatos išsaugotos!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Mokėjimas"
-
-#~ msgid "Debit"
-#~ msgstr "Debetas"
-
-#, fuzzy
-#~ msgid "List Transactions"
-#~ msgstr "Operacijos"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Įmonės kodas"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Sąskaitos numeris"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Kredito riba"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "Nuo"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Prekės"
-
-#, fuzzy
-#~ msgid "Cost Center"
-#~ msgstr "Patvirtinti kaip naują"
-
-#~ msgid "Bin"
-#~ msgstr "Dėžė"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Sutaikinimas"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Iki kada"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "Suvestinę suisti per e-pastą į"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Ataskaita..."
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Įmonės kodas"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Balanso suvestinė"
-
-#~ msgid "Report for"
-#~ msgstr "Ataskaita..."
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Ištrinti sąskaitą"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Sąskaitos-faktūros data"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Apmokestinama"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Užsakymas"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Prekės"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Įdėti į ataskaitą"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Turtas"
-
-#~ msgid "Amount"
-#~ msgstr "Suma"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Sąskaitos-faktūros data"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Patvirtinti kaip naują"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Nuo"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Ataskaita..."
-
-#~ msgid "Projects"
-#~ msgstr "Projektai"
-
-#~ msgid "Difference"
-#~ msgstr "Skirtumas"
-
-#~ msgid "Update"
-#~ msgstr "Atnaujinti"
-
-#~ msgid "Due Date"
-#~ msgstr "Iki Data"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Redaguoti vartotoją"
-
-#~ msgid "Database Host"
-#~ msgstr "Duomenų bazės hostas"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Klientas išsaugotas!"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Redaguoti sąskaitą"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Prisegta"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Sąnaudos/Aktyvai"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Sąskaitos-faktūros numeris"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Aprašymas"
-
-#~ msgid "Password"
-#~ msgstr "Slaptažodis"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Išsaugoti"
-
-#~ msgid "Edit User"
-#~ msgstr "Redaguoti vartotoją"
-
-#~ msgid "Account Number"
-#~ msgstr "Sąskaitos numeris"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Redaguoti Tiekiją"
-
-#~ msgid "User"
-#~ msgstr "Vartotojas"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Turtas"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Prekės"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Datos Formatas"
-
-#~ msgid "Printer"
-#~ msgstr "Spausdintuvas"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Atnaujinta"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Įpakavimo sąrašas"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "iki"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Date Paid"
-#~ msgstr "Mokėjimo Data"
-
-#~ msgid "Amount Due"
-#~ msgstr "Suma iki"
-
-#~ msgid "Credit"
-#~ msgstr "Kreditas"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Suma"
-
-#~ msgid "Short"
-#~ msgstr "Stoka"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Vartotojas"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Kontaktas"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Sąskaitos-faktūros numeris"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Sąskaita-faktūra"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "Geg"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Datos Formatas"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Ištrinti Duomenų aibė"
-
-#~ msgid "Open"
-#~ msgstr "Atidaryti"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Kreditas"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Mokėjimas"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Operacijos"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Sąskaitų sąrašas"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Pastaba"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Išrinkti viską"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "Likutis"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Keitimo kursas"
-
-#, fuzzy
-#~ msgid "Salesperson"
-#~ msgstr "Pardavimų užsakymai"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Įdėti į ataskaitą"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Įdėti į išsįskleidžiančius meniu"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Kreditas"
-
-#~ msgid "Include in Report"
-#~ msgstr "Įdėti į ataskaitą"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Balansas"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Reversuoti operacijas visoms datoms"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Balanso suvestinė"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Ataskaitos"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Iki kada"
-
-#~ msgid "Number Format"
-#~ msgstr "Skaičiaus formatas"
-
-#~ msgid "Date"
-#~ msgstr "Data"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Ataskaitos"
-
-#~ msgid "Line Total"
-#~ msgstr "Viso eilutėje"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Įmonės kodas"
-
-#~ msgid "Address"
-#~ msgstr "Adresas"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Sukūrti duomenų aibę"
-
-#~ msgid "Record in"
-#~ msgstr "Įrašyti į"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Bendrasis žurnalas"
-
-#~ msgid "Image"
-#~ msgstr "Piešinys"
-
-#, fuzzy
-#~ msgid "Vendor Number"
-#~ msgstr "Užsakymo numeris"
-
-#~ msgid "days"
-#~ msgstr "dienos"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Ataskaitos"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Svorio vienetas."
-
-#~ msgid "Project"
-#~ msgstr "Projektas"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Kalba"
-
-#~ msgid "Name"
-#~ msgstr "Vardas"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Datos Formatas"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Pirkimo Operacijos"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Redaguoti sąskaitą"
-
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Čekis"
-
-#~ msgid "Screen"
-#~ msgstr "Ekranas"
-
-#~ msgid "Obsolete"
-#~ msgstr "Pasenę"
-
-#~ msgid "Invoice Date"
-#~ msgstr "Sąskaitos-faktūros data"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Surišti sąskaitas"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Operacija patvirtinta!"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Sąskaitų sąrašas"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Ištrinti sąskaitą"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Projekto numerio nėra!"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Balanso suvestinė"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Ar čia apibendrinta įrašo sąskaita"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Balansas"
-
-#, fuzzy
-#~ msgid "Company Name"
-#~ msgstr "Firma"
-
-#~ msgid "To"
-#~ msgstr "iki"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Sąskaita-faktūra"
-
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Numeris"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Apmokestinama"
-
-#, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Darbuotojas"
-
-#~ msgid "Closed"
-#~ msgstr "Uždaryta"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Patvirtinti kaip naują"
-
-#~ msgid "Total"
-#~ msgstr "Iš viso"
-
-#~ msgid "Notes"
-#~ msgstr "Pastaba"
-
-#, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Sąskaitų sąrašas"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Pardavimo SF"
-
-#~ msgid "Compare to"
-#~ msgstr "Palyginti su"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Sutaikinimas"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Data"
-
-#~ msgid "Current"
-#~ msgstr "Dabartinis"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Datos Formatas"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Reservinė kopija"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Kaina"
-
-#, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Skaičių po taško"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Mokėjimai"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Sąskaita-faktūra"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Žurnalai atidaryti"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Parodyti operacijas"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Darbuotojas"
-
-#~ msgid "Subtotal"
-#~ msgstr "Viso"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Nustatyti šablonus"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Išsaugoti kaip naują"
-
-#~ msgid "Unit"
-#~ msgstr "Vienetas"
-
-#~ msgid "No."
-#~ msgstr "Num"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Sutaikinimas"
-
-#~ msgid "Print"
-#~ msgstr "Spausdinti"
-
-#~ msgid "E-mail"
-#~ msgstr "E-paštas"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Viso"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Sąskaitos"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Mokėjimai"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Numeris"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "Sąskaita-faktūra"
-
-#~ msgid "Weight"
-#~ msgstr "Svoris"
-
-#~ msgid "Tax"
-#~ msgstr "Mokėstis"
-
-#~ msgid "Order Number"
-#~ msgstr "Užsakymo numeris"
-
-#, fuzzy
-#~ msgid "Customer Number"
-#~ msgstr "Klientas"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Audito kontrolė"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Keitimo kursas"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Kursas"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Pirkimo užsakymai"
-
-#~ msgid "Edit"
-#~ msgstr "Redaguoti"
-
-#~ msgid "Copies"
-#~ msgstr "Kopijos"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Pridėti Vartotoją"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Išsaugoti kaip naują"
-
-#~ msgid "Save"
-#~ msgstr "Išsaugoti"
-
-#~ msgid "Heading"
-#~ msgstr "Antraštė"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Nauji šablonai"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Prekės"
-
-#~ msgid "Discount"
-#~ msgstr "Nuolaidos"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Prisegta"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "Patvirtinti!"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Datos Formatas"
-
-#~ msgid "Balance"
-#~ msgstr "Balansas"
-
-#~ msgid "Ship via"
-#~ msgstr "Pristatyti per"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Aprašymas"
-
-#, fuzzy
-#~ msgid "Department"
-#~ msgstr "Mokėjimas"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Iki kada"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Mokesčių sąskaitos"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Apmokestinama"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Slaptažodis"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Ataskaitos"
-
-#~ msgid "Standard"
-#~ msgstr "Standartas"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Redaguoti nuostatas..."
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Užsakymo data"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Ataskaitos"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Projektas"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Surišti sąskaitas"
-
-#, fuzzy
-#~ msgid "Profit Center"
-#~ msgstr "Spausdintuvas"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Bandomasis balansas"
 
-#~ msgid "ROP"
-#~ msgstr "ROP"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Kreditas"
-
-#~ msgid "Payables"
-#~ msgstr "Pirkimai"
-
-#, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Balansas"
-
-#, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Balansas"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "Kontaktas"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Audito kontrolė"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Mokėjimas"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Sutaikinimas"
-
+#: sql/Pg-database.sql:2873
 #, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Redaguoti sąskaitą"
+msgid "Type of Business"
+msgstr "Įmonės kodas"
 
-#~ msgid "Microfiche"
-#~ msgstr "Mikrofiša"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Tiekėjas"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Debetas"
-
-#~ msgid "Add Customer"
-#~ msgstr "Pridėti klientą"
-
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Redaguoti vartotoją"
+msgid "Use AR Overpayment"
+msgstr "Mokėjimas"
 
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Išrinkti viską"
+msgid "Use Overpayment"
+msgstr "Mokėjimas"
 
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Dalykas"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Tiekėjas"
 
+#: sql/Pg-database.sql:2785
 #, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Pirkimo užsakymai"
+msgid "Vendor History"
+msgstr "Tiekėjai"
 
+#: sql/Pg-database.sql:2894
 #, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Pakeisti Administratoriaus slaptažodį"
+msgid "Vendor Invoice"
+msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Pridėti Vartotoją"
+msgid "Vouchers"
+msgstr "Ištrinti sąskaitą"
 
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Mokėjimas"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr ""
 
-#~ msgid "Exch"
-#~ msgstr "Kurs."
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
 #, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Duomenų bazės administravimas"
+msgid "Work Order"
+msgstr "Užsakymas"
 
-#~ msgid "Invoice Number"
-#~ msgstr "Sąskaitos-faktūros numeris"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Sutaikinimas"
+msgid "Year End"
+msgstr "Dabartinis"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Suma"
+msgid "depreciation"
+msgstr "Aprašymas"
 
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Data"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Mokėjimo datos nėra"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Balanso suvestinė"
+msgid "import"
+msgstr "Ataskaitos"
 
-#~ msgid "Accounts"
-#~ msgstr "Sąskaitos"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Mokėjimai"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Sutaikinimas"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Patvirtinti kaip naują"
+msgid "production"
+msgstr "Sutaikinimas"
 
-#~ msgid "Retained Earnings"
-#~ msgstr "Turimi uždarbiai"
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Operacija patvirtinta!"
+#~ msgid " Date missing!"
+#~ msgstr "Datos nėra!"
 
 #, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Projekto numerio nėra!"
+#~ msgid " missing!"
+#~ msgstr "Datos nėra!"
 
 #, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Slaptažodis pakeistas!"
+#~ msgid "# Invoices"
+#~ msgstr "Sąskaitos-faktūros"
 
 #, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Adresas"
-
-#~ msgid "Save as new"
-#~ msgstr "Išsaugoti kaip naują"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "Sąskaitos numerio nėra!"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "Sąskaitos tipo nėra!"
-
-#~ msgid "Account saved!"
-#~ msgstr "Sąskaitos išsaugotos"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Neįmanoma išsaugoti sąskaitos!"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Pridėti Bendroji Žurnalo Operaciją"
 
 #, fuzzy
 #~ msgid "%1 GIFI"
 #~ msgstr "GIFI"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Kopijuoti į SP"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "GIFI nėra!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI išsaugotas!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI ištrintas!"
-
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Nuolaidos"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Pridėti Bendroji Žurnalo Operaciją"
 
 #, fuzzy
 #~ msgid "%1 Language"
 #~ msgstr "Kalba"
 
 #, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Kalba"
-
-#~ msgid "Edit Template"
-#~ msgstr "Redaguoti šabloną"
+#~ msgid "%1 Number"
+#~ msgstr "Numeris"
 
 #, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTeX šablonai"
-
-#~ msgid "Template saved!"
-#~ msgstr "Šablonai išsaugoti!"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "Šablonai išsaugoti!"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Neįmanoma išsaugoti užsakymo!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Neįmanoma išsaugoti nuostatų!"
-
-#~ msgid "localhost"
-#~ msgstr "lokalhostas"
-
-#~ msgid "About"
-#~ msgstr "Apie..."
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript(TM)"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "BŽ operacija"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "E-pašto adreso nėra!"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Projekto numerio nėra!"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Pridėti Pardavimo sąskaitą-faktūrą"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Sausis"
-
-#~ msgid "Post as new"
-#~ msgstr "Patvirtinti kaip naują"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Patvirtinti kaip naują"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Patvirtinti kaip naują"
-
-#~ msgid "ea"
-#~ msgstr "kk"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Sąskaitos-faktūros datos nėra!"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Tiekėjo Vardo nėra!"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Neįmanoma patvirtinti sąskaitos-faktūros uždarajam periodui!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Keitimo kurso nėra!"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Neįmanoma patvirtinti mokėjimo uždarajam periodui!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Mokėjimo keitimo kurso nėra!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Neįmanoma patvirtinti sąskaitos-faktūros!"
-
-#~ msgid "Updated"
-#~ msgstr "Atnaujinta"
-
-#, fuzzy
-#~ msgid "SO"
-#~ msgstr "O"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "O"
-
-#~ msgid "Curr"
-#~ msgstr "Val."
-
-#~ msgid "BOM"
-#~ msgstr "BOM"
-
-#~ msgid "Individual Items"
-#~ msgstr "Individualios prekės"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Tokio kliento nėra!"
 
 #, fuzzy
 #~ msgid "%1: Vendor not on file!"
 #~ msgstr "Tokio tiekėjo nėra!"
 
 #, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Tokio kliento nėra!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Išrinkite vieną iš pavadinimų apačioje"
+#~ msgid "AP Invoices"
+#~ msgstr "Sąskaita-faktūra"
 
 #, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr ""
-#~ "Prekės kiekis turi būti lygus nuliui prieš pažymint šią dalį pasenusia!"
-
-#~ msgid "Item deleted!"
-#~ msgstr "Vienetas ištrintas!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Neįmanoma ištrinti prekės!"
-
-#~ msgid "Add"
-#~ msgstr "Pridėti"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Rinkiniai persandeliuoti!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Neįmanoma sandelioti rinkinius!"
+#~ msgid "AP account"
+#~ msgstr "Sąskaita"
 
 #, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Spausdinti"
+#~ msgid "AR Invoices"
+#~ msgstr "Sąskaita-faktūra"
 
-#~ msgid "Nothing selected!"
-#~ msgstr "Nieko neišrinkta!"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Klientas"
+#~ msgid "AR Transactions"
+#~ msgstr "Pardavimo Operacijos"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Tiekėjas"
+#~ msgid "AR account"
+#~ msgstr "Sąskaita"
+
+#~ msgid "About"
+#~ msgstr "Apie..."
+
+#~ msgid "Account"
+#~ msgstr "Sąskaita"
+
+#, fuzzy
+#~ msgid "Account %1 not found."
+#~ msgstr "Sąskaita"
+
+#, fuzzy
+#~ msgid "Account Description"
+#~ msgstr "Aprašymas"
+
+#, fuzzy
+#~ msgid "Account Label"
+#~ msgstr "Sąskaitos numeris"
+
+#, fuzzy
+#~ msgid "Account Name"
+#~ msgstr "Sąskaitos numeris"
+
+#, fuzzy
+#~ msgid "Account No."
+#~ msgstr "Sąskaita"
+
+#~ msgid "Account Number"
+#~ msgstr "Sąskaitos numeris"
+
+#, fuzzy
+#~ msgid "Account Number End"
+#~ msgstr "Sąskaitos numeris"
+
+#, fuzzy
+#~ msgid "Account Number Start"
+#~ msgstr "Sąskaitos numeris"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "Sąskaitos numerio nėra!"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Sąskaitos tipas"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "Sąskaitos tipo nėra!"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "Sąskaitos numeris"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "Sąskaitos numeris"
+
+#~ msgid "Account saved!"
+#~ msgstr "Sąskaitos išsaugotos"
+
+#, fuzzy
+#~ msgid "Account:"
+#~ msgstr "Sąskaita"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Sąskaita"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Sąskaitos-faktūros numeris"
+#~ msgid "Accounting"
+#~ msgstr "Apskaita"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Apskaitos Menu"
+
+#~ msgid "Accounts"
+#~ msgstr "Sąskaitos"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Užsakymo numeris"
+#~ msgid "Accounts From"
+#~ msgstr "Sąskaitos"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Projekto numerio nėra!"
+#~ msgid "Accounts To"
+#~ msgstr "Sąskaitos"
+
+#~ msgid "Active"
+#~ msgstr "Aktyvus"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "Nuo"
+#~ msgid "Active On"
+#~ msgstr "Aktyvus"
+
+#~ msgid "Add"
+#~ msgstr "Pridėti"
+
+#~ msgid "Add Account"
+#~ msgstr "Pridėti sąskaitą"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Numeris"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Pridėti Pardavimo sąskaitą-faktūrą"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Nėra tokio projekto!"
-
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Išrinkite vieną iš projektų apačioje"
+#~ msgid "Add Customer"
+#~ msgstr "Pridėti klientą"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Data"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Pridėti Pardavimo sąskaitą-faktūrą"
 
 #, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Žinutė"
+#~ msgid "Add Note"
+#~ msgstr "Kreditas"
 
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Išrinkite postscript arba PDF!"
-
-#~ msgid "Recd"
-#~ msgstr "Gaut"
-
-#~ msgid "Extended"
-#~ msgstr "Išplėsta"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Vieneto nėra įrašuose!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Koks šio dalyko tipas?"
-
-#~ msgid "Service"
-#~ msgstr "Paslauga"
-
-#, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Numerio nėra eilėje"
+#~ msgid "Add Project"
+#~ msgstr "Pridėti proektą"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Pridėti Pirkimo užsakymą"
@@ -2722,12 +1148,12 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Add Sales Order"
 #~ msgstr "Pridėti Pardavimo užsakymą"
 
-#~ msgid "In-line"
-#~ msgstr "Vienaeilis"
-
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Datos nėra!"
+#~ msgid "Add Unit"
+#~ msgstr "Vienetas"
+
+#~ msgid "Add Vendor"
+#~ msgstr "Pridėti Tiekėja"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -2737,443 +1163,20 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Add line2"
 #~ msgstr "Pridėti Paslaugą"
 
-#, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Pridėti Pardavimo sąskaitą-faktūrą"
-
-#, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Neįmanoma ištrinti sąskaitos-faktūros!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "Kliento vardo nėra!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Redaguoti projektą"
-
-#~ msgid "Add Project"
-#~ msgstr "Pridėti proektą"
-
-#~ msgid "Orphaned"
-#~ msgstr "Našlaitinis"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Tokio kliento nėra!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Tokio tiekėjo nėra!"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Šablonai išsaugoti!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Nėra Iki Datos!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Neįmanoma patvirtinti operacijos uždarajam periodui!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Operacija patvirtinta!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Neįmanoma patvirtinti operacijos!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Pardavimo Operacijos"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Sąskaitos-faktūros"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Pridėti Bendroji Žurnalo Operaciją"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Pridėti Bendroji Žurnalo Operaciją"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Neįmanoma patvirtinti operacijos!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Operacijos datos nėra!"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Redaguoti pirkimo užsakymą"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Redaguoti pardavimo užsakymą"
-
-#~ msgid "Terms"
-#~ msgstr "Terminas: "
-
-#~ msgid "Order Date"
-#~ msgstr "Užsakymo data"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Užsakymo datos nėra!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Datos nėra!"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Neįmanoma išsaugoti užsakymo!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Ar Jus tikrai norite ištrinti uzsakimas numeris:"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Užsakymai ištrinti!"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Neįmanoma ištrinti užsakymo!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Užsakymo numerio nėra!"
-
-#~ msgid "Done"
-#~ msgstr "Įvykdyta"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Uždaryta"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Uždaryta"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Nuolaidos"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Sąskaitos ištrintos"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Pasenę"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "su mokesčiais"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Balanso suvestinė"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Balansas"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Balansas"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Bandomasis balansas"
-
-#~ msgid "Business Number"
-#~ msgstr "Įmonės kodas"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Kalba"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Šablonai"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Valiūtos keitimo pelnas"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Valiūtos keitimo nuostolis"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTeX šablonai"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Keitimo kurso nėra!"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Ar Jus tikrai norite ištrinti saskaitu-fakturos numeris:"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Ištrinti"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Mokėstis"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Pirkimo užsakymas"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Turtas"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Mokėjimas patvirtintas!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Likutis"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "ne egzistuoja"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Išsaugoti kaip naują"
+#~ msgid "Address"
+#~ msgstr "Adresas"
 
 #, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Pardavimų užsakymai"
+#~ msgid "Addresses"
+#~ msgstr "Adresas"
 
 #, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Pardavimų užsakymai"
+#~ msgid "Adjustment"
+#~ msgstr "Prekės"
 
 #, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Pirkimo užsakymai"
-
-#~ msgid "Add Account"
-#~ msgstr "Pridėti sąskaitą"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Datos nėra!"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Sąskaitos-faktūros numeris"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Čekis"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Depozitas"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Sąskaitos-faktūros data"
-
-#~ msgid "January"
-#~ msgstr "Sausis"
-
-#~ msgid "February"
-#~ msgstr "Vasaris"
-
-#~ msgid "April"
-#~ msgstr "Balandis"
-
-#~ msgid "June"
-#~ msgstr "Birželis"
-
-#~ msgid "July"
-#~ msgstr "Liepa"
-
-#~ msgid "August"
-#~ msgstr "Rugpjūtis"
-
-#~ msgid "September"
-#~ msgstr "Rūgsėjis"
-
-#~ msgid "October"
-#~ msgstr "Spalis"
-
-#~ msgid "November"
-#~ msgstr "Lapkritis"
-
-#~ msgid "December"
-#~ msgstr "Gruodis"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Pakeisti slaptažodį"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Slaptažodis pakeistas!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Bandomasis balansas"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Suma iki"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Iš viso"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Užsakymo data"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Kasos orderiai"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Pridėti sąskaitą"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Grd"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Sąskaitos-faktūros"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Pristatyti per"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Iki kada"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Bir"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Išsiskleidžiančio meniu riba"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Suma"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Suma"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Sąnaudos"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Įdėti į ataskaitą"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Ataskaitos"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Pelno/nuostolio ataskaita"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Sąskaita"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Sąskaitos numeris"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Nuolaidos"
-
-#~ msgid "Jan"
-#~ msgstr "Sau"
-
-#~ msgid "Feb"
-#~ msgstr "Vas"
-
-#~ msgid "Mar"
-#~ msgstr "Kov"
-
-#~ msgid "Apr"
-#~ msgstr "Bal"
-
-#~ msgid "Jun"
-#~ msgstr "Bir"
-
-#~ msgid "Jul"
-#~ msgstr "Lie"
-
-#~ msgid "Aug"
-#~ msgstr "Rug"
-
-#~ msgid "Sep"
-#~ msgstr "Rgs"
-
-#~ msgid "Oct"
-#~ msgstr "Spa"
-
-#~ msgid "Nov"
-#~ msgstr "Lap"
-
-#~ msgid "Dec"
-#~ msgstr "Grd"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Iki kada"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Kov"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Kasos orderis"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Pardavimo SF"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Kalba"
-
-#~ msgid "Accounting"
-#~ msgstr "Apskaita"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Apskaitos Menu"
+#~ msgid "Adjustment Date"
+#~ msgstr "Suvestinė"
 
 #~ msgid "Administration"
 #~ msgstr "Administracija"
@@ -3181,14 +1184,246 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Administrator"
 #~ msgstr "Administratorius"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Ataskaitos"
+
+#~ msgid "All"
+#~ msgstr "Visi"
+
 #~ msgid "All Datasets up to date!"
 #~ msgstr "All Datasets up to date!"
+
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Sąskaitos-faktūros"
+
+#~ msgid "Amount"
+#~ msgstr "Suma"
+
+#~ msgid "Amount Due"
+#~ msgstr "Suma iki"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Suma"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Suma iki"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Suma iki"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Suma"
+
+#~ msgid "Apr"
+#~ msgstr "Bal"
+
+#~ msgid "April"
+#~ msgstr "Balandis"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Ar Jus tikrai norite ištrinti uzsakimas numeris:"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Ar Jus tikrai norite ištrinti operaciją?"
 
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Rinkiniai persandeliuoti!"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Sąskaitų sąrašas"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Turtas"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Turtas"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Turtas"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Sąskaitų sąrašas"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Redaguoti sąskaitą"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Prisegta"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Priėjimo kontrolė"
+
+#~ msgid "Aug"
+#~ msgstr "Rug"
+
+#~ msgid "August"
+#~ msgstr "Rugpjūtis"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Apmokestinama"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Sukūrti duomenų aibę"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Pridėti Vartotoją"
+
+#~ msgid "BOM"
+#~ msgstr "BOM"
+
+#~ msgid "Backup"
+#~ msgstr "Reservinė kopija"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Reservinė kopija"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Reservinė kopija"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Reservinė kopija išsiusta į"
+
+#~ msgid "Balance"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Surišti sąskaitas"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Surišti sąskaitas"
+
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Datos nėra!"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Aprašymas"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Numeris"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Aprašymas"
+
+#~ msgid "Bcc"
+#~ msgstr "Bcc"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Balanso suvestinė"
+
+#~ msgid "Bin"
+#~ msgstr "Dėžė"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Žurnalai atidaryti"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Įdėti į ataskaitą"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Įmonės kodas"
+
+#~ msgid "Business Number"
+#~ msgstr "Įmonės kodas"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Įmonės kodas"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Įmonės kodas"
+
+#~ msgid "COGS"
+#~ msgstr "PPS"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Ataskaitos"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Neįmanoma ištrinti sąskaitos-faktūros!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Neįmanoma patvirtinti operacijos!"
 
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Cannot create Lock!"
@@ -3202,32 +1437,283 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Neįmanoma ištrinti sąskaitos pagal nutylejimą!"
 
+#~ msgid "Cannot delete item!"
+#~ msgstr "Neįmanoma ištrinti prekės!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Neįmanoma ištrinti užsakymo!"
+
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "Neįmanoma ištrinti operacijos!"
 
 #~ msgid "Cannot delete vendor!"
 #~ msgstr "Neįmanoma ištrinti tiekėjo!"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Neįmanoma patvirtinti sąskaitos-faktūros uždarajam periodui!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Neįmanoma patvirtinti sąskaitos-faktūros!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Neįmanoma patvirtinti mokėjimo uždarajam periodui!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Neįmanoma patvirtinti operacijos uždarajam periodui!"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Neįmanoma patvirtinti operacijos!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Neįmanoma išsaugoti sąskaitos!"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Neįmanoma išsaugoti užsakymo!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Neįmanoma išsaugoti nuostatų!"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Neįmanoma išsaugoti užsakymo!"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Neįmanoma sandelioti rinkinius!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Mokesčių sąskaitos"
+
+#~ msgid "Cc"
+#~ msgstr "Cc"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Pakeisti Administratoriaus slaptažodį"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Čekis"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Pastaba"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Nuo"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Operacijos"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Paspauskit prisijungimo vardą redagavimui!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Uždaryti žurnalus iki"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Uždaryta"
+
+#~ msgid "Closed"
+#~ msgstr "Uždaryta"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Uždaryta"
+
+#, fuzzy
+#~ msgid "Code"
+#~ msgstr "Mokesčiai sumokėti"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Pirkimo užsakymai"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Pardavimų užsakymai"
+
+#~ msgid "Company"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Adresas"
+
+#, fuzzy
+#~ msgid "Company Name"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Firma"
+
+#~ msgid "Compare to"
+#~ msgstr "Palyginti su"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "Patvirtinti!"
 
 #~ msgid "Connect to"
 #~ msgstr "Prisijungti prie"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Kontaktas"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Kontaktas"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Kontaktas"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Kontaktas"
+
+#~ msgid "Continue"
+#~ msgstr "Tęsti"
+
+#, fuzzy
+#~ msgid "Contra"
+#~ msgstr "Kontaktas"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Audito kontrolė"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Sąskaitos numeris"
+
+#~ msgid "Copies"
+#~ msgstr "Kopijos"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Kopijuoti į SP"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Kopijuoti į SP"
+
+#, fuzzy
+#~ msgid "Cost Center"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Suma"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Audito kontrolė"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Suma"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Ištrinti Duomenų aibė"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Sukūrti sąskaitų planą"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Ištrinti Duomenų aibė"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Sukūrti duomenų aibę"
+
+#~ msgid "Credit"
+#~ msgstr "Kreditas"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Sąskaitos numeris"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Kredito riba"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Kreditas"
+
+#~ msgid "Curr"
+#~ msgstr "Val."
+
+#~ msgid "Currency"
+#~ msgstr "Valiūta"
+
+#~ msgid "Current"
+#~ msgstr "Dabartinis"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Klientas išsaugotas!"
+
+#, fuzzy
+#~ msgid "Customer Number"
+#~ msgstr "Klientas"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Klientas"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Klientas ištrintas!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Kliento vardo nėra!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Tokio kliento nėra!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Sąskaitų sąrašas"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Klientas"
+
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI ne instaliuotas!"
+
+#~ msgid "Database"
+#~ msgstr "Duomenų bazė"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Duomenų bazės tvarkiklė nepatikrinta!"
 
+#~ msgid "Database Host"
+#~ msgstr "Duomenų bazės hostas"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Duomenų bazės administravimas"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Duomenų bazės vartotojo nėra!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "ne egzistuoja"
+
+#~ msgid "Dataset"
+#~ msgstr "Duomenų aibė"
 
 #~ msgid "Dataset missing!"
 #~ msgstr "Duomenų aibės nėra!"
@@ -3235,11 +1721,198 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Duomenų aibė atnaujinta!"
 
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Datos Formatas"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Datos Formatas"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Datos Formatas"
+
+#~ msgid "Date Paid"
+#~ msgstr "Mokėjimo Data"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Datos Formatas"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Data"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "Geg"
+
+#~ msgid "Debit"
+#~ msgstr "Debetas"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Debetas"
+
+#~ msgid "Dec"
+#~ msgstr "Grd"
+
+#~ msgid "December"
+#~ msgstr "Gruodis"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Skaičių po taško"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Turtas"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Ištrinti sąskaitą"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Ištrinti sąskaitą"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Kalba"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Ištrinti sąskaitą"
+
+#~ msgid "Delete"
+#~ msgstr "Ištrinti"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Kalba"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Prystatimo Data"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "Mokėjimas"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Mokėjimas"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Aprašymas"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Ištrinti sąskaitą"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Aprašymas"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Aprašymas"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Aprašymas"
+
+#~ msgid "Difference"
+#~ msgstr "Skirtumas"
+
 #~ msgid "Directory"
 #~ msgstr "Direktorija"
 
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Nuolaidos"
+
+#~ msgid "Discount"
+#~ msgstr "Nuolaidos"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Nuolaidos"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Nuolaidos"
+
+#~ msgid "Done"
+#~ msgstr "Įvykdyta"
+
+#~ msgid "Drawing"
+#~ msgstr "Briežinys"
+
 #~ msgid "Driver"
 #~ msgstr "Tvarkyklė"
+
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Išsiskleidžiančio meniu riba"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Grd"
+
+#~ msgid "Due Date"
+#~ msgstr "Iki Data"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Nėra Iki Datos!"
+
+#~ msgid "E-mail"
+#~ msgstr "E-paštas"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "Suvestinę suisti per e-pastą į"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "E-paštas"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "E-pašto adreso nėra!"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Pelno/nuostolio ataskaita"
+
+#~ msgid "Edit"
+#~ msgstr "Redaguoti"
+
+#~ msgid "Edit Customer"
+#~ msgstr "Redaguoti Klientą"
+
+#, fuzzy
+#~ msgid "Edit Employee"
+#~ msgstr "Darbuotojas"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Redaguoti Bendrojo Žurnalo operaciją"
@@ -3247,18 +1920,210 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Edit Part"
 #~ msgstr "Redaguoti prekę"
 
+#~ msgid "Edit Project"
+#~ msgstr "Redaguoti projektą"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Redaguoti pirkimo užsakymą"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Ataskaitos"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Redaguoti pardavimo užsakymą"
+
 #~ msgid "Edit Service"
 #~ msgstr "Redaguoti paslaugą"
+
+#~ msgid "Edit Template"
+#~ msgstr "Redaguoti šabloną"
+
+#~ msgid "Edit User"
+#~ msgstr "Redaguoti vartotoją"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Redaguoti Tiekiją"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Redaguoti vartotoją"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Darbuotojas"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Darbuotojas"
+
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Užsakymo data"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Bandomasis balansas"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Balanso suvestinė"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Reversuoti operacijas visoms datoms"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Redaguoti vartotoją"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr ""
-#~ "Įveskite iki 3-jų raidžių, išskirtų taškais (Pvz. LTL:EUR:USD:YEN) savo ir "
-#~ "užsienio valiutoms pažymėti"
+#~ "Įveskite iki 3-jų raidžių, išskirtų taškais (Pvz. LTL:EUR:USD:YEN) savo "
+#~ "ir užsienio valiutoms pažymėti"
+
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Iki kada"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Iki kada"
+
+#~ msgid "Equity"
+#~ msgstr "Turtas/Nuosavybė"
+
+#~ msgid "Exch"
+#~ msgstr "Kurs."
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Keitimo kursas"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Mokėjimo keitimo kurso nėra!"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Keitimo kurso nėra!"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Keitimo kurso nėra!"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Keitimo kursas"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Egzistuojančios duomenų aibės"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Sąnaudos"
+
+#~ msgid "Expense"
+#~ msgstr "Sąnaudos"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Sąskaitų sąrašas"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Sąnaudos/Aktyvai"
+
+#~ msgid "Extended"
+#~ msgstr "Išplėsta"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Redaguoti vartotoją"
+
+#~ msgid "Feb"
+#~ msgstr "Vas"
+
+#~ msgid "February"
+#~ msgstr "Vasaris"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Įmonės kodas"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Redaguoti sąskaitą"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Mokėjimai"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Kasos orderiai"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Pridėti rinkinį"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Valiūtos keitimo pelnas"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Valiūtos keitimo nuostolis"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Datos Formatas"
+
+#~ msgid "From"
+#~ msgstr "Nuo"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "Nuo"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Suma"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Užsakymo data"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "Nuo"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI ištrintas!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "GIFI nėra!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI išsaugotas!"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Surišti sąskaitas"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Bendrasis žurnalas"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Audito kontrolė"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Viso eilutėje"
+
+#~ msgid "Heading"
+#~ msgstr "Antraštė"
 
 #~ msgid "Host"
 #~ msgstr "Hostas"
@@ -3266,33 +2131,190 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Hostname missing!"
 #~ msgstr "Hosto vardo nėra!"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Image"
+#~ msgstr "Piešinys"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTeX šablonai"
+
+#~ msgid "In-line"
+#~ msgstr "Vienaeilis"
+
+#~ msgid "Include in Report"
+#~ msgstr "Įdėti į ataskaitą"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Įdėti į išsįskleidžiančius meniu"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Įdėti į ataskaitą"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Pastaba"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Neteisinga duomenų aibės versija!"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Pakeisti slaptažodį"
+
+#~ msgid "Individual Items"
+#~ msgstr "Individualios prekės"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Prekės"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Prekės"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr ""
+#~ "Prekės kiekis turi būti lygus nuliui prieš pažymint šią dalį pasenusia!"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr ""
 #~ "Prekės kiekis turi būti lygus nuliui prieš pažymint rinkinį pasenusiu!"
 
+#~ msgid "Invoice Date"
+#~ msgstr "Sąskaitos-faktūros data"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Sąskaitos-faktūros datos nėra!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Sąskaitos-faktūra numerio nėra!"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Sąskaitos-faktūros data"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Sąskaitos-faktūros data"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Sąskaitos-faktūros data"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "Sąskaitos-faktūra ištrintos!"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Sąskaitos-faktūros data"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Sąskaita-faktūra"
+
+#~ msgid "Item deleted!"
+#~ msgstr "Vienetas ištrintas!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Vieneto nėra įrašuose!"
+
+#~ msgid "Jan"
+#~ msgstr "Sau"
+
+#~ msgid "January"
+#~ msgstr "Sausis"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Sąskaitos tipas"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Projekto numerio nėra!"
+
+#~ msgid "Jul"
+#~ msgstr "Lie"
+
+#~ msgid "July"
+#~ msgstr "Liepa"
+
+#~ msgid "Jun"
+#~ msgstr "Bir"
+
+#~ msgid "June"
+#~ msgstr "Birželis"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Atnaujinta"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Paskutinieji numeriai ir sąskaitos pagal nutylėjimą"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Atnaujinta"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 #~ msgstr "Lokaliam prisijungimui palikite hosto ir porto laukelius tuščiais"
 
+#~ msgid "Liability"
+#~ msgstr "Nuosavybė"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
 #~ msgid "Licensed to"
 #~ msgstr "Licenzijuota..."
 
+#~ msgid "Line Total"
+#~ msgstr "Viso eilutėje"
+
 #~ msgid "Link"
 #~ msgstr "Ryšys"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Mokėjimai"
+
+#~ msgid "List Price"
+#~ msgstr "Pirkimo kaina"
+
+#, fuzzy
+#~ msgid "List Transactions"
+#~ msgstr "Operacijos"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Svorio vienetas."
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Redaguoti vartotoją"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Sutaikinimas"
 
 #~ msgid "Lock System"
 #~ msgstr "Lock System"
@@ -3303,17 +2325,80 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Lockfile removed!"
 
+#~ msgid "Login"
+#~ msgstr "Prisijungimas"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Login name missing!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Sąskaitų sąrašas"
+
+#~ msgid "Make"
+#~ msgstr "Gamintojas"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Sausis"
+
+#~ msgid "Mar"
+#~ msgstr "Kov"
 
 #~ msgid "May "
 #~ msgstr "Gegužė"
 
+#~ msgid "Message"
+#~ msgstr "Žinutė"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Žinutė"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Išrinkti viską"
+
+#~ msgid "Microfiche"
+#~ msgstr "Mikrofiša"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Apmokestinama"
+
+#~ msgid "Model"
+#~ msgstr "Modelis"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibaitinė kodiruotė"
 
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Name"
+#~ msgstr "Vardas"
+
 #~ msgid "Name missing!"
 #~ msgstr "Pavadinimo nėra"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Vardas"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Sutaikinimas"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Vartotojas"
+
+#~ msgid "No"
+#~ msgstr "Ne"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Sąskaitos ištrintos"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Nėra Duomenų bazių tvarkyklių!"
@@ -3324,20 +2409,234 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "No email address for"
 #~ msgstr "Nėra e-pašto adreso..."
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Kalba"
+
+#~ msgid "No."
+#~ msgstr "Num"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Apmokestinama"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Pastaba"
+
+#~ msgid "Notes"
+#~ msgstr "Pastaba"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "Nieko neišrinkta!"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Nėra ko trinti!"
+
+#~ msgid "Nov"
+#~ msgstr "Lap"
+
+#~ msgid "November"
+#~ msgstr "Lapkritis"
+
+#~ msgid "Number"
+#~ msgstr "Numeris"
+
+#~ msgid "Number Format"
+#~ msgstr "Skaičiaus formatas"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Numerio nėra eilėje"
+
+#~ msgid "Obsolete"
+#~ msgstr "Pasenę"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Pasenę"
+
+#~ msgid "Oct"
+#~ msgstr "Spa"
+
+#~ msgid "October"
+#~ msgstr "Spalis"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Slaptažodis"
+
+#~ msgid "On Hand"
+#~ msgstr "Likutis"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "Likutis"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Pridėti Vartotoją"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Darbuotojas"
+
+#~ msgid "Open"
+#~ msgstr "Atidaryti"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Pirkimo Operacijos"
 
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle Duomenų bazės Administravimas"
 
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Užsakymas"
+
+#~ msgid "Order Date"
+#~ msgstr "Užsakymo data"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Užsakymo datos nėra!"
+
+#~ msgid "Order Number"
+#~ msgstr "Užsakymo numeris"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Užsakymo numerio nėra!"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Užsakymo numeris"
+
+#~ msgid "Order deleted!"
+#~ msgstr "Užsakymai ištrinti!"
+
 #~ msgid "Order saved!"
 #~ msgstr "Užsakymas išsaugotas!"
+
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Užsakymas"
+
+#~ msgid "Orphaned"
+#~ msgstr "Našlaitinis"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Pirkimo Operacijos"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Kreditas"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Debetas"
 
 #~ msgid "Out of balance!"
 #~ msgstr "Nesubalansuota!"
 
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Pirkimo Operaciją"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Mokėjimas"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Mokėjimas patvirtintas!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "O"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Numeris"
+
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Įpakavimo sąrašo numerio nėra!"
+
+#~ msgid "Paid"
+#~ msgstr "Apmokėta"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Dabartinis"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Numeris"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Prekė"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Projekto numerio nėra!"
+
+#~ msgid "Password"
+#~ msgstr "Slaptažodis"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Slaptažodis pakeistas!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Slaptažodis pakeistas!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Datos Formatas"
+
+#~ msgid "Payables"
+#~ msgstr "Pirkimai"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Mokėjimo datos nėra"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Mokėjimai"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Mokėjimai"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Mokėjimas"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Mokėjimas"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Mokėjimas patvirtintas!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Likutis"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "periodui"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Duomenų bazės Administravimas"
@@ -3351,26 +2650,423 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Port missing!"
 #~ msgstr "Porto numerio nėra!"
 
+#~ msgid "Post"
+#~ msgstr "Patvirtinti"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Patvirtinti kaip naują"
+
+#~ msgid "Post as new"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Patvirtinti kaip naują"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "BŽ operacija"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Redaguoti pardavimo sąskaitą-faktūrą"
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript(TM)"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Nuostatos išsaugotos!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Redaguoti nuostatas..."
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Kaina"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Atnaujinta"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "Kaina"
+
+#~ msgid "Print"
+#~ msgstr "Spausdinti"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Spausdinti"
+
+#~ msgid "Printer"
+#~ msgstr "Spausdintuvas"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Pirkimo Operacijos"
+
+#, fuzzy
+#~ msgid "Profit Center"
+#~ msgstr "Spausdintuvas"
+
+#~ msgid "Project"
+#~ msgstr "Projektas"
+
+#, fuzzy
+#~ msgid "Project Number"
+#~ msgstr "Projekto numerio nėra!"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Projekto numerio nėra!"
+
 #~ msgid "Project deleted!"
 #~ msgstr "Projektas ištrintas!"
+
+#~ msgid "Project not on file!"
+#~ msgstr "Nėra tokio projekto!"
 
 #~ msgid "Project saved!"
 #~ msgstr "Projektas išsaugotas!"
 
+#~ msgid "Projects"
+#~ msgstr "Projektai"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Pirkimo užsakymas"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Pirkimo užsakymas"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Pirkimo užsakymas"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Pirkimo užsakymas"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Pirkimo užsakymas"
+
+#~ msgid "Qty"
+#~ msgstr "Kks"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Projekto numerio nėra!"
+
+#~ msgid "ROP"
+#~ msgstr "ROP"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Kursas"
+
+#~ msgid "Recd"
+#~ msgstr "Gaut"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Kasos orderiai"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Įrašyti į"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Sutaikinimas"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Sutaikinimas"
+
+#~ msgid "Record in"
+#~ msgstr "Įrašyti į"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Ataskaita..."
+
+#~ msgid "Reference"
+#~ msgstr "Nuorodos"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Projektas"
+
+#~ msgid "Remaining"
+#~ msgstr "Likutis"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Ataskaita..."
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Ataskaita..."
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Ataskaitos"
+
+#~ msgid "Report for"
+#~ msgstr "Ataskaita..."
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Ataskaitos"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Kasos orderiai"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Iki kada"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Iki kada"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Iki kada"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Slaptažodis"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Turimi uždarbiai"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Sąskaitos"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Reservinė kopija"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Ataskaitos"
+
+#, fuzzy
+#~ msgid "SO"
+#~ msgstr "O"
+
+#, fuzzy
+#~ msgid "Salesperson"
+#~ msgstr "Pardavimų užsakymai"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Pirkimo užsakymas"
+
+#~ msgid "Save"
+#~ msgstr "Išsaugoti"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Išsaugoti kaip naują"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Išsaugoti kaip naują"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Kontaktas"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Išsaugoti kaip naują"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Sutaikinimas"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Išsaugoti kaip naują"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Sutaikinimas"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTeX šablonai"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Išsaugoti kaip naują"
+
+#~ msgid "Save as new"
+#~ msgstr "Išsaugoti kaip naują"
+
 #~ msgid "Save to File"
 #~ msgstr "Išsaugoti į failą"
+
+#~ msgid "Screen"
+#~ msgstr "Ekranas"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Sąskaita-faktūra"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Sąskaita-faktūra"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Prekės"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Pirkimo užsakymai"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Sutaikinimas"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Pardavimų užsakymai"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Parodyti operacijas"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Pirkimo užsakymai"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Išrinkti viską"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Nustatyti šablonus"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Išrinkti viską"
 
 #~ msgid "Select from one of the items below"
 #~ msgstr "Išrinkite vieną iš prekių apačioje"
 
+#~ msgid "Select from one of the names below"
+#~ msgstr "Išrinkite vieną iš pavadinimų apačioje"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Išrinkite vieną iš projektų apačioje"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Pardavimo SF"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Išrinkite postscript arba PDF!"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Išrinkti viską"
+
+#~ msgid "Sell Price"
+#~ msgstr "Pardavimo kaina"
+
 #~ msgid "Send by E-Mail"
 #~ msgstr "Išsiūsti e-paštu"
+
+#~ msgid "Sep"
+#~ msgstr "Rgs"
+
+#~ msgid "September"
+#~ msgstr "Rūgsėjis"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Nuostatos"
+
+#, fuzzy
+#~ msgid "Serial Number"
+#~ msgstr "Užsakymo numeris"
+
+#~ msgid "Service"
+#~ msgstr "Paslauga"
 
 #~ msgid "Services"
 #~ msgstr "Paslaugos"
 
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Pristatyti per"
+
+#~ msgid "Ship via"
+#~ msgstr "Pristatyti per"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Pristatyti per"
+
+#~ msgid "Short"
+#~ msgstr "Stoka"
+
 #~ msgid "Signature"
 #~ msgstr "Parašas"
+
+#~ msgid "Source"
+#~ msgstr "Dokumentas"
+
+#~ msgid "Standard"
+#~ msgstr "Standartas"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Balanso suvestinė"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Užsakymo data"
+
+#, fuzzy
+#~ msgid "Startdate"
+#~ msgstr "Užsakymo data"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Užsakymo data"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Balanso suvestinė"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Siusti suvestinę į"
@@ -3378,8 +3074,93 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Siusti suvestinę į spausdintuvą!"
 
+#~ msgid "Stylesheet"
+#~ msgstr "Stilių lentelė"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Dalykas"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Dalykas"
+
+#~ msgid "Subtotal"
+#~ msgstr "Viso"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Viso"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Ar čia apibendrinta įrašo sąskaita"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Bir"
+
+#, fuzzy
+#~ msgid "System Defaults"
+#~ msgstr "Išrinkti viską"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Mokėstis"
+
+#~ msgid "Tax"
+#~ msgstr "Mokėstis"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Mokesčių sąskaitos"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Datos Formatas"
+
+#~ msgid "Tax Included"
+#~ msgstr "su mokesčiais"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "su mokesčiais"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Numeris"
+
 #~ msgid "Tax collected"
 #~ msgstr "Mokesčiai surinkti"
+
+#~ msgid "Taxable"
+#~ msgstr "Apmokestinama"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "Šablonai išsaugoti!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Šablonai išsaugoti!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Šablonai"
+
+#~ msgid "Template saved!"
+#~ msgstr "Šablonai išsaugoti!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Nauji šablonai"
+
+#~ msgid "Terms"
+#~ msgstr "Terminas: "
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Ar Jus tikrai norite ištrinti saskaitu-fakturos numeris:"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Šios duomenų aibės nėra naudojamos ir gali būti ištrintos"
@@ -3387,12 +3168,47 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Šios duomenų aibės turi būti atnaujintos"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Bandomasis balansas"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Kreditas"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Debetas"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Redaguoti sąskaitą"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
 #~ "Čia preliminarus egzistuojančių šaltinių patikrinimas. Niekas negali būti "
 #~ "sukurta arba ištrinta šioje stadijoje."
+
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "Nuo"
+
+#, fuzzy
+#~ msgid "Till"
+#~ msgstr "Atidaryti"
+
+#~ msgid "To"
+#~ msgstr "iki"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Suma"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Data"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -3403,8 +3219,37 @@ msgstr "Operacija patvirtinta!"
 #~ "vardą ir išsaugokite. Bus sukurtas naujas vartotojas su tais pačiais "
 #~ "kintamaisiais ir nauju prisijungimo vardu"
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "iki"
+
+#~ msgid "Total"
+#~ msgstr "Iš viso"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Iš viso"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Įpakavimo sąrašas"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Operacija patvirtinta!"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Operacijos datos nėra!"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Operacija patvirtinta!"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "Operacija ištrinta!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Operacija patvirtinta!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Operacijos bus reversuojamos visoms datoms"
@@ -3412,23 +3257,118 @@ msgstr "Operacija patvirtinta!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Operacijos bus reversuojamos iki"
 
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Bandomasis balansas"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
+#~ msgid "Unit"
+#~ msgstr "Vienetas"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Matavimo vienetas"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Sąskaitos-faktūros numeris"
+
+#~ msgid "Update"
+#~ msgstr "Atnaujinti"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Atnaujinti Duomenų Aibę"
+
+#~ msgid "Updated"
+#~ msgstr "Atnaujinta"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Išsaugoti"
 
 #~ msgid "Use Templates"
 #~ msgstr "Naudoti šablonus"
 
+#~ msgid "User"
+#~ msgstr "Vartotojas"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Vartotojas išsaugotas!"
+
 #~ msgid "User deleted!"
 #~ msgstr "Vartotojas ištrintas!"
 
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Vartotojas"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Vartotojas"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Vartotojas"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Datos Formatas"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Pridėti sąskaitą"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Tiekėjai išsaugoti"
+
+#, fuzzy
+#~ msgid "Vendor Number"
+#~ msgstr "Užsakymo numeris"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Įdėti į ataskaitą"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Tiekėjas"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "Tiekėjas ištrintas!"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "Tiekėjo Vardo nėra!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Tokio tiekėjo nėra!"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Tiekėjas"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Versija"
+
+#~ msgid "Weight"
+#~ msgstr "Svoris"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Koks šio dalyko tipas?"
+
+#~ msgid "Yes"
+#~ msgstr "Taip"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Neįvedėte vardo!"
@@ -3437,8 +3377,68 @@ msgstr "Operacija patvirtinta!"
 #~ msgstr ""
 #~ "Turite įvesti hostą ir portą lokalioms ir nuotoliniams prisijungimams!"
 
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Kalba"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Operacija patvirtinta!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Kov"
+
+#~ msgid "as at"
+#~ msgstr "kaip"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Balansas"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Čekis"
+
+#~ msgid "days"
+#~ msgstr "dienos"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Debetas"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Ištrinti"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Depozitas"
+
+#~ msgid "ea"
+#~ msgstr "kk"
+
 #~ msgid "is already a member!"
 #~ msgstr "jau narys"
+
+#~ msgid "localhost"
+#~ msgstr "lokalhostas"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Kasos orderis"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Pardavimo SF"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Balanso suvestinė"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Viso"
 
 #~ msgid "successfully created!"
 #~ msgstr "sėkmingai sukurta"

@@ -31,87 +31,409 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "新增業務"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "報表"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "新增倉庫"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "版本"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "現金"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "應付帳款"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "應付帳齡分析"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "應付交易"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "刪除時間表"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "應收帳款"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "應收帳齡分析"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "應收交易"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "刪除時間表"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "新增帳戶"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "新增製成品"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "新增製成品"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "新增業務"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "新增業務"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "新增標準工業分類代碼"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "連絡人"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "新增職員"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "新增GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "新增組別"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "新增語言"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "新增直接人工/經常費用"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "新增零件"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "標準工業分類代碼"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "新增價格組別"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "財務訊息通用索引(GIFI)"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "新增使用者"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "新增標準工業分類代碼"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "新增服務"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "新增零件"
+
+#: sql/Pg-database.sql:2827
+msgid "Add Timecard"
+msgstr "新增工時卡"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "新增交易"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "新增倉庫"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "資產"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "製成品"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "資產"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "銀行識別編號(BIC)"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "資產負債表"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "下一日"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "帳單地址"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "帳單地址"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "帳單地址"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "帳單地址"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "箱的明細表"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "新增業務"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "付運"
-
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "應收交易"
-
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "列出 GIFI"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2911
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "列出部門"
+msgid "Budgets"
+msgstr "新增業務"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "付運"
-
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
-msgstr "新增製成品"
-
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:809
+msgid "CC"
 msgstr ""
+
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "現金"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "住宅電話"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "會計科目表"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "檢查"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+#, fuzzy
+msgid "Cold Lead"
+msgstr "交付時間"
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "連絡人"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "連絡人"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "編輯POS"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "貸方"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "客戶"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "客戶歷史"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "發票"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "借方"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "預設"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "說明"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "說明"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "說明"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "三月"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "已加入！"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "電子郵件"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "職員"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "職員"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "轉移存貨"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "列出業務"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "編輯帳戶"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "傳真"
+
+#: sql/Pg-database.sql:2921
+msgid "Fixed Assets"
+msgstr ""
+
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "財務訊息通用索引(GIFI)"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "總帳"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr "生成"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "生成"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "貨物及服務"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "人事管理"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML 模版"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "住宅電話"
+
+#: sql/Pg-database.sql:548
+#, fuzzy
+msgid "Hot Lead"
+msgstr "交付時間"
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "標準工業分類代碼"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -119,330 +441,213 @@ msgstr ""
 msgid "Import"
 msgstr "報表"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "資產"
+msgid "Import Batch"
+msgstr "報表"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "報表"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "付款"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "資產"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "LaTex 模版"
+msgid "Import GIFI"
+msgstr "編輯GIFI"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "已加入！"
+msgid "Import Inventory"
+msgstr "庫存"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "頂層"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "損益表"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "列出業務"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "連絡人"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "收據"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "銀行識別編號(BIC)"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "帳單地址"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "新增服務"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "新增製成品"
-
-#: sql/Pg-database.sql:3721
-#, fuzzy
-msgid "time"
-msgstr "次"
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "刪除時間表"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "收據"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "工作單"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "貸方"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "新增業務"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "報表"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "貨物及服務"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "編輯POS"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "新增業務"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "供應商歷史"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "銷售"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "個人設定"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "報價請求(RFQ) "
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "新增直接人工/經常費用"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "報表"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "列出語言"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "調節"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "銷貨單"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "採購單"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "出貨單"
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "銷售"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "新增語言"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "帳單地址"
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr "工時卡"
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "發票編號"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "新增GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "新增標準工業分類代碼"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "電子郵件"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "系統"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "預繳"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "付款"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "帳單地址"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "三月"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML 模版"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "三月"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "供應商發票"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "客戶"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "年結"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "轉移"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-#, fuzzy
-msgid "in years"
-msgstr "年"
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr "交付時間"
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "庫存"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "庫存"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "已儲存存貨！"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "發票"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "發票編號"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "國家"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "LaTex 模版"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "語言"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
+msgstr "交付時間"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "列出業務"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "製成品"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "新增使用者"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "列出 GIFI"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "列出語言"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "列出標準工業分類代碼"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "借方"
+msgid "List Tax Forms"
+msgstr "列出部門"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "列出倉庫"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "登出"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "社會保障編號"
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "編輯GIFI"
+msgid "Mailing"
+msgstr "帳單地址"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "預繳"
+msgid "Mr."
+msgstr "三月"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "三月"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr "新視窗"
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "下單項目"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "未收款交易"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "出貨單"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "零件組"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "付款"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "付款"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "揀貨清單"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "個人設定"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "公司名稱"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "搜尋"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "採購單"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "採購單"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -450,138 +655,35 @@ msgstr "預繳"
 msgid "Quotation"
 msgstr "報價單"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "報價單"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "報價請求(RFQ) "
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "報價請求"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "收據"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "收據"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "收到"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "總帳"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "會計帳"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "搜尋"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "新增標準工業分類代碼"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "語言"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "應付交易"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "標準工業分類代碼"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "報表"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "應收帳款"
-
-#: sql/Pg-database.sql:2827
-msgid "Add Timecard"
-msgstr "新增工時卡"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "三月"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "資產負債表"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "住宅電話"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "翻譯"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "傳真"
-
-#: sql/Pg-database.sql:549
-#, fuzzy
-msgid "Cold Lead"
-msgstr "交付時間"
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "日期格式"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "住宅電話"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "說明"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "會計科目表"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "應付帳齡分析"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "新增零件"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "登出"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "編輯帳戶"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "搜尋"
-
-#: sql/Pg-database.sql:3757
-#, fuzzy
-msgid "in months"
-msgstr "月"
+msgid "Reconciliation"
+msgstr "調節"
 
 #: sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -591,307 +693,71 @@ msgstr "重覆出現的交易"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "銷貨單"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "人事管理"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "業務種類"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "庫存"
+msgid "Reporting Units"
+msgstr "報表"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "新增價格組別"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "庫存"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "說明"
+msgid "Reports"
+msgstr "報表"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "說明"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "報價請求"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "發票"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
+msgid "Reverse AR Overpay"
 msgstr "收據"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "生產"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "列出標準工業分類代碼"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "帳單地址"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "轉移存貨"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "應付帳款"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "銷售發票"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "應收帳齡分析"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "下單項目"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "客戶歷史"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "所有價格組別"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr "工時卡"
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "收到"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "把製成品入貨"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "連絡人"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "零件組"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "公司名稱"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "所有價格組別"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "公司名稱"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "生成"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "報價單"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "試算表"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "新增組別"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "搜尋"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "列出倉庫"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "預繳"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "職員"
-
-#: sql/Pg-database.sql:2921
-msgid "Fixed Assets"
-msgstr ""
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "刪除時間表"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "刪除時間表"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "新增帳戶"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "檢查"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "未收款交易"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr "新視窗"
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "發票"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr "生成"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "連絡人"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "國家"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "倉庫"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "職員"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "採購單"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "新增職員"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "供應商"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "預設"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "列出業務"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "揀貨清單"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "搜尋"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "預繳"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "預繳"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "搜尋"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "標準工業分類代碼"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "銷售"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "銷售"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "銷售發票"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "銷貨單"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "銷貨單"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -899,2403 +765,465 @@ msgstr "預繳"
 msgid "Search"
 msgstr "搜尋"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "製成品"
+msgid "Search Assets"
+msgstr "搜尋"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "箱的明細表"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "所有價格組別"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "新增交易"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "所有價格組別"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "搜尋"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "公司名稱"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "個人設定"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "帳單地址"
+msgid "Sessions"
+msgstr "版本"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "付運"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "付運"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "損益表"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "已儲存存貨！"
-
-#: sql/Pg-database.sql:548
-#, fuzzy
-msgid "Hot Lead"
-msgstr "交付時間"
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "下一日"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "會計帳"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "說明"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "把製成品入貨"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "系統"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "日期格式"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr "工時卡"
+
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr "工時卡"
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "頂層"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "已加入交易！"
 
-#~ msgid "Dataset"
-#~ msgstr "資料集"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "轉移"
 
-#~ msgid "Transactions"
-#~ msgstr "所有交易"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "翻譯"
+
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "試算表"
+
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "業務種類"
+
+#: sql/Pg-database.sql:2799
+#, fuzzy
+msgid "Use AR Overpayment"
+msgstr "預繳"
+
+#: sql/Pg-database.sql:2798
+#, fuzzy
+msgid "Use Overpayment"
+msgstr "預繳"
+
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "供應商"
+
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "供應商歷史"
+
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "供應商發票"
+
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#, fuzzy
+msgid "Vouchers"
+msgstr "刪除時間表"
+
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "倉庫"
+
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
+
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "工作單"
+
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
+
+#: sql/Pg-database.sql:2856
+#, fuzzy
+msgid "Year End"
+msgstr "年結"
+
+#: sql/Pg-database.sql:3830
+#, fuzzy
+msgid "depreciation"
+msgstr "說明"
+
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3832
+#, fuzzy
+msgid "import"
+msgstr "報表"
+
+#: sql/Pg-database.sql:3757
+#, fuzzy
+msgid "in months"
+msgstr "月"
+
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+#, fuzzy
+msgid "in years"
+msgstr "年"
+
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3722
+#, fuzzy
+msgid "production"
+msgstr "生產"
+
+#: sql/Pg-database.sql:3721
+#, fuzzy
+msgid "time"
+msgstr "次"
 
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "帳戶"
+#~ msgid " Date missing!"
+#~ msgstr "未指明日期！"
 
 #, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "已加入付款！"
-
-#~ msgid "Source"
-#~ msgstr "來源"
+#~ msgid " missing!"
+#~ msgstr "未指明編碼！"
 
 #, fuzzy
-#~ msgid "User Name"
-#~ msgstr "已儲存使用者！"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "收據"
-
-#~ msgid "Period"
-#~ msgstr "期間"
-
-#~ msgid "Process Transactions"
-#~ msgstr "處理所有交易"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "應收未收"
-
-#~ msgid "Paid"
-#~ msgstr "已付"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "從"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "供應商號碼"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "發票日期"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "交易日期"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "日期格式"
-
-#~ msgid "Equity"
-#~ msgstr "股權"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "全選"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "金額"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "建立資料集"
-
-#~ msgid "Delivery Date"
-#~ msgstr "到期日"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "記錄於"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "說明"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "已加入年結！"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "收據"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "連絡人"
-
-#~ msgid "Scheduled"
-#~ msgstr "編排了時間"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "地址"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "名稱"
-
-#~ msgid "On Hand"
-#~ msgstr "已有存量"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "重覆出現的交易"
-
-#~ msgid "Login"
-#~ msgstr "登入"
-
-#~ msgid "Sell Price"
-#~ msgstr "售價"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
+#~ msgid "# Invoices"
 #~ msgstr "發票"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "審核控制"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "版本"
-
-#, fuzzy
-#~ msgid "Profit and Loss"
-#~ msgstr "列印並加入"
-
-#~ msgid "Add Vendor"
-#~ msgstr "新增供應商"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "付款"
-
-#~ msgid "Expense"
-#~ msgstr "費用"
-
-#~ msgid "Currency"
-#~ msgstr "幣別"
-
-#~ msgid "Liability"
-#~ msgstr "負債"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "應計基礎"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "標題"
-
-#~ msgid "ID"
-#~ msgstr "識別編號"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "起始餘額"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "年結"
-
-#, fuzzy
-#~ msgid "Allocated"
-#~ msgstr "津貼"
-
-#~ msgid "Startdate"
-#~ msgstr "開始日期"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "零件編號"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "帳戶類別"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "單位"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "預設"
-
-#~ msgid "Message"
-#~ msgstr "訊息"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "客戶編號"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "連絡人"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "要求報價單"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "新增製成品"
-
-#~ msgid "Edit Customer"
-#~ msgstr "編輯客戶"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "附件"
-
-#~ msgid "as at"
-#~ msgstr "截至"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "編輯使用者"
-
-#~ msgid "Income"
-#~ msgstr "收入"
-
-#~ msgid "Number"
-#~ msgstr "編號"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "列出帳號"
-
-#~ msgid "Delete"
-#~ msgstr "刪除"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "密碼"
-
-#~ msgid "Markup"
-#~ msgstr "漲價"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "借方"
-
-#~ msgid "Post"
-#~ msgstr "加入"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "日期格式"
-
-#~ msgid "Make"
-#~ msgstr "生產商"
-
-#~ msgid "Till"
-#~ msgstr "直到"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "生效的"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "國家"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "備份"
-
-#~ msgid "Receivables"
-#~ msgstr "應收帳戶"
-
-#~ msgid "System Defaults"
-#~ msgstr "系統預設值"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "現有"
-
-#~ msgid "Detail"
-#~ msgstr "詳情"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "發票編號"
-
-#~ msgid "Backup"
-#~ msgstr "備份"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "當新的儲存"
-
-#~ msgid "Database"
-#~ msgstr "資料庫"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "列出帳號"
-
-#~ msgid "Code"
-#~ msgstr "編碼"
-
-#~ msgid "Close Books up to"
-#~ msgstr "關閉到此為止的帳簿："
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "連絡人"
-
-#~ msgid "Stylesheet"
-#~ msgstr "樣式表"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "零件"
-
-#~ msgid "Edit Employee"
-#~ msgstr "編輯職員"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "借方"
-
-#~ msgid "PO Number"
-#~ msgstr "採購單編號"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "使用者"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "收入"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "電子郵件"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "付運公司"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "訂單"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "貸方"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "已更新"
-
-#~ msgid "Taxable"
-#~ msgstr "應稅"
-
-#~ msgid "Continue"
-#~ msgstr "繼續"
-
-#~ msgid "Shipping Point"
-#~ msgstr "付運地點"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "全選"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "開始日期"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "報價單"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "刪除帳戶"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "使用者"
-
-#~ msgid "COGS"
-#~ msgstr "貨銷成本"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "國家"
-
-#~ msgid "Last Cost"
-#~ msgstr "上次的成本"
-
-#, fuzzy
-#~ msgid "Time Frame"
-#~ msgstr "工時卡"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "會計帳"
-
-#~ msgid "GL"
-#~ msgstr "總帳"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "小計"
-
-#~ msgid "Serial Number"
-#~ msgstr "序號"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "日期"
-
-#~ msgid "Account"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "調節報告"
-
-#~ msgid "Memo"
-#~ msgstr "備忘錄"
-
-#~ msgid "Active"
-#~ msgstr "生效的"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "開始日期"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "帳戶類別"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "減除額"
-
-#~ msgid "Phone"
-#~ msgstr "電話號碼"
-
-#~ msgid "Week"
-#~ msgstr "星期"
-
-#~ msgid "Yes"
-#~ msgstr "是"
-
-#, fuzzy
-#~ msgid "Adjustment Details"
-#~ msgstr "庫存數帳戶不存在！"
-
-#~ msgid "Pricelist"
-#~ msgstr "價格清單"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "應計基礎"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "當新的加入"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "借方"
-
-#~ msgid "Tax Included"
-#~ msgstr "已含稅金"
-
-#~ msgid "Drawing"
-#~ msgstr "圖畫"
-
-#~ msgid "List Price"
-#~ msgstr "列出價"
-
-#~ msgid "No"
-#~ msgstr "否"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "總列數"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "收入"
-
-#~ msgid "Qty"
-#~ msgstr "數量"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "已更新"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "Activate Audit trail"
-#~ msgstr "啟動審核線索"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "個人設定"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "開始日期"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "帳戶編號"
-
-#~ msgid "Project Number"
-#~ msgstr "項目號碼"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "包含外匯差距"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "日期"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "使用者"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "備份"
-
-#~ msgid "Quarter"
-#~ msgstr "季"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "日期格式"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "郵政編碼"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "刪除資料集"
-
-#~ msgid "City"
-#~ msgstr "城市"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "日期"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "減除額"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "編輯使用者"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "權限控制"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "稅金科目"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "郵政編碼"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "連結帳戶"
-
-#~ msgid "All"
-#~ msgstr "全部"
-
-#~ msgid "From"
-#~ msgstr "從"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "報表來源"
-
-#~ msgid "Remaining"
-#~ msgstr "尚餘"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "職員編號"
-
-#~ msgid "Model"
-#~ msgstr "型號"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "複製到 COA"
-
-#~ msgid "Method"
-#~ msgstr "方法"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "當新的儲存"
-
-#~ msgid "Reference"
-#~ msgstr "參考資料"
-
-#~ msgid "Contra"
-#~ msgstr "相反"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "詳情"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "到期金額"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "個人設定已儲存！"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "部門"
-
-#~ msgid "Debit"
-#~ msgstr "借方"
-
-#~ msgid "List Transactions"
-#~ msgstr "列出所有交易"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "帳戶編號"
-
-#~ msgid "Credit Limit"
-#~ msgstr "信用額度"
-
-#~ msgid "Cc"
-#~ msgstr "抄送"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "從"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "檢查存貨清單"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "業務"
-
-#~ msgid "Cost Center"
-#~ msgstr "成本中心"
-
-#~ msgid "Bin"
-#~ msgstr "箱"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "報價單"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "要求交付日期"
-
-#, fuzzy
-#~ msgid "Timecard Criteria"
-#~ msgstr "工時卡已被刪除！"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "零件組"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "電郵會計賬到"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "報表來源"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "會計帳餘額"
-
-#~ msgid "Report for"
-#~ msgstr "報表來源"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "國家"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "減除額"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "發票日期"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "應稅"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "訂單"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "已儲存存貨！"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "包括付款"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "資產"
-
-#~ msgid "Amount"
-#~ msgstr "金額"
-
-#~ msgid "Non-tracking Items"
-#~ msgstr "不用追蹤的項目"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "發票日期"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "當新的加入"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "已清除"
-
-#, fuzzy
-#~ msgid "Lead Time"
-#~ msgstr "總需時"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "報表來源"
-
-#~ msgid "Projects"
-#~ msgstr "項目"
-
-#~ msgid "Difference"
-#~ msgstr "差異"
-
-#~ msgid "Update"
-#~ msgstr "更新"
-
-#~ msgid "Due Date"
-#~ msgstr "到期日"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "編輯使用者"
-
-#~ msgid "Database Host"
-#~ msgstr "資料庫主機"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "客戶編號"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "編輯帳戶"
-
-#~ msgid "Warehouse"
-#~ msgstr "倉庫"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "附件"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "費用/資產"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "職員編號"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "說明"
-
-#~ msgid "Password"
-#~ msgstr "密碼"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "公司"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "說明"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "項目名稱"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "儲存"
-
-#~ msgid "Edit User"
-#~ msgstr "編輯使用者"
-
-#~ msgid "FX"
-#~ msgstr "外幣兌換"
-
-#~ msgid "Account Number"
-#~ msgstr "帳戶編號"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "編輯供應商"
-
-#~ msgid "User"
-#~ msgstr "使用者"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "減除額"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "應付未付"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "已儲存存貨！"
-
-#~ msgid "Time Out"
-#~ msgstr "下班時間"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "日期格式"
-
-#~ msgid "Printer"
-#~ msgstr "印表機"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "已更新"
-
-#~ msgid "Tracking Items"
-#~ msgstr "需要追蹤的項目"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "至"
-
-#~ msgid "Bcc"
-#~ msgstr "不顯示抄送"
-
-#~ msgid "Date Paid"
-#~ msgstr "付款日期"
-
-#~ msgid "Amount Due"
-#~ msgstr "到期金額"
-
-#~ msgid "Credit"
-#~ msgstr "貸方"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "國家"
-
-#~ msgid "Short"
-#~ msgstr "短"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "使用者"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "連絡人"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "供應商號碼"
-
-#~ msgid "Year"
-#~ msgstr "年"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "POS發票"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "附件"
-
-#~ msgid "Day"
-#~ msgstr "日"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "新增扣除"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "日期格式"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "刪除資料集"
-
-#~ msgid "Open"
-#~ msgstr "開啟"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "貸方"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "預繳"
-
-#~ msgid "Average Cost"
-#~ msgstr "平均成本"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "處理所有交易"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "列出帳號"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "備註"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "選擇"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "已有存量"
-
-#~ msgid "Company"
-#~ msgstr "公司"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "匯率"
-
-#~ msgid "Salesperson"
-#~ msgstr "銷售人員"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "供應商號碼"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "包含在下拉式選單中"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "新增工作"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "稅號/社會保障編號"
-
-#~ msgid "Include in Report"
-#~ msgstr "一併顯示"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "餘額"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "強制所有日期的交易回復"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "會計帳餘額"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "報表"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "要求交付日期"
-
-#~ msgid "Number Format"
-#~ msgstr "數字格式"
-
-#~ msgid "Date"
-#~ msgstr "日期"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "報表"
-
-#~ msgid "Line Total"
-#~ msgstr "總列數"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "說明"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "業務"
-
-#~ msgid "Address"
-#~ msgstr "地址"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "建立資料集"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "公司名稱"
-
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "工作已被儲存！"
-
-#~ msgid "Warning!"
-#~ msgstr "警告！"
-
-#, fuzzy
-#~ msgid "Chargeable"
-#~ msgstr "收費"
-
-#~ msgid "Manager"
-#~ msgstr "經理"
-
-#~ msgid "Record in"
-#~ msgstr "記錄於"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "總帳"
-
-#~ msgid "Image"
-#~ msgstr "影像"
-
-#~ msgid "Vendor Number"
-#~ msgstr "供應商號碼"
-
-#~ msgid "days"
-#~ msgstr "日"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "報表"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "重量單位"
-
-#~ msgid "Project"
-#~ msgstr "項目"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "語言"
-
-#~ msgid "Name"
-#~ msgstr "名稱"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "日期格式"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "減除額"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "編輯帳戶"
-
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "檢查"
-
-#~ msgid "Screen"
-#~ msgstr "螢幕"
-
-#~ msgid "Obsolete"
-#~ msgstr "停用"
-
-#~ msgid "Invoice Date"
-#~ msgstr "發票日期"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "連結帳戶"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "交易"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "列出帳號"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "預設"
-
-#~ msgid "Partnumber"
-#~ msgstr "零件編號"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "會計帳餘額"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "此為總結科目嗎?"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "餘額"
-
-#, fuzzy
-#~ msgid "Orders"
-#~ msgstr "訂單"
-
-#~ msgid "Company Name"
-#~ msgstr "公司名稱"
-
-#~ msgid "To"
-#~ msgstr "至"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "發票"
-
-#~ msgid "Part Number"
-#~ msgstr "零件編號"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "不應課稅"
-
-#~ msgid "Employee Number"
-#~ msgstr "職員編號"
-
-#~ msgid "Closed"
-#~ msgstr "已關閉"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "當新的加入"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "編輯職員"
 
-#~ msgid "Total"
-#~ msgstr "總計"
-
-#~ msgid "Notes"
-#~ msgstr "備註"
-
-#, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "客戶歷史"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "列出帳號"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "銷售發票"
-
-#~ msgid "Compare to"
-#~ msgstr "對照"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "調節報告"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "日期"
-
-#~ msgid "Current"
-#~ msgstr "現有"
-
-#~ msgid "Country"
-#~ msgstr "國家"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "日期格式"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "備份"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "價格組別"
-
-#, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "小數的位置"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "付款"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "發票"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Status: Complete"
-#~ msgstr "完成了"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "公司"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "帳簿已開啟"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "處理所有交易"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "職員"
-
-#~ msgid "Group"
-#~ msgstr "組別"
-
-#~ msgid "Subtotal"
-#~ msgstr "小計"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "設定模版"
-
-#~ msgid "DOB"
-#~ msgstr "出生日期"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "當新的儲存"
-
-#~ msgid "Unit"
-#~ msgstr "單位"
-
-#~ msgid "No."
-#~ msgstr "編號"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "報價單"
-
-#~ msgid "Summary"
-#~ msgstr "摘要"
-
-#~ msgid "Print"
-#~ msgstr "列印"
-
-#~ msgid "E-mail"
-#~ msgstr "電子郵件"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "小計"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "組別"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "預繳"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "報價單"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "付款"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "稅號/社會保障編號"
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "收款日期"
-
-#~ msgid "Next"
-#~ msgstr "下一個"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "POS發票"
-
-#~ msgid "Weight"
-#~ msgstr "重量"
-
-#~ msgid "Tax"
-#~ msgstr "稅金"
-
-#~ msgid "Cleared"
-#~ msgstr "已清除"
-
-#~ msgid "Order Number"
-#~ msgstr "訂單編號"
-
-#~ msgid "Customer Number"
-#~ msgstr "客戶編號"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "直接人工代碼"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "匯率"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "稅率"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "應收未收"
-
-#, fuzzy
-#~ msgid "Time and Material Cards"
-#~ msgstr "工時卡"
-
-#~ msgid "Edit"
-#~ msgstr "編輯"
-
-#~ msgid "Copies"
-#~ msgstr "副本"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "附件"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "新增使用者"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "搜尋"
-
-#~ msgid "Save"
-#~ msgstr "儲存"
-
-#~ msgid "State/Province"
-#~ msgstr "省"
-
-#~ msgid "Heading"
-#~ msgstr "標題"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "新增模版"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "庫存數帳戶不存在！"
-
-#~ msgid "Clocked"
-#~ msgstr "計算出的時間"
-
-#~ msgid "Discount"
-#~ msgstr "折扣"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "附件"
-
-#~ msgid "Confirm"
-#~ msgstr "確認"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "日期格式"
-
-#~ msgid "Balance"
-#~ msgstr "餘額"
-
-#~ msgid "Ship via"
-#~ msgstr "付運公司"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "不應課稅"
-
-#~ msgid "Department"
-#~ msgstr "部門"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "要求交付日期"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "稅金科目"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "應稅"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "密碼"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "報表"
-
-#~ msgid "Standard"
-#~ msgstr "標準"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "設定使用者"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "下單日期"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "報表"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "項目"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "連結帳戶"
-
-#~ msgid "Profit Center"
-#~ msgstr "利潤中心"
-
-#~ msgid "ROP"
-#~ msgstr "再訂點"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "貸方"
-
-#~ msgid "Payables"
-#~ msgstr "應付科目"
-
-#, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "有效至"
-
-#, fuzzy
-#~ msgid "Single date"
-#~ msgstr "已清除"
-
-#, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "餘額"
-
-#, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "餘額"
-
-#~ msgid "Time In"
-#~ msgstr "上班時間"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "連絡人"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "直接人工代碼"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "收入"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "付款"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "調節報告"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "編輯帳戶"
-
-#~ msgid "Microfiche"
-#~ msgstr "單片縮影膠片"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "供應商號碼"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "借方"
-
-#~ msgid "Add Customer"
-#~ msgstr "新增客戶"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "編輯使用者"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "預設"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "標題"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "更改管理員密碼"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "經理"
-
 #, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "付款"
+#~ msgid "%1 Business"
+#~ msgstr "業務"
 
-#~ msgid "Exch"
-#~ msgstr "匯率"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "列出部門"
-
-#~ msgid "Pricegroup"
-#~ msgstr "價格組別"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "編輯職員"
-
-#~ msgid "Invoice Number"
-#~ msgstr "發票編號"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "調節"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "金額"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "工作日期"
-
-#~ msgid "Month"
-#~ msgstr "月"
-
-#, fuzzy
-#~ msgid "Item"
-#~ msgstr "項目"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "未指明付款日期！"
-
-#~ msgid "Statement Balance"
-#~ msgstr "會計帳餘額"
-
-#~ msgid "Accounts"
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "預繳"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "新增外匯率"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "報價單"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "年結"
-
-#~ msgid "Internal Notes"
-#~ msgstr "內部備忘錄"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "保留盈餘"
-
-#, fuzzy
-#~ msgid "You are logged out!"
-#~ msgstr "你已登出"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "不能辨認語言！"
-
-#~ msgid "GL Reference Number"
-#~ msgstr "總帳索引編號"
-
-#~ msgid "Sales Invoice/AR Transaction Number"
-#~ msgstr "銷售發票/應收帳交易編號"
-
-#~ msgid "Sales Order Number"
-#~ msgstr "銷貨單編號"
-
-#~ msgid "Vendor Invoice/AP Transaction Number"
-#~ msgstr "供應商發票/應付帳交易編號"
-
-#~ msgid "Sales Quotation Number"
-#~ msgstr "銷售報價單編號"
-
-#~ msgid "RFQ Number"
-#~ msgstr "報價請求號碼"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "項目號碼"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "密碼已改！"
-
-#, fuzzy
-#~ msgid "Default Email To"
-#~ msgstr "預設模版"
-
 #, fuzzy
-#~ msgid "Default Email CC"
-#~ msgstr "預設模版"
-
-#, fuzzy
-#~ msgid "Default Email BCC"
-#~ msgstr "預設模版"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "公司名稱"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "公司名稱"
-
-#~ msgid "Save as new"
-#~ msgstr "當新的儲存"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "未指明帳戶編號！"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "未指明帳戶類別！"
-
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "帳戶不能被設置為其他類型帳戶"
-
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "不能對以下物件設定多個選項："
-
-#~ msgid "Account saved!"
-#~ msgstr "已儲存帳戶！"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "不能儲存帳戶！"
-
-#~ msgid "Account does not exist!"
-#~ msgstr "不存在帳戶！"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "新增現金轉移帳目"
 
 #, fuzzy
 #~ msgid "%1 GIFI"
 #~ msgstr "財務訊息通用索引(GIFI)"
 
-#~ msgid "Copy to COA"
-#~ msgstr "複製到 COA"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "未指明 GIFI！"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "已儲存！"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI已刪除！"
-
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "折扣"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "業務"
-
-#~ msgid "Description missing!"
-#~ msgstr "未指明描述！"
-
-#~ msgid "Business saved!"
-#~ msgstr "已儲存業務！"
-
-#~ msgid "Business deleted!"
-#~ msgstr "已刪除業務！"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "標準工業編碼"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "新增標準工業分類代碼"
-
-#~ msgid "Code missing!"
-#~ msgstr "未指明編碼！"
-
-#~ msgid "SIC saved!"
-#~ msgstr "已儲存標準工業分類代碼！"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "已刪除標準工業分類代碼！"
-
-#~ msgid "Languages"
-#~ msgstr "語言"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "新增總帳交易"
 
 #, fuzzy
 #~ msgid "%1 Language"
 #~ msgstr "語言"
 
-#~ msgid "Language saved!"
-#~ msgstr "已儲存語言！"
-
-#~ msgid "Confirm!"
-#~ msgstr "入帳成功！"
+#, fuzzy
+#~ msgid "%1 Number"
+#~ msgstr "編號"
 
 #, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "編輯語言"
-
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "刪除語言將會刪除它的模版"
-
-#~ msgid "Language deleted!"
-#~ msgstr "已刪除語言！"
-
-#~ msgid "Default Template"
-#~ msgstr "預設模版"
-
-#~ msgid "Edit Template"
-#~ msgstr "編輯模版"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTex 模版"
-
-#~ msgid "Template saved!"
-#~ msgstr "已儲存模版！"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "已儲存模版！"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "不能儲存定單！"
-
-#~ msgid "Password does not match!"
-#~ msgstr "密碼不符！"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "不能儲存優先選擇！"
+#~ msgid "%1 SIC"
+#~ msgstr "新增標準工業分類代碼"
 
 #, fuzzy
 #~ msgid "%1 Warehouse"
 #~ msgstr "倉庫"
 
-#~ msgid "Warehouse saved!"
-#~ msgstr "已儲存倉庫！"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "已刪除倉庫！"
-
-#~ msgid "localhost"
-#~ msgstr "本地寄主"
-
-#~ msgid "About"
-#~ msgstr "關於"
-
-#~ msgid "Ends"
-#~ msgstr "完結"
-
-#~ msgid "Every"
-#~ msgstr "每"
-
-#~ msgid "Times"
-#~ msgstr "次"
-
-#~ msgid "Next Number"
-#~ msgstr "下一個號碼"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
 #, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "銷售發票 "
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "供應商發票 "
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "應付交易"
-
-#~ msgid "done"
-#~ msgstr "完成"
-
-#, fuzzy
-#~ msgid "Saving %1 [_2]"
-#~ msgstr "正在儲存"
-
-#~ msgid "failed"
-#~ msgstr "失敗"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "總帳交易"
-
-#~ msgid "Printing"
-#~ msgstr "正列印"
-
-#~ msgid "Sending"
-#~ msgstr "正在發送"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "未指明電子郵件位址！"
-
-#~ msgid "Current Earnings"
-#~ msgstr "現有收益"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "部門"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "項目號碼"
-
-#~ msgid "N/A"
-#~ msgstr "不適用"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "新增銷售發票"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "新增供應商發票"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "編輯供應商發票"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "一月"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "直接人工代碼"
-
-#~ msgid "Post as new"
-#~ msgstr "當新的加入"
-
-#~ msgid "Schedule"
-#~ msgstr "時間表"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "當新的加入"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "當新的加入"
-
-#~ msgid "ea"
-#~ msgstr "個"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "未指明發票日期！"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "未指明供應商！"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "不能在已關閉的時段內加入發票！"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "未指明匯率！"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "不能在已關閉的時段內加入款項！"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "未指明付款的匯率！"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "不能加入發票！"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Inventory account does not exist!"
-#~ msgstr "庫存數帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "收入帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "貨銷成本帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Service; Income account does not exist!"
-#~ msgstr "收入帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Service; Expense account does not exist!"
-#~ msgstr "費用帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Assembly; Income account does not exist!"
-#~ msgstr "收入帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; Inventory account does not exist!"
-#~ msgstr "庫存數帳戶不存在！"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "貨銷成本帳戶不存在！"
-
-#~ msgid "Stock"
-#~ msgstr "庫存"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "直接人工/經常費用"
-
-#~ msgid "Updated"
-#~ msgstr "已更新"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "歷史"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "銷售點(POS)"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "直接人工代碼"
-
-#~ msgid "Curr"
-#~ msgstr "目前"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "總帳索引編號"
-
-#~ msgid "Cost"
-#~ msgstr "成本"
-
-#~ msgid "Break"
-#~ msgstr "休息"
-
-#~ msgid "Sell"
-#~ msgstr "售賣"
-
-#~ msgid "List"
-#~ msgstr "列表"
-
-#~ msgid "BOM"
-#~ msgstr "材料清單"
-
-#~ msgid "Individual Items"
-#~ msgstr "個別的項目"
-
-#~ msgid "unexpected error!"
-#~ msgstr "沒有預期的錯誤！"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "沒有此客戶的記錄！"
 
 #, fuzzy
 #~ msgid "%1: Vendor not on file!"
 #~ msgstr "沒有此供應商的記錄！"
 
 #, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "沒有此客戶的記錄！"
+#~ msgid "AP Invoices"
+#~ msgstr "POS發票"
 
-#~ msgid "Select from one of the names below"
-#~ msgstr "於下列姓名中選擇一個"
+#~ msgid "AP Outstanding"
+#~ msgstr "應付未付"
 
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "停用此項零件之前, 存貨數量必需為零！"
-
-#~ msgid "Item deleted!"
-#~ msgstr "已刪除項目！"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "不能刪除項目！"
-
-#~ msgid "Add"
-#~ msgstr "新增"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "數量超過可庫存的數量！"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "製成品已重新進貨"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "不能把製成品入貨！"
-
-#~ msgid "Quotation Number"
-#~ msgstr "報價單號碼"
+#~ msgid "AP Transactions"
+#~ msgstr "應付交易"
 
 #, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "列印"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "沒有選擇任何東西！"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "您是否確定要消除有記號的條目？"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "正從隊列中移除有記號的會計項目"
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "移除列印暫存檔案"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "不能移除檔案！"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "已列印有記號的會計項目！"
+#~ msgid "AP account"
+#~ msgstr "帳戶"
 
 #, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "客戶"
+#~ msgid "AR Invoices"
+#~ msgstr "發票"
+
+#~ msgid "AR Outstanding"
+#~ msgstr "應收未收"
+
+#~ msgid "AR Transactions"
+#~ msgstr "應收交易"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "供應商"
+#~ msgid "AR account"
+#~ msgstr "帳戶"
+
+#~ msgid "AR/AP"
+#~ msgstr "應收/應付 "
+
+#~ msgid "About"
+#~ msgstr "關於"
+
+#~ msgid "Above"
+#~ msgstr "上文"
+
+#, fuzzy
+#~ msgid "Access Denied"
+#~ msgstr "拒絕存取！"
+
+#~ msgid "Account"
+#~ msgstr "帳戶"
+
+#, fuzzy
+#~ msgid "Account %1 not found"
+#~ msgstr "不存在帳戶！"
+
+#, fuzzy
+#~ msgid "Account %1 not found."
+#~ msgstr "帳戶"
+
+#, fuzzy
+#~ msgid "Account Description"
+#~ msgstr "說明"
+
+#, fuzzy
+#~ msgid "Account Label"
+#~ msgstr "帳戶編號"
+
+#, fuzzy
+#~ msgid "Account Name"
+#~ msgstr "帳戶編號"
+
+#, fuzzy
+#~ msgid "Account No."
+#~ msgstr "帳戶"
+
+#~ msgid "Account Number"
+#~ msgstr "帳戶編號"
+
+#, fuzzy
+#~ msgid "Account Number End"
+#~ msgstr "帳戶編號"
+
+#, fuzzy
+#~ msgid "Account Number Start"
+#~ msgstr "帳戶編號"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "未指明帳戶編號！"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "帳戶類別"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "未指明帳戶類別！"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "帳戶編號"
+
+#~ msgid "Account does not exist!"
+#~ msgstr "不存在帳戶！"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "帳戶編號"
+
+#~ msgid "Account saved!"
+#~ msgstr "已儲存帳戶！"
+
+#, fuzzy
+#~ msgid "Account:"
+#~ msgstr "帳戶"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "帳戶"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "發票編號"
+#~ msgid "Accounting"
+#~ msgstr "會計"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "會計選單"
+
+#~ msgid "Accounts"
+#~ msgstr "帳戶"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "訂單編號"
+#~ msgid "Accounts From"
+#~ msgstr "帳戶"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "報價單號碼"
+#~ msgid "Accounts To"
+#~ msgstr "帳戶"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "從"
-
-#~ msgid "Spoolfile"
-#~ msgstr "列印暫存(spool)檔案"
-
-#~ msgid "Remove"
-#~ msgstr "移除"
+#~ msgid "Accrual"
+#~ msgstr "應計基礎"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "編號"
-
-#~ msgid "Project not on file!"
-#~ msgstr "沒有此項目的記錄！"
-
-#~ msgid "Select from one of the projects below"
-#~ msgstr "於下列項目中選擇一個"
-
-#~ msgid "Next Date"
-#~ msgstr "下一日"
-
-#~ msgid "E-mail message"
-#~ msgstr "電子郵件訊息"
-
-#~ msgid "Day(s)"
-#~ msgstr "日"
-
-#~ msgid "Week(s)"
-#~ msgstr "星期"
-
-#~ msgid "Month(s)"
-#~ msgstr "月"
-
-#~ msgid "Year(s)"
-#~ msgstr "年"
-
-#~ msgid "Repeat"
-#~ msgstr "重覆"
-
-#~ msgid "For"
-#~ msgstr "重覆"
+#~ msgid "Accrual Basis:"
+#~ msgstr "應計基礎"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "重覆出現的交易"
+#~ msgid "Activate Audit trail"
+#~ msgstr "啟動審核線索"
 
-#~ msgid "Save Schedule"
-#~ msgstr "儲存時間表"
-
-#~ msgid "Delete Schedule"
-#~ msgstr "刪除時間表"
+#~ msgid "Active"
+#~ msgstr "生效的"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "日期"
+#~ msgid "Active On"
+#~ msgstr "生效的"
+
+#~ msgid "Add"
+#~ msgstr "新增"
+
+#~ msgid "Add AP Transaction"
+#~ msgstr "新增應付交易"
+
+#~ msgid "Add AR Transaction"
+#~ msgstr "新增應收交易"
+
+#~ msgid "Add Account"
+#~ msgstr "新增帳戶"
 
 #, fuzzy
-#~ msgid "Message: "
-#~ msgstr "訊息"
-
-#~ msgid "sent"
-#~ msgstr "已送出"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "選擇postscript或PDF！"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "沒有可列印的項目！"
-
-#~ msgid "Select payment"
-#~ msgstr "選擇付款"
-
-#~ msgid "Printed"
-#~ msgstr "已列印"
-
-#~ msgid "Select a Printer!"
-#~ msgstr "選擇印表機！"
-
-#~ msgid "Recd"
-#~ msgstr "已收到"
-
-#~ msgid "Price"
-#~ msgstr "價格"
-
-#~ msgid "Extended"
-#~ msgstr "總價"
-
-#~ msgid "OH"
-#~ msgstr "已有存量"
-
-#~ msgid "Serial No."
-#~ msgstr "序號"
-
-#~ msgid "SKU"
-#~ msgstr "庫存單位"
-
-#~ msgid "Select items"
-#~ msgstr "選擇項目"
-
-#~ msgid "Item not on file!"
-#~ msgstr "沒有此項目的記錄！"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "此項目屬於甚麼類別？"
-
-#~ msgid "Service"
-#~ msgstr "服務"
+#~ msgid "Add Asset Class"
+#~ msgstr "新增製成品"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "此列中缺少數值"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "新增供應商發票"
+
+#~ msgid "Add Customer"
+#~ msgstr "新增客戶"
+
+#, fuzzy
+#~ msgid "Add Debit Invoice"
+#~ msgstr "新增銷售發票"
+
+#~ msgid "Add Department"
+#~ msgstr "新增部門"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "新增工作"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "新增POS發票"
+
+#~ msgid "Add Project"
+#~ msgstr "新增項目"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "新增採購單"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "新增銷貨單"
+#~ msgid "Add Quotation"
+#~ msgstr "新增報價單"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "新增報價單要求"
 
-#~ msgid "Add Quotation"
-#~ msgstr "新增報價單"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "新增銷售發票"
 
-#~ msgid "In-line"
-#~ msgstr "行內"
-
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "選擇文字、postscript或PDF！"
+#~ msgid "Add Sales Order"
+#~ msgstr "新增銷貨單"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "未指明日期！"
+#~ msgid "Add Unit"
+#~ msgstr "單位"
 
-#~ msgid "Ship to"
-#~ msgstr "付運至"
+#~ msgid "Add Vendor"
+#~ msgstr "新增供應商"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "新增供應商發票"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3309,867 +1237,32 @@ msgstr "已加入交易！"
 #~ msgid "Add line3 "
 #~ msgstr "新增業務"
 
-#~ msgid "State"
-#~ msgstr "州"
+#, fuzzy
+#~ msgid "Add/Change Deductions"
+#~ msgstr "新增扣除"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "新增供應商發票"
+#~ msgid "Add/Change Wage"
+#~ msgstr "新增外匯率"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "新增銷售發票"
-
-#~ msgid "Trade Discount"
-#~ msgstr "貿易折扣"
+#~ msgid "Address"
+#~ msgstr "地址"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "不能刪除發票！"
-
-#~ msgid "Customer missing!"
-#~ msgstr "未指明客戶！"
-
-#~ msgid "Edit Project"
-#~ msgstr "編輯項目"
-
-#~ msgid "Add Project"
-#~ msgstr "新增項目"
-
-#~ msgid "Orphaned"
-#~ msgstr "無主"
-
-#~ msgid "Groups"
-#~ msgstr "所有組別"
-
-#~ msgid "Pricegroups"
-#~ msgstr "所有價格組別"
-
-#~ msgid "Inactive"
-#~ msgstr "非活躍的"
-
-#~ msgid "Translations saved!"
-#~ msgstr "已儲存翻譯！"
-
-#~ msgid "Group missing!"
-#~ msgstr "未指明組別！"
-
-#~ msgid "Group saved!"
-#~ msgstr "組別已被儲存！"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "未指明價格組別！"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "已儲存價格組別！"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "已刪除翻譯！"
-
-#~ msgid "Group deleted!"
-#~ msgstr "組別已被刪除！"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "已刪除價格組別！"
-
-#~ msgid "Description Translations"
-#~ msgstr "翻譯描述"
-
-#~ msgid "Group Translations"
-#~ msgstr "組別的翻譯"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "項目描述的翻譯"
-
-#~ msgid "Translation"
-#~ msgstr "翻譯"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "不能辨認語言！"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "編輯翻譯描述"
-
-#~ msgid "Transaction Dates"
-#~ msgstr "交易日期"
-
-#~ msgid "No open Projects!"
-#~ msgstr "沒有已開啟的項目"
-
-#~ msgid "Generate Sales Orders"
-#~ msgstr "生成銷貨單"
-
-#~ msgid "Service Code"
-#~ msgstr "服務編號"
-
-#~ msgid "Select Customer"
-#~ msgstr "選擇客戶"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "沒有此客戶的記錄！"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "沒有此供應商的記錄！"
-
-#~ msgid "Failed to save order!"
-#~ msgstr "儲存訂單時出錯！"
-
-#~ msgid "Orders generated!"
-#~ msgstr "已生成訂單！"
+#~ msgid "Addresses"
+#~ msgstr "地址"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "已儲存模版！"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "未指明到期日！"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "不能在已關閉的時段內加入交易！"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "已加入交易！"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "不能加入交易！"
-
-#~ msgid "AR Transactions"
-#~ msgstr "應收交易"
-
-#~ msgid "AP Transactions"
-#~ msgstr "應付交易"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "項目號碼"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "發票"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "新增現金轉移帳目"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "新增總帳交易"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "不能加入交易！"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "未指明交易日期！"
-
-#~ msgid ""
-#~ "Cannot post transaction with a debit and credit entry for the same account!"
-#~ msgstr "在交易同一帳戶不能又出現在借方又出現在貸方！"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "不協調交易！"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "編輯採購單"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "編輯銷貨單"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "編輯報價單要求"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "編輯報價單"
-
-#~ msgid "Terms"
-#~ msgstr "票期淨計"
-
-#~ msgid "Order Date"
-#~ msgstr "下單日期"
-
-#~ msgid "Quotation Date"
-#~ msgstr "報價單日期"
-
-#~ msgid "Print and Save"
-#~ msgstr "列印並儲存"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "列印並儲存作為新的"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "未指明下單日期！"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "未指明報價單日期！"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "未指明編碼！"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "不能儲存定單！"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "不能儲存報價單！"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "您是否確定要刪除訂單編號"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "您是否確定要刪除報價單編號"
-
-#~ msgid "Order deleted!"
-#~ msgstr "已刪除訂單！"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "不能刪除定單！"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "已刪除報價單！"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "不能刪除報價單！"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "未指明訂單編號！"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "未指明報價單號碼！"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "付運貨物"
-
-#~ msgid "Shipping Date"
-#~ msgstr "付運日期"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "收到貨物"
-
-#~ msgid "Done"
-#~ msgstr "已完成"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "未指明付運日期！"
-
-#~ msgid "Date received missing!"
-#~ msgstr "未指明收款日期！"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "沒有任何輸入！"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "已儲存存貨！"
 
-#~ msgid "Could not save!"
-#~ msgstr "不能儲存！"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "沒有可轉移的項目！"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "轉移存貨"
-
-#~ msgid "Transfer from"
-#~ msgstr "由這裡取貨"
-
-#~ msgid "Transfer to"
-#~ msgstr "存貨至"
-
-#~ msgid "From Warehouse"
-#~ msgstr "從貨倉"
-
-#~ msgid "To Warehouse"
-#~ msgstr "到倉庫"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "轉移的存貨！"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "存貨清單不能轉移！"
-
-#~ msgid "Req"
-#~ msgstr "需要"
-
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "生成採購單"
-
-#~ msgid "Generate Orders"
-#~ msgstr "生成訂單"
-
-#~ msgid "Select Vendor"
-#~ msgstr "選擇供應商"
-
-#~ msgid "Order generation failed!"
-#~ msgstr "生成訂單失敗！"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "已關閉"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "已關閉"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "新增POS發票"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "編輯POS"
-
-#~ msgid "Change"
-#~ msgstr "更改"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "開啟"
-
-#~ msgid "Posted!"
-#~ msgstr "已加入！"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "折扣"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "重覆出現的交易"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "已刪除帳戶！"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "到期金額"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "停用"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "已含稅金"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "會計帳餘額"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "餘額"
-
-#, fuzzy
-#~ msgid "Access Denied"
-#~ msgstr "拒絕存取！"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "餘額"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "試算表"
-
-#~ msgid "Business Number"
-#~ msgstr "業務編號"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "編輯語言"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "模版"
-
-#~ msgid "Session Timeout"
-#~ msgstr "使用期(Session)長短"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "部門"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "刪除帳戶"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "外匯收益"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "外匯損失"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTex 模版"
-
-#, fuzzy
-#~ msgid "Save Batch"
-#~ msgstr "儲存時間表"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "未指明匯率！"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "貿易折扣"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "您是否確定要刪除發票編號"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "刪除"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "有效至"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "編輯製成品"
-
-#, fuzzy
-#~ msgid "Add Asset Class"
-#~ msgstr "新增製成品"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "稅金"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "資產"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "調節報告"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "方法"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "已加入付款！"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "尚餘"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "不存在"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "當新的儲存"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "銷貨單"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders from Sales Orders"
-#~ msgstr "由銷貨單生成採購單"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "銷貨單"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "採購單"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders from Purchase Orders"
-#~ msgstr "由採購單生成銷貨單"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "報價單"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "要求報價單"
-
-#, fuzzy
-#~ msgid "Tax Form Name"
-#~ msgstr "稅號"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "預設模版"
-
-#~ msgid "Add Account"
-#~ msgstr "新增帳戶"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "未指明日期！"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "客戶編號"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "供應商號碼"
-
-#, fuzzy
-#~ msgid "No Null employeenumber"
-#~ msgstr "職員編號"
-
-#, fuzzy
-#~ msgid "Duplicate employee numbers"
-#~ msgstr "職員編號"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "發票編號"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "檢查"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "存款"
-
 #, fuzzy
-#~ msgid "Unable to save %1 object"
-#~ msgstr "儲存訂單時出錯！"
+#~ msgid "Adjustment Date"
+#~ msgstr "會計帳"
 
 #, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "發票日期"
-
-#~ msgid "January"
-#~ msgstr "一月"
-
-#~ msgid "February"
-#~ msgstr "二月"
-
-#~ msgid "March"
-#~ msgstr "三月"
-
-#~ msgid "April"
-#~ msgstr "四月"
-
-#~ msgid "May"
-#~ msgstr "五月"
-
-#~ msgid "June"
-#~ msgstr "六月"
-
-#~ msgid "July"
-#~ msgstr "七月"
-
-#~ msgid "August"
-#~ msgstr "八月"
-
-#~ msgid "September"
-#~ msgstr "九月"
-
-#~ msgid "October"
-#~ msgstr "十月"
-
-#~ msgid "November"
-#~ msgstr "十一月"
-
-#~ msgid "December"
-#~ msgstr "十二月"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "更改密碼"
-
-#, fuzzy
-#~ msgid "Passwords must match."
-#~ msgstr "密碼不符！"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "密碼已改！"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "試算表"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "沒有指定金額！"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "總計"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "下單日期"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "收據"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "新增帳戶"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "十二月"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "搜尋"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "發票"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "付運公司"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "要求交付日期"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "項目號碼"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "六月"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "月"
-
-#, fuzzy
-#~ msgid "Tue"
-#~ msgstr "星期二"
-
-#, fuzzy
-#~ msgid "Fri"
-#~ msgstr "重覆"
-
-#, fuzzy
-#~ msgid "Sat"
-#~ msgstr "州"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "限制"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "金額"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "金額"
-
-#, fuzzy
-#~ msgid "Avg. Cost"
-#~ msgstr "平均成本"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "費用"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "一併顯示"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "一併顯示"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "下一個號碼"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "報表"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "損益表"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "帳戶"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "帳戶編號"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "折扣"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "不存在帳戶！"
-
-#~ msgid "Jan"
-#~ msgstr "一月"
-
-#~ msgid "Feb"
-#~ msgstr "二月"
-
-#~ msgid "Mar"
-#~ msgstr "三月"
-
-#~ msgid "Apr"
-#~ msgstr "四月"
-
-#~ msgid "Jun"
-#~ msgstr "六月"
-
-#~ msgid "Jul"
-#~ msgstr "七月"
-
-#~ msgid "Aug"
-#~ msgstr "八月"
-
-#~ msgid "Sep"
-#~ msgstr "九月"
-
-#~ msgid "Oct"
-#~ msgstr "十月"
-
-#~ msgid "Nov"
-#~ msgstr "十一月"
-
-#~ msgid "Dec"
-#~ msgstr "十二月"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "要求交付日期"
-
-#~ msgid "Checks"
-#~ msgstr "檢查"
-
-#~ msgid "Work Orders"
-#~ msgstr "工作單"
-
-#~ msgid "Packing Lists"
-#~ msgstr "出貨單"
-
-#~ msgid "Pick Lists"
-#~ msgstr "揀貨清單"
-
-#~ msgid "Bin Lists"
-#~ msgstr "箱的明細表"
-
-#~ msgid "POS Invoice"
-#~ msgstr "POS發票"
-
-#~ msgid "Text Templates"
-#~ msgstr "文字模版"
-
-#, fuzzy
-#~ msgid "Batch Printing"
-#~ msgstr "正列印"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "三月"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "付款"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "收據"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "銷售發票"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "供應商發票"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "語言"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "倉庫"
-
-#~ msgid "AR/AP"
-#~ msgstr "應收/應付 "
-
-#~ msgid "Above"
-#~ msgstr "上文"
-
-#~ msgid "Accounting"
-#~ msgstr "會計"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "會計選單"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "新增應付交易"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "新增應收交易"
-
-#~ msgid "Add Department"
-#~ msgstr "新增部門"
+#~ msgid "Adjustment Details"
+#~ msgstr "庫存數帳戶不存在！"
 
 #~ msgid "Administration"
 #~ msgstr "系統管理"
@@ -4180,14 +1273,71 @@ msgstr "已加入交易！"
 #~ msgid "After Deduction"
 #~ msgstr "扣除以後"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "報表"
+
+#~ msgid "All"
+#~ msgstr "全部"
+
 #~ msgid "All Accounts"
 #~ msgstr "全部帳戶"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "所有資料皆已更新！"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "發票"
+
 #~ msgid "All Items"
 #~ msgstr "全部項目"
+
+#, fuzzy
+#~ msgid "Allocated"
+#~ msgstr "津貼"
+
+#~ msgid "Amount"
+#~ msgstr "金額"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "到期金額"
+
+#~ msgid "Amount Due"
+#~ msgstr "到期金額"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "金額"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "沒有指定金額！"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "到期金額"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "金額"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "貿易折扣"
+
+#~ msgid "Apr"
+#~ msgstr "四月"
+
+#~ msgid "April"
+#~ msgstr "四月"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "您是否確定要刪除訂單編號"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "您是否確定要刪除報價單編號"
 
 #~ msgid "Are you sure you want to delete Timecard for"
 #~ msgstr "您是否確定要刪除其工時卡："
@@ -4195,11 +1345,85 @@ msgstr "已加入交易！"
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "您是否確定要刪除交易"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "您是否確定要消除有記號的條目？"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "製成品已重新進貨"
+
 #~ msgid "Assembly"
 #~ msgstr "製成品"
 
 #~ msgid "Assembly stocked!"
 #~ msgstr "製成品已進貨"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "列出帳號"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "資產"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "調節報告"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "資產"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "列出帳號"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "編輯帳戶"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "附件"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "權限控制"
 
 #~ msgid "Audit trail removed up to"
 #~ msgstr "移除到此為止的審核線索"
@@ -4210,17 +1434,179 @@ msgstr "已加入交易！"
 #~ msgid "Audit trails enabled"
 #~ msgstr "審核線索已關閉"
 
+#~ msgid "Aug"
+#~ msgstr "八月"
+
+#~ msgid "August"
+#~ msgstr "八月"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "應稅"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "建立資料集"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "經理"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "預繳"
+
+#~ msgid "Average Cost"
+#~ msgstr "平均成本"
+
+#, fuzzy
+#~ msgid "Avg. Cost"
+#~ msgstr "平均成本"
+
+#~ msgid "BOM"
+#~ msgstr "材料清單"
+
+#~ msgid "Backup"
+#~ msgstr "備份"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "備份"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "備份"
+
 #~ msgid "Backup sent to"
 #~ msgstr "備份寄送到"
+
+#~ msgid "Balance"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "連結帳戶"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "連結帳戶"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "直接人工代碼"
 
 #~ msgid "Based on"
 #~ msgstr "基於"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "未指明日期！"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "說明"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "零件編號"
+
+#, fuzzy
+#~ msgid "Batch Printing"
+#~ msgstr "正列印"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "說明"
+
+#~ msgid "Bcc"
+#~ msgstr "不顯示抄送"
+
 #~ msgid "Before Deduction"
 #~ msgstr "扣除之前"
 
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "會計帳餘額"
+
 #~ msgid "Below"
 #~ msgstr "以下"
+
+#~ msgid "Bin"
+#~ msgstr "箱"
+
+#~ msgid "Bin Lists"
+#~ msgstr "箱的明細表"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "開始日期"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "帳簿已開啟"
+
+#~ msgid "Break"
+#~ msgstr "休息"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "下一個號碼"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "一併顯示"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "業務"
+
+#~ msgid "Business Number"
+#~ msgstr "業務編號"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "業務"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "業務"
+
+#~ msgid "Business deleted!"
+#~ msgstr "已刪除業務！"
+
+#~ msgid "Business saved!"
+#~ msgstr "已儲存業務！"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "業務"
+
+#~ msgid "COGS"
+#~ msgstr "貨銷成本"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "報表"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "不能刪除發票！"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "不能加入交易！"
 
 #~ msgid "Cannot add timecard for a completed job!"
 #~ msgstr "工作已完成，不能再加工時卡！"
@@ -4231,8 +1617,20 @@ msgstr "已加入交易！"
 #~ msgid "Cannot create Assembly"
 #~ msgstr "不能建立製成品"
 
+#, fuzzy
+#~ msgid "Cannot create Assembly; Income account does not exist!"
+#~ msgstr "收入帳戶不存在！"
+
 #~ msgid "Cannot create Labor"
 #~ msgstr "不能建立直接人工"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "貨銷成本帳戶不存在！"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; Inventory account does not exist!"
+#~ msgstr "庫存數帳戶不存在！"
 
 #~ msgid "Cannot create Lock!"
 #~ msgstr "不能建立鎖！"
@@ -4240,8 +1638,28 @@ msgstr "已加入交易！"
 #~ msgid "Cannot create Part"
 #~ msgstr "不能建立零件"
 
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "貨銷成本帳戶不存在！"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "收入帳戶不存在！"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Inventory account does not exist!"
+#~ msgstr "庫存數帳戶不存在！"
+
 #~ msgid "Cannot create Service"
 #~ msgstr "不能建立服務"
+
+#, fuzzy
+#~ msgid "Cannot create Service; Expense account does not exist!"
+#~ msgstr "費用帳戶不存在！"
+
+#, fuzzy
+#~ msgid "Cannot create Service; Income account does not exist!"
+#~ msgstr "收入帳戶不存在！"
 
 #~ msgid "Cannot delete Timecard!"
 #~ msgstr "不能建立工時卡"
@@ -4255,6 +1673,15 @@ msgstr "已加入交易！"
 #~ msgid "Cannot delete default account!"
 #~ msgstr "不能刪除預設帳戶！"
 
+#~ msgid "Cannot delete item!"
+#~ msgstr "不能刪除項目！"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "不能刪除定單！"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "不能刪除報價單！"
+
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "不能刪除交易！"
 
@@ -4267,8 +1694,47 @@ msgstr "已加入交易！"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "不能加入收據！"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "不能在已關閉的時段內加入發票！"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "不能加入發票！"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "不能在已關閉的時段內加入款項！"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "不能在已關閉的時段內加入交易！"
+
+#~ msgid ""
+#~ "Cannot post transaction with a debit and credit entry for the same "
+#~ "account!"
+#~ msgstr "在交易同一帳戶不能又出現在借方又出現在貸方！"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "不能加入交易！"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "不能移除檔案！"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "不能儲存帳戶！"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "不能儲存預設！"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "不能儲存定單！"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "不能儲存優先選擇！"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "不能儲存報價單！"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "不能儲存定單！"
 
 #~ msgid "Cannot save timecard for a closed period!"
 #~ msgstr "不能在已關閉的時段內儲存工時卡！"
@@ -4276,32 +1742,277 @@ msgstr "已加入交易！"
 #~ msgid "Cannot save timecard!"
 #~ msgstr "不能儲存工時卡！"
 
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "不能對以下物件設定多個選項："
+
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "不能對以物件設定多個選項"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "不能把製成品入貨！"
 
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "不能把製成品入貨！"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "稅金科目"
+
+#~ msgid "Cc"
+#~ msgstr "抄送"
+
+#~ msgid "Change"
+#~ msgstr "更改"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "更改管理員密碼"
+
+#, fuzzy
+#~ msgid "Chargeable"
+#~ msgstr "收費"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "檢查"
+
+#~ msgid "Checks"
+#~ msgstr "檢查"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "公司"
+
+#~ msgid "City"
+#~ msgstr "城市"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "已清除"
+
+#~ msgid "Cleared"
+#~ msgstr "已清除"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "處理所有交易"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "請按登入名稱以進行修改！"
+
+#~ msgid "Clocked"
+#~ msgstr "計算出的時間"
+
+#~ msgid "Close Books up to"
+#~ msgstr "關閉到此為止的帳簿："
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "已關閉"
+
+#~ msgid "Closed"
+#~ msgstr "已關閉"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "已關閉"
+
+#~ msgid "Code"
+#~ msgstr "編碼"
+
+#~ msgid "Code missing!"
+#~ msgstr "未指明編碼！"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "採購單"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "銷貨單"
+
+#~ msgid "Company"
+#~ msgstr "公司"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "公司名稱"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "公司名稱"
+
+#~ msgid "Company Name"
+#~ msgstr "公司名稱"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "公司"
+
+#~ msgid "Compare to"
+#~ msgstr "對照"
 
 #~ msgid "Components"
 #~ msgstr "零件"
 
+#~ msgid "Confirm"
+#~ msgstr "確認"
+
+#~ msgid "Confirm!"
+#~ msgstr "入帳成功！"
+
 #~ msgid "Connect to"
 #~ msgstr "連結到"
+
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "連絡人"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "連絡人"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "連絡人"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "連絡人"
+
+#~ msgid "Continue"
+#~ msgstr "繼續"
+
+#~ msgid "Contra"
+#~ msgstr "相反"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "直接人工代碼"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "帳戶編號"
+
+#~ msgid "Copies"
+#~ msgstr "副本"
+
+#~ msgid "Copy to COA"
+#~ msgstr "複製到 COA"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "複製到 COA"
+
+#~ msgid "Cost"
+#~ msgstr "成本"
+
+#~ msgid "Cost Center"
+#~ msgstr "成本中心"
 
 #~ msgid "Could not save pricelist!"
 #~ msgstr "不能儲存價格清單！"
 
+#~ msgid "Could not save!"
+#~ msgstr "不能儲存！"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "存貨清單不能轉移！"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "國家"
+
+#~ msgid "Country"
+#~ msgstr "國家"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "直接人工代碼"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "國家"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "刪除資料集"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "建立帳戶圖表"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "刪除資料集"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "列出部門"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "建立資料集"
+
+#~ msgid "Credit"
+#~ msgstr "貸方"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "帳戶編號"
+
+#~ msgid "Credit Limit"
+#~ msgstr "信用額度"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "貸方"
+
+#~ msgid "Curr"
+#~ msgstr "目前"
+
+#~ msgid "Currency"
+#~ msgstr "幣別"
+
+#~ msgid "Current"
+#~ msgstr "現有"
+
+#~ msgid "Current Earnings"
+#~ msgstr "現有收益"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "客戶編號"
+
+#~ msgid "Customer Number"
+#~ msgstr "客戶編號"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "客戶編號"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "已刪除客戶！"
 
+#~ msgid "Customer missing!"
+#~ msgstr "未指明客戶！"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "沒有此客戶的記錄！"
+
 #~ msgid "Customer saved!"
 #~ msgstr "已儲存客戶！"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "列出帳號"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "客戶"
 
 #~ msgid "Customers"
 #~ msgstr "客戶"
@@ -4309,14 +2020,34 @@ msgstr "已加入交易！"
 #~ msgid "DBI not installed!"
 #~ msgstr "未安裝 DBI 模組！"
 
+#~ msgid "DOB"
+#~ msgstr "出生日期"
+
+#~ msgid "Database"
+#~ msgstr "資料庫"
+
 #~ msgid "Database Administration"
 #~ msgstr "資料庫管理"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "未選定資料庫驅動程式！"
 
+#~ msgid "Database Host"
+#~ msgstr "資料庫主機"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "編輯職員"
+
 #~ msgid "Database User missing!"
 #~ msgstr "未指明資料庫使用者！"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "不存在"
+
+#~ msgid "Dataset"
+#~ msgstr "資料集"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "較新資料集！"
@@ -4327,8 +2058,80 @@ msgstr "已加入交易！"
 #~ msgid "Dataset updated!"
 #~ msgstr "已更新資料集！"
 
+#~ msgid "Date"
+#~ msgstr "日期"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "日期格式"
+
+#~ msgid "Date Paid"
+#~ msgstr "付款日期"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "收款日期"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "日期"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "工作日期"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "日期"
+
+#~ msgid "Date received missing!"
+#~ msgstr "未指明收款日期！"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "日期"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "日期"
+
+#~ msgid "Day"
+#~ msgstr "日"
+
+#~ msgid "Day(s)"
+#~ msgstr "日"
+
 #~ msgid "Days"
 #~ msgstr "日"
+
+#~ msgid "Debit"
+#~ msgstr "借方"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "借方"
+
+#~ msgid "Dec"
+#~ msgstr "十二月"
+
+#~ msgid "December"
+#~ msgstr "十二月"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "小數的位置"
 
 #~ msgid "Decrease"
 #~ msgstr "減少"
@@ -4336,14 +2139,90 @@ msgstr "已加入交易！"
 #~ msgid "Deduct after"
 #~ msgstr "減少以後"
 
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "減除額"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "減除額"
+
 #~ msgid "Deduction deleted!"
 #~ msgstr "已刪除減少！"
 
 #~ msgid "Deduction saved!"
 #~ msgstr "已儲存減少！"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "預設"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "預設"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "刪除帳戶"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "國家"
+
+#, fuzzy
+#~ msgid "Default Email BCC"
+#~ msgstr "預設模版"
+
+#, fuzzy
+#~ msgid "Default Email CC"
+#~ msgstr "預設模版"
+
+#, fuzzy
+#~ msgid "Default Email To"
+#~ msgstr "預設模版"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "編輯語言"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "預設模版"
+
+#~ msgid "Default Template"
+#~ msgstr "預設模版"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "國家"
+
 #~ msgid "Defaults saved!"
 #~ msgstr "已儲存預設！"
+
+#~ msgid "Delete"
+#~ msgstr "刪除"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "編輯語言"
+
+#~ msgid "Delete Schedule"
+#~ msgstr "刪除時間表"
+
+#, fuzzy
+#~ msgid ""
+#~ "Deleting a language will also delete the templates for the language %1"
+#~ msgstr "刪除語言將會刪除它的模版"
+
+#~ msgid "Delivery Date"
+#~ msgstr "到期日"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "方法"
+
+#~ msgid "Department"
+#~ msgstr "部門"
 
 #~ msgid "Department deleted!"
 #~ msgstr "已刪除部門！"
@@ -4351,14 +2230,117 @@ msgstr "已加入交易！"
 #~ msgid "Department saved!"
 #~ msgstr "已儲存部門！"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "部門"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "部門"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "刪除帳戶"
+
+#~ msgid "Description Translations"
+#~ msgstr "翻譯描述"
+
+#~ msgid "Description missing!"
+#~ msgstr "未指明描述！"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "說明"
+
+#~ msgid "Detail"
+#~ msgstr "詳情"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "詳情"
+
+#~ msgid "Difference"
+#~ msgstr "差異"
+
 #~ msgid "Directory"
 #~ msgstr "目錄"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "折扣"
+
+#~ msgid "Discount"
+#~ msgstr "折扣"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "折扣"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "折扣"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "收入"
+
+#~ msgid "Done"
+#~ msgstr "已完成"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "搜尋"
+
+#~ msgid "Drawing"
+#~ msgstr "圖畫"
 
 #~ msgid "Driver"
 #~ msgstr "驅動程式"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "限制"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "十二月"
+
+#~ msgid "Due Date"
+#~ msgstr "到期日"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "未指明到期日！"
+
+#, fuzzy
+#~ msgid "Duplicate employee numbers"
+#~ msgstr "職員編號"
+
+#~ msgid "E-mail"
+#~ msgstr "電子郵件"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "電郵會計賬到"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "電子郵件"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "未指明電子郵件位址！"
+
+#~ msgid "E-mail message"
+#~ msgstr "電子郵件訊息"
+
 #~ msgid "E-mailed"
 #~ msgstr "已電郵"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "損益表"
+
+#~ msgid "Edit"
+#~ msgstr "編輯"
 
 #~ msgid "Edit AP Transaction"
 #~ msgstr "編輯應付交易"
@@ -4366,17 +2348,30 @@ msgstr "已加入交易！"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "編輯應收交易"
 
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "編輯製成品"
+
 #~ msgid "Edit Business"
 #~ msgstr "編輯業務"
 
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "編輯現金轉移"
 
+#~ msgid "Edit Customer"
+#~ msgstr "編輯客戶"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "編輯減除額"
 
 #~ msgid "Edit Department"
 #~ msgstr "編輯部門"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "編輯翻譯描述"
+
+#~ msgid "Edit Employee"
+#~ msgstr "編輯職員"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "編輯總帳"
@@ -4390,11 +2385,30 @@ msgstr "已加入交易！"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "編輯直接人工/經常費用"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "編輯POS"
+
 #~ msgid "Edit Part"
 #~ msgstr "編輯零件"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "編輯價格組別"
+
+#~ msgid "Edit Project"
+#~ msgstr "編輯項目"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "編輯採購單"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "編輯報價單"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "報表"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "編輯報價單要求"
 
 #~ msgid "Edit SIC"
 #~ msgstr "編輯標準工業分類代碼"
@@ -4402,17 +2416,43 @@ msgstr "已加入交易！"
 #~ msgid "Edit Sales Invoice"
 #~ msgstr "編輯銷售發票"
 
+#~ msgid "Edit Sales Order"
+#~ msgstr "編輯銷貨單"
+
 #~ msgid "Edit Service"
 #~ msgstr "編輯服務"
+
+#~ msgid "Edit Template"
+#~ msgstr "編輯模版"
 
 #~ msgid "Edit Timecard"
 #~ msgstr "編輯工時卡"
 
+#~ msgid "Edit User"
+#~ msgstr "編輯使用者"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "編輯供應商"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "編輯供應商發票"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "編輯倉庫"
 
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "編輯使用者"
+
 #~ msgid "Employee Name"
 #~ msgstr "職員姓名"
+
+#~ msgid "Employee Number"
+#~ msgstr "職員編號"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "職員編號"
 
 #~ msgid "Employee deleted!"
 #~ msgstr "已刪除職員！"
@@ -4429,30 +2469,259 @@ msgstr "已加入交易！"
 #~ msgid "Employer pays"
 #~ msgstr "付款給雇主"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "下單日期"
+
 #~ msgid "Enddate"
 #~ msgstr "結束日"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "起始餘額"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "會計帳餘額"
+
+#~ msgid "Ends"
+#~ msgstr "完結"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "強制所有日期的交易回復"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "編輯使用者"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr ""
-#~ "請鍵入以冒號分隔的英文字母, 每項不超過三個字 (如 CAD:USD:EUR), 作為您的本國"
-#~ "及外國貨幣"
+#~ "請鍵入以冒號分隔的英文字母, 每項不超過三個字 (如 CAD:USD:EUR), 作為您的本"
+#~ "國及外國貨幣"
+
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "要求交付日期"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "要求交付日期"
+
+#~ msgid "Equity"
+#~ msgstr "股權"
+
+#~ msgid "Every"
+#~ msgstr "每"
 
 #~ msgid "Excempt age <"
 #~ msgstr "不包括年齡 <"
 
+#~ msgid "Exch"
+#~ msgstr "匯率"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "匯率"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "未指明付款的匯率！"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "未指明匯率！"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "未指明匯率！"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "匯率"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "既有的資料集"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "費用"
+
+#~ msgid "Expense"
+#~ msgstr "費用"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "列出帳號"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "費用/資產"
+
+#~ msgid "Extended"
+#~ msgstr "總價"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "編輯使用者"
+
+#~ msgid "FX"
+#~ msgstr "外幣兌換"
+
+#~ msgid "Failed to save order!"
+#~ msgstr "儲存訂單時出錯！"
+
+#~ msgid "Feb"
+#~ msgstr "二月"
+
+#~ msgid "February"
+#~ msgstr "二月"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "業務"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "編輯帳戶"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "付款"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "收據"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "項目名稱"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "新增製成品"
+
+#~ msgid "For"
+#~ msgstr "重覆"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "外匯收益"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "外匯損失"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Fri"
+#~ msgstr "重覆"
 
 #~ msgid "Friday"
 #~ msgstr "星期五"
 
+#~ msgid "From"
+#~ msgstr "從"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "從"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "金額"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "下單日期"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "從"
+
+#~ msgid "From Warehouse"
+#~ msgstr "從貨倉"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI已刪除！"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "未指明 GIFI！"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "已儲存！"
+
+#~ msgid "GL"
+#~ msgstr "總帳"
+
+#~ msgid "GL Reference Number"
+#~ msgstr "總帳索引編號"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "連結帳戶"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "總帳"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "審核控制"
+
+#~ msgid "Generate Orders"
+#~ msgstr "生成訂單"
+
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "生成採購單"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders from Sales Orders"
+#~ msgstr "由銷貨單生成採購單"
+
 #~ msgid "Generate Sales Order"
 #~ msgstr "生成銷貨單"
 
+#~ msgid "Generate Sales Orders"
+#~ msgstr "生成銷貨單"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders from Purchase Orders"
+#~ msgstr "由採購單生成銷貨單"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "總列數"
+
+#~ msgid "Group"
+#~ msgstr "組別"
+
 #~ msgid "Group Items"
 #~ msgstr "組別的項目"
+
+#~ msgid "Group Translations"
+#~ msgstr "組別的翻譯"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "組別"
+
+#~ msgid "Group deleted!"
+#~ msgstr "組別已被刪除！"
+
+#~ msgid "Group missing!"
+#~ msgstr "未指明組別！"
+
+#~ msgid "Group saved!"
+#~ msgstr "組別已被儲存！"
+
+#~ msgid "Groups"
+#~ msgstr "所有組別"
+
+#~ msgid "Heading"
+#~ msgstr "標題"
 
 #~ msgid "Host"
 #~ msgstr "主機"
@@ -4463,27 +2732,164 @@ msgstr "已加入交易！"
 #~ msgid "IBAN"
 #~ msgstr "國際銀行帳號(IBAN)"
 
+#~ msgid "ID"
+#~ msgstr "識別編號"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "年結"
+
+#~ msgid "Image"
+#~ msgstr "影像"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTex 模版"
+
+#~ msgid "In-line"
+#~ msgstr "行內"
+
+#~ msgid "Inactive"
+#~ msgstr "非活躍的"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "包含外匯差距"
+
+#~ msgid "Include in Report"
+#~ msgstr "一併顯示"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "包含在下拉式選單中"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "包括付款"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "一併顯示"
+
+#~ msgid "Income"
+#~ msgstr "收入"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "收入"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "收入"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "資料集版本錯誤！"
 
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "更改密碼"
+
 #~ msgid "Increase"
 #~ msgstr "增加"
+
+#~ msgid "Individual Items"
+#~ msgstr "個別的項目"
+
+#~ msgid "Internal Notes"
+#~ msgstr "內部備忘錄"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "有效至"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "已儲存存貨！"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "庫存數帳戶不存在！"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "停用此項零件之前, 存貨數量必需為零！"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr "在停用此製成品之前, 存貨數量必需為零！"
 
+#~ msgid "Inventory saved!"
+#~ msgstr "已儲存存貨！"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "轉移的存貨！"
+
+#~ msgid "Invoice Date"
+#~ msgstr "發票日期"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "未指明發票日期！"
+
+#~ msgid "Invoice Number"
+#~ msgstr "發票編號"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "未指明發票編號！"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "發票編號"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "發票日期"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "發票日期"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "發票日期"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "已刪除發票！"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "發票編號"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "發票日期"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "發票"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "項目"
+
 #~ msgid "Item already on pricelist!"
 #~ msgstr "項目己經在價格清單內！"
 
+#~ msgid "Item deleted!"
+#~ msgstr "已刪除項目！"
+
+#~ msgid "Item not on file!"
+#~ msgstr "沒有此項目的記錄！"
+
+#~ msgid "Jan"
+#~ msgstr "一月"
+
+#~ msgid "January"
+#~ msgstr "一月"
+
 #~ msgid "Job"
 #~ msgstr "工作"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "工作已被儲存！"
 
 #~ msgid "Job Name"
 #~ msgstr "工作名稱"
@@ -4494,28 +2900,121 @@ msgstr "已加入交易！"
 #~ msgid "Job Number missing!"
 #~ msgstr "未指明工作編號！"
 
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "帳戶類別"
+
 #~ msgid "Job deleted!"
 #~ msgstr "工作已被刪除！"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "項目號碼"
 
 #~ msgid "Jobs"
 #~ msgstr "工作"
 
+#~ msgid "Jul"
+#~ msgstr "七月"
+
+#~ msgid "July"
+#~ msgstr "七月"
+
+#~ msgid "Jun"
+#~ msgstr "六月"
+
+#~ msgid "June"
+#~ msgstr "六月"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "直接人工/經常費用"
+
+#~ msgid "Language deleted!"
+#~ msgstr "已刪除語言！"
+
+#~ msgid "Language saved!"
+#~ msgstr "已儲存語言！"
+
+#~ msgid "Languages"
+#~ msgstr "語言"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "不能辨認語言！"
+
+#~ msgid "Last Cost"
+#~ msgstr "上次的成本"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "已更新"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "上一筆編號及預設帳戶"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "已更新"
+
+#, fuzzy
+#~ msgid "Lead Time"
+#~ msgstr "總需時"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 #~ msgstr "除非您想要進行遠端連線，否則請將主機及埠號留白。"
 
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "應收未收"
+
+#~ msgid "Liability"
+#~ msgstr "負債"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "職員編號"
+
 #~ msgid "Licensed to"
 #~ msgstr "授權予"
+
+#~ msgid "Line Total"
+#~ msgstr "總列數"
 
 #~ msgid "Link"
 #~ msgstr "連結"
 
+#~ msgid "List"
+#~ msgstr "列表"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "預繳"
+
+#~ msgid "List Price"
+#~ msgstr "列出價"
+
 #~ msgid "List Projects"
 #~ msgstr "列出項目"
+
+#~ msgid "List Transactions"
+#~ msgstr "列出所有交易"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "重量單位"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "編輯使用者"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "報價單"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "報價單"
 
 #~ msgid "Lock System"
 #~ msgstr "系統鎖上"
@@ -4526,26 +3025,133 @@ msgstr "已加入交易！"
 #~ msgid "Lockfile removed!"
 #~ msgstr "已移除上鎖檔案！"
 
+#~ msgid "Login"
+#~ msgstr "登入"
+
 #~ msgid "Login name missing!"
 #~ msgstr "未指明登入名字！"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "列出帳號"
+
+#~ msgid "Make"
+#~ msgstr "生產商"
+
+#~ msgid "Manager"
+#~ msgstr "經理"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "一月"
+
+#~ msgid "Mar"
+#~ msgstr "三月"
+
+#~ msgid "March"
+#~ msgstr "三月"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "已列印有記號的會計項目！"
+
+#~ msgid "Markup"
+#~ msgstr "漲價"
 
 #~ msgid "Maximum"
 #~ msgstr "最大"
 
+#~ msgid "May"
+#~ msgstr "五月"
+
 #~ msgid "May "
 #~ msgstr "五月"
+
+#~ msgid "Memo"
+#~ msgstr "備忘錄"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "重覆出現的交易"
 
 #~ msgid "Menu Width"
 #~ msgstr "選擇單寬度"
 
+#~ msgid "Message"
+#~ msgstr "訊息"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "訊息"
+
+#~ msgid "Method"
+#~ msgstr "方法"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "預設"
+
+#~ msgid "Microfiche"
+#~ msgstr "單片縮影膠片"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "應稅"
+
+#~ msgid "Model"
+#~ msgstr "型號"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "月"
+
 #~ msgid "Monday"
 #~ msgstr "星期一"
+
+#~ msgid "Month"
+#~ msgstr "月"
+
+#~ msgid "Month(s)"
+#~ msgstr "月"
 
 #~ msgid "Multibyte Encoding"
 #~ msgstr "多字元編碼"
 
+#~ msgid "N/A"
+#~ msgstr "不適用"
+
+#~ msgid "Name"
+#~ msgstr "名稱"
+
 #~ msgid "Name missing!"
 #~ msgstr "未指明名字！"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "名稱"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "調節報告"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "使用者"
+
+#~ msgid "Next"
+#~ msgstr "下一個"
+
+#~ msgid "Next Date"
+#~ msgstr "下一日"
+
+#~ msgid "Next Number"
+#~ msgstr "下一個號碼"
+
+#~ msgid "No"
+#~ msgstr "否"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "已刪除帳戶！"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "沒有可用的資料庫驅動程式！"
@@ -4556,14 +3162,36 @@ msgstr "已加入交易！"
 #~ msgid "No Employees on file!"
 #~ msgstr "沒有任何僱員的記錄！"
 
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "歷史"
+
 #~ msgid "No Labor codes on file!"
 #~ msgstr "沒有任何直接人工代碼的記錄！"
+
+#, fuzzy
+#~ msgid "No Null employeenumber"
+#~ msgstr "職員編號"
 
 #~ msgid "No email address for"
 #~ msgstr "未指明電子郵件地址"
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "語言"
+
 #~ msgid "No open Jobs!"
 #~ msgstr "沒有已開啟的工作"
+
+#~ msgid "No open Projects!"
+#~ msgstr "沒有已開啟的項目"
+
+#~ msgid "No."
+#~ msgstr "編號"
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "不應課稅"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "不應課稅的採購"
@@ -4571,17 +3199,189 @@ msgstr "已加入交易！"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "不應課稅的銷售"
 
+#~ msgid "Non-tracking Items"
+#~ msgstr "不用追蹤的項目"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "不應課稅"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "備註"
+
+#~ msgid "Notes"
+#~ msgstr "備註"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "沒有任何輸入！"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "沒有選擇任何東西！"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "沒有可刪除的項目！"
+
+#~ msgid "Nothing to print!"
+#~ msgstr "沒有可列印的項目！"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "沒有可轉移的項目！"
+
+#~ msgid "Nov"
+#~ msgstr "十一月"
+
+#~ msgid "November"
+#~ msgstr "十一月"
+
+#~ msgid "Number"
+#~ msgstr "編號"
+
+#~ msgid "Number Format"
+#~ msgstr "數字格式"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "此列中缺少數值"
+
+#~ msgid "OH"
+#~ msgstr "已有存量"
+
+#~ msgid "Obsolete"
+#~ msgstr "停用"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "停用"
+
+#~ msgid "Oct"
+#~ msgstr "十月"
+
+#~ msgid "October"
+#~ msgstr "十月"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "密碼"
+
+#~ msgid "On Hand"
+#~ msgstr "已有存量"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "已有存量"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "新增使用者"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "職員"
+
+#~ msgid "Open"
+#~ msgstr "開啟"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "開啟"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "減除額"
 
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle資料庫管理"
 
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "訂單"
+
+#~ msgid "Order Date"
+#~ msgstr "下單日期"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "未指明下單日期！"
+
+#~ msgid "Order Number"
+#~ msgstr "訂單編號"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "未指明訂單編號！"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "訂單編號"
+
+#~ msgid "Order deleted!"
+#~ msgstr "已刪除訂單！"
+
+#~ msgid "Order generation failed!"
+#~ msgstr "生成訂單失敗！"
+
 #~ msgid "Order saved!"
 #~ msgstr "已儲存訂單！"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "訂單"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "訂單"
+
+#~ msgid "Orders generated!"
+#~ msgstr "已生成訂單！"
+
+#~ msgid "Orphaned"
+#~ msgstr "無主"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "減除額"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "貸方"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "借方"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "不協調交易！"
+
 #~ msgid "Out of balance!"
 #~ msgstr "不平衡！"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "重覆出現的交易"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "預繳"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "已加入付款！"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "銷售點(POS)"
+
+#~ msgid "PO Number"
+#~ msgstr "採購單編號"
+
+#~ msgid "POS Invoice"
+#~ msgstr "POS發票"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "未指明出貨單日期！"
@@ -4589,8 +3389,77 @@ msgstr "已加入交易！"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "未指明出貨單編號！"
 
+#~ msgid "Packing Lists"
+#~ msgstr "出貨單"
+
+#~ msgid "Paid"
+#~ msgstr "已付"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "現有"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "零件組"
+
+#~ msgid "Part Number"
+#~ msgstr "零件編號"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "零件"
+
+#~ msgid "Partnumber"
+#~ msgstr "零件編號"
+
 #~ msgid "Parts"
 #~ msgstr "零件"
+
+#~ msgid "Password"
+#~ msgstr "密碼"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "密碼已改！"
+
+#~ msgid "Password does not match!"
+#~ msgstr "密碼不符！"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "密碼已改！"
+
+#, fuzzy
+#~ msgid "Passwords must match."
+#~ msgstr "密碼不符！"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "日期格式"
+
+#~ msgid "Payables"
+#~ msgstr "應付科目"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "未指明付款日期！"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "付款"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "付款"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "付款"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "付款"
 
 #~ msgid "Payments posted!"
 #~ msgstr "已加入付款！"
@@ -4598,11 +3467,28 @@ msgstr "已加入交易！"
 #~ msgid "Payroll Deduction"
 #~ msgstr "薪金減除額"
 
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "已加入付款！"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "尚餘"
+
+#~ msgid "Period"
+#~ msgstr "期間"
+
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg資料庫管理"
 
 #~ msgid "PgPP Database Administration"
 #~ msgstr "PgPP資料庫管理"
+
+#~ msgid "Phone"
+#~ msgstr "電話號碼"
+
+#~ msgid "Pick Lists"
+#~ msgstr "揀貨清單"
 
 #~ msgid "Port"
 #~ msgstr "埠號"
@@ -4613,14 +3499,116 @@ msgstr "已加入交易！"
 #~ msgid "Pos"
 #~ msgstr "序號"
 
+#~ msgid "Post"
+#~ msgstr "加入"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "當新的加入"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "年結"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "當新的加入"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "當新的加入"
+
+#~ msgid "Post as new"
+#~ msgstr "當新的加入"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "當新的加入"
+
+#~ msgid "Posted!"
+#~ msgstr "已加入！"
+
 #~ msgid "Posting"
 #~ msgstr "正加入"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "當新的加入"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "總帳交易"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "銷售發票 "
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "應付交易"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "供應商發票 "
 
 #~ msgid "Posting failed!"
 #~ msgstr "加入失敗！"
 
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "個人設定已儲存！"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "設定使用者"
+
+#~ msgid "Price"
+#~ msgstr "價格"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "價格組別"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "已更新"
+
+#~ msgid "Pricegroup"
+#~ msgstr "價格組別"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "已刪除價格組別！"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "未指明價格組別！"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "已儲存價格組別！"
+
+#~ msgid "Pricegroups"
+#~ msgstr "所有價格組別"
+
+#~ msgid "Pricelist"
+#~ msgstr "價格清單"
+
+#~ msgid "Print"
+#~ msgstr "列印"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "列印"
+
 #~ msgid "Print and Post as new"
 #~ msgstr "列印並加入作為新的"
+
+#~ msgid "Print and Save"
+#~ msgstr "列印並儲存"
+
+#~ msgid "Print and Save as new"
+#~ msgstr "列印並儲存作為新的"
 
 #~ msgid "Print and post as new"
 #~ msgstr "列印並加入作為新的"
@@ -4628,11 +3616,47 @@ msgstr "已加入交易！"
 #~ msgid "Print and save as new"
 #~ msgstr "列印並儲存作為新的"
 
+#~ msgid "Printed"
+#~ msgstr "已列印"
+
+#~ msgid "Printer"
+#~ msgstr "印表機"
+
+#~ msgid "Printing"
+#~ msgstr "正列印"
+
 #~ msgid "Printing ... "
 #~ msgstr "正列印‧‧‧"
 
+#~ msgid "Process Transactions"
+#~ msgstr "處理所有交易"
+
+#~ msgid "Profit Center"
+#~ msgstr "利潤中心"
+
+#, fuzzy
+#~ msgid "Profit and Loss"
+#~ msgstr "列印並加入"
+
+#~ msgid "Project"
+#~ msgstr "項目"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "項目描述的翻譯"
+
+#~ msgid "Project Number"
+#~ msgstr "項目號碼"
+
 #~ msgid "Project Number missing!"
 #~ msgstr "未指明項目號碼！"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "項目號碼"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "項目號碼"
 
 #~ msgid "Project Transactions"
 #~ msgstr "項目交易"
@@ -4640,8 +3664,15 @@ msgstr "已加入交易！"
 #~ msgid "Project deleted!"
 #~ msgstr "已刪除項目！"
 
+#~ msgid "Project not on file!"
+#~ msgstr "沒有此項目的記錄！"
+
 #~ msgid "Project saved!"
 #~ msgstr "已儲存項目！"
+
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "項目號碼"
 
 #~ msgid "Project/Job Name"
 #~ msgstr "項目/工作名稱"
@@ -4649,50 +3680,467 @@ msgstr "已加入交易！"
 #~ msgid "Project/Job Number"
 #~ msgstr "項目/工作號碼"
 
+#~ msgid "Projects"
+#~ msgstr "項目"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "採購單"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "採購單"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "客戶歷史"
+
 #~ msgid "Purchase Order Number"
 #~ msgstr "採購單編號"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "採購單"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "採購單"
+
+#~ msgid "Qty"
+#~ msgstr "數量"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "數量超過可庫存的數量！"
+
+#~ msgid "Quarter"
+#~ msgstr "季"
 
 #~ msgid "Quotation "
 #~ msgstr "報價單 "
 
+#~ msgid "Quotation Date"
+#~ msgstr "報價單日期"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "未指明報價單日期！"
+
+#~ msgid "Quotation Number"
+#~ msgstr "報價單號碼"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "未指明報價單號碼！"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "報價單號碼"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "已刪除報價單！"
+
 #~ msgid "RFQ "
 #~ msgstr "報價請求(RFQ)  "
+
+#~ msgid "RFQ Number"
+#~ msgstr "報價請求號碼"
+
+#~ msgid "ROP"
+#~ msgstr "再訂點"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "稅率"
 
 #~ msgid "Rate missing!"
 #~ msgstr "未指明稅率！"
 
+#~ msgid "Recd"
+#~ msgstr "已收到"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "收據"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "已加入收據！"
+
+#~ msgid "Receivables"
+#~ msgstr "應收帳戶"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "收到貨物"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "記錄於"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "調節"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "調節報告"
+
+#~ msgid "Record in"
+#~ msgstr "記錄於"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "報表來源"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "重覆出現的交易"
+
+#~ msgid "Reference"
+#~ msgstr "參考資料"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "項目"
+
+#~ msgid "Remaining"
+#~ msgstr "尚餘"
+
+#~ msgid "Remove"
+#~ msgstr "移除"
 
 #~ msgid "Remove Audit trails up to"
 #~ msgstr "移除審核線索直至"
 
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "移除列印暫存檔案"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "正從隊列中移除有記號的會計項目"
+
+#~ msgid "Repeat"
+#~ msgstr "重覆"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "報表來源"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "報表來源"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "報表"
+
+#~ msgid "Report for"
+#~ msgstr "報表來源"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "報表"
+
+#~ msgid "Req"
+#~ msgstr "需要"
+
 #~ msgid "Request for Quotations"
+#~ msgstr "要求報價單"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "收據"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "要求交付日期"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "要求交付日期"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "要求交付日期"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "密碼"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "保留盈餘"
+
+#, fuzzy
+#~ msgid "Reversal Information"
 #~ msgstr "要求報價單"
 
 #~ msgid "Role"
 #~ msgstr "任務"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "帳戶"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "備份"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "報表"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "已刪除標準工業分類代碼！"
+
+#~ msgid "SIC saved!"
+#~ msgstr "已儲存標準工業分類代碼！"
+
+#~ msgid "SKU"
+#~ msgstr "庫存單位"
+
 #~ msgid "Sales Invoice."
 #~ msgstr "銷售發票。"
+
+#~ msgid "Sales Invoice/AR Transaction Number"
+#~ msgstr "銷售發票/應收帳交易編號"
+
+#~ msgid "Sales Order Number"
+#~ msgstr "銷貨單編號"
+
+#~ msgid "Sales Quotation Number"
+#~ msgstr "銷售報價單編號"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "公司名稱"
+
+#~ msgid "Salesperson"
+#~ msgstr "銷售人員"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "報價單"
+
+#, fuzzy
+#~ msgid "Sat"
+#~ msgstr "州"
 
 #~ msgid "Saturday"
 #~ msgstr "星期六"
 
+#~ msgid "Save"
+#~ msgstr "儲存"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "當新的儲存"
+
+#, fuzzy
+#~ msgid "Save Batch"
+#~ msgstr "儲存時間表"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "當新的儲存"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "連絡人"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "報價單"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "當新的儲存"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "報價單"
+
 #~ msgid "Save Pricelist"
 #~ msgstr "儲存價格清單"
+
+#~ msgid "Save Schedule"
+#~ msgstr "儲存時間表"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTex 模版"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "當新的儲存"
+
+#~ msgid "Save as new"
+#~ msgstr "當新的儲存"
 
 #~ msgid "Save to File"
 #~ msgstr "儲存至檔案"
 
+#, fuzzy
+#~ msgid "Saving %1 [_2]"
+#~ msgstr "正在儲存"
+
+#~ msgid "Schedule"
+#~ msgstr "時間表"
+
+#~ msgid "Scheduled"
+#~ msgstr "編排了時間"
+
+#~ msgid "Screen"
+#~ msgstr "螢幕"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "POS發票"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "發票"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "檢查存貨清單"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "採購單"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "報價單"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "調節報告"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "要求報價單"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "銷貨單"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "處理所有交易"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "搜尋"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "全選"
+
+#~ msgid "Select Customer"
+#~ msgstr "選擇客戶"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "設定模版"
+
+#~ msgid "Select Vendor"
+#~ msgstr "選擇供應商"
+
+#~ msgid "Select a Printer!"
+#~ msgstr "選擇印表機！"
+
 #~ msgid "Select a printer!"
 #~ msgstr "選擇印表機！"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "全選"
 
 #~ msgid "Select from one of the items below"
 #~ msgstr "於下列項目中選擇一項"
 
+#~ msgid "Select from one of the names below"
+#~ msgstr "於下列姓名中選擇一個"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "於下列項目中選擇一個"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "銷售發票"
+
+#~ msgid "Select items"
+#~ msgstr "選擇項目"
+
+#~ msgid "Select payment"
+#~ msgstr "選擇付款"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "選擇postscript或PDF！"
+
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "選擇文字、postscript或PDF！"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "選擇"
+
+#~ msgid "Sell"
+#~ msgstr "售賣"
+
+#~ msgid "Sell Price"
+#~ msgstr "售價"
+
 #~ msgid "Send by E-Mail"
 #~ msgstr "以電子郵件寄送"
+
+#~ msgid "Sending"
+#~ msgstr "正在發送"
+
+#~ msgid "Sep"
+#~ msgstr "九月"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "部門"
+
+#~ msgid "September"
+#~ msgstr "九月"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "個人設定"
+
+#~ msgid "Serial No."
+#~ msgstr "序號"
+
+#~ msgid "Serial Number"
+#~ msgstr "序號"
+
+#~ msgid "Service"
+#~ msgstr "服務"
+
+#~ msgid "Service Code"
+#~ msgstr "服務編號"
 
 #~ msgid "Service/Labor Code"
 #~ msgstr "服務/直接人工編號"
@@ -4700,14 +4148,86 @@ msgstr "已加入交易！"
 #~ msgid "Services"
 #~ msgstr "服務"
 
+#~ msgid "Session Timeout"
+#~ msgstr "使用期(Session)長短"
+
 #~ msgid "Session expired!"
 #~ msgstr "使用期(Session)已過！"
+
+#~ msgid "Ship Merchandise"
+#~ msgstr "付運貨物"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "付運公司"
+
+#~ msgid "Ship to"
+#~ msgstr "付運至"
+
+#~ msgid "Ship via"
+#~ msgstr "付運公司"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "付運公司"
 
 #~ msgid "Shipping Address"
 #~ msgstr "付運地址"
 
+#~ msgid "Shipping Date"
+#~ msgstr "付運日期"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "未指明付運日期！"
+
+#~ msgid "Shipping Point"
+#~ msgstr "付運地點"
+
+#~ msgid "Short"
+#~ msgstr "短"
+
 #~ msgid "Signature"
 #~ msgstr "簽名"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "已清除"
+
+#~ msgid "Source"
+#~ msgstr "來源"
+
+#~ msgid "Spoolfile"
+#~ msgstr "列印暫存(spool)檔案"
+
+#~ msgid "Standard"
+#~ msgstr "標準"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "標準工業編碼"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "會計帳餘額"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "開始日期"
+
+#~ msgid "Startdate"
+#~ msgstr "開始日期"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "開始日期"
+
+#~ msgid "State"
+#~ msgstr "州"
+
+#~ msgid "State/Province"
+#~ msgstr "省"
+
+#~ msgid "Statement Balance"
+#~ msgstr "會計帳餘額"
 
 #~ msgid "Statement sent to"
 #~ msgstr "會計帳已送至"
@@ -4715,11 +4235,47 @@ msgstr "已加入交易！"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "會計帳已送至印表機！"
 
+#, fuzzy
+#~ msgid "Status: Complete"
+#~ msgstr "完成了"
+
+#~ msgid "Stock"
+#~ msgstr "庫存"
+
 #~ msgid "Stocking Date"
 #~ msgstr "入貨日期"
 
+#~ msgid "Stylesheet"
+#~ msgstr "樣式表"
+
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "轉包合同GIFI"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "標題"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "標題"
+
+#~ msgid "Subtotal"
+#~ msgstr "小計"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "小計"
+
+#~ msgid "Summary"
+#~ msgstr "摘要"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "此為總結科目嗎?"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "六月"
 
 #~ msgid "Sunday"
 #~ msgstr "星期日"
@@ -4727,14 +4283,87 @@ msgstr "已加入交易！"
 #~ msgid "Supervisor"
 #~ msgstr "主管"
 
+#~ msgid "System Defaults"
+#~ msgstr "系統預設值"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "稅金"
+
+#~ msgid "Tax"
+#~ msgstr "稅金"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "稅金科目"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "直接人工代碼"
+
+#, fuzzy
+#~ msgid "Tax Form Name"
+#~ msgstr "稅號"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "稅號/社會保障編號"
+
+#~ msgid "Tax Included"
+#~ msgstr "已含稅金"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "已含稅金"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "稅號/社會保障編號"
+
 #~ msgid "Tax collected"
 #~ msgstr "已收稅金"
 
 #~ msgid "Tax paid"
 #~ msgstr "已付稅金"
 
+#~ msgid "Taxable"
+#~ msgstr "應稅"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "已儲存模版！"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "已儲存模版！"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "模版"
+
+#~ msgid "Template saved!"
+#~ msgstr "已儲存模版！"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "新增模版"
+
+#~ msgid "Terms"
+#~ msgstr "票期淨計"
+
 #~ msgid "Text"
 #~ msgstr "文字"
+
+#~ msgid "Text Templates"
+#~ msgstr "文字模版"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "您是否確定要刪除發票編號"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "下列資料集並未使用，可以刪除"
@@ -4742,16 +4371,74 @@ msgstr "已加入交易！"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "下列資料集需要更新"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "試算表"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "貸方"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "借方"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "編輯帳戶"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr "這是對既存資料來源的初步檢查。在此階段，不會刪除或新增任何資料！"
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "從"
+
 #~ msgid "Thursday"
 #~ msgstr "星期四"
 
+#~ msgid "Till"
+#~ msgstr "直到"
+
+#, fuzzy
+#~ msgid "Time Frame"
+#~ msgstr "工時卡"
+
+#~ msgid "Time In"
+#~ msgstr "上班時間"
+
+#~ msgid "Time Out"
+#~ msgstr "下班時間"
+
+#, fuzzy
+#~ msgid "Time and Material Cards"
+#~ msgstr "工時卡"
+
+#, fuzzy
+#~ msgid "Timecard Criteria"
+#~ msgstr "工時卡已被刪除！"
+
 #~ msgid "Timecard saved!"
 #~ msgstr "工時卡已被儲存！"
+
+#~ msgid "Times"
+#~ msgstr "次"
+
+#~ msgid "To"
+#~ msgstr "至"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "金額"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "日期"
+
+#~ msgid "To Warehouse"
+#~ msgstr "到倉庫"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -4761,8 +4448,42 @@ msgstr "已加入交易！"
 #~ "若要新增群組內的使用者，請編輯名稱，更改登入名，然後儲存。這樣一來, 新使用"
 #~ "者會保留相同的變數，並以新的登入名存入。"
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "至"
+
+#~ msgid "Total"
+#~ msgstr "總計"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "總計"
+
+#~ msgid "Tracking Items"
+#~ msgstr "需要追蹤的項目"
+
+#~ msgid "Trade Discount"
+#~ msgstr "貿易折扣"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "交易日期"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "未指明交易日期！"
+
+#~ msgid "Transaction Dates"
+#~ msgstr "交易日期"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "交易"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "已刪除交易！"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "已加入交易！"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "強制回復所有日期的交易"
@@ -4770,8 +4491,56 @@ msgstr "已加入交易！"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "強制回復交易直到"
 
+#~ msgid "Transactions"
+#~ msgstr "所有交易"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "轉移存貨"
+
+#~ msgid "Transfer from"
+#~ msgstr "由這裡取貨"
+
+#~ msgid "Transfer to"
+#~ msgstr "存貨至"
+
+#~ msgid "Translation"
+#~ msgstr "翻譯"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "已刪除翻譯！"
+
 #~ msgid "Translation not on file!"
 #~ msgstr "沒有此翻譯的記錄！"
+
+#~ msgid "Translations saved!"
+#~ msgstr "已儲存翻譯！"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "試算表"
+
+#, fuzzy
+#~ msgid "Tue"
+#~ msgstr "星期二"
+
+#, fuzzy
+#~ msgid "Unable to save %1 object"
+#~ msgstr "儲存訂單時出錯！"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "發票編號"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "客戶編號"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "供應商號碼"
+
+#~ msgid "Unit"
+#~ msgstr "單位"
 
 #~ msgid "Unit of measure"
 #~ msgstr "度量單位"
@@ -4779,8 +4548,22 @@ msgstr "已加入交易！"
 #~ msgid "Unlock System"
 #~ msgstr "系統解封"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "供應商號碼"
+
+#~ msgid "Update"
+#~ msgstr "更新"
+
 #~ msgid "Update Dataset"
 #~ msgstr "更新資料集"
+
+#~ msgid "Updated"
+#~ msgstr "已更新"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "儲存"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "正升級至新版"
@@ -4788,38 +4571,157 @@ msgstr "已加入交易！"
 #~ msgid "Use Templates"
 #~ msgstr "使用模版"
 
+#~ msgid "User"
+#~ msgstr "使用者"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "已儲存使用者！"
+
 #~ msgid "User deleted!"
 #~ msgstr "已刪除使用者！"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "使用者"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "使用者"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "使用者"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "日期格式"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "有效至"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "新增帳戶"
 
 #~ msgid "Vendor Invoice."
 #~ msgstr "供應商發票。"
 
+#~ msgid "Vendor Invoice/AP Transaction Number"
+#~ msgstr "供應商發票/應付帳交易編號"
+
 #~ msgid "Vendor Invoices"
 #~ msgstr "供應商發票"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "供應商號碼"
+
+#~ msgid "Vendor Number"
+#~ msgstr "供應商號碼"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "供應商號碼"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "總帳索引編號"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "供應商號碼"
 
 #~ msgid "Vendor deleted!"
 #~ msgstr "已刪除供應商！"
 
+#~ msgid "Vendor missing!"
+#~ msgstr "未指明供應商！"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "沒有此供應商的記錄！"
+
 #~ msgid "Vendor saved!"
 #~ msgstr "已儲存供應商！"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "供應商"
 
 #~ msgid "Vendors"
 #~ msgstr "供應商"
 
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "版本"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "減除額"
+
+#~ msgid "Warehouse"
+#~ msgstr "倉庫"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "已刪除倉庫！"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "已儲存倉庫！"
+
+#~ msgid "Warning!"
+#~ msgstr "警告！"
+
 #~ msgid "Wednesday"
 #~ msgstr "星期三"
+
+#~ msgid "Week"
+#~ msgstr "星期"
+
+#~ msgid "Week(s)"
+#~ msgstr "星期"
 
 #~ msgid "Weeks"
 #~ msgstr "星期"
 
+#~ msgid "Weight"
+#~ msgstr "重量"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "此項目屬於甚麼類別？"
+
+#~ msgid "Work Orders"
+#~ msgstr "工作單"
+
 #~ msgid "Work Phone"
 #~ msgstr "工作電話"
+
+#~ msgid "Year"
+#~ msgstr "年"
+
+#~ msgid "Year(s)"
+#~ msgstr "年"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "已加入年結！"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "未指明年結日期！"
 
 #~ msgid "Yearend posting failed!"
 #~ msgstr "年結加入失敗！"
+
+#~ msgid "Yes"
+#~ msgstr "是"
+
+#, fuzzy
+#~ msgid "You are logged out!"
+#~ msgstr "你已登出"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "您正在加入一個現存的交易！"
@@ -4851,6 +4753,72 @@ msgstr "已加入交易！"
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr "您必需鍵入主機及埠號，以進行本機或遠端連線！"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "郵政編碼"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "郵政編碼"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "業務"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "語言"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "倉庫"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "帳戶不能被設置為其他類型帳戶"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "不能辨認語言！"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "三月"
+
+#~ msgid "as at"
+#~ msgstr "截至"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "餘額"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "檢查"
+
+#~ msgid "days"
+#~ msgstr "日"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "借方"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "刪除"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "存款"
+
+#~ msgid "done"
+#~ msgstr "完成"
+
+#~ msgid "ea"
+#~ msgstr "個"
+
+#~ msgid "failed"
+#~ msgstr "失敗"
+
 #~ msgid "for"
 #~ msgstr "為了"
 
@@ -4860,17 +4828,50 @@ msgstr "已加入交易！"
 #~ msgid "is already a member!"
 #~ msgstr "已經是成員了！"
 
+#~ msgid "localhost"
+#~ msgstr "本地寄主"
+
 #~ msgid "locked!"
 #~ msgstr "已鎖上！"
 
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "付款"
+
 #~ msgid "posted!"
 #~ msgstr "已加入！"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "收據"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "銷售發票"
+
+#~ msgid "sent"
+#~ msgstr "已送出"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "會計帳餘額"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "小計"
 
 #~ msgid "successfully created!"
 #~ msgstr "成功建立！"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "成功刪除！"
+
+#~ msgid "unexpected error!"
+#~ msgstr "沒有預期的錯誤！"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "供應商發票"
 
 #~ msgid "website"
 #~ msgstr "網站"

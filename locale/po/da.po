@@ -36,88 +36,409 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Ny forretning"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Importer tekst"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Nyt lager"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Version"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Kontanter"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Kreditorer"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Kreditor opfølgning"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Leverandørfaktura"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Slet planlægning"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Debitorer"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Debitor opfølgning"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Debitorpostering"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Slet planlægning"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Ny konto"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Nyt produkt"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Nyt produkt"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Ny forretning"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Ny forretning"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Nyt produkt"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Ny medarbejder"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Ny GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Ny varegruppe"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Nyt sprog"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Ny tidsregistrering"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Ny vare"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Ny prisgruppe"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Ny bruger"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "Ny SIC"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Ny serviceydelse"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Ny vare"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Ny timeseddel"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Ny postering"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Nyt lager"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Aktiv"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Produkter"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Aktiv"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC/SWIFT"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Status"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Næste dato"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "Milliard"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "Milliard"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "Milliard"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "Milliard"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Sendings-list"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Ny forretning"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Afsendelse"
-
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Debitorpostering"
-
-#: sql/Pg-database.sql:2778
+#: sql/Pg-database.sql:2911
 #, fuzzy
-msgid "Import AR Batch"
-msgstr "Importer tekst"
+msgid "Budgets"
+msgstr "Ny forretning"
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "Vis GIFI"
+#: sql/Pg-database.sql:809
+msgid "CC"
+msgstr ""
 
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Kontanter"
+
+#: sql/Pg-database.sql:797
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Vis afdelinger"
+msgid "Cell Phone"
+msgstr "Telefon privat"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Afsend"
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Kontoplan"
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Check"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+#, fuzzy
+msgid "Cold Lead"
+msgstr "Lev.tid"
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2900
+msgid "Credit Invoice"
+msgstr "Kreditor faktura"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Kreditor faktura"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Kunde"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "Kundehistorik"
+
+#: sql/Pg-database.sql:2896
+msgid "Debit Invoice"
+msgstr "Debitor faktura"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Debitor faktura"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "Standardopsætning"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Beskrivelse"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Beskrivelse"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "mar"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Bogført!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "E-post"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Medarbejder"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Medarbejdere"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Overfør lagerbeholdning"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Vis forretninger"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Redigér konto"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Fax"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Nyt produkt"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Hovedbog"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr "Generer"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "Generer"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Varer og serviceydelser"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
 msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "HR"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML-skabeloner"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Telefon privat"
+
+#: sql/Pg-database.sql:548
+#, fuzzy
+msgid "Hot Lead"
+msgstr "Lev.tid"
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -125,329 +446,214 @@ msgstr ""
 msgid "Import"
 msgstr "Importer tekst"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
 #, fuzzy
-msgid "Assets"
-msgstr "Aktiv"
+msgid "Import AP Batch"
+msgstr "Importer tekst"
+
+#: sql/Pg-database.sql:2778
+#, fuzzy
+msgid "Import AR Batch"
+msgstr "Importer tekst"
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
+#, fuzzy
+msgid "Import Batch"
+msgstr "Importer tekst"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Importer tekst"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Betaling"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Aktiv"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "LaTeX-skabeloner"
+msgid "Import GIFI"
+msgstr "Importer tekst"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Bogført!"
+msgid "Import Inventory"
+msgstr "Lagerbeholdning"
 
-#: sql/Pg-database.sql:2788
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Driftsregnskab"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Lagerbeholdning"
+
+#: sql/Pg-database.sql:2777
+msgid "Inventory Activity"
+msgstr "Ændring i lagerbeholdning"
+
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Top-level"
-msgstr "Topniveau"
+msgid "Inventory and COGS"
+msgstr "Lagerbeholdning gemt!"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Vis forretninger"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Kontakt"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Kvitteringer"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC/SWIFT"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "Milliard"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Ny serviceydelse"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Nyt produkt"
-
-#: sql/Pg-database.sql:3721
-#, fuzzy
-msgid "time"
-msgstr "gang(e)"
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Slet planlægning"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Kvitteringer"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Arbejdsseddel"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Kreditor faktura"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Ny forretning"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Rapporter"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Varer og serviceydelser"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-msgid "Credit Invoice"
-msgstr "Kreditor faktura"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Ny forretning"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "Leverandørhistorik"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Salg"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Præferencer"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "Tilbudsønske"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Ny tidsregistrering"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Rapporter"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Vis sprog"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Afstemning"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Salgsordrer"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Indkøbsordrer"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Følgeseddel"
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Salg"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr "Moms/afgifter"
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Nyt sprog"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "Milliard"
-
-#: sql/Pg-database.sql:2934
-#, fuzzy
-msgid "Timecards"
-msgstr "Timesedler"
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Faktura"
 
 #: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
 #, fuzzy
 msgid "Invoice Vouchers"
 msgstr "Fakturanummer"
 
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Ny GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "Ny SIC"
-
-#: sql/Pg-database.sql:808
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
 #, fuzzy
-msgid "Email"
-msgstr "E-post"
+msgid "Journal Entry"
+msgstr "Land"
 
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "System"
-
-#: sql/Pg-database.sql:2865
+#: sql/Pg-database.sql:2869
 #, fuzzy
-msgid "Reverse Payment"
-msgstr "Forudbetaling"
+msgid "LaTeX Templates"
+msgstr "LaTeX-skabeloner"
 
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Betalinger"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "Milliard"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "mar"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML-skabeloner"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "mar"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Leverandørfaktura"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Kunde"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Årsslutning"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Overførsel"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-#, fuzzy
-msgid "in years"
-msgstr "År"
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Sprog"
 
 #: sql/Pg-database.sql:546
 msgid "Lead"
 msgstr "Lev.tid"
 
-#: sql/Pg-database.sql:2777
-msgid "Inventory Activity"
-msgstr "Ændring i lagerbeholdning"
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Vis forretninger"
+
+#: sql/Pg-database.sql:2883
 #, fuzzy
-msgid "Asset Classes"
+msgid "List Classes"
 msgstr "Produkter"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Ny bruger"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "Vis GIFI"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Vis sprog"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "Vis SIC"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Debitor faktura"
+msgid "List Tax Forms"
+msgstr "Vis afdelinger"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Vis lagre"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Log af"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "CPR"
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Importer tekst"
+msgid "Mailing"
+msgstr "Milliard"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Forudbetaling"
+msgid "Mr."
+msgstr "mar"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "mar"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr "Nyt vindue"
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Ordreindgang"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Udestående"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Følgeseddel"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Prisgruppe"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Betaling"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Betalinger"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Pakkeliste"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Præferencer"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Firmanavn"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Søg"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Indkøbsordre"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Indkøbsordrer"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -455,139 +661,35 @@ msgstr "Forudbetaling"
 msgid "Quotation"
 msgstr "Tilbud"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Tilbud"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "Tilbudsønske"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "Tilbudsønsker"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Kvittering"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Kvitteringer"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Modtagelse"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Hovedbog"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Opgørelse"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Søg"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Nyt produkt"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Sprog"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Leverandørfaktura"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Importer tekst"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Debitorer"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Ny timeseddel"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "mar"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Status"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Telefon privat"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Oversættelser"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Fax"
-
-#: sql/Pg-database.sql:549
-#, fuzzy
-msgid "Cold Lead"
-msgstr "Lev.tid"
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Datoformat"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Telefon privat"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Beskrivelse"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Kontoplan"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Kreditor opfølgning"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Ny vare"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Log af"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Redigér konto"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Søg"
-
-#: sql/Pg-database.sql:3757
-#, fuzzy
-msgid "in months"
-msgstr "Måneder"
+msgid "Reconciliation"
+msgstr "Afstemning"
 
 #: sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -597,309 +699,71 @@ msgstr "Gentagne transaktioner"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Salgsordre"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "HR"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Type forretning"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Lagerbeholdning"
+msgid "Reporting Units"
+msgstr "Rapporter"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Ny prisgruppe"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Lagerbeholdning"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Beskrivelse"
+msgid "Reports"
+msgstr "Rapporter"
 
-#: sql/Pg-database.sql:2779
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Import AP Batch"
-msgstr "Importer tekst"
-
-#: sql/Pg-database.sql:2887
-#, fuzzy
-msgid "Depreciate"
-msgstr "Beskrivelse"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "Tilbudsønsker"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Faktura"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Kvittering"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Fradrag i løn"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "Vis SIC"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "Milliard"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Overfør lagerbeholdning"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Kreditorer"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Salgsfaktura"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Debitor opfølgning"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Ordreindgang"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "Kundehistorik"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Prisgrupper"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-#, fuzzy
-msgid "Timecard"
-msgstr "Timesedler"
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Modtagelse"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Sæt produkt på lager"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Kontakt"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Prisgruppe"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Firmanavn"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Prisgrupper"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Firmanavn"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "Generer"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Tilbud"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Foreløbig status"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Ny varegruppe"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Søg"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Vis lagre"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Forudbetaling"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Medarbejdere"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Nyt produkt"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Slet planlægning"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Slet planlægning"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Ny konto"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Check"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Udestående"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr "Nyt vindue"
-
-#: sql/Pg-database.sql:2896
-msgid "Debit Invoice"
-msgstr "Debitor faktura"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr "Generer"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Kontakt"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Land"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Lagre"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Medarbejder"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Indkøbsordre"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Ny medarbejder"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Leverandør"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "Standardopsætning"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Vis forretninger"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Pakkeliste"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Søg"
+msgid "Reverse AR Overpay"
+msgstr "Kvitteringer"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Forudbetaling"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Forudbetaling"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Søg"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Salg"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Salg"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Salgsfaktura"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Salgsordre"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Salgsordrer"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -907,2511 +771,472 @@ msgstr "Forudbetaling"
 msgid "Search"
 msgstr "Søg"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Produkter"
+msgid "Search Assets"
+msgstr "Søg"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Sendings-list"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Prisgrupper"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Ny postering"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Prisgrupper"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Søg"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Firmanavn"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Præferencer"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "Milliard"
+msgid "Sessions"
+msgstr "Version"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Afsend"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Afsendelse"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Driftsregnskab"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Lagerbeholdning gemt!"
-
-#: sql/Pg-database.sql:548
-#, fuzzy
-msgid "Hot Lead"
-msgstr "Lev.tid"
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Næste dato"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Opgørelse"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Beskrivelse"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Sæt produkt på lager"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "System"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Datoformat"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr "Moms/afgifter"
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+#, fuzzy
+msgid "Timecard"
+msgstr "Timesedler"
+
+#: sql/Pg-database.sql:2934
+#, fuzzy
+msgid "Timecards"
+msgstr "Timesedler"
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Topniveau"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Postering bogført!"
 
-#~ msgid "Dataset"
-#~ msgstr "Datasæt"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Overførsel"
 
-#~ msgid "Transactions"
-#~ msgstr "Posteringer"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Oversættelser"
 
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Betaling bogført!"
-
-#~ msgid "Source"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Bruger gemt!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Kvitteringer"
-
-#~ msgid "Period"
-#~ msgstr "Periode"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Projektposteringer"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "Udestående debitorer"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Ny SIC"
-
-#~ msgid "Paid"
-#~ msgstr "Betalt"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "Fra"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Leverandørnummer"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Fakturadato"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Posteringsdato"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Datoformat"
-
-#~ msgid "Equity"
-#~ msgstr "Egenkapital"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Vælg alt"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Beløb"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Opret datasæt"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Leveringsdato"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Bogfør på"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Beskrivelse"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Or Add To Batch"
-#~ msgstr "Importer tekst"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Årsslutning posteret!"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Kvitteringer"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Kontakt"
-
-#~ msgid "Scheduled"
-#~ msgstr "Planlagt"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adresse"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Navn"
-
-#~ msgid "On Hand"
-#~ msgstr "På lager"
-
-#, fuzzy
-#~ msgid "ODS"
-#~ msgstr "Salgssted"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Gentagne transaktioner"
-
-#~ msgid "Login"
-#~ msgstr "Log på"
-
-#~ msgid "Sell Price"
-#~ msgstr "Salgspris"
-
-#, fuzzy
-#~ msgid "Or"
-#~ msgstr "Over"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Revisionskontrol"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Version"
-
-#, fuzzy
-#~ msgid "Profit and Loss"
-#~ msgstr "Udskriv og send"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Ny leverandør"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Betalinger"
-
-#~ msgid "Expense"
-#~ msgstr "Udgift"
-
-#~ msgid "Currency"
-#~ msgstr "Valuta"
-
-#~ msgid "Liability"
-#~ msgstr "Passiv"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "Påløbet"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Emne: %1"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Åbningsbalance"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Årsslutning"
-
-#~ msgid "Allocated"
-#~ msgstr "Allokeret"
-
-#~ msgid "Startdate"
-#~ msgstr "Startdato"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Varenummer"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Kontotype"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Enhed"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Beskrivelse"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "Standardopsætning"
-
-#~ msgid "Message"
-#~ msgstr "Besked"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Kundenummer"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Ønske om tilbud"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Nyt produkt"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Redigér kunde"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Bilag"
-
-#~ msgid "as at"
-#~ msgstr "som ved"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Redigér bruger"
-
-#~ msgid "Income"
-#~ msgstr "Indtægt"
-
-#~ msgid "Number"
-#~ msgstr "Nummer"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Vis konti"
-
-#~ msgid "Delete"
-#~ msgstr "Fjern"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Adgangskode"
-
-#~ msgid "Markup"
-#~ msgstr "Bruttofortjeneste"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Debet"
-
-#~ msgid "Post"
-#~ msgstr "Bogfør"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Datoformat"
-
-#~ msgid "Make"
-#~ msgstr "Fabrikat"
-
-#~ msgid "Till"
-#~ msgstr "Indtil"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Aktiv"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Sikkerhedskopi"
-
-#~ msgid "Receivables"
-#~ msgstr "Indbetalinger"
-
-#~ msgid "System Defaults"
-#~ msgstr "Standardopsætning for system"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Aktuel"
-
-#~ msgid "Detail"
-#~ msgstr "Detalje"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Fakturanummer"
-
-#~ msgid "Backup"
-#~ msgstr "Sikkerhedskopi"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Gem som ny"
-
-#~ msgid "Database"
-#~ msgstr "Database"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Vis konti"
-
-#~ msgid "Code"
-#~ msgstr "Kode"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Afslut bogføring op til"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Kontakt"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Stylesheet"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Vare"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Redigér medarbejder"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Debet"
-
-#~ msgid "Aged"
-#~ msgstr "Udgået"
-
-#~ msgid "PO Number"
-#~ msgstr "Indkøbsordrenummer"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Bruger"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Indtægt"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "E-post"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Send via"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Ordre"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Kredit"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Opdateret"
-
-#~ msgid "Taxable"
-#~ msgstr "Moms/afgiftspligtig"
-
-#~ msgid "Continue"
-#~ msgstr "Fortsæt"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Afsendelsessted"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Vælg alt"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Startdato"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Tilbud"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Fjern konto"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Bruger"
-
-#~ msgid "COGS"
-#~ msgstr "Kostpris"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "On hand"
-#~ msgstr "På lager"
-
-#~ msgid "Last Cost"
-#~ msgstr "Sidste kostpris"
-
-#, fuzzy
-#~ msgid "Time Frame"
-#~ msgstr "Timeseddel gemt!"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Opgørelse"
-
-#~ msgid "GL"
-#~ msgstr "Hovedbog"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Subtotal"
-
-#~ msgid "Serial Number"
-#~ msgstr "Serienummer"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Dato"
-
-#~ msgid "Account"
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Afstemningsrapport"
-
-#~ msgid "Memo"
-#~ msgstr "Note"
-
-#~ msgid "Active"
-#~ msgstr "Aktiv"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Startdato"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Kontotype"
-
-#, fuzzy
-#~ msgid "Error:"
-#~ msgstr "Fejl"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Fradrag"
-
-#~ msgid "Phone"
-#~ msgstr "Tel."
-
-#~ msgid "Week"
-#~ msgstr "Uge"
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#, fuzzy
-#~ msgid "Adjustment Details"
-#~ msgstr "Juster kassebeholdning"
-
-#~ msgid "Pricelist"
-#~ msgstr "Prisliste"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "Påløbet"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Bogfør som ny"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Debet"
-
-#~ msgid "Tax Included"
-#~ msgstr "Inkl. moms og afgifter"
-
-#, fuzzy
-#~ msgid "Superuser Credentials"
-#~ msgstr "Superuser"
-
-#~ msgid "Drawing"
-#~ msgstr "Træk"
-
-#~ msgid "List Price"
-#~ msgstr "Listepris"
-
-#~ msgid "No"
-#~ msgstr "Nej"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Antal linjer"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Indtægt"
-
-#~ msgid "Qty"
-#~ msgstr "Mængde"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Opdateret"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Forretning"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Aktivér revisionssporing"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Præferencer"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Startdato"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Kontonummer"
-
-#~ msgid "Project Number"
-#~ msgstr "Projektnummer"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Inkludér difference i vekselkurs"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Dato"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Bruger"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Sikkerhedskopi"
-
-#~ msgid "Quarter"
-#~ msgstr "Kvartal"
-
-#, fuzzy
-#~ msgid "LedgerSMB [_1]"
-#~ msgstr "LedgerSMB web-side"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Datoformat"
-
-#, fuzzy
-#~ msgid "Super-user login"
-#~ msgstr "Superuser"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "Postnummer"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Fjern datasæt"
-
-#~ msgid "City"
-#~ msgstr "By"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Dato"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Fradrag"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Redigér bruger"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Foreløbig status"
 
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Adgangskontrol"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Moms/afgiftkonti"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "Postnummer"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Forbind konti"
-
-#~ msgid "All"
-#~ msgstr "Alt"
-
-#~ msgid "From"
-#~ msgstr "Fra"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Rapport for"
-
-#~ msgid "Remaining"
-#~ msgstr "Resterer"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Medarbejdernummer"
-
-#~ msgid "Model"
-#~ msgstr "Model"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Aktiv"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Kopiér til COA"
-
-#~ msgid "Method"
-#~ msgstr "Metode"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Gem som ny"
-
-#~ msgid "Reference"
-#~ msgstr "Reference"
-
-#~ msgid "Contra"
-#~ msgstr "Kontra"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Detalje"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Forfaldent"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Indstillinger gemt!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Afdeling"
-
-#~ msgid "Debit"
-#~ msgstr "Debet"
-
-#~ msgid "List Transactions"
-#~ msgstr "Vis bogføringer"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Forretning"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Kontonummer"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Kreditgrænse"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "Fra"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Kontrollér lagerbeholdning"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Forretning"
-
-#~ msgid "Cost Center"
-#~ msgstr "Kostcenter"
-
-#~ msgid "Bin"
-#~ msgstr "Varelager"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Tilbud"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Bestilt af"
-
-#, fuzzy
-#~ msgid "Timecard Criteria"
-#~ msgstr "Timeseddel"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Prisgruppe"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "E-post opgørelse sendt til %1"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Rapport for"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Forretning"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Balanceopgørelse"
-
-#~ msgid "Report for"
-#~ msgstr "Rapport for"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Fradrag"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Fakturadato"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Moms/afgiftspligtig"
-
-#~ msgid "Ordering"
-#~ msgstr "Ordning"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Ændring i lagerbeholdning"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Inkludér betaling"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Aktiv"
-
-#, fuzzy
-#~ msgid "Prefix"
-#~ msgstr "Check ID"
-
-#~ msgid "Amount"
-#~ msgstr "Beløb"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Fakturadato"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Bogfør som ny"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Udlignet"
-
-#, fuzzy
-#~ msgid "Lead Time"
-#~ msgstr "Leveringstid"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Rapport for"
-
-#~ msgid "Projects"
-#~ msgstr "Projekter"
-
-#~ msgid "Difference"
-#~ msgstr "Difference"
-
-#~ msgid "Update"
-#~ msgstr "Opdatér"
-
-#~ msgid "Due Date"
-#~ msgstr "Forfaldsdato"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Redigér bruger"
-
-#~ msgid "Database Host"
-#~ msgstr "Database-host"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Kundenummer"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Moms/afgiftkonti"
-
-#~ msgid "Warehouse"
-#~ msgstr "Lager"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Bilag"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Udgift/Aktiv"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Medarbejdernummer"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Beskrivelse"
-
-#~ msgid "Password"
-#~ msgstr "Adgangskode"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Projektbeskrivelse"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "Projektnavn"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Gem"
-
-#~ msgid "Edit User"
-#~ msgstr "Redigér bruger"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Type forretning"
 
-#~ msgid "FX"
-#~ msgstr "FX"
-
-#~ msgid "Account Number"
-#~ msgstr "Kontonummer"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Redigér leverandør"
-
-#~ msgid "User"
-#~ msgstr "Bruger"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Fradrag"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "Udestående kreditorer"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Ændring i lagerbeholdning"
-
-#~ msgid "Time Out"
-#~ msgstr "Sluttid"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Datoformat"
-
-#~ msgid "Printer"
-#~ msgstr "Printer"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Opdateret"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Følgesedler"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "til"
-
-#~ msgid "Bcc"
-#~ msgstr "Blind kopi"
-
-#~ msgid "Date Paid"
-#~ msgstr "Betalingsdato"
-
-#~ msgid "Amount Due"
-#~ msgstr "Forfaldent"
-
-#~ msgid "Credit"
-#~ msgstr "Kredit"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Land"
-
-#~ msgid "Short"
-#~ msgstr "Kort"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Bruger"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Leverandørnummer"
-
-#~ msgid "Year"
-#~ msgstr "År"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Salgssted faktura"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Bilag"
-
-#~ msgid "Day"
-#~ msgstr "Dag"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Nyt fradrag"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Gældende indtil"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Fjern datasæt"
-
-#~ msgid "Open"
-#~ msgstr "Åbn"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Kredit"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Forudbetaling"
-
-#~ msgid "Average Cost"
-#~ msgstr "Gennemsnitlig kostpris"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Projektposteringer"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Vis konti"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Bemærkninger"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Vælg"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Beskrivelse"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "På lager"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Vekselkurs"
-
-#~ msgid "Salesperson"
-#~ msgstr "Sælger"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Leverandørnummer"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Inkludér i rullegardin-menuer"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Nyt projekt"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "CVR / CPR"
-
-#~ msgid "Include in Report"
-#~ msgstr "Inkludér i rapport"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Balance"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Gennemtving explicitte rettelser af posteringer for alle datoer"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Balanceopgørelse"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Rapporter"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Bestilt af"
-
-#~ msgid "Tax Rules"
-#~ msgstr "Afgifter"
-
-#~ msgid "Number Format"
-#~ msgstr "Numerisk format"
-
-#~ msgid "Date"
-#~ msgstr "Dato"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Rapporter"
-
-#~ msgid "Line Total"
-#~ msgstr "Antal linjer"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Beskrivelse"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Forretning"
-
-#~ msgid "Address"
-#~ msgstr "Adresse"
-
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Opret datasæt"
+msgid "Use AR Overpayment"
+msgstr "Forudbetaling"
 
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Firmanavn"
+msgid "Use Overpayment"
+msgstr "Forudbetaling"
 
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "Projekt gemt!"
-
-#~ msgid "Warning!"
-#~ msgstr "Advarsel!"
-
-#~ msgid "Chargeable"
-#~ msgstr "Fakturerbar"
-
-#~ msgid "Manager"
-#~ msgstr "Leder"
-
-#~ msgid "Record in"
-#~ msgstr "Bogfør på"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Hovedbog rapporter"
-
-#~ msgid "Image"
-#~ msgstr "Billede"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Leverandørnummer"
-
-#~ msgid "days"
-#~ msgstr "dage"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Rapporter"
-
-#~ msgid "Cumulative Error:"
-#~ msgstr "Opsamlet fejl:"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Vægtenhed"
-
-#~ msgid "Project"
-#~ msgstr "Projekt"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Leverandør"
 
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Sprog"
-
-#~ msgid "Name"
-#~ msgstr "Navn"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Datoformat"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Fradrag"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "Leverandørhistorik"
 
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Redigér konto"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Leverandørfaktura"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Check ID"
+msgid "Vouchers"
+msgstr "Slet planlægning"
 
-#~ msgid "Screen"
-#~ msgstr "Skærm"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Lagre"
 
-#~ msgid "Obsolete"
-#~ msgstr "Forældet"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#~ msgid "Invoice Date"
-#~ msgstr "Fakturadato"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Arbejdsseddel"
 
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Forbind konti"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Postering"
+msgid "Year End"
+msgstr "Årsslutning"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Vis konti"
+msgid "depreciation"
+msgstr "Beskrivelse"
 
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Standardopsætning"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Varenummer"
+msgid "import"
+msgstr "Importer tekst"
 
+#: sql/Pg-database.sql:3757
 #, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Balanceopgørelse"
+msgid "in months"
+msgstr "Måneder"
 
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
 #, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Samlekonto for"
+msgid "in years"
+msgstr "År"
 
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Balance"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Ordre"
+msgid "production"
+msgstr "Fradrag i løn"
 
-#~ msgid "Company Name"
-#~ msgstr "Firmanavn"
-
+#: sql/Pg-database.sql:3721
 #, fuzzy
-#~ msgid "Onhand delta"
-#~ msgstr "På lager"
-
-#~ msgid "To"
-#~ msgstr "til"
+msgid "time"
+msgstr "gang(e)"
 
 #, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Faktura"
+#~ msgid " Date missing!"
+#~ msgstr "Dato mangler!"
 
-#~ msgid "Part Number"
-#~ msgstr "Varenummer"
-
 #, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Uden moms/afgift"
-
-#~ msgid "Employee Number"
-#~ msgstr "Medarbejdernummer"
-
-#~ msgid "Closed"
-#~ msgstr "Afsluttet"
+#~ msgid " missing!"
+#~ msgstr "Kode mangler!"
 
 #, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Bogfør som ny"
+#~ msgid "# Invoices"
+#~ msgstr "Fakturaer"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Redigér medarbejder"
 
-#~ msgid "Total"
-#~ msgstr "I alt"
-
-#~ msgid "Notes"
-#~ msgstr "Bemærkninger"
-
-#, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Kundehistorik"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Vis konti"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Salgsfakturaer"
-
-#~ msgid "Compare to"
-#~ msgstr "Sammenlign med"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Afstemningsrapport"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Dato"
-
-#~ msgid "Current"
-#~ msgstr "Aktuel"
-
-#~ msgid "Country"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Datoformat"
-
-#~ msgid "Overdue"
-#~ msgstr "Overskredet"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Sikkerhedskopi"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Prisgruppe"
-
-#, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Decimalpladser"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Betalinger"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Status: Complete"
-#~ msgstr "Færdig"
-
-#~ msgid "Over"
-#~ msgstr "Over"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Bogføringen er åben for rettelser"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Projektposteringer"
-
-#, fuzzy
-#~ msgid "Onhand amount"
-#~ msgstr "På lager"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Medarbejdere"
-
-#~ msgid "Group"
-#~ msgstr "Gruppe"
-
-#~ msgid "Subtotal"
-#~ msgstr "Subtotal"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Skabeloner for opsætning"
-
-#~ msgid "DOB"
-#~ msgstr "Født"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Gem som ny"
-
-#~ msgid "Unit"
-#~ msgstr "Enhed"
-
-#~ msgid "No."
-#~ msgstr "Nummer"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Tilbud"
-
-#~ msgid "Summary"
-#~ msgstr "Oversigt"
-
-#~ msgid "Print"
-#~ msgstr "Udskriv"
-
-#~ msgid "E-mail"
-#~ msgstr "E-post"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Subtotal"
-
-#~ msgid "Group by"
-#~ msgstr "Gruppér efter"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Forudbetaling"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Tilbud"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Betalinger"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "CVR / CPR"
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Modtagelsesdato"
-
-#~ msgid "Next"
-#~ msgstr "Næste"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "Salgssted faktura"
-
-#~ msgid "Weight"
-#~ msgstr "Vægt"
-
-#~ msgid "Tax"
-#~ msgstr "Moms/afgift"
-
-#~ msgid "Cleared"
-#~ msgstr "Udlignet"
-
-#~ msgid "Order Number"
-#~ msgstr "Ordrenummer"
-
-#~ msgid "Customer Number"
-#~ msgstr "Kundenummer"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Opgave"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Vekselkurs"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Sats"
-
-#~ msgid "Sort by"
-#~ msgstr "Sortér efter"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "Udestående debitorer"
-
-#, fuzzy
-#~ msgid "Time and Material Cards"
-#~ msgstr "Timesedler"
-
-#~ msgid "Edit"
-#~ msgstr "Redigér"
-
-#~ msgid "Copies"
-#~ msgstr "Kopier"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Bilag"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Ny bruger"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Søg"
-
-#~ msgid "Save"
-#~ msgstr "Gem"
-
-#~ msgid "State/Province"
-#~ msgstr "Stat/provins"
-
-#~ msgid "Heading"
-#~ msgstr "Overskrift"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Nye skabeloner"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Ændring i lagerbeholdning"
-
-#~ msgid "Clocked"
-#~ msgstr "Målt"
-
-#~ msgid "Discount"
-#~ msgstr "Rabat"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Bilag"
-
-#~ msgid "Confirm"
-#~ msgstr "Bekræft"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Datoformat"
-
-#~ msgid "Balance"
-#~ msgstr "Balance"
-
-#~ msgid "Ship via"
-#~ msgstr "Send via"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Beskrivelse"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Ikke-fakturerbar"
-
-#~ msgid "Department"
-#~ msgstr "Afdeling"
-
-#~ msgid "Under"
-#~ msgstr "Under"
-
 #, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Bestilt af"
+#~ msgid "%1 Business"
+#~ msgstr "Forretning"
 
-#~ msgid "Tax Account"
-#~ msgstr "Moms/afgiftkonti"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Moms/afgiftspligtig"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Adgangskode"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Rapporter"
-
-#~ msgid "Standard"
-#~ msgstr "Standard"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Redigér opsætning for %1"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Ordredato"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Rapporter"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Projekt"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Forbind konti"
-
-#~ msgid "Profit Center"
-#~ msgstr "Profitcenter"
-
-#~ msgid "ROP"
-#~ msgstr "Genbestil ved"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Kredit"
-
-#~ msgid "Payables"
-#~ msgstr "Udeståender"
-
-#~ msgid "Valid To"
-#~ msgstr "Gældende indtil"
-
-#, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Udlignet"
-
-#, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Balance"
-
-#~ msgid "Time In"
-#~ msgstr "Starttid"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Opgave"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Indtægt"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Betaling"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Afstemningsrapport"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Redigér konto"
-
-#~ msgid "Microfiche"
-#~ msgstr "Mikrofilm"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Leverandørnummer"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Debet"
-
-#~ msgid "Add Customer"
-#~ msgstr "Ny kunde"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Redigér bruger"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Standardopsætning"
-
-#, fuzzy
-#~ msgid "Tax Status"
-#~ msgstr "Afgifter"
-
-#~ msgid "Subject"
-#~ msgstr "Emne"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Ændr adgangskode"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Leder"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Betaling"
-
-#~ msgid "Exch"
-#~ msgstr "Vxl"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Vis afdelinger"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Prisgruppe"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Redigér medarbejder"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Fakturanummer"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Afstemning"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Beløb"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Udført"
-
-#~ msgid "Month"
-#~ msgstr "Måned"
-
-#~ msgid "Item"
-#~ msgstr "Varenummer"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Betalingsdato mangler!"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Balanceopgørelse"
-
-#~ msgid "Accounts"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Forudbetaling"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Ny vekselkurs"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Tilbud"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Årsslutning"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Interne noter"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Realiseret overskud"
-
 #, fuzzy
-#~ msgid "Action Not Defined: "
-#~ msgstr "action= ikke defineret!"
-
-#~ msgid "You are logged out!"
-#~ msgstr "Du er logget ud1"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "action= ikke defineret!"
-
-#~ msgid "GL Reference Number"
-#~ msgstr "Hovedbog referencenummer"
-
-#~ msgid "Sales Invoice/AR Transaction Number"
-#~ msgstr "Salgsfaktura/debitorposteringnummer"
-
-#~ msgid "Sales Order Number"
-#~ msgstr "Salgsordrenummer"
-
-#~ msgid "Vendor Invoice/AP Transaction Number"
-#~ msgstr "Leverandørfaktura/kreditorposteringnummer"
-
-#~ msgid "Sales Quotation Number"
-#~ msgstr "Salgstilbudsnummer"
-
-#~ msgid "RFQ Number"
-#~ msgstr "Nummer for tilbudsønske"
-
-#~ msgid "Job/Project Number"
-#~ msgstr "Projektnummer"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Adgangskode ændret"
-
-#, fuzzy
-#~ msgid "Default Email To"
-#~ msgstr "Standard skabelon"
-
-#, fuzzy
-#~ msgid "Default Email CC"
-#~ msgstr "Standard skabelon"
-
-#, fuzzy
-#~ msgid "Default Email BCC"
-#~ msgstr "Standard skabelon"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Firmanavn"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Firmanavn"
-
-#~ msgid "Save as new"
-#~ msgstr "Gem som ny"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "Kontonummer mangler!"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "Kontotype mangler!"
-
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr "Kan ikke sætte konto for mere end én af AR, AP eller IC"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "konto kan ikke sættes til nogen anden type konto"
-
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan ikke sætte flere muligheder for %1"
-
-#~ msgid "Account saved!"
-#~ msgstr "Konto gemt!"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Kan ikke gemme konto!"
-
-#~ msgid "Account does not exist!"
-#~ msgstr "Konto eksisterer ikke!"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Ny kontantoverførsel"
 
 #, fuzzy
 #~ msgid "%1 GIFI"
 #~ msgstr "GIFI"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Kopiér til COA"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "GIFI mangler!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI gemt!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI slettet!"
-
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Rabat"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Forretning"
-
-#~ msgid "Description missing!"
-#~ msgstr "Beskrivelse mangler!"
-
-#~ msgid "Business saved!"
-#~ msgstr "Forretning gemt!"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Forretning slettet!"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "Standard industrikoder (SIC)"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Ny SIC"
-
-#~ msgid "Code missing!"
-#~ msgstr "Kode mangler!"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC gemt!"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC slettet!"
-
-#~ msgid "Languages"
-#~ msgstr "Sprog"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Ny postering i hovedbog"
 
 #, fuzzy
 #~ msgid "%1 Language"
 #~ msgstr "Sprog"
 
-#~ msgid "Language saved!"
-#~ msgstr "Sprog gemt!"
-
-#~ msgid "Confirm!"
-#~ msgstr "Bekræft!"
+#, fuzzy
+#~ msgid "%1 Number"
+#~ msgstr "Nummer"
 
 #, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Redigér sprog"
-
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "Sletning af et sprog vil også slette skabelonerne for sproget %1"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Sprog slettet!"
-
-#~ msgid "Default Template"
-#~ msgstr "Standard skabelon"
-
-#~ msgid "Edit Template"
-#~ msgstr "Redigér skabelon"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTeX-skabeloner"
-
-#~ msgid "Template saved!"
-#~ msgstr "Skabelon gemt!"
-
-#~ msgid "Taxes saved!"
-#~ msgstr "Moms/afgifter gemt!"
-
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Kan ikke gemme moms/afgifter!"
-
-#~ msgid "Password does not match!"
-#~ msgstr "Adgangskoden er ikke korrekt!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Kan ikke gemme præferencer!"
+#~ msgid "%1 SIC"
+#~ msgstr "Ny SIC"
 
 #, fuzzy
 #~ msgid "%1 Warehouse"
 #~ msgstr "Lager"
 
-#~ msgid "Warehouse saved!"
-#~ msgstr "Lager gemt!"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Lager slettet!"
-
-#~ msgid "localhost"
-#~ msgstr "lokalt"
-
-#~ msgid "About"
-#~ msgstr "Om"
-
-#~ msgid "Ends"
-#~ msgstr "Slutter"
-
-#~ msgid "Every"
-#~ msgstr "Hver"
-
-#~ msgid "Times"
-#~ msgstr "Gange"
-
-#~ msgid "Next Number"
-#~ msgstr "Næste nummer"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
+#~ msgid "%1 is already a member!"
+#~ msgstr "%1 er allerede medlem!"
 
 #, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Posterer salgsfaktura %1"
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Posterer leverandørfaktura %1"
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "Posterer postering %1"
-
-#~ msgid "done"
-#~ msgstr "færdig"
-
-#, fuzzy
-#~ msgid "Saving %1 [_2]"
-#~ msgstr "Gemmer %1 %2"
-
-#~ msgid "failed"
-#~ msgstr "fejlede"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Posterer i hovedbog %1"
-
-#~ msgid "Printing"
-#~ msgstr "Udskriver"
-
-#~ msgid "Invalid redirect"
-#~ msgstr "Ugyldig viderestilling"
-
-#~ msgid "Sending"
-#~ msgstr "Sender"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "E-post-adresse mangler!"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Aktuelle indtægter"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Afdeling"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Projektnummer"
-
-#~ msgid "N/A"
-#~ msgstr "I/T"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Debitor faktura"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Ny leverandørfaktura"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Redigér leverandørfaktura"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "januar"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Opgave"
-
-#~ msgid "Import Text"
-#~ msgstr "Importer tekst"
-
-#, fuzzy
-#~ msgid "Calculate Taxes"
-#~ msgstr "Beregn"
-
-#~ msgid "Post as new"
-#~ msgstr "Bogfør som ny"
-
-#~ msgid "Schedule"
-#~ msgstr "Planlæg"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Bogfør som ny"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Bogfør som ny"
-
-#~ msgid "ea"
-#~ msgstr "stk"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Fakturadato mangler!"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Leverandør mangler!"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Kan ikke bogføre faktura for en afsluttet periode!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Vekselkurs mangler!"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Kan ikke bogføre betaling for en afsluttet periode"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Valutakurs for betaling mangler!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Kan ikke bogføre faktura!"
-
-#~ msgid "Cannot create Part; Inventory account does not exist!"
-#~ msgstr "Kan ikke oprette vare; lagerbeholdningskonto findes ikke!"
-
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Kan ikke oprette vare; indtægtskonto findes ikke!"
-
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Kan ikke oprette vare; kostpriskonto findes ikke!"
-
-#~ msgid "Cannot create Service; Income account does not exist!"
-#~ msgstr "Kan ikke oprette serviceydelse; indtægtskontoen findes ikke!"
-
-#~ msgid "Cannot create Service; Expense account does not exist!"
-#~ msgstr "Kan ikke oprette serviceydelse; udgiftskontoen findes ikke!"
-
-#~ msgid "Cannot create Assembly; Income account does not exist!"
-#~ msgstr "Kan ikke oprette produkt; indtægtskontoen findes ikke!"
-
-#~ msgid "Cannot create Labor; Inventory account does not exist!"
-#~ msgstr "Kan ikke registrere tid; lagerbeholdningskonto findes ikke!"
-
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Kan ikke registrere tid; kostpriskonto findes ikke!"
-
-#~ msgid "Stock"
-#~ msgstr "Lager"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Tidsregistrering"
-
-#~ msgid "Updated"
-#~ msgstr "Opdateret"
-
-#~ msgid "No History!"
-#~ msgstr "Ingen historik!"
-
-#~ msgid "Parts Requirements"
-#~ msgstr "Efterspurgte varer"
-
-#~ msgid "SO"
-#~ msgstr "Salgsordre"
-
-#~ msgid "PO"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Opgave"
-
-#~ msgid "Curr"
-#~ msgstr "Val"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Hovedbog referencenummer"
-
-#~ msgid "Cost"
-#~ msgstr "Udgifter"
-
-#~ msgid "Break"
-#~ msgstr "Bryd"
-
-#~ msgid "Sell"
-#~ msgstr "Sælg"
-
-#~ msgid "List"
-#~ msgstr "Vis"
-
-#~ msgid "BOM"
-#~ msgstr "Stykliste"
-
-#~ msgid "Individual Items"
-#~ msgstr "Enkelte varenumre"
-
-#~ msgid "unexpected error!"
-#~ msgstr "uventet fejl!"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "%1: Kunde ikke i databasen!"
 
 #, fuzzy
 #~ msgid "%1: Vendor not on file!"
 #~ msgstr "%1: Leverandør ikke i databasen!"
 
 #, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "%1: Kunde ikke i databasen!"
+#~ msgid "AP Invoices"
+#~ msgstr "Salgssted faktura"
 
-#~ msgid "Select from one of the names below"
-#~ msgstr "Vælg et af navnene nedenfor"
+#~ msgid "AP Outstanding"
+#~ msgstr "Udestående kreditorer"
 
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "Lagerbeholdning skal være nul for at du kan lade denne vare udgå"
-
-#~ msgid "Item deleted!"
-#~ msgstr "Varenummer slettet!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Kan ikke slette varenummer!"
-
-#~ msgid "Add"
-#~ msgstr "Tilføj"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "Mængde overstiger tilgængeligt antal på lager!"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Produkter sat på lager igen!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Kan ikke sætte produkter på lager igen!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Tilbudsnummer"
+#~ msgid "AP Transactions"
+#~ msgstr "Leverandørfakturaer"
 
 #, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Udskriv"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "Ingenting valgt!"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Er du sikker på at du vil fjerne de markerede poster fra køen?"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Fjerner markerede poster fra kø ..."
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Fjernede køfiler!"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Kan ikke fjerne filer!"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Markerede poster udskrevet!"
+#~ msgid "AP account"
+#~ msgstr "Konto"
 
 #, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Kunde"
+#~ msgid "AR Invoices"
+#~ msgstr "Faktura"
+
+#~ msgid "AR Outstanding"
+#~ msgstr "Udestående debitorer"
+
+#~ msgid "AR Transactions"
+#~ msgstr "Debitorposteringer"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Leverandør"
+#~ msgid "AR account"
+#~ msgstr "Konto"
+
+#~ msgid "AR/AP"
+#~ msgstr "Debitorer/Kreditorer"
+
+#~ msgid "About"
+#~ msgstr "Om"
+
+#~ msgid "Above"
+#~ msgstr "Over"
+
+#, fuzzy
+#~ msgid "Access Denied"
+#~ msgstr "Adgang nægtet!"
+
+#~ msgid "Account"
+#~ msgstr "Konto"
+
+#, fuzzy
+#~ msgid "Account %1 not found"
+#~ msgstr "Konto eksisterer ikke!"
+
+#, fuzzy
+#~ msgid "Account %1 not found."
+#~ msgstr "Konto"
+
+#, fuzzy
+#~ msgid "Account Description"
+#~ msgstr "Projektbeskrivelse"
+
+#, fuzzy
+#~ msgid "Account Label"
+#~ msgstr "Kontonummer"
+
+#, fuzzy
+#~ msgid "Account Name"
+#~ msgstr "Kontonummer"
+
+#, fuzzy
+#~ msgid "Account No."
+#~ msgstr "Konto"
+
+#~ msgid "Account Number"
+#~ msgstr "Kontonummer"
+
+#, fuzzy
+#~ msgid "Account Number End"
+#~ msgstr "Kontonummer"
+
+#, fuzzy
+#~ msgid "Account Number Start"
+#~ msgstr "Kontonummer"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "Kontonummer mangler!"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Kontotype"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "Kontotype mangler!"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "Kontonummer"
+
+#~ msgid "Account does not exist!"
+#~ msgstr "Konto eksisterer ikke!"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "Kontonummer"
+
+#~ msgid "Account saved!"
+#~ msgstr "Konto gemt!"
+
+#, fuzzy
+#~ msgid "Account:"
+#~ msgstr "Konto"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Konto"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Fakturanummer"
+#~ msgid "Accounting"
+#~ msgstr "Bogføring"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Bogførings-menu"
+
+#~ msgid "Accounts"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Ordrenummer"
+#~ msgid "Accounts From"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Tilbudsnummer"
+#~ msgid "Accounts To"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "Fra"
-
-#~ msgid "To %1"
-#~ msgstr "Til %1"
-
-#~ msgid "Spoolfile"
-#~ msgstr "køfil"
-
-#~ msgid "Remove"
-#~ msgstr "Fjern"
+#~ msgid "Accrual"
+#~ msgstr "Påløbet"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Nummer"
-
-#~ msgid "Project not on file!"
-#~ msgstr "Projekt ikke i databasen!"
-
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Vælg et af projekterne nedenfor"
-
-#~ msgid "Next Date"
-#~ msgstr "Næste dato"
-
-#~ msgid "E-mail message"
-#~ msgstr "E-post besked"
-
-#~ msgid "Day(s)"
-#~ msgstr "Dag(e)"
-
-#~ msgid "Week(s)"
-#~ msgstr "Uge(r)"
-
-#~ msgid "Month(s)"
-#~ msgstr "Måned(er)"
-
-#~ msgid "Year(s)"
-#~ msgstr "År"
-
-#~ msgid "Repeat"
-#~ msgstr "Gentag"
-
-#~ msgid "For"
-#~ msgstr "Gentag"
+#~ msgid "Accrual Basis:"
+#~ msgstr "Påløbet"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "Gentagen transaktion for %1"
+#~ msgid "Action Not Defined: "
+#~ msgstr "action= ikke defineret!"
 
-#~ msgid "Save Schedule"
-#~ msgstr "Gem planlægning"
+#~ msgid "Activate Audit trail"
+#~ msgstr "Aktivér revisionssporing"
 
-#~ msgid "Delete Schedule"
-#~ msgstr "Slet planlægning"
-
-#, fuzzy
-#~ msgid "Cc: %1"
-#~ msgstr "Cc: %1"
+#~ msgid "Active"
+#~ msgstr "Aktiv"
 
 #, fuzzy
-#~ msgid "Bcc: %1"
-#~ msgstr "Bcc: %1"
+#~ msgid "Active On"
+#~ msgstr "Aktiv"
+
+#~ msgid "Actual"
+#~ msgstr "Faktisk"
+
+#~ msgid "Add"
+#~ msgstr "Tilføj"
+
+#~ msgid "Add AP Transaction"
+#~ msgstr "Ny kreditorpostering"
+
+#~ msgid "Add AR Transaction"
+#~ msgstr "Ny debitorpostering"
+
+#~ msgid "Add Account"
+#~ msgstr "Ny konto"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Dato: %1"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Kreditor faktura"
+
+#~ msgid "Add Customer"
+#~ msgstr "Ny kunde"
 
 #, fuzzy
-#~ msgid "To: %1"
-#~ msgstr "To: %1"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Debitor faktura"
 
-#~ msgid "Message: "
-#~ msgstr "Besked: "
-
-#~ msgid "sent"
-#~ msgstr "sendt"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Vælg postscript eller PDF"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "Ingenting at udskrive!"
-
-#~ msgid "Select payment"
-#~ msgstr "Vælg betaling"
-
-#~ msgid "Queue"
-#~ msgstr "Kø"
-
-#~ msgid "Printed"
-#~ msgstr "Udskrevet"
-
-#~ msgid "Select a Printer!"
-#~ msgstr "Vælg en printer!"
-
-#~ msgid "Recd"
-#~ msgstr "Modt"
-
-#~ msgid "Price"
-#~ msgstr "Pris"
-
-#~ msgid "Extended"
-#~ msgstr "Udvidet"
-
-#~ msgid "Serial No."
-#~ msgstr "Serienummer"
-
-#~ msgid "SKU"
-#~ msgstr "Varenummer"
-
-#~ msgid "Select items"
-#~ msgstr "Vælg varenumre"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Varenummer er ikke i databasen!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Hvilken type varenummer er dette?"
-
-#~ msgid "Service"
-#~ msgstr "Serviceydelse"
+#~ msgid "Add Department"
+#~ msgstr "Ny afdeling"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Tal mangler i række %1"
+#~ msgid "Add Note"
+#~ msgstr "Nyt projekt"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "Ny salgssted faktura"
+
+#~ msgid "Add Project"
+#~ msgstr "Nyt projekt"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Ny indkøbsordre"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Ny salgsordre"
+#~ msgid "Add Quotation"
+#~ msgstr "Nyt tilbud"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Nyt tilbudsønske"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Nyt tilbud"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Ny salgsfaktura"
 
-#~ msgid "In-line"
-#~ msgstr "Indlejret"
-
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "Vælg txt, postscript eller PDF"
+#~ msgid "Add Sales Order"
+#~ msgstr "Ny salgsordre"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Dato mangler!"
+#~ msgid "Add Unit"
+#~ msgstr "Enhed"
 
-#~ msgid "Ship to"
-#~ msgstr "Send til"
+#~ msgid "Add Vendor"
+#~ msgstr "Ny leverandør"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Ny leverandørfaktura"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3425,142 +1250,20 @@ msgstr "Postering bogført!"
 #~ msgid "Add line3 "
 #~ msgstr "Ny forretning"
 
-#~ msgid "State"
-#~ msgstr "Stat"
+#, fuzzy
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Nyt fradrag"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Kreditor faktura"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Ny vekselkurs"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Ny salgsfaktura"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Handelsrabat"
+#~ msgid "Address"
+#~ msgstr "Adresse"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Kan ikke slette faktura!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "Kunde mangler!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Redigér præferencer for"
-
-#~ msgid "Add Project"
-#~ msgstr "Nyt projekt"
-
-#~ msgid "Orphaned"
-#~ msgstr "Fritstående"
-
-#~ msgid "Groups"
-#~ msgstr "Varegrupper"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Prisgrupper"
-
-#~ msgid "Inactive"
-#~ msgstr "Inaktiv"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Oversættelser gemt!"
-
-#~ msgid "Group missing!"
-#~ msgstr "Varegruppe mangler!"
-
-#~ msgid "Group saved!"
-#~ msgstr "Varegruppe gemt!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Prisgruppe mangler!"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Prisgruppe gemt!"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Oversættelser slettet!"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Varegruppe slettet!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Prisgruppe slettet!"
-
-#~ msgid "Description Translations"
-#~ msgstr "Oversættelser af beskrivelse"
-
-#~ msgid "Group Translations"
-#~ msgstr "Gruppeoversættelser"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "Oversættelser af projektbeskrivelse"
-
-#~ msgid "Translation"
-#~ msgstr "Oversættelse"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Sprog ikke definerede!"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "Redigér oversættelser af beskrivelser"
-
-#~ msgid "Transaction Dates"
-#~ msgstr "Posteringsdato"
-
-#~ msgid "No open Projects!"
-#~ msgstr "Ingen åbne projekter!"
-
-#~ msgid "Generate Sales Orders"
-#~ msgstr "Generer salgsordrer"
-
-#~ msgid "Service Code"
-#~ msgstr "Serviceydelsesnummer"
-
-#~ msgid "Select Customer"
-#~ msgstr "Vælg kunde"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Kunde ikke i databasen!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Leverandør ikke i databasen!"
-
-#~ msgid "Failed to save order!"
-#~ msgstr "Kunne ikke gemme ordren!"
-
-#~ msgid "Orders generated!"
-#~ msgstr "Ordrer genereret!"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Skabelon gemt!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Forfaldsdato mangler!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Kan ikke bogføre postering for en afsluttet periode!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Postering bogført!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Kan ikke bogføre postering!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Debitorposteringer"
-
-#~ msgid "AP Transactions"
-#~ msgstr "Leverandørfakturaer"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Projektnummer"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Fakturaer"
+#~ msgid "Addresses"
+#~ msgstr "Adresse"
 
 #~ msgid "Adjusting Till: (till) Source: (source)"
 #~ msgstr "Justerer kassebeholdningen for X bilag N"
@@ -3569,772 +1272,16 @@ msgstr "Postering bogført!"
 #~ msgstr "Juster kassebeholdning på grund af indtastningsfejl."
 
 #, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Ny kontantoverførsel"
+#~ msgid "Adjustment"
+#~ msgstr "Ændring i lagerbeholdning"
 
 #, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Ny postering i hovedbog"
+#~ msgid "Adjustment Date"
+#~ msgstr "Opgørelse"
 
 #, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Kan ikke bogføre postering!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Posteringsdato mangler!"
-
-#~ msgid ""
-#~ "Cannot post transaction with a debit and credit entry for the same account!"
-#~ msgstr "Kan ikke bogføre med kredit og debit på samme konto!"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Ubalanceret overførsel!"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Redigér indkøbsordre"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Redigér salgsordre"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Redigér ønske om tilbud"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Redigér tilbud"
-
-#~ msgid "Terms"
-#~ msgstr "Netto"
-
-#~ msgid "Order Date"
-#~ msgstr "Ordredato"
-
-#~ msgid "Valid until"
-#~ msgstr "Gældende indtil"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Tilbudsdato"
-
-#~ msgid "Print and Save"
-#~ msgstr "Udskriv og gem"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Udskriv og gem som ny"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Ordredato mangler"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Tilbudsdato mangler!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Kode mangler!"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Kan ikke gemme ordre!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "Kan ikke gemme tilbud"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Er du sikker på at du vil fjerne ordrenummer"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Er du sikker på at du vil slette tilbudsnummer"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Ordre slettet"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Kan ikke slette ordre!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Tilbud slettet!"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "Kan ikke slette tilbud"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Ordrenummer mangler"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Tilbudsnummer mangler!"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Afsend varer"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Afsendelsesdato"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Modtag varer"
-
-#~ msgid "Done"
-#~ msgstr "Færdig"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Afsendelsesdato mangler!"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Modtagelsesdato mangler!"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Ingenting indtastet!"
-
-#~ msgid "Inventory saved!"
-#~ msgstr "Lagerbeholdning gemt!"
-
-#~ msgid "Could not save!"
-#~ msgstr "Kunne ikke gemme!"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Intet at overføre!"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Overfør lagerbeholdning"
-
-#~ msgid "Transfer from"
-#~ msgstr "Overfør fra"
-
-#~ msgid "Transfer to"
-#~ msgstr "Overfør til"
-
-#~ msgid "From Warehouse"
-#~ msgstr "Fra lager"
-
-#~ msgid "To Warehouse"
-#~ msgstr "Til lager"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Lagerbeholdning overført!"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "Kunne ikke overføre lagerbeholdning!"
-
-#~ msgid "Req"
-#~ msgstr "Krævet"
-
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "Generer indkøbsordrer"
-
-#~ msgid "Generate Orders"
-#~ msgstr "Generer ordrer"
-
-#~ msgid "Select Vendor"
-#~ msgstr "Vælg leverandør"
-
-#~ msgid "Order generation failed!"
-#~ msgstr "Ordregenerering fejlet!"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Kasseopgørelse for %1"
-
-#~ msgid "Calculate"
-#~ msgstr "Beregn"
-
-#~ msgid "Close Till"
-#~ msgstr "Kasseopgørelse"
-
-#~ msgid "Cash Breakdown:"
-#~ msgstr "Kontant fordeling:"
-
-#, fuzzy
-#~ msgid "Total Cash in Drawer: %1"
-#~ msgstr "Totalt kontant i skuffen: %1"
-
-#, fuzzy
-#~ msgid "Less Cash in Till At Start: %1"
-#~ msgstr "Mindre initiel kassebeholdning: %1"
-
-#, fuzzy
-#~ msgid "Cumulative Error: %1"
-#~ msgstr "Opsamlet fejl:"
-
-#, fuzzy
-#~ msgid "Reset Till By %1"
-#~ msgstr "Nulstil kasse med %1"
-
-#, fuzzy
-#~ msgid "You are over by %1"
-#~ msgstr "Du har %1 for meget"
-
-#, fuzzy
-#~ msgid "You are under by %1"
-#~ msgstr "Du har %1 for lidt"
-
-#~ msgid "Congratulations!  Your till is exactly balanced."
-#~ msgstr "Tillykke! Din kasse stemte!"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Ny salgssted faktura"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Redigér salgssted faktura"
-
-#~ msgid "Change"
-#~ msgstr "Ændr"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Kasseopgørelse"
-
-#~ msgid "Posted!"
-#~ msgstr "Bogført!"
-
-#~ msgid "Visa/MC"
-#~ msgstr "Visa/MC"
-
-#~ msgid "Discover"
-#~ msgstr "Discover"
-
-#~ msgid "Gift Cert"
-#~ msgstr "Gavekort"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "Gentagne transaktioner"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Konto slettet!"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Forfaldent"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Forældet"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Inkl. moms og afgifter"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Balanceopgørelse"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Access Denied"
-#~ msgstr "Adgang nægtet!"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Foreløbig status"
-
-#~ msgid "Business Number"
-#~ msgstr "Forretningsnummer"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Redigér sprog"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Skabeloner"
-
-#~ msgid "Session Timeout"
-#~ msgstr "Session timeout"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Afdelinger"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Fjern konto"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Gevinst på valutahandel"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Tab på valutahandel"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTeX-skabeloner"
-
-#, fuzzy
-#~ msgid "Save Batch"
-#~ msgstr "Gem planlægning"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Vekselkurs mangler!"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Handelsrabat"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Fjern"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Ugyldig viderestilling"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Redigér produkt"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Moms/afgift"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Indkøbsordre"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Aktiv"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "Afstemningsrapport"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Metode"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Betaling bogført!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Resterer"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "Konto eksisterer ikke!"
-
-#, fuzzy
-#~ msgid "Invalid backup request"
-#~ msgstr "Ugyldig viderestilling"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Gem som ny"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Salgsordrer"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders from Sales Orders"
-#~ msgstr "Generer indkøbsordrer fra salgsordrer"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Konsolider salgsordrer"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Indkøbsordrer"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Konsolider indkøbsordrer"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders from Purchase Orders"
-#~ msgstr "Generer salgsordrer fra indkøbsordrer"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Tilbud"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Ønske om tilbud"
-
-#, fuzzy
-#~ msgid "Tax Form Name"
-#~ msgstr "CVR"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Standard skabelon"
-
-#~ msgid "Add Account"
-#~ msgstr "Ny konto"
-
-#~ msgid "Edit Account"
-#~ msgstr "Redigér konto"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Masseudskrift"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Kundenummer"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Leverandørnummer"
-
-#, fuzzy
-#~ msgid "No Null employeenumber"
-#~ msgstr "Medarbejdernummer"
-
-#, fuzzy
-#~ msgid "Duplicate employee numbers"
-#~ msgstr "Medarbejdernummer"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Fakturanummer"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Check"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Depositum"
-
-#, fuzzy
-#~ msgid "Unable to save %1 object"
-#~ msgstr "Kunne ikke gemme ordren!"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Faktura %1 slettet!"
-
-#~ msgid "January"
-#~ msgstr "januar"
-
-#~ msgid "February"
-#~ msgstr "februar"
-
-#~ msgid "March"
-#~ msgstr "marts"
-
-#~ msgid "April"
-#~ msgstr "april"
-
-#~ msgid "May"
-#~ msgstr "maj"
-
-#~ msgid "June"
-#~ msgstr "juni"
-
-#~ msgid "July"
-#~ msgstr "juli"
-
-#~ msgid "August"
-#~ msgstr "august"
-
-#~ msgid "September"
-#~ msgstr "september"
-
-#~ msgid "October"
-#~ msgstr "oktober"
-
-#~ msgid "November"
-#~ msgstr "november"
-
-#~ msgid "December"
-#~ msgstr "december"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Ændr adgangskode"
-
-#, fuzzy
-#~ msgid "Passwords must match."
-#~ msgstr "Adgangskoderne er ikke ens!"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Adgangskode ændret"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Foreløbig status"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Beløb mangler!"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "I alt"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Ordredato"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Kvitteringer"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Ny konto"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "dec"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Søg"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Fakturaer"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Send via"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Bestilt af"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Projektnummer"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "jun"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "Måned"
-
-#, fuzzy
-#~ msgid "Tue"
-#~ msgstr "Ti"
-
-#, fuzzy
-#~ msgid "Fri"
-#~ msgstr "Gentag"
-
-#, fuzzy
-#~ msgid "Sat"
-#~ msgstr "Stat"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Grænse for nedtræk"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Beløb"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Beløb"
-
-#, fuzzy
-#~ msgid "Avg. Cost"
-#~ msgstr "Gns. kost"
-
-#~ msgid "Expected"
-#~ msgstr "Forventet"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Inkludér i rapport"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Inkludér i rapport"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Næste nummer"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Rapporter"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Driftsregnskab"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Konto"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Kontonummer"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Rabat"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Konto eksisterer ikke!"
-
-#~ msgid "Jan"
-#~ msgstr "jan"
-
-#~ msgid "Feb"
-#~ msgstr "feb"
-
-#~ msgid "Mar"
-#~ msgstr "mar"
-
-#~ msgid "Apr"
-#~ msgstr "apr"
-
-#~ msgid "Jun"
-#~ msgstr "jun"
-
-#~ msgid "Jul"
-#~ msgstr "jul"
-
-#~ msgid "Aug"
-#~ msgstr "aug"
-
-#~ msgid "Sep"
-#~ msgstr "sep"
-
-#~ msgid "Oct"
-#~ msgstr "okt"
-
-#~ msgid "Nov"
-#~ msgstr "nov"
-
-#~ msgid "Dec"
-#~ msgstr "dec"
-
-#~ msgid "Requirements"
-#~ msgstr "Krav"
-
-#~ msgid "Checks"
-#~ msgstr "Kontroller"
-
-#~ msgid "Work Orders"
-#~ msgstr "Arbejdssedler"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Pakkelister"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Sendings-lister"
-
-#~ msgid "POS Invoice"
-#~ msgstr "Salgssted faktura"
-
-#~ msgid "Text Templates"
-#~ msgstr "Skabeloner for tekst"
-
-#~ msgid "Batch Printing"
-#~ msgstr "Masseudskrift"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "mar"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Betaling"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Kvittering"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Salgsfaktura"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Leverandørfaktura"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Forretning"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Sprog"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Lager"
-
-#, fuzzy
-#~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Opsamlet fejl: %1"
-
-#~ msgid "%1 is already a member!"
-#~ msgstr "%1 er allerede medlem!"
-
-#~ msgid "AR/AP"
-#~ msgstr "Debitorer/Kreditorer"
-
-#~ msgid "Above"
-#~ msgstr "Over"
-
-#~ msgid "Accounting"
-#~ msgstr "Bogføring"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Bogførings-menu"
-
-#~ msgid "Actual"
-#~ msgstr "Faktisk"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "Ny kreditorpostering"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "Ny debitorpostering"
-
-#~ msgid "Add Department"
-#~ msgstr "Ny afdeling"
+#~ msgid "Adjustment Details"
+#~ msgstr "Juster kassebeholdning"
 
 #~ msgid "Administration"
 #~ msgstr "Administration"
@@ -4348,23 +1295,82 @@ msgstr "Postering bogført!"
 #~ msgid "After Deduction"
 #~ msgstr "Efter fradrag"
 
+#~ msgid "Aged"
+#~ msgstr "Udgået"
+
 #~ msgid "Aged Overdue"
 #~ msgstr "Udgået pga. dato"
+
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Rapporter"
+
+#~ msgid "All"
+#~ msgstr "Alt"
 
 #~ msgid "All Accounts"
 #~ msgstr "Alle konti"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Fakturaer"
+
 #~ msgid "All Items"
 #~ msgstr "Alle varenumre"
+
+#~ msgid "Allocated"
+#~ msgstr "Allokeret"
 
 #~ msgid "Allowances"
 #~ msgstr "Fradrag"
 
+#~ msgid "Amount"
+#~ msgstr "Beløb"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Forfaldent"
+
+#~ msgid "Amount Due"
+#~ msgstr "Forfaldent"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Beløb"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Beløb mangler!"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Forfaldent"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Beløb"
+
 #~ msgid "Application Login"
 #~ msgstr "Applikation login"
 
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Handelsrabat"
+
+#~ msgid "Apr"
+#~ msgstr "apr"
+
+#~ msgid "April"
+#~ msgstr "april"
+
 #~ msgid "Are you sure you want to delete Invoice Number %1?"
 #~ msgstr "Er du sikker på du vil fjerne fakturanummer %1?"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Er du sikker på at du vil fjerne ordrenummer"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Er du sikker på at du vil slette tilbudsnummer"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Er du sikker på du vil fjerne postering"
@@ -4375,14 +1381,96 @@ msgstr "Postering bogført!"
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Er du sikker på at du vil slette timesedlen for"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "Er du sikker på at du vil fjerne de markerede poster fra køen?"
+
 #~ msgid "As of"
 #~ msgstr "Som af"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Produkter sat på lager igen!"
 
 #~ msgid "Assembly"
 #~ msgstr "Produkt"
 
 #~ msgid "Assembly stocked!"
 #~ msgstr "Produkt sag på lager!"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Vis konti"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Aktiv"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Aktiv"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "Afstemningsrapport"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Aktiv"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Vis konti"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Redigér konto"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Bilag"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Adgangskontrol"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Revisionssporing deaktiveret"
@@ -4393,14 +1481,114 @@ msgstr "Postering bogført!"
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Revisionssporing fjernet indtil"
 
+#~ msgid "Aug"
+#~ msgstr "aug"
+
+#~ msgid "August"
+#~ msgstr "august"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Moms/afgiftspligtig"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Opret datasæt"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Leder"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Forudbetaling"
+
+#~ msgid "Average Cost"
+#~ msgstr "Gennemsnitlig kostpris"
+
+#, fuzzy
+#~ msgid "Avg. Cost"
+#~ msgstr "Gns. kost"
+
+#~ msgid "BOM"
+#~ msgstr "Stykliste"
+
+#~ msgid "Backup"
+#~ msgstr "Sikkerhedskopi"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Sikkerhedskopi"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Sikkerhedskopi"
+
 #~ msgid "Backup sent to %1"
 #~ msgstr "Sikkerhedskopi sendt til %1"
+
+#~ msgid "Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Forbind konti"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Forbind konti"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Opgave"
 
 #~ msgid "Based on"
 #~ msgstr "Baseret på"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Masseudskrift"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Beskrivelse"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Varenummer"
+
+#~ msgid "Batch Printing"
+#~ msgstr "Masseudskrift"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Beskrivelse"
+
+#~ msgid "Bcc"
+#~ msgstr "Blind kopi"
+
+#, fuzzy
+#~ msgid "Bcc: %1"
+#~ msgstr "Bcc: %1"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Før fradrag"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Balanceopgørelse"
 
 #~ msgid "Below"
 #~ msgstr "Under"
@@ -4408,14 +1596,110 @@ msgstr "Postering bogført!"
 #~ msgid "Billing Address"
 #~ msgstr "Fakturaadresse"
 
+#~ msgid "Bin"
+#~ msgstr "Varelager"
+
+#~ msgid "Bin Lists"
+#~ msgstr "Sendings-lister"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Startdato"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Bogføringen er åben for rettelser"
+
+#~ msgid "Break"
+#~ msgstr "Bryd"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Næste nummer"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Inkludér i rapport"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Forretning"
+
+#~ msgid "Business Number"
+#~ msgstr "Forretningsnummer"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Forretning"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Forretning"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Forretning slettet!"
+
+#~ msgid "Business saved!"
+#~ msgstr "Forretning gemt!"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Forretning"
+
+#~ msgid "COGS"
+#~ msgstr "Kostpris"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Rapporter"
+
+#~ msgid "Calculate"
+#~ msgstr "Beregn"
+
+#, fuzzy
+#~ msgid "Calculate Taxes"
+#~ msgstr "Beregn"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Kan ikke slette faktura!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Kan ikke bogføre postering!"
+
 #~ msgid "Cannot add time card for a completed job!"
 #~ msgstr "Kan ikke tilføje timeseddel for afsluttet projekt!"
 
 #~ msgid "Cannot change time card for a completed job!"
 #~ msgstr "Kan ikke ændre timeseddel for afsluttet projekt!"
 
+#~ msgid "Cannot create Assembly; Income account does not exist!"
+#~ msgstr "Kan ikke oprette produkt; indtægtskontoen findes ikke!"
+
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Kan ikke registrere tid; kostpriskonto findes ikke!"
+
+#~ msgid "Cannot create Labor; Inventory account does not exist!"
+#~ msgstr "Kan ikke registrere tid; lagerbeholdningskonto findes ikke!"
+
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Kan ikke låse!"
+
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Kan ikke oprette vare; kostpriskonto findes ikke!"
+
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Kan ikke oprette vare; indtægtskonto findes ikke!"
+
+#~ msgid "Cannot create Part; Inventory account does not exist!"
+#~ msgstr "Kan ikke oprette vare; lagerbeholdningskonto findes ikke!"
+
+#~ msgid "Cannot create Service; Expense account does not exist!"
+#~ msgstr "Kan ikke oprette serviceydelse; udgiftskontoen findes ikke!"
+
+#~ msgid "Cannot create Service; Income account does not exist!"
+#~ msgstr "Kan ikke oprette serviceydelse; indtægtskontoen findes ikke!"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "Kan ikke slette konto!"
@@ -4425,6 +1709,15 @@ msgstr "Postering bogført!"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Kan ikke slette standardkonto!"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "Kan ikke slette varenummer!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Kan ikke slette ordre!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "Kan ikke slette tilbud"
 
 #~ msgid "Cannot delete time card!"
 #~ msgstr "Kan ikke slette timeseddel!"
@@ -4441,8 +1734,46 @@ msgstr "Postering bogført!"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "kan ikke postere indbetaling"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Kan ikke bogføre faktura for en afsluttet periode!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Kan ikke bogføre faktura!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Kan ikke bogføre betaling for en afsluttet periode"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Kan ikke bogføre postering for en afsluttet periode!"
+
+#~ msgid ""
+#~ "Cannot post transaction with a debit and credit entry for the same "
+#~ "account!"
+#~ msgstr "Kan ikke bogføre med kredit og debit på samme konto!"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Kan ikke bogføre postering!"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "Kan ikke fjerne filer!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Kan ikke gemme konto!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "Kan ikke gemme standardopsætning"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Kan ikke gemme ordre!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Kan ikke gemme præferencer!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "Kan ikke gemme tilbud"
+
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Kan ikke gemme moms/afgifter!"
 
 #~ msgid "Cannot save time card for a closed period!"
 #~ msgstr "Kan ikke gemme timeseddel for en afslutted periode!"
@@ -4450,23 +1781,146 @@ msgstr "Postering bogført!"
 #~ msgid "Cannot save time card!"
 #~ msgstr "Kan ikke gemme timeseddel!"
 
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr "Kan ikke sætte konto for mere end én af AR, AP eller IC"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "Kan ikke sætte flere muligheder for %1"
+
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan ikke sætte produkt på lager!"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Kan ikke sætte produkter på lager igen!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Moms/afgiftkonti"
+
+#~ msgid "Cash Breakdown:"
+#~ msgstr "Kontant fordeling:"
+
+#~ msgid "Cc"
+#~ msgstr "Cc"
+
+#, fuzzy
+#~ msgid "Cc: %1"
+#~ msgstr "Cc: %1"
+
+#~ msgid "Change"
+#~ msgstr "Ændr"
 
 #~ msgid "Change Admin Password"
 #~ msgstr "Ændr adgangskode for administrator"
 
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Ændr adgangskode"
+
+#~ msgid "Chargeable"
+#~ msgstr "Fakturerbar"
+
 #~ msgid "Chargeout Rate"
 #~ msgstr "Timepris"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Check ID"
+
+#~ msgid "Checks"
+#~ msgstr "Kontroller"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Firma"
+
+#~ msgid "City"
+#~ msgstr "By"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Ny SIC"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Udlignet"
+
+#~ msgid "Cleared"
+#~ msgstr "Udlignet"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Projektposteringer"
 
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Klik på brugernavn for at redigere"
 
+#~ msgid "Clocked"
+#~ msgstr "Målt"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Afslut bogføring op til"
+
 #~ msgid "Close Next"
 #~ msgstr "Luk næste"
 
+#~ msgid "Close Till"
+#~ msgstr "Kasseopgørelse"
+
+#~ msgid "Closed"
+#~ msgstr "Afsluttet"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Kasseopgørelse for %1"
+
+#~ msgid "Code"
+#~ msgstr "Kode"
+
+#~ msgid "Code missing!"
+#~ msgstr "Kode mangler!"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Konsolider indkøbsordrer"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Konsolider salgsordrer"
+
+#~ msgid "Company"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Firmanavn"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Firmanavn"
+
+#~ msgid "Company Name"
+#~ msgstr "Firmanavn"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Firma"
+
+#~ msgid "Compare to"
+#~ msgstr "Sammenlign med"
+
 #~ msgid "Components"
 #~ msgstr "Komponenter"
+
+#~ msgid "Confirm"
+#~ msgstr "Bekræft"
+
+#~ msgid "Confirm!"
+#~ msgstr "Bekræft!"
+
+#~ msgid "Congratulations!  Your till is exactly balanced."
+#~ msgstr "Tillykke! Din kasse stemte!"
 
 #~ msgid "Connect to"
 #~ msgstr "Forbind til"
@@ -4477,17 +1931,162 @@ msgstr "Postering bogført!"
 #~ msgid "Consolidate Orders"
 #~ msgstr "Konsolider ordrer"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Kontakt"
+
+#~ msgid "Continue"
+#~ msgstr "Fortsæt"
+
+#~ msgid "Contra"
+#~ msgstr "Kontra"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Opgave"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Kontonummer"
+
+#~ msgid "Copies"
+#~ msgstr "Kopier"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Kopiér til COA"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Kopiér til COA"
+
+#~ msgid "Cost"
+#~ msgstr "Udgifter"
+
+#~ msgid "Cost Center"
+#~ msgstr "Kostcenter"
+
 #~ msgid "Could not save pricelist!"
 #~ msgstr "Kunne ikke gemme prisliste!"
+
+#~ msgid "Could not save!"
+#~ msgstr "Kunne ikke gemme!"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "Kunne ikke overføre lagerbeholdning!"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Land"
+
+#~ msgid "Country"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Opgave"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Fjern datasæt"
 
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Opret kontoplan"
 
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Fjern datasæt"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Vis afdelinger"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Opret datasæt"
+
+#~ msgid "Credit"
+#~ msgstr "Kredit"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Kontonummer"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Kreditgrænse"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Kredit"
+
+#~ msgid "Cumulative Error:"
+#~ msgstr "Opsamlet fejl:"
+
+#, fuzzy
+#~ msgid "Cumulative Error: %1"
+#~ msgstr "Opsamlet fejl:"
+
+#, fuzzy
+#~ msgid "Cumulative Error: [_1]"
+#~ msgstr "Opsamlet fejl: %1"
+
+#~ msgid "Curr"
+#~ msgstr "Val"
+
+#~ msgid "Currency"
+#~ msgstr "Valuta"
+
+#~ msgid "Current"
+#~ msgstr "Aktuel"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Aktuelle indtægter"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Kundenummer"
+
+#~ msgid "Customer Number"
+#~ msgstr "Kundenummer"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Kundenummer"
+
 #~ msgid "Customer deleted!"
 #~ msgstr "Kunde slettet!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Kunde mangler!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Kunde ikke i databasen!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "Kunde gemt!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Vis konti"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Kunde"
 
 #~ msgid "Customers"
 #~ msgstr "Kunder"
@@ -4495,14 +2094,34 @@ msgstr "Postering bogført!"
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI ikke installeret"
 
+#~ msgid "DOB"
+#~ msgstr "Født"
+
+#~ msgid "Database"
+#~ msgstr "Database"
+
 #~ msgid "Database Administration"
 #~ msgstr "Administration af database"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Databasedriver ikke valgt!"
 
+#~ msgid "Database Host"
+#~ msgstr "Database-host"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Redigér medarbejder"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Bruger af database mangler!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "Konto eksisterer ikke!"
+
+#~ msgid "Dataset"
+#~ msgstr "Datasæt"
 
 #~ msgid "Dataset %1 successfully created!"
 #~ msgstr "Datasæt %1 success-fuldt oprettet!"
@@ -4516,11 +2135,91 @@ msgstr "Postering bogført!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Datasæt opdateret!"
 
+#~ msgid "Date"
+#~ msgstr "Dato"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Datoformat"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Datoformat"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Datoformat"
+
+#~ msgid "Date Paid"
+#~ msgstr "Betalingsdato"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Modtagelsesdato"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Dato"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Udført"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Datoformat"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Dato"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Modtagelsesdato mangler!"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Dato"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Dato: %1"
+
+#~ msgid "Day"
+#~ msgstr "Dag"
+
+#~ msgid "Day(s)"
+#~ msgstr "Dag(e)"
+
 #~ msgid "Days"
 #~ msgstr "Dage"
 
+#~ msgid "Debit"
+#~ msgstr "Debet"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Debet"
+
+#~ msgid "Dec"
+#~ msgstr "dec"
+
+#~ msgid "December"
+#~ msgstr "december"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Decimalpladser"
+
 #~ msgid "Deduct after"
 #~ msgstr "Fratræk efter"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Fradrag"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Fradrag"
 
 #~ msgid "Deduction deleted!"
 #~ msgstr "Fradrag slettet!"
@@ -4528,8 +2227,76 @@ msgstr "Postering bogført!"
 #~ msgid "Deduction saved!"
 #~ msgstr "Fradrag gemt!"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "Standardopsætning"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Standardopsætning"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Fjern konto"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Default Email BCC"
+#~ msgstr "Standard skabelon"
+
+#, fuzzy
+#~ msgid "Default Email CC"
+#~ msgstr "Standard skabelon"
+
+#, fuzzy
+#~ msgid "Default Email To"
+#~ msgstr "Standard skabelon"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Redigér sprog"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Standard skabelon"
+
+#~ msgid "Default Template"
+#~ msgstr "Standard skabelon"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Land"
+
 #~ msgid "Defaults saved!"
 #~ msgstr "Standardopsætning gemt!"
+
+#~ msgid "Delete"
+#~ msgstr "Fjern"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Redigér sprog"
+
+#~ msgid "Delete Schedule"
+#~ msgstr "Slet planlægning"
+
+#, fuzzy
+#~ msgid ""
+#~ "Deleting a language will also delete the templates for the language %1"
+#~ msgstr "Sletning af et sprog vil også slette skabelonerne for sproget %1"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Leveringsdato"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Metode"
+
+#~ msgid "Department"
+#~ msgstr "Afdeling"
 
 #~ msgid "Department deleted!"
 #~ msgstr "Afdeling slettet!"
@@ -4537,14 +2304,128 @@ msgstr "Postering bogført!"
 #~ msgid "Department saved!"
 #~ msgstr "Afdeling gemt!"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Beskrivelse"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Fjern konto"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Beskrivelse"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Beskrivelse"
+
+#~ msgid "Description Translations"
+#~ msgstr "Oversættelser af beskrivelse"
+
+#~ msgid "Description missing!"
+#~ msgstr "Beskrivelse mangler!"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Beskrivelse"
+
+#~ msgid "Detail"
+#~ msgstr "Detalje"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Detalje"
+
+#~ msgid "Difference"
+#~ msgstr "Difference"
+
 #~ msgid "Directory %1 does not exist"
 #~ msgstr "Directory %1 findes ikke"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Rabat"
+
+#~ msgid "Discount"
+#~ msgstr "Rabat"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Rabat"
+
+#~ msgid "Discover"
+#~ msgstr "Discover"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Indtægt"
+
+#~ msgid "Done"
+#~ msgstr "Færdig"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Søg"
+
+#~ msgid "Drawing"
+#~ msgstr "Træk"
 
 #~ msgid "Driver"
 #~ msgstr "Driver"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Grænse for nedtræk"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "dec"
+
+#~ msgid "Due Date"
+#~ msgstr "Forfaldsdato"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Forfaldsdato mangler!"
+
+#, fuzzy
+#~ msgid "Duplicate employee numbers"
+#~ msgstr "Medarbejdernummer"
+
+#~ msgid "E-mail"
+#~ msgstr "E-post"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "E-post opgørelse sendt til %1"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "E-post"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "E-post-adresse mangler!"
+
+#~ msgid "E-mail message"
+#~ msgstr "E-post besked"
+
 #~ msgid "E-mailed"
 #~ msgstr "Sendt som e-post"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Driftsregnskab"
+
+#~ msgid "Edit"
+#~ msgstr "Redigér"
 
 #~ msgid "Edit AP Transaction"
 #~ msgstr "Redigér kreditorpostering"
@@ -4552,17 +2433,33 @@ msgstr "Postering bogført!"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "Redigér debitorpostering"
 
+#~ msgid "Edit Account"
+#~ msgstr "Redigér konto"
+
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Redigér produkt"
+
 #~ msgid "Edit Business"
 #~ msgstr "Redigér forretning"
 
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Redigér kontantoverførsel"
 
+#~ msgid "Edit Customer"
+#~ msgstr "Redigér kunde"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "Redigér fradrag"
 
 #~ msgid "Edit Department"
 #~ msgstr "Redigér afdeling"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "Redigér oversættelser af beskrivelser"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Redigér medarbejder"
 
 #~ msgid "Edit GIFI"
 #~ msgstr "Redigér GIFI"
@@ -4579,11 +2476,30 @@ msgstr "Postering bogført!"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Redigér tidsregistrering"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Redigér salgssted faktura"
+
 #~ msgid "Edit Part"
 #~ msgstr "Redigér vare"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Redigér prisgruppe"
+
+#~ msgid "Edit Project"
+#~ msgstr "Redigér præferencer for"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Redigér indkøbsordre"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Redigér tilbud"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Rapporter"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Redigér ønske om tilbud"
 
 #~ msgid "Edit SIC"
 #~ msgstr "Redigér SIC"
@@ -4591,14 +2507,33 @@ msgstr "Postering bogført!"
 #~ msgid "Edit Sales Invoice"
 #~ msgstr "Redigér salgsfaktura"
 
+#~ msgid "Edit Sales Order"
+#~ msgstr "Redigér salgsordre"
+
 #~ msgid "Edit Service"
 #~ msgstr "Redigér serviceydelse"
+
+#~ msgid "Edit Template"
+#~ msgstr "Redigér skabelon"
 
 #~ msgid "Edit Time Card"
 #~ msgstr "Redigér timeseddel"
 
+#~ msgid "Edit User"
+#~ msgstr "Redigér bruger"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Redigér leverandør"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Redigér leverandørfaktura"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "Redigér lager"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Redigér bruger"
 
 #~ msgid "Eight"
 #~ msgstr "Otte"
@@ -4618,6 +2553,13 @@ msgstr "Postering bogført!"
 #~ msgid "Employee Name"
 #~ msgstr "Navn for medarbejder"
 
+#~ msgid "Employee Number"
+#~ msgstr "Medarbejdernummer"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Medarbejdernummer"
+
 #~ msgid "Employee deleted!"
 #~ msgstr "Medarbejder slettet!"
 
@@ -4633,8 +2575,34 @@ msgstr "Postering bogført!"
 #~ msgid "Employer pays"
 #~ msgstr "Arbejdsgiver betaler"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Ordredato"
+
 #~ msgid "Enddate"
 #~ msgstr "Slutdato"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Åbningsbalance"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Balanceopgørelse"
+
+#~ msgid "Ends"
+#~ msgstr "Slutter"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Gennemtving explicitte rettelser af posteringer for alle datoer"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Redigér bruger"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
@@ -4643,8 +2611,78 @@ msgstr "Postering bogført!"
 #~ "Angiv op til 3 bogstaver adskilt med kolon (fx DKK:EUR:USD) for dine "
 #~ "indenlandske og udenlandske valutaer"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Bestilt af"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Bestilt af"
+
+#~ msgid "Equity"
+#~ msgstr "Egenkapital"
+
+#, fuzzy
+#~ msgid "Error:"
+#~ msgstr "Fejl"
+
+#~ msgid "Every"
+#~ msgstr "Hver"
+
+#~ msgid "Exch"
+#~ msgstr "Vxl"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Vekselkurs"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Valutakurs for betaling mangler!"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Vekselkurs mangler!"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Vekselkurs mangler!"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Vekselkurs"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Eksisterende datasæt"
+
+#~ msgid "Expected"
+#~ msgstr "Forventet"
+
+#~ msgid "Expense"
+#~ msgstr "Udgift"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Vis konti"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Udgift/Aktiv"
+
+#~ msgid "Extended"
+#~ msgstr "Udvidet"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Redigér bruger"
+
+#~ msgid "FX"
+#~ msgstr "FX"
+
+#~ msgid "Failed to save order!"
+#~ msgstr "Kunne ikke gemme ordren!"
+
+#~ msgid "Feb"
+#~ msgstr "feb"
+
+#~ msgid "February"
+#~ msgstr "februar"
 
 #~ msgid "Fifteen"
 #~ msgstr "Femten"
@@ -4652,11 +2690,48 @@ msgstr "Postering bogført!"
 #~ msgid "Fifty"
 #~ msgstr "Halvtreds"
 
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Forretning"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Redigér konto"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Betalinger"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Kvitteringer"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "Projektnavn"
+
 #~ msgid "Five"
 #~ msgstr "Fem"
 
 #~ msgid "Five Hundred"
 #~ msgstr "Femhundrede"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Nyt produkt"
+
+#~ msgid "For"
+#~ msgstr "Gentag"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Gevinst på valutahandel"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Tab på valutahandel"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Datoformat"
 
 #~ msgid "Forty"
 #~ msgstr "Fyrre"
@@ -4667,14 +2742,115 @@ msgstr "Postering bogført!"
 #~ msgid "Fourteen"
 #~ msgstr "Fjorten"
 
+#, fuzzy
+#~ msgid "Fri"
+#~ msgstr "Gentag"
+
 #~ msgid "Friday"
 #~ msgstr "Fredag"
+
+#~ msgid "From"
+#~ msgstr "Fra"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "Fra"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Beløb"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Ordredato"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "Fra"
+
+#~ msgid "From Warehouse"
+#~ msgstr "Fra lager"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI slettet!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "GIFI mangler!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI gemt!"
+
+#~ msgid "GL"
+#~ msgstr "Hovedbog"
+
+#~ msgid "GL Reference Number"
+#~ msgstr "Hovedbog referencenummer"
 
 #~ msgid "GL Transaction"
 #~ msgstr "Postering i hovedbog"
 
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Forbind konti"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Hovedbog rapporter"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Revisionskontrol"
+
+#~ msgid "Generate Orders"
+#~ msgstr "Generer ordrer"
+
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "Generer indkøbsordrer"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders from Sales Orders"
+#~ msgstr "Generer indkøbsordrer fra salgsordrer"
+
 #~ msgid "Generate Sales Order"
 #~ msgstr "Generer salgsordre"
+
+#~ msgid "Generate Sales Orders"
+#~ msgstr "Generer salgsordrer"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders from Purchase Orders"
+#~ msgstr "Generer salgsordrer fra indkøbsordrer"
+
+#~ msgid "Gift Cert"
+#~ msgstr "Gavekort"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Antal linjer"
+
+#~ msgid "Group"
+#~ msgstr "Gruppe"
+
+#~ msgid "Group Translations"
+#~ msgstr "Gruppeoversættelser"
+
+#~ msgid "Group by"
+#~ msgstr "Gruppér efter"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Varegruppe slettet!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Varegruppe mangler!"
+
+#~ msgid "Group saved!"
+#~ msgstr "Varegruppe gemt!"
+
+#~ msgid "Groups"
+#~ msgstr "Varegrupper"
+
+#~ msgid "Heading"
+#~ msgstr "Overskrift"
 
 #~ msgid "Help"
 #~ msgstr "Hjælp"
@@ -4691,27 +2867,174 @@ msgstr "Postering bogført!"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Årsslutning"
+
+#~ msgid "Image"
+#~ msgstr "Billede"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTeX-skabeloner"
+
+#~ msgid "Import Text"
+#~ msgstr "Importer tekst"
+
+#~ msgid "In-line"
+#~ msgstr "Indlejret"
+
+#~ msgid "Inactive"
+#~ msgstr "Inaktiv"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Inkludér difference i vekselkurs"
+
+#~ msgid "Include in Report"
+#~ msgstr "Inkludér i rapport"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Inkludér i rullegardin-menuer"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Inkludér betaling"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Inkludér i rapport"
+
+#~ msgid "Income"
+#~ msgstr "Indtægt"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Indtægt"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Indtægt"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Forkert version af datasæt!"
 
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Ændr adgangskode"
+
+#~ msgid "Individual Items"
+#~ msgstr "Enkelte varenumre"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Interne noter"
+
+#, fuzzy
+#~ msgid "Invalid backup request"
+#~ msgstr "Ugyldig viderestilling"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Ugyldig viderestilling"
+
+#~ msgid "Invalid redirect"
+#~ msgstr "Ugyldig viderestilling"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Ændring i lagerbeholdning"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Ændring i lagerbeholdning"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "Lagerbeholdning skal være nul for at du kan lade denne vare udgå"
+
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
-#~ msgstr "Lagerbeholdning skal være nul for at du kan lade dette produkt udgå!"
+#~ msgstr ""
+#~ "Lagerbeholdning skal være nul for at du kan lade dette produkt udgå!"
+
+#~ msgid "Inventory saved!"
+#~ msgstr "Lagerbeholdning gemt!"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Lagerbeholdning overført!"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Fakturadato"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Fakturadato mangler!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Fakturanummer mangler!"
 
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Fakturanummer"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Fakturadato"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Fakturadato"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Fakturadato"
+
 #~ msgid "Invoice deleted!"
 #~ msgstr "Faktura slettet!"
+
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Fakturanummer"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Faktura %1 slettet!"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Faktura"
+
+#~ msgid "Item"
+#~ msgstr "Varenummer"
 
 #~ msgid "Item already on pricelist!"
 #~ msgstr "Enkeltdel allerede på prisliste!"
 
+#~ msgid "Item deleted!"
+#~ msgstr "Varenummer slettet!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Varenummer er ikke i databasen!"
+
 #~ msgid "Items"
 #~ msgstr "Varenumre"
 
+#~ msgid "Jan"
+#~ msgstr "jan"
+
+#~ msgid "January"
+#~ msgstr "januar"
+
 #~ msgid "Job"
 #~ msgstr "Projekt"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "Projekt gemt!"
 
 #~ msgid "Job Name"
 #~ msgstr "Projektnavn"
@@ -4722,26 +3045,126 @@ msgstr "Postering bogført!"
 #~ msgid "Job Number missing!"
 #~ msgstr "Projektnummer mangler!"
 
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Kontotype"
+
 #~ msgid "Job deleted!"
 #~ msgstr "Projekt slettet!"
+
+#~ msgid "Job/Project Number"
+#~ msgstr "Projektnummer"
 
 #~ msgid "Jobs"
 #~ msgstr "Projekter"
 
+#~ msgid "Jul"
+#~ msgstr "jul"
+
+#~ msgid "July"
+#~ msgstr "juli"
+
+#~ msgid "Jun"
+#~ msgstr "jun"
+
+#~ msgid "June"
+#~ msgstr "juni"
+
 #~ msgid "Labor Code missing!"
 #~ msgstr "Opgave mangler!"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Tidsregistrering"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Sprog slettet!"
+
+#~ msgid "Language saved!"
+#~ msgstr "Sprog gemt!"
+
+#~ msgid "Languages"
+#~ msgstr "Sprog"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Sprog ikke definerede!"
+
+#~ msgid "Last Cost"
+#~ msgstr "Sidste kostpris"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Opdateret"
 
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Løbenumre og standardkonti"
 
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Opdateret"
+
+#, fuzzy
+#~ msgid "Lead Time"
+#~ msgstr "Leveringstid"
+
+#, fuzzy
+#~ msgid "LedgerSMB [_1]"
+#~ msgstr "LedgerSMB web-side"
+
+#, fuzzy
+#~ msgid "Less Cash in Till At Start: %1"
+#~ msgstr "Mindre initiel kassebeholdning: %1"
+
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "Udestående debitorer"
+
+#~ msgid "Liability"
+#~ msgstr "Passiv"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Medarbejdernummer"
+
 #~ msgid "Licensed to"
 #~ msgstr "Udført for"
+
+#~ msgid "Line Total"
+#~ msgstr "Antal linjer"
 
 #~ msgid "Link"
 #~ msgstr "Referencer"
 
+#~ msgid "List"
+#~ msgstr "Vis"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Forudbetaling"
+
+#~ msgid "List Price"
+#~ msgstr "Listepris"
+
 #~ msgid "List Projects"
 #~ msgstr "Vis projekter"
+
+#~ msgid "List Transactions"
+#~ msgstr "Vis bogføringer"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Vægtenhed"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Redigér bruger"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Tilbud"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Tilbud"
 
 #~ msgid "Lock System"
 #~ msgstr "Lås system"
@@ -4752,29 +3175,128 @@ msgstr "Postering bogført!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Lockfile removed!"
 
+#~ msgid "Login"
+#~ msgstr "Log på"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Login name missing!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Vis konti"
+
+#~ msgid "Make"
+#~ msgstr "Fabrikat"
+
+#~ msgid "Manager"
+#~ msgstr "Leder"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "januar"
+
+#~ msgid "Mar"
+#~ msgstr "mar"
+
+#~ msgid "March"
+#~ msgstr "marts"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Markerede poster udskrevet!"
+
+#~ msgid "Markup"
+#~ msgstr "Bruttofortjeneste"
 
 #~ msgid "Maximum"
 #~ msgstr "Maksimum"
 
+#~ msgid "May"
+#~ msgstr "maj"
+
 #~ msgid "May "
 #~ msgstr "maj "
+
+#~ msgid "Memo"
+#~ msgstr "Note"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "Gentagne transaktioner"
 
 #~ msgid "Menu Width"
 #~ msgstr "Menubredde"
 
+#~ msgid "Message"
+#~ msgstr "Besked"
+
+#~ msgid "Message: "
+#~ msgstr "Besked: "
+
+#~ msgid "Method"
+#~ msgstr "Metode"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Standardopsætning"
+
+#~ msgid "Microfiche"
+#~ msgstr "Mikrofilm"
+
 #~ msgid "Million"
 #~ msgstr "Million"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Moms/afgiftspligtig"
+
+#~ msgid "Model"
+#~ msgstr "Model"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "Måned"
 
 #~ msgid "Monday"
 #~ msgstr "Mandag"
 
+#~ msgid "Month"
+#~ msgstr "Måned"
+
+#~ msgid "Month(s)"
+#~ msgstr "Måned(er)"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte Encoding"
 
+#~ msgid "N/A"
+#~ msgstr "I/T"
+
+#~ msgid "Name"
+#~ msgstr "Navn"
+
 #~ msgid "Name missing!"
 #~ msgstr "Navn mangler!"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Navn"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Afstemningsrapport"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Bruger"
+
+#~ msgid "Next"
+#~ msgstr "Næste"
+
+#~ msgid "Next Date"
+#~ msgstr "Næste dato"
+
+#~ msgid "Next Number"
+#~ msgstr "Næste nummer"
 
 #~ msgid "Nine"
 #~ msgstr "Ni"
@@ -4788,6 +3310,13 @@ msgstr "Postering bogført!"
 #~ msgid "Ninety"
 #~ msgstr "Halvfems"
 
+#~ msgid "No"
+#~ msgstr "Nej"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Konto slettet!"
+
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Ingen databasedrivere tilgængelige"
 
@@ -4800,8 +3329,15 @@ msgstr "Postering bogført!"
 #~ msgid "No GlobalDBH Configured or Could not Connect"
 #~ msgstr "Ingen GlobalDBH konfigureret eller kunne ikke forbinde"
 
+#~ msgid "No History!"
+#~ msgstr "Ingen historik!"
+
 #~ msgid "No Labor codes on file!"
 #~ msgstr "Ingen opgaver i databasen!"
+
+#, fuzzy
+#~ msgid "No Null employeenumber"
+#~ msgstr "Medarbejdernummer"
 
 #~ msgid "No Parts on file!"
 #~ msgstr "Ingen varer i databasen!"
@@ -4812,8 +3348,22 @@ msgstr "Postering bogført!"
 #~ msgid "No email address for %1"
 #~ msgstr "Ingen e-mail-adresse for %1"
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Sprog"
+
 #~ msgid "No open Jobs!"
 #~ msgstr "Ingen åbne projekter!"
+
+#~ msgid "No open Projects!"
+#~ msgstr "Ingen åbne projekter!"
+
+#~ msgid "No."
+#~ msgstr "Nummer"
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Ikke-fakturerbar"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "Køb uden moms/afgift"
@@ -4821,11 +3371,82 @@ msgstr "Postering bogført!"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Salg uden moms/afgift"
 
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Uden moms/afgift"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Bemærkninger"
+
+#~ msgid "Notes"
+#~ msgstr "Bemærkninger"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Ingenting indtastet!"
+
 #~ msgid "Nothing open!"
 #~ msgstr "Intet åbent!"
 
+#~ msgid "Nothing selected!"
+#~ msgstr "Ingenting valgt!"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Intet at slette!"
+
+#~ msgid "Nothing to print!"
+#~ msgstr "Ingenting at udskrive!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Intet at overføre!"
+
+#~ msgid "Nov"
+#~ msgstr "nov"
+
+#~ msgid "November"
+#~ msgstr "november"
+
+#~ msgid "Number"
+#~ msgstr "Nummer"
+
+#~ msgid "Number Format"
+#~ msgstr "Numerisk format"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Tal mangler i række %1"
+
+#, fuzzy
+#~ msgid "ODS"
+#~ msgstr "Salgssted"
+
+#~ msgid "Obsolete"
+#~ msgstr "Forældet"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Forældet"
+
+#~ msgid "Oct"
+#~ msgstr "okt"
+
+#~ msgid "October"
+#~ msgstr "oktober"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Adgangskode"
+
+#~ msgid "On Hand"
+#~ msgstr "På lager"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "På lager"
+
+#, fuzzy
+#~ msgid "On hand"
+#~ msgstr "På lager"
 
 #~ msgid "One"
 #~ msgstr "Et"
@@ -4833,11 +3454,134 @@ msgstr "Postering bogført!"
 #~ msgid "One-o"
 #~ msgstr "En"
 
+#, fuzzy
+#~ msgid "Onhand amount"
+#~ msgstr "På lager"
+
+#, fuzzy
+#~ msgid "Onhand delta"
+#~ msgstr "På lager"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Ny bruger"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Medarbejdere"
+
+#~ msgid "Open"
+#~ msgstr "Åbn"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Kasseopgørelse"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Fradrag"
+
+#, fuzzy
+#~ msgid "Or"
+#~ msgstr "Over"
+
+#, fuzzy
+#~ msgid "Or Add To Batch"
+#~ msgstr "Importer tekst"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Ordre"
+
+#~ msgid "Order Date"
+#~ msgstr "Ordredato"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Ordredato mangler"
+
+#~ msgid "Order Number"
+#~ msgstr "Ordrenummer"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Ordrenummer mangler"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Ordrenummer"
+
+#~ msgid "Order deleted!"
+#~ msgstr "Ordre slettet"
+
+#~ msgid "Order generation failed!"
+#~ msgstr "Ordregenerering fejlet!"
+
 #~ msgid "Order saved!"
 #~ msgstr "Ordre gemt!"
 
+#~ msgid "Ordering"
+#~ msgstr "Ordning"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Ordre"
+
+#~ msgid "Orders generated!"
+#~ msgstr "Ordrer genereret!"
+
+#~ msgid "Orphaned"
+#~ msgstr "Fritstående"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Fradrag"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Kredit"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Debet"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Ubalanceret overførsel!"
+
 #~ msgid "Out of balance!"
 #~ msgstr "Ikke i balance!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Gentagne transaktioner"
+
+#~ msgid "Over"
+#~ msgstr "Over"
+
+#~ msgid "Overdue"
+#~ msgstr "Overskredet"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Forudbetaling"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Betaling bogført!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "PO"
+#~ msgstr "Indkøbsordre"
+
+#~ msgid "PO Number"
+#~ msgstr "Indkøbsordrenummer"
+
+#~ msgid "POS Invoice"
+#~ msgstr "Salgssted faktura"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "Dato for pakkeliste mangler!"
@@ -4845,20 +3589,107 @@ msgstr "Postering bogført!"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Nummer for pakkeliste mangler!"
 
+#~ msgid "Paid"
+#~ msgstr "Betalt"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Aktuel"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Prisgruppe"
+
+#~ msgid "Part Number"
+#~ msgstr "Varenummer"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Vare"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Varenummer"
+
 #~ msgid "Parts"
 #~ msgstr "Varer"
+
+#~ msgid "Parts Requirements"
+#~ msgstr "Efterspurgte varer"
 
 #~ msgid "Passed incorrect query type to run_custom_queries."
 #~ msgstr "Gav forkert forespørgselstype til run_custom_queries."
 
+#~ msgid "Password"
+#~ msgstr "Adgangskode"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Adgangskode ændret"
+
+#~ msgid "Password does not match!"
+#~ msgstr "Adgangskoden er ikke korrekt!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Adgangskode ændret"
+
+#, fuzzy
+#~ msgid "Passwords must match."
+#~ msgstr "Adgangskoderne er ikke ens!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Datoformat"
+
+#~ msgid "Payables"
+#~ msgstr "Udeståender"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Betalingsdato mangler!"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Betalinger"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Betalinger"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Betaling"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Betaling"
+
 #~ msgid "Payments posted!"
 #~ msgstr "Bogførte betalinger"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Betaling bogført!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Resterer"
+
+#~ msgid "Period"
+#~ msgstr "Periode"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Administration af database"
 
 #~ msgid "PgPP Database Administration"
 #~ msgstr "PgPP Database Administration"
+
+#~ msgid "Phone"
+#~ msgstr "Tel."
+
+#~ msgid "Pick Lists"
+#~ msgstr "Pakkelister"
 
 #~ msgid "Please see attatched report for list of invoices paid."
 #~ msgstr "Se venligst vedlagte rapport over betalte fakturaer."
@@ -4869,20 +3700,170 @@ msgstr "Postering bogført!"
 #~ msgid "Pos"
 #~ msgstr "Pos"
 
+#~ msgid "Post"
+#~ msgstr "Bogfør"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Bogfør som ny"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Årsslutning"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Bogfør som ny"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Bogfør som ny"
+
+#~ msgid "Post as new"
+#~ msgstr "Bogfør som ny"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Bogfør som ny"
+
+#~ msgid "Posted!"
+#~ msgstr "Bogført!"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Bogfør som ny"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Posterer i hovedbog %1"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Posterer salgsfaktura %1"
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "Posterer postering %1"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Posterer leverandørfaktura %1"
+
 #~ msgid "Posting failed!"
 #~ msgstr "Bogføring fejlede!"
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Indstillinger gemt!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Redigér opsætning for %1"
+
+#, fuzzy
+#~ msgid "Prefix"
+#~ msgstr "Check ID"
+
+#~ msgid "Price"
+#~ msgstr "Pris"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Prisgruppe"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Opdateret"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Prisgruppe"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Prisgruppe slettet!"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Prisgruppe mangler!"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Prisgruppe gemt!"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Prisgrupper"
+
+#~ msgid "Pricelist"
+#~ msgstr "Prisliste"
+
+#~ msgid "Print"
+#~ msgstr "Udskriv"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Udskriv"
 
 #~ msgid "Print and Post as new"
 #~ msgstr "Udskriv og send som ny"
 
+#~ msgid "Print and Save"
+#~ msgstr "Udskriv og gem"
+
+#~ msgid "Print and Save as new"
+#~ msgstr "Udskriv og gem som ny"
+
+#~ msgid "Printed"
+#~ msgstr "Udskrevet"
+
+#~ msgid "Printer"
+#~ msgstr "Printer"
+
+#~ msgid "Printing"
+#~ msgstr "Udskriver"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Projektposteringer"
+
+#~ msgid "Profit Center"
+#~ msgstr "Profitcenter"
+
+#, fuzzy
+#~ msgid "Profit and Loss"
+#~ msgstr "Udskriv og send"
+
+#~ msgid "Project"
+#~ msgstr "Projekt"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "Oversættelser af projektbeskrivelse"
+
+#~ msgid "Project Number"
+#~ msgstr "Projektnummer"
+
 #~ msgid "Project Number missing!"
 #~ msgstr "Projektnummer mangler!"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Projektnummer"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Projektnummer"
 
 #~ msgid "Project deleted!"
 #~ msgstr "Projekt slettet!"
 
+#~ msgid "Project not on file!"
+#~ msgstr "Projekt ikke i databasen!"
+
 #~ msgid "Project saved!"
 #~ msgstr "Projekt gemt!"
+
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Projektnummer"
 
 #~ msgid "Project/Job Name"
 #~ msgstr "Projektnavn"
@@ -4890,50 +3871,480 @@ msgstr "Postering bogført!"
 #~ msgid "Project/Job Number"
 #~ msgstr "Projectnummer"
 
+#~ msgid "Projects"
+#~ msgstr "Projekter"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Indkøbsordre"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Indkøbsordre"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Kundehistorik"
+
 #~ msgid "Purchase Order Number"
 #~ msgstr "Nummer på indkøbsordre"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Indkøbsordre"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Indkøbsordre"
+
+#~ msgid "Qty"
+#~ msgstr "Mængde"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "Mængde overstiger tilgængeligt antal på lager!"
+
+#~ msgid "Quarter"
+#~ msgstr "Kvartal"
+
+#~ msgid "Queue"
+#~ msgstr "Kø"
 
 #~ msgid "Queued"
 #~ msgstr "Sat i kø"
 
+#~ msgid "Quotation Date"
+#~ msgstr "Tilbudsdato"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Tilbudsdato mangler!"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Tilbudsnummer"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Tilbudsnummer mangler!"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Tilbudsnummer"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Tilbud slettet!"
+
 #~ msgid "R"
 #~ msgstr "R"
+
+#~ msgid "RFQ Number"
+#~ msgstr "Nummer for tilbudsønske"
+
+#~ msgid "ROP"
+#~ msgstr "Genbestil ved"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Sats"
 
 #~ msgid "Rate missing!"
 #~ msgstr "Sats mangler!"
 
+#~ msgid "Recd"
+#~ msgstr "Modt"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Kvitteringer"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "Modtagelse posteret"
+
+#~ msgid "Receivables"
+#~ msgstr "Indbetalinger"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Modtag varer"
 
 #~ msgid "Received"
 #~ msgstr "Modtaget"
 
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Bogfør på"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Afstemning"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Afstemningsrapport"
+
+#~ msgid "Record in"
+#~ msgstr "Bogfør på"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Rapport for"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "Gentagen transaktion for %1"
+
+#~ msgid "Reference"
+#~ msgstr "Reference"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Projekt"
+
+#~ msgid "Remaining"
+#~ msgstr "Resterer"
+
+#~ msgid "Remove"
+#~ msgstr "Fjern"
+
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Fjern revisionssporing indtil"
+
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Fjernede køfiler!"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "Fjerner markerede poster fra kø ..."
+
+#~ msgid "Repeat"
+#~ msgstr "Gentag"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Rapport for"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Rapport for"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Rapporter"
+
+#~ msgid "Report for"
+#~ msgstr "Rapport for"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Rapporter"
+
+#~ msgid "Req"
+#~ msgstr "Krævet"
 
 #~ msgid "Request for Quotations"
 #~ msgstr "Ønske om tilbud"
 
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Kvitteringer"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Bestilt af"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Bestilt af"
+
+#~ msgid "Requirements"
+#~ msgstr "Krav"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Adgangskode"
+
+#, fuzzy
+#~ msgid "Reset Till By %1"
+#~ msgstr "Nulstil kasse med %1"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Realiseret overskud"
+
 #~ msgid "Revenue"
 #~ msgstr "Indtægt"
+
+#, fuzzy
+#~ msgid "Reversal Information"
+#~ msgstr "Ønske om tilbud"
 
 #~ msgid "Role"
 #~ msgstr "Rolle"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Konti"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Sikkerhedskopi"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Rapporter"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC slettet!"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC gemt!"
+
+#~ msgid "SKU"
+#~ msgstr "Varenummer"
+
+#~ msgid "SO"
+#~ msgstr "Salgsordre"
+
 #~ msgid "Sales Invoice."
 #~ msgstr "Salgsfaktura."
+
+#~ msgid "Sales Invoice/AR Transaction Number"
+#~ msgstr "Salgsfaktura/debitorposteringnummer"
+
+#~ msgid "Sales Order Number"
+#~ msgstr "Salgsordrenummer"
+
+#~ msgid "Sales Quotation Number"
+#~ msgstr "Salgstilbudsnummer"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Firmanavn"
+
+#~ msgid "Salesperson"
+#~ msgstr "Sælger"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Tilbud"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Indkøbsordre"
+
+#, fuzzy
+#~ msgid "Sat"
+#~ msgstr "Stat"
 
 #~ msgid "Saturday"
 #~ msgstr "Lørdag"
 
+#~ msgid "Save"
+#~ msgstr "Gem"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Gem som ny"
+
+#, fuzzy
+#~ msgid "Save Batch"
+#~ msgstr "Gem planlægning"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Gem som ny"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Tilbud"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Gem som ny"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Tilbud"
+
 #~ msgid "Save Pricelist"
 #~ msgstr "Gem prisliste"
+
+#~ msgid "Save Schedule"
+#~ msgstr "Gem planlægning"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTeX-skabeloner"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Gem som ny"
+
+#~ msgid "Save as new"
+#~ msgstr "Gem som ny"
 
 #~ msgid "Save to File"
 #~ msgstr "Gem i fil"
 
+#, fuzzy
+#~ msgid "Saving %1 [_2]"
+#~ msgstr "Gemmer %1 %2"
+
+#~ msgid "Schedule"
+#~ msgstr "Planlæg"
+
+#~ msgid "Scheduled"
+#~ msgstr "Planlagt"
+
+#~ msgid "Screen"
+#~ msgstr "Skærm"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Salgssted faktura"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Faktura"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Kontrollér lagerbeholdning"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Indkøbsordrer"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Tilbud"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Afstemningsrapport"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Ønske om tilbud"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Salgsordrer"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Projektposteringer"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Søg"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Vælg alt"
+
+#~ msgid "Select Customer"
+#~ msgstr "Vælg kunde"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Skabeloner for opsætning"
+
+#~ msgid "Select Vendor"
+#~ msgstr "Vælg leverandør"
+
+#~ msgid "Select a Printer!"
+#~ msgstr "Vælg en printer!"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Vælg alt"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "Vælg et af navnene nedenfor"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Vælg et af projekterne nedenfor"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Salgsfakturaer"
+
+#~ msgid "Select items"
+#~ msgstr "Vælg varenumre"
+
+#~ msgid "Select payment"
+#~ msgstr "Vælg betaling"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Vælg postscript eller PDF"
+
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "Vælg txt, postscript eller PDF"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Vælg"
+
+#~ msgid "Sell"
+#~ msgstr "Sælg"
+
+#~ msgid "Sell Price"
+#~ msgstr "Salgspris"
+
 #~ msgid "Send by E-Mail"
 #~ msgstr "Send som e-post"
+
+#~ msgid "Sending"
+#~ msgstr "Sender"
+
+#~ msgid "Sep"
+#~ msgstr "sep"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Afdelinger"
+
+#~ msgid "September"
+#~ msgstr "september"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Præferencer"
+
+#~ msgid "Serial No."
+#~ msgstr "Serienummer"
+
+#~ msgid "Serial Number"
+#~ msgstr "Serienummer"
+
+#~ msgid "Service"
+#~ msgstr "Serviceydelse"
+
+#~ msgid "Service Code"
+#~ msgstr "Serviceydelsesnummer"
 
 #~ msgid "Service Code missing!"
 #~ msgstr "Serviceydelsesnummer mangler!"
@@ -4943,6 +4354,9 @@ msgstr "Postering bogført!"
 
 #~ msgid "Services"
 #~ msgstr "Serviceydelser"
+
+#~ msgid "Session Timeout"
+#~ msgstr "Session timeout"
 
 #~ msgid "Session expired!"
 #~ msgstr "Session udløbet1"
@@ -4959,11 +4373,44 @@ msgstr "Postering bogført!"
 #~ msgid "Seventy"
 #~ msgstr "Halvfjerds"
 
+#~ msgid "Ship Merchandise"
+#~ msgstr "Afsend varer"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Send via"
+
+#~ msgid "Ship to"
+#~ msgstr "Send til"
+
+#~ msgid "Ship via"
+#~ msgstr "Send via"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Send via"
+
 #~ msgid "Shipping Address"
 #~ msgstr "Afsendelsesadresse"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Afsendelsesdato"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Afsendelsesdato mangler!"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Afsendelsessted"
+
+#~ msgid "Short"
+#~ msgstr "Kort"
+
 #~ msgid "Signature"
 #~ msgstr "Underskrift"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Udlignet"
 
 #~ msgid "Six"
 #~ msgstr "Seks"
@@ -4977,8 +4424,47 @@ msgstr "Postering bogført!"
 #~ msgid "Sold"
 #~ msgstr "Solgt"
 
+#~ msgid "Sort by"
+#~ msgstr "Sortér efter"
+
+#~ msgid "Source"
+#~ msgstr "Bilag"
+
+#~ msgid "Spoolfile"
+#~ msgstr "køfil"
+
+#~ msgid "Standard"
+#~ msgstr "Standard"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "Standard industrikoder (SIC)"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Balanceopgørelse"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Startdato"
+
+#~ msgid "Startdate"
+#~ msgstr "Startdato"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Startdato"
+
+#~ msgid "State"
+#~ msgstr "Stat"
+
+#~ msgid "State/Province"
+#~ msgstr "Stat/provins"
+
 #~ msgid "Statement - %1"
 #~ msgstr "Opgørelse - %1"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Balanceopgørelse"
 
 #~ msgid "Statement sent to %1"
 #~ msgstr "Opgørelse sendt til %1"
@@ -4986,20 +4472,110 @@ msgstr "Postering bogført!"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Opgørelser sendt til printer"
 
+#, fuzzy
+#~ msgid "Status: Complete"
+#~ msgstr "Færdig"
+
+#~ msgid "Stock"
+#~ msgstr "Lager"
+
 #~ msgid "Stock Finished Goods"
 #~ msgstr "Sæt færdige varer på lager"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Stylesheet"
 
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "Underleverandørs GIFI"
 
+#~ msgid "Subject"
+#~ msgstr "Emne"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Emne: %1"
+
+#~ msgid "Subtotal"
+#~ msgstr "Subtotal"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Subtotal"
+
+#~ msgid "Summary"
+#~ msgstr "Oversigt"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Samlekonto for"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "jun"
+
 #~ msgid "Sunday"
 #~ msgstr "Søndag"
+
+#, fuzzy
+#~ msgid "Super-user login"
+#~ msgstr "Superuser"
+
+#, fuzzy
+#~ msgid "Superuser Credentials"
+#~ msgstr "Superuser"
 
 #~ msgid "Supervisor"
 #~ msgstr "Supervisor"
 
+#~ msgid "System Defaults"
+#~ msgstr "Standardopsætning for system"
+
 #~ msgid "System currently down for maintenance!"
 #~ msgstr "Systemet er i øjeblikket ude af drift på grund af vedligeholdelse!"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Moms/afgift"
+
+#~ msgid "Tax"
+#~ msgstr "Moms/afgift"
+
+#~ msgid "Tax Account"
+#~ msgstr "Moms/afgiftkonti"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Opgave"
+
+#, fuzzy
+#~ msgid "Tax Form Name"
+#~ msgstr "CVR"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Datoformat"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "CVR / CPR"
+
+#~ msgid "Tax Included"
+#~ msgstr "Inkl. moms og afgifter"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Inkl. moms og afgifter"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "CVR / CPR"
+
+#~ msgid "Tax Rules"
+#~ msgstr "Afgifter"
+
+#, fuzzy
+#~ msgid "Tax Status"
+#~ msgstr "Afgifter"
 
 #~ msgid "Tax collected"
 #~ msgstr "Opkrævet moms/afgifter"
@@ -5007,11 +4583,50 @@ msgstr "Postering bogført!"
 #~ msgid "Tax paid"
 #~ msgstr "Betalt moms/afgifter"
 
+#~ msgid "Taxable"
+#~ msgstr "Moms/afgiftspligtig"
+
+#~ msgid "Taxes saved!"
+#~ msgstr "Moms/afgifter gemt!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Skabelon gemt!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Skabeloner"
+
+#~ msgid "Template saved!"
+#~ msgstr "Skabelon gemt!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Nye skabeloner"
+
+#~ msgid "Terms"
+#~ msgstr "Netto"
+
 #~ msgid "Text"
 #~ msgstr "Tekst"
 
+#~ msgid "Text Templates"
+#~ msgstr "Skabeloner for tekst"
+
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "De følgende datasæt er ikke i brug og kan slettes"
+
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Foreløbig status"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Kredit"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Debet"
 
 #~ msgid "Thirteen"
 #~ msgstr "Tretten"
@@ -5019,12 +4634,16 @@ msgstr "Postering bogført!"
 #~ msgid "Thirty"
 #~ msgstr "Tredive"
 
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Moms/afgiftkonti"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
-#~ "Dette er en indledende kontrol af eksisterende kilder. Ingenting vil blive "
-#~ "oprettet eller slettet på dette trin"
+#~ "Dette er en indledende kontrol af eksisterende kilder. Ingenting vil "
+#~ "blive oprettet eller slettet på dette trin"
 
 #~ msgid ""
 #~ "This is your first time logging into LedgerSMB.  Please set your "
@@ -5039,14 +4658,59 @@ msgstr "Postering bogført!"
 #~ msgid "Three"
 #~ msgstr "Tre"
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "Fra"
+
 #~ msgid "Thursday"
 #~ msgstr "Torsdag"
+
+#~ msgid "Till"
+#~ msgstr "Indtil"
 
 #~ msgid "Time"
 #~ msgstr "Klokkeslæt"
 
 #~ msgid "Time Card deleted!"
 #~ msgstr "Timeseddel slettet!"
+
+#, fuzzy
+#~ msgid "Time Frame"
+#~ msgstr "Timeseddel gemt!"
+
+#~ msgid "Time In"
+#~ msgstr "Starttid"
+
+#~ msgid "Time Out"
+#~ msgstr "Sluttid"
+
+#, fuzzy
+#~ msgid "Time and Material Cards"
+#~ msgstr "Timesedler"
+
+#, fuzzy
+#~ msgid "Timecard Criteria"
+#~ msgstr "Timeseddel"
+
+#~ msgid "Times"
+#~ msgstr "Gange"
+
+#~ msgid "To"
+#~ msgstr "til"
+
+#~ msgid "To %1"
+#~ msgstr "Til %1"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Beløb"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Dato"
+
+#~ msgid "To Warehouse"
+#~ msgstr "Til lager"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -5057,8 +4721,51 @@ msgstr "Postering bogført!"
 #~ "bruger til en gruppe. Den nye bruger vil så bive gemt med de samme "
 #~ "indstillinger under det nye brugernavn."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "til"
+
+#, fuzzy
+#~ msgid "To: %1"
+#~ msgstr "To: %1"
+
+#~ msgid "Total"
+#~ msgstr "I alt"
+
+#, fuzzy
+#~ msgid "Total Cash in Drawer: %1"
+#~ msgstr "Totalt kontant i skuffen: %1"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "I alt"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Følgesedler"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Handelsrabat"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Posteringsdato"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Posteringsdato mangler!"
+
+#~ msgid "Transaction Dates"
+#~ msgstr "Posteringsdato"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Postering"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "Postering slettet!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Postering bogført!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Rettelser af posteringer skal altid bogføres explicit"
@@ -5066,11 +4773,40 @@ msgstr "Postering bogført!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Rettelser af posteringer skal bogføres explicit indtil"
 
+#~ msgid "Transactions"
+#~ msgstr "Posteringer"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Overfør lagerbeholdning"
+
+#~ msgid "Transfer from"
+#~ msgstr "Overfør fra"
+
+#~ msgid "Transfer to"
+#~ msgstr "Overfør til"
+
+#~ msgid "Translation"
+#~ msgstr "Oversættelse"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Oversættelser slettet!"
+
 #~ msgid "Translation not on file!"
 #~ msgstr "Oversættelse ikke tilgængelig"
 
+#~ msgid "Translations saved!"
+#~ msgstr "Oversættelser gemt!"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Foreløbig status"
+
 #~ msgid "Trillion"
 #~ msgstr "Billion"
+
+#, fuzzy
+#~ msgid "Tue"
+#~ msgstr "Ti"
 
 #~ msgid "Tuesday"
 #~ msgstr "Tirsdag"
@@ -5114,8 +4850,44 @@ msgstr "Postering bogført!"
 #~ msgid "Two"
 #~ msgstr "To"
 
+#, fuzzy
+#~ msgid "Unable to save %1 object"
+#~ msgstr "Kunne ikke gemme ordren!"
+
+#~ msgid "Under"
+#~ msgstr "Under"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Fakturanummer"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Kundenummer"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Leverandørnummer"
+
+#~ msgid "Unit"
+#~ msgstr "Enhed"
+
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
+
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Leverandørnummer"
+
+#~ msgid "Update"
+#~ msgstr "Opdatér"
+
+#~ msgid "Updated"
+#~ msgstr "Opdateret"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Gem"
 
 #~ msgid "Upgrading to Version %1 ..."
 #~ msgstr "Opgraderer til version %1 ..."
@@ -5123,32 +4895,149 @@ msgstr "Postering bogført!"
 #~ msgid "Use Templates"
 #~ msgstr "Brug skabeloner"
 
+#~ msgid "User"
+#~ msgstr "Bruger"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Bruger gemt!"
+
 #~ msgid "User deleted!"
 #~ msgstr "Bruger slettet!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Bruger"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Bruger"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Bruger"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Gældende indtil"
+
+#~ msgid "Valid To"
+#~ msgstr "Gældende indtil"
+
+#~ msgid "Valid until"
+#~ msgstr "Gældende indtil"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Ny konto"
 
 #~ msgid "Vendor Invoice."
 #~ msgstr "Leverandørfaktura."
 
+#~ msgid "Vendor Invoice/AP Transaction Number"
+#~ msgstr "Leverandørfaktura/kreditorposteringnummer"
+
 #~ msgid "Vendor Invoices"
 #~ msgstr "Leverandørfakturaer"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Leverandørnummer"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Leverandørnummer"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Leverandørnummer"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Hovedbog referencenummer"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Leverandørnummer"
 
 #~ msgid "Vendor deleted!"
 #~ msgstr "Leverandør slettet!"
 
+#~ msgid "Vendor missing!"
+#~ msgstr "Leverandør mangler!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Leverandør ikke i databasen!"
+
 #~ msgid "Vendor saved!"
 #~ msgstr "Leverandør gemt!"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Leverandør"
 
 #~ msgid "Vendors"
 #~ msgstr "Leverandører"
 
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Version"
+
+#~ msgid "Visa/MC"
+#~ msgstr "Visa/MC"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Fradrag"
+
+#~ msgid "Warehouse"
+#~ msgstr "Lager"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Lager slettet!"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Lager gemt!"
+
+#~ msgid "Warning!"
+#~ msgstr "Advarsel!"
+
 #~ msgid "Wednesday"
 #~ msgstr "Onsdag"
+
+#~ msgid "Week"
+#~ msgstr "Uge"
+
+#~ msgid "Week(s)"
+#~ msgstr "Uge(r)"
 
 #~ msgid "Weeks"
 #~ msgstr "Uger"
 
+#~ msgid "Weight"
+#~ msgstr "Vægt"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Hvilken type varenummer er dette?"
+
+#~ msgid "Work Orders"
+#~ msgstr "Arbejdssedler"
+
 #~ msgid "Work Phone"
 #~ msgstr "Telefon arbejde"
+
+#~ msgid "Year"
+#~ msgstr "År"
+
+#~ msgid "Year(s)"
+#~ msgstr "År"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Årsslutning posteret!"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "Dato for årsslutning mangler!"
@@ -5156,8 +5045,18 @@ msgstr "Postering bogført!"
 #~ msgid "Yearend posting failed!"
 #~ msgstr "Postering af årsslutning mislykkedes!"
 
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
 #~ msgid "You are logged out"
 #~ msgstr "Du er logget ud"
+
+#~ msgid "You are logged out!"
+#~ msgstr "Du er logget ud1"
+
+#, fuzzy
+#~ msgid "You are over by %1"
+#~ msgstr "Du har %1 for meget"
 
 #~ msgid "You are printing and saving an existing order"
 #~ msgstr "Du udskriver og gemmer en eksisterende ordre"
@@ -5171,14 +5070,117 @@ msgstr "Postering bogført!"
 #~ msgid "You are saving an existing quotation"
 #~ msgstr "Du gemmer et eksisterende tilbud"
 
+#, fuzzy
+#~ msgid "You are under by %1"
+#~ msgstr "Du har %1 for lidt"
+
 #~ msgid "You did not enter a name!"
 #~ msgstr "Du angav ikke et navn"
 
 #~ msgid "Zero"
 #~ msgstr "Nul"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "Postnummer"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "Postnummer"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Forretning"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Sprog"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Lager"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "konto kan ikke sættes til nogen anden type konto"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "action= ikke defineret!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "mar"
+
+#~ msgid "as at"
+#~ msgstr "som ved"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Check"
+
+#~ msgid "days"
+#~ msgstr "dage"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Debet"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Fjern"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Depositum"
+
+#~ msgid "done"
+#~ msgstr "færdig"
+
+#~ msgid "ea"
+#~ msgstr "stk"
+
+#~ msgid "failed"
+#~ msgstr "fejlede"
+
 #~ msgid "for Period"
 #~ msgstr "for perioden"
 
+#~ msgid "localhost"
+#~ msgstr "lokalt"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Betaling"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Kvittering"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Salgsfaktura"
+
+#~ msgid "sent"
+#~ msgstr "sendt"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Balanceopgørelse"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Subtotal"
+
 #~ msgid "successfully deleted!"
 #~ msgstr "slettet!"
+
+#~ msgid "unexpected error!"
+#~ msgstr "uventet fejl!"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Leverandørfaktura"

@@ -29,85 +29,409 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-msgid "Add Budget"
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
 
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Závazky"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Analýza splatnosti"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
 #, fuzzy
-msgid "Import Batch"
-msgstr "Sestavy"
+msgid "AP Transaction"
+msgstr "Faktury přijaté"
 
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2876
+#: sql/Pg-database.sql:2908
 #, fuzzy
-msgid "Sessions"
-msgstr "Verze"
+msgid "AP Voucher"
+msgstr "Vymazat účet"
 
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr ""
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Pohledávky"
 
-#: sql/Pg-database.sql:726
-msgid "Mrs."
-msgstr ""
-
-#: sql/Pg-database.sql:3783
-msgid "Abandonment"
-msgstr ""
-
-#: sql/Pg-database.sql:2860
-msgid "Add Part"
-msgstr "Příjem zboží"
-
-#: sql/Pg-database.sql:802
-msgid "IRC"
-msgstr ""
-
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "Účtovací řetězec"
-
-#: sql/Pg-database.sql:2139
-#, fuzzy
-msgid "Budget"
-msgstr "Objednávka číslo"
-
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr ""
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Analýza splatnosti"
 
 #: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
 #, fuzzy
 msgid "AR Transaction"
 msgstr "Faktury přijaté"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "Vypsat účtovací řetězce"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2907
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Příjem zboží"
+msgid "AR Voucher"
+msgstr "Vymazat účet"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
+#: sql/Pg-database.sql:3783
+msgid "Abandonment"
 msgstr ""
+
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Založit účet"
 
 #: sql/Pg-database.sql:2862
 msgid "Add Assembly"
 msgstr "Nový výrobek"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Nový výrobek"
+
+#: sql/Pg-database.sql:2909
+msgid "Add Budget"
+msgstr ""
+
+#: sql/Pg-database.sql:2836
+#, fuzzy
+msgid "Add Business"
+msgstr "IČO"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Nový výrobek"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr ""
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Doplnit účtovací řetězec"
+
+#: sql/Pg-database.sql:2929
+#, fuzzy
+msgid "Add Group"
+msgstr "Díly"
+
+#: sql/Pg-database.sql:2838
+#, fuzzy
+msgid "Add Language"
+msgstr "Jazyk"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Nový druh služby"
+
+#: sql/Pg-database.sql:2860
+msgid "Add Part"
+msgstr "Příjem zboží"
+
+#: sql/Pg-database.sql:2930
+#, fuzzy
+msgid "Add Pricegroup"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Nový uživatel"
+
+#: sql/Pg-database.sql:2840
+#, fuzzy
+msgid "Add SIC"
+msgstr "Doplnit účtovací řetězec"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Nový druh služby"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Příjem zboží"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Příjem zboží"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Nová transakce"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Aktiva"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Výrobky"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Aktiva"
+
+#: sql/Pg-database.sql:810
+msgid "BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Rozvaha"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Datum objednávky"
+
+#: sql/Pg-database.sql:659
+msgid "Billing"
+msgstr ""
+
+#: sql/Pg-database.sql:813
+msgid "Billing BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:812
+msgid "Billing CC"
+msgstr ""
+
+#: sql/Pg-database.sql:811
+msgid "Billing Email"
+msgstr ""
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr ""
+
+#: sql/Pg-database.sql:2139
+#, fuzzy
+msgid "Budget"
+msgstr "Objednávka číslo"
+
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:809
+msgid "CC"
+msgstr ""
+
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr ""
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Telefon"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Účtový rozvrh"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr ""
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Kontakt"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Nový druh služby"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Má dáti"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Odběratel"
+
+#: sql/Pg-database.sql:2784
+#, fuzzy
+msgid "Customer History"
+msgstr "Vystavená objednávka"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Faktura"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Má dáti"
+
+#: sql/Pg-database.sql:2833
+#, fuzzy
+msgid "Defaults"
+msgstr "Vymazat účet"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Popis"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Popis"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Popis"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Bře"
+
+#: sql/Pg-database.sql:2866
+msgid "Drafts"
+msgstr ""
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "E-mail"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr ""
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr ""
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Zásoby"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Upravit výrobek"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Upravit účet"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Fax"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
+msgstr "Nový výrobek"
+
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "Účtovací řetězec"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Hlavní kniha"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Zboží a služby"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr ""
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML šablony"
+
+#: sql/Pg-database.sql:805
+#, fuzzy
+msgid "Home Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+msgid "IRC"
 msgstr ""
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
@@ -116,35 +440,81 @@ msgstr ""
 msgid "Import"
 msgstr "Sestavy"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Aktiva"
+msgid "Import Batch"
+msgstr "Sestavy"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Sestavy"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Platba"
+#: sql/Pg-database.sql:2905
+#, fuzzy
+msgid "Import GIFI"
+msgstr "Upravit účtovací řetězec"
 
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Aktiva"
+#: sql/Pg-database.sql:2773
+#, fuzzy
+msgid "Import Inventory"
+msgstr "Zásoby"
+
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Výsledovka"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Zásoby"
+
+#: sql/Pg-database.sql:2777
+#, fuzzy
+msgid "Inventory Activity"
+msgstr "Zásoby"
+
+#: sql/Pg-database.sql:2940
+#, fuzzy
+msgid "Inventory and COGS"
+msgstr "Zásoby"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Faktura"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Číslo faktury"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Částka"
 
 #: sql/Pg-database.sql:2869
 #, fuzzy
 msgid "LaTeX Templates"
 msgstr "LaTeX šablony"
 
-#: sql/Pg-database.sql:2866
-msgid "Drafts"
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Jazyk"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
 msgstr ""
 
-#: sql/Pg-database.sql:2788
-msgid "Top-level"
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
 msgstr ""
 
 #: sql/Pg-database.sql:2837
@@ -152,69 +522,187 @@ msgstr ""
 msgid "List Businesses"
 msgstr "IČO"
 
-#: sql/Pg-database.sql:2783
+#: sql/Pg-database.sql:2883
 #, fuzzy
-msgid "Add Contact"
-msgstr "Kontakt"
+msgid "List Classes"
+msgstr "Výrobky"
 
-#: sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "Vypsat účtovací řetězce"
+
+#: sql/Pg-database.sql:2839
 #, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Platba"
+msgid "List Languages"
+msgstr "Jazyk"
 
-#: sql/Pg-database.sql:810
-msgid "BCC"
+#: sql/Pg-database.sql:2841
+#, fuzzy
+msgid "List SIC"
+msgstr "Vypsat účtovací řetězce"
+
+#: sql/Pg-database.sql:2877
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "Příjem zboží"
+
+#: sql/Pg-database.sql:2835
+msgid "List Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Odhlásit"
+
+#: sql/Pg-database.sql:801
+msgid "MSN"
 msgstr ""
 
 #: sql/Pg-database.sql:663
 msgid "Mailing"
 msgstr ""
 
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Nový druh služby"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
+#: sql/Pg-database.sql:724
+msgid "Miss."
 msgstr ""
 
-#: sql/Pg-database.sql:2884
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Add Assets"
-msgstr "Nový výrobek"
+msgid "Mr."
+msgstr "Bře"
 
-#: sql/Pg-database.sql:3721
-msgid "time"
+#: sql/Pg-database.sql:726
+msgid "Mrs."
 msgstr ""
 
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#: sql/Pg-database.sql:727
 #, fuzzy
-msgid "Vouchers"
-msgstr "Vymazat účet"
+msgid "Ms."
+msgstr "Bře"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Zadání objednávky"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr ""
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+#, fuzzy
+msgid "Packing List"
+msgstr "Chybí datum dodacího listu"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Díly"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Platby"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr ""
+
+#: sql/Pg-database.sql:2924
+#, fuzzy
+msgid "Preferences"
+msgstr "Nastavení"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Vystavená objednávka"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
+#: sql/Pg-database.sql:2966
+#, fuzzy
+msgid "Quotation"
+msgstr "Číslo faktury"
+
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+#, fuzzy
+msgid "Quotations"
+msgstr "Číslo faktury"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr ""
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr ""
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+#, fuzzy
+msgid "Receipt"
+msgstr "Pohledávky"
 
 #: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
 #, fuzzy
 msgid "Receipts"
 msgstr "Pohledávky"
 
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
+#: sql/Pg-database.sql:2817
+#, fuzzy
+msgid "Receive"
+msgstr "Pohledávky"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
+#, fuzzy
+msgid "Reconciliation"
+msgstr "Zahrnovat v sestavě"
+
+#: sql/Pg-database.sql:2919
+#, fuzzy
+msgid "Recurring Transactions"
+msgstr "Vypsat transakce"
+
+#: sql/Pg-database.sql:547
+msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Work Order"
-msgstr "Objednávka"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Má dáti"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Vystavené objednávky"
+msgid "Reporting Units"
+msgstr "Sestavy"
 
 #: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
 #: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
@@ -223,88 +711,32 @@ msgstr "Vystavené objednávky"
 msgid "Reports"
 msgstr "Sestavy"
 
-#: sql/Pg-database.sql:2917
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Goods and Services"
-msgstr "Zboží a služby"
+msgid "Reverse AR Overpay"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:2937
+#, fuzzy
+msgid "Reverse Overpay"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Vystavené objednávky"
 
 #: sql/Pg-database.sql:2477
 msgid "Rounded"
 msgstr ""
 
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Nový druh služby"
-
-#: sql/Pg-database.sql:2836
-#, fuzzy
-msgid "Add Business"
-msgstr "IČO"
-
-#: sql/Pg-database.sql:2785
-#, fuzzy
-msgid "Vendor History"
-msgstr "Vystavená objednávka"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Příjmy z prodeje"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Nastavení"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr ""
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Nový druh služby"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Sestavy"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-#, fuzzy
-msgid "List Languages"
-msgstr "Jazyk"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Zahrnovat v sestavě"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Přijaté objednávky"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-#, fuzzy
-msgid "Packing List"
-msgstr "Chybí datum dodacího listu"
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
+#: sql/Pg-database.sql:2871
+msgid "SIC"
 msgstr ""
 
 #: sql/Pg-database.sql:954
@@ -316,593 +748,24 @@ msgstr ""
 msgid "Sale"
 msgstr "Příjmy z prodeje"
 
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-#, fuzzy
-msgid "Add Language"
-msgstr "Jazyk"
-
-#: sql/Pg-database.sql:659
-msgid "Billing"
-msgstr ""
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Číslo faktury"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Doplnit účtovací řetězec"
-
-#: sql/Pg-database.sql:2840
-#, fuzzy
-msgid "Add SIC"
-msgstr "Doplnit účtovací řetězec"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "E-mail"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Systém"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Platba"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Platby"
-
-#: sql/Pg-database.sql:813
-msgid "Billing BCC"
-msgstr ""
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Bře"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML šablony"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Bře"
-
-#: sql/Pg-database.sql:2894
-#, fuzzy
-msgid "Vendor Invoice"
-msgstr "Faktura"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Odběratel"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Datum"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr ""
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2777
-#, fuzzy
-msgid "Inventory Activity"
-msgstr "Zásoby"
-
-#: sql/Pg-database.sql:2880
-#, fuzzy
-msgid "Asset Classes"
-msgstr "Výrobky"
-
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Nový uživatel"
-
-#: sql/Pg-database.sql:2895
-#, fuzzy
-msgid "Debit Note"
-msgstr "Má dáti"
-
-#: sql/Pg-database.sql:801
-msgid "MSN"
-msgstr ""
-
-#: sql/Pg-database.sql:2905
-#, fuzzy
-msgid "Import GIFI"
-msgstr "Upravit účtovací řetězec"
-
-#: sql/Pg-database.sql:2799
-#, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Platba"
-
-#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
-#: sql/Pg-database.sql:2966
-#, fuzzy
-msgid "Quotation"
-msgstr "Číslo faktury"
-
-#: sql/Pg-database.sql:2916
-#, fuzzy
-msgid "General Journal"
-msgstr "Hlavní kniha"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-#, fuzzy
-msgid "Statement"
-msgstr "Výsledovka"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Nový výrobek"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Jazyk"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-#, fuzzy
-msgid "AP Transaction"
-msgstr "Faktury přijaté"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Sestavy"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Pohledávky"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Příjem zboží"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Bře"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Rozvaha"
-
-#: sql/Pg-database.sql:805
-#, fuzzy
-msgid "Home Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-#, fuzzy
-msgid "Translations"
-msgstr "Faktury vydané"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Fax"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Formát data"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Telefon"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Popis"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Účtový rozvrh"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Analýza splatnosti"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Příjem zboží"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Odhlásit"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Upravit účet"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Aktiva"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
-
-#: sql/Pg-database.sql:2919
-#, fuzzy
-msgid "Recurring Transactions"
-msgstr "Vypsat transakce"
-
-#: sql/Pg-database.sql:547
-msgid "Referral"
-msgstr ""
-
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Přijatá objednávka"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr ""
-
-#: sql/Pg-database.sql:2873
-#, fuzzy
-msgid "Type of Business"
-msgstr "IČO"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
-#, fuzzy
-msgid "Import Inventory"
-msgstr "Zásoby"
-
-#: sql/Pg-database.sql:2930
-#, fuzzy
-msgid "Add Pricegroup"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Zásoby"
-
-#: sql/Pg-database.sql:2891
-#, fuzzy
-msgid "Depreciation"
-msgstr "Popis"
-
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
-#, fuzzy
-msgid "Depreciate"
-msgstr "Popis"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr ""
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Faktura"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-#, fuzzy
-msgid "Receipt"
-msgstr "Pohledávky"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Faktury přijaté"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-#, fuzzy
-msgid "List SIC"
-msgstr "Vypsat účtovací řetězce"
-
-#: sql/Pg-database.sql:811
-msgid "Billing Email"
-msgstr ""
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Zásoby"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Závazky"
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Příjmy z prodeje"
 
 #: sql/Pg-database.sql:2898
 #, fuzzy
 msgid "Sales Invoice"
 msgstr "Faktura"
 
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Analýza splatnosti"
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Přijatá objednávka"
 
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Zadání objednávky"
-
-#: sql/Pg-database.sql:2784
-#, fuzzy
-msgid "Customer History"
-msgstr "Vystavená objednávka"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-#, fuzzy
-msgid "Receive"
-msgstr "Pohledávky"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Výrobky"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Kontakt"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Díly"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Firma"
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-#, fuzzy
-msgid "Quotations"
-msgstr "Číslo faktury"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Obratová předvaha"
-
-#: sql/Pg-database.sql:2929
-#, fuzzy
-msgid "Add Group"
-msgstr "Díly"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Vystavené objednávky"
-
-#: sql/Pg-database.sql:2835
-msgid "List Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Platba"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr ""
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Nový výrobek"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Vymazat účet"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Vymazat účet"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Založit účet"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr ""
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr ""
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Faktura"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Kontakt"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Částka"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr ""
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Vystavená objednávka"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Dodavatel"
-
-#: sql/Pg-database.sql:2833
-#, fuzzy
-msgid "Defaults"
-msgstr "Vymazat účet"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Upravit výrobek"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr ""
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Platby"
-
-#: sql/Pg-database.sql:2937
-#, fuzzy
-msgid "Reverse Overpay"
-msgstr "Platba"
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Přijaté objednávky"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -911,1587 +774,360 @@ msgstr "Platba"
 msgid "Search"
 msgstr "Březen"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Výrobky"
+msgid "Search Assets"
+msgstr "Aktiva"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr ""
-
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Nová transakce"
-
-#: sql/Pg-database.sql:2924
+#: sql/Pg-database.sql:2771
 #, fuzzy
-msgid "Preferences"
+msgid "Search Groups"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Vystavené objednávky"
+
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Platby"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Firma"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Nastavení"
 
-#: sql/Pg-database.sql:812
-msgid "Billing CC"
+#: sql/Pg-database.sql:2876
+#, fuzzy
+msgid "Sessions"
+msgstr "Verze"
+
+#: sql/Pg-database.sql:2816
+msgid "Ship"
 msgstr ""
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
+#: sql/Pg-database.sql:2476
+msgid "Simple"
+msgstr ""
+
+#: sql/Pg-database.sql:728
+msgid "Sir."
+msgstr ""
+
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+#, fuzzy
+msgid "Statement"
 msgstr "Výsledovka"
 
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Zásoby"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Výrobky"
 
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Systém"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Formát data"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
 msgstr ""
 
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Datum objednávky"
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Popis"
+#: sql/Pg-database.sql:2788
+msgid "Top-level"
+msgstr ""
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Položky"
 
-#~ msgid "Dataset"
-#~ msgstr "Dataset"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr ""
+
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+#, fuzzy
+msgid "Translations"
+msgstr "Faktury vydané"
+
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Obratová předvaha"
+
+#: sql/Pg-database.sql:2873
+#, fuzzy
+msgid "Type of Business"
+msgstr "IČO"
+
+#: sql/Pg-database.sql:2799
+#, fuzzy
+msgid "Use AR Overpayment"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:2798
+#, fuzzy
+msgid "Use Overpayment"
+msgstr "Platba"
+
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Dodavatel"
+
+#: sql/Pg-database.sql:2785
+#, fuzzy
+msgid "Vendor History"
+msgstr "Vystavená objednávka"
+
+#: sql/Pg-database.sql:2894
+#, fuzzy
+msgid "Vendor Invoice"
+msgstr "Faktura"
+
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#, fuzzy
+msgid "Vouchers"
+msgstr "Vymazat účet"
+
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr ""
+
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
+
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+#, fuzzy
+msgid "Work Order"
+msgstr "Objednávka"
+
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
+
+#: sql/Pg-database.sql:2856
+#, fuzzy
+msgid "Year End"
+msgstr "Datum"
+
+#: sql/Pg-database.sql:3830
+#, fuzzy
+msgid "depreciation"
+msgstr "Popis"
+
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3832
+#, fuzzy
+msgid "import"
+msgstr "Sestavy"
+
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
+
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
+
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3722
+#, fuzzy
+msgid "production"
+msgstr "Faktury přijaté"
+
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Účty"
+#~ msgid " Date missing!"
+#~ msgstr "Chybí datum splatnosti!"
 
 #, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Platba"
-
-#~ msgid "Source"
-#~ msgstr "Zdroj"
+#~ msgid " missing!"
+#~ msgstr "Chybí účtovací řetězec!"
 
 #, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Jméno"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "za období"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Faktury přijaté"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Poznámky"
-
-#~ msgid "Paid"
-#~ msgstr "Zaplaceno"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "z"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Dodavatel"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Datum vystavení"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Položky"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Formát data"
-
-#~ msgid "Equity"
-#~ msgstr "Vlastní jmění"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Vytvořit dataset"
-
-#, fuzzy
-#~ msgid "Delivery Date"
-#~ msgstr "Datum splatnosti"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Zaúčtovat do"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Účty"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adresa"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Jméno"
-
-#~ msgid "On Hand"
-#~ msgstr "K dispozici"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Vypsat transakce"
-
-#~ msgid "Login"
-#~ msgstr "Uživatelské jméno"
-
-#~ msgid "Sell Price"
-#~ msgstr "Prodejní cena"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
+#~ msgid "# Invoices"
 #~ msgstr "Faktura"
 
 #, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Kontrola přístupů"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Verze"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Nový dodavatel"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Platby"
-
-#~ msgid "Expense"
-#~ msgstr "Náklady"
-
-#~ msgid "Currency"
-#~ msgstr "Měna"
-
-#~ msgid "Liability"
-#~ msgstr "Závazek"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Předmět"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Startdate"
-#~ msgstr "Datum objednávky"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Číslo"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Typ účtu"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Jednotka"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Popis"
-
-#~ msgid "Message"
-#~ msgstr "Zpráva"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Vystavená objednávka"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Odběratel"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Nový výrobek"
-
-#, fuzzy
-#~ msgid "Edit Customer"
-#~ msgstr "Nový zákazník"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Upravit uživatele"
-
-#~ msgid "Number"
-#~ msgstr "Číslo"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Seznam účtů"
-
-#~ msgid "Delete"
-#~ msgstr "Vymazat"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Heslo"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Má dáti"
-
-#, fuzzy
-#~ msgid "Post"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Formát data"
-
-#~ msgid "Make"
-#~ msgstr "Výrobce"
-
-#, fuzzy
-#~ msgid "Till"
-#~ msgstr "Otevřené"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Faktury přijaté"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Vymazat účet"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Záloha"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Číslo faktury"
-
-#~ msgid "Backup"
-#~ msgstr "Záloha"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Uložit"
-
-#~ msgid "Database"
-#~ msgstr "Databáze"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Vystavená objednávka"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Seznam účtů"
-
-#, fuzzy
-#~ msgid "Code"
-#~ msgstr "Cena včetně daně"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Uzavřít účetní knihy do"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Kontakt"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Stylesheet"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Zboží"
-
-#, fuzzy
-#~ msgid "Edit Employee"
-#~ msgstr "Upravit šablonu"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Má dáti"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Číslo"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Uživatel"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Poznámky"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "E-mail"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Objednávka"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Dal"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Dataset updated!"
-
-#~ msgid "Taxable"
-#~ msgstr "Zdanitelné"
-
-#~ msgid "Continue"
-#~ msgstr "Pokračování"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Vymazat účet"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Uživatel"
-
-#~ msgid "COGS"
-#~ msgstr "Náklady na prodané zboží"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Výsledovka"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Mezisoučet"
-
-#, fuzzy
-#~ msgid "Serial Number"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Datum"
-
-#~ msgid "Account"
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Active"
-#~ msgstr "Faktury přijaté"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Datum objednávky"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Typ účtu"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Faktury přijaté"
-
-#~ msgid "Yes"
-#~ msgstr "Ano"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "Cena"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Má dáti"
-
-#~ msgid "Tax Included"
-#~ msgstr "Cena včetně daně"
-
-#~ msgid "List Price"
-#~ msgstr "Výrobní cena"
-
-#~ msgid "No"
-#~ msgstr "Ne"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Řádek celkem"
-
-#~ msgid "Qty"
-#~ msgstr "Množství"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "IČO"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Nastavení"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Datum objednávky"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Project Number"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Uživatel"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Záloha"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Zrušit dataset"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Upravit uživatele"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Přístupová práva"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Daňové účty"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Vazby mezi účty"
-
-#~ msgid "All"
-#~ msgstr "Vše"
-
-#~ msgid "From"
-#~ msgstr "z"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Výkaz za"
-
-#~ msgid "Remaining"
-#~ msgstr "Zbývá"
-
-#~ msgid "Model"
-#~ msgstr "Model"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Aktiva"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Zkopírovat do účtového rozvrhu"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Uložit do souboru"
-
-#, fuzzy
-#~ msgid "Contra"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Nastavení bylo uloženo!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Platba"
-
-#~ msgid "Debit"
-#~ msgstr "Má dáti"
-
-#, fuzzy
-#~ msgid "List Transactions"
-#~ msgstr "Faktury vydané"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "IČO"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Číslo účtu"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Úvěrový limit"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "z"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Zásoby"
-
-#, fuzzy
-#~ msgid "Cost Center"
-#~ msgstr "Datum"
-
-#~ msgid "Bin"
-#~ msgstr "Paleta"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Požadováno do"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Výkaz za"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "IČO"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Obratová předvaha"
-
-#~ msgid "Report for"
-#~ msgstr "Výkaz za"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Vymazat účet"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Datum vystavení"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Zdanitelné"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Objednávka"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Zásoby"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Aktiva"
-
-#~ msgid "Amount"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Datum vystavení"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "z"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Výkaz za"
-
-#, fuzzy
-#~ msgid "Projects"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Difference"
-#~ msgstr "Nastavení"
-
-#, fuzzy
-#~ msgid "Update"
-#~ msgstr "Dataset updated!"
-
-#~ msgid "Due Date"
-#~ msgstr "Datum splatnosti"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Upravit uživatele"
-
-#~ msgid "Database Host"
-#~ msgstr "Databázový server"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Odběratel"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Upravit účet"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Přílohy"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Náklad"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Číslo faktury"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Popis"
-
-#~ msgid "Password"
-#~ msgstr "Heslo"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Uložit"
-
-#~ msgid "Edit User"
-#~ msgstr "Upravit uživatele"
-
-#~ msgid "Account Number"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Edit Vendor"
-#~ msgstr "Nový dodavatel"
-
-#~ msgid "User"
-#~ msgstr "Uživatel"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Aktiva"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Zásoby"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Printer"
-#~ msgstr "Tiskárna"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Dodací list"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "do"
-
-#~ msgid "Date Paid"
-#~ msgstr "Zaplaceno"
-
-#, fuzzy
-#~ msgid "Amount Due"
-#~ msgstr "Částka"
-
-#~ msgid "Credit"
-#~ msgstr "Dal"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Částka"
-
-#~ msgid "Short"
-#~ msgstr "Krátký výpis"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Uživatel"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Číslo faktury"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "Květen"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Vystavená objednávka"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Zrušit dataset"
-
-#~ msgid "Open"
-#~ msgstr "Otevřené"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Dal"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Platba"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Faktury vydané"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Seznam účtů"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Poznámky"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "K dispozici"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Měnový kurz"
-
-#, fuzzy
-#~ msgid "Salesperson"
-#~ msgstr "Přijaté objednávky"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Zahrnovat v sestavě"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Ukazovat v drop-down menu"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Dal"
-
-#~ msgid "Include in Report"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Rozvaha"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Zakázat editaci všech účetních položek"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Sestavy"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Požadováno do"
-
-#~ msgid "Number Format"
-#~ msgstr "Číselný formát"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Sestavy"
-
-#~ msgid "Line Total"
-#~ msgstr "Řádek celkem"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "IČO"
-
-#~ msgid "Address"
-#~ msgstr "Adresa"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Vytvořit dataset"
-
-#~ msgid "Record in"
-#~ msgstr "Zaúčtovat do"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Hlavní kniha"
-
-#, fuzzy
-#~ msgid "Vendor Number"
-#~ msgstr "Objednávka číslo"
-
-#~ msgid "days"
-#~ msgstr "dní"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Sestavy"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Jednotka váhy"
-
-#, fuzzy
-#~ msgid "Project"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Jazyk"
-
-#~ msgid "Name"
-#~ msgstr "Jméno"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Faktury přijaté"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Upravit účet"
-
-#~ msgid "Screen"
-#~ msgstr "Na obrazovku"
-
-#~ msgid "Obsolete"
-#~ msgstr "Vyřazené"
-
-#~ msgid "Invoice Date"
-#~ msgstr "Datum vystavení"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Vazby mezi účty"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Položky"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Seznam účtů"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Vymazat účet"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Řídící účet pro"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Company Name"
-#~ msgstr "Firma"
-
-#~ msgid "To"
-#~ msgstr "do"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Číslo"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Zdanitelné"
-
-#, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Číslo faktury"
-
-#~ msgid "Closed"
-#~ msgstr "Zaplaceno"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Datum"
-
-#~ msgid "Total"
-#~ msgstr "Celkem"
-
-#~ msgid "Notes"
-#~ msgstr "Poznámky"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Seznam účtů"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Faktura"
-
-#~ msgid "Compare to"
-#~ msgstr "Porovnáno k"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Current"
-#~ msgstr "Měna"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Záloha"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Cena"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Platby"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Firma"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "ĄUčetní knihy jsou otevřeny"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Vypsat transakce"
-
-#~ msgid "Subtotal"
-#~ msgstr "Mezisoučet"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Nastavení šablon"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Uložit do souboru"
-
-#~ msgid "Unit"
-#~ msgstr "Jednotka"
-
-#, fuzzy
-#~ msgid "No."
-#~ msgstr "Ne"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Faktury přijaté"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Tiskárna"
-
-#~ msgid "E-mail"
-#~ msgstr "E-mail"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Mezisoučet"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Účty"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Platby"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Číslo"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "Faktura"
-
-#~ msgid "Weight"
-#~ msgstr "Váha"
-
-#~ msgid "Tax"
-#~ msgstr "Daň"
-
-#~ msgid "Order Number"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Customer Number"
-#~ msgstr "Odběratel"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Kontrola přístupů"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Měnový kurz"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Sazba"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Vystavené objednávky"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Upravit zboží"
-
-#~ msgid "Copies"
-#~ msgstr "Kopie"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Nový uživatel"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Uložit"
-
-#~ msgid "Save"
-#~ msgstr "Uložit"
-
-#~ msgid "Heading"
-#~ msgstr "Nadpis"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Nové šablony"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Zásoby"
-
-#~ msgid "Discount"
-#~ msgstr "Sleva"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Přílohy"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "Podtvrďte!"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Formát data"
-
-#, fuzzy
-#~ msgid "Balance"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Popis"
-
-#, fuzzy
-#~ msgid "Department"
-#~ msgstr "Platba"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Požadováno do"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Daňové účty"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Zdanitelné"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Heslo"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Sestavy"
-
-#~ msgid "Standard"
-#~ msgstr "Standardní"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Nastavení pro"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Datum objednávky"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Sestavy"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Předmět"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Vazby mezi účty"
-
-#~ msgid "ROP"
-#~ msgstr "ROP"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Dal"
-
-#~ msgid "Payables"
-#~ msgstr "Závazky"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "Kontakt"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Kontrola přístupů"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Platba"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Upravit účet"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Dodavatel"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Má dáti"
-
-#~ msgid "Add Customer"
-#~ msgstr "Nový zákazník"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Upravit uživatele"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Předmět"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Vystavené objednávky"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Změnit heslo administrátora"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Nový uživatel"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Platba"
-
-#~ msgid "Exch"
-#~ msgstr "Kurz"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Správa databáze"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Číslo faktury"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Chybí datum platby!"
-
-#, fuzzy
-#~ msgid "Statement Balance"
-#~ msgstr "Obratová předvaha"
-
-#~ msgid "Accounts"
-#~ msgstr "Účty"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Platby"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Uložit"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Nerozdělený zisk"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Objednávka číslo"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Password changed!"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Adresa"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "Chybí číslo účtu!"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "Chybí typ účtu!"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Nový zápis do hlavní knihy"
 
 #, fuzzy
 #~ msgid "%1 GIFI"
 #~ msgstr "Účtovací řetězec"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Zkopírovat do účtového rozvrhu"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "Chybí účtovací řetězec!"
-
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Sleva"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Nový zápis do hlavní knihy"
 
 #, fuzzy
 #~ msgid "%1 Language"
 #~ msgstr "Jazyk"
 
 #, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Jazyk"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTeX šablony"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "User saved!"
-
-#~ msgid "localhost"
-#~ msgstr "lokální server"
-
-#~ msgid "About"
-#~ msgstr "O programu"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Vypsat transakce"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Chybí E-mailová adresa!"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Objednávka číslo"
-
-#~ msgid "N/A"
-#~ msgstr "---"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Nový druh služby"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Leden"
-
-#~ msgid "ea"
-#~ msgstr "m.j."
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Chybí datum vystavení!"
-
-#~ msgid "Curr"
-#~ msgstr "Měna"
-
-#~ msgid "Individual Items"
-#~ msgstr "Komponenty výrobku"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Tato položka není v databázi!"
+#~ msgid "%1 Number"
+#~ msgstr "Číslo"
 
 #, fuzzy
 #~ msgid "%1: Customer not on file!"
 #~ msgstr "Tato položka není v databázi!"
 
 #, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "Před vyřazením zboží musí být množství na skladě nulové"
-
-#~ msgid "Add"
-#~ msgstr "Přidat"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Tato položka není v databázi!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Odběratel"
+#~ msgid "AP Invoices"
+#~ msgstr "Faktura"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Dodavatel"
+#~ msgid "AP account"
+#~ msgstr "Účet"
+
+#, fuzzy
+#~ msgid "AR Invoices"
+#~ msgstr "Faktura"
+
+#, fuzzy
+#~ msgid "AR account"
+#~ msgstr "Účet"
+
+#~ msgid "About"
+#~ msgstr "O programu"
+
+#~ msgid "Account"
+#~ msgstr "Účet"
+
+#, fuzzy
+#~ msgid "Account %1 not found."
+#~ msgstr "Účet"
+
+#, fuzzy
+#~ msgid "Account Description"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Account Label"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account Name"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account No."
+#~ msgstr "Účet"
+
+#~ msgid "Account Number"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account Number End"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account Number Start"
+#~ msgstr "Číslo účtu"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "Chybí číslo účtu!"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Typ účtu"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "Chybí typ účtu!"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "Číslo účtu"
+
+#, fuzzy
+#~ msgid "Account:"
+#~ msgstr "Účet"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Účet"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Číslo faktury"
+#~ msgid "Accounting"
+#~ msgstr "Účetnictví"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Menu účetnictví"
+
+#~ msgid "Accounts"
+#~ msgstr "Účty"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Objednávka číslo"
+#~ msgid "Accounts From"
+#~ msgstr "Účty"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "z"
+#~ msgid "Accounts To"
+#~ msgstr "Účty"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Číslo"
+#~ msgid "Active"
+#~ msgstr "Faktury přijaté"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Datum"
+#~ msgid "Active On"
+#~ msgstr "Faktury přijaté"
+
+#~ msgid "Add"
+#~ msgstr "Přidat"
+
+#~ msgid "Add Account"
+#~ msgstr "Založit účet"
+
+#~ msgid "Add Customer"
+#~ msgstr "Nový zákazník"
 
 #, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Zpráva"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Tato položka není v databázi!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "O jaký typ položky se jedná?"
-
-#~ msgid "Service"
-#~ msgstr "Služba"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Nový druh služby"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Chybějící číslo na řádku"
+#~ msgid "Add Note"
+#~ msgstr "Dal"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Nová objednávka (nákup)"
@@ -2499,12 +1135,12 @@ msgstr "Položky"
 #~ msgid "Add Sales Order"
 #~ msgstr "Nová objednávka (příjem)"
 
-#~ msgid "In-line"
-#~ msgstr "Vložené"
-
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Chybí datum splatnosti!"
+#~ msgid "Add Unit"
+#~ msgstr "Jednotka"
+
+#~ msgid "Add Vendor"
+#~ msgstr "Nový dodavatel"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -2514,335 +1150,20 @@ msgstr "Položky"
 #~ msgid "Add line2"
 #~ msgstr "Nový druh služby"
 
-#~ msgid "Orphaned"
-#~ msgstr "Neprodejné"
+#~ msgid "Address"
+#~ msgstr "Adresa"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Šablony"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Chybí datum splatnosti!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Do uzavřeného období nelze účtovat!"
+#~ msgid "Addresses"
+#~ msgstr "Adresa"
 
 #, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Nový zápis do hlavní knihy"
+#~ msgid "Adjustment"
+#~ msgstr "Zásoby"
 
 #, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Nový zápis do hlavní knihy"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Vypsat transakce"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Chybí datum!"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Upravit vystavenou objednávku"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Upravit přijatou objednávku"
-
-#~ msgid "Terms"
-#~ msgstr "Netto"
-
-#~ msgid "Order Date"
-#~ msgstr "Datum objednávky"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Chybí datum objednávky!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Chybí účtovací řetězec!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Opravdu chcete vymazat objednávku číslo"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Chybí číslo objednávky!"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Zaplaceno"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Zaplaceno"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Sleva"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Vyřazené"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Cena včetně daně"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Obratová předvaha"
-
-#~ msgid "Business Number"
-#~ msgstr "IČO"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Jazyk"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Šablony"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Kurzový zisk"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Kurzová ztráta"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTeX šablony"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Opravdu chcete vymazat fakturu číslo"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Vymazat"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Daň"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Vystavená objednávka"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Vystavená objednávka"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Aktiva"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Zbývá"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "neexistuje"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Přijaté objednávky"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Přijaté objednávky"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Vystavené objednávky"
-
-#~ msgid "Add Account"
-#~ msgstr "Založit účet"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Číslo faktury"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Datum vystavení"
-
-#~ msgid "January"
-#~ msgstr "Leden"
-
-#~ msgid "February"
-#~ msgstr "Únor"
-
-#~ msgid "April"
-#~ msgstr "Duben"
-
-#~ msgid "June"
-#~ msgstr "Červen"
-
-#~ msgid "July"
-#~ msgstr "Červenec"
-
-#~ msgid "August"
-#~ msgstr "Srpen"
-
-#~ msgid "September"
-#~ msgstr "Září"
-
-#~ msgid "October"
-#~ msgstr "Říjen"
-
-#~ msgid "November"
-#~ msgstr "Listopad"
-
-#~ msgid "December"
-#~ msgstr "Prosinec"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Změnit heslo"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Password changed!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Obratová předvaha"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Celkem"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Datum objednávky"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Založit účet"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Pro"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Faktura"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Požadováno do"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Čer"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Částka"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Náklady"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Zahrnovat v sestavě"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Sestavy"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
+#~ msgid "Adjustment Date"
 #~ msgstr "Výsledovka"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Účet"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Číslo účtu"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Sleva"
-
-#~ msgid "Jan"
-#~ msgstr "Led"
-
-#~ msgid "Feb"
-#~ msgstr "Úno"
-
-#~ msgid "Mar"
-#~ msgstr "Bře"
-
-#~ msgid "Apr"
-#~ msgstr "Dub"
-
-#~ msgid "Jun"
-#~ msgstr "Čer"
-
-#~ msgid "Jul"
-#~ msgstr "Čec"
-
-#~ msgid "Aug"
-#~ msgstr "Srp"
-
-#~ msgid "Sep"
-#~ msgstr "Zář"
-
-#~ msgid "Oct"
-#~ msgstr "Říj"
-
-#~ msgid "Nov"
-#~ msgstr "Lis"
-
-#~ msgid "Dec"
-#~ msgstr "Pro"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Požadováno do"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Bře"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Jazyk"
-
-#~ msgid "Accounting"
-#~ msgstr "Účetnictví"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Menu účetnictví"
 
 #~ msgid "Administration"
 #~ msgstr "Administrace"
@@ -2850,14 +1171,211 @@ msgstr "Položky"
 #~ msgid "Administrator"
 #~ msgstr "Administrator"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Sestavy"
+
+#~ msgid "All"
+#~ msgstr "Vše"
+
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Všechna data jsou aktualizována"
+
+#~ msgid "Amount"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "Amount Due"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Částka"
+
+#~ msgid "Apr"
+#~ msgstr "Dub"
+
+#~ msgid "April"
+#~ msgstr "Duben"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Opravdu chcete vymazat objednávku číslo"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Opravdu chcete vymazat transakci?"
 
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Seznam účtů"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Aktiva"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Aktiva"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Aktiva"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Seznam účtů"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Upravit účet"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Přílohy"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Přístupová práva"
+
+#~ msgid "Aug"
+#~ msgstr "Srp"
+
+#~ msgid "August"
+#~ msgstr "Srpen"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Zdanitelné"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Vytvořit dataset"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Nový uživatel"
+
+#~ msgid "Backup"
+#~ msgstr "Záloha"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Záloha"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Záloha"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Záloha odeslána na adresu"
+
+#, fuzzy
+#~ msgid "Balance"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Rozvaha"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Vazby mezi účty"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Vazby mezi účty"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Číslo"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Popis"
+
+#~ msgid "Bin"
+#~ msgstr "Paleta"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "ĄUčetní knihy jsou otevřeny"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Zahrnovat v sestavě"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "IČO"
+
+#~ msgid "Business Number"
+#~ msgstr "IČO"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "IČO"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "IČO"
+
+#~ msgid "COGS"
+#~ msgstr "Náklady na prodané zboží"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Sestavy"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Vypsat transakce"
 
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Cannot create Lock!"
@@ -2865,38 +1383,460 @@ msgstr "Položky"
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Účet je nastaven jako defaultní, nelze jej proto vymamazat!"
 
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Do uzavřeného období nelze účtovat!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Daňové účty"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Změnit heslo administrátora"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Poznámky"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "z"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Faktury vydané"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Pro úpravy klikněte na jméno uživatele"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Uzavřít účetní knihy do"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Zaplaceno"
+
+#~ msgid "Closed"
+#~ msgstr "Zaplaceno"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Zaplaceno"
+
+#, fuzzy
+#~ msgid "Code"
+#~ msgstr "Cena včetně daně"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Vystavené objednávky"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Přijaté objednávky"
+
+#~ msgid "Company"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Adresa"
+
+#, fuzzy
+#~ msgid "Company Name"
+#~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Firma"
+
+#~ msgid "Compare to"
+#~ msgstr "Porovnáno k"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "Podtvrďte!"
 
 #~ msgid "Connect to"
 #~ msgstr "Připojit k serveru"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Kontakt"
+
+#~ msgid "Continue"
+#~ msgstr "Pokračování"
+
+#, fuzzy
+#~ msgid "Contra"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Kontrola přístupů"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Číslo účtu"
+
+#~ msgid "Copies"
+#~ msgstr "Kopie"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Zkopírovat do účtového rozvrhu"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Zkopírovat do účtového rozvrhu"
+
+#, fuzzy
+#~ msgid "Cost Center"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Kontrola přístupů"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Zrušit dataset"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Vytvořit účtový rozvrh"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Zrušit dataset"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Vytvořit dataset"
+
+#~ msgid "Credit"
+#~ msgstr "Dal"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Číslo účtu"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Úvěrový limit"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Dal"
+
+#~ msgid "Curr"
+#~ msgstr "Měna"
+
+#~ msgid "Currency"
+#~ msgstr "Měna"
+
+#, fuzzy
+#~ msgid "Current"
+#~ msgstr "Měna"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Odběratel"
+
+#, fuzzy
+#~ msgid "Customer Number"
+#~ msgstr "Odběratel"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Odběratel"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Seznam účtů"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Odběratel"
 
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI není nainstalováno"
 
+#~ msgid "Database"
+#~ msgstr "Databáze"
+
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Nepodařilo se zkontrolovat ovladač databáze"
+
+#~ msgid "Database Host"
+#~ msgstr "Databázový server"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Správa databáze"
 
 #~ msgid "Database User missing!"
 #~ msgstr "Chybí jméno pro přihlášení k databázi!"
 
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "neexistuje"
+
+#~ msgid "Dataset"
+#~ msgstr "Dataset"
+
 #~ msgid "Dataset missing!"
 #~ msgstr "Není zadán dataset"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Formát data"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Formát data"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Formát data"
+
+#~ msgid "Date Paid"
+#~ msgstr "Zaplaceno"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Formát data"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "Květen"
+
+#~ msgid "Debit"
+#~ msgstr "Má dáti"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Má dáti"
+
+#~ msgid "Dec"
+#~ msgstr "Pro"
+
+#~ msgid "December"
+#~ msgstr "Prosinec"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Aktiva"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Vymazat účet"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Vymazat účet"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Jazyk"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Vymazat účet"
+
+#~ msgid "Delete"
+#~ msgstr "Vymazat"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Jazyk"
+
+#, fuzzy
+#~ msgid "Delivery Date"
+#~ msgstr "Datum splatnosti"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Vymazat účet"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Popis"
+
+#, fuzzy
+#~ msgid "Difference"
+#~ msgstr "Nastavení"
 
 #~ msgid "Directory"
 #~ msgstr "Adresář"
 
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Sleva"
+
+#~ msgid "Discount"
+#~ msgstr "Sleva"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Sleva"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Sleva"
+
 #~ msgid "Driver"
 #~ msgstr "Řidič"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Pro"
+
+#~ msgid "Due Date"
+#~ msgstr "Datum splatnosti"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Chybí datum splatnosti!"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "E-mail"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Chybí E-mailová adresa!"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Výsledovka"
+
+#, fuzzy
+#~ msgid "Edit"
+#~ msgstr "Upravit zboží"
+
+#, fuzzy
+#~ msgid "Edit Customer"
+#~ msgstr "Nový zákazník"
+
+#, fuzzy
+#~ msgid "Edit Employee"
+#~ msgstr "Upravit šablonu"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Opravit záznam v hlavní knize"
 
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Upravit vystavenou objednávku"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Sestavy"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Upravit přijatou objednávku"
+
 #~ msgid "Edit Service"
 #~ msgstr "Upravit službu"
+
+#~ msgid "Edit User"
+#~ msgstr "Upravit uživatele"
+
+#, fuzzy
+#~ msgid "Edit Vendor"
+#~ msgstr "Nový dodavatel"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Upravit uživatele"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Číslo faktury"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Datum objednávky"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Obratová předvaha"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Zakázat editaci všech účetních položek"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Upravit uživatele"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
@@ -2905,8 +1845,120 @@ msgstr "Položky"
 #~ "Vložte zkratky měn (max. 3 znaky) oddělené dvojtečkou pro domácí i cizí "
 #~ "měny (např. CZK:USD:EUR)"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Požadováno do"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Požadováno do"
+
+#~ msgid "Equity"
+#~ msgstr "Vlastní jmění"
+
+#~ msgid "Exch"
+#~ msgstr "Kurz"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Měnový kurz"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Měnový kurz"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Datasety"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Náklady"
+
+#~ msgid "Expense"
+#~ msgstr "Náklady"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Seznam účtů"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Náklad"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Upravit uživatele"
+
+#~ msgid "Feb"
+#~ msgstr "Úno"
+
+#~ msgid "February"
+#~ msgstr "Únor"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "IČO"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Upravit účet"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Platby"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Nový výrobek"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Kurzový zisk"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Kurzová ztráta"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Formát data"
+
+#~ msgid "From"
+#~ msgstr "z"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "z"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Datum objednávky"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "z"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "Chybí účtovací řetězec!"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Vazby mezi účty"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Hlavní kniha"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Kontrola přístupů"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Řádek celkem"
+
+#~ msgid "Heading"
+#~ msgstr "Nadpis"
 
 #~ msgid "Host"
 #~ msgstr "Server"
@@ -2914,29 +1966,179 @@ msgstr "Položky"
 #~ msgid "Hostname missing!"
 #~ msgstr "Chybí jméno serveru!"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTeX šablony"
+
+#~ msgid "In-line"
+#~ msgstr "Vložené"
+
+#~ msgid "Include in Report"
+#~ msgstr "Zahrnovat v sestavě"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Ukazovat v drop-down menu"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Zahrnovat v sestavě"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Poznámky"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Špatná verze dat!"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Změnit heslo"
+
+#~ msgid "Individual Items"
+#~ msgstr "Komponenty výrobku"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Zásoby"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Zásoby"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "Před vyřazením zboží musí být množství na skladě nulové"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr "Před vyřazením výrobu, musí být stav na skladě nulový!"
 
+#~ msgid "Invoice Date"
+#~ msgstr "Datum vystavení"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Chybí datum vystavení!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Číslo faktury"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Chybí číslo faktury!"
 
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Číslo faktury"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Datum vystavení"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Datum vystavení"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Datum vystavení"
+
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Číslo faktury"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Datum vystavení"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Faktura"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Tato položka není v databázi!"
+
+#~ msgid "Jan"
+#~ msgstr "Led"
+
+#~ msgid "January"
+#~ msgstr "Leden"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Typ účtu"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Objednávka číslo"
+
+#~ msgid "Jul"
+#~ msgstr "Čec"
+
+#~ msgid "July"
+#~ msgstr "Červenec"
+
+#~ msgid "Jun"
+#~ msgstr "Čer"
+
+#~ msgid "June"
+#~ msgstr "Červen"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Dataset updated!"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Poslední čísla a standardní čísla účtů"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Dataset updated!"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 #~ msgstr "Pro lokální databázi, nezadávejte adresu serveru a port."
 
+#~ msgid "Liability"
+#~ msgstr "Závazek"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Číslo faktury"
+
 #~ msgid "Licensed to"
 #~ msgstr "Licencováno pro"
 
+#~ msgid "Line Total"
+#~ msgstr "Řádek celkem"
+
 #~ msgid "Link"
 #~ msgstr "Vazby"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Platby"
+
+#~ msgid "List Price"
+#~ msgstr "Výrobní cena"
+
+#, fuzzy
+#~ msgid "List Transactions"
+#~ msgstr "Faktury vydané"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Jednotka váhy"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Upravit uživatele"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Faktury přijaté"
 
 #~ msgid "Lock System"
 #~ msgstr "Lock System"
@@ -2947,14 +2149,66 @@ msgstr "Položky"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Lockfile removed!"
 
+#~ msgid "Login"
+#~ msgstr "Uživatelské jméno"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Login name missing!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Seznam účtů"
+
+#~ msgid "Make"
+#~ msgstr "Výrobce"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Leden"
+
+#~ msgid "Mar"
+#~ msgstr "Bře"
 
 #~ msgid "May "
 #~ msgstr "Kvě"
 
+#~ msgid "Message"
+#~ msgstr "Zpráva"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Zpráva"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Zdanitelné"
+
+#~ msgid "Model"
+#~ msgstr "Model"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte Encoding"
+
+#~ msgid "N/A"
+#~ msgstr "---"
+
+#~ msgid "Name"
+#~ msgstr "Jméno"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Jméno"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Zahrnovat v sestavě"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Uživatel"
+
+#~ msgid "No"
+#~ msgstr "Ne"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Není instalován žádný ovladač databáze!"
@@ -2965,14 +2219,204 @@ msgstr "Položky"
 #~ msgid "No email address for"
 #~ msgstr "Chybí emailová adresy pro"
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Jazyk"
+
+#, fuzzy
+#~ msgid "No."
+#~ msgstr "Ne"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Zdanitelné"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Poznámky"
+
+#~ msgid "Notes"
+#~ msgstr "Poznámky"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Nejsou položky k vymazání!"
+
+#~ msgid "Nov"
+#~ msgstr "Lis"
+
+#~ msgid "November"
+#~ msgstr "Listopad"
+
+#~ msgid "Number"
+#~ msgstr "Číslo"
+
+#~ msgid "Number Format"
+#~ msgstr "Číselný formát"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Chybějící číslo na řádku"
+
+#~ msgid "Obsolete"
+#~ msgstr "Vyřazené"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Vyřazené"
+
+#~ msgid "Oct"
+#~ msgstr "Říj"
+
+#~ msgid "October"
+#~ msgstr "Říjen"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Heslo"
+
+#~ msgid "On Hand"
+#~ msgstr "K dispozici"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "K dispozici"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Nový uživatel"
+
+#~ msgid "Open"
+#~ msgstr "Otevřené"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Faktury přijaté"
 
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle Správa databáze"
 
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Objednávka"
+
+#~ msgid "Order Date"
+#~ msgstr "Datum objednávky"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Chybí datum objednávky!"
+
+#~ msgid "Order Number"
+#~ msgstr "Objednávka číslo"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Chybí číslo objednávky!"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Objednávka"
+
+#~ msgid "Orphaned"
+#~ msgstr "Neprodejné"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Faktury přijaté"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Dal"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Má dáti"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Vypsat transakce"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Číslo"
+
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Chybí číslo dodacího listu"
+
+#~ msgid "Paid"
+#~ msgstr "Zaplaceno"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Číslo"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Zboží"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Objednávka číslo"
+
+#~ msgid "Password"
+#~ msgstr "Heslo"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Password changed!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Password changed!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Formát data"
+
+#~ msgid "Payables"
+#~ msgstr "Závazky"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Chybí datum platby!"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Platby"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Platby"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Platba"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Zbývá"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "za období"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Správa databáze"
@@ -2986,17 +2430,392 @@ msgstr "Položky"
 #~ msgid "Port missing!"
 #~ msgstr "Chybí číslo portu!"
 
+#, fuzzy
+#~ msgid "Post"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Vypsat transakce"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Nastavení bylo uloženo!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Nastavení pro"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Cena"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Dataset updated!"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "Cena"
+
+#, fuzzy
+#~ msgid "Print"
+#~ msgstr "Tiskárna"
+
+#, fuzzy
+#~ msgid "Printer"
+#~ msgstr "Tiskárna"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Faktury přijaté"
+
+#, fuzzy
+#~ msgid "Project"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Project Number"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Projects"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Vystavená objednávka"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Vystavená objednávka"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Vystavená objednávka"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Vystavená objednávka"
+
+#~ msgid "Qty"
+#~ msgstr "Množství"
+
+#~ msgid "ROP"
+#~ msgstr "ROP"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Sazba"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Zaúčtovat do"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Zahrnovat v sestavě"
+
+#~ msgid "Record in"
+#~ msgstr "Zaúčtovat do"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Výkaz za"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Předmět"
+
+#~ msgid "Remaining"
+#~ msgstr "Zbývá"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Výkaz za"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Výkaz za"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Sestavy"
+
+#~ msgid "Report for"
+#~ msgstr "Výkaz za"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Sestavy"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Požadováno do"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Požadováno do"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Požadováno do"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Heslo"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Nerozdělený zisk"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Účty"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Záloha"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Sestavy"
+
+#, fuzzy
+#~ msgid "Salesperson"
+#~ msgstr "Přijaté objednávky"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Vystavená objednávka"
+
+#~ msgid "Save"
+#~ msgstr "Uložit"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Uložit do souboru"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Uložit"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Kontakt"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Uložit"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Uložit"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Uložit do souboru"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTeX šablony"
+
+#~ msgid "Screen"
+#~ msgstr "Na obrazovku"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Faktura"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Faktura"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Zásoby"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Vystavené objednávky"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Zahrnovat v sestavě"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Přijaté objednávky"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Vypsat transakce"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Vystavené objednávky"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Nastavení šablon"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Zvolte z níže uvedených položek"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Faktura"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Popis"
+
+#~ msgid "Sell Price"
+#~ msgstr "Prodejní cena"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "Poslat e-mailem"
 
+#~ msgid "Sep"
+#~ msgstr "Zář"
+
+#~ msgid "September"
+#~ msgstr "Září"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Nastavení"
+
+#, fuzzy
+#~ msgid "Serial Number"
+#~ msgstr "Objednávka číslo"
+
+#~ msgid "Service"
+#~ msgstr "Služba"
+
 #~ msgid "Services"
 #~ msgstr "Služby"
 
+#~ msgid "Short"
+#~ msgstr "Krátký výpis"
+
 #~ msgid "Signature"
 #~ msgstr "Podpis"
+
+#~ msgid "Source"
+#~ msgstr "Zdroj"
+
+#~ msgid "Standard"
+#~ msgstr "Standardní"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Datum objednávky"
+
+#, fuzzy
+#~ msgid "Startdate"
+#~ msgstr "Datum objednávky"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Datum objednávky"
+
+#, fuzzy
+#~ msgid "Statement Balance"
+#~ msgstr "Obratová předvaha"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Stylesheet"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Předmět"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Předmět"
+
+#~ msgid "Subtotal"
+#~ msgstr "Mezisoučet"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Mezisoučet"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Řídící účet pro"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Čer"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Daň"
+
+#~ msgid "Tax"
+#~ msgstr "Daň"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Daňové účty"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Formát data"
+
+#~ msgid "Tax Included"
+#~ msgstr "Cena včetně daně"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Cena včetně daně"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Číslo"
+
+#~ msgid "Taxable"
+#~ msgstr "Zdanitelné"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "User saved!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Šablony"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Šablony"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Nové šablony"
+
+#~ msgid "Terms"
+#~ msgstr "Netto"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Opravdu chcete vymazat fakturu číslo"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Uvedené datasety nejsou využívány a mohou být vymazány"
@@ -3004,12 +2823,47 @@ msgstr "Položky"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Následující data musí být aktualizována"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Dal"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Má dáti"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Upravit účet"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
 #~ "Toto je předběžná kontrola existence zdrojových dokumentů. V této fázi "
 #~ "nebude databáze aktualizována."
+
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "z"
+
+#, fuzzy
+#~ msgid "Till"
+#~ msgstr "Otevřené"
+
+#~ msgid "To"
+#~ msgstr "do"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Částka"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Datum"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -3020,6 +2874,32 @@ msgstr "Položky"
 #~ "jej s jiným uživatelským jménem. Nový uživatel bude vytvořen s totožným "
 #~ "nastavením všech proměnných."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "do"
+
+#~ msgid "Total"
+#~ msgstr "Celkem"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Celkem"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Dodací list"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Položky"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Chybí datum!"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Položky"
+
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr ""
 #~ "Editace všech položek zakázána (je nutné provést storno a nové zadání)"
@@ -3027,20 +2907,103 @@ msgstr "Položky"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Editace položek zakázána do"
 
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Číslo faktury"
+
+#~ msgid "Unit"
+#~ msgstr "Jednotka"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Měrná jednotka"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Číslo faktury"
+
+#, fuzzy
+#~ msgid "Update"
+#~ msgstr "Dataset updated!"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Aktualizovat data"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Uložit"
 
 #~ msgid "Use Templates"
 #~ msgstr "Využít šablony"
 
+#~ msgid "User"
+#~ msgstr "Uživatel"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Jméno"
+
 #~ msgid "User deleted!"
 #~ msgstr "User deleted!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Uživatel"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Uživatel"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Uživatel"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Formát data"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Založit účet"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Dodavatel"
+
+#, fuzzy
+#~ msgid "Vendor Number"
+#~ msgstr "Objednávka číslo"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Zahrnovat v sestavě"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Dodavatel"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Dodavatel"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Verze"
+
+#~ msgid "Weight"
+#~ msgstr "Váha"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "O jaký typ položky se jedná?"
+
+#~ msgid "Yes"
+#~ msgstr "Ano"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Nezadal jste jméno!"
@@ -3049,8 +3012,45 @@ msgstr "Položky"
 #~ msgstr ""
 #~ "Pro lokální i vzdálené připojení je nutné  zadat adresu serveru a port!"
 
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Jazyk"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Bře"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Obratová předvaha"
+
+#~ msgid "days"
+#~ msgstr "dní"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Má dáti"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Vymazat"
+
+#~ msgid "ea"
+#~ msgstr "m.j."
+
 #~ msgid "is already a member!"
 #~ msgstr "již existuje!"
+
+#~ msgid "localhost"
+#~ msgstr "lokální server"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Obratová předvaha"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Mezisoučet"
 
 #~ msgid "successfully created!"
 #~ msgstr "úspěšně vytvořen!"

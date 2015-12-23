@@ -29,87 +29,409 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Додати бізнес"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Звіти"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Додати склад"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Версія"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Готівка"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Витрати"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Старіння рахунків витрат"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Проводка витрат"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Видалити розклад"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Доходи"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Старіння рахунків доходів"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Проводка доходів"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Видалити розклад"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Додати рахунок"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Додати комплект"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Додати комплект"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Додати бізнес"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Додати бізнес"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Додати SIC"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Контактна особа"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Додати працівника"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Новий GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Додати групу"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Додати мову"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Додати роботу/додаткові витрати"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Новий Товар"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Додати цінову групу"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Новий користувач"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "Додати SIC"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Нова послуга"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Новий Товар"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Новий Товар"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Нова проводка"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Додати склад"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Актив"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Комплекти"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Актив"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Баланс-зведення"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Наступна дата"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "Адреса для надсилання рахунку"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "Адреса для надсилання рахунку"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "Адреса для надсилання рахунку"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "Адреса для надсилання рахунку"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Список корзин"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Додати бізнес"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Відісилання"
-
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Проводка доходів"
-
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "Список GIFI"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2911
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Список відділів"
+msgid "Budgets"
+msgstr "Додати бізнес"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Відіслати"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "С"
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
-msgstr "Додати комплект"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Готівка"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Домашній телефон"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "План Рахунків"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Чек"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
+
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Контактна особа"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Контактна особа"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Рахунок-фактура"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Дебит"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Клієнт"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "Історія клієнта"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Рахунок-фактура"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Дебит"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "Типові значення"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Опис"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Опис"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Опис"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "березня"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Виставлено!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "Ел. пошта"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Працівник"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Працівники"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Перенести інвентар"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Список бізнесів"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Редагувати рахунок"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Фах"
+
+#: sql/Pg-database.sql:2921
+msgid "Fixed Assets"
+msgstr ""
+
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Головна книга"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr "Створити"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "Створити"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Товари і Послуги"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "HR"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML Шаблони "
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Домашній телефон"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -117,331 +439,213 @@ msgstr ""
 msgid "Import"
 msgstr "Звіти"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Актив"
+msgid "Import Batch"
+msgstr "Звіти"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Звіти"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Платіж"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Актив"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "Шаблони LaTeX"
+msgid "Import GIFI"
+msgstr "Редагувати GIFI"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Виставлено!"
+msgid "Import Inventory"
+msgstr "Інвентар"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Верхній Рівень"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Звіт про доходи і видатки"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Список бізнесів"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Контактна особа"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Квитанції"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "Адреса для надсилання рахунку"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Нова послуга"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Додати комплект"
-
-#: sql/Pg-database.sql:3721
-#, fuzzy
-msgid "time"
-msgstr "раз(ів)"
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Видалити розклад"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Квитанції"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Наряд"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Дебит"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Додати бізнес"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Звіти"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Товари і Послуги"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Рахунок-фактура"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Додати бізнес"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "Історія постачальника"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Продаж"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Параметри"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "RFQ"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Додати роботу/додаткові витрати"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Звіти"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Список мов"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Узгодження"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Накладні продажу"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Купівельні замовлення"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Пакувальний список"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "С"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Продаж"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Додати мову"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "Адреса для надсилання рахунку"
-
-#: sql/Pg-database.sql:2934
-#, fuzzy
-msgid "Timecards"
-msgstr "Разів"
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Номер рахунка-фактури"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Новий GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "Додати SIC"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "Ел. пошта"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Система"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Передплата"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Платежі"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "Адреса для надсилання рахунку"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "березня"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML Шаблони "
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "березня"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Рахунок-фактура"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Клієнт"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Кінець року"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Перенесення"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr ""
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Інвентар"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Інвентар"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "Інвентар збережено!"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Рахунок-фактура"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Номер рахунка-фактури"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Країна"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "Шаблони LaTeX"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Мова"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Список бізнесів"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "Комплекти"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Новий користувач"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "Список GIFI"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Список мов"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "Список SIC"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Дебит"
+msgid "List Tax Forms"
+msgstr "Список відділів"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Список складів"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Вихід"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "Персональний номер"
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Редагувати GIFI"
+msgid "Mailing"
+msgstr "Адреса для надсилання рахунку"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Передплата"
+msgid "Mr."
+msgstr "березня"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "березня"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr "Нове вікно"
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Виставлення замовлення"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Не сплачено"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Пакувальний список"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Цінова група"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Платіж"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Платежі"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Список комплектування"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Параметри"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Назва підприємства"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Пошук"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Купівельне замовлення"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Купівельні замовлення"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -449,137 +653,35 @@ msgstr "Передплата"
 msgid "Quotation"
 msgstr "Котирування"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Котирування"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "RFQ"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "RFQs"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Квитанція"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Квитанції"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Отримати"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Головна книга"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Звіт"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Пошук"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Додати SIC"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Мова"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Проводка витрат"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Звіти"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Доходи"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Новий Товар"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "березня"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Баланс-зведення"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Домашній телефон"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Переклади"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Фах"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Формат дати"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Домашній телефон"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Опис"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "План Рахунків"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Старіння рахунків витрат"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Новий Товар"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Вихід"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Редагувати рахунок"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Пошук"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
+msgid "Reconciliation"
+msgstr "Узгодження"
 
 #: sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -589,308 +691,71 @@ msgstr "Періодичні проводки"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Накладна продажу"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "HR"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Тип бізнесу"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Інвентар"
+msgid "Reporting Units"
+msgstr "Звіти"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Додати цінову групу"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Інвентар"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Опис"
+msgid "Reports"
+msgstr "Звіти"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "Опис"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "RFQs"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Рахунок-фактура"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Квитанція"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Відрахування від зарплати"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "Список SIC"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "Адреса для надсилання рахунку"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Перенести інвентар"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Витрати"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Рахунок-фактура"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Старіння рахунків доходів"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Виставлення замовлення"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "Історія клієнта"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Цінові групи"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-#, fuzzy
-msgid "Timecard"
-msgstr "Разів"
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Отримати"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Інвентар комплекту"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Контактна особа"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Цінова група"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Назва підприємства"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Цінові групи"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Назва підприємства"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "Створити"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Котирування"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Пробний баланс"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Додати групу"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Пошук"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Список складів"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Передплата"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Працівники"
-
-#: sql/Pg-database.sql:2921
-msgid "Fixed Assets"
-msgstr ""
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Видалити розклад"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Видалити розклад"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Додати рахунок"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Чек"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Не сплачено"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr "Нове вікно"
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Рахунок-фактура"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr "Створити"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Контактна особа"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Країна"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Склади"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Працівник"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Купівельне замовлення"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Додати працівника"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Постачальник"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "Типові значення"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Список бізнесів"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Список комплектування"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Пошук"
+msgid "Reverse AR Overpay"
+msgstr "Квитанції"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Передплата"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Передплата"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Пошук"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Продаж"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Продаж"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Рахунок-фактура"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Накладна продажу"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Накладні продажу"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -898,2330 +763,456 @@ msgstr "Передплата"
 msgid "Search"
 msgstr "Пошук"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Комплекти"
+msgid "Search Assets"
+msgstr "Пошук"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Список корзин"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Цінові групи"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Нова проводка"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Цінові групи"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Пошук"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Назва підприємства"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Параметри"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "Адреса для надсилання рахунку"
+msgid "Sessions"
+msgstr "Версія"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Відіслати"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Відісилання"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Звіт про доходи і видатки"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Інвентар збережено!"
-
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Звіт"
+
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Інвентар комплекту"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Система"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Формат дати"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
 msgstr ""
 
-#: sql/Pg-database.sql:2781
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
 #, fuzzy
-msgid "Batches"
-msgstr "Наступна дата"
+msgid "Timecard"
+msgstr "Разів"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Опис"
+#: sql/Pg-database.sql:2934
+#, fuzzy
+msgid "Timecards"
+msgstr "Разів"
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Верхній Рівень"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Проводка здійснена"
 
-#~ msgid "Dataset"
-#~ msgstr "База даних"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Перенесення"
 
-#, fuzzy
-#~ msgid "Transactions"
-#~ msgstr "Проводка"
-
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Рахунки"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Платіж виставлено!"
-
-#~ msgid "Source"
-#~ msgstr "Джерело"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Користувач збережений"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Квитанції"
-
-#~ msgid "Period"
-#~ msgstr "Період"
-
-#~ msgid "Process Transactions"
-#~ msgstr "Опрацювати проводки"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "Несплачені рахунки доходів"
-
-#~ msgid "Paid"
-#~ msgstr "Заплачено"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "Від/З"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Номер постачальника"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Дата виставлення"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Проводка"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Формат дати"
-
-#~ msgid "Equity"
-#~ msgstr "Капітал"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Вибрати все"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Створити базу даних"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Дата доставки"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Внести в"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Опис"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Рахунки"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Кінець року виставлено!"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Квитанції"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Контактна особа"
-
-#~ msgid "Scheduled"
-#~ msgstr "В розкладі"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Адреса"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Назва"
-
-#~ msgid "On Hand"
-#~ msgstr "На руках"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Періодичні проводки"
-
-#~ msgid "Login"
-#~ msgstr "Вхід"
-
-#~ msgid "Sell Price"
-#~ msgstr "Відпускна Ціна"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Рахунок-фактура"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Контроль"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Версія"
-
-#, fuzzy
-#~ msgid "Profit and Loss"
-#~ msgstr "Надрукувати і виставити"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Новий постачальник"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Платежі"
-
-#~ msgid "Expense"
-#~ msgstr "Видатки"
-
-#~ msgid "Currency"
-#~ msgstr "Валюта"
-
-#~ msgid "Liability"
-#~ msgstr "Пассив"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Тема"
-
-#~ msgid "ID"
-#~ msgstr "Ідентифікаційний номер"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Початковий баланс"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Кінець року"
-
-#~ msgid "Startdate"
-#~ msgstr "Дата початку"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Податковий номер"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Вид рахунку"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Одиниця"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "Типові значення"
-
-#~ msgid "Message"
-#~ msgstr "Повідомлення"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Купівельне замовлення"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Номер клієнта"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Контактна особа"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Запит на котирування"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Додати комплект"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Редагувати Клієнта"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Додаток"
-
-#~ msgid "as at"
-#~ msgstr "як в"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Редагувати користувача"
-
-#~ msgid "Income"
-#~ msgstr "Прибуток"
-
-#~ msgid "Number"
-#~ msgstr "Номер"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Список Рахунків"
-
-#~ msgid "Delete"
-#~ msgstr "Видалити"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Markup"
-#~ msgstr "Націнка"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Post"
-#~ msgstr "Виставити"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Формат дати"
-
-#~ msgid "Make"
-#~ msgstr "Виробництво"
-
-#~ msgid "Till"
-#~ msgstr "Каса"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Активний"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Країна"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Резервна копія"
-
-#~ msgid "Receivables"
-#~ msgstr "Належності (дебити)"
-
-#~ msgid "System Defaults"
-#~ msgstr "Типові системні значення"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Поточний"
-
-#~ msgid "Detail"
-#~ msgstr "Подробиці"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Номер рахунка-фактури"
-
-#~ msgid "Backup"
-#~ msgstr "Резервна копія"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Зберегти як нове"
-
-#~ msgid "Database"
-#~ msgstr "База даних"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Купівельне замовлення"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Додаток"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Список Рахунків"
-
-#~ msgid "Code"
-#~ msgstr "Код"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Закрити книги до"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Контактна особа"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Оформленння"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Частина"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Редагувати працівника"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "PO Number"
-#~ msgstr "Номер купівельного замовлення"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Користувач"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Прибуток"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "Ел. пошта"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Рахунок"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Відіслати через"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Додаток"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Замовлення"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Оновлено"
-
-#~ msgid "Taxable"
-#~ msgstr "Оподатковується"
-
-#~ msgid "Continue"
-#~ msgstr "Продовжити"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Пункт відсилання"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Вибрати все"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Дата початку"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Котирування"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Видалити рахунок"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Користувач"
-
-#~ msgid "COGS"
-#~ msgstr "COGS"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Країна"
-
-#, fuzzy
-#~ msgid "Last Cost"
-#~ msgstr "Затрати"
-
-#, fuzzy
-#~ msgid "Time Frame"
-#~ msgstr "Разів"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Звіт"
-
-#~ msgid "GL"
-#~ msgstr "ГК"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Підсумок по розділу"
-
-#~ msgid "Serial Number"
-#~ msgstr "Серійний номер"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Дата"
-
-#~ msgid "Account"
-#~ msgstr "Рахунок"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Узгодження"
-
-#~ msgid "Memo"
-#~ msgstr "Нотатка"
-
-#~ msgid "Active"
-#~ msgstr "Активний"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Дата початку"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Вид рахунку"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Відрахування"
-
-#~ msgid "Phone"
-#~ msgstr "Тел."
-
-#~ msgid "Week"
-#~ msgstr "Тиждень"
-
-#~ msgid "Yes"
-#~ msgstr "Tak"
-
-#~ msgid "Pricelist"
-#~ msgstr "Ціновий список"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Виставити як новий"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Tax Included"
-#~ msgstr "Податок включено"
-
-#~ msgid "Drawing"
-#~ msgstr "Малюнок"
-
-#~ msgid "List Price"
-#~ msgstr "Ціна"
-
-#~ msgid "No"
-#~ msgstr "Ні"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Загальна Сума"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Прибуток"
-
-#~ msgid "Qty"
-#~ msgstr "Кількість"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Оновлено"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Бізнес"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Активувати сліди для аудиту"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Параметри"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Дата початку"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Номер рахунку"
-
-#~ msgid "Project Number"
-#~ msgstr "Номер проекту"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Вкючити різницю курсів"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Користувач"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Резервна копія"
-
-#~ msgid "Quarter"
-#~ msgstr "Квартал"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Формат дати"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "Поштовий код"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Видалити Базу Даних"
-
-#~ msgid "City"
-#~ msgstr "Місто"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Відрахування"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Редагувати користувача"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Контроль доступу"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Податкові рахунки"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "Поштовий код"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Повязати Рахунки"
-
-#~ msgid "All"
-#~ msgstr "Всі"
-
-#~ msgid "From"
-#~ msgstr "Від/З"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Звіт для"
-
-#~ msgid "Remaining"
-#~ msgstr "Залишилось"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Номер працівника"
-
-#~ msgid "Model"
-#~ msgstr "Модель"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Скопіювати до плану рахунків"
-
-#~ msgid "Method"
-#~ msgstr "Метод"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Зберегти як нове"
-
-#~ msgid "Reference"
-#~ msgstr "Посилання"
-
-#, fuzzy
-#~ msgid "Contra"
-#~ msgstr "Контактна особа"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Подробиці"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Заплатити суму"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Параметри збережено!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Відділ"
-
-#~ msgid "Debit"
-#~ msgstr "Дебит"
-
-#~ msgid "List Transactions"
-#~ msgstr "Список проводок"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Бізнес"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Номер рахунку"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Ліміт кредиту"
-
-#~ msgid "Cc"
-#~ msgstr "Копія до"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "Від/З"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Перевірити інвентар"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Бізнес"
-
-#~ msgid "Cost Center"
-#~ msgstr "Центр затрат"
-
-#~ msgid "Bin"
-#~ msgstr "Корзина"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Котирування"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Додаток"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Термін доставки"
-
-#, fuzzy
-#~ msgid "Timecard Criteria"
-#~ msgstr "Разів"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Цінова група"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "Послати по ел. пошті до"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Звіт для"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Бізнес"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Балансовий Звіт"
-
-#~ msgid "Report for"
-#~ msgstr "Звіт для"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Країна"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Відрахування"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Дата виставлення"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Оподатковується"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Замовлення"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Інвентар збережено!"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Включити плтіж"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Актив"
-
-#~ msgid "Amount"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Дата виставлення"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Виставити як новий"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Проведено"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Звіт для"
-
-#~ msgid "Projects"
-#~ msgstr "Проекти"
-
-#~ msgid "Difference"
-#~ msgstr "Різниця"
-
-#~ msgid "Update"
-#~ msgstr "Оновити"
-
-#~ msgid "Due Date"
-#~ msgstr "Заплатити до"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Редагувати користувача"
-
-#~ msgid "Database Host"
-#~ msgstr "Вузол бази даних"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Номер клієнта"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Редагувати рахунок"
-
-#~ msgid "Warehouse"
-#~ msgstr "Склад"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Додаток"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Видаток/Актив"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Номер працівника"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Опис"
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Підприємство"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Опис"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Переклади"
 
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "Податковий номер"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Додаток"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Зберегти"
-
-#~ msgid "Edit User"
-#~ msgstr "Редагувати користувача"
-
-#~ msgid "FX"
-#~ msgstr "FX"
-
-#~ msgid "Account Number"
-#~ msgstr "Номер рахунку"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Редагувати постачальника"
-
-#~ msgid "User"
-#~ msgstr "Користувач"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Відрахування"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "Несплачені рахунки витрат"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Інвентар збережено!"
-
-#, fuzzy
-#~ msgid "Time Out"
-#~ msgstr "Разів"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Формат дати"
-
-#~ msgid "Printer"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Оновлено"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Пакувальні списки"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "До"
-
-#~ msgid "Bcc"
-#~ msgstr "Прих.копія"
-
-#~ msgid "Date Paid"
-#~ msgstr "Дата оплати"
-
-#~ msgid "Amount Due"
-#~ msgstr "Заплатити суму"
-
-#~ msgid "Credit"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Країна"
-
-#~ msgid "Short"
-#~ msgstr "Скорочено"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Користувач"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Контактна особа"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Номер постачальника"
-
-#~ msgid "Year"
-#~ msgstr "Рік"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Рахунок-фактура"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Додаток"
-
-#~ msgid "Day"
-#~ msgstr "День"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Додати відрахування"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Формат дати"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Видалити Базу Даних"
-
-#~ msgid "Open"
-#~ msgstr "Відкрито"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Передплата"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Опрацювати проводки"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Список Рахунків"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Примітки"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Вибрати"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "На руках"
-
-#~ msgid "Company"
-#~ msgstr "Підприємство"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Курс валюти"
-
-#~ msgid "Salesperson"
-#~ msgstr "Торговець/представник"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Номер постачальника"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Додати до листових меню"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "Податковий номер / персональний номер"
-
-#~ msgid "Include in Report"
-#~ msgstr "Додати до звіту"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Баланс"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Заставити зворотну зміну проводок для всіх дат"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Балансовий Звіт"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Звіти"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Термін доставки"
-
-#~ msgid "Number Format"
-#~ msgstr "Формат Числа"
-
-#~ msgid "Date"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Звіти"
-
-#~ msgid "Line Total"
-#~ msgstr "Загальна Сума"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Опис"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Бізнес"
-
-#~ msgid "Address"
-#~ msgstr "Адреса"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Створити базу даних"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Назва підприємства"
-
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "зазнало невдачі"
-
-#~ msgid "Warning!"
-#~ msgstr "Попередження!"
-
-#~ msgid "Manager"
-#~ msgstr "Менеджер"
-
-#~ msgid "Record in"
-#~ msgstr "Внести в"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Головна книга"
-
-#~ msgid "Image"
-#~ msgstr "Зображення"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Номер постачальника"
-
-#~ msgid "days"
-#~ msgstr "днів"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Пробний баланс"
 
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Звіти"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Тип бізнесу"
 
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Одиниця ваги"
-
-#~ msgid "Project"
-#~ msgstr "Проект"
+msgid "Use AR Overpayment"
+msgstr "Передплата"
 
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "No language"
-#~ msgstr "Мова"
+msgid "Use Overpayment"
+msgstr "Передплата"
 
-#~ msgid "Name"
-#~ msgstr "Назва"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Формат дати"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Постачальник"
 
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Номер рахунку"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "Історія постачальника"
 
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Відрахування"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Рахунок-фактура"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Редагувати рахунок"
+msgid "Vouchers"
+msgstr "Видалити розклад"
 
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Чек"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Склади"
 
-#~ msgid "Screen"
-#~ msgstr "Екран"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#~ msgid "Obsolete"
-#~ msgstr "Застаріле"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Наряд"
 
-#~ msgid "Invoice Date"
-#~ msgstr "Дата виставлення"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Повязати Рахунки"
+msgid "Year End"
+msgstr "Кінець року"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Проводка"
+msgid "depreciation"
+msgstr "Опис"
 
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Список Рахунків"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Типові значення"
+msgid "import"
+msgstr "Звіти"
 
-#~ msgid "Partnumber"
-#~ msgstr "Номер частини"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Балансовий Звіт"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Чи це підсумковий рахунок для запису?"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Баланс"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Замовлення"
+msgid "production"
+msgstr "Відрахування від зарплати"
 
-#~ msgid "Company Name"
-#~ msgstr "Назва підприємства"
-
-#~ msgid "To"
-#~ msgstr "До"
-
+#: sql/Pg-database.sql:3721
 #, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Рахунок-фактура"
+msgid "time"
+msgstr "раз(ів)"
 
 #, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Номер частини"
+#~ msgid " Date missing!"
+#~ msgstr "Не вказана дата!"
 
 #, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Не оподатковується"
-
-#~ msgid "Employee Number"
-#~ msgstr "Номер працівника"
-
-#~ msgid "Closed"
-#~ msgstr "Закрито"
+#~ msgid " missing!"
+#~ msgstr "Відсутній код"
 
 #, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Виставити як новий"
+#~ msgid "# Invoices"
+#~ msgstr "Рахунки-фактури"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Редагувати працівника"
 
-#~ msgid "Total"
-#~ msgstr "Загальна Сума"
-
-#~ msgid "Notes"
-#~ msgstr "Примітки"
+#, fuzzy
+#~ msgid "%1 Business"
+#~ msgstr "Бізнес"
 
 #, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Історія клієнта"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Додати проводку переведення готівки"
 
 #, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Список Рахунків"
+#~ msgid "%1 GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Додаток"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Нова проводка"
 
 #, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Рахунки-фактури"
-
-#~ msgid "Compare to"
-#~ msgstr "Порівняти з"
+#~ msgid "%1 Language"
+#~ msgstr "Мова"
 
 #, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Узгодження"
+#~ msgid "%1 Number"
+#~ msgstr "Номер"
 
 #, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Дата"
-
-#~ msgid "Current"
-#~ msgstr "Поточний"
-
-#~ msgid "Country"
-#~ msgstr "Країна"
+#~ msgid "%1 SIC"
+#~ msgstr "Додати SIC"
 
 #, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Формат дати"
+#~ msgid "%1 Warehouse"
+#~ msgstr "Склад"
 
 #, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Резервна копія"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Клієнта нема в списку!"
 
 #, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Цінова група"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Потачальника нема у списку "
+
+#~ msgid "A"
+#~ msgstr "А"
 
 #, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Десятичні місця"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Платежі"
-
-#, fuzzy
-#~ msgid "Invoices"
+#~ msgid "AP Invoices"
 #~ msgstr "Рахунок-фактура"
 
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Номер рахунку"
+#~ msgid "AP Outstanding"
+#~ msgstr "Несплачені рахунки витрат"
 
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Підприємство"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Книга відкрита"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Опрацювати проводки"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Працівники"
-
-#~ msgid "Group"
-#~ msgstr "Група"
-
-#~ msgid "Subtotal"
-#~ msgstr "Підсумок по розділу"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Налаштувати шаблони"
-
-#~ msgid "DOB"
-#~ msgstr "DOB"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Зберегти як нове"
-
-#~ msgid "Unit"
-#~ msgstr "Одиниця"
-
-#~ msgid "No."
-#~ msgstr "No."
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Котирування"
-
-#~ msgid "Summary"
-#~ msgstr "Зведення"
-
-#~ msgid "Print"
-#~ msgstr "Надрукувати"
-
-#~ msgid "E-mail"
-#~ msgstr "Ел. пошта"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Підсумок по розділу"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "Група"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Передплата"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Рахунки"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Котирування"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Платежі"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Податковий номер / персональний номер"
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Дата отримання"
-
-#~ msgid "Next"
-#~ msgstr "Далі"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "Рахунок-фактура"
-
-#~ msgid "Weight"
-#~ msgstr "Вага"
-
-#~ msgid "Tax"
-#~ msgstr "Податок"
-
-#~ msgid "Cleared"
-#~ msgstr "Проведено"
-
-#~ msgid "Order Number"
-#~ msgstr "Номер замовлення"
-
-#~ msgid "Customer Number"
-#~ msgstr "Номер клієнта"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Курс валюти"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Розцінка"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "Несплачені рахунки доходів"
-
-#, fuzzy
-#~ msgid "Time and Material Cards"
-#~ msgstr "Разів"
-
-#~ msgid "Edit"
-#~ msgstr "Редагувати"
-
-#~ msgid "Copies"
-#~ msgstr "Копій"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Додаток"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Новий користувач"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Пошук"
-
-#~ msgid "Save"
-#~ msgstr "Зберегти"
-
-#~ msgid "State/Province"
-#~ msgstr "Штат/область"
-
-#~ msgid "Heading"
-#~ msgstr "Розділ"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Нові шаблони"
+#~ msgid "AP Transactions"
+#~ msgstr "Проводки витрат"
 
 #, fuzzy
 #~ msgid "AP account"
 #~ msgstr "Рахунок"
 
 #, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Інвентар збережено!"
+#~ msgid "AR Invoices"
+#~ msgstr "Рахунок-фактура"
 
-#, fuzzy
-#~ msgid "Clocked"
-#~ msgstr "замкнено!"
+#~ msgid "AR Outstanding"
+#~ msgstr "Несплачені рахунки доходів"
 
-#~ msgid "Discount"
-#~ msgstr "Знижка"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Додаток"
-
-#~ msgid "Confirm"
-#~ msgstr "Підтвердити"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Формат дати"
-
-#~ msgid "Balance"
-#~ msgstr "Баланс"
-
-#~ msgid "Ship via"
-#~ msgstr "Відіслати через"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Не оподатковується"
-
-#~ msgid "Department"
-#~ msgstr "Відділ"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Термін доставки"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Податкові рахунки"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Оподатковується"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Пароль"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Звіти"
-
-#~ msgid "Standard"
-#~ msgstr "Стандартні"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Редагувати параметри для"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Дата замовлення"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Звіти"
+#~ msgid "AR Transactions"
+#~ msgstr "Проводки доходів"
 
 #, fuzzy
 #~ msgid "AR account"
 #~ msgstr "Рахунок"
 
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Проект"
+#~ msgid "About"
+#~ msgstr "Про програму"
+
+#~ msgid "Above"
+#~ msgstr "Вище"
+
+#~ msgid "Account"
+#~ msgstr "Рахунок"
 
 #, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Повязати Рахунки"
-
-#~ msgid "Profit Center"
-#~ msgstr "Центр прибутку"
-
-#~ msgid "ROP"
-#~ msgstr "ROP"
+#~ msgid "Account %1 not found"
+#~ msgstr "Рахунок не існує"
 
 #, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Кредит"
-
-#~ msgid "Payables"
-#~ msgstr "Зобовязання (платіжні)"
+#~ msgid "Account %1 not found."
+#~ msgstr "Рахунок"
 
 #, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "Дійсний до"
+#~ msgid "Account Description"
+#~ msgstr "Опис"
 
 #, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Проведено"
+#~ msgid "Account Label"
+#~ msgstr "Номер рахунку"
 
 #, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Баланс"
+#~ msgid "Account Name"
+#~ msgstr "Номер рахунку"
 
 #, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Баланс"
+#~ msgid "Account No."
+#~ msgstr "Рахунок"
+
+#~ msgid "Account Number"
+#~ msgstr "Номер рахунку"
 
 #, fuzzy
-#~ msgid "Time In"
-#~ msgstr "Разів"
+#~ msgid "Account Number End"
+#~ msgstr "Номер рахунку"
 
 #, fuzzy
-#~ msgid "Content"
-#~ msgstr "Контактна особа"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Країна"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Прибуток"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Платіж"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Узгодження"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Редагувати рахунок"
-
-#~ msgid "Microfiche"
-#~ msgstr "Мікрофіша"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Номер постачальника"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Add Customer"
-#~ msgstr "Новий клієнт"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Редагувати користувача"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Типові значення"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Тема"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Змінити пароль Адміністратора"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Менеджер"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Платіж"
-
-#~ msgid "Exch"
-#~ msgstr "Курс"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Список відділів"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Цінова група"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Редагувати працівника"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Номер рахунка-фактури"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Узгодження"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Дата"
-
-#~ msgid "Month"
-#~ msgstr "Місяць"
-
-#, fuzzy
-#~ msgid "Item"
-#~ msgstr "Елементи"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Не вказано дату Платежу!"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Балансовий Звіт"
-
-#~ msgid "Accounts"
-#~ msgstr "Рахунки"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Передплата"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Додати курс"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Котирування"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Кінець року"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Внутрішні примітки"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Прибуток (нерозподілений)"
-
-#, fuzzy
-#~ msgid "You are logged out!"
-#~ msgstr "Ви вийшли з системи"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Мови не визначено!"
-
-#, fuzzy
-#~ msgid "GL Reference Number"
-#~ msgstr "Посилання"
-
-#~ msgid "Sales Order Number"
-#~ msgstr "Номер накладної продажу"
-
-#, fuzzy
-#~ msgid "Sales Quotation Number"
-#~ msgstr "Номер котирування"
-
-#~ msgid "RFQ Number"
-#~ msgstr "RFQ номер"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Номер проекту"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Пароль змінено!"
-
-#, fuzzy
-#~ msgid "Default Email To"
-#~ msgstr "Типовий шаблон"
-
-#, fuzzy
-#~ msgid "Default Email CC"
-#~ msgstr "Типовий шаблон"
-
-#, fuzzy
-#~ msgid "Default Email BCC"
-#~ msgstr "Типовий шаблон"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Назва підприємства"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Назва підприємства"
-
-#~ msgid "Save as new"
-#~ msgstr "Зберегти як нове"
+#~ msgid "Account Number Start"
+#~ msgstr "Номер рахунку"
 
 #~ msgid "Account Number missing!"
 #~ msgstr "Не вказаний номер рахунку!"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Вид рахунку"
 
 #~ msgid "Account Type missing!"
 #~ msgstr "Не вказаний вид рахунку!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Не вдається наставити декілька параметрів для"
-
-#~ msgid "Account saved!"
-#~ msgstr "Рахунок збережено"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Не вдається зберегти рахунок!"
+#~ msgid "Account category"
+#~ msgstr "Номер рахунку"
 
 #~ msgid "Account does not exist!"
 #~ msgstr "Рахунок не існує"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
+#~ msgid "Account numbers"
+#~ msgstr "Номер рахунку"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Скопіювати до плану рахунків"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "Не вказано GIFI!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI збережено!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI видалено!"
+#~ msgid "Account saved!"
+#~ msgstr "Рахунок збережено"
 
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Знижка"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Бізнес"
-
-#~ msgid "Description missing!"
-#~ msgstr "Опис відсутній!"
-
-#~ msgid "Business saved!"
-#~ msgstr "Бізнес збережено"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Бізнес видалено!"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "Стандартні індустріальні коди"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Додати SIC"
-
-#~ msgid "Code missing!"
-#~ msgstr "Відсутній код"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC збережено!"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC видалено!"
-
-#~ msgid "Languages"
-#~ msgstr "Мови"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Мова"
-
-#~ msgid "Language saved!"
-#~ msgstr "Мову збережено!"
-
-#~ msgid "Confirm!"
-#~ msgstr "Підтвердіть!"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Змінити мову"
-
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "Видалення мови призведе також до видалення шаблонів для мови"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Мову видалено!"
-
-#~ msgid "Default Template"
-#~ msgstr "Типовий шаблон"
-
-#~ msgid "Edit Template"
-#~ msgstr "Редагувати шаблон"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "Шаблони LaTeX"
-
-#~ msgid "Template saved!"
-#~ msgstr "Шаблон збережено"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "Шаблон збережено"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Не вдається зберегти замовлення!"
-
-#~ msgid "Password does not match!"
-#~ msgstr "Пароль не співпадає!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Не вдається зберегти вподобання!"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Склад збережено!"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Склад видалено!"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid "About"
-#~ msgstr "Про програму"
-
-#~ msgid "Every"
-#~ msgstr "Кожні"
-
-#, fuzzy
-#~ msgid "Next Number"
-#~ msgstr "Податковий номер"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Рахунок-фактура "
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Рахунок-фактура "
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "Проводка витрат"
-
-#~ msgid "done"
-#~ msgstr "завершено"
-
-#, fuzzy
-#~ msgid "Saving %1 [_2]"
-#~ msgstr "Збереження"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Проводка ГК"
-
-#~ msgid "Printing"
-#~ msgstr "Друкується"
-
-#~ msgid "Sending"
-#~ msgstr "Відсилається"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Не вказана адреса ел. пошти!"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Поточний заробіток"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Відділ"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Номер проекту"
-
-#~ msgid "N/A"
-#~ msgstr "Н/Д"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Новий Рахуно-фактура"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Новий купівельний рахунок-фактура"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Редагувати купівельний рахунок-фактуру"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "січень"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Код"
-
-#~ msgid "Post as new"
-#~ msgstr "Виставити як новий"
-
-#~ msgid "Schedule"
-#~ msgstr "Розклад"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Виставити як новий"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Виставити як новий"
-
-#~ msgid "ea"
-#~ msgstr "шт."
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Не вказана дата виставлення рахунка-фактури"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Постачальник не існує"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Не вдається виставити рахунок-фактуру для закритого періоду!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Не вказаний курс валюти!"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Не вдається виставити платіж для закритого періоду!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Не вказаний курс валюти для платежу!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Не вдається виставити рахунок-фактуру!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Рахунок не існує"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Рахунок не існує"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Рахунок не існує"
-
-#~ msgid "Stock"
-#~ msgstr "Інвентар"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Робота/додаткові витрати"
-
-#~ msgid "Updated"
-#~ msgstr "Оновлено"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Історія"
-
-#, fuzzy
-#~ msgid "SO"
-#~ msgstr "О"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "О"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Код"
-
-#~ msgid "Curr"
-#~ msgstr "Валюта"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Номер постачальника"
-
-#~ msgid "Cost"
-#~ msgstr "Затрати"
-
-#~ msgid "Sell"
-#~ msgstr "Продати"
-
-#~ msgid "List"
-#~ msgstr "Список"
-
-#~ msgid "BOM"
-#~ msgstr "BOM"
-
-#~ msgid "A"
-#~ msgstr "А"
-
-#~ msgid "Individual Items"
-#~ msgstr "Індивідуальні елементи"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Потачальника нема у списку "
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Клієнта нема в списку!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Виберіть одну із наступних назв"
-
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr ""
-#~ "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити ций "
-#~ "товар застарілим!"
-
-#~ msgid "Item deleted!"
-#~ msgstr "Річ видалено!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Не вдається видалити цей елемент!"
-
-#~ msgid "Add"
-#~ msgstr "Додати"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Комплекти інвентаризовані!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Не вдається інвентаризувати комплекти!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Номер котирування"
-
-#, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Надрукувати"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "Нічого не вибрано!"
-
-#, fuzzy
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Ви певні, що хочете видалити дане  замовлення?"
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Спул-файли видалено!"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Не вдається видалити файли!"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Позначені записи надруковано!"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Клієнт"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Постачальник"
+#~ msgid "Account:"
+#~ msgstr "Рахунок"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Рахунок"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Номер рахунка-фактури"
+#~ msgid "Accounting"
+#~ msgstr "Облік"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Меню обліку"
+
+#~ msgid "Accounts"
+#~ msgstr "Рахунки"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Номер замовлення"
+#~ msgid "Accounts From"
+#~ msgstr "Рахунки"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Номер котирування"
+#~ msgid "Accounts To"
+#~ msgstr "Рахунки"
+
+#~ msgid "Activate Audit trail"
+#~ msgstr "Активувати сліди для аудиту"
+
+#~ msgid "Activate Audit trails"
+#~ msgstr "Активувати сліди для аудиту"
+
+#~ msgid "Active"
+#~ msgstr "Активний"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "Від/З"
+#~ msgid "Active On"
+#~ msgstr "Активний"
 
-#~ msgid "Remove"
-#~ msgstr "Вилучити"
+#~ msgid "Add"
+#~ msgstr "Додати"
 
-#, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Номер"
+#~ msgid "Add AP Transaction"
+#~ msgstr "Додати проводку витрат"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Проекту нема в списку!"
+#~ msgid "Add AR Transaction"
+#~ msgstr "Додати проводку доходів"
 
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Виберіть один із наступних проектів"
-
-#~ msgid "Next Date"
-#~ msgstr "Наступна дата"
-
-#~ msgid "E-mail message"
-#~ msgstr "Повідомлення ел. пошти"
+#~ msgid "Add Account"
+#~ msgstr "Додати рахунок"
 
 #, fuzzy
-#~ msgid "Week(s)"
-#~ msgstr "Тижні"
+#~ msgid "Add Asset Class"
+#~ msgstr "Додати комплект"
 
 #, fuzzy
-#~ msgid "Month(s)"
-#~ msgstr "Місяці"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Новий купівельний рахунок-фактура"
+
+#~ msgid "Add Customer"
+#~ msgstr "Новий клієнт"
 
 #, fuzzy
-#~ msgid "Year(s)"
-#~ msgstr "Роки"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Новий Рахуно-фактура"
 
-#~ msgid "Repeat"
-#~ msgstr "Повторити"
-
-#~ msgid "For"
-#~ msgstr "Для"
+#~ msgid "Add Department"
+#~ msgstr "Додати відділ"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "Періодична проводка"
-
-#~ msgid "Save Schedule"
-#~ msgstr "Зберегти розклад"
-
-#~ msgid "Delete Schedule"
-#~ msgstr "Видалити розклад"
+#~ msgid "Add Note"
+#~ msgstr "Кредит"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Дата"
+#~ msgid "Add POS Invoice"
+#~ msgstr "Новий Рахуно-фактура"
 
-#, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Повідомлення"
-
-#~ msgid "sent"
-#~ msgstr "нідіслано"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Виберіть postscript або PDF"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "Нема що дркувати!"
-
-#~ msgid "Select payment"
-#~ msgstr "Виберіть платіж"
-
-#~ msgid "Printed"
-#~ msgstr "Надруковано"
-
-#, fuzzy
-#~ msgid "Select a Printer!"
-#~ msgstr "Виберіть елементи"
-
-#~ msgid "Recd"
-#~ msgstr "Отримано"
-
-#~ msgid "Price"
-#~ msgstr "Ціна"
-
-#~ msgid "Extended"
-#~ msgstr "Продовжено"
-
-#, fuzzy
-#~ msgid "OH"
-#~ msgstr "О"
-
-#~ msgid "Serial No."
-#~ msgstr "Серійний No."
-
-#~ msgid "SKU"
-#~ msgstr "SKU"
-
-#~ msgid "Select items"
-#~ msgstr "Виберіть елементи"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Речі нема в списку!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Який це вид/тип елемента"
-
-#~ msgid "Service"
-#~ msgstr "Послуга"
-
-#, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Не вказаний номер у рядку"
+#~ msgid "Add Project"
+#~ msgstr "Новий Проект"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Нове замовлення на купівлю"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Нове замовлення на продаж"
+#~ msgid "Add Quotation"
+#~ msgstr "Котирування"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Додати запит на котирування"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Котирування"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Новий Рахуно-фактура"
 
-#~ msgid "In-line"
-#~ msgstr "Включено (In-line)"
-
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "Виберіть txt, postscript або PDF!"
+#~ msgid "Add Sales Order"
+#~ msgstr "Нове замовлення на продаж"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Не вказана дата!"
+#~ msgid "Add Unit"
+#~ msgstr "Одиниця"
 
-#~ msgid "Ship to"
-#~ msgstr "Відіслати до"
+#~ msgid "Add Vendor"
+#~ msgstr "Новий постачальник"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Новий купівельний рахунок-фактура"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3235,861 +1226,28 @@ msgstr "Проводка здійснена"
 #~ msgid "Add line3 "
 #~ msgstr "Додати бізнес"
 
-#~ msgid "State"
-#~ msgstr "Штат"
+#, fuzzy
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Додати відрахування"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Новий купівельний рахунок-фактура"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Додати курс"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Новий Рахуно-фактура"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Торгова знижка"
+#~ msgid "Address"
+#~ msgstr "Адреса"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Не вдається видалити рахунок-фактуру!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "Не вказаний клієнт!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Редагувати проект"
-
-#~ msgid "Add Project"
-#~ msgstr "Новий Проект"
-
-#~ msgid "Orphaned"
-#~ msgstr "Відокремлений/Осиротілий"
-
-#~ msgid "Groups"
-#~ msgstr "Групи"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Цінові групи"
+#~ msgid "Addresses"
+#~ msgstr "Адреса"
 
 #, fuzzy
-#~ msgid "Inactive"
-#~ msgstr "Активний"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Переклади збережено!"
-
-#~ msgid "Group missing!"
-#~ msgstr "Відсутня група!"
-
-#~ msgid "Group saved!"
-#~ msgstr "Групу збережено!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Відсутня цінова група!"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Цінову групу збережено!"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Переклад видалено!"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Групу видалено!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Цінову групу видалено!"
-
-#~ msgid "Description Translations"
-#~ msgstr "Переклади опису"
-
-#~ msgid "Group Translations"
-#~ msgstr "Згрупувати переклади"
-
-#, fuzzy
-#~ msgid "Project Description Translations"
-#~ msgstr "Переклади опису"
-
-#~ msgid "Translation"
-#~ msgstr "Переклад"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Мови не визначено!"
-
-#, fuzzy
-#~ msgid "Edit Description Translations"
-#~ msgstr "Переклади опису"
-
-#, fuzzy
-#~ msgid "Transaction Dates"
-#~ msgstr "Проводки"
-
-#, fuzzy
-#~ msgid "No open Projects!"
-#~ msgstr "Проекти"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders"
-#~ msgstr "Створити замовлення"
-
-#, fuzzy
-#~ msgid "Service Code"
-#~ msgstr "Послуга"
-
-#, fuzzy
-#~ msgid "Select Customer"
-#~ msgstr "Редагувати Клієнта"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Клієнта нема в списку!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Потачальника нема у списку "
-
-#, fuzzy
-#~ msgid "Failed to save order!"
-#~ msgstr "Не вдається зберегти замовлення!"
-
-#, fuzzy
-#~ msgid "Orders generated!"
-#~ msgstr "Створення замовлення зазнало невдачі!"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Шаблон збережено"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Не вказаний термін оплати!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Не вдається виставити проводку для закритого періоду!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Проводка здійснена"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Не вдається виставити проводку!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Проводки доходів"
-
-#~ msgid "AP Transactions"
-#~ msgstr "Проводки витрат"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Номер проекту"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Рахунки-фактури"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Додати проводку переведення готівки"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Нова проводка"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Рахунок"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Не вдається виставити проводку!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Не вказана дата проводки"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Незбалансована проводка"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Редагувати купівельне замовлення"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Редагувати продажну накладну"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Редагувати запит на котирування"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Редагувати котирування"
-
-#~ msgid "Terms"
-#~ msgstr "Умови: "
-
-#~ msgid "Order Date"
-#~ msgstr "Дата замовлення"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Дата котирування"
-
-#~ msgid "Print and Save"
-#~ msgstr "Надрукувати і зберегти"
-
-#, fuzzy
-#~ msgid "Print and Save as new"
-#~ msgstr "Надрукувати і зберегти"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Не вказано дату замовлення!"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Відсутня дата котирування!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Відсутній код"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Не вдається зберегти замовлення!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "Не вдається зберегти котирування!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Ви певні, що хочете видалити дане  замовлення?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Ви певні, що хочете видалити номер котирування?"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Замовлення видалено!"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Не вдається видалити замовлення!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Котирування видалено!"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "Не вдається видалити котирування!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Відсутній номер замовлення"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Відсутній номер котирування!"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Відіслати товари"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Дата відсилання"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Отримати товари"
-
-#~ msgid "Done"
-#~ msgstr "Зроблено"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Відсутня дата відсилання!"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Відсутня дата отримання!"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Нічого не введено!"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "Інвентар збережено!"
 
-#~ msgid "Could not save!"
-#~ msgstr "Не вдалось зберегти!"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Нема що перенести"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Перенести інвентар"
-
 #, fuzzy
-#~ msgid "Transfer from"
-#~ msgstr "Перенести до"
-
-#~ msgid "Transfer to"
-#~ msgstr "Перенести до"
-
-#, fuzzy
-#~ msgid "From Warehouse"
-#~ msgstr "Склад"
-
-#, fuzzy
-#~ msgid "To Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Інвентар перенесено!"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "Не вдалось перевести інвентар!"
-
-#~ msgid "Req"
-#~ msgstr "Запит"
-
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "Створити купівельні замовлення"
-
-#~ msgid "Generate Orders"
-#~ msgstr "Створити замовлення"
-
-#~ msgid "Select Vendor"
-#~ msgstr "Виберіть постачальника"
-
-#~ msgid "Order generation failed!"
-#~ msgstr "Створення замовлення зазнало невдачі!"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Закрито"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Закрито"
-
-#, fuzzy
-#~ msgid "Add POS Invoice"
-#~ msgstr "Новий Рахуно-фактура"
-
-#, fuzzy
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Редагувати рахунок-фактуру"
-
-#~ msgid "Change"
-#~ msgstr "Змінити"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Відкрито"
-
-#~ msgid "Posted!"
-#~ msgstr "Виставлено!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Знижка"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "Періодичні проводки"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Рахунок видалений"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Номер рахунку"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Заплатити суму"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Застаріле"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Податок включено"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Балансовий Звіт"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Баланс"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Баланс"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Пробний баланс"
-
-#~ msgid "Business Number"
-#~ msgstr "Бізнес-номер"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Змінити мову"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Шаблони"
-
-#~ msgid "Session Timeout"
-#~ msgstr "Таймаут сеансу"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Відділи"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Видалити рахунок"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Прибуток з Обміну Валюти"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Втрата на Обміні Валюти"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "Шаблони LaTeX"
-
-#, fuzzy
-#~ msgid "Save Batch"
-#~ msgstr "Зберегти розклад"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Не вказаний курс валюти!"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Торгова знижка"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Ви певні, що хочете видалити даний рахунок?"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Видалити"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Дійсний до"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Редагувати комплект"
-
-#, fuzzy
-#~ msgid "Add Asset Class"
-#~ msgstr "Додати комплект"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Податок"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Купівельне замовлення"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Купівельне замовлення"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Актив"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Метод"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Платіж виставлено!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Залишилось"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "не існує"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Зберегти як нове"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Накладні продажу"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders from Sales Orders"
-#~ msgstr "Створити купівельні замовлення"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Накладні продажу"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Купівельні замовлення"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Купівельні замовлення"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders from Purchase Orders"
-#~ msgstr "Створити купівельні замовлення"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Котирування"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Запит на котирування"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Типовий шаблон"
-
-#~ msgid "Add Account"
-#~ msgstr "Додати рахунок"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Не вказана дата!"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Номер клієнта"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Номер постачальника"
-
-#, fuzzy
-#~ msgid "No Null employeenumber"
-#~ msgstr "Номер працівника"
-
-#, fuzzy
-#~ msgid "Duplicate employee numbers"
-#~ msgstr "Номер працівника"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Номер рахунка-фактури"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Чек"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Депозит/вклад"
-
-#, fuzzy
-#~ msgid "Unable to save %1 object"
-#~ msgstr "Не вдається зберегти замовлення!"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Дата виставлення"
-
-#~ msgid "January"
-#~ msgstr "січень"
-
-#~ msgid "February"
-#~ msgstr "Лютий"
-
-#~ msgid "March"
-#~ msgstr "Березень"
-
-#~ msgid "April"
-#~ msgstr "Квітень"
-
-#~ msgid "May"
-#~ msgstr "травня"
-
-#~ msgid "June"
-#~ msgstr "Червень"
-
-#~ msgid "July"
-#~ msgstr "Липень"
-
-#~ msgid "August"
-#~ msgstr "Серпень"
-
-#~ msgid "September"
-#~ msgstr "Вересень"
-
-#~ msgid "October"
-#~ msgstr "Жовтень"
-
-#~ msgid "November"
-#~ msgstr "Листопад"
-
-#~ msgid "December"
-#~ msgstr "Грудень"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Змінити пароль"
-
-#, fuzzy
-#~ msgid "Passwords must match."
-#~ msgstr "Паролі не співпадають!"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Пароль змінено!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Пробний баланс"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Сума відсутня!"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Загальна Сума"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Дата замовлення"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Квитанції"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Додати рахунок"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "грудня"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Пошук"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Рахунки-фактури"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Відіслати через"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Номер рахунку"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Номер рахунку"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Термін доставки"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Номер проекту"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "червня"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "Місяць"
-
-#, fuzzy
-#~ msgid "Fri"
-#~ msgstr "Для"
-
-#, fuzzy
-#~ msgid "Sat"
-#~ msgstr "Штат"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Обмеження листового меню"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Avg. Cost"
-#~ msgstr "Затрати"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Видатки"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Додати до звіту"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Додати до звіту"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Номер замовлення"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Звіти"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Звіт про доходи і видатки"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Рахунок"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Номер рахунку"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Знижка"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Рахунок не існує"
-
-#~ msgid "Jan"
-#~ msgstr "січня"
-
-#~ msgid "Feb"
-#~ msgstr "лютого"
-
-#~ msgid "Mar"
-#~ msgstr "березня"
-
-#~ msgid "Apr"
-#~ msgstr "квітня"
-
-#~ msgid "Jun"
-#~ msgstr "червня"
-
-#~ msgid "Jul"
-#~ msgstr "липня"
-
-#~ msgid "Aug"
-#~ msgstr "серпня"
-
-#~ msgid "Sep"
-#~ msgstr "вересня"
-
-#~ msgid "Oct"
-#~ msgstr "жовтня"
-
-#~ msgid "Nov"
-#~ msgstr "листопада"
-
-#~ msgid "Dec"
-#~ msgstr "грудня"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Термін доставки"
-
-#~ msgid "Checks"
-#~ msgstr "Чеки"
-
-#~ msgid "Work Orders"
-#~ msgstr "Наряди"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Списки комплектування"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Списки корзин"
-
-#, fuzzy
-#~ msgid "POS Invoice"
-#~ msgstr "Рахунок-фактура"
-
-#~ msgid "Text Templates"
-#~ msgstr "Текстові шаблони"
-
-#, fuzzy
-#~ msgid "Batch Printing"
-#~ msgstr "Друкується"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "березня"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Платіж"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Квитанція"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Рахунок-фактура"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Рахунок-фактура"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Бізнес"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Мова"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "Above"
-#~ msgstr "Вище"
-
-#~ msgid "Accounting"
-#~ msgstr "Облік"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Меню обліку"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Активувати сліди для аудиту"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "Додати проводку витрат"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "Додати проводку доходів"
-
-#~ msgid "Add Department"
-#~ msgstr "Додати відділ"
+#~ msgid "Adjustment Date"
+#~ msgstr "Звіт"
 
 #~ msgid "Administration"
 #~ msgstr "Адміністрування"
@@ -4100,20 +1258,144 @@ msgstr "Проводка здійснена"
 #~ msgid "After Deduction"
 #~ msgstr "Після відрахування"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Звіти"
+
+#~ msgid "All"
+#~ msgstr "Всі"
+
 #~ msgid "All Accounts"
 #~ msgstr "Всі рахунки"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Бази Даних не потребують поновлення!"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Рахунки-фактури"
+
 #~ msgid "All Items"
 #~ msgstr "Всі елементи"
+
+#~ msgid "Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Заплатити суму"
+
+#~ msgid "Amount Due"
+#~ msgstr "Заплатити суму"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Сума відсутня!"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Заплатити суму"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Торгова знижка"
+
+#~ msgid "Apr"
+#~ msgstr "квітня"
+
+#~ msgid "April"
+#~ msgstr "Квітень"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Ви певні, що хочете видалити дане  замовлення?"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Ви певні, що хочете видалити номер котирування?"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Ви певні, що хочете видалити дану проводку?"
 
+#, fuzzy
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "Ви певні, що хочете видалити дане  замовлення?"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Комплекти інвентаризовані!"
+
 #~ msgid "Assembly"
 #~ msgstr "Комплект"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Список Рахунків"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Актив"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Актив"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Список Рахунків"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Редагувати рахунок"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Додаток"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Контроль доступу"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Вимкнено сліди для аудиту"
@@ -4130,20 +1412,188 @@ msgstr "Проводка здійснена"
 #~ msgid "Audit trails enabled"
 #~ msgstr "Увімкнено сліди для аудиту"
 
+#~ msgid "Aug"
+#~ msgstr "серпня"
+
+#~ msgid "August"
+#~ msgstr "Серпень"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Оподатковується"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Створити базу даних"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Менеджер"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Передплата"
+
+#, fuzzy
+#~ msgid "Avg. Cost"
+#~ msgstr "Затрати"
+
+#~ msgid "BOM"
+#~ msgstr "BOM"
+
+#~ msgid "Backup"
+#~ msgstr "Резервна копія"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Резервна копія"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Резервна копія"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Резервна копія послана до"
+
+#~ msgid "Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Повязати Рахунки"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Повязати Рахунки"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Код"
 
 #~ msgid "Based on"
 #~ msgstr "Основано на"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Не вказана дата!"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Опис"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Податковий номер"
+
+#, fuzzy
+#~ msgid "Batch Printing"
+#~ msgstr "Друкується"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Опис"
+
+#~ msgid "Bcc"
+#~ msgstr "Прих.копія"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Перед відрахуванням"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Балансовий Звіт"
 
 #~ msgid "Below"
 #~ msgstr "Нижче"
 
+#~ msgid "Bin"
+#~ msgstr "Корзина"
+
+#~ msgid "Bin Lists"
+#~ msgstr "Списки корзин"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Дата початку"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Книга відкрита"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Номер замовлення"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Додати до звіту"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Бізнес"
+
+#~ msgid "Business Number"
+#~ msgstr "Бізнес-номер"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Бізнес"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Бізнес"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Бізнес видалено!"
+
+#~ msgid "Business saved!"
+#~ msgstr "Бізнес збережено"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Бізнес"
+
+#~ msgid "COGS"
+#~ msgstr "COGS"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Звіти"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Не вдається видалити рахунок-фактуру!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Не вдається виставити проводку!"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Рахунок не існує"
+
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Не вдається створити замок!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Рахунок не існує"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Рахунок не існує"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "Не вдається видалити рахунок!"
@@ -4153,6 +1603,15 @@ msgstr "Проводка здійснена"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Не вдається видалити типовий рахунок!"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "Не вдається видалити цей елемент!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Не вдається видалити замовлення!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "Не вдається видалити котирування!"
 
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "Не вдається видалити проводку!"
@@ -4166,29 +1625,299 @@ msgstr "Проводка здійснена"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "Не вдається виставити квитанцію!"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Не вдається виставити рахунок-фактуру для закритого періоду!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Не вдається виставити рахунок-фактуру!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Не вдається виставити платіж для закритого періоду!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Не вдається виставити проводку для закритого періоду!"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Не вдається виставити проводку!"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "Не вдається видалити файли!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Не вдається зберегти рахунок!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "Не вдається зберегти типові значення!"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Не вдається зберегти замовлення!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Не вдається зберегти вподобання!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "Не вдається зберегти котирування!"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Не вдається зберегти замовлення!"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "Не вдається наставити декілька параметрів для"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Не вдається інвентаризувати комплекти!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Податкові рахунки"
+
+#~ msgid "Cc"
+#~ msgstr "Копія до"
+
+#~ msgid "Change"
+#~ msgstr "Змінити"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Змінити пароль Адміністратора"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Чек"
+
+#~ msgid "Checks"
+#~ msgstr "Чеки"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Підприємство"
+
+#~ msgid "City"
+#~ msgstr "Місто"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Проведено"
+
+#~ msgid "Cleared"
+#~ msgstr "Проведено"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Опрацювати проводки"
 
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Натисніть на ім'я користувача, щоб редагувати!"
 
+#, fuzzy
+#~ msgid "Clocked"
+#~ msgstr "замкнено!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Закрити книги до"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Закрито"
+
+#~ msgid "Closed"
+#~ msgstr "Закрито"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Закрито"
+
+#~ msgid "Code"
+#~ msgstr "Код"
+
+#~ msgid "Code missing!"
+#~ msgstr "Відсутній код"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Купівельні замовлення"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Накладні продажу"
+
+#~ msgid "Company"
+#~ msgstr "Підприємство"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Назва підприємства"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Назва підприємства"
+
+#~ msgid "Company Name"
+#~ msgstr "Назва підприємства"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Підприємство"
+
+#~ msgid "Compare to"
+#~ msgstr "Порівняти з"
+
 #~ msgid "Components"
 #~ msgstr "Компоненти"
+
+#~ msgid "Confirm"
+#~ msgstr "Підтвердити"
+
+#~ msgid "Confirm!"
+#~ msgstr "Підтвердіть!"
 
 #~ msgid "Connect to"
 #~ msgstr "Підключитись до"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Контактна особа"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Контактна особа"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Контактна особа"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Контактна особа"
+
+#~ msgid "Continue"
+#~ msgstr "Продовжити"
+
+#, fuzzy
+#~ msgid "Contra"
+#~ msgstr "Контактна особа"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Номер рахунку"
+
+#~ msgid "Copies"
+#~ msgstr "Копій"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Скопіювати до плану рахунків"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Скопіювати до плану рахунків"
+
+#~ msgid "Cost"
+#~ msgstr "Затрати"
+
+#~ msgid "Cost Center"
+#~ msgstr "Центр затрат"
+
 #~ msgid "Could not save pricelist!"
 #~ msgstr "Не вдалось зберегти ціновий список!"
+
+#~ msgid "Could not save!"
+#~ msgstr "Не вдалось зберегти!"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "Не вдалось перевести інвентар!"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Країна"
+
+#~ msgid "Country"
+#~ msgstr "Країна"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Країна"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Країна"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Видалити Базу Даних"
 
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Створити план рахунків"
 
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Видалити Базу Даних"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Список відділів"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Створити базу даних"
+
+#~ msgid "Credit"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Номер рахунку"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Ліміт кредиту"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Кредит"
+
+#~ msgid "Curr"
+#~ msgstr "Валюта"
+
+#~ msgid "Currency"
+#~ msgstr "Валюта"
+
+#~ msgid "Current"
+#~ msgstr "Поточний"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Поточний заробіток"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Номер клієнта"
+
+#~ msgid "Customer Number"
+#~ msgstr "Номер клієнта"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Номер клієнта"
+
 #~ msgid "Customer deleted!"
 #~ msgstr "Клієнта видалено!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Не вказаний клієнт!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Клієнта нема в списку!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "Клієнта збережено!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Список Рахунків"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Клієнт"
 
 #~ msgid "Customers"
 #~ msgstr "Клієнти"
@@ -4196,14 +1925,34 @@ msgstr "Проводка здійснена"
 #~ msgid "DBI not installed!"
 #~ msgstr "Не встановлено драйвер DBI!"
 
+#~ msgid "DOB"
+#~ msgstr "DOB"
+
+#~ msgid "Database"
+#~ msgstr "База даних"
+
 #~ msgid "Database Administration"
 #~ msgstr "Адміністрування бази даних"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Не увімкнено драйвер бази даних!"
 
+#~ msgid "Database Host"
+#~ msgstr "Вузол бази даних"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Редагувати працівника"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Відсутній користувач бази даних!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "не існує"
+
+#~ msgid "Dataset"
+#~ msgstr "База даних"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "База даних новіша ніж версія!"
@@ -4214,8 +1963,77 @@ msgstr "Проводка здійснена"
 #~ msgid "Dataset updated!"
 #~ msgstr "Базу даних оновлено!"
 
+#~ msgid "Date"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Формат дати"
+
+#~ msgid "Date Paid"
+#~ msgstr "Дата оплати"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Дата отримання"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Дата"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Відсутня дата отримання!"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Дата"
+
+#~ msgid "Day"
+#~ msgstr "День"
+
 #~ msgid "Days"
 #~ msgstr "Дні(в)"
+
+#~ msgid "Debit"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Дебит"
+
+#~ msgid "Dec"
+#~ msgstr "грудня"
+
+#~ msgid "December"
+#~ msgstr "Грудень"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Десятичні місця"
 
 #~ msgid "Decrease"
 #~ msgstr "Зменшити"
@@ -4223,14 +2041,90 @@ msgstr "Проводка здійснена"
 #~ msgid "Deduct after"
 #~ msgstr "Відрахувати після"
 
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Відрахування"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Відрахування"
+
 #~ msgid "Deduction deleted!"
 #~ msgstr "Відрахування видалено!"
 
 #~ msgid "Deduction saved!"
 #~ msgstr "Відрахування збережено!"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "Типові значення"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Типові значення"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Видалити рахунок"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Країна"
+
+#, fuzzy
+#~ msgid "Default Email BCC"
+#~ msgstr "Типовий шаблон"
+
+#, fuzzy
+#~ msgid "Default Email CC"
+#~ msgstr "Типовий шаблон"
+
+#, fuzzy
+#~ msgid "Default Email To"
+#~ msgstr "Типовий шаблон"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Змінити мову"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Типовий шаблон"
+
+#~ msgid "Default Template"
+#~ msgstr "Типовий шаблон"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Країна"
+
 #~ msgid "Defaults saved!"
 #~ msgstr "Типові значення збережено!"
+
+#~ msgid "Delete"
+#~ msgstr "Видалити"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Змінити мову"
+
+#~ msgid "Delete Schedule"
+#~ msgstr "Видалити розклад"
+
+#, fuzzy
+#~ msgid ""
+#~ "Deleting a language will also delete the templates for the language %1"
+#~ msgstr "Видалення мови призведе також до видалення шаблонів для мови"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Дата доставки"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Метод"
+
+#~ msgid "Department"
+#~ msgstr "Відділ"
 
 #~ msgid "Department deleted!"
 #~ msgstr "Відділ видалено!"
@@ -4238,14 +2132,117 @@ msgstr "Проводка здійснена"
 #~ msgid "Department saved!"
 #~ msgstr "Відділ збережено!"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Відділ"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Відділ"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Видалити рахунок"
+
+#~ msgid "Description Translations"
+#~ msgstr "Переклади опису"
+
+#~ msgid "Description missing!"
+#~ msgstr "Опис відсутній!"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Опис"
+
+#~ msgid "Detail"
+#~ msgstr "Подробиці"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Подробиці"
+
+#~ msgid "Difference"
+#~ msgstr "Різниця"
+
 #~ msgid "Directory"
 #~ msgstr "Каталог"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Знижка"
+
+#~ msgid "Discount"
+#~ msgstr "Знижка"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Знижка"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Знижка"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Прибуток"
+
+#~ msgid "Done"
+#~ msgstr "Зроблено"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Пошук"
+
+#~ msgid "Drawing"
+#~ msgstr "Малюнок"
 
 #~ msgid "Driver"
 #~ msgstr "Драйвер"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Обмеження листового меню"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "грудня"
+
+#~ msgid "Due Date"
+#~ msgstr "Заплатити до"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Не вказаний термін оплати!"
+
+#, fuzzy
+#~ msgid "Duplicate employee numbers"
+#~ msgstr "Номер працівника"
+
+#~ msgid "E-mail"
+#~ msgstr "Ел. пошта"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "Послати по ел. пошті до"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "Ел. пошта"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Не вказана адреса ел. пошти!"
+
+#~ msgid "E-mail message"
+#~ msgstr "Повідомлення ел. пошти"
+
 #~ msgid "E-mailed"
 #~ msgstr "Ел. пошту відіслано"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Звіт про доходи і видатки"
+
+#~ msgid "Edit"
+#~ msgstr "Редагувати"
 
 #~ msgid "Edit AP Transaction"
 #~ msgstr "Редагувати проводку витрат"
@@ -4253,14 +2250,28 @@ msgstr "Проводка здійснена"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "Редагувати проводку доходів"
 
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Редагувати комплект"
+
 #~ msgid "Edit Business"
 #~ msgstr "Редагувати бізнес"
+
+#~ msgid "Edit Customer"
+#~ msgstr "Редагувати Клієнта"
 
 #~ msgid "Edit Deduction"
 #~ msgstr "Редагувати відрахування"
 
 #~ msgid "Edit Department"
 #~ msgstr "Редагувати відділ"
+
+#, fuzzy
+#~ msgid "Edit Description Translations"
+#~ msgstr "Переклади опису"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Редагувати працівника"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Редагувати проводку головної книги"
@@ -4271,23 +2282,69 @@ msgstr "Проводка здійснена"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Редагувати роботу/додаткові витрати"
 
+#, fuzzy
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Редагувати рахунок-фактуру"
+
 #~ msgid "Edit Part"
 #~ msgstr "Редагувати товар"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Редагувати цінову групу"
 
+#~ msgid "Edit Project"
+#~ msgstr "Редагувати проект"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Редагувати купівельне замовлення"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Редагувати котирування"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Звіти"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Редагувати запит на котирування"
+
 #~ msgid "Edit SIC"
 #~ msgstr "Редагувати SIC"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Редагувати продажну накладну"
 
 #~ msgid "Edit Service"
 #~ msgstr "Редагувати послугу"
 
+#~ msgid "Edit Template"
+#~ msgstr "Редагувати шаблон"
+
+#~ msgid "Edit User"
+#~ msgstr "Редагувати користувача"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Редагувати постачальника"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Редагувати купівельний рахунок-фактуру"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "Редагувати склад"
 
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Редагувати користувача"
+
 #~ msgid "Employee Name"
 #~ msgstr "Ім'я працівника"
+
+#~ msgid "Employee Number"
+#~ msgstr "Номер працівника"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Номер працівника"
 
 #~ msgid "Employee deleted!"
 #~ msgstr "Працівника видалено"
@@ -4298,21 +2355,251 @@ msgstr "Проводка здійснена"
 #~ msgid "Employer"
 #~ msgstr "Роботодавець"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Дата замовлення"
+
 #~ msgid "Enddate"
 #~ msgstr "Дата закінчення"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Початковий баланс"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Балансовий Звіт"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Заставити зворотну зміну проводок для всіх дат"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Редагувати користувача"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr ""
-#~ "Введіть до 3 літер розділених двокрапками (i.e CAD:USD:EUR) для позначення "
-#~ "місцевої і іноземних грошових одиниць"
+#~ "Введіть до 3 літер розділених двокрапками (i.e CAD:USD:EUR) для "
+#~ "позначення місцевої і іноземних грошових одиниць"
+
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Термін доставки"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Термін доставки"
+
+#~ msgid "Equity"
+#~ msgstr "Капітал"
+
+#~ msgid "Every"
+#~ msgstr "Кожні"
+
+#~ msgid "Exch"
+#~ msgstr "Курс"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Курс валюти"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Не вказаний курс валюти для платежу!"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Не вказаний курс валюти!"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Не вказаний курс валюти!"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Курс валюти"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Існуючі бази даних"
 
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Видатки"
+
+#~ msgid "Expense"
+#~ msgstr "Видатки"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Список Рахунків"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Видаток/Актив"
+
+#~ msgid "Extended"
+#~ msgstr "Продовжено"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Редагувати користувача"
+
+#~ msgid "FX"
+#~ msgstr "FX"
+
+#, fuzzy
+#~ msgid "Failed to save order!"
+#~ msgstr "Не вдається зберегти замовлення!"
+
+#~ msgid "Feb"
+#~ msgstr "лютого"
+
+#~ msgid "February"
+#~ msgstr "Лютий"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Бізнес"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Редагувати рахунок"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Платежі"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Квитанції"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "Податковий номер"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Додати комплект"
+
+#~ msgid "For"
+#~ msgstr "Для"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Прибуток з Обміну Валюти"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Втрата на Обміні Валюти"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Fri"
+#~ msgstr "Для"
+
+#~ msgid "From"
+#~ msgstr "Від/З"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "Від/З"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Дата замовлення"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "Від/З"
+
+#, fuzzy
+#~ msgid "From Warehouse"
+#~ msgstr "Склад"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI видалено!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "Не вказано GIFI!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI збережено!"
+
+#~ msgid "GL"
+#~ msgstr "ГК"
+
+#, fuzzy
+#~ msgid "GL Reference Number"
+#~ msgstr "Посилання"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Повязати Рахунки"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Головна книга"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Контроль"
+
+#~ msgid "Generate Orders"
+#~ msgstr "Створити замовлення"
+
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "Створити купівельні замовлення"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders from Sales Orders"
+#~ msgstr "Створити купівельні замовлення"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders"
+#~ msgstr "Створити замовлення"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders from Purchase Orders"
+#~ msgstr "Створити купівельні замовлення"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Загальна Сума"
+
+#~ msgid "Group"
+#~ msgstr "Група"
+
 #~ msgid "Group Items"
 #~ msgstr "Зрупувати елементи"
+
+#~ msgid "Group Translations"
+#~ msgstr "Згрупувати переклади"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "Група"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Групу видалено!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Відсутня група!"
+
+#~ msgid "Group saved!"
+#~ msgstr "Групу збережено!"
+
+#~ msgid "Groups"
+#~ msgstr "Групи"
+
+#~ msgid "Heading"
+#~ msgstr "Розділ"
 
 #~ msgid "Host"
 #~ msgstr "Машина/Host"
@@ -4323,45 +2610,275 @@ msgstr "Проводка здійснена"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "Ідентифікаційний номер"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Кінець року"
+
+#~ msgid "Image"
+#~ msgstr "Зображення"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "Шаблони LaTeX"
+
+#~ msgid "In-line"
+#~ msgstr "Включено (In-line)"
+
+#, fuzzy
+#~ msgid "Inactive"
+#~ msgstr "Активний"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Вкючити різницю курсів"
+
+#~ msgid "Include in Report"
+#~ msgstr "Додати до звіту"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Додати до листових меню"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Включити плтіж"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Додати до звіту"
+
+#~ msgid "Income"
+#~ msgstr "Прибуток"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Прибуток"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Прибуток"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Невірна версія Бази Даних!"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Змінити пароль"
 
 #~ msgid "Increase"
 #~ msgstr "Збільшити"
 
+#~ msgid "Individual Items"
+#~ msgstr "Індивідуальні елементи"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Внутрішні примітки"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Дійсний до"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Інвентар збережено!"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Інвентар збережено!"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr ""
+#~ "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити ций "
+#~ "товар застарілим!"
+
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr ""
-#~ "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити комплект "
-#~ "застарілим!"
+#~ "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити "
+#~ "комплект застарілим!"
+
+#~ msgid "Inventory saved!"
+#~ msgstr "Інвентар збережено!"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Інвентар перенесено!"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Дата виставлення"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Не вказана дата виставлення рахунка-фактури"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Номер рахунка-фактури"
 
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Не вказаний номер рахунка-фактури"
 
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Номер рахунка-фактури"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Дата виставлення"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Дата виставлення"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Дата виставлення"
+
 #~ msgid "Invoice deleted!"
 #~ msgstr "Рахунок-фактура видалений!"
+
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Номер рахунка-фактури"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Дата виставлення"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Рахунок-фактура"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "Елементи"
 
 #~ msgid "Item already on pricelist!"
 #~ msgstr "Елемент вже є в ціновому списку!"
 
+#~ msgid "Item deleted!"
+#~ msgstr "Річ видалено!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Речі нема в списку!"
+
+#~ msgid "Jan"
+#~ msgstr "січня"
+
+#~ msgid "January"
+#~ msgstr "січень"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "зазнало невдачі"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Вид рахунку"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Номер проекту"
+
+#~ msgid "Jul"
+#~ msgstr "липня"
+
+#~ msgid "July"
+#~ msgstr "Липень"
+
+#~ msgid "Jun"
+#~ msgstr "червня"
+
+#~ msgid "June"
+#~ msgstr "Червень"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Робота/додаткові витрати"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Мову видалено!"
+
+#~ msgid "Language saved!"
+#~ msgstr "Мову збережено!"
+
+#~ msgid "Languages"
+#~ msgstr "Мови"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Мови не визначено!"
+
+#, fuzzy
+#~ msgid "Last Cost"
+#~ msgstr "Затрати"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Оновлено"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Останні номери і типові рахунки"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Оновлено"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 #~ msgstr ""
-#~ "Якщо ви не бажаєте встановити віддалений звязок, не заповнюйте поля машини "
-#~ "і порту."
+#~ "Якщо ви не бажаєте встановити віддалений звязок, не заповнюйте поля "
+#~ "машини і порту."
+
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "Несплачені рахунки доходів"
+
+#~ msgid "Liability"
+#~ msgstr "Пассив"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Номер працівника"
 
 #~ msgid "Licensed to"
 #~ msgstr "Ліцензовано для"
 
+#~ msgid "Line Total"
+#~ msgstr "Загальна Сума"
+
 #~ msgid "Link"
 #~ msgstr "Посилання"
 
+#~ msgid "List"
+#~ msgstr "Список"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Передплата"
+
+#~ msgid "List Price"
+#~ msgstr "Ціна"
+
 #~ msgid "List Projects"
 #~ msgstr "Список проектів"
+
+#~ msgid "List Transactions"
+#~ msgstr "Список проводок"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Одиниця ваги"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Редагувати користувача"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Котирування"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Котирування"
 
 #~ msgid "Lock System"
 #~ msgstr "Замкнути систему"
@@ -4372,23 +2889,132 @@ msgstr "Проводка здійснена"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Замковий файл вилучено!"
 
+#~ msgid "Login"
+#~ msgstr "Вхід"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Відсутнє ім'я користувача!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Список Рахунків"
+
+#~ msgid "Make"
+#~ msgstr "Виробництво"
+
+#~ msgid "Manager"
+#~ msgstr "Менеджер"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "січень"
+
+#~ msgid "Mar"
+#~ msgstr "березня"
+
+#~ msgid "March"
+#~ msgstr "Березень"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Позначені записи надруковано!"
+
+#~ msgid "Markup"
+#~ msgstr "Націнка"
 
 #~ msgid "Maximum"
 #~ msgstr "Максимум"
 
+#~ msgid "May"
+#~ msgstr "травня"
+
 #~ msgid "May "
 #~ msgstr "Травень"
+
+#~ msgid "Memo"
+#~ msgstr "Нотатка"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "Періодичні проводки"
 
 #~ msgid "Menu Width"
 #~ msgstr "Ширина меню"
 
+#~ msgid "Message"
+#~ msgstr "Повідомлення"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Повідомлення"
+
+#~ msgid "Method"
+#~ msgstr "Метод"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Типові значення"
+
+#~ msgid "Microfiche"
+#~ msgstr "Мікрофіша"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Оподатковується"
+
+#~ msgid "Model"
+#~ msgstr "Модель"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "Місяць"
+
+#~ msgid "Month"
+#~ msgstr "Місяць"
+
+#, fuzzy
+#~ msgid "Month(s)"
+#~ msgstr "Місяці"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Мультибитне кодування"
 
+#~ msgid "N/A"
+#~ msgstr "Н/Д"
+
+#~ msgid "Name"
+#~ msgstr "Назва"
+
 #~ msgid "Name missing!"
 #~ msgstr "Не вказано назву!"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Назва"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Узгодження"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Користувач"
+
+#~ msgid "Next"
+#~ msgstr "Далі"
+
+#~ msgid "Next Date"
+#~ msgstr "Наступна дата"
+
+#, fuzzy
+#~ msgid "Next Number"
+#~ msgstr "Податковий номер"
+
+#~ msgid "No"
+#~ msgstr "Ні"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Рахунок видалений"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Недоступний драйвер Бази Даних!"
@@ -4396,20 +3022,215 @@ msgstr "Проводка здійснена"
 #~ msgid "No Dataset selected!"
 #~ msgstr "Не позначено вибрану Базу Даних!"
 
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "Історія"
+
+#, fuzzy
+#~ msgid "No Null employeenumber"
+#~ msgstr "Номер працівника"
+
 #~ msgid "No email address for"
 #~ msgstr "Не вказана адреса ел. пошти для"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Мова"
+
+#, fuzzy
+#~ msgid "No open Projects!"
+#~ msgstr "Проекти"
+
+#~ msgid "No."
+#~ msgstr "No."
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Не оподатковується"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Не оподатковується"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Примітки"
+
+#~ msgid "Notes"
+#~ msgstr "Примітки"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Нічого не введено!"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "Нічого не вибрано!"
 
 #~ msgid "Nothing to delete!"
 #~ msgstr "Нема що видалити!"
 
+#~ msgid "Nothing to print!"
+#~ msgstr "Нема що дркувати!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Нема що перенести"
+
+#~ msgid "Nov"
+#~ msgstr "листопада"
+
+#~ msgid "November"
+#~ msgstr "Листопад"
+
+#~ msgid "Number"
+#~ msgstr "Номер"
+
+#~ msgid "Number Format"
+#~ msgstr "Формат Числа"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Не вказаний номер у рядку"
+
+#, fuzzy
+#~ msgid "OH"
+#~ msgstr "О"
+
+#~ msgid "Obsolete"
+#~ msgstr "Застаріле"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Застаріле"
+
+#~ msgid "Oct"
+#~ msgstr "жовтня"
+
+#~ msgid "October"
+#~ msgstr "Жовтень"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Пароль"
+
+#~ msgid "On Hand"
+#~ msgstr "На руках"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "На руках"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Новий користувач"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Працівники"
+
+#~ msgid "Open"
+#~ msgstr "Відкрито"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Відкрито"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Відрахування"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Адміністрування бази даних Oracle"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Замовлення"
+
+#~ msgid "Order Date"
+#~ msgstr "Дата замовлення"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Не вказано дату замовлення!"
+
+#~ msgid "Order Number"
+#~ msgstr "Номер замовлення"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Відсутній номер замовлення"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Номер замовлення"
+
+#~ msgid "Order deleted!"
+#~ msgstr "Замовлення видалено!"
+
+#~ msgid "Order generation failed!"
+#~ msgstr "Створення замовлення зазнало невдачі!"
 
 #~ msgid "Order saved!"
 #~ msgstr "Замовлення збережено!"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Замовлення"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Замовлення"
+
+#, fuzzy
+#~ msgid "Orders generated!"
+#~ msgstr "Створення замовлення зазнало невдачі!"
+
+#~ msgid "Orphaned"
+#~ msgstr "Відокремлений/Осиротілий"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Відрахування"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Дебит"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Незбалансована проводка"
+
 #~ msgid "Out of balance!"
 #~ msgstr "Не збалансовано!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Періодичні проводки"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Передплата"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Платіж виставлено!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "О"
+
+#~ msgid "PO Number"
+#~ msgstr "Номер купівельного замовлення"
+
+#, fuzzy
+#~ msgid "POS Invoice"
+#~ msgstr "Рахунок-фактура"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "Не вказано дату пакувального списку"
@@ -4417,8 +3238,86 @@ msgstr "Проводка здійснена"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Не вказано номер пакувального списку"
 
+#~ msgid "Paid"
+#~ msgstr "Заплачено"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Поточний"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Цінова група"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Номер частини"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Частина"
+
+#~ msgid "Partnumber"
+#~ msgstr "Номер частини"
+
 #~ msgid "Parts"
 #~ msgstr "товари"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Пароль змінено!"
+
+#~ msgid "Password does not match!"
+#~ msgstr "Пароль не співпадає!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Пароль змінено!"
+
+#, fuzzy
+#~ msgid "Passwords must match."
+#~ msgstr "Паролі не співпадають!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Формат дати"
+
+#~ msgid "Payables"
+#~ msgstr "Зобовязання (платіжні)"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Не вказано дату Платежу!"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Платежі"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Платежі"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Платіж"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Платіж"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Платіж виставлено!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Залишилось"
+
+#~ msgid "Period"
+#~ msgstr "Період"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Адміністрування бази даних Pg"
@@ -4426,17 +3325,163 @@ msgstr "Проводка здійснена"
 #~ msgid "PgPP Database Administration"
 #~ msgstr "Адміністрування бази даних PgPP"
 
+#~ msgid "Phone"
+#~ msgstr "Тел."
+
+#~ msgid "Pick Lists"
+#~ msgstr "Списки комплектування"
+
 #~ msgid "Port"
 #~ msgstr "Порт"
 
 #~ msgid "Port missing!"
 #~ msgstr "Порт не вказано!"
 
+#~ msgid "Post"
+#~ msgstr "Виставити"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Виставити як новий"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Кінець року"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Виставити як новий"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Виставити як новий"
+
+#~ msgid "Post as new"
+#~ msgstr "Виставити як новий"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Виставити як новий"
+
+#~ msgid "Posted!"
+#~ msgstr "Виставлено!"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Виставити як новий"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Проводка ГК"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Рахунок-фактура "
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "Проводка витрат"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Рахунок-фактура "
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Параметри збережено!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Редагувати параметри для"
+
+#~ msgid "Price"
+#~ msgstr "Ціна"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Цінова група"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Оновлено"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Цінова група"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Цінову групу видалено!"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Відсутня цінова група!"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Цінову групу збережено!"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Цінові групи"
+
+#~ msgid "Pricelist"
+#~ msgstr "Ціновий список"
+
+#~ msgid "Print"
+#~ msgstr "Надрукувати"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Надрукувати"
+
+#~ msgid "Print and Save"
+#~ msgstr "Надрукувати і зберегти"
+
+#, fuzzy
+#~ msgid "Print and Save as new"
+#~ msgstr "Надрукувати і зберегти"
+
+#~ msgid "Printed"
+#~ msgstr "Надруковано"
+
+#~ msgid "Printer"
+#~ msgstr "Принтер"
+
+#~ msgid "Printing"
+#~ msgstr "Друкується"
+
 #~ msgid "Printing ... "
 #~ msgstr "Друкується ..."
 
+#~ msgid "Process Transactions"
+#~ msgstr "Опрацювати проводки"
+
+#~ msgid "Profit Center"
+#~ msgstr "Центр прибутку"
+
+#, fuzzy
+#~ msgid "Profit and Loss"
+#~ msgstr "Надрукувати і виставити"
+
+#~ msgid "Project"
+#~ msgstr "Проект"
+
+#, fuzzy
+#~ msgid "Project Description Translations"
+#~ msgstr "Переклади опису"
+
+#~ msgid "Project Number"
+#~ msgstr "Номер проекту"
+
 #~ msgid "Project Number missing!"
 #~ msgstr "Не вказаний номер проекту!"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Номер проекту"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Номер проекту"
 
 #~ msgid "Project Transactions"
 #~ msgstr "Проводки проекту"
@@ -4444,14 +3489,69 @@ msgstr "Проводка здійснена"
 #~ msgid "Project deleted!"
 #~ msgstr "Проект видалено!"
 
+#~ msgid "Project not on file!"
+#~ msgstr "Проекту нема в списку!"
+
 #~ msgid "Project saved!"
 #~ msgstr "Проект збережено!"
+
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Номер проекту"
+
+#~ msgid "Projects"
+#~ msgstr "Проекти"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Купівельне замовлення"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Купівельне замовлення"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Історія клієнта"
 
 #~ msgid "Purchase Order Number"
 #~ msgstr "Номер купівельного замовлення"
 
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Купівельне замовлення"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Купівельне замовлення"
+
+#~ msgid "Qty"
+#~ msgstr "Кількість"
+
+#~ msgid "Quarter"
+#~ msgstr "Квартал"
+
 #~ msgid "Quotation "
 #~ msgstr "Котирування "
+
+#~ msgid "Quotation Date"
+#~ msgstr "Дата котирування"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Відсутня дата котирування!"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Номер котирування"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Відсутній номер котирування!"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Номер котирування"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Котирування видалено!"
 
 #~ msgid "R"
 #~ msgstr "R"
@@ -4459,11 +3559,70 @@ msgstr "Проводка здійснена"
 #~ msgid "RFQ "
 #~ msgstr "RFQ "
 
+#~ msgid "RFQ Number"
+#~ msgstr "RFQ номер"
+
+#~ msgid "ROP"
+#~ msgstr "ROP"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Розцінка"
+
 #~ msgid "Rate missing!"
 #~ msgstr "Відсутня розцінка!"
 
+#~ msgid "Recd"
+#~ msgstr "Отримано"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Квитанції"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "Квитанцію виставлено!"
+
+#~ msgid "Receivables"
+#~ msgstr "Належності (дебити)"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Отримати товари"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Внести в"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Узгодження"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Узгодження"
+
+#~ msgid "Record in"
+#~ msgstr "Внести в"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Звіт для"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "Періодична проводка"
+
+#~ msgid "Reference"
+#~ msgstr "Посилання"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Проект"
+
+#~ msgid "Remaining"
+#~ msgstr "Залишилось"
+
+#~ msgid "Remove"
+#~ msgstr "Вилучити"
 
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Вилучити сліди для аудиту до"
@@ -4471,41 +3630,419 @@ msgstr "Проводка здійснена"
 #~ msgid "Remove Audit trails up to"
 #~ msgstr "Вилучити сліди для аудиту до"
 
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Спул-файли видалено!"
+
+#~ msgid "Repeat"
+#~ msgstr "Повторити"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Звіт для"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Звіт для"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Звіти"
+
+#~ msgid "Report for"
+#~ msgstr "Звіт для"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Звіти"
+
+#~ msgid "Req"
+#~ msgstr "Запит"
+
 #~ msgid "Request for Quotations"
+#~ msgstr "Запит на котирування"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Квитанції"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Термін доставки"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Термін доставки"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Термін доставки"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Пароль"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Прибуток (нерозподілений)"
+
+#, fuzzy
+#~ msgid "Reversal Information"
 #~ msgstr "Запит на котирування"
 
 #~ msgid "Role"
 #~ msgstr "Роль"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Рахунки"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Резервна копія"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Звіти"
+
 #~ msgid "S"
 #~ msgstr "S"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC видалено!"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC збережено!"
+
+#~ msgid "SKU"
+#~ msgstr "SKU"
+
+#, fuzzy
+#~ msgid "SO"
+#~ msgstr "О"
 
 #~ msgid "Sales Invoice."
 #~ msgstr "Рахунок-фактура."
 
+#~ msgid "Sales Order Number"
+#~ msgstr "Номер накладної продажу"
+
+#, fuzzy
+#~ msgid "Sales Quotation Number"
+#~ msgstr "Номер котирування"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Назва підприємства"
+
+#~ msgid "Salesperson"
+#~ msgstr "Торговець/представник"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Котирування"
+
+#, fuzzy
+#~ msgid "Sat"
+#~ msgstr "Штат"
+
+#~ msgid "Save"
+#~ msgstr "Зберегти"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Зберегти як нове"
+
+#, fuzzy
+#~ msgid "Save Batch"
+#~ msgstr "Зберегти розклад"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Зберегти як нове"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Контактна особа"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Котирування"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Зберегти як нове"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Котирування"
+
 #~ msgid "Save Pricelist"
 #~ msgstr "Зберегти ціновий список"
+
+#~ msgid "Save Schedule"
+#~ msgstr "Зберегти розклад"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "Шаблони LaTeX"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Зберегти як нове"
+
+#~ msgid "Save as new"
+#~ msgstr "Зберегти як нове"
 
 #~ msgid "Save to File"
 #~ msgstr "Зберегти у Файлі"
 
+#, fuzzy
+#~ msgid "Saving %1 [_2]"
+#~ msgstr "Збереження"
+
+#~ msgid "Schedule"
+#~ msgstr "Розклад"
+
+#~ msgid "Scheduled"
+#~ msgstr "В розкладі"
+
+#~ msgid "Screen"
+#~ msgstr "Екран"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Рахунок-фактура"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Рахунок-фактура"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Перевірити інвентар"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Купівельні замовлення"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Котирування"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Узгодження"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Запит на котирування"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Накладні продажу"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Опрацювати проводки"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Пошук"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Вибрати все"
+
+#, fuzzy
+#~ msgid "Select Customer"
+#~ msgstr "Редагувати Клієнта"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Налаштувати шаблони"
+
+#~ msgid "Select Vendor"
+#~ msgstr "Виберіть постачальника"
+
+#, fuzzy
+#~ msgid "Select a Printer!"
+#~ msgstr "Виберіть елементи"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Вибрати все"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Виберіть одну із наступних речей"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "Виберіть одну із наступних назв"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Виберіть один із наступних проектів"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Рахунки-фактури"
+
+#~ msgid "Select items"
+#~ msgstr "Виберіть елементи"
+
+#~ msgid "Select payment"
+#~ msgstr "Виберіть платіж"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Виберіть postscript або PDF"
+
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "Виберіть txt, postscript або PDF!"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Вибрати"
+
+#~ msgid "Sell"
+#~ msgstr "Продати"
+
+#~ msgid "Sell Price"
+#~ msgstr "Відпускна Ціна"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "Вислати по ел. пошті"
 
+#~ msgid "Sending"
+#~ msgstr "Відсилається"
+
+#~ msgid "Sep"
+#~ msgstr "вересня"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Відділи"
+
+#~ msgid "September"
+#~ msgstr "Вересень"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Параметри"
+
+#~ msgid "Serial No."
+#~ msgstr "Серійний No."
+
+#~ msgid "Serial Number"
+#~ msgstr "Серійний номер"
+
+#~ msgid "Service"
+#~ msgstr "Послуга"
+
+#, fuzzy
+#~ msgid "Service Code"
+#~ msgstr "Послуга"
+
 #~ msgid "Services"
 #~ msgstr "Послуги"
+
+#~ msgid "Session Timeout"
+#~ msgstr "Таймаут сеансу"
 
 #~ msgid "Session expired!"
 #~ msgstr "Сеанс застарів!"
 
+#~ msgid "Ship Merchandise"
+#~ msgstr "Відіслати товари"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Відіслати через"
+
+#~ msgid "Ship to"
+#~ msgstr "Відіслати до"
+
+#~ msgid "Ship via"
+#~ msgstr "Відіслати через"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Відіслати через"
+
 #~ msgid "Shipping Address"
 #~ msgstr "Адреса для відсилання"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Дата відсилання"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Відсутня дата відсилання!"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Пункт відсилання"
+
+#~ msgid "Short"
+#~ msgstr "Скорочено"
+
 #~ msgid "Signature"
 #~ msgstr "Підпис"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Проведено"
+
+#~ msgid "Source"
+#~ msgstr "Джерело"
+
+#~ msgid "Standard"
+#~ msgstr "Стандартні"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "Стандартні індустріальні коди"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Балансовий Звіт"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Дата початку"
+
+#~ msgid "Startdate"
+#~ msgstr "Дата початку"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Дата початку"
+
+#~ msgid "State"
+#~ msgstr "Штат"
+
+#~ msgid "State/Province"
+#~ msgstr "Штат/область"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Балансовий Звіт"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Звіт послано до"
@@ -4513,8 +4050,77 @@ msgstr "Проводка здійснена"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Звіт послано до принтера!"
 
+#~ msgid "Stock"
+#~ msgstr "Інвентар"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Оформленння"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Тема"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Тема"
+
+#~ msgid "Subtotal"
+#~ msgstr "Підсумок по розділу"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Підсумок по розділу"
+
+#~ msgid "Summary"
+#~ msgstr "Зведення"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Чи це підсумковий рахунок для запису?"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "червня"
+
 #~ msgid "Supervisor"
 #~ msgstr "Начальник"
+
+#~ msgid "System Defaults"
+#~ msgstr "Типові системні значення"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Податок"
+
+#~ msgid "Tax"
+#~ msgstr "Податок"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Податкові рахунки"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Код"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "Податковий номер / персональний номер"
+
+#~ msgid "Tax Included"
+#~ msgstr "Податок включено"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Податок включено"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Податковий номер / персональний номер"
 
 #~ msgid "Tax collected"
 #~ msgstr "Податок зібрано"
@@ -4522,8 +4128,40 @@ msgstr "Проводка здійснена"
 #~ msgid "Tax paid"
 #~ msgstr "Податок заплачено"
 
+#~ msgid "Taxable"
+#~ msgstr "Оподатковується"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "Шаблон збережено"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Шаблон збережено"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Шаблони"
+
+#~ msgid "Template saved!"
+#~ msgstr "Шаблон збережено"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Нові шаблони"
+
+#~ msgid "Terms"
+#~ msgstr "Умови: "
+
 #~ msgid "Text"
 #~ msgstr "Текст"
+
+#~ msgid "Text Templates"
+#~ msgstr "Текстові шаблони"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Ви певні, що хочете видалити даний рахунок?"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Наступні бази даних не використовуються і можуть бути видалені"
@@ -4531,12 +4169,70 @@ msgstr "Проводка здійснена"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Наступні бази даних необхідно оновити"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Пробний баланс"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Редагувати рахунок"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
 #~ "Попередня перевірка існуючих джерел. Поки що нічого не буде створено або "
 #~ "видалено!"
+
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "Від/З"
+
+#~ msgid "Till"
+#~ msgstr "Каса"
+
+#, fuzzy
+#~ msgid "Time Frame"
+#~ msgstr "Разів"
+
+#, fuzzy
+#~ msgid "Time In"
+#~ msgstr "Разів"
+
+#, fuzzy
+#~ msgid "Time Out"
+#~ msgstr "Разів"
+
+#, fuzzy
+#~ msgid "Time and Material Cards"
+#~ msgstr "Разів"
+
+#, fuzzy
+#~ msgid "Timecard Criteria"
+#~ msgstr "Разів"
+
+#~ msgid "To"
+#~ msgstr "До"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "To Warehouse"
+#~ msgstr "Склад"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -4547,8 +4243,44 @@ msgstr "Проводка здійснена"
 #~ "збережіть їх. Новий користувач із однаковими параметрами буде збережено "
 #~ "під новим іменем входу."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "До"
+
+#~ msgid "Total"
+#~ msgstr "Загальна Сума"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Загальна Сума"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Пакувальні списки"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Торгова знижка"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Проводка"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Не вказана дата проводки"
+
+#, fuzzy
+#~ msgid "Transaction Dates"
+#~ msgstr "Проводки"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Проводка"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "Проводка видалена"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Проводка здійснена"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Зроблена ревесивну зміна проводок для всіх дат"
@@ -4556,8 +4288,54 @@ msgstr "Проводка здійснена"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Зроблена ревесивну зміна проводок аж до"
 
+#, fuzzy
+#~ msgid "Transactions"
+#~ msgstr "Проводка"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Перенести інвентар"
+
+#, fuzzy
+#~ msgid "Transfer from"
+#~ msgstr "Перенести до"
+
+#~ msgid "Transfer to"
+#~ msgstr "Перенести до"
+
+#~ msgid "Translation"
+#~ msgstr "Переклад"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Переклад видалено!"
+
 #~ msgid "Translation not on file!"
 #~ msgstr "Переклад немає в файлі!"
+
+#~ msgid "Translations saved!"
+#~ msgstr "Переклади збережено!"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Пробний баланс"
+
+#, fuzzy
+#~ msgid "Unable to save %1 object"
+#~ msgstr "Не вдається зберегти замовлення!"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Номер рахунка-фактури"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Номер клієнта"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Номер постачальника"
+
+#~ msgid "Unit"
+#~ msgstr "Одиниця"
 
 #~ msgid "Unit of measure"
 #~ msgstr "Одиниця виміру"
@@ -4565,8 +4343,22 @@ msgstr "Проводка здійснена"
 #~ msgid "Unlock System"
 #~ msgstr "Відімкнути систему"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Номер постачальника"
+
+#~ msgid "Update"
+#~ msgstr "Оновити"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Оновити базу даних"
+
+#~ msgid "Updated"
+#~ msgstr "Оновлено"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Зберегти"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "Оновлення до версії"
@@ -4574,8 +4366,43 @@ msgstr "Проводка здійснена"
 #~ msgid "Use Templates"
 #~ msgstr "Використовувати шаблони"
 
+#~ msgid "User"
+#~ msgstr "Користувач"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Користувач збережений"
+
 #~ msgid "User deleted!"
 #~ msgstr "Користувач Видалений"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Користувач"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Користувач"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Користувач"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Формат дати"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "Дійсний до"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Додати рахунок"
 
 #~ msgid "Vendor Invoice."
 #~ msgstr "Рахунок-фактура."
@@ -4583,23 +4410,106 @@ msgstr "Проводка здійснена"
 #~ msgid "Vendor Invoices"
 #~ msgstr "Рахунки-фактури"
 
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Номер постачальника"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Номер постачальника"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Номер постачальника"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Номер постачальника"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Номер постачальника"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "Постачальник видалений"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "Постачальник не існує"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Потачальника нема у списку "
 
 #~ msgid "Vendor saved!"
 #~ msgstr "Постачальника збережено"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Постачальник"
+
 #~ msgid "Vendors"
 #~ msgstr "Постачальники"
 
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Версія"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Відрахування"
+
+#~ msgid "Warehouse"
+#~ msgstr "Склад"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Склад видалено!"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Склад збережено!"
+
+#~ msgid "Warning!"
+#~ msgstr "Попередження!"
+
+#~ msgid "Week"
+#~ msgstr "Тиждень"
+
+#, fuzzy
+#~ msgid "Week(s)"
+#~ msgstr "Тижні"
+
+#~ msgid "Weight"
+#~ msgstr "Вага"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Який це вид/тип елемента"
+
+#~ msgid "Work Orders"
+#~ msgstr "Наряди"
+
 #~ msgid "Work Phone"
 #~ msgstr "Робочий телефон"
+
+#~ msgid "Year"
+#~ msgstr "Рік"
+
+#, fuzzy
+#~ msgid "Year(s)"
+#~ msgstr "Роки"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Кінець року виставлено!"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "Відсутня дата кінця року!"
 
 #~ msgid "Yearend posting failed!"
 #~ msgstr "Виставлення кінця року зазнало невдачі!"
+
+#~ msgid "Yes"
+#~ msgstr "Tak"
+
+#, fuzzy
+#~ msgid "You are logged out!"
+#~ msgstr "Ви вийшли з системи"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "Ви виставляєте проводку, яка вже існує!"
@@ -4623,7 +4533,68 @@ msgstr "Проводка здійснена"
 #~ msgstr "Не введено назву!"
 
 #~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr "Необхідно ввести вузол і порт для місцевого і віддаленого з'єднання!"
+#~ msgstr ""
+#~ "Необхідно ввести вузол і порт для місцевого і віддаленого з'єднання!"
+
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "Поштовий код"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "Поштовий код"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Бізнес"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Мова"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Склад"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Мови не визначено!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "березня"
+
+#~ msgid "as at"
+#~ msgstr "як в"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Чек"
+
+#~ msgid "days"
+#~ msgstr "днів"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Видалити"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Депозит/вклад"
+
+#~ msgid "done"
+#~ msgstr "завершено"
+
+#~ msgid "ea"
+#~ msgstr "шт."
 
 #~ msgid "for"
 #~ msgstr "для"
@@ -4634,14 +4605,44 @@ msgstr "Проводка здійснена"
 #~ msgid "is already a member!"
 #~ msgstr "вже є членом!"
 
+#~ msgid "localhost"
+#~ msgstr "localhost"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Платіж"
+
 #~ msgid "posted!"
 #~ msgstr "виставлено!"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Квитанція"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Рахунок-фактура"
+
+#~ msgid "sent"
+#~ msgstr "нідіслано"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Балансовий Звіт"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Підсумок по розділу"
 
 #~ msgid "successfully created!"
 #~ msgstr "успішно створено"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "успішно видалено"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Рахунок-фактура"
 
 #~ msgid "website"
 #~ msgstr "веб-майданчик"

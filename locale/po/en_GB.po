@@ -29,284 +29,89 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-msgid "Add Budget"
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
 
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Delete Dataset"
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Purchases"
 
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Creditor Aging"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Purchase Transaction"
+
+#: sql/Pg-database.sql:2908
+msgid "AP Voucher"
 msgstr ""
 
-#: sql/Pg-database.sql:2876
-msgid "Sessions"
-msgstr ""
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Sales"
 
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr ""
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Debtor Aging"
 
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Sales Transaction"
+
+#: sql/Pg-database.sql:2907
+msgid "AR Voucher"
 msgstr ""
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
-#: sql/Pg-database.sql:2860
+#: sql/Pg-database.sql:2787
 #, fuzzy
-msgid "Add Part"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:802
-msgid "IRC"
-msgstr ""
-
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr ""
-
-#: sql/Pg-database.sql:2139
-msgid "Budget"
-msgstr ""
-
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr ""
-
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Sales Transaction"
-
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr ""
-
-#: sql/Pg-database.sql:2877
-#, fuzzy
-msgid "List Tax Forms"
-msgstr "Labour Code"
-
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr ""
+msgid "Add Accounts"
+msgstr "Accounting"
 
 #: sql/Pg-database.sql:2862
 #, fuzzy
 msgid "Add Assembly"
 msgstr "Add User"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
-msgstr ""
-
-#: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
-#: sql/Pg-database.sql:2906
-msgid "Import"
-msgstr ""
-
-#: sql/Pg-database.sql:2881
-#, fuzzy
-msgid "Assets"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:2848
-msgid "Import Chart"
-msgstr ""
-
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr ""
-
-#: sql/Pg-database.sql:3821
-#, fuzzy
-msgid "Asset"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:2869
-#, fuzzy
-msgid "LaTeX Templates"
-msgstr "Use Templates"
-
-#: sql/Pg-database.sql:2866
-msgid "Drafts"
-msgstr ""
-
-#: sql/Pg-database.sql:2788
-msgid "Top-level"
-msgstr ""
-
-#: sql/Pg-database.sql:2837
-#, fuzzy
-msgid "List Businesses"
-msgstr "Edit User"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:2938
-msgid "Reverse AR Overpay"
-msgstr ""
-
-#: sql/Pg-database.sql:810
-msgid "BCC"
-msgstr ""
-
-#: sql/Pg-database.sql:663
-msgid "Mailing"
-msgstr ""
-
-#: sql/Pg-database.sql:2861
-#, fuzzy
-msgid "Add Service"
-msgstr "Add Creditor Invoice"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
 #: sql/Pg-database.sql:2884
 #, fuzzy
 msgid "Add Assets"
 msgstr "Add User"
 
-#: sql/Pg-database.sql:3721
-msgid "time"
+#: sql/Pg-database.sql:2909
+msgid "Add Budget"
 msgstr ""
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-msgid "Vouchers"
-msgstr ""
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr ""
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr ""
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:2911
-msgid "Budgets"
-msgstr ""
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Accounting"
-
-#: sql/Pg-database.sql:2917
-msgid "Goods and Services"
-msgstr ""
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Creditor Invoice"
 
 #: sql/Pg-database.sql:2836
 #, fuzzy
 msgid "Add Business"
 msgstr "Add User"
 
-#: sql/Pg-database.sql:2785
+#: sql/Pg-database.sql:2882
+msgid "Add Class"
+msgstr ""
+
+#: sql/Pg-database.sql:2783
 #, fuzzy
-msgid "Vendor History"
-msgstr "Creditors"
+msgid "Add Contact"
+msgstr "Add User"
 
-#: sql/Pg-database.sql:660
-msgid "Sales"
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
 msgstr ""
 
-#: sql/Pg-database.sql:2935
-msgid "Sequences"
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
 msgstr ""
 
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr ""
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Add Labour/Overhead"
-
-#: sql/Pg-database.sql:2874
-msgid "Reporting Units"
-msgstr ""
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-#, fuzzy
-msgid "List Languages"
-msgstr "Delete Dataset"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Purchase Transaction"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr ""
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr ""
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr ""
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr ""
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
 msgstr ""
 
 #: sql/Pg-database.sql:2838
@@ -314,92 +119,18 @@ msgstr ""
 msgid "Add Language"
 msgstr "Delete Dataset"
 
-#: sql/Pg-database.sql:659
-msgid "Billing"
-msgstr ""
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#: sql/Pg-database.sql:2928
 #, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Creditor Invoice"
+msgid "Add Overhead"
+msgstr "Add Labour/Overhead"
 
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr ""
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:808
+#: sql/Pg-database.sql:2860
 #, fuzzy
-msgid "Email"
-msgstr "Email"
+msgid "Add Part"
+msgstr "Add User"
 
-#: sql/Pg-database.sql:2925
-#, fuzzy
-msgid "System"
-msgstr "Lock System"
-
-#: sql/Pg-database.sql:2865
-msgid "Reverse Payment"
-msgstr ""
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr ""
-
-#: sql/Pg-database.sql:813
-msgid "Billing BCC"
-msgstr ""
-
-#: sql/Pg-database.sql:723
-msgid "Dr."
-msgstr ""
-
-#: sql/Pg-database.sql:2870
-#, fuzzy
-msgid "HTML Templates"
-msgstr "Use Templates"
-
-#: sql/Pg-database.sql:725
-msgid "Mr."
-msgstr ""
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Debtor"
-
-#: sql/Pg-database.sql:2856
-msgid "Year End"
-msgstr ""
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr ""
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2777
-msgid "Inventory Activity"
-msgstr ""
-
-#: sql/Pg-database.sql:2880
-msgid "Asset Classes"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
 msgstr ""
 
 #: sql/Pg-database.sql:2972
@@ -407,21 +138,493 @@ msgstr ""
 msgid "Add Return"
 msgstr "Add User"
 
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr ""
+
+#: sql/Pg-database.sql:2861
+#, fuzzy
+msgid "Add Service"
+msgstr "Add Creditor Invoice"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Labour Code"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Add User"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+#, fuzzy
+msgid "Add Transaction"
+msgstr "Purchase Transaction"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+#, fuzzy
+msgid "Asset"
+msgstr "Add User"
+
+#: sql/Pg-database.sql:2880
+msgid "Asset Classes"
+msgstr ""
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Add User"
+
+#: sql/Pg-database.sql:810
+msgid "BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr ""
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Debtor Number"
+
+#: sql/Pg-database.sql:659
+msgid "Billing"
+msgstr ""
+
+#: sql/Pg-database.sql:813
+msgid "Billing BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:812
+msgid "Billing CC"
+msgstr ""
+
+#: sql/Pg-database.sql:811
+msgid "Billing Email"
+msgstr ""
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr ""
+
+#: sql/Pg-database.sql:2139
+msgid "Budget"
+msgstr ""
+
+#: sql/Pg-database.sql:2911
+msgid "Budgets"
+msgstr ""
+
+#: sql/Pg-database.sql:809
+msgid "CC"
+msgstr ""
+
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr ""
+
+#: sql/Pg-database.sql:797
+msgid "Cell Phone"
+msgstr ""
+
+#: sql/Pg-database.sql:2786
+#, fuzzy
+msgid "Chart of Accounts"
+msgstr "Create Chart of Accounts"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Cheque"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr ""
+
+#: sql/Pg-database.sql:2847
+msgid "Contacts"
+msgstr ""
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Creditor Invoice"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Creditor Invoice"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Debtor"
+
+#: sql/Pg-database.sql:2784
+#, fuzzy
+msgid "Customer History"
+msgstr "Debtors"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Creditor Invoice"
+
 #: sql/Pg-database.sql:2895
 #, fuzzy
 msgid "Debit Note"
 msgstr "Creditor Invoice"
 
-#: sql/Pg-database.sql:801
-msgid "MSN"
+#: sql/Pg-database.sql:2833
+#, fuzzy
+msgid "Defaults"
+msgstr "Create Chart of Accounts"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Create Chart of Accounts"
+
+#: sql/Pg-database.sql:2891
+msgid "Depreciation"
+msgstr ""
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+#, fuzzy
+msgid "Description"
+msgstr "Accounting"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+msgid "Dr."
+msgstr ""
+
+#: sql/Pg-database.sql:2866
+msgid "Drafts"
+msgstr ""
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "Email"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr ""
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr ""
+
+#: sql/Pg-database.sql:2780
+msgid "Enter Inventory"
+msgstr ""
+
+#: sql/Pg-database.sql:1054
+msgid "Entity"
+msgstr ""
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Create Chart of Accounts"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr ""
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
+msgstr "Add User"
+
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr ""
+
+#: sql/Pg-database.sql:2916
+msgid "General Journal"
+msgstr ""
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+msgid "Goods and Services"
+msgstr ""
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr ""
+
+#: sql/Pg-database.sql:2870
+#, fuzzy
+msgid "HTML Templates"
+msgstr "Use Templates"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr ""
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+msgid "IRC"
+msgstr ""
+
+#: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
+#: sql/Pg-database.sql:2906
+msgid "Import"
+msgstr ""
+
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
+#, fuzzy
+msgid "Import Batch"
+msgstr "Delete Dataset"
+
+#: sql/Pg-database.sql:2848
+msgid "Import Chart"
 msgstr ""
 
 #: sql/Pg-database.sql:2905
 msgid "Import GIFI"
 msgstr ""
 
-#: sql/Pg-database.sql:2799
-msgid "Use AR Overpayment"
+#: sql/Pg-database.sql:2773
+msgid "Import Inventory"
+msgstr ""
+
+#: sql/Pg-database.sql:2858
+#, fuzzy
+msgid "Income Statement"
+msgstr "Email Statement to"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr ""
+
+#: sql/Pg-database.sql:2777
+msgid "Inventory Activity"
+msgstr ""
+
+#: sql/Pg-database.sql:2940
+msgid "Inventory and COGS"
+msgstr ""
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+#, fuzzy
+msgid "Invoice"
+msgstr "Creditor Invoice"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Creditor Invoice"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+msgid "Journal Entry"
+msgstr ""
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "Use Templates"
+
+#: sql/Pg-database.sql:2872
+#, fuzzy
+msgid "Language"
+msgstr "Delete Dataset"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+#, fuzzy
+msgid "List Businesses"
+msgstr "Edit User"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
+msgstr "Edit User"
+
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr ""
+
+#: sql/Pg-database.sql:2839
+#, fuzzy
+msgid "List Languages"
+msgstr "Delete Dataset"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr ""
+
+#: sql/Pg-database.sql:2877
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "Labour Code"
+
+#: sql/Pg-database.sql:2835
+msgid "List Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr ""
+
+#: sql/Pg-database.sql:801
+msgid "MSN"
+msgstr ""
+
+#: sql/Pg-database.sql:663
+msgid "Mailing"
+msgstr ""
+
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
+msgid "Mr."
+msgstr ""
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+msgid "Ms."
+msgstr ""
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+#, fuzzy
+msgid "Order Entry"
+msgstr "Creditor Number"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr ""
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr ""
+
+#: sql/Pg-database.sql:2826
+msgid "Partsgroup"
+msgstr ""
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr ""
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr ""
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr ""
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr ""
+
+#: sql/Pg-database.sql:795
+msgid "Primary Phone"
+msgstr ""
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+msgid "Product Receipt"
+msgstr ""
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr ""
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
 msgstr ""
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
@@ -430,135 +633,35 @@ msgstr ""
 msgid "Quotation"
 msgstr "Purchase Transactions"
 
-#: sql/Pg-database.sql:2916
-msgid "General Journal"
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
 msgstr ""
 
-#: sql/Pg-database.sql:3831
-msgid "disposal"
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
 msgstr ""
 
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr ""
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr ""
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr ""
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr ""
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "Statement"
-msgstr "Email Statement to"
-
-#: sql/Pg-database.sql:2936
-msgid "Reverse Receipts"
-msgstr ""
-
-#: sql/Pg-database.sql:2882
-msgid "Add Class"
-msgstr ""
-
-#: sql/Pg-database.sql:2872
-#, fuzzy
-msgid "Language"
-msgstr "Delete Dataset"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
+msgid "Reconciliation"
 msgstr "Purchase Transaction"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:3832
-msgid "import"
-msgstr ""
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Sales"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:727
-msgid "Ms."
-msgstr ""
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr ""
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr ""
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-#, fuzzy
-msgid "Translations"
-msgstr "Sales Transactions"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr ""
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Labour Code"
-
-#: sql/Pg-database.sql:797
-msgid "Cell Phone"
-msgstr ""
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Create Chart of Accounts"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-#, fuzzy
-msgid "Chart of Accounts"
-msgstr "Create Chart of Accounts"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Creditor Aging"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Labour Code"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr ""
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Create Chart of Accounts"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
 
 #: sql/Pg-database.sql:2919
 #, fuzzy
@@ -569,294 +672,66 @@ msgstr "Purchase Transaction"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
+#: sql/Pg-database.sql:2874
+msgid "Reporting Units"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr ""
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr ""
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
-msgid "Import Inventory"
-msgstr ""
-
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr ""
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr ""
-
-#: sql/Pg-database.sql:2891
-msgid "Depreciation"
-msgstr ""
-
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciate"
-msgstr "Create Chart of Accounts"
+msgid "Reports"
+msgstr "Accounting"
 
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
+#: sql/Pg-database.sql:2938
+msgid "Reverse AR Overpay"
 msgstr ""
 
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-#, fuzzy
-msgid "Invoice"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
+#: sql/Pg-database.sql:2937
+msgid "Reverse Overpay"
 msgstr ""
 
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Purchase Transactions"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
+#: sql/Pg-database.sql:2865
+msgid "Reverse Payment"
 msgstr ""
 
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
+#: sql/Pg-database.sql:2936
+msgid "Reverse Receipts"
 msgstr ""
 
-#: sql/Pg-database.sql:811
-msgid "Billing Email"
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
 msgstr ""
 
-#: sql/Pg-database.sql:2780
-msgid "Enter Inventory"
+#: sql/Pg-database.sql:2871
+msgid "SIC"
 msgstr ""
 
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Purchases"
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr ""
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr ""
 
 #: sql/Pg-database.sql:2898
 #, fuzzy
 msgid "Sales Invoice"
 msgstr "Creditor Invoice"
 
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Debtor Aging"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
 msgstr ""
 
-#: sql/Pg-database.sql:2913
-#, fuzzy
-msgid "Order Entry"
-msgstr "Creditor Number"
-
-#: sql/Pg-database.sql:2784
-#, fuzzy
-msgid "Customer History"
-msgstr "Debtors"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr ""
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr ""
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr ""
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-msgid "Partsgroup"
-msgstr ""
-
-#: sql/Pg-database.sql:795
-msgid "Primary Phone"
-msgstr ""
-
-#: sql/Pg-database.sql:2771
-msgid "Search Groups"
-msgstr ""
-
-#: sql/Pg-database.sql:796
-msgid "Secondary Phone"
-msgstr ""
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr ""
-
-#: sql/Pg-database.sql:2857
-#, fuzzy
-msgid "Trial Balance"
-msgstr "Email Statement to"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr ""
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-msgid "Product Receipt"
-msgstr ""
-
-#: sql/Pg-database.sql:2835
-msgid "List Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2798
-msgid "Use Overpayment"
-msgstr ""
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr ""
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Add User"
-
-#: sql/Pg-database.sql:2908
-msgid "AP Voucher"
-msgstr ""
-
-#: sql/Pg-database.sql:2907
-msgid "AR Voucher"
-msgstr ""
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Accounting"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Cheque"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr ""
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Creditor Invoice"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-msgid "Contacts"
-msgstr ""
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-msgid "Journal Entry"
-msgstr ""
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr ""
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr ""
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Creditor"
-
-#: sql/Pg-database.sql:2833
-#, fuzzy
-msgid "Defaults"
-msgstr "Create Chart of Accounts"
-
-#: sql/Pg-database.sql:1054
-msgid "Entity"
-msgstr ""
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr ""
-
-#: sql/Pg-database.sql:2902
-msgid "Search and GL"
-msgstr ""
-
-#: sql/Pg-database.sql:2937
-msgid "Reverse Overpay"
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
 msgstr ""
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
@@ -865,207 +740,271 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Edit User"
+msgid "Search Assets"
+msgstr "Creditor Invoice"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
+#: sql/Pg-database.sql:2771
+msgid "Search Groups"
 msgstr ""
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+#: sql/Pg-database.sql:2772
 #, fuzzy
-msgid "Add Transaction"
-msgstr "Purchase Transaction"
+msgid "Search Pricegroups"
+msgstr "Creditor Invoice"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+msgid "Search and GL"
 msgstr ""
 
-#: sql/Pg-database.sql:812
-msgid "Billing CC"
+#: sql/Pg-database.sql:796
+msgid "Secondary Phone"
 msgstr ""
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2935
+msgid "Sequences"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
+#: sql/Pg-database.sql:2876
+msgid "Sessions"
+msgstr ""
+
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr ""
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr ""
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
+msgstr ""
+
+#: sql/Pg-database.sql:728
+msgid "Sir."
+msgstr ""
+
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
 #, fuzzy
-msgid "Income Statement"
+msgid "Statement"
 msgstr "Email Statement to"
 
-#: sql/Pg-database.sql:2940
-msgid "Inventory and COGS"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
 msgstr ""
 
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
-msgstr ""
-
-#: sql/Pg-database.sql:2781
+#: sql/Pg-database.sql:2925
 #, fuzzy
-msgid "Batches"
-msgstr "Debtor Number"
+msgid "System"
+msgstr "Lock System"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+#: sql/Pg-database.sql:2920
 #, fuzzy
-msgid "Description"
-msgstr "Accounting"
+msgid "Tax Forms"
+msgstr "Labour Code"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr ""
+
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
+
+#: sql/Pg-database.sql:2788
+msgid "Top-level"
+msgstr ""
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Purchase Transaction"
 
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr ""
+
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
 #, fuzzy
-#~ msgid "Dataset"
-#~ msgstr "Database"
+msgid "Translations"
+msgstr "Sales Transactions"
+
+#: sql/Pg-database.sql:2857
+#, fuzzy
+msgid "Trial Balance"
+msgstr "Email Statement to"
+
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr ""
+
+#: sql/Pg-database.sql:2799
+msgid "Use AR Overpayment"
+msgstr ""
+
+#: sql/Pg-database.sql:2798
+msgid "Use Overpayment"
+msgstr ""
+
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Creditor"
+
+#: sql/Pg-database.sql:2785
+#, fuzzy
+msgid "Vendor History"
+msgstr "Creditors"
+
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Creditor Invoice"
+
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+msgid "Vouchers"
+msgstr ""
+
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr ""
+
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
+
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr ""
+
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
+
+#: sql/Pg-database.sql:2856
+msgid "Year End"
+msgstr ""
+
+#: sql/Pg-database.sql:3830
+#, fuzzy
+msgid "depreciation"
+msgstr "Create Chart of Accounts"
+
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3832
+msgid "import"
+msgstr ""
+
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
+
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
+
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3722
+#, fuzzy
+msgid "production"
+msgstr "Purchase Transactions"
+
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Accounting"
+#~ msgid " Date missing!"
+#~ msgstr "Dataset missing!"
 
 #, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Create Chart of Accounts"
+#~ msgid " missing!"
+#~ msgstr "Port missing!"
 
 #, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Purchase Transactions"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Sales Transaction"
 
 #, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Creditor Number"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Debtor not on file!"
 
 #, fuzzy
-#~ msgid "Invoice Status"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Creditor not on file!"
+
+#, fuzzy
+#~ msgid "AP Invoices"
 #~ msgstr "Creditor Invoice"
 
 #, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Purchase Transaction"
-
-#, fuzzy
-#~ msgid "Amount From"
+#~ msgid "AP account"
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Create Dataset"
+#~ msgid "AR Invoices"
+#~ msgstr "Creditor Invoice"
 
 #, fuzzy
-#~ msgid "Accounts To"
+#~ msgid "AR account"
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Purchase Transaction"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Labour Code"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Add Creditor"
-
-#, fuzzy
-#~ msgid "Job Title"
+#~ msgid "Account"
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Add User"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Edit Debtor"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Edit User"
-
-#, fuzzy
-#~ msgid "Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
+#~ msgid "Account %1 not found."
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Delete"
-#~ msgstr "User deleted!"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Change Password"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Purchase Transactions"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Create Chart of Accounts"
-
-#~ msgid "Database"
-#~ msgstr "Database"
-
-#, fuzzy
-#~ msgid "Expense Account"
+#~ msgid "Account Description"
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Code"
-#~ msgstr "Labour Code"
+#~ msgid "Account Label"
+#~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Creditor Number"
+#~ msgid "Account Name"
+#~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Change Password"
+#~ msgid "Account Number"
+#~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "Email"
+#~ msgid "Account Type"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "Accounting"
 
 #, fuzzy
 #~ msgid "Account:"
 #~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Create Chart of Accounts"
+#~ msgid "Accounts From"
+#~ msgstr "Accounting"
 
 #, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Email Statement to"
-
-#, fuzzy
-#~ msgid "Serial Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Account"
+#~ msgid "Accounts To"
 #~ msgstr "Accounting"
 
 #, fuzzy
@@ -1073,517 +1012,30 @@ msgstr "Purchase Transaction"
 #~ msgstr "Purchase Transactions"
 
 #, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Email Statement to"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Other Actions"
+#~ msgid "Active On"
 #~ msgstr "Purchase Transactions"
-
-#, fuzzy
-#~ msgid "Tax Included"
-#~ msgstr "Labour Code"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Email Statement to"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Project Number"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Delete Dataset"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Purchase Transaction"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Edit User"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Access Control"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "List Transactions"
-#~ msgstr "Sales Transactions"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Labour Code"
-
-#, fuzzy
-#~ msgid "Credit Limit"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Purchase Transaction"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Existing Datasets"
-
-#, fuzzy
-#~ msgid "Projects"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Update"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Edit User"
-
-#, fuzzy
-#~ msgid "Database Host"
-#~ msgstr "Database"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Password"
-#~ msgstr "Password changed!"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Accounting"
-
-#~ msgid "Edit User"
-#~ msgstr "Edit User"
-
-#, fuzzy
-#~ msgid "Account Number"
-#~ msgstr "Accounting"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Edit Creditor"
-
-#, fuzzy
-#~ msgid "User"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Amount Due"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Credit"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Sales Transactions"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Purchase Transactions"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Create Dataset"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Project"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Delete Dataset"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Purchase Transactions"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Cheque"
-
-#, fuzzy
-#~ msgid "Invoice Date"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Purchase Transaction"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Debtor"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Email Statement to"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Purchase Transactions"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Purchase Transactions"
-
-#~ msgid "E-mail"
-#~ msgstr "Email"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Creditor Number"
-
-#~ msgid "Customer Number"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Labour Code"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Edit User"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Use Templates"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Change Admin Password"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Labour Code"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Create Chart of Accounts"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Creditor Number"
-
-#~ msgid "Add Customer"
-#~ msgstr "Add Debtor"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Change Admin Password"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Add User"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Database Administration"
-
-#, fuzzy
-#~ msgid "Invoice Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Delete Dataset"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "Setup Templates"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "User saved!"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Edit Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Edit Creditor Invoice"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Purchase Transaction"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Email address missing!"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Add Creditor Invoice"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Edit Creditor Invoice"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Creditor missing!"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Labour/Overhead"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Labour Code"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Creditor not on file!"
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Debtor not on file!"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Debtor"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Creditor"
-
-#~ msgid "E-mail message"
-#~ msgstr "Email message"
-
-#, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Dataset missing!"
 
 #, fuzzy
 #~ msgid "Add Credit Invoice"
 #~ msgstr "Add Creditor Invoice"
 
-#~ msgid "Customer missing!"
-#~ msgstr "Debtor missing!"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Debtor not on file!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Creditor not on file!"
+#~ msgid "Add Customer"
+#~ msgstr "Add Debtor"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Templates"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Add Creditor Invoice"
 
 #, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Sales Transaction"
+#~ msgid "Add Note"
+#~ msgstr "Add User"
+
+#~ msgid "Add Vendor"
+#~ msgstr "Add Creditor"
 
 #, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Sales Transaction"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Port missing!"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Accounting"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Templates"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "New Templates"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "does not exist"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Debtor Number"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Creditor Number"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Cheque"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Password changed!"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Creditor"
-
-#~ msgid "Checks"
-#~ msgstr "Cheques"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Creditor Invoice"
+#~ msgid "Adjustment Date"
+#~ msgstr "Email Statement to"
 
 #~ msgid "Administration"
 #~ msgstr "Administration"
@@ -1593,6 +1045,58 @@ msgstr "Purchase Transaction"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "All Datasets up to date!"
+
+#, fuzzy
+#~ msgid "Amount Due"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Access Control"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Create Dataset"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Add User"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Labour Code"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Sales Transaction"
 
 #~ msgid "Cannot create Labor"
 #~ msgstr "Cannot create Labour"
@@ -1606,26 +1110,149 @@ msgstr "Purchase Transaction"
 #~ msgid "Cannot delete vendor!"
 #~ msgstr "Cannot delete creditor"
 
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Change Admin Password"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Cheque"
+
+#~ msgid "Checks"
+#~ msgstr "Cheques"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Sales Transactions"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Click on login name to edit!"
+
+#, fuzzy
+#~ msgid "Code"
+#~ msgstr "Labour Code"
 
 #~ msgid "Connect to"
 #~ msgstr "Connect to"
 
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Labour Code"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Labour Code"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Labour Code"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Delete Dataset"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Create Dataset"
+
+#, fuzzy
+#~ msgid "Credit"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Credit Limit"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Debtor Number"
+
+#~ msgid "Customer Number"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Debtor Number"
+
 #~ msgid "Customer deleted!"
 #~ msgstr "Debtor deleted!"
+
+#~ msgid "Customer missing!"
+#~ msgstr "Debtor missing!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Debtor not on file!"
 
 #~ msgid "Customer saved!"
 #~ msgstr "Debtor saved!"
 
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Debtor"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Debtor"
+
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI not installed!"
+
+#~ msgid "Database"
+#~ msgstr "Database"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Database Driver not checked!"
 
+#, fuzzy
+#~ msgid "Database Host"
+#~ msgstr "Database"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Database Administration"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Database User missing!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "does not exist"
+
+#, fuzzy
+#~ msgid "Dataset"
+#~ msgstr "Database"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Delete"
+#~ msgstr "User deleted!"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Delete Dataset"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Accounting"
 
 #~ msgid "Directory"
 #~ msgstr "Directory"
@@ -1633,20 +1260,136 @@ msgstr "Purchase Transaction"
 #~ msgid "Driver"
 #~ msgstr "Driver"
 
+#~ msgid "E-mail"
+#~ msgstr "Email"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "Email"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Email address missing!"
+
+#~ msgid "E-mail message"
+#~ msgstr "Email message"
+
 #~ msgid "E-mailed"
 #~ msgstr "Emailed"
+
+#, fuzzy
+#~ msgid "Edit"
+#~ msgstr "Edit User"
+
+#~ msgid "Edit Customer"
+#~ msgstr "Edit Debtor"
 
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Edit Labour/Overhead"
 
+#~ msgid "Edit User"
+#~ msgstr "Edit User"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Edit Creditor"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Edit Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Edit User"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Email Statement to"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Edit User"
+
 #~ msgid "Excempt age <"
 #~ msgstr "Exempt age <"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Edit User"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Add User"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Labour Code"
 
 #~ msgid "Host"
 #~ msgstr "Host"
 
 #~ msgid "Hostname missing!"
 #~ msgstr "Hostname missing!"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "New Templates"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Change Password"
+
+#, fuzzy
+#~ msgid "Invoice Date"
+#~ msgstr "Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Invoice Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Accounting"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Labour/Overhead"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Dataset updated!"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Dataset updated!"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -1655,8 +1398,20 @@ msgstr "Purchase Transaction"
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Creditor Number"
+
 #~ msgid "Licensed to"
 #~ msgstr "Licenced to"
+
+#, fuzzy
+#~ msgid "List Transactions"
+#~ msgstr "Sales Transactions"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Purchase Transactions"
 
 #~ msgid "Lockfile created!"
 #~ msgstr "Lockfile created!"
@@ -1667,8 +1422,16 @@ msgstr "Purchase Transaction"
 #~ msgid "Login name missing!"
 #~ msgstr "Login name missing!"
 
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Accounting"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte Encoding"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Add User"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "No Database Drivers available!"
@@ -1679,11 +1442,63 @@ msgstr "Purchase Transaction"
 #~ msgid "No Labor codes on file!"
 #~ msgstr "No Labour codes on file"
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Delete Dataset"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Nothing to delete!"
 
+#, fuzzy
+#~ msgid "Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Change Admin Password"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Add User"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Purchase Transactions"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle Database Administration"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Purchase Transactions"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Purchase Transaction"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Create Chart of Accounts"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Password"
+#~ msgstr "Password changed!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Password changed!"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Database Administration"
@@ -1694,11 +1509,115 @@ msgstr "Purchase Transaction"
 #~ msgid "Port"
 #~ msgstr "Port"
 
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Existing Datasets"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Purchase Transaction"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Edit Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Edit Creditor Invoice"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Dataset updated!"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Purchase Transactions"
+
+#, fuzzy
+#~ msgid "Project"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Project Number"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Projects"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Purchase Transaction"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Change Password"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "Setup Templates"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Purchase Transactions"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Purchase Transactions"
+
 #~ msgid "Send by E-Mail"
 #~ msgstr "Send by Email"
 
+#, fuzzy
+#~ msgid "Serial Number"
+#~ msgstr "Creditor Number"
+
 #~ msgid "Service/Labor Code"
 #~ msgstr "Service/Labour Code"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Email Statement to"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Email Statement to"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Accounting"
+
+#, fuzzy
+#~ msgid "Tax Included"
+#~ msgstr "Labour Code"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "User saved!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Templates"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Templates"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Use Templates"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "The following Datasets are not in use and can be deleted"
@@ -1706,12 +1625,20 @@ msgstr "Purchase Transaction"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "The following Datasets need to be updated"
 
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Accounting"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Purchase Transaction"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -1721,21 +1648,90 @@ msgstr "Purchase Transaction"
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
 #~ "name."
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Purchase Transaction"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Purchase Transaction"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Debtor Number"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Creditor Number"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Update"
+#~ msgstr "Dataset updated!"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Update Dataset"
+
+#, fuzzy
+#~ msgid "User"
+#~ msgstr "Add User"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Add User"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Creditor"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Creditor Number"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Creditor Number"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Creditor Number"
 
 #~ msgid "Vendor deleted!"
 #~ msgstr "Creditor deleted!"
 
+#~ msgid "Vendor missing!"
+#~ msgstr "Creditor missing!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Creditor not on file!"
+
 #~ msgid "Vendor saved!"
 #~ msgstr "Creditor saved!"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Creditor"
+
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr "You must enter a host and port for local and remote connections!"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Cheque"
 
 #~ msgid "is already a member!"
 #~ msgstr "is already a member!"
@@ -1745,6 +1741,10 @@ msgstr "Purchase Transaction"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "successfully deleted!"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Creditor Invoice"
 
 #~ msgid "website"
 #~ msgstr "website"

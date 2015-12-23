@@ -12,11 +12,11 @@ find UI/ templates/ -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
-msguniq --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot
+msguniq -s --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot
 
 # Merge with .po files
 
 for pofile in `find . -name '*.po'`
 do
-    msgmerge --width=80 --update $pofile locale/LedgerSMB.pot
+    msgmerge -s --width=80 --update $pofile locale/LedgerSMB.pot
 done

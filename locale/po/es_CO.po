@@ -34,87 +34,412 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Agregar Empresa"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Informes"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Agregar Bodega"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Versión"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Efectivo"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Facturas de Proveedores"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Cartera"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Transaccion Proveedor"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Borrar Programación"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Factura de Ventas"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Cartera "
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Cuentas por Cobrar"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Borrar Programación"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Añadir Cuenta"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Añadir Compuesto"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Añadir Compuesto"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Agregar Empresa"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Agregar Empresa"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Añadir Compuesto"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Contacto"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Agregar Empleado"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Añadir cuenta PUC"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Agregar Grupo"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Agregar Idioma"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Agregar Honorarios"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Añadir Artículo"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Añadir Grupo de Precios"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "Plan Único de Cuentas (PUC)"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Añadir Usuario"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "Agregar SIC"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Añadir Servicio"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Añadir Artículo"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Añadir Artículo"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Añadir Transacción"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Agregar Bodega"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Activo"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Compuestos"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Activo"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Hoja de balance"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Proxima Fecha"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "millón"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "millón"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "millón"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "millón"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Lista Empaque"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Agregar Empresa"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Envio"
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "Agregar Empresa"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Cuentas por Cobrar"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "C"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Efectivo"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Teléfono residencia"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Plan de cuentas"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Cheque"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "Mostrar PUC"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:549
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Mostrar Centro de Costos"
+msgid "Cold Lead"
+msgstr "Entrega"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Envio"
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Contacto"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Contacto"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Editar Factura Punto de Venta"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Débito"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Cliente"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "Historial del Cliente"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Factura de Venta"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Débito"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "Preferencias"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Descripción"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Descripción"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Descripción"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Agregado!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Colaborador/Empleado"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Empleados"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Transferir Inventario"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Mostrar empresas"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Editar cuenta"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Fax"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Añadir Compuesto"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "Plan Único de Cuentas (PUC)"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Notas de Contabilidad"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr "Elaborar"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "Elaborar"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Bienes y servicios"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
 msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "Recursos Humanos"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "Plantillas HTML"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Teléfono residencia"
+
+#: sql/Pg-database.sql:548
+#, fuzzy
+msgid "Hot Lead"
+msgstr "Entrega"
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -122,331 +447,213 @@ msgstr ""
 msgid "Import"
 msgstr "Informes"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Activo"
+msgid "Import Batch"
+msgstr "Informes"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Informes"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Comprobante de Egreso"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Activo"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "Plantillas LaTeX"
+msgid "Import GIFI"
+msgstr "Editar PUC"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Agregado!"
+msgid "Import Inventory"
+msgstr "Inventario"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Nivel superior"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Estado de Resultados"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Mostrar empresas"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Contacto"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Recibos"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "millón"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Añadir Servicio"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Añadir Compuesto"
-
-#: sql/Pg-database.sql:3721
-#, fuzzy
-msgid "time"
-msgstr "vez/veces"
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Borrar Programación"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Recibos"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Orden de Trabajo"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Débito"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Agregar Empresa"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Informes"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Bienes y servicios"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Editar Factura Punto de Venta"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Agregar Empresa"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "Historial Proveedor"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Ventas"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Preferencias"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "Solicitar Cotización"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Agregar Honorarios"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Informes"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Mostrar Idiomas"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Reconciliación"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Ordenes de Venta"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Pedidos"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Albarán"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "C"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Venta"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Agregar Idioma"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "millón"
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Número de factura"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Añadir cuenta PUC"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "Agregar SIC"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "Correo electrónico"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Sistema"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Anticipio"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Pagos"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "millón"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "Plantillas HTML"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Factura de Proveedor"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Cliente"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Fin del Año"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Transferencia"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-#, fuzzy
-msgid "in years"
-msgstr "AÃ±os"
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr "Entrega"
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Inventario"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Inventario"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "Inventario guardado!"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Factura de Venta"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Número de factura"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "País"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "Plantillas LaTeX"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Idioma"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
+msgstr "Entrega"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Mostrar empresas"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "Compuestos"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Añadir Usuario"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "Mostrar PUC"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Mostrar Idiomas"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "Mostrar SIC"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Débito"
+msgid "List Tax Forms"
+msgstr "Mostrar Centro de Costos"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Mostar bodegas"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Salir"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "RIF"
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Editar PUC"
+msgid "Mailing"
+msgstr "millón"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Anticipio"
+msgid "Mr."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr "Nueva Ventana"
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Cotizaciones y pedidos"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Impagados"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Albarán"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Grupo de Precios"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Comprobante de Egreso"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Pagos"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Lista de Empaque"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Nombre de la empresa"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Búsqueda"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Pedido"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Pedidos"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -454,139 +661,35 @@ msgstr "Anticipio"
 msgid "Quotation"
 msgstr "Cotizaciones"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Cotizaciones"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "Solicitar Cotización"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "Cotizaciones solicitados"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Recibo"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Recibos"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Recibir"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Notas de Contabilidad"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Estado de Cuenta"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Búsqueda"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Añadir Compuesto"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Idioma"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Transaccion Proveedor"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Informes"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Factura de Ventas"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Añadir Artículo"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Hoja de balance"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Teléfono residencia"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Traducciones"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Fax"
-
-#: sql/Pg-database.sql:549
-#, fuzzy
-msgid "Cold Lead"
-msgstr "Entrega"
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Formato de fecha"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Teléfono residencia"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Descripción"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Plan de cuentas"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Cartera"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Añadir Artículo"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Salir"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Editar cuenta"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Búsqueda"
-
-#: sql/Pg-database.sql:3757
-#, fuzzy
-msgid "in months"
-msgstr "Meses"
+msgid "Reconciliation"
+msgstr "Reconciliación"
 
 #: sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -596,308 +699,71 @@ msgstr "Transacciones Recurrentes"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Orden de Venta"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "Recursos Humanos"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Clase de Negocio"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Inventario"
+msgid "Reporting Units"
+msgstr "Informes"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Añadir Grupo de Precios"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Inventario"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Descripción"
+msgid "Reports"
+msgstr "Informes"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "Descripción"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "Cotizaciones solicitados"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Factura de Venta"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Recibo"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Deducciones Nómina"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "Mostrar SIC"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "millón"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Transferir Inventario"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Facturas de Proveedores"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Facturas de Ventas"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Cartera "
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Cotizaciones y pedidos"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "Historial del Cliente"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Grupos de Precios"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Recibir"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Inventariar Compuesto"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Contacto"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Grupo de Precios"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Nombre de la empresa"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Grupos de Precios"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Nombre de la empresa"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "Elaborar"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Cotizaciones"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Balance de Comprobación"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Agregar Grupo"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Búsqueda"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Mostar bodegas"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Anticipio"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Empleados"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Añadir Compuesto"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Borrar Programación"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Borrar Programación"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Añadir Cuenta"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Cheque"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Impagados"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr "Nueva Ventana"
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Factura de Venta"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr "Elaborar"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Contacto"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "País"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Bodegas"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Colaborador/Empleado"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Pedido"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Agregar Empleado"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Proveedor"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "Preferencias"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Mostrar empresas"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Lista de Empaque"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Búsqueda"
+msgid "Reverse AR Overpay"
+msgstr "Recibos"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Anticipio"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Anticipio"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Búsqueda"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Venta"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Ventas"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Facturas de Ventas"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Orden de Venta"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Ordenes de Venta"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -905,2365 +771,459 @@ msgstr "Anticipio"
 msgid "Search"
 msgstr "Búsqueda"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Compuestos"
+msgid "Search Assets"
+msgstr "Búsqueda"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Lista Empaque"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Grupos de Precios"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Añadir Transacción"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Grupos de Precios"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Búsqueda"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Nombre de la empresa"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Preferencias"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "millón"
+msgid "Sessions"
+msgstr "Versión"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Envio"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Envio"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Estado de Resultados"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Inventario guardado!"
-
-#: sql/Pg-database.sql:548
-#, fuzzy
-msgid "Hot Lead"
-msgstr "Entrega"
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Proxima Fecha"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Estado de Cuenta"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Descripción"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Inventariar Compuesto"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Sistema"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Formato de fecha"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr ""
+
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Nivel superior"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "¡Transacción registrada!"
 
-#~ msgid "Dataset"
-#~ msgstr "Base de datos"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Transferencia"
 
-#~ msgid "Transactions"
-#~ msgstr "Transacciones"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Traducciones"
 
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Cuentas"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "¡Pago registrado!"
-
-#~ msgid "Source"
-#~ msgstr "Fuente"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "¡Usuario guardado!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Recibos"
-
-#~ msgid "Period"
-#~ msgstr "Periodo"
-
-#~ msgid "Process Transactions"
-#~ msgstr "Procesar TransacciÃ³n"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "Impagados Cartera"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Agregar SIC"
-
-#~ msgid "Paid"
-#~ msgstr "Pagado"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "De"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Código Vendedor"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Fecha de factura"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Asiento"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Formato de fecha"
-
-#~ msgid "Equity"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Guardar todo"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Crear base de datos"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Fecha de entrega"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Registrar en"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Cuentas"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Fin del Año guardado!"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Recibos"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Contacto"
-
-#~ msgid "Scheduled"
-#~ msgstr "Programado"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Dirección"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Nombre"
-
-#~ msgid "On Hand"
-#~ msgstr "Disponible"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Transacciones Recurrentes"
-
-#~ msgid "Login"
-#~ msgstr "Entrar"
-
-#~ msgid "Sell Price"
-#~ msgstr "Precio de venta"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Factura de Venta"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Control de Auditoría"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Versión"
-
-#, fuzzy
-#~ msgid "Profit and Loss"
-#~ msgstr "Imprimir y Registrar"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Añadir Proveedor"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Pagos"
-
-#~ msgid "Expense"
-#~ msgstr "Gastos"
-
-#~ msgid "Currency"
-#~ msgstr "Moneda"
-
-#~ msgid "Liability"
-#~ msgstr "Pasivo"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "Acumulado"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Asunto"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Balance Inicial"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Fin del Año"
-
-#, fuzzy
-#~ msgid "Allocated"
-#~ msgstr "Permisos"
-
-#~ msgid "Startdate"
-#~ msgstr "Fecha inicial"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "NIT/CC"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Categoría de cuenta"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Unidad"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "Preferencias"
-
-#~ msgid "Message"
-#~ msgstr "Mensaje"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Pedido"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Número del cliente"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Contacto"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Solicitar Cotización"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Añadir Compuesto"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Editar Cliente"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Adjunto"
-
-#~ msgid "as at"
-#~ msgstr "al"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Editar Usuario"
-
-#~ msgid "Income"
-#~ msgstr "Ingreso"
-
-#~ msgid "Number"
-#~ msgstr "Número"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Mostrar Plan Único de Cuentas"
-
-#~ msgid "Delete"
-#~ msgstr "Borrar"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Contraseña"
-
-#~ msgid "Markup"
-#~ msgstr "Margen"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Débito"
-
-#~ msgid "Post"
-#~ msgstr "Registrar"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Formato de fecha"
-
-#~ msgid "Make"
-#~ msgstr "Marca"
-
-#~ msgid "Till"
-#~ msgstr "Caja"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Activo"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "País"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Copia de seguridad de los datos"
-
-#~ msgid "Receivables"
-#~ msgstr "Cobros"
-
-#~ msgid "System Defaults"
-#~ msgstr "Predeterminados del Sistema"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Actual"
-
-#~ msgid "Detail"
-#~ msgstr "Detalle"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Número de factura"
-
-#~ msgid "Backup"
-#~ msgstr "Copia de seguridad de los datos"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Guardar como nuevo"
-
-#~ msgid "Database"
-#~ msgstr "Base de datos"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Pedido"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Mostrar Plan Único de Cuentas"
-
-#~ msgid "Code"
-#~ msgstr "Código"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Cerrar los libros hasta"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Contacto"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Hoja de Estilo"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Artículo"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Editar Empleado"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Débito"
-
-#~ msgid "PO Number"
-#~ msgstr "Número pedido"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Usuario"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Ingreso"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "Correo electrónico"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Cuenta"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Envio por"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Orden"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Crédito"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "¡Actualizado!"
-
-#~ msgid "Taxable"
-#~ msgstr "Impuestos Gravables"
-
-#~ msgid "Continue"
-#~ msgstr "Continuar"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Destino"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Guardar todo"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Fecha inicial"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Cotización"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Borrar cuenta"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Usuario"
-
-#~ msgid "COGS"
-#~ msgstr "Costo de los artículos"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "País"
-
-#, fuzzy
-#~ msgid "Last Cost"
-#~ msgstr "Costo"
-
-#, fuzzy
-#~ msgid "Time Frame"
-#~ msgstr "Veces"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Estado de Cuenta"
-
-#~ msgid "GL"
-#~ msgstr "Nota Contable"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Subtotal"
-
-#~ msgid "Serial Number"
-#~ msgstr "Número del Serial"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Fecha"
-
-#~ msgid "Account"
-#~ msgstr "Cuenta"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Reporte de Reconciliación"
-
-#~ msgid "Memo"
-#~ msgstr "Memo"
-
-#~ msgid "Active"
-#~ msgstr "Activo"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Fecha inicial"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Categoría de cuenta"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Deducciones"
-
-#~ msgid "Phone"
-#~ msgstr "Teléfono"
-
-#~ msgid "Week"
-#~ msgstr "Semana"
-
-#~ msgid "Yes"
-#~ msgstr "Si"
-
-#~ msgid "Pricelist"
-#~ msgstr "Lista de Precios"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "Acumulado"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Registrar como Nuevo"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Débito"
-
-#~ msgid "Tax Included"
-#~ msgstr "Impuestos Incluidos"
-
-#~ msgid "Drawing"
-#~ msgstr "Reintegro"
-
-#~ msgid "List Price"
-#~ msgstr "Precio de Lista"
-
-#~ msgid "No"
-#~ msgstr "No"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Total de la línea"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Ingreso"
-
-#~ msgid "Qty"
-#~ msgstr "Cantidad"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "¡Actualizado!"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Empresa"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Activar Rastro Auditoría"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Preferencias"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Fecha inicial"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Número de cuenta"
-
-#~ msgid "Project Number"
-#~ msgstr "Número del Proyecto"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Incluir Diferencia por Tasa de Cambio"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Fecha"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Usuario"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Copia de seguridad de los datos"
-
-#~ msgid "Quarter"
-#~ msgstr "Trimestre"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Formato de fecha"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "Código Postal"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Borrar base de datos"
-
-#~ msgid "City"
-#~ msgstr "Ciudad"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Balance de Comprobación"
 
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Fecha"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Deducciones"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Editar Usuario"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Control de Acceso"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Cuentas de Impuestos"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "Código Postal"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Enlazar cuentas"
-
-#~ msgid "All"
-#~ msgstr "Todos"
-
-#~ msgid "From"
-#~ msgstr "De"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Informe para"
-
-#~ msgid "Remaining"
-#~ msgstr "Resto"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Número de Empleado"
-
-#~ msgid "Model"
-#~ msgstr "Modelo"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Activo"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Copiar al plan de cuentas"
-
-#~ msgid "Method"
-#~ msgstr "Metódo"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Guardar como nuevo"
-
-#~ msgid "Reference"
-#~ msgstr "Referencia"
-
-#~ msgid "Contra"
-#~ msgstr "Cuentas del Orden"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Detalle"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Por Pagar"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Preferencias guardadas"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Centro de Costos"
-
-#~ msgid "Debit"
-#~ msgstr "Débito"
-
-#~ msgid "List Transactions"
-#~ msgstr "Mostrar Transacciones"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Número de cuenta"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Limite de credito"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "De"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Revisar Inventario"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Empresa"
-
-#~ msgid "Cost Center"
-#~ msgstr "Centro de Costos (Gastos)"
-
-#~ msgid "Bin"
-#~ msgstr "Empaque"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Cotización"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Aceptado el"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Grupo de Precios"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "Enviar comprobante por correo electrónico a"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Informe para"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Balance de Cuenta"
-
-#~ msgid "Report for"
-#~ msgstr "Informe para"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "País"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Deducciones"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Fecha de factura"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Impuestos Gravables"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Orden"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Inventario guardado!"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Incluir Pago"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Activo"
-
-#~ msgid "Amount"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Fecha de factura"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Registrar como Nuevo"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Borrado"
-
-#, fuzzy
-#~ msgid "Lead Time"
-#~ msgstr "Plazo"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Informe para"
-
-#~ msgid "Projects"
-#~ msgstr "Proyectos"
-
-#~ msgid "Difference"
-#~ msgstr "Diferencia"
-
-#~ msgid "Update"
-#~ msgstr "Actualizar"
-
-#~ msgid "Due Date"
-#~ msgstr "Fecha de vencimiento"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Editar Usuario"
-
-#~ msgid "Database Host"
-#~ msgstr "Máquina servidor de base de datos"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Número del cliente"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Editar cuenta"
-
-#~ msgid "Warehouse"
-#~ msgstr "Bodega"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Adjunto"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Gastos/Activo"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Número de Empleado"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Descripción"
-
-#~ msgid "Password"
-#~ msgstr "Contraseña"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "NIT/CC"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Adjunto"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Clase de Negocio"
 
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Guardar"
+msgid "Use AR Overpayment"
+msgstr "Anticipio"
 
-#~ msgid "Edit User"
-#~ msgstr "Editar Usuario"
-
-#~ msgid "FX"
-#~ msgstr "Tasa de Cambio"
-
-#~ msgid "Account Number"
-#~ msgstr "Número de cuenta"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Editar Proveedor"
-
-#~ msgid "User"
-#~ msgstr "Usuario"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Deducciones"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "Impagados Proveedores"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Inventario guardado!"
-
-#, fuzzy
-#~ msgid "Time Out"
-#~ msgstr "Veces"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Formato de fecha"
-
-#~ msgid "Printer"
-#~ msgstr "Impresora"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "¡Actualizado!"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Lista de empaque"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "Hasta "
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Date Paid"
-#~ msgstr "Fecha de pago"
-
-#~ msgid "Amount Due"
-#~ msgstr "Por Pagar"
-
-#~ msgid "Credit"
-#~ msgstr "Crédito"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "País"
-
-#~ msgid "Short"
-#~ msgstr "Corto"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Usuario"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Contacto"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Código Vendedor"
-
-#~ msgid "Year"
-#~ msgstr "Año"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Factura Punto de Venta"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Adjunto"
-
-#~ msgid "Day"
-#~ msgstr "DÃ­a"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Pedido"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Agregar Deducción"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Formato de fecha"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Borrar base de datos"
-
-#~ msgid "Open"
-#~ msgstr "Abierto"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Crédito"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Anticipio"
-
-#, fuzzy
-#~ msgid "Average Cost"
-#~ msgstr "Costo"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Procesar TransacciÃ³n"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Mostrar Plan Único de Cuentas"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Notas"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Seleccionar"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "Disponible"
-
-#~ msgid "Company"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Tasa de Cambio"
-
-#~ msgid "Salesperson"
-#~ msgstr "Vendedor"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Código Vendedor"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Incluir en menúes desplegables:"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Crédito"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "NIT./CC./CE."
-
-#~ msgid "Include in Report"
-#~ msgstr "Incluir en informe"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Balance"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Forzar la anulación de las transacciones para todas las fechas"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Balance de Cuenta"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Informes"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Aceptado el"
-
-#~ msgid "Number Format"
-#~ msgstr "Formato de número"
-
-#~ msgid "Date"
-#~ msgstr "Fecha"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Informes"
-
-#~ msgid "Line Total"
-#~ msgstr "Total de la línea"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Empresa"
-
-#~ msgid "Address"
-#~ msgstr "Dirección"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Crear base de datos"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Nombre de la empresa"
-
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "falló"
-
-#~ msgid "Warning!"
-#~ msgstr "Alerta!"
-
-#~ msgid "Manager"
-#~ msgstr "Administrador"
-
-#~ msgid "Record in"
-#~ msgstr "Registrar en"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Notas de Contabilidad"
-
-#~ msgid "Image"
-#~ msgstr "Imagen"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Código Vendedor"
-
-#~ msgid "days"
-#~ msgstr "días"
-
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Informes"
+msgid "Use Overpayment"
+msgstr "Anticipio"
 
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Unidad de peso"
-
-#~ msgid "Project"
-#~ msgstr "Proyecto"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Idioma"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Proveedor"
 
-#~ msgid "Name"
-#~ msgstr "Nombre"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Formato de fecha"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Número de cuenta"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "Historial Proveedor"
 
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Deducciones"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Factura de Proveedor"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Editar cuenta"
+msgid "Vouchers"
+msgstr "Borrar Programación"
 
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Cheque"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Bodegas"
 
-#~ msgid "Screen"
-#~ msgstr "Pantalla"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#~ msgid "Obsolete"
-#~ msgstr "Obsoleto"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Orden de Trabajo"
 
-#~ msgid "Invoice Date"
-#~ msgstr "Fecha de factura"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Enlazar cuentas"
+msgid "Year End"
+msgstr "Fin del Año"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Asiento"
+msgid "depreciation"
+msgstr "Descripción"
 
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Mostrar Plan Único de Cuentas"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Preferencias"
-
-#~ msgid "Partnumber"
-#~ msgstr "Número parte"
+msgid "import"
+msgstr "Informes"
 
+#: sql/Pg-database.sql:3757
 #, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Balance de Cuenta"
+msgid "in months"
+msgstr "Meses"
 
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
 #, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "¿Es esta una cuenta de Cartera por Cobrar/Pagar?"
+msgid "in years"
+msgstr "AÃ±os"
 
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Balance"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Orden"
-
-#~ msgid "Company Name"
-#~ msgstr "Nombre de la empresa"
+msgid "production"
+msgstr "Deducciones Nómina"
 
-#~ msgid "To"
-#~ msgstr "Hasta "
-
+#: sql/Pg-database.sql:3721
 #, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Factura de Venta"
+msgid "time"
+msgstr "vez/veces"
 
 #, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Número parte"
+#~ msgid " Date missing!"
+#~ msgstr "¡Falta la fecha!"
 
 #, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Sin Impuestos"
-
-#~ msgid "Employee Number"
-#~ msgstr "Número de Empleado"
-
-#~ msgid "Closed"
-#~ msgstr "Cerrado"
+#~ msgid " missing!"
+#~ msgstr "Falta código"
 
 #, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Registrar como Nuevo"
+#~ msgid "# Invoices"
+#~ msgstr "Facturas"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Editar Empleado"
 
-#~ msgid "Total"
-#~ msgstr "Total"
-
-#~ msgid "Notes"
-#~ msgstr "Notas"
-
 #, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Historial del Cliente"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Mostrar Plan Único de Cuentas"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Factura de Venta"
-
-#~ msgid "Compare to"
-#~ msgstr "Comparar con"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Reporte de Reconciliación"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Fecha"
-
-#~ msgid "Current"
-#~ msgstr "Actual"
-
-#~ msgid "Country"
-#~ msgstr "País"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Formato de fecha"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Copia de seguridad de los datos"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Grupo de Precios"
-
-#, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Lugar de los decimales"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Pagos"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Factura de Venta"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Número de cuenta"
-
-#, fuzzy
-#~ msgid "Choose a company"
+#~ msgid "%1 Business"
 #~ msgstr "Empresa"
 
 #, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Los libros están abiertos"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Agregar Transacción Efectivo"
 
 #, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Procesar TransacciÃ³n"
+#~ msgid "%1 GIFI"
+#~ msgstr "Plan Único de Cuentas (PUC)"
 
 #, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Empleados"
-
-#~ msgid "Group"
-#~ msgstr "Grupo"
-
-#~ msgid "Subtotal"
-#~ msgstr "Subtotal"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Añadir Nota de Contabilidad"
 
 #, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Configurar plantillas"
-
-#~ msgid "DOB"
-#~ msgstr "Fecha de Nacimiento"
+#~ msgid "%1 Language"
+#~ msgstr "Idioma"
 
 #, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Guardar como nuevo"
-
-#~ msgid "Unit"
-#~ msgstr "Unidad"
-
-#~ msgid "No."
-#~ msgstr "No."
+#~ msgid "%1 Number"
+#~ msgstr "Número"
 
 #, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Cotización"
-
-#~ msgid "Summary"
-#~ msgstr "Résumen"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid "E-mail"
-#~ msgstr "Correo electrónico"
+#~ msgid "%1 SIC"
+#~ msgstr "Agregar SIC"
 
 #, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Subtotal"
+#~ msgid "%1 Warehouse"
+#~ msgstr "Bodega"
 
 #, fuzzy
-#~ msgid "Group by"
-#~ msgstr "Grupo"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "¡El cliente no existe!"
 
 #, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Anticipio"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "¡No se encuentra el proveedor en la base de datos!"
+
+#~ msgid "A"
+#~ msgstr "A"
 
 #, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Cuentas"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Cotización"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Pagos"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "NIT./CC./CE."
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Fecha recibido"
-
-#~ msgid "Next"
-#~ msgstr "Proximo"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
+#~ msgid "AP Invoices"
 #~ msgstr "Factura Punto de Venta"
 
-#~ msgid "Weight"
-#~ msgstr "Peso"
+#~ msgid "AP Outstanding"
+#~ msgstr "Impagados Proveedores"
 
-#~ msgid "Tax"
-#~ msgstr "Impuestos"
-
-#~ msgid "Cleared"
-#~ msgstr "Borrado"
-
-#~ msgid "Order Number"
-#~ msgstr "Número de orden"
-
-#~ msgid "Customer Number"
-#~ msgstr "Número del cliente"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Control de Auditoría"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Tasa de Cambio"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Tarifa"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "Impagados Cartera"
-
-#, fuzzy
-#~ msgid "Time and Material Cards"
-#~ msgstr "Veces"
-
-#~ msgid "Edit"
-#~ msgstr "Editar"
-
-#~ msgid "Copies"
-#~ msgstr "Copias"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Adjunto"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Añadir Usuario"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Búsqueda"
-
-#~ msgid "Save"
-#~ msgstr "Guardar"
-
-#~ msgid "State/Province"
-#~ msgstr "Departamento"
-
-#~ msgid "Heading"
-#~ msgstr "Encabezado"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Nuevas plantillas"
+#~ msgid "AP Transactions"
+#~ msgstr "Gestiones de pagos"
 
 #, fuzzy
 #~ msgid "AP account"
 #~ msgstr "Cuenta"
 
 #, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Inventario guardado!"
+#~ msgid "AR Invoices"
+#~ msgstr "Factura de Venta"
 
-#, fuzzy
-#~ msgid "Clocked"
-#~ msgstr "Bloqueado!"
+#~ msgid "AR Outstanding"
+#~ msgstr "Impagados Cartera"
 
-#~ msgid "Discount"
-#~ msgstr "Descuento"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Adjunto"
-
-#~ msgid "Confirm"
-#~ msgstr "Confirmar"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Formato de fecha"
-
-#~ msgid "Balance"
-#~ msgstr "Balance"
-
-#~ msgid "Ship via"
-#~ msgstr "Envio por"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Descripción"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Sin Impuestos"
-
-#~ msgid "Department"
-#~ msgstr "Centro de Costos"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Aceptado el"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Cuentas de Impuestos"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Impuestos Gravables"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Contraseña"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Informes"
-
-#~ msgid "Standard"
-#~ msgstr "Estándard"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Editar preferencias de"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Fecha de elaboración"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Informes"
+#~ msgid "AR Transactions"
+#~ msgstr "Cuentas por Cobrar"
 
 #, fuzzy
 #~ msgid "AR account"
 #~ msgstr "Cuenta"
 
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Proyecto"
+#~ msgid "About"
+#~ msgstr "Acerca de"
+
+#~ msgid "Above"
+#~ msgstr "Encima de"
+
+#~ msgid "Account"
+#~ msgstr "Cuenta"
 
 #, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Enlazar cuentas"
-
-#~ msgid "Profit Center"
-#~ msgstr "Centro de Costo (Ingresos)"
-
-#~ msgid "ROP"
-#~ msgstr "Tope de envio"
+#~ msgid "Account %1 not found"
+#~ msgstr "Cuenta no existe!"
 
 #, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Crédito"
-
-#~ msgid "Payables"
-#~ msgstr "Por Pagar"
+#~ msgid "Account %1 not found."
+#~ msgstr "Cuenta"
 
 #, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "Válido hasta"
+#~ msgid "Account Description"
+#~ msgstr "Descripción"
 
 #, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Borrado"
+#~ msgid "Account Label"
+#~ msgstr "Número de cuenta"
 
 #, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Balance"
+#~ msgid "Account Name"
+#~ msgstr "Número de cuenta"
 
 #, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Balance"
+#~ msgid "Account No."
+#~ msgstr "Cuenta"
+
+#~ msgid "Account Number"
+#~ msgstr "Número de cuenta"
 
 #, fuzzy
-#~ msgid "Time In"
-#~ msgstr "Veces"
+#~ msgid "Account Number End"
+#~ msgstr "Número de cuenta"
 
 #, fuzzy
-#~ msgid "Content"
-#~ msgstr "Contacto"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "País"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Ingreso"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Comprobante de Egreso"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Reporte de Reconciliación"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Editar cuenta"
-
-#~ msgid "Microfiche"
-#~ msgstr "Microficha"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Código Vendedor"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Débito"
-
-#~ msgid "Add Customer"
-#~ msgstr "Añadir Cliente"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Editar Usuario"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Preferencias"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Asunto"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Cambiar la contraseña del administrador"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Administrador"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Comprobante de Egreso"
-
-#~ msgid "Exch"
-#~ msgstr "Cambio"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Mostrar Centro de Costos"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Grupo de Precios"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Editar Empleado"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Número de factura"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Reconciliación"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Fecha"
-
-#~ msgid "Month"
-#~ msgstr "Mes"
-
-#, fuzzy
-#~ msgid "Item"
-#~ msgstr "Productos/Servicios"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "No se encuentra la fecha de pago"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Balance de Cuenta"
-
-#~ msgid "Accounts"
-#~ msgstr "Cuentas"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Anticipio"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Agregar Tasa de Cambio"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Cotización"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Fin del Año"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Notas internas"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Resultado del Ejercicio"
-
-#, fuzzy
-#~ msgid "You are logged out!"
-#~ msgstr "¡Ud. está desconectado del sistema!"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Idiomas no configuradas!"
-
-#~ msgid "Sales Order Number"
-#~ msgstr "N°de Pedido"
-
-#~ msgid "Sales Quotation Number"
-#~ msgstr "N°de Cotización de Venta"
-
-#~ msgid "RFQ Number"
-#~ msgstr "Número de Cotización"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Número del Proyecto"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "¡Contraseña cambiada!"
-
-#, fuzzy
-#~ msgid "Default Email To"
-#~ msgstr "Plantilla Predeterminada"
-
-#, fuzzy
-#~ msgid "Default Email CC"
-#~ msgstr "Plantilla Predeterminada"
-
-#, fuzzy
-#~ msgid "Default Email BCC"
-#~ msgstr "Plantilla Predeterminada"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Nombre de la empresa"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Nombre de la empresa"
-
-#~ msgid "Save as new"
-#~ msgstr "Guardar como nuevo"
+#~ msgid "Account Number Start"
+#~ msgstr "Número de cuenta"
 
 #~ msgid "Account Number missing!"
 #~ msgstr "No se ha definido el número de la cuenta"
 
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Categoría de cuenta"
+
 #~ msgid "Account Type missing!"
 #~ msgstr "No se ha definido el tipo de la cuenta"
 
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr "Tiene que seleccionar cuenta!"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "No se puede cambiar a otro tipo de cuenta"
-
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "No puedo crear multiples opciones para"
-
-#~ msgid "Account saved!"
-#~ msgstr "¡Cuenta guardada!"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "¡No se puede guardar la cuenta!"
+#~ msgid "Account category"
+#~ msgstr "Número de cuenta"
 
 #~ msgid "Account does not exist!"
 #~ msgstr "Cuenta no existe!"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "Plan Único de Cuentas (PUC)"
+#~ msgid "Account numbers"
+#~ msgstr "Número de cuenta"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Copiar al plan de cuentas"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "No se ha definido el código PUC"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "¡Guardado el código PUC!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "¡Borrado el código PUC!"
+#~ msgid "Account saved!"
+#~ msgstr "¡Cuenta guardada!"
 
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Descuento"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Empresa"
-
-#~ msgid "Description missing!"
-#~ msgstr "Falta Descripción"
-
-#~ msgid "Business saved!"
-#~ msgstr "Empresa guardada!"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Empresa eliminada!"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "Standard Industrial Codes (Código Industrial)"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Agregar SIC"
-
-#~ msgid "Code missing!"
-#~ msgstr "Falta código"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC guardado!"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC borrado!"
-
-#~ msgid "Languages"
-#~ msgstr "Idiomas"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Idioma"
-
-#~ msgid "Language saved!"
-#~ msgstr "Idioma Guardada!"
-
-#~ msgid "Confirm!"
-#~ msgstr "Confirmar"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Editar Idioma"
-
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "Borrar la idioma tambien borra las plantillas de la idoma"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Idioma Borrada!"
-
-#~ msgid "Default Template"
-#~ msgstr "Plantilla Predeterminada"
-
-#~ msgid "Edit Template"
-#~ msgstr "Editar Plantilla"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "Plantillas LaTeX"
-
-#~ msgid "Template saved!"
-#~ msgstr "¡Plantilla guardada!"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "¡Plantilla guardada!"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "¡No se puede guardar el pedido!"
-
-#~ msgid "Password does not match!"
-#~ msgstr "¡Contraseña incorrecta!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "¡No se puede guardar las preferencias!"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Bodega"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Bodegas guardado"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Bodega borrado"
-
-#~ msgid "localhost"
-#~ msgstr "máquina local"
-
-#~ msgid "About"
-#~ msgstr "Acerca de"
-
-#~ msgid "Ends"
-#~ msgstr "Finaliza"
-
-#~ msgid "Every"
-#~ msgstr "Cada"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Facturas de Ventas "
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Factura de Proveedor "
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "Transaccion Proveedor"
-
-#~ msgid "done"
-#~ msgstr "hecho"
-
-#, fuzzy
-#~ msgid "Saving %1 [_2]"
-#~ msgstr "Guardando"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Nota de Contabilidad"
-
-#~ msgid "Printing"
-#~ msgstr "Imprimiendo"
-
-#~ msgid "Sending"
-#~ msgstr "Enviando"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "No se ha definido el correo electrónico"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Resultado del periodo"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Centro de Costos"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Número del Proyecto"
-
-#~ msgid "N/A"
-#~ msgstr "Sin respuesta"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Añadir Factura de Venta"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Agregar Factura de Proveedor"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Editar Factura de Proveedor"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Enero"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Código"
-
-#~ msgid "Post as new"
-#~ msgstr "Registrar como Nuevo"
-
-#~ msgid "Schedule"
-#~ msgstr "Programar Recurrencia"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Registrar como Nuevo"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Registrar como Nuevo"
-
-#~ msgid "ea"
-#~ msgstr "unid."
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "No se ha definido la fecha de la factura"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "¡Falta el proveedor!"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "¡No se puede registrar una factura en un periodo ya cerrado!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Falta Tasa de Cambio"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "¡No se puede registrar un pago en un periodo ya cerrado!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Falta Tasa de Cambio"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "¡No se puede registrar la factura!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Cuenta no existe!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Cuenta no existe!"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Cuenta no existe!"
-
-#~ msgid "Stock"
-#~ msgstr "Inventario"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Honorarios"
-
-#~ msgid "Updated"
-#~ msgstr "¡Actualizado!"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Historial"
-
-#, fuzzy
-#~ msgid "SO"
-#~ msgstr "O"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "Punto de Venta"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Código"
-
-#~ msgid "Curr"
-#~ msgstr "Mon."
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Código Vendedor"
-
-#~ msgid "Break"
-#~ msgstr "Pausa"
-
-#~ msgid "Sell"
-#~ msgstr "Vender"
-
-#~ msgid "List"
-#~ msgstr "Lista"
-
-#~ msgid "BOM"
-#~ msgstr "Listado de piezas"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Individual Items"
-#~ msgstr "Artículos individuales"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "¡No se encuentra el proveedor en la base de datos!"
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "¡El cliente no existe!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Seleccione uno de los nombres de la lista"
-
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr ""
-#~ "La cantidad en inventario debe ser cero antes de cambiar este artículo a "
-#~ "obsoleto"
-
-#~ msgid "Item deleted!"
-#~ msgstr "¡Concepto borrado!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "¡No se puede borrar el artículo!"
-
-#~ msgid "Add"
-#~ msgstr "Añadir"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "No hay esta cantidad disponible en el Inventario!"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "¡Compuestos actualizados en almacen!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "¡No se pueden almacenar los compuestos!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Número cotización"
-
-#, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Imprimir"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "¡No es seleccionado nada!"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Seguro que quieres remover las entradas seleccionadas de la cola?"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Removiendo entradas sellecionads de la cola..."
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Archivos eliminados de la cola"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "No puedo borrar archivos!"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Selección impresa"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Cliente"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Proveedor"
+#~ msgid "Account:"
+#~ msgstr "Cuenta"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Cuenta"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Número de factura"
+#~ msgid "Accounting"
+#~ msgstr "Contabilidad"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Menú general"
+
+#~ msgid "Accounts"
+#~ msgstr "Cuentas"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Número de orden"
+#~ msgid "Accounts From"
+#~ msgstr "Cuentas"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Número cotización"
+#~ msgid "Accounts To"
+#~ msgstr "Cuentas"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "De"
-
-#~ msgid "Spoolfile"
-#~ msgstr "Cola de Impresión"
-
-#~ msgid "Remove"
-#~ msgstr "Eliminar"
+#~ msgid "Accrual"
+#~ msgstr "Acumulado"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Número"
+#~ msgid "Accrual Basis:"
+#~ msgstr "Acumulado"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Proyecto no existe!"
+#~ msgid "Activate Audit trail"
+#~ msgstr "Activar Rastro Auditoría"
 
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Selecciona uno de los proyectos abajo"
+#~ msgid "Activate Audit trails"
+#~ msgstr "Activar Rastro Auditoría"
 
-#~ msgid "Next Date"
-#~ msgstr "Proxima Fecha"
-
-#~ msgid "E-mail message"
-#~ msgstr "Mensaje Email"
-
-#~ msgid "Repeat"
-#~ msgstr "Repetir"
-
-#~ msgid "For"
-#~ msgstr "Para"
+#~ msgid "Active"
+#~ msgstr "Activo"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "Transacción Recurrente"
+#~ msgid "Active On"
+#~ msgstr "Activo"
 
-#~ msgid "Save Schedule"
-#~ msgstr "Guardar Programación"
+#~ msgid "Add"
+#~ msgstr "Añadir"
 
-#~ msgid "Delete Schedule"
-#~ msgstr "Borrar Programación"
+#~ msgid "Add AP Transaction"
+#~ msgstr "Añadir Transacción por Pagar"
 
-#, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Fecha"
+#~ msgid "Add AR Transaction"
+#~ msgstr "Añadir Transacción por Cobrar"
 
-#, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Mensaje"
-
-#~ msgid "sent"
-#~ msgstr "Enviado"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "¡Seleccione postscript o PDF"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "¡No hay nada que imprimir!"
-
-#~ msgid "Select payment"
-#~ msgstr "¡Seleccione Pago!"
-
-#~ msgid "Printed"
-#~ msgstr "Impreso"
-
-#~ msgid "Recd"
-#~ msgstr "Cobrado"
-
-#~ msgid "Price"
-#~ msgstr "Precio"
-
-#~ msgid "Extended"
-#~ msgstr "Extendido"
-
-#~ msgid "Serial No."
-#~ msgstr "No de Serial"
-
-#~ msgid "SKU"
-#~ msgstr "SKU"
-
-#~ msgid "Select items"
-#~ msgstr "Seleccionar Itemes"
-
-#~ msgid "Item not on file!"
-#~ msgstr "El concepto no se encuentra en ningún archivo"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "¿De qué tipo es este concepto?"
-
-#~ msgid "Service"
-#~ msgstr "Servicio"
+#~ msgid "Add Account"
+#~ msgstr "Añadir Cuenta"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "No se ha definido el número en la fila"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Agregar Factura de Proveedor"
+
+#~ msgid "Add Customer"
+#~ msgstr "Añadir Cliente"
+
+#, fuzzy
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Añadir Factura de Venta"
+
+#~ msgid "Add Department"
+#~ msgstr "Agregar Centro de Costos"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "Crédito"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "Agregar Factura PdV"
+
+#~ msgid "Add Project"
+#~ msgstr "Añadir Proyecto"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Añadir Pedido"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Añadir Cotización"
+#~ msgid "Add Quotation"
+#~ msgstr "Agregar Cotización"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Pedir Cotización"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Agregar Cotización"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Añadir Factura de Venta"
 
-#~ msgid "In-line"
-#~ msgstr "Incrustado"
-
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "¡Seleccione txt, postscript o PDF!"
+#~ msgid "Add Sales Order"
+#~ msgstr "Añadir Cotización"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "¡Falta la fecha!"
+#~ msgid "Add Unit"
+#~ msgstr "Unidad"
 
-#~ msgid "Ship to"
-#~ msgstr "Destino"
+#~ msgid "Add Vendor"
+#~ msgstr "Añadir Proveedor"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Agregar Factura de Proveedor"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3277,804 +1237,28 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Add line3 "
 #~ msgstr "Agregar Empresa"
 
-#~ msgid "State"
-#~ msgstr "Departamento"
+#, fuzzy
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Agregar Deducción"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Agregar Factura de Proveedor"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Agregar Tasa de Cambio"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Añadir Factura de Venta"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Descuento"
+#~ msgid "Address"
+#~ msgstr "Dirección"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "¡No se puede borrar la factura!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "¡Falta el cliente!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Editar Proyecto"
-
-#~ msgid "Add Project"
-#~ msgstr "Añadir Proyecto"
-
-#~ msgid "Orphaned"
-#~ msgstr "Huérfano"
-
-#~ msgid "Groups"
-#~ msgstr "Grupos"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Grupos de Precios"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Guardado"
-
-#~ msgid "Group missing!"
-#~ msgstr "Falta el grupo"
-
-#~ msgid "Group saved!"
-#~ msgstr "Grupo guardado!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Falta Grupo!"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Guardado!"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Traducción Borrada!"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Grupo eleminado!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Grupo Borrado!"
-
-#~ msgid "Description Translations"
-#~ msgstr "Descripción Traducción"
-
-#~ msgid "Group Translations"
-#~ msgstr "Traducción Grupos"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "Descripción Traducción del Proyecto"
-
-#~ msgid "Translation"
-#~ msgstr "Traducción"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Idiomas no configuradas!"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "Editar Descripción Traducción"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "¡El cliente no existe!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "¡No se encuentra el proveedor en la base de datos!"
+#~ msgid "Addresses"
+#~ msgstr "Dirección"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "¡Plantilla guardada!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Falta la fecha de vencimiento"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "¡No se puede registrar una transacción para un periodo cerrado"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "¡Transacción registrada!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "¡No se puede registrar la transacción"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Cuentas por Cobrar"
-
-#~ msgid "AP Transactions"
-#~ msgstr "Gestiones de pagos"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Número del Proyecto"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Facturas"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Agregar Transacción Efectivo"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Añadir Nota de Contabilidad"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Cuenta"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "¡No se puede registrar la transacción"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "No se ha definido la fecha de la transacción"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Transacción fuera de Balance!"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Editar Pedido"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Editar Cotización"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Editar Solicitud de Cotización"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Editar Cotización"
-
-#~ msgid "Terms"
-#~ msgstr "Condiciones"
-
-#~ msgid "Order Date"
-#~ msgstr "Fecha de elaboración"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Fecha de cotización"
-
-#~ msgid "Print and Save"
-#~ msgstr "Imprimir y Registrar"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "No se ha definido la fecha de la elaboración"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Falta fecha de cotización"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Falta código"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "¡No se puede guardar el pedido!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "No puedo guardar cotización!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "¿Esta seguro de que desea borrar la orden número?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Seguro que quiere borrar la cotización número"
-
-#~ msgid "Order deleted!"
-#~ msgstr "¡Orden borrada!"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "¡No se puede borrar el pedido!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Cotización borrado"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "No puedo borrar cotización!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "No se ha definido el número de la orden"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Falta número de cotización"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Enviar Mercancía"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Fecha del Envio"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Recibir mercancia"
-
-#~ msgid "Done"
-#~ msgstr "Hecho"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Falta Fecha del Envio"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Faltas datos"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Información Incompleta"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "Inventario guardado!"
 
-#~ msgid "Could not save!"
-#~ msgstr "No pude guardar"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Nada para transferir"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Transferir Inventario"
-
-#~ msgid "Transfer to"
-#~ msgstr "Transferir a"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Inventario transferido!"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "No puedo transferir inventario!"
-
-#~ msgid "Req"
-#~ msgstr "Pedido"
-
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "Elaborar Orden de Venta"
-
-#~ msgid "Generate Orders"
-#~ msgstr "Elaborar Pedidos"
-
-#~ msgid "Select Vendor"
-#~ msgstr "Seleccionar Proveedor"
-
-#~ msgid "Order generation failed!"
-#~ msgstr "Fallo Elaboración Pedido"
-
 #, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Cerrado"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Cerrado"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Agregar Factura PdV"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Editar Factura Punto de Venta"
-
-#~ msgid "Change"
-#~ msgstr "Cambiar"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Abierto"
-
-#~ msgid "Posted!"
-#~ msgstr "Agregado!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Descuento"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "Transacciones Recurrentes"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "¡Cuenta borrada!"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Número de cuenta"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Por Pagar"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Obsoleto"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Impuestos Incluidos"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Balance de Cuenta"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Balance"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Balance de Comprobación"
-
-#~ msgid "Business Number"
-#~ msgstr "Numero de negocio"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Editar Idioma"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Plantillas"
-
-#~ msgid "Session Timeout"
-#~ msgstr "¡Sesión Caducó!"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Centro de Costos"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Borrar cuenta"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Ganancia en moneda extranjera"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Pérdida en moneda extranjera"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "Plantillas LaTeX"
-
-#, fuzzy
-#~ msgid "Save Batch"
-#~ msgstr "Guardar Programación"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Falta Tasa de Cambio"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Descuento"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "¿Esta seguro de que desea borrar la factura número"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Borrar"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Válido hasta"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Editar compuesto"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Impuestos"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Pedido"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Pedido"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Activo"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "Reporte de Reconciliación"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Metódo"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "¡Pago registrado!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Resto"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "no existe"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Guardar como nuevo"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Ordenes de Venta"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders from Sales Orders"
-#~ msgstr "Elaborar Orden de Compra de Orden de Venta"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Ordenes de Venta"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Pedidos"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Pedidos"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders from Purchase Orders"
-#~ msgstr "Elaborar Orden de Venta de Orden de Compra"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Cotizaciones"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Solicitar Cotización"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Plantilla Predeterminada"
-
-#~ msgid "Add Account"
-#~ msgstr "Añadir Cuenta"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "¡Falta la fecha!"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Número del cliente"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Código Vendedor"
-
-#, fuzzy
-#~ msgid "No Null employeenumber"
-#~ msgstr "Número de Empleado"
-
-#, fuzzy
-#~ msgid "Duplicate employee numbers"
-#~ msgstr "Número de Empleado"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Número de factura"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Cheque"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Depósito"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Fecha de factura"
-
-#~ msgid "January"
-#~ msgstr "Enero"
-
-#~ msgid "February"
-#~ msgstr "Febrero"
-
-#~ msgid "March"
-#~ msgstr "Marzo"
-
-#~ msgid "April"
-#~ msgstr "Abril"
-
-#~ msgid "May"
-#~ msgstr "Mayo"
-
-#~ msgid "June"
-#~ msgstr "Junio"
-
-#~ msgid "July"
-#~ msgstr "Julio"
-
-#~ msgid "August"
-#~ msgstr "Agosto"
-
-#~ msgid "September"
-#~ msgstr "Septiembre"
-
-#~ msgid "October"
-#~ msgstr "Octubre"
-
-#~ msgid "November"
-#~ msgstr "Noviembre"
-
-#~ msgid "December"
-#~ msgstr "Diciembre"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Cambiar contraseña"
-
-#, fuzzy
-#~ msgid "Passwords must match."
-#~ msgstr "¡Contraseñas son incorrectas!"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "¡Contraseña cambiada!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Balance de Comprobación"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Falta suma"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Fecha de elaboración"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Recibos"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Añadir Cuenta"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Dic"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Búsqueda"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Facturas"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Envio por"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Número de cuenta"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Número de cuenta"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Aceptado el"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Número del Proyecto"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Jun"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "Mes"
-
-#, fuzzy
-#~ msgid "Tue"
-#~ msgstr "diez"
-
-#, fuzzy
-#~ msgid "Fri"
-#~ msgstr "Para"
-
-#, fuzzy
-#~ msgid "Sat"
-#~ msgstr "Departamento"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Límite de efectivo"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Total"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Gastos"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Incluir en informe"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Incluir en informe"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Número de orden"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Informes"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Estado de Resultados"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Cuenta"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Número de cuenta"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Descuento"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Cuenta no existe!"
-
-#~ msgid "Jan"
-#~ msgstr "Ene"
-
-#~ msgid "Feb"
-#~ msgstr "Feb"
-
-#~ msgid "Mar"
-#~ msgstr "Mar"
-
-#~ msgid "Apr"
-#~ msgstr "Abr"
-
-#~ msgid "Jun"
-#~ msgstr "Jun"
-
-#~ msgid "Jul"
-#~ msgstr "Jul"
-
-#~ msgid "Aug"
-#~ msgstr "Ago"
-
-#~ msgid "Sep"
-#~ msgstr "Sep"
-
-#~ msgid "Oct"
-#~ msgstr "Oct"
-
-#~ msgid "Nov"
-#~ msgstr "Nov"
-
-#~ msgid "Dec"
-#~ msgstr "Dic"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Aceptado el"
-
-#~ msgid "Checks"
-#~ msgstr "Cheques"
-
-#~ msgid "Work Orders"
-#~ msgstr "Ordenes de Trabajo"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Listas de Empaque"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Listas Empaque"
-
-#~ msgid "POS Invoice"
-#~ msgstr "Factura Punto de Venta"
-
-#~ msgid "Text Templates"
-#~ msgstr "Plantillas de Texto"
-
-#, fuzzy
-#~ msgid "Batch Printing"
-#~ msgstr "Imprimiendo"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Mar"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Comprobante de Egreso"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Recibo"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Facturas de Ventas"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Factura de Proveedor"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Bodega"
-
-#~ msgid "Above"
-#~ msgstr "Encima de"
-
-#~ msgid "Accounting"
-#~ msgstr "Contabilidad"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Menú general"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Activar Rastro Auditoría"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "Añadir Transacción por Pagar"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "Añadir Transacción por Cobrar"
-
-#~ msgid "Add Department"
-#~ msgstr "Agregar Centro de Costos"
+#~ msgid "Adjustment Date"
+#~ msgstr "Estado de Cuenta"
 
 #~ msgid "Administration"
 #~ msgstr "Administración"
@@ -4085,20 +1269,159 @@ msgstr "¡Transacción registrada!"
 #~ msgid "After Deduction"
 #~ msgstr "Despues Deducción"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Informes"
+
+#~ msgid "All"
+#~ msgstr "Todos"
+
 #~ msgid "All Accounts"
 #~ msgstr "Todas las Cuentas"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Todas las Bases de Datos están actualizadas"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Facturas"
+
 #~ msgid "All Items"
 #~ msgstr "Todo"
+
+#, fuzzy
+#~ msgid "Allocated"
+#~ msgstr "Permisos"
+
+#~ msgid "Amount"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Por Pagar"
+
+#~ msgid "Amount Due"
+#~ msgstr "Por Pagar"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Falta suma"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Por Pagar"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Descuento"
+
+#~ msgid "Apr"
+#~ msgstr "Abr"
+
+#~ msgid "April"
+#~ msgstr "Abril"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "¿Esta seguro de que desea borrar la orden número?"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Seguro que quiere borrar la cotización número"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "¿Está seguro de que desea borrar la transacción?"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "Seguro que quieres remover las entradas seleccionadas de la cola?"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "¡Compuestos actualizados en almacen!"
+
 #~ msgid "Assembly"
 #~ msgstr "Compuesto"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Mostrar Plan Único de Cuentas"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Activo"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Activo"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "Reporte de Reconciliación"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Activo"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Mostrar Plan Único de Cuentas"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Editar cuenta"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Adjunto"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Control de Acceso"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Rastro de Auditoría desactivado"
@@ -4115,14 +1438,108 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Audit trails enabled"
 #~ msgstr "Rastro de Auditoría activado"
 
+#~ msgid "Aug"
+#~ msgstr "Ago"
+
+#~ msgid "August"
+#~ msgstr "Agosto"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Impuestos Gravables"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Crear base de datos"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Administrador"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Anticipio"
+
+#, fuzzy
+#~ msgid "Average Cost"
+#~ msgstr "Costo"
+
+#~ msgid "BOM"
+#~ msgstr "Listado de piezas"
+
+#~ msgid "Backup"
+#~ msgstr "Copia de seguridad de los datos"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Copia de seguridad de los datos"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Copia de seguridad de los datos"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Copia de seguridad enviada a"
+
+#~ msgid "Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Enlazar cuentas"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Enlazar cuentas"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Código"
 
 #~ msgid "Based on"
 #~ msgstr "Basado en"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "¡Falta la fecha!"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Descripción"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "NIT/CC"
+
+#, fuzzy
+#~ msgid "Batch Printing"
+#~ msgstr "Imprimiendo"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Descripción"
+
+#~ msgid "Bcc"
+#~ msgstr "Bcc"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Antes de la Deducción"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Balance de Cuenta"
 
 #~ msgid "Below"
 #~ msgstr "Debajo"
@@ -4130,8 +1547,85 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Billing Address"
 #~ msgstr "Dirección Factura"
 
+#~ msgid "Bin"
+#~ msgstr "Empaque"
+
+#~ msgid "Bin Lists"
+#~ msgstr "Listas Empaque"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Fecha inicial"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Los libros están abiertos"
+
+#~ msgid "Break"
+#~ msgstr "Pausa"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Número de orden"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Incluir en informe"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Empresa"
+
+#~ msgid "Business Number"
+#~ msgstr "Numero de negocio"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Empresa"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Empresa"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Empresa eliminada!"
+
+#~ msgid "Business saved!"
+#~ msgstr "Empresa guardada!"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Empresa"
+
+#~ msgid "COGS"
+#~ msgstr "Costo de los artículos"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Informes"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "¡No se puede borrar la factura!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "¡No se puede registrar la transacción"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Cuenta no existe!"
+
 #~ msgid "Cannot create Lock!"
 #~ msgstr "No puedo crear lock-file"
+
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Cuenta no existe!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Cuenta no existe!"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "¡No se puede borrar la cuenta!"
@@ -4141,6 +1635,15 @@ msgstr "¡Transacción registrada!"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "No se puede borrar la cuenta por omisión"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "¡No se puede borrar el artículo!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "¡No se puede borrar el pedido!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "No puedo borrar cotización!"
 
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "¡No se puede borrar la transacción!"
@@ -4154,29 +1657,306 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "No puedo guardar recibo"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "¡No se puede registrar una factura en un periodo ya cerrado!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "¡No se puede registrar la factura!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "¡No se puede registrar un pago en un periodo ya cerrado!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "¡No se puede registrar una transacción para un periodo cerrado"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "¡No se puede registrar la transacción"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "No puedo borrar archivos!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "¡No se puede guardar la cuenta!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "No puedo guardar preferencias!"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "¡No se puede guardar el pedido!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "¡No se puede guardar las preferencias!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "No puedo guardar cotización!"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "¡No se puede guardar el pedido!"
+
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr "Tiene que seleccionar cuenta!"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "No puedo crear multiples opciones para"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "¡No se pueden almacenar los compuestos!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Cuentas de Impuestos"
+
+#~ msgid "Cc"
+#~ msgstr "Cc"
+
+#~ msgid "Change"
+#~ msgstr "Cambiar"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Cambiar la contraseña del administrador"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Cheque"
+
+#~ msgid "Checks"
+#~ msgstr "Cheques"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Empresa"
+
+#~ msgid "City"
+#~ msgstr "Ciudad"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Agregar SIC"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Borrado"
+
+#~ msgid "Cleared"
+#~ msgstr "Borrado"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Procesar TransacciÃ³n"
 
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Haga clic en el nombre de usuario por editar"
 
+#, fuzzy
+#~ msgid "Clocked"
+#~ msgstr "Bloqueado!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Cerrar los libros hasta"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Cerrado"
+
+#~ msgid "Closed"
+#~ msgstr "Cerrado"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Cerrado"
+
+#~ msgid "Code"
+#~ msgstr "Código"
+
+#~ msgid "Code missing!"
+#~ msgstr "Falta código"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Pedidos"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Ordenes de Venta"
+
+#~ msgid "Company"
+#~ msgstr "Empresa"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Nombre de la empresa"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Nombre de la empresa"
+
+#~ msgid "Company Name"
+#~ msgstr "Nombre de la empresa"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Empresa"
+
+#~ msgid "Compare to"
+#~ msgstr "Comparar con"
+
 #~ msgid "Components"
 #~ msgstr "Componentes"
+
+#~ msgid "Confirm"
+#~ msgstr "Confirmar"
+
+#~ msgid "Confirm!"
+#~ msgstr "Confirmar"
 
 #~ msgid "Connect to"
 #~ msgstr "Conectar a"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Contacto"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Contacto"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Contacto"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Contacto"
+
+#~ msgid "Continue"
+#~ msgstr "Continuar"
+
+#~ msgid "Contra"
+#~ msgstr "Cuentas del Orden"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Control de Auditoría"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Número de cuenta"
+
+#~ msgid "Copies"
+#~ msgstr "Copias"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Copiar al plan de cuentas"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Copiar al plan de cuentas"
+
+#~ msgid "Cost Center"
+#~ msgstr "Centro de Costos (Gastos)"
+
 #~ msgid "Could not save pricelist!"
 #~ msgstr "¡No se pudo guradar lista de precios!"
+
+#~ msgid "Could not save!"
+#~ msgstr "No pude guardar"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "No puedo transferir inventario!"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "País"
+
+#~ msgid "Country"
+#~ msgstr "País"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "País"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "País"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Borrar base de datos"
 
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Crear plan de cuentas"
 
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Borrar base de datos"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Mostrar Centro de Costos"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Crear base de datos"
+
+#~ msgid "Credit"
+#~ msgstr "Crédito"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Número de cuenta"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Limite de credito"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Crédito"
+
+#~ msgid "Curr"
+#~ msgstr "Mon."
+
+#~ msgid "Currency"
+#~ msgstr "Moneda"
+
+#~ msgid "Current"
+#~ msgstr "Actual"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Resultado del periodo"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Número del cliente"
+
+#~ msgid "Customer Number"
+#~ msgstr "Número del cliente"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Número del cliente"
+
 #~ msgid "Customer deleted!"
 #~ msgstr "¡Cliente borrado!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "¡Falta el cliente!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "¡El cliente no existe!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "¡Cliente guardado!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Mostrar Plan Único de Cuentas"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Cliente"
 
 #~ msgid "Customers"
 #~ msgstr "Clientes"
@@ -4184,14 +1964,34 @@ msgstr "¡Transacción registrada!"
 #~ msgid "DBI not installed!"
 #~ msgstr "No se ha instalado DBI"
 
+#~ msgid "DOB"
+#~ msgstr "Fecha de Nacimiento"
+
+#~ msgid "Database"
+#~ msgstr "Base de datos"
+
 #~ msgid "Database Administration"
 #~ msgstr "Administración de las bases de datos"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "No se ha podido verificar el gestor de la base de datos"
 
+#~ msgid "Database Host"
+#~ msgstr "Máquina servidor de base de datos"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Editar Empleado"
+
 #~ msgid "Database User missing!"
 #~ msgstr "No se ha definido el usuario de la base de datos"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "no existe"
+
+#~ msgid "Dataset"
+#~ msgstr "Base de datos"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "La base de datos está más actual que la versión del programa"
@@ -4202,8 +2002,77 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Base de datos actualizada"
 
+#~ msgid "Date"
+#~ msgstr "Fecha"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Formato de fecha"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Formato de fecha"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Formato de fecha"
+
+#~ msgid "Date Paid"
+#~ msgstr "Fecha de pago"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Fecha recibido"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Fecha"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Fecha"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Formato de fecha"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Fecha"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Faltas datos"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Fecha"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Fecha"
+
+#~ msgid "Day"
+#~ msgstr "DÃ­a"
+
 #~ msgid "Days"
 #~ msgstr "Dias"
+
+#~ msgid "Debit"
+#~ msgstr "Débito"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Débito"
+
+#~ msgid "Dec"
+#~ msgstr "Dic"
+
+#~ msgid "December"
+#~ msgstr "Diciembre"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Lugar de los decimales"
 
 #~ msgid "Decrease"
 #~ msgstr "Reducir"
@@ -4211,14 +2080,90 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Deduct after"
 #~ msgstr "Deducir despues de"
 
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Deducciones"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Deducciones"
+
 #~ msgid "Deduction deleted!"
 #~ msgstr "Deducción borrado!"
 
 #~ msgid "Deduction saved!"
 #~ msgstr "Deducción guardado"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "Preferencias"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Preferencias"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Borrar cuenta"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "País"
+
+#, fuzzy
+#~ msgid "Default Email BCC"
+#~ msgstr "Plantilla Predeterminada"
+
+#, fuzzy
+#~ msgid "Default Email CC"
+#~ msgstr "Plantilla Predeterminada"
+
+#, fuzzy
+#~ msgid "Default Email To"
+#~ msgstr "Plantilla Predeterminada"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Editar Idioma"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Plantilla Predeterminada"
+
+#~ msgid "Default Template"
+#~ msgstr "Plantilla Predeterminada"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "País"
+
 #~ msgid "Defaults saved!"
 #~ msgstr "Guardado!"
+
+#~ msgid "Delete"
+#~ msgstr "Borrar"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Editar Idioma"
+
+#~ msgid "Delete Schedule"
+#~ msgstr "Borrar Programación"
+
+#, fuzzy
+#~ msgid ""
+#~ "Deleting a language will also delete the templates for the language %1"
+#~ msgstr "Borrar la idioma tambien borra las plantillas de la idoma"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Fecha de entrega"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Metódo"
+
+#~ msgid "Department"
+#~ msgstr "Centro de Costos"
 
 #~ msgid "Department deleted!"
 #~ msgstr "Centro de Costos borrado!"
@@ -4226,14 +2171,129 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Department saved!"
 #~ msgstr "Centro de Costos guardado!"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Centro de Costos"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Centro de Costos"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Descripción"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Borrar cuenta"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Descripción"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Descripción"
+
+#~ msgid "Description Translations"
+#~ msgstr "Descripción Traducción"
+
+#~ msgid "Description missing!"
+#~ msgstr "Falta Descripción"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Descripción"
+
+#~ msgid "Detail"
+#~ msgstr "Detalle"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Detalle"
+
+#~ msgid "Difference"
+#~ msgstr "Diferencia"
+
 #~ msgid "Directory"
 #~ msgstr "Directorio"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Descuento"
+
+#~ msgid "Discount"
+#~ msgstr "Descuento"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Descuento"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Descuento"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Ingreso"
+
+#~ msgid "Done"
+#~ msgstr "Hecho"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Búsqueda"
+
+#~ msgid "Drawing"
+#~ msgstr "Reintegro"
 
 #~ msgid "Driver"
 #~ msgstr "Gestor"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Límite de efectivo"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Dic"
+
+#~ msgid "Due Date"
+#~ msgstr "Fecha de vencimiento"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Falta la fecha de vencimiento"
+
+#, fuzzy
+#~ msgid "Duplicate employee numbers"
+#~ msgstr "Número de Empleado"
+
+#~ msgid "E-mail"
+#~ msgstr "Correo electrónico"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "Enviar comprobante por correo electrónico a"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "Correo electrónico"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "No se ha definido el correo electrónico"
+
+#~ msgid "E-mail message"
+#~ msgstr "Mensaje Email"
+
 #~ msgid "E-mailed"
 #~ msgstr "Enviado por mail"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Estado de Resultados"
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
 
 #~ msgid "Edit AP Transaction"
 #~ msgstr "Editar Asiento de CxP"
@@ -4241,17 +2301,30 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "Editar Asiento de CxC"
 
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Editar compuesto"
+
 #~ msgid "Edit Business"
 #~ msgstr "Editar empresa"
 
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Editar Transacción en Effectivo"
 
+#~ msgid "Edit Customer"
+#~ msgstr "Editar Cliente"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "Editar Deducción"
 
 #~ msgid "Edit Department"
 #~ msgstr "Editar Centro de Costos"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "Editar Descripción Traducción"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Editar Empleado"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Editar Notas Contables"
@@ -4262,11 +2335,30 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Editar Honorario"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Editar Factura Punto de Venta"
+
 #~ msgid "Edit Part"
 #~ msgstr "Editar compuesto"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Editar Grupo de Precios"
+
+#~ msgid "Edit Project"
+#~ msgstr "Editar Proyecto"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Editar Pedido"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Editar Cotización"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Informes"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Editar Solicitud de Cotización"
 
 #~ msgid "Edit SIC"
 #~ msgstr "Editar SIC"
@@ -4274,11 +2366,30 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Edit Sales Invoice"
 #~ msgstr "Editar Factura de Venta"
 
+#~ msgid "Edit Sales Order"
+#~ msgstr "Editar Cotización"
+
 #~ msgid "Edit Service"
 #~ msgstr "Editar Servicio"
 
+#~ msgid "Edit Template"
+#~ msgstr "Editar Plantilla"
+
+#~ msgid "Edit User"
+#~ msgstr "Editar Usuario"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Editar Proveedor"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Editar Factura de Proveedor"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "Editar Bodega"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Editar Usuario"
 
 #~ msgid "Eight"
 #~ msgstr "ocho"
@@ -4298,6 +2409,13 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Employee Name"
 #~ msgstr "Nombre del Empleado"
 
+#~ msgid "Employee Number"
+#~ msgstr "Número de Empleado"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Número de Empleado"
+
 #~ msgid "Employee deleted!"
 #~ msgstr "Empleado borrado!"
 
@@ -4313,21 +2431,111 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Employer pays"
 #~ msgstr "Empleador cancela"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Fecha de elaboración"
+
 #~ msgid "Enddate"
 #~ msgstr "Fecha final"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Balance Inicial"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Balance de Cuenta"
+
+#~ msgid "Ends"
+#~ msgstr "Finaliza"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Forzar la anulación de las transacciones para todas las fechas"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Editar Usuario"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr ""
-#~ "Introduzca hasta 3 letras separadas por dos puntos (p.e. CAD:USD:EUR) para "
-#~ "las monedas locales y las extranjeras"
+#~ "Introduzca hasta 3 letras separadas por dos puntos (p.e. CAD:USD:EUR) "
+#~ "para las monedas locales y las extranjeras"
+
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Aceptado el"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Aceptado el"
+
+#~ msgid "Equity"
+#~ msgstr "Balance"
+
+#~ msgid "Every"
+#~ msgstr "Cada"
 
 #~ msgid "Excempt age <"
 #~ msgstr "Edad de Excención <"
 
+#~ msgid "Exch"
+#~ msgstr "Cambio"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Tasa de Cambio"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Falta Tasa de Cambio"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Falta Tasa de Cambio"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Falta Tasa de Cambio"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Tasa de Cambio"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Bases de datos existentes"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Gastos"
+
+#~ msgid "Expense"
+#~ msgstr "Gastos"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Mostrar Plan Único de Cuentas"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Gastos/Activo"
+
+#~ msgid "Extended"
+#~ msgstr "Extendido"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Editar Usuario"
+
+#~ msgid "FX"
+#~ msgstr "Tasa de Cambio"
+
+#~ msgid "Feb"
+#~ msgstr "Feb"
+
+#~ msgid "February"
+#~ msgstr "Febrero"
 
 #~ msgid "Fifteen"
 #~ msgstr "quince"
@@ -4335,11 +2543,48 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Fifty"
 #~ msgstr "cincuenta"
 
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Empresa"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Editar cuenta"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Pagos"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Recibos"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "NIT/CC"
+
 #~ msgid "Five"
 #~ msgstr "cinco"
 
 #~ msgid "Five Hundred"
 #~ msgstr "quinientos"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Añadir Compuesto"
+
+#~ msgid "For"
+#~ msgstr "Para"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Ganancia en moneda extranjera"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Pérdida en moneda extranjera"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Formato de fecha"
 
 #~ msgid "Forty"
 #~ msgstr "cuarenta"
@@ -4350,11 +2595,101 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Fourteen"
 #~ msgstr "catorce"
 
+#, fuzzy
+#~ msgid "Fri"
+#~ msgstr "Para"
+
+#~ msgid "From"
+#~ msgstr "De"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "De"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Fecha de elaboración"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "De"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "¡Borrado el código PUC!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "No se ha definido el código PUC"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "¡Guardado el código PUC!"
+
+#~ msgid "GL"
+#~ msgstr "Nota Contable"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Enlazar cuentas"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Notas de Contabilidad"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Control de Auditoría"
+
+#~ msgid "Generate Orders"
+#~ msgstr "Elaborar Pedidos"
+
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "Elaborar Orden de Venta"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders from Sales Orders"
+#~ msgstr "Elaborar Orden de Compra de Orden de Venta"
+
 #~ msgid "Generate Sales Order"
 #~ msgstr "Elaborar Orden de Venta"
 
+#, fuzzy
+#~ msgid "Generate Sales Orders from Purchase Orders"
+#~ msgstr "Elaborar Orden de Venta de Orden de Compra"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Total de la línea"
+
+#~ msgid "Group"
+#~ msgstr "Grupo"
+
 #~ msgid "Group Items"
 #~ msgstr "Agrupar itemes"
+
+#~ msgid "Group Translations"
+#~ msgstr "Traducción Grupos"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "Grupo"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Grupo eleminado!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Falta el grupo"
+
+#~ msgid "Group saved!"
+#~ msgstr "Grupo guardado!"
+
+#~ msgid "Groups"
+#~ msgstr "Grupos"
+
+#~ msgid "Heading"
+#~ msgstr "Encabezado"
 
 #~ msgid "Host"
 #~ msgstr "Máquina servidor de base de datos"
@@ -4368,11 +2703,84 @@ msgstr "¡Transacción registrada!"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Fin del Año"
+
+#~ msgid "Image"
+#~ msgstr "Imagen"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "Plantillas LaTeX"
+
+#~ msgid "In-line"
+#~ msgstr "Incrustado"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Incluir Diferencia por Tasa de Cambio"
+
+#~ msgid "Include in Report"
+#~ msgstr "Incluir en informe"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Incluir en menúes desplegables:"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Incluir Pago"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Incluir en informe"
+
+#~ msgid "Income"
+#~ msgstr "Ingreso"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Ingreso"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Ingreso"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Versión de base de datos incorrecta"
 
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Cambiar contraseña"
+
 #~ msgid "Increase"
 #~ msgstr "Aumentar"
+
+#~ msgid "Individual Items"
+#~ msgstr "Artículos individuales"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Notas internas"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Válido hasta"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Inventario guardado!"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Inventario guardado!"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr ""
+#~ "La cantidad en inventario debe ser cero antes de cambiar este artículo a "
+#~ "obsoleto"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
@@ -4380,17 +2788,131 @@ msgstr "¡Transacción registrada!"
 #~ "La cantidad en inventario debe ser cero antes de cambiar este compuesto a "
 #~ "obsoleto"
 
+#~ msgid "Inventory saved!"
+#~ msgstr "Inventario guardado!"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Inventario transferido!"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Fecha de factura"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "No se ha definido la fecha de la factura"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Número de factura"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "No se ha definido el número de la factura"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Número de factura"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Fecha de factura"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Fecha de factura"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Fecha de factura"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "¡Factura borrada!"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Número de factura"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Fecha de factura"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Factura de Venta"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "Productos/Servicios"
+
 #~ msgid "Item already on pricelist!"
 #~ msgstr "¡Artículo está incluido en la lista de precios!"
 
+#~ msgid "Item deleted!"
+#~ msgstr "¡Concepto borrado!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "El concepto no se encuentra en ningún archivo"
+
+#~ msgid "Jan"
+#~ msgstr "Ene"
+
+#~ msgid "January"
+#~ msgstr "Enero"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "falló"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Categoría de cuenta"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Número del Proyecto"
+
+#~ msgid "Jul"
+#~ msgstr "Jul"
+
+#~ msgid "July"
+#~ msgstr "Julio"
+
+#~ msgid "Jun"
+#~ msgstr "Jun"
+
+#~ msgid "June"
+#~ msgstr "Junio"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Honorarios"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Idioma Borrada!"
+
+#~ msgid "Language saved!"
+#~ msgstr "Idioma Guardada!"
+
+#~ msgid "Languages"
+#~ msgstr "Idiomas"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Idiomas no configuradas!"
+
+#, fuzzy
+#~ msgid "Last Cost"
+#~ msgstr "Costo"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "¡Actualizado!"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Últimos números y cuentas por omisión"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "¡Actualizado!"
+
+#, fuzzy
+#~ msgid "Lead Time"
+#~ msgstr "Plazo"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -4399,14 +2921,57 @@ msgstr "¡Transacción registrada!"
 #~ "Deje los campos de máquina servidor de base de datos y puerto vacíos al "
 #~ "menos que quiera hacer una conexión remota"
 
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "Impagados Cartera"
+
+#~ msgid "Liability"
+#~ msgstr "Pasivo"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Número de Empleado"
+
 #~ msgid "Licensed to"
 #~ msgstr "Adaptado para"
+
+#~ msgid "Line Total"
+#~ msgstr "Total de la línea"
 
 #~ msgid "Link"
 #~ msgstr "Enlaces"
 
+#~ msgid "List"
+#~ msgstr "Lista"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Anticipio"
+
+#~ msgid "List Price"
+#~ msgstr "Precio de Lista"
+
 #~ msgid "List Projects"
 #~ msgstr "Mostrar Projectos"
+
+#~ msgid "List Transactions"
+#~ msgstr "Mostrar Transacciones"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Unidad de peso"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Editar Usuario"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Cotización"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Cotización"
 
 #~ msgid "Lock System"
 #~ msgstr "Bloquear sistema"
@@ -4417,23 +2982,117 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Desbloqueado!"
 
+#~ msgid "Login"
+#~ msgstr "Entrar"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Falta Nombre del Usuario"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Mostrar Plan Único de Cuentas"
+
+#~ msgid "Make"
+#~ msgstr "Marca"
+
+#~ msgid "Manager"
+#~ msgstr "Administrador"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Enero"
+
+#~ msgid "Mar"
+#~ msgstr "Mar"
+
+#~ msgid "March"
+#~ msgstr "Marzo"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Selección impresa"
+
+#~ msgid "Markup"
+#~ msgstr "Margen"
 
 #~ msgid "Maximum"
 #~ msgstr "Maximo"
 
+#~ msgid "May"
+#~ msgstr "Mayo"
+
 #~ msgid "May "
 #~ msgstr "Mayo"
+
+#~ msgid "Memo"
+#~ msgstr "Memo"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "Transacciones Recurrentes"
 
 #~ msgid "Menu Width"
 #~ msgstr "Ancho del Menu"
 
+#~ msgid "Message"
+#~ msgstr "Mensaje"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Mensaje"
+
+#~ msgid "Method"
+#~ msgstr "Metódo"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Preferencias"
+
+#~ msgid "Microfiche"
+#~ msgstr "Microficha"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Impuestos Gravables"
+
+#~ msgid "Model"
+#~ msgstr "Modelo"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "Mes"
+
+#~ msgid "Month"
+#~ msgstr "Mes"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Codificación Multibyte"
 
+#~ msgid "N/A"
+#~ msgstr "Sin respuesta"
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
 #~ msgid "Name missing!"
 #~ msgstr "¡Falta el nombre!"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Nombre"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Reporte de Reconciliación"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Usuario"
+
+#~ msgid "Next"
+#~ msgstr "Proximo"
+
+#~ msgid "Next Date"
+#~ msgstr "Proxima Fecha"
 
 #~ msgid "Nine"
 #~ msgstr "nueve"
@@ -4447,14 +3106,40 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Ninety"
 #~ msgstr "noventa"
 
+#~ msgid "No"
+#~ msgstr "No"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "¡Cuenta borrada!"
+
 #~ msgid "No Database Drivers available!"
 #~ msgstr "No hay ningún gestor de base de datos disponible"
 
 #~ msgid "No Dataset selected!"
 #~ msgstr "No se ha seleccionado ninguna base de datos"
 
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "Historial"
+
+#, fuzzy
+#~ msgid "No Null employeenumber"
+#~ msgstr "Número de Empleado"
+
 #~ msgid "No email address for"
 #~ msgstr "Falta la dirección de correo electrónico de"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Idioma"
+
+#~ msgid "No."
+#~ msgstr "No."
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Sin Impuestos"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "Compras sin Impuestos"
@@ -4462,8 +3147,71 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Ventas sin Impuestos"
 
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Sin Impuestos"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Notas"
+
+#~ msgid "Notes"
+#~ msgstr "Notas"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Información Incompleta"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "¡No es seleccionado nada!"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "¡No hay nada para borrar!"
+
+#~ msgid "Nothing to print!"
+#~ msgstr "¡No hay nada que imprimir!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Nada para transferir"
+
+#~ msgid "Nov"
+#~ msgstr "Nov"
+
+#~ msgid "November"
+#~ msgstr "Noviembre"
+
+#~ msgid "Number"
+#~ msgstr "Número"
+
+#~ msgid "Number Format"
+#~ msgstr "Formato de número"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "No se ha definido el número en la fila"
+
+#~ msgid "Obsolete"
+#~ msgstr "Obsoleto"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Obsoleto"
+
+#~ msgid "Oct"
+#~ msgstr "Oct"
+
+#~ msgid "October"
+#~ msgstr "Octubre"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Contraseña"
+
+#~ msgid "On Hand"
+#~ msgstr "Disponible"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "Disponible"
 
 #~ msgid "One"
 #~ msgstr "un"
@@ -4471,14 +3219,114 @@ msgstr "¡Transacción registrada!"
 #~ msgid "One-o"
 #~ msgstr "uno"
 
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Añadir Usuario"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Empleados"
+
+#~ msgid "Open"
+#~ msgstr "Abierto"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Abierto"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Deducciones"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Administración de la base de datos Oracle"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Orden"
+
+#~ msgid "Order Date"
+#~ msgstr "Fecha de elaboración"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "No se ha definido la fecha de la elaboración"
+
+#~ msgid "Order Number"
+#~ msgstr "Número de orden"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "No se ha definido el número de la orden"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Número de orden"
+
+#~ msgid "Order deleted!"
+#~ msgstr "¡Orden borrada!"
+
+#~ msgid "Order generation failed!"
+#~ msgstr "Fallo Elaboración Pedido"
 
 #~ msgid "Order saved!"
 #~ msgstr "Pedido guardado"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Orden"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Orden"
+
+#~ msgid "Orphaned"
+#~ msgstr "Huérfano"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Deducciones"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Crédito"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Débito"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Transacción fuera de Balance!"
+
 #~ msgid "Out of balance!"
 #~ msgstr "¡Fuera de balance!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Transacciones Recurrentes"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Anticipio"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "¡Pago registrado!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "Punto de Venta"
+
+#~ msgid "PO Number"
+#~ msgstr "Número pedido"
+
+#~ msgid "POS Invoice"
+#~ msgstr "Factura Punto de Venta"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "No se ha definido la fecha del albarán"
@@ -4486,14 +3334,98 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "No se ha definido el número del albarán"
 
+#~ msgid "Paid"
+#~ msgstr "Pagado"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Actual"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Grupo de Precios"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Número parte"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Artículo"
+
+#~ msgid "Partnumber"
+#~ msgstr "Número parte"
+
 #~ msgid "Parts"
 #~ msgstr "Artículos"
+
+#~ msgid "Password"
+#~ msgstr "Contraseña"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "¡Contraseña cambiada!"
+
+#~ msgid "Password does not match!"
+#~ msgstr "¡Contraseña incorrecta!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "¡Contraseña cambiada!"
+
+#, fuzzy
+#~ msgid "Passwords must match."
+#~ msgstr "¡Contraseñas son incorrectas!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Formato de fecha"
+
+#~ msgid "Payables"
+#~ msgstr "Por Pagar"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "No se encuentra la fecha de pago"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Pagos"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Pagos"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Comprobante de Egreso"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Comprobante de Egreso"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "¡Pago registrado!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Resto"
+
+#~ msgid "Period"
+#~ msgstr "Periodo"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Administración de la base de datos PostgreSQL"
 
 #~ msgid "PgPP Database Administration"
 #~ msgstr "PostGres Admin"
+
+#~ msgid "Phone"
+#~ msgstr "Teléfono"
+
+#~ msgid "Pick Lists"
+#~ msgstr "Listas de Empaque"
 
 #~ msgid "Port"
 #~ msgstr "Puerto"
@@ -4504,14 +3436,149 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Pos"
 #~ msgstr "PdV"
 
+#~ msgid "Post"
+#~ msgstr "Registrar"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Registrar como Nuevo"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Fin del Año"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Registrar como Nuevo"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Registrar como Nuevo"
+
+#~ msgid "Post as new"
+#~ msgstr "Registrar como Nuevo"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Registrar como Nuevo"
+
+#~ msgid "Posted!"
+#~ msgstr "Agregado!"
+
 #~ msgid "Posting"
 #~ msgstr "Registro"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Registrar como Nuevo"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Nota de Contabilidad"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Facturas de Ventas "
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "Transaccion Proveedor"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Factura de Proveedor "
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Preferencias guardadas"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Editar preferencias de"
+
+#~ msgid "Price"
+#~ msgstr "Precio"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Grupo de Precios"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "¡Actualizado!"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Grupo de Precios"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Grupo Borrado!"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Falta Grupo!"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Guardado!"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Grupos de Precios"
+
+#~ msgid "Pricelist"
+#~ msgstr "Lista de Precios"
+
+#~ msgid "Print"
+#~ msgstr "Imprimir"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Imprimir"
+
+#~ msgid "Print and Save"
+#~ msgstr "Imprimir y Registrar"
+
+#~ msgid "Printed"
+#~ msgstr "Impreso"
+
+#~ msgid "Printer"
+#~ msgstr "Impresora"
+
+#~ msgid "Printing"
+#~ msgstr "Imprimiendo"
 
 #~ msgid "Printing ... "
 #~ msgstr "Imprimiendo..."
 
+#~ msgid "Process Transactions"
+#~ msgstr "Procesar TransacciÃ³n"
+
+#~ msgid "Profit Center"
+#~ msgstr "Centro de Costo (Ingresos)"
+
+#, fuzzy
+#~ msgid "Profit and Loss"
+#~ msgstr "Imprimir y Registrar"
+
+#~ msgid "Project"
+#~ msgstr "Proyecto"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "Descripción Traducción del Proyecto"
+
+#~ msgid "Project Number"
+#~ msgstr "Número del Proyecto"
+
 #~ msgid "Project Number missing!"
 #~ msgstr "¡Falta el Número de Proyecto!"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Número del Proyecto"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Número del Proyecto"
 
 #~ msgid "Project Transactions"
 #~ msgstr "Transacciones del Projecto"
@@ -4519,14 +3586,72 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Project deleted!"
 #~ msgstr "¡Proyecto borrado!"
 
+#~ msgid "Project not on file!"
+#~ msgstr "Proyecto no existe!"
+
 #~ msgid "Project saved!"
 #~ msgstr "¡Proyecto guardado "
+
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Número del Proyecto"
+
+#~ msgid "Projects"
+#~ msgstr "Proyectos"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Pedido"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Pedido"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Historial del Cliente"
 
 #~ msgid "Purchase Order Number"
 #~ msgstr "Número de Orden de Compra"
 
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Pedido"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Pedido"
+
+#~ msgid "Qty"
+#~ msgstr "Cantidad"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "No hay esta cantidad disponible en el Inventario!"
+
+#~ msgid "Quarter"
+#~ msgstr "Trimestre"
+
 #~ msgid "Quotation "
 #~ msgstr "Cotización "
+
+#~ msgid "Quotation Date"
+#~ msgstr "Fecha de cotización"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Falta fecha de cotización"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Número cotización"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Falta número de cotización"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Número cotización"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Cotización borrado"
 
 #~ msgid "R"
 #~ msgstr "R"
@@ -4534,11 +3659,70 @@ msgstr "¡Transacción registrada!"
 #~ msgid "RFQ "
 #~ msgstr "Solicitud de Cotización "
 
+#~ msgid "RFQ Number"
+#~ msgstr "Número de Cotización"
+
+#~ msgid "ROP"
+#~ msgstr "Tope de envio"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Tarifa"
+
 #~ msgid "Rate missing!"
 #~ msgstr "Falta Tarifa!"
 
+#~ msgid "Recd"
+#~ msgstr "Cobrado"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Recibos"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "Recibo agregado"
+
+#~ msgid "Receivables"
+#~ msgstr "Cobros"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Recibir mercancia"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Registrar en"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Reconciliación"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Reporte de Reconciliación"
+
+#~ msgid "Record in"
+#~ msgstr "Registrar en"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Informe para"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "Transacción Recurrente"
+
+#~ msgid "Reference"
+#~ msgstr "Referencia"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Proyecto"
+
+#~ msgid "Remaining"
+#~ msgstr "Resto"
+
+#~ msgid "Remove"
+#~ msgstr "Eliminar"
 
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Remover Rastro de Auditoría hasta"
@@ -4546,32 +3730,338 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Remove Audit trails up to"
 #~ msgstr "Remover Rastro de Auditoría hasta"
 
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Archivos eliminados de la cola"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "Removiendo entradas sellecionads de la cola..."
+
+#~ msgid "Repeat"
+#~ msgstr "Repetir"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Informe para"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Informe para"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Informes"
+
+#~ msgid "Report for"
+#~ msgstr "Informe para"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Informes"
+
+#~ msgid "Req"
+#~ msgstr "Pedido"
+
 #~ msgid "Request for Quotations"
 #~ msgstr "Solicitar Cotizaciones"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Recibos"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Aceptado el"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Aceptado el"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Aceptado el"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Contraseña"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Resultado del Ejercicio"
+
+#, fuzzy
+#~ msgid "Reversal Information"
+#~ msgstr "Solicitar Cotización"
 
 #~ msgid "Role"
 #~ msgstr "Función"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Cuentas"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Copia de seguridad de los datos"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Informes"
+
 #~ msgid "S"
 #~ msgstr "S"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC borrado!"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC guardado!"
+
+#~ msgid "SKU"
+#~ msgstr "SKU"
+
+#, fuzzy
+#~ msgid "SO"
+#~ msgstr "O"
 
 #~ msgid "Sales Invoice."
 #~ msgstr "Factura de Ventas."
 
+#~ msgid "Sales Order Number"
+#~ msgstr "N°de Pedido"
+
+#~ msgid "Sales Quotation Number"
+#~ msgstr "N°de Cotización de Venta"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Nombre de la empresa"
+
+#~ msgid "Salesperson"
+#~ msgstr "Vendedor"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Cotización"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Pedido"
+
+#, fuzzy
+#~ msgid "Sat"
+#~ msgstr "Departamento"
+
+#~ msgid "Save"
+#~ msgstr "Guardar"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Guardar como nuevo"
+
+#, fuzzy
+#~ msgid "Save Batch"
+#~ msgstr "Guardar Programación"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Guardar como nuevo"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Contacto"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Cotización"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Guardar como nuevo"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Cotización"
+
 #~ msgid "Save Pricelist"
 #~ msgstr "Guardar Lista de Precios"
+
+#~ msgid "Save Schedule"
+#~ msgstr "Guardar Programación"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "Plantillas LaTeX"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Guardar como nuevo"
+
+#~ msgid "Save as new"
+#~ msgstr "Guardar como nuevo"
 
 #~ msgid "Save to File"
 #~ msgstr "Guardar en un archivo"
 
+#, fuzzy
+#~ msgid "Saving %1 [_2]"
+#~ msgstr "Guardando"
+
+#~ msgid "Schedule"
+#~ msgstr "Programar Recurrencia"
+
+#~ msgid "Scheduled"
+#~ msgstr "Programado"
+
+#~ msgid "Screen"
+#~ msgstr "Pantalla"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Factura Punto de Venta"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Factura de Venta"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Revisar Inventario"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Pedidos"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Cotizaciones"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Reporte de Reconciliación"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Solicitar Cotización"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Ordenes de Venta"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Procesar TransacciÃ³n"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Búsqueda"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Guardar todo"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Configurar plantillas"
+
+#~ msgid "Select Vendor"
+#~ msgstr "Seleccionar Proveedor"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Guardar todo"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Seleccione uno de los artículos siguientes"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "Seleccione uno de los nombres de la lista"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Selecciona uno de los proyectos abajo"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Factura de Venta"
+
+#~ msgid "Select items"
+#~ msgstr "Seleccionar Itemes"
+
+#~ msgid "Select payment"
+#~ msgstr "¡Seleccione Pago!"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "¡Seleccione postscript o PDF"
+
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "¡Seleccione txt, postscript o PDF!"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Seleccionar"
+
+#~ msgid "Sell"
+#~ msgstr "Vender"
+
+#~ msgid "Sell Price"
+#~ msgstr "Precio de venta"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "Enviar por correo electrónico"
 
+#~ msgid "Sending"
+#~ msgstr "Enviando"
+
+#~ msgid "Sep"
+#~ msgstr "Sep"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Centro de Costos"
+
+#~ msgid "September"
+#~ msgstr "Septiembre"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Preferencias"
+
+#~ msgid "Serial No."
+#~ msgstr "No de Serial"
+
+#~ msgid "Serial Number"
+#~ msgstr "Número del Serial"
+
+#~ msgid "Service"
+#~ msgstr "Servicio"
+
 #~ msgid "Services"
 #~ msgstr "Servicios"
+
+#~ msgid "Session Timeout"
+#~ msgstr "¡Sesión Caducó!"
 
 #~ msgid "Session expired!"
 #~ msgstr "¡Sesión Expiró!"
@@ -4588,11 +4078,44 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Seventy"
 #~ msgstr "setenta"
 
+#~ msgid "Ship Merchandise"
+#~ msgstr "Enviar Mercancía"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Envio por"
+
+#~ msgid "Ship to"
+#~ msgstr "Destino"
+
+#~ msgid "Ship via"
+#~ msgstr "Envio por"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Envio por"
+
 #~ msgid "Shipping Address"
 #~ msgstr "Dirección del envio"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Fecha del Envio"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Falta Fecha del Envio"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Destino"
+
+#~ msgid "Short"
+#~ msgstr "Corto"
+
 #~ msgid "Signature"
 #~ msgstr "Firma"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Borrado"
 
 #~ msgid "Six"
 #~ msgstr "sies"
@@ -4603,17 +4126,122 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Sixty"
 #~ msgstr "sesenta"
 
+#~ msgid "Source"
+#~ msgstr "Fuente"
+
+#~ msgid "Spoolfile"
+#~ msgstr "Cola de Impresión"
+
+#~ msgid "Standard"
+#~ msgstr "Estándard"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "Standard Industrial Codes (Código Industrial)"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Balance de Cuenta"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Fecha inicial"
+
+#~ msgid "Startdate"
+#~ msgstr "Fecha inicial"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Fecha inicial"
+
+#~ msgid "State"
+#~ msgstr "Departamento"
+
+#~ msgid "State/Province"
+#~ msgstr "Departamento"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Balance de Cuenta"
+
 #~ msgid "Statement sent to"
 #~ msgstr "Estado de Cuenta enviado a"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "¡Estado de Cuenta enviado a la impresora!"
 
+#~ msgid "Stock"
+#~ msgstr "Inventario"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Hoja de Estilo"
+
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "Sub-Contrato PUC"
 
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Asunto"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Asunto"
+
+#~ msgid "Subtotal"
+#~ msgstr "Subtotal"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Subtotal"
+
+#~ msgid "Summary"
+#~ msgstr "Résumen"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "¿Es esta una cuenta de Cartera por Cobrar/Pagar?"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Jun"
+
 #~ msgid "Supervisor"
 #~ msgstr "Supervisor"
+
+#~ msgid "System Defaults"
+#~ msgstr "Predeterminados del Sistema"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Impuestos"
+
+#~ msgid "Tax"
+#~ msgstr "Impuestos"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Cuentas de Impuestos"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Código"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Formato de fecha"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "NIT./CC./CE."
+
+#~ msgid "Tax Included"
+#~ msgstr "Impuestos Incluidos"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Impuestos Incluidos"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "NIT./CC./CE."
 
 #~ msgid "Tax collected"
 #~ msgstr "Impuestos Cobrados Clientes"
@@ -4621,8 +4249,40 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Tax paid"
 #~ msgstr "Impuestos Pagados"
 
+#~ msgid "Taxable"
+#~ msgstr "Impuestos Gravables"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "¡Plantilla guardada!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "¡Plantilla guardada!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Plantillas"
+
+#~ msgid "Template saved!"
+#~ msgstr "¡Plantilla guardada!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Nuevas plantillas"
+
+#~ msgid "Terms"
+#~ msgstr "Condiciones"
+
 #~ msgid "Text"
 #~ msgstr "Texto"
+
+#~ msgid "Text Templates"
+#~ msgstr "Plantillas de Texto"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "¿Esta seguro de que desea borrar la factura número"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Las siguientes bases de datos no están en uso y se pueden borrar"
@@ -4630,11 +4290,27 @@ msgstr "¡Transacción registrada!"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Es necesario actualizar las siguientes bases de datos"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Balance de Comprobación"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Crédito"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Débito"
+
 #~ msgid "Thirteen"
 #~ msgstr "trece"
 
 #~ msgid "Thirty"
 #~ msgstr "treinta"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Editar cuenta"
 
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
@@ -4649,6 +4325,40 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Three"
 #~ msgstr "tres"
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "De"
+
+#~ msgid "Till"
+#~ msgstr "Caja"
+
+#, fuzzy
+#~ msgid "Time Frame"
+#~ msgstr "Veces"
+
+#, fuzzy
+#~ msgid "Time In"
+#~ msgstr "Veces"
+
+#, fuzzy
+#~ msgid "Time Out"
+#~ msgstr "Veces"
+
+#, fuzzy
+#~ msgid "Time and Material Cards"
+#~ msgstr "Veces"
+
+#~ msgid "To"
+#~ msgstr "Hasta "
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Fecha"
+
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
@@ -4658,8 +4368,40 @@ msgstr "¡Transacción registrada!"
 #~ "usuario (login) y guarde los cambios.  Un nuevo usuario, con las mismas "
 #~ "propiedades se guardará bajo el nuevo nombre de usuario (login)."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "Hasta "
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Total"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Lista de empaque"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Descuento"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Asiento"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "No se ha definido la fecha de la transacción"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Asiento"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "¡Transacción borrada!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "¡Transacción registrada!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr ""
@@ -4668,11 +4410,37 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Se ha forzado la anulación de las transacciones hasta"
 
+#~ msgid "Transactions"
+#~ msgstr "Transacciones"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Transferir Inventario"
+
+#~ msgid "Transfer to"
+#~ msgstr "Transferir a"
+
+#~ msgid "Translation"
+#~ msgstr "Traducción"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Traducción Borrada!"
+
 #~ msgid "Translation not on file!"
 #~ msgstr "No hay traducción"
 
+#~ msgid "Translations saved!"
+#~ msgstr "Guardado"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Balance de Comprobación"
+
 #~ msgid "Trillion"
 #~ msgstr "billón"
+
+#, fuzzy
+#~ msgid "Tue"
+#~ msgstr "diez"
 
 #~ msgid "Twelve"
 #~ msgstr "doce"
@@ -4713,14 +4481,43 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Two"
 #~ msgstr "dos"
 
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Número de factura"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Número del cliente"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Código Vendedor"
+
+#~ msgid "Unit"
+#~ msgstr "Unidad"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Unidad de medida"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock sistema"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Código Vendedor"
+
+#~ msgid "Update"
+#~ msgstr "Actualizar"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Actualizar base de datos"
+
+#~ msgid "Updated"
+#~ msgstr "¡Actualizado!"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Guardar"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "Actulaizando a versión"
@@ -4728,8 +4525,43 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Use Templates"
 #~ msgstr "Plantillas de usuarios"
 
+#~ msgid "User"
+#~ msgstr "Usuario"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "¡Usuario guardado!"
+
 #~ msgid "User deleted!"
 #~ msgstr "¡Usuario borrado!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Usuario"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Usuario"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Usuario"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Formato de fecha"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "Válido hasta"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Añadir Cuenta"
 
 #~ msgid "Vendor Invoice."
 #~ msgstr "Factura de Proveedor."
@@ -4737,26 +4569,101 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Vendor Invoices"
 #~ msgstr "Facturas de Proveedor"
 
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Código Vendedor"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Código Vendedor"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Código Vendedor"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Código Vendedor"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Código Vendedor"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "¡Proveedor borrado!"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "¡Falta el proveedor!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "¡No se encuentra el proveedor en la base de datos!"
 
 #~ msgid "Vendor saved!"
 #~ msgstr "¡Proveedor guardado!"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Proveedor"
+
 #~ msgid "Vendors"
 #~ msgstr "Proveedores"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Versión"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Deducciones"
+
+#~ msgid "Warehouse"
+#~ msgstr "Bodega"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Bodega borrado"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Bodegas guardado"
+
+#~ msgid "Warning!"
+#~ msgstr "Alerta!"
+
+#~ msgid "Week"
+#~ msgstr "Semana"
 
 #~ msgid "Weeks"
 #~ msgstr "Semanas"
 
+#~ msgid "Weight"
+#~ msgstr "Peso"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "¿De qué tipo es este concepto?"
+
+#~ msgid "Work Orders"
+#~ msgstr "Ordenes de Trabajo"
+
 #~ msgid "Work Phone"
 #~ msgstr "Teléfono (Oficina)"
+
+#~ msgid "Year"
+#~ msgstr "Año"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Fin del Año guardado!"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "Falta fecha del Fin del Año"
 
 #~ msgid "Yearend posting failed!"
 #~ msgstr "No se puede guardar Fin del Año"
+
+#~ msgid "Yes"
+#~ msgstr "Si"
+
+#, fuzzy
+#~ msgid "You are logged out!"
+#~ msgstr "¡Ud. está desconectado del sistema!"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "Está registrando una transacción existente!"
@@ -4787,6 +4694,69 @@ msgstr "¡Transacción registrada!"
 #~ msgid "Zero"
 #~ msgstr "cero"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "Código Postal"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "Código Postal"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Empresa"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Bodega"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "No se puede cambiar a otro tipo de cuenta"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Idiomas no configuradas!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Mar"
+
+#~ msgid "as at"
+#~ msgstr "al"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Balance"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Cheque"
+
+#~ msgid "days"
+#~ msgstr "días"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Débito"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Borrar"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Depósito"
+
+#~ msgid "done"
+#~ msgstr "hecho"
+
+#~ msgid "ea"
+#~ msgstr "unid."
+
 #~ msgid "for"
 #~ msgstr "para"
 
@@ -4796,14 +4766,44 @@ msgstr "¡Transacción registrada!"
 #~ msgid "is already a member!"
 #~ msgstr "ya es actualmente un miembro"
 
+#~ msgid "localhost"
+#~ msgstr "máquina local"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Comprobante de Egreso"
+
 #~ msgid "posted!"
 #~ msgstr "Guardado"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Recibo"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Facturas de Ventas"
+
+#~ msgid "sent"
+#~ msgstr "Enviado"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Balance de Cuenta"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Subtotal"
 
 #~ msgid "successfully created!"
 #~ msgstr "creado satisfactoriamente"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "borrado satisfactoriamente"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Factura de Proveedor"
 
 #~ msgid "website"
 #~ msgstr "sitio web"

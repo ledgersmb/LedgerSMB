@@ -29,46 +29,199 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-msgid "Add Budget"
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
 
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Borçlar"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Gecikmiş Borçlar"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
 #, fuzzy
-msgid "Import Batch"
-msgstr "Raporlar"
+msgid "AP Transaction"
+msgstr "Borç İşlemleri"
 
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2876
+#: sql/Pg-database.sql:2908
 #, fuzzy
-msgid "Sessions"
-msgstr "Versiyon"
+msgid "AP Voucher"
+msgstr "Hesabı Sil"
 
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr ""
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Alacaklar"
 
-#: sql/Pg-database.sql:726
-msgid "Mrs."
-msgstr ""
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Gecikmiş Alacaklar"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+#, fuzzy
+msgid "AR Transaction"
+msgstr "Borç İşlemleri"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Hesabı Sil"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Hesap Ekle"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Grup Ekle"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Grup Ekle"
+
+#: sql/Pg-database.sql:2909
+msgid "Add Budget"
+msgstr ""
+
+#: sql/Pg-database.sql:2836
+#, fuzzy
+msgid "Add Business"
+msgstr "ŞirketNo"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Grup Ekle"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Kontak"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr ""
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr ""
+
+#: sql/Pg-database.sql:2929
+#, fuzzy
+msgid "Add Group"
+msgstr "Parçalar"
+
+#: sql/Pg-database.sql:2838
+#, fuzzy
+msgid "Add Language"
+msgstr "Dil"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Hizmet Ekle"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Parça Ekle"
 
-#: sql/Pg-database.sql:802
-msgid "IRC"
+#: sql/Pg-database.sql:2930
+#, fuzzy
+msgid "Add Pricegroup"
+msgstr "Satınalma Siparişleri"
+
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Kullanıcı Ekle"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
 msgstr ""
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Hizmet Ekle"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Parça Ekle"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Parça Ekle"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "İşlem Ekle"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Aktif"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Gruplar"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Aktif"
+
+#: sql/Pg-database.sql:810
+msgid "BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Bilanço"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Sipariş Tarihi"
+
+#: sql/Pg-database.sql:659
+msgid "Billing"
+msgstr ""
+
+#: sql/Pg-database.sql:813
+msgid "Billing BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:812
+msgid "Billing CC"
+msgstr ""
+
+#: sql/Pg-database.sql:811
+msgid "Billing Email"
+msgstr ""
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
 msgstr ""
 
 #: sql/Pg-database.sql:2139
@@ -76,38 +229,209 @@ msgstr ""
 msgid "Budget"
 msgstr "Sipariş No"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr ""
-
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+#: sql/Pg-database.sql:2911
 #, fuzzy
-msgid "AR Transaction"
-msgstr "Borç İşlemleri"
+msgid "Budgets"
+msgstr "Satınalma Siparişleri"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:809
+msgid "CC"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
 msgstr ""
 
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:797
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Parça Ekle"
+msgid "Cell Phone"
+msgstr "Telefon"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Hesap Planı"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
 msgstr ""
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Kontak"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Kontak"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Hizmet Ekle"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Borç"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Alıcı"
+
+#: sql/Pg-database.sql:2784
+#, fuzzy
+msgid "Customer History"
+msgstr "Satınalma Siparişi"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Fatura"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Borç"
+
+#: sql/Pg-database.sql:2833
+#, fuzzy
+msgid "Defaults"
+msgstr "Hesabı Sil"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Açıklama"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Açıklama"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Açıklama"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2866
+msgid "Drafts"
+msgstr ""
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "Posta"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr ""
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr ""
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Stok"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Grubu Düzenle"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Hesabı Düzenle"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Faks"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Grup Ekle"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr ""
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Defteri Kebir"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Hizmet Ekle"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr ""
+
+#: sql/Pg-database.sql:2870
+#, fuzzy
+msgid "HTML Templates"
+msgstr "Şablon Kullan"
+
+#: sql/Pg-database.sql:805
+#, fuzzy
+msgid "Home Phone"
+msgstr "Şirket"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+msgid "IRC"
 msgstr ""
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
@@ -116,35 +440,81 @@ msgstr ""
 msgid "Import"
 msgstr "Raporlar"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Aktif"
+msgid "Import Batch"
+msgstr "Raporlar"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Raporlar"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Ödeme"
+#: sql/Pg-database.sql:2905
+#, fuzzy
+msgid "Import GIFI"
+msgstr "Raporlar"
 
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Aktif"
+#: sql/Pg-database.sql:2773
+#, fuzzy
+msgid "Import Inventory"
+msgstr "Stok"
+
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Gelir Tablosu"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Stok"
+
+#: sql/Pg-database.sql:2777
+#, fuzzy
+msgid "Inventory Activity"
+msgstr "Stok"
+
+#: sql/Pg-database.sql:2940
+#, fuzzy
+msgid "Inventory and COGS"
+msgstr "Stok"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Fatura"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Fatura No"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Miktar"
 
 #: sql/Pg-database.sql:2869
 #, fuzzy
 msgid "LaTeX Templates"
 msgstr "Şablon Kullan"
 
-#: sql/Pg-database.sql:2866
-msgid "Drafts"
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Dil"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
 msgstr ""
 
-#: sql/Pg-database.sql:2788
-msgid "Top-level"
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
 msgstr ""
 
 #: sql/Pg-database.sql:2837
@@ -152,69 +522,186 @@ msgstr ""
 msgid "List Businesses"
 msgstr "ŞirketNo"
 
-#: sql/Pg-database.sql:2783
+#: sql/Pg-database.sql:2883
 #, fuzzy
-msgid "Add Contact"
-msgstr "Kontak"
+msgid "List Classes"
+msgstr "Gruplar"
 
-#: sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr ""
+
+#: sql/Pg-database.sql:2839
 #, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Ödeme"
+msgid "List Languages"
+msgstr "Dil"
 
-#: sql/Pg-database.sql:810
-msgid "BCC"
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr ""
+
+#: sql/Pg-database.sql:2877
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "Parça Ekle"
+
+#: sql/Pg-database.sql:2835
+msgid "List Warehouse"
+msgstr ""
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr ""
+
+#: sql/Pg-database.sql:801
+msgid "MSN"
 msgstr ""
 
 #: sql/Pg-database.sql:663
 msgid "Mailing"
 msgstr ""
 
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Hizmet Ekle"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
+#: sql/Pg-database.sql:724
+msgid "Miss."
 msgstr ""
 
-#: sql/Pg-database.sql:2884
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Add Assets"
-msgstr "Grup Ekle"
+msgid "Mr."
+msgstr "Mar"
 
-#: sql/Pg-database.sql:3721
-msgid "time"
+#: sql/Pg-database.sql:726
+msgid "Mrs."
 msgstr ""
 
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#: sql/Pg-database.sql:727
 #, fuzzy
-msgid "Vouchers"
-msgstr "Hesabı Sil"
+msgid "Ms."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Sipariş Girişi"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr ""
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+#, fuzzy
+msgid "Packing List"
+msgstr "Paketleme Listesi"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Parçalar"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Ödeme"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Ödemeler"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr ""
+
+#: sql/Pg-database.sql:2924
+#, fuzzy
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Şirket"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Satınalma Siparişleri"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Satınalma Siparişi"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Satınalma Siparişleri"
+
+#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
+#: sql/Pg-database.sql:2966
+#, fuzzy
+msgid "Quotation"
+msgstr "Fatura No"
+
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+#, fuzzy
+msgid "Quotations"
+msgstr "Fatura No"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr ""
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr ""
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+#, fuzzy
+msgid "Receipt"
+msgstr "Alacaklar"
 
 #: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
 #, fuzzy
 msgid "Receipts"
 msgstr "Alacaklar"
 
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
+#: sql/Pg-database.sql:2817
+#, fuzzy
+msgid "Receive"
+msgstr "Alacaklar"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
+#, fuzzy
+msgid "Reconciliation"
+msgstr "Raporla"
+
+#: sql/Pg-database.sql:2919
+#, fuzzy
+msgid "Recurring Transactions"
+msgstr "İşlemleri Listele"
+
+#: sql/Pg-database.sql:547
+msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Work Order"
-msgstr "Sipariş"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Borç"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Satınalma Siparişleri"
+msgid "Reporting Units"
+msgstr "Raporlar"
 
 #: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
 #: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
@@ -223,88 +710,32 @@ msgstr "Satınalma Siparişleri"
 msgid "Reports"
 msgstr "Raporlar"
 
-#: sql/Pg-database.sql:2917
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Goods and Services"
-msgstr "Hizmet Ekle"
+msgid "Reverse AR Overpay"
+msgstr "Ödeme"
+
+#: sql/Pg-database.sql:2937
+#, fuzzy
+msgid "Reverse Overpay"
+msgstr "Ödeme"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Ödeme"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Satınalma Siparişleri"
 
 #: sql/Pg-database.sql:2477
 msgid "Rounded"
 msgstr ""
 
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Hizmet Ekle"
-
-#: sql/Pg-database.sql:2836
-#, fuzzy
-msgid "Add Business"
-msgstr "ŞirketNo"
-
-#: sql/Pg-database.sql:2785
-#, fuzzy
-msgid "Vendor History"
-msgstr "Satınalma Siparişi"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Satışlar"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Tercihler"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr ""
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Hizmet Ekle"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Raporlar"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-#, fuzzy
-msgid "List Languages"
-msgstr "Dil"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Raporla"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Satış Siparişleri"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-#, fuzzy
-msgid "Packing List"
-msgstr "Paketleme Listesi"
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
+#: sql/Pg-database.sql:2871
+msgid "SIC"
 msgstr ""
 
 #: sql/Pg-database.sql:954
@@ -316,593 +747,24 @@ msgstr ""
 msgid "Sale"
 msgstr "Satışlar"
 
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-#, fuzzy
-msgid "Add Language"
-msgstr "Dil"
-
-#: sql/Pg-database.sql:659
-msgid "Billing"
-msgstr ""
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Fatura No"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr ""
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "Posta"
-
-#: sql/Pg-database.sql:2925
-#, fuzzy
-msgid "System"
-msgstr "Lock System"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Ödeme"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Ödemeler"
-
-#: sql/Pg-database.sql:813
-msgid "Billing BCC"
-msgstr ""
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2870
-#, fuzzy
-msgid "HTML Templates"
-msgstr "Şablon Kullan"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2894
-#, fuzzy
-msgid "Vendor Invoice"
-msgstr "Fatura"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Alıcı"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Tarih"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr ""
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2777
-#, fuzzy
-msgid "Inventory Activity"
-msgstr "Stok"
-
-#: sql/Pg-database.sql:2880
-#, fuzzy
-msgid "Asset Classes"
-msgstr "Gruplar"
-
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Kullanıcı Ekle"
-
-#: sql/Pg-database.sql:2895
-#, fuzzy
-msgid "Debit Note"
-msgstr "Borç"
-
-#: sql/Pg-database.sql:801
-msgid "MSN"
-msgstr ""
-
-#: sql/Pg-database.sql:2905
-#, fuzzy
-msgid "Import GIFI"
-msgstr "Raporlar"
-
-#: sql/Pg-database.sql:2799
-#, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Ödeme"
-
-#: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
-#: sql/Pg-database.sql:2966
-#, fuzzy
-msgid "Quotation"
-msgstr "Fatura No"
-
-#: sql/Pg-database.sql:2916
-#, fuzzy
-msgid "General Journal"
-msgstr "Defteri Kebir"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-#, fuzzy
-msgid "Statement"
-msgstr "Gelir Tablosu"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Grup Ekle"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Dil"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-#, fuzzy
-msgid "AP Transaction"
-msgstr "Borç İşlemleri"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Raporlar"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Alacaklar"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Parça Ekle"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Bilanço"
-
-#: sql/Pg-database.sql:805
-#, fuzzy
-msgid "Home Phone"
-msgstr "Şirket"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-#, fuzzy
-msgid "Translations"
-msgstr "Alacak İşlemleri"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Faks"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Tarih Formatı"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Telefon"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Açıklama"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Hesap Planı"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Gecikmiş Borçlar"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Parça Ekle"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr ""
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Hesabı Düzenle"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Aktif"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
-
-#: sql/Pg-database.sql:2919
-#, fuzzy
-msgid "Recurring Transactions"
-msgstr "İşlemleri Listele"
-
-#: sql/Pg-database.sql:547
-msgid "Referral"
-msgstr ""
-
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Satış Siparişi"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr ""
-
-#: sql/Pg-database.sql:2873
-#, fuzzy
-msgid "Type of Business"
-msgstr "ŞirketNo"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
-#, fuzzy
-msgid "Import Inventory"
-msgstr "Stok"
-
-#: sql/Pg-database.sql:2930
-#, fuzzy
-msgid "Add Pricegroup"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Stok"
-
-#: sql/Pg-database.sql:2891
-#, fuzzy
-msgid "Depreciation"
-msgstr "Açıklama"
-
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
-#, fuzzy
-msgid "Depreciate"
-msgstr "Açıklama"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr ""
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Fatura"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-#, fuzzy
-msgid "Receipt"
-msgstr "Alacaklar"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Borç İşlemleri"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr ""
-
-#: sql/Pg-database.sql:811
-msgid "Billing Email"
-msgstr ""
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Stok"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Borçlar"
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Satışlar"
 
 #: sql/Pg-database.sql:2898
 #, fuzzy
 msgid "Sales Invoice"
 msgstr "Fatura"
 
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Gecikmiş Alacaklar"
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Satış Siparişi"
 
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Sipariş Girişi"
-
-#: sql/Pg-database.sql:2784
-#, fuzzy
-msgid "Customer History"
-msgstr "Satınalma Siparişi"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-#, fuzzy
-msgid "Receive"
-msgstr "Alacaklar"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Grubu Stokla"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Kontak"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Parçalar"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Şirket"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Şirket"
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-#, fuzzy
-msgid "Quotations"
-msgstr "Fatura No"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Proforma Bilanço"
-
-#: sql/Pg-database.sql:2929
-#, fuzzy
-msgid "Add Group"
-msgstr "Parçalar"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Satınalma Siparişleri"
-
-#: sql/Pg-database.sql:2835
-msgid "List Warehouse"
-msgstr ""
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Ödeme"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr ""
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Grup Ekle"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Hesabı Sil"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Hesabı Sil"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Hesap Ekle"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr ""
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr ""
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Fatura"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Kontak"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Miktar"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr ""
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Satınalma Siparişi"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr ""
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Satıcı"
-
-#: sql/Pg-database.sql:2833
-#, fuzzy
-msgid "Defaults"
-msgstr "Hesabı Sil"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Grubu Düzenle"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr ""
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Ödemeler"
-
-#: sql/Pg-database.sql:2937
-#, fuzzy
-msgid "Reverse Overpay"
-msgstr "Ödeme"
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Satış Siparişleri"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -911,1475 +773,212 @@ msgstr "Ödeme"
 msgid "Search"
 msgstr "Mart"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Gruplar"
+msgid "Search Assets"
+msgstr "Aktif"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr ""
-
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "İşlem Ekle"
-
-#: sql/Pg-database.sql:2924
+#: sql/Pg-database.sql:2771
 #, fuzzy
-msgid "Preferences"
+msgid "Search Groups"
+msgstr "Satınalma Siparişleri"
+
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Satınalma Siparişleri"
+
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Ödemeler"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Şirket"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Tercihler"
 
-#: sql/Pg-database.sql:812
-msgid "Billing CC"
+#: sql/Pg-database.sql:2876
+#, fuzzy
+msgid "Sessions"
+msgstr "Versiyon"
+
+#: sql/Pg-database.sql:2816
+msgid "Ship"
 msgstr ""
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
+#: sql/Pg-database.sql:2476
+msgid "Simple"
+msgstr ""
+
+#: sql/Pg-database.sql:728
+msgid "Sir."
+msgstr ""
+
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+#, fuzzy
+msgid "Statement"
 msgstr "Gelir Tablosu"
 
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Stok"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Grubu Stokla"
 
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
+#: sql/Pg-database.sql:2925
+#, fuzzy
+msgid "System"
+msgstr "Lock System"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Tarih Formatı"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
 msgstr ""
 
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Sipariş Tarihi"
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Açıklama"
+#: sql/Pg-database.sql:2788
+msgid "Top-level"
+msgstr ""
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "İşlemler"
 
-#~ msgid "Dataset"
-#~ msgstr "Veriseti"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr ""
 
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Hesap Ekle"
+msgid "Translations"
+msgstr "Alacak İşlemleri"
 
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Ödeme"
-
-#~ msgid "Source"
-#~ msgstr "Kaynak"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "İsim"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "Dönem:"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Borç İşlemleri"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Notlar:"
-
-#~ msgid "Paid"
-#~ msgstr "Ödendi"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "Başlangıç"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Satıcı"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Fatura Tarihi"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "İşlemler"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Tarih Formatı"
-
-#~ msgid "Equity"
-#~ msgstr "Sermaye"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Veriseti Oluştur"
-
-#, fuzzy
-#~ msgid "Delivery Date"
-#~ msgstr "Vade Tarihi"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Kaydet"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Kontak"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "İsim"
-
-#~ msgid "On Hand"
-#~ msgstr "Stok:"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "İşlemleri Listele"
-
-#~ msgid "Login"
-#~ msgstr "Giriş"
-
-#~ msgid "Sell Price"
-#~ msgstr "Satış Fiyatı"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Fatura"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Versiyon"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Satıcı Ekle"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Ödemeler"
-
-#~ msgid "Expense"
-#~ msgstr "Gider"
-
-#~ msgid "Currency"
-#~ msgstr "Para Birimi"
-
-#~ msgid "Liability"
-#~ msgstr "Pasif"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Startdate"
-#~ msgstr "Sipariş Tarihi"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Numara"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Hesap Türü"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Birim"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Satınalma Siparişi"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Alıcı"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Kontak"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Grup Ekle"
-
-#, fuzzy
-#~ msgid "Edit Customer"
-#~ msgstr "Alıcı Ekle"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Kullanıcı Bilgilerini Düzenle"
-
-#~ msgid "Number"
-#~ msgstr "Numara"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Hesap Ekle"
-
-#~ msgid "Delete"
-#~ msgstr "Sil"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Şifre"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Borç"
-
-#, fuzzy
-#~ msgid "Post"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Tarih Formatı"
-
-#~ msgid "Make"
-#~ msgstr "Marka"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Borç İşlemleri"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Hesabı Sil"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Yedekleme"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Fatura No"
-
-#~ msgid "Backup"
-#~ msgstr "Yedekleme"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Kaydet"
-
-#~ msgid "Database"
-#~ msgstr "Veritabanı"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Satınalma Siparişi"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Hesap Ekle"
-
-#, fuzzy
-#~ msgid "Code"
-#~ msgstr "Vergi Dahil"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Kontak"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Düzen Sayfası"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Parça"
-
-#, fuzzy
-#~ msgid "Edit Employee"
-#~ msgstr "Şablonu Düzenle"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Borç"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Numara"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Kullanıcı"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Notlar:"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "Posta"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Sipariş"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Alacak"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Dataset updated!"
-
-#~ msgid "Taxable"
-#~ msgstr "Vergiye tabi"
-
-#~ msgid "Continue"
-#~ msgstr "Devam"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Hesabı Sil"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Kullanıcı"
-
-#~ msgid "COGS"
-#~ msgstr "SMM"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Gelir Tablosu"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Aratoplam"
-
-#, fuzzy
-#~ msgid "Serial Number"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Tarih"
-
-#~ msgid "Account"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Active"
-#~ msgstr "Borç İşlemleri"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Sipariş Tarihi"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Hesap Türü"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Borç İşlemleri"
-
-#~ msgid "Yes"
-#~ msgstr "Evet"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "Fiyat"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Borç"
-
-#~ msgid "Tax Included"
-#~ msgstr "Vergi Dahil"
-
-#~ msgid "List Price"
-#~ msgstr "Liste Fiyatı"
-
-#~ msgid "No"
-#~ msgstr "Hayır"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Toplam"
-
-#~ msgid "Qty"
-#~ msgstr "Adet"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "ŞirketNo"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Tercihler"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Sipariş Tarihi"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Hesap Numarası"
-
-#, fuzzy
-#~ msgid "Project Number"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Kullanıcı"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Yedekleme"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Verisetini Sil"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Kullanıcı Bilgilerini Düzenle"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Giriş Kontrol"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Vergi Hesapları"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Bağlı Hesaplar"
-
-#~ msgid "All"
-#~ msgstr "Hepsi"
-
-#~ msgid "From"
-#~ msgstr "Başlangıç"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "Remaining"
-#~ msgstr "Net Dönem Karı (Zararı)"
-
-#~ msgid "Model"
-#~ msgstr "Model"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Aktif"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Dosyaya Kaydet"
-
-#, fuzzy
-#~ msgid "Contra"
-#~ msgstr "Kontak"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Tercihler kaydedildi!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Ödeme"
-
-#~ msgid "Debit"
-#~ msgstr "Borç"
-
-#, fuzzy
-#~ msgid "List Transactions"
-#~ msgstr "Alacak İşlemleri"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "ŞirketNo"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Hesap Numarası"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Kredi Limiti"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "Başlangıç"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Stok"
-
-#, fuzzy
-#~ msgid "Cost Center"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Talep tarihi:"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "İşlemleri Listele"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "ŞirketNo"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Report for"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Hesabı Sil"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Fatura Tarihi"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Vergiye tabi"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Sipariş"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Stok"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Aktif"
-
-#~ msgid "Amount"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Fatura Tarihi"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Başlangıç"
-
-#, fuzzy
-#~ msgid "Projects"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Difference"
-#~ msgstr "Tercihler"
-
-#, fuzzy
-#~ msgid "Update"
-#~ msgstr "Dataset updated!"
-
-#~ msgid "Due Date"
-#~ msgstr "Vade Tarihi"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Kullanıcı Bilgilerini Düzenle"
-
-#~ msgid "Database Host"
-#~ msgstr "Veritabanı Hostu"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Alıcı"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Hesabı Düzenle"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Gider/Varlıklar"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Fatura No"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Açıklama"
-
-#~ msgid "Password"
-#~ msgstr "Şifre"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Şirket"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Kaydet"
-
-#~ msgid "Edit User"
-#~ msgstr "Kullanıcı Bilgilerini Düzenle"
-
-#~ msgid "Account Number"
-#~ msgstr "Hesap Numarası"
-
-#, fuzzy
-#~ msgid "Edit Vendor"
-#~ msgstr "Satıcı Ekle"
-
-#~ msgid "User"
-#~ msgstr "Kullanıcı"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Aktif"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Stok"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Printer"
-#~ msgstr "Yazıcı"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Dataset updated!"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "Bitiş"
-
-#~ msgid "Date Paid"
-#~ msgstr "Ödendiği Tarih"
-
-#, fuzzy
-#~ msgid "Amount Due"
-#~ msgstr "Miktar"
-
-#~ msgid "Credit"
-#~ msgstr "Alacak"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Miktar"
-
-#~ msgid "Short"
-#~ msgstr "Kısa"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Kullanıcı"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Kontak"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Fatura No"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Fatura"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "May"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Satınalma Siparişi"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Verisetini Sil"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Alacak"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Ödeme"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Alacak İşlemleri"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Hesap Ekle"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Notlar:"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "Stok:"
-
-#~ msgid "Company"
-#~ msgstr "Şirket"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Döviz Kuru"
-
-#, fuzzy
-#~ msgid "Salesperson"
-#~ msgstr "Satış Siparişleri"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Raporla"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Seçmeli Menüye dahil et"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Alacak"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Proforma Bilanço"
 
-#~ msgid "Include in Report"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Bilanço"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Talep tarihi:"
-
-#~ msgid "Number Format"
-#~ msgstr "Rakam Formatı"
-
-#~ msgid "Date"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "Line Total"
-#~ msgstr "Toplam"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "ŞirketNo"
-
-#~ msgid "Address"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Veriseti Oluştur"
-
-#~ msgid "Record in"
-#~ msgstr "Kaydet"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Defteri Kebir"
-
-#, fuzzy
-#~ msgid "Vendor Number"
-#~ msgstr "Sipariş No"
-
-#~ msgid "days"
-#~ msgstr "gün. "
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Ağırlık Birimi"
-
-#, fuzzy
-#~ msgid "Project"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Dil"
-
-#~ msgid "Name"
-#~ msgstr "İsim"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Hesap Numarası"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Borç İşlemleri"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Hesabı Düzenle"
-
-#~ msgid "Obsolete"
-#~ msgstr "Eski"
-
-#~ msgid "Invoice Date"
-#~ msgstr "Fatura Tarihi"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Bağlı Hesaplar"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "İşlemler"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Hesap Planı"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Hesabı Sil"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Bu kaydedilecek hesap özeti mi"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Company Name"
-#~ msgstr "Şirket"
-
-#~ msgid "To"
-#~ msgstr "Bitiş"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Fatura"
-
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Numara"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Vergiye tabi"
-
-#, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Fatura No"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Tarih"
-
-#~ msgid "Total"
-#~ msgstr "Toplam"
-
-#~ msgid "Notes"
-#~ msgstr "Notlar:"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Hesap Ekle"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Fatura"
-
-#~ msgid "Compare to"
-#~ msgstr "...kıyasla"
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Current"
-#~ msgstr "Para Birimi"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Yedekleme"
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Fiyat"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Ödemeler"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Fatura"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Hesap Numarası"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Şirket"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "İşlemleri Listele"
-
-#~ msgid "Subtotal"
-#~ msgstr "Aratoplam"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Dosyaya Kaydet"
-
-#~ msgid "Unit"
-#~ msgstr "Birim"
-
-#, fuzzy
-#~ msgid "No."
-#~ msgstr "Hayır"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Borç İşlemleri"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Yazıcı"
-
-#~ msgid "E-mail"
-#~ msgstr "Posta"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Aratoplam"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Ödemeler"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Numara"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "Fatura"
-
-#~ msgid "Weight"
-#~ msgstr "Ağırlık"
-
-#~ msgid "Tax"
-#~ msgstr "Vergi"
-
-#~ msgid "Order Number"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Customer Number"
-#~ msgstr "Alıcı"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Döviz Kuru"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Oran"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Satınalma Siparişleri"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Parçayı Düzenle"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Kullanıcı Ekle"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Kaydet"
-
-#~ msgid "Save"
-#~ msgstr "Kaydet"
-
-#~ msgid "Heading"
-#~ msgstr "Başlık"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Şablon Kullan"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Stok"
-
-#~ msgid "Discount"
-#~ msgstr "İndirim"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "Onayla!"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Tarih Formatı"
-
-#, fuzzy
-#~ msgid "Balance"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Açıklama"
-
-#, fuzzy
-#~ msgid "Department"
-#~ msgstr "Ödeme"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Talep tarihi:"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Vergi Hesapları"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Vergiye tabi"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Şifre"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Tercihleri Düzenle: "
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Sipariş Tarihi"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Bağlı Hesaplar"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Alacak"
-
-#~ msgid "Payables"
-#~ msgstr "Borçlar"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "Kontak"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Ödeme"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Hesabı Düzenle"
-
+#: sql/Pg-database.sql:2873
 #, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Satıcı"
+msgid "Type of Business"
+msgstr "ŞirketNo"
 
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "debits"
-#~ msgstr "Borç"
+msgid "Use AR Overpayment"
+msgstr "Ödeme"
 
-#~ msgid "Add Customer"
-#~ msgstr "Alıcı Ekle"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Kullanıcı Bilgilerini Düzenle"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Satınalma Siparişleri"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Yönetici Şifresini Değiştir"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Kullanıcı Ekle"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Ödeme"
-
-#~ msgid "Exch"
-#~ msgstr "D.Kuru"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Veritabani Yonetimi"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Fatura No"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Tarih"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Ödeme Tarihi yok"
-
-#, fuzzy
-#~ msgid "Statement Balance"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Accounts"
-#~ msgstr "Hesap"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Ödemeler"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Kaydet"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Net Dönem Karı (Zararı)"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Sipariş No"
-
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Password changed!"
+msgid "Use Overpayment"
+msgstr "Ödeme"
 
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Adres"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "Hesap Numarası yok!"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "Hesap Türü yok!"
-
-#, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "İndirim"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Dil"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Dil"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "Şablon Kur"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "User saved!"
-
-#~ msgid "localhost"
-#~ msgstr "Yerelhost"
-
-#~ msgid "About"
-#~ msgstr "Program bilgileri"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "İşlemleri Listele"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Posta adresi yok!"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Sipariş No"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Hizmet Ekle"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Ocak"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Satıcı"
 
-#~ msgid "ea"
-#~ msgstr "ad"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Fatura Tarihi yok!"
-
-#~ msgid "Individual Items"
-#~ msgstr "Farklı Kalemler"
-
+#: sql/Pg-database.sql:2785
 #, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Bu kalem dosyada yok!"
+msgid "Vendor History"
+msgstr "Satınalma Siparişi"
 
+#: sql/Pg-database.sql:2894
 #, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Bu kalem dosyada yok!"
+msgid "Vendor Invoice"
+msgstr "Fatura"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "Bu Parçayı çıkarmadan önce stok miktarı sıfır olmalıdır"
-
-#~ msgid "Add"
-#~ msgstr "Ekle"
+msgid "Vouchers"
+msgstr "Hesabı Sil"
 
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Alıcı"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Satıcı"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
 #, fuzzy
-#~ msgid "Account: %1"
-#~ msgstr "Hesap"
+msgid "Work Order"
+msgstr "Sipariş"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Fatura No"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Sipariş No"
+msgid "Year End"
+msgstr "Tarih"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "Başlangıç"
+msgid "depreciation"
+msgstr "Açıklama"
 
-#, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Numara"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Tarih"
+msgid "import"
+msgstr "Raporlar"
 
-#~ msgid "Item not on file!"
-#~ msgstr "Bu kalem dosyada yok!"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#~ msgid "What type of item is this?"
-#~ msgstr "Bu ne çeşit bir kalemdir?"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#~ msgid "Service"
-#~ msgstr "servis"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Sırada Numara yok!"
-
-#~ msgid "Add Purchase Order"
-#~ msgstr "Satınalma Sip. Ekle"
+msgid "production"
+msgstr "Borç İşlemleri"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Satış Siparişi Ekle"
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
 #~ msgid " Date missing!"
 #~ msgstr "Vade Tarihi yok!"
 
 #, fuzzy
-#~ msgid "Add line1"
-#~ msgstr "Hizmet Ekle"
+#~ msgid " missing!"
+#~ msgstr "Port yok!"
 
 #, fuzzy
-#~ msgid "Add line2"
-#~ msgstr "Hizmet Ekle"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Şablonlar"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Vade Tarihi yok!"
+#~ msgid "# Invoices"
+#~ msgstr "Fatura"
 
 #, fuzzy
 #~ msgid "%1 Cash Transfer Transaction"
@@ -2390,198 +989,60 @@ msgstr "İşlemler"
 #~ msgstr "Defteri Kebire İşlem Ekle"
 
 #, fuzzy
+#~ msgid "%1 Language"
+#~ msgstr "Dil"
+
+#, fuzzy
+#~ msgid "%1 Number"
+#~ msgstr "Numara"
+
+#, fuzzy
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Bu kalem dosyada yok!"
+
+#, fuzzy
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Bu kalem dosyada yok!"
+
+#, fuzzy
+#~ msgid "AP Invoices"
+#~ msgstr "Fatura"
+
+#, fuzzy
+#~ msgid "AP account"
+#~ msgstr "Hesap"
+
+#, fuzzy
+#~ msgid "AR Invoices"
+#~ msgstr "Fatura"
+
+#, fuzzy
+#~ msgid "AR account"
+#~ msgstr "Hesap"
+
+#~ msgid "About"
+#~ msgstr "Program bilgileri"
+
+#~ msgid "Account"
+#~ msgstr "Hesap"
+
+#, fuzzy
 #~ msgid "Account %1 not found."
 #~ msgstr "Hesap"
 
 #, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "İşlemleri Listele"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "İşlem Tarihi yok!"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Alış Siparişini Düzenle"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Satış Siparişini Düzenle"
-
-#~ msgid "Terms"
-#~ msgstr "Şartlar"
-
-#~ msgid "Order Date"
-#~ msgstr "Sipariş Tarihi"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Sipariş Tarihi yok!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Port yok!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: "
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Sipariş Numarası yok!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "İndirim"
+#~ msgid "Account Description"
+#~ msgstr "Açıklama"
 
 #, fuzzy
 #~ msgid "Account Label"
 #~ msgstr "Hesap Numarası"
 
 #, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Eski"
+#~ msgid "Account Name"
+#~ msgstr "Hesap Numarası"
 
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Vergi Dahil"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Proforma Bilanço"
-
-#~ msgid "Business Number"
-#~ msgstr "ŞirketNo"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Dil"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Şablonlar"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Kur Kazancı"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Kur Kaybı"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "Yeni Şablonlar"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Fatura Numarasını silmek istediğinizden emin misiniz? Fiş: "
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Sil"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Vergi"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Satınalma Siparişi"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Satınalma Siparişi"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Aktif"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "mevcut değil"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Satış Siparişleri"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Satış Siparişleri"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Satınalma Siparişleri"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Fatura No"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Fatura Tarihi"
-
-#~ msgid "January"
-#~ msgstr "Ocak"
-
-#~ msgid "February"
-#~ msgstr "Şubat"
-
-#~ msgid "April"
-#~ msgstr "Nisan"
-
-#~ msgid "June"
-#~ msgstr "Haziran"
-
-#~ msgid "July"
-#~ msgstr "Temmuz"
-
-#~ msgid "August"
-#~ msgstr "Ağustos"
-
-#~ msgid "September"
-#~ msgstr "Eylül"
-
-#~ msgid "October"
-#~ msgstr "Ekim"
-
-#~ msgid "November"
-#~ msgstr "Kasım"
-
-#~ msgid "December"
-#~ msgstr "Aralık"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Şifre Değiştir"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Password changed!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Proforma Bilanço"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Toplam"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Sipariş Tarihi"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Hesap Ekle"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Ara"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Fatura"
-
-#, fuzzy
-#~ msgid "Account Number Start"
+#~ msgid "Account Number"
 #~ msgstr "Hesap Numarası"
 
 #, fuzzy
@@ -2589,89 +1050,34 @@ msgstr "İşlemler"
 #~ msgstr "Hesap Numarası"
 
 #, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Talep tarihi:"
+#~ msgid "Account Number Start"
+#~ msgstr "Hesap Numarası"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "Hesap Numarası yok!"
 
 #, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Haz"
+#~ msgid "Account Type"
+#~ msgstr "Hesap Türü"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "Hesap Türü yok!"
 
 #, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Miktar"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Gider"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Raporla"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Raporlar"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Gelir Tablosu"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
+#~ msgid "Account category"
 #~ msgstr "Hesap Numarası"
 
 #, fuzzy
-#~ msgid "Disc"
-#~ msgstr "İndirim"
-
-#~ msgid "Jan"
-#~ msgstr "Oca"
-
-#~ msgid "Feb"
-#~ msgstr "Şub"
-
-#~ msgid "Mar"
-#~ msgstr "Mar"
-
-#~ msgid "Apr"
-#~ msgstr "Nis"
-
-#~ msgid "Jun"
-#~ msgstr "Haz"
-
-#~ msgid "Jul"
-#~ msgstr "Tem"
-
-#~ msgid "Aug"
-#~ msgstr "Ağu"
-
-#~ msgid "Sep"
-#~ msgstr "Eyl"
-
-#~ msgid "Oct"
-#~ msgstr "Eki"
-
-#~ msgid "Nov"
-#~ msgstr "Kas"
-
-#~ msgid "Dec"
-#~ msgstr "Ara"
+#~ msgid "Account numbers"
+#~ msgstr "Hesap Numarası"
 
 #, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Talep tarihi:"
+#~ msgid "Account:"
+#~ msgstr "Hesap"
 
 #, fuzzy
-#~ msgid "ar"
-#~ msgstr "Mar"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Dil"
+#~ msgid "Account: %1"
+#~ msgstr "Hesap"
 
 #~ msgid "Accounting"
 #~ msgstr "Muhasebe"
@@ -2679,17 +1085,233 @@ msgstr "İşlemler"
 #~ msgid "Accounting Menu"
 #~ msgstr "Muhasebe Menüsü"
 
+#, fuzzy
+#~ msgid "Accounts"
+#~ msgstr "Hesap"
+
+#, fuzzy
+#~ msgid "Accounts From"
+#~ msgstr "Hesap"
+
+#, fuzzy
+#~ msgid "Accounts To"
+#~ msgstr "Hesap"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Borç İşlemleri"
+
+#, fuzzy
+#~ msgid "Active On"
+#~ msgstr "Borç İşlemleri"
+
+#~ msgid "Add"
+#~ msgstr "Ekle"
+
+#~ msgid "Add Customer"
+#~ msgstr "Alıcı Ekle"
+
+#, fuzzy
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Hizmet Ekle"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "Alacak"
+
+#~ msgid "Add Purchase Order"
+#~ msgstr "Satınalma Sip. Ekle"
+
+#~ msgid "Add Sales Order"
+#~ msgstr "Satış Siparişi Ekle"
+
+#, fuzzy
+#~ msgid "Add Unit"
+#~ msgstr "Birim"
+
+#~ msgid "Add Vendor"
+#~ msgstr "Satıcı Ekle"
+
+#, fuzzy
+#~ msgid "Add line1"
+#~ msgstr "Hizmet Ekle"
+
+#, fuzzy
+#~ msgid "Add line2"
+#~ msgstr "Hizmet Ekle"
+
+#~ msgid "Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~ msgid "Addresses"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~ msgid "Adjustment"
+#~ msgstr "Stok"
+
+#, fuzzy
+#~ msgid "Adjustment Date"
+#~ msgstr "Gelir Tablosu"
+
 #~ msgid "Administration"
 #~ msgstr "Yönetim"
 
 #~ msgid "Administrator"
 #~ msgstr "Administrator"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Raporlar"
+
+#~ msgid "All"
+#~ msgstr "Hepsi"
+
 #~ msgid "All Datasets up to date!"
 #~ msgstr "All Datasets up to date!"
 
+#~ msgid "Amount"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Amount Due"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Miktar"
+
+#~ msgid "Apr"
+#~ msgstr "Nis"
+
+#~ msgid "April"
+#~ msgstr "Nisan"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: "
+
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "İşlemi silmek istediğinizden emin misiniz? Fiş: "
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Hesap Ekle"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Aktif"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Aktif"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Aktif"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Hesap Ekle"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Hesabı Düzenle"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Giriş Kontrol"
+
+#~ msgid "Aug"
+#~ msgstr "Ağu"
+
+#~ msgid "August"
+#~ msgstr "Ağustos"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Vergiye tabi"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Veriseti Oluştur"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Kullanıcı Ekle"
+
+#~ msgid "Backup"
+#~ msgstr "Yedekleme"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Yedekleme"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Yedekleme"
+
+#, fuzzy
+#~ msgid "Balance"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Bilanço"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Bağlı Hesaplar"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Bağlı Hesaplar"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Numara"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Raporla"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "ŞirketNo"
+
+#~ msgid "Business Number"
+#~ msgstr "ŞirketNo"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "ŞirketNo"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "ŞirketNo"
+
+#~ msgid "COGS"
+#~ msgstr "SMM"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "İşlemleri Listele"
 
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Cannot create Lock!"
@@ -2697,38 +1319,423 @@ msgstr "İşlemler"
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Öntanımlı hesap silinmez!"
 
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Vergi Hesapları"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Yönetici Şifresini Değiştir"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Şirket"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Notlar:"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Başlangıç"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Alacak İşlemleri"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Düzenlemek için giriş ismini tıklayın."
+
+#, fuzzy
+#~ msgid "Code"
+#~ msgstr "Vergi Dahil"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Satınalma Siparişleri"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Satış Siparişleri"
+
+#~ msgid "Company"
+#~ msgstr "Şirket"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Adres"
+
+#, fuzzy
+#~ msgid "Company Name"
+#~ msgstr "Şirket"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Şirket"
+
+#~ msgid "Compare to"
+#~ msgstr "...kıyasla"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "Onayla!"
 
 #~ msgid "Connect to"
 #~ msgstr "Bağlan"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Kontak"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Kontak"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Kontak"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Kontak"
+
+#~ msgid "Continue"
+#~ msgstr "Devam"
+
+#, fuzzy
+#~ msgid "Contra"
+#~ msgstr "Kontak"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Hesap Numarası"
+
+#, fuzzy
+#~ msgid "Cost Center"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Verisetini Sil"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Hesap Planı Oluştur"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Verisetini Sil"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Veriseti Oluştur"
+
+#~ msgid "Credit"
+#~ msgstr "Alacak"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Hesap Numarası"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Kredi Limiti"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Alacak"
+
+#~ msgid "Currency"
+#~ msgstr "Para Birimi"
+
+#, fuzzy
+#~ msgid "Current"
+#~ msgstr "Para Birimi"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Alıcı"
+
+#, fuzzy
+#~ msgid "Customer Number"
+#~ msgstr "Alıcı"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Alıcı"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Hesap Planı"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Alıcı"
 
 #~ msgid "DBI not installed!"
 #~ msgstr "DBJ kurulu değil"
 
+#~ msgid "Database"
+#~ msgstr "Veritabanı"
+
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Database Driver not checked!"
+
+#~ msgid "Database Host"
+#~ msgstr "Veritabanı Hostu"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Veritabani Yonetimi"
 
 #~ msgid "Database User missing!"
 #~ msgstr "Veritabanı Kullanıcısı yok!"
 
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "mevcut değil"
+
+#~ msgid "Dataset"
+#~ msgstr "Veriseti"
+
 #~ msgid "Dataset missing!"
 #~ msgstr "Veriseti Yok!"
+
+#~ msgid "Date"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Tarih Formatı"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Tarih Formatı"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Tarih Formatı"
+
+#~ msgid "Date Paid"
+#~ msgstr "Ödendiği Tarih"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Tarih Formatı"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "May"
+
+#~ msgid "Debit"
+#~ msgstr "Borç"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Borç"
+
+#~ msgid "Dec"
+#~ msgstr "Ara"
+
+#~ msgid "December"
+#~ msgstr "Aralık"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Aktif"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Hesabı Sil"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Hesabı Sil"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Dil"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Hesabı Sil"
+
+#~ msgid "Delete"
+#~ msgstr "Sil"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Dil"
+
+#, fuzzy
+#~ msgid "Delivery Date"
+#~ msgstr "Vade Tarihi"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Hesabı Sil"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Açıklama"
+
+#, fuzzy
+#~ msgid "Difference"
+#~ msgstr "Tercihler"
 
 #~ msgid "Directory"
 #~ msgstr "Dizin"
 
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "İndirim"
+
+#~ msgid "Discount"
+#~ msgstr "İndirim"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "İndirim"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "İndirim"
+
 #~ msgid "Driver"
 #~ msgstr "Sürücü"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Ara"
+
+#~ msgid "Due Date"
+#~ msgstr "Vade Tarihi"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Vade Tarihi yok!"
+
+#~ msgid "E-mail"
+#~ msgstr "Posta"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "Posta"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Posta adresi yok!"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Gelir Tablosu"
+
+#, fuzzy
+#~ msgid "Edit"
+#~ msgstr "Parçayı Düzenle"
+
+#, fuzzy
+#~ msgid "Edit Customer"
+#~ msgstr "Alıcı Ekle"
+
+#, fuzzy
+#~ msgid "Edit Employee"
+#~ msgstr "Şablonu Düzenle"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Defteri Kebir İşlemini Düzenle"
 
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Alış Siparişini Düzenle"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Raporlar"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Satış Siparişini Düzenle"
+
 #~ msgid "Edit Service"
 #~ msgstr "Hizmeti Düzenle"
+
+#~ msgid "Edit User"
+#~ msgstr "Kullanıcı Bilgilerini Düzenle"
+
+#, fuzzy
+#~ msgid "Edit Vendor"
+#~ msgstr "Satıcı Ekle"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Kullanıcı Bilgilerini Düzenle"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Fatura No"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Sipariş Tarihi"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Kullanıcı Bilgilerini Düzenle"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
@@ -2737,8 +1744,113 @@ msgstr "İşlemler"
 #~ "Yerel ve yabancı para birimleri için 3 harfli tanımlama giriniz yi "
 #~ "tıklayınız (USD:TRL:EUR)"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Talep tarihi:"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Talep tarihi:"
+
+#~ msgid "Equity"
+#~ msgstr "Sermaye"
+
+#~ msgid "Exch"
+#~ msgstr "D.Kuru"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Döviz Kuru"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Döviz Kuru"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Verisetleri"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Gider"
+
+#~ msgid "Expense"
+#~ msgstr "Gider"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Hesap Ekle"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Gider/Varlıklar"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Kullanıcı Bilgilerini Düzenle"
+
+#~ msgid "Feb"
+#~ msgstr "Şub"
+
+#~ msgid "February"
+#~ msgstr "Şubat"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "ŞirketNo"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Hesabı Düzenle"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Ödemeler"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Grup Ekle"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Kur Kazancı"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Kur Kaybı"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Tarih Formatı"
+
+#~ msgid "From"
+#~ msgstr "Başlangıç"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "Başlangıç"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Sipariş Tarihi"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "Başlangıç"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Bağlı Hesaplar"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Defteri Kebir"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Toplam"
+
+#~ msgid "Heading"
+#~ msgstr "Başlık"
 
 #~ msgid "Host"
 #~ msgstr "Host"
@@ -2746,15 +1858,126 @@ msgstr "İşlemler"
 #~ msgid "Hostname missing!"
 #~ msgstr "Host yok!"
 
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "Yeni Şablonlar"
+
+#~ msgid "Include in Report"
+#~ msgstr "Raporla"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Seçmeli Menüye dahil et"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Raporla"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Notlar:"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Şifre Değiştir"
+
+#~ msgid "Individual Items"
+#~ msgstr "Farklı Kalemler"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Stok"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Stok"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "Bu Parçayı çıkarmadan önce stok miktarı sıfır olmalıdır"
+
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr "Bu grubu çıkarmadan önce stok miktarı sıfır olmalıdır"
 
+#~ msgid "Invoice Date"
+#~ msgstr "Fatura Tarihi"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Fatura Tarihi yok!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Fatura No"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Fatura Numarası yok!"
 
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Fatura No"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Fatura Tarihi"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Fatura Tarihi"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Fatura Tarihi"
+
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Fatura No"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Fatura Tarihi"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Fatura"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Bu kalem dosyada yok!"
+
+#~ msgid "Jan"
+#~ msgstr "Oca"
+
+#~ msgid "January"
+#~ msgstr "Ocak"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Hesap Türü"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Sipariş No"
+
+#~ msgid "Jul"
+#~ msgstr "Tem"
+
+#~ msgid "July"
+#~ msgstr "Temmuz"
+
+#~ msgid "Jun"
+#~ msgstr "Haz"
+
+#~ msgid "June"
+#~ msgstr "Haziran"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Dataset updated!"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Son Numaralar ve Öntanımlı Hesaplar"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Dataset updated!"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -2763,11 +1986,45 @@ msgstr "İşlemler"
 #~ "Uzakta baglantı yapmak istemiyorsanız host ve port alanlarını boş "
 #~ "bırakınız."
 
+#~ msgid "Liability"
+#~ msgstr "Pasif"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Fatura No"
+
 #~ msgid "Licensed to"
 #~ msgstr "Lisans Sahibi:"
 
+#, fuzzy
+#~ msgid "Line Total"
+#~ msgstr "Toplam"
+
 #~ msgid "Link"
 #~ msgstr "Bağla"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Ödemeler"
+
+#~ msgid "List Price"
+#~ msgstr "Liste Fiyatı"
+
+#, fuzzy
+#~ msgid "List Transactions"
+#~ msgstr "Alacak İşlemleri"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Ağırlık Birimi"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Kullanıcı Bilgilerini Düzenle"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Borç İşlemleri"
 
 #~ msgid "Lockfile created!"
 #~ msgstr "Lockfile created!"
@@ -2775,14 +2032,56 @@ msgstr "İşlemler"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Lockfile removed!"
 
+#~ msgid "Login"
+#~ msgstr "Giriş"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Login name missing!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Hesap Ekle"
+
+#~ msgid "Make"
+#~ msgstr "Marka"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Ocak"
+
+#~ msgid "Mar"
+#~ msgstr "Mar"
 
 #~ msgid "May "
 #~ msgstr "Mayıs"
 
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Vergiye tabi"
+
+#~ msgid "Model"
+#~ msgstr "Model"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte Encoding"
+
+#~ msgid "Name"
+#~ msgstr "İsim"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "İsim"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Raporla"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Kullanıcı"
+
+#~ msgid "No"
+#~ msgstr "Hayır"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Veritabanı Sürücüsü yok!"
@@ -2793,11 +2092,191 @@ msgstr "İşlemler"
 #~ msgid "No email address for"
 #~ msgstr "E-posta adresi yok: "
 
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Dil"
+
+#, fuzzy
+#~ msgid "No."
+#~ msgstr "Hayır"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Vergiye tabi"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Notlar:"
+
+#~ msgid "Notes"
+#~ msgstr "Notlar:"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Nothing to delete!"
 
+#~ msgid "Nov"
+#~ msgstr "Kas"
+
+#~ msgid "November"
+#~ msgstr "Kasım"
+
+#~ msgid "Number"
+#~ msgstr "Numara"
+
+#~ msgid "Number Format"
+#~ msgstr "Rakam Formatı"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Sırada Numara yok!"
+
+#~ msgid "Obsolete"
+#~ msgstr "Eski"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Eski"
+
+#~ msgid "Oct"
+#~ msgstr "Eki"
+
+#~ msgid "October"
+#~ msgstr "Ekim"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Şifre"
+
+#~ msgid "On Hand"
+#~ msgstr "Stok:"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "Stok:"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Kullanıcı Ekle"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Borç İşlemleri"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle Veritabanı Yönetimi"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Sipariş"
+
+#~ msgid "Order Date"
+#~ msgstr "Sipariş Tarihi"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Sipariş Tarihi yok!"
+
+#~ msgid "Order Number"
+#~ msgstr "Sipariş No"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Sipariş Numarası yok!"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Sipariş"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Borç İşlemleri"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Alacak"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Borç"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "İşlemleri Listele"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Numara"
+
+#~ msgid "Paid"
+#~ msgstr "Ödendi"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Numara"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Parça"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Sipariş No"
+
+#~ msgid "Password"
+#~ msgstr "Şifre"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Password changed!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Password changed!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Tarih Formatı"
+
+#~ msgid "Payables"
+#~ msgstr "Borçlar"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Ödeme Tarihi yok"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Ödemeler"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Ödemeler"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Ödeme"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "Dönem:"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Veritabanı Yönetimi"
@@ -2808,17 +2287,365 @@ msgstr "İşlemler"
 #~ msgid "Port"
 #~ msgstr "Port"
 
+#, fuzzy
+#~ msgid "Post"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Tarih"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "İşlemleri Listele"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Tercihler kaydedildi!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Tercihleri Düzenle: "
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Fiyat"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Dataset updated!"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "Fiyat"
+
+#, fuzzy
+#~ msgid "Print"
+#~ msgstr "Yazıcı"
+
+#, fuzzy
+#~ msgid "Printer"
+#~ msgstr "Yazıcı"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Borç İşlemleri"
+
+#, fuzzy
+#~ msgid "Project"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Project Number"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Projects"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Satınalma Siparişi"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Satınalma Siparişi"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Satınalma Siparişi"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Satınalma Siparişi"
+
+#~ msgid "Qty"
+#~ msgstr "Adet"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Oran"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Raporla"
+
+#~ msgid "Record in"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "İşlemleri Listele"
+
+#, fuzzy
+#~ msgid "Remaining"
+#~ msgstr "Net Dönem Karı (Zararı)"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Report for"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Talep tarihi:"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Talep tarihi:"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Talep tarihi:"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Şifre"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Net Dönem Karı (Zararı)"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Hesap Ekle"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Yedekleme"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Raporlar"
+
+#, fuzzy
+#~ msgid "Salesperson"
+#~ msgstr "Satış Siparişleri"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Satınalma Siparişi"
+
+#~ msgid "Save"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Dosyaya Kaydet"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Kontak"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Kaydet"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Dosyaya Kaydet"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "Şablon Kur"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Fatura"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Fatura"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Stok"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Satınalma Siparişleri"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Raporla"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Satış Siparişleri"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "İşlemleri Listele"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Satınalma Siparişleri"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Aşağıdaki kalemlerden birini seç"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Fatura"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Açıklama"
+
+#~ msgid "Sell Price"
+#~ msgstr "Satış Fiyatı"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "E-postayla gönder"
 
+#~ msgid "Sep"
+#~ msgstr "Eyl"
+
+#~ msgid "September"
+#~ msgstr "Eylül"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Tercihler"
+
+#, fuzzy
+#~ msgid "Serial Number"
+#~ msgstr "Sipariş No"
+
+#~ msgid "Service"
+#~ msgstr "servis"
+
 #~ msgid "Services"
 #~ msgstr "Servisler"
 
+#~ msgid "Short"
+#~ msgstr "Kısa"
+
 #~ msgid "Signature"
 #~ msgstr "İmza"
+
+#~ msgid "Source"
+#~ msgstr "Kaynak"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Sipariş Tarihi"
+
+#, fuzzy
+#~ msgid "Startdate"
+#~ msgstr "Sipariş Tarihi"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Sipariş Tarihi"
+
+#, fuzzy
+#~ msgid "Statement Balance"
+#~ msgstr "Proforma Bilanço"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Düzen Sayfası"
+
+#~ msgid "Subtotal"
+#~ msgstr "Aratoplam"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Aratoplam"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Bu kaydedilecek hesap özeti mi"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Haz"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Vergi"
+
+#~ msgid "Tax"
+#~ msgstr "Vergi"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Vergi Hesapları"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Tarih Formatı"
+
+#~ msgid "Tax Included"
+#~ msgstr "Vergi Dahil"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Vergi Dahil"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Numara"
+
+#~ msgid "Taxable"
+#~ msgstr "Vergiye tabi"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "User saved!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Şablonlar"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Şablonlar"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Şablon Kullan"
+
+#~ msgid "Terms"
+#~ msgstr "Şartlar"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Fatura Numarasını silmek istediğinizden emin misiniz? Fiş: "
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Aşağıdaki Verisetleri kullanılmamaktadır ve silinebilir"
@@ -2826,12 +2653,43 @@ msgstr "İşlemler"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "The following Datasets need to be updated"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Alacak"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Borç"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Hesabı Düzenle"
+
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
 #~ "Mevcut fiş bilgileri için bu bir ön kontroldür. Bu aşamada hiçbirşey "
 #~ "oluşturulmaz ve silinemez"
+
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "Başlangıç"
+
+#~ msgid "To"
+#~ msgstr "Bitiş"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Miktar"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Tarih"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -2841,26 +2699,169 @@ msgstr "İşlemler"
 #~ "Gruba yeni kullanıcı eklemek için, giriş ismini değiştirin ve kaydedin. "
 #~ "Yeni kullanıcı yeni giriş altında aynı parametrelerle kaydedilecektir."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "Bitiş"
+
+#~ msgid "Total"
+#~ msgstr "Toplam"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Toplam"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "İşlemler"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "İşlem Tarihi yok!"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "İşlemler"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Fatura No"
+
+#~ msgid "Unit"
+#~ msgstr "Birim"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Ölçme Birimi"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Fatura No"
+
+#, fuzzy
+#~ msgid "Update"
+#~ msgstr "Dataset updated!"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Update Dataset"
 
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Kaydet"
+
+#~ msgid "User"
+#~ msgstr "Kullanıcı"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "İsim"
+
 #~ msgid "User deleted!"
 #~ msgstr "User deleted!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Kullanıcı"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Kullanıcı"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Kullanıcı"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Tarih Formatı"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Hesap Ekle"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Satıcı"
+
+#, fuzzy
+#~ msgid "Vendor Number"
+#~ msgstr "Sipariş No"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Raporla"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Satıcı"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Satıcı"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Versiyon"
+
+#~ msgid "Weight"
+#~ msgstr "Ağırlık"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Bu ne çeşit bir kalemdir?"
+
+#~ msgid "Yes"
+#~ msgstr "Evet"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "İsim girmediniz!"
 
 #~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr "Yerel ve uzak bağlantılar için bir host ve port girmek zorundasınız!"
+#~ msgstr ""
+#~ "Yerel ve uzak bağlantılar için bir host ve port girmek zorundasınız!"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Dil"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Mar"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Proforma Bilanço"
+
+#~ msgid "days"
+#~ msgstr "gün. "
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Borç"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Sil"
+
+#~ msgid "ea"
+#~ msgstr "ad"
 
 #~ msgid "is already a member!"
 #~ msgstr "üyedir!"
+
+#~ msgid "localhost"
+#~ msgstr "Yerelhost"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Proforma Bilanço"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Aratoplam"
 
 #~ msgid "successfully created!"
 #~ msgstr "başarıyla oluşturuldu!"

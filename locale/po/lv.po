@@ -29,87 +29,409 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Pievienot komercdarbību"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Atskaites"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Pievienot noliktavu"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Versija"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Nauda"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Kreditoru parādi"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "KP novecojums"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "KP transakcija"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Izdzēst Kontu"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Debitoru parādi"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "DP novecojums"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "DP transakcija"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Izdzēst Kontu"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Pievienot kontu"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Pievienot komplektāciju"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Pievienot komplektāciju"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Pievienot komercdarbību"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Pievienot komercdarbību"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Pievienot komplektāciju"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Kontaktpersona"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Pievienot darbinieku"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Pievienot GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Pievienot grupu"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Pievienot valodu"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Pievienot darbu/izmaksas"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Pievienot daļu"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Pieviento cenu grupu"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Pievienot lietotāju"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "Pievienot SIC"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Pievienot pakalpojumu"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Pievienot daļu"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Pievienot daļu"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Pievienot transakciju"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Pievienot noliktavu"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Aktīvs"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Komplektācijas"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Aktīvs"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Bilances pārskats"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Sākuma datums"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "Rēķina adrese"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "Rēķina adrese"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "Rēķina adrese"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "Rēķina adrese"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Bin saraksts"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Pievienot komercdarbību"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Piegāde"
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "Pievienot komercdarbību"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "DP transakcija"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "cena"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Nauda"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Mājas telefons"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Kontu plāns"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Čeks"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "GIFI saraksts"
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
 
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Kontaktpersona"
+
+#: sql/Pg-database.sql:2847
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Nodaļu saraksts"
+msgid "Contacts"
+msgstr "Kontaktpersona"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Piegādāt"
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Labot POS rēķinu"
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Debets"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Klients"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "Klienta vēsture"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Rēķins"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Debets"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "Noklusētās vērtības"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Apraksts"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Apraksts"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Apraksts"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Iegrāmatots!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "E-pasts"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Darbinieks"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Darbinieki"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Krājuma pārsūtīšana"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Komerdarbību saraksts"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Labot kontu"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Fakss"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Pievienot komplektāciju"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Virsgrāmata"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
 msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Preces un Pakalpojumi"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "Personāldaļa"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML šabloni"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Mājas telefons"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -117,329 +439,213 @@ msgstr ""
 msgid "Import"
 msgstr "Atskaites"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Aktīvs"
+msgid "Import Batch"
+msgstr "Atskaites"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Atskaites"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Maksājums"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Aktīvs"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "LaTeX šablons"
+msgid "Import GIFI"
+msgstr "Labot GIFI"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Iegrāmatots!"
+msgid "Import Inventory"
+msgstr "Krājumi"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Augšējais līmenis"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Peļņas vai zaudējuma aprēķins"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Komerdarbību saraksts"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Kontaktpersona"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Kvītis"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "Rēķina adrese"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Pievienot pakalpojumu"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Pievienot komplektāciju"
-
-#: sql/Pg-database.sql:3721
-msgid "time"
-msgstr ""
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Izdzēst Kontu"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Kvītis"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Darba orderis"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Debets"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Pievienot komercdarbību"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Atskaites"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Preces un Pakalpojumi"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Labot POS rēķinu"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Pievienot komercdarbību"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "Pārdevēja vēsture"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Pārdošanas"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Izvēles"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "Tāmes pieprasījums"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Pievienot darbu/izmaksas"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Atskaites"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Valodu saraksts"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Izlīdzināšana"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Pārdošanas orderi"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Pirkšanas orderi"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Iesaiņojumu saraksts"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "cena"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Pārdošana"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Pievienot valodu"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "Rēķina adrese"
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Rēķina numurs"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Pievienot GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "Pievienot SIC"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "E-pasts"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Sistēma"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Avansa maksājums"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Maksājumi"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "Rēķina adrese"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML šabloni"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Pārdevēja rēķins"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Klients"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Finanšu gada beigas"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Pārsūtīšana"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-#, fuzzy
-msgid "Lead"
-msgstr "Izlaides termiņš"
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Krājumi"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Krājumi"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "Krājums saglabāts"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Rēķins"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Rēķina numurs"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Valsts"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "LaTeX šablons"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Valoda"
+
+#: sql/Pg-database.sql:546
+#, fuzzy
+msgid "Lead"
+msgstr "Izlaides termiņš"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Komerdarbību saraksts"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "Komplektācijas"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Pievienot lietotāju"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "GIFI saraksts"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Valodu saraksts"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "SIC saraksts"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Debets"
+msgid "List Tax Forms"
+msgstr "Nodaļu saraksts"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Noliktavu saraksts"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Beigt darbu"
 
 #: sql/Pg-database.sql:801
 msgid "MSN"
 msgstr ""
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Labot GIFI"
+msgid "Mailing"
+msgstr "Rēķina adrese"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Avansa maksājums"
+msgid "Mr."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "Mar"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Ordera ieraksts"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Neapmaksātais"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Iesaiņojumu saraksts"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Cenu grupa"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Maksājums"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Maksājumi"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Izvēles saraksts"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Izvēles"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Uzņēmuma nosaukums"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Meklēt"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Pirkšanas orderis"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Pirkšanas orderi"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -447,137 +653,35 @@ msgstr "Avansa maksājums"
 msgid "Quotation"
 msgstr "Tāmes"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Tāmes"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "Tāmes pieprasījums"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "Tāmes pieprasījumu"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Kvīts"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Kvītis"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Saņemt"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Virsgrāmata"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Pārskats"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Meklēt"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Pievienot komplektāciju"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Valoda"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "KP transakcija"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Atskaites"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Debitoru parādi"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Pievienot daļu"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Mar"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Bilances pārskats"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Mājas telefons"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Tulkojumi"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Fakss"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Datuma formāts"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Mājas telefons"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Apraksts"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Kontu plāns"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "KP novecojums"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Pievienot daļu"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Beigt darbu"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Labot kontu"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Meklēt"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
+msgid "Reconciliation"
+msgstr "Izlīdzināšana"
 
 #: sql/Pg-database.sql:2919
 #, fuzzy
@@ -588,307 +692,71 @@ msgstr "KP transakcija"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Pārdošanas orderis"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "Personāldaļa"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Komercdarbības veids"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Krājumi"
+msgid "Reporting Units"
+msgstr "Atskaites"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Pieviento cenu grupu"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Krājumi"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Apraksts"
+msgid "Reports"
+msgstr "Atskaites"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "Apraksts"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "Tāmes pieprasījumu"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Rēķins"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Kvīts"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Algu atlaides"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "SIC saraksts"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "Rēķina adrese"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Krājuma pārsūtīšana"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Kreditoru parādi"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Pārdošanas rēķins"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "DP novecojums"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Ordera ieraksts"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "Klienta vēsture"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Cenu grupas"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Saņemt"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Komplektācijas krājumā"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Kontaktpersona"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Cenu grupa"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Uzņēmuma nosaukums"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Cenu grupas"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Uzņēmuma nosaukums"
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Tāmes"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Kontu bilance"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Pievienot grupu"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Meklēt"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Noliktavu saraksts"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Avansa maksājums"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Darbinieki"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Pievienot komplektāciju"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Izdzēst Kontu"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Izdzēst Kontu"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Pievienot kontu"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Čeks"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Neapmaksātais"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Rēķins"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Kontaktpersona"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Valsts"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Noliktavas"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Darbinieks"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Pirkšanas orderis"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Pievienot darbinieku"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Pārdevējs"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "Noklusētās vērtības"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Komerdarbību saraksts"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Izvēles saraksts"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Meklēt"
+msgid "Reverse AR Overpay"
+msgstr "Kvītis"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Avansa maksājums"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Avansa maksājums"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Meklēt"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Pārdošana"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Pārdošanas"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Pārdošanas rēķins"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Pārdošanas orderis"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Pārdošanas orderi"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -896,2215 +764,447 @@ msgstr "Avansa maksājums"
 msgid "Search"
 msgstr "Meklēt"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Komplektācijas"
+msgid "Search Assets"
+msgstr "Meklēt"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Bin saraksts"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Cenu grupas"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Pievienot transakciju"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Cenu grupas"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Meklēt"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Uzņēmuma nosaukums"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Izvēles"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "Rēķina adrese"
+msgid "Sessions"
+msgstr "Versija"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Piegādāt"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Piegāde"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Peļņas vai zaudējuma aprēķins"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Krājums saglabāts"
-
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Pārskats"
+
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Komplektācijas krājumā"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Sistēma"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Datuma formāts"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Sākuma datums"
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr ""
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Apraksts"
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Augšējais līmenis"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Transakcija iegrāmatota!"
 
-#~ msgid "Dataset"
-#~ msgstr "Datukopa"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Pārsūtīšana"
 
-#~ msgid "Transactions"
-#~ msgstr "Transakcijas"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Tulkojumi"
 
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Maksājums iegrāmatots!"
-
-#~ msgid "Source"
-#~ msgstr "Dokuments"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Lietotājs saglabāts!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Kvītis"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "periodam"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "KP transakcijas"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "DP Neapmaksātie"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Pievienot SIC"
-
-#~ msgid "Paid"
-#~ msgstr "Apmaksāts"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "No"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Pārdevēja numurs"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Rēķina datums"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Transakcija iegrāmatota!"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Datuma formāts"
-
-#~ msgid "Equity"
-#~ msgstr "Pašu kapitāls"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Atlasīt visu"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Summa"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Izveidot datu kopu"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Piegādes datums"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Ierakstīt"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Finanšu gada beigas iegrāmatotas"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Kvītis"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Kontaktpersona"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adrese"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Nosaukums"
-
-#~ msgid "On Hand"
-#~ msgstr "Pieejams"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "KP transakcija"
-
-#~ msgid "Login"
-#~ msgstr "Pieteikties"
-
-#~ msgid "Sell Price"
-#~ msgstr "Pārdošanas cena"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Rēķins"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Audita kontrole"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Versija"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Pievienot pārdevēju"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Maksājumi"
-
-#~ msgid "Expense"
-#~ msgstr "Izdevumi"
-
-#~ msgid "Currency"
-#~ msgstr "Valūta"
-
-#~ msgid "Liability"
-#~ msgstr "Saistības"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "Uzkrāšana"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Temats"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Sākuma atlikums"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Finanšu gada beigas"
-
-#, fuzzy
-#~ msgid "Allocated"
-#~ msgstr "Kabatas nauda"
-
-#~ msgid "Startdate"
-#~ msgstr "Sākuma datums"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Nodokļu maksātāja kods"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Konta tips"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Vienība"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "Noklusētās vērtības"
-
-#~ msgid "Message"
-#~ msgstr "Paziņojums"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Pirkšanas orderis"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Klienta numurs"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Kontaktpersona"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Tāmes pieprasījums"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Pievienot komplektāciju"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Labot klientu"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Pielikums"
-
-#~ msgid "as at"
-#~ msgstr "uz"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Labot lietotāju"
-
-#~ msgid "Income"
-#~ msgstr "Ienākums"
-
-#~ msgid "Number"
-#~ msgstr "Numurs"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Kontu saraksts"
-
-#~ msgid "Delete"
-#~ msgstr "Dzēst"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Parole"
-
-#~ msgid "Markup"
-#~ msgstr "Uzcenojums"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Debets"
-
-#~ msgid "Post"
-#~ msgstr "Iegrāmatot"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Datuma formāts"
-
-#~ msgid "Make"
-#~ msgstr "Izveidot"
-
-#~ msgid "Till"
-#~ msgstr "līdz"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Aktīvs"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Valsts"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Rezerves kopija"
-
-#~ msgid "Receivables"
-#~ msgstr "Ienākošie maksājumi"
-
-#~ msgid "System Defaults"
-#~ msgstr "Sistēmas noklusētās vērtības"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Pašreizējs"
-
-#~ msgid "Detail"
-#~ msgstr "Sīks apraksts"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Rēķina numurs"
-
-#~ msgid "Backup"
-#~ msgstr "Rezerves kopija"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Saglabāt kā jaunu"
-
-#~ msgid "Database"
-#~ msgstr "Datubāze"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Pirkšanas orderis"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Kontu saraksts"
-
-#~ msgid "Code"
-#~ msgstr "Kods"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Aizvērt ierakstus līdz"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Kontaktpersona"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Stila lapa"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Prece"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Labot darbinieku"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Debets"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Numurs"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Lietotājs"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Ienākums"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "E-pasts"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Konts"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Piegādāt caur"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Orderis"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Kredīts"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Atjaunināts"
-
-#~ msgid "Taxable"
-#~ msgstr "Apliekams ar nodokli"
-
-#~ msgid "Continue"
-#~ msgstr "Turpināt"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Nosūtīšanas vietas"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Atlasīt visu"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Sākuma datums"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Tāme"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Izdzēst Kontu"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Lietotājs"
-
-#~ msgid "COGS"
-#~ msgstr "Pašizmaksa"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Valsts"
-
-#, fuzzy
-#~ msgid "Last Cost"
-#~ msgstr "Izmaksas"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Pārskats"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Kopā"
-
-#~ msgid "Serial Number"
-#~ msgstr "Seriālais numurs"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Datums"
-
-#~ msgid "Account"
-#~ msgstr "Konts"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Izlīdzināšanas atskaite"
-
-#~ msgid "Memo"
-#~ msgstr "Memorands"
-
-#~ msgid "Active"
-#~ msgstr "Aktīvs"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Sākuma datums"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Konta tips"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Atlaides"
-
-#~ msgid "Phone"
-#~ msgstr "Tel."
-
-#~ msgid "Yes"
-#~ msgstr "Jā"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "Cena"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "Uzkrāšana"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Iegrāmatot kā jaunu"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Debets"
-
-#~ msgid "Tax Included"
-#~ msgstr "Kopā ar nodokļiem"
-
-#~ msgid "Drawing"
-#~ msgstr "Čeku izrakstīšana"
-
-#~ msgid "List Price"
-#~ msgstr "Cenrāža cena"
-
-#~ msgid "No"
-#~ msgstr "Nē"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Kopsumma"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Ienākums"
-
-#~ msgid "Qty"
-#~ msgstr "Skaits"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Atjaunināts"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Komercdarbība"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Aktivizēt audita atzīmes"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Izvēles"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Sākuma datums"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Konta numurs"
-
-#~ msgid "Project Number"
-#~ msgstr "Projekta numurs"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Iekļaut valūtas kursu atšķirības"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Datums"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Lietotājs"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Rezerves kopija"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Datuma formāts"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "Kods"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Izdzēst datukopu"
-
-#~ msgid "City"
-#~ msgstr "Pilsēta"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Kontu bilance"
 
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Datums"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Atlaides"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Labot lietotāju"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Piekļuves kontrole"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Nodokļu konti"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "Kods"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Piesaistīt kontus"
-
-#~ msgid "All"
-#~ msgstr "Visi"
-
-#~ msgid "From"
-#~ msgstr "No"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Atskaite par"
-
-#~ msgid "Remaining"
-#~ msgstr "Atlikums"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Darbinieka vārds"
-
-#~ msgid "Model"
-#~ msgstr "Modelis"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Aktīvs"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Kopēt uz kontu plānu"
-
-#~ msgid "Method"
-#~ msgstr "Metode"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Saglabāt kā jaunu"
-
-#~ msgid "Reference"
-#~ msgstr "Norāde"
-
-#~ msgid "Contra"
-#~ msgstr "Kontrārais konts"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Sīks apraksts"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Nesamaksātā summa"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Izvēles saglabātas!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Nodaļa"
-
-#~ msgid "Debit"
-#~ msgstr "Debets"
-
-#~ msgid "List Transactions"
-#~ msgstr "Transakciju saraksts"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Komercdarbība"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Konta numurs"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Kredīta limits"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "No"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Čeku inventūra"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Komercdarbība"
-
-#~ msgid "Cost Center"
-#~ msgstr "Galvenās izmaksas"
-
-#~ msgid "Bin"
-#~ msgstr "Bin"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Tāme"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Pieprasīja"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Cenu grupa"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "Nosūtīt atskaiti pa e-pastu uz "
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Atskaite par"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Komercdarbība"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Bilances atskaite"
-
-#~ msgid "Report for"
-#~ msgstr "Atskaite par"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Valsts"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Atlaides"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Rēķina datums"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Apliekams ar nodokli"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Orderis"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Krājums saglabāts"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Iekļaut atskaitē"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Aktīvs"
-
-#~ msgid "Amount"
-#~ msgstr "Summa"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Rēķina datums"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Iegrāmatot kā jaunu"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Apmaksāts"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Atskaite par"
-
-#~ msgid "Projects"
-#~ msgstr "Projekti"
-
-#~ msgid "Difference"
-#~ msgstr "Starpība"
-
-#~ msgid "Update"
-#~ msgstr "Atjaunināt"
-
-#~ msgid "Due Date"
-#~ msgstr "Apmaksas termiņš"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Labot lietotāju"
-
-#~ msgid "Database Host"
-#~ msgstr "Datubāzes serveris"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Klienta numurs"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Labot kontu"
-
-#~ msgid "Warehouse"
-#~ msgstr "Noliktava"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Pielikums"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Izdevumi/Aktīvi"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Uzņēmuma nosaukums"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Apraksts"
-
-#~ msgid "Password"
-#~ msgstr "Parole"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Uzņēmums"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "Nodokļu maksātāja kods"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Saglabāt"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Komercdarbības veids"
 
-#~ msgid "Edit User"
-#~ msgstr "Labot lietotāju"
-
-#~ msgid "FX"
-#~ msgstr "FX"
-
-#~ msgid "Account Number"
-#~ msgstr "Konta numurs"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Labot pārdevēju"
-
-#~ msgid "User"
-#~ msgstr "Lietotājs"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Atlaides"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "KP Neapmaksātie"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Krājums saglabāts"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Datuma formāts"
-
-#~ msgid "Printer"
-#~ msgstr "Printeris"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Atjaunināts"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Iesaiņojumu saraksti"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "uz"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Date Paid"
-#~ msgstr "Maksājuma datums"
-
-#~ msgid "Amount Due"
-#~ msgstr "Nesamaksātā summa"
-
-#~ msgid "Credit"
-#~ msgstr "Kredīts"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Valsts"
-
-#~ msgid "Short"
-#~ msgstr "Aizdošana"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Lietotājs"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Kontaktpersona"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Pārdevēja numurs"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Finanšu gada beigas"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "POS rēķins"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "Mai"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Pirkšanas orderis"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Pievienot atlaidi"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Datuma formāts"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Izdzēst datukopu"
-
-#~ msgid "Open"
-#~ msgstr "Atvērts"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Kredīts"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Avansa maksājums"
-
-#, fuzzy
-#~ msgid "Average Cost"
-#~ msgstr "Izmaksas"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Transakcijas"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Kontu saraksts"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Piezīmes"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Atlasīt"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "Pieejams"
-
-#~ msgid "Company"
-#~ msgstr "Uzņēmums"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Valūtas maiņas kurss"
-
-#~ msgid "Salesperson"
-#~ msgstr "Pārdevējs"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Pārdevēja numurs"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Iekļaut nolaižamo izvēlni"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Kredīts"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "Nodokļu maksātāja kods / SSN"
-
-#~ msgid "Include in Report"
-#~ msgstr "Iekļaut atskaitē"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Bilance"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Izpildīt transakciju atcelšanu visos datumos"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Bilances atskaite"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Atskaites"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Pieprasīja"
-
-#~ msgid "Number Format"
-#~ msgstr "Skaitļa formāts"
-
-#~ msgid "Date"
-#~ msgstr "Datums"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Atskaites"
-
-#~ msgid "Line Total"
-#~ msgstr "Kopsumma"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Komercdarbība"
-
-#~ msgid "Address"
-#~ msgstr "Adrese"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Izveidot datu kopu"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Uzņēmuma nosaukums"
-
-#~ msgid "Warning!"
-#~ msgstr "Brīdinājums!"
-
-#~ msgid "Manager"
-#~ msgstr "Vadītājs"
-
-#~ msgid "Record in"
-#~ msgstr "Ierakstīt"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Virsgrāmata"
-
-#~ msgid "Image"
-#~ msgstr "Attēls"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Pārdevēja numurs"
-
-#~ msgid "days"
-#~ msgstr "dienas"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Atskaites"
-
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Svara mērvienība"
+msgid "Use AR Overpayment"
+msgstr "Avansa maksājums"
 
-#~ msgid "Project"
-#~ msgstr "Projekts"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Valoda"
-
-#~ msgid "Name"
-#~ msgstr "Nosaukums"
-
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Datuma formāts"
+msgid "Use Overpayment"
+msgstr "Avansa maksājums"
 
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Konta numurs"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Pārdevējs"
 
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Atlaides"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "Pārdevēja vēsture"
 
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Labot kontu"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Pārdevēja rēķins"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Čeks"
-
-#~ msgid "Screen"
-#~ msgstr "Ekrāns"
+msgid "Vouchers"
+msgstr "Izdzēst Kontu"
 
-#~ msgid "Obsolete"
-#~ msgstr "Novecojis"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Noliktavas"
 
-#~ msgid "Invoice Date"
-#~ msgstr "Rēķina datums"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Piesaistīt kontus"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Transakcija iegrāmatota!"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Darba orderis"
 
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Kontu saraksts"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Noklusētās vērtības"
+msgid "Year End"
+msgstr "Finanšu gada beigas"
 
-#~ msgid "Partnumber"
-#~ msgstr "Daļas numurs"
-
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Bilances atskaite"
+msgid "depreciation"
+msgstr "Apraksts"
 
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Vai šis ir summārais konts ierakstam"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "balance"
-#~ msgstr "Bilance"
+msgid "import"
+msgstr "Atskaites"
 
-#, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Orderis"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#~ msgid "Company Name"
-#~ msgstr "Uzņēmuma nosaukums"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#~ msgid "To"
-#~ msgstr "uz"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Rēķins"
+msgid "production"
+msgstr "Algu atlaides"
 
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Daļas numurs"
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Neapliekams ar nodokļiem"
+#~ msgid " Date missing!"
+#~ msgstr "Nav norādīts datums!"
 
 #, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Darbinieka vārds"
-
-#~ msgid "Closed"
-#~ msgstr "Aizvērts"
+#~ msgid " missing!"
+#~ msgstr "Nav norādīts kods"
 
 #, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Iegrāmatot kā jaunu"
+#~ msgid "# Invoices"
+#~ msgstr "Rēķini"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Labot darbinieku"
 
-#~ msgid "Total"
-#~ msgstr "Pavisam Kopā"
-
-#~ msgid "Notes"
-#~ msgstr "Piezīmes"
+#, fuzzy
+#~ msgid "%1 Business"
+#~ msgstr "Komercdarbība"
 
 #, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Klienta vēsture"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Pievienot naudas transakciju"
 
 #, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Kontu saraksts"
+#~ msgid "%1 GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Pielikums"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Pievienot virsgrāmatas transakciju"
 
 #, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Pārdošanas rēķini"
-
-#~ msgid "Compare to"
-#~ msgstr "Salīdzināt ar"
+#~ msgid "%1 Language"
+#~ msgstr "Valoda"
 
 #, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Izlīdzināšanas atskaite"
+#~ msgid "%1 Number"
+#~ msgstr "Numurs"
 
 #, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Datums"
-
-#~ msgid "Current"
-#~ msgstr "Pašreizējs"
-
-#~ msgid "Country"
-#~ msgstr "Valsts"
+#~ msgid "%1 SIC"
+#~ msgstr "Pievienot SIC"
 
 #, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Datuma formāts"
+#~ msgid "%1 Warehouse"
+#~ msgstr "Noliktava"
 
 #, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Rezerves kopija"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Nav tāda klienta!"
 
 #, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Cenu grupa"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Nav tāda pārdevēja!"
+
+#~ msgid "A"
+#~ msgstr "A"
 
 #, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "decimāldaļa"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Maksājumi"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Rēķins"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Konta numurs"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Uzņēmums"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Ieraksti ir atvērti"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Projekta transakcijas"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Darbinieki"
-
-#~ msgid "Group"
-#~ msgstr "Grupa"
-
-#~ msgid "Subtotal"
-#~ msgstr "Kopā"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Šablonu izveidošana"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Saglabāt kā jaunu"
-
-#~ msgid "Unit"
-#~ msgstr "Vienība"
-
-#~ msgid "No."
-#~ msgstr "Nr."
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Tāme"
-
-#~ msgid "Summary"
-#~ msgstr "Kopējais"
-
-#~ msgid "Print"
-#~ msgstr "Drukāt"
-
-#~ msgid "E-mail"
-#~ msgstr "E-pasts"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Kopā"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "Grupa"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Avansa maksājums"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Tāme"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Maksājumi"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Nodokļu maksātāja kods / SSN"
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Saņemšanas datums"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
+#~ msgid "AP Invoices"
 #~ msgstr "POS rēķins"
 
-#~ msgid "Weight"
-#~ msgstr "Svars"
-
-#~ msgid "Tax"
-#~ msgstr "Nodokļi"
-
-#~ msgid "Cleared"
-#~ msgstr "Apmaksāts"
-
-#~ msgid "Order Number"
-#~ msgstr "Ordera Nr."
-
-#~ msgid "Customer Number"
-#~ msgstr "Klienta numurs"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Audita kontrole"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Valūtas maiņas kurss"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Likme"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "DP Neapmaksātie"
-
-#~ msgid "Edit"
-#~ msgstr "Labot"
-
-#~ msgid "Copies"
-#~ msgstr "Kopijas"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Pievienot lietotāju"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Meklēt"
-
-#~ msgid "Save"
-#~ msgstr "Saglabāt"
-
-#~ msgid "State/Province"
-#~ msgstr "Štats/Province"
-
-#~ msgid "Heading"
-#~ msgstr "Virsraksts"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Jauni šabloni"
+#~ msgid "AP Outstanding"
+#~ msgstr "KP Neapmaksātie"
 
 #, fuzzy
 #~ msgid "AP account"
 #~ msgstr "Konts"
 
 #, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Krājums saglabāts"
+#~ msgid "AR Invoices"
+#~ msgstr "Rēķins"
 
-#, fuzzy
-#~ msgid "Clocked"
-#~ msgstr "slēgts!"
+#~ msgid "AR Outstanding"
+#~ msgstr "DP Neapmaksātie"
 
-#~ msgid "Discount"
-#~ msgstr "Atlaide"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Pielikums"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "Apstiprināt!"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Datuma formāts"
-
-#~ msgid "Balance"
-#~ msgstr "Bilance"
-
-#~ msgid "Ship via"
-#~ msgstr "Piegādāt caur"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Apraksts"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Neapliekams ar nodokļiem"
-
-#~ msgid "Department"
-#~ msgstr "Nodaļa"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Pieprasīja"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Nodokļu konti"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Apliekams ar nodokli"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Parole"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Atskaites"
-
-#~ msgid "Standard"
-#~ msgstr "Standarts"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Labot izvēles"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Ordera datums"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Atskaites"
+#~ msgid "AR Transactions"
+#~ msgstr "DP transakcijas"
 
 #, fuzzy
 #~ msgid "AR account"
 #~ msgstr "Konts"
 
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Projekts"
+#~ msgid "About"
+#~ msgstr "Par"
+
+#~ msgid "Above"
+#~ msgstr "Iepriekš"
+
+#~ msgid "Account"
+#~ msgstr "Konts"
 
 #, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Piesaistīt kontus"
-
-#~ msgid "Profit Center"
-#~ msgstr "Galvenie ienākumi"
-
-#~ msgid "ROP"
-#~ msgstr "Pasūtīšanas limits"
+#~ msgid "Account %1 not found"
+#~ msgstr "Konts neeksistē"
 
 #, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Kredīts"
-
-#~ msgid "Payables"
-#~ msgstr "Kreditoru parādi"
+#~ msgid "Account %1 not found."
+#~ msgstr "Konts"
 
 #, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "Derīgs līdz"
+#~ msgid "Account Description"
+#~ msgstr "Apraksts"
 
 #, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Apmaksāts"
+#~ msgid "Account Label"
+#~ msgstr "Konta numurs"
 
 #, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Bilance"
+#~ msgid "Account Name"
+#~ msgstr "Konta numurs"
 
 #, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Bilance"
+#~ msgid "Account No."
+#~ msgstr "Konts"
+
+#~ msgid "Account Number"
+#~ msgstr "Konta numurs"
 
 #, fuzzy
-#~ msgid "Content"
-#~ msgstr "Kontaktpersona"
+#~ msgid "Account Number End"
+#~ msgstr "Konta numurs"
 
 #, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Valsts"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Ienākums"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Maksājums"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Izlīdzināšanas atskaite"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Labot kontu"
-
-#~ msgid "Microfiche"
-#~ msgstr "Mikrofilma"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Pārdevēja numurs"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Debets"
-
-#~ msgid "Add Customer"
-#~ msgstr "Pievienot klientu"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Labot lietotāju"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Noklusētās vērtības"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Temats"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Nomainīt administratora paroli"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Vadītājs"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Maksājums"
-
-#~ msgid "Exch"
-#~ msgstr "Kurss"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Nodaļu saraksts"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Cenu grupa"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Labot darbinieku"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Rēķina numurs"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Izlīdzināšana"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Summa"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Datums"
-
-#, fuzzy
-#~ msgid "Item"
-#~ msgstr "Vienības"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Nav norādīts maksājuma datums"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Bilances atskaite"
-
-#~ msgid "Accounts"
-#~ msgstr "Konti"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Avansa maksājums"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Pievienot valūtas maiņas kursu"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Tāme"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Finanšu gada beigas"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Iekšējās piezīmes"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Nesadalītā peļņa"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Valodas nav definētas"
-
-#~ msgid "RFQ Number"
-#~ msgstr "Tāmes pieprasījuma numurs"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Projekta numurs"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Mainīt paroli!"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Uzņēmuma nosaukums"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Uzņēmuma nosaukums"
-
-#~ msgid "Save as new"
-#~ msgstr "Saglabāt kā jaunu"
+#~ msgid "Account Number Start"
+#~ msgstr "Konta numurs"
 
 #~ msgid "Account Number missing!"
 #~ msgstr "Nav norādīts konta numurs!"
 
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Konta tips"
+
 #~ msgid "Account Type missing!"
 #~ msgstr "Nav norādīts konta tips!"
 
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr "Konta nevar piesaistīt vairāk kā vienam DP, KP vai IC"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "kontu nevar nomainīt uz jebkuru citu konta tipu"
-
-#~ msgid "Account saved!"
-#~ msgstr "Konts saglabāts!"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Kontu nevar saglabāt!"
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "Konta numurs"
 
 #~ msgid "Account does not exist!"
 #~ msgstr "Konts neeksistē"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
+#~ msgid "Account numbers"
+#~ msgstr "Konta numurs"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Kopēt uz kontu plānu"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "Nav norādīts GIFI!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI saglabāts!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI izdzēsts"
+#~ msgid "Account saved!"
+#~ msgstr "Konts saglabāts!"
 
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Atlaide"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Komercdarbība"
-
-#~ msgid "Description missing!"
-#~ msgstr "Nav norādīts apraksts"
-
-#~ msgid "Business saved!"
-#~ msgstr "Komercdarbība saglabāta"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Komercdarbība izdzēsta"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "Standarta industrijas kodi"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Pievienot SIC"
-
-#~ msgid "Code missing!"
-#~ msgstr "Nav norādīts kods"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC saglabāts"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC izdzēsts"
-
-#~ msgid "Languages"
-#~ msgstr "Valodas"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Valoda"
-
-#~ msgid "Language saved!"
-#~ msgstr "Valoda saglabāta"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Labot valodu"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Valoda izdzēsta"
-
-#~ msgid "Edit Template"
-#~ msgstr "Labot šablonu"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTeX šablons"
-
-#~ msgid "Template saved!"
-#~ msgstr "Šablons saglabāts!"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "Šablons saglabāts!"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Maksājuma uzdevumu nevar saglabāt!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Nevar saglabāt izvēles!"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Noliktava"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Noliktava saglabāta"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Noliktava izdzēsta"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid "About"
-#~ msgstr "Par"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Labot pārdošanas rēķinu"
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Labot pārdevēja rēķinu"
-
-#~ msgid "done"
-#~ msgstr "izdarīts"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Virsgrāmatas transakcija"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Nepareiza E-pasta adrese!"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Pašreizējie ienākumi"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Nodaļa"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Projekta numurs"
-
-#~ msgid "N/A"
-#~ msgstr "Nav"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Pievienot preču rēķinu"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Pievienot pārdevēja rēķinu"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Labot pārdevēja rēķinu"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Janvārī"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Kods"
-
-#~ msgid "Post as new"
-#~ msgstr "Iegrāmatot kā jaunu"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Iegrāmatot kā jaunu"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Iegrāmatot kā jaunu"
-
-#~ msgid "ea"
-#~ msgstr "gb"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Nav norādīts rēķina datums!"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Pārdevējs nav norādīts!"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Nevar iegrāmatot rēķinu par slēgtu periodu!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Nav norādīts valūtas maiņas kurss!"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Nevar iegrāmatot maksājumu par slēgtu periodu!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Nav norādīts valūtas maiņas kurss maksājumā!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Nevar iegrāmatot rēķinu!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Konts neeksistē"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Konts neeksistē"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Konts neeksistē"
-
-#~ msgid "Stock"
-#~ msgstr "Krājums"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Darbs/izmaksas"
-
-#~ msgid "Updated"
-#~ msgstr "Atjaunināts"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Vēsture"
-
-#, fuzzy
-#~ msgid "SO"
-#~ msgstr "O"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "POS"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Kods"
-
-#~ msgid "Curr"
-#~ msgstr "Val."
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Pārdevēja numurs"
-
-#~ msgid "Break"
-#~ msgstr "Pārtraukums"
-
-#~ msgid "BOM"
-#~ msgstr "Materiālu uzskaite"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Individual Items"
-#~ msgstr "Individuāli ieraksti"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Nav tāda pārdevēja!"
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Nav tāda klienta!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Atlasīt vienu no sekojošiem nosaukumiem"
-
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo preci!"
-
-#~ msgid "Item deleted!"
-#~ msgstr "Vienība izdzēsts!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Vienību nevar izdzēst!"
-
-#~ msgid "Add"
-#~ msgstr "Pievienot"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "Skaits pārsniedz noliktavā esošo priekšmetu skaitu"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Komplektācijas papildinātas!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Nevar papildināt komplektāciju!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Tāmes numurs"
-
-#, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Drukāt"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "Nekas nav iezīmēts!"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst atzīmētos ierakstus rindā"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Izdzēšu atzīmētos ierakstus no rindas ..."
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Izdzēst printera rindas failus"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Nevar izdzēst failus"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Atzīmētie ieraksti izdrukāti"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Klients"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Pārdevējs"
+#~ msgid "Account:"
+#~ msgstr "Konts"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Konts"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Rēķina numurs"
+#~ msgid "Accounting"
+#~ msgstr "Kontēšana"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Kontēšanas izvēlne"
+
+#~ msgid "Accounts"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Ordera Nr."
+#~ msgid "Accounts From"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Tāmes numurs"
+#~ msgid "Accounts To"
+#~ msgstr "Konti"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "No"
-
-#~ msgid "Spoolfile"
-#~ msgstr "Printera rindas fails"
-
-#~ msgid "Remove"
-#~ msgstr "Izdzēst"
+#~ msgid "Accrual"
+#~ msgstr "Uzkrāšana"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Numurs"
+#~ msgid "Accrual Basis:"
+#~ msgstr "Uzkrāšana"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Nav tāda projekta!"
+#~ msgid "Activate Audit trail"
+#~ msgstr "Aktivizēt audita atzīmes"
 
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Atlasīt vienu no sekojošiem projektiem"
+#~ msgid "Activate Audit trails"
+#~ msgstr "Aktivizēt audita atzīmes"
 
-#, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Datums"
-
-#, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Paziņojums"
-
-#~ msgid "sent"
-#~ msgstr "nosūtīts"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Izvēlēties postscript vai PDF!"
-
-#~ msgid "Printed"
-#~ msgstr "Izdrukāts"
-
-#~ msgid "Recd"
-#~ msgstr "Saņemts"
-
-#~ msgid "Extended"
-#~ msgstr "Kopā"
-
-#~ msgid "Serial No."
-#~ msgstr "Seriālais Nr."
-
-#~ msgid "SKU"
-#~ msgstr "SKU"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Nav tādas vienības!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Kāda veida vienība tā ir?"
-
-#~ msgid "Service"
-#~ msgstr "Pakalpojums"
+#~ msgid "Active"
+#~ msgstr "Aktīvs"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Rindā nav norādīts numurs"
+#~ msgid "Active On"
+#~ msgstr "Aktīvs"
+
+#~ msgid "Add"
+#~ msgstr "Pievienot"
+
+#~ msgid "Add Account"
+#~ msgstr "Pievienot kontu"
+
+#, fuzzy
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Pievienot pārdevēja rēķinu"
+
+#~ msgid "Add Customer"
+#~ msgstr "Pievienot klientu"
+
+#, fuzzy
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Pievienot preču rēķinu"
+
+#~ msgid "Add Department"
+#~ msgstr "Pievienot nodaļu"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "Kredīts"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "Pievienot POS rēķinu"
+
+#~ msgid "Add Project"
+#~ msgstr "Pievienot projektu"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Pievienot pirkuma orderi"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Pievienot preču orderi"
+#~ msgid "Add Quotation"
+#~ msgstr "Pievienot tāmi"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Pievienot tāmes pieprasījumu"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Pievienot tāmi"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Pievienot preču rēķinu"
 
-#~ msgid "In-line"
-#~ msgstr "Iekļauts"
+#~ msgid "Add Sales Order"
+#~ msgstr "Pievienot preču orderi"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Nav norādīts datums!"
+#~ msgid "Add Unit"
+#~ msgstr "Vienība"
 
-#~ msgid "Ship to"
-#~ msgstr "Piegādes adrese"
+#~ msgid "Add Vendor"
+#~ msgstr "Pievienot pārdevēju"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Pievienot pārdevēja rēķinu"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3119,710 +1219,27 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgstr "Pievienot komercdarbību"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Pievienot pārdevēja rēķinu"
-
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Pievienot preču rēķinu"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Vairumtirgotāja atlaide"
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Pievienot atlaidi"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Rēķinu nevar izdzēst!"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Pievienot valūtas maiņas kursu"
 
-#~ msgid "Customer missing!"
-#~ msgstr "Nav norādīts klients!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Labot projektu"
-
-#~ msgid "Add Project"
-#~ msgstr "Pievienot projektu"
-
-#~ msgid "Orphaned"
-#~ msgstr "Bez atbilstošā pāra"
-
-#~ msgid "Groups"
-#~ msgstr "Grupas"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Cenu grupas"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Tulkojumi saglabāti"
-
-#~ msgid "Group missing!"
-#~ msgstr "Grupa nav norādīta!"
-
-#~ msgid "Group saved!"
-#~ msgstr "Grupa saglabāta!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Cenu grupa nav norādīta"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Cenu grupa saglabāta"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Tulkojums izdzēsts"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Grupa izdzēsta!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Cenu grupa izdzēsta"
-
-#~ msgid "Description Translations"
-#~ msgstr "Apraksta tulkojumi"
-
-#~ msgid "Group Translations"
-#~ msgstr "Grupu transakcijas"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "Projekta apraksta tulkojumi"
-
-#~ msgid "Translation"
-#~ msgstr "Tulkojums"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Valodas nav definētas"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "Labot tulkojumu aprakstus"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Nav tāda klienta!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Nav tāda pārdevēja!"
+#~ msgid "Address"
+#~ msgstr "Adrese"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Šablons saglabāts!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Nav norādīts apmaksas termiņš!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Nevar iegrāmatot transakciju par slēgtu periodu!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Transakcija iegrāmatota!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Nevar iegrāmatot transakciju!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "DP transakcijas"
+#~ msgid "Addresses"
+#~ msgstr "Adrese"
 
 #, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Projekta numurs"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Rēķini"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Pievienot naudas transakciju"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Pievienot virsgrāmatas transakciju"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Konts"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Nevar iegrāmatot transakciju!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Nav norādīts transakcijas datums!"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Transakcija bez bilances"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Labot pirkuma orderi"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Labot pārdošanas orderi"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Labot tāmes pieprasījumu"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Labot tāmi"
-
-#~ msgid "Terms"
-#~ msgstr "Noteikumi: termiņš"
-
-#~ msgid "Order Date"
-#~ msgstr "Ordera datums"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Tāmes datums"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Nav norādīts ordera datums!"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Nav norādīts tāmes datums"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Nav norādīts kods"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Maksājuma uzdevumu nevar saglabāt!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "Nevar saglabāt tāmi"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst ordera numuru"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst tāmes numuru"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Orderis izdzēsts"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Orderi nevar izdzēst!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Tāme izdzēsta"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "Tāmi nevar izdzēst!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Nav norādīts ordera numurs!"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Nav norādīts tāmes numurs"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Piegādāt preces"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Nosūtīšanas datums"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Saņemt preces"
-
-#~ msgid "Done"
-#~ msgstr "Izdarīts"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Nav norādīts nosūtīšanas datums"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Nav norādīts saņemšanas datums"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Nekas nav ievadīts"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "Krājums saglabāts"
 
-#~ msgid "Could not save!"
-#~ msgstr "Nevarēja saglabāt"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Nav nekā pārsūtīšanai"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Krājuma pārsūtīšana"
-
-#~ msgid "Transfer to"
-#~ msgstr "Pārsūtīt uz"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Krājums pārsūtīts"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "Nevarēja pārsūtīt krājumu"
-
 #, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Aizvērts"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Aizvērts"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Pievienot POS rēķinu"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Labot POS rēķinu"
-
-#~ msgid "Change"
-#~ msgstr "Izmainīt"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Atvērts"
-
-#~ msgid "Posted!"
-#~ msgstr "Iegrāmatots!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Atlaide"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Kots izdzēsts!"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Konta numurs"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Nesamaksātā summa"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Novecojis"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Kopā ar nodokļiem"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Bilances atskaite"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Bilance"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Bilance"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Kontu bilance"
-
-#~ msgid "Business Number"
-#~ msgstr "Reģistrācijas numurs"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Labot valodu"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Šabloni"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Nodaļas"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Izdzēst Kontu"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Ienākumi no valūtas maiņas"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Zaudējumi no valūtas maiņas"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTeX šablons"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Nav norādīts valūtas maiņas kurss!"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Vairumtirgotāja atlaide"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst rēķina numuru"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Dzēst"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Derīgs līdz"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Labot komplektāciju"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Nodokļi"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Pirkšanas orderis"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Pirkšanas orderis"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Aktīvs"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "Izlīdzināšanas atskaite"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Metode"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Maksājums iegrāmatots!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Atlikums"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "neeksistē"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Saglabāt kā jaunu"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Pārdošanas orderi"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Pārdošanas orderi"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Pirkšanas orderi"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Pirkšanas orderi"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Tāmes"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Tāmes pieprasījums"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Noklusētās vērtības saglabātas"
-
-#~ msgid "Add Account"
-#~ msgstr "Pievienot kontu"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Nav norādīts datums!"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Klienta numurs"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Pārdevēja numurs"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Rēķina numurs"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Čeks"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Depozīts"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Rēķina datums"
-
-#~ msgid "January"
-#~ msgstr "Janvārī"
-
-#~ msgid "February"
-#~ msgstr "Februārī"
-
-#~ msgid "March"
-#~ msgstr "Martā"
-
-#~ msgid "April"
-#~ msgstr "Aprīlī"
-
-#~ msgid "June"
-#~ msgstr "Jūnijā"
-
-#~ msgid "July"
-#~ msgstr "Jūlijā"
-
-#~ msgid "August"
-#~ msgstr "Augustā"
-
-#~ msgid "September"
-#~ msgstr "Septembrī"
-
-#~ msgid "October"
-#~ msgstr "Oktobrī"
-
-#~ msgid "November"
-#~ msgstr "Novembrī"
-
-#~ msgid "December"
-#~ msgstr "Decembrī"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Nomainīt paroli"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Mainīt paroli!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Kontu bilance"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Nav norādīta summa"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Pavisam Kopā"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Ordera datums"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Kvītis"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Pievienot kontu"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Dec"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Meklēt"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Rēķini"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Piegādāt caur"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Konta numurs"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Konta numurs"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Pieprasīja"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Projekta numurs"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Jūn"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Maks. rindu skaits izvēlnē"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Summa"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Summa"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Izdevumi"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Iekļaut atskaitē"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Iekļaut atskaitē"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Ordera Nr."
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Atskaites"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Peļņas vai zaudējuma aprēķins"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Konts"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Konta numurs"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Atlaide"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Konts neeksistē"
-
-#~ msgid "Jan"
-#~ msgstr "Jan"
-
-#~ msgid "Feb"
-#~ msgstr "Feb"
-
-#~ msgid "Mar"
-#~ msgstr "Mar"
-
-#~ msgid "Apr"
-#~ msgstr "Apr"
-
-#~ msgid "Jun"
-#~ msgstr "Jūn"
-
-#~ msgid "Jul"
-#~ msgstr "Jūl"
-
-#~ msgid "Aug"
-#~ msgstr "Aug"
-
-#~ msgid "Sep"
-#~ msgstr "Sep"
-
-#~ msgid "Oct"
-#~ msgstr "Okt"
-
-#~ msgid "Nov"
-#~ msgstr "Nov"
-
-#~ msgid "Dec"
-#~ msgstr "Dec"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Pieprasīja"
-
-#~ msgid "Checks"
-#~ msgstr "Čeki"
-
-#~ msgid "POS Invoice"
-#~ msgstr "POS rēķins"
-
-#~ msgid "Text Templates"
-#~ msgstr "Teksta šabloni"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Mar"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Maksājums"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Kvīts"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Pārdošanas rēķins"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Pārdevēja rēķins"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Komercdarbība"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Valoda"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Noliktava"
-
-#~ msgid "Above"
-#~ msgstr "Iepriekš"
-
-#~ msgid "Accounting"
-#~ msgstr "Kontēšana"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Kontēšanas izvēlne"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Aktivizēt audita atzīmes"
-
-#~ msgid "Add Department"
-#~ msgstr "Pievienot nodaļu"
+#~ msgid "Adjustment Date"
+#~ msgstr "Pārskats"
 
 #~ msgid "Administration"
 #~ msgstr "Administrācija"
@@ -3833,20 +1250,159 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "After Deduction"
 #~ msgstr "Pēc atlaides"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Atskaites"
+
+#~ msgid "All"
+#~ msgstr "Visi"
+
 #~ msgid "All Accounts"
 #~ msgstr "Visi konti"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Visas datu kopas ir atjauninātas!"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Rēķini"
+
 #~ msgid "All Items"
 #~ msgstr "Visi "
+
+#, fuzzy
+#~ msgid "Allocated"
+#~ msgstr "Kabatas nauda"
+
+#~ msgid "Amount"
+#~ msgstr "Summa"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Nesamaksātā summa"
+
+#~ msgid "Amount Due"
+#~ msgstr "Nesamaksātā summa"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Summa"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Nav norādīta summa"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Nesamaksātā summa"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Summa"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Vairumtirgotāja atlaide"
+
+#~ msgid "Apr"
+#~ msgstr "Apr"
+
+#~ msgid "April"
+#~ msgstr "Aprīlī"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Vai jūs patiešām vēlaties dzēst ordera numuru"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Vai jūs patiešām vēlaties dzēst tāmes numuru"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Vai jūs patiešām vēlaties dzēst transakciju"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "Vai jūs patiešām vēlaties dzēst atzīmētos ierakstus rindā"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Komplektācijas papildinātas!"
+
 #~ msgid "Assembly"
 #~ msgstr "Komplektācija"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Kontu saraksts"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Aktīvs"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Aktīvs"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "Izlīdzināšanas atskaite"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Aktīvs"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Kontu saraksts"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Labot kontu"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Pielikums"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Piekļuves kontrole"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Audita atzīmes atslēgtas"
@@ -3863,20 +1419,184 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Audit trails enabled"
 #~ msgstr "Audita atzīmes ieslēgtas"
 
+#~ msgid "Aug"
+#~ msgstr "Aug"
+
+#~ msgid "August"
+#~ msgstr "Augustā"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Apliekams ar nodokli"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Izveidot datu kopu"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Vadītājs"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Avansa maksājums"
+
+#, fuzzy
+#~ msgid "Average Cost"
+#~ msgstr "Izmaksas"
+
+#~ msgid "BOM"
+#~ msgstr "Materiālu uzskaite"
+
+#~ msgid "Backup"
+#~ msgstr "Rezerves kopija"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Rezerves kopija"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Rezerves kopija"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Rezerves kopija nosūtīta uz"
+
+#~ msgid "Balance"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Piesaistīt kontus"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Piesaistīt kontus"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Kods"
 
 #~ msgid "Based on"
 #~ msgstr "Pamatojoties uz"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Nav norādīts datums!"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Apraksts"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Nodokļu maksātāja kods"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Apraksts"
+
+#~ msgid "Bcc"
+#~ msgstr "Bcc"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Pirms atlaides"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Bilances atskaite"
 
 #~ msgid "Below"
 #~ msgstr "Zemāk"
 
+#~ msgid "Bin"
+#~ msgstr "Bin"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Sākuma datums"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Ieraksti ir atvērti"
+
+#~ msgid "Break"
+#~ msgstr "Pārtraukums"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Ordera Nr."
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Iekļaut atskaitē"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Komercdarbība"
+
+#~ msgid "Business Number"
+#~ msgstr "Reģistrācijas numurs"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Komercdarbība"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Komercdarbība"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Komercdarbība izdzēsta"
+
+#~ msgid "Business saved!"
+#~ msgstr "Komercdarbība saglabāta"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Komercdarbība"
+
+#~ msgid "COGS"
+#~ msgstr "Pašizmaksa"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Atskaites"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Rēķinu nevar izdzēst!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Nevar iegrāmatot transakciju!"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Konts neeksistē"
+
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Cannot create Lock!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Konts neeksistē"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Konts neeksistē"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "Kontu nevar izdzēst!"
@@ -3886,6 +1606,15 @@ msgstr "Transakcija iegrāmatota!"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Noklusēto kontu nevar izdzēst!"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "Vienību nevar izdzēst!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Orderi nevar izdzēst!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "Tāmi nevar izdzēst!"
 
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "Transakciju nevar izdzēst!"
@@ -3899,26 +1628,297 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "Kvīti nevar iegrāmatot!"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Nevar iegrāmatot rēķinu par slēgtu periodu!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Nevar iegrāmatot rēķinu!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Nevar iegrāmatot maksājumu par slēgtu periodu!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Nevar iegrāmatot transakciju par slēgtu periodu!"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Nevar iegrāmatot transakciju!"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "Nevar izdzēst failus"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Kontu nevar saglabāt!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "Nevar saglabāt noklusētās vērtības"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Maksājuma uzdevumu nevar saglabāt!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Nevar saglabāt izvēles!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "Nevar saglabāt tāmi"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Maksājuma uzdevumu nevar saglabāt!"
+
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr "Konta nevar piesaistīt vairāk kā vienam DP, KP vai IC"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Nevar papildināt komplektāciju!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Nodokļu konti"
+
+#~ msgid "Cc"
+#~ msgstr "Cc"
+
+#~ msgid "Change"
+#~ msgstr "Izmainīt"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Nomainīt administratora paroli"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Čeks"
+
+#~ msgid "Checks"
+#~ msgstr "Čeki"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Uzņēmums"
+
+#~ msgid "City"
+#~ msgstr "Pilsēta"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Pievienot SIC"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Apmaksāts"
+
+#~ msgid "Cleared"
+#~ msgstr "Apmaksāts"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Transakcijas"
 
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Noklikšķināt uz lietotājvārda, lai mainītu!"
 
+#, fuzzy
+#~ msgid "Clocked"
+#~ msgstr "slēgts!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Aizvērt ierakstus līdz"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Aizvērts"
+
+#~ msgid "Closed"
+#~ msgstr "Aizvērts"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Aizvērts"
+
+#~ msgid "Code"
+#~ msgstr "Kods"
+
+#~ msgid "Code missing!"
+#~ msgstr "Nav norādīts kods"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Pirkšanas orderi"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Pārdošanas orderi"
+
+#~ msgid "Company"
+#~ msgstr "Uzņēmums"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Uzņēmuma nosaukums"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Uzņēmuma nosaukums"
+
+#~ msgid "Company Name"
+#~ msgstr "Uzņēmuma nosaukums"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Uzņēmums"
+
+#~ msgid "Compare to"
+#~ msgstr "Salīdzināt ar"
+
 #~ msgid "Components"
 #~ msgstr "Komponentes"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "Apstiprināt!"
 
 #~ msgid "Connect to"
 #~ msgstr "Pievienoties"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Kontaktpersona"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Kontaktpersona"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Kontaktpersona"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Kontaktpersona"
+
+#~ msgid "Continue"
+#~ msgstr "Turpināt"
+
+#~ msgid "Contra"
+#~ msgstr "Kontrārais konts"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Audita kontrole"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Konta numurs"
+
+#~ msgid "Copies"
+#~ msgstr "Kopijas"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Kopēt uz kontu plānu"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Kopēt uz kontu plānu"
+
+#~ msgid "Cost Center"
+#~ msgstr "Galvenās izmaksas"
+
+#~ msgid "Could not save!"
+#~ msgstr "Nevarēja saglabāt"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "Nevarēja pārsūtīt krājumu"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Valsts"
+
+#~ msgid "Country"
+#~ msgstr "Valsts"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Valsts"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Valsts"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Izdzēst datukopu"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Izveidot kontu plānu"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Izdzēst datukopu"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Nodaļu saraksts"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Izveidot datu kopu"
+
+#~ msgid "Credit"
+#~ msgstr "Kredīts"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Konta numurs"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Kredīta limits"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Kredīts"
+
+#~ msgid "Curr"
+#~ msgstr "Val."
+
+#~ msgid "Currency"
+#~ msgstr "Valūta"
+
+#~ msgid "Current"
+#~ msgstr "Pašreizējs"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Pašreizējie ienākumi"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Klienta numurs"
+
+#~ msgid "Customer Number"
+#~ msgstr "Klienta numurs"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Klienta numurs"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Klients izdzēsts!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Nav norādīts klients!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Nav tāda klienta!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "Klients ir saglabāts!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Kontu saraksts"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Klients"
 
 #~ msgid "Customers"
 #~ msgstr "Klienti"
@@ -3926,14 +1926,31 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "DBI not installed!"
 #~ msgstr "Nav instalēts DBI!"
 
+#~ msgid "Database"
+#~ msgstr "Datubāze"
+
 #~ msgid "Database Administration"
 #~ msgstr "Datubāzes administrators"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Datubāzes draiveris nav atzīmēts!"
 
+#~ msgid "Database Host"
+#~ msgstr "Datubāzes serveris"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Labot darbinieku"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Nav norādīts datubāzes lietotājs!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "neeksistē"
+
+#~ msgid "Dataset"
+#~ msgstr "Datukopa"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "Datukopa ir jaunāka par versiju!"
@@ -3944,11 +1961,89 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Datukopa atjaunināta!"
 
+#~ msgid "Date"
+#~ msgstr "Datums"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Datuma formāts"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Datuma formāts"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Datuma formāts"
+
+#~ msgid "Date Paid"
+#~ msgstr "Maksājuma datums"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Saņemšanas datums"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Datums"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Datums"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Datuma formāts"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Datums"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Nav norādīts saņemšanas datums"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Datums"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Datums"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "Mai"
+
+#~ msgid "Debit"
+#~ msgstr "Debets"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Debets"
+
+#~ msgid "Dec"
+#~ msgstr "Dec"
+
+#~ msgid "December"
+#~ msgstr "Decembrī"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "decimāldaļa"
+
 #~ msgid "Decrease"
 #~ msgstr "Samazināt"
 
 #~ msgid "Deduct after"
 #~ msgstr "Piešķirt atlaidi pēc"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Atlaides"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Atlaides"
 
 #~ msgid "Deduction deleted!"
 #~ msgstr "Atlaide izdzēsta"
@@ -3956,20 +2051,177 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Deduction saved!"
 #~ msgstr "Atlaide saglabāta"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "Noklusētās vērtības"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Noklusētās vērtības"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Izdzēst Kontu"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Valsts"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Labot valodu"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Noklusētās vērtības saglabātas"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Valsts"
+
+#~ msgid "Delete"
+#~ msgstr "Dzēst"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Labot valodu"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Piegādes datums"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Metode"
+
+#~ msgid "Department"
+#~ msgstr "Nodaļa"
+
 #~ msgid "Department deleted!"
 #~ msgstr "Nodaļa izdzēsta"
 
 #~ msgid "Department saved!"
 #~ msgstr "Nodaļa saglabāta"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Nodaļa"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Nodaļa"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Apraksts"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Izdzēst Kontu"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Apraksts"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Apraksts"
+
+#~ msgid "Description Translations"
+#~ msgstr "Apraksta tulkojumi"
+
+#~ msgid "Description missing!"
+#~ msgstr "Nav norādīts apraksts"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Apraksts"
+
+#~ msgid "Detail"
+#~ msgstr "Sīks apraksts"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Sīks apraksts"
+
+#~ msgid "Difference"
+#~ msgstr "Starpība"
+
 #~ msgid "Directory"
 #~ msgstr "Direktorija"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Atlaide"
+
+#~ msgid "Discount"
+#~ msgstr "Atlaide"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Atlaide"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Atlaide"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Ienākums"
+
+#~ msgid "Done"
+#~ msgstr "Izdarīts"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Meklēt"
+
+#~ msgid "Drawing"
+#~ msgstr "Čeku izrakstīšana"
 
 #~ msgid "Driver"
 #~ msgstr "Draiveris"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Maks. rindu skaits izvēlnē"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Dec"
+
+#~ msgid "Due Date"
+#~ msgstr "Apmaksas termiņš"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Nav norādīts apmaksas termiņš!"
+
+#~ msgid "E-mail"
+#~ msgstr "E-pasts"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "Nosūtīt atskaiti pa e-pastu uz "
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "E-pasts"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Nepareiza E-pasta adrese!"
+
 #~ msgid "E-mailed"
 #~ msgstr "Nosūtīts pa e-pastu"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Peļņas vai zaudējuma aprēķins"
+
+#~ msgid "Edit"
+#~ msgstr "Labot"
+
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Labot komplektāciju"
 
 #~ msgid "Edit Business"
 #~ msgstr "Izmainīt komercdarbību"
@@ -3977,11 +2229,20 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Labot naudas pārsūtīšanas transakciju"
 
+#~ msgid "Edit Customer"
+#~ msgstr "Labot klientu"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "Labot atlaidi"
 
 #~ msgid "Edit Department"
 #~ msgstr "Labot nodaļu"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "Labot tulkojumu aprakstus"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Labot darbinieku"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Labot transakciju virsgrāmatā"
@@ -3992,20 +2253,66 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Labot darbu/izmaksas"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Labot POS rēķinu"
+
 #~ msgid "Edit Part"
 #~ msgstr "Labot daļu"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Labot cenu grupu"
 
+#~ msgid "Edit Project"
+#~ msgstr "Labot projektu"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Labot pirkuma orderi"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Labot tāmi"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Atskaites"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Labot tāmes pieprasījumu"
+
 #~ msgid "Edit SIC"
 #~ msgstr "Labot SIC"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Labot pārdošanas orderi"
 
 #~ msgid "Edit Service"
 #~ msgstr "Labot pakalpojumu"
 
+#~ msgid "Edit Template"
+#~ msgstr "Labot šablonu"
+
+#~ msgid "Edit User"
+#~ msgstr "Labot lietotāju"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Labot pārdevēju"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Labot pārdevēja rēķinu"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "Labot noliktavu"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Labot lietotāju"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Darbinieka vārds"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Darbinieka vārds"
 
 #~ msgid "Employee deleted!"
 #~ msgstr "Darbinieks izdzēsts"
@@ -4022,19 +2329,206 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Employer pays"
 #~ msgstr "Nodarbinātāju izmaksas"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Ordera datums"
+
 #~ msgid "Enddate"
 #~ msgstr "Beigu datums"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Sākuma atlikums"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Bilances atskaite"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Izpildīt transakciju atcelšanu visos datumos"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Labot lietotāju"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr "Ierakstīt 3 simbolus kolonās (USD:LVL:EUR), lai definētu valūtas"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Pieprasīja"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Pieprasīja"
+
+#~ msgid "Equity"
+#~ msgstr "Pašu kapitāls"
+
+#~ msgid "Exch"
+#~ msgstr "Kurss"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Valūtas maiņas kurss"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Nav norādīts valūtas maiņas kurss maksājumā!"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Nav norādīts valūtas maiņas kurss!"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Nav norādīts valūtas maiņas kurss!"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Valūtas maiņas kurss"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Esošās datukopas"
 
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Izdevumi"
+
+#~ msgid "Expense"
+#~ msgstr "Izdevumi"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Kontu saraksts"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Izdevumi/Aktīvi"
+
+#~ msgid "Extended"
+#~ msgstr "Kopā"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Labot lietotāju"
+
+#~ msgid "FX"
+#~ msgstr "FX"
+
+#~ msgid "Feb"
+#~ msgstr "Feb"
+
+#~ msgid "February"
+#~ msgstr "Februārī"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Komercdarbība"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Labot kontu"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Maksājumi"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Kvītis"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "Nodokļu maksātāja kods"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Pievienot komplektāciju"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Ienākumi no valūtas maiņas"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Zaudējumi no valūtas maiņas"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Datuma formāts"
+
+#~ msgid "From"
+#~ msgstr "No"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "No"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Summa"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Ordera datums"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "No"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI izdzēsts"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "Nav norādīts GIFI!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI saglabāts!"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Piesaistīt kontus"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Virsgrāmata"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Audita kontrole"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Kopsumma"
+
+#~ msgid "Group"
+#~ msgstr "Grupa"
+
 #~ msgid "Group Items"
 #~ msgstr "Ierakstu grupa"
+
+#~ msgid "Group Translations"
+#~ msgstr "Grupu transakcijas"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "Grupa"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Grupa izdzēsta!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Grupa nav norādīta!"
+
+#~ msgid "Group saved!"
+#~ msgstr "Grupa saglabāta!"
+
+#~ msgid "Groups"
+#~ msgstr "Grupas"
+
+#~ msgid "Heading"
+#~ msgstr "Virsraksts"
 
 #~ msgid "Host"
 #~ msgstr "Serveris"
@@ -4045,25 +2539,202 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Finanšu gada beigas"
+
+#~ msgid "Image"
+#~ msgstr "Attēls"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTeX šablons"
+
+#~ msgid "In-line"
+#~ msgstr "Iekļauts"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Iekļaut valūtas kursu atšķirības"
+
+#~ msgid "Include in Report"
+#~ msgstr "Iekļaut atskaitē"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Iekļaut nolaižamo izvēlni"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Iekļaut atskaitē"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Iekļaut atskaitē"
+
+#~ msgid "Income"
+#~ msgstr "Ienākums"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Ienākums"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Ienākums"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Nepareiza datukopas versija!"
 
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Nomainīt paroli"
+
 #~ msgid "Increase"
 #~ msgstr "Pieaugums"
+
+#~ msgid "Individual Items"
+#~ msgstr "Individuāli ieraksti"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Iekšējās piezīmes"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Derīgs līdz"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Krājums saglabāts"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Krājums saglabāts"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo preci!"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr ""
 #~ "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo komplektāciju!"
 
+#~ msgid "Inventory saved!"
+#~ msgstr "Krājums saglabāts"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Krājums pārsūtīts"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Rēķina datums"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Nav norādīts rēķina datums!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Rēķina numurs"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Nepareizs rēķina numurs"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Rēķina numurs"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Rēķina datums"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Rēķina datums"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Rēķina datums"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "Rēķins izdzēsts!"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Rēķina numurs"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Rēķina datums"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Rēķins"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "Vienības"
+
+#~ msgid "Item deleted!"
+#~ msgstr "Vienība izdzēsts!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Nav tādas vienības!"
+
+#~ msgid "Jan"
+#~ msgstr "Jan"
+
+#~ msgid "January"
+#~ msgstr "Janvārī"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Konta tips"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Projekta numurs"
+
+#~ msgid "Jul"
+#~ msgstr "Jūl"
+
+#~ msgid "July"
+#~ msgstr "Jūlijā"
+
+#~ msgid "Jun"
+#~ msgstr "Jūn"
+
+#~ msgid "June"
+#~ msgstr "Jūnijā"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Darbs/izmaksas"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Valoda izdzēsta"
+
+#~ msgid "Language saved!"
+#~ msgstr "Valoda saglabāta"
+
+#~ msgid "Languages"
+#~ msgstr "Valodas"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Valodas nav definētas"
+
+#, fuzzy
+#~ msgid "Last Cost"
+#~ msgstr "Izmaksas"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Atjaunināts"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Pēdējais numurs un noklusētais konts"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Atjaunināts"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -4072,14 +2743,54 @@ msgstr "Transakcija iegrāmatota!"
 #~ "Servera un porta laukus var atstāt tukšus, ja nevēlaties izveidot "
 #~ "attālinātu konekciju"
 
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "DP Neapmaksātie"
+
+#~ msgid "Liability"
+#~ msgstr "Saistības"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Uzņēmuma nosaukums"
+
 #~ msgid "Licensed to"
 #~ msgstr "Licencēts firmai"
+
+#~ msgid "Line Total"
+#~ msgstr "Kopsumma"
 
 #~ msgid "Link"
 #~ msgstr "Saite"
 
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Avansa maksājums"
+
+#~ msgid "List Price"
+#~ msgstr "Cenrāža cena"
+
 #~ msgid "List Projects"
 #~ msgstr "Projektu saraksts"
+
+#~ msgid "List Transactions"
+#~ msgstr "Transakciju saraksts"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Svara mērvienība"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Labot lietotāju"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Tāme"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Tāme"
 
 #~ msgid "Lock System"
 #~ msgstr "Lock System"
@@ -4090,8 +2801,37 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Lockfile removed!"
 
+#~ msgid "Login"
+#~ msgstr "Pieteikties"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Nav norādīts pieteikumvārds"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Kontu saraksts"
+
+#~ msgid "Make"
+#~ msgstr "Izveidot"
+
+#~ msgid "Manager"
+#~ msgstr "Vadītājs"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Janvārī"
+
+#~ msgid "Mar"
+#~ msgstr "Mar"
+
+#~ msgid "March"
+#~ msgstr "Martā"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Atzīmētie ieraksti izdrukāti"
+
+#~ msgid "Markup"
+#~ msgstr "Uzcenojums"
 
 #~ msgid "Maximum"
 #~ msgstr "Maksimālais"
@@ -4099,14 +2839,66 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "May "
 #~ msgstr "Maijā "
 
+#~ msgid "Memo"
+#~ msgstr "Memorands"
+
 #~ msgid "Menu Width"
 #~ msgstr "Izvēlnes Platums"
+
+#~ msgid "Message"
+#~ msgstr "Paziņojums"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Paziņojums"
+
+#~ msgid "Method"
+#~ msgstr "Metode"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Noklusētās vērtības"
+
+#~ msgid "Microfiche"
+#~ msgstr "Mikrofilma"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Apliekams ar nodokli"
+
+#~ msgid "Model"
+#~ msgstr "Modelis"
 
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibaitu kodēšana"
 
+#~ msgid "N/A"
+#~ msgstr "Nav"
+
+#~ msgid "Name"
+#~ msgstr "Nosaukums"
+
 #~ msgid "Name missing!"
 #~ msgstr "Nepareizs nosaukums"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Nosaukums"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Izlīdzināšanas atskaite"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Lietotājs"
+
+#~ msgid "No"
+#~ msgstr "Nē"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Kots izdzēsts!"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Nav pieejams datubāzes draiveris!"
@@ -4114,8 +2906,23 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "No Dataset selected!"
 #~ msgstr "Nav iezīmēta datukopa!"
 
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "Vēsture"
+
 #~ msgid "No email address for"
 #~ msgstr "Nav e-pasta adrese"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Valoda"
+
+#~ msgid "No."
+#~ msgstr "Nr."
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Neapliekams ar nodokļiem"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "Pirkumi, kas nav apliekami ar nodokļiem"
@@ -4123,17 +2930,175 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Tirgošana, kas nav apliekama ar nodokļiem"
 
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Neapliekams ar nodokļiem"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Piezīmes"
+
+#~ msgid "Notes"
+#~ msgstr "Piezīmes"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Nekas nav ievadīts"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "Nekas nav iezīmēts!"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Nav nekā dzēšama!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Nav nekā pārsūtīšanai"
+
+#~ msgid "Nov"
+#~ msgstr "Nov"
+
+#~ msgid "November"
+#~ msgstr "Novembrī"
+
+#~ msgid "Number"
+#~ msgstr "Numurs"
+
+#~ msgid "Number Format"
+#~ msgstr "Skaitļa formāts"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Rindā nav norādīts numurs"
+
+#~ msgid "Obsolete"
+#~ msgstr "Novecojis"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Novecojis"
+
+#~ msgid "Oct"
+#~ msgstr "Okt"
+
+#~ msgid "October"
+#~ msgstr "Oktobrī"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Parole"
+
+#~ msgid "On Hand"
+#~ msgstr "Pieejams"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "Pieejams"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Pievienot lietotāju"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Darbinieki"
+
+#~ msgid "Open"
+#~ msgstr "Atvērts"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Atvērts"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Atlaides"
 
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle datubāzes administrēšana"
 
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Orderis"
+
+#~ msgid "Order Date"
+#~ msgstr "Ordera datums"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Nav norādīts ordera datums!"
+
+#~ msgid "Order Number"
+#~ msgstr "Ordera Nr."
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Nav norādīts ordera numurs!"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Ordera Nr."
+
+#~ msgid "Order deleted!"
+#~ msgstr "Orderis izdzēsts"
+
 #~ msgid "Order saved!"
 #~ msgstr "Orderis saglabāts!"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Orderis"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Orderis"
+
+#~ msgid "Orphaned"
+#~ msgstr "Bez atbilstošā pāra"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Atlaides"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Kredīts"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Debets"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Transakcija bez bilances"
+
 #~ msgid "Out of balance!"
 #~ msgstr "Nav bilances!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "KP transakcija"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Avansa maksājums"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Maksājums iegrāmatots!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "POS"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Numurs"
+
+#~ msgid "POS Invoice"
+#~ msgstr "POS rēķins"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "Nav norādīts iesaiņojumu datums!"
@@ -4141,8 +3106,80 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Nav norādīts iesaiņojumu numurs!"
 
+#~ msgid "Paid"
+#~ msgstr "Apmaksāts"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Pašreizējs"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Cenu grupa"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Daļas numurs"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Prece"
+
+#~ msgid "Partnumber"
+#~ msgstr "Daļas numurs"
+
 #~ msgid "Parts"
 #~ msgstr "Daļas"
+
+#~ msgid "Password"
+#~ msgstr "Parole"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Mainīt paroli!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Mainīt paroli!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Datuma formāts"
+
+#~ msgid "Payables"
+#~ msgstr "Kreditoru parādi"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Nav norādīts maksājuma datums"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Maksājumi"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Maksājumi"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Maksājums"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Maksājums"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Maksājums iegrāmatots!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Atlikums"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "periodam"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg datubāzes administrēšana"
@@ -4150,32 +3187,265 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "PgPP Database Administration"
 #~ msgstr "PgPP Database Administration"
 
+#~ msgid "Phone"
+#~ msgstr "Tel."
+
 #~ msgid "Port"
 #~ msgstr "Ports"
 
 #~ msgid "Port missing!"
 #~ msgstr "Nareizs porta numurs!"
 
+#~ msgid "Post"
+#~ msgstr "Iegrāmatot"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Finanšu gada beigas"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#~ msgid "Post as new"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#~ msgid "Posted!"
+#~ msgstr "Iegrāmatots!"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Iegrāmatot kā jaunu"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Virsgrāmatas transakcija"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Labot pārdošanas rēķinu"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Labot pārdevēja rēķinu"
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Izvēles saglabātas!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Labot izvēles"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Cenu grupa"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Atjaunināts"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Cenu grupa"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Cenu grupa izdzēsta"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Cenu grupa nav norādīta"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Cenu grupa saglabāta"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Cenu grupas"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "Cena"
+
+#~ msgid "Print"
+#~ msgstr "Drukāt"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Drukāt"
+
+#~ msgid "Printed"
+#~ msgstr "Izdrukāts"
+
+#~ msgid "Printer"
+#~ msgstr "Printeris"
+
 #~ msgid "Printing ... "
 #~ msgstr "Drukā ..."
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "KP transakcijas"
+
+#~ msgid "Profit Center"
+#~ msgstr "Galvenie ienākumi"
+
+#~ msgid "Project"
+#~ msgstr "Projekts"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "Projekta apraksta tulkojumi"
+
+#~ msgid "Project Number"
+#~ msgstr "Projekta numurs"
 
 #~ msgid "Project Number missing!"
 #~ msgstr "Nav norādīts projekta numurs!"
 
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Projekta numurs"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Projekta numurs"
+
 #~ msgid "Project deleted!"
 #~ msgstr "Projekts izdzēsts!"
+
+#~ msgid "Project not on file!"
+#~ msgstr "Nav tāda projekta!"
 
 #~ msgid "Project saved!"
 #~ msgstr "Projekts saglabāts"
 
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Projekta numurs"
+
+#~ msgid "Projects"
+#~ msgstr "Projekti"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Pirkšanas orderis"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Pirkšanas orderis"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Klienta vēsture"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Pirkšanas orderis"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Pirkšanas orderis"
+
+#~ msgid "Qty"
+#~ msgstr "Skaits"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "Skaits pārsniedz noliktavā esošo priekšmetu skaitu"
+
+#~ msgid "Quotation Date"
+#~ msgstr "Tāmes datums"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Nav norādīts tāmes datums"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Tāmes numurs"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Nav norādīts tāmes numurs"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Tāmes numurs"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Tāme izdzēsta"
+
 #~ msgid "R"
 #~ msgstr "R"
+
+#~ msgid "RFQ Number"
+#~ msgstr "Tāmes pieprasījuma numurs"
+
+#~ msgid "ROP"
+#~ msgstr "Pasūtīšanas limits"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Likme"
 
 #~ msgid "Rate missing!"
 #~ msgstr "Likme nav norādīta"
 
+#~ msgid "Recd"
+#~ msgstr "Saņemts"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Kvītis"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "Kvītis iegrāmatotas"
+
+#~ msgid "Receivables"
+#~ msgstr "Ienākošie maksājumi"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Saņemt preces"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Ierakstīt"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Izlīdzināšana"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Izlīdzināšanas atskaite"
+
+#~ msgid "Record in"
+#~ msgstr "Ierakstīt"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Atskaite par"
+
+#~ msgid "Reference"
+#~ msgstr "Norāde"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Projekts"
+
+#~ msgid "Remaining"
+#~ msgstr "Atlikums"
+
+#~ msgid "Remove"
+#~ msgstr "Izdzēst"
 
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Izdzēst audita atzīmes līdz"
@@ -4183,32 +3453,350 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Remove Audit trails up to"
 #~ msgstr "Izdzēst audita atzīmes līdz"
 
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Izdzēst printera rindas failus"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "Izdzēšu atzīmētos ierakstus no rindas ..."
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Atskaite par"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Atskaite par"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Atskaites"
+
+#~ msgid "Report for"
+#~ msgstr "Atskaite par"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Atskaites"
+
 #~ msgid "Request for Quotations"
 #~ msgstr "Tāmju pieprasījums"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Kvītis"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Pieprasīja"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Pieprasīja"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Pieprasīja"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Parole"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Nesadalītā peļņa"
+
+#, fuzzy
+#~ msgid "Reversal Information"
+#~ msgstr "Tāmes pieprasījums"
 
 #~ msgid "Role"
 #~ msgstr "Loma"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Konti"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Rezerves kopija"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Atskaites"
+
 #~ msgid "S"
 #~ msgstr "S"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC izdzēsts"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC saglabāts"
+
+#~ msgid "SKU"
+#~ msgstr "SKU"
+
+#, fuzzy
+#~ msgid "SO"
+#~ msgstr "O"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Uzņēmuma nosaukums"
+
+#~ msgid "Salesperson"
+#~ msgstr "Pārdevējs"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Tāme"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Pirkšanas orderis"
+
+#~ msgid "Save"
+#~ msgstr "Saglabāt"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Saglabāt kā jaunu"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Saglabāt kā jaunu"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Kontaktpersona"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Tāme"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Saglabāt kā jaunu"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Tāme"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTeX šablons"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Saglabāt kā jaunu"
+
+#~ msgid "Save as new"
+#~ msgstr "Saglabāt kā jaunu"
 
 #~ msgid "Save to File"
 #~ msgstr "Saglabāt failā"
 
+#~ msgid "Screen"
+#~ msgstr "Ekrāns"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "POS rēķins"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Rēķins"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Čeku inventūra"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Pirkšanas orderi"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Tāmes"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Izlīdzināšanas atskaite"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Tāmes pieprasījums"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Pārdošanas orderi"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Projekta transakcijas"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Meklēt"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Atlasīt visu"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Šablonu izveidošana"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Atlasīt visu"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Atlasīt vienu no sekojošiem ierakstiem"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "Atlasīt vienu no sekojošiem nosaukumiem"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Atlasīt vienu no sekojošiem projektiem"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Pārdošanas rēķini"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Izvēlēties postscript vai PDF!"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Atlasīt"
+
+#~ msgid "Sell Price"
+#~ msgstr "Pārdošanas cena"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "Nosūtīt pa e-pastu"
 
+#~ msgid "Sep"
+#~ msgstr "Sep"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Nodaļas"
+
+#~ msgid "September"
+#~ msgstr "Septembrī"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Izvēles"
+
+#~ msgid "Serial No."
+#~ msgstr "Seriālais Nr."
+
+#~ msgid "Serial Number"
+#~ msgstr "Seriālais numurs"
+
+#~ msgid "Service"
+#~ msgstr "Pakalpojums"
+
 #~ msgid "Services"
 #~ msgstr "Pakalpojumi"
+
+#~ msgid "Ship Merchandise"
+#~ msgstr "Piegādāt preces"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Piegādāt caur"
+
+#~ msgid "Ship to"
+#~ msgstr "Piegādes adrese"
+
+#~ msgid "Ship via"
+#~ msgstr "Piegādāt caur"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Piegādāt caur"
 
 #~ msgid "Shipping Address"
 #~ msgstr "Piegādes adrese"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Nosūtīšanas datums"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Nav norādīts nosūtīšanas datums"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Nosūtīšanas vietas"
+
+#~ msgid "Short"
+#~ msgstr "Aizdošana"
+
 #~ msgid "Signature"
 #~ msgstr "Paraksts"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Apmaksāts"
+
+#~ msgid "Source"
+#~ msgstr "Dokuments"
+
+#~ msgid "Spoolfile"
+#~ msgstr "Printera rindas fails"
+
+#~ msgid "Standard"
+#~ msgstr "Standarts"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "Standarta industrijas kodi"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Bilances atskaite"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Sākuma datums"
+
+#~ msgid "Startdate"
+#~ msgstr "Sākuma datums"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Sākuma datums"
+
+#~ msgid "State/Province"
+#~ msgstr "Štats/Province"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Bilances atskaite"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Nosūtīt pārskatu uz"
@@ -4216,8 +3804,77 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Nosūtīt pārskatu uz drukāšanu!"
 
+#~ msgid "Stock"
+#~ msgstr "Krājums"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Stila lapa"
+
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "Subkontrakta GIFI"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Temats"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Temats"
+
+#~ msgid "Subtotal"
+#~ msgstr "Kopā"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Kopā"
+
+#~ msgid "Summary"
+#~ msgstr "Kopējais"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Vai šis ir summārais konts ierakstam"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Jūn"
+
+#~ msgid "System Defaults"
+#~ msgstr "Sistēmas noklusētās vērtības"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Nodokļi"
+
+#~ msgid "Tax"
+#~ msgstr "Nodokļi"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Nodokļu konti"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Kods"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Datuma formāts"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "Nodokļu maksātāja kods / SSN"
+
+#~ msgid "Tax Included"
+#~ msgstr "Kopā ar nodokļiem"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Kopā ar nodokļiem"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Nodokļu maksātāja kods / SSN"
 
 #~ msgid "Tax collected"
 #~ msgstr "Ieņemtie nodokļi"
@@ -4225,11 +3882,59 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Tax paid"
 #~ msgstr "Samaksātie nodokļi"
 
+#~ msgid "Taxable"
+#~ msgstr "Apliekams ar nodokli"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "Šablons saglabāts!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Šablons saglabāts!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Šabloni"
+
+#~ msgid "Template saved!"
+#~ msgstr "Šablons saglabāts!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Jauni šabloni"
+
+#~ msgid "Terms"
+#~ msgstr "Noteikumi: termiņš"
+
+#~ msgid "Text Templates"
+#~ msgstr "Teksta šabloni"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Vai jūs patiešām vēlaties dzēst rēķina numuru"
+
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Sekojošās datukopas netiek lietotas un tās var izdzēst"
 
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Sekojošās datukopas nepieciešams atjaunināt"
+
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Kontu bilance"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Kredīts"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Debets"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Labot kontu"
 
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
@@ -4238,6 +3943,24 @@ msgstr "Transakcija iegrāmatota!"
 #~ "Šī ir sagatavošanās pārbaude esošiem datiem. Nekas netiks izveidots vai "
 #~ "izdzēsts."
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "No"
+
+#~ msgid "Till"
+#~ msgstr "līdz"
+
+#~ msgid "To"
+#~ msgstr "uz"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Summa"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Datums"
+
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
@@ -4245,8 +3968,40 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgstr ""
 #~ "Lai pievienotu lietotāju grupai, izmainiet lietotājvārdu un saglabājiet."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "uz"
+
+#~ msgid "Total"
+#~ msgstr "Pavisam Kopā"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Pavisam Kopā"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Iesaiņojumu saraksti"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Vairumtirgotāja atlaide"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Transakcija iegrāmatota!"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Nav norādīts transakcijas datums!"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Transakcija iegrāmatota!"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "Transakcija izdzēsta!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Transakcija iegrāmatota!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Veikt transakciju atcelšanu visiem datumiem"
@@ -4254,14 +4009,65 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Transakcijas būs izmainītas līdz"
 
+#~ msgid "Transactions"
+#~ msgstr "Transakcijas"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Krājuma pārsūtīšana"
+
+#~ msgid "Transfer to"
+#~ msgstr "Pārsūtīt uz"
+
+#~ msgid "Translation"
+#~ msgstr "Tulkojums"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Tulkojums izdzēsts"
+
+#~ msgid "Translations saved!"
+#~ msgstr "Tulkojumi saglabāti"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Kontu bilance"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Rēķina numurs"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Klienta numurs"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Pārdevēja numurs"
+
+#~ msgid "Unit"
+#~ msgstr "Vienība"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Preces mērvienība"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Pārdevēja numurs"
+
+#~ msgid "Update"
+#~ msgstr "Atjaunināt"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Atjaunināt datu kopu"
+
+#~ msgid "Updated"
+#~ msgstr "Atjaunināts"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Saglabāt"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "Uzlabot līdz versijai"
@@ -4269,29 +4075,130 @@ msgstr "Transakcija iegrāmatota!"
 #~ msgid "Use Templates"
 #~ msgstr "Lietot šablonu"
 
+#~ msgid "User"
+#~ msgstr "Lietotājs"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Lietotājs saglabāts!"
+
 #~ msgid "User deleted!"
 #~ msgstr "Lietotājs izdzēsts!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Lietotājs"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Lietotājs"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Lietotājs"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Datuma formāts"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "Derīgs līdz"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Pievienot kontu"
 
 #~ msgid "Vendor Invoices"
 #~ msgstr "Pārdevēja rēķini"
 
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Pārdevēja numurs"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Pārdevēja numurs"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Pārdevēja numurs"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Pārdevēja numurs"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Pārdevēja numurs"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "Pārdevējs izdzēsts!"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "Pārdevējs nav norādīts!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Nav tāda pārdevēja!"
 
 #~ msgid "Vendor saved!"
 #~ msgstr "Pārdevējs saglabāts"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Pārdevējs"
+
 #~ msgid "Vendors"
 #~ msgstr "Pārdevēji"
 
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Versija"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Atlaides"
+
+#~ msgid "Warehouse"
+#~ msgstr "Noliktava"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Noliktava izdzēsta"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Noliktava saglabāta"
+
+#~ msgid "Warning!"
+#~ msgstr "Brīdinājums!"
+
+#~ msgid "Weight"
+#~ msgstr "Svars"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Kāda veida vienība tā ir?"
+
 #~ msgid "Work Phone"
 #~ msgstr "Darba telefons"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Finanšu gada beigas"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Finanšu gada beigas iegrāmatotas"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "Nav norādīts pārskata finanšu gada beigu datums"
 
 #~ msgid "Yearend posting failed!"
 #~ msgstr "Finanšu gada beigu iegrāmatošana neizdevās"
+
+#~ msgid "Yes"
+#~ msgstr "Jā"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Nav ievadīts vārds"
@@ -4301,17 +4208,110 @@ msgstr "Transakcija iegrāmatota!"
 #~ "Lokālam un attālinātam savienojumam jāievada vērtības servera un porta "
 #~ "laukos!"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "Kods"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "Kods"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Komercdarbība"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Valoda"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Noliktava"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "kontu nevar nomainīt uz jebkuru citu konta tipu"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Valodas nav definētas"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Mar"
+
+#~ msgid "as at"
+#~ msgstr "uz"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Bilance"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Čeks"
+
+#~ msgid "days"
+#~ msgstr "dienas"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Debets"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Dzēst"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Depozīts"
+
+#~ msgid "done"
+#~ msgstr "izdarīts"
+
+#~ msgid "ea"
+#~ msgstr "gb"
+
 #~ msgid "is already a member!"
 #~ msgstr "jau eksistē "
 
+#~ msgid "localhost"
+#~ msgstr "localhost"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Maksājums"
+
 #~ msgid "posted!"
 #~ msgstr "iegrāmatots!"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Kvīts"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Pārdošanas rēķins"
+
+#~ msgid "sent"
+#~ msgstr "nosūtīts"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Bilances atskaite"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Kopā"
 
 #~ msgid "successfully created!"
 #~ msgstr "veiksmīgi izveidots!"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "veiksmīgi izdzēsts!"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Pārdevēja rēķins"
 
 #~ msgid "website"
 #~ msgstr "interneta lapa"

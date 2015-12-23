@@ -30,87 +30,413 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Zaaktype toevoegen"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Rapporten"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Magazijn toevoegen"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Versie"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Kas (contant)"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Crediteuren"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Crediteuren Ouderdomsoverzicht"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Crediteurenboeking"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Rekening verwijderen"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Debiteuren"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Debiteuren Ouderdomsoverzicht"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Debiteurenboeking"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Rekening verwijderen"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Rekening toevoegen"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Assemblage toevoegen"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Assemblage toevoegen"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Zaaktype toevoegen"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Zaaktype toevoegen"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Assemblage toevoegen"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Contact"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Werknemer toevoegen"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Toevoegen GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Groep toevoegen"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Taal toevoegen"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Arbeid/Overheadskosten toevoegen"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Artikel toevoegen"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Prijsgroep toevoegen"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Gebruiker toevoegen"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "SIC toevoegen"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Dienst toevoegen"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Artikel toevoegen"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Artikel toevoegen"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Boeking toevoegen"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Magazijn toevoegen"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Activa (bezittingen)"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Assemblages"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Activa (bezittingen)"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Balans"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Begindatum"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "miljard"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "miljard"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "miljard"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "miljard"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Locatielijst"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Zaaktype toevoegen"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Zendingen"
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "Zaaktype toevoegen"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Debiteurenboeking"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "C"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Kas (contant)"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Thuistelefoon"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Rekeningstelsel"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "Cheque"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "GIFI weergeven"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:549
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Afdelingen weergeven"
+msgid "Cold Lead"
+msgstr "Levertijd"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Verzenden"
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Contact"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Contact"
+
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "Directe verkooporder wijzigen"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Debet"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Klant"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "Klant Historie"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "Factuur"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Debet"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "Standaard"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Omschrijving"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Omschrijving"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Omschrijving"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Mrt"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Geboekt!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "E-mail"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Werknemer"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Werknemers"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Inventaris overboeken"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Zaaktypes weergeven"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Rekening wijzigen"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Fax"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Assemblage toevoegen"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Grootboek"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+#, fuzzy
+msgid "Generate"
+msgstr "Grootboek"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "Grootboek"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Goederen & Diensten"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
 msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "Personeel"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML Sjablonen"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Thuistelefoon"
+
+#: sql/Pg-database.sql:548
+#, fuzzy
+msgid "Hot Lead"
+msgstr "Levertijd"
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -118,331 +444,214 @@ msgstr ""
 msgid "Import"
 msgstr "Rapporten"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Activa (bezittingen)"
+msgid "Import Batch"
+msgstr "Rapporten"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Rapporten"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Betaling"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Activa (bezittingen)"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "Latex Sjablonen"
+msgid "Import GIFI"
+msgstr "Wijzig GIFI"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Geboekt!"
+msgid "Import Inventory"
+msgstr "Voorraad"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Top Niveau"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Inkomstenoverzicht"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Zaaktypes weergeven"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Contact"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Ontvangstbewijzen"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "miljard"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Dienst toevoegen"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Assemblage toevoegen"
-
-#: sql/Pg-database.sql:3721
-msgid "time"
-msgstr ""
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Rekening verwijderen"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Ontvangstbewijzen"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Bedrijfs order"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Debet"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Zaaktype toevoegen"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Rapporten"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Goederen & Diensten"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "Directe verkooporder wijzigen"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Zaaktype toevoegen"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "Leverancier Historie"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Verkoop"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Instellingen"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "Offerteaanvraag"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Arbeid/Overheadskosten toevoegen"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Rapporten"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Talen weergeven"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Boekingen Verwerken"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Verkooporders"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Inkooporders"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Pakbon"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "C"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Verkoopfactuur"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Taal toevoegen"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "miljard"
-
-#: sql/Pg-database.sql:2934
-#, fuzzy
-msgid "Timecards"
-msgstr "Artikel toevoegen"
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Factuurnummer"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Toevoegen GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "SIC toevoegen"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "E-mail"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Systeem"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Voorschot"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Betalingen"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "miljard"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Mrt"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML Sjablonen"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Mrt"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Inkoopfaktuur"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Klant"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Jaareinde"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Overboeking"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
-msgstr ""
-
-#: sql/Pg-database.sql:546
-#, fuzzy
-msgid "Lead"
-msgstr "Levertijd"
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Voorraad"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Voorraad"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "Voorraad opgeslagen"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Factuur"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Factuurnummer"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Land"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "Latex Sjablonen"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Taal"
+
+#: sql/Pg-database.sql:546
+#, fuzzy
+msgid "Lead"
+msgstr "Levertijd"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Zaaktypes weergeven"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "Assemblages"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Gebruiker toevoegen"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "GIFI weergeven"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Talen weergeven"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "SIC weergeven"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Debet"
+msgid "List Tax Forms"
+msgstr "Afdelingen weergeven"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Magazijnen weergeven"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Logout"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "Pers.nr."
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Wijzig GIFI"
+msgid "Mailing"
+msgstr "miljard"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Voorschot"
+msgid "Mr."
+msgstr "Mrt"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "Mrt"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Order invoer"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Openstaand"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Pakbon"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Prijsgroep"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Betaling"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Betalingen"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Uitzoeklijst"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Instellingen"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Bedrijfsnaam"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Zoek"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Inkooporder"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Inkooporders"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -450,138 +659,35 @@ msgstr "Voorschot"
 msgid "Quotation"
 msgstr "Offertes"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Offertes"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "Offerteaanvraag"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "Offerteaanvragen"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Ontvangstbewijs"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Ontvangstbewijzen"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Inkomende zending"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Grootboek"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Overzicht"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Zoek"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Assemblage toevoegen"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Taal"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Crediteurenboeking"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Rapporten"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Debiteuren"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Artikel toevoegen"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Mrt"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Balans"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Thuistelefoon"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Vertalingen"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Fax"
-
-#: sql/Pg-database.sql:549
-#, fuzzy
-msgid "Cold Lead"
-msgstr "Levertijd"
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Datum formaat"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Thuistelefoon"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Omschrijving"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Rekeningstelsel"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Crediteuren Ouderdomsoverzicht"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Artikel toevoegen"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Logout"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Rekening wijzigen"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Zoek"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
+msgid "Reconciliation"
+msgstr "Boekingen Verwerken"
 
 #: sql/Pg-database.sql:2919
 #, fuzzy
@@ -592,310 +698,71 @@ msgstr "Debiteurenboekingen"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Verkooporder"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "Personeel"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Zaaktype"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Voorraad"
+msgid "Reporting Units"
+msgstr "Rapporten"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Prijsgroep toevoegen"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Voorraad"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Omschrijving"
+msgid "Reports"
+msgstr "Rapporten"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "Omschrijving"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "Offerteaanvragen"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Factuur"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Ontvangstbewijs"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Loonkorting"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "SIC weergeven"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "miljard"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Inventaris overboeken"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Crediteuren"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Verkoopfactuur"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Debiteuren Ouderdomsoverzicht"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Order invoer"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "Klant Historie"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Prijsgroepen"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-#, fuzzy
-msgid "Timecard"
-msgstr "Artikel toevoegen"
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Inkomende zending"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Assemblage voorraad"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Contact"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Prijsgroep"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Bedrijfsnaam"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Prijsgroepen"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Bedrijfsnaam"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "Grootboek"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Offertes"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Proefbalans"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Groep toevoegen"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Zoek"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Magazijnen weergeven"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Voorschot"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Werknemers"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Assemblage toevoegen"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Rekening verwijderen"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Rekening verwijderen"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Rekening toevoegen"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "Cheque"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Openstaand"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "Factuur"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-#, fuzzy
-msgid "Generate"
-msgstr "Grootboek"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Contact"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Land"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Magazijnen"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Werknemer"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Inkooporder"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Werknemer toevoegen"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Leverancier"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "Standaard"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Zaaktypes weergeven"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Uitzoeklijst"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Zoek"
+msgid "Reverse AR Overpay"
+msgstr "Ontvangstbewijzen"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Voorschot"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Voorschot"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Zoek"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Verkoopfactuur"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Verkoop"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Verkoopfactuur"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Verkooporder"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Verkooporders"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -903,2311 +770,452 @@ msgstr "Voorschot"
 msgid "Search"
 msgstr "Zoek"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Assemblages"
+msgid "Search Assets"
+msgstr "Zoek"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Locatielijst"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Prijsgroepen"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Boeking toevoegen"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Prijsgroepen"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Zoek"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Bedrijfsnaam"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Instellingen"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "miljard"
+msgid "Sessions"
+msgstr "Versie"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Verzenden"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Zendingen"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Inkomstenoverzicht"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Voorraad opgeslagen"
-
-#: sql/Pg-database.sql:548
-#, fuzzy
-msgid "Hot Lead"
-msgstr "Levertijd"
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Begindatum"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Overzicht"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Omschrijving"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Assemblage voorraad"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Systeem"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Datum formaat"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+#, fuzzy
+msgid "Timecard"
+msgstr "Artikel toevoegen"
+
+#: sql/Pg-database.sql:2934
+#, fuzzy
+msgid "Timecards"
+msgstr "Artikel toevoegen"
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Top Niveau"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Boeking opgeslagen!"
 
-#~ msgid "Dataset"
-#~ msgstr "Dataset"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Overboeking"
 
-#, fuzzy
-#~ msgid "Transactions"
-#~ msgstr "Boekingen"
-
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Rekeningen"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Betaling geboekt!"
-
-#~ msgid "Source"
-#~ msgstr "Herkomst"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Gebruiker opgeslagen!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Ontvangstbewijzen"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "voor periode"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "Projectboekingen"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "Openstaande Debiteuren"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "SIC toevoegen"
-
-#~ msgid "Paid"
-#~ msgstr "Betaald"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "Van"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Leveranciernummer"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Factuurdatum"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Boeking opgeslagen!"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Datum formaat"
-
-#~ msgid "Equity"
-#~ msgstr "Passiva/Eigen Vermogen"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Selecteer alles"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Bedrag"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Maak dataset"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Leverdatum"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Boeken op"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Rekeningen"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Jaareinde geboekt!"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Ontvangstbewijzen"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Contact"
-
-#, fuzzy
-#~ msgid "Scheduled"
-#~ msgstr "Rekening verwijderen"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Naam"
-
-#~ msgid "On Hand"
-#~ msgstr "Op voorraad"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Debiteurenboekingen"
-
-#~ msgid "Login"
-#~ msgstr "Login"
-
-#~ msgid "Sell Price"
-#~ msgstr "Verkoopprijs"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "Factuur"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Accountants Controle"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Versie"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Leverancier toevoegen"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Betalingen"
-
-#~ msgid "Expense"
-#~ msgstr "Onkosten"
-
-#~ msgid "Currency"
-#~ msgstr "Valuta"
-
-#~ msgid "Liability"
-#~ msgstr "Passiva"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "Opeengestapeld"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Onderwerp"
-
-#~ msgid "ID"
-#~ msgstr "ID"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Begin Balans"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Jaareinde"
-
-#, fuzzy
-#~ msgid "Allocated"
-#~ msgstr "Toelagen"
-
-#~ msgid "Startdate"
-#~ msgstr "Begindatum"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Belastingnummer"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Rekeningtype"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Eenheid"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "Standaard"
-
-#~ msgid "Message"
-#~ msgstr "Boodschap"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Inkooporder"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Klantnummer"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Contact"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Offerteaanvraag"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Assemblage toevoegen"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Klant wijzigen"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Bijlage"
-
-#~ msgid "as at"
-#~ msgstr "per"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Gebruiker wijzigen"
-
-#~ msgid "Income"
-#~ msgstr "Inkomsten"
-
-#~ msgid "Number"
-#~ msgstr "Nummer"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Rekeningen weergeven"
-
-#~ msgid "Delete"
-#~ msgstr "Verwijder"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Wachtwoord"
-
-#~ msgid "Markup"
-#~ msgstr "Winstmarge"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Debet"
-
-#~ msgid "Post"
-#~ msgstr "Boek"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Datum formaat"
-
-#~ msgid "Make"
-#~ msgstr "Fabrikant"
-
-#~ msgid "Till"
-#~ msgstr "Kassa"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Actief"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Backup"
-
-#~ msgid "Receivables"
-#~ msgstr "Vorderingen"
-
-#~ msgid "System Defaults"
-#~ msgstr "Systeem Standaard"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Huidig"
-
-#~ msgid "Detail"
-#~ msgstr "Detail"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Factuurnummer"
-
-#~ msgid "Backup"
-#~ msgstr "Backup"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Opslaan als nieuw"
-
-#~ msgid "Database"
-#~ msgstr "Database"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Inkooporder"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Rekeningen weergeven"
-
-#~ msgid "Code"
-#~ msgstr "Code"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Boeken afsluiten tot"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Contact"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Stylesheet"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Artikel"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Werknemer wijzigen"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Debet"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "Nummer"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "Gebruiker"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Inkomsten"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "E-mail"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Rekening"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Verzenden via"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Bestelling"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Credit"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Bijgewerkt"
-
-#~ msgid "Taxable"
-#~ msgstr "Belastbaar percentage"
-
-#~ msgid "Continue"
-#~ msgstr "Verder"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Verzendpunt"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Selecteer alles"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Begindatum"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Offerte"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Rekening verwijderen"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "Gebruiker"
-
-#~ msgid "COGS"
-#~ msgstr "Kostprijs Verkopen"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Last Cost"
-#~ msgstr "Kost"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Overzicht"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Subtotaal"
-
-#~ msgid "Serial Number"
-#~ msgstr "Serienummer"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Datum"
-
-#~ msgid "Account"
-#~ msgstr "Rekening"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Reconcilidatie rapport"
-
-#~ msgid "Memo"
-#~ msgstr "Memo"
-
-#~ msgid "Active"
-#~ msgstr "Actief"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Begindatum"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Rekeningtype"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Kortingen"
-
-#~ msgid "Phone"
-#~ msgstr "Tel."
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "Prijs"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "Opeengestapeld"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Boek als nieuw"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Debet"
-
-#~ msgid "Tax Included"
-#~ msgstr "Inclusief Belasting"
-
-#~ msgid "Drawing"
-#~ msgstr "Tekening"
-
-#~ msgid "List Price"
-#~ msgstr "Catalogusprijs"
-
-#~ msgid "No"
-#~ msgstr "Nee"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Totaal Regel"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Inkomsten"
-
-#~ msgid "Qty"
-#~ msgstr "Aantal"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Bijgewerkt"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Zaaktype"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Activeer Accountants opsporing"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Instellingen"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Begindatum"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Rekeningnummer"
-
-#~ msgid "Project Number"
-#~ msgstr "Projectnummer"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Inclusief wisselkoersverschil"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "Gebruiker"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Backup"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Datum formaat"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "Code"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Verwijder dataset"
-
-#~ msgid "City"
-#~ msgstr "Stad"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Kortingen"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Vertalingen"
 
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Gebruiker wijzigen"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Toegangsbeheer"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Belasting Rekeningen"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "Code"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Rekeningen verbinden"
-
-#~ msgid "All"
-#~ msgstr "Allemaal"
-
-#~ msgid "From"
-#~ msgstr "Van"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Rapport voor"
-
-#~ msgid "Remaining"
-#~ msgstr "Resterend"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Werknemernaam"
-
-#~ msgid "Model"
-#~ msgstr "Type"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Activa (bezittingen)"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Kopieër naar rekeningstelsel"
-
-#~ msgid "Method"
-#~ msgstr "Methode"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Opslaan als nieuw"
-
-#~ msgid "Reference"
-#~ msgstr "Referentie"
-
-#~ msgid "Contra"
-#~ msgstr "Tegen"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Detail"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Verschuldigd bedrag"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Instellingen bewaard!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Afdeling"
-
-#~ msgid "Debit"
-#~ msgstr "Debet"
-
-#~ msgid "List Transactions"
-#~ msgstr "Boekingen tonen"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Zaaktype"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Rekeningnummer"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Kredietlimiet"
-
-#~ msgid "Cc"
-#~ msgstr "Kopie aan"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "Van"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Inventaris controleren"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Zaaktype"
-
-#~ msgid "Cost Center"
-#~ msgstr "Kostenpost"
-
-#~ msgid "Bin"
-#~ msgstr "Locatie"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Offerte"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Nodig voor"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Prijsgroep"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "E-mail Overzicht aan"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Rapport voor"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Zaaktype"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Saldo Overzicht"
-
-#~ msgid "Report for"
-#~ msgstr "Rapport voor"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Kortingen"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Factuurdatum"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Belastbaar percentage"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Bestelling"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Voorraad opgeslagen"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Inkomstenoverzicht"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Activa (bezittingen)"
-
-#~ msgid "Amount"
-#~ msgstr "Bedrag"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Factuurdatum"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Boek als nieuw"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Opgeschoond"
-
-#, fuzzy
-#~ msgid "Lead Time"
-#~ msgstr "Levertijd"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Rapport voor"
-
-#~ msgid "Projects"
-#~ msgstr "Projecten"
-
-#~ msgid "Difference"
-#~ msgstr "Verschil"
-
-#~ msgid "Update"
-#~ msgstr "Bijwerken"
-
-#~ msgid "Due Date"
-#~ msgstr "Vervaldatum"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Gebruiker wijzigen"
-
-#~ msgid "Database Host"
-#~ msgstr "Database computer"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Klantnummer"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Rekening wijzigen"
-
-#~ msgid "Warehouse"
-#~ msgstr "Magazijn"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Bijlage"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Uitgaven"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Bedrijfsnaam"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Omschrijving"
-
-#~ msgid "Password"
-#~ msgstr "Wachtwoord"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Bedrijf"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "Belastingnummer"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Opslaan"
-
-#~ msgid "Edit User"
-#~ msgstr "Gebruiker wijzigen"
-
-#~ msgid "FX"
-#~ msgstr "FX"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Proefbalans"
 
-#~ msgid "Account Number"
-#~ msgstr "Rekeningnummer"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Zaaktype"
 
-#~ msgid "Edit Vendor"
-#~ msgstr "Leverancier wijzigen"
-
-#~ msgid "User"
-#~ msgstr "Gebruiker"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Kortingen"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "Openstaande Crediteuren"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Voorraad opgeslagen"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Datum formaat"
-
-#~ msgid "Printer"
-#~ msgstr "Printer"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Bijgewerkt"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "Pakbonnen"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "Tot"
-
-#~ msgid "Bcc"
-#~ msgstr "Onzichtbare kopie aan"
-
-#~ msgid "Date Paid"
-#~ msgstr "Betaaldatum"
-
-#~ msgid "Amount Due"
-#~ msgstr "Verschuldigd bedrag"
-
-#~ msgid "Credit"
-#~ msgstr "Credit"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Land"
-
-#~ msgid "Short"
-#~ msgstr "Kort"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "Gebruiker"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Contact"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Leveranciernummer"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Jaareinde"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Verkooppunt Rekening"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "Mei"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Inkooporder"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Korting toevoegen"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Datum formaat"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Verwijder dataset"
-
-#~ msgid "Open"
-#~ msgstr "Open"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Credit"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Voorschot"
-
-#, fuzzy
-#~ msgid "Average Cost"
-#~ msgstr "Kost"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Projectboekingen"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Rekeningen weergeven"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Opmerkingen"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Selecteer"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "Op voorraad"
-
-#~ msgid "Company"
-#~ msgstr "Bedrijf"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Wisselkoers"
-
-#~ msgid "Salesperson"
-#~ msgstr "Verkoper"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Leveranciernummer"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Toevoegen aan drop-down menus"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Credit"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "Belastingnummer / Pers.nr."
-
-#~ msgid "Include in Report"
-#~ msgstr "Toevoegen aan Uitvoer"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Saldo"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Boeking terugdraaien voor alle data"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Saldo Overzicht"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Rapporten"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Nodig voor"
-
-#~ msgid "Number Format"
-#~ msgstr "Nummeraanduiding"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Rapporten"
-
-#~ msgid "Line Total"
-#~ msgstr "Totaal Regel"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Zaaktype"
-
-#~ msgid "Address"
-#~ msgstr "Adres"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Maak dataset"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Bedrijfsnaam"
-
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "Gemaild"
-
-#~ msgid "Warning!"
-#~ msgstr "Waarschuwing!"
-
-#~ msgid "Manager"
-#~ msgstr "Manager"
-
-#~ msgid "Record in"
-#~ msgstr "Boeken op"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Grootboek"
-
-#~ msgid "Image"
-#~ msgstr "Plaatje"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Leveranciernummer"
-
-#~ msgid "days"
-#~ msgstr "dagen"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Rapporten"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Gewichtseenheid"
-
-#~ msgid "Project"
-#~ msgstr "Project"
-
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "No language"
-#~ msgstr "Taal"
+msgid "Use AR Overpayment"
+msgstr "Voorschot"
 
-#~ msgid "Name"
-#~ msgstr "Naam"
-
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Datum formaat"
+msgid "Use Overpayment"
+msgstr "Voorschot"
 
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Rekeningnummer"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Leverancier"
 
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Kortingen"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "Leverancier Historie"
 
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Rekening wijzigen"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Inkoopfaktuur"
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "Cheque"
-
-#~ msgid "Screen"
-#~ msgstr "Scherm"
-
-#~ msgid "Obsolete"
-#~ msgstr "Niet actief"
+msgid "Vouchers"
+msgstr "Rekening verwijderen"
 
-#~ msgid "Invoice Date"
-#~ msgstr "Factuurdatum"
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Magazijnen"
 
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Rekeningen verbinden"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Boekingen"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Rekeningen weergeven"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Bedrijfs order"
 
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "Standaard"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Projectnummer"
+msgid "Year End"
+msgstr "Jaareinde"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Saldo Overzicht"
+msgid "depreciation"
+msgstr "Omschrijving"
 
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Totaalrekening voor"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "balance"
-#~ msgstr "Saldo"
+msgid "import"
+msgstr "Rapporten"
 
-#, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Bestelling"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#~ msgid "Company Name"
-#~ msgstr "Bedrijfsnaam"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#~ msgid "To"
-#~ msgstr "Tot"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Factuur"
+msgid "production"
+msgstr "Loonkorting"
 
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "Projectnummer"
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Onbelast"
+#~ msgid " Date missing!"
+#~ msgstr "Datum ontbreekt!"
 
 #, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "Werknemernaam"
-
-#~ msgid "Closed"
-#~ msgstr "Afgesloten"
+#~ msgid " missing!"
+#~ msgstr "Code ontbreekt!"
 
 #, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Boek als nieuw"
+#~ msgid "# Invoices"
+#~ msgstr "Facturen"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Werknemer wijzigen"
 
-#~ msgid "Total"
-#~ msgstr "Totaal"
-
-#~ msgid "Notes"
-#~ msgstr "Opmerkingen"
+#, fuzzy
+#~ msgid "%1 Business"
+#~ msgstr "Zaaktype"
 
 #, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "Klant Historie"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Geldoverboeking toevoegen"
 
 #, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Rekeningen weergeven"
+#~ msgid "%1 GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Bijlage"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Journaalpost toevoegen"
 
 #, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Verkoopfacturen"
-
-#~ msgid "Compare to"
-#~ msgstr "Vergelijk met"
+#~ msgid "%1 Language"
+#~ msgstr "Taal"
 
 #, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Reconcilidatie rapport"
+#~ msgid "%1 Number"
+#~ msgstr "Nummer"
 
 #, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Datum"
-
-#~ msgid "Current"
-#~ msgstr "Huidig"
-
-#~ msgid "Country"
-#~ msgstr "Land"
+#~ msgid "%1 SIC"
+#~ msgstr "SIC toevoegen"
 
 #, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Datum formaat"
+#~ msgid "%1 Warehouse"
+#~ msgstr "Magazijn"
 
 #, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Backup"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Klant bestaat niet!"
 
 #, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Prijsgroep"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Leverancier bestaat niet!"
+
+#~ msgid "A"
+#~ msgstr "A"
 
 #, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Aantal Decimalen"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Betalingen"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Factuur"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Rekeningnummer"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Bedrijf"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Boekingsperiode is open"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Projectboekingen"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Werknemers"
-
-#~ msgid "Group"
-#~ msgstr "Groep"
-
-#~ msgid "Subtotal"
-#~ msgstr "Subtotaal"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Setup templates"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Opslaan als nieuw"
-
-#~ msgid "Unit"
-#~ msgstr "Eenheid"
-
-#~ msgid "No."
-#~ msgstr "Nr."
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Offerte"
-
-#~ msgid "Summary"
-#~ msgstr "Overzicht"
-
-#~ msgid "Print"
-#~ msgstr "Afdrukken"
-
-#~ msgid "E-mail"
-#~ msgstr "E-mail"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Subtotaal"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "Groep"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Voorschot"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Rekeningen"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Offerte"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Betalingen"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Belastingnummer / Pers.nr."
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Ontvangstdatum"
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "Vervaldatum"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
+#~ msgid "AP Invoices"
 #~ msgstr "Verkooppunt Rekening"
 
-#~ msgid "Weight"
-#~ msgstr "Gewicht"
+#~ msgid "AP Outstanding"
+#~ msgstr "Openstaande Crediteuren"
 
-#~ msgid "Tax"
-#~ msgstr "Belasting"
-
-#~ msgid "Cleared"
-#~ msgstr "Opgeschoond"
-
-#~ msgid "Order Number"
-#~ msgstr "Referentie"
-
-#~ msgid "Customer Number"
-#~ msgstr "Klantnummer"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Accountants Controle"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Wisselkoers"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Percentage"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "Openstaande Debiteuren"
-
-#~ msgid "Edit"
-#~ msgstr "Wijzig"
-
-#~ msgid "Copies"
-#~ msgstr "Kopieën"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Gebruiker toevoegen"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Zoek"
-
-#~ msgid "Save"
-#~ msgstr "Opslaan"
-
-#~ msgid "State/Province"
-#~ msgstr "Staat/Provincie"
-
-#, fuzzy
-#~ msgid "Heading"
-#~ msgstr "Kopregel"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Nieuwe templates"
+#~ msgid "AP Transactions"
+#~ msgstr "Crediteurenboekingen"
 
 #, fuzzy
 #~ msgid "AP account"
 #~ msgstr "Rekening"
 
 #, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Voorraad opgeslagen"
+#~ msgid "AR Invoices"
+#~ msgstr "Factuur"
 
-#, fuzzy
-#~ msgid "Clocked"
-#~ msgstr "Geblokeerd!"
+#~ msgid "AR Outstanding"
+#~ msgstr "Openstaande Debiteuren"
 
-#~ msgid "Discount"
-#~ msgstr "Korting"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Bijlage"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "Bevestig!"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Datum formaat"
-
-#~ msgid "Balance"
-#~ msgstr "Saldo"
-
-#~ msgid "Ship via"
-#~ msgstr "Verzenden via"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Omschrijving"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Onbelast"
-
-#~ msgid "Department"
-#~ msgstr "Afdeling"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Nodig voor"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "Belasting Rekeningen"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Belastbaar percentage"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Wachtwoord"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Rapporten"
-
-#~ msgid "Standard"
-#~ msgstr "Standaard"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Instellingen wijzigen voor"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Orderdatum"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Rapporten"
+#~ msgid "AR Transactions"
+#~ msgstr "Debiteurenboekingen"
 
 #, fuzzy
 #~ msgid "AR account"
 #~ msgstr "Rekening"
 
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Project"
+#~ msgid "About"
+#~ msgstr "Over"
+
+#~ msgid "Above"
+#~ msgstr "Boven"
+
+#~ msgid "Account"
+#~ msgstr "Rekening"
 
 #, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Rekeningen verbinden"
-
-#~ msgid "Profit Center"
-#~ msgstr "Inkomstenpost"
-
-#~ msgid "ROP"
-#~ msgstr "Minimum voorraad"
+#~ msgid "Account %1 not found"
+#~ msgstr "Rekening bestaat niet"
 
 #, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Credit"
-
-#~ msgid "Payables"
-#~ msgstr "Betalingen"
+#~ msgid "Account %1 not found."
+#~ msgstr "Rekening"
 
 #, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "Geldig tot"
+#~ msgid "Account Description"
+#~ msgstr "Omschrijving"
 
 #, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Opgeschoond"
+#~ msgid "Account Label"
+#~ msgstr "Rekeningnummer"
 
 #, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Saldo"
+#~ msgid "Account Name"
+#~ msgstr "Rekeningnummer"
 
 #, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Saldo"
+#~ msgid "Account No."
+#~ msgstr "Rekening"
+
+#~ msgid "Account Number"
+#~ msgstr "Rekeningnummer"
 
 #, fuzzy
-#~ msgid "Content"
-#~ msgstr "Contact"
+#~ msgid "Account Number End"
+#~ msgstr "Rekeningnummer"
 
 #, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Land"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Inkomsten"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Betaling"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Reconcilidatie rapport"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Rekening wijzigen"
-
-#~ msgid "Microfiche"
-#~ msgstr "Microfiche"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Leveranciernummer"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Debet"
-
-#~ msgid "Add Customer"
-#~ msgstr "Klant toevoegen"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Gebruiker wijzigen"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "Standaard"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Onderwerp"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Admin wachtwoord veranderen"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Manager"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Betaling"
-
-#~ msgid "Exch"
-#~ msgstr "Wisselkoers"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Afdelingen weergeven"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Prijsgroep"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Werknemer wijzigen"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Factuurnummer"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Boekingen Verwerken"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Bedrag"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Item"
-#~ msgstr "Onderdelen"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Geen betalingsdatum aanwezig!"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Saldo Overzicht"
-
-#~ msgid "Accounts"
-#~ msgstr "Rekeningen"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Voorschot"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Wisselkoers toevoegen"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Offerte"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Jaareinde"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Interne notities"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Winstreserve"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Taal niet gedefinieerd!"
-
-#, fuzzy
-#~ msgid "GL Reference Number"
-#~ msgstr "Referentie"
-
-#, fuzzy
-#~ msgid "Sales Order Number"
-#~ msgstr "Referentie"
-
-#, fuzzy
-#~ msgid "Sales Quotation Number"
-#~ msgstr "Offertenummer"
-
-#~ msgid "RFQ Number"
-#~ msgstr "Offerteaanvraagnummer"
-
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "Projectnummer"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Wachtwoord gewijzigd!"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Bedrijfsnaam"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Bedrijfsnaam"
-
-#~ msgid "Save as new"
-#~ msgstr "Opslaan als nieuw"
+#~ msgid "Account Number Start"
+#~ msgstr "Rekeningnummer"
 
 #~ msgid "Account Number missing!"
 #~ msgstr "Rekeningnummer ontbreekt!"
 
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Rekeningtype"
+
 #~ msgid "Account Type missing!"
 #~ msgstr "Rekeningtype ontbreekt!"
 
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr ""
-#~ "Kan rekening niet toekennen aan meer dan één debiteuren-, crediteuren- of "
-#~ "inventarisrekening"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "Rekening kan niet omgezet worden naar ander type Rekening"
-
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan de meerdere opties voor niet instellen"
-
-#~ msgid "Account saved!"
-#~ msgstr "Rekening opgeslagen"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Kan rekening niet opslaan!"
+#~ msgid "Account category"
+#~ msgstr "Rekeningnummer"
 
 #~ msgid "Account does not exist!"
 #~ msgstr "Rekening bestaat niet"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
+#~ msgid "Account numbers"
+#~ msgstr "Rekeningnummer"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Kopieër naar rekeningstelsel"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "GIFI ontbreekt!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI opgeslagen!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI verwijderd!"
+#~ msgid "Account saved!"
+#~ msgstr "Rekening opgeslagen"
 
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Korting"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Zaaktype"
-
-#~ msgid "Description missing!"
-#~ msgstr "Omschrijving ontbreekt"
-
-#~ msgid "Business saved!"
-#~ msgstr "Zaaktype opgeslagen"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Zaaktype verwijderd!"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "Standaard Industiële Codes"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "SIC toevoegen"
-
-#~ msgid "Code missing!"
-#~ msgstr "Code ontbreekt!"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC opgeslagen!"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC verwijderd!"
-
-#~ msgid "Languages"
-#~ msgstr "Talen"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Taal"
-
-#~ msgid "Language saved!"
-#~ msgstr "Taal opgeslagen!"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Taal Wijzigen"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Taal verwijderd!"
-
-#, fuzzy
-#~ msgid "Default Template"
-#~ msgstr "Tekst templates"
-
-#~ msgid "Edit Template"
-#~ msgstr "Template wijzigen"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "Latex Sjablonen"
-
-#~ msgid "Template saved!"
-#~ msgstr "Template opgeslagen!"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "Template opgeslagen!"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Kan order niet opslaan!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Kan voorkeuren niet opslaan!"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Magazijn"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Magazijn opgeslagen"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Magazijn verwijderd!"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid "About"
-#~ msgstr "Over"
-
-#, fuzzy
-#~ msgid "Next Number"
-#~ msgstr "Belastingnummer"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Verkoopfactuur wijzigen"
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Inkoop factuur wijzigen"
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "Crediteurenboeking"
-
-#~ msgid "done"
-#~ msgstr "gebeurd"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Grootboekboeking (memoriaal) "
-
-#, fuzzy
-#~ msgid "Printing"
-#~ msgstr "Afdrukken"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "E-mailadres ontbreekt!"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Huidige winst"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Afdeling"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Projectnummer"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Verkoopfactuur toevoegen"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Inkoop factuur toevoegen"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Inkoop factuur wijzigen"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Januari"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Code"
-
-#~ msgid "Post as new"
-#~ msgstr "Boek als nieuw"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Boek als nieuw"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Boek als nieuw"
-
-#~ msgid "ea"
-#~ msgstr "voor"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Factuurdatum ontbreekt!"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Leverancier ontbreekt!"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Kan geen factuur boeken in afgesloten periode!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Wisselkoers ontbreekt!"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Kan geen betaling boeken voor afgesloten periode!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Wisselkoers voor Betaling ontbreekt!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Kan factuur niet boeken!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Rekening bestaat niet"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Rekening bestaat niet"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Rekening bestaat niet"
-
-#~ msgid "Stock"
-#~ msgstr "Voorraad"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Arbeid/Overheadskosten"
-
-#~ msgid "Updated"
-#~ msgstr "Bijgewerkt"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Geschiedenis"
-
-#, fuzzy
-#~ msgid "SO"
-#~ msgstr "O"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "Verkooppunt"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Code"
-
-#~ msgid "Curr"
-#~ msgstr "Val."
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Leveranciernummer"
-
-#~ msgid "Cost"
-#~ msgstr "Kost"
-
-#~ msgid "Break"
-#~ msgstr "Onderbreking"
-
-#, fuzzy
-#~ msgid "List"
-#~ msgstr "Locatielijst"
-
-#~ msgid "BOM"
-#~ msgstr "Onderdelenlijst"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Individual Items"
-#~ msgstr "Onderliggende onderdelen"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Leverancier bestaat niet!"
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Klant bestaat niet!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Kies een van de onderstaande namen"
-
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr ""
-#~ "Aanwezige voorraad moet nul zijn voordat een product als 'niet actief' kan "
-#~ "worden gemarkeerd."
-
-#~ msgid "Item deleted!"
-#~ msgstr "Onderdeel verwijderd!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Kan onderdeel niet verwijderen!"
-
-#~ msgid "Add"
-#~ msgstr "Toevoegen"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "Aantal is hoger dan de aanwezige voorraad!"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Assemblage naar voorraad geboekt"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Kan assemblages niet in voorraad nemen!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Offertenummer"
-
-#, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Afdrukken"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "Niets geselecteerd!"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr ""
-#~ "Weet us zeker dat u de gemarkeerde stukken wil verwijderen uit de wachtrij?"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Gemarkeerde stukken uit de wachtrij aan het verwijderen"
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Spoolfiles verwijderd!"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Kan bestanden niet verwijderen!"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Gemarkeerde delen afgedrukt!"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Klant"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Leverancier"
+#~ msgid "Account:"
+#~ msgstr "Rekening"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Rekening"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Factuurnummer"
+#~ msgid "Accounting"
+#~ msgstr "Boekhouding"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Boekhoudmenu"
+
+#~ msgid "Accounts"
+#~ msgstr "Rekeningen"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Referentie"
+#~ msgid "Accounts From"
+#~ msgstr "Rekeningen"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Offertenummer"
+#~ msgid "Accounts To"
+#~ msgstr "Rekeningen"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "Van"
-
-#~ msgid "Spoolfile"
-#~ msgstr "Spoolfile"
-
-#~ msgid "Remove"
-#~ msgstr "Verwijder"
+#~ msgid "Accrual"
+#~ msgstr "Opeengestapeld"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Nummer"
+#~ msgid "Accrual Basis:"
+#~ msgstr "Opeengestapeld"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Onbekend project!"
+#~ msgid "Activate Audit trail"
+#~ msgstr "Activeer Accountants opsporing"
 
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Kies een van de onderstaande projecten"
+#~ msgid "Activate Audit trails"
+#~ msgstr "Activeer Accountants opsporing"
 
-#, fuzzy
-#~ msgid "E-mail message"
-#~ msgstr "Gemaild"
-
-#, fuzzy
-#~ msgid "For"
-#~ msgstr "vier"
+#~ msgid "Active"
+#~ msgstr "Actief"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "Debiteurenboekingen"
+#~ msgid "Active On"
+#~ msgstr "Actief"
+
+#~ msgid "Add"
+#~ msgstr "Toevoegen"
+
+#~ msgid "Add Account"
+#~ msgstr "Rekening toevoegen"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Datum"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Inkoop factuur toevoegen"
+
+#~ msgid "Add Customer"
+#~ msgstr "Klant toevoegen"
 
 #, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Boodschap"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Verkoopfactuur toevoegen"
 
-#~ msgid "sent"
-#~ msgstr "verzonden"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Kies postscript of PDF"
+#~ msgid "Add Department"
+#~ msgstr "Afdeling toevoegen"
 
 #, fuzzy
-#~ msgid "Nothing to print!"
-#~ msgstr "Niets over te boeken!"
+#~ msgid "Add Note"
+#~ msgstr "Credit"
 
-#, fuzzy
-#~ msgid "Select payment"
-#~ msgstr "Voorschot"
+#~ msgid "Add POS Invoice"
+#~ msgstr "Directe verkooporder toevoegen"
 
-#~ msgid "Printed"
-#~ msgstr "Afgedrukt"
-
-#~ msgid "Recd"
-#~ msgstr "Ontvangen"
-
-#~ msgid "Extended"
-#~ msgstr "Uitgebreid"
-
-#, fuzzy
-#~ msgid "OH"
-#~ msgstr "O"
-
-#~ msgid "Serial No."
-#~ msgstr "Serienr"
-
-#~ msgid "SKU"
-#~ msgstr "SKU"
-
-#, fuzzy
-#~ msgid "Select items"
-#~ msgstr "Selecteer"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Dit onderdeel is niet in de database gevonden!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Wat voor soort artikel is dit?"
-
-#~ msgid "Service"
-#~ msgstr "Dienst"
-
-#, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "Getal ontbreekt in Regel"
+#~ msgid "Add Project"
+#~ msgstr "Project toevoegen"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Inkooporder toevoegen"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Verkooporder toevoegen"
+#~ msgid "Add Quotation"
+#~ msgstr "Offerte toevoegen"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Offerteaanvraag toevoegen"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Offerte toevoegen"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Verkoopfactuur toevoegen"
 
-#~ msgid "In-line"
-#~ msgstr "In Lijn"
-
-#, fuzzy
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "Kies postscript of PDF"
+#~ msgid "Add Sales Order"
+#~ msgstr "Verkooporder toevoegen"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Datum ontbreekt!"
+#~ msgid "Add Unit"
+#~ msgstr "Eenheid"
 
-#~ msgid "Ship to"
-#~ msgstr "Verzenden aan"
+#~ msgid "Add Vendor"
+#~ msgstr "Leverancier toevoegen"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Inkoop factuur toevoegen"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3222,806 +1230,27 @@ msgstr "Boeking opgeslagen!"
 #~ msgstr "Zaaktype toevoegen"
 
 #, fuzzy
-#~ msgid "State"
-#~ msgstr "Overzicht"
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Korting toevoegen"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Inkoop factuur toevoegen"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Wisselkoers toevoegen"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Verkoopfactuur toevoegen"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Handelskorting"
+#~ msgid "Address"
+#~ msgstr "Adres"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Kan factuur niet verwijderen!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "Klant ontbreekt!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Project wijzigen"
-
-#~ msgid "Add Project"
-#~ msgstr "Project toevoegen"
-
-#~ msgid "Orphaned"
-#~ msgstr "Wees"
-
-#~ msgid "Groups"
-#~ msgstr "Groepen"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Prijsgroepen"
+#~ msgid "Addresses"
+#~ msgstr "Adres"
 
 #, fuzzy
-#~ msgid "Inactive"
-#~ msgstr "Actief"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Vertalingen opgeslagen!"
-
-#~ msgid "Group missing!"
-#~ msgstr "Groep ontbreekt!"
-
-#~ msgid "Group saved!"
-#~ msgstr "Groep opgeslagen!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Prijsgroep mist!"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Prijsgroep opgeslagen!"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Vertaling verwijderd!"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Groep verwijderd!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Prijsgroep verwijderd!"
-
-#~ msgid "Description Translations"
-#~ msgstr "Omschrijving Vertaling"
-
-#~ msgid "Group Translations"
-#~ msgstr "Groep vertaling"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "Project Omschrijving Vertaling"
-
-#~ msgid "Translation"
-#~ msgstr "Vertaling"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Taal niet gedefinieerd!"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "Wijzig Omschrijving Vertaling"
-
-#, fuzzy
-#~ msgid "Transaction Dates"
-#~ msgstr "Boekingen"
-
-#, fuzzy
-#~ msgid "No open Projects!"
-#~ msgstr "Projecten"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders"
-#~ msgstr "Verkooporders"
-
-#, fuzzy
-#~ msgid "Service Code"
-#~ msgstr "Dienst"
-
-#, fuzzy
-#~ msgid "Select Customer"
-#~ msgstr "Klant wijzigen"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Klant bestaat niet!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Leverancier bestaat niet!"
-
-#, fuzzy
-#~ msgid "Failed to save order!"
-#~ msgstr "Kan order niet opslaan!"
-
-#, fuzzy
-#~ msgid "Orders generated!"
-#~ msgstr "Order verwijderd!"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Template opgeslagen!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Vervaldatum ontbreekt!"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Kan geen boeking maken in afgesloten periode"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Boeking opgeslagen!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Kan transactie niet boeken!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Debiteurenboekingen"
-
-#~ msgid "AP Transactions"
-#~ msgstr "Crediteurenboekingen"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Projectnummer"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Facturen"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Geldoverboeking toevoegen"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Journaalpost toevoegen"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Rekening"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Kan transactie niet boeken!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Boekingsdatum ontbreekt!"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Boeking is niet in evenwicht"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Inkooporder wijzigen"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Verkoop order wijzigen"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Offerteaanvraag wijzigen"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Offerte wijzigen"
-
-#~ msgid "Terms"
-#~ msgstr "Termijn"
-
-#~ msgid "Order Date"
-#~ msgstr "Orderdatum"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Offertedatum"
-
-#, fuzzy
-#~ msgid "Print and Save as new"
-#~ msgstr "Opslaan als nieuw"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Geen order datum aanwezig"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Offertedatum ontbreekt!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Code ontbreekt!"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Kan order niet opslaan!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "Kan offerte niet opslaan!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Weet u zeker dat u dit ordernummer wilt verwijderen?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Weet u zeker dat u dit offertenummer wilt verwijderen?"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Order verwijderd!"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Kan order niet verwijderen!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Offerte verwijderd!"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "Kan offerte niet verwijderen!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Geen ordernummer aanwezig"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Offertenummer ontbreekt!"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Goederen Verzenden"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Verzenddatum"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Goederen Ontvangen"
-
-#~ msgid "Done"
-#~ msgstr "Klaar"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Verzenddatum ontbreekt!"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Ontvangstdatum ontbreekt!"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Niets ingevuld!"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "Voorraad opgeslagen"
 
-#~ msgid "Could not save!"
-#~ msgstr "Kon niet opslaan!"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Niets over te boeken!"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Inventaris overboeken"
-
 #, fuzzy
-#~ msgid "Transfer from"
-#~ msgstr "Overboeken naar"
-
-#~ msgid "Transfer to"
-#~ msgstr "Overboeken naar"
-
-#, fuzzy
-#~ msgid "From Warehouse"
-#~ msgstr "Magazijn"
-
-#, fuzzy
-#~ msgid "To Warehouse"
-#~ msgstr "Magazijn"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Voorraad overgeheveld"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "Kon geen inventaris overboeken!"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "Inkooporders"
-
-#, fuzzy
-#~ msgid "Generate Orders"
-#~ msgstr "Grootboek"
-
-#, fuzzy
-#~ msgid "Select Vendor"
-#~ msgstr "Leverancier wijzigen"
-
-#, fuzzy
-#~ msgid "Order generation failed!"
-#~ msgstr "Boeking jaareinde mislukt!"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Afgesloten"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Afgesloten"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Directe verkooporder toevoegen"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Directe verkooporder wijzigen"
-
-#~ msgid "Change"
-#~ msgstr "Wijzig"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Open"
-
-#~ msgid "Posted!"
-#~ msgstr "Geboekt!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Korting"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "Projectboekingen"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Rekening verwijderd"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Rekeningnummer"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Verschuldigd bedrag"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Niet actief"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Inclusief Belasting"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Saldo Overzicht"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Saldo"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Saldo"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Proefbalans"
-
-#~ msgid "Business Number"
-#~ msgstr "Kamer van Koophandel nummer"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Taal Wijzigen"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Templates"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Afdelingen"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Rekening verwijderen"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Wisselkoers winst"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Wisselkoers verlies"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "Latex Sjablonen"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Wisselkoers ontbreekt!"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Handelskorting"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Weet u zeker dat u dit factuurnummer wilt verwijderen?"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Verwijder"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Geldig tot"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Assemblage wijzigen"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Belasting"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Inkooporder"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Inkooporder"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Activa (bezittingen)"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "Reconcilidatie rapport"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Methode"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Betaling geboekt!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Resterend"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "bestaat niet"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Opslaan als nieuw"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Verkooporders"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Verkooporders"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Inkooporders"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Inkooporders"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Offertes"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Offerteaanvraag"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Standaarden bewaard!"
-
-#~ msgid "Add Account"
-#~ msgstr "Rekening toevoegen"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Datum ontbreekt!"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Klantnummer"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Leveranciernummer"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Factuurnummer"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "Cheque"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Storting"
-
-#, fuzzy
-#~ msgid "Unable to save %1 object"
-#~ msgstr "Kan order niet opslaan!"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Factuurdatum"
-
-#~ msgid "January"
-#~ msgstr "Januari"
-
-#~ msgid "February"
-#~ msgstr "Februari"
-
-#~ msgid "March"
-#~ msgstr "Maart"
-
-#~ msgid "April"
-#~ msgstr "April"
-
-#~ msgid "June"
-#~ msgstr "Juni"
-
-#~ msgid "July"
-#~ msgstr "Juli"
-
-#~ msgid "August"
-#~ msgstr "Augustus"
-
-#~ msgid "September"
-#~ msgstr "September"
-
-#~ msgid "October"
-#~ msgstr "Oktober"
-
-#~ msgid "November"
-#~ msgstr "November"
-
-#~ msgid "December"
-#~ msgstr "December"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Verander wachtwoord"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Wachtwoord gewijzigd!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Proefbalans"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Bedrag ontbreekt"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Totaal"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Orderdatum"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Ontvangstbewijzen"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Rekening toevoegen"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Dec"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Zoek"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Facturen"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Verzenden via"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Rekeningnummer"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Rekeningnummer"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Nodig voor"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Projectnummer"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Jun"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "miljoen"
-
-#, fuzzy
-#~ msgid "Tue"
-#~ msgstr "tien"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Maximum in dropdown-lijst"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Bedrag"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Bedrag"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Onkosten"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Toevoegen aan Uitvoer"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Toevoegen aan Uitvoer"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Referentie"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Rapporten"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Inkomstenoverzicht"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Rekening"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Rekeningnummer"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Korting"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Rekening bestaat niet"
-
-#~ msgid "Jan"
-#~ msgstr "Jan"
-
-#~ msgid "Feb"
-#~ msgstr "Feb"
-
-#~ msgid "Mar"
-#~ msgstr "Mrt"
-
-#~ msgid "Apr"
-#~ msgstr "Apr"
-
-#~ msgid "Jun"
-#~ msgstr "Jun"
-
-#~ msgid "Jul"
-#~ msgstr "Jul"
-
-#~ msgid "Aug"
-#~ msgstr "Aug"
-
-#~ msgid "Sep"
-#~ msgstr "Sep"
-
-#~ msgid "Oct"
-#~ msgstr "Okt"
-
-#~ msgid "Nov"
-#~ msgstr "Nov"
-
-#~ msgid "Dec"
-#~ msgstr "Dec"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "Nodig voor"
-
-#~ msgid "Checks"
-#~ msgstr "Cheques"
-
-#~ msgid "Work Orders"
-#~ msgstr "Werk orders"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Pick lijsten"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Verzamel lijsten"
-
-#~ msgid "POS Invoice"
-#~ msgstr "Verkooppunt Rekening"
-
-#~ msgid "Text Templates"
-#~ msgstr "Tekst templates"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Mrt"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Betaling"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Ontvangstbewijs"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Verkoopfactuur"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Inkoopfaktuur"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Zaaktype"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Taal"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Magazijn"
-
-#~ msgid "Above"
-#~ msgstr "Boven"
-
-#~ msgid "Accounting"
-#~ msgstr "Boekhouding"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Boekhoudmenu"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Activeer Accountants opsporing"
-
-#~ msgid "Add Department"
-#~ msgstr "Afdeling toevoegen"
+#~ msgid "Adjustment Date"
+#~ msgstr "Overzicht"
 
 #~ msgid "Administration"
 #~ msgstr "Administratie"
@@ -4032,20 +1261,161 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "After Deduction"
 #~ msgstr "Na korting"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Rapporten"
+
+#~ msgid "All"
+#~ msgstr "Allemaal"
+
 #~ msgid "All Accounts"
 #~ msgstr "Alle Rekeningen"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Alle Datasets actueel"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Facturen"
+
 #~ msgid "All Items"
 #~ msgstr "Alle onderdelen"
+
+#, fuzzy
+#~ msgid "Allocated"
+#~ msgstr "Toelagen"
+
+#~ msgid "Amount"
+#~ msgstr "Bedrag"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Verschuldigd bedrag"
+
+#~ msgid "Amount Due"
+#~ msgstr "Verschuldigd bedrag"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Bedrag"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Bedrag ontbreekt"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Verschuldigd bedrag"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Bedrag"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Handelskorting"
+
+#~ msgid "Apr"
+#~ msgstr "Apr"
+
+#~ msgid "April"
+#~ msgstr "April"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Weet u zeker dat u dit ordernummer wilt verwijderen?"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Weet u zeker dat u dit offertenummer wilt verwijderen?"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Weet u zeker dat u deze boeking wilt verwijderen?"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr ""
+#~ "Weet us zeker dat u de gemarkeerde stukken wil verwijderen uit de "
+#~ "wachtrij?"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Assemblage naar voorraad geboekt"
+
 #~ msgid "Assembly"
 #~ msgstr "Assemblage"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Rekeningen weergeven"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Activa (bezittingen)"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Activa (bezittingen)"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "Reconcilidatie rapport"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Activa (bezittingen)"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Rekeningen weergeven"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Rekening wijzigen"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Bijlage"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Toegangsbeheer"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Accountants opsporing onbruikbaar"
@@ -4062,14 +1432,104 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Audit trails enabled"
 #~ msgstr "Accountants opsporing toegelaten"
 
+#~ msgid "Aug"
+#~ msgstr "Aug"
+
+#~ msgid "August"
+#~ msgstr "Augustus"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Belastbaar percentage"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Maak dataset"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Manager"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Voorschot"
+
+#, fuzzy
+#~ msgid "Average Cost"
+#~ msgstr "Kost"
+
+#~ msgid "BOM"
+#~ msgstr "Onderdelenlijst"
+
+#~ msgid "Backup"
+#~ msgstr "Backup"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Backup"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Backup"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Backup gezonden aan"
+
+#~ msgid "Balance"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Rekeningen verbinden"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Rekeningen verbinden"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Code"
 
 #~ msgid "Based on"
 #~ msgstr "Gebaseerd op"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Datum ontbreekt!"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Omschrijving"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Belastingnummer"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Omschrijving"
+
+#~ msgid "Bcc"
+#~ msgstr "Onzichtbare kopie aan"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Voor korting"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Saldo Overzicht"
 
 #~ msgid "Below"
 #~ msgstr "Onder"
@@ -4077,8 +1537,85 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Billing Address"
 #~ msgstr "Facturatieadres"
 
+#~ msgid "Bin"
+#~ msgstr "Locatie"
+
+#~ msgid "Bin Lists"
+#~ msgstr "Verzamel lijsten"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Begindatum"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Boekingsperiode is open"
+
+#~ msgid "Break"
+#~ msgstr "Onderbreking"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Referentie"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Toevoegen aan Uitvoer"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Zaaktype"
+
+#~ msgid "Business Number"
+#~ msgstr "Kamer van Koophandel nummer"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Zaaktype"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Zaaktype"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Zaaktype verwijderd!"
+
+#~ msgid "Business saved!"
+#~ msgstr "Zaaktype opgeslagen"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Zaaktype"
+
+#~ msgid "COGS"
+#~ msgstr "Kostprijs Verkopen"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Rapporten"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Kan factuur niet verwijderen!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Kan transactie niet boeken!"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Rekening bestaat niet"
+
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Kan geen exclusieve toegang krijgen!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Rekening bestaat niet"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Rekening bestaat niet"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "Kan bedrag niet verwijderen!"
@@ -4088,6 +1625,15 @@ msgstr "Boeking opgeslagen!"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Kan standaardrekening niet verwijderen!"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "Kan onderdeel niet verwijderen!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Kan order niet verwijderen!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "Kan offerte niet verwijderen!"
 
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "Kan boeking niet verwijderen!"
@@ -4101,26 +1647,306 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "Kan ontvangst niet boeken!"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Kan geen factuur boeken in afgesloten periode!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Kan factuur niet boeken!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Kan geen betaling boeken voor afgesloten periode!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Kan geen boeking maken in afgesloten periode"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Kan transactie niet boeken!"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "Kan bestanden niet verwijderen!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Kan rekening niet opslaan!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "Kan de standaard niet opslaan!"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Kan order niet opslaan!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Kan voorkeuren niet opslaan!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "Kan offerte niet opslaan!"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Kan order niet opslaan!"
+
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr ""
+#~ "Kan rekening niet toekennen aan meer dan één debiteuren-, crediteuren- of "
+#~ "inventarisrekening"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "Kan de meerdere opties voor niet instellen"
+
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Kan assemblages niet in voorraad nemen!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Belasting Rekeningen"
+
+#~ msgid "Cc"
+#~ msgstr "Kopie aan"
+
+#~ msgid "Change"
+#~ msgstr "Wijzig"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Admin wachtwoord veranderen"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "Cheque"
+
+#~ msgid "Checks"
+#~ msgstr "Cheques"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Bedrijf"
+
+#~ msgid "City"
+#~ msgstr "Stad"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "SIC toevoegen"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Opgeschoond"
+
+#~ msgid "Cleared"
+#~ msgstr "Opgeschoond"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Projectboekingen"
 
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Klik op login naam om deze te bewerken."
 
+#, fuzzy
+#~ msgid "Clocked"
+#~ msgstr "Geblokeerd!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Boeken afsluiten tot"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Afgesloten"
+
+#~ msgid "Closed"
+#~ msgstr "Afgesloten"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Afgesloten"
+
+#~ msgid "Code"
+#~ msgstr "Code"
+
+#~ msgid "Code missing!"
+#~ msgstr "Code ontbreekt!"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Inkooporders"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Verkooporders"
+
+#~ msgid "Company"
+#~ msgstr "Bedrijf"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Bedrijfsnaam"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Bedrijfsnaam"
+
+#~ msgid "Company Name"
+#~ msgstr "Bedrijfsnaam"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Bedrijf"
+
+#~ msgid "Compare to"
+#~ msgstr "Vergelijk met"
+
 #~ msgid "Components"
 #~ msgstr "Componenten"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "Bevestig!"
 
 #~ msgid "Connect to"
 #~ msgstr "Verbinden met"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Contact"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Contact"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Contact"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Contact"
+
+#~ msgid "Continue"
+#~ msgstr "Verder"
+
+#~ msgid "Contra"
+#~ msgstr "Tegen"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Accountants Controle"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Rekeningnummer"
+
+#~ msgid "Copies"
+#~ msgstr "Kopieën"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Kopieër naar rekeningstelsel"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Kopieër naar rekeningstelsel"
+
+#~ msgid "Cost"
+#~ msgstr "Kost"
+
+#~ msgid "Cost Center"
+#~ msgstr "Kostenpost"
+
+#~ msgid "Could not save!"
+#~ msgstr "Kon niet opslaan!"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "Kon geen inventaris overboeken!"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Land"
+
+#~ msgid "Country"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Verwijder dataset"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Maak rekeningstelsel"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Verwijder dataset"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Afdelingen weergeven"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Maak dataset"
+
+#~ msgid "Credit"
+#~ msgstr "Credit"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Rekeningnummer"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Kredietlimiet"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Credit"
+
+#~ msgid "Curr"
+#~ msgstr "Val."
+
+#~ msgid "Currency"
+#~ msgstr "Valuta"
+
+#~ msgid "Current"
+#~ msgstr "Huidig"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Huidige winst"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Klantnummer"
+
+#~ msgid "Customer Number"
+#~ msgstr "Klantnummer"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Klantnummer"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Klant verwijderd!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Klant ontbreekt!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Klant bestaat niet!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "Klant opgeslagen!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Rekeningen weergeven"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Klant"
 
 #~ msgid "Customers"
 #~ msgstr "Klanten"
@@ -4128,14 +1954,31 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI niet geinstalleerd"
 
+#~ msgid "Database"
+#~ msgstr "Database"
+
 #~ msgid "Database Administration"
 #~ msgstr "Database administratie"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Database Driver niet aangevinkt"
 
+#~ msgid "Database Host"
+#~ msgstr "Database computer"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Werknemer wijzigen"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Geen database gebruiker aanwezig!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "bestaat niet"
+
+#~ msgid "Dataset"
+#~ msgstr "Dataset"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "Dataset is nieuwer dan de versie!"
@@ -4146,11 +1989,89 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Dataset aangepast aan nieuwe versie!"
 
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Datum formaat"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Datum formaat"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Datum formaat"
+
+#~ msgid "Date Paid"
+#~ msgstr "Betaaldatum"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Ontvangstdatum"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Datum formaat"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Datum"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Ontvangstdatum ontbreekt!"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "Mei"
+
+#~ msgid "Debit"
+#~ msgstr "Debet"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Debet"
+
+#~ msgid "Dec"
+#~ msgstr "Dec"
+
+#~ msgid "December"
+#~ msgstr "December"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Aantal Decimalen"
+
 #~ msgid "Decrease"
 #~ msgstr "Vermindering"
 
 #~ msgid "Deduct after"
 #~ msgstr "Verminder na"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Kortingen"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Kortingen"
 
 #~ msgid "Deduction deleted!"
 #~ msgstr "Korting verwijderd!"
@@ -4158,17 +2079,182 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Deduction saved!"
 #~ msgstr "Korting opgeslagen!"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "Standaard"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "Standaard"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Rekening verwijderen"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Land"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Taal Wijzigen"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Standaarden bewaard!"
+
+#, fuzzy
+#~ msgid "Default Template"
+#~ msgstr "Tekst templates"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Land"
+
+#~ msgid "Delete"
+#~ msgstr "Verwijder"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Taal Wijzigen"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Leverdatum"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Methode"
+
+#~ msgid "Department"
+#~ msgstr "Afdeling"
+
 #~ msgid "Department deleted!"
 #~ msgstr "Afdeling verwijderd!"
 
 #~ msgid "Department saved!"
 #~ msgstr "Afdeling opgeslagen!"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Afdeling"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Omschrijving"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Rekening verwijderen"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Omschrijving"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Omschrijving"
+
+#~ msgid "Description Translations"
+#~ msgstr "Omschrijving Vertaling"
+
+#~ msgid "Description missing!"
+#~ msgstr "Omschrijving ontbreekt"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Omschrijving"
+
+#~ msgid "Detail"
+#~ msgstr "Detail"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Detail"
+
+#~ msgid "Difference"
+#~ msgstr "Verschil"
+
 #~ msgid "Directory"
 #~ msgstr "Directory"
 
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Korting"
+
+#~ msgid "Discount"
+#~ msgstr "Korting"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Korting"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Korting"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Inkomsten"
+
+#~ msgid "Done"
+#~ msgstr "Klaar"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Zoek"
+
+#~ msgid "Drawing"
+#~ msgstr "Tekening"
+
 #~ msgid "Driver"
 #~ msgstr "Besturings programma"
+
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Maximum in dropdown-lijst"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Dec"
+
+#~ msgid "Due Date"
+#~ msgstr "Vervaldatum"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Vervaldatum ontbreekt!"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "E-mail Overzicht aan"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "E-mail"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "E-mailadres ontbreekt!"
+
+#, fuzzy
+#~ msgid "E-mail message"
+#~ msgstr "Gemaild"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Inkomstenoverzicht"
+
+#~ msgid "Edit"
+#~ msgstr "Wijzig"
+
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Assemblage wijzigen"
 
 #~ msgid "Edit Business"
 #~ msgstr "Zaaktype wijzigen"
@@ -4176,11 +2262,20 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Kasoverboeking wijzigen"
 
+#~ msgid "Edit Customer"
+#~ msgstr "Klant wijzigen"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "Korting wijzigen"
 
 #~ msgid "Edit Department"
 #~ msgstr "Afdeling wijzigen"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "Wijzig Omschrijving Vertaling"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Werknemer wijzigen"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Boeking in grootboek wijzigen"
@@ -4191,20 +2286,58 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Arbeid/Overheadskosten wijzigen"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Directe verkooporder wijzigen"
+
 #~ msgid "Edit Part"
 #~ msgstr "Artikel wijzigen"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Prijsgroep wijzigen "
 
+#~ msgid "Edit Project"
+#~ msgstr "Project wijzigen"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Inkooporder wijzigen"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Offerte wijzigen"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Rapporten"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Offerteaanvraag wijzigen"
+
 #~ msgid "Edit SIC"
 #~ msgstr "SIC wijzigen"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "Verkoop order wijzigen"
 
 #~ msgid "Edit Service"
 #~ msgstr "Dienst wijzigen"
 
+#~ msgid "Edit Template"
+#~ msgstr "Template wijzigen"
+
+#~ msgid "Edit User"
+#~ msgstr "Gebruiker wijzigen"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Leverancier wijzigen"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Inkoop factuur wijzigen"
+
 #~ msgid "Edit Warehouse"
 #~ msgstr "Magazijn wijzigen"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Gebruiker wijzigen"
 
 #~ msgid "Eight"
 #~ msgstr "acht"
@@ -4217,6 +2350,14 @@ msgstr "Boeking opgeslagen!"
 
 #~ msgid "Eleven"
 #~ msgstr "elf"
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "Werknemernaam"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Werknemernaam"
 
 #~ msgid "Employee deleted!"
 #~ msgstr "Werknemer verwijderd"
@@ -4233,8 +2374,31 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Employer pays"
 #~ msgstr "Werkgeverbetalingen"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Orderdatum"
+
 #~ msgid "Enddate"
 #~ msgstr "Einddatum"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Begin Balans"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Saldo Overzicht"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Boeking terugdraaien voor alle data"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Gebruiker wijzigen"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
@@ -4243,8 +2407,73 @@ msgstr "Boeking opgeslagen!"
 #~ "Vul max drie karakters in, gescheiden door een dubbelepunt (b.v. EUR:USD:"
 #~ "GBP:CAD) voor lokale en buitenlandse valuta"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Nodig voor"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Nodig voor"
+
+#~ msgid "Equity"
+#~ msgstr "Passiva/Eigen Vermogen"
+
+#~ msgid "Exch"
+#~ msgstr "Wisselkoers"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Wisselkoers"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Wisselkoers voor Betaling ontbreekt!"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Wisselkoers ontbreekt!"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Wisselkoers ontbreekt!"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Wisselkoers"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "Bestaande datasets"
+
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Onkosten"
+
+#~ msgid "Expense"
+#~ msgstr "Onkosten"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Rekeningen weergeven"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Uitgaven"
+
+#~ msgid "Extended"
+#~ msgstr "Uitgebreid"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Gebruiker wijzigen"
+
+#~ msgid "FX"
+#~ msgstr "FX"
+
+#, fuzzy
+#~ msgid "Failed to save order!"
+#~ msgstr "Kan order niet opslaan!"
+
+#~ msgid "Feb"
+#~ msgstr "Feb"
+
+#~ msgid "February"
+#~ msgstr "Februari"
 
 #~ msgid "Fifteen"
 #~ msgstr "vijftien"
@@ -4252,8 +2481,46 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Fifty"
 #~ msgstr "vijftig"
 
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Zaaktype"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Rekening wijzigen"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Betalingen"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Ontvangstbewijzen"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "Belastingnummer"
+
 #~ msgid "Five"
 #~ msgstr "vijf"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Assemblage toevoegen"
+
+#, fuzzy
+#~ msgid "For"
+#~ msgstr "vier"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Wisselkoers winst"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Wisselkoers verlies"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Datum formaat"
 
 #~ msgid "Forty"
 #~ msgstr "veertig"
@@ -4261,8 +2528,98 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Fourteen"
 #~ msgstr "veertien"
 
+#~ msgid "From"
+#~ msgstr "Van"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "Van"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Bedrag"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Orderdatum"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "Van"
+
+#, fuzzy
+#~ msgid "From Warehouse"
+#~ msgstr "Magazijn"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI verwijderd!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "GIFI ontbreekt!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI opgeslagen!"
+
+#, fuzzy
+#~ msgid "GL Reference Number"
+#~ msgstr "Referentie"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Rekeningen verbinden"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Grootboek"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Accountants Controle"
+
+#, fuzzy
+#~ msgid "Generate Orders"
+#~ msgstr "Grootboek"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "Inkooporders"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders"
+#~ msgstr "Verkooporders"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Totaal Regel"
+
+#~ msgid "Group"
+#~ msgstr "Groep"
+
 #~ msgid "Group Items"
 #~ msgstr "Groepeer Onderdelen"
+
+#~ msgid "Group Translations"
+#~ msgstr "Groep vertaling"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "Groep"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Groep verwijderd!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Groep ontbreekt!"
+
+#~ msgid "Group saved!"
+#~ msgstr "Groep opgeslagen!"
+
+#~ msgid "Groups"
+#~ msgstr "Groepen"
+
+#, fuzzy
+#~ msgid "Heading"
+#~ msgstr "Kopregel"
 
 #~ msgid "Host"
 #~ msgstr "Host"
@@ -4276,11 +2633,88 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Jaareinde"
+
+#~ msgid "Image"
+#~ msgstr "Plaatje"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "Latex Sjablonen"
+
+#~ msgid "In-line"
+#~ msgstr "In Lijn"
+
+#, fuzzy
+#~ msgid "Inactive"
+#~ msgstr "Actief"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Inclusief wisselkoersverschil"
+
+#~ msgid "Include in Report"
+#~ msgstr "Toevoegen aan Uitvoer"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Toevoegen aan drop-down menus"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Inkomstenoverzicht"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Toevoegen aan Uitvoer"
+
+#~ msgid "Income"
+#~ msgstr "Inkomsten"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Inkomsten"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Inkomsten"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Ongeldige versie Dataset!!"
 
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Verander wachtwoord"
+
 #~ msgid "Increase"
 #~ msgstr "Toename"
+
+#~ msgid "Individual Items"
+#~ msgstr "Onderliggende onderdelen"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Interne notities"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Geldig tot"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Voorraad opgeslagen"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Voorraad opgeslagen"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr ""
+#~ "Aanwezige voorraad moet nul zijn voordat een product als 'niet actief' "
+#~ "kan worden gemarkeerd."
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
@@ -4288,14 +2722,128 @@ msgstr "Boeking opgeslagen!"
 #~ "Aanwezige voorraad moet nul zijn voordat een assemblage als 'niet actief' "
 #~ "kan worden gemarkeerd."
 
+#~ msgid "Inventory saved!"
+#~ msgstr "Voorraad opgeslagen"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Voorraad overgeheveld"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Factuurdatum"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Factuurdatum ontbreekt!"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Factuurnummer"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Factuurnummer ontbreekt!"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Factuurnummer"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Factuurdatum"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Factuurdatum"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Factuurdatum"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "Factuur verwijderd!"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Factuurnummer"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Factuurdatum"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Factuur"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "Onderdelen"
+
+#~ msgid "Item deleted!"
+#~ msgstr "Onderdeel verwijderd!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Dit onderdeel is niet in de database gevonden!"
+
+#~ msgid "Jan"
+#~ msgstr "Jan"
+
+#~ msgid "January"
+#~ msgstr "Januari"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "Gemaild"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Rekeningtype"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "Projectnummer"
+
+#~ msgid "Jul"
+#~ msgstr "Jul"
+
+#~ msgid "July"
+#~ msgstr "Juli"
+
+#~ msgid "Jun"
+#~ msgstr "Jun"
+
+#~ msgid "June"
+#~ msgstr "Juni"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Arbeid/Overheadskosten"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Taal verwijderd!"
+
+#~ msgid "Language saved!"
+#~ msgstr "Taal opgeslagen!"
+
+#~ msgid "Languages"
+#~ msgstr "Talen"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Taal niet gedefinieerd!"
+
+#, fuzzy
+#~ msgid "Last Cost"
+#~ msgstr "Kost"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Bijgewerkt"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Laatst toegekende nummers & Standaard Rekeningen"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Bijgewerkt"
+
+#, fuzzy
+#~ msgid "Lead Time"
+#~ msgstr "Levertijd"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -4303,14 +2851,58 @@ msgstr "Boeking opgeslagen!"
 #~ msgstr ""
 #~ "Laat host en port veld leeg, tenzij u een netwerk connectie wilt opzetten."
 
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "Openstaande Debiteuren"
+
+#~ msgid "Liability"
+#~ msgstr "Passiva"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Bedrijfsnaam"
+
 #~ msgid "Licensed to"
 #~ msgstr "Gelicenseerd aan"
+
+#~ msgid "Line Total"
+#~ msgstr "Totaal Regel"
 
 #~ msgid "Link"
 #~ msgstr "Verbinding"
 
+#, fuzzy
+#~ msgid "List"
+#~ msgstr "Locatielijst"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Voorschot"
+
+#~ msgid "List Price"
+#~ msgstr "Catalogusprijs"
+
 #~ msgid "List Projects"
 #~ msgstr "Projecten weergeven"
+
+#~ msgid "List Transactions"
+#~ msgstr "Boekingen tonen"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Gewichtseenheid"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Gebruiker wijzigen"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Offerte"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Offerte"
 
 #~ msgid "Lock System"
 #~ msgstr "Vergrendel het systeem"
@@ -4321,8 +2913,37 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Blokkeerbestand verwijderd!"
 
+#~ msgid "Login"
+#~ msgstr "Login"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Login naam ontbreekt!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Rekeningen weergeven"
+
+#~ msgid "Make"
+#~ msgstr "Fabrikant"
+
+#~ msgid "Manager"
+#~ msgstr "Manager"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Januari"
+
+#~ msgid "Mar"
+#~ msgstr "Mrt"
+
+#~ msgid "March"
+#~ msgstr "Maart"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Gemarkeerde delen afgedrukt!"
+
+#~ msgid "Markup"
+#~ msgstr "Winstmarge"
 
 #~ msgid "Maximum"
 #~ msgstr "Maximum"
@@ -4330,14 +2951,75 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "May "
 #~ msgstr "Mei"
 
+#~ msgid "Memo"
+#~ msgstr "Memo"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "Projectboekingen"
+
 #~ msgid "Menu Width"
 #~ msgstr "Menu Breedte"
+
+#~ msgid "Message"
+#~ msgstr "Boodschap"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Boodschap"
+
+#~ msgid "Method"
+#~ msgstr "Methode"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "Standaard"
+
+#~ msgid "Microfiche"
+#~ msgstr "Microfiche"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Belastbaar percentage"
+
+#~ msgid "Model"
+#~ msgstr "Type"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "miljoen"
 
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Unicode"
 
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
 #~ msgid "Name missing!"
 #~ msgstr "Naam ontbreekt!"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Naam"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Reconcilidatie rapport"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "Gebruiker"
+
+#, fuzzy
+#~ msgid "Next"
+#~ msgstr "Vervaldatum"
+
+#, fuzzy
+#~ msgid "Next Number"
+#~ msgstr "Belastingnummer"
 
 #~ msgid "Nine"
 #~ msgstr "negen"
@@ -4348,14 +3030,40 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Ninety"
 #~ msgstr "negentig"
 
+#~ msgid "No"
+#~ msgstr "Nee"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Rekening verwijderd"
+
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Geen database besturings programma aanwezig"
 
 #~ msgid "No Dataset selected!"
 #~ msgstr "Geen dataset geselecteerd"
 
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "Geschiedenis"
+
 #~ msgid "No email address for"
 #~ msgstr "Geen email adres voor"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Taal"
+
+#, fuzzy
+#~ msgid "No open Projects!"
+#~ msgstr "Projecten"
+
+#~ msgid "No."
+#~ msgstr "Nr."
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Onbelast"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "Onbelaste aankopen"
@@ -4363,20 +3071,194 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Onbelaste verkopen"
 
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Onbelast"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Opmerkingen"
+
+#~ msgid "Notes"
+#~ msgstr "Opmerkingen"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Niets ingevuld!"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "Niets geselecteerd!"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "Niets te verwijderen!"
+
+#, fuzzy
+#~ msgid "Nothing to print!"
+#~ msgstr "Niets over te boeken!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Niets over te boeken!"
+
+#~ msgid "Nov"
+#~ msgstr "Nov"
+
+#~ msgid "November"
+#~ msgstr "November"
+
+#~ msgid "Number"
+#~ msgstr "Nummer"
+
+#~ msgid "Number Format"
+#~ msgstr "Nummeraanduiding"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "Getal ontbreekt in Regel"
+
+#, fuzzy
+#~ msgid "OH"
+#~ msgstr "O"
+
+#~ msgid "Obsolete"
+#~ msgstr "Niet actief"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Niet actief"
+
+#~ msgid "Oct"
+#~ msgstr "Okt"
+
+#~ msgid "October"
+#~ msgstr "Oktober"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Wachtwoord"
+
+#~ msgid "On Hand"
+#~ msgstr "Op voorraad"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "Op voorraad"
 
 #~ msgid "One"
 #~ msgstr "een"
 
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Gebruiker toevoegen"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Werknemers"
+
+#~ msgid "Open"
+#~ msgstr "Open"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Open"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Kortingen"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Oracle Database Administratie"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Bestelling"
+
+#~ msgid "Order Date"
+#~ msgstr "Orderdatum"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Geen order datum aanwezig"
+
+#~ msgid "Order Number"
+#~ msgstr "Referentie"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Geen ordernummer aanwezig"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Referentie"
+
+#~ msgid "Order deleted!"
+#~ msgstr "Order verwijderd!"
+
+#, fuzzy
+#~ msgid "Order generation failed!"
+#~ msgstr "Boeking jaareinde mislukt!"
 
 #~ msgid "Order saved!"
 #~ msgstr "Order opgeslagen!"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Bestelling"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Bestelling"
+
+#, fuzzy
+#~ msgid "Orders generated!"
+#~ msgstr "Order verwijderd!"
+
+#~ msgid "Orphaned"
+#~ msgstr "Wees"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Kortingen"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Credit"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Debet"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Boeking is niet in evenwicht"
+
 #~ msgid "Out of balance!"
 #~ msgstr "Niet in evenwicht!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Debiteurenboekingen"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Voorschot"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Betaling geboekt!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "Verkooppunt"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "Nummer"
+
+#~ msgid "POS Invoice"
+#~ msgstr "Verkooppunt Rekening"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "Pakbon datum ontbreekt!"
@@ -4384,8 +3266,81 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Pakbon nummer ontbreekt!"
 
+#~ msgid "Paid"
+#~ msgstr "Betaald"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Huidig"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Prijsgroep"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "Projectnummer"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Artikel"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Projectnummer"
+
 #~ msgid "Parts"
 #~ msgstr "Artikelen"
+
+#~ msgid "Password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Wachtwoord gewijzigd!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Wachtwoord gewijzigd!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Datum formaat"
+
+#~ msgid "Payables"
+#~ msgstr "Betalingen"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Geen betalingsdatum aanwezig!"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Betalingen"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Betalingen"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Betaling"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Betaling"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Betaling geboekt!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Resterend"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "voor periode"
 
 #~ msgid "Pg Database Administration"
 #~ msgstr "Pg Database Administratie"
@@ -4393,32 +3348,284 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "PgPP Database Administration"
 #~ msgstr "PgPP Database Administratie"
 
+#~ msgid "Phone"
+#~ msgstr "Tel."
+
+#~ msgid "Pick Lists"
+#~ msgstr "Pick lijsten"
+
 #~ msgid "Port"
 #~ msgstr "Port"
 
 #~ msgid "Port missing!"
 #~ msgstr "Geen port aanwezig"
 
+#~ msgid "Post"
+#~ msgstr "Boek"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Boek als nieuw"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Jaareinde"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Boek als nieuw"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Boek als nieuw"
+
+#~ msgid "Post as new"
+#~ msgstr "Boek als nieuw"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Boek als nieuw"
+
+#~ msgid "Posted!"
+#~ msgstr "Geboekt!"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Boek als nieuw"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Grootboekboeking (memoriaal) "
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Verkoopfactuur wijzigen"
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "Crediteurenboeking"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Inkoop factuur wijzigen"
+
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Instellingen bewaard!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Instellingen wijzigen voor"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Prijsgroep"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Bijgewerkt"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Prijsgroep"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Prijsgroep verwijderd!"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Prijsgroep mist!"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Prijsgroep opgeslagen!"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Prijsgroepen"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "Prijs"
+
+#~ msgid "Print"
+#~ msgstr "Afdrukken"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Afdrukken"
+
+#, fuzzy
+#~ msgid "Print and Save as new"
+#~ msgstr "Opslaan als nieuw"
+
+#~ msgid "Printed"
+#~ msgstr "Afgedrukt"
+
+#~ msgid "Printer"
+#~ msgstr "Printer"
+
+#, fuzzy
+#~ msgid "Printing"
+#~ msgstr "Afdrukken"
+
 #~ msgid "Printing ... "
 #~ msgstr "Afdrukken ..."
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "Projectboekingen"
+
+#~ msgid "Profit Center"
+#~ msgstr "Inkomstenpost"
+
+#~ msgid "Project"
+#~ msgstr "Project"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "Project Omschrijving Vertaling"
+
+#~ msgid "Project Number"
+#~ msgstr "Projectnummer"
 
 #~ msgid "Project Number missing!"
 #~ msgstr "Projectnummer ontbreekt!"
 
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Projectnummer"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Projectnummer"
+
 #~ msgid "Project deleted!"
 #~ msgstr "Project verwijderd!"
+
+#~ msgid "Project not on file!"
+#~ msgstr "Onbekend project!"
 
 #~ msgid "Project saved!"
 #~ msgstr "Project opgeslagen!"
 
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Projectnummer"
+
+#~ msgid "Projects"
+#~ msgstr "Projecten"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Inkooporder"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Inkooporder"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "Klant Historie"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Inkooporder"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Inkooporder"
+
+#~ msgid "Qty"
+#~ msgstr "Aantal"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "Aantal is hoger dan de aanwezige voorraad!"
+
+#~ msgid "Quotation Date"
+#~ msgstr "Offertedatum"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Offertedatum ontbreekt!"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Offertenummer"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Offertenummer ontbreekt!"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Offertenummer"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Offerte verwijderd!"
+
 #~ msgid "R"
 #~ msgstr "R"
+
+#~ msgid "RFQ Number"
+#~ msgstr "Offerteaanvraagnummer"
+
+#~ msgid "ROP"
+#~ msgstr "Minimum voorraad"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Percentage"
 
 #~ msgid "Rate missing!"
 #~ msgstr "Percentage ontbreekt!"
 
+#~ msgid "Recd"
+#~ msgstr "Ontvangen"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Ontvangstbewijzen"
+
 #~ msgid "Receipt posted!"
 #~ msgstr "Ontvangstbewijs geboekt"
+
+#~ msgid "Receivables"
+#~ msgstr "Vorderingen"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Goederen Ontvangen"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Boeken op"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Boekingen Verwerken"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Reconcilidatie rapport"
+
+#~ msgid "Record in"
+#~ msgstr "Boeken op"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Rapport voor"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "Debiteurenboekingen"
+
+#~ msgid "Reference"
+#~ msgstr "Referentie"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Project"
+
+#~ msgid "Remaining"
+#~ msgstr "Resterend"
+
+#~ msgid "Remove"
+#~ msgstr "Verwijder"
 
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Verwijder Accountants opsporing tot"
@@ -4426,23 +3633,311 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Remove Audit trails up to"
 #~ msgstr "Verwijder Accountants opsporing tot"
 
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Spoolfiles verwijderd!"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "Gemarkeerde stukken uit de wachtrij aan het verwijderen"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Rapport voor"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Rapport voor"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Rapporten"
+
+#~ msgid "Report for"
+#~ msgstr "Rapport voor"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Rapporten"
+
 #~ msgid "Request for Quotations"
 #~ msgstr "Offerteaanvragen"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Ontvangstbewijzen"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Nodig voor"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Nodig voor"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "Nodig voor"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Wachtwoord"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Winstreserve"
+
+#, fuzzy
+#~ msgid "Reversal Information"
+#~ msgstr "Offerteaanvraag"
 
 #~ msgid "Role"
 #~ msgstr "Rol"
 
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Rekeningen"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Backup"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Rapporten"
+
 #~ msgid "S"
 #~ msgstr "S"
+
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC verwijderd!"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC opgeslagen!"
+
+#~ msgid "SKU"
+#~ msgstr "SKU"
+
+#, fuzzy
+#~ msgid "SO"
+#~ msgstr "O"
+
+#, fuzzy
+#~ msgid "Sales Order Number"
+#~ msgstr "Referentie"
+
+#, fuzzy
+#~ msgid "Sales Quotation Number"
+#~ msgstr "Offertenummer"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Bedrijfsnaam"
+
+#~ msgid "Salesperson"
+#~ msgstr "Verkoper"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Offerte"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Inkooporder"
+
+#~ msgid "Save"
+#~ msgstr "Opslaan"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Opslaan als nieuw"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Opslaan als nieuw"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Contact"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Offerte"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Opslaan als nieuw"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Offerte"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "Latex Sjablonen"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Opslaan als nieuw"
+
+#~ msgid "Save as new"
+#~ msgstr "Opslaan als nieuw"
 
 #~ msgid "Save to File"
 #~ msgstr "Opslaan als bestand"
 
+#, fuzzy
+#~ msgid "Scheduled"
+#~ msgstr "Rekening verwijderen"
+
+#~ msgid "Screen"
+#~ msgstr "Scherm"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Verkooppunt Rekening"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Factuur"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Inventaris controleren"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Inkooporders"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Offertes"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Reconcilidatie rapport"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Offerteaanvraag"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Verkooporders"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Projectboekingen"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Zoek"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Selecteer alles"
+
+#, fuzzy
+#~ msgid "Select Customer"
+#~ msgstr "Klant wijzigen"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Setup templates"
+
+#, fuzzy
+#~ msgid "Select Vendor"
+#~ msgstr "Leverancier wijzigen"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Selecteer alles"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "Kies een van de onderstaande onderdelen"
 
+#~ msgid "Select from one of the names below"
+#~ msgstr "Kies een van de onderstaande namen"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Kies een van de onderstaande projecten"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Verkoopfacturen"
+
+#, fuzzy
+#~ msgid "Select items"
+#~ msgstr "Selecteer"
+
+#, fuzzy
+#~ msgid "Select payment"
+#~ msgstr "Voorschot"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Kies postscript of PDF"
+
+#, fuzzy
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "Kies postscript of PDF"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Selecteer"
+
+#~ msgid "Sell Price"
+#~ msgstr "Verkoopprijs"
+
 #~ msgid "Send by E-Mail"
 #~ msgstr "Verzenden per E-mail"
+
+#~ msgid "Sep"
+#~ msgstr "Sep"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Afdelingen"
+
+#~ msgid "September"
+#~ msgstr "September"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Instellingen"
+
+#~ msgid "Serial No."
+#~ msgstr "Serienr"
+
+#~ msgid "Serial Number"
+#~ msgstr "Serienummer"
+
+#~ msgid "Service"
+#~ msgstr "Dienst"
+
+#, fuzzy
+#~ msgid "Service Code"
+#~ msgstr "Dienst"
 
 #~ msgid "Services"
 #~ msgstr "Diensten"
@@ -4456,11 +3951,44 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Seventy"
 #~ msgstr "zeventig"
 
+#~ msgid "Ship Merchandise"
+#~ msgstr "Goederen Verzenden"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Verzenden via"
+
+#~ msgid "Ship to"
+#~ msgstr "Verzenden aan"
+
+#~ msgid "Ship via"
+#~ msgstr "Verzenden via"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Verzenden via"
+
 #~ msgid "Shipping Address"
 #~ msgstr "Verzendadres"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Verzenddatum"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Verzenddatum ontbreekt!"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Verzendpunt"
+
+#~ msgid "Short"
+#~ msgstr "Kort"
+
 #~ msgid "Signature"
 #~ msgstr "Handtekening"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Opgeschoond"
 
 #~ msgid "Six"
 #~ msgstr "zes"
@@ -4471,20 +3999,158 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Sixty"
 #~ msgstr "zestig"
 
+#~ msgid "Source"
+#~ msgstr "Herkomst"
+
+#~ msgid "Spoolfile"
+#~ msgstr "Spoolfile"
+
+#~ msgid "Standard"
+#~ msgstr "Standaard"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "Standaard Industiële Codes"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Saldo Overzicht"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Begindatum"
+
+#~ msgid "Startdate"
+#~ msgstr "Begindatum"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Begindatum"
+
+#, fuzzy
+#~ msgid "State"
+#~ msgstr "Overzicht"
+
+#~ msgid "State/Province"
+#~ msgstr "Staat/Provincie"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Saldo Overzicht"
+
 #~ msgid "Statement sent to"
 #~ msgstr "Overzicht verzonden aan"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Overzichten afgedrukt"
 
+#~ msgid "Stock"
+#~ msgstr "Voorraad"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Stylesheet"
+
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "GIFI Onderaannemer"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Onderwerp"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Onderwerp"
+
+#~ msgid "Subtotal"
+#~ msgstr "Subtotaal"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Subtotaal"
+
+#~ msgid "Summary"
+#~ msgstr "Overzicht"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Totaalrekening voor"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Jun"
+
+#~ msgid "System Defaults"
+#~ msgstr "Systeem Standaard"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Belasting"
+
+#~ msgid "Tax"
+#~ msgstr "Belasting"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "Belasting Rekeningen"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Code"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Datum formaat"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "Belastingnummer / Pers.nr."
+
+#~ msgid "Tax Included"
+#~ msgstr "Inclusief Belasting"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Inclusief Belasting"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Belastingnummer / Pers.nr."
 
 #~ msgid "Tax collected"
 #~ msgstr "Belasting verschuldigd"
 
 #~ msgid "Tax paid"
 #~ msgstr "Belasting Betaald"
+
+#~ msgid "Taxable"
+#~ msgstr "Belastbaar percentage"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "Template opgeslagen!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Template opgeslagen!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Templates"
+
+#~ msgid "Template saved!"
+#~ msgstr "Template opgeslagen!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Nieuwe templates"
+
+#~ msgid "Terms"
+#~ msgstr "Termijn"
+
+#~ msgid "Text Templates"
+#~ msgstr "Tekst templates"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Weet u zeker dat u dit factuurnummer wilt verwijderen?"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr ""
@@ -4493,11 +4159,27 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "De volgende datasets moeten worden bijgewerkt"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Proefbalans"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Credit"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Debet"
+
 #~ msgid "Thirteen"
 #~ msgstr "dertien"
 
 #~ msgid "Thirty"
 #~ msgstr "dertig"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Rekening wijzigen"
 
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
@@ -4510,17 +4192,75 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Three"
 #~ msgstr "drie"
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "Van"
+
+#~ msgid "Till"
+#~ msgstr "Kassa"
+
+#~ msgid "To"
+#~ msgstr "Tot"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Bedrag"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Datum"
+
+#, fuzzy
+#~ msgid "To Warehouse"
+#~ msgstr "Magazijn"
+
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
 #~ "name."
 #~ msgstr ""
 #~ "Om een gebruiker aan een groep toe te voegen, een naam te wijzigen, een "
-#~ "login naam te wijzigen en op te slaan. Een nieuwe gebruiker zal dan worder "
-#~ "opgeslagen met dezelfde gegevens onder de nieuwe login naam."
+#~ "login naam te wijzigen en op te slaan. Een nieuwe gebruiker zal dan "
+#~ "worder opgeslagen met dezelfde gegevens onder de nieuwe login naam."
+
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "Tot"
+
+#~ msgid "Total"
+#~ msgstr "Totaal"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Totaal"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "Pakbonnen"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Handelskorting"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Boeking opgeslagen!"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Boekingsdatum ontbreekt!"
+
+#, fuzzy
+#~ msgid "Transaction Dates"
+#~ msgstr "Boekingen"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Boekingen"
 
 #~ msgid "Transaction deleted!"
 #~ msgstr "Boeking verwijderd!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Boeking opgeslagen!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Boekingen verplicht terugdraaien voor alle datums"
@@ -4528,8 +4268,39 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Boekingen verplicht terugdraaien tot aan"
 
+#, fuzzy
+#~ msgid "Transactions"
+#~ msgstr "Boekingen"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Inventaris overboeken"
+
+#, fuzzy
+#~ msgid "Transfer from"
+#~ msgstr "Overboeken naar"
+
+#~ msgid "Transfer to"
+#~ msgstr "Overboeken naar"
+
+#~ msgid "Translation"
+#~ msgstr "Vertaling"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Vertaling verwijderd!"
+
+#~ msgid "Translations saved!"
+#~ msgstr "Vertalingen opgeslagen!"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Proefbalans"
+
 #~ msgid "Trillion"
 #~ msgstr "biljoen"
+
+#, fuzzy
+#~ msgid "Tue"
+#~ msgstr "tien"
 
 #~ msgid "Twelve"
 #~ msgstr "twalf"
@@ -4540,14 +4311,47 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Two"
 #~ msgstr "twee"
 
+#, fuzzy
+#~ msgid "Unable to save %1 object"
+#~ msgstr "Kan order niet opslaan!"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Factuurnummer"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Klantnummer"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Leveranciernummer"
+
+#~ msgid "Unit"
+#~ msgstr "Eenheid"
+
 #~ msgid "Unit of measure"
 #~ msgstr "Rekeneenheid"
 
 #~ msgid "Unlock System"
 #~ msgstr "Unlock System"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Leveranciernummer"
+
+#~ msgid "Update"
+#~ msgstr "Bijwerken"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Dataset bijwerken"
+
+#~ msgid "Updated"
+#~ msgstr "Bijgewerkt"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Opslaan"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "Opwaarderen naar Versie"
@@ -4555,26 +4359,130 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Use Templates"
 #~ msgstr "Gebruik templates"
 
+#~ msgid "User"
+#~ msgstr "Gebruiker"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Gebruiker opgeslagen!"
+
 #~ msgid "User deleted!"
 #~ msgstr "Gebruiker verwijderd!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "Gebruiker"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "Gebruiker"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "Gebruiker"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Datum formaat"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "Geldig tot"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Rekening toevoegen"
 
 #~ msgid "Vendor Invoices"
 #~ msgstr "Leverancier inkoopfacturen"
 
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Leveranciernummer"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Leveranciernummer"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Leveranciernummer"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Leveranciernummer"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Leveranciernummer"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "Leverancier verwijderd!"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "Leverancier ontbreekt!"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Leverancier bestaat niet!"
 
 #~ msgid "Vendor saved!"
 #~ msgstr "Leverancier opgeslagen!"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Leverancier"
+
 #~ msgid "Vendors"
 #~ msgstr "Leveranciers"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Versie"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Kortingen"
+
+#~ msgid "Warehouse"
+#~ msgstr "Magazijn"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Magazijn verwijderd!"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Magazijn opgeslagen"
+
+#~ msgid "Warning!"
+#~ msgstr "Waarschuwing!"
+
+#~ msgid "Weight"
+#~ msgstr "Gewicht"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Wat voor soort artikel is dit?"
+
+#~ msgid "Work Orders"
+#~ msgstr "Werk orders"
 
 #~ msgid "Work Phone"
 #~ msgstr "Bedrijfstelefoon"
 
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Jaareinde"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Jaareinde geboekt!"
+
 #~ msgid "Yearend date missing!"
 #~ msgstr "Jaareinde ontbreekt!"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "U heeft geen naam gegeven!"
@@ -4585,17 +4493,110 @@ msgstr "Boeking opgeslagen!"
 #~ msgid "Zero"
 #~ msgstr "nul"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "Code"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "Code"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Zaaktype"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Taal"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Magazijn"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "Rekening kan niet omgezet worden naar ander type Rekening"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Taal niet gedefinieerd!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Mrt"
+
+#~ msgid "as at"
+#~ msgstr "per"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Saldo"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "Cheque"
+
+#~ msgid "days"
+#~ msgstr "dagen"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Debet"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Verwijder"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Storting"
+
+#~ msgid "done"
+#~ msgstr "gebeurd"
+
+#~ msgid "ea"
+#~ msgstr "voor"
+
 #~ msgid "is already a member!"
 #~ msgstr "is al een gebruiker"
 
+#~ msgid "localhost"
+#~ msgstr "localhost"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Betaling"
+
 #~ msgid "posted!"
 #~ msgstr "opgeslagen!"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Ontvangstbewijs"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Verkoopfactuur"
+
+#~ msgid "sent"
+#~ msgstr "verzonden"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Saldo Overzicht"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Subtotaal"
 
 #~ msgid "successfully created!"
 #~ msgstr "Met succes aangemaakt!"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "Met succes verwijderd!"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Inkoopfaktuur"
 
 #~ msgid "website"
 #~ msgstr "website"

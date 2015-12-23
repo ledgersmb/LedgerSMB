@@ -31,87 +31,410 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "Добави направление"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "Справки"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "Добави склад"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "Версия"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "Каса"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "Покупки"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "Разчети с доставчици"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "Превод покупка"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "Изтрии задачата"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "Продажби"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "Разчети с клиенти"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "Превод продажба"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "Изтрии задачата"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "Добави Сметка"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "Добави комплект"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "Добави комплект"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "Добави направление"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "Добави направление"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "Добави комплект"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "Лице за контакт"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "Добави сътрудник"
+
+#: sql/Pg-database.sql:2903
+msgid "Add GIFI"
+msgstr "Добави GIFI"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "Добави група"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "Добави език"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "Добави Разработка/Текущи разходи"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "Добави позиция"
 
-#: sql/Pg-database.sql:802
-#, fuzzy
-msgid "IRC"
-msgstr "SIC"
+#: sql/Pg-database.sql:2930
+msgid "Add Pricegroup"
+msgstr "Добави ценова група"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
-msgstr "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "Добави потребител"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "Добави SIC"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "Добави услуга"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "Добави позиция"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "Добави работна карта"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "Добави превод"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "Добави склад"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
+msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "Актив"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "Комплекти"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "Актив"
+
+#: sql/Pg-database.sql:810
+#, fuzzy
+msgid "BCC"
+msgstr "BIC"
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "Баланс"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "Следваща дата"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "Адрес за получаване на сметката"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "Адрес за получаване на сметката"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "Адрес за получаване на сметката"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "Адрес за получаване на сметката"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+msgid "Bin List"
+msgstr "Списък на пакет"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "Добави направление"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "Доставки"
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "Добави направление"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "Превод продажба"
+#: sql/Pg-database.sql:809
+#, fuzzy
+msgid "CC"
+msgstr "C"
 
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "Каса"
+
+#: sql/Pg-database.sql:797
+#, fuzzy
+msgid "Cell Phone"
+msgstr "Домашен телефон"
+
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "Сметкоплан"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "В брой"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
-msgid "List GIFI"
-msgstr "Списък-GIFI"
-
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:549
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "Списък-отдели"
+msgid "Cold Lead"
+msgstr "Тежест"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "Доставка"
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "Лице за контакт"
+
+#: sql/Pg-database.sql:2847
+#, fuzzy
+msgid "Contacts"
+msgstr "Лице за контакт"
+
+#: sql/Pg-database.sql:2900
+msgid "Credit Invoice"
+msgstr "Кредитно известие към фактура"
+
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "Кредитно известие към фактура"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "Клиент"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "История на клиента"
+
+#: sql/Pg-database.sql:2896
+msgid "Debit Invoice"
+msgstr "Дебитно известие към фактура"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "Дебитно известие към фактура"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "По подразбиране"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "Обяснение"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "Обяснение"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "Обяснение"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "Мар"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "Запазено!"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "Ел.адрес"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "Сътрудник"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "Сътрудници"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Прехвърляне на инвентар"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "Списък-направления"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "Редакция на сметка"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "Факс"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "Добави комплект"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
+msgstr "GIFI"
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "Главна книга"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr "Създай"
+
+#: sql/Pg-database.sql:804
+#, fuzzy
+msgid "Generic Jabber"
+msgstr "Създай"
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "Стоки и услуги"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
 msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "Сътрудници"
+
+#: sql/Pg-database.sql:2870
+msgid "HTML Templates"
+msgstr "HTML Шаблони"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "Домашен телефон"
+
+#: sql/Pg-database.sql:548
+#, fuzzy
+msgid "Hot Lead"
+msgstr "Тежест"
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "SIC"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -119,331 +442,213 @@ msgstr ""
 msgid "Import"
 msgstr "Справки"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "Актив"
+msgid "Import Batch"
+msgstr "Справки"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "Справки"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "Разходен ордер"
-
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "Актив"
-
-#: sql/Pg-database.sql:2869
+#: sql/Pg-database.sql:2905
 #, fuzzy
-msgid "LaTeX Templates"
-msgstr "LaTeX Шаблони"
+msgid "Import GIFI"
+msgstr "Редакция на GIFI"
 
-#: sql/Pg-database.sql:2866
+#: sql/Pg-database.sql:2773
 #, fuzzy
-msgid "Drafts"
-msgstr "Запазено!"
+msgid "Import Inventory"
+msgstr "Инвентар"
 
-#: sql/Pg-database.sql:2788
-#, fuzzy
-msgid "Top-level"
-msgstr "Вишше ниво"
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "Отчет за Приходи и Разходи"
 
-#: sql/Pg-database.sql:2837
-msgid "List Businesses"
-msgstr "Списък-направления"
-
-#: sql/Pg-database.sql:2783
-#, fuzzy
-msgid "Add Contact"
-msgstr "Лице за контакт"
-
-#: sql/Pg-database.sql:2938
-#, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "Постъпления"
-
-#: sql/Pg-database.sql:810
-#, fuzzy
-msgid "BCC"
-msgstr "BIC"
-
-#: sql/Pg-database.sql:663
-#, fuzzy
-msgid "Mailing"
-msgstr "Адрес за получаване на сметката"
-
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "Добави услуга"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "Добави комплект"
-
-#: sql/Pg-database.sql:3721
-#, fuzzy
-msgid "time"
-msgstr "път(и)"
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "Изтрии задачата"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "Постъпления"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "Работна поръчка"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "Кредитно известие към фактура"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "Добави направление"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "Справки"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "Стоки и услуги"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-msgid "Credit Invoice"
-msgstr "Кредитно известие към фактура"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "Добави направление"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "История на доставчика"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "Продажби"
-
-#: sql/Pg-database.sql:2935
-#, fuzzy
-msgid "Sequences"
-msgstr "Свойства"
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-msgid "RFQ"
-msgstr "Резервация"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "Добави Разработка/Текущи разходи"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "Справки"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "Списък-езици"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "Съгласуване"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "Поръчки продажби"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "Поръчки за доставки"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "Опъковачен лист"
-
-#: sql/Pg-database.sql:809
-#, fuzzy
-msgid "CC"
-msgstr "C"
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "Продажби"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "Добави език"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "Адрес за получаване на сметката"
-
-#: sql/Pg-database.sql:2934
-#, fuzzy
-msgid "Timecards"
-msgstr "Работни карти"
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "Фактура номер"
-
-#: sql/Pg-database.sql:2903
-msgid "Add GIFI"
-msgstr "Добави GIFI"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "Добави SIC"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "Ел.адрес"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "Система"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "Авансово плащане"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "Плащания"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "Адрес за получаване на сметката"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "Мар"
-
-#: sql/Pg-database.sql:2870
-msgid "HTML Templates"
-msgstr "HTML Шаблони"
-
-#: sql/Pg-database.sql:725
-#, fuzzy
-msgid "Mr."
-msgstr "Мар"
-
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "Фактура за доставка"
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "Клиент"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "Приключване на година"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "Прехвърляне"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-#, fuzzy
-msgid "in years"
-msgstr "Години"
-
-#: sql/Pg-database.sql:546
-msgid "Lead"
-msgstr "Тежест"
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "Инвентар"
 
 #: sql/Pg-database.sql:2777
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Инвентар"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2940
 #, fuzzy
-msgid "Asset Classes"
+msgid "Inventory and COGS"
+msgstr "Ивентара е запазен!"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "Фактура"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "Фактура номер"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "Държава"
+
+#: sql/Pg-database.sql:2869
+#, fuzzy
+msgid "LaTeX Templates"
+msgstr "LaTeX Шаблони"
+
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "Език"
+
+#: sql/Pg-database.sql:546
+msgid "Lead"
+msgstr "Тежест"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
+
+#: sql/Pg-database.sql:2837
+msgid "List Businesses"
+msgstr "Списък-направления"
+
+#: sql/Pg-database.sql:2883
+#, fuzzy
+msgid "List Classes"
 msgstr "Комплекти"
 
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "Добави потребител"
+#: sql/Pg-database.sql:2904
+msgid "List GIFI"
+msgstr "Списък-GIFI"
 
-#: sql/Pg-database.sql:2895
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "Списък-езици"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "Списък-SIC"
+
+#: sql/Pg-database.sql:2877
 #, fuzzy
-msgid "Debit Note"
-msgstr "Дебитно известие към фактура"
+msgid "List Tax Forms"
+msgstr "Списък-отдели"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "Списък-складове"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "Излизане"
 
 #: sql/Pg-database.sql:801
 #, fuzzy
 msgid "MSN"
 msgstr "SSN"
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:663
 #, fuzzy
-msgid "Import GIFI"
-msgstr "Редакция на GIFI"
+msgid "Mailing"
+msgstr "Адрес за получаване на сметката"
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:724
+msgid "Miss."
+msgstr ""
+
+#: sql/Pg-database.sql:725
 #, fuzzy
-msgid "Use AR Overpayment"
-msgstr "Авансово плащане"
+msgid "Mr."
+msgstr "Мар"
+
+#: sql/Pg-database.sql:726
+msgid "Mrs."
+msgstr ""
+
+#: sql/Pg-database.sql:727
+#, fuzzy
+msgid "Ms."
+msgstr "Мар"
+
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
+msgstr ""
+
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr "Нов прозорец"
+
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "Поръчки"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "Задължения"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "Опъковачен лист"
+
+#: sql/Pg-database.sql:2826
+#, fuzzy
+msgid "Partsgroup"
+msgstr "Ценова група"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
+msgstr "Разходен ордер"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "Плащания"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+msgid "Pick List"
+msgstr "Товарителница"
+
+#: sql/Pg-database.sql:2924
+msgid "Preferences"
+msgstr "Свойства"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "Име на фирма"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Търси"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "Поръчка за доставка"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "Поръчки за доставки"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -451,139 +656,35 @@ msgstr "Авансово плащане"
 msgid "Quotation"
 msgstr "Запазени форми"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "Запазени форми"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
+msgid "RFQ"
+msgstr "Резервация"
+
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "Резервации"
+
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "Приходен ордер"
+
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "Постъпления"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "Получи"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "General Journal"
-msgstr "Главна книга"
-
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "Ведомост"
-
-#: sql/Pg-database.sql:2936
-#, fuzzy
-msgid "Reverse Receipts"
-msgstr "Търси"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "Добави комплект"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "Език"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "Превод покупка"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "SIC"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "Справки"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "Продажби"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "Добави работна карта"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "Мар"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "Баланс"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "Домашен телефон"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "Преводи"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "Факс"
-
-#: sql/Pg-database.sql:549
-#, fuzzy
-msgid "Cold Lead"
-msgstr "Тежест"
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "Фармат за дата"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "Домашен телефон"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "Обяснение"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "Сметкоплан"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "Разчети с доставчици"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "Добави позиция"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "Излизане"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "Редакция на сметка"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "Търси"
-
-#: sql/Pg-database.sql:3757
-#, fuzzy
-msgid "in months"
-msgstr "Месеци"
+msgid "Reconciliation"
+msgstr "Съгласуване"
 
 #: sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -593,308 +694,71 @@ msgstr "Повтарящи се преводи"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "Поръчка продажба"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "Сътрудници"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "Направления"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "Инвентар"
+msgid "Reporting Units"
+msgstr "Справки"
 
-#: sql/Pg-database.sql:2930
-msgid "Add Pricegroup"
-msgstr "Добави ценова група"
-
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "Инвентар"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Depreciation"
-msgstr "Обяснение"
+msgid "Reports"
+msgstr "Справки"
 
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciate"
-msgstr "Обяснение"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "Резервации"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "Фактура"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "Приходен ордер"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "Продукция"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "Списък-SIC"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "Адрес за получаване на сметката"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "Прехвърляне на инвентар"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "Покупки"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "Фактура продажба"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "Разчети с клиенти"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "Поръчки"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "История на клиента"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "Ценова група"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-#, fuzzy
-msgid "Timecard"
-msgstr "Работни карти"
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "Получи"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "Изграждане на комплект"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "Лице за контакт"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "Ценова група"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "Име на фирма"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "Ценова група"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "Име на фирма"
-
-#: sql/Pg-database.sql:804
-#, fuzzy
-msgid "Generic Jabber"
-msgstr "Създай"
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "Запазени форми"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "Временен баланс"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "Добави група"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "Търси"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "Списък-складове"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "Авансово плащане"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "Сътрудници"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "Добави комплект"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "Изтрии задачата"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "Изтрии задачата"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "Добави Сметка"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "В брой"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "Задължения"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr "Нов прозорец"
-
-#: sql/Pg-database.sql:2896
-msgid "Debit Invoice"
-msgstr "Дебитно известие към фактура"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr "Създай"
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "Лице за контакт"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "Държава"
-
-#: sql/Pg-database.sql:2875
-msgid "Warehouses"
-msgstr "Складове"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "Сътрудник"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "Поръчка за доставка"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "Добави сътрудник"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "Доставчик"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "По подразбиране"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "Списък-направления"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-msgid "Pick List"
-msgstr "Товарителница"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "Търси"
+msgid "Reverse AR Overpay"
+msgstr "Постъпления"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "Авансово плащане"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "Авансово плащане"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "Търси"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "SIC"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "Продажби"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "Продажби"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "Фактура продажба"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "Поръчка продажба"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "Поръчки продажби"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -902,2466 +766,465 @@ msgstr "Авансово плащане"
 msgid "Search"
 msgstr "Търси"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "Комплекти"
+msgid "Search Assets"
+msgstr "Търси"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
-msgid "Bin List"
-msgstr "Списък на пакет"
+#: sql/Pg-database.sql:2771
+#, fuzzy
+msgid "Search Groups"
+msgstr "Ценова група"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "Добави превод"
+#: sql/Pg-database.sql:2772
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Ценова група"
 
-#: sql/Pg-database.sql:2924
-msgid "Preferences"
+#: sql/Pg-database.sql:2902
+#, fuzzy
+msgid "Search and GL"
+msgstr "Търси"
+
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "Име на фирма"
+
+#: sql/Pg-database.sql:2935
+#, fuzzy
+msgid "Sequences"
 msgstr "Свойства"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Billing CC"
-msgstr "Адрес за получаване на сметката"
+msgid "Sessions"
+msgstr "Версия"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "Доставка"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "Доставки"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "Отчет за Приходи и Разходи"
-
-#: sql/Pg-database.sql:2940
-#, fuzzy
-msgid "Inventory and COGS"
-msgstr "Ивентара е запазен!"
-
-#: sql/Pg-database.sql:548
-#, fuzzy
-msgid "Hot Lead"
-msgstr "Тежест"
-
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "Следваща дата"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "Ведомост"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "Обяснение"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "Изграждане на комплект"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "Система"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "Фармат за дата"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+#, fuzzy
+msgid "Timecard"
+msgstr "Работни карти"
+
+#: sql/Pg-database.sql:2934
+#, fuzzy
+msgid "Timecards"
+msgstr "Работни карти"
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "Вишше ниво"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Превода е запазен!"
 
-#~ msgid "Dataset"
-#~ msgstr "Бази-данни"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "Прехвърляне"
 
-#~ msgid "Transactions"
-#~ msgstr "Преводи"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "Преводи"
+
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "Временен баланс"
+
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "Направления"
+
+#: sql/Pg-database.sql:2799
+#, fuzzy
+msgid "Use AR Overpayment"
+msgstr "Авансово плащане"
+
+#: sql/Pg-database.sql:2798
+#, fuzzy
+msgid "Use Overpayment"
+msgstr "Авансово плащане"
+
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "Доставчик"
+
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "История на доставчика"
+
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "Фактура за доставка"
+
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
+#, fuzzy
+msgid "Vouchers"
+msgstr "Изтрии задачата"
+
+#: sql/Pg-database.sql:2875
+msgid "Warehouses"
+msgstr "Складове"
+
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
+
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "Работна поръчка"
+
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
+
+#: sql/Pg-database.sql:2856
+#, fuzzy
+msgid "Year End"
+msgstr "Приключване на година"
+
+#: sql/Pg-database.sql:3830
+#, fuzzy
+msgid "depreciation"
+msgstr "Обяснение"
+
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3832
+#, fuzzy
+msgid "import"
+msgstr "Справки"
+
+#: sql/Pg-database.sql:3757
+#, fuzzy
+msgid "in months"
+msgstr "Месеци"
+
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+#, fuzzy
+msgid "in years"
+msgstr "Години"
+
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:3722
+#, fuzzy
+msgid "production"
+msgstr "Продукция"
+
+#: sql/Pg-database.sql:3721
+#, fuzzy
+msgid "time"
+msgstr "път(и)"
 
 #, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "Сметки"
+#~ msgid " Date missing!"
+#~ msgstr "Липсва дата!"
 
 #, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "Плащането е запазено!"
-
-#~ msgid "Source"
-#~ msgstr "Оригинал"
+#~ msgid " missing!"
+#~ msgstr "Липсва код!"
 
 #, fuzzy
-#~ msgid "User Name"
-#~ msgstr "Потребителя е запазен!"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "Постъпления"
-
-#~ msgid "Period"
-#~ msgstr "Период"
-
-#~ msgid "Process Transactions"
-#~ msgstr "Изпълнение на преводи"
-
-#~ msgid "PDF"
-#~ msgstr "PDF"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "Вземания от клиенти"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Добави SIC"
-
-#~ msgid "Paid"
-#~ msgstr "Платено"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "От"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "Доставчик номер"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "Фактура дата"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "Дата на превод"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "Фармат за дата"
-
-#~ msgid "Equity"
-#~ msgstr "Капитал"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "Избери всичко"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "Създай базата-данни"
-
-#~ msgid "Delivery Date"
-#~ msgstr "Дата на доставка"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "Запази в"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "Сметки"
-
-#, fuzzy
-#~ msgid "Yearend complete"
-#~ msgstr "Приключената година е запазена!"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "Постъпления"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "Лице за контакт"
-
-#~ msgid "Scheduled"
-#~ msgstr "Зададено разписание"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "Адрес"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Име"
-
-#~ msgid "On Hand"
-#~ msgstr "На ръка"
-
-#, fuzzy
-#~ msgid "ODS"
-#~ msgstr "Кредино известие"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "Повтарящи се преводи"
-
-#~ msgid "Login"
-#~ msgstr "Влизане"
-
-#~ msgid "Sell Price"
-#~ msgstr "Продажна цена"
-
-#, fuzzy
-#~ msgid "Or"
-#~ msgstr "O"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
+#~ msgid "# Invoices"
 #~ msgstr "Фактура"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "Контрол"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "Версия"
-
-#, fuzzy
-#~ msgid "Profit and Loss"
-#~ msgstr "Разпечатай и запази"
-
-#~ msgid "Add Vendor"
-#~ msgstr "Добави доставчик"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "Плащания"
-
-#~ msgid "Expense"
-#~ msgstr "Разход"
-
-#~ msgid "Currency"
-#~ msgstr "Валута"
-
-#~ msgid "Liability"
-#~ msgstr "Пасив"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "Натрупване"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "Тема"
-
-#~ msgid "ID"
-#~ msgstr "Код"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "Начално салдо"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "Приключване на година"
-
-#, fuzzy
-#~ msgid "Allocated"
-#~ msgstr "Разрешителни"
-
-#~ msgid "Startdate"
-#~ msgstr "Начална дата"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "Сериен номер"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "Тип на сметката"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "Единица"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "По подразбиране"
-
-#~ msgid "Message"
-#~ msgstr "Съобщение"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "Поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "Клиент номер"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "Лице за контакт"
-
-#, fuzzy
-#~ msgid "Reversal Information"
-#~ msgstr "Необходимост от задание"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "Добави комплект"
-
-#~ msgid "Edit Customer"
-#~ msgstr "Редакция на клиент"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "Прикрепен"
-
-#~ msgid "as at"
-#~ msgstr "както"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "Редакция на потребител"
-
-#~ msgid "Income"
-#~ msgstr "Приходи"
-
-#~ msgid "Number"
-#~ msgstr "Номер"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "Списък-сметки"
-
-#~ msgid "Delete"
-#~ msgstr "Изтрии"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "Парола"
-
-#~ msgid "Markup"
-#~ msgstr "Надценка"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Post"
-#~ msgstr "Запази"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "Фармат за дата"
-
-#~ msgid "Make"
-#~ msgstr "Изработи"
-
-#~ msgid "Till"
-#~ msgstr "до"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "Актив"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "Държава"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "Архив"
-
-#~ msgid "Receivables"
-#~ msgstr "Подлежащи на получване"
-
-#~ msgid "System Defaults"
-#~ msgstr "Система по подразбиране"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "Текущ"
-
-#~ msgid "Detail"
-#~ msgstr "Детаилен"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "Фактура номер"
-
-#~ msgid "Backup"
-#~ msgstr "Архив"
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "Запази като нов"
-
-#~ msgid "Database"
-#~ msgstr "Бази-данни"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "Поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "Списък-сметки"
-
-#~ msgid "Code"
-#~ msgstr "Код"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Книгата е затворена докато"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "Лице за контакт"
-
-#~ msgid "Stylesheet"
-#~ msgstr "Таблица със стилове"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "Позиция"
-
-#~ msgid "Edit Employee"
-#~ msgstr "Редакция на сътрудник"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Aged"
-#~ msgstr "Остарял"
-
-#~ msgid "PO Number"
-#~ msgstr "Поръчка номер за покупка"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "потребител"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "Приходи"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "Ел.адрес"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "Сметка"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "Доставка със"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "Поръчка"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Обновен"
-
-#~ msgid "Taxable"
-#~ msgstr "Облагаема сделка"
-
-#~ msgid "Continue"
-#~ msgstr "Продължение"
-
-#~ msgid "Shipping Point"
-#~ msgstr "Местоназначение"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "Избери всичко"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "Начална дата"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "Запазена форма"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "Изтрии сметка!"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "потребител"
-
-#~ msgid "COGS"
-#~ msgstr "COGS"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "Държава"
-
-#, fuzzy
-#~ msgid "On hand"
-#~ msgstr "На ръка"
-
-#~ msgid "Last Cost"
-#~ msgstr "Последна цена"
-
-#, fuzzy
-#~ msgid "Time Frame"
-#~ msgstr "Работни карти"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "Ведомост"
-
-#~ msgid "GL"
-#~ msgstr "Главна книга"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "Междинен сбор"
-
-#~ msgid "Serial Number"
-#~ msgstr "Сериен номер"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "Дата"
-
-#~ msgid "Account"
-#~ msgstr "Сметка"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "Отчет за съгласуване"
-
-#~ msgid "Memo"
-#~ msgstr "Бележка"
-
-#~ msgid "Active"
-#~ msgstr "Актив"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "Начална дата"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "Тип на сметката"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "Удръжки"
-
-#~ msgid "Phone"
-#~ msgstr "Телефон"
-
-#~ msgid "Week"
-#~ msgstr "Седмица"
-
-#~ msgid "Yes"
-#~ msgstr "Да"
-
-#, fuzzy
-#~ msgid "Adjustment Details"
-#~ msgstr "Липсва инвентарна сметка!"
-
-#~ msgid "Pricelist"
-#~ msgstr "Ценоразпис"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "Натрупване"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Запази като нов"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Tax Included"
-#~ msgstr "Включен данък"
-
-#~ msgid "Drawing"
-#~ msgstr "Изрисуване"
-
-#~ msgid "List Price"
-#~ msgstr "Ценоразпис"
-
-#~ msgid "No"
-#~ msgstr "Но."
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "Сборна линия"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "Приходи"
-
-#~ msgid "Qty"
-#~ msgstr "К-во"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "Обновен"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "Направления"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Активиране на пробен баланс!"
-
-#, fuzzy
-#~ msgid "Sequence"
-#~ msgstr "Свойства"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "Начална дата"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "Номер на сметка"
-
-#~ msgid "Project Number"
-#~ msgstr "Номер на проекта"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Включи курсовата разлика"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "потребител"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "Архив"
-
-#~ msgid "Quarter"
-#~ msgstr "Четиримесечие"
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "Фармат за дата"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "ПК"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "Изтрии база-данни"
-
-#~ msgid "City"
-#~ msgstr "Град"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Wages and Deductions"
-#~ msgstr "Удръжки"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "Редакция на потребител"
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "Контрол на достъпа"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "Сметка за данъци"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "ПК"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "Връзка със сметки"
-
-#~ msgid "All"
-#~ msgstr "Всичко"
-
-#~ msgid "From"
-#~ msgstr "От"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "Справка за"
-
-#~ msgid "Remaining"
-#~ msgstr "Напомняне"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "Сътрудник номер"
-
-#~ msgid "Model"
-#~ msgstr "Модел"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "Актив"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "Запази в COA"
-
-#~ msgid "Method"
-#~ msgstr "Метод"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "Запази като нов"
-
-#~ msgid "Reference"
-#~ msgstr "Референция"
-
-#~ msgid "Contra"
-#~ msgstr "Коректив"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "Детаилен"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "Сума за получаване"
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "Свойствата за запазени!"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "Отдел"
-
-#~ msgid "Debit"
-#~ msgstr "Дебит"
-
-#~ msgid "List Transactions"
-#~ msgstr "Списък с преводи"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "Направления"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "Номер на сметка"
-
-#~ msgid "Credit Limit"
-#~ msgstr "Кредитен лимит"
-
-#~ msgid "Cc"
-#~ msgstr "Сс"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "От"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "Провери инвентара"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "Направления"
-
-#~ msgid "Cost Center"
-#~ msgstr "Звено платец"
-
-#~ msgid "Bin"
-#~ msgstr "Пакет"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "Запазена форма"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "Необходим е за"
-
-#, fuzzy
-#~ msgid "Timecard Criteria"
-#~ msgstr "Работна карта"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "Ценова група"
-
-#, fuzzy
-#~ msgid "E-mail Statement to [_1]"
-#~ msgstr "Ел.адрес за потвърждения"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "Справка за"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "Направления"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "Баланс за потвърждение"
-
-#~ msgid "Report for"
-#~ msgstr "Справка за"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "Държава"
-
-#, fuzzy
-#~ msgid "Deduction Type"
-#~ msgstr "Удръжки"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "Фактура дата"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "Облагаема сделка"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "Поръчка"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "Ивентара е запазен!"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "Включено плащане"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "Актив"
-
-#~ msgid "Amount"
-#~ msgstr "Сума"
-
-#~ msgid "Non-tracking Items"
-#~ msgstr "Стоки без проследяване"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "Фактура дата"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "Запази като нов"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "Изчистено"
-
-#, fuzzy
-#~ msgid "Lead Time"
-#~ msgstr "Основно време"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "Справка за"
-
-#~ msgid "Projects"
-#~ msgstr "Проекти"
-
-#~ msgid "Difference"
-#~ msgstr "Различия"
-
-#~ msgid "Update"
-#~ msgstr "Обнови"
-
-#~ msgid "Due Date"
-#~ msgstr "Платете до"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "Редакция на потребител"
-
-#~ msgid "Database Host"
-#~ msgstr "Сървър за база-данни"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "Клиент номер"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "Сметка за данъци"
-
-#~ msgid "Warehouse"
-#~ msgstr "Склад"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "Прикрепен"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Разход/активи"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "Сътрудник номер"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Обяснение"
-
-#~ msgid "Password"
-#~ msgstr "Парола"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "Фирма"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "Данък номер"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "Запази"
-
-#~ msgid "Edit User"
-#~ msgstr "Редакция на потребител"
-
-#~ msgid "FX"
-#~ msgstr "FX"
-
-#~ msgid "Account Number"
-#~ msgstr "Номер на сметка"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "Редакция на доставчик"
-
-#~ msgid "User"
-#~ msgstr "потребител"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "Удръжки"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "Задължения към доставчици"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "Ивентара е запазен!"
-
-#, fuzzy
-#~ msgid "Time Out"
-#~ msgstr "Пъти"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "Фармат за дата"
-
-#~ msgid "Printer"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "Обновен"
-
-#~ msgid "Tracking Items"
-#~ msgstr "Стока с проследяване"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "за"
-
-#~ msgid "Bcc"
-#~ msgstr "Бсс"
-
-#~ msgid "Date Paid"
-#~ msgstr "Падеж"
-
-#~ msgid "Amount Due"
-#~ msgstr "Сума за получаване"
-
-#~ msgid "Credit"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "Държава"
-
-#~ msgid "Short"
-#~ msgstr "Къс"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "потребител"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "Лице за контакт"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "Доставчик номер"
-
-#~ msgid "Year"
-#~ msgstr "Година"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "Кредитно известие към фактура"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "Прикрепен"
-
-#~ msgid "Day"
-#~ msgstr "Ден"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "Поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Add/Change Deductions"
-#~ msgstr "Добави удръжка"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "Фармат за дата"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "Изтрии база-данни"
-
-#~ msgid "Open"
-#~ msgstr "Отворен"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "Кредит"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "Авансово плащане"
-
-#~ msgid "Average Cost"
-#~ msgstr "Средно-претеглена цена"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "Изпълнение на преводи"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "Списък-сметки"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "Забележка"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "Избери"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "На ръка"
-
-#~ msgid "Company"
-#~ msgstr "Фирма"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "Валутен курс"
-
-#~ msgid "Salesperson"
-#~ msgstr "Продавач"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "Доставчик номер"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Включи в падащо меню"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "Добави задача"
-
-#, fuzzy
-#~ msgid "Tax ID/SSN"
-#~ msgstr "Данък номер / SSN"
-
-#~ msgid "Include in Report"
-#~ msgstr "Включен в справката"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "Баланс"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Принудително преизчисляване на преводи за всички дати"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "Баланс за потвърждение"
-
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "Справки"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "Необходим е за"
-
-#~ msgid "Number Format"
-#~ msgstr "Формат-число"
-
-#~ msgid "Date"
-#~ msgstr "Дата"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "Справки"
-
-#~ msgid "Line Total"
-#~ msgstr "Сборна линия"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "Направления"
-
-#~ msgid "Address"
-#~ msgstr "Адрес"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "Създай базата-данни"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "Име на фирма"
-
-#, fuzzy
-#~ msgid "Job Failed"
-#~ msgstr "Задачата е запазена!"
-
-#~ msgid "Warning!"
-#~ msgstr "Внимание!"
-
-#~ msgid "Manager"
-#~ msgstr "Ръководител"
-
-#~ msgid "Record in"
-#~ msgstr "Запази в"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "Главна книга"
-
-#~ msgid "Image"
-#~ msgstr "Изображение"
-
-#~ msgid "Vendor Number"
-#~ msgstr "Доставчик номер"
-
-#~ msgid "days"
-#~ msgstr "дни"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "Справки"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "Мерна еденица за тежест"
-
-#~ msgid "Project"
-#~ msgstr "Проект"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "Език"
-
-#~ msgid "Name"
-#~ msgstr "Име"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "Фармат за дата"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "Удръжки"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "Редакция на сметка"
-
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "В брой"
-
-#~ msgid "Screen"
-#~ msgstr "Екран"
-
-#~ msgid "Obsolete"
-#~ msgstr "Остарял"
-
-#~ msgid "Invoice Date"
-#~ msgstr "Фактура дата"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "Връзка със сметки"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "Превод"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "Списък-сметки"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "По подразбиране"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "Сериен номер"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "Баланс за потвърждение"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "Това е сумарна сметка за запис!"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "Баланс"
-
-#, fuzzy
-#~ msgid "Orders"
-#~ msgstr "Поръчка"
-
-#~ msgid "Company Name"
-#~ msgstr "Име на фирма"
-
-#, fuzzy
-#~ msgid "Onhand delta"
-#~ msgstr "На ръка"
-
-#~ msgid "To"
-#~ msgstr "за"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "Фактура"
-
-#~ msgid "Part Number"
-#~ msgstr "Сериен номер"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "Освободени сделки"
-
-#~ msgid "Employee Number"
-#~ msgstr "Сътрудник номер"
-
-#~ msgid "Closed"
-#~ msgstr "Затворено"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "Запази като нов"
 
 #, fuzzy
 #~ msgid "$operation Employee"
 #~ msgstr "Редакция на сътрудник"
 
-#~ msgid "Total"
-#~ msgstr "Всичко"
-
-#~ msgid "Notes"
-#~ msgstr "Забележка"
+#, fuzzy
+#~ msgid "%1 Business"
+#~ msgstr "Направления"
 
 #, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "История на клиента"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "Добави плащане в брой"
 
 #, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "Списък-сметки"
+#~ msgid "%1 GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "Прикрепен"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "Добави в главната книга превод"
 
 #, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "Фактури прдажби"
-
-#~ msgid "Compare to"
-#~ msgstr "Сравни със"
+#~ msgid "%1 Language"
+#~ msgstr "Език"
 
 #, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "Отчет за съгласуване"
+#~ msgid "%1 Number"
+#~ msgstr "Номер"
 
 #, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "Дата"
-
-#~ msgid "Current"
-#~ msgstr "Текущ"
-
-#~ msgid "Country"
-#~ msgstr "Държава"
+#~ msgid "%1 SIC"
+#~ msgstr "Добави SIC"
 
 #, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "Фармат за дата"
-
-#~ msgid "Overdue"
-#~ msgstr "Просрочен"
+#~ msgid "%1 Warehouse"
+#~ msgstr "Склад"
 
 #, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "Архив"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr "Липсва клиента в базите!"
 
 #, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "Ценова група"
+#~ msgid "%1: Vendor not on file!"
+#~ msgstr "Липсва доствчика в базата"
+
+#~ msgid "A"
+#~ msgstr "А"
 
 #, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "Десетична запетая"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "Плащания"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Фактура"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Status: Complete"
-#~ msgstr "Завършен"
-
-#, fuzzy
-#~ msgid "Over"
-#~ msgstr "Просрочен"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "Фирма"
-
-#, fuzzy
-#~ msgid "Books closed on"
-#~ msgstr "Книгата е вече отворена"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "Изпълнение на преводи"
-
-#, fuzzy
-#~ msgid "Onhand amount"
-#~ msgstr "На ръка"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "Сътрудници"
-
-#~ msgid "Group"
-#~ msgstr "Група"
-
-#~ msgid "Subtotal"
-#~ msgstr "Междинен сбор"
-
-#, fuzzy
-#~ msgid "Select Templates to Load"
-#~ msgstr "Настройка шаблони"
-
-#~ msgid "DOB"
-#~ msgstr "Дата на раждане"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "Запази като нов"
-
-#~ msgid "Unit"
-#~ msgstr "Единица"
-
-#~ msgid "No."
-#~ msgstr "Но."
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "Запазена форма"
-
-#~ msgid "Summary"
-#~ msgstr "Сумарно"
-
-#~ msgid "Print"
-#~ msgstr "Печат"
-
-#~ msgid "E-mail"
-#~ msgstr "Ел.адрес"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "Междинен сбор"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "Група"
-
-#, fuzzy
-#~ msgid "Available overpayments"
-#~ msgstr "Авансово плащане"
-
-#, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "Сметки"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Запазена форма"
-
-#, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "Плащания"
-
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "Данък номер / SSN"
-
-#, fuzzy
-#~ msgid "Date Reversed"
-#~ msgstr "Дата за получаване"
-
-#~ msgid "Next"
-#~ msgstr "Следващ"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
+#~ msgid "AP Invoices"
 #~ msgstr "Кредитно известие към фактура"
 
-#~ msgid "Weight"
-#~ msgstr "Тегло"
+#~ msgid "AP Outstanding"
+#~ msgstr "Задължения към доставчици"
 
-#~ msgid "Tax"
-#~ msgstr "Данък"
-
-#~ msgid "Cleared"
-#~ msgstr "Изчистено"
-
-#~ msgid "Order Number"
-#~ msgstr "Поръчка номер"
-
-#~ msgid "Customer Number"
-#~ msgstr "Клиент номер"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "Контрол"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "Валутен курс"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "Курс"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "Вземания от клиенти"
-
-#, fuzzy
-#~ msgid "Time and Material Cards"
-#~ msgstr "Работни карти"
-
-#~ msgid "Edit"
-#~ msgstr "Редакция"
-
-#~ msgid "Copies"
-#~ msgstr "Копие"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "Прикрепен"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "Добави потребител"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "Търси"
-
-#~ msgid "Save"
-#~ msgstr "Запази"
-
-#~ msgid "State/Province"
-#~ msgstr "Окръг/Област"
-
-#~ msgid "Heading"
-#~ msgstr "Заглавие"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "Нов проформа"
+#~ msgid "AP Transactions"
+#~ msgstr "Преводи покупки"
 
 #, fuzzy
 #~ msgid "AP account"
 #~ msgstr "Сметка"
 
 #, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "Липсва инвентарна сметка!"
+#~ msgid "AR Invoices"
+#~ msgstr "Фактура"
 
-#, fuzzy
-#~ msgid "Clocked"
-#~ msgstr "заключих!"
+#~ msgid "AR Outstanding"
+#~ msgstr "Вземания от клиенти"
 
-#~ msgid "Discount"
-#~ msgstr "Отстъпка"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "Прикрепен"
-
-#~ msgid "Confirm"
-#~ msgstr "Съгласие"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "Фармат за дата"
-
-#~ msgid "Balance"
-#~ msgstr "Баланс"
-
-#~ msgid "Ship via"
-#~ msgstr "Доставка със"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "Обяснение"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "Освободени сделки"
-
-#~ msgid "Department"
-#~ msgstr "Отдел"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "Необходим е за"
-
-#~ msgid "Tax Account"
-#~ msgstr "Сметка за данъци"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "Облагаема сделка"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "Парола"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "Справки"
-
-#~ msgid "Standard"
-#~ msgstr "Стандарт"
-
-#, fuzzy
-#~ msgid "Preferences for [_1]"
-#~ msgstr "Редакция на свойства за"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "Дата на поръчка"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "Справки"
+#~ msgid "AR Transactions"
+#~ msgstr "Преводи продажби"
 
 #, fuzzy
 #~ msgid "AR account"
 #~ msgstr "Сметка"
 
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "Проект"
+#~ msgid "AR/AP"
+#~ msgstr "Продажби/Покупки"
+
+#~ msgid "About"
+#~ msgstr "Информация"
+
+#~ msgid "Above"
+#~ msgstr "По-горе"
 
 #, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "Връзка със сметки"
+#~ msgid "Access Denied"
+#~ msgstr "Отказан достъп!"
 
-#~ msgid "Profit Center"
-#~ msgstr "Изсточник печалба"
-
-#~ msgid "ROP"
-#~ msgstr "ROP"
+#~ msgid "Account"
+#~ msgstr "Сметка"
 
 #, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "Кредит"
-
-#~ msgid "Payables"
-#~ msgstr "Подлежащи на плащане"
+#~ msgid "Account %1 not found"
+#~ msgstr "Сметката не съществува!"
 
 #, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "Валидно до"
+#~ msgid "Account %1 not found."
+#~ msgstr "Сметка"
 
 #, fuzzy
-#~ msgid "Single date"
-#~ msgstr "Изчистено"
+#~ msgid "Account Description"
+#~ msgstr "Обяснение"
 
 #, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "Баланс"
+#~ msgid "Account Label"
+#~ msgstr "Номер на сметка"
 
 #, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "Баланс"
+#~ msgid "Account Name"
+#~ msgstr "Номер на сметка"
 
 #, fuzzy
-#~ msgid "Time In"
-#~ msgstr "Пъти"
+#~ msgid "Account No."
+#~ msgstr "Сметка"
+
+#~ msgid "Account Number"
+#~ msgstr "Номер на сметка"
 
 #, fuzzy
-#~ msgid "Content"
-#~ msgstr "Лице за контакт"
+#~ msgid "Account Number End"
+#~ msgstr "Номер на сметка"
 
 #, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "Държава"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "Приходи"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "Разходен ордер"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "Отчет за съгласуване"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "Редакция на сметка"
-
-#~ msgid "Microfiche"
-#~ msgstr "Микрофиш"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "Доставчик номер"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "Дебит"
-
-#~ msgid "Add Customer"
-#~ msgstr "Добави клиент"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "Редакция на потребител"
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "По подразбиране"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "Тема"
-
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "Промени Администраторската парола"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "Ръководител"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "Разходен ордер"
-
-#~ msgid "Exch"
-#~ msgstr "Курс"
-
-#, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "Списък-отдели"
-
-#~ msgid "Pricegroup"
-#~ msgstr "Ценова група"
-
-#, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "Редакция на сътрудник"
-
-#~ msgid "Invoice Number"
-#~ msgstr "Фактура номер"
-
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "Съгласуване"
-
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "Дата"
-
-#~ msgid "Month"
-#~ msgstr "Месец"
-
-#~ msgid "Item"
-#~ msgstr "Стока"
-
-#, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "Пропусната дата на плащане!"
-
-#~ msgid "Statement Balance"
-#~ msgstr "Баланс за потвърждение"
-
-#~ msgid "Accounts"
-#~ msgstr "Сметки"
-
-#, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "Авансово плащане"
-
-#, fuzzy
-#~ msgid "Add/Change Wage"
-#~ msgstr "Добави валутен курс"
-
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "Запазена форма"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "Приключване на година"
-
-#~ msgid "Internal Notes"
-#~ msgstr "Вътрешни бележки"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Неразпределена печалба"
-
-#, fuzzy
-#~ msgid "You are logged out!"
-#~ msgstr "Вие напуснахте"
-
-#, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "Езикът не е определен!"
-
-#~ msgid "GL Reference Number"
-#~ msgstr "Номер на главната книга"
-
-#~ msgid "Sales Invoice/AR Transaction Number"
-#~ msgstr "Фактура продажби/Номер на превод от клиент"
-
-#~ msgid "Sales Order Number"
-#~ msgstr "Номер на поръчка продажба"
-
-#~ msgid "Vendor Invoice/AP Transaction Number"
-#~ msgstr "Фактура за доставка/номер на превода от доставчик"
-
-#~ msgid "Sales Quotation Number"
-#~ msgstr "Номер на поръчка продажба със запазване"
-
-#~ msgid "RFQ Number"
-#~ msgstr "Номер на искане за заявка"
-
-#~ msgid "Job/Project Number"
-#~ msgstr "Работа/Проект номер"
-
-#, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "Паролата е променена!"
-
-#, fuzzy
-#~ msgid "Default Email To"
-#~ msgstr "Подразбиращ се шаблон"
-
-#, fuzzy
-#~ msgid "Default Email CC"
-#~ msgstr "Подразбиращ се шаблон"
-
-#, fuzzy
-#~ msgid "Default Email BCC"
-#~ msgstr "Подразбиращ се шаблон"
-
-#, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "Име на фирма"
-
-#, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "Име на фирма"
-
-#~ msgid "Save as new"
-#~ msgstr "Запази като нов"
+#~ msgid "Account Number Start"
+#~ msgstr "Номер на сметка"
 
 #~ msgid "Account Number missing!"
 #~ msgstr "Липсва номер на сметка!"
 
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "Тип на сметката"
+
 #~ msgid "Account Type missing!"
 #~ msgstr "Липсва тип на сметката!"
 
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr ""
-#~ "Не задавай на сметка повече от едно значение (покупка, продажба или "
-#~ "инвентар)!"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "не е възможно да се зададе друг тип на тази сметка"
-
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Не задавай повече от едно значение за"
-
-#~ msgid "Account saved!"
-#~ msgstr "Сметката е запазена!"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "Не е възможно да се запази сметката!"
+#~ msgid "Account category"
+#~ msgstr "Номер на сметка"
 
 #~ msgid "Account does not exist!"
 #~ msgstr "Сметката не съществува!"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
+#~ msgid "Account numbers"
+#~ msgstr "Номер на сметка"
 
-#~ msgid "Copy to COA"
-#~ msgstr "Запази в COA"
-
-#~ msgid "GIFI missing!"
-#~ msgstr "Липсва GIFI!"
-
-#~ msgid "GIFI saved!"
-#~ msgstr "GIFI е запазен!"
-
-#~ msgid "GIFI deleted!"
-#~ msgstr "GIFI е изтрит!"
+#~ msgid "Account saved!"
+#~ msgstr "Сметката е запазена!"
 
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "Отстъпка"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Направления"
-
-#~ msgid "Description missing!"
-#~ msgstr "Липсва подпис!"
-
-#~ msgid "Business saved!"
-#~ msgstr "Направлението е запазено!"
-
-#~ msgid "Business deleted!"
-#~ msgstr "Направлението е изтрито!"
-
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "БДС"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Добави SIC"
-
-#~ msgid "Code missing!"
-#~ msgstr "Липсва код!"
-
-#~ msgid "SIC saved!"
-#~ msgstr "SIC е запазен"
-
-#~ msgid "SIC deleted!"
-#~ msgstr "SIC е изтрит"
-
-#~ msgid "Languages"
-#~ msgstr "Езици"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Език"
-
-#~ msgid "Language saved!"
-#~ msgstr "Езика е запазен!"
-
-#~ msgid "Confirm!"
-#~ msgstr "Съгласие!"
-
-#, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "Редакция на език"
-
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "Изтриването на език ще доведе до премахването на шаблоните му!"
-
-#~ msgid "Language deleted!"
-#~ msgstr "Езика е изтрит!"
-
-#~ msgid "Default Template"
-#~ msgstr "Подразбиращ се шаблон"
-
-#~ msgid "Edit Template"
-#~ msgstr "Редакция на шаблон"
-
-#, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "LaTeX Шаблони"
-
-#~ msgid "Template saved!"
-#~ msgstr "Шаблона е запазен!"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "Шаблона е запазен!"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "Не е възможно запазване на поръчката!"
-
-#~ msgid "Password does not match!"
-#~ msgstr "Въведената парола не съвпада!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "Не е възможно да се запази свойство!"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Склада е запазен!"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Склада е изтрит!"
-
-#~ msgid "localhost"
-#~ msgstr "този компютър"
-
-#~ msgid "About"
-#~ msgstr "Информация"
-
-#~ msgid "Ends"
-#~ msgstr "Приключване"
-
-#~ msgid "Every"
-#~ msgstr "Винаги"
-
-#~ msgid "Next Number"
-#~ msgstr "Следващ номер"
-
-#~ msgid "Postscript"
-#~ msgstr "Postscript"
-
-#, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "Фактура продажби "
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "Фактура на доставчик "
-
-#, fuzzy
-#~ msgid "Posting Transaction %1"
-#~ msgstr "Превод покупка"
-
-#~ msgid "done"
-#~ msgstr "Готов"
-
-#, fuzzy
-#~ msgid "Saving %1 [_2]"
-#~ msgstr "Запазено"
-
-#~ msgid "failed"
-#~ msgstr "грешка"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "Главна книга на преводи"
-
-#~ msgid "Printing"
-#~ msgstr "Разпечатано"
-
-#~ msgid "Sending"
-#~ msgstr "Изпратено"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "Липсва Ел.адрес!"
-
-#~ msgid "Current Earnings"
-#~ msgstr "Текуща печалба"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "Отдел"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Номер на проекта"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "Дебитно известие към фактура"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "Добави фактура за доставка"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "Редакция на фактура доставки"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "Януари"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "Код"
-
-#~ msgid "Post as new"
-#~ msgstr "Запази като нов"
-
-#~ msgid "Schedule"
-#~ msgstr "Разписание"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "Запази като нов"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "Запази като нов"
-
-#~ msgid "ea"
-#~ msgstr "бр."
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "Попусната дата на фактурата"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "Липсва доставчик"
-
-#~ msgid "Cannot post invoice for a closed period!"
-#~ msgstr "Не е възможно запазване на фактура в приключен период!"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "Пропуснат валутен курс"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "Не мога да извърша плащане за закрит период!"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "Валутен курс за пропуснато плащане"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Не е възможно запазване на фактурата!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Inventory account does not exist!"
-#~ msgstr "Липсва инвентарна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "Липсва приходна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "Липсва сметка за реализирана стока!"
-
-#, fuzzy
-#~ msgid "Cannot create Service; Income account does not exist!"
-#~ msgstr "Липсва приходна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Service; Expense account does not exist!"
-#~ msgstr "Липсва разходна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Assembly; Income account does not exist!"
-#~ msgstr "Липсва приходна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; Inventory account does not exist!"
-#~ msgstr "Липсва инвентарна сметка!"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "Липсва сметка за реализирана стока!"
-
-#~ msgid "Stock"
-#~ msgstr "Стока"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "Текущи разходи"
-
-#~ msgid "Updated"
-#~ msgstr "Обновен"
-
-#~ msgid "No History!"
-#~ msgstr "Без история!"
-
-#~ msgid "Parts Requirements"
-#~ msgstr "Липсващи позиции"
-
-#~ msgid "SO"
-#~ msgstr "SO"
-
-#~ msgid "PO"
-#~ msgstr "PO"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "Код"
-
-#~ msgid "Curr"
-#~ msgstr "Валута"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "Номер на главната книга"
-
-#~ msgid "Cost"
-#~ msgstr "Цена"
-
-#~ msgid "Break"
-#~ msgstr "Прекъсване"
-
-#~ msgid "Sell"
-#~ msgstr "Продажба"
-
-#~ msgid "List"
-#~ msgstr "Списък"
-
-#~ msgid "BOM"
-#~ msgstr "Ведомост материали"
-
-#~ msgid "A"
-#~ msgstr "А"
-
-#~ msgid "Individual Items"
-#~ msgstr "Самостоятелена стока"
-
-#~ msgid "unexpected error!"
-#~ msgstr "Необяснима грешка!"
-
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Липсва доствчика в базата"
-
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "Липсва клиента в базите!"
-
-#~ msgid "Select from one of the names below"
-#~ msgstr "Избери едно от имената посочени по-долу"
-
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr "Преди бракуване на позиция е необходимо количеството и да е нула!"
-
-#~ msgid "Item deleted!"
-#~ msgstr "Стоката е изтрита!"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "Не е възможно изтриване на стоката!"
-
-#~ msgid "Add"
-#~ msgstr "Добави"
-
-#~ msgid "Quantity exceeds available units to stock!"
-#~ msgstr "Превишено е количеството в пакет!"
-
-#~ msgid "Assemblies restocked!"
-#~ msgstr "Завършен комплект!"
-
-#~ msgid "Cannot stock assemblies!"
-#~ msgstr "Не е възможно да се окомлектова!"
-
-#~ msgid "Quotation Number"
-#~ msgstr "Номер на задание"
-
-#, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "Печат"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "Не сте избрали нищо!"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Сигурен ли сте, че искате да премахнете маркираните задания?"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Прехнати са маркраните редове със задания ..."
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "Премахнати са предназначените за печат опашки!"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Не е възможно премахване на файлове!"
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "Маркираните редове са разпечатани!"
-
-#, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "Клиент"
-
-#, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "Доставчик"
+#~ msgid "Account:"
+#~ msgstr "Сметка"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "Сметка"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Фактура номер"
+#~ msgid "Accounting"
+#~ msgstr "Сметкоплан"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "Меню Сметкоплан"
+
+#~ msgid "Accounts"
+#~ msgstr "Сметки"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Поръчка номер"
+#~ msgid "Accounts From"
+#~ msgstr "Сметки"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Номер на задание"
+#~ msgid "Accounts To"
+#~ msgstr "Сметки"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "От"
-
-#~ msgid "Spoolfile"
-#~ msgstr "Опашка за печат"
-
-#~ msgid "Remove"
-#~ msgstr "Премахни"
+#~ msgid "Accrual"
+#~ msgstr "Натрупване"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Номер"
+#~ msgid "Accrual Basis:"
+#~ msgstr "Натрупване"
 
-#~ msgid "Project not on file!"
-#~ msgstr "Проекта липсва в базите!"
+#~ msgid "Activate Audit trail"
+#~ msgstr "Активиране на пробен баланс!"
 
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Избери един от проектите посочени по-долу"
-
-#~ msgid "Next Date"
-#~ msgstr "Следваща дата"
-
-#~ msgid "E-mail message"
-#~ msgstr "Ел.съобщение"
-
-#~ msgid "Day(s)"
-#~ msgstr "Ден(дни)"
-
-#~ msgid "Week(s)"
-#~ msgstr "Седмица(и)"
-
-#~ msgid "Month(s)"
-#~ msgstr "Месеци"
-
-#~ msgid "Year(s)"
-#~ msgstr "Година(и)"
-
-#~ msgid "Repeat"
-#~ msgstr "Повторение"
-
-#~ msgid "For"
-#~ msgstr "За"
+#~ msgid "Active"
+#~ msgstr "Актив"
 
 #, fuzzy
-#~ msgid "Recurring Transaction for %1"
-#~ msgstr "Повтарящ се превод"
+#~ msgid "Active On"
+#~ msgstr "Актив"
 
-#~ msgid "Save Schedule"
-#~ msgstr "Запази разписание"
+#~ msgid "Add"
+#~ msgstr "Добави"
 
-#~ msgid "Delete Schedule"
-#~ msgstr "Изтрии задачата"
+#~ msgid "Add AP Transaction"
+#~ msgstr "Добавяне превод към доставчици"
 
-#, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "Дата"
+#~ msgid "Add AR Transaction"
+#~ msgstr "Добавяне превод към клиенти"
 
-#, fuzzy
-#~ msgid "Message: "
-#~ msgstr "Съобщение"
-
-#~ msgid "sent"
-#~ msgstr "изпрати"
-
-#~ msgid "Select postscript or PDF!"
-#~ msgstr "Избери postscript или PDF!"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "Няма за печатане!"
-
-#~ msgid "Select payment"
-#~ msgstr "Избери плащане"
-
-#~ msgid "Queue"
-#~ msgstr "Задание"
-
-#~ msgid "Printed"
-#~ msgstr "Разпечатано"
-
-#~ msgid "Select a Printer!"
-#~ msgstr "Избери принтер!"
-
-#~ msgid "Recd"
-#~ msgstr "Запис"
-
-#~ msgid "Price"
-#~ msgstr "Цена"
-
-#~ msgid "Extended"
-#~ msgstr "Обобщен"
-
-#~ msgid "OH"
-#~ msgstr "OH"
-
-#~ msgid "Serial No."
-#~ msgstr "Сериен номер"
-
-#~ msgid "SKU"
-#~ msgstr "SKU"
-
-#~ msgid "Select items"
-#~ msgstr "Избери стока"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Стоката липсва в базата!"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Какъв тип е тази номенклатура на стоките?"
-
-#~ msgid "Service"
-#~ msgstr "Услуга"
+#~ msgid "Add Account"
+#~ msgstr "Добави Сметка"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "липсва номер на ред!"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "Кредитно известие към фактура"
+
+#~ msgid "Add Customer"
+#~ msgstr "Добави клиент"
+
+#, fuzzy
+#~ msgid "Add Debit Invoice"
+#~ msgstr "Дебитно известие към фактура"
+
+#~ msgid "Add Department"
+#~ msgstr "Добави отдел"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "Добави задача"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "Добави POS фактура"
+
+#~ msgid "Add Project"
+#~ msgstr "Добави проект"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "Добави платежно нареждане"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "Добави поръчка продажби"
+#~ msgid "Add Quotation"
+#~ msgstr "Добави заявка"
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "Добави запитване за заявка"
 
-#~ msgid "Add Quotation"
-#~ msgstr "Добави заявка"
+#~ msgid "Add Sales Invoice"
+#~ msgstr "Добави фактура продажби"
 
-#~ msgid "In-line"
-#~ msgstr "Включен"
-
-#~ msgid "Select txt, postscript or PDF!"
-#~ msgstr "Избери txt, postscrip или PDF!"
+#~ msgid "Add Sales Order"
+#~ msgstr "Добави поръчка продажби"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "Липсва дата!"
+#~ msgid "Add Unit"
+#~ msgstr "Единица"
 
-#~ msgid "Ship to"
-#~ msgstr "Доставка до"
+#~ msgid "Add Vendor"
+#~ msgstr "Добави доставчик"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "Добави фактура за доставка"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -3375,859 +1238,32 @@ msgstr "Превода е запазен!"
 #~ msgid "Add line3 "
 #~ msgstr "Добави направление"
 
-#~ msgid "State"
-#~ msgstr "Окръг"
+#, fuzzy
+#~ msgid "Add/Change Deductions"
+#~ msgstr "Добави удръжка"
 
 #, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "Кредитно известие към фактура"
+#~ msgid "Add/Change Wage"
+#~ msgstr "Добави валутен курс"
 
-#~ msgid "Add Sales Invoice"
-#~ msgstr "Добави фактура продажби"
-
-#~ msgid "Trade Discount"
-#~ msgstr "Търговска остъпка"
+#~ msgid "Address"
+#~ msgstr "Адрес"
 
 #, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Не възможно истриване на фактура!"
-
-#~ msgid "Customer missing!"
-#~ msgstr "Пропуснат клиент!"
-
-#~ msgid "Edit Project"
-#~ msgstr "Редакция на проект"
-
-#~ msgid "Add Project"
-#~ msgstr "Добави проект"
-
-#~ msgid "Orphaned"
-#~ msgstr "Без движение"
-
-#~ msgid "Groups"
-#~ msgstr "Групи"
-
-#~ msgid "Pricegroups"
-#~ msgstr "Ценова група"
-
-#~ msgid "Inactive"
-#~ msgstr "Неизползваем"
-
-#~ msgid "Translations saved!"
-#~ msgstr "Превода е запазен!"
-
-#~ msgid "Group missing!"
-#~ msgstr "Липсва група!"
-
-#~ msgid "Group saved!"
-#~ msgstr "Групата е запазена!"
-
-#~ msgid "Pricegroup missing!"
-#~ msgstr "Липсва ценова група!"
-
-#~ msgid "Pricegroup saved!"
-#~ msgstr "Ценовата група е изтрита!"
-
-#~ msgid "Translation deleted!"
-#~ msgstr "Превода е изтрит!"
-
-#~ msgid "Group deleted!"
-#~ msgstr "Групата е изтрита!"
-
-#~ msgid "Pricegroup deleted!"
-#~ msgstr "Ценовата група е изтрита!"
-
-#~ msgid "Description Translations"
-#~ msgstr "Описание на преводите"
-
-#~ msgid "Group Translations"
-#~ msgstr "Група преводи"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "Описание на преводите към проекта"
-
-#~ msgid "Translation"
-#~ msgstr "Превод"
-
-#~ msgid "Languages not defined!"
-#~ msgstr "Езикът не е определен!"
-
-#~ msgid "Edit Description Translations"
-#~ msgstr "Редакция на описанията на преводите"
-
-#~ msgid "Transaction Dates"
-#~ msgstr "Дата на превод"
-
-#~ msgid "No open Projects!"
-#~ msgstr "Няма отворен проект!"
-
-#~ msgid "Generate Sales Orders"
-#~ msgstr "Създай поръчките за продажбите"
-
-#~ msgid "Service Code"
-#~ msgstr "Код на услуга"
-
-#~ msgid "Select Customer"
-#~ msgstr "Избери клиент"
-
-#~ msgid "Customer not on file!"
-#~ msgstr "Липсва клиента в базите!"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "Липсва доствчика в базата"
-
-#~ msgid "Failed to save order!"
-#~ msgstr "Грешка при запазване на поръчка!"
-
-#~ msgid "Orders generated!"
-#~ msgstr "Поръчките са създадени!"
+#~ msgid "Addresses"
+#~ msgstr "Адрес"
 
 #, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "Шаблона е запазен!"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "Пропусната дата за плащане"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "Не мога да извърша превод за закрит период!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Превода е запазен!"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "Не мога да извърша плащане!"
-
-#~ msgid "AR Transactions"
-#~ msgstr "Преводи продажби"
-
-#~ msgid "AP Transactions"
-#~ msgstr "Преводи покупки"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "Номер на проекта"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "Фактура"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Добави плащане в брой"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Добави в главната книга превод"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "Сметка"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "Не мога да извърша плащане!"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "Липсва дата на превода"
-
-#~ msgid ""
-#~ "Cannot post transaction with a debit and credit entry for the same account!"
-#~ msgstr ""
-#~ "Не е възможно запазването на превода едновременно в дебита и кредита на "
-#~ "сметката!"
-
-#~ msgid "Out of balance transaction!"
-#~ msgstr "Ивън балансови преводи"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "Редакция на платежно нареждане"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "Редакция на поръчка продажби"
-
-#~ msgid "Edit Request for Quotation"
-#~ msgstr "Редакция на заявка за задание"
-
-#~ msgid "Edit Quotation"
-#~ msgstr "Редакция на задание"
-
-#~ msgid "Terms"
-#~ msgstr "Падеж"
-
-#~ msgid "Order Date"
-#~ msgstr "Дата на поръчка"
-
-#~ msgid "Quotation Date"
-#~ msgstr "Дата на заданието"
-
-#~ msgid "Print and Save"
-#~ msgstr "Разпечатай и запази"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Разпечатай и запази като нов"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "Липсва дата на поръчката!"
-
-#~ msgid "Quotation Date missing!"
-#~ msgstr "Липсва дата на заданието!"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "Липсва код!"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "Не е възможно запазване на поръчката!"
-
-#~ msgid "Cannot save quotation!"
-#~ msgstr "Не в възможно запазване на заданието!"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Сигурен ли сте, че ще изтриете номера на поръчката"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Сигурен ли сте, че ще изтриете номера на заданието"
-
-#~ msgid "Order deleted!"
-#~ msgstr "Поръчката е изтрита!"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "Не е възможно изтриване на поръчка!"
-
-#~ msgid "Quotation deleted!"
-#~ msgstr "Заданието е изтрито!"
-
-#~ msgid "Cannot delete quotation!"
-#~ msgstr "Не е възможно изтриване на задание!"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "Липсва номер на поръчката!"
-
-#~ msgid "Quotation Number missing!"
-#~ msgstr "Липсва номер на заданието!"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "Доставка на стока"
-
-#~ msgid "Shipping Date"
-#~ msgstr "Дата на доставка"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "Получаване на стока"
-
-#~ msgid "Done"
-#~ msgstr "Готов"
-
-#~ msgid "Shipping Date missing!"
-#~ msgstr "Липсва дата на доставка!"
-
-#~ msgid "Date received missing!"
-#~ msgstr "Липсва дата на получаване!"
-
-#~ msgid "Nothing entered!"
-#~ msgstr "Нищо не е въведено!"
-
-#~ msgid "Inventory saved!"
+#~ msgid "Adjustment"
 #~ msgstr "Ивентара е запазен!"
 
-#~ msgid "Could not save!"
-#~ msgstr "Невъзможно е да се запази!"
-
-#~ msgid "Nothing to transfer!"
-#~ msgstr "Нищо не е преведено!"
-
-#~ msgid "Transfer Inventory"
-#~ msgstr "Прехвърляне на инвентар"
-
-#~ msgid "Transfer from"
-#~ msgstr "Преместване от"
-
-#~ msgid "Transfer to"
-#~ msgstr "Преместване в"
-
-#~ msgid "From Warehouse"
-#~ msgstr "От склад"
-
-#~ msgid "To Warehouse"
-#~ msgstr "За склад"
-
-#~ msgid "Inventory transferred!"
-#~ msgstr "Инвентара е преместен!"
-
-#~ msgid "Could not transfer Inventory!"
-#~ msgstr "Невъзможно е да се премести инвентара!"
-
-#~ msgid "Req"
-#~ msgstr "Req"
-
-#~ msgid "Generate Purchase Orders"
-#~ msgstr "Създай поръчка за доставка"
-
-#~ msgid "Generate Orders"
-#~ msgstr "Създай поръчка"
-
-#~ msgid "Select Vendor"
-#~ msgstr "Избери доставчик"
-
-#~ msgid "Order generation failed!"
-#~ msgstr "Създаването на поръчка е провалено!"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Затворено"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "Затворено"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Добави POS фактура"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Редакция на POS фактура"
-
-#~ msgid "Change"
-#~ msgstr "Промени"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "Отворен"
-
-#~ msgid "Posted!"
-#~ msgstr "Запазено!"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "Отстъпка"
-
-#, fuzzy
-#~ msgid "Memorized Transaction List"
-#~ msgstr "Повтарящи се преводи"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "Сметката е изтрита!"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "Сума за получаване"
-
-#, fuzzy
-#~ msgid "Obsolete By"
-#~ msgstr "Остарял"
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "Включен данък"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "Баланс за потвърждение"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "Баланс"
-
-#, fuzzy
-#~ msgid "Access Denied"
-#~ msgstr "Отказан достъп!"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "Баланс"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "Временен баланс"
-
-#~ msgid "Business Number"
-#~ msgstr "Номер на направление"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "Редакция на език"
-
-#, fuzzy
-#~ msgid "Template Set"
-#~ msgstr "Шаблони"
-
-#~ msgid "Session Timeout"
-#~ msgstr "Изтече времето на сесията"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "Отдели"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "Изтрии сметка!"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "Печалба от курсови разлики"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "Загуба от курсови разлики"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "LaTeX Шаблони"
-
-#, fuzzy
-#~ msgid "Save Batch"
-#~ msgstr "Запази разписание"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "Пропуснат валутен курс"
-
-#, fuzzy
-#~ msgid "Applied discount"
-#~ msgstr "Търговска остъпка"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "Сигурен ли сте, че изтриете този момер фактура?"
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "Изтрии"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "Валидно до"
-
-#, fuzzy
-#~ msgid "Edit Asset Class"
-#~ msgstr "Редакция на окомплектовка"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "Данък"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "Поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "Поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "Актив"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "Отчет за съгласуване"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "Метод"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "Плащането е запазено!"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "Напомняне"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "не съществува"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "Запази като нов"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "Поръчки продажби"
-
-#, fuzzy
-#~ msgid "Generate Purchase Orders from Sales Orders"
-#~ msgstr "Създай поръчка за доставка на база поръчка продажби"
-
-#, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "Обобщени поръчки на продажби"
-
-#, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "Поръчки за доставки"
-
-#, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "Обобщени платежни нареждания"
-
-#, fuzzy
-#~ msgid "Generate Sales Orders from Purchase Orders"
-#~ msgstr "Създай поръчка продажби на база поръчка за доставка"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "Запазени форми"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "Необходимост от задание"
-
-#, fuzzy
-#~ msgid "Default Reportable"
-#~ msgstr "Подразбиращ се шаблон"
-
-#~ msgid "Add Account"
-#~ msgstr "Добави Сметка"
-
-#~ msgid "Edit Account"
-#~ msgstr "Редакция на сметка"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "Отпечантване на запазени форми"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "Клиент номер"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "Доставчик номер"
-
-#, fuzzy
-#~ msgid "No Null employeenumber"
-#~ msgstr "Сътрудник номер"
-
-#, fuzzy
-#~ msgid "Duplicate employee numbers"
-#~ msgstr "Сътрудник номер"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "Фактура номер"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "В брой"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "Депозит"
-
 #, fuzzy
-#~ msgid "Unable to save %1 object"
-#~ msgstr "Грешка при запазване на поръчка!"
+#~ msgid "Adjustment Date"
+#~ msgstr "Ведомост"
 
 #, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "Фактура дата"
-
-#~ msgid "January"
-#~ msgstr "Януари"
-
-#~ msgid "February"
-#~ msgstr "Февруари"
-
-#~ msgid "March"
-#~ msgstr "Март"
-
-#~ msgid "April"
-#~ msgstr "Април"
-
-#~ msgid "May"
-#~ msgstr "Май"
-
-#~ msgid "June"
-#~ msgstr "Юни"
-
-#~ msgid "July"
-#~ msgstr "Юли"
-
-#~ msgid "August"
-#~ msgstr "Август"
-
-#~ msgid "September"
-#~ msgstr "Септември"
-
-#~ msgid "October"
-#~ msgstr "Октомври"
-
-#~ msgid "November"
-#~ msgstr "Ноември"
-
-#~ msgid "December"
-#~ msgstr "Декември"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "Промени парола"
-
-#, fuzzy
-#~ msgid "Passwords must match."
-#~ msgstr "Паролата не съотведства!"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "Паролата е променена!"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "Временен баланс"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "Липсва сума!"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "Всичко"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "Дата на поръчка"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "Постъпления"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "Добави Сметка"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "Дек"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "Търси"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "Фактура"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "Доставка със"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "Необходим е за"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "Номер на проекта"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "Юни"
-
-#, fuzzy
-#~ msgid "Mon"
-#~ msgstr "Месец"
-
-#, fuzzy
-#~ msgid "Fri"
-#~ msgstr "За"
-
-#, fuzzy
-#~ msgid "Sat"
-#~ msgstr "Окръг"
-
-#, fuzzy
-#~ msgid "Dropdowns"
-#~ msgstr "Максимална дължина на падащи менюта"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "Сума"
-
-#, fuzzy
-#~ msgid "Avg. Cost"
-#~ msgstr "Ср. цена"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "Разход"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "Включен в справката"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "Включен в справката"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "Следващ номер"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "Справки"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "Отчет за Приходи и Разходи"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "Сметка"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "Номер на сметка"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "Отстъпка"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "Сметката не съществува!"
-
-#~ msgid "Jan"
-#~ msgstr "Яну"
-
-#~ msgid "Feb"
-#~ msgstr "Фев"
-
-#~ msgid "Mar"
-#~ msgstr "Мар"
-
-#~ msgid "Apr"
-#~ msgstr "Апр"
-
-#~ msgid "Jun"
-#~ msgstr "Юни"
-
-#~ msgid "Jul"
-#~ msgstr "Юли"
-
-#~ msgid "Aug"
-#~ msgstr "Авг"
-
-#~ msgid "Sep"
-#~ msgstr "Сеп"
-
-#~ msgid "Oct"
-#~ msgstr "Окт"
-
-#~ msgid "Nov"
-#~ msgstr "Ное"
-
-#~ msgid "Dec"
-#~ msgstr "Дек"
-
-#~ msgid "Requirements"
-#~ msgstr "Съгласия"
-
-#, fuzzy
-#~ msgid "Checks"
-#~ msgstr "В брой"
-
-#~ msgid "Work Orders"
-#~ msgstr "Работни поръчки"
-
-#~ msgid "Packing Lists"
-#~ msgstr "Опъковъчни листи"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Товарителници"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Списъци на пакети"
-
-#~ msgid "POS Invoice"
-#~ msgstr "Кредитно известие към фактура"
-
-#~ msgid "Text Templates"
-#~ msgstr "Текстови шаблони"
-
-#~ msgid "Batch Printing"
-#~ msgstr "Отпечантване на запазени форми"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "Мар"
-
-#, fuzzy
-#~ msgid "payment"
-#~ msgstr "Разходен ордер"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "Приходен ордер"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "Фактура продажба"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "Фактура за доставка"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Направления"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Език"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "AR/AP"
-#~ msgstr "Продажби/Покупки"
-
-#~ msgid "Above"
-#~ msgstr "По-горе"
-
-#~ msgid "Accounting"
-#~ msgstr "Сметкоплан"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Меню Сметкоплан"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "Добавяне превод към доставчици"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "Добавяне превод към клиенти"
-
-#~ msgid "Add Department"
-#~ msgstr "Добави отдел"
+#~ msgid "Adjustment Details"
+#~ msgstr "Липсва инвентарна сметка!"
 
 #~ msgid "Administration"
 #~ msgstr "Администриране"
@@ -4238,8 +1274,18 @@ msgstr "Превода е запазен!"
 #~ msgid "After Deduction"
 #~ msgstr "След приспадане"
 
+#~ msgid "Aged"
+#~ msgstr "Остарял"
+
 #~ msgid "Aged Overdue"
 #~ msgstr "Преминала годност"
+
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "Справки"
+
+#~ msgid "All"
+#~ msgstr "Всичко"
 
 #~ msgid "All Accounts"
 #~ msgstr "Всички сметки"
@@ -4247,20 +1293,152 @@ msgstr "Превода е запазен!"
 #~ msgid "All Datasets up to date!"
 #~ msgstr "Всички бази са обновени!"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "Фактура"
+
 #~ msgid "All Items"
 #~ msgstr "Всички позиции"
+
+#, fuzzy
+#~ msgid "Allocated"
+#~ msgstr "Разрешителни"
+
+#~ msgid "Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "Сума за получаване"
+
+#~ msgid "Amount Due"
+#~ msgstr "Сума за получаване"
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "Липсва сума!"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "Сума за получаване"
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "Applied discount"
+#~ msgstr "Търговска остъпка"
+
+#~ msgid "Apr"
+#~ msgstr "Апр"
+
+#~ msgid "April"
+#~ msgstr "Април"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "Сигурен ли сте, че ще изтриете номера на поръчката"
+
+#~ msgid "Are you sure you want to delete Quotation Number"
+#~ msgstr "Сигурен ли сте, че ще изтриете номера на заданието"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Сигурни ли сте, че ще изстриете превода?"
 
+#~ msgid "Are you sure you want to remove the marked entries from the queue?"
+#~ msgstr "Сигурен ли сте, че искате да премахнете маркираните задания?"
+
 #~ msgid "As of"
 #~ msgstr "Като този"
+
+#~ msgid "Assemblies restocked!"
+#~ msgstr "Завършен комплект!"
 
 #~ msgid "Assembly"
 #~ msgstr "Комплект"
 
 #~ msgid "Assembly stocked!"
 #~ msgstr "Комплекта е складиран!"
+
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "Списък-сметки"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "Актив"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "Актив"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "Отчет за съгласуване"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "Актив"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "Списък-сметки"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "Редакция на сметка"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "Прикрепен"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "Контрол на достъпа"
 
 #~ msgid "Audit trail disabled"
 #~ msgstr "Не е възможен пробен баланс!"
@@ -4271,23 +1449,196 @@ msgstr "Превода е запазен!"
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Премахване на възможност за пробен баланс докато"
 
+#~ msgid "Aug"
+#~ msgstr "Авг"
+
+#~ msgid "August"
+#~ msgstr "Август"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "Облагаема сделка"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "Създай базата-данни"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "Ръководител"
+
+#, fuzzy
+#~ msgid "Available overpayments"
+#~ msgstr "Авансово плащане"
+
+#~ msgid "Average Cost"
+#~ msgstr "Средно-претеглена цена"
+
+#, fuzzy
+#~ msgid "Avg. Cost"
+#~ msgstr "Ср. цена"
+
+#~ msgid "BOM"
+#~ msgstr "Ведомост материали"
+
+#~ msgid "Backup"
+#~ msgstr "Архив"
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "Архив"
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "Архив"
+
 #~ msgid "Backup sent to"
 #~ msgstr "Архива го запази в/у"
+
+#~ msgid "Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "Връзка със сметки"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "Връзка със сметки"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "Код"
 
 #~ msgid "Based on"
 #~ msgstr "Основащо се на"
 
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "Отпечантване на запазени форми"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "Обяснение"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "Сериен номер"
+
+#~ msgid "Batch Printing"
+#~ msgstr "Отпечантване на запазени форми"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "Обяснение"
+
+#~ msgid "Bcc"
+#~ msgstr "Бсс"
+
 #~ msgid "Before Deduction"
 #~ msgstr "Преди приспадане"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "Баланс за потвърждение"
 
 #~ msgid "Below"
 #~ msgstr "По-долу"
 
+#~ msgid "Bin"
+#~ msgstr "Пакет"
+
+#~ msgid "Bin Lists"
+#~ msgstr "Списъци на пакети"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "Начална дата"
+
+#, fuzzy
+#~ msgid "Books closed on"
+#~ msgstr "Книгата е вече отворена"
+
+#~ msgid "Break"
+#~ msgstr "Прекъсване"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "Следващ номер"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "Включен в справката"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "Направления"
+
+#~ msgid "Business Number"
+#~ msgstr "Номер на направление"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "Направления"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "Направления"
+
+#~ msgid "Business deleted!"
+#~ msgstr "Направлението е изтрито!"
+
+#~ msgid "Business saved!"
+#~ msgstr "Направлението е запазено!"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "Направления"
+
+#~ msgid "COGS"
+#~ msgstr "COGS"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "Справки"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "Не възможно истриване на фактура!"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "Не мога да извърша плащане!"
+
 #~ msgid "Cannot create Assembly"
 #~ msgstr "Не е възможно създаване на окомлектовка"
 
+#, fuzzy
+#~ msgid "Cannot create Assembly; Income account does not exist!"
+#~ msgstr "Липсва приходна сметка!"
+
 #~ msgid "Cannot create Labor"
 #~ msgstr "Не е възможно създаване на работа"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "Липсва сметка за реализирана стока!"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; Inventory account does not exist!"
+#~ msgstr "Липсва инвентарна сметка!"
 
 #~ msgid "Cannot create Lock!"
 #~ msgstr "Не мога да заключа записа"
@@ -4295,8 +1646,28 @@ msgstr "Превода е запазен!"
 #~ msgid "Cannot create Part"
 #~ msgstr "Не е възможно създаване на позиция"
 
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "Липсва сметка за реализирана стока!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "Липсва приходна сметка!"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Inventory account does not exist!"
+#~ msgstr "Липсва инвентарна сметка!"
+
 #~ msgid "Cannot create Service"
 #~ msgstr "Не е възможно създаване на услуга"
+
+#, fuzzy
+#~ msgid "Cannot create Service; Expense account does not exist!"
+#~ msgstr "Липсва разходна сметка!"
+
+#, fuzzy
+#~ msgid "Cannot create Service; Income account does not exist!"
+#~ msgstr "Липсва приходна сметка!"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "Не е възможно изтриването на сметката!"
@@ -4306,6 +1677,15 @@ msgstr "Превода е запазен!"
 
 #~ msgid "Cannot delete default account!"
 #~ msgstr "Не е възможно да се изтрие сметка, която е шаблон!"
+
+#~ msgid "Cannot delete item!"
+#~ msgstr "Не е възможно изтриване на стоката!"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "Не е възможно изтриване на поръчка!"
+
+#~ msgid "Cannot delete quotation!"
+#~ msgstr "Не е възможно изтриване на задание!"
 
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "Не мога да изстрия превода!"
@@ -4319,17 +1699,173 @@ msgstr "Превода е запазен!"
 #~ msgid "Cannot post Receipt!"
 #~ msgstr "Не е възможно запазването на постъплението!"
 
+#~ msgid "Cannot post invoice for a closed period!"
+#~ msgstr "Не е възможно запазване на фактура в приключен период!"
+
+#~ msgid "Cannot post invoice!"
+#~ msgstr "Не е възможно запазване на фактурата!"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "Не мога да извърша плащане за закрит период!"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "Не мога да извърша превод за закрит период!"
+
+#~ msgid ""
+#~ "Cannot post transaction with a debit and credit entry for the same "
+#~ "account!"
+#~ msgstr ""
+#~ "Не е възможно запазването на превода едновременно в дебита и кредита на "
+#~ "сметката!"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "Не мога да извърша плащане!"
+
+#~ msgid "Cannot remove files!"
+#~ msgstr "Не е възможно премахване на файлове!"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "Не е възможно да се запази сметката!"
+
 #~ msgid "Cannot save defaults!"
 #~ msgstr "Не е възможно да запази шаблона!"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "Не е възможно запазване на поръчката!"
+
+#~ msgid "Cannot save preferences!"
+#~ msgstr "Не е възможно да се запази свойство!"
+
+#~ msgid "Cannot save quotation!"
+#~ msgstr "Не в възможно запазване на заданието!"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "Не е възможно запазване на поръчката!"
+
+#~ msgid "Cannot set account for more than one of AR, AP or IC"
+#~ msgstr ""
+#~ "Не задавай на сметка повече от едно значение (покупка, продажба или "
+#~ "инвентар)!"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "Не задавай повече от едно значение за"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Не е възможно създаване на окомлектовка!"
 
+#~ msgid "Cannot stock assemblies!"
+#~ msgstr "Не е възможно да се окомлектова!"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "Сметка за данъци"
+
+#~ msgid "Cc"
+#~ msgstr "Сс"
+
+#~ msgid "Change"
+#~ msgstr "Промени"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "Промени Администраторската парола"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "В брой"
+
+#, fuzzy
+#~ msgid "Checks"
+#~ msgstr "В брой"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "Фирма"
+
+#~ msgid "City"
+#~ msgstr "Град"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Добави SIC"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "Изчистено"
+
+#~ msgid "Cleared"
+#~ msgstr "Изчистено"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "Изпълнение на преводи"
+
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Потвърди за редакция на потребителско име!"
 
+#, fuzzy
+#~ msgid "Clocked"
+#~ msgstr "заключих!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "Книгата е затворена докато"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "Затворено"
+
+#~ msgid "Closed"
+#~ msgstr "Затворено"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "Затворено"
+
+#~ msgid "Code"
+#~ msgstr "Код"
+
+#~ msgid "Code missing!"
+#~ msgstr "Липсва код!"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "Обобщени платежни нареждания"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "Обобщени поръчки на продажби"
+
+#~ msgid "Company"
+#~ msgstr "Фирма"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "Име на фирма"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "Име на фирма"
+
+#~ msgid "Company Name"
+#~ msgstr "Име на фирма"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "Фирма"
+
+#~ msgid "Compare to"
+#~ msgstr "Сравни със"
+
 #~ msgid "Components"
 #~ msgstr "Елементи"
+
+#~ msgid "Confirm"
+#~ msgstr "Съгласие"
+
+#~ msgid "Confirm!"
+#~ msgstr "Съгласие!"
 
 #~ msgid "Connect to"
 #~ msgstr "Свържисе със"
@@ -4340,17 +1876,151 @@ msgstr "Превода е запазен!"
 #~ msgid "Consolidate Orders"
 #~ msgstr "Обобщени поръчки"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "Лице за контакт"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "Лице за контакт"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "Лице за контакт"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "Лице за контакт"
+
+#~ msgid "Continue"
+#~ msgstr "Продължение"
+
+#~ msgid "Contra"
+#~ msgstr "Коректив"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "Контрол"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "Номер на сметка"
+
+#~ msgid "Copies"
+#~ msgstr "Копие"
+
+#~ msgid "Copy to COA"
+#~ msgstr "Запази в COA"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "Запази в COA"
+
+#~ msgid "Cost"
+#~ msgstr "Цена"
+
+#~ msgid "Cost Center"
+#~ msgstr "Звено платец"
+
 #~ msgid "Could not save pricelist!"
 #~ msgstr "Не е възможно запазването на ценоразписа!"
+
+#~ msgid "Could not save!"
+#~ msgstr "Невъзможно е да се запази!"
+
+#~ msgid "Could not transfer Inventory!"
+#~ msgstr "Невъзможно е да се премести инвентара!"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "Държава"
+
+#~ msgid "Country"
+#~ msgstr "Държава"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "Държава"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "Държава"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "Изтрии база-данни"
 
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "Създай сметкоплана"
 
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "Изтрии база-данни"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "Списък-отдели"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "Създай базата-данни"
+
+#~ msgid "Credit"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "Номер на сметка"
+
+#~ msgid "Credit Limit"
+#~ msgstr "Кредитен лимит"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "Кредит"
+
+#~ msgid "Curr"
+#~ msgstr "Валута"
+
+#~ msgid "Currency"
+#~ msgstr "Валута"
+
+#~ msgid "Current"
+#~ msgstr "Текущ"
+
+#~ msgid "Current Earnings"
+#~ msgstr "Текуща печалба"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "Клиент номер"
+
+#~ msgid "Customer Number"
+#~ msgstr "Клиент номер"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "Клиент номер"
+
 #~ msgid "Customer deleted!"
 #~ msgstr "Клиента е изтрит!"
 
+#~ msgid "Customer missing!"
+#~ msgstr "Пропуснат клиент!"
+
+#~ msgid "Customer not on file!"
+#~ msgstr "Липсва клиента в базите!"
+
 #~ msgid "Customer saved!"
 #~ msgstr "Клиента е запазен!"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "Списък-сметки"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "Клиент"
 
 #~ msgid "Customers"
 #~ msgstr "Клиенти"
@@ -4361,14 +2031,34 @@ msgstr "Превода е запазен!"
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI не е инсталиран"
 
+#~ msgid "DOB"
+#~ msgstr "Дата на раждане"
+
+#~ msgid "Database"
+#~ msgstr "Бази-данни"
+
 #~ msgid "Database Administration"
 #~ msgstr "Администрация на бази-данни"
 
 #~ msgid "Database Driver not checked!"
 #~ msgstr "Драйвер за връзка с бази-данни липсва!"
 
+#~ msgid "Database Host"
+#~ msgstr "Сървър за база-данни"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "Редакция на сътрудник"
+
 #~ msgid "Database User missing!"
 #~ msgstr "Потребител за управление на бази-данни липсва!"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "не съществува"
+
+#~ msgid "Dataset"
+#~ msgstr "Бази-данни"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "Базата-данни е нова версия!"
@@ -4379,11 +2069,91 @@ msgstr "Превода е запазен!"
 #~ msgid "Dataset updated!"
 #~ msgstr "Базите-данни са актуализирани!"
 
+#~ msgid "Date"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "Фармат за дата"
+
+#~ msgid "Date Paid"
+#~ msgstr "Падеж"
+
+#, fuzzy
+#~ msgid "Date Reversed"
+#~ msgstr "Дата за получаване"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "Дата"
+
+#~ msgid "Date received missing!"
+#~ msgstr "Липсва дата на получаване!"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "Дата"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "Дата"
+
+#~ msgid "Day"
+#~ msgstr "Ден"
+
+#~ msgid "Day(s)"
+#~ msgstr "Ден(дни)"
+
 #~ msgid "Days"
 #~ msgstr "Дни"
 
+#~ msgid "Debit"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "Дебит"
+
+#~ msgid "Dec"
+#~ msgstr "Дек"
+
+#~ msgid "December"
+#~ msgstr "Декември"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "Десетична запетая"
+
 #~ msgid "Deduct after"
 #~ msgstr "След приспадане"
+
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "Удръжки"
+
+#, fuzzy
+#~ msgid "Deduction Type"
+#~ msgstr "Удръжки"
 
 #~ msgid "Deduction deleted!"
 #~ msgstr "Удръжката е изтрита!"
@@ -4391,8 +2161,76 @@ msgstr "Превода е запазен!"
 #~ msgid "Deduction saved!"
 #~ msgstr "Удръжката е запазена!"
 
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "По подразбиране"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "По подразбиране"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "Изтрии сметка!"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "Държава"
+
+#, fuzzy
+#~ msgid "Default Email BCC"
+#~ msgstr "Подразбиращ се шаблон"
+
+#, fuzzy
+#~ msgid "Default Email CC"
+#~ msgstr "Подразбиращ се шаблон"
+
+#, fuzzy
+#~ msgid "Default Email To"
+#~ msgstr "Подразбиращ се шаблон"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "Редакция на език"
+
+#, fuzzy
+#~ msgid "Default Reportable"
+#~ msgstr "Подразбиращ се шаблон"
+
+#~ msgid "Default Template"
+#~ msgstr "Подразбиращ се шаблон"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "Държава"
+
 #~ msgid "Defaults saved!"
 #~ msgstr "Подразбиращият се е запазен!"
+
+#~ msgid "Delete"
+#~ msgstr "Изтрии"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "Редакция на език"
+
+#~ msgid "Delete Schedule"
+#~ msgstr "Изтрии задачата"
+
+#, fuzzy
+#~ msgid ""
+#~ "Deleting a language will also delete the templates for the language %1"
+#~ msgstr "Изтриването на език ще доведе до премахването на шаблоните му!"
+
+#~ msgid "Delivery Date"
+#~ msgstr "Дата на доставка"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "Метод"
+
+#~ msgid "Department"
+#~ msgstr "Отдел"
 
 #~ msgid "Department deleted!"
 #~ msgstr "Отдела е изтрит!"
@@ -4400,14 +2238,129 @@ msgstr "Превода е запазен!"
 #~ msgid "Department saved!"
 #~ msgstr "Отделът е запазен!"
 
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "Отдел"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "Отдел"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "Обяснение"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "Изтрии сметка!"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "Обяснение"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "Обяснение"
+
+#~ msgid "Description Translations"
+#~ msgstr "Описание на преводите"
+
+#~ msgid "Description missing!"
+#~ msgstr "Липсва подпис!"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Обяснение"
+
+#~ msgid "Detail"
+#~ msgstr "Детаилен"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "Детаилен"
+
+#~ msgid "Difference"
+#~ msgstr "Различия"
+
 #~ msgid "Directory"
 #~ msgstr "Директория"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "Отстъпка"
+
+#~ msgid "Discount"
+#~ msgstr "Отстъпка"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "Отстъпка"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "Отстъпка"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "Приходи"
+
+#~ msgid "Done"
+#~ msgstr "Готов"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "Търси"
+
+#~ msgid "Drawing"
+#~ msgstr "Изрисуване"
 
 #~ msgid "Driver"
 #~ msgstr "Драйвер"
 
+#, fuzzy
+#~ msgid "Dropdowns"
+#~ msgstr "Максимална дължина на падащи менюта"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "Дек"
+
+#~ msgid "Due Date"
+#~ msgstr "Платете до"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "Пропусната дата за плащане"
+
+#, fuzzy
+#~ msgid "Duplicate employee numbers"
+#~ msgstr "Сътрудник номер"
+
+#~ msgid "E-mail"
+#~ msgstr "Ел.адрес"
+
+#, fuzzy
+#~ msgid "E-mail Statement to [_1]"
+#~ msgstr "Ел.адрес за потвърждения"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "Ел.адрес"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "Липсва Ел.адрес!"
+
+#~ msgid "E-mail message"
+#~ msgstr "Ел.съобщение"
+
 #~ msgid "E-mailed"
 #~ msgstr "Изпратено ел.съобщение"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "Отчет за Приходи и Разходи"
+
+#~ msgid "Edit"
+#~ msgstr "Редакция"
 
 #~ msgid "Edit AP Transaction"
 #~ msgstr "Редакция на превод към доставчик"
@@ -4415,17 +2368,33 @@ msgstr "Превода е запазен!"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "Редакция на превод към клиент"
 
+#~ msgid "Edit Account"
+#~ msgstr "Редакция на сметка"
+
+#, fuzzy
+#~ msgid "Edit Asset Class"
+#~ msgstr "Редакция на окомплектовка"
+
 #~ msgid "Edit Business"
 #~ msgstr "Редакция на направление"
 
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Редакция на плащанията в брой"
 
+#~ msgid "Edit Customer"
+#~ msgstr "Редакция на клиент"
+
 #~ msgid "Edit Deduction"
 #~ msgstr "Редакция на удръжки"
 
 #~ msgid "Edit Department"
 #~ msgstr "Редакция на отдел"
+
+#~ msgid "Edit Description Translations"
+#~ msgstr "Редакция на описанията на преводите"
+
+#~ msgid "Edit Employee"
+#~ msgstr "Редакция на сътрудник"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Редакция на преводи в главната книга"
@@ -4439,11 +2408,30 @@ msgstr "Превода е запазен!"
 #~ msgid "Edit Labor/Overhead"
 #~ msgstr "Редакция на работа/натрупани разходи"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "Редакция на POS фактура"
+
 #~ msgid "Edit Part"
 #~ msgstr "Редакция на позиция"
 
 #~ msgid "Edit Pricegroup"
 #~ msgstr "Редакция на ценова група"
+
+#~ msgid "Edit Project"
+#~ msgstr "Редакция на проект"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "Редакция на платежно нареждане"
+
+#~ msgid "Edit Quotation"
+#~ msgstr "Редакция на задание"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "Справки"
+
+#~ msgid "Edit Request for Quotation"
+#~ msgstr "Редакция на заявка за задание"
 
 #~ msgid "Edit SIC"
 #~ msgstr "Редакция с SIC"
@@ -4451,14 +2439,40 @@ msgstr "Превода е запазен!"
 #~ msgid "Edit Sales Invoice"
 #~ msgstr "Редактирай фактура за продажба"
 
+#~ msgid "Edit Sales Order"
+#~ msgstr "Редакция на поръчка продажби"
+
 #~ msgid "Edit Service"
 #~ msgstr "Редакция на услуга"
+
+#~ msgid "Edit Template"
+#~ msgstr "Редакция на шаблон"
+
+#~ msgid "Edit User"
+#~ msgstr "Редакция на потребител"
+
+#~ msgid "Edit Vendor"
+#~ msgstr "Редакция на доставчик"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "Редакция на фактура доставки"
 
 #~ msgid "Edit Warehouse"
 #~ msgstr "Редакция на склад"
 
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "Редакция на потребител"
+
 #~ msgid "Employee Name"
 #~ msgstr "Име на сътрудник"
+
+#~ msgid "Employee Number"
+#~ msgstr "Сътрудник номер"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "Сътрудник номер"
 
 #~ msgid "Employee deleted!"
 #~ msgstr "Сътрудника е изтрит!"
@@ -4475,25 +2489,254 @@ msgstr "Превода е запазен!"
 #~ msgid "Employer pays"
 #~ msgstr "Ведомости със заплати на работодателя"
 
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "Дата на поръчка"
+
 #~ msgid "Enddate"
 #~ msgstr "Крайна дата"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "Начално салдо"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "Баланс за потвърждение"
+
+#~ msgid "Ends"
+#~ msgstr "Приключване"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "Принудително преизчисляване на преводи за всички дати"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "Редакция на потребител"
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
 #~ "native and foreign currencies"
 #~ msgstr "Въведи до 3 букви разделени с двуеточие (пример BGL:USD:EUR)"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "Необходим е за"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "Необходим е за"
+
+#~ msgid "Equity"
+#~ msgstr "Капитал"
+
+#~ msgid "Every"
+#~ msgstr "Винаги"
+
+#~ msgid "Exch"
+#~ msgstr "Курс"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "Валутен курс"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "Валутен курс за пропуснато плащане"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "Пропуснат валутен курс"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "Пропуснат валутен курс"
+
 #~ msgid "Exempt age <"
 #~ msgstr "Възраст <"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "Валутен курс"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Съществува базата-данни"
 
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "Разход"
+
+#~ msgid "Expense"
+#~ msgstr "Разход"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "Списък-сметки"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "Разход/активи"
+
+#~ msgid "Extended"
+#~ msgstr "Обобщен"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "Редакция на потребител"
+
+#~ msgid "FX"
+#~ msgstr "FX"
+
+#~ msgid "Failed to save order!"
+#~ msgstr "Грешка при запазване на поръчка!"
+
+#~ msgid "Feb"
+#~ msgstr "Фев"
+
+#~ msgid "February"
+#~ msgstr "Февруари"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "Направления"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "Редакция на сметка"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "Плащания"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "Постъпления"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "Данък номер"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "Добави комплект"
+
+#~ msgid "For"
+#~ msgstr "За"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "Печалба от курсови разлики"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "Загуба от курсови разлики"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Fri"
+#~ msgstr "За"
+
+#~ msgid "From"
+#~ msgstr "От"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "От"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "Дата на поръчка"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "От"
+
+#~ msgid "From Warehouse"
+#~ msgstr "От склад"
+
+#~ msgid "GIFI deleted!"
+#~ msgstr "GIFI е изтрит!"
+
+#~ msgid "GIFI missing!"
+#~ msgstr "Липсва GIFI!"
+
+#~ msgid "GIFI saved!"
+#~ msgstr "GIFI е запазен!"
+
+#~ msgid "GL"
+#~ msgstr "Главна книга"
+
+#~ msgid "GL Reference Number"
+#~ msgstr "Номер на главната книга"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "Връзка със сметки"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "Главна книга"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "Контрол"
+
+#~ msgid "Generate Orders"
+#~ msgstr "Създай поръчка"
+
+#~ msgid "Generate Purchase Orders"
+#~ msgstr "Създай поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Generate Purchase Orders from Sales Orders"
+#~ msgstr "Създай поръчка за доставка на база поръчка продажби"
+
 #~ msgid "Generate Sales Order"
 #~ msgstr "Създай поръчка продажби"
 
+#~ msgid "Generate Sales Orders"
+#~ msgstr "Създай поръчките за продажбите"
+
+#, fuzzy
+#~ msgid "Generate Sales Orders from Purchase Orders"
+#~ msgstr "Създай поръчка продажби на база поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "Сборна линия"
+
+#~ msgid "Group"
+#~ msgstr "Група"
+
 #~ msgid "Group Items"
 #~ msgstr "Група стоки"
+
+#~ msgid "Group Translations"
+#~ msgstr "Група преводи"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "Група"
+
+#~ msgid "Group deleted!"
+#~ msgstr "Групата е изтрита!"
+
+#~ msgid "Group missing!"
+#~ msgstr "Липсва група!"
+
+#~ msgid "Group saved!"
+#~ msgstr "Групата е запазена!"
+
+#~ msgid "Groups"
+#~ msgstr "Групи"
+
+#~ msgid "Heading"
+#~ msgstr "Заглавие"
 
 #~ msgid "History"
 #~ msgstr "История"
@@ -4507,49 +2750,277 @@ msgstr "Превода е запазен!"
 #~ msgid "IBAN"
 #~ msgstr "IBAN"
 
+#~ msgid "ID"
+#~ msgstr "Код"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "Приключване на година"
+
+#~ msgid "Image"
+#~ msgstr "Изображение"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "LaTeX Шаблони"
+
+#~ msgid "In-line"
+#~ msgstr "Включен"
+
+#~ msgid "Inactive"
+#~ msgstr "Неизползваем"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "Включи курсовата разлика"
+
+#~ msgid "Include in Report"
+#~ msgstr "Включен в справката"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "Включи в падащо меню"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "Включено плащане"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "Включен в справката"
+
+#~ msgid "Income"
+#~ msgstr "Приходи"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "Приходи"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "Приходи"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "Коригирай версията на базата-данни!"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "Промени парола"
+
+#~ msgid "Individual Items"
+#~ msgstr "Самостоятелена стока"
+
+#~ msgid "Internal Notes"
+#~ msgstr "Вътрешни бележки"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "Валидно до"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "Ивентара е запазен!"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "Липсва инвентарна сметка!"
+
+#, fuzzy
+#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+#~ msgstr "Преди бракуване на позиция е необходимо количеството и да е нула!"
 
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this assembly obsolete!"
 #~ msgstr ""
 #~ "Преди бракуване на окомплектовка е необходимо количеството му да е нула!"
 
+#~ msgid "Inventory saved!"
+#~ msgstr "Ивентара е запазен!"
+
+#~ msgid "Inventory transferred!"
+#~ msgstr "Инвентара е преместен!"
+
+#~ msgid "Invoice Date"
+#~ msgstr "Фактура дата"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "Попусната дата на фактурата"
+
+#~ msgid "Invoice Number"
+#~ msgstr "Фактура номер"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Липсва номер на фактура!"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Фактура номер"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "Фактура дата"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "Фактура дата"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "Фактура дата"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "Фактурата е изтрита!"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "Фактура номер"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "Фактура дата"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Фактура"
+
+#~ msgid "Item"
+#~ msgstr "Стока"
+
 #~ msgid "Item already on pricelist!"
 #~ msgstr "Стоката е наличена в ценоразписа!"
+
+#~ msgid "Item deleted!"
+#~ msgstr "Стоката е изтрита!"
+
+#~ msgid "Item not on file!"
+#~ msgstr "Стоката липсва в базата!"
 
 #~ msgid "Items"
 #~ msgstr "Стоки"
 
+#~ msgid "Jan"
+#~ msgstr "Яну"
+
+#~ msgid "January"
+#~ msgstr "Януари"
+
 #~ msgid "Job"
 #~ msgstr "Задача"
+
+#, fuzzy
+#~ msgid "Job Failed"
+#~ msgstr "Задачата е запазена!"
 
 #~ msgid "Job Number"
 #~ msgstr "Номер на задача"
 
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "Тип на сметката"
+
 #~ msgid "Job deleted!"
 #~ msgstr "Задачата е изтрита!"
+
+#~ msgid "Job/Project Number"
+#~ msgstr "Работа/Проект номер"
 
 #~ msgid "Jobs"
 #~ msgstr "Задачи"
 
+#~ msgid "Jul"
+#~ msgstr "Юли"
+
+#~ msgid "July"
+#~ msgstr "Юли"
+
+#~ msgid "Jun"
+#~ msgstr "Юни"
+
+#~ msgid "June"
+#~ msgstr "Юни"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "Текущи разходи"
+
+#~ msgid "Language deleted!"
+#~ msgstr "Езика е изтрит!"
+
+#~ msgid "Language saved!"
+#~ msgstr "Езика е запазен!"
+
+#~ msgid "Languages"
+#~ msgstr "Езици"
+
+#~ msgid "Languages not defined!"
+#~ msgstr "Езикът не е определен!"
+
+#~ msgid "Last Cost"
+#~ msgstr "Последна цена"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "Обновен"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "Последен номер и Сметка по подразбиране"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Обновен"
+
+#, fuzzy
+#~ msgid "Lead Time"
+#~ msgstr "Основно време"
+
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "Вземания от клиенти"
+
+#~ msgid "Liability"
+#~ msgstr "Пасив"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "Сътрудник номер"
 
 #~ msgid "Licensed to"
 #~ msgstr "Лицензирана за"
 
+#~ msgid "Line Total"
+#~ msgstr "Сборна линия"
+
 #~ msgid "Link"
 #~ msgstr "Връзка"
 
+#~ msgid "List"
+#~ msgstr "Списък"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "Авансово плащане"
+
+#~ msgid "List Price"
+#~ msgstr "Ценоразпис"
+
 #~ msgid "List Projects"
 #~ msgstr "Списък-проекти"
+
+#~ msgid "List Transactions"
+#~ msgstr "Списък с преводи"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "Мерна еденица за тежест"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "Редакция на потребител"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Запазена форма"
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "Запазена форма"
 
 #~ msgid "Lock System"
 #~ msgstr "Заключена е системата"
@@ -4560,23 +3031,130 @@ msgstr "Превода е запазен!"
 #~ msgid "Lockfile removed!"
 #~ msgstr "Блокиращия файл е премахнат!"
 
+#~ msgid "Login"
+#~ msgstr "Влизане"
+
 #~ msgid "Login name missing!"
 #~ msgstr "Името на потребителя липсва!"
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "Списък-сметки"
+
+#~ msgid "Make"
+#~ msgstr "Изработи"
+
+#~ msgid "Manager"
+#~ msgstr "Ръководител"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "Януари"
+
+#~ msgid "Mar"
+#~ msgstr "Мар"
+
+#~ msgid "March"
+#~ msgstr "Март"
+
+#~ msgid "Marked entries printed!"
+#~ msgstr "Маркираните редове са разпечатани!"
+
+#~ msgid "Markup"
+#~ msgstr "Надценка"
 
 #~ msgid "Maximum"
 #~ msgstr "Максимален"
 
+#~ msgid "May"
+#~ msgstr "Май"
+
 #~ msgid "May "
 #~ msgstr "Май"
+
+#~ msgid "Memo"
+#~ msgstr "Бележка"
+
+#, fuzzy
+#~ msgid "Memorized Transaction List"
+#~ msgstr "Повтарящи се преводи"
 
 #~ msgid "Menu Width"
 #~ msgstr "Ширина на менюто"
 
+#~ msgid "Message"
+#~ msgstr "Съобщение"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "Съобщение"
+
+#~ msgid "Method"
+#~ msgstr "Метод"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "По подразбиране"
+
+#~ msgid "Microfiche"
+#~ msgstr "Микрофиш"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "Облагаема сделка"
+
+#~ msgid "Model"
+#~ msgstr "Модел"
+
+#, fuzzy
+#~ msgid "Mon"
+#~ msgstr "Месец"
+
+#~ msgid "Month"
+#~ msgstr "Месец"
+
+#~ msgid "Month(s)"
+#~ msgstr "Месеци"
+
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte Encoding"
 
+#~ msgid "N/A"
+#~ msgstr "N/A"
+
+#~ msgid "Name"
+#~ msgstr "Име"
+
 #~ msgid "Name missing!"
 #~ msgstr "Липсва име!"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Име"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "Отчет за съгласуване"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "потребител"
+
+#~ msgid "Next"
+#~ msgstr "Следващ"
+
+#~ msgid "Next Date"
+#~ msgstr "Следваща дата"
+
+#~ msgid "Next Number"
+#~ msgstr "Следващ номер"
+
+#~ msgid "No"
+#~ msgstr "Но."
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "Сметката е изтрита!"
 
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Липсва драйвер за базите-данни!"
@@ -4584,8 +3162,29 @@ msgstr "Превода е запазен!"
 #~ msgid "No Dataset selected!"
 #~ msgstr "Не сте избрали база-данни!"
 
+#~ msgid "No History!"
+#~ msgstr "Без история!"
+
+#, fuzzy
+#~ msgid "No Null employeenumber"
+#~ msgstr "Сътрудник номер"
+
 #~ msgid "No email address for"
 #~ msgstr "Липсва ел.адрес за"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "Език"
+
+#~ msgid "No open Projects!"
+#~ msgstr "Няма отворен проект!"
+
+#~ msgid "No."
+#~ msgstr "Но."
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "Освободени сделки"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "Освободен от плащане"
@@ -4593,20 +3192,218 @@ msgstr "Превода е запазен!"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Освободена продажба"
 
+#~ msgid "Non-tracking Items"
+#~ msgstr "Стоки без проследяване"
+
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "Освободени сделки"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "Забележка"
+
+#~ msgid "Notes"
+#~ msgstr "Забележка"
+
+#~ msgid "Nothing entered!"
+#~ msgstr "Нищо не е въведено!"
+
 #~ msgid "Nothing open!"
 #~ msgstr "Нищо не отворено!"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "Не сте избрали нищо!"
 
 #~ msgid "Nothing to delete!"
 #~ msgstr "Няма нищо за изстриване"
 
+#~ msgid "Nothing to print!"
+#~ msgstr "Няма за печатане!"
+
+#~ msgid "Nothing to transfer!"
+#~ msgstr "Нищо не е преведено!"
+
+#~ msgid "Nov"
+#~ msgstr "Ное"
+
+#~ msgid "November"
+#~ msgstr "Ноември"
+
+#~ msgid "Number"
+#~ msgstr "Номер"
+
+#~ msgid "Number Format"
+#~ msgstr "Формат-число"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "липсва номер на ред!"
+
+#, fuzzy
+#~ msgid "ODS"
+#~ msgstr "Кредино известие"
+
+#~ msgid "OH"
+#~ msgstr "OH"
+
+#~ msgid "Obsolete"
+#~ msgstr "Остарял"
+
+#, fuzzy
+#~ msgid "Obsolete By"
+#~ msgstr "Остарял"
+
+#~ msgid "Oct"
+#~ msgstr "Окт"
+
+#~ msgid "October"
+#~ msgstr "Октомври"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "Парола"
+
+#~ msgid "On Hand"
+#~ msgstr "На ръка"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "На ръка"
+
+#, fuzzy
+#~ msgid "On hand"
+#~ msgstr "На ръка"
+
+#, fuzzy
+#~ msgid "Onhand amount"
+#~ msgstr "На ръка"
+
+#, fuzzy
+#~ msgid "Onhand delta"
+#~ msgstr "На ръка"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "Добави потребител"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "Сътрудници"
+
+#~ msgid "Open"
+#~ msgstr "Отворен"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "Отворен"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "Удръжки"
+
+#, fuzzy
+#~ msgid "Or"
+#~ msgstr "O"
+
 #~ msgid "Oracle Database Administration"
 #~ msgstr "Адмистриране на бази-данни Oracle"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "Поръчка"
+
+#~ msgid "Order Date"
+#~ msgstr "Дата на поръчка"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "Липсва дата на поръчката!"
+
+#~ msgid "Order Number"
+#~ msgstr "Поръчка номер"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "Липсва номер на поръчката!"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "Поръчка номер"
+
+#~ msgid "Order deleted!"
+#~ msgstr "Поръчката е изтрита!"
+
+#~ msgid "Order generation failed!"
+#~ msgstr "Създаването на поръчка е провалено!"
 
 #~ msgid "Order saved!"
 #~ msgstr "Поръчката е запазена!"
 
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "Поръчка"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "Поръчка"
+
+#~ msgid "Orders generated!"
+#~ msgstr "Поръчките са създадени!"
+
+#~ msgid "Orphaned"
+#~ msgstr "Без движение"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "Удръжки"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "Дебит"
+
+#~ msgid "Out of balance transaction!"
+#~ msgstr "Ивън балансови преводи"
+
 #~ msgid "Out of balance!"
 #~ msgstr "Извън балансови!"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "Повтарящи се преводи"
+
+#, fuzzy
+#~ msgid "Over"
+#~ msgstr "Просрочен"
+
+#~ msgid "Overdue"
+#~ msgstr "Просрочен"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "Авансово плащане"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "Плащането е запазено!"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "PO"
+#~ msgstr "PO"
+
+#~ msgid "PO Number"
+#~ msgstr "Поръчка номер за покупка"
+
+#~ msgid "POS Invoice"
+#~ msgstr "Кредитно известие към фактура"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "Липсва дата на опаковъчния лист!"
@@ -4614,8 +3411,81 @@ msgstr "Превода е запазен!"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "Липсва номер на опаковъчния лист!"
 
+#~ msgid "Packing Lists"
+#~ msgstr "Опъковъчни листи"
+
+#~ msgid "Paid"
+#~ msgstr "Платено"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "Текущ"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "Ценова група"
+
+#~ msgid "Part Number"
+#~ msgstr "Сериен номер"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "Позиция"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "Сериен номер"
+
 #~ msgid "Parts"
 #~ msgstr "Детайли"
+
+#~ msgid "Parts Requirements"
+#~ msgstr "Липсващи позиции"
+
+#~ msgid "Password"
+#~ msgstr "Парола"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "Паролата е променена!"
+
+#~ msgid "Password does not match!"
+#~ msgstr "Въведената парола не съвпада!"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "Паролата е променена!"
+
+#, fuzzy
+#~ msgid "Passwords must match."
+#~ msgstr "Паролата не съотведства!"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "Фармат за дата"
+
+#~ msgid "Payables"
+#~ msgstr "Подлежащи на плащане"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "Пропусната дата на плащане!"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "Плащания"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "Плащания"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "Разходен ордер"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "Разходен ордер"
 
 #~ msgid "Payments posted!"
 #~ msgstr "Плащанията са запазени!"
@@ -4623,11 +3493,28 @@ msgstr "Превода е запазен!"
 #~ msgid "Payroll Deduction"
 #~ msgstr "Удръжки по ведомост"
 
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "Плащането е запазено!"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "Напомняне"
+
+#~ msgid "Period"
+#~ msgstr "Период"
+
 #~ msgid "Pg Database Administration"
 #~ msgstr "Адмистриране на бази-данни Postgres"
 
 #~ msgid "PgPP Database Administration"
 #~ msgstr "Адмистриране на бази-данни PgPP"
+
+#~ msgid "Phone"
+#~ msgstr "Телефон"
+
+#~ msgid "Pick Lists"
+#~ msgstr "Товарителници"
 
 #~ msgid "Port"
 #~ msgstr "Порт"
@@ -4638,14 +3525,152 @@ msgstr "Превода е запазен!"
 #~ msgid "Pos"
 #~ msgstr "POS"
 
+#~ msgid "Post"
+#~ msgstr "Запази"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "Приключване на година"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "Запази като нов"
+
+#~ msgid "Post as new"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "Запази като нов"
+
+#~ msgid "Posted!"
+#~ msgstr "Запазено!"
+
 #~ msgid "Posting"
 #~ msgstr "Запазих"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "Главна книга на преводи"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "Фактура продажби "
+
+#, fuzzy
+#~ msgid "Posting Transaction %1"
+#~ msgstr "Превод покупка"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "Фактура на доставчик "
 
 #~ msgid "Posting failed!"
 #~ msgstr "Грешка при запазване!"
 
+#~ msgid "Postscript"
+#~ msgstr "Postscript"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "Свойствата за запазени!"
+
+#, fuzzy
+#~ msgid "Preferences for [_1]"
+#~ msgstr "Редакция на свойства за"
+
+#~ msgid "Price"
+#~ msgstr "Цена"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "Ценова група"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "Обновен"
+
+#~ msgid "Pricegroup"
+#~ msgstr "Ценова група"
+
+#~ msgid "Pricegroup deleted!"
+#~ msgstr "Ценовата група е изтрита!"
+
+#~ msgid "Pricegroup missing!"
+#~ msgstr "Липсва ценова група!"
+
+#~ msgid "Pricegroup saved!"
+#~ msgstr "Ценовата група е изтрита!"
+
+#~ msgid "Pricegroups"
+#~ msgstr "Ценова група"
+
+#~ msgid "Pricelist"
+#~ msgstr "Ценоразпис"
+
+#~ msgid "Print"
+#~ msgstr "Печат"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "Печат"
+
 #~ msgid "Print and Post as new"
 #~ msgstr "Разпечатай и запази като нов"
+
+#~ msgid "Print and Save"
+#~ msgstr "Разпечатай и запази"
+
+#~ msgid "Print and Save as new"
+#~ msgstr "Разпечатай и запази като нов"
+
+#~ msgid "Printed"
+#~ msgstr "Разпечатано"
+
+#~ msgid "Printer"
+#~ msgstr "Принтер"
+
+#~ msgid "Printing"
+#~ msgstr "Разпечатано"
+
+#~ msgid "Process Transactions"
+#~ msgstr "Изпълнение на преводи"
+
+#~ msgid "Profit Center"
+#~ msgstr "Изсточник печалба"
+
+#, fuzzy
+#~ msgid "Profit and Loss"
+#~ msgstr "Разпечатай и запази"
+
+#~ msgid "Project"
+#~ msgstr "Проект"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "Описание на преводите към проекта"
+
+#~ msgid "Project Number"
+#~ msgstr "Номер на проекта"
+
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "Номер на проекта"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "Номер на проекта"
 
 #~ msgid "Project Transactions"
 #~ msgstr "Превод за проект"
@@ -4653,11 +3678,53 @@ msgstr "Превода е запазен!"
 #~ msgid "Project deleted!"
 #~ msgstr "Проекта е изтрит!"
 
+#~ msgid "Project not on file!"
+#~ msgstr "Проекта липсва в базите!"
+
 #~ msgid "Project saved!"
 #~ msgstr "Проекта е запазен!"
 
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "Номер на проекта"
+
+#~ msgid "Projects"
+#~ msgstr "Проекти"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "Поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "Поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "История на клиента"
+
 #~ msgid "Purchase Order Number"
 #~ msgstr "Номер на Поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "Поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "Поръчка за доставка"
+
+#~ msgid "Qty"
+#~ msgstr "К-во"
+
+#~ msgid "Quantity exceeds available units to stock!"
+#~ msgstr "Превишено е количеството в пакет!"
+
+#~ msgid "Quarter"
+#~ msgstr "Четиримесечие"
+
+#~ msgid "Queue"
+#~ msgstr "Задание"
 
 #~ msgid "Queued"
 #~ msgstr "Изпълнено заданието"
@@ -4665,53 +3732,516 @@ msgstr "Превода е запазен!"
 #~ msgid "Quotation "
 #~ msgstr "Задание"
 
+#~ msgid "Quotation Date"
+#~ msgstr "Дата на заданието"
+
+#~ msgid "Quotation Date missing!"
+#~ msgstr "Липсва дата на заданието!"
+
+#~ msgid "Quotation Number"
+#~ msgstr "Номер на задание"
+
+#~ msgid "Quotation Number missing!"
+#~ msgstr "Липсва номер на заданието!"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Номер на задание"
+
+#~ msgid "Quotation deleted!"
+#~ msgstr "Заданието е изтрито!"
+
 #~ msgid "R"
 #~ msgstr "R"
 
 #~ msgid "RFQ "
 #~ msgstr "Заявление за заявка"
 
+#~ msgid "RFQ Number"
+#~ msgstr "Номер на искане за заявка"
+
+#~ msgid "ROP"
+#~ msgstr "ROP"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "Курс"
+
 #~ msgid "Rate missing!"
 #~ msgstr "Липсва курс!"
+
+#~ msgid "Recd"
+#~ msgstr "Запис"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "Постъпления"
 
 #~ msgid "Receipt posted!"
 #~ msgstr "Приходеният ордер е запазено!"
 
+#~ msgid "Receivables"
+#~ msgstr "Подлежащи на получване"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "Получаване на стока"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "Запази в"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "Съгласуване"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "Отчет за съгласуване"
+
+#~ msgid "Record in"
+#~ msgstr "Запази в"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "Справка за"
+
+#, fuzzy
+#~ msgid "Recurring Transaction for %1"
+#~ msgstr "Повтарящ се превод"
+
+#~ msgid "Reference"
+#~ msgstr "Референция"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "Проект"
+
+#~ msgid "Remaining"
+#~ msgstr "Напомняне"
+
+#~ msgid "Remove"
+#~ msgstr "Премахни"
+
 #~ msgid "Remove Audit trail up to"
 #~ msgstr "Премахни временния баланс докато"
+
+#~ msgid "Removed spoolfiles!"
+#~ msgstr "Премахнати са предназначените за печат опашки!"
+
+#~ msgid "Removing marked entries from queue ..."
+#~ msgstr "Прехнати са маркраните редове със задания ..."
+
+#~ msgid "Repeat"
+#~ msgstr "Повторение"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "Справка за"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "Справка за"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "Справки"
+
+#~ msgid "Report for"
+#~ msgstr "Справка за"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "Справки"
+
+#~ msgid "Req"
+#~ msgstr "Req"
 
 #~ msgid "Request for Quotations"
 #~ msgstr "Необходимост от заявки"
 
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "Постъпления"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "Необходим е за"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "Необходим е за"
+
+#~ msgid "Requirements"
+#~ msgstr "Съгласия"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "Парола"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "Неразпределена печалба"
+
+#, fuzzy
+#~ msgid "Reversal Information"
+#~ msgstr "Необходимост от задание"
+
 #~ msgid "Role"
 #~ msgstr "Роля"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "Сметки"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "Архив"
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "Справки"
 
 #~ msgid "S"
 #~ msgstr "S"
 
+#~ msgid "SIC deleted!"
+#~ msgstr "SIC е изтрит"
+
+#~ msgid "SIC saved!"
+#~ msgstr "SIC е запазен"
+
+#~ msgid "SKU"
+#~ msgstr "SKU"
+
+#~ msgid "SO"
+#~ msgstr "SO"
+
 #~ msgid "Sales Invoice."
 #~ msgstr "Фактура продажби"
+
+#~ msgid "Sales Invoice/AR Transaction Number"
+#~ msgstr "Фактура продажби/Номер на превод от клиент"
+
+#~ msgid "Sales Order Number"
+#~ msgstr "Номер на поръчка продажба"
+
+#~ msgid "Sales Quotation Number"
+#~ msgstr "Номер на поръчка продажба със запазване"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "Име на фирма"
+
+#~ msgid "Salesperson"
+#~ msgstr "Продавач"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "Запазена форма"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "Поръчка за доставка"
+
+#, fuzzy
+#~ msgid "Sat"
+#~ msgstr "Окръг"
+
+#~ msgid "Save"
+#~ msgstr "Запази"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Save Batch"
+#~ msgstr "Запази разписание"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "Лице за контакт"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "Запазена форма"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "Запази като нов"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "Запазена форма"
 
 #~ msgid "Save Pricelist"
 #~ msgstr "Запази ценоразписа"
 
+#~ msgid "Save Schedule"
+#~ msgstr "Запази разписание"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "LaTeX Шаблони"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "Запази като нов"
+
+#~ msgid "Save as new"
+#~ msgstr "Запази като нов"
+
 #~ msgid "Save to File"
 #~ msgstr "Запази във файл"
+
+#, fuzzy
+#~ msgid "Saving %1 [_2]"
+#~ msgstr "Запазено"
+
+#~ msgid "Schedule"
+#~ msgstr "Разписание"
+
+#~ msgid "Scheduled"
+#~ msgstr "Зададено разписание"
+
+#~ msgid "Screen"
+#~ msgstr "Екран"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "Кредитно известие към фактура"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "Фактура"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "Провери инвентара"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "Поръчки за доставки"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "Запазени форми"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "Отчет за съгласуване"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "Необходимост от задание"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "Поръчки продажби"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "Изпълнение на преводи"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "Търси"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "Избери всичко"
+
+#~ msgid "Select Customer"
+#~ msgstr "Избери клиент"
+
+#, fuzzy
+#~ msgid "Select Templates to Load"
+#~ msgstr "Настройка шаблони"
+
+#~ msgid "Select Vendor"
+#~ msgstr "Избери доставчик"
+
+#~ msgid "Select a Printer!"
+#~ msgstr "Избери принтер!"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "Избери всичко"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "Избери едно от имената посочени по-долу"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "Избери един от проектите посочени по-долу"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "Фактури прдажби"
+
+#~ msgid "Select items"
+#~ msgstr "Избери стока"
+
+#~ msgid "Select payment"
+#~ msgstr "Избери плащане"
+
+#~ msgid "Select postscript or PDF!"
+#~ msgstr "Избери postscript или PDF!"
+
+#~ msgid "Select txt, postscript or PDF!"
+#~ msgstr "Избери txt, postscrip или PDF!"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Избери"
+
+#~ msgid "Sell"
+#~ msgstr "Продажба"
+
+#~ msgid "Sell Price"
+#~ msgstr "Продажна цена"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "Изпрати на ел.адрес"
 
+#~ msgid "Sending"
+#~ msgstr "Изпратено"
+
+#~ msgid "Sep"
+#~ msgstr "Сеп"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "Отдели"
+
+#~ msgid "September"
+#~ msgstr "Септември"
+
+#, fuzzy
+#~ msgid "Sequence"
+#~ msgstr "Свойства"
+
+#~ msgid "Serial No."
+#~ msgstr "Сериен номер"
+
+#~ msgid "Serial Number"
+#~ msgstr "Сериен номер"
+
+#~ msgid "Service"
+#~ msgstr "Услуга"
+
+#~ msgid "Service Code"
+#~ msgstr "Код на услуга"
+
 #~ msgid "Services"
 #~ msgstr "Услуги"
+
+#~ msgid "Session Timeout"
+#~ msgstr "Изтече времето на сесията"
 
 #~ msgid "Session expired!"
 #~ msgstr "Невалидна сесията!"
 
+#~ msgid "Ship Merchandise"
+#~ msgstr "Доставка на стока"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "Доставка със"
+
+#~ msgid "Ship to"
+#~ msgstr "Доставка до"
+
+#~ msgid "Ship via"
+#~ msgstr "Доставка със"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "Доставка със"
+
 #~ msgid "Shipping Address"
 #~ msgstr "Адрес на доставка"
 
+#~ msgid "Shipping Date"
+#~ msgstr "Дата на доставка"
+
+#~ msgid "Shipping Date missing!"
+#~ msgstr "Липсва дата на доставка!"
+
+#~ msgid "Shipping Point"
+#~ msgstr "Местоназначение"
+
+#~ msgid "Short"
+#~ msgstr "Къс"
+
 #~ msgid "Signature"
 #~ msgstr "Подпис"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "Изчистено"
+
+#~ msgid "Source"
+#~ msgstr "Оригинал"
+
+#~ msgid "Spoolfile"
+#~ msgstr "Опашка за печат"
+
+#~ msgid "Standard"
+#~ msgstr "Стандарт"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "БДС"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "Баланс за потвърждение"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "Начална дата"
+
+#~ msgid "Startdate"
+#~ msgstr "Начална дата"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "Начална дата"
+
+#~ msgid "State"
+#~ msgstr "Окръг"
+
+#~ msgid "State/Province"
+#~ msgstr "Окръг/Област"
+
+#~ msgid "Statement Balance"
+#~ msgstr "Баланс за потвърждение"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Потвърждението изпрати на"
@@ -4719,17 +4249,89 @@ msgstr "Превода е запазен!"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Разпечатай потвърждението!"
 
+#, fuzzy
+#~ msgid "Status: Complete"
+#~ msgstr "Завършен"
+
+#~ msgid "Stock"
+#~ msgstr "Стока"
+
 #~ msgid "Stock Finished Goods"
 #~ msgstr "Приключи незавърцено пройзводство"
+
+#~ msgid "Stylesheet"
+#~ msgstr "Таблица със стилове"
 
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "Подчинен на GIFI"
 
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "Тема"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "Тема"
+
+#~ msgid "Subtotal"
+#~ msgstr "Междинен сбор"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "Междинен сбор"
+
+#~ msgid "Summary"
+#~ msgstr "Сумарно"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "Това е сумарна сметка за запис!"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "Юни"
+
 #~ msgid "Supervisor"
 #~ msgstr "Главен администратор"
 
+#~ msgid "System Defaults"
+#~ msgstr "Система по подразбиране"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "Данък"
+
+#~ msgid "Tax"
+#~ msgstr "Данък"
+
+#~ msgid "Tax Account"
+#~ msgstr "Сметка за данъци"
+
 #~ msgid "Tax Accounts"
 #~ msgstr "Сметка за данъци"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "Код"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Tax ID/SSN"
+#~ msgstr "Данък номер / SSN"
+
+#~ msgid "Tax Included"
+#~ msgstr "Включен данък"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "Включен данък"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "Данък номер / SSN"
 
 #~ msgid "Tax collected"
 #~ msgstr "Събрани данъци"
@@ -4737,14 +4339,62 @@ msgstr "Превода е запазен!"
 #~ msgid "Tax paid"
 #~ msgstr "Платени данъци"
 
+#~ msgid "Taxable"
+#~ msgstr "Облагаема сделка"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "Шаблона е запазен!"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "Шаблона е запазен!"
+
+#, fuzzy
+#~ msgid "Template Set"
+#~ msgstr "Шаблони"
+
+#~ msgid "Template saved!"
+#~ msgstr "Шаблона е запазен!"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "Нов проформа"
+
+#~ msgid "Terms"
+#~ msgstr "Падеж"
+
 #~ msgid "Text"
 #~ msgstr "Текст"
+
+#~ msgid "Text Templates"
+#~ msgstr "Текстови шаблони"
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "Сигурен ли сте, че изтриете този момер фактура?"
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "Настоящата база-данни не съществува и не може да се изстрие"
 
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "Настоящата база-данни има нужда от обновяване"
+
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "Временен баланс"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "Кредит"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "Сметка за данъци"
 
 #~ msgid ""
 #~ "This is a preliminary check for existing sources. Nothing will be created "
@@ -4753,6 +4403,47 @@ msgstr "Превода е запазен!"
 #~ "Ще направя само проверка на текущите испочници. Нищо няма да се създава "
 #~ "или изтрива от тази страница!"
 
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "От"
+
+#~ msgid "Till"
+#~ msgstr "до"
+
+#, fuzzy
+#~ msgid "Time Frame"
+#~ msgstr "Работни карти"
+
+#, fuzzy
+#~ msgid "Time In"
+#~ msgstr "Пъти"
+
+#, fuzzy
+#~ msgid "Time Out"
+#~ msgstr "Пъти"
+
+#, fuzzy
+#~ msgid "Time and Material Cards"
+#~ msgstr "Работни карти"
+
+#, fuzzy
+#~ msgid "Timecard Criteria"
+#~ msgstr "Работна карта"
+
+#~ msgid "To"
+#~ msgstr "за"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "Сума"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "Дата"
+
+#~ msgid "To Warehouse"
+#~ msgstr "За склад"
+
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
@@ -4762,8 +4453,42 @@ msgstr "Превода е запазен!"
 #~ "new user with the same variables will then be saved under the new login "
 #~ "name."
 
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "за"
+
+#~ msgid "Total"
+#~ msgstr "Всичко"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "Всичко"
+
+#~ msgid "Tracking Items"
+#~ msgstr "Стока с проследяване"
+
+#~ msgid "Trade Discount"
+#~ msgstr "Търговска остъпка"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "Дата на превод"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "Липсва дата на превода"
+
+#~ msgid "Transaction Dates"
+#~ msgstr "Дата на превод"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "Превод"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "Превода е изтрит!"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "Превода е запазен!"
 
 #~ msgid "Transaction reversal enforced for all dates"
 #~ msgstr "Преводите за преизчислени за всички дати"
@@ -4771,14 +4496,72 @@ msgstr "Превода е запазен!"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "Преводите за преизчислени до"
 
+#~ msgid "Transactions"
+#~ msgstr "Преводи"
+
+#~ msgid "Transfer Inventory"
+#~ msgstr "Прехвърляне на инвентар"
+
+#~ msgid "Transfer from"
+#~ msgstr "Преместване от"
+
+#~ msgid "Transfer to"
+#~ msgstr "Преместване в"
+
+#~ msgid "Translation"
+#~ msgstr "Превод"
+
+#~ msgid "Translation deleted!"
+#~ msgstr "Превода е изтрит!"
+
 #~ msgid "Translation not on file!"
 #~ msgstr "Превода не е в базата!"
+
+#~ msgid "Translations saved!"
+#~ msgstr "Превода е запазен!"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "Временен баланс"
+
+#, fuzzy
+#~ msgid "Unable to save %1 object"
+#~ msgstr "Грешка при запазване на поръчка!"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "Фактура номер"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "Клиент номер"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "Доставчик номер"
+
+#~ msgid "Unit"
+#~ msgstr "Единица"
 
 #~ msgid "Unlock System"
 #~ msgstr "Отключи системата"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "Доставчик номер"
+
+#~ msgid "Update"
+#~ msgstr "Обнови"
+
 #~ msgid "Update Dataset"
 #~ msgstr "Обнови база-данни"
+
+#~ msgid "Updated"
+#~ msgstr "Обновен"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "Запази"
 
 #~ msgid "Upgrading to Version"
 #~ msgstr "Обнови версията"
@@ -4786,35 +4569,154 @@ msgstr "Превода е запазен!"
 #~ msgid "Use Templates"
 #~ msgstr "Лични шаблони"
 
+#~ msgid "User"
+#~ msgstr "потребител"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "Потребителя е запазен!"
+
 #~ msgid "User deleted!"
 #~ msgstr "Потребителя е изстрит!"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "потребител"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "потребител"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "потребител"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "Фармат за дата"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "Валидно до"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "Добави Сметка"
 
 #~ msgid "Vendor Invoice."
 #~ msgstr "Фактура на доставчик"
 
+#~ msgid "Vendor Invoice/AP Transaction Number"
+#~ msgstr "Фактура за доставка/номер на превода от доставчик"
+
 #~ msgid "Vendor Invoices"
 #~ msgstr "Фактури за доставки"
+
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "Доставчик номер"
+
+#~ msgid "Vendor Number"
+#~ msgstr "Доставчик номер"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "Доставчик номер"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "Номер на главната книга"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "Доставчик номер"
 
 #~ msgid "Vendor deleted!"
 #~ msgstr "Доставчика е изтрит!"
 
+#~ msgid "Vendor missing!"
+#~ msgstr "Липсва доставчик"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "Липсва доствчика в базата"
+
 #~ msgid "Vendor saved!"
 #~ msgstr "Доставчика е запазен!"
+
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "Доставчик"
 
 #~ msgid "Vendors"
 #~ msgstr "Доставчици"
 
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "Версия"
+
+#, fuzzy
+#~ msgid "Wages and Deductions"
+#~ msgstr "Удръжки"
+
+#~ msgid "Warehouse"
+#~ msgstr "Склад"
+
+#~ msgid "Warehouse deleted!"
+#~ msgstr "Склада е изтрит!"
+
+#~ msgid "Warehouse saved!"
+#~ msgstr "Склада е запазен!"
+
+#~ msgid "Warning!"
+#~ msgstr "Внимание!"
+
+#~ msgid "Week"
+#~ msgstr "Седмица"
+
+#~ msgid "Week(s)"
+#~ msgstr "Седмица(и)"
+
 #~ msgid "Weeks"
 #~ msgstr "Седмици"
 
+#~ msgid "Weight"
+#~ msgstr "Тегло"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "Какъв тип е тази номенклатура на стоките?"
+
+#~ msgid "Work Orders"
+#~ msgstr "Работни поръчки"
+
 #~ msgid "Work Phone"
 #~ msgstr "Служебен телефон"
+
+#~ msgid "Year"
+#~ msgstr "Година"
+
+#~ msgid "Year(s)"
+#~ msgstr "Година(и)"
+
+#, fuzzy
+#~ msgid "Yearend complete"
+#~ msgstr "Приключената година е запазена!"
 
 #~ msgid "Yearend date missing!"
 #~ msgstr "Не е приключена годината!"
 
 #~ msgid "Yearend posting failed!"
 #~ msgstr "Не успя да се запази приключената година!"
+
+#~ msgid "Yes"
+#~ msgstr "Да"
+
+#, fuzzy
+#~ msgid "You are logged out!"
+#~ msgstr "Вие напуснахте"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "Сигурен ли сте, че ще запазите този превод!"
@@ -4837,6 +4739,72 @@ msgstr "Превода е запазен!"
 #~ msgid "You did not enter a name!"
 #~ msgstr "Не сте въвели име!"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "ПК"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "ПК"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Направления"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Език"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Склад"
+
+#~ msgid "account cannot be set to any other type of account"
+#~ msgstr "не е възможно да се зададе друг тип на тази сметка"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "Езикът не е определен!"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "Мар"
+
+#~ msgid "as at"
+#~ msgstr "както"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "Баланс"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "В брой"
+
+#~ msgid "days"
+#~ msgstr "дни"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "Дебит"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Изтрии"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Депозит"
+
+#~ msgid "done"
+#~ msgstr "Готов"
+
+#~ msgid "ea"
+#~ msgstr "бр."
+
+#~ msgid "failed"
+#~ msgstr "грешка"
+
 #~ msgid "for"
 #~ msgstr "за"
 
@@ -4846,14 +4814,47 @@ msgstr "Превода е запазен!"
 #~ msgid "is already a member!"
 #~ msgstr "Вече сте потребител!"
 
+#~ msgid "localhost"
+#~ msgstr "този компютър"
+
+#, fuzzy
+#~ msgid "payment"
+#~ msgstr "Разходен ордер"
+
 #~ msgid "posted!"
 #~ msgstr "запазен!"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "Приходен ордер"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "Фактура продажба"
+
+#~ msgid "sent"
+#~ msgstr "изпрати"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "Баланс за потвърждение"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "Междинен сбор"
 
 #~ msgid "successfully created!"
 #~ msgstr "създаването приключи успешно!"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "изстриването приключи успешно!"
+
+#~ msgid "unexpected error!"
+#~ msgstr "Необяснима грешка!"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "Фактура за доставка"
 
 #~ msgid "website"
 #~ msgstr "страница"

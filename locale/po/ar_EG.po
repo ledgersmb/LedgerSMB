@@ -38,88 +38,411 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: sql/Pg-database.sql:2909
-#, fuzzy
-msgid "Add Budget"
-msgstr "اضافة نوع عمل"
-
-#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
-msgid "Import Batch"
-msgstr "تقارير"
-
-#: sql/Pg-database.sql:2834
-msgid "Add Warehouse"
-msgstr "اضافة مخزن"
-
-#: sql/Pg-database.sql:2876
-#, fuzzy
-msgid "Sessions"
-msgstr "نسخة"
-
-#: sql/Pg-database.sql:2846
-msgid "Cash"
-msgstr "النقدية"
-
-#: sql/Pg-database.sql:726
-msgid "Mrs."
+#: sql/Pg-database.sql:798
+msgid "AIM"
 msgstr ""
+
+#: sql/Pg-database.sql:2845
+msgid "AP"
+msgstr "موردين"
+
+#: sql/Pg-database.sql:2794
+msgid "AP Aging"
+msgstr "كشف حساب موردين"
+
+#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
+msgid "AP Transaction"
+msgstr "حركة حساب مورد"
+
+#: sql/Pg-database.sql:2908
+#, fuzzy
+msgid "AP Voucher"
+msgstr "الغاء الحساب"
+
+#: sql/Pg-database.sql:2844
+msgid "AR"
+msgstr "عملاء"
+
+#: sql/Pg-database.sql:2791
+msgid "AR Aging"
+msgstr "كشوفات حسابات العملاء"
+
+#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
+msgid "AR Transaction"
+msgstr "حركة حساب عميل"
+
+#: sql/Pg-database.sql:2907
+#, fuzzy
+msgid "AR Voucher"
+msgstr "الغاء الحساب"
 
 #: sql/Pg-database.sql:3783
 msgid "Abandonment"
 msgstr ""
 
+#: sql/Pg-database.sql:2787
+#, fuzzy
+msgid "Add Accounts"
+msgstr "اضافة حساب"
+
+#: sql/Pg-database.sql:2862
+msgid "Add Assembly"
+msgstr "اضافة تجميع"
+
+#: sql/Pg-database.sql:2884
+#, fuzzy
+msgid "Add Assets"
+msgstr "اضافة تجميع"
+
+#: sql/Pg-database.sql:2909
+#, fuzzy
+msgid "Add Budget"
+msgstr "اضافة نوع عمل"
+
+#: sql/Pg-database.sql:2836
+msgid "Add Business"
+msgstr "اضافة نوع عمل"
+
+#: sql/Pg-database.sql:2882
+#, fuzzy
+msgid "Add Class"
+msgstr "اضافة تجميع"
+
+#: sql/Pg-database.sql:2783
+#, fuzzy
+msgid "Add Contact"
+msgstr "شخص الاتصال"
+
+#: sql/Pg-database.sql:2804
+msgid "Add Employee"
+msgstr "اضافة موظف"
+
+#: sql/Pg-database.sql:2903
+#, fuzzy
+msgid "Add GIFI"
+msgstr "اضافة كود صناعى قياسى"
+
+#: sql/Pg-database.sql:2929
+msgid "Add Group"
+msgstr "اضافة مجموعة"
+
+#: sql/Pg-database.sql:2838
+msgid "Add Language"
+msgstr "اضافة لغة"
+
+#: sql/Pg-database.sql:2928
+#, fuzzy
+msgid "Add Overhead"
+msgstr "اضافة تكلفة عمالة"
+
 #: sql/Pg-database.sql:2860
 msgid "Add Part"
 msgstr "اضافة جزء"
 
-#: sql/Pg-database.sql:802
+#: sql/Pg-database.sql:2930
 #, fuzzy
-msgid "IRC"
-msgstr "الاكواد الصناعية القياسية"
+msgid "Add Pricegroup"
+msgstr "مجموعة سعرية"
 
-#: sql/Pg-database.sql:2849
-msgid "GIFI"
+#: sql/Pg-database.sql:2972
+#, fuzzy
+msgid "Add Return"
+msgstr "اضافة مستخدم"
+
+#: sql/Pg-database.sql:2840
+msgid "Add SIC"
+msgstr "اضافة كود صناعى قياسى"
+
+#: sql/Pg-database.sql:2861
+msgid "Add Service"
+msgstr "اضافة خدمة"
+
+#: sql/Pg-database.sql:2868
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "اضافة جزء"
+
+#: sql/Pg-database.sql:2827
+#, fuzzy
+msgid "Add Timecard"
+msgstr "اضافة جزء"
+
+#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
+msgid "Add Transaction"
+msgstr "اضافة حركة"
+
+#: sql/Pg-database.sql:2834
+msgid "Add Warehouse"
+msgstr "اضافة مخزن"
+
+#: sql/Pg-database.sql:3752
+msgid "Annual Straight Line Daily"
 msgstr ""
+
+#: sql/Pg-database.sql:3760
+msgid "Annual Straight Line Monthly"
+msgstr ""
+
+#: sql/Pg-database.sql:3821
+msgid "Asset"
+msgstr "أصول"
+
+#: sql/Pg-database.sql:2880
+#, fuzzy
+msgid "Asset Classes"
+msgstr "مجمعات"
+
+#: sql/Pg-database.sql:2881
+#, fuzzy
+msgid "Assets"
+msgstr "أصول"
+
+#: sql/Pg-database.sql:810
+msgid "BCC"
+msgstr ""
+
+#: sql/Pg-database.sql:2831
+msgid "Balance Sheet"
+msgstr "الميزانية"
+
+#: sql/Pg-database.sql:2781
+#, fuzzy
+msgid "Batches"
+msgstr "تاريخ يدء العمل"
+
+#: sql/Pg-database.sql:659
+#, fuzzy
+msgid "Billing"
+msgstr "عنوان ارسال الفواتير"
+
+#: sql/Pg-database.sql:813
+#, fuzzy
+msgid "Billing BCC"
+msgstr "عنوان ارسال الفواتير"
+
+#: sql/Pg-database.sql:812
+#, fuzzy
+msgid "Billing CC"
+msgstr "عنوان ارسال الفواتير"
+
+#: sql/Pg-database.sql:811
+#, fuzzy
+msgid "Billing Email"
+msgstr "عنوان ارسال الفواتير"
+
+#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+#, fuzzy
+msgid "Bin List"
+msgstr "قائمة تعبئة"
 
 #: sql/Pg-database.sql:2139
 #, fuzzy
 msgid "Budget"
 msgstr "اضافة نوع عمل"
 
-#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
-msgid "Shipping"
-msgstr "شحن"
+#: sql/Pg-database.sql:2911
+#, fuzzy
+msgid "Budgets"
+msgstr "اضافة نوع عمل"
 
-#: sql/Pg-database.sql:2942 sql/Pg-database.sql:2955
-msgid "AR Transaction"
-msgstr "حركة حساب عميل"
-
-#: sql/Pg-database.sql:2778
-msgid "Import AR Batch"
+#: sql/Pg-database.sql:809
+msgid "CC"
 msgstr ""
 
-#: sql/Pg-database.sql:2904
+#: sql/Pg-database.sql:2846
+msgid "Cash"
+msgstr "النقدية"
+
+#: sql/Pg-database.sql:797
 #, fuzzy
-msgid "List GIFI"
-msgstr "قائمة الاكواد الصناعية القياسية"
+msgid "Cell Phone"
+msgstr "تلفون المنزل"
 
-#: sql/Pg-database.sql:2877
+#: sql/Pg-database.sql:2786
+msgid "Chart of Accounts"
+msgstr "قائمة الحسابات"
+
+#: sql/Pg-database.sql:2964
+msgid "Check"
+msgstr "شيك"
+
+#: sql/Pg-database.sql:956
+msgid "Chord"
+msgstr ""
+
+#: sql/Pg-database.sql:549
+msgid "Cold Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:2859
+msgid "Combine"
+msgstr ""
+
+#: sql/Pg-database.sql:545
+msgid "Contact"
+msgstr "شخص الاتصال"
+
+#: sql/Pg-database.sql:2847
 #, fuzzy
-msgid "List Tax Forms"
-msgstr "قائمة الاقسام"
+msgid "Contacts"
+msgstr "شخص الاتصال"
 
-#: sql/Pg-database.sql:2816
-msgid "Ship"
-msgstr "شحن صادر"
+#: sql/Pg-database.sql:2900
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "تعديل فاتورة أمر الشراء"
 
-#: sql/Pg-database.sql:2862
-msgid "Add Assembly"
+#: sql/Pg-database.sql:2899
+#, fuzzy
+msgid "Credit Note"
+msgstr "مدين"
+
+#: sql/Pg-database.sql:543
+msgid "Customer"
+msgstr "العميل"
+
+#: sql/Pg-database.sql:2784
+msgid "Customer History"
+msgstr "بيانات تاريخية للعميل"
+
+#: sql/Pg-database.sql:2896
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "فاتورة"
+
+#: sql/Pg-database.sql:2895
+#, fuzzy
+msgid "Debit Note"
+msgstr "مدين"
+
+#: sql/Pg-database.sql:2833
+msgid "Defaults"
+msgstr "معطيات النظام"
+
+#: sql/Pg-database.sql:2887
+#, fuzzy
+msgid "Depreciate"
+msgstr "وصف"
+
+#: sql/Pg-database.sql:2891
+#, fuzzy
+msgid "Depreciation"
+msgstr "وصف"
+
+#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
+msgid "Description"
+msgstr "وصف"
+
+#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
+msgid "Disposal"
+msgstr ""
+
+#: sql/Pg-database.sql:723
+#, fuzzy
+msgid "Dr."
+msgstr "مارس"
+
+#: sql/Pg-database.sql:2866
+#, fuzzy
+msgid "Drafts"
+msgstr "سجل"
+
+#: sql/Pg-database.sql:815
+msgid "EDI ID"
+msgstr ""
+
+#: sql/Pg-database.sql:814
+msgid "EDI Interchange ID"
+msgstr ""
+
+#: sql/Pg-database.sql:808
+#, fuzzy
+msgid "Email"
+msgstr "بريد الكتروني"
+
+#: sql/Pg-database.sql:544
+msgid "Employee"
+msgstr "الموظف"
+
+#: sql/Pg-database.sql:2803
+msgid "Employees"
+msgstr "العاملين"
+
+#: sql/Pg-database.sql:2780
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "مخزون"
+
+#: sql/Pg-database.sql:1054
+#, fuzzy
+msgid "Entity"
+msgstr "قائمةانواع  العمل"
+
+#: sql/Pg-database.sql:1056
+#, fuzzy
+msgid "Entity Credit Account"
+msgstr "تعديل الحساب"
+
+#: sql/Pg-database.sql:803
+msgid "Fax"
+msgstr "الفاكس"
+
+#: sql/Pg-database.sql:2921
+#, fuzzy
+msgid "Fixed Assets"
 msgstr "اضافة تجميع"
 
-#: sql/Pg-database.sql:2476
-msgid "Simple"
+#: sql/Pg-database.sql:2849
+msgid "GIFI"
 msgstr ""
+
+#: sql/Pg-database.sql:2916
+#, fuzzy
+msgid "General Journal"
+msgstr "الاستاذ العام"
+
+#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
+msgid "Generate"
+msgstr ""
+
+#: sql/Pg-database.sql:804
+msgid "Generic Jabber"
+msgstr ""
+
+#: sql/Pg-database.sql:2917
+#, fuzzy
+msgid "Goods and Services"
+msgstr "البضاعة و الخدمات"
+
+#: sql/Pg-database.sql:800
+msgid "Gtalk"
+msgstr ""
+
+#: sql/Pg-database.sql:2912
+msgid "HR"
+msgstr "موارد بشرية"
+
+#: sql/Pg-database.sql:2870
+#, fuzzy
+msgid "HTML Templates"
+msgstr "تعديل عينة"
+
+#: sql/Pg-database.sql:805
+msgid "Home Phone"
+msgstr "تلفون المنزل"
+
+#: sql/Pg-database.sql:548
+msgid "Hot Lead"
+msgstr ""
+
+#: sql/Pg-database.sql:955
+msgid "Hourly"
+msgstr ""
+
+#: sql/Pg-database.sql:802
+#, fuzzy
+msgid "IRC"
+msgstr "الاكواد الصناعية القياسية"
 
 #: sql/Pg-database.sql:2776 sql/Pg-database.sql:2886 sql/Pg-database.sql:2901
 #: sql/Pg-database.sql:2906
@@ -127,55 +450,122 @@ msgstr ""
 msgid "Import"
 msgstr "تقارير"
 
-#: sql/Pg-database.sql:2881
+#: sql/Pg-database.sql:2779
+msgid "Import AP Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2778
+msgid "Import AR Batch"
+msgstr ""
+
+#: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
 #, fuzzy
-msgid "Assets"
-msgstr "أصول"
+msgid "Import Batch"
+msgstr "تقارير"
 
 #: sql/Pg-database.sql:2848
 #, fuzzy
 msgid "Import Chart"
 msgstr "تقارير"
 
-#: sql/Pg-database.sql:2797
-msgid "Payment"
-msgstr "الدفع النقدى"
+#: sql/Pg-database.sql:2905
+#, fuzzy
+msgid "Import GIFI"
+msgstr "تقارير"
 
-#: sql/Pg-database.sql:3821
-msgid "Asset"
-msgstr "أصول"
+#: sql/Pg-database.sql:2773
+#, fuzzy
+msgid "Import Inventory"
+msgstr "مخزون"
+
+#: sql/Pg-database.sql:2858
+msgid "Income Statement"
+msgstr "قائمة الدخل"
+
+#: sql/Pg-database.sql:2939
+msgid "Inventory"
+msgstr "مخزون"
+
+#: sql/Pg-database.sql:2777
+#, fuzzy
+msgid "Inventory Activity"
+msgstr "مخزون"
+
+#: sql/Pg-database.sql:2940
+#, fuzzy
+msgid "Inventory and COGS"
+msgstr "مخزون"
+
+#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
+msgid "Invoice"
+msgstr "فاتورة"
+
+#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "رقم الفاتورة"
+
+#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
+#, fuzzy
+msgid "Journal Entry"
+msgstr "دولة"
 
 #: sql/Pg-database.sql:2869
 #, fuzzy
 msgid "LaTeX Templates"
 msgstr "تعديل عينة"
 
-#: sql/Pg-database.sql:2866
-#, fuzzy
-msgid "Drafts"
-msgstr "سجل"
+#: sql/Pg-database.sql:2872
+msgid "Language"
+msgstr "اللغة"
 
-#: sql/Pg-database.sql:2788
+#: sql/Pg-database.sql:546
 #, fuzzy
-msgid "Top-level"
-msgstr "المستوى الاعلى"
+msgid "Lead"
+msgstr "مدة التسليم"
+
+#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
+msgid "Letterhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2837
 msgid "List Businesses"
 msgstr "قائمةانواع  العمل"
 
-#: sql/Pg-database.sql:2783
+#: sql/Pg-database.sql:2883
 #, fuzzy
-msgid "Add Contact"
-msgstr "شخص الاتصال"
+msgid "List Classes"
+msgstr "مجمعات"
 
-#: sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2904
 #, fuzzy
-msgid "Reverse AR Overpay"
-msgstr "الواردات"
+msgid "List GIFI"
+msgstr "قائمة الاكواد الصناعية القياسية"
 
-#: sql/Pg-database.sql:810
-msgid "BCC"
+#: sql/Pg-database.sql:2839
+msgid "List Languages"
+msgstr "قائمة اللغات"
+
+#: sql/Pg-database.sql:2841
+msgid "List SIC"
+msgstr "قائمة الاكواد الصناعية القياسية"
+
+#: sql/Pg-database.sql:2877
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "قائمة الاقسام"
+
+#: sql/Pg-database.sql:2835
+#, fuzzy
+msgid "List Warehouse"
+msgstr "قائمة المخازن"
+
+#: sql/Pg-database.sql:2922
+msgid "Logout"
+msgstr "خروج"
+
+#: sql/Pg-database.sql:801
+msgid "MSN"
 msgstr ""
 
 #: sql/Pg-database.sql:663
@@ -183,273 +573,93 @@ msgstr ""
 msgid "Mailing"
 msgstr "عنوان ارسال الفواتير"
 
-#: sql/Pg-database.sql:2861
-msgid "Add Service"
-msgstr "اضافة خدمة"
-
-#: sql/Pg-database.sql:3833
-msgid "partial disposal"
+#: sql/Pg-database.sql:724
+msgid "Miss."
 msgstr ""
-
-#: sql/Pg-database.sql:2884
-#, fuzzy
-msgid "Add Assets"
-msgstr "اضافة تجميع"
-
-#: sql/Pg-database.sql:3721
-msgid "time"
-msgstr ""
-
-#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
-#, fuzzy
-msgid "Vouchers"
-msgstr "الغاء الحساب"
-
-#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
-msgid "Receipts"
-msgstr "الواردات"
-
-#: sql/Pg-database.sql:957
-msgid "Non-cash"
-msgstr ""
-
-#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
-msgid "Work Order"
-msgstr "امر شغل"
-
-#: sql/Pg-database.sql:2899
-#, fuzzy
-msgid "Credit Note"
-msgstr "مدين"
-
-#: sql/Pg-database.sql:2911
-#, fuzzy
-msgid "Budgets"
-msgstr "اضافة نوع عمل"
-
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
-#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
-#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
-#, fuzzy
-msgid "Reports"
-msgstr "تقارير"
-
-#: sql/Pg-database.sql:2917
-#, fuzzy
-msgid "Goods and Services"
-msgstr "البضاعة و الخدمات"
-
-#: sql/Pg-database.sql:2477
-msgid "Rounded"
-msgstr ""
-
-#: sql/Pg-database.sql:2900
-#, fuzzy
-msgid "Credit Invoice"
-msgstr "تعديل فاتورة أمر الشراء"
-
-#: sql/Pg-database.sql:2836
-msgid "Add Business"
-msgstr "اضافة نوع عمل"
-
-#: sql/Pg-database.sql:2785
-msgid "Vendor History"
-msgstr "بيانات تاريخية عن مورد"
-
-#: sql/Pg-database.sql:660
-msgid "Sales"
-msgstr "مبيعات"
-
-#: sql/Pg-database.sql:2935
-msgid "Sequences"
-msgstr ""
-
-#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
-#: sql/Pg-database.sql:2967
-#, fuzzy
-msgid "RFQ"
-msgstr "عروض اسعار موردين"
-
-#: sql/Pg-database.sql:2928
-#, fuzzy
-msgid "Add Overhead"
-msgstr "اضافة تكلفة عمالة"
-
-#: sql/Pg-database.sql:2874
-#, fuzzy
-msgid "Reporting Units"
-msgstr "تقارير"
-
-#: sql/Pg-database.sql:662
-msgid "Physical"
-msgstr ""
-
-#: sql/Pg-database.sql:2839
-msgid "List Languages"
-msgstr "قائمة اللغات"
-
-#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
-#, fuzzy
-msgid "Reconciliation"
-msgstr "تسويات"
-
-#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
-#: sql/Pg-database.sql:2828
-msgid "Sales Orders"
-msgstr "اوامر بيع"
-
-#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
-msgid "Purchase Orders"
-msgstr "اوامر شراء"
-
-#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
-msgid "Packing List"
-msgstr "قائمة تعبئة"
-
-#: sql/Pg-database.sql:809
-msgid "CC"
-msgstr ""
-
-#: sql/Pg-database.sql:800
-msgid "Gtalk"
-msgstr ""
-
-#: sql/Pg-database.sql:954
-msgid "Salary"
-msgstr ""
-
-#: sql/Pg-database.sql:3785
-msgid "Sale"
-msgstr "بيع"
-
-#: sql/Pg-database.sql:2832
-msgid "Taxes"
-msgstr ""
-
-#: sql/Pg-database.sql:2838
-msgid "Add Language"
-msgstr "اضافة لغة"
-
-#: sql/Pg-database.sql:659
-#, fuzzy
-msgid "Billing"
-msgstr "عنوان ارسال الفواتير"
-
-#: sql/Pg-database.sql:2934
-msgid "Timecards"
-msgstr ""
-
-#: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
-msgid "Invoice Vouchers"
-msgstr "رقم الفاتورة"
-
-#: sql/Pg-database.sql:2903
-#, fuzzy
-msgid "Add GIFI"
-msgstr "اضافة كود صناعى قياسى"
-
-#: sql/Pg-database.sql:2840
-msgid "Add SIC"
-msgstr "اضافة كود صناعى قياسى"
-
-#: sql/Pg-database.sql:808
-#, fuzzy
-msgid "Email"
-msgstr "بريد الكتروني"
-
-#: sql/Pg-database.sql:2925
-msgid "System"
-msgstr "نظام"
-
-#: sql/Pg-database.sql:2865
-#, fuzzy
-msgid "Reverse Payment"
-msgstr "الدفع النقدى"
-
-#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
-msgid "Payments"
-msgstr "المدفوعات"
-
-#: sql/Pg-database.sql:813
-#, fuzzy
-msgid "Billing BCC"
-msgstr "عنوان ارسال الفواتير"
-
-#: sql/Pg-database.sql:723
-#, fuzzy
-msgid "Dr."
-msgstr "مارس"
-
-#: sql/Pg-database.sql:2870
-#, fuzzy
-msgid "HTML Templates"
-msgstr "تعديل عينة"
 
 #: sql/Pg-database.sql:725
 #, fuzzy
 msgid "Mr."
 msgstr "مارس"
 
-#: sql/Pg-database.sql:2894
-msgid "Vendor Invoice"
-msgstr "فاتورة المورد "
-
-#: sql/Pg-database.sql:543
-msgid "Customer"
-msgstr "العميل"
-
-#: sql/Pg-database.sql:2856
-#, fuzzy
-msgid "Year End"
-msgstr "نهاية العام المالى"
-
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
-msgid "Transfer"
-msgstr "تحويل"
-
-#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-msgid "in years"
+#: sql/Pg-database.sql:726
+msgid "Mrs."
 msgstr ""
 
-#: sql/Pg-database.sql:546
+#: sql/Pg-database.sql:727
 #, fuzzy
-msgid "Lead"
-msgstr "مدة التسليم"
+msgid "Ms."
+msgstr "مارس"
 
-#: sql/Pg-database.sql:2777
-#, fuzzy
-msgid "Inventory Activity"
-msgstr "مخزون"
-
-#: sql/Pg-database.sql:2880
-#, fuzzy
-msgid "Asset Classes"
-msgstr "مجمعات"
-
-#: sql/Pg-database.sql:2972
-#, fuzzy
-msgid "Add Return"
-msgstr "اضافة مستخدم"
-
-#: sql/Pg-database.sql:2895
-#, fuzzy
-msgid "Debit Note"
-msgstr "مدين"
-
-#: sql/Pg-database.sql:801
-msgid "MSN"
+#: sql/Pg-database.sql:2888
+msgid "Net Book Value"
 msgstr ""
 
-#: sql/Pg-database.sql:2905
-#, fuzzy
-msgid "Import GIFI"
-msgstr "تقارير"
+#: sql/Pg-database.sql:2923
+msgid "New Window"
+msgstr ""
 
-#: sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:957
+msgid "Non-cash"
+msgstr ""
+
+#: sql/Pg-database.sql:2913
+msgid "Order Entry"
+msgstr "ادخال الامر"
+
+#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
+msgid "Outstanding"
+msgstr "ارصدة"
+
+#: sql/Pg-database.sql:2944 sql/Pg-database.sql:2957
+msgid "Packing List"
+msgstr "قائمة تعبئة"
+
+#: sql/Pg-database.sql:2826
 #, fuzzy
-msgid "Use AR Overpayment"
+msgid "Partsgroup"
+msgstr "مجموعة سعرية"
+
+#: sql/Pg-database.sql:2797
+msgid "Payment"
 msgstr "الدفع النقدى"
+
+#: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
+msgid "Payments"
+msgstr "المدفوعات"
+
+#: sql/Pg-database.sql:662
+msgid "Physical"
+msgstr ""
+
+#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
+#, fuzzy
+msgid "Pick List"
+msgstr "قائمة تعبئة"
+
+#: sql/Pg-database.sql:2924
+#, fuzzy
+msgid "Preferences"
+msgstr "مرجع"
+
+#: sql/Pg-database.sql:795
+#, fuzzy
+msgid "Primary Phone"
+msgstr "اسم  الشركة"
+
+#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
+#, fuzzy
+msgid "Product Receipt"
+msgstr "بحث"
+
+#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
+#: sql/Pg-database.sql:2961
+msgid "Purchase Order"
+msgstr "امر شراء"
+
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
+msgid "Purchase Orders"
+msgstr "اوامر شراء"
 
 #: sql/Pg-database.sql:1933 sql/Pg-database.sql:2819 sql/Pg-database.sql:2951
 #: sql/Pg-database.sql:2966
@@ -457,137 +667,36 @@ msgstr "الدفع النقدى"
 msgid "Quotation"
 msgstr "عروض اسعار"
 
-#: sql/Pg-database.sql:2916
+#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
+msgid "Quotations"
+msgstr "عروض اسعار"
+
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 #, fuzzy
-msgid "General Journal"
-msgstr "الاستاذ العام"
+msgid "RFQ"
+msgstr "عروض اسعار موردين"
 
-#: sql/Pg-database.sql:3831
-msgid "disposal"
-msgstr ""
+#: sql/Pg-database.sql:2823
+msgid "RFQs"
+msgstr "عروض اسعار موردين"
 
-#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
-msgid "Statement"
-msgstr "كشف حساب"
+#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
+msgid "Receipt"
+msgstr "الوارد"
 
-#: sql/Pg-database.sql:2936
+#: sql/Pg-database.sql:2800 sql/Pg-database.sql:2878
+msgid "Receipts"
+msgstr "الواردات"
+
+#: sql/Pg-database.sql:2817
+msgid "Receive"
+msgstr "شحن وارد"
+
+#: sql/Pg-database.sql:2802 sql/Pg-database.sql:2855 sql/Pg-database.sql:2867
 #, fuzzy
-msgid "Reverse Receipts"
-msgstr "بحث"
-
-#: sql/Pg-database.sql:2882
-#, fuzzy
-msgid "Add Class"
-msgstr "اضافة تجميع"
-
-#: sql/Pg-database.sql:2872
-msgid "Language"
-msgstr "اللغة"
-
-#: sql/Pg-database.sql:2943 sql/Pg-database.sql:2956
-msgid "AP Transaction"
-msgstr "حركة حساب مورد"
-
-#: sql/Pg-database.sql:2889 sql/Pg-database.sql:2892
-msgid "Disposal"
-msgstr ""
-
-#: sql/Pg-database.sql:2871
-msgid "SIC"
-msgstr "الاكواد الصناعية القياسية"
-
-#: sql/Pg-database.sql:3832
-#, fuzzy
-msgid "import"
-msgstr "تقارير"
-
-#: sql/Pg-database.sql:2844
-msgid "AR"
-msgstr "عملاء"
-
-#: sql/Pg-database.sql:2827
-#, fuzzy
-msgid "Add Timecard"
-msgstr "اضافة جزء"
-
-#: sql/Pg-database.sql:727
-#, fuzzy
-msgid "Ms."
-msgstr "مارس"
-
-#: sql/Pg-database.sql:2831
-msgid "Balance Sheet"
-msgstr "الميزانية"
-
-#: sql/Pg-database.sql:805
-msgid "Home Phone"
-msgstr "تلفون المنزل"
-
-#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
-msgid "Translations"
-msgstr "ترجمات"
-
-#: sql/Pg-database.sql:803
-msgid "Fax"
-msgstr "الفاكس"
-
-#: sql/Pg-database.sql:549
-msgid "Cold Lead"
-msgstr ""
-
-#: sql/Pg-database.sql:2920
-#, fuzzy
-msgid "Tax Forms"
-msgstr "تنسيق البيانات"
-
-#: sql/Pg-database.sql:797
-#, fuzzy
-msgid "Cell Phone"
-msgstr "تلفون المنزل"
-
-#: sql/Pg-database.sql:3830
-#, fuzzy
-msgid "depreciation"
-msgstr "وصف"
-
-#: sql/Pg-database.sql:815
-msgid "EDI ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2786
-msgid "Chart of Accounts"
-msgstr "قائمة الحسابات"
-
-#: sql/Pg-database.sql:2794
-msgid "AP Aging"
-msgstr "كشف حساب موردين"
-
-#: sql/Pg-database.sql:2868
-#, fuzzy
-msgid "Add Tax Form"
-msgstr "اضافة جزء"
-
-#: sql/Pg-database.sql:798
-msgid "AIM"
-msgstr ""
-
-#: sql/Pg-database.sql:2922
-msgid "Logout"
-msgstr "خروج"
-
-#: sql/Pg-database.sql:1056
-#, fuzzy
-msgid "Entity Credit Account"
-msgstr "تعديل الحساب"
-
-#: sql/Pg-database.sql:2885
-#, fuzzy
-msgid "Search Assets"
-msgstr "بحث"
-
-#: sql/Pg-database.sql:3757
-msgid "in months"
-msgstr ""
+msgid "Reconciliation"
+msgstr "تسويات"
 
 #: sql/Pg-database.sql:2919
 #, fuzzy
@@ -598,310 +707,71 @@ msgstr "حركة حساب مورد"
 msgid "Referral"
 msgstr ""
 
-#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
-#: sql/Pg-database.sql:2959
-msgid "Sales Order"
-msgstr "امر بيع"
-
-#: sql/Pg-database.sql:2912
-msgid "HR"
-msgstr "موارد بشرية"
-
-#: sql/Pg-database.sql:2873
-msgid "Type of Business"
-msgstr "نوع العمل"
-
-#: sql/Pg-database.sql:724
-msgid "Miss."
-msgstr ""
-
-#: sql/Pg-database.sql:2773
+#: sql/Pg-database.sql:2874
 #, fuzzy
-msgid "Import Inventory"
-msgstr "مخزون"
+msgid "Reporting Units"
+msgstr "تقارير"
 
-#: sql/Pg-database.sql:2930
+#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 #, fuzzy
-msgid "Add Pricegroup"
-msgstr "مجموعة سعرية"
+msgid "Reports"
+msgstr "تقارير"
 
-#: sql/Pg-database.sql:2939
-msgid "Inventory"
-msgstr "مخزون"
-
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2938
 #, fuzzy
-msgid "Depreciation"
-msgstr "وصف"
-
-#: sql/Pg-database.sql:2779
-msgid "Import AP Batch"
-msgstr ""
-
-#: sql/Pg-database.sql:2887
-#, fuzzy
-msgid "Depreciate"
-msgstr "وصف"
-
-#: sql/Pg-database.sql:2823
-msgid "RFQs"
-msgstr "عروض اسعار موردين"
-
-#: sql/Pg-database.sql:1055 sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
-msgid "Invoice"
-msgstr "فاتورة"
-
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2965
-msgid "Receipt"
-msgstr "الوارد"
-
-#: sql/Pg-database.sql:3722
-#, fuzzy
-msgid "production"
-msgstr "عروض اسعار للعملاء"
-
-#: sql/Pg-database.sql:2888
-msgid "Net Book Value"
-msgstr ""
-
-#: sql/Pg-database.sql:2841
-msgid "List SIC"
-msgstr "قائمة الاكواد الصناعية القياسية"
-
-#: sql/Pg-database.sql:811
-#, fuzzy
-msgid "Billing Email"
-msgstr "عنوان ارسال الفواتير"
-
-#: sql/Pg-database.sql:2780
-#, fuzzy
-msgid "Enter Inventory"
-msgstr "مخزون"
-
-#: sql/Pg-database.sql:2845
-msgid "AP"
-msgstr "موردين"
-
-#: sql/Pg-database.sql:2898
-msgid "Sales Invoice"
-msgstr "فاتورة المبيعات"
-
-#: sql/Pg-database.sql:2791
-msgid "AR Aging"
-msgstr "كشوفات حسابات العملاء"
-
-#: sql/Pg-database.sql:3760
-msgid "Annual Straight Line Monthly"
-msgstr ""
-
-#: sql/Pg-database.sql:2913
-msgid "Order Entry"
-msgstr "ادخال الامر"
-
-#: sql/Pg-database.sql:2784
-msgid "Customer History"
-msgstr "بيانات تاريخية للعميل"
-
-#: sql/Pg-database.sql:2772
-#, fuzzy
-msgid "Search Pricegroups"
-msgstr "مجموعات سعرية"
-
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
-msgid "Timecard"
-msgstr ""
-
-#: sql/Pg-database.sql:2817
-msgid "Receive"
-msgstr "شحن وارد"
-
-#: sql/Pg-database.sql:2931
-msgid "Stock Assembly"
-msgstr "تجميع مخزون"
-
-#: sql/Pg-database.sql:545
-msgid "Contact"
-msgstr "شخص الاتصال"
-
-#: sql/Pg-database.sql:3752
-msgid "Annual Straight Line Daily"
-msgstr ""
-
-#: sql/Pg-database.sql:2826
-#, fuzzy
-msgid "Partsgroup"
-msgstr "مجموعة سعرية"
-
-#: sql/Pg-database.sql:795
-#, fuzzy
-msgid "Primary Phone"
-msgstr "اسم  الشركة"
-
-#: sql/Pg-database.sql:2771
-#, fuzzy
-msgid "Search Groups"
-msgstr "مجموعات سعرية"
-
-#: sql/Pg-database.sql:796
-#, fuzzy
-msgid "Secondary Phone"
-msgstr "اسم  الشركة"
-
-#: sql/Pg-database.sql:804
-msgid "Generic Jabber"
-msgstr ""
-
-#: sql/Pg-database.sql:3756
-msgid "Whole Month Straight Line"
-msgstr ""
-
-#: sql/Pg-database.sql:2822 sql/Pg-database.sql:2915
-msgid "Quotations"
-msgstr "عروض اسعار"
-
-#: sql/Pg-database.sql:2857
-msgid "Trial Balance"
-msgstr "ميزان المراجعة"
-
-#: sql/Pg-database.sql:2929
-msgid "Add Group"
-msgstr "اضافة مجموعة"
-
-#: sql/Pg-database.sql:728
-msgid "Sir."
-msgstr ""
-
-#: sql/Pg-database.sql:2970 sql/Pg-database.sql:2971
-#, fuzzy
-msgid "Product Receipt"
-msgstr "بحث"
-
-#: sql/Pg-database.sql:2835
-#, fuzzy
-msgid "List Warehouse"
-msgstr "قائمة المخازن"
-
-#: sql/Pg-database.sql:2798
-#, fuzzy
-msgid "Use Overpayment"
-msgstr "الدفع النقدى"
-
-#: sql/Pg-database.sql:799
-msgid "Yahoo"
-msgstr ""
-
-#: sql/Pg-database.sql:2803
-msgid "Employees"
-msgstr "العاملين"
-
-#: sql/Pg-database.sql:2921
-#, fuzzy
-msgid "Fixed Assets"
-msgstr "اضافة تجميع"
-
-#: sql/Pg-database.sql:2908
-#, fuzzy
-msgid "AP Voucher"
-msgstr "الغاء الحساب"
-
-#: sql/Pg-database.sql:2907
-#, fuzzy
-msgid "AR Voucher"
-msgstr "الغاء الحساب"
-
-#: sql/Pg-database.sql:2787
-#, fuzzy
-msgid "Add Accounts"
-msgstr "اضافة حساب"
-
-#: sql/Pg-database.sql:2964
-msgid "Check"
-msgstr "شيك"
-
-#: sql/Pg-database.sql:2926 sql/Pg-database.sql:2927
-msgid "Outstanding"
-msgstr "ارصدة"
-
-#: sql/Pg-database.sql:814
-msgid "EDI Interchange ID"
-msgstr ""
-
-#: sql/Pg-database.sql:2923
-msgid "New Window"
-msgstr ""
-
-#: sql/Pg-database.sql:2896
-#, fuzzy
-msgid "Debit Invoice"
-msgstr "فاتورة"
-
-#: sql/Pg-database.sql:2775 sql/Pg-database.sql:2813
-msgid "Generate"
-msgstr ""
-
-#: sql/Pg-database.sql:2859
-msgid "Combine"
-msgstr ""
-
-#: sql/Pg-database.sql:2847
-#, fuzzy
-msgid "Contacts"
-msgstr "شخص الاتصال"
-
-#: sql/Pg-database.sql:1057 sql/Pg-database.sql:2824
-#, fuzzy
-msgid "Journal Entry"
-msgstr "دولة"
-
-#: sql/Pg-database.sql:2875
-#, fuzzy
-msgid "Warehouses"
-msgstr "مخازن"
-
-#: sql/Pg-database.sql:544
-msgid "Employee"
-msgstr "الموظف"
-
-#: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
-msgid "Purchase Order"
-msgstr "امر شراء"
-
-#: sql/Pg-database.sql:2804
-msgid "Add Employee"
-msgstr "اضافة موظف"
-
-#: sql/Pg-database.sql:956
-msgid "Chord"
-msgstr ""
-
-#: sql/Pg-database.sql:542
-msgid "Vendor"
-msgstr "المورد"
-
-#: sql/Pg-database.sql:2833
-msgid "Defaults"
-msgstr "معطيات النظام"
-
-#: sql/Pg-database.sql:1054
-#, fuzzy
-msgid "Entity"
-msgstr "قائمةانواع  العمل"
-
-#: sql/Pg-database.sql:2945 sql/Pg-database.sql:2958
-#, fuzzy
-msgid "Pick List"
-msgstr "قائمة تعبئة"
-
-#: sql/Pg-database.sql:2902
-#, fuzzy
-msgid "Search and GL"
-msgstr "بحث"
+msgid "Reverse AR Overpay"
+msgstr "الواردات"
 
 #: sql/Pg-database.sql:2937
 #, fuzzy
 msgid "Reverse Overpay"
 msgstr "الواردات"
+
+#: sql/Pg-database.sql:2865
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "الدفع النقدى"
+
+#: sql/Pg-database.sql:2936
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "بحث"
+
+#: sql/Pg-database.sql:2477
+msgid "Rounded"
+msgstr ""
+
+#: sql/Pg-database.sql:2871
+msgid "SIC"
+msgstr "الاكواد الصناعية القياسية"
+
+#: sql/Pg-database.sql:954
+msgid "Salary"
+msgstr ""
+
+#: sql/Pg-database.sql:3785
+msgid "Sale"
+msgstr "بيع"
+
+#: sql/Pg-database.sql:660
+msgid "Sales"
+msgstr "مبيعات"
+
+#: sql/Pg-database.sql:2898
+msgid "Sales Invoice"
+msgstr "فاتورة المبيعات"
+
+#: sql/Pg-database.sql:1931 sql/Pg-database.sql:2806 sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2959
+msgid "Sales Order"
+msgstr "امر بيع"
+
+#: sql/Pg-database.sql:2809 sql/Pg-database.sql:2811 sql/Pg-database.sql:2814
+#: sql/Pg-database.sql:2828
+msgid "Sales Orders"
+msgstr "اوامر بيع"
 
 #: sql/Pg-database.sql:2774 sql/Pg-database.sql:2782 sql/Pg-database.sql:2795
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2863 sql/Pg-database.sql:2910
@@ -909,1975 +779,423 @@ msgstr "الواردات"
 msgid "Search"
 msgstr "بحث"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2885
 #, fuzzy
-msgid "List Classes"
-msgstr "مجمعات"
+msgid "Search Assets"
+msgstr "بحث"
 
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+#: sql/Pg-database.sql:2771
 #, fuzzy
-msgid "Bin List"
-msgstr "قائمة تعبئة"
+msgid "Search Groups"
+msgstr "مجموعات سعرية"
 
-#: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
-msgid "Add Transaction"
-msgstr "اضافة حركة"
-
-#: sql/Pg-database.sql:2924
+#: sql/Pg-database.sql:2772
 #, fuzzy
-msgid "Preferences"
-msgstr "مرجع"
+msgid "Search Pricegroups"
+msgstr "مجموعات سعرية"
 
-#: sql/Pg-database.sql:812
+#: sql/Pg-database.sql:2902
 #, fuzzy
-msgid "Billing CC"
-msgstr "عنوان ارسال الفواتير"
+msgid "Search and GL"
+msgstr "بحث"
 
-#: sql/Pg-database.sql:955
-msgid "Hourly"
+#: sql/Pg-database.sql:796
+#, fuzzy
+msgid "Secondary Phone"
+msgstr "اسم  الشركة"
+
+#: sql/Pg-database.sql:2935
+msgid "Sequences"
 msgstr ""
 
-#: sql/Pg-database.sql:2858
-msgid "Income Statement"
-msgstr "قائمة الدخل"
-
-#: sql/Pg-database.sql:2940
+#: sql/Pg-database.sql:2876
 #, fuzzy
-msgid "Inventory and COGS"
-msgstr "مخزون"
+msgid "Sessions"
+msgstr "نسخة"
 
-#: sql/Pg-database.sql:548
-msgid "Hot Lead"
+#: sql/Pg-database.sql:2816
+msgid "Ship"
+msgstr "شحن صادر"
+
+#: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
+msgid "Shipping"
+msgstr "شحن"
+
+#: sql/Pg-database.sql:2476
+msgid "Simple"
 msgstr ""
 
-#: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
-msgid "Letterhead"
+#: sql/Pg-database.sql:728
+msgid "Sir."
 msgstr ""
 
-#: sql/Pg-database.sql:2781
-#, fuzzy
-msgid "Batches"
-msgstr "تاريخ يدء العمل"
+#: sql/Pg-database.sql:2950 sql/Pg-database.sql:2963
+msgid "Statement"
+msgstr "كشف حساب"
 
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2830
-msgid "Description"
-msgstr "وصف"
+#: sql/Pg-database.sql:2931
+msgid "Stock Assembly"
+msgstr "تجميع مخزون"
+
+#: sql/Pg-database.sql:2925
+msgid "System"
+msgstr "نظام"
+
+#: sql/Pg-database.sql:2920
+#, fuzzy
+msgid "Tax Forms"
+msgstr "تنسيق البيانات"
+
+#: sql/Pg-database.sql:2832
+msgid "Taxes"
+msgstr ""
+
+#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2968
+msgid "Timecard"
+msgstr ""
+
+#: sql/Pg-database.sql:2934
+msgid "Timecards"
+msgstr ""
+
+#: sql/Pg-database.sql:2788
+#, fuzzy
+msgid "Top-level"
+msgstr "المستوى الاعلى"
 
 #: sql/Pg-database.sql:2843
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "سجلت الحركة"
 
-#~ msgid "Dataset"
-#~ msgstr "مجموعة بيانات"
+#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2853
+msgid "Transfer"
+msgstr "تحويل"
 
-#~ msgid "Transactions"
-#~ msgstr "حركات"
+#: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
+msgid "Translations"
+msgstr "ترجمات"
 
-#, fuzzy
-#~ msgid "Row counts"
-#~ msgstr "حسابات"
-
-#, fuzzy
-#~ msgid "Overpayment Account"
-#~ msgstr "تم ترحيل مدفوعات"
-
-#~ msgid "Source"
-#~ msgstr "مصدر"
-
-#, fuzzy
-#~ msgid "User Name"
-#~ msgstr "خزن المستخدم"
-
-#, fuzzy
-#~ msgid "Filtering Receipts"
-#~ msgstr "الواردات"
-
-#, fuzzy
-#~ msgid "Period"
-#~ msgstr "للفترة"
-
-#, fuzzy
-#~ msgid "Process Transactions"
-#~ msgstr "حركات حساب الموردين"
-
-#~ msgid "AR Outstanding"
-#~ msgstr "ارصدة عملاء "
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "اضافة كود صناعى قياسى"
-
-#~ msgid "Paid"
-#~ msgstr "المدفوع"
-
-#, fuzzy
-#~ msgid "From File"
-#~ msgstr "من"
-
-#, fuzzy
-#~ msgid "Vendor Name"
-#~ msgstr "رقم المورد"
-
-#, fuzzy
-#~ msgid "Invoice Status"
-#~ msgstr "تاريخ الفاتورة"
-
-#, fuzzy
-#~ msgid "Transaction Date"
-#~ msgstr "سجلت الحركة"
-
-#, fuzzy
-#~ msgid "Date from"
-#~ msgstr "تنسيق البيانات"
-
-#~ msgid "Equity"
-#~ msgstr "رأس المال"
-
-#, fuzzy
-#~ msgid "Select All"
-#~ msgstr "اختر الكل"
-
-#, fuzzy
-#~ msgid "Amount From"
-#~ msgstr "الكمية"
-
-#, fuzzy
-#~ msgid "Create User"
-#~ msgstr "انشاء مجموعة بيانات"
-
-#~ msgid "Delivery Date"
-#~ msgstr "تاريخ الوصول"
-
-#, fuzzy
-#~ msgid "Recon"
-#~ msgstr "في السجل"
-
-#, fuzzy
-#~ msgid "Batch Selection"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "Accounts To"
-#~ msgstr "حسابات"
-
-#, fuzzy
-#~ msgid "Request read receipt"
-#~ msgstr "الواردات"
-
-#, fuzzy
-#~ msgid "Contact Search"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Addresses"
-#~ msgstr "العنوان"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "الاسم"
-
-#~ msgid "On Hand"
-#~ msgstr "بالمخزن"
-
-#, fuzzy
-#~ msgid "Outstanding Transactions"
-#~ msgstr "حركة حساب مورد"
-
-#~ msgid "Login"
-#~ msgstr "دخول"
-
-#~ msgid "Sell Price"
-#~ msgstr "سعر البيع"
-
-#, fuzzy
-#~ msgid "Search AR Invoices"
-#~ msgstr "فاتورة"
-
-#, fuzzy
-#~ msgid "Generate Control Code"
-#~ msgstr "التحكم في المراجعة"
-
-#, fuzzy
-#~ msgid "Version [_1]"
-#~ msgstr "نسخة"
-
-#~ msgid "Add Vendor"
-#~ msgstr "اضافة مورد"
-
-#, fuzzy
-#~ msgid "Payment Terms"
-#~ msgstr "المدفوعات"
-
-#~ msgid "Expense"
-#~ msgstr "المصروفات"
-
-#~ msgid "Currency"
-#~ msgstr "عملة"
-
-#~ msgid "Liability"
-#~ msgstr "التزامات"
-
-#, fuzzy
-#~ msgid "Accrual"
-#~ msgstr "المجمعة"
-
-#, fuzzy
-#~ msgid "Subject: [_1]"
-#~ msgstr "موضوع"
-
-#~ msgid "ID"
-#~ msgstr "البطاقة الشخصية"
-
-#, fuzzy
-#~ msgid "Ending GL Balance:"
-#~ msgstr "بداية الميزانية"
-
-#, fuzzy
-#~ msgid "Ignore Year-ends"
-#~ msgstr "نهاية العام المالى"
-
-#~ msgid "Startdate"
-#~ msgstr "تاريخ يدء العمل"
-
-#, fuzzy
-#~ msgid "Batch Number"
-#~ msgstr "رقم ضريبى"
-
-#, fuzzy
-#~ msgid "Job Title"
-#~ msgstr "نوع الحساب"
-
-#, fuzzy
-#~ msgid "Add Unit"
-#~ msgstr "وحدة"
-
-#, fuzzy
-#~ msgid "Depreciate Through"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "Default AP"
-#~ msgstr "معطيات النظام"
-
-#~ msgid "Message"
-#~ msgstr "رسالة"
-
-#, fuzzy
-#~ msgid "Purchase Value:"
-#~ msgstr "امر شراء"
-
-#, fuzzy
-#~ msgid "Customer Search"
-#~ msgstr "رقم العميل"
-
-#, fuzzy
-#~ msgid "Contact Info"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Fixed Asset"
-#~ msgstr "اضافة تجميع"
-
-#~ msgid "Edit Customer"
-#~ msgstr "تعديل بيانات العميل"
-
-#, fuzzy
-#~ msgid "Attach to"
-#~ msgstr "مرفقات"
-
-#~ msgid "as at"
-#~ msgstr "من"
-
-#, fuzzy
-#~ msgid "Enter User"
-#~ msgstr "تعديل مستخدم "
-
-#~ msgid "Income"
-#~ msgstr "الربح"
-
-#~ msgid "Number"
-#~ msgstr "الرقم"
-
-#, fuzzy
-#~ msgid "Assets to Equity"
-#~ msgstr "قائمة الحسابات"
-
-#~ msgid "Delete"
-#~ msgstr "الغاء"
-
-#, fuzzy
-#~ msgid "Reset Password"
-#~ msgstr "كلمة السر"
-
-#~ msgid "Markup"
-#~ msgstr "نسبة الربح"
-
-#, fuzzy
-#~ msgid "Our Debits"
-#~ msgstr "مدين"
-
-#~ msgid "Post"
-#~ msgstr "تسجيل"
-
-#, fuzzy
-#~ msgid "Tax Form Reports"
-#~ msgstr "تنسيق البيانات"
-
-#~ msgid "Make"
-#~ msgstr "افعل"
-
-#~ msgid "Till"
-#~ msgstr "إلى"
-
-#, fuzzy
-#~ msgid "Active On"
-#~ msgstr "فعال"
-
-#, fuzzy
-#~ msgid "Default Country"
-#~ msgstr "دولة"
-
-#, fuzzy
-#~ msgid "Run Backup"
-#~ msgstr "نسخة احتياطية "
-
-#~ msgid "Receivables"
-#~ msgstr "المقبوضات"
-
-#~ msgid "System Defaults"
-#~ msgstr "معطيات النظام"
-
-#, fuzzy
-#~ msgid "Parent"
-#~ msgstr "الحالي"
-
-#~ msgid "Detail"
-#~ msgstr "تفصيلى"
-
-#, fuzzy
-#~ msgid "Invoice due"
-#~ msgstr "رقم الفاتورة"
-
-#~ msgid "Backup"
-#~ msgstr "نسخة احتياطية "
-
-#, fuzzy
-#~ msgid "Save Changes"
-#~ msgstr "خزن كجديد"
-
-#~ msgid "Database"
-#~ msgstr "قواعد البيانات"
-
-#, fuzzy
-#~ msgid "Purchase Date:"
-#~ msgstr "امر شراء"
-
-#, fuzzy
-#~ msgid "Attach to Entity"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Expense Account"
-#~ msgstr "قائمة الحسابات"
-
-#~ msgid "Code"
-#~ msgstr "كود"
-
-#~ msgid "Close Books up to"
-#~ msgstr "اقفال الدفاتر حتى"
-
-#, fuzzy
-#~ msgid "Save Contact"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Partial"
-#~ msgstr "جزء"
-
-#, fuzzy
-#~ msgid "Edit Employee"
-#~ msgstr "اضافة موظف"
-
-#, fuzzy
-#~ msgid "Debits"
-#~ msgstr "مدين"
-
-#, fuzzy
-#~ msgid "PO Number"
-#~ msgstr "الرقم"
-
-#, fuzzy
-#~ msgid "Username:"
-#~ msgstr "مستخدم"
-
-#, fuzzy
-#~ msgid "Income Class"
-#~ msgstr "الربح"
-
-#, fuzzy
-#~ msgid "E-mail [_1]"
-#~ msgstr "بريد الكتروني"
-
-#, fuzzy
-#~ msgid "Account:"
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Search Payments"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Ship Via"
-#~ msgstr "شحن من خلال"
-
-#, fuzzy
-#~ msgid "Attach To"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Order By"
-#~ msgstr "امر"
-
-#, fuzzy
-#~ msgid "Credits"
-#~ msgstr "دائن"
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "معدل"
-
-#~ msgid "Taxable"
-#~ msgstr "خاضع للضريبة"
-
-#~ msgid "Continue"
-#~ msgstr "تابع"
-
-#~ msgid "Shipping Point"
-#~ msgstr "نقطة الشحن"
-
-#, fuzzy
-#~ msgid "Select by Default:"
-#~ msgstr "اختر الكل"
-
-#, fuzzy
-#~ msgid "Birthdate"
-#~ msgstr "تاريخ يدء العمل"
-
-#, fuzzy
-#~ msgid "Salutation"
-#~ msgstr "عروض اسعار للعملاء"
-
-#, fuzzy
-#~ msgid "Depreciation Account"
-#~ msgstr "الغاء الحساب"
-
-#, fuzzy
-#~ msgid "New User"
-#~ msgstr "مستخدم"
-
-#~ msgid "COGS"
-#~ msgstr "تكلفة البضاعة المباعة"
-
-#, fuzzy
-#~ msgid "Counted"
-#~ msgstr "دولة"
-
-#, fuzzy
-#~ msgid "Last Cost"
-#~ msgstr "تكلفة"
-
-#, fuzzy
-#~ msgid "Adjustment Date"
-#~ msgstr "كشف حساب"
-
-#, fuzzy
-#~ msgid "subtotal"
-#~ msgstr "اجمالى"
-
-#~ msgid "Serial Number"
-#~ msgstr "رقم  مسلسل"
-
-#, fuzzy
-#~ msgid "Date To:"
-#~ msgstr "التاريخ"
-
-#~ msgid "Account"
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Search Reconciliation Reports"
-#~ msgstr "تقرير  التسويات"
-
-#~ msgid "Memo"
-#~ msgstr "ملاحظات"
-
-#~ msgid "Active"
-#~ msgstr "فعال"
-
-#, fuzzy
-#~ msgid "Start Date"
-#~ msgstr "تاريخ يدء العمل"
-
-#, fuzzy
-#~ msgid "Account Type"
-#~ msgstr "نوع الحساب"
-
-#, fuzzy
-#~ msgid "Other Actions"
-#~ msgstr "حركات حساب الموردين"
-
-#~ msgid "Phone"
-#~ msgstr "تليفون"
-
-#~ msgid "Yes"
-#~ msgstr "نعم"
-
-#, fuzzy
-#~ msgid "Pricelist"
-#~ msgstr "سعر"
-
-#, fuzzy
-#~ msgid "Accrual Basis:"
-#~ msgstr "المجمعة"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "سجل كجديد"
-
-#, fuzzy
-#~ msgid "Their Debits"
-#~ msgstr "مدين"
-
-#~ msgid "Tax Included"
-#~ msgstr "الضريبة المضافة"
-
-#~ msgid "Drawing"
-#~ msgstr "رسم"
-
-#~ msgid "List Price"
-#~ msgstr "قائمة الاسعار"
-
-#~ msgid "No"
-#~ msgstr "لا"
-
-#, fuzzy
-#~ msgid "Grand Total"
-#~ msgstr "اجمالى السطر"
-
-#, fuzzy
-#~ msgid "Document Type"
-#~ msgstr "الربح"
-
-#~ msgid "Qty"
-#~ msgstr "الكمية"
-
-#, fuzzy
-#~ msgid "Last Name"
-#~ msgstr "معدل"
-
-#, fuzzy
-#~ msgid "Attached To Type"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Business Type"
-#~ msgstr "الرقم الضريبى"
-
-#, fuzzy
-#~ msgid "Starting Date"
-#~ msgstr "تاريخ يدء العمل"
-
-#, fuzzy
-#~ msgid "Account category"
-#~ msgstr "رقم حساب"
-
-#~ msgid "Project Number"
-#~ msgstr "رقم المشروع"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "اظهار تغيير سعر العملة"
-
-#, fuzzy
-#~ msgid "Date to"
-#~ msgstr "التاريخ"
-
-#, fuzzy
-#~ msgid "Username"
-#~ msgstr "مستخدم"
-
-#, fuzzy
-#~ msgid "Backup Roles"
-#~ msgstr "نسخة احتياطية "
-
-#, fuzzy
-#~ msgid "Date From:"
-#~ msgstr "تنسيق البيانات"
-
-#, fuzzy
-#~ msgid "Zip/Postal Code"
-#~ msgstr "كود"
-
-#, fuzzy
-#~ msgid "Create New Batch"
-#~ msgstr "الغاء مجموعة البيانات"
-
-#~ msgid "City"
-#~ msgstr "مدينة"
-
-#, fuzzy
-#~ msgid "To Date"
-#~ msgstr "التاريخ"
-
-#, fuzzy
-#~ msgid "Editing User"
-#~ msgstr "تعديل مستخدم "
-
-#, fuzzy
-#~ msgid "Audit Control"
-#~ msgstr "التحكم في المراجعة"
-
-#, fuzzy
-#~ msgid "Cash Account"
-#~ msgstr "الحسابات الضريبية"
-
-#, fuzzy
-#~ msgid "Zip/Post Code"
-#~ msgstr "كود"
-
-#, fuzzy
-#~ msgid "Bank Account"
-#~ msgstr "ربط الحسابات"
-
-#~ msgid "All"
-#~ msgstr "الكل"
-
-#~ msgid "From"
-#~ msgstr "من"
-
-#, fuzzy
-#~ msgid "Report Name"
-#~ msgstr "تقرير لاجل"
-
-#~ msgid "Remaining"
-#~ msgstr "متبقى"
-
-#, fuzzy
-#~ msgid "Employee Search"
-#~ msgstr "اسم الموظف"
-
-#~ msgid "Model"
-#~ msgstr "موديل"
-
-#, fuzzy
-#~ msgid "Asset Class:"
-#~ msgstr "أصول"
-
-#, fuzzy
-#~ msgid "Copy to New Name"
-#~ msgstr "اسم  الشركة"
-
-#~ msgid "Method"
-#~ msgstr "طريقة"
-
-#, fuzzy
-#~ msgid "Search Budgets"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Save As New"
-#~ msgstr "خزن كجديد"
-
-#, fuzzy
-#~ msgid "Contra"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Details"
-#~ msgstr "تفصيلى"
-
-#, fuzzy
-#~ msgid "Amount to be used"
-#~ msgstr "الرصيد "
-
-#, fuzzy
-#~ msgid "Preferences Saved"
-#~ msgstr "مرجع"
-
-#, fuzzy
-#~ msgid "Departments"
-#~ msgstr "قسم"
-
-#~ msgid "Debit"
-#~ msgstr "مدين"
-
-#~ msgid "List Transactions"
-#~ msgstr "قائمة الحركات"
-
-#, fuzzy
-#~ msgid "Business Units"
-#~ msgstr "الرقم الضريبى"
-
-#, fuzzy
-#~ msgid "Control Number"
-#~ msgstr "رقم حساب"
-
-#~ msgid "Credit Limit"
-#~ msgstr "حد الائتمان"
-
-#~ msgid "Cc"
-#~ msgstr "نسخة اخرى"
-
-#, fuzzy
-#~ msgid "Through date"
-#~ msgstr "من"
-
-#, fuzzy
-#~ msgid "Search Inventory Entry"
-#~ msgstr "مراجعة مخزون"
-
-#, fuzzy
-#~ msgid "Business:"
-#~ msgstr "اضافة نوع عمل"
-
-#~ msgid "Cost Center"
-#~ msgstr "مركز تكلفة"
-
-#, fuzzy
-#~ msgid "Bin"
-#~ msgstr "عنوان ارسال الفواتير"
-
-#, fuzzy
-#~ msgid "Save New Location"
-#~ msgstr "عروض اسعار للعملاء"
-
-#, fuzzy
-#~ msgid "Attached To"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Required By"
-#~ msgstr "مطلوب من قبل"
-
-#, fuzzy
-#~ msgid "Part Group"
-#~ msgstr "مجموعة سعرية"
-
-#, fuzzy
-#~ msgid "Recording time for"
-#~ msgstr "تقرير لاجل"
-
-#, fuzzy
-#~ msgid "Business Class"
-#~ msgstr "الرقم الضريبى"
-
-#, fuzzy
-#~ msgid "starting_balance"
-#~ msgstr "رصيد كشف حساب"
-
-#~ msgid "Report for"
-#~ msgstr "تقرير لاجل"
-
-#, fuzzy
-#~ msgid "Default amount"
-#~ msgstr "دولة"
-
-#, fuzzy
-#~ msgid "Invoice Total"
-#~ msgstr "تاريخ الفاتورة"
-
-#, fuzzy
-#~ msgid "Available"
-#~ msgstr "خاضع للضريبة"
-
-#, fuzzy
-#~ msgid "Ordering"
-#~ msgstr "امر"
-
-#, fuzzy
-#~ msgid "Adjustment"
-#~ msgstr "مخزون"
-
-#, fuzzy
-#~ msgid "Includes Part"
-#~ msgstr "ارفق في التقرير ------"
-
-#, fuzzy
-#~ msgid "Asset Class"
-#~ msgstr "أصول"
-
-#~ msgid "Amount"
-#~ msgstr "الكمية"
-
-#, fuzzy
-#~ msgid "Invoice date"
-#~ msgstr "تاريخ الفاتورة"
-
-#, fuzzy
-#~ msgid "Posting Date:"
-#~ msgstr "سجل كجديد"
-
-#, fuzzy
-#~ msgid "Clear date"
-#~ msgstr "مغلق"
-
-#, fuzzy
-#~ msgid "Report Approved"
-#~ msgstr "تقرير لاجل"
-
-#~ msgid "Projects"
-#~ msgstr "مشروعات"
-
-#~ msgid "Difference"
-#~ msgstr "اختلافات"
-
-#~ msgid "Update"
-#~ msgstr "تعديل"
-
-#~ msgid "Due Date"
-#~ msgstr "تاريخ الاستحقاق"
-
-#, fuzzy
-#~ msgid "Extra Used"
-#~ msgstr "تعديل مستخدم "
-
-#~ msgid "Database Host"
-#~ msgstr "مضيف قواعد البيانات"
-
-#, fuzzy
-#~ msgid "Customer Name"
-#~ msgstr "رقم العميل"
-
-#, fuzzy
-#~ msgid "This Account"
-#~ msgstr "تعديل الحساب"
-
-#, fuzzy
-#~ msgid "Attached By"
-#~ msgstr "مرفقات"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "الخصوم/الأصول"
-
-#, fuzzy
-#~ msgid "License Number"
-#~ msgstr "اسم  الشركة"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "وصف"
-
-#~ msgid "Password"
-#~ msgstr "كلمة السر"
-
-#, fuzzy
-#~ msgid "Company: [_1]"
-#~ msgstr "شركة"
-
-#, fuzzy
-#~ msgid "Account Description"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "First Name"
-#~ msgstr "رقم ضريبى"
-
-#, fuzzy
-#~ msgid "Attached at"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Upgrade Info"
-#~ msgstr "تخزين"
-
-#~ msgid "Edit User"
-#~ msgstr "تعديل مستخدم "
-
-#~ msgid "Account Number"
-#~ msgstr "رقم حساب"
-
-#~ msgid "Edit Vendor"
-#~ msgstr "تعديل مورد"
-
-#~ msgid "User"
-#~ msgstr "مستخدم"
-
-#, fuzzy
-#~ msgid "Deduction Class"
-#~ msgstr "أصول"
-
-#~ msgid "AP Outstanding"
-#~ msgstr "ارصدة موردين متبقية"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Entry"
-#~ msgstr "مخزون"
-
-#, fuzzy
-#~ msgid "Form"
-#~ msgstr "تنسيق البيانات"
-
-#~ msgid "Printer"
-#~ msgstr "طابعة"
-
-#, fuzzy
-#~ msgid "Price Updated"
-#~ msgstr "معدل"
-
-#, fuzzy
-#~ msgid "Tracking Items"
-#~ msgstr "قوائم تعبئة"
-
-#, fuzzy
-#~ msgid "To:"
-#~ msgstr "إلى"
-
-#~ msgid "Bcc"
-#~ msgstr "نسخة غير مرئية"
-
-#~ msgid "Date Paid"
-#~ msgstr "تاريخ الدفع"
-
-#~ msgid "Amount Due"
-#~ msgstr "الرصيد "
-
-#~ msgid "Credit"
-#~ msgstr "دائن"
-
-#, fuzzy
-#~ msgid "Country:"
-#~ msgstr "دولة"
-
-#~ msgid "Short"
-#~ msgstr "قصير"
-
-#, fuzzy
-#~ msgid "Users"
-#~ msgstr "مستخدم"
-
-#, fuzzy
-#~ msgid "Contact Information"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Unsupported Number"
-#~ msgstr "رقم المورد"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "نهاية العام المالى"
-
-#, fuzzy
-#~ msgid "AP Invoices"
-#~ msgstr "فاتورة امر الشراء"
-
-#, fuzzy
-#~ msgid "Attach"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Day"
-#~ msgstr "مايو"
-
-#, fuzzy
-#~ msgid "Salvage Value:"
-#~ msgstr "امر شراء"
-
-#, fuzzy
-#~ msgid "Valid From"
-#~ msgstr "تنسيق البيانات"
-
-#, fuzzy
-#~ msgid "Create Batch"
-#~ msgstr "الغاء مجموعة البيانات"
-
-#~ msgid "Open"
-#~ msgstr "فتح"
-
-#, fuzzy
-#~ msgid "Our Credits"
-#~ msgstr "دائن"
-
-#, fuzzy
-#~ msgid "Overpayment"
-#~ msgstr "الدفع النقدى"
-
-#, fuzzy
-#~ msgid "Average Cost"
-#~ msgstr "تكلفة"
-
-#, fuzzy
-#~ msgid "Cleared Transactions"
-#~ msgstr "حركات"
-
-#, fuzzy
-#~ msgid "Asset Account"
-#~ msgstr "قائمة الحسابات"
-
-#, fuzzy
-#~ msgid "Note Class"
-#~ msgstr "ملاحظات"
-
-#, fuzzy
-#~ msgid "Selection"
-#~ msgstr "اختر الكل"
-
-#, fuzzy
-#~ msgid "Depreciation Starts"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "On Hold"
-#~ msgstr "بالمخزن"
-
-#~ msgid "Company"
-#~ msgstr "شركة"
-
-#, fuzzy
-#~ msgid "Exhchange Rate"
-#~ msgstr "سعر الصرف"
-
-#~ msgid "Salesperson"
-#~ msgstr "مندوب مبيعات"
-
-#, fuzzy
-#~ msgid "Vendor Partnumber"
-#~ msgstr "رقم المورد"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "ضع الحساب فى قائمة الخيارات ---"
-
-#, fuzzy
-#~ msgid "Add Note"
-#~ msgstr "دائن"
-
-#~ msgid "Include in Report"
-#~ msgstr "ارفق في التقرير ------"
-
-#, fuzzy
-#~ msgid "Balances as"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Beginning Statement Balance:"
-#~ msgstr "رصيد كشف حساب"
+#: sql/Pg-database.sql:2857
+msgid "Trial Balance"
+msgstr "ميزان المراجعة"
 
-#, fuzzy
-#~ msgid "COGS Lots Report"
-#~ msgstr "تقارير"
-
-#, fuzzy
-#~ msgid "Entered at: [_1]"
-#~ msgstr "مطلوب من قبل"
-
-#, fuzzy
-#~ msgid "Number Format"
-#~ msgstr "الرقم"
-
-#~ msgid "Date"
-#~ msgstr "التاريخ"
-
-#, fuzzy
-#~ msgid "Run Report"
-#~ msgstr "تقارير"
-
-#~ msgid "Line Total"
-#~ msgstr "اجمالى السطر"
-
-#, fuzzy
-#~ msgid "Batch Information"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "File Type"
-#~ msgstr "الرقم الضريبى"
-
-#~ msgid "Address"
-#~ msgstr "العنوان"
-
-#, fuzzy
-#~ msgid "Available Databases"
-#~ msgstr "انشاء مجموعة بيانات"
-
-#, fuzzy
-#~ msgid "Sales Tax ID"
-#~ msgstr "اسم  الشركة"
-
-#~ msgid "Manager"
-#~ msgstr "مدير"
-
-#~ msgid "Record in"
-#~ msgstr "في السجل"
-
-#, fuzzy
-#~ msgid "General Ledger Reports"
-#~ msgstr "الاستاذ العام"
-
-#~ msgid "Image"
-#~ msgstr "صورة"
-
-#~ msgid "Vendor Number"
-#~ msgstr "رقم المورد"
-
-#~ msgid "days"
-#~ msgstr "ايام"
-
-#, fuzzy
-#~ msgid "Edit Reporting Unit"
-#~ msgstr "تقارير"
-
-#, fuzzy
-#~ msgid "List Units"
-#~ msgstr "وزن الوحدة"
-
-#~ msgid "Project"
-#~ msgstr "مشروع"
-
-#, fuzzy
-#~ msgid "No language"
-#~ msgstr "اللغة"
-
-#~ msgid "Name"
-#~ msgstr "الاسم"
-
-#, fuzzy
-#~ msgid "Pay From"
-#~ msgstr "تنسيق البيانات"
-
-#, fuzzy
-#~ msgid "Account numbers"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Options"
-#~ msgstr "حركات حساب الموردين"
-
-#, fuzzy
-#~ msgid "Files attached to Credit Account"
-#~ msgstr "تعديل الحساب"
-
-#, fuzzy
-#~ msgid "Checking Job"
-#~ msgstr "شيك"
-
-#~ msgid "Screen"
-#~ msgstr "الشاشة"
-
-#~ msgid "Invoice Date"
-#~ msgstr "تاريخ الفاتورة"
-
-#, fuzzy
-#~ msgid "Gain Account"
-#~ msgstr "ربط الحسابات"
-
-#, fuzzy
-#~ msgid "Transaction Type"
-#~ msgstr "سجلت الحركة"
-
-#, fuzzy
-#~ msgid "Customer/Vendor Accounts"
-#~ msgstr "قائمة الحسابات"
-
-#, fuzzy
-#~ msgid "Default AR"
-#~ msgstr "معطيات النظام"
-
-#, fuzzy
-#~ msgid "Partnumber"
-#~ msgstr "رقم المشروع"
-
-#, fuzzy
-#~ msgid "Ending Statement Balance:"
-#~ msgstr "رصيد كشف حساب"
-
-#, fuzzy
-#~ msgid "Summary account for"
-#~ msgstr "هل هذا الحساب ملخص لحساب لكى يتم تسجيله ----"
-
-#, fuzzy
-#~ msgid "balance"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Orders"
-#~ msgstr "امر"
-
-#~ msgid "Company Name"
-#~ msgstr "اسم  الشركة"
-
-#~ msgid "To"
-#~ msgstr "إلى"
-
-#, fuzzy
-#~ msgid "AR Invoices"
-#~ msgstr "فاتورة"
-
-#, fuzzy
-#~ msgid "Part Number"
-#~ msgstr "رقم المشروع"
-
-#, fuzzy
-#~ msgid "Nontaxable"
-#~ msgstr "غير خاضع  للضريبة"
-
-#, fuzzy
-#~ msgid "Employee Number"
-#~ msgstr "اسم الموظف"
-
-#~ msgid "Closed"
-#~ msgstr "مغلق"
-
-#, fuzzy
-#~ msgid "Posted Date"
-#~ msgstr "سجل كجديد"
-
-#~ msgid "Total"
-#~ msgstr "مجموع"
-
-#~ msgid "Notes"
-#~ msgstr "ملاحظات"
-
-#, fuzzy
-#~ msgid "Purchase History"
-#~ msgstr "بيانات تاريخية للعميل"
-
-#, fuzzy
-#~ msgid "Loss Account"
-#~ msgstr "قائمة الحسابات"
-
-#, fuzzy
-#~ msgid "Attached At"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Select invoices"
-#~ msgstr "فواتير المبيعات"
-
-#~ msgid "Compare to"
-#~ msgstr "مقارنة "
-
-#, fuzzy
-#~ msgid "Reconciliation Report"
-#~ msgstr "تقرير  التسويات"
-
-#, fuzzy
-#~ msgid "Date of Birth"
-#~ msgstr "التاريخ"
-
-#~ msgid "Current"
-#~ msgstr "الحالي"
-
-#~ msgid "Country"
-#~ msgstr "دولة"
-
-#, fuzzy
-#~ msgid "Date Format"
-#~ msgstr "تنسيق البيانات"
-
-#, fuzzy
-#~ msgid "Backup DB"
-#~ msgstr "نسخة احتياطية "
-
-#, fuzzy
-#~ msgid "Price Group"
-#~ msgstr "مجموعة سعرية"
-
-#, fuzzy
-#~ msgid "Decimal Places"
-#~ msgstr "علامات عشرية"
-
-#, fuzzy
-#~ msgid "Filtering Payments"
-#~ msgstr "المدفوعات"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "فاتورة"
-
-#, fuzzy
-#~ msgid "Account Name"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Choose a company"
-#~ msgstr "شركة"
-
-#, fuzzy
-#~ msgid "Search Unapproved Transactions"
-#~ msgstr "حركات  المشروع"
-
-#, fuzzy
-#~ msgid "Only for Employees"
-#~ msgstr "العاملين"
-
-#~ msgid "Group"
-#~ msgstr "مجموعة"
-
-#~ msgid "Subtotal"
-#~ msgstr "اجمالى"
-
-#, fuzzy
-#~ msgid "Save New"
-#~ msgstr "خزن كجديد"
-
-#~ msgid "Unit"
-#~ msgstr "وحدة"
-
-#~ msgid "No."
-#~ msgstr "رقم"
-
-#, fuzzy
-#~ msgid "Locations"
-#~ msgstr "عروض اسعار للعملاء"
-
-#~ msgid "Summary"
-#~ msgstr "ملخص"
-
-#~ msgid "Print"
-#~ msgstr "طباعة"
-
-#~ msgid "E-mail"
-#~ msgstr "بريد الكتروني"
-
-#, fuzzy
-#~ msgid "Subtotal:"
-#~ msgstr "اجمالى"
-
-#, fuzzy
-#~ msgid "Group by"
-#~ msgstr "مجموعة"
+#: sql/Pg-database.sql:2873
+msgid "Type of Business"
+msgstr "نوع العمل"
 
+#: sql/Pg-database.sql:2799
 #, fuzzy
-#~ msgid "Accounts From"
-#~ msgstr "حسابات"
+msgid "Use AR Overpayment"
+msgstr "الدفع النقدى"
 
+#: sql/Pg-database.sql:2798
 #, fuzzy
-#~ msgid "Payment Reversal Information"
-#~ msgstr "المدفوعات"
+msgid "Use Overpayment"
+msgstr "الدفع النقدى"
 
-#, fuzzy
-#~ msgid "Tax Number/SSN"
-#~ msgstr "رقم ضريبى"
-
-#, fuzzy
-#~ msgid "Search AP Invoices"
-#~ msgstr "فاتورة امر الشراء"
-
-#~ msgid "Weight"
-#~ msgstr "وزن"
-
-#~ msgid "Tax"
-#~ msgstr "ضريبة"
-
-#~ msgid "Cleared"
-#~ msgstr "مغلق"
-
-#~ msgid "Order Number"
-#~ msgstr "رقم الامر"
-
-#~ msgid "Customer Number"
-#~ msgstr "رقم العميل"
-
-#, fuzzy
-#~ msgid "Control Code"
-#~ msgstr "التحكم في المراجعة"
-
-#~ msgid "Exchange Rate"
-#~ msgstr "سعر الصرف"
-
-#, fuzzy
-#~ msgid "Rate (%)"
-#~ msgstr "النسبة"
-
-#, fuzzy
-#~ msgid "Search for Users"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Less Outstanding Checks:"
-#~ msgstr "ارصدة عملاء "
-
-#~ msgid "Edit"
-#~ msgstr "تعديل"
-
-#~ msgid "Copies"
-#~ msgstr "نسخ"
-
-#, fuzzy
-#~ msgid "Attach File"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Only Users"
-#~ msgstr "اضافة مستخدم"
-
-#, fuzzy
-#~ msgid "Save Groups"
-#~ msgstr "بحث"
-
-#~ msgid "Save"
-#~ msgstr "تخزين"
-
-#~ msgid "State/Province"
-#~ msgstr "محافظة"
-
-#~ msgid "Heading"
-#~ msgstr "عنوان"
-
-#, fuzzy
-#~ msgid "Templates"
-#~ msgstr "العينات"
-
-#, fuzzy
-#~ msgid "AP account"
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Inventory Adjustment Setup"
-#~ msgstr "مخزون"
-
-#~ msgid "Discount"
-#~ msgstr "خصم"
-
-#, fuzzy
-#~ msgid "Attached by"
-#~ msgstr "مرفقات"
-
-#, fuzzy
-#~ msgid "Confirm"
-#~ msgstr "تاكيد"
-
-#, fuzzy
-#~ msgid "Date From"
-#~ msgstr "تنسيق البيانات"
-
-#~ msgid "Balance"
-#~ msgstr "رصيد"
-
-#~ msgid "Ship via"
-#~ msgstr "شحن من خلال"
-
-#, fuzzy
-#~ msgid "Depreciation Method"
-#~ msgstr "وصف"
-
-#, fuzzy
-#~ msgid "Non-Chargeable"
-#~ msgstr "غير خاضع  للضريبة"
-
-#~ msgid "Department"
-#~ msgstr "قسم"
-
-#, fuzzy
-#~ msgid "Entered For"
-#~ msgstr "مطلوب من قبل"
-
-#, fuzzy
-#~ msgid "Tax Account"
-#~ msgstr "الحسابات الضريبية"
-
-#, fuzzy
-#~ msgid "Min Taxable"
-#~ msgstr "خاضع للضريبة"
-
-#, fuzzy
-#~ msgid "Old Password"
-#~ msgstr "كلمة السر"
-
-#, fuzzy
-#~ msgid "Report Submitted"
-#~ msgstr "تقارير"
-
-#~ msgid "Standard"
-#~ msgstr "اساس"
-
-#, fuzzy
-#~ msgid "End Date"
-#~ msgstr "تاريخ الامر"
-
-#, fuzzy
-#~ msgid "Aging Report"
-#~ msgstr "تقارير"
-
-#, fuzzy
-#~ msgid "AR account"
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Reject"
-#~ msgstr "مشروع"
-
-#, fuzzy
-#~ msgid "Bank Accounts"
-#~ msgstr "ربط الحسابات"
-
-#~ msgid "Profit Center"
-#~ msgstr "مركز ربح"
-
-#, fuzzy
-#~ msgid "Their Credits"
-#~ msgstr "دائن"
-
-#~ msgid "Payables"
-#~ msgstr "المدفوعات"
-
-#, fuzzy
-#~ msgid "Valid To"
-#~ msgstr "سارى حتى"
-
-#, fuzzy
-#~ msgid "Single date"
-#~ msgstr "مغلق"
-
-#, fuzzy
-#~ msgid "Balance y Mayor"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Variance:"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Content"
-#~ msgstr "شخص الاتصال"
-
-#, fuzzy
-#~ msgid "Country Code"
-#~ msgstr "دولة"
-
-#, fuzzy
-#~ msgid "Income Type"
-#~ msgstr "الربح"
-
-#, fuzzy
-#~ msgid "Payment Type:"
-#~ msgstr "الدفع النقدى"
-
-#, fuzzy
-#~ msgid "New Reconciliation Report"
-#~ msgstr "تقرير  التسويات"
-
-#, fuzzy
-#~ msgid "Attach to Credit Account"
-#~ msgstr "تعديل الحساب"
-
-#, fuzzy
-#~ msgid "Vendor Search"
-#~ msgstr "رقم المورد"
-
-#, fuzzy
-#~ msgid "debits"
-#~ msgstr "مدين"
-
-#~ msgid "Add Customer"
-#~ msgstr "اضافة عميل"
-
-#, fuzzy
-#~ msgid "List Users"
-#~ msgstr "تعديل مستخدم "
-
-#, fuzzy
-#~ msgid "Method Default"
-#~ msgstr "معطيات النظام"
-
-#, fuzzy
-#~ msgid "Subject"
-#~ msgstr "موضوع"
+#: sql/Pg-database.sql:542
+msgid "Vendor"
+msgstr "المورد"
 
-#, fuzzy
-#~ msgid "Search Parts Groups"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Change Password"
-#~ msgstr "كلمة السر"
-
-#, fuzzy
-#~ msgid "Available Users"
-#~ msgstr "مدير"
-
-#, fuzzy
-#~ msgid "Payment Type :"
-#~ msgstr "الدفع النقدى"
+#: sql/Pg-database.sql:2785
+msgid "Vendor History"
+msgstr "بيانات تاريخية عن مورد"
 
-#~ msgid "Exch"
-#~ msgstr "سعر  الصرف"
+#: sql/Pg-database.sql:2894
+msgid "Vendor Invoice"
+msgstr "فاتورة المورد "
 
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2852 sql/Pg-database.sql:2975
 #, fuzzy
-#~ msgid "Create New Tax Form"
-#~ msgstr "قائمة الاقسام"
+msgid "Vouchers"
+msgstr "الغاء الحساب"
 
+#: sql/Pg-database.sql:2875
 #, fuzzy
-#~ msgid "Database Operation Complete"
-#~ msgstr "ادارة قواعد البيانات"
-
-#~ msgid "Invoice Number"
-#~ msgstr "رقم الفاتورة"
+msgid "Warehouses"
+msgstr "مخازن"
 
-#, fuzzy
-#~ msgid "Reconcile as FX"
-#~ msgstr "تسويات"
+#: sql/Pg-database.sql:3756
+msgid "Whole Month Straight Line"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Amount/Rate"
-#~ msgstr "الكمية"
+#: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
+msgid "Work Order"
+msgstr "امر شغل"
 
-#, fuzzy
-#~ msgid "Date Worked"
-#~ msgstr "التاريخ"
+#: sql/Pg-database.sql:799
+msgid "Yahoo"
+msgstr ""
 
+#: sql/Pg-database.sql:2856
 #, fuzzy
-#~ msgid "Item"
-#~ msgstr "الكل"
+msgid "Year End"
+msgstr "نهاية العام المالى"
 
+#: sql/Pg-database.sql:3830
 #, fuzzy
-#~ msgid "Payment Processing"
-#~ msgstr "تاريخ الدفع غير موجود"
-
-#~ msgid "Statement Balance"
-#~ msgstr "رصيد كشف حساب"
+msgid "depreciation"
+msgstr "وصف"
 
-#~ msgid "Accounts"
-#~ msgstr "حسابات"
+#: sql/Pg-database.sql:3831
+msgid "disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3832
 #, fuzzy
-#~ msgid "List Overpayments"
-#~ msgstr "المدفوعات"
+msgid "import"
+msgstr "تقارير"
 
-#, fuzzy
-#~ msgid "Save Location"
-#~ msgstr "عروض اسعار للعملاء"
-
-#, fuzzy
-#~ msgid "Post Yearend"
-#~ msgstr "نهاية العام المالى"
+#: sql/Pg-database.sql:3757
+msgid "in months"
+msgstr ""
 
-#~ msgid "Internal Notes"
-#~ msgstr "ملاحظات داخلية"
+#: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
+msgid "in years"
+msgstr ""
 
-#~ msgid "Retained Earnings"
-#~ msgstr "ارباح محجوزة"
+#: sql/Pg-database.sql:3833
+msgid "partial disposal"
+msgstr ""
 
+#: sql/Pg-database.sql:3722
 #, fuzzy
-#~ msgid "action not defined!"
-#~ msgstr "سجلت الحركة"
-
-#~ msgid "RFQ Number"
-#~ msgstr "رقم  عرض السعر"
+msgid "production"
+msgstr "عروض اسعار للعملاء"
 
-#, fuzzy
-#~ msgid "Job/Project Number"
-#~ msgstr "رقم المشروع"
+#: sql/Pg-database.sql:3721
+msgid "time"
+msgstr ""
 
 #, fuzzy
-#~ msgid "Password Duration"
-#~ msgstr "تغيير كلمة السر"
+#~ msgid " Date missing!"
+#~ msgstr "التاريخ غير موجود"
 
 #, fuzzy
-#~ msgid "Company Address"
-#~ msgstr "اسم  الشركة"
+#~ msgid " missing!"
+#~ msgstr "التاريخ غير موجود"
 
 #, fuzzy
-#~ msgid "Company Fax"
-#~ msgstr "اسم  الشركة"
-
-#~ msgid "Save as new"
-#~ msgstr "خزن كجديد"
-
-#~ msgid "Account Number missing!"
-#~ msgstr "رقم الحساب غير موجود"
-
-#~ msgid "Account Type missing!"
-#~ msgstr "نوع الحساب غير موجود"
+#~ msgid "# Invoices"
+#~ msgstr "فواتير"
 
-#~ msgid "Account saved!"
-#~ msgstr "خزن الحساب"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "لا يمكن تخزين الحساب"
-
-#~ msgid "Account does not exist!"
-#~ msgstr "الحساب غير موجود"
-
 #, fuzzy
-#~ msgid "Discount %"
-#~ msgstr "خصم"
+#~ msgid "%1 Cash Transfer Transaction"
+#~ msgstr "اضافة حركة تحويل النقدية"
 
-#~ msgid "Standard Industrial Codes"
-#~ msgstr "الاكواد الصناعية القياسية"
-
 #, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "اضافة كود صناعى قياسى"
-
-#~ msgid "Languages"
-#~ msgstr "اللغات"
+#~ msgid "%1 General Ledger Transaction"
+#~ msgstr "اضافة حركة الأستاذ العام"
 
 #, fuzzy
 #~ msgid "%1 Language"
 #~ msgstr "اللغة"
 
 #, fuzzy
-#~ msgid "Delete Language"
-#~ msgstr "اللغة"
+#~ msgid "%1 Number"
+#~ msgstr "الرقم"
 
 #, fuzzy
-#~ msgid "Save Template"
-#~ msgstr "استخدم العينات"
-
-#~ msgid "Template saved!"
-#~ msgstr "خزنت العينة"
-
-#, fuzzy
-#~ msgid "Taxes saved!"
-#~ msgstr "خزنت العينة"
-
-#, fuzzy
-#~ msgid "Cannot save taxes!"
-#~ msgstr "لا يمكن تخزين الطلب"
+#~ msgid "%1 SIC"
+#~ msgstr "اضافة كود صناعى قياسى"
 
 #, fuzzy
 #~ msgid "%1 Warehouse"
 #~ msgstr "مخازن"
 
-#~ msgid "About"
-#~ msgstr "عن"
-
 #, fuzzy
-#~ msgid "Posting Sales Invoice %1"
-#~ msgstr "تعديل فاتورة مبيعات"
-
-#, fuzzy
-#~ msgid "Posting Vendor Invoice %1"
-#~ msgstr "تعديل فاتورة مورد"
-
-#~ msgid "done"
-#~ msgstr "نفذ"
-
-#, fuzzy
-#~ msgid "Posting GL Transaction %1"
-#~ msgstr "حركات الاستاذ العام"
-
-#~ msgid "E-mail address missing!"
-#~ msgstr "عنوان البريد الالكتروني غير موجود"
-
-#, fuzzy
-#~ msgid "Department: %1"
-#~ msgstr "قسم"
-
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "رقم المشروع"
-
-#~ msgid "N/A"
-#~ msgstr "غير موجود"
-
-#, fuzzy
-#~ msgid "Add Debit Invoice"
-#~ msgstr "اضافة فاتورة بيع"
-
-#~ msgid "Add Vendor Invoice"
-#~ msgstr "اضافة فاتورة المورد"
-
-#~ msgid "Edit Vendor Invoice"
-#~ msgstr "تعديل فاتورة مورد"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "يناير"
-
-#, fuzzy
-#~ msgid "Tax Code"
-#~ msgstr "كود"
-
-#~ msgid "Post as new"
-#~ msgstr "سجل كجديد"
-
-#, fuzzy
-#~ msgid "Post as Saved"
-#~ msgstr "سجل كجديد"
-
-#, fuzzy
-#~ msgid "Post as Shown"
-#~ msgstr "سجل كجديد"
-
-#~ msgid "ea"
-#~ msgstr "قطعة"
-
-#~ msgid "Invoice Date missing!"
-#~ msgstr "تاريخ الفاتورة غير موجود"
-
-#~ msgid "Vendor missing!"
-#~ msgstr "مورد غير موجود"
-
-#~ msgid "Exchange rate missing!"
-#~ msgstr "سعر الصرف غير موجود"
-
-#~ msgid "Cannot post payment for a closed period!"
-#~ msgstr "لا يمكن تسجيل المدفوعات لفترة مغلقة"
-
-#~ msgid "Exchange rate for payment missing!"
-#~ msgstr "سعر الصرف للمدفوعات غير موجود"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "لا يمكن تسجيل الفاتورة"
-
-#, fuzzy
-#~ msgid "Cannot create Part; Income account does not exist!"
-#~ msgstr "الحساب غير موجود"
-
-#, fuzzy
-#~ msgid "Cannot create Part; COGS account does not exist!"
-#~ msgstr "الحساب غير موجود"
-
-#, fuzzy
-#~ msgid "Cannot create Labor; COGS account does not exist!"
-#~ msgstr "الحساب غير موجود"
-
-#~ msgid "Stock"
-#~ msgstr "مخزون"
-
-#~ msgid "Labor/Overhead"
-#~ msgstr "تكلفة عمالة"
-
-#~ msgid "Updated"
-#~ msgstr "معدل"
-
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "تاريخى"
-
-#, fuzzy
-#~ msgid "PO"
-#~ msgstr "نقطة بيع"
-
-#, fuzzy
-#~ msgid "Bar Code"
-#~ msgstr "كود"
-
-#~ msgid "Curr"
-#~ msgstr "عملة"
-
-#, fuzzy
-#~ msgid "Vendor Reference Number"
-#~ msgstr "رقم المورد"
-
-#~ msgid "Individual Items"
-#~ msgstr "وحدات فردية"
+#~ msgid "%1: Customer not on file!"
+#~ msgstr " عميل غير موجود في الملف"
 
 #, fuzzy
 #~ msgid "%1: Vendor not on file!"
 #~ msgstr "مورد غير موجود في الملف"
 
 #, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr " عميل غير موجود في الملف"
+#~ msgid "AP Invoices"
+#~ msgstr "فاتورة امر الشراء"
 
-#~ msgid "Select from one of the names below"
-#~ msgstr "اختر اسم من الاسماء"
-
-#~ msgid "Item deleted!"
-#~ msgstr "الغيت الوحدة"
-
-#~ msgid "Cannot delete item!"
-#~ msgstr "لا يمكن الغاء الوحدة"
-
-#~ msgid "Add"
-#~ msgstr "اضافة"
-
-#~ msgid "Quotation Number"
-#~ msgstr "رقم عرض السعر"
+#~ msgid "AP Outstanding"
+#~ msgstr "ارصدة موردين متبقية"
 
 #, fuzzy
-#~ msgid "Print %1"
-#~ msgstr "طباعة"
-
-#~ msgid "Nothing selected!"
-#~ msgstr "لم يتم الاختيار"
+#~ msgid "AP account"
+#~ msgstr "حساب"
 
 #, fuzzy
-#~ msgid "Customer: %1"
-#~ msgstr "العميل"
+#~ msgid "AR Invoices"
+#~ msgstr "فاتورة"
+
+#~ msgid "AR Outstanding"
+#~ msgstr "ارصدة عملاء "
+
+#~ msgid "AR Transactions"
+#~ msgstr "حركات حساب العملاء"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
-#~ msgstr "المورد"
+#~ msgid "AR account"
+#~ msgstr "حساب"
+
+#~ msgid "About"
+#~ msgstr "عن"
+
+#~ msgid "Account"
+#~ msgstr "حساب"
+
+#, fuzzy
+#~ msgid "Account %1 not found"
+#~ msgstr "الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Account %1 not found."
+#~ msgstr "حساب"
+
+#, fuzzy
+#~ msgid "Account Description"
+#~ msgstr "وصف"
+
+#, fuzzy
+#~ msgid "Account Label"
+#~ msgstr "رقم حساب"
+
+#, fuzzy
+#~ msgid "Account Name"
+#~ msgstr "رقم حساب"
+
+#, fuzzy
+#~ msgid "Account No."
+#~ msgstr "حساب"
+
+#~ msgid "Account Number"
+#~ msgstr "رقم حساب"
+
+#, fuzzy
+#~ msgid "Account Number End"
+#~ msgstr "رقم حساب"
+
+#, fuzzy
+#~ msgid "Account Number Start"
+#~ msgstr "رقم حساب"
+
+#~ msgid "Account Number missing!"
+#~ msgstr "رقم الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Account Type"
+#~ msgstr "نوع الحساب"
+
+#~ msgid "Account Type missing!"
+#~ msgstr "نوع الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Account category"
+#~ msgstr "رقم حساب"
+
+#~ msgid "Account does not exist!"
+#~ msgstr "الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Account numbers"
+#~ msgstr "رقم حساب"
+
+#~ msgid "Account saved!"
+#~ msgstr "خزن الحساب"
+
+#, fuzzy
+#~ msgid "Account:"
+#~ msgstr "حساب"
 
 #, fuzzy
 #~ msgid "Account: %1"
 #~ msgstr "حساب"
 
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "رقم الفاتورة"
+#~ msgid "Accounting"
+#~ msgstr "الحسابات"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "قائمة الحسابات"
+
+#~ msgid "Accounts"
+#~ msgstr "حسابات"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "رقم الامر"
+#~ msgid "Accounts From"
+#~ msgstr "حسابات"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "رقم عرض السعر"
+#~ msgid "Accounts To"
+#~ msgstr "حسابات"
 
 #, fuzzy
-#~ msgid "From %1"
-#~ msgstr "من"
+#~ msgid "Accrual"
+#~ msgstr "المجمعة"
 
 #, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "الرقم"
+#~ msgid "Accrual Basis:"
+#~ msgstr "المجمعة"
 
-#~ msgid "Project not on file!"
-#~ msgstr "المشروع ليس فى الملفات"
-
-#~ msgid "Select from one of the projects below"
-#~ msgstr "اختر  مشروع من المشروعات التالية"
+#~ msgid "Active"
+#~ msgstr "فعال"
 
 #, fuzzy
-#~ msgid "Date: %1"
-#~ msgstr "التاريخ"
+#~ msgid "Active On"
+#~ msgstr "فعال"
+
+#~ msgid "Add"
+#~ msgstr "اضافة"
+
+#~ msgid "Add Account"
+#~ msgstr "اضافة حساب"
 
 #, fuzzy
-#~ msgid "Message: "
-#~ msgstr "رسالة"
+#~ msgid "Add Credit Invoice"
+#~ msgstr "اضافة فاتورة المورد"
 
-#~ msgid "Extended"
-#~ msgstr "اجمالى"
-
-#~ msgid "Item not on file!"
-#~ msgstr "الوحدة غير موجودة في الملف"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "ما نوع هذة الوحدة؟"
-
-#~ msgid "Service"
-#~ msgstr "خدمة"
+#~ msgid "Add Customer"
+#~ msgstr "اضافة عميل"
 
 #, fuzzy
-#~ msgid "Number missing in Row %1"
-#~ msgstr "رقم غير موجود في الصف"
+#~ msgid "Add Debit Invoice"
+#~ msgstr "اضافة فاتورة بيع"
+
+#~ msgid "Add Department"
+#~ msgstr "اضافة قسم"
+
+#, fuzzy
+#~ msgid "Add Note"
+#~ msgstr "دائن"
+
+#~ msgid "Add POS Invoice"
+#~ msgstr "اضافة فاتورة نقطة بيع"
+
+#~ msgid "Add Project"
+#~ msgstr "اضافة مشروع"
 
 #~ msgid "Add Purchase Order"
 #~ msgstr "اضافة طلب شراء"
 
-#~ msgid "Add Sales Order"
-#~ msgstr "اضافة طلب بيع"
+#~ msgid "Add Quotation"
+#~ msgstr "اضافة عرض سعر "
 
 #~ msgid "Add Request for Quotation"
 #~ msgstr "اضافة عرض سعر مورد"
 
-#~ msgid "Add Quotation"
-#~ msgstr "اضافة عرض سعر "
+#~ msgid "Add Sales Invoice"
+#~ msgstr "اضافة فاتورة بيع"
 
-#~ msgid "In-line"
-#~ msgstr "في الصف"
+#~ msgid "Add Sales Order"
+#~ msgstr "اضافة طلب بيع"
 
 #, fuzzy
-#~ msgid " Date missing!"
-#~ msgstr "التاريخ غير موجود"
+#~ msgid "Add Unit"
+#~ msgstr "وحدة"
 
-#~ msgid "Ship to"
-#~ msgstr "شحن الى"
+#~ msgid "Add Vendor"
+#~ msgstr "اضافة مورد"
+
+#~ msgid "Add Vendor Invoice"
+#~ msgstr "اضافة فاتورة المورد"
 
 #, fuzzy
 #~ msgid "Add line1"
@@ -2891,576 +1209,20 @@ msgstr "سجلت الحركة"
 #~ msgid "Add line3 "
 #~ msgstr "اضافة نوع عمل"
 
-#, fuzzy
-#~ msgid "Add Credit Invoice"
-#~ msgstr "اضافة فاتورة المورد"
-
-#~ msgid "Add Sales Invoice"
-#~ msgstr "اضافة فاتورة بيع"
-
-#, fuzzy
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "لا يمكن الغاء الفاتورة"
-
-#~ msgid "Customer missing!"
-#~ msgstr "عميل غير موجود"
-
-#~ msgid "Edit Project"
-#~ msgstr "تعديل مشروع"
-
-#~ msgid "Add Project"
-#~ msgstr "اضافة مشروع"
-
-#~ msgid "Groups"
-#~ msgstr "مجموعات"
-
-#~ msgid "Pricegroups"
-#~ msgstr "مجموعات سعرية"
-
-#~ msgid "Group missing!"
-#~ msgstr "مجموعة غير موجودة"
-
-#~ msgid "Group saved!"
-#~ msgstr "تخزين المجموعة"
-
-#~ msgid "Group deleted!"
-#~ msgstr "الغيت المجموعة"
-
-#~ msgid "Description Translations"
-#~ msgstr "ترجمة مواصفات"
-
-#~ msgid "Group Translations"
-#~ msgstr "ترجمة مجوعات"
-
-#~ msgid "Project Description Translations"
-#~ msgstr "ترجمة وصف المشروع"
-
-#~ msgid "Customer not on file!"
-#~ msgstr " عميل غير موجود في الملف"
-
-#~ msgid "Vendor not on file!"
-#~ msgstr "مورد غير موجود في الملف"
-
-#, fuzzy
-#~ msgid "Template Saved!"
-#~ msgstr "خزنت العينة"
-
-#~ msgid "Due Date missing!"
-#~ msgstr "تاريخ الاستحقاق غير موجود"
-
-#~ msgid "Cannot post transaction for a closed period!"
-#~ msgstr "لا يمكن تسجيل الحركة لفترة مغلقة"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "سجلت الحركة"
-
-#~ msgid "Cannot post transaction!"
-#~ msgstr "لا يمكن تسجيل الحركة"
-
-#~ msgid "AR Transactions"
-#~ msgstr "حركات حساب العملاء"
-
-#, fuzzy
-#~ msgid "Project Numbers"
-#~ msgstr "رقم المشروع"
-
-#, fuzzy
-#~ msgid "All Invoices"
-#~ msgstr "فواتير"
-
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "اضافة حركة تحويل النقدية"
-
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "اضافة حركة الأستاذ العام"
-
-#, fuzzy
-#~ msgid "Account %1 not found."
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Cannot Repost Transaction"
-#~ msgstr "لا يمكن تسجيل الحركة"
-
-#~ msgid "Transaction Date missing!"
-#~ msgstr "تاريخ الحركة غير موجود"
-
-#~ msgid "Edit Purchase Order"
-#~ msgstr "تعديل امر شراء"
-
-#~ msgid "Edit Sales Order"
-#~ msgstr "تعديل امر مبيعات"
-
-#~ msgid "Terms"
-#~ msgstr "شروط "
-
-#~ msgid "Order Date"
-#~ msgstr "تاريخ الامر"
-
-#~ msgid "Quotation Date"
-#~ msgstr "تاريخ عرض السعر"
-
-#~ msgid "Order Date missing!"
-#~ msgstr "تاريخ الامر غير موجود"
-
-#, fuzzy
-#~ msgid " missing!"
-#~ msgstr "التاريخ غير موجود"
-
-#~ msgid "Cannot save order!"
-#~ msgstr "لا يمكن تخزين الطلب"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "هل انت متأكد انك تريد الغاء رقم الطلب"
-
-#~ msgid "Order deleted!"
-#~ msgstr "الغي الامر"
-
-#~ msgid "Cannot delete order!"
-#~ msgstr "لا يمكن الغاء الطلب"
-
-#~ msgid "Order Number missing!"
-#~ msgstr "رقم الامر غير موجود"
-
-#~ msgid "Ship Merchandise"
-#~ msgstr "شحن بضاعة للخارج"
-
-#~ msgid "Receive Merchandise"
-#~ msgstr "استلام بضاعة"
-
-#~ msgid "Done"
-#~ msgstr "نفذ"
-
-#, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "مغلق"
-
-#, fuzzy
-#~ msgid "Close Till"
-#~ msgstr "مغلق"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "اضافة فاتورة نقطة بيع"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "تعديل فاتورة أمر الشراء"
-
-#~ msgid "Change"
-#~ msgstr "تغيير"
-
-#, fuzzy
-#~ msgid "Open Till"
-#~ msgstr "فتح"
-
-#~ msgid "Posted!"
-#~ msgstr "سجل"
-
-#, fuzzy
-#~ msgid "Discover"
-#~ msgstr "خصم"
-
-#, fuzzy
-#~ msgid "No AR or AP Account Selected"
-#~ msgstr "ألغي الحساب"
-
-#, fuzzy
-#~ msgid "Account Label"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Amount Budgetted"
-#~ msgstr "الرصيد "
-
-#, fuzzy
-#~ msgid "Tax Included?"
-#~ msgstr "الضريبة المضافة"
-
-#, fuzzy
-#~ msgid "Start Balance"
-#~ msgstr "رصيد كشف حساب"
-
-#, fuzzy
-#~ msgid "End Balance"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Our Balance"
-#~ msgstr "رصيد"
-
-#, fuzzy
-#~ msgid "Their Balance"
-#~ msgstr "ميزان المراجعة"
-
-#~ msgid "Business Number"
-#~ msgstr "الرقم الضريبى"
-
-#, fuzzy
-#~ msgid "Default Language"
-#~ msgstr "قائمة اللغات"
-
-#, fuzzy
-#~ msgid "Separate Duties"
-#~ msgstr "اقسام"
-
-#, fuzzy
-#~ msgid "Default Accounts"
-#~ msgstr "الغاء الحساب"
-
-#~ msgid "Foreign Exchange Gain"
-#~ msgstr "ارباح التحويل الاجنبي"
-
-#~ msgid "Foreign Exchange Loss"
-#~ msgstr "خسائر التحويل الاجنبي"
-
-#, fuzzy
-#~ msgid "Images in Templates"
-#~ msgstr "عينة جديدة"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
-#~ msgstr "سعر الصرف غير موجود"
-
-#, fuzzy
-#~ msgid "The amount of the invoice number"
-#~ msgstr "هل انت متأكد انك تريد الغاء رقم الفاتروة "
-
-#, fuzzy
-#~ msgid "delete"
-#~ msgstr "الغاء"
-
-#, fuzzy
-#~ msgid "Invalid file"
-#~ msgstr "سارى حتى"
-
-#, fuzzy
-#~ msgid "Tag"
-#~ msgstr "ضريبة"
-
-#, fuzzy
-#~ msgid "Purchase Date"
-#~ msgstr "امر شراء"
-
-#, fuzzy
-#~ msgid "Purchase Value"
-#~ msgstr "امر شراء"
-
-#, fuzzy
-#~ msgid "Asset Tag"
-#~ msgstr "أصول"
-
-#, fuzzy
-#~ msgid "Asset Depreciation Report"
-#~ msgstr "تقرير  التسويات"
-
-#, fuzzy
-#~ msgid "Dep. Method"
-#~ msgstr "طريقة"
-
-#, fuzzy
-#~ msgid "Percent Disposed"
-#~ msgstr "تم ترحيل مدفوعات"
-
-#, fuzzy
-#~ msgid "Percent Remaining"
-#~ msgstr "متبقى"
-
-#, fuzzy
-#~ msgid "Database does not exist."
-#~ msgstr "لا يوجد"
-
-#, fuzzy
-#~ msgid "Save and Retry"
-#~ msgstr "خزن كجديد"
-
-#, fuzzy
-#~ msgid "Search Sales Orders"
-#~ msgstr "اوامر بيع"
+#~ msgid "Address"
+#~ msgstr "العنوان"
 
 #, fuzzy
-#~ msgid "Combine Sales Orders"
-#~ msgstr "اوامر بيع"
+#~ msgid "Addresses"
+#~ msgstr "العنوان"
 
 #, fuzzy
-#~ msgid "Search Purchase Orders"
-#~ msgstr "اوامر شراء"
+#~ msgid "Adjustment"
+#~ msgstr "مخزون"
 
 #, fuzzy
-#~ msgid "Combine Purchase Orders"
-#~ msgstr "اوامر شراء"
-
-#, fuzzy
-#~ msgid "Search Quotations"
-#~ msgstr "عروض اسعار"
-
-#, fuzzy
-#~ msgid "Search Requests for Quotation"
-#~ msgstr "عروض اسعار مطلوبة"
-
-#~ msgid "Add Account"
-#~ msgstr "اضافة حساب"
-
-#, fuzzy
-#~ msgid "Batch ID Missing"
-#~ msgstr "التاريخ غير موجود"
-
-#, fuzzy
-#~ msgid "Unique Customernumber"
-#~ msgstr "رقم العميل"
-
-#, fuzzy
-#~ msgid "Unique Vendornumber"
-#~ msgstr "رقم المورد"
-
-#, fuzzy
-#~ msgid "Unique AR Invoice numbers"
-#~ msgstr "رقم الفاتورة"
-
-#, fuzzy
-#~ msgid "check"
-#~ msgstr "شيك"
-
-#, fuzzy
-#~ msgid "deposit"
-#~ msgstr "إيداع"
-
-#, fuzzy
-#~ msgid "Invoice not found"
-#~ msgstr "تاريخ الفاتورة"
-
-#~ msgid "January"
-#~ msgstr "يناير"
-
-#~ msgid "February"
-#~ msgstr "فبراير"
-
-#~ msgid "March"
-#~ msgstr "مارس"
-
-#~ msgid "April"
-#~ msgstr "ابريل"
-
-#~ msgid "June"
-#~ msgstr "يونية"
-
-#~ msgid "July"
-#~ msgstr "يولية"
-
-#~ msgid "August"
-#~ msgstr "اغسطس"
-
-#~ msgid "September"
-#~ msgstr "سبتمبر"
-
-#~ msgid "October"
-#~ msgstr "اكتوبر"
-
-#~ msgid "November"
-#~ msgstr "نوفمبر"
-
-#~ msgid "December"
-#~ msgstr "ديسمبر"
-
-#, fuzzy
-#~ msgid "Incorrect Password"
-#~ msgstr "تغيير كلمة السر"
-
-#, fuzzy
-#~ msgid "Password required"
-#~ msgstr "تغيير كلمة السر"
-
-#, fuzzy
-#~ msgid "Trial Balance List"
-#~ msgstr "ميزان المراجعة"
-
-#, fuzzy
-#~ msgid "Draft Search"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Amount Less Than"
-#~ msgstr "الكمية غير موجودة"
-
-#, fuzzy
-#~ msgid "Batch Search"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Total Paid"
-#~ msgstr "مجموع"
-
-#, fuzzy
-#~ msgid "From Date"
-#~ msgstr "تاريخ الامر"
-
-#, fuzzy
-#~ msgid "Receipt Results"
-#~ msgstr "الواردات"
-
-#, fuzzy
-#~ msgid "Vendor Account"
-#~ msgstr "اضافة حساب"
-
-#, fuzzy
-#~ msgid "Due"
-#~ msgstr "ديسمبر"
-
-#, fuzzy
-#~ msgid "Search AP"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "Search AR"
-#~ msgstr "بحث"
-
-#, fuzzy
-#~ msgid "# Invoices"
-#~ msgstr "فواتير"
-
-#, fuzzy
-#~ msgid "Ship_Via"
-#~ msgstr "شحن من خلال"
-
-#, fuzzy
-#~ msgid "Account Number Start"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Account Number End"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Required Date"
-#~ msgstr "مطلوب من قبل"
-
-#, fuzzy
-#~ msgid "Project/Department Number"
-#~ msgstr "رقم المشروع"
-
-#, fuzzy
-#~ msgid "Sun"
-#~ msgstr "يونية"
-
-#, fuzzy
-#~ msgid "From Amount"
-#~ msgstr "الكمية"
-
-#, fuzzy
-#~ msgid "To Amount"
-#~ msgstr "الكمية"
-
-#, fuzzy
-#~ msgid "Expected"
-#~ msgstr "المصروفات"
-
-#, fuzzy
-#~ msgid "Including partnumber"
-#~ msgstr "ارفق في التقرير ------"
-
-#, fuzzy
-#~ msgid "Budget Variance Report"
-#~ msgstr "ارفق في التقرير ------"
-
-#, fuzzy
-#~ msgid "Budget Number"
-#~ msgstr "رقم الامر"
-
-#, fuzzy
-#~ msgid "Reporting Basis"
-#~ msgstr "تقارير"
-
-#, fuzzy
-#~ msgid "ECA Income Statement"
-#~ msgstr "قائمة الدخل"
-
-#, fuzzy
-#~ msgid "Account No."
-#~ msgstr "حساب"
-
-#, fuzzy
-#~ msgid "Credit Account Number"
-#~ msgstr "رقم حساب"
-
-#, fuzzy
-#~ msgid "Disc"
-#~ msgstr "خصم"
-
-#, fuzzy
-#~ msgid "Account %1 not found"
-#~ msgstr "الحساب غير موجود"
-
-#~ msgid "Jan"
-#~ msgstr "يناير"
-
-#~ msgid "Feb"
-#~ msgstr "فبراير"
-
-#~ msgid "Mar"
-#~ msgstr "مارس"
-
-#~ msgid "Apr"
-#~ msgstr "ابريل"
-
-#~ msgid "Jun"
-#~ msgstr "يونية"
-
-#~ msgid "Jul"
-#~ msgstr "يولية"
-
-#~ msgid "Aug"
-#~ msgstr "اغسطس"
-
-#~ msgid "Sep"
-#~ msgstr "سبتمبر"
-
-#~ msgid "Oct"
-#~ msgstr "اكتوبر"
-
-#~ msgid "Nov"
-#~ msgstr "نوفمبر"
-
-#~ msgid "Dec"
-#~ msgstr "ديسمبر"
-
-#, fuzzy
-#~ msgid "Requirements"
-#~ msgstr "مطلوب من قبل"
-
-#~ msgid "Checks"
-#~ msgstr "الشيكات"
-
-#~ msgid "POS Invoice"
-#~ msgstr "فاتورة امر الشراء"
-
-#, fuzzy
-#~ msgid "ar"
-#~ msgstr "مارس"
-
-#, fuzzy
-#~ msgid "receipt"
-#~ msgstr "الوارد"
-
-#, fuzzy
-#~ msgid "sales_invoice"
-#~ msgstr "فاتورة المبيعات"
-
-#, fuzzy
-#~ msgid "vendor_invoice"
-#~ msgstr "فاتورة المورد "
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "اللغة"
-
-#~ msgid "Accounting"
-#~ msgstr "الحسابات"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "قائمة الحسابات"
-
-#~ msgid "Add Department"
-#~ msgstr "اضافة قسم"
+#~ msgid "Adjustment Date"
+#~ msgstr "كشف حساب"
 
 #~ msgid "Administration"
 #~ msgstr "الادارة"
@@ -3468,17 +1230,284 @@ msgstr "سجلت الحركة"
 #~ msgid "Administrator"
 #~ msgstr "المدير"
 
+#, fuzzy
+#~ msgid "Aging Report"
+#~ msgstr "تقارير"
+
+#~ msgid "All"
+#~ msgstr "الكل"
+
 #~ msgid "All Accounts"
 #~ msgstr "كل الحسابات"
 
 #~ msgid "All Datasets up to date!"
 #~ msgstr "كل البيانات حديثة"
 
+#, fuzzy
+#~ msgid "All Invoices"
+#~ msgstr "فواتير"
+
+#~ msgid "Amount"
+#~ msgstr "الكمية"
+
+#, fuzzy
+#~ msgid "Amount Budgetted"
+#~ msgstr "الرصيد "
+
+#~ msgid "Amount Due"
+#~ msgstr "الرصيد "
+
+#, fuzzy
+#~ msgid "Amount From"
+#~ msgstr "الكمية"
+
+#, fuzzy
+#~ msgid "Amount Less Than"
+#~ msgstr "الكمية غير موجودة"
+
+#, fuzzy
+#~ msgid "Amount to be used"
+#~ msgstr "الرصيد "
+
+#, fuzzy
+#~ msgid "Amount/Rate"
+#~ msgstr "الكمية"
+
+#~ msgid "Apr"
+#~ msgstr "ابريل"
+
+#~ msgid "April"
+#~ msgstr "ابريل"
+
+#~ msgid "Are you sure you want to delete Order Number"
+#~ msgstr "هل انت متأكد انك تريد الغاء رقم الطلب"
+
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "هل انت متأكد انك تريد الغاء الحركة"
 
+#, fuzzy
+#~ msgid "Asset Account"
+#~ msgstr "قائمة الحسابات"
+
+#, fuzzy
+#~ msgid "Asset Class"
+#~ msgstr "أصول"
+
+#, fuzzy
+#~ msgid "Asset Class:"
+#~ msgstr "أصول"
+
+#, fuzzy
+#~ msgid "Asset Depreciation Report"
+#~ msgstr "تقرير  التسويات"
+
+#, fuzzy
+#~ msgid "Asset Tag"
+#~ msgstr "أصول"
+
+#, fuzzy
+#~ msgid "Assets to Equity"
+#~ msgstr "قائمة الحسابات"
+
+#, fuzzy
+#~ msgid "Attach"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attach File"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attach To"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attach to"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attach to Credit Account"
+#~ msgstr "تعديل الحساب"
+
+#, fuzzy
+#~ msgid "Attach to Entity"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached At"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached By"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached To"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached To Type"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached at"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Attached by"
+#~ msgstr "مرفقات"
+
+#, fuzzy
+#~ msgid "Audit Control"
+#~ msgstr "التحكم في المراجعة"
+
+#~ msgid "Aug"
+#~ msgstr "اغسطس"
+
+#~ msgid "August"
+#~ msgstr "اغسطس"
+
+#, fuzzy
+#~ msgid "Available"
+#~ msgstr "خاضع للضريبة"
+
+#, fuzzy
+#~ msgid "Available Databases"
+#~ msgstr "انشاء مجموعة بيانات"
+
+#, fuzzy
+#~ msgid "Available Users"
+#~ msgstr "مدير"
+
+#, fuzzy
+#~ msgid "Average Cost"
+#~ msgstr "تكلفة"
+
+#~ msgid "Backup"
+#~ msgstr "نسخة احتياطية "
+
+#, fuzzy
+#~ msgid "Backup DB"
+#~ msgstr "نسخة احتياطية "
+
+#, fuzzy
+#~ msgid "Backup Roles"
+#~ msgstr "نسخة احتياطية "
+
 #~ msgid "Backup sent to"
 #~ msgstr "نسخة احتياطية ارسلت الى"
+
+#~ msgid "Balance"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "Balance y Mayor"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "Balances as"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "Bank Account"
+#~ msgstr "ربط الحسابات"
+
+#, fuzzy
+#~ msgid "Bank Accounts"
+#~ msgstr "ربط الحسابات"
+
+#, fuzzy
+#~ msgid "Bar Code"
+#~ msgstr "كود"
+
+#, fuzzy
+#~ msgid "Batch ID Missing"
+#~ msgstr "التاريخ غير موجود"
+
+#, fuzzy
+#~ msgid "Batch Information"
+#~ msgstr "وصف"
+
+#, fuzzy
+#~ msgid "Batch Number"
+#~ msgstr "رقم ضريبى"
+
+#, fuzzy
+#~ msgid "Batch Search"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Batch Selection"
+#~ msgstr "وصف"
+
+#~ msgid "Bcc"
+#~ msgstr "نسخة غير مرئية"
+
+#, fuzzy
+#~ msgid "Beginning Statement Balance:"
+#~ msgstr "رصيد كشف حساب"
+
+#, fuzzy
+#~ msgid "Bin"
+#~ msgstr "عنوان ارسال الفواتير"
+
+#, fuzzy
+#~ msgid "Birthdate"
+#~ msgstr "تاريخ يدء العمل"
+
+#, fuzzy
+#~ msgid "Budget Number"
+#~ msgstr "رقم الامر"
+
+#, fuzzy
+#~ msgid "Budget Variance Report"
+#~ msgstr "ارفق في التقرير ------"
+
+#, fuzzy
+#~ msgid "Business Class"
+#~ msgstr "الرقم الضريبى"
+
+#~ msgid "Business Number"
+#~ msgstr "الرقم الضريبى"
+
+#, fuzzy
+#~ msgid "Business Type"
+#~ msgstr "الرقم الضريبى"
+
+#, fuzzy
+#~ msgid "Business Units"
+#~ msgstr "الرقم الضريبى"
+
+#, fuzzy
+#~ msgid "Business:"
+#~ msgstr "اضافة نوع عمل"
+
+#~ msgid "COGS"
+#~ msgstr "تكلفة البضاعة المباعة"
+
+#, fuzzy
+#~ msgid "COGS Lots Report"
+#~ msgstr "تقارير"
+
+#, fuzzy
+#~ msgid "Can't void a voided invoice!"
+#~ msgstr "لا يمكن الغاء الفاتورة"
+
+#, fuzzy
+#~ msgid "Cannot Repost Transaction"
+#~ msgstr "لا يمكن تسجيل الحركة"
+
+#, fuzzy
+#~ msgid "Cannot create Labor; COGS account does not exist!"
+#~ msgstr "الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Cannot create Part; COGS account does not exist!"
+#~ msgstr "الحساب غير موجود"
+
+#, fuzzy
+#~ msgid "Cannot create Part; Income account does not exist!"
+#~ msgstr "الحساب غير موجود"
 
 #~ msgid "Cannot delete account!"
 #~ msgstr "لا يمكن الغاء الحساب "
@@ -3489,6 +1518,12 @@ msgstr "سجلت الحركة"
 #~ msgid "Cannot delete default account!"
 #~ msgstr "لا يمكن الغاء الحساب الاساسي"
 
+#~ msgid "Cannot delete item!"
+#~ msgstr "لا يمكن الغاء الوحدة"
+
+#~ msgid "Cannot delete order!"
+#~ msgstr "لا يمكن الغاء الطلب"
+
 #~ msgid "Cannot delete transaction!"
 #~ msgstr "لا يمكن الغاء الحركة"
 
@@ -3498,26 +1533,278 @@ msgstr "سجلت الحركة"
 #~ msgid "Cannot post Payment!"
 #~ msgstr "لا يمكن تسجيل المدفوعات"
 
+#~ msgid "Cannot post invoice!"
+#~ msgstr "لا يمكن تسجيل الفاتورة"
+
+#~ msgid "Cannot post payment for a closed period!"
+#~ msgstr "لا يمكن تسجيل المدفوعات لفترة مغلقة"
+
+#~ msgid "Cannot post transaction for a closed period!"
+#~ msgstr "لا يمكن تسجيل الحركة لفترة مغلقة"
+
+#~ msgid "Cannot post transaction!"
+#~ msgstr "لا يمكن تسجيل الحركة"
+
+#~ msgid "Cannot save account!"
+#~ msgstr "لا يمكن تخزين الحساب"
+
+#~ msgid "Cannot save order!"
+#~ msgstr "لا يمكن تخزين الطلب"
+
+#, fuzzy
+#~ msgid "Cannot save taxes!"
+#~ msgstr "لا يمكن تخزين الطلب"
+
+#, fuzzy
+#~ msgid "Cash Account"
+#~ msgstr "الحسابات الضريبية"
+
+#~ msgid "Cc"
+#~ msgstr "نسخة اخرى"
+
+#~ msgid "Change"
+#~ msgstr "تغيير"
+
+#, fuzzy
+#~ msgid "Change Password"
+#~ msgstr "كلمة السر"
+
+#, fuzzy
+#~ msgid "Checking Job"
+#~ msgstr "شيك"
+
+#~ msgid "Checks"
+#~ msgstr "الشيكات"
+
+#, fuzzy
+#~ msgid "Choose a company"
+#~ msgstr "شركة"
+
+#~ msgid "City"
+#~ msgstr "مدينة"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "اضافة كود صناعى قياسى"
+
+#, fuzzy
+#~ msgid "Clear date"
+#~ msgstr "مغلق"
+
+#~ msgid "Cleared"
+#~ msgstr "مغلق"
+
+#, fuzzy
+#~ msgid "Cleared Transactions"
+#~ msgstr "حركات"
+
+#~ msgid "Close Books up to"
+#~ msgstr "اقفال الدفاتر حتى"
+
+#, fuzzy
+#~ msgid "Close Till"
+#~ msgstr "مغلق"
+
+#~ msgid "Closed"
+#~ msgstr "مغلق"
+
+#, fuzzy
+#~ msgid "Closing Till For %1"
+#~ msgstr "مغلق"
+
+#~ msgid "Code"
+#~ msgstr "كود"
+
+#, fuzzy
+#~ msgid "Combine Purchase Orders"
+#~ msgstr "اوامر شراء"
+
+#, fuzzy
+#~ msgid "Combine Sales Orders"
+#~ msgstr "اوامر بيع"
+
+#~ msgid "Company"
+#~ msgstr "شركة"
+
+#, fuzzy
+#~ msgid "Company Address"
+#~ msgstr "اسم  الشركة"
+
+#, fuzzy
+#~ msgid "Company Fax"
+#~ msgstr "اسم  الشركة"
+
+#~ msgid "Company Name"
+#~ msgstr "اسم  الشركة"
+
+#, fuzzy
+#~ msgid "Company: [_1]"
+#~ msgstr "شركة"
+
+#~ msgid "Compare to"
+#~ msgstr "مقارنة "
+
 #~ msgid "Components"
 #~ msgstr "مكونات"
+
+#, fuzzy
+#~ msgid "Confirm"
+#~ msgstr "تاكيد"
 
 #~ msgid "Connect to"
 #~ msgstr "صل"
 
+#, fuzzy
+#~ msgid "Contact Info"
+#~ msgstr "شخص الاتصال"
+
+#, fuzzy
+#~ msgid "Contact Information"
+#~ msgstr "شخص الاتصال"
+
+#, fuzzy
+#~ msgid "Contact Search"
+#~ msgstr "شخص الاتصال"
+
+#, fuzzy
+#~ msgid "Content"
+#~ msgstr "شخص الاتصال"
+
+#~ msgid "Continue"
+#~ msgstr "تابع"
+
+#, fuzzy
+#~ msgid "Contra"
+#~ msgstr "شخص الاتصال"
+
+#, fuzzy
+#~ msgid "Control Code"
+#~ msgstr "التحكم في المراجعة"
+
+#, fuzzy
+#~ msgid "Control Number"
+#~ msgstr "رقم حساب"
+
+#~ msgid "Copies"
+#~ msgstr "نسخ"
+
+#, fuzzy
+#~ msgid "Copy to New Name"
+#~ msgstr "اسم  الشركة"
+
+#~ msgid "Cost Center"
+#~ msgstr "مركز تكلفة"
+
+#, fuzzy
+#~ msgid "Counted"
+#~ msgstr "دولة"
+
+#~ msgid "Country"
+#~ msgstr "دولة"
+
+#, fuzzy
+#~ msgid "Country Code"
+#~ msgstr "دولة"
+
+#, fuzzy
+#~ msgid "Country:"
+#~ msgstr "دولة"
+
+#, fuzzy
+#~ msgid "Create Batch"
+#~ msgstr "الغاء مجموعة البيانات"
+
 #~ msgid "Create Chart of Accounts"
 #~ msgstr "انشاء قائمة حسابات"
+
+#, fuzzy
+#~ msgid "Create New Batch"
+#~ msgstr "الغاء مجموعة البيانات"
+
+#, fuzzy
+#~ msgid "Create New Tax Form"
+#~ msgstr "قائمة الاقسام"
+
+#, fuzzy
+#~ msgid "Create User"
+#~ msgstr "انشاء مجموعة بيانات"
+
+#~ msgid "Credit"
+#~ msgstr "دائن"
+
+#, fuzzy
+#~ msgid "Credit Account Number"
+#~ msgstr "رقم حساب"
+
+#~ msgid "Credit Limit"
+#~ msgstr "حد الائتمان"
+
+#, fuzzy
+#~ msgid "Credits"
+#~ msgstr "دائن"
+
+#~ msgid "Curr"
+#~ msgstr "عملة"
+
+#~ msgid "Currency"
+#~ msgstr "عملة"
+
+#~ msgid "Current"
+#~ msgstr "الحالي"
+
+#, fuzzy
+#~ msgid "Customer Name"
+#~ msgstr "رقم العميل"
+
+#~ msgid "Customer Number"
+#~ msgstr "رقم العميل"
+
+#, fuzzy
+#~ msgid "Customer Search"
+#~ msgstr "رقم العميل"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "الغي العميل"
 
+#~ msgid "Customer missing!"
+#~ msgstr "عميل غير موجود"
+
+#~ msgid "Customer not on file!"
+#~ msgstr " عميل غير موجود في الملف"
+
 #~ msgid "Customer saved!"
 #~ msgstr "خزن العميل"
+
+#, fuzzy
+#~ msgid "Customer/Vendor Accounts"
+#~ msgstr "قائمة الحسابات"
+
+#, fuzzy
+#~ msgid "Customer: %1"
+#~ msgstr "العميل"
 
 #~ msgid "Customers"
 #~ msgstr "العملاء"
 
+#~ msgid "Database"
+#~ msgstr "قواعد البيانات"
+
+#~ msgid "Database Host"
+#~ msgstr "مضيف قواعد البيانات"
+
+#, fuzzy
+#~ msgid "Database Operation Complete"
+#~ msgstr "ادارة قواعد البيانات"
+
 #~ msgid "Database User missing!"
 #~ msgstr " مستخدم قواعد البيانات غير موجود"
+
+#, fuzzy
+#~ msgid "Database does not exist."
+#~ msgstr "لا يوجد"
+
+#~ msgid "Dataset"
+#~ msgstr "مجموعة بيانات"
 
 #~ msgid "Dataset missing!"
 #~ msgstr "مجموعة بيانات غير موجودة"
@@ -3525,11 +1812,223 @@ msgstr "سجلت الحركة"
 #~ msgid "Dataset updated!"
 #~ msgstr "مجموعة بيانات معدلة"
 
+#~ msgid "Date"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Date Format"
+#~ msgstr "تنسيق البيانات"
+
+#, fuzzy
+#~ msgid "Date From"
+#~ msgstr "تنسيق البيانات"
+
+#, fuzzy
+#~ msgid "Date From:"
+#~ msgstr "تنسيق البيانات"
+
+#~ msgid "Date Paid"
+#~ msgstr "تاريخ الدفع"
+
+#, fuzzy
+#~ msgid "Date To:"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Date Worked"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Date from"
+#~ msgstr "تنسيق البيانات"
+
+#, fuzzy
+#~ msgid "Date of Birth"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Date to"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Date: %1"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "Day"
+#~ msgstr "مايو"
+
+#~ msgid "Debit"
+#~ msgstr "مدين"
+
+#, fuzzy
+#~ msgid "Debits"
+#~ msgstr "مدين"
+
+#~ msgid "Dec"
+#~ msgstr "ديسمبر"
+
+#~ msgid "December"
+#~ msgstr "ديسمبر"
+
+#, fuzzy
+#~ msgid "Decimal Places"
+#~ msgstr "علامات عشرية"
+
 #~ msgid "Decrease"
 #~ msgstr "تناقص"
 
+#, fuzzy
+#~ msgid "Deduction Class"
+#~ msgstr "أصول"
+
+#, fuzzy
+#~ msgid "Default AP"
+#~ msgstr "معطيات النظام"
+
+#, fuzzy
+#~ msgid "Default AR"
+#~ msgstr "معطيات النظام"
+
+#, fuzzy
+#~ msgid "Default Accounts"
+#~ msgstr "الغاء الحساب"
+
+#, fuzzy
+#~ msgid "Default Country"
+#~ msgstr "دولة"
+
+#, fuzzy
+#~ msgid "Default Language"
+#~ msgstr "قائمة اللغات"
+
+#, fuzzy
+#~ msgid "Default amount"
+#~ msgstr "دولة"
+
+#~ msgid "Delete"
+#~ msgstr "الغاء"
+
+#, fuzzy
+#~ msgid "Delete Language"
+#~ msgstr "اللغة"
+
+#~ msgid "Delivery Date"
+#~ msgstr "تاريخ الوصول"
+
+#, fuzzy
+#~ msgid "Dep. Method"
+#~ msgstr "طريقة"
+
+#~ msgid "Department"
+#~ msgstr "قسم"
+
+#, fuzzy
+#~ msgid "Department: %1"
+#~ msgstr "قسم"
+
+#, fuzzy
+#~ msgid "Departments"
+#~ msgstr "قسم"
+
+#, fuzzy
+#~ msgid "Depreciate Through"
+#~ msgstr "وصف"
+
+#, fuzzy
+#~ msgid "Depreciation Account"
+#~ msgstr "الغاء الحساب"
+
+#, fuzzy
+#~ msgid "Depreciation Method"
+#~ msgstr "وصف"
+
+#, fuzzy
+#~ msgid "Depreciation Starts"
+#~ msgstr "وصف"
+
+#~ msgid "Description Translations"
+#~ msgstr "ترجمة مواصفات"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "وصف"
+
+#~ msgid "Detail"
+#~ msgstr "تفصيلى"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "تفصيلى"
+
+#~ msgid "Difference"
+#~ msgstr "اختلافات"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "خصم"
+
+#~ msgid "Discount"
+#~ msgstr "خصم"
+
+#, fuzzy
+#~ msgid "Discount %"
+#~ msgstr "خصم"
+
+#, fuzzy
+#~ msgid "Discover"
+#~ msgstr "خصم"
+
+#, fuzzy
+#~ msgid "Document Type"
+#~ msgstr "الربح"
+
+#~ msgid "Done"
+#~ msgstr "نفذ"
+
+#, fuzzy
+#~ msgid "Draft Search"
+#~ msgstr "بحث"
+
+#~ msgid "Drawing"
+#~ msgstr "رسم"
+
+#, fuzzy
+#~ msgid "Due"
+#~ msgstr "ديسمبر"
+
+#~ msgid "Due Date"
+#~ msgstr "تاريخ الاستحقاق"
+
+#~ msgid "Due Date missing!"
+#~ msgstr "تاريخ الاستحقاق غير موجود"
+
+#~ msgid "E-mail"
+#~ msgstr "بريد الكتروني"
+
+#, fuzzy
+#~ msgid "E-mail [_1]"
+#~ msgstr "بريد الكتروني"
+
+#~ msgid "E-mail address missing!"
+#~ msgstr "عنوان البريد الالكتروني غير موجود"
+
+#, fuzzy
+#~ msgid "ECA Income Statement"
+#~ msgstr "قائمة الدخل"
+
+#~ msgid "Edit"
+#~ msgstr "تعديل"
+
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "تعديل حركة تحويل النقدية"
+
+#~ msgid "Edit Customer"
+#~ msgstr "تعديل بيانات العميل"
+
+#, fuzzy
+#~ msgid "Edit Employee"
+#~ msgstr "اضافة موظف"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "تعديل حركة الأستاذ العام"
@@ -3537,14 +2036,71 @@ msgstr "سجلت الحركة"
 #~ msgid "Edit Group"
 #~ msgstr "تعديل مجموعة"
 
+#~ msgid "Edit POS Invoice"
+#~ msgstr "تعديل فاتورة أمر الشراء"
+
 #~ msgid "Edit Part"
 #~ msgstr "تعديل جزء"
+
+#~ msgid "Edit Project"
+#~ msgstr "تعديل مشروع"
+
+#~ msgid "Edit Purchase Order"
+#~ msgstr "تعديل امر شراء"
+
+#, fuzzy
+#~ msgid "Edit Reporting Unit"
+#~ msgstr "تقارير"
+
+#~ msgid "Edit Sales Order"
+#~ msgstr "تعديل امر مبيعات"
 
 #~ msgid "Edit Service"
 #~ msgstr "تعديل خدمة"
 
+#~ msgid "Edit User"
+#~ msgstr "تعديل مستخدم "
+
+#~ msgid "Edit Vendor"
+#~ msgstr "تعديل مورد"
+
+#~ msgid "Edit Vendor Invoice"
+#~ msgstr "تعديل فاتورة مورد"
+
+#, fuzzy
+#~ msgid "Editing User"
+#~ msgstr "تعديل مستخدم "
+
+#, fuzzy
+#~ msgid "Employee Number"
+#~ msgstr "اسم الموظف"
+
+#, fuzzy
+#~ msgid "Employee Search"
+#~ msgstr "اسم الموظف"
+
+#, fuzzy
+#~ msgid "End Balance"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "End Date"
+#~ msgstr "تاريخ الامر"
+
 #~ msgid "Enddate"
 #~ msgstr "تاريخ نهاية العمل"
+
+#, fuzzy
+#~ msgid "Ending GL Balance:"
+#~ msgstr "بداية الميزانية"
+
+#, fuzzy
+#~ msgid "Ending Statement Balance:"
+#~ msgstr "رصيد كشف حساب"
+
+#, fuzzy
+#~ msgid "Enter User"
+#~ msgstr "تعديل مستخدم "
 
 #~ msgid ""
 #~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
@@ -3553,11 +2109,163 @@ msgstr "سجلت الحركة"
 #~ "ادخل  3 حروف للعملة مفصولة \":\" )CAD:USD:EUR) للعملة المحلية و العملات "
 #~ "الاجنبية"
 
+#, fuzzy
+#~ msgid "Entered For"
+#~ msgstr "مطلوب من قبل"
+
+#, fuzzy
+#~ msgid "Entered at: [_1]"
+#~ msgstr "مطلوب من قبل"
+
+#~ msgid "Equity"
+#~ msgstr "رأس المال"
+
+#~ msgid "Exch"
+#~ msgstr "سعر  الصرف"
+
+#~ msgid "Exchange Rate"
+#~ msgstr "سعر الصرف"
+
+#~ msgid "Exchange rate for payment missing!"
+#~ msgstr "سعر الصرف للمدفوعات غير موجود"
+
+#, fuzzy
+#~ msgid "Exchange rate hasn't been defined"
+#~ msgstr "سعر الصرف غير موجود"
+
+#~ msgid "Exchange rate missing!"
+#~ msgstr "سعر الصرف غير موجود"
+
+#, fuzzy
+#~ msgid "Exhchange Rate"
+#~ msgstr "سعر الصرف"
+
 #~ msgid "Existing Datasets"
 #~ msgstr "قاعدةالبيانات الحالية"
 
+#, fuzzy
+#~ msgid "Expected"
+#~ msgstr "المصروفات"
+
+#~ msgid "Expense"
+#~ msgstr "المصروفات"
+
+#, fuzzy
+#~ msgid "Expense Account"
+#~ msgstr "قائمة الحسابات"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "الخصوم/الأصول"
+
+#~ msgid "Extended"
+#~ msgstr "اجمالى"
+
+#, fuzzy
+#~ msgid "Extra Used"
+#~ msgstr "تعديل مستخدم "
+
+#~ msgid "Feb"
+#~ msgstr "فبراير"
+
+#~ msgid "February"
+#~ msgstr "فبراير"
+
+#, fuzzy
+#~ msgid "File Type"
+#~ msgstr "الرقم الضريبى"
+
+#, fuzzy
+#~ msgid "Files attached to Credit Account"
+#~ msgstr "تعديل الحساب"
+
+#, fuzzy
+#~ msgid "Filtering Payments"
+#~ msgstr "المدفوعات"
+
+#, fuzzy
+#~ msgid "Filtering Receipts"
+#~ msgstr "الواردات"
+
+#, fuzzy
+#~ msgid "First Name"
+#~ msgstr "رقم ضريبى"
+
+#, fuzzy
+#~ msgid "Fixed Asset"
+#~ msgstr "اضافة تجميع"
+
+#~ msgid "Foreign Exchange Gain"
+#~ msgstr "ارباح التحويل الاجنبي"
+
+#~ msgid "Foreign Exchange Loss"
+#~ msgstr "خسائر التحويل الاجنبي"
+
+#, fuzzy
+#~ msgid "Form"
+#~ msgstr "تنسيق البيانات"
+
+#~ msgid "From"
+#~ msgstr "من"
+
+#, fuzzy
+#~ msgid "From %1"
+#~ msgstr "من"
+
+#, fuzzy
+#~ msgid "From Amount"
+#~ msgstr "الكمية"
+
+#, fuzzy
+#~ msgid "From Date"
+#~ msgstr "تاريخ الامر"
+
+#, fuzzy
+#~ msgid "From File"
+#~ msgstr "من"
+
+#, fuzzy
+#~ msgid "Gain Account"
+#~ msgstr "ربط الحسابات"
+
+#, fuzzy
+#~ msgid "General Ledger Reports"
+#~ msgstr "الاستاذ العام"
+
+#, fuzzy
+#~ msgid "Generate Control Code"
+#~ msgstr "التحكم في المراجعة"
+
+#, fuzzy
+#~ msgid "Grand Total"
+#~ msgstr "اجمالى السطر"
+
+#~ msgid "Group"
+#~ msgstr "مجموعة"
+
 #~ msgid "Group Items"
 #~ msgstr "مجموعة الوحدات"
+
+#~ msgid "Group Translations"
+#~ msgstr "ترجمة مجوعات"
+
+#, fuzzy
+#~ msgid "Group by"
+#~ msgstr "مجموعة"
+
+#~ msgid "Group deleted!"
+#~ msgstr "الغيت المجموعة"
+
+#~ msgid "Group missing!"
+#~ msgstr "مجموعة غير موجودة"
+
+#~ msgid "Group saved!"
+#~ msgstr "تخزين المجموعة"
+
+#~ msgid "Groups"
+#~ msgstr "مجموعات"
+
+#~ msgid "Heading"
+#~ msgstr "عنوان"
 
 #~ msgid "Host"
 #~ msgstr "المضيف"
@@ -3565,38 +2273,322 @@ msgstr "سجلت الحركة"
 #~ msgid "Hostname missing!"
 #~ msgstr "اسم المضيف غير موجود"
 
+#~ msgid "ID"
+#~ msgstr "البطاقة الشخصية"
+
+#, fuzzy
+#~ msgid "Ignore Year-ends"
+#~ msgstr "نهاية العام المالى"
+
+#~ msgid "Image"
+#~ msgstr "صورة"
+
+#, fuzzy
+#~ msgid "Images in Templates"
+#~ msgstr "عينة جديدة"
+
+#~ msgid "In-line"
+#~ msgstr "في الصف"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "اظهار تغيير سعر العملة"
+
+#~ msgid "Include in Report"
+#~ msgstr "ارفق في التقرير ------"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "ضع الحساب فى قائمة الخيارات ---"
+
+#, fuzzy
+#~ msgid "Includes Part"
+#~ msgstr "ارفق في التقرير ------"
+
+#, fuzzy
+#~ msgid "Including partnumber"
+#~ msgstr "ارفق في التقرير ------"
+
+#~ msgid "Income"
+#~ msgstr "الربح"
+
+#, fuzzy
+#~ msgid "Income Class"
+#~ msgstr "الربح"
+
+#, fuzzy
+#~ msgid "Income Type"
+#~ msgstr "الربح"
+
 #~ msgid "Incorrect Dataset version!"
 #~ msgstr "نسخة غير صحيحة من مجموعة البيانات"
+
+#, fuzzy
+#~ msgid "Incorrect Password"
+#~ msgstr "تغيير كلمة السر"
 
 #~ msgid "Increase"
 #~ msgstr "زيادة"
 
+#~ msgid "Individual Items"
+#~ msgstr "وحدات فردية"
+
+#~ msgid "Internal Notes"
+#~ msgstr "ملاحظات داخلية"
+
+#, fuzzy
+#~ msgid "Invalid file"
+#~ msgstr "سارى حتى"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Entry"
+#~ msgstr "مخزون"
+
+#, fuzzy
+#~ msgid "Inventory Adjustment Setup"
+#~ msgstr "مخزون"
+
+#~ msgid "Invoice Date"
+#~ msgstr "تاريخ الفاتورة"
+
+#~ msgid "Invoice Date missing!"
+#~ msgstr "تاريخ الفاتورة غير موجود"
+
+#~ msgid "Invoice Number"
+#~ msgstr "رقم الفاتورة"
+
 #~ msgid "Invoice Number missing!"
 #~ msgstr "رقم الفاتورة غير موجود"
+
+#, fuzzy
+#~ msgid "Invoice Number: %1"
+#~ msgstr "رقم الفاتورة"
+
+#, fuzzy
+#~ msgid "Invoice Status"
+#~ msgstr "تاريخ الفاتورة"
+
+#, fuzzy
+#~ msgid "Invoice Total"
+#~ msgstr "تاريخ الفاتورة"
+
+#, fuzzy
+#~ msgid "Invoice date"
+#~ msgstr "تاريخ الفاتورة"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "الغيت القاتورة"
 
+#, fuzzy
+#~ msgid "Invoice due"
+#~ msgstr "رقم الفاتورة"
+
+#, fuzzy
+#~ msgid "Invoice not found"
+#~ msgstr "تاريخ الفاتورة"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "فاتورة"
+
+#, fuzzy
+#~ msgid "Item"
+#~ msgstr "الكل"
+
+#~ msgid "Item deleted!"
+#~ msgstr "الغيت الوحدة"
+
+#~ msgid "Item not on file!"
+#~ msgstr "الوحدة غير موجودة في الملف"
+
+#~ msgid "Jan"
+#~ msgstr "يناير"
+
+#~ msgid "January"
+#~ msgstr "يناير"
+
+#, fuzzy
+#~ msgid "Job Title"
+#~ msgstr "نوع الحساب"
+
+#, fuzzy
+#~ msgid "Job/Project Number"
+#~ msgstr "رقم المشروع"
+
+#~ msgid "Jul"
+#~ msgstr "يولية"
+
+#~ msgid "July"
+#~ msgstr "يولية"
+
+#~ msgid "Jun"
+#~ msgstr "يونية"
+
+#~ msgid "June"
+#~ msgstr "يونية"
+
+#~ msgid "Labor/Overhead"
+#~ msgstr "تكلفة عمالة"
+
+#~ msgid "Languages"
+#~ msgstr "اللغات"
+
+#, fuzzy
+#~ msgid "Last Cost"
+#~ msgstr "تكلفة"
+
+#, fuzzy
+#~ msgid "Last Name"
+#~ msgstr "معدل"
+
 #~ msgid "Last Numbers & Default Accounts"
 #~ msgstr "اخر رقم و الحساب الرئيسي"
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "معدل"
+
+#, fuzzy
+#~ msgid "Less Outstanding Checks:"
+#~ msgstr "ارصدة عملاء "
+
+#~ msgid "Liability"
+#~ msgstr "التزامات"
+
+#, fuzzy
+#~ msgid "License Number"
+#~ msgstr "اسم  الشركة"
 
 #~ msgid "Licensed to"
 #~ msgstr "ترخيص"
 
+#~ msgid "Line Total"
+#~ msgstr "اجمالى السطر"
+
 #~ msgid "Link"
 #~ msgstr "ربط"
+
+#, fuzzy
+#~ msgid "List Overpayments"
+#~ msgstr "المدفوعات"
+
+#~ msgid "List Price"
+#~ msgstr "قائمة الاسعار"
 
 #~ msgid "List Projects"
 #~ msgstr "قائمة المشروعات"
 
+#~ msgid "List Transactions"
+#~ msgstr "قائمة الحركات"
+
+#, fuzzy
+#~ msgid "List Units"
+#~ msgstr "وزن الوحدة"
+
+#, fuzzy
+#~ msgid "List Users"
+#~ msgstr "تعديل مستخدم "
+
+#, fuzzy
+#~ msgid "Locations"
+#~ msgstr "عروض اسعار للعملاء"
+
+#~ msgid "Login"
+#~ msgstr "دخول"
+
 #~ msgid "Login name missing!"
 #~ msgstr "اسم مستخدم غير موجود "
+
+#, fuzzy
+#~ msgid "Loss Account"
+#~ msgstr "قائمة الحسابات"
+
+#~ msgid "Make"
+#~ msgstr "افعل"
+
+#~ msgid "Manager"
+#~ msgstr "مدير"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "يناير"
+
+#~ msgid "Mar"
+#~ msgstr "مارس"
+
+#~ msgid "March"
+#~ msgstr "مارس"
+
+#~ msgid "Markup"
+#~ msgstr "نسبة الربح"
 
 #~ msgid "May "
 #~ msgstr "مايو"
 
+#~ msgid "Memo"
+#~ msgstr "ملاحظات"
+
+#~ msgid "Message"
+#~ msgstr "رسالة"
+
+#, fuzzy
+#~ msgid "Message: "
+#~ msgstr "رسالة"
+
+#~ msgid "Method"
+#~ msgstr "طريقة"
+
+#, fuzzy
+#~ msgid "Method Default"
+#~ msgstr "معطيات النظام"
+
+#, fuzzy
+#~ msgid "Min Taxable"
+#~ msgstr "خاضع للضريبة"
+
+#~ msgid "Model"
+#~ msgstr "موديل"
+
+#~ msgid "N/A"
+#~ msgstr "غير موجود"
+
+#~ msgid "Name"
+#~ msgstr "الاسم"
+
 #~ msgid "Name missing!"
 #~ msgstr "اسم غير موجود"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "الاسم"
+
+#, fuzzy
+#~ msgid "New Reconciliation Report"
+#~ msgstr "تقرير  التسويات"
+
+#, fuzzy
+#~ msgid "New User"
+#~ msgstr "مستخدم"
+
+#~ msgid "No"
+#~ msgstr "لا"
+
+#, fuzzy
+#~ msgid "No AR or AP Account Selected"
+#~ msgstr "ألغي الحساب"
+
+#, fuzzy
+#~ msgid "No History!"
+#~ msgstr "تاريخى"
+
+#, fuzzy
+#~ msgid "No language"
+#~ msgstr "اللغة"
+
+#~ msgid "No."
+#~ msgstr "رقم"
+
+#, fuzzy
+#~ msgid "Non-Chargeable"
+#~ msgstr "غير خاضع  للضريبة"
 
 #~ msgid "Non-taxable Purchases"
 #~ msgstr "المبيعات المعفاة من الضرائب"
@@ -3604,11 +2596,148 @@ msgstr "سجلت الحركة"
 #~ msgid "Non-taxable Sales"
 #~ msgstr "المبيعات المعفاة من الضرائب"
 
+#, fuzzy
+#~ msgid "Nontaxable"
+#~ msgstr "غير خاضع  للضريبة"
+
+#, fuzzy
+#~ msgid "Note Class"
+#~ msgstr "ملاحظات"
+
+#~ msgid "Notes"
+#~ msgstr "ملاحظات"
+
+#~ msgid "Nothing selected!"
+#~ msgstr "لم يتم الاختيار"
+
 #~ msgid "Nothing to delete!"
 #~ msgstr "لم يتم الالغاء"
 
+#~ msgid "Nov"
+#~ msgstr "نوفمبر"
+
+#~ msgid "November"
+#~ msgstr "نوفمبر"
+
+#~ msgid "Number"
+#~ msgstr "الرقم"
+
+#, fuzzy
+#~ msgid "Number Format"
+#~ msgstr "الرقم"
+
+#, fuzzy
+#~ msgid "Number missing in Row %1"
+#~ msgstr "رقم غير موجود في الصف"
+
+#~ msgid "Oct"
+#~ msgstr "اكتوبر"
+
+#~ msgid "October"
+#~ msgstr "اكتوبر"
+
+#, fuzzy
+#~ msgid "Old Password"
+#~ msgstr "كلمة السر"
+
+#~ msgid "On Hand"
+#~ msgstr "بالمخزن"
+
+#, fuzzy
+#~ msgid "On Hold"
+#~ msgstr "بالمخزن"
+
+#, fuzzy
+#~ msgid "Only Users"
+#~ msgstr "اضافة مستخدم"
+
+#, fuzzy
+#~ msgid "Only for Employees"
+#~ msgstr "العاملين"
+
+#~ msgid "Open"
+#~ msgstr "فتح"
+
+#, fuzzy
+#~ msgid "Open Till"
+#~ msgstr "فتح"
+
+#, fuzzy
+#~ msgid "Options"
+#~ msgstr "حركات حساب الموردين"
+
+#, fuzzy
+#~ msgid "Order By"
+#~ msgstr "امر"
+
+#~ msgid "Order Date"
+#~ msgstr "تاريخ الامر"
+
+#~ msgid "Order Date missing!"
+#~ msgstr "تاريخ الامر غير موجود"
+
+#~ msgid "Order Number"
+#~ msgstr "رقم الامر"
+
+#~ msgid "Order Number missing!"
+#~ msgstr "رقم الامر غير موجود"
+
+#, fuzzy
+#~ msgid "Order Number: %1"
+#~ msgstr "رقم الامر"
+
+#~ msgid "Order deleted!"
+#~ msgstr "الغي الامر"
+
 #~ msgid "Order saved!"
 #~ msgstr "خزن الامر"
+
+#, fuzzy
+#~ msgid "Ordering"
+#~ msgstr "امر"
+
+#, fuzzy
+#~ msgid "Orders"
+#~ msgstr "امر"
+
+#, fuzzy
+#~ msgid "Other Actions"
+#~ msgstr "حركات حساب الموردين"
+
+#, fuzzy
+#~ msgid "Our Balance"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "Our Credits"
+#~ msgstr "دائن"
+
+#, fuzzy
+#~ msgid "Our Debits"
+#~ msgstr "مدين"
+
+#, fuzzy
+#~ msgid "Outstanding Transactions"
+#~ msgstr "حركة حساب مورد"
+
+#, fuzzy
+#~ msgid "Overpayment"
+#~ msgstr "الدفع النقدى"
+
+#, fuzzy
+#~ msgid "Overpayment Account"
+#~ msgstr "تم ترحيل مدفوعات"
+
+#, fuzzy
+#~ msgid "PO"
+#~ msgstr "نقطة بيع"
+
+#, fuzzy
+#~ msgid "PO Number"
+#~ msgstr "الرقم"
+
+#~ msgid "POS Invoice"
+#~ msgstr "فاتورة امر الشراء"
 
 #~ msgid "Packing List Date missing!"
 #~ msgstr "تاريخ بوليصة الشحن غير موجود"
@@ -3616,38 +2745,570 @@ msgstr "سجلت الحركة"
 #~ msgid "Packing List Number missing!"
 #~ msgstr "رقم بوليصة الشحن غير موجود"
 
+#~ msgid "Paid"
+#~ msgstr "المدفوع"
+
+#, fuzzy
+#~ msgid "Parent"
+#~ msgstr "الحالي"
+
+#, fuzzy
+#~ msgid "Part Group"
+#~ msgstr "مجموعة سعرية"
+
+#, fuzzy
+#~ msgid "Part Number"
+#~ msgstr "رقم المشروع"
+
+#, fuzzy
+#~ msgid "Partial"
+#~ msgstr "جزء"
+
+#, fuzzy
+#~ msgid "Partnumber"
+#~ msgstr "رقم المشروع"
+
 #~ msgid "Parts"
 #~ msgstr "الاجزاء"
+
+#~ msgid "Password"
+#~ msgstr "كلمة السر"
+
+#, fuzzy
+#~ msgid "Password Duration"
+#~ msgstr "تغيير كلمة السر"
+
+#, fuzzy
+#~ msgid "Password required"
+#~ msgstr "تغيير كلمة السر"
+
+#, fuzzy
+#~ msgid "Pay From"
+#~ msgstr "تنسيق البيانات"
+
+#~ msgid "Payables"
+#~ msgstr "المدفوعات"
+
+#, fuzzy
+#~ msgid "Payment Processing"
+#~ msgstr "تاريخ الدفع غير موجود"
+
+#, fuzzy
+#~ msgid "Payment Reversal Information"
+#~ msgstr "المدفوعات"
+
+#, fuzzy
+#~ msgid "Payment Terms"
+#~ msgstr "المدفوعات"
+
+#, fuzzy
+#~ msgid "Payment Type :"
+#~ msgstr "الدفع النقدى"
+
+#, fuzzy
+#~ msgid "Payment Type:"
+#~ msgstr "الدفع النقدى"
+
+#, fuzzy
+#~ msgid "Percent Disposed"
+#~ msgstr "تم ترحيل مدفوعات"
+
+#, fuzzy
+#~ msgid "Percent Remaining"
+#~ msgstr "متبقى"
+
+#, fuzzy
+#~ msgid "Period"
+#~ msgstr "للفترة"
+
+#~ msgid "Phone"
+#~ msgstr "تليفون"
+
+#~ msgid "Post"
+#~ msgstr "تسجيل"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "سجل كجديد"
+
+#, fuzzy
+#~ msgid "Post Yearend"
+#~ msgstr "نهاية العام المالى"
+
+#, fuzzy
+#~ msgid "Post as Saved"
+#~ msgstr "سجل كجديد"
+
+#, fuzzy
+#~ msgid "Post as Shown"
+#~ msgstr "سجل كجديد"
+
+#~ msgid "Post as new"
+#~ msgstr "سجل كجديد"
+
+#, fuzzy
+#~ msgid "Posted Date"
+#~ msgstr "سجل كجديد"
+
+#~ msgid "Posted!"
+#~ msgstr "سجل"
+
+#, fuzzy
+#~ msgid "Posting Date:"
+#~ msgstr "سجل كجديد"
+
+#, fuzzy
+#~ msgid "Posting GL Transaction %1"
+#~ msgstr "حركات الاستاذ العام"
+
+#, fuzzy
+#~ msgid "Posting Sales Invoice %1"
+#~ msgstr "تعديل فاتورة مبيعات"
+
+#, fuzzy
+#~ msgid "Posting Vendor Invoice %1"
+#~ msgstr "تعديل فاتورة مورد"
+
+#, fuzzy
+#~ msgid "Preferences Saved"
+#~ msgstr "مرجع"
+
+#, fuzzy
+#~ msgid "Price Group"
+#~ msgstr "مجموعة سعرية"
+
+#, fuzzy
+#~ msgid "Price Updated"
+#~ msgstr "معدل"
+
+#~ msgid "Pricegroups"
+#~ msgstr "مجموعات سعرية"
+
+#, fuzzy
+#~ msgid "Pricelist"
+#~ msgstr "سعر"
+
+#~ msgid "Print"
+#~ msgstr "طباعة"
+
+#, fuzzy
+#~ msgid "Print %1"
+#~ msgstr "طباعة"
+
+#~ msgid "Printer"
+#~ msgstr "طابعة"
+
+#, fuzzy
+#~ msgid "Process Transactions"
+#~ msgstr "حركات حساب الموردين"
+
+#~ msgid "Profit Center"
+#~ msgstr "مركز ربح"
+
+#~ msgid "Project"
+#~ msgstr "مشروع"
+
+#~ msgid "Project Description Translations"
+#~ msgstr "ترجمة وصف المشروع"
+
+#~ msgid "Project Number"
+#~ msgstr "رقم المشروع"
 
 #~ msgid "Project Number missing!"
 #~ msgstr "رقم المشروع غير موجود"
 
+#, fuzzy
+#~ msgid "Project Number: %1"
+#~ msgstr "رقم المشروع"
+
+#, fuzzy
+#~ msgid "Project Numbers"
+#~ msgstr "رقم المشروع"
+
 #~ msgid "Project deleted!"
 #~ msgstr "الغي المشروع"
+
+#~ msgid "Project not on file!"
+#~ msgstr "المشروع ليس فى الملفات"
 
 #~ msgid "Project saved!"
 #~ msgstr "خزن المشروع"
 
+#, fuzzy
+#~ msgid "Project/Department Number"
+#~ msgstr "رقم المشروع"
+
+#~ msgid "Projects"
+#~ msgstr "مشروعات"
+
+#, fuzzy
+#~ msgid "Purchase Date"
+#~ msgstr "امر شراء"
+
+#, fuzzy
+#~ msgid "Purchase Date:"
+#~ msgstr "امر شراء"
+
+#, fuzzy
+#~ msgid "Purchase History"
+#~ msgstr "بيانات تاريخية للعميل"
+
+#, fuzzy
+#~ msgid "Purchase Value"
+#~ msgstr "امر شراء"
+
+#, fuzzy
+#~ msgid "Purchase Value:"
+#~ msgstr "امر شراء"
+
+#~ msgid "Qty"
+#~ msgstr "الكمية"
+
+#~ msgid "Quotation Date"
+#~ msgstr "تاريخ عرض السعر"
+
+#~ msgid "Quotation Number"
+#~ msgstr "رقم عرض السعر"
+
+#, fuzzy
+#~ msgid "Quotation Number: %1"
+#~ msgstr "رقم عرض السعر"
+
+#~ msgid "RFQ Number"
+#~ msgstr "رقم  عرض السعر"
+
+#, fuzzy
+#~ msgid "Rate (%)"
+#~ msgstr "النسبة"
+
+#, fuzzy
+#~ msgid "Receipt Results"
+#~ msgstr "الواردات"
+
+#~ msgid "Receivables"
+#~ msgstr "المقبوضات"
+
+#~ msgid "Receive Merchandise"
+#~ msgstr "استلام بضاعة"
+
+#, fuzzy
+#~ msgid "Recon"
+#~ msgstr "في السجل"
+
+#, fuzzy
+#~ msgid "Reconcile as FX"
+#~ msgstr "تسويات"
+
+#, fuzzy
+#~ msgid "Reconciliation Report"
+#~ msgstr "تقرير  التسويات"
+
+#~ msgid "Record in"
+#~ msgstr "في السجل"
+
+#, fuzzy
+#~ msgid "Recording time for"
+#~ msgstr "تقرير لاجل"
+
+#, fuzzy
+#~ msgid "Reject"
+#~ msgstr "مشروع"
+
+#~ msgid "Remaining"
+#~ msgstr "متبقى"
+
+#, fuzzy
+#~ msgid "Report Approved"
+#~ msgstr "تقرير لاجل"
+
+#, fuzzy
+#~ msgid "Report Name"
+#~ msgstr "تقرير لاجل"
+
+#, fuzzy
+#~ msgid "Report Submitted"
+#~ msgstr "تقارير"
+
+#~ msgid "Report for"
+#~ msgstr "تقرير لاجل"
+
+#, fuzzy
+#~ msgid "Reporting Basis"
+#~ msgstr "تقارير"
+
+#, fuzzy
+#~ msgid "Request read receipt"
+#~ msgstr "الواردات"
+
+#, fuzzy
+#~ msgid "Required By"
+#~ msgstr "مطلوب من قبل"
+
+#, fuzzy
+#~ msgid "Required Date"
+#~ msgstr "مطلوب من قبل"
+
+#, fuzzy
+#~ msgid "Requirements"
+#~ msgstr "مطلوب من قبل"
+
+#, fuzzy
+#~ msgid "Reset Password"
+#~ msgstr "كلمة السر"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "ارباح محجوزة"
+
 #~ msgid "Role"
 #~ msgstr "الوظيفة"
+
+#, fuzzy
+#~ msgid "Row counts"
+#~ msgstr "حسابات"
+
+#, fuzzy
+#~ msgid "Run Backup"
+#~ msgstr "نسخة احتياطية "
+
+#, fuzzy
+#~ msgid "Run Report"
+#~ msgstr "تقارير"
+
+#, fuzzy
+#~ msgid "Sales Tax ID"
+#~ msgstr "اسم  الشركة"
+
+#~ msgid "Salesperson"
+#~ msgstr "مندوب مبيعات"
+
+#, fuzzy
+#~ msgid "Salutation"
+#~ msgstr "عروض اسعار للعملاء"
+
+#, fuzzy
+#~ msgid "Salvage Value:"
+#~ msgstr "امر شراء"
+
+#~ msgid "Save"
+#~ msgstr "تخزين"
+
+#, fuzzy
+#~ msgid "Save As New"
+#~ msgstr "خزن كجديد"
+
+#, fuzzy
+#~ msgid "Save Changes"
+#~ msgstr "خزن كجديد"
+
+#, fuzzy
+#~ msgid "Save Contact"
+#~ msgstr "شخص الاتصال"
+
+#, fuzzy
+#~ msgid "Save Groups"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Save Location"
+#~ msgstr "عروض اسعار للعملاء"
+
+#, fuzzy
+#~ msgid "Save New"
+#~ msgstr "خزن كجديد"
+
+#, fuzzy
+#~ msgid "Save New Location"
+#~ msgstr "عروض اسعار للعملاء"
+
+#, fuzzy
+#~ msgid "Save Template"
+#~ msgstr "استخدم العينات"
+
+#, fuzzy
+#~ msgid "Save and Retry"
+#~ msgstr "خزن كجديد"
+
+#~ msgid "Save as new"
+#~ msgstr "خزن كجديد"
 
 #~ msgid "Save to File"
 #~ msgstr "خزن كملف"
 
+#~ msgid "Screen"
+#~ msgstr "الشاشة"
+
+#, fuzzy
+#~ msgid "Search AP"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Search AP Invoices"
+#~ msgstr "فاتورة امر الشراء"
+
+#, fuzzy
+#~ msgid "Search AR"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Search AR Invoices"
+#~ msgstr "فاتورة"
+
+#, fuzzy
+#~ msgid "Search Budgets"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Search Inventory Entry"
+#~ msgstr "مراجعة مخزون"
+
+#, fuzzy
+#~ msgid "Search Parts Groups"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Search Payments"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Search Purchase Orders"
+#~ msgstr "اوامر شراء"
+
+#, fuzzy
+#~ msgid "Search Quotations"
+#~ msgstr "عروض اسعار"
+
+#, fuzzy
+#~ msgid "Search Reconciliation Reports"
+#~ msgstr "تقرير  التسويات"
+
+#, fuzzy
+#~ msgid "Search Requests for Quotation"
+#~ msgstr "عروض اسعار مطلوبة"
+
+#, fuzzy
+#~ msgid "Search Sales Orders"
+#~ msgstr "اوامر بيع"
+
+#, fuzzy
+#~ msgid "Search Unapproved Transactions"
+#~ msgstr "حركات  المشروع"
+
+#, fuzzy
+#~ msgid "Search for Users"
+#~ msgstr "بحث"
+
+#, fuzzy
+#~ msgid "Select All"
+#~ msgstr "اختر الكل"
+
+#, fuzzy
+#~ msgid "Select by Default:"
+#~ msgstr "اختر الكل"
+
 #~ msgid "Select from one of the items below"
 #~ msgstr "اختر وحدة من الوحدات"
+
+#~ msgid "Select from one of the names below"
+#~ msgstr "اختر اسم من الاسماء"
+
+#~ msgid "Select from one of the projects below"
+#~ msgstr "اختر  مشروع من المشروعات التالية"
+
+#, fuzzy
+#~ msgid "Select invoices"
+#~ msgstr "فواتير المبيعات"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "اختر الكل"
+
+#~ msgid "Sell Price"
+#~ msgstr "سعر البيع"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "ارسل بالبريد الالكتروني"
 
+#~ msgid "Sep"
+#~ msgstr "سبتمبر"
+
+#, fuzzy
+#~ msgid "Separate Duties"
+#~ msgstr "اقسام"
+
+#~ msgid "September"
+#~ msgstr "سبتمبر"
+
+#~ msgid "Serial Number"
+#~ msgstr "رقم  مسلسل"
+
+#~ msgid "Service"
+#~ msgstr "خدمة"
+
 #~ msgid "Services"
 #~ msgstr "خدمات"
+
+#~ msgid "Ship Merchandise"
+#~ msgstr "شحن بضاعة للخارج"
+
+#, fuzzy
+#~ msgid "Ship Via"
+#~ msgstr "شحن من خلال"
+
+#~ msgid "Ship to"
+#~ msgstr "شحن الى"
+
+#~ msgid "Ship via"
+#~ msgstr "شحن من خلال"
+
+#, fuzzy
+#~ msgid "Ship_Via"
+#~ msgstr "شحن من خلال"
 
 #~ msgid "Shipping Address"
 #~ msgstr "عنوان الشحن"
 
+#~ msgid "Shipping Point"
+#~ msgstr "نقطة الشحن"
+
+#~ msgid "Short"
+#~ msgstr "قصير"
+
 #~ msgid "Signature"
 #~ msgstr "امضاء"
+
+#, fuzzy
+#~ msgid "Single date"
+#~ msgstr "مغلق"
+
+#~ msgid "Source"
+#~ msgstr "مصدر"
+
+#~ msgid "Standard"
+#~ msgstr "اساس"
+
+#~ msgid "Standard Industrial Codes"
+#~ msgstr "الاكواد الصناعية القياسية"
+
+#, fuzzy
+#~ msgid "Start Balance"
+#~ msgstr "رصيد كشف حساب"
+
+#, fuzzy
+#~ msgid "Start Date"
+#~ msgstr "تاريخ يدء العمل"
+
+#~ msgid "Startdate"
+#~ msgstr "تاريخ يدء العمل"
+
+#, fuzzy
+#~ msgid "Starting Date"
+#~ msgstr "تاريخ يدء العمل"
+
+#~ msgid "State/Province"
+#~ msgstr "محافظة"
+
+#~ msgid "Statement Balance"
+#~ msgstr "رصيد كشف حساب"
 
 #~ msgid "Statement sent to"
 #~ msgstr "كشف حساب مرسل الى"
@@ -3655,11 +3316,98 @@ msgstr "سجلت الحركة"
 #~ msgid "Statements sent to printer!"
 #~ msgstr "كشف حساب مرسل الى الطابعة"
 
+#~ msgid "Stock"
+#~ msgstr "مخزون"
+
+#, fuzzy
+#~ msgid "Subject"
+#~ msgstr "موضوع"
+
+#, fuzzy
+#~ msgid "Subject: [_1]"
+#~ msgstr "موضوع"
+
+#~ msgid "Subtotal"
+#~ msgstr "اجمالى"
+
+#, fuzzy
+#~ msgid "Subtotal:"
+#~ msgstr "اجمالى"
+
+#~ msgid "Summary"
+#~ msgstr "ملخص"
+
+#, fuzzy
+#~ msgid "Summary account for"
+#~ msgstr "هل هذا الحساب ملخص لحساب لكى يتم تسجيله ----"
+
+#, fuzzy
+#~ msgid "Sun"
+#~ msgstr "يونية"
+
+#~ msgid "System Defaults"
+#~ msgstr "معطيات النظام"
+
+#, fuzzy
+#~ msgid "Tag"
+#~ msgstr "ضريبة"
+
+#~ msgid "Tax"
+#~ msgstr "ضريبة"
+
+#, fuzzy
+#~ msgid "Tax Account"
+#~ msgstr "الحسابات الضريبية"
+
+#, fuzzy
+#~ msgid "Tax Code"
+#~ msgstr "كود"
+
+#, fuzzy
+#~ msgid "Tax Form Reports"
+#~ msgstr "تنسيق البيانات"
+
+#~ msgid "Tax Included"
+#~ msgstr "الضريبة المضافة"
+
+#, fuzzy
+#~ msgid "Tax Included?"
+#~ msgstr "الضريبة المضافة"
+
+#, fuzzy
+#~ msgid "Tax Number/SSN"
+#~ msgstr "رقم ضريبى"
+
 #~ msgid "Tax collected"
 #~ msgstr "الضريبة المجمعة"
 
 #~ msgid "Tax paid"
 #~ msgstr "الضريبة المدفوعة"
+
+#~ msgid "Taxable"
+#~ msgstr "خاضع للضريبة"
+
+#, fuzzy
+#~ msgid "Taxes saved!"
+#~ msgstr "خزنت العينة"
+
+#, fuzzy
+#~ msgid "Template Saved!"
+#~ msgstr "خزنت العينة"
+
+#~ msgid "Template saved!"
+#~ msgstr "خزنت العينة"
+
+#, fuzzy
+#~ msgid "Templates"
+#~ msgstr "العينات"
+
+#~ msgid "Terms"
+#~ msgstr "شروط "
+
+#, fuzzy
+#~ msgid "The amount of the invoice number"
+#~ msgstr "هل انت متأكد انك تريد الغاء رقم الفاتروة "
 
 #~ msgid "The following Datasets are not in use and can be deleted"
 #~ msgstr "هذة المجموعة من البيانات لا يتم استخدامها و يمكن الغائها"
@@ -3667,41 +3415,293 @@ msgstr "سجلت الحركة"
 #~ msgid "The following Datasets need to be updated"
 #~ msgstr "هذة المجموعة من البيانات تحتاج إلى تحديث"
 
+#, fuzzy
+#~ msgid "Their Balance"
+#~ msgstr "ميزان المراجعة"
+
+#, fuzzy
+#~ msgid "Their Credits"
+#~ msgstr "دائن"
+
+#, fuzzy
+#~ msgid "Their Debits"
+#~ msgstr "مدين"
+
+#, fuzzy
+#~ msgid "This Account"
+#~ msgstr "تعديل الحساب"
+
+#, fuzzy
+#~ msgid "Through date"
+#~ msgstr "من"
+
+#~ msgid "Till"
+#~ msgstr "إلى"
+
+#~ msgid "To"
+#~ msgstr "إلى"
+
+#, fuzzy
+#~ msgid "To Amount"
+#~ msgstr "الكمية"
+
+#, fuzzy
+#~ msgid "To Date"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~ msgid "To:"
+#~ msgstr "إلى"
+
+#~ msgid "Total"
+#~ msgstr "مجموع"
+
+#, fuzzy
+#~ msgid "Total Paid"
+#~ msgstr "مجموع"
+
+#, fuzzy
+#~ msgid "Tracking Items"
+#~ msgstr "قوائم تعبئة"
+
+#, fuzzy
+#~ msgid "Transaction Date"
+#~ msgstr "سجلت الحركة"
+
+#~ msgid "Transaction Date missing!"
+#~ msgstr "تاريخ الحركة غير موجود"
+
+#, fuzzy
+#~ msgid "Transaction Type"
+#~ msgstr "سجلت الحركة"
+
 #~ msgid "Transaction deleted!"
 #~ msgstr "الغيت الحركة"
+
+#~ msgid "Transaction posted!"
+#~ msgstr "سجلت الحركة"
+
+#~ msgid "Transactions"
+#~ msgstr "حركات"
+
+#, fuzzy
+#~ msgid "Trial Balance List"
+#~ msgstr "ميزان المراجعة"
+
+#, fuzzy
+#~ msgid "Unique AR Invoice numbers"
+#~ msgstr "رقم الفاتورة"
+
+#, fuzzy
+#~ msgid "Unique Customernumber"
+#~ msgstr "رقم العميل"
+
+#, fuzzy
+#~ msgid "Unique Vendornumber"
+#~ msgstr "رقم المورد"
+
+#~ msgid "Unit"
+#~ msgstr "وحدة"
 
 #~ msgid "Unit of measure"
 #~ msgstr "وحدة القياس"
 
+#, fuzzy
+#~ msgid "Unsupported Number"
+#~ msgstr "رقم المورد"
+
+#~ msgid "Update"
+#~ msgstr "تعديل"
+
+#~ msgid "Updated"
+#~ msgstr "معدل"
+
+#, fuzzy
+#~ msgid "Upgrade Info"
+#~ msgstr "تخزين"
+
+#~ msgid "User"
+#~ msgstr "مستخدم"
+
+#, fuzzy
+#~ msgid "User Name"
+#~ msgstr "خزن المستخدم"
+
 #~ msgid "User deleted!"
 #~ msgstr "الغي المستخدم"
+
+#, fuzzy
+#~ msgid "Username"
+#~ msgstr "مستخدم"
+
+#, fuzzy
+#~ msgid "Username:"
+#~ msgstr "مستخدم"
+
+#, fuzzy
+#~ msgid "Users"
+#~ msgstr "مستخدم"
+
+#, fuzzy
+#~ msgid "Valid From"
+#~ msgstr "تنسيق البيانات"
+
+#, fuzzy
+#~ msgid "Valid To"
+#~ msgstr "سارى حتى"
+
+#, fuzzy
+#~ msgid "Variance:"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "Vendor Account"
+#~ msgstr "اضافة حساب"
 
 #~ msgid "Vendor Invoices"
 #~ msgstr "فواتير الموردين"
 
+#, fuzzy
+#~ msgid "Vendor Name"
+#~ msgstr "رقم المورد"
+
+#~ msgid "Vendor Number"
+#~ msgstr "رقم المورد"
+
+#, fuzzy
+#~ msgid "Vendor Partnumber"
+#~ msgstr "رقم المورد"
+
+#, fuzzy
+#~ msgid "Vendor Reference Number"
+#~ msgstr "رقم المورد"
+
+#, fuzzy
+#~ msgid "Vendor Search"
+#~ msgstr "رقم المورد"
+
 #~ msgid "Vendor deleted!"
 #~ msgstr "الغي المورد"
+
+#~ msgid "Vendor missing!"
+#~ msgstr "مورد غير موجود"
+
+#~ msgid "Vendor not on file!"
+#~ msgstr "مورد غير موجود في الملف"
 
 #~ msgid "Vendor saved!"
 #~ msgstr "خزن المورد"
 
+#, fuzzy
+#~ msgid "Vendor: %1"
+#~ msgstr "المورد"
+
 #~ msgid "Vendors"
 #~ msgstr "الموردين"
+
+#, fuzzy
+#~ msgid "Version [_1]"
+#~ msgstr "نسخة"
+
+#~ msgid "Weight"
+#~ msgstr "وزن"
+
+#~ msgid "What type of item is this?"
+#~ msgstr "ما نوع هذة الوحدة؟"
 
 #~ msgid "Work Phone"
 #~ msgstr "تلفون العمل"
 
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "نهاية العام المالى"
+
+#~ msgid "Yes"
+#~ msgstr "نعم"
+
 #~ msgid "You did not enter a name!"
 #~ msgstr "لم يتم ادخال الاسم"
 
+#, fuzzy
+#~ msgid "Zip/Post Code"
+#~ msgstr "كود"
+
+#, fuzzy
+#~ msgid "Zip/Postal Code"
+#~ msgstr "كود"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "اللغة"
+
+#, fuzzy
+#~ msgid "action not defined!"
+#~ msgstr "سجلت الحركة"
+
+#, fuzzy
+#~ msgid "ar"
+#~ msgstr "مارس"
+
+#~ msgid "as at"
+#~ msgstr "من"
+
+#, fuzzy
+#~ msgid "balance"
+#~ msgstr "رصيد"
+
+#, fuzzy
+#~ msgid "check"
+#~ msgstr "شيك"
+
+#~ msgid "days"
+#~ msgstr "ايام"
+
+#, fuzzy
+#~ msgid "debits"
+#~ msgstr "مدين"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "الغاء"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "إيداع"
+
+#~ msgid "done"
+#~ msgstr "نفذ"
+
+#~ msgid "ea"
+#~ msgstr "قطعة"
+
 #~ msgid "is already a member!"
 #~ msgstr "عضو موجود"
+
+#, fuzzy
+#~ msgid "receipt"
+#~ msgstr "الوارد"
+
+#, fuzzy
+#~ msgid "sales_invoice"
+#~ msgstr "فاتورة المبيعات"
+
+#, fuzzy
+#~ msgid "starting_balance"
+#~ msgstr "رصيد كشف حساب"
+
+#, fuzzy
+#~ msgid "subtotal"
+#~ msgstr "اجمالى"
 
 #~ msgid "successfully created!"
 #~ msgstr "انشأ بنجاح"
 
 #~ msgid "successfully deleted!"
 #~ msgstr "الغي بنجاح"
+
+#, fuzzy
+#~ msgid "vendor_invoice"
+#~ msgstr "فاتورة المورد "
 
 #~ msgid "website"
 #~ msgstr "موقع انترنت"
