@@ -1,23 +1,18 @@
 #!/bin/sh
 
 
-# SETTING UP FILE LIST
-find . -name '*.pl' | grep -v blib > tools/files
-find . -name '*.html' | grep -v blib >> tools/files
-find . -name '*.tex' | grep -v blib >> tools/files
-find . -name '*.csv' | grep -v blib >> tools/files
-find . -name '*.pm' | grep -v blib | grep -v Num2text | \
-  grep -v LaTeX >> tools/files
+# EXTRACT STRINGS AND RECREATE POT
+find . -name '*.pl' -o -name '*.pm' | \
+  grep -v blib | grep -v LaTeX | \
+  utils/devel/extract-perl > locale/LedgerSMB.pot
 
-# EXTRACT STRINGS AND MERGE WITH .POT
+find UI/ templates/ -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
+   grep -v blib | grep -v dojo/ | \
+   utils/devel/extract-template-translations >> locale/LedgerSMB.pot
 
-xgettext -f tools/files -ktext -o locale/LedgerSMB.pot
-find UI/ -name '*.html' | grep -v dojo/ | \
-   utils/devel/extract-template-translations > locale/templates.pot
-msgmerge locale/LedgerSMB.pot locale/templates.pot -o locale/LedgerSMB.pot-tmp
-utils/devel/extract-sql < sql/Pg-database.sql > locale/sql.pot
-msgmerge locale/LedgerSMB.pot-tmp locale/sql.pot -o locale/LedgerSMB.pot
-xgettext -ktext -j -o locale/LedgerSMB.pot --language=perl
+utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
+
+msguniq --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot
 
 # Merge with .po files
 
