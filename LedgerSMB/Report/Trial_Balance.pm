@@ -30,7 +30,7 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-The trial balance is a report used to test the books and whether they balance 
+The trial balance is a report used to test the books and whether they balance
 in paper accounting systems.  In digital systems it tends to also be repurposed
 also as a general, quick look at accounting activity.  For this reason it is
 probably the second most important report in the system, behind only the GL
@@ -46,7 +46,7 @@ Criteria sets can also be saved/loaded.
 
 =item id
 
-This is the id of the trial balance, only used to save over an existing 
+This is the id of the trial balance, only used to save over an existing
 criteria set.
 
 =cut
@@ -80,7 +80,7 @@ has ignore_yearend => (is => 'rw', isa => 'Str');
 
 =item balance_sign
 
-Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e 
+Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e
 credit balances except for asset and expense accounts).
 
 =cut
@@ -111,6 +111,16 @@ A list of business account ids
 =cut
 
 has business_units => (is => 'ro', isa => 'ArrayRef[Int]', required => 0);
+
+
+=item all_accounts
+
+A boolean indicating that even unused accounts should be output
+
+=cut
+
+has all_accounts => (is => 'ro', isa => 'Bool', required => 0);
+
 
 =back
 
@@ -182,7 +192,7 @@ sub columns {
         money => 1,
          name => LedgerSMB::Report::text('Debit Balance'),
         pwidth => 1} ,
-        
+
       {col_id => 'ending_balance_credit',
          type => 'text',
         money => 1,
@@ -192,7 +202,7 @@ sub columns {
     ];
 }
 
-=item header_lines 
+=item header_lines
 
 =cut
 
@@ -220,7 +230,7 @@ Retrieves the trial balance for review and possibly running it.
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'trial_balance__get', 
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'trial_balance__get',
                                               args => [$id]);
     return __PACKAGE__->new(%$ref);
 }
@@ -251,24 +261,25 @@ sub run_report {
     my $total_credits;
     my @rows = ();
     for my $ref(@rawrows){
-        next if (($ref->{starting_balance} == 0)
-                        and ($ref->{credits} == 0) and ($ref->{debits} == 0));
+        next if ! $self->all_accounts
+                && (($ref->{starting_balance} == 0)
+                    and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "&accno=" . $ref->{account_number};
-        $href_suffix .= "&from_date=" . $self->from_date->to_db 
+        $href_suffix .= "&from_date=" . $self->from_date->to_db
               if defined $self->from_date;
         $href_suffix .= "&to_date=" . $self->to_date->to_db
               if defined $self->to_date;
-               
-        $total_debits += $ref->{debits}; 
-        $total_credits += $ref->{credits}; 
+
+        $total_debits += $ref->{debits};
+        $total_credits += $ref->{credits};
         $ref->{account_number_href_suffix} = $href_suffix;
         $ref->{account_desc_href_suffix} = $href_suffix;
         $ref->{gifi_accno_href_suffix} = $href_suffix;
         push @rows, $ref;
     }
-    push @rows, {class => 'total', 
+    push @rows, {class => 'total',
                debits => $total_debits,
-              credits => $total_credits, 
+              credits => $total_credits,
             html_class => 'listtotal'};
     $self->rows(\@rows);
 }
