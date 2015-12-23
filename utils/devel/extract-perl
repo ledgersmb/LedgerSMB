@@ -83,7 +83,14 @@ while (<>) {
           $state==TXT &&
               m/^[\s\t\n]*"(([^"]|\\\\|\\")*)"/g
               && do { $state = TXT_FIN;
-                      add_entry($1, $file, $line_no);
+                      my $string = $1;
+                      if ($string =~ m/(?<!\\)\$/) {
+                          warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax!";
+                          $state = NUL;
+                      }
+                      else {
+                          add_entry($1, $file, $line_no);
+                      }
                       redo; };
 
           $state==TXT &&

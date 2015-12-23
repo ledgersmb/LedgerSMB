@@ -107,7 +107,7 @@ sub require_version {
     return if $ignore_version;
 
     my $version = LedgerSMB::Setting->get('version');
-    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was $version, expected $expected_version.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>")
+    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was [_1], expected [_2].  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>", $version, $expected_version)
        unless $version eq $expected_version;
     return 0;
 }
