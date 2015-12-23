@@ -1,0 +1,286 @@
+#!/usr/bin/perl
+
+=comment
+
+This script contains a relatively simple state machine to scan various
+SQL files for translatable strings.
+
+The scanner consists of 3 main state processes (block comment,
+INSERT statement and COPY statement). Additionally, it pre-processes input
+lines to strip single-line comments (those starting with '--').
+
+This script exists because xgettext and xgettext.pl don't allow us to
+extract a sub-set of strings from our SQL files.
+
+=cut
+
+
+use strict;
+use warnings;
+
+use constant {
+    NUL => 0,
+
+    INS => 1,
+    INTO => 2,
+    ITBL => 3,
+    ICOL => 5,
+    ICOL_FIN => 6,
+    VAL => 7,
+    VAL1 => 8,
+    VALU => 9,
+    VALN => 10,
+
+    COP => 20,
+    CTBL => 21,
+    CCOL => 22,
+    CCOL_FIN => 23,
+    FROM => 24,
+    DELIM => 25,
+    DATA => 26,
+
+    BCOM => 100,
+};
+
+my %dict = ();
+
+sub ensure_entry {
+    my ($string) = @_;
+
+    $dict{$string} = []
+        unless exists $dict{$string};
+}
+
+sub add_entry {
+    my ($string,$line) = @_;
+
+    # recode 'string' to double quoting
+    $string =~ s/''/'/g;
+    $string =~ s/\\/\\\\/g;
+    $string =~ s/"/\\"/g;
+
+    &ensure_entry($string);
+    push @{$dict{$string}}, "#: sql/Pg-database.sql:$line";
+}
+
+
+my $stripped = '';
+my %tables = (
+    # These tables are set up through INSERT statements:
+    entity_class => { 'class' => 1 },
+    contact_class => { 'class' => 1 },
+    location_class => { 'class' => 1 },
+    note_class => { 'class' => 1 },
+    oe_class => { 'oe_class' => 1 },
+    business_unit_class => { 'business_unit_class' => 1 },
+    asset_unit_class => { 'class' => 1 },
+    asset_report_class => { 'class' => 1 },
+    salutation => { 'salutation' => 1 },
+    payroll_income_category => { label => 1 },
+    taxmodule => { taxmodulename => 1 },
+    asset_dep_method => { method => 1, unit_label => 1 },
+    asset_disposal_method => { label => 1 },
+
+    # These tables are set up through COPY statements:
+    menu_node => { label => 1 },
+    );
+
+my $state = NUL;
+my $table = '';
+my %cols = ();
+my $col_no = 0;
+my $line_no = 1;
+my $pre_comment_state = 0;
+my $remaining_line = '';
+my $delim = '';
+while (<>) {
+    $_ = $remaining_line . $_;
+    $remaining_line = '';
+
+  PARSER: {
+      $_ = substr($_, pos($_)) if (pos($_));
+      m/--.*/g && redo; # strip out comment at end of line
+
+      # States for block comments; block comments can appear anywhere
+      $state!=BCOM &&
+          m#\s*/\*#g
+          && do { $pre_comment_state = $state; $state = BCOM; redo; };
+      $state==BCOM &&
+          m#([^\*]|\*[^/])+#
+          && redo;
+      $state==BCOM &&
+          m#\*/#
+          && do { $state = $pre_comment_state; redo; };
+
+      # Initial states
+      $state==NUL &&
+          m/\bINSERT\b/gi && do { $state = INS; redo; };
+      $state==NUL &&
+          m/\\?COPY\b/gi && do { $state = COP; redo; };
+
+      # States associated with INSERT INTO ...
+      $state==INS &&
+          m/^\s*INTO\b/gi && do { $state = INTO; redo; };
+      $state==INS &&
+          m/^\s*\S+/g
+          && do { warn "$line_no: INSERT not followed by INTO; resetting scan\n";
+                  $state = NUL;
+                  redo;
+      };
+
+      $state==INTO &&
+          m/^\s*(("[^"]*")|[\d\w]+)/gi
+          && do {
+              $table = $1;
+              if (! exists $tables{$table}) {
+                  $state = NUL;
+              }
+              else {
+                  $state = ITBL;
+                  %cols = ();
+                  $col_no = 0;
+                  $table = $1;
+              }
+              redo;
+      };
+
+      $state==ITBL &&
+          m/^\s*\(/g
+          && do { $state = ICOL; redo; };
+
+      $state==ICOL &&
+          m/^\s*(("[^"]*")|[\d\w]+)[\s\t\n]*,/g
+          && do { ++$col_no; $cols{$col_no} = $1; redo; };
+
+      $state==ICOL &&
+          m/^\s*(("[^"]*")|[\d\w]+)[\s\t\n]*\)/g
+          && do { ++$col_no; $cols{$col_no} = $1; $state = ICOL_FIN; redo; };
+
+      ($state==ITBL || $state==ICOL_FIN) &&
+          m/^\s*VALUES\b/gi
+          && do { $state = VAL1; redo; };
+      ($state==ITBL || $state==ICOL_FIN) &&
+          m/^\s*\w+/g
+          && do { warn "$line_no: 'INSERT INTO $table' not followed by VALUES; resetting scan\n";
+                  $state = NUL;
+      };
+
+      $state==VAL1 &&
+          m/^\s*\(/g
+          && do { $state = VALU; $col_no = 0; redo };
+
+      $state==VALU &&
+          (m/^\s*'(([^']|'')+)'\s*,/g
+           || m/^\s*([\d\w]+)\s*,/g)
+          && do { ++$col_no;
+                  my $string = $1;
+                  if ($tables{$table}->{$cols{$col_no}}) {
+                      &add_entry($string, $line_no);
+                  }
+                  redo; };
+
+      $state==VALU &&
+          (m/^\s*'(([^']|'')+)'\s*\)/g
+           || m/^\s*([\d\w]+)\s*\)/g)
+          && do { $state = VALN;
+                  ++$col_no;
+                  my $string = $1;
+                  if ($tables{$table}->{$cols{$col_no}}) {
+                      &add_entry($string, $line_no);
+                  }
+                  redo; };
+
+      $state==VALN &&
+          m/^\s*,/g
+          && do {  $state = VAL1; redo; };
+
+      $state==VALN &&
+          m/^\s*;/g
+          && do { $state = NUL; redo; };
+
+
+      # States for COPY statement
+      $state==COP &&
+          m/^\s*(("[^"]*")|[\d\w]+)/gi
+          && do { $state = CTBL;
+                  $table = $1;
+                  if (! exists $tables{$table}) {
+                      $state = NUL;
+                  }
+                  else {
+                      $state = CTBL;
+                      %cols = ();
+                      $col_no = 0;
+                  }
+                  redo;
+      };
+
+      $state==CTBL &&
+          m/^\s*\(/g
+          && do { $state = CCOL; redo; };
+
+      $state==CCOL &&
+          m/^\s*(("[^"]*")|[\d\w]+)[\s\t\n]*,/g
+          && do { ++$col_no; $cols{$col_no} = $1; redo; };
+
+      $state==CCOL &&
+          m/^\s*(("[^"]*")|[\d\w]+)[\s\t\n]*\)/g
+          && do { ++$col_no; $cols{$col_no} = $1; $state = CCOL_FIN; redo; };
+
+      ($state==CTBL || $state==CCOL_FIN) &&
+          m/^\s*FROM[\s\t\n]+STDIN\b;?/gi
+          && do { $state = FROM; $delim = "\t"; redo; };
+
+      $state==FROM &&
+          m/^\s*WITH[\s\t\n]+DELIMITER[\s\t\n]+('(.)'|"(.)")/gi
+          && do { $state = DELIM; $delim = $2 || $3; redo; };
+
+      ($state==FROM || $state==DELIM) &&
+          m/^$/g
+          && do { $state = DATA; $col_no = 1;
+                  # process the NEXT line, as this one will keep matching!
+                  # we're in a line-based context here...
+                  next;
+      };
+
+      $state==DATA &&
+          m/^\\\.$/g
+          && do { $state = NUL; redo; };
+
+      $state==DATA &&
+          m/^$delim/g
+          && do { ++$col_no; redo; };
+
+      $state==DATA &&
+          m/^$/g
+          && do { $col_no = 1;
+                  # process the NEXT line, as this one will keep matching!
+                  # we're in a line-based context here...
+                  next; };
+
+      my $regex = "^([^$delim]+)";
+      $state==DATA &&
+          m/$regex/g
+          && do { my $string = $1;
+                  if ($tables{$table}->{$cols{$col_no}}) {
+                      &add_entry($string, $line_no);
+                  }
+                  redo;
+      };
+
+    }
+
+    chomp;
+    $remaining_line = ($state==NUL) ? '' :
+        (pos($_)) ? substr($_, pos($_)) : $_;
+    ++$line_no;
+}
+
+
+foreach my $string (keys %dict) {
+    foreach my $location (@{$dict{$string}}) {
+        print "$location\n";
+    }
+    print "msgid \"$string\"\n";
+    print "msgstr \"\"\n\n";
+}

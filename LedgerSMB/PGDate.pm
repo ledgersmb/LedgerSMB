@@ -134,7 +134,6 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    warn $self->is_time;
     #return undef if !defined $self;
 	 return undef if !defined $self->{_pgobject_is_date};
     my $fmt;

@@ -242,9 +242,9 @@ sub display_form
     'oldtransdate' => $form->{oldtransdate},
     'recurring' => $form->{recurring},
     'title' => $title,
-    'approved' => $form->{approved}
-     'callback' => $form->{callback};
-     'form_id' => $form->{form_id};
+    'approved' => $form->{approved},
+     'callback' => $form->{callback},
+     'form_id' => $form->{form_id},
     );
 
 
