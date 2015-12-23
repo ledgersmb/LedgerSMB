@@ -6,7 +6,7 @@ function submit_form() {
 					 var password = document.getElementsByName('s_password')[0].value;
 					 var company = document.getElementsByName('database')[0].value;
 
-		  xhr('login.pl?action=authenticate&company=postgres',
+		  xhr('login.pl?action=authenticate&company=postgres&dbonly=1',
 				{
 					 user: username,
 					 password: password
