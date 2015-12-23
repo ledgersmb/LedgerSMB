@@ -150,12 +150,12 @@ sub edit_gifi {
 
 sub gifi_header {
     my $hiddens = shift;
+
     my $title_msg="$form->{title} GIFI";
-
-    $form->{title} = $locale->text($title_msg);
-
     # $locale->text('Add GIFI')
     # $locale->text('Edit GIFI')
+
+    $form->{title} = $locale->maketext($title_msg);
 
     for (qw(accno description)) { $form->{$_} = $form->quote( $form->{$_} ) }
 
@@ -273,12 +273,11 @@ sub edit_business {
 
 sub business_header {
     my $hiddens = shift;
+
     my $title_msg="$form->{title} Business";
-
-    $form->{title} = $locale->text($title_msg);
-
     # $locale->text('Add Business')
     # $locale->text('Edit Business')
+    $form->{title} = $locale->maketext($title_msg);
 
     $form->{description} = $form->quote( $form->{description} );
     $form->{discount} =
@@ -360,12 +359,11 @@ sub edit_sic {
 
 sub sic_header {
     my $hiddens = shift;
+
     my $title_msg="$form->{title} SIC";
-
-    $form->{title} = $locale->text($title_msg);
-
     # $locale->text('Add SIC')
     # $locale->text('Edit SIC')
+    $form->{title} = $locale->maketext($title_msg);
 
     for (qw(code description)) { $form->{$_} = $form->quote( $form->{$_} ) }
 
@@ -449,12 +447,11 @@ sub edit_language {
 
 sub language_header {
     my $hiddens = shift;
+
     my $title_msg="$form->{title} Language";
-
-    $form->{title} = $locale->text($title_msg);
-
     # $locale->text('Add Language')
     # $locale->text('Edit Language')
+    $form->{title} = $locale->maketext($title_msg);
 
     for (qw(code description)) { $form->{$_} = $form->quote( $form->{$_} ) }
 
@@ -777,12 +774,11 @@ sub edit_warehouse {
 
 sub warehouse_header {
     my $hiddens = shift;
+
     my $title_msg="$form->{title} Warehouse";
-
-    $form->{title} = $locale->text($title_msg);
-
     # $locale->text('Add Warehouse')
     # $locale->text('Edit Warehouse')
+    $form->{title} = $locale->maketext($title_msg);
 
     $form->{description} = $form->quote( $form->{description} );
 
@@ -900,12 +896,12 @@ sub recurring_transactions {
             my $unit;
             my $repeat;
             if ( $ref->{repeat} > 1 ) {
-                $unit   = $locale->text( ucfirst $ref->{unit} );
+                $unit   = $locale->maketext( ucfirst $ref->{unit} );
                 $repeat = "$ref->{repeat} $unit";
             }
             else {
                 chop $ref->{unit};
-                $unit   = $locale->text( ucfirst $ref->{unit} );
+                $unit   = $locale->maketext( ucfirst $ref->{unit} );
                 $repeat = $unit;
             }
 
@@ -1416,7 +1412,19 @@ sub print_recurring {
     my ( $pt, $defaultprinter ) = @_;
     use List::Util qw(first);
 
-    my %f  = &formnames;
+    my $ref = $form->{reference};
+    my %f  = (
+        transaction    => $locale->text('Printing Transaction [_1]', $ref),
+        invoice        => $locale->text('Printing Invoice [_1]', $ref),
+        credit_invoice => $locale->text('Printing Credit Invoice [_1]', $ref),
+        debit_invoice  => $locale->text('Printing Debit Invoice [_1]', $ref),
+        packing_list   => $locale->text('Printing Packing List [_1]', $ref),
+        pick_list      => $locale->text('Printing Pick List [_1]', $ref),
+        sales_order    => $locale->text('Printing Sales Order [_1]', $ref),
+        work_order     => $locale->text('Printing Work Order [_1]', $ref),
+        purchase_order => $locale->text('Printing Purchase Order [_1]', $ref),
+        bin_list       => $locale->text('Printing Bin List [_1]', $ref),
+        );
     my $ok = 1;
 
     if ( $pt->{recurringprint} ) {
@@ -1428,11 +1436,9 @@ sub print_recurring {
               if ${LedgerSMB::Sysconfig::printer}{ $myconfig->{printer} };
             $media ||= $defaultprinter;
 
-            $form->info( "\n"
-                  . $locale->text('Printing') . " "
-                  . $locale->text( $f{ $f[$j] } )
-                  . " $form->{reference}" );
 
+
+            $form->info( "\n" . $f{ $f[$j] } );
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
@@ -1451,7 +1457,19 @@ sub email_recurring {
     my ($pt) = @_;
     use List::Util qw(first);
 
-    my %f  = &formnames;
+    my $ref = $form->{reference};
+    my %f  = (
+        transaction    => $locale->text('Sending Transaction [_1]', $ref),
+        invoice        => $locale->text('Sending Invoice [_1]', $ref),
+        credit_invoice => $locale->text('Sending Credit Invoice [_1]', $ref),
+        debit_invoice  => $locale->text('Sending Debit Invoice [_1]', $ref),
+        packing_list   => $locale->text('Sending Packing List [_1]', $ref),
+        pick_list      => $locale->text('Sending Pick List [_1]', $ref),
+        sales_order    => $locale->text('Sending Sales Order [_1]', $ref),
+        work_order     => $locale->text('Sending Work Order [_1]', $ref),
+        purchase_order => $locale->text('Sending Purchase Order [_1]', $ref),
+        bin_list       => $locale->text('Sending Bin List [_1]', $ref),
+        );
     my $ok = 1;
 
     if ( $pt->{recurringemail} ) {
@@ -1459,11 +1477,7 @@ sub email_recurring {
         @f = split /:/, $pt->{recurringemail};
         for ( $j = 0 ; $j <= $#f ; $j += 2 ) {
 
-            $form->info( "\n"
-                  . $locale->text('Sending') . " "
-                  . $locale->text( $f{ $f[$j] } )
-                  . " $form->{reference}" );
-
+            $form->info( "\n" . $f{ $f[$j] } );
             # no email, bail out
             if ( !$form->{email} ) {
                 $form->info(

@@ -65,7 +65,7 @@ sub add {
     # $locale->text('Add Labor/Overhead')
 
     $label = "Add $label{$form->{item}}";
-    $form->{title} = $locale->text($label);
+    $form->{title} = $locale->maketext($label);
 
     $form->{callback} =
 "$form->{script}?action=add&item=$form->{item}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -100,7 +100,7 @@ sub edit {
     IC->get_part( \%myconfig, \%$form );
 
     $label = "Edit $label{$form->{item}}";
-    $form->{title} = $locale->text($label);
+    $form->{title} = $locale->maketext($label);
 
     $form->{previousform} = $form->escape( $form->{previousform}, 1 )
       if $form->{previousform};
@@ -1683,7 +1683,7 @@ sub select_name {
     $label = ucfirst $table;
     $column_data{ndx} = qq|<th>&nbsp;</th>|;
     $column_data{name} =
-      qq|<th class=listheading>| . $locale->text($label) . qq|</th>|;
+      qq|<th class=listheading>| . $locale->maketext($label) . qq|</th>|;
     $column_data{meta_number} =
       qq|<th class=listheading>| . $locale->text('Account Number') . qq|</th>|;
     $column_data{address} =

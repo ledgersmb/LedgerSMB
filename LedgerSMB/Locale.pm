@@ -18,8 +18,17 @@ Locale::Maketext.
 
 =item text ($string, @params)
 
-Returns the translation for the given string.  This is a legacy wrapper that
-merely calls $self->maketext.
+Returns the translation for the given string.  Use this method with a litteral
+string argument to make sure it's included in the translation lexicon.
+
+To request translation of a non-litteral string (e.g. function return value),
+call the maketext() method.
+
+=item maketext ($string, @params)
+
+Returns the translation for the given string.  The string position argument
+won't be included in the translation lexicon.  Use this function to translate
+a string held in a variable, or returned from a function.
 
 =item date ($myconfig, $date, $longformat)
 
@@ -161,7 +170,7 @@ sub date {
     }
 
     if ( defined $longformat ) {
-        $longdate = $self->text( $longmonth[ --$mm ] ) . " $dd $yy";
+        $longdate = $self->maketext( $longmonth[ --$mm ] ) . " $dd $yy";
     }
     $longdate;
 }

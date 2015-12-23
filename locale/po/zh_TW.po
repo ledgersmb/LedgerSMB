@@ -68,8 +68,9 @@ msgid "% Dep."
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:96
+#, fuzzy
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "採購單"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:104
 msgid "(-) Accum. Dep."
@@ -124,7 +125,7 @@ msgstr ""
 msgid "AIM"
 msgstr ""
 
-#: bin/am.pl:876 UI/Reports/filters/unapproved.html:13
+#: bin/am.pl:872 UI/Reports/filters/unapproved.html:13
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:104
 #: sql/Pg-database.sql:2845
 msgid "AP"
@@ -144,7 +145,7 @@ msgstr "POS發票"
 msgid "AP Invoices"
 msgstr "POS發票"
 
-#: LedgerSMB/Report/Invoices/Outstanding.pm:298 bin/aa.pl:1536
+#: LedgerSMB/Report/Invoices/Outstanding.pm:298 bin/aa.pl:1538
 #: UI/Reports/filters/invoice_outstanding.html:5
 msgid "AP Outstanding"
 msgstr "應付未付"
@@ -161,7 +162,7 @@ msgstr "應付未付"
 msgid "AP Transaction"
 msgstr "應付交易"
 
-#: LedgerSMB/Report/Contact/Purchase.pm:128 bin/aa.pl:1492
+#: LedgerSMB/Report/Contact/Purchase.pm:128 bin/aa.pl:1494
 msgid "AP Transactions"
 msgstr "應付交易"
 
@@ -175,7 +176,7 @@ msgstr "刪除時間表"
 msgid "AP account"
 msgstr "帳戶"
 
-#: bin/am.pl:875 UI/Reports/filters/unapproved.html:14
+#: bin/am.pl:871 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2844
 msgid "AR"
@@ -195,7 +196,7 @@ msgstr "發票"
 msgid "AR Invoices"
 msgstr "發票"
 
-#: LedgerSMB/Report/Invoices/Outstanding.pm:300 bin/aa.pl:1535
+#: LedgerSMB/Report/Invoices/Outstanding.pm:300 bin/aa.pl:1537
 #: UI/Reports/filters/invoice_outstanding.html:9
 msgid "AR Outstanding"
 msgstr "應收未收"
@@ -212,7 +213,7 @@ msgstr "應收未收"
 msgid "AR Transaction"
 msgstr "應收交易"
 
-#: LedgerSMB/Report/Contact/Purchase.pm:130 bin/aa.pl:1491
+#: LedgerSMB/Report/Contact/Purchase.pm:130 bin/aa.pl:1493
 msgid "AR Transactions"
 msgstr "應收交易"
 
@@ -250,8 +251,8 @@ msgstr "拒絕存取！"
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:66
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67 bin/ic.pl:1128 bin/ir.pl:470
-#: bin/ir.pl:864 bin/is.pl:461 bin/is.pl:910 bin/oe.pl:427 bin/aa.pl:596
-#: bin/aa.pl:660 bin/aa.pl:817 bin/aa.pl:1671 UI/Contact/contact.html:20
+#: bin/ir.pl:864 bin/is.pl:461 bin/is.pl:910 bin/oe.pl:427 bin/aa.pl:598
+#: bin/aa.pl:662 bin/aa.pl:819 bin/aa.pl:1673 UI/Contact/contact.html:20
 #: UI/Contact/divs/credit.html:187 UI/Contact/divs/credit.html:188
 #: UI/Reports/filters/aging.html:25 UI/Reports/filters/gl.html:32
 #: UI/Reports/filters/gl.html:248
@@ -379,9 +380,10 @@ msgid "Accounts To"
 msgstr "帳戶"
 
 #: LedgerSMB/Upgrade_Tests.pm:731
-#, fuzzy
-msgid "Accounts can\\"
-msgstr "帳戶"
+msgid ""
+"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"listed in dropdowns elsewhere."
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:420
 msgid "Accounts without heading"
@@ -419,7 +421,7 @@ msgstr ""
 msgid "Activate Audit trail"
 msgstr "啟動審核線索"
 
-#: bin/aa.pl:1702 UI/Reports/filters/contact_search.html:112
+#: bin/aa.pl:1704 UI/Reports/filters/contact_search.html:112
 #: UI/Reports/filters/invoice_outstanding.html:86
 #: UI/Reports/filters/invoice_search.html:179
 #: UI/Reports/filters/search_goods.html:92
@@ -438,11 +440,11 @@ msgid "Active Sessions"
 msgstr "版本"
 
 #: LedgerSMB/Report/File/Incoming.pm:101 LedgerSMB/Report/File/Internal.pm:89
-#: bin/ic.pl:2121 bin/am.pl:1532
+#: bin/ic.pl:2121 bin/am.pl:1546
 msgid "Add"
 msgstr "新增"
 
-#: bin/aa.pl:378 bin/aa.pl:413
+#: bin/aa.pl:378 bin/aa.pl:415
 msgid "Add AP Transaction"
 msgstr "新增應付交易"
 
@@ -483,7 +485,7 @@ msgstr "新增製成品"
 msgid "Add Budget"
 msgstr "新增業務"
 
-#: bin/am.pl:281 sql/Pg-database.sql:2836
+#: bin/am.pl:279 sql/Pg-database.sql:2836
 msgid "Add Business"
 msgstr "新增業務"
 
@@ -502,7 +504,7 @@ msgstr "連絡人"
 msgid "Add Credit Invoice"
 msgstr "新增供應商發票"
 
-#: bin/aa.pl:411
+#: bin/aa.pl:413
 #, fuzzy
 msgid "Add Credit Note"
 msgstr "貸方"
@@ -521,7 +523,7 @@ msgstr "新增客戶"
 msgid "Add Debit Invoice"
 msgstr "新增銷售發票"
 
-#: bin/aa.pl:409
+#: bin/aa.pl:411
 #, fuzzy
 msgid "Add Debit Note"
 msgstr "借方"
@@ -530,16 +532,16 @@ msgstr "借方"
 msgid "Add Employee"
 msgstr "新增職員"
 
-#: bin/oe.pl:1503
+#: bin/oe.pl:1501
 #, fuzzy
 msgid "Add Exchange Rate"
 msgstr "匯率"
 
-#: bin/am.pl:158 sql/Pg-database.sql:2903
+#: bin/am.pl:156 sql/Pg-database.sql:2903
 msgid "Add GIFI"
 msgstr "新增GIFI"
 
-#: bin/pe.pl:108 sql/Pg-database.sql:2929
+#: bin/pe.pl:106 sql/Pg-database.sql:2929
 msgid "Add Group"
 msgstr "新增組別"
 
@@ -548,7 +550,7 @@ msgstr "新增組別"
 msgid "Add Labor/Overhead"
 msgstr "直接人工/經常費用"
 
-#: bin/am.pl:457 sql/Pg-database.sql:2838
+#: bin/am.pl:453 sql/Pg-database.sql:2838
 msgid "Add Language"
 msgstr "新增語言"
 
@@ -571,7 +573,7 @@ msgstr "新增直接人工/經常費用"
 msgid "Add Part"
 msgstr "新增零件"
 
-#: bin/pe.pl:197 sql/Pg-database.sql:2930
+#: bin/pe.pl:195 sql/Pg-database.sql:2930
 msgid "Add Pricegroup"
 msgstr "新增價格組別"
 
@@ -597,11 +599,11 @@ msgstr "新增報價單要求"
 msgid "Add Return"
 msgstr "新增使用者"
 
-#: bin/am.pl:368 sql/Pg-database.sql:2840
+#: bin/am.pl:365 sql/Pg-database.sql:2840
 msgid "Add SIC"
 msgstr "新增標準工業分類代碼"
 
-#: bin/is.pl:110 bin/oe.pl:1419
+#: bin/is.pl:110 bin/oe.pl:1417
 msgid "Add Sales Invoice"
 msgstr "新增銷售發票"
 
@@ -651,7 +653,7 @@ msgstr "編輯使用者"
 msgid "Add Vendor"
 msgstr "新增供應商"
 
-#: bin/ir.pl:125 bin/oe.pl:1411
+#: bin/ir.pl:125 bin/oe.pl:1409
 msgid "Add Vendor Invoice"
 msgstr "新增供應商發票"
 
@@ -660,7 +662,7 @@ msgstr "新增供應商發票"
 msgid "Add Vendor Return"
 msgstr "新增供應商"
 
-#: bin/am.pl:785 sql/Pg-database.sql:2834
+#: bin/am.pl:780 sql/Pg-database.sql:2834
 msgid "Add Warehouse"
 msgstr "新增倉庫"
 
@@ -690,7 +692,7 @@ msgid "Add/Change Wage"
 msgstr "新增外匯率"
 
 #: bin/arap.pl:175 bin/ic.pl:1692 bin/ir.pl:480 bin/is.pl:471 bin/oe.pl:432
-#: bin/pe.pl:687 bin/aa.pl:601 UI/Contact/divs/address.html:85
+#: bin/pe.pl:687 bin/aa.pl:603 UI/Contact/divs/address.html:85
 #: UI/Contact/divs/address.html:130 UI/Reports/filters/contact_search.html:87
 #: UI/Reports/filters/purchase_history.html:70
 msgid "Address"
@@ -752,7 +754,7 @@ msgstr "報表"
 msgid "All"
 msgstr "全部"
 
-#: bin/aa.pl:1701
+#: bin/aa.pl:1703
 #, fuzzy
 msgid "All Invoices"
 msgstr "發票"
@@ -811,8 +813,8 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Transactions.pm:271
 #: LedgerSMB/Report/Invoices/Outstanding.pm:216 LedgerSMB/Report/Orders.pm:234
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:119 bin/ir.pl:686 bin/ir.pl:862
-#: bin/is.pl:745 bin/is.pl:908 bin/pe.pl:1067 bin/am.pl:866 bin/aa.pl:658
-#: bin/aa.pl:815 bin/aa.pl:1629 UI/Reports/filters/gl.html:102
+#: bin/is.pl:745 bin/is.pl:908 bin/pe.pl:1067 bin/am.pl:862 bin/aa.pl:660
+#: bin/aa.pl:817 bin/aa.pl:1631 UI/Reports/filters/gl.html:102
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:287
 #: UI/Reports/filters/orders.html:168 UI/orders/order.html:249
@@ -864,7 +866,7 @@ msgstr "到期金額"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:236
 #: LedgerSMB/Scripts/payment.pm:754 LedgerSMB/Scripts/payment.pm:760
-#: bin/aa.pl:1647 UI/Reports/filters/invoice_outstanding.html:243
+#: bin/aa.pl:1649 UI/Reports/filters/invoice_outstanding.html:243
 #: UI/Reports/filters/invoice_search.html:333 templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -988,11 +990,11 @@ msgstr "要求交付日期"
 msgid "Aquired Value Remaining"
 msgstr "尚餘"
 
-#: bin/oe.pl:1295
+#: bin/oe.pl:1293
 msgid "Are you sure you want to delete Order Number"
 msgstr "您是否確定要刪除訂單編號"
 
-#: bin/oe.pl:1300
+#: bin/oe.pl:1298
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "您是否確定要刪除報價單編號"
 
@@ -1074,7 +1076,7 @@ msgid "Assets to Liabilities"
 msgstr "列出帳號"
 
 #: LedgerSMB/Report/File/Incoming.pm:107 bin/ic.pl:927 bin/ir.pl:1033
-#: bin/is.pl:1085 bin/oe.pl:928 bin/aa.pl:1062
+#: bin/is.pl:1085 bin/oe.pl:928 bin/aa.pl:1064
 #: UI/journal/journal_entry.html:361
 #, fuzzy
 msgid "Attach"
@@ -1115,33 +1117,33 @@ msgstr "附件"
 msgid "Attached By"
 msgstr "附件"
 
-#: bin/ic.pl:899 bin/ir.pl:1007 bin/is.pl:1059 bin/oe.pl:902 bin/aa.pl:1034
+#: bin/ic.pl:899 bin/ir.pl:1007 bin/is.pl:1059 bin/oe.pl:902 bin/aa.pl:1036
 #: UI/journal/journal_entry.html:337
 #, fuzzy
 msgid "Attached To"
 msgstr "附件"
 
-#: bin/ic.pl:898 bin/ir.pl:1006 bin/is.pl:1058 bin/oe.pl:901 bin/aa.pl:1033
+#: bin/ic.pl:898 bin/ir.pl:1006 bin/is.pl:1058 bin/oe.pl:901 bin/aa.pl:1035
 #: UI/journal/journal_entry.html:336
 #, fuzzy
 msgid "Attached To Type"
 msgstr "附件"
 
-#: bin/ic.pl:875 bin/ir.pl:983 bin/is.pl:1035 bin/oe.pl:878 bin/aa.pl:1009
+#: bin/ic.pl:875 bin/ir.pl:983 bin/is.pl:1035 bin/oe.pl:878 bin/aa.pl:1011
 #: UI/journal/journal_entry.html:314
 #, fuzzy
 msgid "Attached and Linked Files"
 msgstr "附件"
 
 #: bin/ic.pl:879 bin/ic.pl:900 bin/ir.pl:987 bin/ir.pl:1008 bin/is.pl:1039
-#: bin/is.pl:1060 bin/oe.pl:882 bin/oe.pl:903 bin/aa.pl:1013 bin/aa.pl:1035
+#: bin/is.pl:1060 bin/oe.pl:882 bin/oe.pl:903 bin/aa.pl:1015 bin/aa.pl:1037
 #: UI/journal/journal_entry.html:318 UI/journal/journal_entry.html:338
 #, fuzzy
 msgid "Attached at"
 msgstr "附件"
 
 #: bin/ic.pl:880 bin/ic.pl:901 bin/ir.pl:988 bin/ir.pl:1009 bin/is.pl:1040
-#: bin/is.pl:1061 bin/oe.pl:883 bin/oe.pl:904 bin/aa.pl:1014 bin/aa.pl:1036
+#: bin/is.pl:1061 bin/oe.pl:883 bin/oe.pl:904 bin/aa.pl:1016 bin/aa.pl:1038
 #: UI/journal/journal_entry.html:319 UI/journal/journal_entry.html:339
 #, fuzzy
 msgid "Attached by"
@@ -1326,8 +1328,9 @@ msgid "Bar Code"
 msgstr "直接人工代碼"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:92 bin/ir.pl:688 bin/is.pl:747
+#, fuzzy
 msgid "Basis"
-msgstr ""
+msgstr "報表"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:153
 #, fuzzy
@@ -1339,7 +1342,7 @@ msgstr "下一日"
 msgid "Batch Class"
 msgstr "備註"
 
-#: bin/aa.pl:567
+#: bin/aa.pl:569
 #, fuzzy
 msgid "Batch Control Code"
 msgstr "直接人工代碼"
@@ -1369,7 +1372,7 @@ msgstr "未指明日期！"
 msgid "Batch Information"
 msgstr "說明"
 
-#: bin/aa.pl:572
+#: bin/aa.pl:574
 #, fuzzy
 msgid "Batch Name"
 msgstr "零件編號"
@@ -1441,7 +1444,7 @@ msgstr "帳單地址"
 
 #: LedgerSMB/Report/Inventory/History.pm:134
 #: LedgerSMB/Report/Inventory/Search.pm:214 bin/ic.pl:491 bin/ic.pl:2114
-#: bin/io.pl:243 bin/oe.pl:1851 UI/Reports/filters/search_goods.html:288
+#: bin/io.pl:243 bin/oe.pl:1849 UI/Reports/filters/search_goods.html:288
 #: UI/io-email.html:105 templates/demo/bin_list.html:154
 #: templates/demo/bin_list.tex:109 templates/demo/pick_list.html:116
 #: templates/demo/pick_list.tex:102 templates/demo/work_order.html:133
@@ -1457,7 +1460,7 @@ msgid "Bin"
 msgstr "箱"
 
 #: bin/io.pl:1422 bin/io.pl:1436 bin/io.pl:1644 bin/oe.pl:260 bin/oe.pl:272
-#: bin/am.pl:1509 templates/demo/bin_list.html:4
+#: bin/am.pl:1523 templates/demo/bin_list.html:4
 #: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
 #: templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
@@ -1546,11 +1549,11 @@ msgstr "業務編號"
 msgid "Business Units"
 msgstr "業務"
 
-#: bin/am.pl:304
+#: bin/am.pl:303
 msgid "Business deleted!"
 msgstr "已刪除業務！"
 
-#: bin/am.pl:297
+#: bin/am.pl:296
 msgid "Business saved!"
 msgstr "已儲存業務！"
 
@@ -1602,8 +1605,9 @@ msgid "Cancel"
 msgstr "餘額"
 
 #: LedgerSMB/Scripts/setup.pm:189
+#, fuzzy
 msgid "Cancel?"
-msgstr ""
+msgstr "餘額"
 
 #: bin/gl.pl:670
 #, fuzzy
@@ -1649,7 +1653,7 @@ msgstr "收入帳戶不存在！"
 msgid "Cannot delete item!"
 msgstr "不能刪除項目！"
 
-#: bin/oe.pl:1333
+#: bin/oe.pl:1331
 msgid "Cannot delete order!"
 msgstr "不能刪除定單！"
 
@@ -1658,7 +1662,7 @@ msgstr "不能刪除定單！"
 msgid "Cannot delete posted transaction"
 msgstr "不能刪除交易！"
 
-#: bin/oe.pl:1337
+#: bin/oe.pl:1335
 msgid "Cannot delete quotation!"
 msgstr "不能刪除報價單！"
 
@@ -1666,11 +1670,11 @@ msgstr "不能刪除報價單！"
 msgid "Cannot post invoice for a closed period!"
 msgstr "不能在已關閉的時段內加入發票！"
 
-#: bin/ir.pl:1381 bin/is.pl:1355 bin/aa.pl:1334
+#: bin/ir.pl:1381 bin/is.pl:1355 bin/aa.pl:1336
 msgid "Cannot post payment for a closed period!"
 msgstr "不能在已關閉的時段內加入款項！"
 
-#: bin/aa.pl:1320 bin/gl.pl:682
+#: bin/aa.pl:1322 bin/gl.pl:682
 msgid "Cannot post transaction for a closed period!"
 msgstr "不能在已關閉的時段內加入交易！"
 
@@ -1679,19 +1683,19 @@ msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr "在交易同一帳戶不能又出現在借方又出現在貸方！"
 
-#: bin/aa.pl:1382
+#: bin/aa.pl:1384
 msgid "Cannot post transaction!"
 msgstr "不能加入交易！"
 
-#: bin/oe.pl:1224
+#: bin/oe.pl:1222
 msgid "Cannot save order!"
 msgstr "不能儲存定單！"
 
-#: bin/oe.pl:1241
+#: bin/oe.pl:1239
 msgid "Cannot save quotation!"
 msgstr "不能儲存報價單！"
 
-#: bin/am.pl:725
+#: bin/am.pl:722
 #, fuzzy
 msgid "Cannot save taxes!"
 msgstr "不能儲存定單！"
@@ -1825,7 +1829,7 @@ msgstr "計算出的時間"
 msgid "Close Books up to"
 msgstr "關閉到此為止的帳簿："
 
-#: LedgerSMB/Report/Orders.pm:243 bin/oe.pl:313 bin/aa.pl:1527
+#: LedgerSMB/Report/Orders.pm:243 bin/oe.pl:313 bin/aa.pl:1529
 #: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
 #: UI/Reports/filters/purchase_history.html:212
 #: UI/Reports/filters/timecards.html:36
@@ -1837,7 +1841,7 @@ msgstr "已關閉"
 msgid "Code"
 msgstr "編碼"
 
-#: bin/am.pl:383 bin/am.pl:468
+#: bin/am.pl:381 bin/am.pl:465
 msgid "Code missing!"
 msgstr "未指明編碼！"
 
@@ -1927,7 +1931,7 @@ msgstr "確認"
 msgid "Confirm Operation"
 msgstr "連絡人"
 
-#: bin/oe.pl:1314 bin/am.pl:516
+#: bin/oe.pl:1312 bin/am.pl:513
 msgid "Confirm!"
 msgstr "入帳成功！"
 
@@ -1993,8 +1997,8 @@ msgstr "連絡人"
 #: LedgerSMB/Scripts/payment.pm:594 LedgerSMB/Scripts/payment.pm:659
 #: LedgerSMB/Scripts/payment.pm:1307 bin/arap.pl:269 bin/arapprn.pl:423
 #: bin/ic.pl:959 bin/ic.pl:1781 bin/ic.pl:2064 bin/ic.pl:2218 bin/io.pl:682
-#: bin/io.pl:882 bin/io.pl:1323 bin/oe.pl:1539 bin/oe.pl:2067 bin/oe.pl:2578
-#: bin/pe.pl:339 bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 bin/aa.pl:1750
+#: bin/io.pl:882 bin/io.pl:1323 bin/oe.pl:1537 bin/oe.pl:2065 bin/oe.pl:2576
+#: bin/pe.pl:339 bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 bin/aa.pl:1752
 #: UI/Contact/divs/credit.html:401 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
 #: UI/Reports/filters/gl.html:302 UI/Reports/filters/inventory_activity.html:32
@@ -2050,7 +2054,7 @@ msgstr ""
 msgid "Copy to COA"
 msgstr "複製到 COA"
 
-#: bin/ir.pl:554 bin/is.pl:572 bin/aa.pl:934
+#: bin/ir.pl:554 bin/is.pl:572 bin/aa.pl:936
 #, fuzzy
 msgid "Copy to New"
 msgstr "複製到 COA"
@@ -2060,7 +2064,7 @@ msgstr "複製到 COA"
 msgid "Copy to New Name"
 msgstr "複製到 COA"
 
-#: bin/ic.pl:1029 bin/ic.pl:1274 bin/oe.pl:2417
+#: bin/ic.pl:1029 bin/ic.pl:1274 bin/oe.pl:2415
 msgid "Cost"
 msgstr "成本"
 
@@ -2080,15 +2084,15 @@ msgstr ""
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
 msgstr ""
 
-#: bin/ir.pl:1344 bin/is.pl:1319 bin/oe.pl:1259
+#: bin/ir.pl:1344 bin/is.pl:1319 bin/oe.pl:1257
 msgid "Could not save the data.  Please try again"
 msgstr ""
 
-#: bin/oe.pl:2000
+#: bin/oe.pl:1998
 msgid "Could not save!"
 msgstr "不能儲存！"
 
-#: bin/oe.pl:2280
+#: bin/oe.pl:2278
 msgid "Could not transfer Inventory!"
 msgstr "存貨清單不能轉移！"
 
@@ -2196,12 +2200,12 @@ msgstr "帳戶編號"
 msgid "Credit Accounts"
 msgstr "編輯帳戶"
 
-#: bin/am.pl:1502 sql/Pg-database.sql:2900
+#: bin/am.pl:1516 sql/Pg-database.sql:2900
 #, fuzzy
 msgid "Credit Invoice"
 msgstr "編輯POS"
 
-#: bin/ir.pl:450 bin/is.pl:441 bin/oe.pl:408 bin/aa.pl:548
+#: bin/ir.pl:450 bin/is.pl:441 bin/oe.pl:408 bin/aa.pl:550
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:145
 #: UI/Contact/divs/credit.html:146 UI/orders/order.html:34
 msgid "Credit Limit"
@@ -2224,7 +2228,7 @@ msgid "Cumulative Error:"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:241 bin/ic.pl:1015 bin/ic.pl:1114
-#: bin/oe.pl:2422
+#: bin/oe.pl:2420
 msgid "Curr"
 msgstr "目前"
 
@@ -2236,8 +2240,8 @@ msgstr ""
 #: LedgerSMB/Report/Contact/Purchase.pm:77
 #: LedgerSMB/Report/Contact/Search.pm:82
 #: LedgerSMB/Report/Inventory/Search.pm:290 LedgerSMB/Report/Orders.pm:239
-#: bin/ir.pl:345 bin/is.pl:303 bin/oe.pl:324 bin/oe.pl:1517 bin/aa.pl:425
-#: bin/aa.pl:1636 UI/Contact/divs/credit.html:221
+#: bin/ir.pl:345 bin/is.pl:303 bin/oe.pl:324 bin/oe.pl:1515 bin/aa.pl:427
+#: bin/aa.pl:1638 UI/Contact/divs/credit.html:221
 #: UI/Contact/divs/credit.html:222 UI/Contact/pricelist.csv:43
 #: UI/Contact/pricelist.html:56 UI/Contact/pricelist.tex:58
 #: UI/Reports/filters/invoice_outstanding.html:216
@@ -2257,7 +2261,7 @@ msgid "Currency"
 msgstr "幣別"
 
 #: LedgerSMB/DBObject/Date.pm:79 LedgerSMB/Report/Aging.pm:126 bin/pe.pl:839
-#: bin/aa.pl:1574 UI/lib/report_base.html:139 UI/lib/report_base.html:206
+#: bin/aa.pl:1576 UI/lib/report_base.html:139 UI/lib/report_base.html:206
 #: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
 #: UI/bp-search.html:40 UI/rc-reconciliation.html:40
 #: UI/rp-search-generate_income_statement.html:33
@@ -2276,7 +2280,7 @@ msgstr "現有收益"
 #: LedgerSMB/Report/Aging.pm:83 LedgerSMB/Report/Invoices/Transactions.pm:250
 #: LedgerSMB/Report/Invoices/Outstanding.pm:177 LedgerSMB/Report/Orders.pm:188
 #: LedgerSMB/Report/Orders.pm:194 bin/ic.pl:1127 bin/is.pl:429 bin/pe.pl:1039
-#: bin/pe.pl:1194 bin/aa.pl:511 bin/aa.pl:1586 UI/Contact/divs/credit.html:14
+#: bin/pe.pl:1194 bin/aa.pl:513 bin/aa.pl:1588 UI/Contact/divs/credit.html:14
 #: UI/Contact/divs/credit.html:15 UI/Reports/filters/aging.html:15
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
@@ -2303,7 +2307,7 @@ msgstr "客戶編號"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:115
 #: LedgerSMB/Report/Invoices/Payments.pm:185
-#: LedgerSMB/Scripts/configuration.pm:115 bin/io.pl:2057 bin/aa.pl:1587
+#: LedgerSMB/Scripts/configuration.pm:115 bin/io.pl:2057 bin/aa.pl:1589
 #: UI/Reports/filters/invoice_outstanding.html:11
 #: UI/Reports/filters/invoice_search.html:11
 #: UI/Reports/filters/overpayments.html:21 UI/Reports/filters/payments.html:21
@@ -2317,11 +2321,11 @@ msgstr "客戶編號"
 msgid "Customer Search"
 msgstr "客戶編號"
 
-#: bin/is.pl:1328 bin/oe.pl:1192 bin/pe.pl:1273 bin/aa.pl:1302
+#: bin/is.pl:1328 bin/oe.pl:1190 bin/pe.pl:1273 bin/aa.pl:1304
 msgid "Customer missing!"
 msgstr "未指明客戶！"
 
-#: bin/arap.pl:158 bin/pe.pl:1248
+#: bin/arap.pl:148 bin/pe.pl:1248
 msgid "Customer not on file!"
 msgstr "沒有此客戶的記錄！"
 
@@ -2338,7 +2342,7 @@ msgstr ""
 msgid "DOB"
 msgstr "出生日期"
 
-#: LedgerSMB/Scripts/payment.pm:333 bin/aa.pl:1292
+#: LedgerSMB/Scripts/payment.pm:333 bin/aa.pl:1294
 msgid "Data not saved.  Please try again."
 msgstr ""
 
@@ -2392,7 +2396,7 @@ msgstr "資料集"
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:532
 #: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:748
-#: bin/ir.pl:861 bin/is.pl:907 bin/oe.pl:1521 bin/pe.pl:1052 bin/aa.pl:814
+#: bin/ir.pl:861 bin/is.pl:907 bin/oe.pl:1519 bin/pe.pl:1052 bin/aa.pl:816
 #: UI/Reports/filters/gl.html:183 UI/Reports/filters/orders.html:125
 #: UI/asset/begin_depreciation_all.html:13 UI/asset/begin_report.html:23
 #: UI/inventory/adjustment_setup.html:19 UI/journal/journal_entry.html:40
@@ -2474,13 +2478,13 @@ msgstr "日期格式"
 #: LedgerSMB/Report/Contact/Purchase.pm:101
 #: LedgerSMB/Report/Invoices/Payments.pm:135
 #: LedgerSMB/Report/Invoices/Transactions.pm:286
-#: LedgerSMB/Report/Invoices/Outstanding.pm:245 bin/aa.pl:1638
+#: LedgerSMB/Report/Invoices/Outstanding.pm:245 bin/aa.pl:1640
 #: UI/Reports/filters/invoice_outstanding.html:222
 #: UI/Reports/filters/invoice_search.html:312
 msgid "Date Paid"
 msgstr "付款日期"
 
-#: bin/oe.pl:1727
+#: bin/oe.pl:1725
 #, fuzzy
 msgid "Date Received"
 msgstr "收款日期"
@@ -2515,11 +2519,11 @@ msgstr "日期格式"
 msgid "Date of Birth"
 msgstr "日期"
 
-#: bin/oe.pl:1985
+#: bin/oe.pl:1983
 msgid "Date received missing!"
 msgstr "未指明收款日期！"
 
-#: bin/aa.pl:1691 UI/Reports/filters/contact_search.html:121
+#: bin/aa.pl:1693 UI/Reports/filters/contact_search.html:121
 #: UI/payments/payment1.html:73
 #, fuzzy
 msgid "Date to"
@@ -2530,7 +2534,7 @@ msgstr "日期"
 msgid "Date: [_1]"
 msgstr "日期"
 
-#: bin/am.pl:820 UI/timecards/entry_filter.html:23
+#: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
 msgstr "日"
 
@@ -2538,7 +2542,7 @@ msgstr "日"
 msgid "Day(s)"
 msgstr "日"
 
-#: bin/am.pl:821
+#: bin/am.pl:817
 msgid "Days"
 msgstr "日"
 
@@ -2549,7 +2553,7 @@ msgstr "日"
 msgid "Debit"
 msgstr "借方"
 
-#: bin/am.pl:1503 sql/Pg-database.sql:2896
+#: bin/am.pl:1517 sql/Pg-database.sql:2896
 #, fuzzy
 msgid "Debit Invoice"
 msgstr "發票"
@@ -2671,7 +2675,7 @@ msgstr "預設"
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
 #: bin/ic.pl:833 bin/ic.pl:855 bin/ir.pl:968 bin/is.pl:1019 bin/oe.pl:673
 #: bin/oe.pl:862 bin/pe.pl:173 bin/pe.pl:250 bin/pe.pl:622 bin/am.pl:69
-#: bin/am.pl:81 bin/am.pl:175 bin/am.pl:184 bin/aa.pl:912 bin/aa.pl:941
+#: bin/am.pl:81 bin/am.pl:175 bin/am.pl:184 bin/aa.pl:914 bin/aa.pl:943
 #: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
 #: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
 #: UI/business_units/list_classes.html:92 UI/reconciliation/report.html:303
@@ -2683,7 +2687,7 @@ msgstr "刪除"
 msgid "Delete Batch"
 msgstr "刪除資料集"
 
-#: bin/am.pl:524
+#: bin/am.pl:521
 #, fuzzy
 msgid "Delete Language"
 msgstr "編輯語言"
@@ -2697,7 +2701,7 @@ msgstr "刪除時間表"
 msgid "Delete Vouchers"
 msgstr "刪除時間表"
 
-#: bin/am.pl:535
+#: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
 msgstr "刪除語言將會刪除它的模版"
@@ -2727,8 +2731,9 @@ msgstr "方法"
 
 #: LedgerSMB/Scripts/asset.pm:634 LedgerSMB/Scripts/asset.pm:698
 #: LedgerSMB/Scripts/asset.pm:766
+#, fuzzy
 msgid "Dep. Starts"
-msgstr ""
+msgstr "說明"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:100
 #, fuzzy
@@ -2736,14 +2741,16 @@ msgid "Dep. Through"
 msgstr "方法"
 
 #: LedgerSMB/Scripts/asset.pm:642
+#, fuzzy
 msgid "Dep. YTD"
-msgstr ""
+msgstr "方法"
 
 #: LedgerSMB/Scripts/asset.pm:641
+#, fuzzy
 msgid "Dep. this run"
-msgstr ""
+msgstr "方法"
 
-#: bin/ir.pl:378 bin/is.pl:332 bin/oe.pl:506 bin/aa.pl:451
+#: bin/ir.pl:378 bin/is.pl:332 bin/oe.pl:506 bin/aa.pl:453
 #: UI/asset/edit_asset.html:152 UI/asset/search_asset.html:136
 #: UI/ca-list-selector.html:51 UI/payments/payment2.html:78
 #: UI/payments/payments_detail.html:123 UI/payments/payments_filter.html:52
@@ -2825,10 +2832,10 @@ msgstr "刪除帳戶"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:73 LedgerSMB/Scripts/asset.pm:397
 #: LedgerSMB/Scripts/asset.pm:697 LedgerSMB/Scripts/asset.pm:765 bin/ic.pl:744
 #: bin/ic.pl:1268 bin/ic.pl:2038 bin/ic.pl:2110 bin/io.pl:231 bin/io.pl:566
-#: bin/io.pl:2178 bin/ir.pl:495 bin/is.pl:489 bin/oe.pl:1844 bin/oe.pl:2048
-#: bin/oe.pl:2126 bin/oe.pl:2160 bin/oe.pl:2409 bin/pe.pl:320 bin/pe.pl:366
-#: bin/pe.pl:395 bin/pe.pl:1062 bin/am.pl:857 bin/aa.pl:610 bin/aa.pl:661
-#: bin/aa.pl:1512 UI/Contact/divs/contact_info.html:34
+#: bin/io.pl:2178 bin/ir.pl:495 bin/is.pl:489 bin/oe.pl:1842 bin/oe.pl:2046
+#: bin/oe.pl:2124 bin/oe.pl:2158 bin/oe.pl:2407 bin/pe.pl:320 bin/pe.pl:366
+#: bin/pe.pl:395 bin/pe.pl:1062 bin/am.pl:853 bin/aa.pl:612 bin/aa.pl:663
+#: bin/aa.pl:1514 UI/Contact/divs/contact_info.html:34
 #: UI/Contact/divs/contact_info.html:104 UI/Contact/divs/credit.html:28
 #: UI/Contact/divs/credit.html:86 UI/Contact/divs/credit.html:87
 #: UI/Contact/pricelist.csv:11 UI/Contact/pricelist.html:26
@@ -2904,7 +2911,7 @@ msgstr "說明"
 msgid "Description Translations"
 msgstr "翻譯描述"
 
-#: bin/am.pl:295 bin/am.pl:384 bin/am.pl:469 bin/am.pl:799
+#: bin/am.pl:294 bin/am.pl:382 bin/am.pl:466 bin/am.pl:795
 msgid "Description missing!"
 msgstr "未指明描述！"
 
@@ -2915,7 +2922,7 @@ msgstr "未指明描述！"
 msgid "Description:"
 msgstr "說明"
 
-#: bin/pe.pl:920 bin/aa.pl:1547 UI/Reports/filters/aging.html:64
+#: bin/pe.pl:920 bin/aa.pl:1549 UI/Reports/filters/aging.html:64
 #: UI/Reports/filters/purchase_history.html:231 UI/rc-reconciliation.html:99
 msgid "Detail"
 msgstr "詳情"
@@ -2967,8 +2974,9 @@ msgid "Discount (%)"
 msgstr "折扣"
 
 #: LedgerSMB/Scripts/asset.pm:702
+#, fuzzy
 msgid "Disp. Aquired Value"
-msgstr ""
+msgstr "要求交付日期"
 
 #: UI/templates/preview.html:54
 msgid "Display"
@@ -3015,7 +3023,7 @@ msgstr "收入"
 msgid "Don't know what to do with backup"
 msgstr ""
 
-#: bin/oe.pl:1941 bin/oe.pl:1949
+#: bin/oe.pl:1939 bin/oe.pl:1947
 msgid "Done"
 msgstr "已完成"
 
@@ -3034,7 +3042,7 @@ msgstr "供應商號碼"
 msgid "Dr."
 msgstr "三月"
 
-#: bin/ir.pl:97 bin/aa.pl:1161 bin/aa.pl:1426 bin/gl.pl:131
+#: bin/ir.pl:97 bin/aa.pl:1163 bin/aa.pl:1428 bin/gl.pl:131
 #, fuzzy
 msgid "Draft Posted"
 msgstr "已加入！"
@@ -3092,12 +3100,12 @@ msgstr "十二月"
 #: LedgerSMB/Report/Aging.pm:119 LedgerSMB/Report/Contact/Purchase.pm:105
 #: LedgerSMB/Report/Invoices/Transactions.pm:289
 #: LedgerSMB/Report/Invoices/Outstanding.pm:249 bin/ir.pl:523 bin/is.pl:527
-#: bin/aa.pl:638 bin/aa.pl:1645 UI/Reports/filters/invoice_outstanding.html:237
+#: bin/aa.pl:640 bin/aa.pl:1647 UI/Reports/filters/invoice_outstanding.html:237
 #: UI/Reports/filters/invoice_search.html:327 UI/orders/order.html:96
 msgid "Due Date"
 msgstr "到期日"
 
-#: bin/aa.pl:1307
+#: bin/aa.pl:1309
 msgid "Due Date missing!"
 msgstr "未指明到期日！"
 
@@ -3111,7 +3119,7 @@ msgid "Duplicate employee numbers"
 msgstr "職員編號"
 
 #: bin/arap.pl:411 bin/is.pl:579 bin/is.pl:1018 bin/oe.pl:640 bin/oe.pl:861
-#: bin/oe.pl:1948 bin/am.pl:870 UI/Reports/filters/contact_search.html:46
+#: bin/oe.pl:1946 bin/am.pl:866 UI/Reports/filters/contact_search.html:46
 #: UI/io-email.html:16 UI/rp-email.html:15
 msgid "E-mail"
 msgstr "電子郵件"
@@ -3126,7 +3134,7 @@ msgstr "電郵會計賬到"
 msgid "E-mail [_1]"
 msgstr "電子郵件"
 
-#: bin/io.pl:1698 bin/am.pl:1471
+#: bin/io.pl:1698 bin/am.pl:1485
 msgid "E-mail address missing!"
 msgstr "未指明電子郵件位址！"
 
@@ -3157,7 +3165,7 @@ msgstr ""
 msgid "Edit"
 msgstr "編輯"
 
-#: bin/aa.pl:380 bin/aa.pl:414
+#: bin/aa.pl:380 bin/aa.pl:416
 msgid "Edit AP Transaction"
 msgstr "編輯應付交易"
 
@@ -3180,7 +3188,7 @@ msgstr "新增製成品"
 msgid "Edit Asset Class"
 msgstr "編輯製成品"
 
-#: bin/am.pl:282
+#: bin/am.pl:280
 msgid "Edit Business"
 msgstr "編輯業務"
 
@@ -3189,7 +3197,7 @@ msgstr "編輯業務"
 msgid "Edit Credit Invoice"
 msgstr "新增供應商發票"
 
-#: bin/aa.pl:412
+#: bin/aa.pl:414
 #, fuzzy
 msgid "Edit Credit Note"
 msgstr "貸方"
@@ -3203,7 +3211,7 @@ msgstr "編輯客戶"
 msgid "Edit Customer Return"
 msgstr "編輯客戶"
 
-#: bin/aa.pl:410
+#: bin/aa.pl:412
 #, fuzzy
 msgid "Edit Debit Note"
 msgstr "借方"
@@ -3216,12 +3224,12 @@ msgstr "編輯翻譯描述"
 msgid "Edit Employee"
 msgstr "編輯職員"
 
-#: bin/am.pl:159
+#: bin/am.pl:157
 #, fuzzy
 msgid "Edit GIFI"
 msgstr "列出 GIFI"
 
-#: bin/pe.pl:109
+#: bin/pe.pl:107
 msgid "Edit Group"
 msgstr "編輯組別"
 
@@ -3229,7 +3237,7 @@ msgstr "編輯組別"
 msgid "Edit Labor/Overhead"
 msgstr "編輯直接人工/經常費用"
 
-#: bin/am.pl:458
+#: bin/am.pl:454
 #, fuzzy
 msgid "Edit Language"
 msgstr "列出語言"
@@ -3238,7 +3246,7 @@ msgstr "列出語言"
 msgid "Edit Part"
 msgstr "編輯零件"
 
-#: bin/pe.pl:198
+#: bin/pe.pl:196
 msgid "Edit Pricegroup"
 msgstr "編輯價格組別"
 
@@ -3259,7 +3267,7 @@ msgstr "報表"
 msgid "Edit Request for Quotation"
 msgstr "編輯報價單要求"
 
-#: bin/am.pl:369
+#: bin/am.pl:366
 msgid "Edit SIC"
 msgstr "編輯標準工業分類代碼"
 
@@ -3297,7 +3305,7 @@ msgstr "編輯供應商發票"
 msgid "Edit Vendor Return"
 msgstr "編輯供應商"
 
-#: bin/am.pl:786
+#: bin/am.pl:781
 msgid "Edit Warehouse"
 msgstr "編輯倉庫"
 
@@ -3312,8 +3320,9 @@ msgid "Eight"
 msgstr "重量"
 
 #: LedgerSMB/Num2text.pm:93
+#, fuzzy
 msgid "Eighteen"
-msgstr ""
+msgstr "重量"
 
 #: LedgerSMB/Num2text.pm:111
 #, fuzzy
@@ -3321,8 +3330,9 @@ msgid "Eighty"
 msgstr "重量"
 
 #: LedgerSMB/Num2text.pm:85
+#, fuzzy
 msgid "Eleven"
-msgstr ""
+msgstr "庫存"
 
 #: LedgerSMB/Num2text.pm:86
 msgid "Eleven-o"
@@ -3334,7 +3344,7 @@ msgid "Email"
 msgstr "電子郵件"
 
 #: LedgerSMB/Report/Orders.pm:263 LedgerSMB/Scripts/contact.pm:177
-#: bin/oe.pl:530 bin/pe.pl:884 bin/aa.pl:477 bin/aa.pl:1472
+#: bin/oe.pl:530 bin/pe.pl:884 bin/aa.pl:479 bin/aa.pl:1474
 #: UI/Contact/divs/employee.html:2 UI/Reports/filters/contact_search.html:62
 #: UI/timecards/entry_filter.html:13 templates/demo/ap_transaction.html:93
 #: templates/demo/ap_transaction.tex:68 templates/demo/ar_transaction.tex:85
@@ -3410,7 +3420,7 @@ msgstr "起始餘額"
 msgid "Ending Statement Balance:"
 msgstr "會計帳餘額"
 
-#: bin/am.pl:863
+#: bin/am.pl:859
 msgid "Ends"
 msgstr "完結"
 
@@ -3476,7 +3486,7 @@ msgstr "列出業務"
 msgid "Entity Code"
 msgstr "列出業務"
 
-#: bin/aa.pl:586
+#: bin/aa.pl:588
 #, fuzzy
 msgid "Entity Control Code"
 msgstr "直接人工代碼"
@@ -3534,36 +3544,36 @@ msgstr ""
 msgid "Est. Life"
 msgstr ""
 
-#: bin/arap.pl:554 bin/am.pl:868
+#: bin/arap.pl:554 bin/am.pl:864
 msgid "Every"
 msgstr "每"
 
-#: bin/ir.pl:863 bin/is.pl:909 bin/aa.pl:816 UI/orders/order.html:251
+#: bin/ir.pl:863 bin/is.pl:909 bin/aa.pl:818 UI/orders/order.html:251
 msgid "Exch"
 msgstr "匯率"
 
 #: LedgerSMB/Report/Contact/History.pm:116 LedgerSMB/Scripts/payment.pm:759
-#: bin/ir.pl:354 bin/is.pl:312 bin/oe.pl:334 bin/oe.pl:342 bin/oe.pl:1525
-#: bin/aa.pl:433 UI/Reports/filters/payments.html:110 UI/orders/order.html:54
+#: bin/ir.pl:354 bin/is.pl:312 bin/oe.pl:334 bin/oe.pl:342 bin/oe.pl:1523
+#: bin/aa.pl:435 UI/Reports/filters/payments.html:110 UI/orders/order.html:54
 #: UI/payments/payment2.html:134 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 msgid "Exchange Rate"
 msgstr "匯率"
 
-#: bin/ir.pl:1388 bin/is.pl:1362 bin/aa.pl:1341
+#: bin/ir.pl:1388 bin/is.pl:1362 bin/aa.pl:1343
 msgid "Exchange rate for payment missing!"
 msgstr "未指明付款的匯率！"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\"
+msgid "Exchange rate hasn\\'t been defined!"
 msgstr "未指明匯率！"
 
 #: LedgerSMB/DBObject/Payment.pm:750
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
 
-#: bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1196 bin/oe.pl:1552 bin/aa.pl:1323
+#: bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1194 bin/oe.pl:1550 bin/aa.pl:1325
 msgid "Exchange rate missing!"
 msgstr "未指明匯率！"
 
@@ -3745,7 +3755,7 @@ msgid "File Type"
 msgstr "業務"
 
 #: bin/ic.pl:877 bin/ic.pl:896 bin/ir.pl:985 bin/ir.pl:1004 bin/is.pl:1037
-#: bin/is.pl:1056 bin/oe.pl:880 bin/oe.pl:899 bin/aa.pl:1011 bin/aa.pl:1031
+#: bin/is.pl:1056 bin/oe.pl:880 bin/oe.pl:899 bin/aa.pl:1013 bin/aa.pl:1033
 #: UI/Contact/divs/files.html:9 UI/journal/journal_entry.html:316
 #: UI/journal/journal_entry.html:334
 #, fuzzy
@@ -3753,7 +3763,7 @@ msgid "File name"
 msgstr "業務"
 
 #: bin/ic.pl:878 bin/ic.pl:897 bin/ir.pl:986 bin/ir.pl:1005 bin/is.pl:1038
-#: bin/is.pl:1057 bin/oe.pl:881 bin/oe.pl:900 bin/aa.pl:1012 bin/aa.pl:1032
+#: bin/is.pl:1057 bin/oe.pl:881 bin/oe.pl:900 bin/aa.pl:1014 bin/aa.pl:1034
 #: UI/journal/journal_entry.html:317 UI/journal/journal_entry.html:335
 #, fuzzy
 msgid "File type"
@@ -3864,7 +3874,7 @@ msgstr ""
 msgid "Fri"
 msgstr "重覆"
 
-#: bin/ic.pl:1133 bin/oe.pl:2134 bin/pe.pl:855 bin/aa.pl:1689
+#: bin/ic.pl:1133 bin/oe.pl:2132 bin/pe.pl:855 bin/aa.pl:1691
 #: UI/lib/report_base.html:97 UI/lib/report_base.html:166
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:114
@@ -3902,7 +3912,7 @@ msgstr "下單日期"
 msgid "From File"
 msgstr "從"
 
-#: bin/oe.pl:2147
+#: bin/oe.pl:2145
 msgid "From Warehouse"
 msgstr "從貨倉"
 
@@ -3948,7 +3958,7 @@ msgstr "未指明 GIFI！"
 msgid "GIFI saved!"
 msgstr "已儲存！"
 
-#: bin/am.pl:877 UI/Reports/filters/unapproved.html:15
+#: bin/am.pl:873 UI/Reports/filters/unapproved.html:15
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
 msgid "GL"
 msgstr "總帳"
@@ -4000,11 +4010,11 @@ msgstr "生成"
 msgid "Generate Control Code"
 msgstr "審核控制"
 
-#: bin/oe.pl:2519
+#: bin/oe.pl:2517
 msgid "Generate Orders"
 msgstr "生成訂單"
 
-#: bin/oe.pl:2424
+#: bin/oe.pl:2422
 msgid "Generate Purchase Orders"
 msgstr "生成採購單"
 
@@ -4048,7 +4058,7 @@ msgid "Grand Total"
 msgstr "總列數"
 
 #: LedgerSMB/Report/Inventory/Partsgroups.pm:48 bin/ic.pl:424 bin/ic.pl:1277
-#: bin/io.pl:263 bin/io.pl:568 bin/oe.pl:2052 bin/oe.pl:2130 bin/oe.pl:2165
+#: bin/io.pl:263 bin/io.pl:568 bin/oe.pl:2050 bin/oe.pl:2128 bin/oe.pl:2163
 #: bin/pe.pl:144 UI/io-email.html:87
 msgid "Group"
 msgstr "組別"
@@ -4132,7 +4142,7 @@ msgstr ""
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:93
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:94
 #: LedgerSMB/Report/Unapproved/Drafts.pm:84 LedgerSMB/Scripts/asset.pm:531
-#: bin/am.pl:856 bin/aa.pl:1607 UI/Reports/filters/gl.html:176
+#: bin/am.pl:852 bin/aa.pl:1609 UI/Reports/filters/gl.html:176
 #: UI/Reports/filters/invoice_outstanding.html:136
 #: UI/Reports/filters/invoice_search.html:226
 #: UI/Reports/filters/orders.html:112 UI/business_units/list_classes.html:12
@@ -4244,7 +4254,7 @@ msgstr "包含外匯差距"
 msgid "Include Payment"
 msgstr "包括付款"
 
-#: bin/aa.pl:1712 UI/Reports/co/filter_bm.html:67
+#: bin/aa.pl:1714 UI/Reports/co/filter_bm.html:67
 #: UI/Reports/co/filter_cd.html:54 UI/Reports/filters/aging.html:71
 #: UI/Reports/filters/gl.html:116
 #: UI/Reports/filters/invoice_outstanding.html:102
@@ -4335,7 +4345,7 @@ msgid "Internal Files"
 msgstr "內部備忘錄"
 
 #: bin/ir.pl:799 bin/ir.pl:808 bin/is.pl:851 bin/is.pl:859 bin/oe.pl:808
-#: bin/aa.pl:786 UI/orders/order.html:200
+#: bin/aa.pl:788 UI/orders/order.html:200
 msgid "Internal Notes"
 msgstr "內部備忘錄"
 
@@ -4345,8 +4355,9 @@ msgid "Invalid Reporting Basis"
 msgstr "報表"
 
 #: LedgerSMB/Scripts/setup.pm:364
+#, fuzzy
 msgid "Invalid backup request"
-msgstr ""
+msgstr "有效至"
 
 #: LedgerSMB.pm:605
 msgid "Invalid date/time entered"
@@ -4357,7 +4368,7 @@ msgstr ""
 msgid "Invalid file"
 msgstr "有效至"
 
-#: bin/am.pl:1437 bin/am.pl:1477
+#: bin/am.pl:1443 bin/am.pl:1491
 #, fuzzy
 msgid "Invalid redirect"
 msgstr "有效至"
@@ -4420,11 +4431,11 @@ msgstr "在停用此製成品之前, 存貨數量必需為零！"
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr "停用此項零件之前, 存貨數量必需為零！"
 
-#: bin/oe.pl:1997
+#: bin/oe.pl:1995
 msgid "Inventory saved!"
 msgstr "已儲存存貨！"
 
-#: bin/oe.pl:2277
+#: bin/oe.pl:2275
 msgid "Inventory transferred!"
 msgstr "轉移的存貨！"
 
@@ -4432,7 +4443,7 @@ msgstr "轉移的存貨！"
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Scripts/payment.pm:747 bin/io.pl:1385 bin/io.pl:1584 bin/is.pl:236
-#: bin/is.pl:1366 bin/am.pl:1501 UI/rp-search-generate_tax_report.html:119
+#: bin/is.pl:1366 bin/am.pl:1515 UI/rp-search-generate_tax_report.html:119
 #: templates/demo/invoice.html:12 templates/demo/invoice.tex:112
 #: templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:12
@@ -4481,24 +4492,24 @@ msgstr "發票"
 msgid "Invoice #"
 msgstr "發票"
 
-#: bin/ir.pl:515 bin/is.pl:519 bin/aa.pl:630 bin/aa.pl:1643
+#: bin/ir.pl:515 bin/is.pl:519 bin/aa.pl:632 bin/aa.pl:1645
 #, fuzzy
 msgid "Invoice Created"
 msgstr "發票日期"
 
-#: bin/aa.pl:1308
+#: bin/aa.pl:1310
 #, fuzzy
 msgid "Invoice Created Date missing!"
 msgstr "未指明發票日期！"
 
 #: LedgerSMB/Report/Invoices/COGS.pm:94 bin/ir.pl:519 bin/is.pl:523
-#: bin/aa.pl:634 bin/aa.pl:1617 UI/Reports/filters/invoice_outstanding.html:163
+#: bin/aa.pl:636 bin/aa.pl:1619 UI/Reports/filters/invoice_outstanding.html:163
 #: UI/Reports/filters/invoice_search.html:253 UI/orders/order.html:90
 #: templates/demo/product_receipt.html:103
 msgid "Invoice Date"
 msgstr "發票日期"
 
-#: bin/io.pl:1710 bin/ir.pl:1353 bin/is.pl:1327 bin/aa.pl:1306
+#: bin/io.pl:1701 bin/ir.pl:1353 bin/is.pl:1327 bin/aa.pl:1308
 msgid "Invoice Date missing!"
 msgstr "未指明發票日期！"
 
@@ -4511,7 +4522,7 @@ msgstr "發票"
 #: LedgerSMB/Report/Contact/History.pm:68
 #: LedgerSMB/Report/Contact/Purchase.pm:65 LedgerSMB/Report/Invoices/COGS.pm:88
 #: LedgerSMB/Report/PNL/Invoice.pm:86 LedgerSMB/Report/Taxform/Details.pm:86
-#: bin/ir.pl:505 bin/is.pl:510 bin/aa.pl:621 bin/aa.pl:1496 bin/aa.pl:1610
+#: bin/ir.pl:505 bin/is.pl:510 bin/aa.pl:623 bin/aa.pl:1498 bin/aa.pl:1612
 #: UI/Reports/filters/invoice_outstanding.html:142
 #: UI/Reports/filters/invoice_search.html:87
 #: UI/Reports/filters/invoice_search.html:232 UI/asset/edit_asset.html:207
@@ -4520,7 +4531,7 @@ msgstr "發票"
 msgid "Invoice Number"
 msgstr "發票編號"
 
-#: bin/io.pl:1709
+#: bin/io.pl:1711
 msgid "Invoice Number missing!"
 msgstr "未指明發票編號！"
 
@@ -4738,11 +4749,11 @@ msgstr "服務編號"
 msgid "Language"
 msgstr "語言"
 
-#: bin/am.pl:550
+#: bin/am.pl:547
 msgid "Language deleted!"
 msgstr "已刪除語言！"
 
-#: bin/am.pl:510
+#: bin/am.pl:507
 msgid "Language saved!"
 msgstr "已儲存語言！"
 
@@ -4771,7 +4782,7 @@ msgstr "已更新"
 msgid "Last name"
 msgstr "已更新"
 
-#: bin/oe.pl:2420 sql/Pg-database.sql:546
+#: bin/oe.pl:2418 sql/Pg-database.sql:546
 msgid "Lead"
 msgstr "交付時間"
 
@@ -4986,12 +4997,14 @@ msgid "Make invoice numbers unique"
 msgstr "發票編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:589
+#, fuzzy
 msgid "Make non-obsolete partnumbers unique"
-msgstr ""
+msgstr "客戶編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:295
+#, fuzzy
 msgid "Make sure all meta numbers are unique."
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:210
 msgid ""
@@ -5007,7 +5020,7 @@ msgstr "經理"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:301
 #: LedgerSMB/Report/Invoices/Outstanding.pm:265 LedgerSMB/Report/Orders.pm:267
-#: bin/aa.pl:1486 UI/Contact/divs/employee.html:105
+#: bin/aa.pl:1488 UI/Contact/divs/employee.html:105
 #: UI/Contact/divs/employee.html:143
 #: UI/Reports/filters/invoice_outstanding.html:189
 #: UI/Reports/filters/invoice_search.html:279
@@ -5052,7 +5065,7 @@ msgstr "五月"
 
 #: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:153
 #: LedgerSMB/Scripts/payment.pm:753 bin/ir.pl:690 bin/ir.pl:866 bin/is.pl:749
-#: bin/is.pl:912 bin/aa.pl:819 UI/Reports/filters/gl.html:72
+#: bin/is.pl:912 bin/aa.pl:821 UI/Reports/filters/gl.html:72
 #: UI/Reports/filters/gl.html:227 UI/journal/journal_entry.html:118
 #: UI/orders/order.html:248 UI/payments/payment2.html:284
 #: templates/demo/ap_transaction.html:195
@@ -5119,8 +5132,9 @@ msgid "Min Taxable"
 msgstr "應稅"
 
 #: LedgerSMB/Scripts/configuration.pm:118
+#, fuzzy
 msgid "Misc Settings"
-msgstr ""
+msgstr "開始日期"
 
 #: UI/reconciliation/report.html:137
 msgid "Mismatched Transactions (From Upload)"
@@ -5141,7 +5155,7 @@ msgstr "型號"
 msgid "Mon"
 msgstr "月"
 
-#: LedgerSMB/DBObject/Date.pm:84 bin/pe.pl:841 bin/am.pl:822 bin/aa.pl:1576
+#: LedgerSMB/DBObject/Date.pm:84 bin/pe.pl:841 bin/am.pl:818 bin/aa.pl:1578
 #: UI/lib/report_base.html:145 UI/lib/report_base.html:212
 #: UI/Reports/co/filter_bm.html:58 UI/bp-search.html:44
 #: UI/rc-reconciliation.html:47 UI/rp-search-generate_income_statement.html:40
@@ -5153,7 +5167,7 @@ msgstr "月"
 msgid "Month(s)"
 msgstr "月"
 
-#: bin/am.pl:823
+#: bin/am.pl:819
 #, fuzzy
 msgid "Months"
 msgstr "月"
@@ -5216,7 +5230,7 @@ msgid "Net Due"
 msgstr ""
 
 #: bin/ir.pl:373 bin/ir.pl:572 bin/is.pl:327 bin/is.pl:591 bin/oe.pl:501
-#: bin/aa.pl:467 bin/aa.pl:949 bin/gl.pl:284
+#: bin/aa.pl:469 bin/aa.pl:951 bin/gl.pl:284
 msgid "New"
 msgstr ""
 
@@ -5243,7 +5257,7 @@ msgstr "使用者"
 msgid "New Window"
 msgstr "新視窗"
 
-#: bin/am.pl:859 UI/inventory/adjustment_entry.html:85
+#: bin/am.pl:855 UI/inventory/adjustment_entry.html:85
 #: UI/setup/select_coa.html:47
 msgid "Next"
 msgstr "下一個"
@@ -5252,7 +5266,7 @@ msgstr "下一個"
 msgid "Next Date"
 msgstr "下一日"
 
-#: bin/am.pl:930
+#: bin/am.pl:926
 msgid "Next Number"
 msgstr "下一個號碼"
 
@@ -5358,7 +5372,7 @@ msgstr "未選定資料集！"
 msgid "No workflow script specified"
 msgstr ""
 
-#: bin/aa.pl:1605 UI/Reports/filters/invoice_outstanding.html:130
+#: bin/aa.pl:1607 UI/Reports/filters/invoice_outstanding.html:130
 #: UI/Reports/filters/invoice_search.html:220
 #: UI/Reports/filters/orders.html:106 UI/Reports/filters/search_goods.html:189
 msgid "No."
@@ -5424,7 +5438,7 @@ msgstr "備註"
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Scripts/contact.pm:184 bin/ic.pl:769 bin/ir.pl:796 bin/is.pl:846
-#: bin/oe.pl:807 bin/aa.pl:785 bin/aa.pl:1516 bin/aa.pl:1649
+#: bin/oe.pl:807 bin/aa.pl:787 bin/aa.pl:1518 bin/aa.pl:1651
 #: UI/Contact/divs/notes.html:2 UI/Contact/divs/notes.html:6
 #: UI/Contact/divs/notes.html:60 UI/Reports/filters/contact_search.html:73
 #: UI/Reports/filters/gl.html:91
@@ -5453,15 +5467,15 @@ msgstr "備註"
 msgid "Notes"
 msgstr "備註"
 
-#: bin/oe.pl:1994
+#: bin/oe.pl:1992
 msgid "Nothing entered!"
 msgstr "沒有任何輸入！"
 
-#: bin/oe.pl:2295 bin/oe.pl:2558 bin/pe.pl:1190
+#: bin/oe.pl:2293 bin/oe.pl:2556 bin/pe.pl:1190
 msgid "Nothing selected!"
 msgstr "沒有選擇任何東西！"
 
-#: bin/oe.pl:2011
+#: bin/oe.pl:2009
 msgid "Nothing to transfer!"
 msgstr "沒有可轉移的項目！"
 
@@ -5490,7 +5504,7 @@ msgid "Null model numbers"
 msgstr "職員編號"
 
 #: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2032 bin/ic.pl:2106 bin/io.pl:228
-#: bin/io.pl:562 bin/oe.pl:1841 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391
+#: bin/io.pl:562 bin/oe.pl:1839 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391
 #: UI/Contact/divs/credit.html:26 UI/am-taxes.html:14 UI/io-email.html:99
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:135
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:119
@@ -5575,7 +5589,7 @@ msgstr "十月"
 msgid "October"
 msgstr "十月"
 
-#: bin/ir.pl:542 bin/is.pl:560 bin/is.pl:832 bin/aa.pl:922
+#: bin/ir.pl:542 bin/is.pl:560 bin/is.pl:832 bin/aa.pl:924
 #, fuzzy
 msgid "Off Hold"
 msgstr "已有存量"
@@ -5593,7 +5607,7 @@ msgstr "密碼"
 msgid "On Hand"
 msgstr "已有存量"
 
-#: bin/ir.pl:544 bin/is.pl:562 bin/is.pl:834 bin/aa.pl:924 bin/aa.pl:1703
+#: bin/ir.pl:544 bin/is.pl:562 bin/is.pl:834 bin/aa.pl:926 bin/aa.pl:1705
 #: UI/Reports/filters/invoice_outstanding.html:94
 #: UI/Reports/filters/invoice_search.html:186
 #, fuzzy
@@ -5634,7 +5648,7 @@ msgstr "新增使用者"
 msgid "Only for Employees"
 msgstr "職員"
 
-#: bin/oe.pl:310 bin/aa.pl:1524 UI/Reports/filters/invoice_search.html:206
+#: bin/oe.pl:310 bin/aa.pl:1526 UI/Reports/filters/invoice_search.html:206
 #: UI/Reports/filters/orders.html:91
 #: UI/Reports/filters/purchase_history.html:203
 #: UI/Reports/filters/timecards.html:29
@@ -5661,7 +5675,7 @@ msgid "Or Add To Batch"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:282
-#: LedgerSMB/Report/Invoices/Outstanding.pm:199 bin/oe.pl:2413
+#: LedgerSMB/Report/Invoices/Outstanding.pm:199 bin/oe.pl:2411
 #, fuzzy
 msgid "Order"
 msgstr "訂單"
@@ -5704,7 +5718,7 @@ msgstr "訂單"
 msgid "Order By"
 msgstr "訂單"
 
-#: bin/oe.pl:387 bin/oe.pl:1797 templates/demo/purchase_order.html:103
+#: bin/oe.pl:387 bin/oe.pl:1795 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103 templates/demo/work_order.html:103
 #: templates/demo_with_images/purchase_order.html:103
 #: templates/demo_with_images/sales_order.html:103
@@ -5714,7 +5728,7 @@ msgstr "訂單"
 msgid "Order Date"
 msgstr "下單日期"
 
-#: bin/io.pl:1714 bin/oe.pl:1180 bin/oe.pl:1355
+#: bin/io.pl:1703 bin/oe.pl:1180 bin/oe.pl:1353
 msgid "Order Date missing!"
 msgstr "未指明下單日期！"
 
@@ -5723,7 +5737,7 @@ msgid "Order Entry"
 msgstr "下單項目"
 
 #: LedgerSMB/Report/Contact/Purchase.pm:69 bin/ir.pl:510 bin/is.pl:514
-#: bin/oe.pl:381 bin/oe.pl:1792 bin/aa.pl:626 bin/aa.pl:1500 bin/aa.pl:1613
+#: bin/oe.pl:381 bin/oe.pl:1790 bin/aa.pl:628 bin/aa.pl:1502 bin/aa.pl:1615
 #: UI/Reports/filters/invoice_outstanding.html:149
 #: UI/Reports/filters/invoice_search.html:97
 #: UI/Reports/filters/invoice_search.html:239 UI/Reports/filters/orders.html:38
@@ -5731,15 +5745,15 @@ msgstr "下單項目"
 msgid "Order Number"
 msgstr "訂單編號"
 
-#: bin/io.pl:1713 bin/oe.pl:1354
+#: bin/io.pl:1713 bin/oe.pl:1352
 msgid "Order Number missing!"
 msgstr "未指明訂單編號！"
 
-#: bin/oe.pl:1332
+#: bin/oe.pl:1330
 msgid "Order deleted!"
 msgstr "已刪除訂單！"
 
-#: bin/oe.pl:2547
+#: bin/oe.pl:2545
 msgid "Order generation failed!"
 msgstr "生成訂單失敗！"
 
@@ -5837,7 +5851,7 @@ msgstr "已加入付款！"
 msgid "Overpayments"
 msgstr "預繳"
 
-#: LedgerSMB/Form.pm:1400 bin/arapprn.pl:480 bin/io.pl:1489 bin/am.pl:1085
+#: LedgerSMB/Form.pm:1400 bin/arapprn.pl:480 bin/io.pl:1489 bin/am.pl:1081
 #: UI/Contact/pricelist.html:101 UI/Reports/aging_report.html:112
 #: UI/Reports/display_report.html:65 UI/Reports/balance_sheet.html:115
 #: UI/Reports/PNL.html:97
@@ -5857,8 +5871,8 @@ msgstr ""
 
 #: LedgerSMB/Report/Contact/Purchase.pm:73
 #: LedgerSMB/Report/Invoices/Outstanding.pm:203 LedgerSMB/Report/Orders.pm:247
-#: bin/ir.pl:527 bin/is.pl:531 bin/oe.pl:395 bin/oe.pl:1802 bin/aa.pl:642
-#: bin/aa.pl:1504 bin/aa.pl:1615
+#: bin/ir.pl:527 bin/is.pl:531 bin/oe.pl:395 bin/oe.pl:1800 bin/aa.pl:644
+#: bin/aa.pl:1506 bin/aa.pl:1617
 #: UI/Reports/filters/invoice_outstanding.html:155
 #: UI/Reports/filters/invoice_search.html:107
 #: UI/Reports/filters/invoice_search.html:245 UI/Reports/filters/orders.html:48
@@ -5875,7 +5889,7 @@ msgid "POST AND PRINT"
 msgstr ""
 
 #: bin/io.pl:1413 bin/io.pl:1431 bin/io.pl:1603 bin/is.pl:238 bin/is.pl:993
-#: bin/oe.pl:248 bin/oe.pl:267 bin/am.pl:1504
+#: bin/oe.pl:248 bin/oe.pl:267 bin/am.pl:1518
 #: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
 #: templates/demo/packing_list.tex:81
 #: templates/demo_with_images/packing_list.html:4
@@ -5887,11 +5901,11 @@ msgstr ""
 msgid "Packing List"
 msgstr "出貨單"
 
-#: bin/io.pl:1712
+#: bin/io.pl:1702
 msgid "Packing List Date missing!"
 msgstr "未指明出貨單日期！"
 
-#: bin/io.pl:1711
+#: bin/io.pl:1712
 msgid "Packing List Number missing!"
 msgstr "未指明出貨單編號！"
 
@@ -5899,7 +5913,7 @@ msgstr "未指明出貨單編號！"
 #: LedgerSMB/Report/Invoices/Transactions.pm:280
 #: LedgerSMB/Report/Invoices/Outstanding.pm:231
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
-#: LedgerSMB/Scripts/payment.pm:750 bin/aa.pl:1641
+#: LedgerSMB/Scripts/payment.pm:750 bin/aa.pl:1643
 #: UI/Reports/filters/invoice_outstanding.html:230
 #: UI/Reports/filters/invoice_search.html:320
 #: UI/payments/payments_detail.html:323 templates/demo/invoice.html:184
@@ -5936,7 +5950,7 @@ msgstr "零件組"
 #: LedgerSMB/Report/Inventory/Search.pm:194
 #: LedgerSMB/Report/Invoices/COGS.pm:99 LedgerSMB/Report/Invoices/COGS.pm:159
 #: LedgerSMB/Report/PNL/Product.pm:78 LedgerSMB/Scripts/configuration.pm:112
-#: bin/oe.pl:2044 bin/oe.pl:2122 bin/oe.pl:2156 bin/oe.pl:2407 bin/pe.pl:1057
+#: bin/oe.pl:2042 bin/oe.pl:2120 bin/oe.pl:2154 bin/oe.pl:2405 bin/pe.pl:1057
 #: UI/Reports/filters/cogs_lines.html:9
 #: UI/Reports/filters/inventory_activity.html:11
 #: UI/Reports/filters/purchase_history.html:246
@@ -5951,8 +5965,9 @@ msgid "Partial"
 msgstr "零件"
 
 #: LedgerSMB/Scripts/asset.pm:693
+#, fuzzy
 msgid "Partial Disposal Report [_1] on date [_2]"
-msgstr ""
+msgstr "調節報告"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
 #: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:113
@@ -6076,7 +6091,7 @@ msgstr "付款"
 msgid "Payment Type:"
 msgstr "付款"
 
-#: bin/ir.pl:1378 bin/is.pl:1352 bin/aa.pl:1331
+#: bin/ir.pl:1378 bin/is.pl:1352 bin/aa.pl:1333
 #, fuzzy
 msgid "Payment date missing!"
 msgstr "未指明年結日期！"
@@ -6091,7 +6106,7 @@ msgstr ""
 msgid "Payment due by [_1]."
 msgstr ""
 
-#: bin/ir.pl:850 bin/is.pl:896 bin/aa.pl:799 UI/orders/order.html:243
+#: bin/ir.pl:850 bin/is.pl:896 bin/aa.pl:801 UI/orders/order.html:243
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:10
 #: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
 #: templates/demo/ar_transaction.html:178 templates/demo/ar_transaction.tex:126
@@ -6130,7 +6145,7 @@ msgstr "已加入付款！"
 msgid "Percent Remaining"
 msgstr "尚餘"
 
-#: bin/pe.pl:834 bin/aa.pl:1569 UI/lib/report_base.html:114
+#: bin/pe.pl:834 bin/aa.pl:1571 UI/lib/report_base.html:114
 #: UI/lib/report_base.html:182 UI/bp-search.html:34 UI/ca-list-selector.html:58
 #: UI/rc-reconciliation.html:32 UI/rp-search-generate_income_statement.html:25
 #: UI/rp-search-generate_income_statement.html:85
@@ -6155,7 +6170,7 @@ msgid "Physical"
 msgstr ""
 
 #: bin/io.pl:1409 bin/io.pl:1427 bin/io.pl:1626 bin/is.pl:237 bin/oe.pl:247
-#: bin/oe.pl:266 bin/am.pl:1505 templates/demo/pick_list.html:4
+#: bin/oe.pl:266 bin/am.pl:1519 templates/demo/pick_list.html:4
 #: templates/demo/pick_list.html:18 templates/demo/pick_list.tex:74
 #: templates/demo_with_images/pick_list.html:4
 #: templates/demo_with_images/pick_list.html:18
@@ -6188,12 +6203,14 @@ msgid ""
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:551
+#, fuzzy
 msgid "Please make all AR invoice numbers unique"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:459
+#, fuzzy
 msgid "Please make all customer numbers unique"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:530
 #, fuzzy
@@ -6201,28 +6218,33 @@ msgid "Please make all employee numbers unique"
 msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:494
+#, fuzzy
 msgid "Please make all vendor numbers unique"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:510
+#, fuzzy
 msgid "Please make sure all employees have an employee number"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:625
+#, fuzzy
 msgid "Please make sure all make numbers are non-empty"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:607
+#, fuzzy
 msgid "Please make sure all modelsnumbers are non-empty"
-msgstr ""
+msgstr "職員編號"
 
 #: LedgerSMB/Upgrade_Tests.pm:440
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:475
+#, fuzzy
 msgid "Please make sure there are no empty vendor numbers."
-msgstr ""
+msgstr "職員編號"
 
 #: templates/demo/request_quotation.html:128
 #: templates/demo/request_quotation.tex:117
@@ -6265,7 +6287,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:242 bin/ir.pl:557
 #: bin/ir.pl:591 bin/ir.pl:964 bin/is.pl:575 bin/is.pl:613 bin/is.pl:1014
-#: bin/aa.pl:908 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:272 bin/gl.pl:312
+#: bin/aa.pl:910 bin/aa.pl:939 bin/aa.pl:959 bin/gl.pl:272 bin/gl.pl:312
 #: UI/payments/payment2.html:446
 msgid "Post"
 msgstr "加入"
@@ -6285,7 +6307,7 @@ msgstr "當新的加入"
 msgid "Post Yearend"
 msgstr "年結"
 
-#: bin/ir.pl:559 bin/ir.pl:965 bin/is.pl:1017 bin/aa.pl:911
+#: bin/ir.pl:559 bin/ir.pl:965 bin/is.pl:1017 bin/aa.pl:913
 msgid "Post as new"
 msgstr "當新的加入"
 
@@ -6300,27 +6322,27 @@ msgstr "當新的加入"
 msgid "Posting Date:"
 msgstr "當新的加入"
 
-#: bin/am.pl:1396
+#: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
 msgstr "總帳交易"
 
-#: bin/am.pl:1236
+#: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
 msgstr "銷售發票 "
 
-#: bin/am.pl:1258 bin/am.pl:1267
+#: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
 msgid "Posting Transaction [_1]"
 msgstr "應付交易"
 
-#: bin/am.pl:1246
+#: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
 msgstr "供應商發票 "
 
-#: LedgerSMB/Form.pm:1398 bin/arapprn.pl:479 bin/io.pl:1485 bin/am.pl:1084
+#: LedgerSMB/Form.pm:1398 bin/arapprn.pl:479 bin/io.pl:1485 bin/am.pl:1080
 msgid "Postscript"
 msgstr "Postscript"
 
@@ -6412,8 +6434,8 @@ msgstr "公司名稱"
 
 #: LedgerSMB/Report/Taxform/Details.pm:129
 #: LedgerSMB/Report/Taxform/Summary.pm:127 bin/arap.pl:486 bin/ir.pl:556
-#: bin/is.pl:574 bin/is.pl:1013 bin/oe.pl:635 bin/oe.pl:854 bin/oe.pl:1945
-#: bin/am.pl:871 bin/aa.pl:907 bin/aa.pl:936
+#: bin/is.pl:574 bin/is.pl:1013 bin/oe.pl:635 bin/oe.pl:854 bin/oe.pl:1943
+#: bin/am.pl:867 bin/aa.pl:909 bin/aa.pl:938
 #: UI/payments/payments_detail.html:490 UI/timecards/timecard.html:158
 msgid "Print"
 msgstr "列印"
@@ -6439,23 +6461,68 @@ msgstr "已列印"
 msgid "Printer"
 msgstr "印表機"
 
-#: bin/am.pl:1433
-msgid "Printing"
-msgstr "正列印"
+#: bin/am.pl:1427
+#, fuzzy
+msgid "Printing Bin List [_1]"
+msgstr "應付交易"
+
+#: bin/am.pl:1420
+#, fuzzy
+msgid "Printing Credit Invoice [_1]"
+msgstr "供應商發票 "
+
+#: bin/am.pl:1421
+#, fuzzy
+msgid "Printing Debit Invoice [_1]"
+msgstr "銷售發票 "
+
+#: bin/am.pl:1419
+#, fuzzy
+msgid "Printing Invoice [_1]"
+msgstr "銷售發票 "
+
+#: bin/am.pl:1422
+#, fuzzy
+msgid "Printing Packing List [_1]"
+msgstr "出貨單"
+
+#: bin/am.pl:1423
+msgid "Printing Pick List [_1]"
+msgstr ""
+
+#: bin/am.pl:1426
+#, fuzzy
+msgid "Printing Purchase Order [_1]"
+msgstr "編輯採購單"
+
+#: bin/am.pl:1424
+#, fuzzy
+msgid "Printing Sales Order [_1]"
+msgstr "銷售發票 "
+
+#: bin/am.pl:1418
+#, fuzzy
+msgid "Printing Transaction [_1]"
+msgstr "應付交易"
+
+#: bin/am.pl:1425
+msgid "Printing Work Order [_1]"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:640
 msgid "Prior Dep."
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:639
+#, fuzzy
 msgid "Prior Through"
-msgstr ""
+msgstr "說明"
 
 #: LedgerSMB/Scripts/asset.pm:400 LedgerSMB/Scripts/asset.pm:771
 msgid "Proceeds"
 msgstr ""
 
-#: bin/am.pl:1007 UI/am-list-recurring.html:62
+#: bin/am.pl:1003 UI/am-list-recurring.html:62
 msgid "Process Transactions"
 msgstr "處理所有交易"
 
@@ -6481,7 +6548,7 @@ msgstr "利潤中心"
 msgid "Profit and Loss"
 msgstr "列印並加入"
 
-#: bin/ic.pl:948 bin/ir.pl:980 bin/is.pl:1032 bin/aa.pl:1006
+#: bin/ic.pl:948 bin/ir.pl:980 bin/is.pl:1032 bin/aa.pl:1008
 #, fuzzy
 msgid "Profit/Loss"
 msgstr "列印並加入"
@@ -6504,7 +6571,7 @@ msgstr "項目描述的翻譯"
 msgid "Project Number"
 msgstr "項目號碼"
 
-#: bin/aa.pl:1621
+#: bin/aa.pl:1623
 #, fuzzy
 msgid "Project Numbers"
 msgstr "項目號碼"
@@ -6536,7 +6603,7 @@ msgid "Purchase History"
 msgstr "客戶歷史"
 
 #: bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563 bin/ir.pl:967 bin/oe.pl:259
-#: bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1218 bin/am.pl:1303 bin/am.pl:1508
+#: bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216 bin/am.pl:1299 bin/am.pl:1522
 #: UI/Contact/divs/credit.html:367 templates/demo/purchase_order.html:4
 #: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
@@ -6554,7 +6621,7 @@ msgstr "採購單"
 msgid "Purchase Order Number"
 msgstr "採購單編號"
 
-#: LedgerSMB/Report/Orders.pm:190 LedgerSMB/Report/Orders.pm:290 bin/am.pl:879
+#: LedgerSMB/Report/Orders.pm:190 LedgerSMB/Report/Orders.pm:290 bin/am.pl:875
 #: UI/Reports/filters/search_goods.html:167 sql/Pg-database.sql:2810
 #: sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
 msgid "Purchase Orders"
@@ -6579,7 +6646,7 @@ msgstr "採購單"
 #: LedgerSMB/Report/Contact/History.pm:87
 #: LedgerSMB/Report/Inventory/History.pm:155
 #: LedgerSMB/Report/Inventory/Search.pm:294 bin/ic.pl:1260 bin/ic.pl:2117
-#: bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1847 bin/oe.pl:2139 bin/pe.pl:1065
+#: bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845 bin/oe.pl:2137 bin/pe.pl:1065
 #: UI/Reports/filters/purchase_history.html:286
 #: UI/timecards/timecard-week.html:98 templates/demo/bin_list.html:151
 #: templates/demo/bin_list.tex:108 templates/demo/invoice.html:138
@@ -6635,7 +6702,7 @@ msgstr "列出業務"
 msgid "Quantity exceeds available units to stock!"
 msgstr "數量超過可庫存的數量！"
 
-#: LedgerSMB/DBObject/Date.pm:90 bin/pe.pl:843 bin/aa.pl:1578
+#: LedgerSMB/DBObject/Date.pm:90 bin/pe.pl:843 bin/aa.pl:1580
 #: UI/lib/report_base.html:151 UI/lib/report_base.html:218
 #: UI/Reports/co/filter_bm.html:63 UI/bp-search.html:47
 #: UI/rc-reconciliation.html:53 UI/rp-search-generate_income_statement.html:46
@@ -6645,7 +6712,7 @@ msgstr "季"
 
 #: LedgerSMB/Report/Inventory/Search.pm:286 LedgerSMB/Report/Orders.pm:251
 #: bin/io.pl:1391 bin/io.pl:1651 bin/io.pl:1658 bin/oe.pl:225 bin/oe.pl:658
-#: bin/oe.pl:865 bin/oe.pl:1229 templates/demo/sales_quotation.html:4
+#: bin/oe.pl:865 bin/oe.pl:1227 templates/demo/sales_quotation.html:4
 #: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
@@ -6669,7 +6736,7 @@ msgstr "報價單 "
 msgid "Quotation Date"
 msgstr "報價單日期"
 
-#: bin/io.pl:1716 bin/oe.pl:1183 bin/oe.pl:1361
+#: bin/io.pl:1704 bin/oe.pl:1183 bin/oe.pl:1359
 msgid "Quotation Date missing!"
 msgstr "未指明報價單日期！"
 
@@ -6677,11 +6744,11 @@ msgstr "未指明報價單日期！"
 msgid "Quotation Number"
 msgstr "報價單號碼"
 
-#: bin/io.pl:1715 bin/oe.pl:1360
+#: bin/io.pl:1714 bin/oe.pl:1358
 msgid "Quotation Number missing!"
 msgstr "未指明報價單號碼！"
 
-#: bin/oe.pl:1336
+#: bin/oe.pl:1334
 msgid "Quotation deleted!"
 msgstr "已刪除報價單！"
 
@@ -6743,7 +6810,7 @@ msgstr ""
 msgid "Re-open Books"
 msgstr ""
 
-#: bin/io.pl:176 bin/oe.pl:1831 templates/demo/bin_list.html:152
+#: bin/io.pl:176 bin/oe.pl:1829 templates/demo/bin_list.html:152
 #: templates/demo_with_images/bin_list.html:152
 #: templates/xedemo/bin_list.html:152
 msgid "Recd"
@@ -6782,7 +6849,7 @@ msgstr "應收帳戶"
 msgid "Receive"
 msgstr "收到"
 
-#: bin/oe.pl:1726
+#: bin/oe.pl:1724
 msgid "Receive Merchandise"
 msgstr "收到貨物"
 
@@ -6835,7 +6902,7 @@ msgstr "報表來源"
 msgid "Recurring Transaction for [_1]"
 msgstr "重覆出現的交易"
 
-#: bin/am.pl:833 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
+#: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
 msgstr "重覆出現的交易"
 
@@ -6845,7 +6912,7 @@ msgstr "重覆出現的交易"
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:108
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
 #: LedgerSMB/Report/Unapproved/Drafts.pm:94
-#: LedgerSMB/Report/Unapproved/Drafts.pm:134 bin/arap.pl:587 bin/am.pl:852
+#: LedgerSMB/Report/Unapproved/Drafts.pm:134 bin/arap.pl:587 bin/am.pl:848
 #: UI/Reports/filters/budget_search.html:16 UI/Reports/filters/gl.html:24
 #: UI/Reports/filters/gl.html:190 UI/Reports/filters/unapproved.html:80
 #: UI/accounts/yearend.html:21 UI/budgetting/budget_entry.html:19
@@ -6853,7 +6920,7 @@ msgstr "重覆出現的交易"
 msgid "Reference"
 msgstr "參考資料"
 
-#: bin/io.pl:1706
+#: bin/io.pl:1715
 #, fuzzy
 msgid "Reference Number Missing"
 msgstr "總帳索引編號"
@@ -6886,7 +6953,7 @@ msgstr "項目"
 msgid "Rem. Life"
 msgstr ""
 
-#: bin/ir.pl:455 bin/is.pl:446 bin/oe.pl:413 bin/aa.pl:550
+#: bin/ir.pl:455 bin/is.pl:446 bin/oe.pl:413 bin/aa.pl:552
 #: UI/orders/order.html:36
 msgid "Remaining"
 msgstr "尚餘"
@@ -6958,11 +7025,11 @@ msgstr "報表"
 msgid "Reposting Not Allowed"
 msgstr ""
 
-#: bin/oe.pl:2415
+#: bin/oe.pl:2413
 msgid "Req"
 msgstr "需要"
 
-#: bin/oe.pl:1235 templates/demo/request_quotation.html:4
+#: bin/oe.pl:1233 templates/demo/request_quotation.html:4
 #: templates/demo/request_quotation.html:18
 #: templates/demo/request_quotation.tex:100
 #: templates/demo_with_images/request_quotation.html:4
@@ -7107,15 +7174,15 @@ msgstr "報表"
 msgid "SIC"
 msgstr "標準工業分類代碼"
 
-#: bin/am.pl:393
+#: bin/am.pl:391
 msgid "SIC deleted!"
 msgstr "已刪除標準工業分類代碼！"
 
-#: bin/am.pl:386
+#: bin/am.pl:384
 msgid "SIC saved!"
 msgstr "已儲存標準工業分類代碼！"
 
-#: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1833 bin/oe.pl:2405
+#: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "庫存單位"
 
@@ -7146,7 +7213,7 @@ msgid "Sales Invoice/AR Transaction Number"
 msgstr "銷售發票/應收帳交易編號"
 
 #: bin/io.pl:1401 bin/io.pl:1589 bin/is.pl:581 bin/is.pl:1020 bin/oe.pl:245
-#: bin/oe.pl:656 bin/oe.pl:867 bin/oe.pl:1212 bin/am.pl:1297 bin/am.pl:1506
+#: bin/oe.pl:656 bin/oe.pl:867 bin/oe.pl:1210 bin/am.pl:1293 bin/am.pl:1520
 #: templates/demo/sales_order.html:4 templates/demo/sales_order.html:18
 #: templates/demo/sales_order.tex:99
 #: templates/demo_with_images/sales_order.html:4
@@ -7162,7 +7229,7 @@ msgstr "銷貨單"
 msgid "Sales Order Number"
 msgstr "銷貨單編號"
 
-#: LedgerSMB/Report/Orders.pm:187 LedgerSMB/Report/Orders.pm:288 bin/am.pl:878
+#: LedgerSMB/Report/Orders.pm:187 LedgerSMB/Report/Orders.pm:288 bin/am.pl:874
 #: UI/Reports/filters/search_goods.html:144 sql/Pg-database.sql:2809
 #: sql/Pg-database.sql:2811 sql/Pg-database.sql:2814 sql/Pg-database.sql:2828
 msgid "Sales Orders"
@@ -7180,7 +7247,7 @@ msgstr "公司名稱"
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Transactions.pm:298
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261 bin/is.pl:360 bin/oe.pl:520
-#: bin/aa.pl:476 bin/aa.pl:1471 UI/Reports/filters/contact_search.html:59
+#: bin/aa.pl:478 bin/aa.pl:1473 UI/Reports/filters/contact_search.html:59
 #: UI/Reports/filters/invoice_outstanding.html:183
 #: UI/Reports/filters/invoice_search.html:273
 #: templates/demo/ar_transaction.html:92 templates/demo/invoice.html:110
@@ -7217,7 +7284,7 @@ msgstr "州"
 #: LedgerSMB/Scripts/asset.pm:447 LedgerSMB/Scripts/budgets.pm:102
 #: bin/ic.pl:831 bin/ic.pl:840 bin/ir.pl:576 bin/is.pl:597 bin/oe.pl:636
 #: bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243 bin/pe.pl:621 bin/am.pl:67
-#: bin/am.pl:75 bin/am.pl:86 bin/am.pl:173 bin/am.pl:179 bin/aa.pl:969
+#: bin/am.pl:75 bin/am.pl:86 bin/am.pl:173 bin/am.pl:179 bin/aa.pl:971
 #: bin/gl.pl:289 UI/Configuration/sequence.html:10
 #: UI/Configuration/sequence.html:119 UI/Configuration/settings.html:68
 #: UI/Contact/divs/bank_act.html:85 UI/Contact/divs/company.html:181
@@ -7255,7 +7322,7 @@ msgstr "當新的儲存"
 msgid "Save Contact"
 msgstr "連絡人"
 
-#: bin/ir.pl:596 bin/is.pl:618 bin/aa.pl:962 bin/gl.pl:274 bin/gl.pl:320
+#: bin/ir.pl:596 bin/is.pl:618 bin/aa.pl:964 bin/gl.pl:274 bin/gl.pl:320
 #, fuzzy
 msgid "Save Draft"
 msgstr "儲存時間表"
@@ -7265,7 +7332,7 @@ msgstr "儲存時間表"
 msgid "Save Groups"
 msgstr "搜尋"
 
-#: bin/ir.pl:570 bin/is.pl:589 bin/aa.pl:945
+#: bin/ir.pl:570 bin/is.pl:589 bin/aa.pl:947
 #, fuzzy
 msgid "Save Info"
 msgstr "儲存"
@@ -7289,7 +7356,7 @@ msgstr "報價單"
 msgid "Save Schedule"
 msgstr "儲存時間表"
 
-#: bin/aa.pl:947 bin/gl.pl:278
+#: bin/aa.pl:949 bin/gl.pl:278
 #, fuzzy
 msgid "Save Template"
 msgstr "LaTex 模版"
@@ -7299,7 +7366,7 @@ msgstr "LaTex 模版"
 msgid "Save and Retry"
 msgstr "當新的儲存"
 
-#: bin/aa.pl:970
+#: bin/aa.pl:972
 #, fuzzy
 msgid "Save as New"
 msgstr "當新的儲存"
@@ -7309,7 +7376,7 @@ msgstr "當新的儲存"
 msgid "Save as new"
 msgstr "當新的儲存"
 
-#: bin/am.pl:1342
+#: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
 msgstr "正在儲存"
@@ -7319,7 +7386,7 @@ msgid "Saving over an existing document.  Continue?"
 msgstr ""
 
 #: bin/ir.pl:566 bin/ir.pl:966 bin/is.pl:583 bin/is.pl:1015 bin/oe.pl:671
-#: bin/oe.pl:855 bin/aa.pl:909 bin/aa.pl:939 bin/gl.pl:282
+#: bin/oe.pl:855 bin/aa.pl:911 bin/aa.pl:941 bin/gl.pl:282
 msgid "Schedule"
 msgstr "時間表"
 
@@ -7492,11 +7559,11 @@ msgstr "選擇客戶"
 msgid "Select Templates to Load"
 msgstr "設定模版"
 
-#: bin/oe.pl:2524
+#: bin/oe.pl:2522
 msgid "Select Vendor"
 msgstr "選擇供應商"
 
-#: bin/arapprn.pl:518 bin/is.pl:1387 bin/oe.pl:1278
+#: bin/arapprn.pl:518 bin/is.pl:1387 bin/oe.pl:1276
 msgid "Select a Printer!"
 msgstr "選擇印表機！"
 
@@ -7522,7 +7589,7 @@ msgstr "選擇項目"
 msgid "Select payment"
 msgstr "選擇付款"
 
-#: bin/arapprn.pl:71 bin/arapprn.pl:516 bin/is.pl:1385 bin/oe.pl:1276
+#: bin/arapprn.pl:71 bin/arapprn.pl:516 bin/is.pl:1385 bin/oe.pl:1274
 msgid "Select postscript or PDF!"
 msgstr "選擇postscript或PDF！"
 
@@ -7553,9 +7620,53 @@ msgstr "售賣"
 msgid "Sell Price"
 msgstr "售價"
 
+#: bin/am.pl:1472
+msgid "Sending Bin List [_1]"
+msgstr ""
+
+#: bin/am.pl:1465
+#, fuzzy
+msgid "Sending Credit Invoice [_1]"
+msgstr "新增供應商發票"
+
+#: bin/am.pl:1466
+#, fuzzy
+msgid "Sending Debit Invoice [_1]"
+msgstr "新增銷售發票"
+
 #: bin/am.pl:1464
-msgid "Sending"
-msgstr "正在發送"
+#, fuzzy
+msgid "Sending Invoice [_1]"
+msgstr "銷售發票 "
+
+#: bin/am.pl:1467
+#, fuzzy
+msgid "Sending Packing List [_1]"
+msgstr "出貨單"
+
+#: bin/am.pl:1468
+msgid "Sending Pick List [_1]"
+msgstr ""
+
+#: bin/am.pl:1471
+#, fuzzy
+msgid "Sending Purchase Order [_1]"
+msgstr "編輯採購單"
+
+#: bin/am.pl:1469
+#, fuzzy
+msgid "Sending Sales Order [_1]"
+msgstr "編輯銷貨單"
+
+#: bin/am.pl:1463
+#, fuzzy
+msgid "Sending Transaction [_1]"
+msgstr "應付交易"
+
+#: bin/am.pl:1470
+#, fuzzy
+msgid "Sending Work Order [_1]"
+msgstr "工作單"
 
 #: LedgerSMB/App_State.pm:247 bin/io.pl:87 bin/aa.pl:94 bin/gl.pl:87
 msgid "Sep"
@@ -7589,7 +7700,7 @@ msgstr "個人設定"
 msgid "Serial #"
 msgstr "序號"
 
-#: bin/io.pl:261 bin/oe.pl:1854
+#: bin/io.pl:261 bin/oe.pl:1852
 msgid "Serial No."
 msgstr "序號"
 
@@ -7642,23 +7753,25 @@ msgid "Settings"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:81
+#, fuzzy
 msgid "Seven"
-msgstr ""
+msgstr "庫存"
 
 #: LedgerSMB/Num2text.pm:115
 msgid "Seven Hundred"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:92
+#, fuzzy
 msgid "Seventeen"
-msgstr ""
+msgstr "庫存"
 
 #: LedgerSMB/Num2text.pm:110
 #, fuzzy
 msgid "Seventy"
 msgstr "庫存"
 
-#: LedgerSMB/Scripts/order.pm:65 bin/io.pl:169 bin/oe.pl:1827
+#: LedgerSMB/Scripts/order.pm:65 bin/io.pl:169 bin/oe.pl:1825
 #: templates/demo/packing_list.html:124 templates/demo/pick_list.html:114
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
@@ -7667,7 +7780,7 @@ msgstr "庫存"
 msgid "Ship"
 msgstr "付運"
 
-#: bin/oe.pl:1722
+#: bin/oe.pl:1720
 msgid "Ship Merchandise"
 msgstr "付運貨物"
 
@@ -7726,11 +7839,11 @@ msgid "Ship Via"
 msgstr "付運公司"
 
 #: bin/io.pl:2043 bin/is.pl:577 bin/is.pl:1016 bin/oe.pl:638 bin/oe.pl:858
-#: bin/oe.pl:1947 bin/aa.pl:910
+#: bin/oe.pl:1945 bin/aa.pl:912
 msgid "Ship to"
 msgstr "付運至"
 
-#: bin/is.pl:499 bin/oe.pl:598 bin/oe.pl:1781 bin/aa.pl:1655 bin/aa.pl:1685
+#: bin/is.pl:499 bin/oe.pl:598 bin/oe.pl:1779 bin/aa.pl:1657 bin/aa.pl:1687
 #: UI/orders/order.html:68 templates/demo/bin_list.html:115
 #: templates/demo/invoice.html:112 templates/demo/invoice.tex:122
 #: templates/demo/packing_list.html:86 templates/demo/packing_list.tex:93
@@ -7774,11 +7887,11 @@ msgstr "付運公司"
 msgid "Shipping"
 msgstr "付運"
 
-#: bin/oe.pl:1723
+#: bin/oe.pl:1721
 msgid "Shipping Date"
 msgstr "付運日期"
 
-#: bin/oe.pl:1981
+#: bin/oe.pl:1979
 msgid "Shipping Date missing!"
 msgstr "未指明付運日期！"
 
@@ -7790,7 +7903,7 @@ msgstr "付運日期"
 #: LedgerSMB/Report/Contact/Purchase.pm:113
 #: LedgerSMB/Report/Invoices/Transactions.pm:304
 #: LedgerSMB/Report/Invoices/Outstanding.pm:269 LedgerSMB/Report/Orders.pm:255
-#: bin/is.pl:495 bin/oe.pl:594 bin/oe.pl:1776 bin/aa.pl:1653
+#: bin/is.pl:495 bin/oe.pl:594 bin/oe.pl:1774 bin/aa.pl:1655
 #: UI/Reports/filters/invoice_outstanding.html:264
 #: UI/Reports/filters/invoice_search.html:354 UI/orders/order.html:62
 #: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
@@ -7898,8 +8011,8 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Search.pm:128 LedgerSMB/Report/GL.pm:122
 #: LedgerSMB/Report/GL.pm:213 LedgerSMB/Report/Inventory/Adj_Details.pm:75
 #: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:152
-#: LedgerSMB/Scripts/recon.pm:221 bin/ir.pl:865 bin/is.pl:911 bin/aa.pl:818
-#: bin/aa.pl:1508 UI/Reports/filters/gl.html:66 UI/Reports/filters/gl.html:221
+#: LedgerSMB/Scripts/recon.pm:221 bin/ir.pl:865 bin/is.pl:911 bin/aa.pl:820
+#: bin/aa.pl:1510 UI/Reports/filters/gl.html:66 UI/Reports/filters/gl.html:221
 #: UI/Reports/filters/inventory_adj.html:11
 #: UI/Reports/filters/invoice_search.html:128
 #: UI/Reports/filters/payments.html:74 UI/inventory/adjustment_setup.html:29
@@ -8065,7 +8178,7 @@ msgstr ""
 msgid "Submitted"
 msgstr "報表"
 
-#: bin/io.pl:1757 bin/ir.pl:768 bin/is.pl:816 bin/oe.pl:789 bin/aa.pl:1733
+#: bin/io.pl:1757 bin/ir.pl:768 bin/is.pl:816 bin/oe.pl:789 bin/aa.pl:1735
 #: UI/Reports/filters/gl.html:274
 #: UI/Reports/filters/invoice_outstanding.html:279
 #: UI/Reports/filters/invoice_search.html:369
@@ -8108,7 +8221,7 @@ msgstr "小計"
 msgid "Suffix"
 msgstr ""
 
-#: bin/pe.pl:918 bin/aa.pl:1544 UI/Reports/filters/aging.html:57
+#: bin/pe.pl:918 bin/aa.pl:1546 UI/Reports/filters/aging.html:57
 #: UI/Reports/filters/invoice_outstanding.html:115
 #: UI/Reports/filters/purchase_history.html:221 UI/rc-reconciliation.html:92
 #: UI/rp-search-generate_tax_report.html:60
@@ -8171,7 +8284,7 @@ msgstr ""
 #: LedgerSMB/Report/Contact/Purchase.pm:87
 #: LedgerSMB/Report/Invoices/Transactions.pm:274
 #: LedgerSMB/Report/Invoices/Outstanding.pm:221 bin/ic.pl:540 bin/ic.pl:669
-#: bin/aa.pl:1631 UI/Reports/filters/invoice_outstanding.html:203
+#: bin/aa.pl:1633 UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:293
 #: UI/Reports/filters/orders.html:176 UI/accounts/edit.html:251
 #: UI/accounts/edit.html:399 UI/accounts/edit.html:429
@@ -8196,7 +8309,7 @@ msgstr "直接人工代碼"
 msgid "Tax Form"
 msgstr "日期格式"
 
-#: bin/aa.pl:662
+#: bin/aa.pl:664
 #, fuzzy
 msgid "Tax Form Applied"
 msgstr "稅號"
@@ -8226,7 +8339,7 @@ msgstr "日期格式"
 msgid "Tax Forms"
 msgstr "日期格式"
 
-#: bin/ir.pl:475 bin/is.pl:466 bin/aa.pl:591 UI/Admin/user_search.html:41
+#: bin/ir.pl:475 bin/is.pl:466 bin/aa.pl:593 UI/Admin/user_search.html:41
 #, fuzzy
 msgid "Tax ID"
 msgstr "稅號/社會保障編號"
@@ -8280,11 +8393,11 @@ msgstr "日期格式"
 msgid "Taxable"
 msgstr "應稅"
 
-#: bin/am.pl:584 UI/Contact/divs/credit.html:286 sql/Pg-database.sql:2832
+#: bin/am.pl:581 UI/Contact/divs/credit.html:286 sql/Pg-database.sql:2832
 msgid "Taxes"
 msgstr ""
 
-#: bin/am.pl:722
+#: bin/am.pl:719
 #, fuzzy
 msgid "Taxes saved!"
 msgstr "已儲存模版！"
@@ -8412,7 +8525,7 @@ msgstr "新增模版"
 msgid "Template Not Found"
 msgstr "模版"
 
-#: bin/aa.pl:1126 bin/gl.pl:401
+#: bin/aa.pl:1128 bin/gl.pl:401
 #, fuzzy
 msgid "Template Saved!"
 msgstr "已儲存模版！"
@@ -8482,8 +8595,9 @@ msgid "The amount of the invoice number"
 msgstr "您是否確定要刪除發票編號"
 
 #: LedgerSMB/Scripts/payment.pm:1709
+#, fuzzy
 msgid "The amount to be pay from the accno"
-msgstr ""
+msgstr "您是否確定要刪除發票編號"
 
 #: LedgerSMB/Scripts/payment.pm:1677
 #, fuzzy
@@ -8583,7 +8697,7 @@ msgid "Thu"
 msgstr "星期二"
 
 #: LedgerSMB/Report/GL.pm:137 LedgerSMB/Report/Invoices/Transactions.pm:295
-#: LedgerSMB/Report/Invoices/Outstanding.pm:257 bin/aa.pl:1592
+#: LedgerSMB/Report/Invoices/Outstanding.pm:257 bin/aa.pl:1594
 #: UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/invoice_outstanding.html:256
 #: UI/Reports/filters/invoice_search.html:346
@@ -8635,11 +8749,11 @@ msgstr "工時卡已被刪除！"
 msgid "Timecards"
 msgstr "工時卡"
 
-#: bin/am.pl:869
+#: bin/am.pl:865
 msgid "Times"
 msgstr "次"
 
-#: bin/ic.pl:1134 bin/oe.pl:2137 bin/pe.pl:858 UI/lib/report_base.html:104
+#: bin/ic.pl:1134 bin/oe.pl:2135 bin/pe.pl:858 UI/lib/report_base.html:104
 #: UI/lib/report_base.html:174 UI/Reports/co/filter_bm.html:27
 #: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/purchase_history.html:127
@@ -8678,7 +8792,7 @@ msgstr "日期"
 msgid "To Pay"
 msgstr ""
 
-#: bin/oe.pl:2152
+#: bin/oe.pl:2150
 msgid "To Warehouse"
 msgstr "到倉庫"
 
@@ -8737,7 +8851,7 @@ msgstr "頂層"
 #: LedgerSMB/Report/Taxform/Details.pm:98
 #: LedgerSMB/Report/Taxform/Summary.pm:96 LedgerSMB/Scripts/asset.pm:537
 #: LedgerSMB/Scripts/payment.pm:200 LedgerSMB/Scripts/payment.pm:749
-#: bin/ir.pl:837 bin/is.pl:882 bin/oe.pl:821 bin/aa.pl:1634
+#: bin/ir.pl:837 bin/is.pl:882 bin/oe.pl:821 bin/aa.pl:1636
 #: UI/Reports/filters/invoice_outstanding.html:209
 #: UI/Reports/filters/invoice_search.html:299 UI/orders/order.html:225
 #: UI/payments/payment1.html:86 UI/payments/payment1.html:95
@@ -8815,7 +8929,7 @@ msgstr "需要追蹤的項目"
 msgid "Trade Discount"
 msgstr "貿易折扣"
 
-#: bin/am.pl:1500 bin/aa.pl:210
+#: bin/am.pl:1514 bin/aa.pl:210
 #, fuzzy
 msgid "Transaction"
 msgstr "所有交易"
@@ -8850,20 +8964,20 @@ msgstr "交易"
 msgid "Transactions"
 msgstr "所有交易"
 
-#: bin/oe.pl:2141 bin/oe.pl:2257 sql/Pg-database.sql:2818
+#: bin/oe.pl:2139 bin/oe.pl:2255 sql/Pg-database.sql:2818
 #: sql/Pg-database.sql:2853
 msgid "Transfer"
 msgstr "轉移"
 
-#: bin/oe.pl:2018 bin/oe.pl:2168
+#: bin/oe.pl:2016 bin/oe.pl:2166
 msgid "Transfer Inventory"
 msgstr "轉移存貨"
 
-#: bin/oe.pl:2036
+#: bin/oe.pl:2034
 msgid "Transfer from"
 msgstr "由這裡取貨"
 
-#: bin/oe.pl:2040
+#: bin/oe.pl:2038
 msgid "Transfer to"
 msgstr "存貨至"
 
@@ -8902,8 +9016,9 @@ msgid "Twelve"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:95
+#, fuzzy
 msgid "Twenty"
-msgstr ""
+msgstr "庫存"
 
 #: LedgerSMB/Num2text.pm:104
 msgid "Twenty Eight"
@@ -9009,7 +9124,7 @@ msgstr "客戶編號"
 #: LedgerSMB/Report/Contact/History.pm:91
 #: LedgerSMB/Report/Inventory/History.pm:130
 #: LedgerSMB/Report/Inventory/Search.pm:206 bin/ic.pl:788 bin/ic.pl:1262
-#: bin/io.pl:236 bin/oe.pl:1849 UI/Reports/filters/purchase_history.html:296
+#: bin/io.pl:236 bin/oe.pl:1847 UI/Reports/filters/purchase_history.html:296
 #: UI/Reports/filters/search_goods.html:221 UI/payroll/income.html:74
 #: templates/demo/invoice.tex:138 templates/demo/product_receipt.tex:119
 #: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
@@ -9077,8 +9192,9 @@ msgid "Unsupported account categories"
 msgstr "供應商號碼"
 
 #: LedgerSMB/Upgrade_Tests.pm:398
+#, fuzzy
 msgid "Unsupported account link combinations"
-msgstr ""
+msgstr "供應商號碼"
 
 #: LedgerSMB/Scripts/contact.pm:459
 #, fuzzy
@@ -9096,7 +9212,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/budgets.pm:96 bin/ic.pl:830 bin/ic.pl:839 bin/ir.pl:550
 #: bin/ir.pl:963 bin/is.pl:568 bin/is.pl:1012 bin/oe.pl:633 bin/oe.pl:853
-#: bin/oe.pl:1944 bin/pe.pl:620 bin/aa.pl:906 bin/aa.pl:930 bin/gl.pl:271
+#: bin/oe.pl:1942 bin/pe.pl:620 bin/aa.pl:908 bin/aa.pl:932 bin/gl.pl:271
 #: UI/am-taxes.html:65 UI/payments/payment2.html:440
 #: UI/payments/payments_detail.html:464 UI/payroll/deduction.html:90
 #: UI/payroll/income.html:96 UI/reconciliation/report.html:263
@@ -9126,8 +9242,9 @@ msgid "Uploaded At"
 msgstr ""
 
 #: LedgerSMB/Report/File/Incoming.pm:59 LedgerSMB/Report/File/Internal.pm:57
+#, fuzzy
 msgid "Uploaded By"
-msgstr ""
+msgstr "報表來源"
 
 #: UI/file/attachment_screen.html:26
 msgid "Url"
@@ -9229,8 +9346,8 @@ msgstr "餘額"
 
 #: LedgerSMB/Report/Aging.pm:80 LedgerSMB/Report/Invoices/Transactions.pm:247
 #: LedgerSMB/Report/Invoices/Outstanding.pm:175 LedgerSMB/Report/Orders.pm:191
-#: LedgerSMB/Report/Orders.pm:197 bin/ic.pl:1026 bin/ir.pl:436 bin/oe.pl:2411
-#: bin/oe.pl:2567 bin/pe.pl:1040 bin/pe.pl:1195 bin/aa.pl:514 bin/aa.pl:1595
+#: LedgerSMB/Report/Orders.pm:197 bin/ic.pl:1026 bin/ir.pl:436 bin/oe.pl:2409
+#: bin/oe.pl:2565 bin/pe.pl:1040 bin/pe.pl:1195 bin/aa.pl:516 bin/aa.pl:1597
 #: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
 #: UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:6
@@ -9267,7 +9384,7 @@ msgstr "供應商號碼"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:113
 #: LedgerSMB/Report/Invoices/Payments.pm:183
-#: LedgerSMB/Scripts/configuration.pm:116 bin/io.pl:2058 bin/aa.pl:1596
+#: LedgerSMB/Scripts/configuration.pm:116 bin/io.pl:2058 bin/aa.pl:1598
 #: UI/Reports/filters/invoice_outstanding.html:7
 #: UI/Reports/filters/invoice_search.html:7
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:22
@@ -9293,11 +9410,11 @@ msgstr "總帳索引編號"
 msgid "Vendor Search"
 msgstr "供應商號碼"
 
-#: bin/ir.pl:1354 bin/oe.pl:1194 bin/aa.pl:1303
+#: bin/ir.pl:1354 bin/oe.pl:1191 bin/aa.pl:1305
 msgid "Vendor missing!"
 msgstr "未指明供應商！"
 
-#: bin/arap.pl:159 bin/pe.pl:1249
+#: bin/arap.pl:149 bin/pe.pl:1249
 msgid "Vendor not on file!"
 msgstr "沒有此供應商的記錄！"
 
@@ -9335,7 +9452,7 @@ msgstr "減除額"
 msgid "Wages/Deductions"
 msgstr "減除額"
 
-#: bin/oe.pl:1732 UI/Reports/filters/search_goods.html:353
+#: bin/oe.pl:1730 UI/Reports/filters/search_goods.html:353
 #: templates/demo/bin_list.html:112 templates/demo/bin_list.tex:82
 #: templates/demo/packing_list.html:83 templates/demo/packing_list.tex:90
 #: templates/demo/pick_list.html:81 templates/demo/pick_list.tex:82
@@ -9367,7 +9484,7 @@ msgstr ""
 msgid "Wed"
 msgstr ""
 
-#: bin/am.pl:824 UI/timecards/entry_filter.html:24
+#: bin/am.pl:820 UI/timecards/entry_filter.html:24
 msgid "Week"
 msgstr "星期"
 
@@ -9385,7 +9502,7 @@ msgstr "星期"
 msgid "Weekly Time and Materials Entry"
 msgstr "工時卡"
 
-#: bin/am.pl:825
+#: bin/am.pl:821
 msgid "Weeks"
 msgstr "星期"
 
@@ -9416,7 +9533,7 @@ msgstr ""
 msgid "Widgit Themes"
 msgstr "編輯模版"
 
-#: bin/io.pl:1405 bin/io.pl:1596 bin/oe.pl:246 bin/am.pl:1507
+#: bin/io.pl:1405 bin/io.pl:1596 bin/oe.pl:246 bin/am.pl:1521
 #: templates/demo/work_order.html:4 templates/demo/work_order.html:18
 #: templates/demo/work_order.tex:109
 #: templates/demo_with_images/work_order.html:4
@@ -9436,7 +9553,7 @@ msgstr ""
 msgid "Yahoo"
 msgstr ""
 
-#: LedgerSMB/DBObject/Date.pm:95 bin/pe.pl:845 bin/am.pl:826 bin/aa.pl:1580
+#: LedgerSMB/DBObject/Date.pm:95 bin/pe.pl:845 bin/am.pl:822 bin/aa.pl:1582
 #: UI/lib/report_base.html:157 UI/lib/report_base.html:224 UI/bp-search.html:50
 #: UI/rc-reconciliation.html:59 UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
@@ -9462,12 +9579,12 @@ msgstr "年結"
 msgid "Yearend complete"
 msgstr "已加入年結！"
 
-#: bin/am.pl:827
+#: bin/am.pl:823
 #, fuzzy
 msgid "Years"
 msgstr "年"
 
-#: LedgerSMB/Report/Taxform/List.pm:100 bin/oe.pl:1319
+#: LedgerSMB/Report/Taxform/List.pm:100 bin/oe.pl:1317
 #: UI/Configuration/settings.html:27 UI/am-audit-control.html:14
 #: UI/am-audit-control.html:30 UI/setup/confirm_operation.html:25
 msgid "Yes"
@@ -9507,12 +9624,12 @@ msgstr "郵政編碼"
 msgid "[_1] Cash Transfer Transaction"
 msgstr "新增現金轉移帳目"
 
-#: bin/aa.pl:394
+#: bin/aa.pl:395
 #, fuzzy
 msgid "[_1] Credit Note"
 msgstr "貸方"
 
-#: bin/aa.pl:397
+#: bin/aa.pl:399
 #, fuzzy
 msgid "[_1] Debit Note"
 msgstr "借方"
@@ -9541,6 +9658,11 @@ msgstr "沒有此客戶的記錄！"
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
 msgstr "沒有此供應商的記錄！"
+
+#: LedgerSMB/Form.pm:710
+#, fuzzy
+msgid "[_1]:[_2]:[_3]: Invalid Redirect"
+msgstr "有效至"
 
 #: bin/old-handler.pl:184
 #, fuzzy
@@ -9598,7 +9720,7 @@ msgstr "說明"
 msgid "disposal"
 msgstr ""
 
-#: bin/am.pl:1276 bin/am.pl:1347 bin/am.pl:1401 bin/am.pl:1442 bin/am.pl:1484
+#: bin/am.pl:1272 bin/am.pl:1343 bin/am.pl:1397 bin/am.pl:1448 bin/am.pl:1498
 msgid "done"
 msgstr "完成"
 
@@ -9606,7 +9728,7 @@ msgstr "完成"
 msgid "ea"
 msgstr "個"
 
-#: bin/am.pl:1350 bin/am.pl:1487
+#: bin/am.pl:1346 bin/am.pl:1501
 msgid "failed"
 msgstr "失敗"
 
@@ -9756,6 +9878,10 @@ msgstr "預繳"
 
 #~ msgid "Accounting Menu"
 #~ msgstr "會計選單"
+
+#, fuzzy
+#~ msgid "Accounts can\\"
+#~ msgstr "帳戶"
 
 #~ msgid "Add Department"
 #~ msgstr "新增部門"
@@ -10061,7 +10187,7 @@ msgstr "預繳"
 #~ msgstr "不包括年齡 <"
 
 #, fuzzy
-#~ msgid "Exchange rate hasn't been defined"
+#~ msgid "Exchange rate hasn\\"
 #~ msgstr "未指明匯率！"
 
 #~ msgid "Existing Datasets"
@@ -10303,6 +10429,9 @@ msgstr "預繳"
 #~ msgid "Print and save as new"
 #~ msgstr "列印並儲存作為新的"
 
+#~ msgid "Printing"
+#~ msgstr "正列印"
+
 #~ msgid "Printing ... "
 #~ msgstr "正列印‧‧‧"
 
@@ -10380,6 +10509,9 @@ msgstr "預繳"
 
 #~ msgid "Send by E-Mail"
 #~ msgstr "以電子郵件寄送"
+
+#~ msgid "Sending"
+#~ msgstr "正在發送"
 
 #~ msgid "Service/Labor Code"
 #~ msgstr "服務/直接人工編號"
