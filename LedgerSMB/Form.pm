@@ -706,7 +706,7 @@ sub _redirect {
     }
     $form->error(
         $form->_locale->text(
-            __FILE__ . ':' . __LINE__ . ':' . $script . ':' . "Invalid Redirect"
+            "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
         )
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 

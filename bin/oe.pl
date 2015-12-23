@@ -348,7 +348,7 @@ sub form_header {
 |;
 
     $vclabel = ucfirst $form->{vc};
-    $vclabel = $locale->text($vclabel);
+    $vclabel = $locale->maketext($vclabel);
 
     $terms = qq|
                     <tr id="terms-row">
@@ -1186,11 +1186,9 @@ sub save {
 
     $msg = ucfirst $form->{vc};
 
-    $form->isblank( $form->{vc}, $locale->text( $msg . " missing!" ) );
-
     # $locale->text('Customer missing!');
-
     # $locale->text('Vendor missing!');
+    $form->isblank( $form->{vc}, $locale->maketext( $msg . " missing!" ) );
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
@@ -1713,7 +1711,7 @@ sub display_ship_receive {
      $form->generate_selects(\%myconfig);
 
     $vclabel = ucfirst $form->{vc};
-    $vclabel = $locale->text($vclabel);
+    $vclabel = $locale->maketext($vclabel);
 
     $form->{rowcount}++;
 
@@ -2616,7 +2614,7 @@ sub vendor_selected {
     }
     else {
         $msg = ucfirst $form->{vc} . " not on file!" unless $msg;
-        $form->error( $locale->text($msg) );
+        $form->error( $locale->maketext($msg) );
     }
 
     &po_orderitems;

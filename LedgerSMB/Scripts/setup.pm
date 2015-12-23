@@ -174,7 +174,7 @@ sub login {
 
         foreach $field (qw|operation message next_action|) {
             $request->{$field} =
-               $request->{_locale}->text($dispatch_entry->{$field});
+               $request->{_locale}->maketext($dispatch_entry->{$field});
         }
         last;
         }

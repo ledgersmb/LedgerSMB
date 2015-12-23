@@ -39,11 +39,11 @@ sub _build_locale {
 sub Text {
     my $self = shift;
 
-    return $self->locale->text(@_);
+    return $self->locale->maketext(@_);
 }
 
 sub text {
-    return LedgerSMB::App_State->Locale->text(@_);
+    return LedgerSMB::App_State->Locale->maketext(@_);
 }
 
 =head1 COPYRIGHT

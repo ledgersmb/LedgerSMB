@@ -144,8 +144,11 @@ sub check_name {
             else {
 
                 # name is not on file
-                $msg = ucfirst $name . " not on file!";
-                $form->error( $locale->text($msg) );
+                # $locale->text('Customer not on file!')
+                # $locale->text('Vendor not on file!')
+
+                $msg = ucfirst $name . "not on file!";
+                $form->error( $locale->maketext($msg) );
             }
         }
     }
@@ -153,9 +156,6 @@ sub check_name {
     $rv;
 
 }
-
-# $locale->text('Customer not on file!')
-# $locale->text('Vendor not on file!')
 
 sub select_name {
     my ($table) = @_;
