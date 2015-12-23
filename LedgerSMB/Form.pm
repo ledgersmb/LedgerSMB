@@ -707,7 +707,6 @@ sub _redirect {
     $form->error(
         $form->_locale->text(
             "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
-        )
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 
     my %temphash;
