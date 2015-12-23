@@ -31,10 +31,6 @@ msgstr "Invois"
 msgid "$entity_classname Number"
 msgstr "Jumlah entity_namakelas"
 
-#: bin/gl.pl:199
-msgid "$form->{title}"
-msgstr ""
-
 #: UI/Contact/divs/company.html:13 UI/Contact/divs/person.html:10
 msgid "$operation $entity_classname"
 msgstr "$operasi $entiti_namakelas"
@@ -2239,9 +2235,8 @@ msgstr "Pengkalan data tidak wujud"
 
 #: LedgerSMB/DBH.pm:111
 msgid ""
-"Database is not the expected version.  Was $version, expected "
-"$expected_version.  Please re-run setup.pl against this database to correct."
-"<a href='setup.pl'>setup.pl</a>"
+"Database is not the expected version.  Was [_1], expected [_2].  Please re-"
+"run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>"
 msgstr ""
 
 #: UI/am-company-logo.html:16
