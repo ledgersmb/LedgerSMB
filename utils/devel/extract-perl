@@ -34,6 +34,8 @@ my %dict;
 sub add_entry {
     my ($string, $file, $line) = @_;
 
+    return if $string =~ m/^[\s\t\n]*$/g; # return on empty/space-only strings
+
     $dict{$string} = []
         if ! exists $dict{$string};
 
