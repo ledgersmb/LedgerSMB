@@ -1485,13 +1485,13 @@ sub print_options {
             value => 'postscript',
             };
         push @{$options{format}{options}}, {
-            text => $locale->text('PDF'),
+            text => 'PDF',
             value => 'pdf',
             };
     }
     if ($form->{type} eq 'invoice'){
        push @{$options{format}{options}}, {
-            text => $locale->text('894.EDI'),
+            text => '894.EDI',
             value => '894.edi',
             };
     }
