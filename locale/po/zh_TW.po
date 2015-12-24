@@ -9832,23 +9832,23 @@ msgstr "預繳"
 #~ msgstr "未指明編碼！"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "業務"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "財務訊息通用索引(GIFI)"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "語言"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "新增標準工業分類代碼"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "倉庫"
 
 #~ msgid "AR/AP"
@@ -9870,7 +9870,7 @@ msgstr "預繳"
 #~ msgstr "已儲存帳戶！"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "帳戶"
 
 #~ msgid "Accounting"
@@ -10021,7 +10021,7 @@ msgstr "預繳"
 #~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "不能對以下物件設定多個選項："
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10044,7 +10044,7 @@ msgstr "預繳"
 #~ msgstr "已關閉"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "已關閉"
 
 #~ msgid "Components"
@@ -10066,7 +10066,7 @@ msgstr "預繳"
 #~ msgstr "已儲存客戶！"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "客戶"
 
 #~ msgid "Customers"
@@ -10118,7 +10118,7 @@ msgstr "預繳"
 #~ msgstr "已儲存部門！"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "部門"
 
 #~ msgid "Directory"
@@ -10197,7 +10197,7 @@ msgstr "預繳"
 #~ msgstr "星期五"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "從"
 
 #~ msgid "Generate Sales Order"
@@ -10228,7 +10228,7 @@ msgstr "預繳"
 #~ msgstr "增加"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "發票編號"
 
 #~ msgid "Invoice deleted!"
@@ -10347,7 +10347,7 @@ msgstr "預繳"
 #~ msgstr "Oracle資料庫管理"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "訂單編號"
 
 #~ msgid "Order saved!"
@@ -10417,7 +10417,7 @@ msgstr "預繳"
 #~ msgstr "所有價格組別"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "列印"
 
 #~ msgid "Print and Post as new"
@@ -10439,7 +10439,7 @@ msgstr "預繳"
 #~ msgstr "未指明項目號碼！"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "項目號碼"
 
 #~ msgid "Project Transactions"
@@ -10461,7 +10461,7 @@ msgstr "預繳"
 #~ msgstr "項目/工作號碼"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "報價單號碼"
 
 #~ msgid "Rate missing!"
@@ -10637,7 +10637,7 @@ msgstr "預繳"
 #~ msgstr "已儲存供應商！"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "供應商"
 
 #~ msgid "Vendors"

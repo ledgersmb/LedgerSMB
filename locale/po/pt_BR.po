@@ -9844,23 +9844,23 @@ msgstr "Pré-pagamento"
 #~ msgstr "Código faltando!"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Negócio"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "CFOP - Código Fiscal da Operação"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Idioma"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Adicionar SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Almoxarifado"
 
 #~ msgid "AR/AP"
@@ -9882,7 +9882,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Conta salva!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Conta"
 
 #~ msgid "Accounting"
@@ -10065,7 +10065,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Não é possível haver conta para mais de um dos CR, CP ou IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Não é possível haver múltipla escolha para"
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10091,7 +10091,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Fechado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Fechado"
 
 #~ msgid "Components"
@@ -10116,7 +10116,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Cliente salvo"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "Customers"
@@ -10171,7 +10171,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Departamento salvo!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departamento"
 
 #~ msgid "Directory"
@@ -10253,7 +10253,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Sexta-feira"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Generate Sales Order"
@@ -10287,7 +10287,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Incrementar"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número da Fatura"
 
 #~ msgid "Invoice deleted!"
@@ -10422,7 +10422,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Administração da Base de Dados Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Número do Pedido"
 
 #~ msgid "Order saved!"
@@ -10494,7 +10494,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Grupos de Preços"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #~ msgid "Print and Post as new"
@@ -10516,7 +10516,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Número do Projeto faltando!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número do Projeto"
 
 #~ msgid "Project Transactions"
@@ -10544,7 +10544,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Enfileirado"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Número da Cotação"
 
 #~ msgid "R"
@@ -10759,7 +10759,7 @@ msgstr "Pré-pagamento"
 #~ msgstr "Fornecedor salvo!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fornecedor"
 
 #~ msgid "Vendors"

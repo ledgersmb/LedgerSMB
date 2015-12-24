@@ -9853,23 +9853,23 @@ msgstr "Anticipo"
 #~ msgstr "¡Falta el Código!"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Negocio"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Plan de Cuentas Fiscal (PCF)"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Idioma"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Agregar CIS"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Almacén"
 
 #~ msgid "About"
@@ -9888,7 +9888,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Cuenta guardada!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Cuenta"
 
 #~ msgid "Accounting"
@@ -10012,7 +10012,7 @@ msgstr "Anticipo"
 #~ "CxP o Inventario)"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "No se pueden configurar opciones múltiples para"
 
 #~ msgid "Change"
@@ -10029,7 +10029,7 @@ msgstr "Anticipo"
 #~ msgstr "Cerrado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerrado"
 
 #~ msgid "Components"
@@ -10051,7 +10051,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Cliente guardado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "Customers"
@@ -10097,7 +10097,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Departamento guardado!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departamento"
 
 #~ msgid "Directory"
@@ -10167,7 +10167,7 @@ msgstr "Anticipo"
 #~ msgstr "Bases de datos existentes"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Desde"
 
 #~ msgid "Group Items"
@@ -10192,7 +10192,7 @@ msgstr "Anticipo"
 #~ msgstr "Aumentar"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de factura"
 
 #~ msgid "Invoice deleted!"
@@ -10283,7 +10283,7 @@ msgstr "Anticipo"
 #~ msgstr "Administración de la base de datos Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Número de la orden"
 
 #~ msgid "Order saved!"
@@ -10335,7 +10335,7 @@ msgstr "Anticipo"
 #~ msgstr "Grupos de precios"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10349,7 +10349,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Falta el número de proyecto!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número del Proyecto"
 
 #~ msgid "Project deleted!"
@@ -10362,7 +10362,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Proyecto guardado!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Número de Cotización"
 
 #~ msgid "R"
@@ -10530,7 +10530,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Proveedor guardado!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveedor"
 
 #~ msgid "Vendors"

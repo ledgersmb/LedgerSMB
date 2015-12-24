@@ -9862,19 +9862,19 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Mangler kode"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Organisasjon"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Språk"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Lager"
 
 #~ msgid "About"
@@ -9893,7 +9893,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Konto lagret!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10034,7 +10034,7 @@ msgstr "Forskuddsbetaling"
 #~ "Kan ikke sette konto for mer enn en av Kunde, Leverandør eller Intern"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Kan ikke sette flere valg for"
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10057,7 +10057,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Avsluttet"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Avsluttet"
 
 #~ msgid "Components"
@@ -10079,7 +10079,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Kunde lagret!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10131,7 +10131,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Avdeling lagret"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Avdeling"
 
 #~ msgid "Directory"
@@ -10201,7 +10201,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Eksisterende datasett"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Fra"
 
 #~ msgid "Generate Sales Order"
@@ -10226,7 +10226,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Økning"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice deleted!"
@@ -10341,7 +10341,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Administrasjon av database Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Ordrenummer"
 
 #~ msgid "Order saved!"
@@ -10405,7 +10405,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prisgrupper"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Skriv ut"
 
 #~ msgid "Print and Post as new"
@@ -10427,7 +10427,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prosjektnummer mangler!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Prosjektnummer"
 
 #~ msgid "Project Transactions"
@@ -10449,7 +10449,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prosjekt/Jobb nummer"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tilbudsnummer"
 
 #~ msgid "R"
@@ -10630,7 +10630,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Leverandør lagret!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverandør"
 
 #~ msgid "Vendors"

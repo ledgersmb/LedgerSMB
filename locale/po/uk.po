@@ -9864,23 +9864,23 @@ msgstr "Передплата"
 #~ msgstr "Відсутній код"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Бізнес"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Мова"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Додати SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Склад"
 
 #~ msgid "About"
@@ -9899,7 +9899,7 @@ msgstr "Передплата"
 #~ msgstr "Рахунок збережено"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Рахунок"
 
 #~ msgid "Accounting"
@@ -10021,7 +10021,7 @@ msgstr "Передплата"
 #~ msgstr "Не вдається зберегти вподобання!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Не вдається наставити декілька параметрів для"
 
 #~ msgid "Change"
@@ -10038,7 +10038,7 @@ msgstr "Передплата"
 #~ msgstr "Закрито"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Закрито"
 
 #~ msgid "Components"
@@ -10060,7 +10060,7 @@ msgstr "Передплата"
 #~ msgstr "Клієнта збережено!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Клієнт"
 
 #~ msgid "Customers"
@@ -10112,7 +10112,7 @@ msgstr "Передплата"
 #~ msgstr "Відділ збережено!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Відділ"
 
 #~ msgid "Directory"
@@ -10171,7 +10171,7 @@ msgstr "Передплата"
 #~ msgstr "Існуючі бази даних"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Від/З"
 
 #~ msgid "Group Items"
@@ -10200,7 +10200,7 @@ msgstr "Передплата"
 #~ msgstr "Збільшити"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Номер рахунка-фактури"
 
 #~ msgid "Invoice deleted!"
@@ -10285,7 +10285,7 @@ msgstr "Передплата"
 #~ msgstr "Адміністрування бази даних Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Номер замовлення"
 
 #~ msgid "Order saved!"
@@ -10338,7 +10338,7 @@ msgstr "Передплата"
 #~ msgstr "Цінові групи"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Надрукувати"
 
 #~ msgid "Printing"
@@ -10351,7 +10351,7 @@ msgstr "Передплата"
 #~ msgstr "Не вказаний номер проекту!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Номер проекту"
 
 #~ msgid "Project Transactions"
@@ -10367,7 +10367,7 @@ msgstr "Передплата"
 #~ msgstr "Проект збережено!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Номер котирування"
 
 #~ msgid "R"
@@ -10529,7 +10529,7 @@ msgstr "Передплата"
 #~ msgstr "Постачальника збережено"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Постачальник"
 
 #~ msgid "Vendors"

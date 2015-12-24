@@ -9881,23 +9881,23 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Code manquant!"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Type d'affaire"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Code d'identification comptable ou fiscale"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Langue"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Ajouter code secteur économique"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Entrepôt"
 
 #~ msgid "About"
@@ -9916,7 +9916,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Compte enregistré"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Compte"
 
 #~ msgid "Accounting"
@@ -10046,7 +10046,7 @@ msgstr "Paiement à l'avance"
 #~ "recettes, dépenses ou service"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Impossible de choisir plusieurs options pour"
 
 #~ msgid "Change"
@@ -10063,7 +10063,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Clôturé"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Clôturé"
 
 #~ msgid "Components"
@@ -10085,7 +10085,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Client enregistré!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Client"
 
 #~ msgid "Customers"
@@ -10137,7 +10137,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Service enregistré!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Service"
 
 #~ msgid "Directory"
@@ -10204,7 +10204,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Fichiers de données existants"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Group Items"
@@ -10233,7 +10233,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Augmentation"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Numéro de facture"
 
 #~ msgid "Invoice deleted!"
@@ -10324,7 +10324,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Administration de base de données Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Numéro de commande"
 
 #~ msgid "Order saved!"
@@ -10379,7 +10379,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Groupes de prix"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimer"
 
 #~ msgid "Printing"
@@ -10392,7 +10392,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Numéro du projet manquant!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Numéro de projet"
 
 #~ msgid "Project Transactions"
@@ -10408,7 +10408,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Projet enregistré!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Numéro de devis"
 
 #~ msgid "R"
@@ -10581,7 +10581,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Fournisseur enregistré!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fournisseur"
 
 #~ msgid "Vendors"

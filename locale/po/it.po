@@ -9985,11 +9985,11 @@ msgstr "Pagamento"
 #~ msgstr "Manca la data!"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Codice GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Lingua"
 
 #~ msgid "About"
@@ -10005,7 +10005,7 @@ msgstr "Pagamento"
 #~ msgstr "Conto salvato!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Conto"
 
 #~ msgid "Accounting"
@@ -10082,7 +10082,7 @@ msgstr "Pagamento"
 #~ msgstr "Chiuso"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Chiuso"
 
 #~ msgid "Connect to"
@@ -10098,7 +10098,7 @@ msgstr "Pagamento"
 #~ msgstr "Cliente salvato!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "DBI not installed!"
@@ -10117,7 +10117,7 @@ msgstr "Pagamento"
 #~ msgstr "Dataset aggiornato!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Sollecito"
 
 #~ msgid "Directory"
@@ -10145,7 +10145,7 @@ msgstr "Pagamento"
 #~ "valuta locale e quelle straniere"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Dal"
 
 #~ msgid "Host"
@@ -10162,7 +10162,7 @@ msgstr "Pagamento"
 #~ msgstr "Versione del Dataset non corretta!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Protocollo Numero"
 
 #, fuzzy
@@ -10205,7 +10205,7 @@ msgstr "Pagamento"
 #~ msgstr "Amministratore del Database Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Numero Fattura Fornitore"
 
 #~ msgid "Orphaned"
@@ -10242,7 +10242,7 @@ msgstr "Pagamento"
 #~ msgstr "Prezzo"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Stampa"
 
 #, fuzzy
@@ -10250,7 +10250,7 @@ msgstr "Pagamento"
 #~ msgstr "Stampa"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Manca il codice del progetto!"
 
 #~ msgid "Project deleted!"
@@ -10260,7 +10260,7 @@ msgstr "Pagamento"
 #~ msgstr "Progetto non archiviato!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Partita IVA"
 
 #, fuzzy
@@ -10354,7 +10354,7 @@ msgstr "Pagamento"
 #~ msgstr "Fornitore cancellato!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fornitore"
 
 #, fuzzy

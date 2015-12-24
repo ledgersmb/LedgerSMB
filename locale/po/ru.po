@@ -9840,23 +9840,23 @@ msgstr "Предварительная оплата"
 #~ msgstr "Пропущен код"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Бизнес"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Язык"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Новый SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Склад"
 
 #~ msgid "AR/AP"
@@ -9878,7 +9878,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Счет записан"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Счет"
 
 #~ msgid "Accounting"
@@ -10060,7 +10060,7 @@ msgstr "Предварительная оплата"
 #~ "Невозможно установить в счете более чем одно значение из AR, AP или IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Невозможно установить много опций для"
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10083,7 +10083,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Закрыт"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Закрыт"
 
 #~ msgid "Components"
@@ -10105,7 +10105,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Клиент сохранен"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Клиент"
 
 #~ msgid "Customers"
@@ -10160,7 +10160,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Отдел сохранен!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Отдел"
 
 #~ msgid "Directory"
@@ -10239,7 +10239,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "пятница"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "с"
 
 #~ msgid "Generate Sales Order"
@@ -10270,7 +10270,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Рост(увеличение)"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Номер счета-фактуры"
 
 #~ msgid "Invoice deleted!"
@@ -10397,7 +10397,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Администрирование базы данных Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Номер заказа"
 
 #~ msgid "Order saved!"
@@ -10467,7 +10467,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Типы цен"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Печать"
 
 #~ msgid "Print and Post as new"
@@ -10483,7 +10483,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Пропущен код проекта"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Код проекта"
 
 #~ msgid "Project Transactions"
@@ -10505,7 +10505,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Номер Проекта/Задания"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Номер резервирования"
 
 #~ msgid "R"
@@ -10706,7 +10706,7 @@ msgstr "Предварительная оплата"
 #~ msgstr "Поставщик сохранен!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Поставщик"
 
 #~ msgid "Vendors"

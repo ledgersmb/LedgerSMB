@@ -9837,23 +9837,23 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Koodi puuttuu!"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Yritys"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Kieli"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Lisää teollisuusluokite"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Varasto"
 
 #~ msgid "AR/AP"
@@ -9875,7 +9875,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Tili lisätty"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Tili"
 
 #~ msgid "Accounting"
@@ -10070,7 +10070,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Tili voi olla vain joko Myynti, Osto tai Varasto"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Ei voi asettaa useita asetuksia"
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10099,7 +10099,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Suljettu"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Suljettu"
 
 #~ msgid "Components"
@@ -10127,7 +10127,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Asiakas tallennettu!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Asiakas"
 
 #~ msgid "Customers"
@@ -10182,7 +10182,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Osasto tallennettu"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Osasto"
 
 #~ msgid "Directory"
@@ -10267,7 +10267,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Perjantai"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Alkaen"
 
 #~ msgid "Generate Sales Order"
@@ -10301,7 +10301,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Lisää"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Laskun numero"
 
 #~ msgid "Invoice deleted!"
@@ -10432,7 +10432,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Oracle-tietokannan ylläpito"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Tilausnumero"
 
 #~ msgid "Order saved!"
@@ -10504,7 +10504,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Hintaryhmät"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Tulosta"
 
 #~ msgid "Print and Post as new"
@@ -10520,7 +10520,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Projektin numero puuttuu!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektin numero"
 
 #~ msgid "Project Transactions"
@@ -10548,7 +10548,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Jonotettu"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tarjousnumero"
 
 #~ msgid "R"
@@ -10758,7 +10758,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Toimittaja tallennettu!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Toimittaja"
 
 #~ msgid "Vendors"

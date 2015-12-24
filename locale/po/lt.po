@@ -9929,11 +9929,11 @@ msgid "use of an overpayment"
 msgstr "Mokėjimas"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Kalba"
 
 #~ msgid "About"
@@ -9946,7 +9946,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Sąskaitos tipo nėra!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Sąskaita"
 
 #~ msgid "Accounting"
@@ -10003,7 +10003,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Uždaryta"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Uždaryta"
 
 #~ msgid "Connect to"
@@ -10016,7 +10016,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Klientas ištrintas!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klientas"
 
 #~ msgid "DBI not installed!"
@@ -10062,7 +10062,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Egzistuojančios duomenų aibės"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Nuo"
 
 #~ msgid "Host"
@@ -10075,7 +10075,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Neteisinga duomenų aibės versija!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Sąskaitos-faktūros numeris"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10143,7 +10143,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Patvirtinti kaip naują"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Spausdinti"
 
 #, fuzzy
@@ -10151,7 +10151,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Spausdinti"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projekto numerio nėra!"
 
 #~ msgid "Project deleted!"
@@ -10251,7 +10251,7 @@ msgstr "Mokėjimas"
 #~ msgstr "Tiekėjas ištrintas!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Tiekėjas"
 
 #~ msgid "You did not enter a name!"

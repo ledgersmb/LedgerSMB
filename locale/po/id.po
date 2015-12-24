@@ -9880,15 +9880,15 @@ msgid "use of an overpayment"
 msgstr "Pilih pembayaran"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Bisnis"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Bahasa"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Gudang"
 
 #~ msgid "Above"
@@ -9904,7 +9904,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kode Akun sudah disimpan"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Akun"
 
 #~ msgid "Accounting"
@@ -9994,7 +9994,7 @@ msgstr "Pilih pembayaran"
 #~ "Tidak dapat men-set akun untuk selain AR (Piutang), AP (Hutang) or IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Tidak dapat men-set multiple option untuk "
 
 #~ msgid "Change"
@@ -10019,7 +10019,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Pelanggan sudah dihapus!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Pelanggan"
 
 #~ msgid "Customers"
@@ -10047,7 +10047,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Departemen telah disimpan"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departemen"
 
 #~ msgid "Directory"
@@ -10093,7 +10093,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kurs harap diisi!"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Dari"
 
 #~ msgid "Hostname missing!"
@@ -10103,7 +10103,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Versi Dataset tidak benar!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Nomor Invoice"
 
 #~ msgid "Invoice deleted!"
@@ -10153,7 +10153,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Tidak ada yang akan dicetak!"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Nomor Pesanan"
 
 #, fuzzy
@@ -10184,7 +10184,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kelompok Harga"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Cetak"
 
 #, fuzzy
@@ -10198,7 +10198,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Nomor Proyek harap diisi!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Nomor Proyek"
 
 #~ msgid "Project deleted!"
@@ -10211,7 +10211,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Proyek sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Nomor Quotation"
 
 #, fuzzy
@@ -10296,7 +10296,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Supplier sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Supplier"
 
 #~ msgid "Vendors"

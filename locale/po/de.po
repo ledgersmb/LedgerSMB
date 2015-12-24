@@ -9897,23 +9897,23 @@ msgstr "Anzahlung"
 #~ msgstr "Kodex fehlt!"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Gewerbe"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Sprache"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "SIC anlegen"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Warenlager"
 
 #~ msgid "Above"
@@ -9929,7 +9929,7 @@ msgstr "Anzahlung"
 #~ msgstr "Konto gespeichert!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10039,7 +10039,7 @@ msgstr "Anzahlung"
 #~ "eingestellt werden"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Mehr als eine Optionen nicht erlaubt für : "
 
 #~ msgid "Change"
@@ -10057,7 +10057,7 @@ msgstr "Anzahlung"
 #~ msgstr "Geschlossen"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Geschlossen"
 
 #~ msgid "Components"
@@ -10076,7 +10076,7 @@ msgstr "Anzahlung"
 #~ msgstr "Kunde gespeichert!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10119,7 +10119,7 @@ msgstr "Anzahlung"
 #~ msgstr "Abteilung gespeichert!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Abteilung"
 
 #~ msgid "Directory"
@@ -10183,7 +10183,7 @@ msgstr "Anzahlung"
 #~ msgstr "Existierende Datenbanken"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Von"
 
 #~ msgid "Groups"
@@ -10206,7 +10206,7 @@ msgstr "Anzahlung"
 #~ msgstr "Ungültigige Datensatzversion"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Rechnungsnummer"
 
 #~ msgid "Invoice deleted!"
@@ -10285,7 +10285,7 @@ msgstr "Anzahlung"
 #~ msgstr "Oracle Datenbankverwaltung"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Bestellnummer"
 
 #~ msgid "Order saved!"
@@ -10334,7 +10334,7 @@ msgstr "Anzahlung"
 #~ msgstr "Preisgruppen"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Drucken"
 
 #, fuzzy
@@ -10345,7 +10345,7 @@ msgstr "Anzahlung"
 #~ msgstr "Projektnummer fehlt!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektnummer"
 
 #~ msgid "Project deleted!"
@@ -10358,7 +10358,7 @@ msgstr "Anzahlung"
 #~ msgstr "Projekt gespeichert!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Angebotsnummer"
 
 #~ msgid "R"
@@ -10506,7 +10506,7 @@ msgstr "Anzahlung"
 #~ msgstr "Lieferant gespeichert!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Lieferant"
 
 #~ msgid "Vendors"
