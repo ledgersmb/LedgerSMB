@@ -275,7 +275,9 @@ push @tests, __PACKAGE__->new(
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
  instructions => $locale->text(
-                   '?????'),
+                   'There are NULL values in the amounts column of your
+source database. Please either find professional help to migrate your
+database, or delete the offending rows through PgAdmin III or psql'),
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.4'
