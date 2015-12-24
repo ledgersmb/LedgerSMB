@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.3.29\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-24 20:40+0000\n"
+"POT-Creation-Date: 2015-12-24 21:01+0000\n"
 "PO-Revision-Date: 2013-08-27 08:52+0200\n"
 "Last-Translator: István <pongracz.istvan@startit.hu>\n"
 "Language-Team: StartIT Kft <info@startit.hu>\n"
@@ -48,15 +48,6 @@ msgstr "$operation $entity_classname"
 #: UI/Contact/divs/employee.html:6
 msgid "$operation Employee"
 msgstr "$operation Alkalmazott"
-
-#: templates/demo/product_receipt.html:130
-#: templates/demo/purchase_order.html:132
-#: templates/demo_with_images/product_receipt.html:130
-#: templates/demo_with_images/purchase_order.html:132
-#: templates/xedemo/product_receipt.html:132
-#: templates/xedemo/purchase_order.html:132
-msgid "%"
-msgstr "%"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -86,23 +77,11 @@ msgstr "30"
 msgid "60"
 msgstr "60"
 
-#: bin/io.pl:1495
-msgid "894.EDI"
-msgstr ""
-
 #: LedgerSMB/Report/Aging.pm:144 templates/demo/statement.html:67
 #: templates/demo_with_images/statement.html:67
 #: templates/xedemo/statement.html:67
 msgid "90"
 msgstr "90"
-
-#: LedgerSMB/Upgrade_Tests.pm:279
-msgid "?????"
-msgstr ""
-
-#: bin/ic.pl:1276
-msgid "A"
-msgstr "Árvált."
 
 #: templates/demo/invoice.tex:32 templates/demo/packing_list.tex:22
 #: templates/demo_with_images/invoice.tex:32
@@ -369,13 +348,13 @@ msgstr "Összegtől"
 msgid "Accounts To"
 msgstr "Számlák"
 
-#: LedgerSMB/Upgrade_Tests.pm:731
+#: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
 "Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:420
+#: LedgerSMB/Upgrade_Tests.pm:422
 msgid "Accounts without heading"
 msgstr ""
 
@@ -679,6 +658,11 @@ msgstr "Cím: %1"
 #: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr "Címek"
+
+#: bin/ic.pl:1276
+#, fuzzy
+msgid "Adj"
+msgstr "Új"
 
 #: LedgerSMB/Scripts/asset.pm:772
 msgid "Adjusted Basis"
@@ -2876,12 +2860,12 @@ msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 msgid "Done"
 msgstr "Elvégezve"
 
-#: LedgerSMB/Upgrade_Tests.pm:455
+#: LedgerSMB/Upgrade_Tests.pm:457
 #, fuzzy
 msgid "Double customernumbers"
 msgstr "Egyedi vevő azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:490
+#: LedgerSMB/Upgrade_Tests.pm:492
 #, fuzzy
 msgid "Double vendornumbers"
 msgstr "Egyedi szállító azonosító"
@@ -3213,12 +3197,12 @@ msgstr ""
 msgid "Employees"
 msgstr "Alkalmazottak"
 
-#: LedgerSMB/Upgrade_Tests.pm:436
+#: LedgerSMB/Upgrade_Tests.pm:438
 #, fuzzy
 msgid "Empty customernumbers"
 msgstr "Egyedi vevő azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:471
+#: LedgerSMB/Upgrade_Tests.pm:473
 #, fuzzy
 msgid "Empty vendornumbers"
 msgstr "Egyedi szállító azonosító"
@@ -3767,8 +3751,8 @@ msgstr "Teljes jogosultság"
 msgid "GIFI"
 msgstr "Gyűjtőkód"
 
-#: LedgerSMB/Upgrade_Tests.pm:306 LedgerSMB/Upgrade_Tests.pm:321
-#: LedgerSMB/Upgrade_Tests.pm:337
+#: LedgerSMB/Upgrade_Tests.pm:308 LedgerSMB/Upgrade_Tests.pm:323
+#: LedgerSMB/Upgrade_Tests.pm:339
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -4799,12 +4783,12 @@ msgstr "Duplikált alkalmazott azonosító"
 msgid "Make invoice numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:589
+#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:591
 #, fuzzy
 msgid "Make non-obsolete partnumbers unique"
 msgstr "Egyedi élő cikkszám"
 
-#: LedgerSMB/Upgrade_Tests.pm:295
+#: LedgerSMB/Upgrade_Tests.pm:297
 #, fuzzy
 msgid "Make sure all meta numbers are unique."
 msgstr "Duplikált alkalmazott azonosító"
@@ -5125,7 +5109,7 @@ msgstr ""
 "Nincsenek beállítva pénznemek. Kérem állítson be pénznemeket a Rendszer/"
 "Alapbeállítások menüpont alatt."
 
-#: LedgerSMB/Upgrade_Tests.pm:290
+#: LedgerSMB/Upgrade_Tests.pm:292
 #, fuzzy
 msgid "No duplicate meta_numbers"
 msgstr "Duplikált alkalmazott azonosító"
@@ -5182,11 +5166,11 @@ msgstr "Nem számlázandó"
 msgid "Non-cash"
 msgstr "bankkivonat"
 
-#: LedgerSMB/Upgrade_Tests.pm:639
+#: LedgerSMB/Upgrade_Tests.pm:641
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:750
+#: LedgerSMB/Upgrade_Tests.pm:752
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -5194,7 +5178,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr "Nem raktározott tétel"
 
-#: LedgerSMB/Upgrade_Tests.pm:545 LedgerSMB/Upgrade_Tests.pm:567
+#: LedgerSMB/Upgrade_Tests.pm:547 LedgerSMB/Upgrade_Tests.pm:569
 #, fuzzy
 msgid "Non-unique invoice numbers"
 msgstr "Egyedi vevőszámla azonosítók"
@@ -5280,17 +5264,17 @@ msgstr "Nov."
 msgid "November"
 msgstr "November"
 
-#: LedgerSMB/Upgrade_Tests.pm:506 LedgerSMB/Upgrade_Tests.pm:525
+#: LedgerSMB/Upgrade_Tests.pm:508 LedgerSMB/Upgrade_Tests.pm:527
 #, fuzzy
 msgid "Null employee numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
 
-#: LedgerSMB/Upgrade_Tests.pm:620
+#: LedgerSMB/Upgrade_Tests.pm:622
 #, fuzzy
 msgid "Null make numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
 
-#: LedgerSMB/Upgrade_Tests.pm:603
+#: LedgerSMB/Upgrade_Tests.pm:605
 #, fuzzy
 msgid "Null model numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
@@ -5635,7 +5619,7 @@ msgstr "Túlfizetés számla"
 msgid "Overpayments"
 msgstr "Túlfizetés"
 
-#: LedgerSMB/Form.pm:1399 bin/arapprn.pl:480 bin/am.pl:1081 bin/io.pl:1489
+#: LedgerSMB/Form.pm:1399 bin/arapprn.pl:480 bin/am.pl:1081
 #: UI/Contact/pricelist.html:101 UI/Reports/aging_report.html:112
 #: UI/Reports/display_report.html:65 UI/Reports/balance_sheet.html:115
 #: UI/Reports/PNL.html:97
@@ -5955,64 +5939,64 @@ msgstr ""
 msgid "Pick List"
 msgstr "Kitárolási lista"
 
-#: LedgerSMB/Upgrade_Tests.pm:713
+#: LedgerSMB/Upgrade_Tests.pm:715
 msgid ""
 "Please add a header to the CoA which sorts before the listed accounts "
 "(usually \"0000\" works) (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:694
+#: LedgerSMB/Upgrade_Tests.pm:696
 msgid ""
 "Please add at least one header to your CoA which sorts before all other "
 "account numbers (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:659
+#: LedgerSMB/Upgrade_Tests.pm:661
 msgid "Please fix the presented rows to either be \"H\" or \"A\""
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:643 LedgerSMB/Upgrade_Tests.pm:677
+#: LedgerSMB/Upgrade_Tests.pm:645 LedgerSMB/Upgrade_Tests.pm:679
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:551
+#: LedgerSMB/Upgrade_Tests.pm:553
 #, fuzzy
 msgid "Please make all AR invoice numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:459
+#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:461
 #, fuzzy
 msgid "Please make all customer numbers unique"
 msgstr "Duplikált alkalmazott azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:530
+#: LedgerSMB/Upgrade_Tests.pm:532
 #, fuzzy
 msgid "Please make all employee numbers unique"
 msgstr "Duplikált alkalmazott azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:494
+#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:496
 #, fuzzy
 msgid "Please make all vendor numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:510
+#: LedgerSMB/Upgrade_Tests.pm:512
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:625
+#: LedgerSMB/Upgrade_Tests.pm:627
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:607
+#: LedgerSMB/Upgrade_Tests.pm:609
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:440
+#: LedgerSMB/Upgrade_Tests.pm:442
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:475
+#: LedgerSMB/Upgrade_Tests.pm:477
 msgid "Please make sure there are no empty vendor numbers."
 msgstr ""
 
@@ -6038,21 +6022,21 @@ msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
 msgid "Please select a vendor with unused overpayments"
 msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
 
-#: LedgerSMB/Upgrade_Tests.pm:735
+#: LedgerSMB/Upgrade_Tests.pm:737
 msgid ""
 "Please unmark accounts as summary accounts, or remove dropdown checkmarks (in "
 "the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:310
+#: LedgerSMB/Upgrade_Tests.pm:312
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:341
+#: LedgerSMB/Upgrade_Tests.pm:343
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:325
+#: LedgerSMB/Upgrade_Tests.pm:327
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -8807,7 +8791,7 @@ msgstr "Egyedi vevő azonosító"
 msgid "Unique Vendornumber"
 msgstr "Egyedi szállító azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:587
+#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:589
 msgid "Unique nonobsolete partnumbers"
 msgstr "Egyedi élő cikkszám"
 
@@ -8838,17 +8822,17 @@ msgstr "Egység"
 msgid "Unit Price"
 msgstr "Egységár"
 
-#: LedgerSMB/Upgrade_Tests.pm:690
+#: LedgerSMB/Upgrade_Tests.pm:692
 msgid "Unknown "
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:672
+#: LedgerSMB/Upgrade_Tests.pm:674
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)"
 "Q(uity))"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:654
+#: LedgerSMB/Upgrade_Tests.pm:656
 msgid "Unknown charttype; should be H(eader)/A(ccount))"
 msgstr ""
 
@@ -8875,12 +8859,12 @@ msgstr "Jóváhagyva"
 msgid "Unsupported Number"
 msgstr "Nem támogatott szám"
 
-#: LedgerSMB/Upgrade_Tests.pm:380
+#: LedgerSMB/Upgrade_Tests.pm:382
 #, fuzzy
 msgid "Unsupported account categories"
 msgstr "Nem támogatott számla típus"
 
-#: LedgerSMB/Upgrade_Tests.pm:398
+#: LedgerSMB/Upgrade_Tests.pm:400
 #, fuzzy
 msgid "Unsupported account link combinations"
 msgstr "Nem támogatott számla típus"
@@ -9523,6 +9507,9 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "$operation Person"
 #~ msgstr "$operation Személy"
 
+#~ msgid "%"
+#~ msgstr "%"
+
 #~ msgid "%1 Business"
 #~ msgstr "%1 partnercsoport"
 
@@ -9549,6 +9536,9 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "= Variance"
 #~ msgstr "= Eltérés"
+
+#~ msgid "A"
+#~ msgstr "Árvált."
 
 #~ msgid "AR/AP"
 #~ msgstr "Vevők/Szállítók"
