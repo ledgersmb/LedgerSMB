@@ -86,7 +86,7 @@ while (<>) {
               m/^[\s\t\n]*"(([^"\\]|\\.)*)"/g
               && do { $state = TXT_FIN;
                       my $string = $1;
-                      if ($string =~ m/(?<!\\)\$/) {
+                      if ($string =~ m/(?<!\\)\$/g) {
                           warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax!";
                           $state = NUL;
                       }
