@@ -1272,7 +1272,7 @@ sub assembly_row {
     $column_header{lastcost} =
       qq|<th align=right nowrap>| . $locale->text('Cost') . qq|</th>|;
     $column_header{bom}        = qq|<th>| . $locale->text('BOM') . qq|</th>|;
-    $column_header{adj}        = qq|<th>| . $locale->text('A') . qq|</th>|;
+    $column_header{adj}        = qq|<th>| . $locale->text('Adj') . qq|</th>|;
     $column_header{partsgroup} = qq|<th>| . $locale->text('Group') . qq|</th>|;
 
     print qq|

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.3.29\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-24 22:20+0000\n"
+"POT-Creation-Date: 2015-12-24 21:01+0000\n"
 "PO-Revision-Date: 2013-08-27 08:52+0200\n"
 "Last-Translator: István <pongracz.istvan@startit.hu>\n"
 "Language-Team: StartIT Kft <info@startit.hu>\n"
@@ -48,15 +48,6 @@ msgstr "$operation $entity_classname"
 #: UI/Contact/divs/employee.html:6
 msgid "$operation Employee"
 msgstr "$operation Alkalmazott"
-
-#: templates/demo/product_receipt.html:130
-#: templates/demo/purchase_order.html:132
-#: templates/demo_with_images/product_receipt.html:130
-#: templates/demo_with_images/purchase_order.html:132
-#: templates/xedemo/product_receipt.html:132
-#: templates/xedemo/purchase_order.html:132
-msgid "%"
-msgstr "%"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -86,23 +77,11 @@ msgstr "30"
 msgid "60"
 msgstr "60"
 
-#: bin/io.pl:1495
-msgid "894.EDI"
-msgstr ""
-
 #: LedgerSMB/Report/Aging.pm:144 templates/demo/statement.html:67
 #: templates/demo_with_images/statement.html:67
 #: templates/xedemo/statement.html:67
 msgid "90"
 msgstr "90"
-
-#: LedgerSMB/Upgrade_Tests.pm:279
-msgid "?????"
-msgstr ""
-
-#: bin/ic.pl:1276
-msgid "A"
-msgstr "Árvált."
 
 #: templates/demo/invoice.tex:32 templates/demo/packing_list.tex:22
 #: templates/demo_with_images/invoice.tex:32
@@ -115,8 +94,8 @@ msgid ""
 "responsible for damages during transit."
 msgstr ""
 "A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt [_1] hivatalos engedélye szükséges. A "
-"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. [_1] "
+"visszaszállítás megkezdése előtt %1 hivatalos engedélye szükséges. A "
+"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. %1 "
 "semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
 #: sql/Pg-database.sql:798
@@ -246,7 +225,7 @@ msgstr "Hozzáférés megtagadva"
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:66
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67 bin/ir.pl:470 bin/ir.pl:864
 #: bin/is.pl:461 bin/is.pl:910 bin/aa.pl:598 bin/aa.pl:662 bin/aa.pl:819
-#: bin/aa.pl:1673 bin/oe.pl:427 bin/ic.pl:1128 UI/Contact/contact.html:20
+#: bin/aa.pl:1673 bin/ic.pl:1128 bin/oe.pl:427 UI/Contact/contact.html:20
 #: UI/Contact/divs/credit.html:187 UI/Contact/divs/credit.html:188
 #: UI/Reports/filters/aging.html:25 UI/Reports/filters/gl.html:32
 #: UI/Reports/filters/gl.html:248
@@ -325,12 +304,12 @@ msgstr "Számlatípus"
 #: LedgerSMB/GL.pm:206
 #, fuzzy
 msgid "Account [_1] not found"
-msgstr "[_1] számla nem található"
+msgstr "%1 számla nem található"
 
 #: bin/gl.pl:634
 #, fuzzy
 msgid "Account [_1] not found."
-msgstr "[_1] számla nem található."
+msgstr "%1 számla nem található."
 
 # 78%
 #: UI/Reports/filters/balance_sheet.html:59
@@ -369,13 +348,13 @@ msgstr "Összegtől"
 msgid "Accounts To"
 msgstr "Számlák"
 
-#: LedgerSMB/Upgrade_Tests.pm:731
+#: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
 "Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:420
+#: LedgerSMB/Upgrade_Tests.pm:422
 msgid "Accounts without heading"
 msgstr ""
 
@@ -402,7 +381,7 @@ msgstr "A művelet nincs meghatározva: "
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 #, fuzzy
 msgid "Action: [_1], ID: [_2]"
-msgstr "Művelet: [_1], ID: [_2]"
+msgstr "Művelet: %1, ID: %2"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -553,11 +532,11 @@ msgstr "Új cikk"
 msgid "Add Pricegroup"
 msgstr "Új árcsoport"
 
-#: bin/oe.pl:62 bin/io.pl:1198
+#: bin/io.pl:1198 bin/oe.pl:62
 msgid "Add Purchase Order"
 msgstr "Új beszerzési rendelés"
 
-#: bin/oe.pl:74 bin/io.pl:1231
+#: bin/io.pl:1231 bin/oe.pl:74
 msgid "Add Quotation"
 msgstr "Új ajánlat"
 
@@ -566,7 +545,7 @@ msgstr "Új ajánlat"
 msgid "Add Reporting Unit"
 msgstr "Jelentés alapja"
 
-#: bin/oe.pl:70 bin/io.pl:1220
+#: bin/io.pl:1220 bin/oe.pl:70
 msgid "Add Request for Quotation"
 msgstr "Új ajánlatkérés"
 
@@ -583,7 +562,7 @@ msgstr "Új TEÁOR/SZJ"
 msgid "Add Sales Invoice"
 msgstr "Új vevőszámla"
 
-#: bin/oe.pl:66 bin/io.pl:1209
+#: bin/io.pl:1209 bin/oe.pl:66
 msgid "Add Sales Order"
 msgstr "Új vevőrendelés"
 
@@ -661,8 +640,8 @@ msgstr "Levonás hozzáadása"
 msgid "Add/Change Wage"
 msgstr "Új átváltási árfolyam"
 
-#: bin/ir.pl:480 bin/is.pl:471 bin/aa.pl:603 bin/arap.pl:175 bin/oe.pl:432
-#: bin/pe.pl:687 bin/ic.pl:1692 UI/Contact/divs/address.html:85
+#: bin/ir.pl:480 bin/is.pl:471 bin/aa.pl:603 bin/arap.pl:175 bin/ic.pl:1692
+#: bin/oe.pl:432 bin/pe.pl:687 UI/Contact/divs/address.html:85
 #: UI/Contact/divs/address.html:130 UI/Reports/filters/contact_search.html:87
 #: UI/Reports/filters/purchase_history.html:70
 msgid "Address"
@@ -673,12 +652,17 @@ msgstr "Cím"
 #: templates/xedemo/printPayment.html:26
 #, fuzzy
 msgid "Address: [_1]"
-msgstr "Cím: [_1]"
+msgstr "Cím: %1"
 
 # 77%
 #: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr "Címek"
+
+#: bin/ic.pl:1276
+#, fuzzy
+msgid "Adj"
+msgstr "Új"
 
 #: LedgerSMB/Scripts/asset.pm:772
 msgid "Adjusted Basis"
@@ -739,7 +723,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:222
 #, fuzzy
 msgid "All prices in [_1]"
-msgstr "A megadott árak [_1]ban értendők"
+msgstr "A megadott árak %1ban értendők"
 
 #: templates/demo/sales_order.html:211 templates/demo/sales_quotation.html:179
 #: templates/demo_with_images/sales_order.html:211
@@ -748,7 +732,7 @@ msgstr "A megadott árak [_1]ban értendők"
 #: templates/xedemo/sales_quotation.html:179
 #, fuzzy
 msgid "All prices in [_1] Funds"
-msgstr "Minden ár [_1]ban értendő"
+msgstr "Minden ár %1ban értendő"
 
 #: templates/demo/product_receipt.html:201
 #: templates/demo/purchase_order.html:203
@@ -758,7 +742,7 @@ msgstr "Minden ár [_1]ban értendő"
 #: templates/xedemo/purchase_order.html:203
 #, fuzzy
 msgid "All prices in [_1] funds"
-msgstr "Minden ár [_1]ban értendő"
+msgstr "Minden ár %1ban értendő"
 
 #: templates/demo/invoice.tex:186 templates/demo/product_receipt.tex:147
 #: templates/demo/purchase_order.tex:153 templates/demo/sales_order.tex:158
@@ -773,7 +757,7 @@ msgstr "Minden ár [_1]ban értendő"
 #: templates/xedemo/sales_quotation.tex:125
 #, fuzzy
 msgid "All prices in [_1]."
-msgstr "A megadott árak [_1]ban értendők"
+msgstr "A megadott árak %1ban értendők"
 
 #: LedgerSMB/Report/Invoices/COGS.pm:125 UI/timecards/timecard.html:129
 msgid "Allocated"
@@ -797,12 +781,12 @@ msgstr "Felülírható"
 #: templates/demo/ar_transaction.html:194 templates/demo/ar_transaction.tex:129
 #: templates/demo/invoice.html:250 templates/demo/invoice.tex:141
 #: templates/demo/invoice.tex:202 templates/demo/printPayment.html:53
-#: templates/demo/product_receipt.tex:120 templates/demo/purchase_order.tex:120
+#: templates/demo/product_receipt.html:131
+#: templates/demo/product_receipt.tex:120
+#: templates/demo/purchase_order.html:133 templates/demo/purchase_order.tex:120
 #: templates/demo/sales_order.html:135 templates/demo/sales_order.tex:122
 #: templates/demo/sales_quotation.html:104
 #: templates/demo/sales_quotation.tex:90
-#: templates/demo/product_receipt.html:131
-#: templates/demo/purchase_order.html:133
 #: templates/demo_with_images/ap_transaction.html:196
 #: templates/demo_with_images/ar_transaction.html:194
 #: templates/demo_with_images/ar_transaction.tex:129
@@ -810,26 +794,26 @@ msgstr "Felülírható"
 #: templates/demo_with_images/invoice.tex:141
 #: templates/demo_with_images/invoice.tex:201
 #: templates/demo_with_images/printPayment.html:53
+#: templates/demo_with_images/product_receipt.html:131
 #: templates/demo_with_images/product_receipt.tex:120
+#: templates/demo_with_images/purchase_order.html:133
 #: templates/demo_with_images/purchase_order.tex:120
 #: templates/demo_with_images/sales_order.html:135
 #: templates/demo_with_images/sales_order.tex:122
 #: templates/demo_with_images/sales_quotation.html:104
 #: templates/demo_with_images/sales_quotation.tex:90
-#: templates/demo_with_images/product_receipt.html:131
-#: templates/demo_with_images/purchase_order.html:133
 #: templates/xedemo/ap_transaction.html:196
 #: templates/xedemo/ar_transaction.html:194
 #: templates/xedemo/ar_transaction.tex:129 templates/xedemo/invoice.html:250
 #: templates/xedemo/invoice.tex:140 templates/xedemo/invoice.tex:201
 #: templates/xedemo/printPayment.html:53
+#: templates/xedemo/product_receipt.html:133
 #: templates/xedemo/product_receipt.tex:120
+#: templates/xedemo/purchase_order.html:133
 #: templates/xedemo/purchase_order.tex:120
 #: templates/xedemo/sales_order.html:135 templates/xedemo/sales_order.tex:122
 #: templates/xedemo/sales_quotation.html:104
 #: templates/xedemo/sales_quotation.tex:91
-#: templates/xedemo/product_receipt.html:133
-#: templates/xedemo/purchase_order.html:133
 msgid "Amount"
 msgstr "Összeg"
 
@@ -1029,7 +1013,7 @@ msgid "Assets to Liabilities"
 msgstr "Kötelezettségek"
 
 #: LedgerSMB/Report/File/Incoming.pm:107 bin/ir.pl:1033 bin/is.pl:1085
-#: bin/aa.pl:1064 bin/oe.pl:928 bin/ic.pl:927 UI/journal/journal_entry.html:361
+#: bin/aa.pl:1064 bin/ic.pl:927 bin/oe.pl:928 UI/journal/journal_entry.html:361
 msgid "Attach"
 msgstr "Hozzáad"
 
@@ -1068,29 +1052,29 @@ msgstr "Mellékelve"
 msgid "Attached By"
 msgstr "Mellékelte"
 
-#: bin/ir.pl:1007 bin/is.pl:1059 bin/aa.pl:1036 bin/oe.pl:902 bin/ic.pl:899
+#: bin/ir.pl:1007 bin/is.pl:1059 bin/aa.pl:1036 bin/ic.pl:899 bin/oe.pl:902
 #: UI/journal/journal_entry.html:337
 msgid "Attached To"
 msgstr "Mellékelt"
 
-#: bin/ir.pl:1006 bin/is.pl:1058 bin/aa.pl:1035 bin/oe.pl:901 bin/ic.pl:898
+#: bin/ir.pl:1006 bin/is.pl:1058 bin/aa.pl:1035 bin/ic.pl:898 bin/oe.pl:901
 #: UI/journal/journal_entry.html:336
 msgid "Attached To Type"
 msgstr "Melléklet típusa"
 
-#: bin/ir.pl:983 bin/is.pl:1035 bin/aa.pl:1011 bin/oe.pl:878 bin/ic.pl:875
+#: bin/ir.pl:983 bin/is.pl:1035 bin/aa.pl:1011 bin/ic.pl:875 bin/oe.pl:878
 #: UI/journal/journal_entry.html:314
 msgid "Attached and Linked Files"
 msgstr "Mellékelt és hivatkozott fájlok"
 
 #: bin/ir.pl:987 bin/ir.pl:1008 bin/is.pl:1039 bin/is.pl:1060 bin/aa.pl:1015
-#: bin/aa.pl:1037 bin/oe.pl:882 bin/oe.pl:903 bin/ic.pl:879 bin/ic.pl:900
+#: bin/aa.pl:1037 bin/ic.pl:879 bin/ic.pl:900 bin/oe.pl:882 bin/oe.pl:903
 #: UI/journal/journal_entry.html:318 UI/journal/journal_entry.html:338
 msgid "Attached at"
 msgstr "Mellékelve"
 
 #: bin/ir.pl:988 bin/ir.pl:1009 bin/is.pl:1040 bin/is.pl:1061 bin/aa.pl:1016
-#: bin/aa.pl:1038 bin/oe.pl:883 bin/oe.pl:904 bin/ic.pl:880 bin/ic.pl:901
+#: bin/aa.pl:1038 bin/ic.pl:880 bin/ic.pl:901 bin/oe.pl:883 bin/oe.pl:904
 #: UI/journal/journal_entry.html:319 UI/journal/journal_entry.html:339
 msgid "Attached by"
 msgstr "Mellékelte"
@@ -1101,20 +1085,24 @@ msgstr "Melléklet"
 
 #: templates/demo/bin_list.html:51 templates/demo/bin_list.html:84
 #: templates/demo/packing_list.html:52 templates/demo/pick_list.html:51
-#: templates/demo/product_receipt.tex:47 templates/demo/product_receipt.tex:82
-#: templates/demo/purchase_order.tex:47 templates/demo/purchase_order.tex:82
+#: templates/demo/product_receipt.html:50
+#: templates/demo/product_receipt.html:78 templates/demo/product_receipt.tex:47
+#: templates/demo/product_receipt.tex:82 templates/demo/purchase_order.html:50
+#: templates/demo/purchase_order.html:78 templates/demo/purchase_order.tex:47
+#: templates/demo/purchase_order.tex:82
 #: templates/demo/request_quotation.html:51
 #: templates/demo/request_quotation.html:79 templates/demo/sales_order.html:49
 #: templates/demo/sales_quotation.html:44 templates/demo/work_order.html:49
-#: templates/demo/product_receipt.html:50
-#: templates/demo/product_receipt.html:78 templates/demo/purchase_order.html:50
-#: templates/demo/purchase_order.html:78
 #: templates/demo_with_images/bin_list.html:51
 #: templates/demo_with_images/bin_list.html:84
 #: templates/demo_with_images/packing_list.html:52
 #: templates/demo_with_images/pick_list.html:51
+#: templates/demo_with_images/product_receipt.html:50
+#: templates/demo_with_images/product_receipt.html:78
 #: templates/demo_with_images/product_receipt.tex:47
 #: templates/demo_with_images/product_receipt.tex:82
+#: templates/demo_with_images/purchase_order.html:50
+#: templates/demo_with_images/purchase_order.html:78
 #: templates/demo_with_images/purchase_order.tex:47
 #: templates/demo_with_images/purchase_order.tex:82
 #: templates/demo_with_images/request_quotation.html:51
@@ -1122,27 +1110,23 @@ msgstr "Melléklet"
 #: templates/demo_with_images/sales_order.html:49
 #: templates/demo_with_images/sales_quotation.html:44
 #: templates/demo_with_images/work_order.html:49
-#: templates/demo_with_images/product_receipt.html:50
-#: templates/demo_with_images/product_receipt.html:78
-#: templates/demo_with_images/purchase_order.html:50
-#: templates/demo_with_images/purchase_order.html:78
 #: templates/xedemo/bin_list.html:51 templates/xedemo/bin_list.html:84
 #: templates/xedemo/packing_list.html:52 templates/xedemo/pick_list.html:51
+#: templates/xedemo/product_receipt.html:50
+#: templates/xedemo/product_receipt.html:78
 #: templates/xedemo/product_receipt.tex:47
 #: templates/xedemo/product_receipt.tex:82
+#: templates/xedemo/purchase_order.html:50
+#: templates/xedemo/purchase_order.html:78
 #: templates/xedemo/purchase_order.tex:47
 #: templates/xedemo/purchase_order.tex:82
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
 #: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
-#: templates/xedemo/product_receipt.html:50
-#: templates/xedemo/product_receipt.html:78
-#: templates/xedemo/purchase_order.html:50
-#: templates/xedemo/purchase_order.html:78
 #, fuzzy
 msgid "Attn: [_1]"
-msgstr "Címzett: [_1]"
+msgstr "Címzett: %1"
 
 #: UI/am-audit-control.html:6
 msgid "Audit Control"
@@ -1160,7 +1144,7 @@ msgstr "Augusztus"
 #: UI/Contact/divs/notes.html:79
 #, fuzzy
 msgid "Author: [_1]"
-msgstr "Szerző: [_1]"
+msgstr "Szerző: %1"
 
 #: bin/ir.pl:648 bin/is.pl:408 bin/is.pl:703
 msgid "Automatic"
@@ -1333,7 +1317,7 @@ msgstr "Titkos másolat"
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Bcc: [_1]"
+msgstr "Bcc: %1"
 
 #: UI/reconciliation/report.html:26
 msgid "Beginning Statement Balance:"
@@ -1364,8 +1348,8 @@ msgid "Billion"
 msgstr "milliárd"
 
 #: LedgerSMB/Report/Inventory/History.pm:134
-#: LedgerSMB/Report/Inventory/Search.pm:214 bin/oe.pl:1849 bin/ic.pl:491
-#: bin/ic.pl:2114 bin/io.pl:243 UI/Reports/filters/search_goods.html:288
+#: LedgerSMB/Report/Inventory/Search.pm:214 bin/ic.pl:491 bin/ic.pl:2114
+#: bin/io.pl:243 bin/oe.pl:1849 UI/Reports/filters/search_goods.html:288
 #: UI/io-email.html:105 templates/demo/bin_list.html:154
 #: templates/demo/bin_list.tex:109 templates/demo/pick_list.html:116
 #: templates/demo/pick_list.tex:102 templates/demo/work_order.html:133
@@ -1381,10 +1365,9 @@ msgid "Bin"
 msgstr "VTSZ/TEÁOR"
 
 # A bin-t a ledger után VTSZ/TEÁOR követésére használjuk, nem a raktárhely követésére.
-#: bin/am.pl:1523 bin/oe.pl:260 bin/oe.pl:272 bin/io.pl:1422 bin/io.pl:1436
-#: bin/io.pl:1644 templates/demo/bin_list.html:4
-#: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
-#: templates/demo_with_images/bin_list.html:4
+#: bin/am.pl:1523 bin/io.pl:1422 bin/io.pl:1436 bin/io.pl:1644 bin/oe.pl:260
+#: bin/oe.pl:272 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
+#: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
@@ -1609,7 +1592,7 @@ msgstr "Nem lehet elmenteni az adókat!"
 #: LedgerSMB/Budget.pm:240
 #, fuzzy
 msgid "Cannot specify both debits and credits for budget line [_1]"
-msgstr "Nem specifikálható a tartozik és követel is a költségvetés [_1] sorához"
+msgstr "Nem specifikálható a tartozik és követel is a költségvetés %1 sorához"
 
 #: bin/ic.pl:2244
 msgid "Cannot stock assemblies!"
@@ -1644,7 +1627,7 @@ msgstr "Másolat"
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Cc: [_1]"
+msgstr "Cc: %1"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -1686,7 +1669,7 @@ msgstr "Feladat ellenőrzése"
 #: UI/payments/check_job.html:15
 #, fuzzy
 msgid "Checking Job [_1]"
-msgstr "Feladat ellenőrzése [_1]"
+msgstr "Feladat ellenőrzése %1"
 
 #: UI/payments/payment1_5.html:23
 msgid "Choose a company"
@@ -1812,7 +1795,7 @@ msgstr "Társaság faxszáma"
 #: UI/am-company-logo.html:7
 #, fuzzy
 msgid "Company: [_1]"
-msgstr "Cég: [_1]"
+msgstr "Cég: %1"
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1841,25 +1824,24 @@ msgstr "Meglévő adattal való ütközés. Elképzelhető, hogy már megadta ko
 
 #: bin/io.pl:2175 UI/Reports/filters/contact_search.html:54
 #: templates/demo/bin_list.html:110 templates/demo/packing_list.html:81
-#: templates/demo/pick_list.html:80 templates/demo/product_receipt.tex:106
+#: templates/demo/pick_list.html:80 templates/demo/product_receipt.html:104
+#: templates/demo/product_receipt.tex:106
+#: templates/demo/purchase_order.html:105
 #: templates/demo/request_quotation.html:106
 #: templates/demo/sales_quotation.html:74
-#: templates/demo/product_receipt.html:104
-#: templates/demo/purchase_order.html:105
 #: templates/demo_with_images/bin_list.html:110
 #: templates/demo_with_images/packing_list.html:81
 #: templates/demo_with_images/pick_list.html:80
+#: templates/demo_with_images/product_receipt.html:104
 #: templates/demo_with_images/product_receipt.tex:106
+#: templates/demo_with_images/purchase_order.html:105
 #: templates/demo_with_images/request_quotation.html:106
 #: templates/demo_with_images/sales_quotation.html:74
-#: templates/demo_with_images/product_receipt.html:104
-#: templates/demo_with_images/purchase_order.html:105
 #: templates/xedemo/bin_list.html:110 templates/xedemo/packing_list.html:81
-#: templates/xedemo/pick_list.html:80
+#: templates/xedemo/pick_list.html:80 templates/xedemo/product_receipt.html:105
+#: templates/xedemo/purchase_order.html:105
 #: templates/xedemo/request_quotation.html:106
-#: templates/xedemo/sales_quotation.html:74
-#: templates/xedemo/product_receipt.html:105
-#: templates/xedemo/purchase_order.html:105 sql/Pg-database.sql:545
+#: templates/xedemo/sales_quotation.html:74 sql/Pg-database.sql:545
 msgid "Contact"
 msgstr "Kapcsolat"
 
@@ -1894,9 +1876,9 @@ msgstr "Kapcsolat"
 
 #: LedgerSMB/Scripts/payment.pm:594 LedgerSMB/Scripts/payment.pm:659
 #: LedgerSMB/Scripts/payment.pm:1307 bin/arapprn.pl:423 bin/aa.pl:1752
-#: bin/arap.pl:269 bin/oe.pl:1537 bin/oe.pl:2065 bin/oe.pl:2576 bin/pe.pl:339
-#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 bin/ic.pl:959 bin/ic.pl:1781
-#: bin/ic.pl:2064 bin/ic.pl:2218 bin/io.pl:682 bin/io.pl:882 bin/io.pl:1323
+#: bin/arap.pl:269 bin/ic.pl:959 bin/ic.pl:1781 bin/ic.pl:2064 bin/ic.pl:2218
+#: bin/io.pl:682 bin/io.pl:882 bin/io.pl:1323 bin/oe.pl:1537 bin/oe.pl:2065
+#: bin/oe.pl:2576 bin/pe.pl:339 bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215
 #: UI/Contact/divs/credit.html:401 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
 #: UI/Reports/filters/gl.html:302 UI/Reports/filters/inventory_activity.html:32
@@ -1958,7 +1940,7 @@ msgstr "Újba másol"
 msgid "Copy to New Name"
 msgstr "Új névbe másol"
 
-#: bin/oe.pl:2415 bin/ic.pl:1029 bin/ic.pl:1274
+#: bin/ic.pl:1029 bin/ic.pl:1274 bin/oe.pl:2415
 msgid "Cost"
 msgstr "Költség"
 
@@ -1977,7 +1959,7 @@ msgstr ""
 #: bin/gl.pl:95
 #, fuzzy
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
-msgstr "Nem nyitható meg a pos.conf.pl fájl innen [_1], [_2] sor: [_3]"
+msgstr "Nem nyitható meg a pos.conf.pl fájl innen %1, %2 sor: %3"
 
 #: bin/ir.pl:1344 bin/is.pl:1319 bin/oe.pl:1257
 msgid "Could not save the data.  Please try again"
@@ -2113,8 +2095,8 @@ msgstr "Követel"
 msgid "Cumulative Error:"
 msgstr "Összesített hiba:"
 
-#: LedgerSMB/Report/Invoices/Outstanding.pm:241 bin/oe.pl:2420 bin/ic.pl:1015
-#: bin/ic.pl:1114
+#: LedgerSMB/Report/Invoices/Outstanding.pm:241 bin/ic.pl:1015 bin/ic.pl:1114
+#: bin/oe.pl:2420
 msgid "Curr"
 msgstr "Pénznem"
 
@@ -2166,7 +2148,7 @@ msgstr "Nyereség"
 #: LedgerSMB/Report/Aging.pm:83 LedgerSMB/Report/Invoices/Transactions.pm:250
 #: LedgerSMB/Report/Invoices/Outstanding.pm:177 LedgerSMB/Report/Orders.pm:188
 #: LedgerSMB/Report/Orders.pm:194 bin/is.pl:429 bin/aa.pl:513 bin/aa.pl:1588
-#: bin/pe.pl:1039 bin/pe.pl:1194 bin/ic.pl:1127 UI/Contact/divs/credit.html:14
+#: bin/ic.pl:1127 bin/pe.pl:1039 bin/pe.pl:1194 UI/Contact/divs/credit.html:14
 #: UI/Contact/divs/credit.html:15 UI/Reports/filters/aging.html:15
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
@@ -2333,10 +2315,11 @@ msgstr "Cégadatbázis"
 #: templates/xedemo/invoice.tex:200 templates/xedemo/packing_list.html:80
 #: templates/xedemo/packing_list.tex:88 templates/xedemo/pick_list.html:79
 #: templates/xedemo/pick_list.tex:81 templates/xedemo/printPayment.html:78
+#: templates/xedemo/product_receipt.html:103
 #: templates/xedemo/request_quotation.html:104
 #: templates/xedemo/sales_quotation.html:72 templates/xedemo/statement.html:62
 #: templates/xedemo/statement.tex:37 templates/xedemo/timecard.html:48
-#: templates/xedemo/timecard.tex:28 templates/xedemo/product_receipt.html:103
+#: templates/xedemo/timecard.tex:28
 msgid "Date"
 msgstr "Dátum"
 
@@ -2407,7 +2390,7 @@ msgstr "Dátumig"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Dátum: [_1]"
+msgstr "Dátum: %1"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2539,8 +2522,8 @@ msgstr "Alapbeállítások"
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Scripts/account.pm:161 bin/ir.pl:968 bin/is.pl:1019 bin/aa.pl:914
 #: bin/aa.pl:943 bin/am.pl:69 bin/am.pl:81 bin/am.pl:175 bin/am.pl:184
-#: bin/oe.pl:673 bin/oe.pl:862 bin/pe.pl:173 bin/pe.pl:250 bin/pe.pl:622
-#: bin/ic.pl:833 bin/ic.pl:855 UI/Contact/divs/address.html:52
+#: bin/ic.pl:833 bin/ic.pl:855 bin/oe.pl:673 bin/oe.pl:862 bin/pe.pl:173
+#: bin/pe.pl:250 bin/pe.pl:622 UI/Contact/divs/address.html:52
 #: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
 #: UI/Contact/pricelist.html:65 UI/business_units/list_classes.html:92
 #: UI/reconciliation/report.html:303
@@ -2568,7 +2551,7 @@ msgstr "Utalványok törlése"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "A nyelv törlése törli a [_1] nyelvhez tartozó sablonokat is"
+msgstr "A nyelv törlése törli a %1 nyelvhez tartozó sablonokat is"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -2683,10 +2666,10 @@ msgstr "Értékcsökkentés sikeres"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:73 LedgerSMB/Report/GL.pm:100
 #: LedgerSMB/Scripts/asset.pm:397 LedgerSMB/Scripts/asset.pm:697
 #: LedgerSMB/Scripts/asset.pm:765 bin/ir.pl:495 bin/is.pl:489 bin/aa.pl:612
-#: bin/aa.pl:663 bin/aa.pl:1514 bin/am.pl:853 bin/oe.pl:1842 bin/oe.pl:2046
-#: bin/oe.pl:2124 bin/oe.pl:2158 bin/oe.pl:2407 bin/pe.pl:320 bin/pe.pl:366
-#: bin/pe.pl:395 bin/pe.pl:1062 bin/ic.pl:744 bin/ic.pl:1268 bin/ic.pl:2038
-#: bin/ic.pl:2110 bin/io.pl:231 bin/io.pl:566 bin/io.pl:2178
+#: bin/aa.pl:663 bin/aa.pl:1514 bin/am.pl:853 bin/ic.pl:744 bin/ic.pl:1268
+#: bin/ic.pl:2038 bin/ic.pl:2110 bin/io.pl:231 bin/io.pl:566 bin/io.pl:2178
+#: bin/oe.pl:1842 bin/oe.pl:2046 bin/oe.pl:2124 bin/oe.pl:2158 bin/oe.pl:2407
+#: bin/pe.pl:320 bin/pe.pl:366 bin/pe.pl:395 bin/pe.pl:1062
 #: UI/Contact/divs/contact_info.html:34 UI/Contact/divs/contact_info.html:104
 #: UI/Contact/divs/credit.html:28 UI/Contact/divs/credit.html:86
 #: UI/Contact/divs/credit.html:87 UI/Contact/pricelist.csv:11
@@ -2713,14 +2696,14 @@ msgstr "Értékcsökkentés sikeres"
 #: templates/demo/invoice.html:136 templates/demo/invoice.tex:135
 #: templates/demo/packing_list.html:120 templates/demo/packing_list.tex:114
 #: templates/demo/pick_list.html:112 templates/demo/pick_list.tex:100
-#: templates/demo/printPayment.html:47
+#: templates/demo/printPayment.html:47 templates/demo/product_receipt.html:126
+#: templates/demo/purchase_order.html:128
 #: templates/demo/request_quotation.html:141
 #: templates/demo/sales_order.html:130 templates/demo/sales_order.tex:119
 #: templates/demo/sales_quotation.html:99 templates/demo/timecard.html:85
 #: templates/demo/timecard.html:93 templates/demo/timecard.tex:38
 #: templates/demo/timecard.tex:40 templates/demo/work_order.html:130
-#: templates/demo/work_order.tex:125 templates/demo/product_receipt.html:126
-#: templates/demo/purchase_order.html:128
+#: templates/demo/work_order.tex:125
 #: templates/demo_with_images/bin_list.html:148
 #: templates/demo_with_images/bin_list.tex:106
 #: templates/demo_with_images/invoice.html:136
@@ -2730,6 +2713,8 @@ msgstr "Értékcsökkentés sikeres"
 #: templates/demo_with_images/pick_list.html:112
 #: templates/demo_with_images/pick_list.tex:100
 #: templates/demo_with_images/printPayment.html:47
+#: templates/demo_with_images/product_receipt.html:126
+#: templates/demo_with_images/purchase_order.html:128
 #: templates/demo_with_images/request_quotation.html:141
 #: templates/demo_with_images/sales_order.html:130
 #: templates/demo_with_images/sales_order.tex:119
@@ -2740,21 +2725,19 @@ msgstr "Értékcsökkentés sikeres"
 #: templates/demo_with_images/timecard.tex:40
 #: templates/demo_with_images/work_order.html:130
 #: templates/demo_with_images/work_order.tex:125
-#: templates/demo_with_images/product_receipt.html:126
-#: templates/demo_with_images/purchase_order.html:128
 #: templates/xedemo/bin_list.html:148 templates/xedemo/bin_list.tex:106
 #: templates/xedemo/invoice.html:136 templates/xedemo/invoice.tex:134
 #: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
 #: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
 #: templates/xedemo/printPayment.html:47
+#: templates/xedemo/product_receipt.html:128
+#: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
 #: templates/xedemo/sales_order.html:130 templates/xedemo/sales_order.tex:119
 #: templates/xedemo/sales_quotation.html:99 templates/xedemo/timecard.html:85
 #: templates/xedemo/timecard.html:93 templates/xedemo/timecard.tex:38
 #: templates/xedemo/timecard.tex:40 templates/xedemo/work_order.html:130
-#: templates/xedemo/work_order.tex:125
-#: templates/xedemo/product_receipt.html:128
-#: templates/xedemo/purchase_order.html:128 sql/Pg-database.sql:2825
+#: templates/xedemo/work_order.tex:125 sql/Pg-database.sql:2825
 #: sql/Pg-database.sql:2830
 msgid "Description"
 msgstr "Leírás"
@@ -2849,7 +2832,7 @@ msgstr "Selejtezés módja"
 #: LedgerSMB/Scripts/asset.pm:761
 #, fuzzy
 msgid "Disposal Report [_1] on date [_2]"
-msgstr "Selejtezés jelentés [_1] időpontra [_2]"
+msgstr "Selejtezés jelentés %1 időpontra %2"
 
 #: LedgerSMB.pm:606
 msgid "Division by 0 error"
@@ -2858,7 +2841,7 @@ msgstr "Nullával osztás probléma"
 #: bin/io.pl:2403
 #, fuzzy
 msgid "Do not keep field empty [_1]"
-msgstr "Ne hagyja a mezőt üresen [_1]"
+msgstr "Ne hagyja a mezőt üresen %1"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:78
 msgid "Document"
@@ -2877,12 +2860,12 @@ msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 msgid "Done"
 msgstr "Elvégezve"
 
-#: LedgerSMB/Upgrade_Tests.pm:455
+#: LedgerSMB/Upgrade_Tests.pm:457
 #, fuzzy
 msgid "Double customernumbers"
 msgstr "Egyedi vevő azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:490
+#: LedgerSMB/Upgrade_Tests.pm:492
 #, fuzzy
 msgid "Double vendornumbers"
 msgstr "Egyedi szállító azonosító"
@@ -2971,12 +2954,12 @@ msgstr "E-mail"
 #: UI/rp-email.html:8
 #, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Kimutatás küldése e-mail-ben [_1]"
+msgstr "Kimutatás küldése e-mail-ben %1"
 
 #: UI/io-email.html:7
 #, fuzzy
 msgid "E-mail [_1]"
-msgstr "Email [_1]"
+msgstr "Email %1"
 
 #: bin/am.pl:1485 bin/io.pl:1698
 msgid "E-mail address missing!"
@@ -3214,12 +3197,12 @@ msgstr ""
 msgid "Employees"
 msgstr "Alkalmazottak"
 
-#: LedgerSMB/Upgrade_Tests.pm:436
+#: LedgerSMB/Upgrade_Tests.pm:438
 #, fuzzy
 msgid "Empty customernumbers"
 msgstr "Egyedi vevő azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:471
+#: LedgerSMB/Upgrade_Tests.pm:473
 #, fuzzy
 msgid "Empty vendornumbers"
 msgstr "Egyedi szállító azonosító"
@@ -3303,7 +3286,7 @@ msgstr "Felrögzítve"
 #: UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
-msgstr "Bevitel: [_1]"
+msgstr "Bevitel: %1"
 
 #: LedgerSMB/Scripts/contact.pm:301 sql/Pg-database.sql:1054
 msgid "Entity"
@@ -3406,7 +3389,7 @@ msgstr "Az átváltási árfolyam még nincs megadva"
 #, fuzzy
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
-"Átvátlási árfolyam nem egyezik az adatbázisban. [_1]-et találtam, a várt [_2] "
+"Átvátlási árfolyam nem egyezik az adatbázisban. %1-et találtam, a várt %2 "
 "helyett"
 
 #: bin/ir.pl:1369 bin/is.pl:1343 bin/aa.pl:1325 bin/oe.pl:1194 bin/oe.pl:1550
@@ -3476,8 +3459,10 @@ msgstr "Fax:"
 #: templates/demo/bin_list.html:59 templates/demo/bin_list.html:92
 #: templates/demo/invoice.html:53 templates/demo/invoice.html:86
 #: templates/demo/letterhead.html:22 templates/demo/packing_list.html:60
-#: templates/demo/pick_list.html:59 templates/demo/product_receipt.tex:56
-#: templates/demo/product_receipt.tex:91 templates/demo/purchase_order.tex:56
+#: templates/demo/pick_list.html:59 templates/demo/product_receipt.html:58
+#: templates/demo/product_receipt.html:86 templates/demo/product_receipt.tex:56
+#: templates/demo/product_receipt.tex:91 templates/demo/purchase_order.html:58
+#: templates/demo/purchase_order.html:86 templates/demo/purchase_order.tex:56
 #: templates/demo/purchase_order.tex:91
 #: templates/demo/request_quotation.html:59
 #: templates/demo/request_quotation.html:87
@@ -3487,9 +3472,6 @@ msgstr "Fax:"
 #: templates/demo/sales_order.tex:90 templates/demo/sales_quotation.html:52
 #: templates/demo/sales_quotation.tex:61 templates/demo/work_order.html:55
 #: templates/demo/work_order.html:83 templates/demo/work_order.tex:65
-#: templates/demo/product_receipt.html:58
-#: templates/demo/product_receipt.html:86 templates/demo/purchase_order.html:58
-#: templates/demo/purchase_order.html:86
 #: templates/demo_with_images/ap_transaction.html:54
 #: templates/demo_with_images/ar_transaction.tex:65
 #: templates/demo_with_images/bin_list.html:59
@@ -3499,8 +3481,12 @@ msgstr "Fax:"
 #: templates/demo_with_images/letterhead.html:22
 #: templates/demo_with_images/packing_list.html:60
 #: templates/demo_with_images/pick_list.html:59
+#: templates/demo_with_images/product_receipt.html:58
+#: templates/demo_with_images/product_receipt.html:86
 #: templates/demo_with_images/product_receipt.tex:56
 #: templates/demo_with_images/product_receipt.tex:91
+#: templates/demo_with_images/purchase_order.html:58
+#: templates/demo_with_images/purchase_order.html:86
 #: templates/demo_with_images/purchase_order.tex:56
 #: templates/demo_with_images/purchase_order.tex:91
 #: templates/demo_with_images/request_quotation.html:59
@@ -3516,17 +3502,17 @@ msgstr "Fax:"
 #: templates/demo_with_images/work_order.html:55
 #: templates/demo_with_images/work_order.html:83
 #: templates/demo_with_images/work_order.tex:65
-#: templates/demo_with_images/product_receipt.html:58
-#: templates/demo_with_images/product_receipt.html:86
-#: templates/demo_with_images/purchase_order.html:58
-#: templates/demo_with_images/purchase_order.html:86
 #: templates/xedemo/ap_transaction.html:54
 #: templates/xedemo/ar_transaction.tex:65 templates/xedemo/bin_list.html:59
 #: templates/xedemo/bin_list.html:92 templates/xedemo/invoice.html:53
 #: templates/xedemo/invoice.html:86 templates/xedemo/letterhead.html:22
 #: templates/xedemo/packing_list.html:60 templates/xedemo/pick_list.html:59
+#: templates/xedemo/product_receipt.html:58
+#: templates/xedemo/product_receipt.html:86
 #: templates/xedemo/product_receipt.tex:56
 #: templates/xedemo/product_receipt.tex:91
+#: templates/xedemo/purchase_order.html:58
+#: templates/xedemo/purchase_order.html:86
 #: templates/xedemo/purchase_order.tex:56
 #: templates/xedemo/purchase_order.tex:91
 #: templates/xedemo/request_quotation.html:59
@@ -3538,13 +3524,9 @@ msgstr "Fax:"
 #: templates/xedemo/sales_quotation.html:52
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
-#: templates/xedemo/product_receipt.html:58
-#: templates/xedemo/product_receipt.html:86
-#: templates/xedemo/purchase_order.html:58
-#: templates/xedemo/purchase_order.html:86
 #, fuzzy
 msgid "Fax: [_1]"
-msgstr "Fax: [_1]"
+msgstr "Fax: %1"
 
 # 75%
 #: templates/demo/work_order.tex:100
@@ -3592,14 +3574,14 @@ msgid "File Type"
 msgstr "Fájl típusa"
 
 #: bin/ir.pl:985 bin/ir.pl:1004 bin/is.pl:1037 bin/is.pl:1056 bin/aa.pl:1013
-#: bin/aa.pl:1033 bin/oe.pl:880 bin/oe.pl:899 bin/ic.pl:877 bin/ic.pl:896
+#: bin/aa.pl:1033 bin/ic.pl:877 bin/ic.pl:896 bin/oe.pl:880 bin/oe.pl:899
 #: UI/Contact/divs/files.html:9 UI/journal/journal_entry.html:316
 #: UI/journal/journal_entry.html:334
 msgid "File name"
 msgstr "Fájl neve"
 
 #: bin/ir.pl:986 bin/ir.pl:1005 bin/is.pl:1038 bin/is.pl:1057 bin/aa.pl:1014
-#: bin/aa.pl:1034 bin/oe.pl:881 bin/oe.pl:900 bin/ic.pl:878 bin/ic.pl:897
+#: bin/aa.pl:1034 bin/ic.pl:878 bin/ic.pl:897 bin/oe.pl:881 bin/oe.pl:900
 #: UI/journal/journal_entry.html:317 UI/journal/journal_entry.html:335
 msgid "File type"
 msgstr "Fájl típusa"
@@ -3704,7 +3686,7 @@ msgstr "tizennégy"
 msgid "Fri"
 msgstr "Ismétlés"
 
-#: bin/aa.pl:1691 bin/oe.pl:2132 bin/pe.pl:855 bin/ic.pl:1133
+#: bin/aa.pl:1691 bin/ic.pl:1133 bin/oe.pl:2132 bin/pe.pl:855
 #: UI/lib/report_base.html:97 UI/lib/report_base.html:166
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:114
@@ -3769,8 +3751,8 @@ msgstr "Teljes jogosultság"
 msgid "GIFI"
 msgstr "Gyűjtőkód"
 
-#: LedgerSMB/Upgrade_Tests.pm:306 LedgerSMB/Upgrade_Tests.pm:321
-#: LedgerSMB/Upgrade_Tests.pm:337
+#: LedgerSMB/Upgrade_Tests.pm:308 LedgerSMB/Upgrade_Tests.pm:323
+#: LedgerSMB/Upgrade_Tests.pm:339
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -3881,9 +3863,9 @@ msgstr "Cikkek és szolgáltatások"
 msgid "Grand Total"
 msgstr "Végösszeg"
 
-#: LedgerSMB/Report/Inventory/Partsgroups.pm:48 bin/oe.pl:2050 bin/oe.pl:2128
-#: bin/oe.pl:2163 bin/pe.pl:144 bin/ic.pl:424 bin/ic.pl:1277 bin/io.pl:263
-#: bin/io.pl:568 UI/io-email.html:87
+#: LedgerSMB/Report/Inventory/Partsgroups.pm:48 bin/ic.pl:424 bin/ic.pl:1277
+#: bin/io.pl:263 bin/io.pl:568 bin/oe.pl:2050 bin/oe.pl:2128 bin/oe.pl:2163
+#: bin/pe.pl:144 UI/io-email.html:87
 msgid "Group"
 msgstr "Csoport"
 
@@ -4232,7 +4214,7 @@ msgstr "Készlet elmentve!"
 #, fuzzy
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
 msgstr ""
-"Mielőtt ezt az anyagot/árut ( [_1] ) elavultnak nyilvánítja,a mennyiségnek "
+"Mielőtt ezt az anyagot/árut ( %1 ) elavultnak nyilvánítja,a mennyiségnek "
 "nullának kell lennie!"
 
 #: bin/ic.pl:1825
@@ -4278,9 +4260,9 @@ msgstr "Számla"
 #: templates/demo/check_base.tex:52 templates/demo/invoice.html:106
 #: templates/demo/invoice.tex:118 templates/demo/packing_list.html:78
 #: templates/demo/packing_list.tex:87 templates/demo/pick_list.html:77
-#: templates/demo/pick_list.tex:80 templates/demo/product_receipt.tex:105
-#: templates/demo/statement.html:60 templates/demo/statement.tex:36
-#: templates/demo/product_receipt.html:102
+#: templates/demo/pick_list.tex:80 templates/demo/product_receipt.html:102
+#: templates/demo/product_receipt.tex:105 templates/demo/statement.html:60
+#: templates/demo/statement.tex:36
 #: templates/demo_with_images/ap_transaction.html:69
 #: templates/demo_with_images/ap_transaction.tex:59
 #: templates/demo_with_images/ar_transaction.html:68
@@ -4292,10 +4274,10 @@ msgstr "Számla"
 #: templates/demo_with_images/packing_list.tex:87
 #: templates/demo_with_images/pick_list.html:77
 #: templates/demo_with_images/pick_list.tex:80
+#: templates/demo_with_images/product_receipt.html:102
 #: templates/demo_with_images/product_receipt.tex:105
 #: templates/demo_with_images/statement.html:60
 #: templates/demo_with_images/statement.tex:36
-#: templates/demo_with_images/product_receipt.html:102
 #: templates/xedemo/ap_transaction.html:69
 #: templates/xedemo/ap_transaction.tex:59
 #: templates/xedemo/ar_transaction.html:68
@@ -4303,8 +4285,9 @@ msgstr "Számla"
 #: templates/xedemo/invoice.html:106 templates/xedemo/invoice.tex:117
 #: templates/xedemo/packing_list.html:78 templates/xedemo/packing_list.tex:87
 #: templates/xedemo/pick_list.html:77 templates/xedemo/pick_list.tex:80
+#: templates/xedemo/product_receipt.html:102
 #: templates/xedemo/product_receipt.tex:105 templates/xedemo/statement.html:60
-#: templates/xedemo/statement.tex:36 templates/xedemo/product_receipt.html:102
+#: templates/xedemo/statement.tex:36
 msgid "Invoice #"
 msgstr "Számla #"
 
@@ -4398,11 +4381,12 @@ msgstr "Számlák"
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:134
 #: templates/demo/invoice.tex:133 templates/demo/packing_list.html:118
 #: templates/demo/packing_list.tex:113 templates/demo/pick_list.html:110
-#: templates/demo/pick_list.tex:99 templates/demo/request_quotation.html:139
+#: templates/demo/pick_list.tex:99 templates/demo/product_receipt.html:124
+#: templates/demo/purchase_order.html:126
+#: templates/demo/request_quotation.html:139
 #: templates/demo/sales_order.html:128 templates/demo/sales_order.tex:118
 #: templates/demo/sales_quotation.html:97 templates/demo/work_order.html:128
-#: templates/demo/work_order.tex:124 templates/demo/product_receipt.html:124
-#: templates/demo/purchase_order.html:126
+#: templates/demo/work_order.tex:124
 #: templates/demo_with_images/bin_list.html:146
 #: templates/demo_with_images/bin_list.tex:105
 #: templates/demo_with_images/invoice.html:134
@@ -4411,24 +4395,24 @@ msgstr "Számlák"
 #: templates/demo_with_images/packing_list.tex:113
 #: templates/demo_with_images/pick_list.html:110
 #: templates/demo_with_images/pick_list.tex:99
+#: templates/demo_with_images/product_receipt.html:124
+#: templates/demo_with_images/purchase_order.html:126
 #: templates/demo_with_images/request_quotation.html:139
 #: templates/demo_with_images/sales_order.html:128
 #: templates/demo_with_images/sales_order.tex:118
 #: templates/demo_with_images/sales_quotation.html:97
 #: templates/demo_with_images/work_order.html:128
 #: templates/demo_with_images/work_order.tex:124
-#: templates/demo_with_images/product_receipt.html:124
-#: templates/demo_with_images/purchase_order.html:126
 #: templates/xedemo/bin_list.html:146 templates/xedemo/bin_list.tex:105
 #: templates/xedemo/invoice.html:134 templates/xedemo/invoice.tex:132
 #: templates/xedemo/packing_list.html:118 templates/xedemo/packing_list.tex:113
 #: templates/xedemo/pick_list.html:110 templates/xedemo/pick_list.tex:99
+#: templates/xedemo/product_receipt.html:126
+#: templates/xedemo/purchase_order.html:126
 #: templates/xedemo/request_quotation.html:139
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
 #: templates/xedemo/sales_quotation.html:97
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
-#: templates/xedemo/product_receipt.html:126
-#: templates/xedemo/purchase_order.html:126
 msgid "Item"
 msgstr "Tétel"
 
@@ -4463,8 +4447,8 @@ msgid ""
 "transit."
 msgstr ""
 "A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt [_1] hivatalos engedélye szükséges. A "
-"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. [_1] "
+"visszaszállítás megkezdése előtt %1 hivatalos engedélye szükséges. A "
+"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. %1 "
 "semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
 #: LedgerSMB/App_State.pm:237 bin/gl.pl:79 bin/aa.pl:86 bin/io.pl:79
@@ -4608,7 +4592,7 @@ msgstr "LedgerSMB adatbázis statisztika"
 #: UI/login.html:29 UI/menu/expanding.html:4
 #, fuzzy
 msgid "LedgerSMB [_1]"
-msgstr "LedgerSMB [_1]"
+msgstr "LedgerSMB %1"
 
 #: UI/reconciliation/report.html:48
 msgid "Less Outstanding Checks:"
@@ -4728,7 +4712,7 @@ msgstr "Feladat leírása"
 #: UI/payments/payments_detail.html:404
 #, fuzzy
 msgid "Locked by [_1]"
-msgstr "Zárolta [_1]"
+msgstr "Zárolta %1"
 
 #: UI/setup/confirm_operation.html:9
 msgid "Logged in as"
@@ -4742,7 +4726,7 @@ msgstr "Bejelentkezve mint"
 #: UI/menu/expanding.html:5
 #, fuzzy
 msgid "Logged into [_1]"
-msgstr "Bejelentkezve [_1]"
+msgstr "Bejelentkezve %1"
 
 #: UI/logout.html:26
 msgid "Logged out due to inactivity"
@@ -4799,12 +4783,12 @@ msgstr "Duplikált alkalmazott azonosító"
 msgid "Make invoice numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:589
+#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:591
 #, fuzzy
 msgid "Make non-obsolete partnumbers unique"
 msgstr "Egyedi élő cikkszám"
 
-#: LedgerSMB/Upgrade_Tests.pm:295
+#: LedgerSMB/Upgrade_Tests.pm:297
 #, fuzzy
 msgid "Make sure all meta numbers are unique."
 msgstr "Duplikált alkalmazott azonosító"
@@ -5093,7 +5077,7 @@ msgstr "Nincs kiválasztva vevő vagy szállító számla"
 #: LedgerSMB/DBObject/TransTemplate.pm:27
 #, fuzzy
 msgid "No Account id for [_1]"
-msgstr "Nincs számla azonosító ehhez: [_1]"
+msgstr "Nincs számla azonosító ehhez: %1"
 
 #: LedgerSMB/Report/File.pm:49
 #, fuzzy
@@ -5125,7 +5109,7 @@ msgstr ""
 "Nincsenek beállítva pénznemek. Kérem állítson be pénznemeket a Rendszer/"
 "Alapbeállítások menüpont alatt."
 
-#: LedgerSMB/Upgrade_Tests.pm:290
+#: LedgerSMB/Upgrade_Tests.pm:292
 #, fuzzy
 msgid "No duplicate meta_numbers"
 msgstr "Duplikált alkalmazott azonosító"
@@ -5182,11 +5166,11 @@ msgstr "Nem számlázandó"
 msgid "Non-cash"
 msgstr "bankkivonat"
 
-#: LedgerSMB/Upgrade_Tests.pm:639
+#: LedgerSMB/Upgrade_Tests.pm:641
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:750
+#: LedgerSMB/Upgrade_Tests.pm:752
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -5194,7 +5178,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr "Nem raktározott tétel"
 
-#: LedgerSMB/Upgrade_Tests.pm:545 LedgerSMB/Upgrade_Tests.pm:567
+#: LedgerSMB/Upgrade_Tests.pm:547 LedgerSMB/Upgrade_Tests.pm:569
 #, fuzzy
 msgid "Non-unique invoice numbers"
 msgstr "Egyedi vevőszámla azonosítók"
@@ -5230,7 +5214,7 @@ msgstr "Megjegyzés osztálya"
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Scripts/contact.pm:184 bin/ir.pl:796 bin/is.pl:846 bin/aa.pl:787
-#: bin/aa.pl:1518 bin/aa.pl:1651 bin/oe.pl:807 bin/ic.pl:769
+#: bin/aa.pl:1518 bin/aa.pl:1651 bin/ic.pl:769 bin/oe.pl:807
 #: UI/Contact/divs/notes.html:2 UI/Contact/divs/notes.html:6
 #: UI/Contact/divs/notes.html:60 UI/Reports/filters/contact_search.html:73
 #: UI/Reports/filters/gl.html:91
@@ -5240,23 +5224,22 @@ msgstr "Megjegyzés osztálya"
 #: UI/Reports/filters/search_goods.html:310 UI/journal/journal_entry.html:79
 #: UI/orders/order.html:199 UI/payments/payment2.html:52
 #: UI/payments/use_overpayment2.html:72 UI/timecards/timecard.html:132
-#: templates/demo/printPayment.html:124
+#: templates/demo/printPayment.html:124 templates/demo/product_receipt.html:217
+#: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
 #: templates/demo/sales_order.html:205 templates/demo/sales_quotation.html:173
-#: templates/demo/product_receipt.html:217
-#: templates/demo/purchase_order.html:219
 #: templates/demo_with_images/printPayment.html:124
+#: templates/demo_with_images/product_receipt.html:217
+#: templates/demo_with_images/purchase_order.html:219
 #: templates/demo_with_images/request_quotation.html:175
 #: templates/demo_with_images/sales_order.html:205
 #: templates/demo_with_images/sales_quotation.html:173
-#: templates/demo_with_images/product_receipt.html:217
-#: templates/demo_with_images/purchase_order.html:219
 #: templates/xedemo/printPayment.html:124
+#: templates/xedemo/product_receipt.html:219
+#: templates/xedemo/purchase_order.html:219
 #: templates/xedemo/request_quotation.html:175
 #: templates/xedemo/sales_order.html:205
 #: templates/xedemo/sales_quotation.html:173
-#: templates/xedemo/product_receipt.html:219
-#: templates/xedemo/purchase_order.html:219
 msgid "Notes"
 msgstr "Megjegyzés"
 
@@ -5281,41 +5264,43 @@ msgstr "Nov."
 msgid "November"
 msgstr "November"
 
-#: LedgerSMB/Upgrade_Tests.pm:506 LedgerSMB/Upgrade_Tests.pm:525
+#: LedgerSMB/Upgrade_Tests.pm:508 LedgerSMB/Upgrade_Tests.pm:527
 #, fuzzy
 msgid "Null employee numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
 
-#: LedgerSMB/Upgrade_Tests.pm:620
+#: LedgerSMB/Upgrade_Tests.pm:622
 #, fuzzy
 msgid "Null make numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
 
-#: LedgerSMB/Upgrade_Tests.pm:603
+#: LedgerSMB/Upgrade_Tests.pm:605
 #, fuzzy
 msgid "Null model numbers"
 msgstr "Alkalmazott azonosítója nem lehet üres"
 
 # Vagy szám.
-#: bin/oe.pl:1839 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391 bin/ic.pl:743
-#: bin/ic.pl:1265 bin/ic.pl:2032 bin/ic.pl:2106 bin/io.pl:228 bin/io.pl:562
+#: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2032 bin/ic.pl:2106 bin/io.pl:228
+#: bin/io.pl:562 bin/oe.pl:1839 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391
 #: UI/Contact/divs/credit.html:26 UI/am-taxes.html:14 UI/io-email.html:99
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:135
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:119
-#: templates/demo/pick_list.html:111 templates/demo/product_receipt.tex:117
-#: templates/demo/purchase_order.tex:117
+#: templates/demo/pick_list.html:111 templates/demo/product_receipt.html:125
+#: templates/demo/product_receipt.tex:117
+#: templates/demo/purchase_order.html:127 templates/demo/purchase_order.tex:117
 #: templates/demo/request_quotation.html:140
 #: templates/demo/request_quotation.tex:122 templates/demo/sales_order.html:129
 #: templates/demo/sales_quotation.html:71
 #: templates/demo/sales_quotation.html:98 templates/demo/sales_quotation.tex:87
-#: templates/demo/work_order.html:129 templates/demo/product_receipt.html:125
-#: templates/demo/purchase_order.html:127
+#: templates/demo/work_order.html:129
 #: templates/demo_with_images/bin_list.html:147
 #: templates/demo_with_images/invoice.html:135
 #: templates/demo_with_images/invoice.tex:134
 #: templates/demo_with_images/packing_list.html:119
 #: templates/demo_with_images/pick_list.html:111
+#: templates/demo_with_images/product_receipt.html:125
 #: templates/demo_with_images/product_receipt.tex:117
+#: templates/demo_with_images/purchase_order.html:127
 #: templates/demo_with_images/purchase_order.tex:117
 #: templates/demo_with_images/request_quotation.html:140
 #: templates/demo_with_images/request_quotation.tex:122
@@ -5324,11 +5309,12 @@ msgstr "Alkalmazott azonosítója nem lehet üres"
 #: templates/demo_with_images/sales_quotation.html:98
 #: templates/demo_with_images/sales_quotation.tex:87
 #: templates/demo_with_images/work_order.html:129
-#: templates/demo_with_images/product_receipt.html:125
-#: templates/demo_with_images/purchase_order.html:127
 #: templates/xedemo/bin_list.html:147 templates/xedemo/invoice.html:135
 #: templates/xedemo/invoice.tex:133 templates/xedemo/packing_list.html:119
-#: templates/xedemo/pick_list.html:111 templates/xedemo/product_receipt.tex:117
+#: templates/xedemo/pick_list.html:111
+#: templates/xedemo/product_receipt.html:127
+#: templates/xedemo/product_receipt.tex:117
+#: templates/xedemo/purchase_order.html:127
 #: templates/xedemo/purchase_order.tex:117
 #: templates/xedemo/request_quotation.html:140
 #: templates/xedemo/request_quotation.tex:122
@@ -5336,8 +5322,6 @@ msgstr "Alkalmazott azonosítója nem lehet üres"
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98
 #: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
-#: templates/xedemo/product_receipt.html:127
-#: templates/xedemo/purchase_order.html:127
 msgid "Number"
 msgstr "Azonosító"
 
@@ -5349,7 +5333,7 @@ msgstr "Számformátum"
 #: bin/io.pl:1191
 #, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "A [_1]. sorból hiányzik a szám"
+msgstr "A %1. sorból hiányzik a szám"
 
 #: UI/Contact/pricelist.html:107 UI/Reports/aging_report.html:125
 #: UI/Reports/display_report.html:74
@@ -5479,9 +5463,9 @@ msgstr "Sorrend"
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
 #: templates/demo/bin_list.html:108 templates/demo/invoice.html:109
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
-#: templates/demo/purchase_order.tex:105 templates/demo/sales_order.html:102
-#: templates/demo/sales_order.tex:105 templates/demo/work_order.html:102
-#: templates/demo/purchase_order.html:102
+#: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
+#: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/work_order.html:102
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -5490,20 +5474,20 @@ msgstr "Sorrend"
 #: templates/demo_with_images/invoice.html:109
 #: templates/demo_with_images/packing_list.html:79
 #: templates/demo_with_images/pick_list.html:78
+#: templates/demo_with_images/purchase_order.html:102
 #: templates/demo_with_images/purchase_order.tex:105
 #: templates/demo_with_images/sales_order.html:102
 #: templates/demo_with_images/sales_order.tex:105
 #: templates/demo_with_images/work_order.html:102
-#: templates/demo_with_images/purchase_order.html:102
 #: templates/xedemo/ap_transaction.html:88
 #: templates/xedemo/ap_transaction.tex:66
 #: templates/xedemo/ar_transaction.html:87
 #: templates/xedemo/ar_transaction.tex:83 templates/xedemo/bin_list.html:108
 #: templates/xedemo/invoice.html:109 templates/xedemo/packing_list.html:79
-#: templates/xedemo/pick_list.html:78 templates/xedemo/purchase_order.tex:105
+#: templates/xedemo/pick_list.html:78 templates/xedemo/purchase_order.html:102
+#: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
 #: templates/xedemo/work_order.html:102
-#: templates/xedemo/purchase_order.html:102
 msgid "Order #"
 msgstr "Rendelés #"
 
@@ -5511,17 +5495,17 @@ msgstr "Rendelés #"
 msgid "Order By"
 msgstr "Rendezés"
 
-#: bin/oe.pl:387 bin/oe.pl:1795 templates/demo/sales_order.html:103
-#: templates/demo/work_order.html:103 templates/demo/purchase_order.html:103
+#: bin/oe.pl:387 bin/oe.pl:1795 templates/demo/purchase_order.html:103
+#: templates/demo/sales_order.html:103 templates/demo/work_order.html:103
+#: templates/demo_with_images/purchase_order.html:103
 #: templates/demo_with_images/sales_order.html:103
 #: templates/demo_with_images/work_order.html:103
-#: templates/demo_with_images/purchase_order.html:103
-#: templates/xedemo/sales_order.html:103 templates/xedemo/work_order.html:103
 #: templates/xedemo/purchase_order.html:103
+#: templates/xedemo/sales_order.html:103 templates/xedemo/work_order.html:103
 msgid "Order Date"
 msgstr "Rendelés dátuma"
 
-#: bin/oe.pl:1180 bin/oe.pl:1353 bin/io.pl:1703
+#: bin/io.pl:1703 bin/oe.pl:1180 bin/oe.pl:1353
 msgid "Order Date missing!"
 msgstr "A rendelés dátuma hiányzik!"
 
@@ -5538,7 +5522,7 @@ msgstr "Rendelések"
 msgid "Order Number"
 msgstr "Rendelés azonosítója"
 
-#: bin/oe.pl:1352 bin/io.pl:1713
+#: bin/io.pl:1713 bin/oe.pl:1352
 msgid "Order Number missing!"
 msgstr "A rendelés azonosítója hiányzik!"
 
@@ -5635,7 +5619,7 @@ msgstr "Túlfizetés számla"
 msgid "Overpayments"
 msgstr "Túlfizetés"
 
-#: LedgerSMB/Form.pm:1399 bin/arapprn.pl:480 bin/am.pl:1081 bin/io.pl:1489
+#: LedgerSMB/Form.pm:1399 bin/arapprn.pl:480 bin/am.pl:1081
 #: UI/Contact/pricelist.html:101 UI/Reports/aging_report.html:112
 #: UI/Reports/display_report.html:65 UI/Reports/balance_sheet.html:115
 #: UI/Reports/PNL.html:97
@@ -5672,8 +5656,8 @@ msgstr "RÖGZÍT"
 msgid "POST AND PRINT"
 msgstr "Rögzít és nyomtat"
 
-#: bin/is.pl:238 bin/is.pl:993 bin/am.pl:1518 bin/oe.pl:248 bin/oe.pl:267
-#: bin/io.pl:1413 bin/io.pl:1431 bin/io.pl:1603
+#: bin/is.pl:238 bin/is.pl:993 bin/am.pl:1518 bin/io.pl:1413 bin/io.pl:1431
+#: bin/io.pl:1603 bin/oe.pl:248 bin/oe.pl:267
 #: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
 #: templates/demo/packing_list.tex:81
 #: templates/demo_with_images/packing_list.html:4
@@ -5750,7 +5734,7 @@ msgstr "Részleges"
 #: LedgerSMB/Scripts/asset.pm:693
 #, fuzzy
 msgid "Partial Disposal Report [_1] on date [_2]"
-msgstr "Részleges selejtezés jelentés [_1] időpontra [_2]"
+msgstr "Részleges selejtezés jelentés %1 időpontra %2"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
 #: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:113
@@ -5838,7 +5822,7 @@ msgstr "Kifizetés értéke"
 #: templates/xedemo/printPayment.html:32
 #, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Kifizetés rendelés száma [_1]"
+msgstr "Kifizetés rendelés száma %1"
 
 #: UI/payments/payments_filter.html:135
 msgid "Payment Processing"
@@ -5878,7 +5862,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:285
 #, fuzzy
 msgid "Payment due by [_1]."
-msgstr "Kifizetés lejárt [_1] nappal."
+msgstr "Kifizetés lejárt %1 nappal."
 
 #: bin/ir.pl:850 bin/is.pl:896 bin/aa.pl:801 UI/orders/order.html:243
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:10
@@ -5943,8 +5927,8 @@ msgstr "Telefon"
 msgid "Physical"
 msgstr ""
 
-#: bin/is.pl:237 bin/am.pl:1519 bin/oe.pl:247 bin/oe.pl:266 bin/io.pl:1409
-#: bin/io.pl:1427 bin/io.pl:1626 templates/demo/pick_list.html:4
+#: bin/is.pl:237 bin/am.pl:1519 bin/io.pl:1409 bin/io.pl:1427 bin/io.pl:1626
+#: bin/oe.pl:247 bin/oe.pl:266 templates/demo/pick_list.html:4
 #: templates/demo/pick_list.html:18 templates/demo/pick_list.tex:74
 #: templates/demo_with_images/pick_list.html:4
 #: templates/demo_with_images/pick_list.html:18
@@ -5955,64 +5939,64 @@ msgstr ""
 msgid "Pick List"
 msgstr "Kitárolási lista"
 
-#: LedgerSMB/Upgrade_Tests.pm:713
+#: LedgerSMB/Upgrade_Tests.pm:715
 msgid ""
 "Please add a header to the CoA which sorts before the listed accounts "
 "(usually \"0000\" works) (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:694
+#: LedgerSMB/Upgrade_Tests.pm:696
 msgid ""
 "Please add at least one header to your CoA which sorts before all other "
 "account numbers (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:659
+#: LedgerSMB/Upgrade_Tests.pm:661
 msgid "Please fix the presented rows to either be \"H\" or \"A\""
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:643 LedgerSMB/Upgrade_Tests.pm:677
+#: LedgerSMB/Upgrade_Tests.pm:645 LedgerSMB/Upgrade_Tests.pm:679
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:551
+#: LedgerSMB/Upgrade_Tests.pm:553
 #, fuzzy
 msgid "Please make all AR invoice numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:459
+#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:461
 #, fuzzy
 msgid "Please make all customer numbers unique"
 msgstr "Duplikált alkalmazott azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:530
+#: LedgerSMB/Upgrade_Tests.pm:532
 #, fuzzy
 msgid "Please make all employee numbers unique"
 msgstr "Duplikált alkalmazott azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:494
+#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:496
 #, fuzzy
 msgid "Please make all vendor numbers unique"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:510
+#: LedgerSMB/Upgrade_Tests.pm:512
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:625
+#: LedgerSMB/Upgrade_Tests.pm:627
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:607
+#: LedgerSMB/Upgrade_Tests.pm:609
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:440
+#: LedgerSMB/Upgrade_Tests.pm:442
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:475
+#: LedgerSMB/Upgrade_Tests.pm:477
 msgid "Please make sure there are no empty vendor numbers."
 msgstr ""
 
@@ -6038,21 +6022,21 @@ msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
 msgid "Please select a vendor with unused overpayments"
 msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
 
-#: LedgerSMB/Upgrade_Tests.pm:735
+#: LedgerSMB/Upgrade_Tests.pm:737
 msgid ""
 "Please unmark accounts as summary accounts, or remove dropdown checkmarks (in "
 "the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:310
+#: LedgerSMB/Upgrade_Tests.pm:312
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:341
+#: LedgerSMB/Upgrade_Tests.pm:343
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:325
+#: LedgerSMB/Upgrade_Tests.pm:327
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -6091,22 +6075,22 @@ msgstr "Rögzítés dátuma:"
 #: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "[_1] Vegyes könyvelési tranzakció mentése"
+msgstr "%1 Vegyes könyvelési tranzakció mentése"
 
 #: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr "%1 tranzakció rögzítése"
 
 #: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "[_1] szállító számla rögzítése"
+msgstr "%1 szállító számla rögzítése"
 
 #: LedgerSMB/Form.pm:1397 bin/arapprn.pl:479 bin/am.pl:1080 bin/io.pl:1485
 msgid "Postscript"
@@ -6123,28 +6107,28 @@ msgstr "Beállítások elmentve"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "[_1] beállításai"
+msgstr "%1 beállításai"
 
 #: UI/Configuration/sequence.html:14
 msgid "Prefix"
 msgstr "Előtag"
 
 #: bin/io.pl:238 bin/io.pl:570 templates/demo/invoice.tex:139
-#: templates/demo/sales_order.html:133 templates/demo/sales_quotation.html:102
-#: templates/demo/sales_quotation.tex:89
 #: templates/demo/product_receipt.html:129
-#: templates/demo/purchase_order.html:131
+#: templates/demo/purchase_order.html:131 templates/demo/sales_order.html:133
+#: templates/demo/sales_quotation.html:102
+#: templates/demo/sales_quotation.tex:89
 #: templates/demo_with_images/invoice.tex:139
+#: templates/demo_with_images/product_receipt.html:129
+#: templates/demo_with_images/purchase_order.html:131
 #: templates/demo_with_images/sales_order.html:133
 #: templates/demo_with_images/sales_quotation.html:102
 #: templates/demo_with_images/sales_quotation.tex:89
-#: templates/demo_with_images/product_receipt.html:129
-#: templates/demo_with_images/purchase_order.html:131
-#: templates/xedemo/invoice.tex:138 templates/xedemo/sales_order.html:133
+#: templates/xedemo/invoice.tex:138 templates/xedemo/product_receipt.html:131
+#: templates/xedemo/purchase_order.html:131
+#: templates/xedemo/sales_order.html:133
 #: templates/xedemo/sales_quotation.html:102
 #: templates/xedemo/sales_quotation.tex:90
-#: templates/xedemo/product_receipt.html:131
-#: templates/xedemo/purchase_order.html:131
 msgid "Price"
 msgstr "Ár"
 
@@ -6166,7 +6150,7 @@ msgstr "Árcsoportok"
 msgid "Price Updated"
 msgstr "Frissítve"
 
-#: bin/pe.pl:221 bin/ic.pl:1104 UI/Contact/divs/credit.html:246
+#: bin/ic.pl:1104 bin/pe.pl:221 UI/Contact/divs/credit.html:246
 #: UI/Contact/divs/credit.html:247
 msgid "Pricegroup"
 msgstr "Árcsoport"
@@ -6229,22 +6213,22 @@ msgstr "Nyomtató"
 #: bin/am.pl:1427
 #, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr "%1 tranzakció rögzítése"
 
 #: bin/am.pl:1420
 #, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "[_1] szállító számla rögzítése"
+msgstr "%1 szállító számla rögzítése"
 
 #: bin/am.pl:1421
 #, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:1419
 #, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:1422
 #, fuzzy
@@ -6263,12 +6247,12 @@ msgstr "Beszerzési rendelés módosítása"
 #: bin/am.pl:1424
 #, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:1418
 #, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr "%1 tranzakció rögzítése"
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6291,13 +6275,14 @@ msgstr "Bevételek"
 msgid "Process Transactions"
 msgstr "Tranzakciók végrehajtása"
 
-#: bin/ir.pl:944 templates/demo/product_receipt.tex:100
-#: templates/demo/product_receipt.html:4 templates/demo/product_receipt.html:18
-#: templates/demo_with_images/product_receipt.tex:100
+#: bin/ir.pl:944 templates/demo/product_receipt.html:4
+#: templates/demo/product_receipt.html:18
+#: templates/demo/product_receipt.tex:100
 #: templates/demo_with_images/product_receipt.html:4
 #: templates/demo_with_images/product_receipt.html:18
-#: templates/xedemo/product_receipt.tex:100
-#: templates/xedemo/product_receipt.html:4 sql/Pg-database.sql:2970
+#: templates/demo_with_images/product_receipt.tex:100
+#: templates/xedemo/product_receipt.html:4
+#: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2970
 #: sql/Pg-database.sql:2971
 #, fuzzy
 msgid "Product Receipt"
@@ -6321,7 +6306,7 @@ msgstr "Számla nyereség/veszteség"
 msgid "Proft/Loss on Inventory Sales"
 msgstr "Nyereség/veszteség készlet értékesítéskor"
 
-#: bin/pe.pl:910 bin/io.pl:262 UI/io-email.html:83
+#: bin/io.pl:262 bin/pe.pl:910 UI/io-email.html:83
 #: UI/journal/journal_entry.html:120 UI/payments/payments_filter.html:40
 #: UI/rp-search-generate_income_statement.html:2
 msgid "Project"
@@ -6363,17 +6348,17 @@ msgstr "Vásárlás dátuma:"
 msgid "Purchase History"
 msgstr "Beszerzési napló"
 
-#: bin/ir.pl:563 bin/ir.pl:967 bin/am.pl:1299 bin/am.pl:1522 bin/oe.pl:259
-#: bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216 bin/io.pl:1418 bin/io.pl:1637
-#: UI/Contact/divs/credit.html:367 templates/demo/purchase_order.tex:100
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo_with_images/purchase_order.tex:100
+#: bin/ir.pl:563 bin/ir.pl:967 bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418
+#: bin/io.pl:1637 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
+#: UI/Contact/divs/credit.html:367 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
-#: templates/xedemo/purchase_order.tex:100
+#: templates/demo_with_images/purchase_order.tex:100
 #: templates/xedemo/product_receipt.html:18
 #: templates/xedemo/purchase_order.html:4
-#: templates/xedemo/purchase_order.html:18 sql/Pg-database.sql:1932
+#: templates/xedemo/purchase_order.html:18
+#: templates/xedemo/purchase_order.tex:100 sql/Pg-database.sql:1932
 #: sql/Pg-database.sql:2807 sql/Pg-database.sql:2948 sql/Pg-database.sql:2961
 msgid "Purchase Order"
 msgstr "Beszerzési rendelés"
@@ -6404,21 +6389,20 @@ msgstr "Beszerzési rendelés"
 
 #: LedgerSMB/Report/Contact/History.pm:87
 #: LedgerSMB/Report/Inventory/History.pm:155
-#: LedgerSMB/Report/Inventory/Search.pm:294 bin/oe.pl:1845 bin/oe.pl:2137
-#: bin/pe.pl:1065 bin/ic.pl:1260 bin/ic.pl:2117 bin/io.pl:234 bin/io.pl:572
+#: LedgerSMB/Report/Inventory/Search.pm:294 bin/ic.pl:1260 bin/ic.pl:2117
+#: bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845 bin/oe.pl:2137 bin/pe.pl:1065
 #: UI/Reports/filters/purchase_history.html:286
 #: UI/timecards/timecard-week.html:98 templates/demo/bin_list.html:151
 #: templates/demo/bin_list.tex:108 templates/demo/invoice.html:138
 #: templates/demo/invoice.tex:137 templates/demo/packing_list.html:123
 #: templates/demo/packing_list.tex:116 templates/demo/pick_list.html:113
-#: templates/demo/pick_list.tex:101 templates/demo/product_receipt.tex:118
-#: templates/demo/purchase_order.tex:118
+#: templates/demo/pick_list.tex:101 templates/demo/product_receipt.html:127
+#: templates/demo/product_receipt.tex:118
+#: templates/demo/purchase_order.html:129 templates/demo/purchase_order.tex:118
 #: templates/demo/request_quotation.html:142
 #: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:131
 #: templates/demo/sales_quotation.html:100
 #: templates/demo/sales_quotation.tex:88 templates/demo/work_order.html:131
-#: templates/demo/product_receipt.html:127
-#: templates/demo/purchase_order.html:129
 #: templates/demo_with_images/bin_list.html:151
 #: templates/demo_with_images/bin_list.tex:108
 #: templates/demo_with_images/invoice.html:138
@@ -6427,7 +6411,9 @@ msgstr "Beszerzési rendelés"
 #: templates/demo_with_images/packing_list.tex:116
 #: templates/demo_with_images/pick_list.html:113
 #: templates/demo_with_images/pick_list.tex:101
+#: templates/demo_with_images/product_receipt.html:127
 #: templates/demo_with_images/product_receipt.tex:118
+#: templates/demo_with_images/purchase_order.html:129
 #: templates/demo_with_images/purchase_order.tex:118
 #: templates/demo_with_images/request_quotation.html:142
 #: templates/demo_with_images/request_quotation.tex:123
@@ -6435,21 +6421,19 @@ msgstr "Beszerzési rendelés"
 #: templates/demo_with_images/sales_quotation.html:100
 #: templates/demo_with_images/sales_quotation.tex:88
 #: templates/demo_with_images/work_order.html:131
-#: templates/demo_with_images/product_receipt.html:127
-#: templates/demo_with_images/purchase_order.html:129
 #: templates/xedemo/bin_list.html:151 templates/xedemo/bin_list.tex:108
 #: templates/xedemo/invoice.html:138 templates/xedemo/invoice.tex:136
 #: templates/xedemo/packing_list.html:123 templates/xedemo/packing_list.tex:116
 #: templates/xedemo/pick_list.html:113 templates/xedemo/pick_list.tex:101
+#: templates/xedemo/product_receipt.html:129
 #: templates/xedemo/product_receipt.tex:118
+#: templates/xedemo/purchase_order.html:129
 #: templates/xedemo/purchase_order.tex:118
 #: templates/xedemo/request_quotation.html:142
 #: templates/xedemo/request_quotation.tex:123
 #: templates/xedemo/sales_order.html:131
 #: templates/xedemo/sales_quotation.html:100
 #: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
-#: templates/xedemo/product_receipt.html:129
-#: templates/xedemo/purchase_order.html:129
 msgid "Qty"
 msgstr "Menny."
 
@@ -6471,8 +6455,8 @@ msgid "Quarter"
 msgstr "Negyedév"
 
 #: LedgerSMB/Report/Inventory/Search.pm:286 LedgerSMB/Report/Orders.pm:251
-#: bin/oe.pl:225 bin/oe.pl:658 bin/oe.pl:865 bin/oe.pl:1227 bin/io.pl:1391
-#: bin/io.pl:1651 bin/io.pl:1658 templates/demo/sales_quotation.html:4
+#: bin/io.pl:1391 bin/io.pl:1651 bin/io.pl:1658 bin/oe.pl:225 bin/oe.pl:658
+#: bin/oe.pl:865 bin/oe.pl:1227 templates/demo/sales_quotation.html:4
 #: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
@@ -6495,7 +6479,7 @@ msgstr "Ajánlat"
 msgid "Quotation Date"
 msgstr "Ajánlat dátuma"
 
-#: bin/oe.pl:1183 bin/oe.pl:1359 bin/io.pl:1704
+#: bin/io.pl:1704 bin/oe.pl:1183 bin/oe.pl:1359
 msgid "Quotation Date missing!"
 msgstr "Az ajánlat dátuma hiányzik!"
 
@@ -6503,7 +6487,7 @@ msgstr "Az ajánlat dátuma hiányzik!"
 msgid "Quotation Number"
 msgstr "Ajánlat azonosítója"
 
-#: bin/oe.pl:1358 bin/io.pl:1714
+#: bin/io.pl:1714 bin/oe.pl:1358
 msgid "Quotation Number missing!"
 msgstr "Az ajánlat azonosítója hiányzik!"
 
@@ -6518,7 +6502,7 @@ msgstr "Ajánlat törölve!"
 msgid "Quotations"
 msgstr "Ajánlatok"
 
-#: bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866 bin/io.pl:1396
+#: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
 #: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
 #: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
 msgid "RFQ"
@@ -6567,7 +6551,7 @@ msgstr "Újranyitás mint"
 msgid "Re-open Books"
 msgstr "Könyvelés újranyitása"
 
-#: bin/oe.pl:1829 bin/io.pl:176 templates/demo/bin_list.html:152
+#: bin/io.pl:176 bin/oe.pl:1829 templates/demo/bin_list.html:152
 #: templates/demo_with_images/bin_list.html:152
 #: templates/xedemo/bin_list.html:152
 msgid "Recd"
@@ -6653,7 +6637,7 @@ msgstr "Jelentés:"
 #: bin/arap.pl:566
 #, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Ismétlődő tranzakció [_1]"
+msgstr "Ismétlődő tranzakció %1"
 
 #: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -6694,7 +6678,7 @@ msgstr "Regisztráció"
 #: templates/xedemo/invoice.html:303
 #, fuzzy
 msgid "Registration [_1]"
-msgstr "Regisztráció [_1]"
+msgstr "Regisztráció %1"
 
 #: LedgerSMB/Scripts/budgets.pm:117 UI/reconciliation/report.html:295
 msgid "Reject"
@@ -6749,7 +6733,7 @@ msgstr "Szállító neve"
 #: LedgerSMB/Scripts/asset.pm:630
 #, fuzzy
 msgid "Report [_1] on date [_2]"
-msgstr "[_1] jelentés ekkor: [_2]"
+msgstr "%1 jelentés ekkor: %2"
 
 #: UI/rp-search-generate_tax_report.html:67
 msgid "Report for"
@@ -6814,27 +6798,26 @@ msgstr "Kért kiszállítás"
 msgid "Required attribute not provided: [_1]"
 msgstr "Nincs megadva elegendő adat"
 
-#: bin/oe.pl:391 bin/oe.pl:447 bin/io.pl:269
-#: templates/demo/purchase_order.tex:106
+#: bin/io.pl:269 bin/oe.pl:391 bin/oe.pl:447
+#: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
 #: templates/demo/request_quotation.html:105
 #: templates/demo/request_quotation.tex:107 templates/demo/sales_order.html:104
 #: templates/demo/sales_order.tex:106 templates/demo/work_order.html:104
-#: templates/demo/purchase_order.html:104
+#: templates/demo_with_images/purchase_order.html:104
 #: templates/demo_with_images/purchase_order.tex:106
 #: templates/demo_with_images/request_quotation.html:105
 #: templates/demo_with_images/request_quotation.tex:107
 #: templates/demo_with_images/sales_order.html:104
 #: templates/demo_with_images/sales_order.tex:106
 #: templates/demo_with_images/work_order.html:104
-#: templates/demo_with_images/purchase_order.html:104
+#: templates/xedemo/product_receipt.html:104
 #: templates/xedemo/product_receipt.tex:106
+#: templates/xedemo/purchase_order.html:104
 #: templates/xedemo/purchase_order.tex:106
 #: templates/xedemo/request_quotation.html:105
 #: templates/xedemo/request_quotation.tex:107
 #: templates/xedemo/sales_order.html:104 templates/xedemo/sales_order.tex:106
 #: templates/xedemo/work_order.html:104
-#: templates/xedemo/product_receipt.html:104
-#: templates/xedemo/purchase_order.html:104
 msgid "Required by"
 msgstr "Kért kiszállítás"
 
@@ -6916,7 +6899,7 @@ msgstr "Biztonsági mentés indítása"
 #: UI/Reports/filters/inventory_adj.html:35
 #, fuzzy
 msgid "Run Report"
-msgstr "[_1] jelentés"
+msgstr "%1 jelentés"
 
 #: UI/Contact/divs/company.html:125 sql/Pg-database.sql:2871
 msgid "SIC"
@@ -6931,7 +6914,7 @@ msgid "SIC saved!"
 msgstr "TEÁOR/SZJ elmentve!"
 
 # Ezt így hagyom, minden más csak rosszabb lenne.
-#: bin/oe.pl:1831 bin/oe.pl:2403 bin/io.pl:264 bin/io.pl:564
+#: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "SKU"
 
@@ -6960,8 +6943,8 @@ msgstr "Új vevőszámla"
 msgid "Sales Invoice/AR Transaction Number"
 msgstr "Vevőszámla/tranzakció azonosító"
 
-#: bin/is.pl:581 bin/is.pl:1020 bin/am.pl:1293 bin/am.pl:1520 bin/oe.pl:245
-#: bin/oe.pl:656 bin/oe.pl:867 bin/oe.pl:1210 bin/io.pl:1401 bin/io.pl:1589
+#: bin/is.pl:581 bin/is.pl:1020 bin/am.pl:1293 bin/am.pl:1520 bin/io.pl:1401
+#: bin/io.pl:1589 bin/oe.pl:245 bin/oe.pl:656 bin/oe.pl:867 bin/oe.pl:1210
 #: templates/demo/sales_order.html:4 templates/demo/sales_order.html:18
 #: templates/demo/sales_order.tex:99
 #: templates/demo_with_images/sales_order.html:4
@@ -7029,9 +7012,9 @@ msgstr "Megye"
 #: LedgerSMB/Scripts/account.pm:153 LedgerSMB/Scripts/account.pm:166
 #: LedgerSMB/Scripts/asset.pm:447 LedgerSMB/Scripts/budgets.pm:102
 #: bin/ir.pl:576 bin/is.pl:597 bin/gl.pl:289 bin/aa.pl:971 bin/am.pl:67
-#: bin/am.pl:75 bin/am.pl:86 bin/am.pl:173 bin/am.pl:179 bin/oe.pl:636
-#: bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243 bin/pe.pl:621 bin/ic.pl:831
-#: bin/ic.pl:840 UI/Configuration/sequence.html:10
+#: bin/am.pl:75 bin/am.pl:86 bin/am.pl:173 bin/am.pl:179 bin/ic.pl:831
+#: bin/ic.pl:840 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
+#: bin/pe.pl:621 UI/Configuration/sequence.html:10
 #: UI/Configuration/sequence.html:119 UI/Configuration/settings.html:68
 #: UI/Contact/divs/bank_act.html:85 UI/Contact/divs/company.html:181
 #: UI/Contact/divs/employee.html:204 UI/Contact/divs/notes.html:68
@@ -7107,14 +7090,14 @@ msgid "Save as New"
 msgstr "Mentés újként"
 
 #: LedgerSMB/Scripts/account.pm:156 bin/gl.pl:280 bin/am.pl:68 bin/am.pl:77
-#: bin/oe.pl:647 bin/oe.pl:859 bin/ic.pl:832 bin/ic.pl:849
+#: bin/ic.pl:832 bin/ic.pl:849 bin/oe.pl:647 bin/oe.pl:859
 msgid "Save as new"
 msgstr "Mentés újként"
 
 #: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "Mentés [_1] [_2]"
+msgstr "Mentés %1 %2"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7301,7 +7284,7 @@ msgstr "Válasszon egy nyomtatót!"
 msgid "Select by Default:"
 msgstr "Alapértelmezett:"
 
-#: bin/arap.pl:184 bin/pe.pl:691 bin/ic.pl:1698
+#: bin/arap.pl:184 bin/ic.pl:1698 bin/pe.pl:691
 msgid "Select from one of the names below"
 msgstr "Válasszon ki egyet az alábbi nevek közül"
 
@@ -7367,7 +7350,7 @@ msgstr "Új beszerzési számlakorrekció"
 #: bin/am.pl:1464
 #, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:1467
 #, fuzzy
@@ -7391,7 +7374,7 @@ msgstr "Vevőrendelés módosítása"
 #: bin/am.pl:1463
 #, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr "%1 tranzakció rögzítése"
 
 #: bin/am.pl:1470
 #, fuzzy
@@ -7426,7 +7409,7 @@ msgstr "Sorszámok"
 msgid "Serial #"
 msgstr "Sorozatszám"
 
-#: bin/oe.pl:1852 bin/io.pl:261
+#: bin/io.pl:261 bin/oe.pl:1852
 msgid "Serial No."
 msgstr "Sorozatszám"
 
@@ -7492,7 +7475,7 @@ msgstr "tizenhét"
 msgid "Seventy"
 msgstr "hetven"
 
-#: LedgerSMB/Scripts/order.pm:65 bin/oe.pl:1825 bin/io.pl:169
+#: LedgerSMB/Scripts/order.pm:65 bin/io.pl:169 bin/oe.pl:1825
 #: templates/demo/packing_list.html:124 templates/demo/pick_list.html:114
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
@@ -7522,17 +7505,17 @@ msgstr "Szállítási cím"
 
 # 75%
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
-#: templates/demo/request_quotation.html:30
 #: templates/demo/product_receipt.html:30 templates/demo/purchase_order.html:30
+#: templates/demo/request_quotation.html:30
 #: templates/demo_with_images/packing_list.html:29
 #: templates/demo_with_images/pick_list.html:28
-#: templates/demo_with_images/request_quotation.html:30
 #: templates/demo_with_images/product_receipt.html:30
 #: templates/demo_with_images/purchase_order.html:30
+#: templates/demo_with_images/request_quotation.html:30
 #: templates/xedemo/packing_list.html:29 templates/xedemo/pick_list.html:28
-#: templates/xedemo/request_quotation.html:30
 #: templates/xedemo/product_receipt.html:30
 #: templates/xedemo/purchase_order.html:30
+#: templates/xedemo/request_quotation.html:30
 msgid "Ship To:"
 msgstr "Szállítási cím:"
 
@@ -7543,24 +7526,23 @@ msgstr "Szállítási cím:"
 #: UI/Reports/filters/invoice_outstanding.html:270
 #: UI/Reports/filters/invoice_search.html:158
 #: UI/Reports/filters/invoice_search.html:360 UI/Reports/filters/orders.html:58
-#: UI/Reports/filters/orders.html:161 templates/demo/sales_order.html:107
+#: UI/Reports/filters/orders.html:161 templates/demo/product_receipt.html:106
+#: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109 templates/demo/work_order.html:107
-#: templates/demo/product_receipt.html:106
-#: templates/demo/purchase_order.html:107
+#: templates/demo_with_images/product_receipt.html:106
+#: templates/demo_with_images/purchase_order.html:107
 #: templates/demo_with_images/sales_order.html:107
 #: templates/demo_with_images/sales_order.tex:109
 #: templates/demo_with_images/work_order.html:107
-#: templates/demo_with_images/product_receipt.html:106
-#: templates/demo_with_images/purchase_order.html:107
-#: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
-#: templates/xedemo/work_order.html:107
 #: templates/xedemo/product_receipt.html:107
 #: templates/xedemo/purchase_order.html:107
+#: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
+#: templates/xedemo/work_order.html:107
 msgid "Ship Via"
 msgstr "Fizetési mód"
 
-#: bin/is.pl:577 bin/is.pl:1016 bin/aa.pl:912 bin/oe.pl:638 bin/oe.pl:858
-#: bin/oe.pl:1945 bin/io.pl:2043
+#: bin/is.pl:577 bin/is.pl:1016 bin/aa.pl:912 bin/io.pl:2043 bin/oe.pl:638
+#: bin/oe.pl:858 bin/oe.pl:1945
 msgid "Ship to"
 msgstr "Szállítási cím"
 
@@ -7632,13 +7614,13 @@ msgstr "Szállítás dátuma"
 #: templates/demo/invoice.html:111 templates/demo/invoice.tex:121
 #: templates/demo/packing_list.html:85 templates/demo/packing_list.tex:92
 #: templates/demo/pick_list.html:82 templates/demo/pick_list.tex:83
-#: templates/demo/product_receipt.tex:107 templates/demo/purchase_order.tex:107
+#: templates/demo/product_receipt.html:105
+#: templates/demo/product_receipt.tex:107
+#: templates/demo/purchase_order.html:106 templates/demo/purchase_order.tex:107
 #: templates/demo/request_quotation.html:107
 #: templates/demo/request_quotation.tex:108 templates/demo/sales_order.html:106
 #: templates/demo/sales_order.tex:108 templates/demo/sales_quotation.html:75
 #: templates/demo/sales_quotation.tex:77 templates/demo/work_order.html:106
-#: templates/demo/product_receipt.html:105
-#: templates/demo/purchase_order.html:106
 #: templates/demo_with_images/bin_list.html:114
 #: templates/demo_with_images/bin_list.tex:84
 #: templates/demo_with_images/invoice.html:111
@@ -7647,7 +7629,9 @@ msgstr "Szállítás dátuma"
 #: templates/demo_with_images/packing_list.tex:92
 #: templates/demo_with_images/pick_list.html:82
 #: templates/demo_with_images/pick_list.tex:83
+#: templates/demo_with_images/product_receipt.html:105
 #: templates/demo_with_images/product_receipt.tex:107
+#: templates/demo_with_images/purchase_order.html:106
 #: templates/demo_with_images/purchase_order.tex:107
 #: templates/demo_with_images/request_quotation.html:107
 #: templates/demo_with_images/request_quotation.tex:108
@@ -7656,21 +7640,19 @@ msgstr "Szállítás dátuma"
 #: templates/demo_with_images/sales_quotation.html:75
 #: templates/demo_with_images/sales_quotation.tex:77
 #: templates/demo_with_images/work_order.html:106
-#: templates/demo_with_images/product_receipt.html:105
-#: templates/demo_with_images/purchase_order.html:106
 #: templates/xedemo/bin_list.html:114 templates/xedemo/bin_list.tex:84
 #: templates/xedemo/invoice.html:111 templates/xedemo/invoice.tex:120
 #: templates/xedemo/packing_list.html:85 templates/xedemo/packing_list.tex:92
 #: templates/xedemo/pick_list.html:82 templates/xedemo/pick_list.tex:83
+#: templates/xedemo/product_receipt.html:106
 #: templates/xedemo/product_receipt.tex:107
+#: templates/xedemo/purchase_order.html:106
 #: templates/xedemo/purchase_order.tex:107
 #: templates/xedemo/request_quotation.html:107
 #: templates/xedemo/request_quotation.tex:108
 #: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:108
 #: templates/xedemo/sales_quotation.html:75
 #: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
-#: templates/xedemo/product_receipt.html:106
-#: templates/xedemo/purchase_order.html:106
 msgid "Shipping Point"
 msgstr "Teljesítés helye"
 
@@ -7882,7 +7864,7 @@ msgstr "Tárgy"
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Tárgy: [_1]"
+msgstr "Tárgy: %1"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -7897,7 +7879,7 @@ msgstr "Elküldés"
 msgid "Submitted"
 msgstr "Elküldve"
 
-#: bin/ir.pl:768 bin/is.pl:816 bin/aa.pl:1735 bin/oe.pl:789 bin/io.pl:1757
+#: bin/ir.pl:768 bin/is.pl:816 bin/aa.pl:1735 bin/io.pl:1757 bin/oe.pl:789
 #: UI/Reports/filters/gl.html:274
 #: UI/Reports/filters/invoice_outstanding.html:279
 #: UI/Reports/filters/invoice_search.html:369
@@ -7909,26 +7891,25 @@ msgstr "Elküldve"
 #: UI/rp-search-generate_tax_report.html:186
 #: templates/demo/ap_transaction.html:130
 #: templates/demo/ar_transaction.html:129 templates/demo/invoice.html:169
-#: templates/demo/invoice.tex:157 templates/demo/sales_order.html:161
+#: templates/demo/invoice.tex:157 templates/demo/product_receipt.html:157
+#: templates/demo/purchase_order.html:159 templates/demo/sales_order.html:161
 #: templates/demo/sales_quotation.html:130
 #: templates/demo/sales_quotation.tex:107
-#: templates/demo/product_receipt.html:157
-#: templates/demo/purchase_order.html:159
 #: templates/demo_with_images/ap_transaction.html:130
 #: templates/demo_with_images/ar_transaction.html:129
 #: templates/demo_with_images/invoice.html:169
 #: templates/demo_with_images/invoice.tex:156
+#: templates/demo_with_images/product_receipt.html:157
+#: templates/demo_with_images/purchase_order.html:159
 #: templates/demo_with_images/sales_order.html:161
 #: templates/demo_with_images/sales_quotation.html:130
 #: templates/demo_with_images/sales_quotation.tex:107
-#: templates/demo_with_images/product_receipt.html:157
-#: templates/demo_with_images/purchase_order.html:159
 #: templates/xedemo/ap_transaction.html:130
 #: templates/xedemo/ar_transaction.html:129 templates/xedemo/invoice.html:169
-#: templates/xedemo/invoice.tex:155 templates/xedemo/sales_order.html:161
-#: templates/xedemo/sales_quotation.html:130
-#: templates/xedemo/product_receipt.html:159
+#: templates/xedemo/invoice.tex:155 templates/xedemo/product_receipt.html:159
 #: templates/xedemo/purchase_order.html:159
+#: templates/xedemo/sales_order.html:161
+#: templates/xedemo/sales_quotation.html:130
 msgid "Subtotal"
 msgstr "Részösszeg"
 
@@ -8133,7 +8114,7 @@ msgstr "Adószám:"
 #: templates/xedemo/ap_transaction.html:62
 #, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Adószám: [_1]"
+msgstr "Adószám: %1"
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8151,8 +8132,11 @@ msgstr "Telefon:"
 #: templates/demo/invoice.html:49 templates/demo/invoice.html:82
 #: templates/demo/letterhead.html:21 templates/demo/packing_list.html:56
 #: templates/demo/pick_list.html:55 templates/demo/printPayment.html:27
-#: templates/demo/product_receipt.tex:52 templates/demo/product_receipt.tex:87
-#: templates/demo/purchase_order.tex:52 templates/demo/purchase_order.tex:87
+#: templates/demo/product_receipt.html:54
+#: templates/demo/product_receipt.html:82 templates/demo/product_receipt.tex:52
+#: templates/demo/product_receipt.tex:87 templates/demo/purchase_order.html:54
+#: templates/demo/purchase_order.html:82 templates/demo/purchase_order.tex:52
+#: templates/demo/purchase_order.tex:87
 #: templates/demo/request_quotation.html:55
 #: templates/demo/request_quotation.html:83
 #: templates/demo/request_quotation.tex:52
@@ -8161,9 +8145,7 @@ msgstr "Telefon:"
 #: templates/demo/sales_order.tex:86 templates/demo/sales_quotation.html:48
 #: templates/demo/sales_quotation.tex:57 templates/demo/work_order.html:52
 #: templates/demo/work_order.html:80 templates/demo/work_order.tex:61
-#: templates/demo/work_order.tex:96 templates/demo/product_receipt.html:54
-#: templates/demo/product_receipt.html:82 templates/demo/purchase_order.html:54
-#: templates/demo/purchase_order.html:82
+#: templates/demo/work_order.tex:96
 #: templates/demo_with_images/ap_transaction.html:50
 #: templates/demo_with_images/ar_transaction.tex:61
 #: templates/demo_with_images/bin_list.html:55
@@ -8174,8 +8156,12 @@ msgstr "Telefon:"
 #: templates/demo_with_images/packing_list.html:56
 #: templates/demo_with_images/pick_list.html:55
 #: templates/demo_with_images/printPayment.html:27
+#: templates/demo_with_images/product_receipt.html:54
+#: templates/demo_with_images/product_receipt.html:82
 #: templates/demo_with_images/product_receipt.tex:52
 #: templates/demo_with_images/product_receipt.tex:87
+#: templates/demo_with_images/purchase_order.html:54
+#: templates/demo_with_images/purchase_order.html:82
 #: templates/demo_with_images/purchase_order.tex:52
 #: templates/demo_with_images/purchase_order.tex:87
 #: templates/demo_with_images/request_quotation.html:55
@@ -8192,18 +8178,18 @@ msgstr "Telefon:"
 #: templates/demo_with_images/work_order.html:80
 #: templates/demo_with_images/work_order.tex:61
 #: templates/demo_with_images/work_order.tex:96
-#: templates/demo_with_images/product_receipt.html:54
-#: templates/demo_with_images/product_receipt.html:82
-#: templates/demo_with_images/purchase_order.html:54
-#: templates/demo_with_images/purchase_order.html:82
 #: templates/xedemo/ap_transaction.html:50
 #: templates/xedemo/ar_transaction.tex:61 templates/xedemo/bin_list.html:55
 #: templates/xedemo/bin_list.html:88 templates/xedemo/invoice.html:49
 #: templates/xedemo/invoice.html:82 templates/xedemo/letterhead.html:21
 #: templates/xedemo/packing_list.html:56 templates/xedemo/pick_list.html:55
 #: templates/xedemo/printPayment.html:27
+#: templates/xedemo/product_receipt.html:54
+#: templates/xedemo/product_receipt.html:82
 #: templates/xedemo/product_receipt.tex:52
 #: templates/xedemo/product_receipt.tex:87
+#: templates/xedemo/purchase_order.html:54
+#: templates/xedemo/purchase_order.html:82
 #: templates/xedemo/purchase_order.tex:52
 #: templates/xedemo/purchase_order.tex:87
 #: templates/xedemo/request_quotation.html:55
@@ -8215,13 +8201,10 @@ msgstr "Telefon:"
 #: templates/xedemo/sales_quotation.html:48
 #: templates/xedemo/sales_quotation.tex:58 templates/xedemo/work_order.html:52
 #: templates/xedemo/work_order.html:80 templates/xedemo/work_order.tex:61
-#: templates/xedemo/work_order.tex:96 templates/xedemo/product_receipt.html:54
-#: templates/xedemo/product_receipt.html:82
-#: templates/xedemo/purchase_order.html:54
-#: templates/xedemo/purchase_order.html:82
+#: templates/xedemo/work_order.tex:96
 #, fuzzy
 msgid "Tel: [_1]"
-msgstr "Telefon: [_1]"
+msgstr "Telefon: %1"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 #, fuzzy
@@ -8250,34 +8233,34 @@ msgstr "tíz"
 msgid "Terms"
 msgstr "Határidő"
 
-#: templates/demo/sales_order.html:183 templates/demo/sales_quotation.html:151
 #: templates/demo/product_receipt.html:182
-#: templates/demo/purchase_order.html:184
-#: templates/demo_with_images/sales_order.html:183
-#: templates/demo_with_images/sales_quotation.html:151
+#: templates/demo/purchase_order.html:184 templates/demo/sales_order.html:183
+#: templates/demo/sales_quotation.html:151
 #: templates/demo_with_images/product_receipt.html:182
 #: templates/demo_with_images/purchase_order.html:184
-#: templates/xedemo/sales_order.html:183
-#: templates/xedemo/sales_quotation.html:151
+#: templates/demo_with_images/sales_order.html:183
+#: templates/demo_with_images/sales_quotation.html:151
 #: templates/xedemo/product_receipt.html:184
 #: templates/xedemo/purchase_order.html:184
+#: templates/xedemo/sales_order.html:183
+#: templates/xedemo/sales_quotation.html:151
 #, fuzzy
 msgid "Terms Net [_1] days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr "Fizetési határidő %1 nap"
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
 #, fuzzy
 msgid "Terms: Net [_1]  days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr "Fizetési határidő %1 nap"
 
 #: templates/demo/sales_quotation.tex:126
 #: templates/demo_with_images/sales_quotation.tex:126
 #: templates/xedemo/sales_quotation.tex:128
 #, fuzzy
 msgid "Terms: [_1] days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr "Fizetési határidő %1 nap"
 
 #: templates/demo/invoice.tex:214 templates/demo/sales_order.tex:175
 #: templates/demo_with_images/invoice.tex:217
@@ -8457,7 +8440,7 @@ msgstr "Időkártyák"
 msgid "Times"
 msgstr "-szor"
 
-#: bin/oe.pl:2135 bin/pe.pl:858 bin/ic.pl:1134 UI/lib/report_base.html:104
+#: bin/ic.pl:1134 bin/oe.pl:2135 bin/pe.pl:858 UI/lib/report_base.html:104
 #: UI/lib/report_base.html:174 UI/Reports/co/filter_bm.html:27
 #: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/purchase_history.html:127
@@ -8518,22 +8501,22 @@ msgstr "Fizetendő"
 
 #: UI/Reports/filters/reconciliation_search.html:19
 #: UI/Reports/filters/reconciliation_search.html:37
-#: UI/payments/payments_detail.html:116
+#: UI/payments/payments_detail.html:116 templates/demo/product_receipt.html:29
+#: templates/demo/purchase_order.html:29
 #: templates/demo/request_quotation.html:28
-#: templates/demo/product_receipt.html:29 templates/demo/purchase_order.html:29
-#: templates/demo_with_images/request_quotation.html:28
 #: templates/demo_with_images/product_receipt.html:29
 #: templates/demo_with_images/purchase_order.html:29
-#: templates/xedemo/request_quotation.html:28
+#: templates/demo_with_images/request_quotation.html:28
 #: templates/xedemo/product_receipt.html:29
 #: templates/xedemo/purchase_order.html:29
+#: templates/xedemo/request_quotation.html:28
 msgid "To:"
 msgstr "Címzett:"
 
 #: bin/arap.pl:802 bin/io.pl:1916
 #, fuzzy
 msgid "To: [_1]"
-msgstr "Címzett: [_1]"
+msgstr "Címzett: %1"
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -8563,45 +8546,46 @@ msgstr "Legfelső szint"
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:166
-#: templates/demo/sales_order.html:158 templates/demo/sales_order.html:186
-#: templates/demo/sales_quotation.html:127
-#: templates/demo/sales_quotation.html:154 templates/demo/timecard.html:105
-#: templates/demo/timecard.tex:45 templates/demo/product_receipt.html:154
+#: templates/demo/product_receipt.html:154
 #: templates/demo/product_receipt.html:176
 #: templates/demo/product_receipt.html:183
 #: templates/demo/purchase_order.html:156
 #: templates/demo/purchase_order.html:178
-#: templates/demo/purchase_order.html:185
+#: templates/demo/purchase_order.html:185 templates/demo/sales_order.html:158
+#: templates/demo/sales_order.html:186 templates/demo/sales_quotation.html:127
+#: templates/demo/sales_quotation.html:154 templates/demo/timecard.html:105
+#: templates/demo/timecard.tex:45
 #: templates/demo_with_images/ap_transaction.html:126
 #: templates/demo_with_images/ap_transaction.html:147
 #: templates/demo_with_images/ar_transaction.html:125
 #: templates/demo_with_images/ar_transaction.html:146
 #: templates/demo_with_images/invoice.html:166
-#: templates/demo_with_images/sales_order.html:158
-#: templates/demo_with_images/sales_order.html:186
-#: templates/demo_with_images/sales_quotation.html:127
-#: templates/demo_with_images/sales_quotation.html:154
-#: templates/demo_with_images/timecard.html:105
-#: templates/demo_with_images/timecard.tex:45
 #: templates/demo_with_images/product_receipt.html:154
 #: templates/demo_with_images/product_receipt.html:176
 #: templates/demo_with_images/product_receipt.html:183
 #: templates/demo_with_images/purchase_order.html:156
 #: templates/demo_with_images/purchase_order.html:178
 #: templates/demo_with_images/purchase_order.html:185
+#: templates/demo_with_images/sales_order.html:158
+#: templates/demo_with_images/sales_order.html:186
+#: templates/demo_with_images/sales_quotation.html:127
+#: templates/demo_with_images/sales_quotation.html:154
+#: templates/demo_with_images/timecard.html:105
+#: templates/demo_with_images/timecard.tex:45
 #: templates/xedemo/ap_transaction.html:126
 #: templates/xedemo/ap_transaction.html:147
 #: templates/xedemo/ar_transaction.html:125
 #: templates/xedemo/ar_transaction.html:146 templates/xedemo/invoice.html:166
-#: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
-#: templates/xedemo/sales_quotation.html:127
-#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
-#: templates/xedemo/timecard.tex:45 templates/xedemo/product_receipt.html:156
+#: templates/xedemo/product_receipt.html:156
 #: templates/xedemo/product_receipt.html:178
 #: templates/xedemo/product_receipt.html:185
 #: templates/xedemo/purchase_order.html:156
 #: templates/xedemo/purchase_order.html:178
 #: templates/xedemo/purchase_order.html:185
+#: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
+#: templates/xedemo/sales_quotation.html:127
+#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
+#: templates/xedemo/timecard.tex:45
 msgid "Total"
 msgstr "Végösszeg"
 
@@ -8807,14 +8791,14 @@ msgstr "Egyedi vevő azonosító"
 msgid "Unique Vendornumber"
 msgstr "Egyedi szállító azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:587
+#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:589
 msgid "Unique nonobsolete partnumbers"
 msgstr "Egyedi élő cikkszám"
 
 #: LedgerSMB/Report/Contact/History.pm:91
 #: LedgerSMB/Report/Inventory/History.pm:130
-#: LedgerSMB/Report/Inventory/Search.pm:206 bin/oe.pl:1847 bin/ic.pl:788
-#: bin/ic.pl:1262 bin/io.pl:236 UI/Reports/filters/purchase_history.html:296
+#: LedgerSMB/Report/Inventory/Search.pm:206 bin/ic.pl:788 bin/ic.pl:1262
+#: bin/io.pl:236 bin/oe.pl:1847 UI/Reports/filters/purchase_history.html:296
 #: UI/Reports/filters/search_goods.html:221 UI/payroll/income.html:74
 #: templates/demo/invoice.tex:138 templates/demo/product_receipt.tex:119
 #: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
@@ -8838,17 +8822,17 @@ msgstr "Egység"
 msgid "Unit Price"
 msgstr "Egységár"
 
-#: LedgerSMB/Upgrade_Tests.pm:690
+#: LedgerSMB/Upgrade_Tests.pm:692
 msgid "Unknown "
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:672
+#: LedgerSMB/Upgrade_Tests.pm:674
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)"
 "Q(uity))"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:654
+#: LedgerSMB/Upgrade_Tests.pm:656
 msgid "Unknown charttype; should be H(eader)/A(ccount))"
 msgstr ""
 
@@ -8875,12 +8859,12 @@ msgstr "Jóváhagyva"
 msgid "Unsupported Number"
 msgstr "Nem támogatott szám"
 
-#: LedgerSMB/Upgrade_Tests.pm:380
+#: LedgerSMB/Upgrade_Tests.pm:382
 #, fuzzy
 msgid "Unsupported account categories"
 msgstr "Nem támogatott számla típus"
 
-#: LedgerSMB/Upgrade_Tests.pm:398
+#: LedgerSMB/Upgrade_Tests.pm:400
 #, fuzzy
 msgid "Unsupported account link combinations"
 msgstr "Nem támogatott számla típus"
@@ -8899,8 +8883,8 @@ msgid "Unused"
 msgstr ""
 
 #: LedgerSMB/Scripts/budgets.pm:96 bin/ir.pl:550 bin/ir.pl:963 bin/is.pl:568
-#: bin/is.pl:1012 bin/gl.pl:271 bin/aa.pl:908 bin/aa.pl:932 bin/oe.pl:633
-#: bin/oe.pl:853 bin/oe.pl:1942 bin/pe.pl:620 bin/ic.pl:830 bin/ic.pl:839
+#: bin/is.pl:1012 bin/gl.pl:271 bin/aa.pl:908 bin/aa.pl:932 bin/ic.pl:830
+#: bin/ic.pl:839 bin/oe.pl:633 bin/oe.pl:853 bin/oe.pl:1942 bin/pe.pl:620
 #: UI/am-taxes.html:65 UI/payments/payment2.html:440
 #: UI/payments/payments_detail.html:464 UI/payroll/deduction.html:90
 #: UI/payroll/income.html:96 UI/reconciliation/report.html:263
@@ -9026,7 +9010,7 @@ msgstr "Eltérés:"
 #: LedgerSMB/Report/Aging.pm:80 LedgerSMB/Report/Invoices/Transactions.pm:247
 #: LedgerSMB/Report/Invoices/Outstanding.pm:175 LedgerSMB/Report/Orders.pm:191
 #: LedgerSMB/Report/Orders.pm:197 bin/ir.pl:436 bin/aa.pl:516 bin/aa.pl:1597
-#: bin/oe.pl:2409 bin/oe.pl:2565 bin/pe.pl:1040 bin/pe.pl:1195 bin/ic.pl:1026
+#: bin/ic.pl:1026 bin/oe.pl:2409 bin/oe.pl:2565 bin/pe.pl:1040 bin/pe.pl:1195
 #: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
 #: UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:6
@@ -9101,7 +9085,7 @@ msgstr "Verzió"
 #: UI/am-company-logo.html:6
 #, fuzzy
 msgid "Version [_1]"
-msgstr "Verzió [_1]"
+msgstr "Verzió %1"
 
 #: bin/is.pl:587
 msgid "Void"
@@ -9152,7 +9136,7 @@ msgstr "Figyelmeztetés!"
 #: UI/lib/ui-header.html:26
 #, fuzzy
 msgid "Warning:  Your password will expire in [_1]"
-msgstr "Figyelem! A jelszava érvényessége [_1] "
+msgstr "Figyelem! A jelszava érvényessége %1 "
 
 #: LedgerSMB/Report/Timecards.pm:133
 msgid "Wed"
@@ -9205,7 +9189,7 @@ msgstr ""
 msgid "Widgit Themes"
 msgstr "Sablon szerkesztése"
 
-#: bin/am.pl:1521 bin/oe.pl:246 bin/io.pl:1405 bin/io.pl:1596
+#: bin/am.pl:1521 bin/io.pl:1405 bin/io.pl:1596 bin/oe.pl:246
 #: templates/demo/work_order.html:4 templates/demo/work_order.html:18
 #: templates/demo/work_order.tex:109
 #: templates/demo_with_images/work_order.html:4
@@ -9266,7 +9250,7 @@ msgstr "Ön sikeresen kijelentkezett a rendszerből!"
 #: UI/users/preferences.html:23
 #, fuzzy
 msgid "Your password will expire in [_1]"
-msgstr "A jelszava érvényessége még [_1]"
+msgstr "A jelszava érvényessége még %1"
 
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
@@ -9290,7 +9274,7 @@ msgstr "Irányítószám"
 #: bin/gl.pl:201
 #, fuzzy
 msgid "[_1] Cash Transfer Transaction"
-msgstr "[_1] számlák közötti pénzmozgás"
+msgstr "%1 számlák közötti pénzmozgás"
 
 #: bin/aa.pl:395
 #, fuzzy
@@ -9306,12 +9290,12 @@ msgstr "Új kéziszámla korrekció"
 #: bin/gl.pl:204
 #, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "[_1] vegyes könyvelési tranzakció"
+msgstr "%1 vegyes könyvelési tranzakció"
 
 #: bin/arap.pl:173
 #, fuzzy
 msgid "[_1] Number"
-msgstr "[_1] azonosító"
+msgstr "%1 azonosító"
 
 #: bin/aa.pl:388
 #, fuzzy
@@ -9323,14 +9307,14 @@ msgstr "Tranzakció"
 #: bin/ic.pl:1656
 #, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "[_1]: A vevő hiányzik az adatbázisból!"
+msgstr "%1: A vevő hiányzik az adatbázisból!"
 
 # 82%
 # 88%
 #: bin/ic.pl:1578
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "[_1]: Szállító nincs az adatbázisban!"
+msgstr "%1: Szállító nincs az adatbázisban!"
 
 #: LedgerSMB/Form.pm:710
 #, fuzzy
@@ -9365,7 +9349,7 @@ msgstr "pénztárbizonylat"
 msgid "city"
 msgstr "város"
 
-#: bin/oe.pl:358 bin/ic.pl:1084 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "nap"
@@ -9523,11 +9507,38 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "$operation Person"
 #~ msgstr "$operation Személy"
 
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "%1 Business"
+#~ msgstr "%1 partnercsoport"
+
+#~ msgid "%1 Department"
+#~ msgstr "%1 költséghely/profitcenter"
+
+#~ msgid "%1 GIFI"
+#~ msgstr "%1 gyűjtőkód"
+
+#~ msgid "%1 Language"
+#~ msgstr "%1 nyelv"
+
+#~ msgid "%1 SIC"
+#~ msgstr "%1 TEÁOR/SZJ"
+
+#~ msgid "%1 To %2"
+#~ msgstr "%1-tól %2-ig"
+
+#~ msgid "%1 Warehouse"
+#~ msgstr "%1 raktár"
+
 #~ msgid "- Used"
 #~ msgstr "- Használt"
 
 #~ msgid "= Variance"
 #~ msgstr "= Eltérés"
+
+#~ msgid "A"
+#~ msgstr "Árvált."
 
 #~ msgid "AR/AP"
 #~ msgstr "Vevők/Szállítók"
@@ -9558,8 +9569,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Account saved!"
 #~ msgstr "Számla elmentve!"
 
-#~ msgid "Account: [_1]"
-#~ msgstr "Számla: [_1]"
+#~ msgid "Account: %1"
+#~ msgstr "Számla: %1"
 
 #~ msgid "Accounting"
 #~ msgstr "Könyvelés"
@@ -9634,8 +9645,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "All Items"
 #~ msgstr "Minden tétel"
 
-#~ msgid "All amounts in [_1] Funds"
-#~ msgstr "A teljes összeg [_1]ban értendő"
+#~ msgid "All amounts in %1 Funds"
+#~ msgstr "A teljes összeg %1ban értendő"
 
 #~ msgid "Allowances"
 #~ msgstr "Juttatások"
@@ -9648,8 +9659,8 @@ msgstr "felhasznál egy túlfizetést"
 
 # 92%
 # 94%
-#~ msgid "Are you sure you want to delete Invoice Number [_1]?"
-#~ msgstr "Biztosan törölni szeretné a [_1] számú számlát?"
+#~ msgid "Are you sure you want to delete Invoice Number %1?"
+#~ msgstr "Biztosan törölni szeretné a %1 számú számlát?"
 
 #~ msgid "Are you sure you want to delete Timecard for"
 #~ msgstr "Biztos benne, hogy törölni akarja az időkártyát"
@@ -9658,16 +9669,16 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgstr "Biztosan törölni akarja a tranzakciót"
 
 # 93%
-#~ msgid "Are you sure you want to delete Transaction [_1]"
-#~ msgstr "Biztosan törölni akarja a [_1] tranzakciót"
+#~ msgid "Are you sure you want to delete Transaction %1"
+#~ msgstr "Biztosan törölni akarja a %1 tranzakciót"
 
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
 
 # 83%
 # 85%
-#~ msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-#~ msgstr "Biztosan törölni szeretné a munkalapot [_1] [_2] [_3]"
+#~ msgid "Are you sure you want to delete time card for %1 %2 %3"
+#~ msgstr "Biztosan törölni szeretné a munkalapot %1 %2 %3"
 
 #~ msgid "Are you sure you want to remove the marked entries from the queue?"
 #~ msgstr "Biztosan el akarja távolítani a kijelölt tételeket a várólistáról?"
@@ -9701,7 +9712,7 @@ msgstr "felhasznál egy túlfizetést"
 
 # 82%
 #, fuzzy
-#~ msgid "Backup sent to [_1]"
+#~ msgid "Backup sent to %1"
 #~ msgstr "Biztonsági másolat elküldve:"
 
 # 84%
@@ -9804,8 +9815,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Cannot delete vendor!"
 #~ msgstr "A szállítót nem lehet törölni!"
 
-#~ msgid "Cannot find Contrib script [_1] in [_2]."
-#~ msgstr "Nem található a [_1] Contrib szkript ezen az útvonalon: [_2]."
+#~ msgid "Cannot find Contrib script %1 in %2."
+#~ msgstr "Nem található a %1 Contrib szkript ezen az útvonalon: %2."
 
 #~ msgid "Cannot post Payment!"
 #~ msgstr "A kifizetést nem tudom rögzíteni!"
@@ -9853,11 +9864,11 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Cannot set multiple options for"
 #~ msgstr "Nem lehet beállítani a töbszörös opciót"
 
+#~ msgid "Cannot set multiple options for %1"
+#~ msgstr "Nem lehet több opciót beállítani ehhez: %1"
+
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Nem lehet beállítani a töbszörös opciót a tételre"
-
-#~ msgid "Cannot set multiple options for [_1]"
-#~ msgstr "Nem lehet több opciót beállítani ehhez: [_1]"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Nem lehet a saját terméket bevételezni!"
@@ -9900,8 +9911,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Close Till"
 #~ msgstr "Kassza zárása"
 
-#~ msgid "Closing Till For [_1]"
-#~ msgstr "Kassza lezárása eddig [_1]"
+#~ msgid "Closing Till For %1"
+#~ msgstr "Kassza lezárása eddig %1"
 
 #~ msgid "Completed"
 #~ msgstr "Befejezve"
@@ -9948,8 +9959,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Credit Limit:"
 #~ msgstr "Hitelkeret:"
 
-#~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Összesített hiba: [_1]"
+#~ msgid "Cumulative Error: %1"
+#~ msgstr "Összesített hiba: %1"
 
 #~ msgid "Customer Invoice"
 #~ msgstr "Vevő számla"
@@ -9960,8 +9971,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Customer saved!"
 #~ msgstr "Vevő elmentve!"
 
-#~ msgid "Customer: [_1]"
-#~ msgstr "Vevő: [_1]"
+#~ msgid "Customer: %1"
+#~ msgstr "Vevő: %1"
 
 #~ msgid "Customers"
 #~ msgstr "Vevők"
@@ -10041,14 +10052,14 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Department:"
 #~ msgstr "Költséghely/profitcenter:"
 
-#~ msgid "Department: [_1]"
-#~ msgstr "Költséghely/profitcenter: [_1]"
+#~ msgid "Department: %1"
+#~ msgstr "Költséghely/profitcenter: %1"
 
 #~ msgid "Deposit"
 #~ msgstr "Jóváírás"
 
-#~ msgid "Description: [_1]"
-#~ msgstr "Leírás: [_1]"
+#~ msgid "Description: %1"
+#~ msgstr "Leírás: %1"
 
 #~ msgid "Development version found.  Please upgrade first"
 #~ msgstr "Fejlesztői verziót találtam.  Kérem előbb frissítsen"
@@ -10102,8 +10113,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Edit Preferences for"
 #~ msgstr "Felhasználói paraméterek módosítása:"
 
-#~ msgid "Edit Preferences for [_1]"
-#~ msgstr "[_1] felhasználó beállításainak módosítása"
+#~ msgid "Edit Preferences for %1"
+#~ msgstr "%1 felhasználó beállításainak módosítása"
 
 #~ msgid "Edit Project"
 #~ msgstr "Projekt módosítása"
@@ -10193,20 +10204,20 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Friday"
 #~ msgstr "Péntek"
 
-#~ msgid "From [_1]"
-#~ msgstr "Mettől: [_1]"
+#~ msgid "From %1"
+#~ msgstr "Mettől: %1"
 
 #~ msgid "GL Transaction"
 #~ msgstr "Főkönyvi tranzakció"
 
-#~ msgid "GL report sent to [_1]"
-#~ msgstr "Főkönyvi jelentés elküldve [_1]"
+#~ msgid "GL report sent to %1"
+#~ msgstr "Főkönyvi jelentés elküldve %1"
 
 #~ msgid "General Ledger"
 #~ msgstr "Főkönyvi könyvelés"
 
-#~ msgid "General Ledger: [_1] [_2]"
-#~ msgstr "Főkönyv: [_1] [_2]"
+#~ msgid "General Ledger: %1 %2"
+#~ msgstr "Főkönyv: %1 %2"
 
 #~ msgid "Generate Sales Order"
 #~ msgstr "Vevőrendelés készítése"
@@ -10267,8 +10278,8 @@ msgstr "felhasznál egy túlfizetést"
 
 # 77%
 # 85%
-#~ msgid "Invoice Number: [_1]"
-#~ msgstr "Számlaszám: [_1]"
+#~ msgid "Invoice Number: %1"
+#~ msgstr "Számlaszám: %1"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "A számla törölve!"
@@ -10350,8 +10361,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Legacy version found.  Please upgrade first"
 #~ msgstr "Régi verziót találtam.  Kérem előbb frissítsen"
 
-#~ msgid "Less Cash in Till At Start: [_1]"
-#~ msgstr "Kevés készpénz a kasszában ekkortól: [_1]"
+#~ msgid "Less Cash in Till At Start: %1"
+#~ msgstr "Kevés készpénz a kasszában ekkortól: %1"
 
 #~ msgid "Licensed to"
 #~ msgstr "Cég:"
@@ -10408,8 +10419,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Maximum Value"
 #~ msgstr "Maximum érték"
 
-#~ msgid "Memo: [_1]"
-#~ msgstr "Megjegyzés: [_1]"
+#~ msgid "Memo: %1"
+#~ msgstr "Megjegyzés: %1"
 
 #~ msgid "Menu Width"
 #~ msgstr "Menü szélesség"
@@ -10472,7 +10483,7 @@ msgstr "felhasznál egy túlfizetést"
 
 # 86%
 #, fuzzy
-#~ msgid "No email address for [_1]"
+#~ msgid "No email address for %1"
 #~ msgstr "Nincs e-mail címe:"
 
 #~ msgid "No open Jobs!"
@@ -10518,8 +10529,8 @@ msgstr "felhasznál egy túlfizetést"
 
 # 75%
 # 83%
-#~ msgid "Order Number: [_1]"
-#~ msgstr "Rendelés azonosító: [_1]"
+#~ msgid "Order Number: %1"
+#~ msgstr "Rendelés azonosító: %1"
 
 #~ msgid "Order saved!"
 #~ msgstr "Rendelés elmentve!"
@@ -10581,8 +10592,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Pick Lists"
 #~ msgstr "Kiszedési listák"
 
-#~ msgid "Please make check payable to [_1]."
-#~ msgstr "Kérem állítson ki fizethető csekket [_1] számára."
+#~ msgid "Please make check payable to %1."
+#~ msgstr "Kérem állítson ki fizethető csekket %1 számára."
 
 #~ msgid ""
 #~ "Please point your contrib_dir directive in your ledgersmb.conf to the "
@@ -10627,8 +10638,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Prepayment"
 #~ msgstr "Előre fizetés"
 
-#~ msgid "Print [_1]"
-#~ msgstr "[_1] nyomtatása"
+#~ msgid "Print %1"
+#~ msgstr "%1 nyomtatása"
 
 #~ msgid "Print and Post as new"
 #~ msgstr "Újként nyomtat és rögzít"
@@ -10654,8 +10665,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Project Number missing!"
 #~ msgstr "A projektszám hiányzik!"
 
-#~ msgid "Project Number: [_1]"
-#~ msgstr "Projekt azonosító: [_1]"
+#~ msgid "Project Number: %1"
+#~ msgstr "Projekt azonosító: %1"
 
 #~ msgid "Project Transactions"
 #~ msgstr "Projekt tranzakciók"
@@ -10683,8 +10694,8 @@ msgstr "felhasznál egy túlfizetést"
 
 # 80%
 # 86%
-#~ msgid "Quotation Number: [_1]"
-#~ msgstr "Ajánlat azonosítója: [_1]"
+#~ msgid "Quotation Number: %1"
+#~ msgstr "Ajánlat azonosítója: %1"
 
 #~ msgid "R"
 #~ msgstr "E"
@@ -10726,8 +10737,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Requirements"
 #~ msgstr "Anyagszükséglet"
 
-#~ msgid "Reset Till By [_1]"
-#~ msgstr "Kassza alaphelyzetbe [_1]"
+#~ msgid "Reset Till By %1"
+#~ msgstr "Kassza alaphelyzetbe %1"
 
 #~ msgid "Role"
 #~ msgstr "Szerep"
@@ -10814,8 +10825,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgstr "Szállítási cím"
 
 # Vagy kezdés
-#~ msgid "Source: [_1]"
-#~ msgstr "Bizonylatszám: [_1]"
+#~ msgid "Source: %1"
+#~ msgstr "Bizonylatszám: %1"
 
 #~ msgid "Spoolfile"
 #~ msgstr "Segédfájlok"
@@ -10835,14 +10846,14 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "State/Province:"
 #~ msgstr "Állam/Régió:"
 
-#~ msgid "Statement - [_1]"
-#~ msgstr "Kimutatás - [_1]"
+#~ msgid "Statement - %1"
+#~ msgstr "Kimutatás - %1"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Kimutatás elküldve:"
 
-#~ msgid "Statement sent to [_1]"
-#~ msgstr "Kimutatás elküldve [_1]"
+#~ msgid "Statement sent to %1"
+#~ msgstr "Kimutatás elküldve %1"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "A kimutatás elküldésre került a nyomtatóra!"
@@ -10901,8 +10912,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Taxforms"
 #~ msgstr "Adóűrlapok"
 
-#~ msgid "Tel: [_1],"
-#~ msgstr "Telefon: [_1],"
+#~ msgid "Tel: %1,"
+#~ msgstr "Telefon: %1,"
 
 #~ msgid "Templates directory"
 #~ msgstr "Sablonkönyvtár"
@@ -10945,8 +10956,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Timecard saved!"
 #~ msgstr "Időkártya elmentve!"
 
-#~ msgid "To [_1]"
-#~ msgstr "Meddig: [_1]"
+#~ msgid "To %1"
+#~ msgstr "Meddig: %1"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -10963,8 +10974,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Total Assets"
 #~ msgstr "Mérlegfőösszeg"
 
-#~ msgid "Total Cash in Drawer: [_1]"
-#~ msgstr "Összes készpénz a kasszában: [_1]"
+#~ msgid "Total Cash in Drawer: %1"
+#~ msgstr "Összes készpénz a kasszában: %1"
 
 #~ msgid "Total Equity"
 #~ msgstr "Összes tőke"
@@ -10995,8 +11006,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Transaction reversal enforced up to"
 #~ msgstr "E dátumig csak ellentétes előjelű tranzakcióval lehet stornózni:"
 
-#~ msgid "Transaction reversal enforced up to [_1]"
-#~ msgstr "[_1] dátumig csak ellentétes előjelű tranzakcióval lehet stornózni"
+#~ msgid "Transaction reversal enforced up to %1"
+#~ msgstr "%1 dátumig csak ellentétes előjelű tranzakcióval lehet stornózni"
 
 #~ msgid "Transactions Locked"
 #~ msgstr "Zárolt tranzakciók"
@@ -11014,8 +11025,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Type:"
 #~ msgstr "Típus:"
 
-#~ msgid "Unable to save [_1] object"
-#~ msgstr "A(z) [_1] objektum nem menthető el."
+#~ msgid "Unable to save %1 object"
+#~ msgstr "A(z) %1 objektum nem menthető el."
 
 #~ msgid "Unit of measure"
 #~ msgstr "Mértékegység"
@@ -11062,8 +11073,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Vendor saved!"
 #~ msgstr "Szállító elmentve!"
 
-#~ msgid "Vendor: [_1]"
-#~ msgstr "Szállító: [_1]"
+#~ msgid "Vendor: %1"
+#~ msgstr "Szállító: %1"
 
 #~ msgid "Vendors"
 #~ msgstr "Szállítók"
@@ -11110,8 +11121,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "You are logged out"
 #~ msgstr "Ön kilépett"
 
-#~ msgid "You are over by [_1]"
-#~ msgstr "Többlete van ennyivel: [_1]"
+#~ msgid "You are over by %1"
+#~ msgstr "Többlete van ennyivel: %1"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "Ön egy már létező tranzakciót rögzít!"
@@ -11137,8 +11148,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "You are saving an existing transaction!"
 #~ msgstr "Ön egy már létező tranzakciót ment!"
 
-#~ msgid "You are under by [_1]"
-#~ msgstr "Hiánya van ennyivel: [_1]"
+#~ msgid "You are under by %1"
+#~ msgstr "Hiánya van ennyivel: %1"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Nem írt be nevet!"
@@ -11154,27 +11165,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Zip/Post Code:"
 #~ msgstr "Irányítószám:"
 
-#~ msgid "[_1] Business"
-#~ msgstr "[_1] partnercsoport"
-
-#~ msgid "[_1] Department"
-#~ msgstr "[_1] költséghely/profitcenter"
-
-#~ msgid "[_1] GIFI"
-#~ msgstr "[_1] gyűjtőkód"
-
-#~ msgid "[_1] Language"
-#~ msgstr "[_1] nyelv"
-
-#~ msgid "[_1] SIC"
-#~ msgstr "[_1] TEÁOR/SZJ"
-
-#~ msgid "[_1] To [_2]"
-#~ msgstr "[_1]-tól [_2]-ig"
-
-#~ msgid "[_1] Warehouse"
-#~ msgstr "[_1] raktár"
-
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "a számla nem állítható be bármilyen más számla típusra"
 
@@ -11184,8 +11174,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "ar"
 #~ msgstr "vevő"
 
-#~ msgid "as at [_1]"
-#~ msgstr "fordulónap [_1]"
+#~ msgid "as at %1"
+#~ msgstr "fordulónap %1"
 
 #~ msgid "default_language"
 #~ msgstr "Alapértelmezett nyelv"
@@ -11203,8 +11193,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "for Period"
 #~ msgstr "Időszak"
 
-#~ msgid "for Period To [_1]"
-#~ msgstr "időszakhoz [_1]"
+#~ msgid "for Period To %1"
+#~ msgstr "időszakhoz %1"
 
 #~ msgid "gl"
 #~ msgstr "vegyeskönyvelés"
