@@ -17,11 +17,11 @@ EOF
 
 # EXTRACT STRINGS AND CREATE POT
 find . -name '*.pl' -o -name '*.pm' | \
-  grep -v blib | grep -v LaTeX | \
+  grep -v blib | grep -v LaTeX | sort | \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
-   grep -v blib | grep -v dojo/ | \
+   grep -v blib | grep -v dojo/ | sort | \
    utils/devel/extract-template-translations >> locale/LedgerSMB.pot
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
