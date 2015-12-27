@@ -9826,26 +9826,6 @@ msgstr "Prepago"
 #~ msgid "$operation Employee"
 #~ msgstr "Editar Empleado"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Negocio"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Código GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Agregar SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Almacén"
-
 #~ msgid "A"
 #~ msgstr "Ajst."
 
@@ -10028,12 +10008,12 @@ msgstr "Prepago"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "No se admite selección múltiple en CxC, CxP o IC!"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "No se pueden guardar múltiples opciones para el Item"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "No se admiten opciones simlutaneas para"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "No se pueden guardar múltiples opciones para el Item"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "¡No se puede almacenar el Juego!"
@@ -10728,8 +10708,16 @@ msgstr "Prepago"
 #~ msgstr "Negocio"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Código GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Agregar SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

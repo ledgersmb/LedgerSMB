@@ -9834,26 +9834,6 @@ msgstr "Предварительная оплата"
 #~ msgid "$operation Employee"
 #~ msgstr "Редактировать сотрудника"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Бизнес"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Язык"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Новый SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10054,12 +10034,12 @@ msgstr "Предварительная оплата"
 #~ msgstr ""
 #~ "Невозможно установить в счете более чем одно значение из AR, AP или IC"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Невозможно установить много опций для элемента"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Невозможно установить много опций для"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Невозможно установить много опций для элемента"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Невозможно сформировать комплект!"
@@ -10763,8 +10743,16 @@ msgstr "Предварительная оплата"
 #~ msgstr "Бизнес"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Язык"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Новый SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

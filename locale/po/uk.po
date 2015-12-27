@@ -9857,26 +9857,6 @@ msgstr "Передплата"
 #~ msgid "$operation Employee"
 #~ msgstr "Редагувати працівника"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Бізнес"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Мова"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Додати SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
 #~ msgid "A"
 #~ msgstr "А"
 
@@ -10574,8 +10554,16 @@ msgstr "Передплата"
 #~ msgstr "Бізнес"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Мова"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Додати SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

@@ -9986,10 +9986,6 @@ msgstr "Pagament"
 #~ msgstr "Editar Plantilla"
 
 #, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Despeses"
 

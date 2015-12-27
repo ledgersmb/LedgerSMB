@@ -9856,22 +9856,6 @@ msgstr "Forskuddsbetaling"
 #~ msgid "$operation Employee"
 #~ msgstr "Endre ansatt"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Organisasjon"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Språk"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Lager"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10028,12 +10012,12 @@ msgstr "Forskuddsbetaling"
 #~ msgstr ""
 #~ "Kan ikke sette konto for mer enn en av Kunde, Leverandør eller Intern"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Kan ikke sette flere valg for vare"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Kan ikke sette flere valg for"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Kan ikke sette flere valg for vare"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan ikke plasere sammensetninger!"
@@ -10655,6 +10639,10 @@ msgstr "Forskuddsbetaling"
 #, fuzzy
 #~ msgid "[_1] Business"
 #~ msgstr "Organisasjon"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

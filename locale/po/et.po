@@ -9835,26 +9835,6 @@ msgstr "Ettemaksmine"
 #~ msgid "$operation Employee"
 #~ msgstr "Muuda Töötaja"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Ettevõte"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Keel"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Lisa Standardiseeritud Tööstuskood"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Kaubaladu"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10059,12 +10039,12 @@ msgstr "Ettemaksmine"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "Konto saab olla, kas Nõue, Kohustuse või Tulu/Kulu tüüpi"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Ei saa märgistada mitut valikut Kaubaartiklile"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Ei saa märgistada mitut valikut"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Ei saa märgistada mitut valikut Kaubaartiklile"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Komplekti pole võimalik ladustada!"
@@ -10785,8 +10765,16 @@ msgstr "Ettemaksmine"
 #~ msgstr "Ettevõte"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Keel"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Lisa Standardiseeritud Tööstuskood"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

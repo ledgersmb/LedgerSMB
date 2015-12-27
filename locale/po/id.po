@@ -9874,18 +9874,6 @@ msgstr "Pilih pembayaran"
 #~ msgid "$operation Employee"
 #~ msgstr "Edit Karyawan"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Bisnis"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Bahasa"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Gudang"
-
 #~ msgid "A"
 #~ msgstr "A"
 

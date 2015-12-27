@@ -9891,26 +9891,6 @@ msgstr "Voorschot"
 #~ msgid "$operation Employee"
 #~ msgstr "Werknemer wijzigen"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Zaaktype"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Taal"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "SIC toevoegen"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Magazijn"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10570,8 +10550,16 @@ msgstr "Voorschot"
 #~ msgstr "Zaaktype"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Taal"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "SIC toevoegen"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

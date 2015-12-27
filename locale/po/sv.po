@@ -9830,26 +9830,6 @@ msgstr "Förskottsbetald"
 #~ msgid "$operation Employee"
 #~ msgstr "Redigera anställd"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Verksamhet"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "SRU-kod"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Språk"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Ny sni-kod (industrikod)"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Lager"
-
 #~ msgid "A"
 #~ msgstr "Tillgångar"
 
@@ -10062,10 +10042,6 @@ msgstr "Förskottsbetald"
 #~ "Måste välja om kontot används för leverantörsskulder, kundfordringar eller "
 #~ "lager"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for [_1]"
-#~ msgstr "Kan inte ange flera val för"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Kan inte ange flera alternativ för varan"
 
@@ -10074,6 +10050,10 @@ msgstr "Förskottsbetald"
 
 #~ msgid "Cannot set multiple options for Service Items"
 #~ msgstr "Kan inte ange flera alternativ för tjänste-artiklar"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan inte ange flera val för"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan inte lagra produkt"
@@ -10842,8 +10822,16 @@ msgstr "Förskottsbetald"
 #~ msgstr "Verksamhet"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "SRU-kod"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Språk"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ny sni-kod (industrikod)"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

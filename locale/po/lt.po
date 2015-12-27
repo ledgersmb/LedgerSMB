@@ -9922,14 +9922,6 @@ msgstr "Mokėjimas"
 #~ msgstr "Darbuotojas"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Kalba"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Pirkimai"
 
@@ -10257,6 +10249,10 @@ msgstr "Mokėjimas"
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr ""
 #~ "Turite įvesti hostą ir portą lokalioms ir nuotoliniams prisijungimams!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

@@ -9812,29 +9812,6 @@ msgstr "Forudbetaling"
 #~ msgstr "Redigér medarbejder"
 
 #, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Forretning"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Sprog"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Ny SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Lager"
-
-#~ msgid "[_1] is already a member!"
-#~ msgstr "[_1] er allerede medlem!"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Kreditorer"
 
@@ -10075,11 +10052,11 @@ msgstr "Forudbetaling"
 
 #, fuzzy
 #~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Opsamlet fejl:"
-
-#, fuzzy
-#~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Opsamlet fejl: [_1]"
+#~ msgstr ""
+#~ "#-#-#-#-#  da.po (LedgerSMB 1.2.0)  #-#-#-#-#\n"
+#~ "Opsamlet fejl:\n"
+#~ "#-#-#-#-#  da.po (LedgerSMB 1.2.0)  #-#-#-#-#\n"
+#~ "Opsamlet fejl: [_1]"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Kunde slettet!"
@@ -10746,12 +10723,23 @@ msgstr "Forudbetaling"
 #~ msgstr "Forretning"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Sprog"
 
 #, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ny SIC"
+
+#, fuzzy
 #~ msgid "[_1] Warehouse"
 #~ msgstr "Lager"
+
+#~ msgid "[_1] is already a member!"
+#~ msgstr "[_1] er allerede medlem!"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "konto kan ikke sættes til nogen anden type konto"

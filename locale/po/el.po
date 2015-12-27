@@ -9923,10 +9923,6 @@ msgstr "Προπληρωμή"
 #~ msgstr "Επεξεργασία Εργαζομένου"
 
 #, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Γλώσσα"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Αγορές"
 

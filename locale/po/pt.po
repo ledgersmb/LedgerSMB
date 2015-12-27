@@ -9927,14 +9927,6 @@ msgstr "Pagamento"
 #~ msgstr "Funcionário"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "CFOP - Código Fiscal da Operação"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Língua"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Fornecedores"
 
@@ -10247,6 +10239,10 @@ msgstr "Pagamento"
 
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr "Tem de indicar host e port para ligações locais e remotas!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "CFOP - Código Fiscal da Operação"
 
 #, fuzzy
 #~ msgid "[_1] Language"

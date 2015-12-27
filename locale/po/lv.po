@@ -9863,26 +9863,6 @@ msgstr "Avansa maksājums"
 #~ msgid "$operation Employee"
 #~ msgstr "Labot darbinieku"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Komercdarbība"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Valoda"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Pievienot SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Noliktava"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10507,8 +10487,16 @@ msgstr "Avansa maksājums"
 #~ msgstr "Komercdarbība"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Valoda"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Pievienot SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

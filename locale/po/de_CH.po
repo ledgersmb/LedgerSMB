@@ -9848,26 +9848,6 @@ msgstr "Anzahlung"
 #~ msgid "$operation Employee"
 #~ msgstr "Arbeitnehmer bearbeiten"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Branche"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Sprache"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Euro-SIC erfassen"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Warenlager"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10092,12 +10072,12 @@ msgstr "Anzahlung"
 #~ "AR, AP und IC Konten können nicht auf andere Konten gleichzeitig "
 #~ "eingestellt werden"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Mehr als eine Auswahl ist nicht erlaubt"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Mehr als eine Optionen nicht erlaubt für : "
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Mehr als eine Auswahl ist nicht erlaubt"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Erzeugnis kann nicht eingelagert werden!"
@@ -10870,8 +10850,16 @@ msgstr "Anzahlung"
 #~ msgstr "Branche"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Sprache"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Euro-SIC erfassen"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

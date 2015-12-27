@@ -9838,26 +9838,6 @@ msgstr "Pré-pagamento"
 #~ msgid "$operation Employee"
 #~ msgstr "Editar o Empregado"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Negócio"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "CFOP - Código Fiscal da Operação"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Adicionar SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Almoxarifado"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10059,12 +10039,12 @@ msgstr "Pré-pagamento"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "Não é possível haver conta para mais de um dos CR, CP ou IC"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Não é possível haver múltipla escolha para o item"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Não é possível haver múltipla escolha para"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Não é possível haver múltipla escolha para o item"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Não é possível estocar o Conjunto"
@@ -10815,8 +10795,16 @@ msgstr "Pré-pagamento"
 #~ msgstr "Negócio"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "CFOP - Código Fiscal da Operação"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Adicionar SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

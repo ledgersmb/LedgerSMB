@@ -9936,14 +9936,6 @@ msgstr "Platba"
 #~ msgstr "Upravit šablonu"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Účtovací řetězec"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Jazyk"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Závazky"
 
@@ -10180,6 +10172,10 @@ msgstr "Platba"
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr ""
 #~ "Pro lokální i vzdálené připojení je nutné  zadat adresu serveru a port!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Účtovací řetězec"
 
 #, fuzzy
 #~ msgid "[_1] Language"

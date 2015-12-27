@@ -9978,14 +9978,6 @@ msgstr "Pagamento"
 #~ msgstr "Dipendente"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Codice GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Lingua"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Debiti Fornitori"
 
@@ -10372,6 +10364,10 @@ msgstr "Pagamento"
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr ""
 #~ "Devi inserire un server ed una porta per le connessioni locali e remote!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Codice GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

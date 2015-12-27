@@ -9826,26 +9826,6 @@ msgstr "預繳"
 #~ msgstr "編輯職員"
 
 #, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "財務訊息通用索引(GIFI)"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "語言"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "新增標準工業分類代碼"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "倉庫"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "應付帳款"
 
@@ -10015,12 +9995,12 @@ msgstr "預繳"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "不能對以物件設定多個選項"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "不能對以下物件設定多個選項："
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "不能對以物件設定多個選項"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "不能把製成品入貨！"
@@ -10692,8 +10672,16 @@ msgstr "預繳"
 #~ msgstr "業務"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "財務訊息通用索引(GIFI)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "語言"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "新增標準工業分類代碼"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

@@ -9508,21 +9508,6 @@ msgstr "guna lebihan bayaran"
 #~ msgid "$operation Person"
 #~ msgstr "$operasi perseorangan"
 
-#~ msgid "[_1] Business"
-#~ msgstr "[_1] Bisnes"
-
-#~ msgid "[_1] GIFI"
-#~ msgstr "[_1] GIFI"
-
-#~ msgid "[_1] Language"
-#~ msgstr "[_1] Bahasa"
-
-#~ msgid "[_1] SIC"
-#~ msgstr "[_1] SIC"
-
-#~ msgid "[_1] Warehouse"
-#~ msgstr "[_1] Gudang"
-
 #~ msgid "= Variance"
 #~ msgstr "= Varian"
 
@@ -9835,6 +9820,21 @@ msgstr "guna lebihan bayaran"
 
 #~ msgid "Would you like to upgrade the database?"
 #~ msgstr "Adakah anda ingin menaik taraf pangkalan data?"
+
+#~ msgid "[_1] Business"
+#~ msgstr "[_1] Bisnes"
+
+#~ msgid "[_1] GIFI"
+#~ msgstr "[_1] GIFI"
+
+#~ msgid "[_1] Language"
+#~ msgstr "[_1] Bahasa"
+
+#~ msgid "[_1] SIC"
+#~ msgstr "[_1] SIC"
+
+#~ msgid "[_1] Warehouse"
+#~ msgstr "[_1] Gudang"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "Akaun tidak boleh ditentukan untuk menjadi akaun yang lain"

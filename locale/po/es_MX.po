@@ -9849,26 +9849,6 @@ msgstr "Prepago"
 #~ msgid "$operation Employee"
 #~ msgstr "Modificar empleado"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Negocio"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Código GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Lenguaje"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Nuevo SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Almacén"
-
 #~ msgid "A"
 #~ msgstr "E"
 
@@ -10560,8 +10540,16 @@ msgstr "Prepago"
 #~ msgstr "Negocio"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Código GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Lenguaje"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Nuevo SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

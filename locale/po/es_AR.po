@@ -2613,7 +2613,8 @@ msgstr "Eliminar Cupones"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "Eliminando un idioma tambien eliminara las plantillas para el idioma [_1]"
+msgstr ""
+"Eliminando un idioma tambien eliminara las plantillas para el idioma [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -9787,21 +9788,6 @@ msgstr "uso de un sobrepago"
 #~ msgid "$operation Employee"
 #~ msgstr "Agregar Empleado"
 
-#~ msgid "[_1] Business"
-#~ msgstr "Negocio [_1]"
-
-#~ msgid "[_1] Department"
-#~ msgstr "Departamento [_1]"
-
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma [_1]"
-
-#~ msgid "[_1] To [_2]"
-#~ msgstr "[_1] A [_2]"
-
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Deposito [_1]"
-
 #, fuzzy
 #~ msgid "A"
 #~ msgstr "Egreso"
@@ -10407,6 +10393,21 @@ msgstr "uso de un sobrepago"
 
 #~ msgid "You are saving an existing transaction!"
 #~ msgstr "Usted esta salvando una transaccion existente!"
+
+#~ msgid "[_1] Business"
+#~ msgstr "Negocio [_1]"
+
+#~ msgid "[_1] Department"
+#~ msgstr "Departamento [_1]"
+
+#~ msgid "[_1] Language"
+#~ msgstr "Idioma [_1]"
+
+#~ msgid "[_1] To [_2]"
+#~ msgstr "[_1] A [_2]"
+
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Deposito [_1]"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "la cuenta no puede ser definida a cualquier otro tipo de cuenta"

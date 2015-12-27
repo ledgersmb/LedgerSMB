@@ -9853,26 +9853,6 @@ msgstr "Anticipio"
 #~ msgid "$operation Employee"
 #~ msgstr "Editar Empleado"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Empresa"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Plan Único de Cuentas (PUC)"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Agregar SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Bodega"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10604,8 +10584,16 @@ msgstr "Anticipio"
 #~ msgstr "Empresa"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Plan Único de Cuentas (PUC)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Agregar SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

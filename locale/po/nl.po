@@ -9715,29 +9715,6 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "$operation Person"
 #~ msgstr "Uitvoerende persoon"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Bedrijfsactiviteit"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Taal"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Magazijn"
-
-#~ msgid "[_1] locked!"
-#~ msgstr "[_1] geblokkeerd!"
-
 #~ msgid "- Used"
 #~ msgstr "Verbruikt"
 
@@ -9983,12 +9960,12 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ "Kan rekening niet toekennen behalve aan ofwel Debiteuren, Crediteuren of "
 #~ "Inventaris"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Kan niet verschillende opties voor Artikel toekennen"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Kan slechts één menuoptie instellen voor"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Kan niet verschillende opties voor Artikel toekennen"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan assemblage niet inslaan"
@@ -10050,11 +10027,11 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #, fuzzy
 #~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Cumulatieve Fout:"
-
-#, fuzzy
-#~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Cumulatieve Fout: [_1]"
+#~ msgstr ""
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Cumulatieve Fout:\n"
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Cumulatieve Fout: [_1]"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Klant verwijderd!"
@@ -10883,15 +10860,30 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #, fuzzy
 #~ msgid "[_1] Business"
-#~ msgstr "Branche"
+#~ msgstr ""
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Bedrijfsactiviteit\n"
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Branche"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Taal"
 
 #, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "SIC"
+
+#, fuzzy
 #~ msgid "[_1] Warehouse"
 #~ msgstr "Magazijn"
+
+#~ msgid "[_1] locked!"
+#~ msgstr "[_1] geblokkeerd!"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "Rekening kan niet omgezet worden naar ander type rekening"

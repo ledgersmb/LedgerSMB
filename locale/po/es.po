@@ -9932,14 +9932,6 @@ msgstr "Pago"
 #~ msgstr "Colaborador/Empleado"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Código GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Lenguaje"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Cartera de pagos"
 
@@ -10257,6 +10249,10 @@ msgstr "Pago"
 #~ msgstr ""
 #~ "Debe introducir una máquina servidor de bases de datos y un puerto para "
 #~ "conexiones locales y remotas"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Código GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

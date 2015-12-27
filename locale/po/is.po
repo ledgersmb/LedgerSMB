@@ -9920,14 +9920,6 @@ msgstr "Greislur"
 #~ msgstr "Starfsmenn"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Túngumál"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Innkaupakerfi"
 
@@ -10251,6 +10243,10 @@ msgstr "Greislur"
 
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr "Þú verður að gefa upp netþjón of port til þess að geta tengst!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

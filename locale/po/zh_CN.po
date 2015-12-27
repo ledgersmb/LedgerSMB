@@ -9843,26 +9843,6 @@ msgstr "预缴"
 #~ msgstr "编辑职员"
 
 #, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "业务"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "新增 GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "语言"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "新增原文"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "仓库"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "应付帐款"
 
@@ -10540,8 +10520,16 @@ msgstr "预缴"
 #~ msgstr "业务"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "新增 GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "语言"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "新增原文"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

@@ -9838,26 +9838,6 @@ msgstr "Авансово плащане"
 #~ msgid "$operation Employee"
 #~ msgstr "Редакция на сътрудник"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Направления"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Език"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Добави SIC"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
 #~ msgid "A"
 #~ msgstr "А"
 
@@ -10639,8 +10619,16 @@ msgstr "Авансово плащане"
 #~ msgstr "Направления"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Език"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Добави SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

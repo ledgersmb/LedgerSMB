@@ -9919,10 +9919,6 @@ msgstr "Pago"
 #~ msgstr "Empleado"
 
 #, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Código GIFI"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Ctas X Pagar"
 
@@ -10279,6 +10275,10 @@ msgstr "Pago"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "No introdujo un nombre!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Código GIFI"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "Cuenta no puede ser establecida a ningun otro tipo"

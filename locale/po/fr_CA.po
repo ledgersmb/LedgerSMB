@@ -9877,26 +9877,6 @@ msgstr "Paiement à l'avance"
 #~ msgid "$operation Employee"
 #~ msgstr "Modifier employé"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Type d'affaire"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Code d'identification comptable ou fiscale"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Langue"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Ajouter code secteur économique"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Entrepôt"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10610,8 +10590,16 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Type d'affaire"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Code d'identification comptable ou fiscale"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Langue"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ajouter code secteur économique"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

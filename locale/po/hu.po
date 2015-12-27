@@ -9511,27 +9511,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "%"
 #~ msgstr "%"
 
-#~ msgid "[_1] Business"
-#~ msgstr "[_1] partnercsoport"
-
-#~ msgid "[_1] Department"
-#~ msgstr "[_1] költséghely/profitcenter"
-
-#~ msgid "[_1] GIFI"
-#~ msgstr "[_1] gyűjtőkód"
-
-#~ msgid "[_1] Language"
-#~ msgstr "[_1] nyelv"
-
-#~ msgid "[_1] SIC"
-#~ msgstr "[_1] TEÁOR/SZJ"
-
-#~ msgid "[_1] To [_2]"
-#~ msgstr "[_1]-tól [_2]-ig"
-
-#~ msgid "[_1] Warehouse"
-#~ msgstr "[_1] raktár"
-
 #~ msgid "- Used"
 #~ msgstr "- Használt"
 
@@ -9865,11 +9844,11 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Cannot set multiple options for"
 #~ msgstr "Nem lehet beállítani a töbszörös opciót"
 
-#~ msgid "Cannot set multiple options for [_1]"
-#~ msgstr "Nem lehet több opciót beállítani ehhez: [_1]"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Nem lehet beállítani a töbszörös opciót a tételre"
+
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Nem lehet több opciót beállítani ehhez: [_1]"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Nem lehet a saját terméket bevételezni!"
@@ -11168,6 +11147,27 @@ msgstr "felhasznál egy túlfizetést"
 # 80%
 #~ msgid "Zip/Post Code:"
 #~ msgstr "Irányítószám:"
+
+#~ msgid "[_1] Business"
+#~ msgstr "[_1] partnercsoport"
+
+#~ msgid "[_1] Department"
+#~ msgstr "[_1] költséghely/profitcenter"
+
+#~ msgid "[_1] GIFI"
+#~ msgstr "[_1] gyűjtőkód"
+
+#~ msgid "[_1] Language"
+#~ msgstr "[_1] nyelv"
+
+#~ msgid "[_1] SIC"
+#~ msgstr "[_1] TEÁOR/SZJ"
+
+#~ msgid "[_1] To [_2]"
+#~ msgstr "[_1]-tól [_2]-ig"
+
+#~ msgid "[_1] Warehouse"
+#~ msgstr "[_1] raktár"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "a számla nem állítható be bármilyen más számla típusra"

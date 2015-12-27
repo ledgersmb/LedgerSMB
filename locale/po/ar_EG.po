@@ -9913,14 +9913,6 @@ msgstr "الدفع النقدى"
 #~ msgstr "اضافة موظف"
 
 #, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "اللغة"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "اضافة كود صناعى قياسى"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "موردين"
 
@@ -10254,6 +10246,10 @@ msgstr "الدفع النقدى"
 #, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "اللغة"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "اضافة كود صناعى قياسى"
 
 #, fuzzy
 #~ msgid "ar"

@@ -9851,26 +9851,6 @@ msgstr "Anticipo"
 #~ msgid "$operation Employee"
 #~ msgstr "Modificar Empleado"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Negocio"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "Plan de Cuentas Fiscal (PCF)"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Agregar CIS"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Almacén"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10559,8 +10539,16 @@ msgstr "Anticipo"
 #~ msgstr "Negocio"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Plan de Cuentas Fiscal (PCF)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Agregar CIS"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

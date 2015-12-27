@@ -9921,10 +9921,6 @@ msgstr "Ödeme"
 #~ msgstr "Şablonu Düzenle"
 
 #, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Dil"
-
-#, fuzzy
 #~ msgid "A"
 #~ msgstr "Borçlar"
 

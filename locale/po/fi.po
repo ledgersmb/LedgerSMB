@@ -9831,26 +9831,6 @@ msgstr "Ennakkomaksu"
 #~ msgid "$operation Employee"
 #~ msgstr "Muokkaa työntekijää"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Yritys"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Kieli"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Lisää teollisuusluokite"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Varasto"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10064,12 +10044,12 @@ msgstr "Ennakkomaksu"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "Tili voi olla vain joko Myynti, Osto tai Varasto"
 
+#~ msgid "Cannot set multiple options for Item"
+#~ msgstr "Ei voi asettaa nimikkeelle useita asetuksia"
+
 #, fuzzy
 #~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Ei voi asettaa useita asetuksia"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Ei voi asettaa nimikkeelle useita asetuksia"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Tuoteen varastointi ei onnistu"
@@ -10814,8 +10794,16 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Yritys"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Kieli"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Lisää teollisuusluokite"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

@@ -9863,26 +9863,6 @@ msgstr "Przedpłata"
 #~ msgid "$operation Employee"
 #~ msgstr "Zmiany Pracownika"
 
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Działalność"
-
-#, fuzzy
-#~ msgid "[_1] GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Język"
-
-#, fuzzy
-#~ msgid "[_1] SIC"
-#~ msgstr "Dodaj EKD"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Magazyn"
-
 #~ msgid "A"
 #~ msgstr "A"
 
@@ -10550,8 +10530,16 @@ msgstr "Przedpłata"
 #~ msgstr "Działalność"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Język"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Dodaj EKD"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"
