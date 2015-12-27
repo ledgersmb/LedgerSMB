@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Фактура"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Редакция на сътрудник"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3773,10 +3763,6 @@ msgstr "Редакция на сметка"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Прикрепен"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Плащания"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9849,24 +9835,8 @@ msgstr "Авансово плащане"
 #~ msgstr "Липсва код!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Направления"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Език"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Добави SIC"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Склад"
+#~ msgid "$operation Employee"
+#~ msgstr "Редакция на сътрудник"
 
 #~ msgid "A"
 #~ msgstr "А"
@@ -9890,7 +9860,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Сметката е запазена!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Сметка"
 
 #~ msgid "Accounting"
@@ -10027,7 +9997,7 @@ msgstr "Авансово плащане"
 #~ "инвентар)!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Не задавай повече от едно значение за"
 
 #~ msgid "Cannot stock Assembly!"
@@ -10048,7 +10018,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Затворено"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Затворено"
 
 #~ msgid "Components"
@@ -10076,7 +10046,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Клиента е запазен!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Клиент"
 
 #~ msgid "Customers"
@@ -10128,7 +10098,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Отделът е запазен!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Отдел"
 
 #~ msgid "Directory"
@@ -10199,7 +10169,11 @@ msgstr "Авансово плащане"
 #~ msgstr "Съществува базата-данни"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Плащания"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "От"
 
 #~ msgid "Generate Sales Order"
@@ -10230,7 +10204,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Коригирай версията на базата-данни!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Фактура номер"
 
 #~ msgid "Invoice deleted!"
@@ -10331,7 +10305,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Адмистриране на бази-данни Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Поръчка номер"
 
 #~ msgid "Order saved!"
@@ -10403,7 +10377,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Ценова група"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Печат"
 
 #~ msgid "Print and Post as new"
@@ -10413,7 +10387,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Разпечатано"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Номер на проекта"
 
 #~ msgid "Project Transactions"
@@ -10435,7 +10409,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Изпълнено заданието"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Номер на задание"
 
 #~ msgid "R"
@@ -10598,7 +10572,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Доставчика е запазен!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Доставчик"
 
 #~ msgid "Vendors"
@@ -10645,8 +10619,16 @@ msgstr "Авансово плащане"
 #~ msgstr "Направления"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Език"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Добави SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

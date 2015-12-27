@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fatura"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Şablonu Düzenle"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3807,10 +3797,6 @@ msgstr "Hesabı Düzenle"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Hesabı Düzenle"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Ödemeler"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9931,8 +9917,8 @@ msgid "use of an overpayment"
 msgstr "Ödeme"
 
 #, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Dil"
+#~ msgid "$operation Employee"
+#~ msgstr "Şablonu Düzenle"
 
 #, fuzzy
 #~ msgid "A"
@@ -9942,7 +9928,7 @@ msgstr "Ödeme"
 #~ msgstr "Program bilgileri"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Hesap"
 
 #~ msgid "Accounting"
@@ -9974,7 +9960,7 @@ msgstr "Ödeme"
 #~ msgstr "Hesap Planı Oluştur"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Alıcı"
 
 #~ msgid "DBI not installed!"
@@ -10013,14 +9999,18 @@ msgstr "Ödeme"
 #~ msgstr "Verisetleri"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Ödemeler"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Başlangıç"
 
 #~ msgid "Host"
 #~ msgstr "Host"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fatura No"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10074,7 +10064,7 @@ msgstr "Ödeme"
 #~ msgstr "Yazıcı"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Sipariş No"
 
 #, fuzzy
@@ -10123,7 +10113,7 @@ msgstr "Ödeme"
 #~ msgstr "Update Dataset"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Satıcı"
 
 #~ msgid "You did not enter a name!"

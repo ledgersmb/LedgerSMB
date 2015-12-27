@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Rēķini"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Labot darbinieku"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3785,10 +3775,6 @@ msgstr "Labot kontu"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Pielikums"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Maksājumi"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9874,24 +9860,8 @@ msgstr "Avansa maksājums"
 #~ msgstr "Nav norādīts kods"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Komercdarbība"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Valoda"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Pievienot SIC"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Noliktava"
+#~ msgid "$operation Employee"
+#~ msgstr "Labot darbinieku"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9912,7 +9882,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Konts saglabāts!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konts"
 
 #~ msgid "Accounting"
@@ -10038,7 +10008,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Aizvērts"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Aizvērts"
 
 #~ msgid "Components"
@@ -10057,7 +10027,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Klients ir saglabāts!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klients"
 
 #~ msgid "Customers"
@@ -10103,7 +10073,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Nodaļa saglabāta"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Nodaļa"
 
 #~ msgid "Directory"
@@ -10165,7 +10135,11 @@ msgstr "Avansa maksājums"
 #~ msgstr "Esošās datukopas"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Maksājumi"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "No"
 
 #~ msgid "Group Items"
@@ -10190,7 +10164,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Pieaugums"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Rēķina numurs"
 
 #~ msgid "Invoice deleted!"
@@ -10313,7 +10287,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Cenu grupas"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Drukāt"
 
 #, fuzzy
@@ -10327,7 +10301,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Nav norādīts projekta numurs!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projekta numurs"
 
 #~ msgid "Project deleted!"
@@ -10340,7 +10314,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Projekts saglabāts"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tāmes numurs"
 
 #~ msgid "R"
@@ -10485,7 +10459,7 @@ msgstr "Avansa maksājums"
 #~ msgstr "Pārdevējs saglabāts"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Pārdevējs"
 
 #~ msgid "Vendors"
@@ -10513,8 +10487,16 @@ msgstr "Avansa maksājums"
 #~ msgstr "Komercdarbība"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Valoda"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Pievienot SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

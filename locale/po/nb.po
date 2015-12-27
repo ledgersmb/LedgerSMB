@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Håvard Sørli <havard@anix.no>\n"
 "Language-Team: \n"
@@ -44,16 +44,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fakturaer"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Endre ansatt"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3785,10 +3775,6 @@ msgstr "Endre konto"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Vedlegg"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Betalinger"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9867,20 +9853,8 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Mangler kode"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Organisasjon"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Språk"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Lager"
+#~ msgid "$operation Employee"
+#~ msgstr "Endre ansatt"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9901,7 +9875,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Konto lagret!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10038,12 +10012,12 @@ msgstr "Forskuddsbetaling"
 #~ msgstr ""
 #~ "Kan ikke sette konto for mer enn en av Kunde, Leverandør eller Intern"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan ikke sette flere valg for"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Kan ikke sette flere valg for vare"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan ikke sette flere valg for"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan ikke plasere sammensetninger!"
@@ -10062,7 +10036,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Avsluttet"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Avsluttet"
 
 #~ msgid "Components"
@@ -10084,7 +10058,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Kunde lagret!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10136,7 +10110,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Avdeling lagret"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Avdeling"
 
 #~ msgid "Directory"
@@ -10206,7 +10180,11 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Eksisterende datasett"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Betalinger"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Fra"
 
 #~ msgid "Generate Sales Order"
@@ -10231,7 +10209,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Økning"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice deleted!"
@@ -10346,7 +10324,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Administrasjon av database Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Ordrenummer"
 
 #~ msgid "Order saved!"
@@ -10410,7 +10388,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prisgrupper"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Skriv ut"
 
 #~ msgid "Print and Post as new"
@@ -10432,7 +10410,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prosjektnummer mangler!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Prosjektnummer"
 
 #~ msgid "Project Transactions"
@@ -10454,7 +10432,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Prosjekt/Jobb nummer"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tilbudsnummer"
 
 #~ msgid "R"
@@ -10631,7 +10609,7 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Leverandør lagret!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverandør"
 
 #~ msgid "Vendors"
@@ -10661,6 +10639,10 @@ msgstr "Forskuddsbetaling"
 #, fuzzy
 #~ msgid "[_1] Business"
 #~ msgstr "Organisasjon"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fakturor"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Redigera anställd"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3771,10 +3761,6 @@ msgstr "Redigera konto"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Bilaga"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Utbetalningar"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9841,24 +9827,8 @@ msgstr "Förskottsbetald"
 #~ msgstr "Kod saknas"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Verksamhet"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "SRU-kod"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Språk"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Ny sni-kod (industrikod)"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Lager"
+#~ msgid "$operation Employee"
+#~ msgstr "Redigera anställd"
 
 #~ msgid "A"
 #~ msgstr "Tillgångar"
@@ -9882,7 +9852,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Konto sparat!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10072,10 +10042,6 @@ msgstr "Förskottsbetald"
 #~ "Måste välja om kontot används för leverantörsskulder, kundfordringar eller "
 #~ "lager"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan inte ange flera val för"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Kan inte ange flera alternativ för varan"
 
@@ -10084,6 +10050,10 @@ msgstr "Förskottsbetald"
 
 #~ msgid "Cannot set multiple options for Service Items"
 #~ msgstr "Kan inte ange flera alternativ för tjänste-artiklar"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan inte ange flera val för"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan inte lagra produkt"
@@ -10108,7 +10078,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Avslutad"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Avslutad"
 
 #~ msgid "Components"
@@ -10130,7 +10100,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Kund sparad"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kund"
 
 #~ msgid "Customers"
@@ -10185,7 +10155,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Kst/res.enh. sparad"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Kostnadsställe/resultatenhet"
 
 #~ msgid "Directory"
@@ -10261,11 +10231,15 @@ msgstr "Förskottsbetald"
 #~ msgid "Existing Datasets"
 #~ msgstr "Existerande Dataset"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Utbetalningar"
+
 #~ msgid "Friday"
 #~ msgstr "Fredag"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Från"
 
 #~ msgid "Generate Sales Order"
@@ -10303,7 +10277,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Öka"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice deleted!"
@@ -10438,7 +10412,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Oracle Databasadministration"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Ordernummer"
 
 #~ msgid "Order processed!"
@@ -10529,7 +10503,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Prisgrupper"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Skriv ut"
 
 #~ msgid "Print and Post as new"
@@ -10545,7 +10519,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Projektnummer saknas"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projekt nr"
 
 #~ msgid "Project Transactions"
@@ -10573,7 +10547,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Köad"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Offert  nummer"
 
 #~ msgid "R"
@@ -10789,7 +10763,7 @@ msgstr "Förskottsbetald"
 #~ msgstr "Leverantör sparad"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverantör"
 
 #~ msgid "Vendors"
@@ -10848,8 +10822,16 @@ msgstr "Förskottsbetald"
 #~ msgstr "Verksamhet"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "SRU-kod"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Språk"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ny sni-kod (industrikod)"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

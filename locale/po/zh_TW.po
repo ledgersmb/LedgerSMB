@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "發票"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "編輯職員"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3772,10 +3762,6 @@ msgstr "編輯帳戶"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "附件"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "付款"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9836,24 +9822,8 @@ msgstr "預繳"
 #~ msgstr "未指明編碼！"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "財務訊息通用索引(GIFI)"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "語言"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "新增標準工業分類代碼"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "倉庫"
+#~ msgid "$operation Employee"
+#~ msgstr "編輯職員"
 
 #, fuzzy
 #~ msgid "A"
@@ -9878,7 +9848,7 @@ msgstr "預繳"
 #~ msgstr "已儲存帳戶！"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "帳戶"
 
 #~ msgid "Accounting"
@@ -10025,12 +9995,12 @@ msgstr "預繳"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "不能對以下物件設定多個選項："
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "不能對以物件設定多個選項"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "不能對以下物件設定多個選項："
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "不能把製成品入貨！"
@@ -10049,7 +10019,7 @@ msgstr "預繳"
 #~ msgstr "已關閉"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "已關閉"
 
 #~ msgid "Components"
@@ -10071,7 +10041,7 @@ msgstr "預繳"
 #~ msgstr "已儲存客戶！"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "客戶"
 
 #~ msgid "Customers"
@@ -10123,7 +10093,7 @@ msgstr "預繳"
 #~ msgstr "已儲存部門！"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "部門"
 
 #~ msgid "Directory"
@@ -10198,11 +10168,15 @@ msgstr "預繳"
 #~ msgid "Existing Datasets"
 #~ msgstr "既有的資料集"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "付款"
+
 #~ msgid "Friday"
 #~ msgstr "星期五"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "從"
 
 #~ msgid "Generate Sales Order"
@@ -10233,7 +10207,7 @@ msgstr "預繳"
 #~ msgstr "增加"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "發票編號"
 
 #~ msgid "Invoice deleted!"
@@ -10352,7 +10326,7 @@ msgstr "預繳"
 #~ msgstr "Oracle資料庫管理"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "訂單編號"
 
 #~ msgid "Order saved!"
@@ -10422,7 +10396,7 @@ msgstr "預繳"
 #~ msgstr "所有價格組別"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "列印"
 
 #~ msgid "Print and Post as new"
@@ -10444,7 +10418,7 @@ msgstr "預繳"
 #~ msgstr "未指明項目號碼！"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "項目號碼"
 
 #~ msgid "Project Transactions"
@@ -10466,7 +10440,7 @@ msgstr "預繳"
 #~ msgstr "項目/工作號碼"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "報價單號碼"
 
 #~ msgid "Rate missing!"
@@ -10639,7 +10613,7 @@ msgstr "預繳"
 #~ msgstr "已儲存供應商！"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "供應商"
 
 #~ msgid "Vendors"
@@ -10698,8 +10672,16 @@ msgstr "預繳"
 #~ msgstr "業務"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "財務訊息通用索引(GIFI)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "語言"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "新增標準工業分類代碼"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

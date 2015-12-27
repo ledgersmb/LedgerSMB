@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,16 +34,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturas"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Empleado"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3808,10 +3798,6 @@ msgstr "Editar Cuenta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Adjunto"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagos"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9929,8 +9915,8 @@ msgid "use of an overpayment"
 msgstr "Pago"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "Código GIFI"
+#~ msgid "$operation Employee"
+#~ msgstr "Empleado"
 
 #, fuzzy
 #~ msgid "A"
@@ -9946,7 +9932,7 @@ msgstr "Pago"
 #~ msgstr "No existe el tipo de la cuenta!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Cuenta"
 
 #~ msgid "Accounting"
@@ -10003,7 +9989,7 @@ msgstr "Pago"
 #~ msgstr "Cerrado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerrado"
 
 #~ msgid "Connect to"
@@ -10016,7 +10002,7 @@ msgstr "Pago"
 #~ msgstr "Cliente borrado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "DBI not installed!"
@@ -10077,7 +10063,11 @@ msgstr "Pago"
 #~ msgstr "Sets de dato existentes"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pagos"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Desde"
 
 #~ msgid "Group Items"
@@ -10099,7 +10089,7 @@ msgstr "Pago"
 #~ msgstr "Incrementa"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de Factura"
 
 #~ msgid "Licensed to"
@@ -10172,7 +10162,7 @@ msgstr "Pago"
 #~ msgstr "Enviado!"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10183,7 +10173,7 @@ msgstr "Pago"
 #~ msgstr "Falta número de proyecto!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número de Proyecto"
 
 #~ msgid "Project deleted!"
@@ -10277,7 +10267,7 @@ msgstr "Pago"
 #~ msgstr "Proveedor borrado!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveedor"
 
 #~ msgid "Vendors"
@@ -10285,6 +10275,10 @@ msgstr "Pago"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "No introdujo un nombre!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Código GIFI"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "Cuenta no puede ser establecida a ningun otro tipo"

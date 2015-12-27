@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -39,16 +39,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Factures"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Modifier employé"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3778,10 +3768,6 @@ msgstr "Modifier le compte"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Pièce jointe"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Paiements"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9886,24 +9872,8 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Code manquant!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Type d'affaire"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "Code d'identification comptable ou fiscale"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Langue"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Ajouter code secteur économique"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Entrepôt"
+#~ msgid "$operation Employee"
+#~ msgstr "Modifier employé"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9924,7 +9894,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Compte enregistré"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Compte"
 
 #~ msgid "Accounting"
@@ -10051,7 +10021,7 @@ msgstr "Paiement à l'avance"
 #~ "recettes, dépenses ou service"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Impossible de choisir plusieurs options pour"
 
 #~ msgid "Change"
@@ -10068,7 +10038,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Clôturé"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Clôturé"
 
 #~ msgid "Components"
@@ -10090,7 +10060,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Client enregistré!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Client"
 
 #~ msgid "Customers"
@@ -10142,7 +10112,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Service enregistré!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Service"
 
 #~ msgid "Directory"
@@ -10209,7 +10179,11 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Fichiers de données existants"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Paiements"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Group Items"
@@ -10238,7 +10212,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Augmentation"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Numéro de facture"
 
 #~ msgid "Invoice deleted!"
@@ -10329,7 +10303,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Administration de base de données Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Numéro de commande"
 
 #~ msgid "Order saved!"
@@ -10384,7 +10358,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Groupes de prix"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimer"
 
 #~ msgid "Printing"
@@ -10397,7 +10371,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Numéro du projet manquant!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Numéro de projet"
 
 #~ msgid "Project Transactions"
@@ -10413,7 +10387,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Projet enregistré!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Numéro de devis"
 
 #~ msgid "R"
@@ -10583,7 +10557,7 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Fournisseur enregistré!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fournisseur"
 
 #~ msgid "Vendors"
@@ -10631,8 +10605,16 @@ msgstr "Paiement à l'avance"
 #~ msgstr "Type d'affaire"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Code d'identification comptable ou fiscale"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Langue"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ajouter code secteur économique"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

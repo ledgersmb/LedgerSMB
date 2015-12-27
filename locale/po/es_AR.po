@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2012-06-20 13:35-0300\n"
 "Last-Translator: Andres Basile <basile@gmail.com>\n"
 "Language-Team: \n"
@@ -17,16 +17,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Factura"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Agregar Empleado"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 #, fuzzy
@@ -290,12 +280,12 @@ msgstr "Titulo de Cuenta"
 #: LedgerSMB/GL.pm:206
 #, fuzzy
 msgid "Account [_1] not found"
-msgstr "Cuenta %1"
+msgstr "Cuenta [_1]"
 
 #: bin/gl.pl:634
 #, fuzzy
 msgid "Account [_1] not found."
-msgstr "Cuenta %1"
+msgstr "Cuenta [_1]"
 
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
@@ -693,7 +683,7 @@ msgstr "Antiguedad"
 #: LedgerSMB/Report/Aging.pm:176 UI/Reports/filters/aging.html:7
 #, fuzzy
 msgid "Aging Report"
-msgstr "Reporte de %1"
+msgstr "Reporte de [_1]"
 
 #: UI/payments/payments_detail.html:285 UI/Reports/filters/gl.html:129
 #: UI/Reports/filters/invoice_outstanding.html:78
@@ -999,7 +989,7 @@ msgstr "Etiqueta de Activo"
 #: LedgerSMB/Scripts/asset.pm:461
 #, fuzzy
 msgid "Asset Partial Disposal Report"
-msgstr "Reporte %1 de Disposicion Parcial para fecha %2"
+msgstr "Reporte [_1] de Disposicion Parcial para fecha [_2]"
 
 #: LedgerSMB/Scripts/asset.pm:396
 msgid "Asset Tag"
@@ -1133,7 +1123,7 @@ msgstr "Adjunto"
 #: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
 #, fuzzy
 msgid "Attn: [_1]"
-msgstr "Cliente: %1"
+msgstr "Cliente: [_1]"
 
 #: UI/am-audit-control.html:6
 #, fuzzy
@@ -1152,7 +1142,7 @@ msgstr ""
 #: UI/Contact/divs/notes.html:79
 #, fuzzy
 msgid "Author: [_1]"
-msgstr "Cliente: %1"
+msgstr "Cliente: [_1]"
 
 #: bin/ir.pl:648 bin/is.pl:408 bin/is.pl:703
 msgid "Automatic"
@@ -1336,12 +1326,12 @@ msgstr "Lotes"
 #: UI/io-email.html:24 UI/rp-email.html:23
 #, fuzzy
 msgid "Bcc"
-msgstr "Cuenta %1"
+msgstr "Cuenta [_1]"
 
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: UI/reconciliation/report.html:26
 #, fuzzy
@@ -1658,7 +1648,7 @@ msgstr ""
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -2458,7 +2448,7 @@ msgstr "Fecha"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Departamento: %1"
+msgstr "Departamento: [_1]"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 #, fuzzy
@@ -2623,7 +2613,8 @@ msgstr "Eliminar Cupones"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "Eliminando un idioma tambien eliminara las plantillas para el idioma %1"
+msgstr ""
+"Eliminando un idioma tambien eliminara las plantillas para el idioma [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -2913,7 +2904,7 @@ msgstr "Metodo de Disposicion"
 #: LedgerSMB/Scripts/asset.pm:761
 #, fuzzy
 msgid "Disposal Report [_1] on date [_2]"
-msgstr "Reporte %1 de Disposicion para la fecha %2"
+msgstr "Reporte [_1] de Disposicion para la fecha [_2]"
 
 #: LedgerSMB.pm:606
 msgid "Division by 0 error"
@@ -3039,12 +3030,12 @@ msgstr ""
 #: UI/rp-email.html:8
 #, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Declaracion enviada a %1"
+msgstr "Declaracion enviada a [_1]"
 
 #: UI/io-email.html:7
 #, fuzzy
 msgid "E-mail [_1]"
-msgstr "Declaracion enviada a %1"
+msgstr "Declaracion enviada a [_1]"
 
 #: bin/am.pl:1485 bin/io.pl:1698
 msgid "E-mail address missing!"
@@ -3718,10 +3709,6 @@ msgstr "Editar Cuenta"
 msgid "Files attached to Entity"
 msgstr "Adjuntado al Tipo"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagos Inversos"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3877,7 +3864,7 @@ msgstr "Todos los Permisos"
 #: sql/Pg-database.sql:2849
 #, fuzzy
 msgid "GIFI"
-msgstr "GIFI %1"
+msgstr "GIFI [_1]"
 
 #: LedgerSMB/Upgrade_Tests.pm:308 LedgerSMB/Upgrade_Tests.pm:323
 #: LedgerSMB/Upgrade_Tests.pm:339
@@ -4096,7 +4083,7 @@ msgstr ""
 #: sql/Pg-database.sql:802
 #, fuzzy
 msgid "IRC"
-msgstr "SIC %1"
+msgstr "SIC [_1]"
 
 #: templates/demo/printPayment.html:87
 #: templates/demo_with_images/printPayment.html:87
@@ -4360,20 +4347,20 @@ msgstr "Inventario guardado!"
 #, fuzzy
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
 msgstr ""
-"La cantidad en el inventario debe ser cero antes de setear obsoleto a %1!"
+"La cantidad en el inventario debe ser cero antes de setear obsoleto a [_1]!"
 
 #: bin/ic.pl:1825
 #, fuzzy
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
-"La cantidad en el inventario debe ser cero antes de setear obsoleto a %1!"
+"La cantidad en el inventario debe ser cero antes de setear obsoleto a [_1]!"
 
 #: bin/ic.pl:1824
 #, fuzzy
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
-"La cantidad en el inventario debe ser cero antes de setear obsoleto a %1!"
+"La cantidad en el inventario debe ser cero antes de setear obsoleto a [_1]!"
 
 #: bin/oe.pl:1995
 msgid "Inventory saved!"
@@ -4521,7 +4508,7 @@ msgstr "Numero de Factura"
 #: LedgerSMB/DBObject/Asset.pm:290
 #, fuzzy
 msgid "Invoice not found"
-msgstr "Factura %1 anunciada!"
+msgstr "Factura [_1] anunciada!"
 
 #: UI/Reports/filters/purchase_history.html:174
 #, fuzzy
@@ -4876,22 +4863,22 @@ msgstr "Descripcion del Trabajo"
 #: UI/payments/payments_detail.html:404
 #, fuzzy
 msgid "Locked by [_1]"
-msgstr "Ingresado en %1"
+msgstr "Ingresado en [_1]"
 
 #: UI/setup/confirm_operation.html:9
 #, fuzzy
 msgid "Logged in as"
-msgstr "Ingresado en %1"
+msgstr "Ingresado en [_1]"
 
 #: UI/menu/expanding.html:6
 #, fuzzy
 msgid "Logged in as [_1]"
-msgstr "Ingresado en %1"
+msgstr "Ingresado en [_1]"
 
 #: UI/menu/expanding.html:5
 #, fuzzy
 msgid "Logged into [_1]"
-msgstr "Ingresado en %1"
+msgstr "Ingresado en [_1]"
 
 #: UI/logout.html:26
 msgid "Logged out due to inactivity"
@@ -5256,7 +5243,7 @@ msgstr "Cuenta eliminada!"
 #: LedgerSMB/DBObject/TransTemplate.pm:27
 #, fuzzy
 msgid "No Account id for [_1]"
-msgstr "Cuenta %1"
+msgstr "Cuenta [_1]"
 
 #: LedgerSMB/Report/File.pm:49
 #, fuzzy
@@ -5924,7 +5911,7 @@ msgstr "Partes"
 #: LedgerSMB/Scripts/asset.pm:693
 #, fuzzy
 msgid "Partial Disposal Report [_1] on date [_2]"
-msgstr "Reporte %1 de Disposicion Parcial para fecha %2"
+msgstr "Reporte [_1] de Disposicion Parcial para fecha [_2]"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
 #: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:113
@@ -6282,22 +6269,22 @@ msgstr "Fecha Anuncio"
 #: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Anunciando Transaccion del Libro Mayor %1"
+msgstr "Anunciando Transaccion del Libro Mayor [_1]"
 
 #: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Anunciando Factura de Venta %1"
+msgstr "Anunciando Factura de Venta [_1]"
 
 #: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Anunciando Transaccion %1"
+msgstr "Anunciando Transaccion [_1]"
 
 #: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Anunciando Factura de Proveedor %1"
+msgstr "Anunciando Factura de Proveedor [_1]"
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 #, fuzzy
@@ -6316,7 +6303,7 @@ msgstr "Preferencias guardadas!"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Preferencias para %1"
+msgstr "Preferencias para [_1]"
 
 #: UI/Configuration/sequence.html:14
 #, fuzzy
@@ -6386,7 +6373,7 @@ msgstr "Precio"
 #: UI/Contact/pricelist.tex:65
 #, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Preferencias para %1"
+msgstr "Preferencias para [_1]"
 
 #: sql/Pg-database.sql:795
 #, fuzzy
@@ -6427,22 +6414,22 @@ msgstr "Impreso"
 #: bin/am.pl:1427
 #, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "Anunciando Transaccion %1"
+msgstr "Anunciando Transaccion [_1]"
 
 #: bin/am.pl:1420
 #, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "Anunciando Factura de Proveedor %1"
+msgstr "Anunciando Factura de Proveedor [_1]"
 
 #: bin/am.pl:1421
 #, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "Anunciando Factura de Venta %1"
+msgstr "Anunciando Factura de Venta [_1]"
 
 #: bin/am.pl:1419
 #, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "Anunciando Factura de Venta %1"
+msgstr "Anunciando Factura de Venta [_1]"
 
 #: bin/am.pl:1422
 #, fuzzy
@@ -6461,12 +6448,12 @@ msgstr "Editar Orden de Compra"
 #: bin/am.pl:1424
 #, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "Anunciando Factura de Venta %1"
+msgstr "Anunciando Factura de Venta [_1]"
 
 #: bin/am.pl:1418
 #, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "Anunciando Transaccion %1"
+msgstr "Anunciando Transaccion [_1]"
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6962,7 +6949,7 @@ msgstr "Reportes"
 #: LedgerSMB/Scripts/asset.pm:630
 #, fuzzy
 msgid "Report [_1] on date [_2]"
-msgstr "Reporte %1 en fecha %2"
+msgstr "Reporte [_1] en fecha [_2]"
 
 #: UI/rp-search-generate_tax_report.html:67
 #, fuzzy
@@ -7135,12 +7122,12 @@ msgstr ""
 #: UI/Reports/filters/inventory_adj.html:35
 #, fuzzy
 msgid "Run Report"
-msgstr "Reporte de %1"
+msgstr "Reporte de [_1]"
 
 #: UI/Contact/divs/company.html:125 sql/Pg-database.sql:2871
 #, fuzzy
 msgid "SIC"
-msgstr "SIC %1"
+msgstr "SIC [_1]"
 
 #: bin/am.pl:391
 msgid "SIC deleted!"
@@ -7347,7 +7334,7 @@ msgstr "Guardar como nuevo"
 #: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "Guardando %1 %1"
+msgstr "Guardando [_1] [_1]"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7594,7 +7581,7 @@ msgstr "Precio de Venta"
 #: bin/am.pl:1472
 #, fuzzy
 msgid "Sending Bin List [_1]"
-msgstr "Ingresado en %1"
+msgstr "Ingresado en [_1]"
 
 #: bin/am.pl:1465
 #, fuzzy
@@ -7609,7 +7596,7 @@ msgstr "Agregar Factura de Debito"
 #: bin/am.pl:1464
 #, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "Anunciando Factura de Venta %1"
+msgstr "Anunciando Factura de Venta [_1]"
 
 #: bin/am.pl:1467
 #, fuzzy
@@ -7633,7 +7620,7 @@ msgstr "Editar Orden de Venta"
 #: bin/am.pl:1463
 #, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "Anunciando Transaccion %1"
+msgstr "Anunciando Transaccion [_1]"
 
 #: bin/am.pl:1470
 #, fuzzy
@@ -8136,12 +8123,12 @@ msgstr "Hoja de Estilo"
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
 #, fuzzy
 msgid "Subject"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8400,7 +8387,7 @@ msgstr "Numero de Parte"
 #: templates/xedemo/ap_transaction.html:62
 #, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8489,7 +8476,7 @@ msgstr ""
 #: templates/xedemo/work_order.tex:96
 #, fuzzy
 msgid "Tel: [_1]"
-msgstr "Fuente: %1"
+msgstr "Fuente: [_1]"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 #, fuzzy
@@ -8809,7 +8796,7 @@ msgstr "A"
 #: bin/arap.pl:802 bin/io.pl:1916
 #, fuzzy
 msgid "To: [_1]"
-msgstr "Proveedor: %1"
+msgstr "Proveedor: [_1]"
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -9593,7 +9580,7 @@ msgstr "Codigo"
 #: bin/gl.pl:201
 #, fuzzy
 msgid "[_1] Cash Transfer Transaction"
-msgstr "Trasaccion de Transferencia para Dinero: %1"
+msgstr "Trasaccion de Transferencia para Dinero: [_1]"
 
 #: bin/aa.pl:395
 #, fuzzy
@@ -9608,12 +9595,12 @@ msgstr "Nota de Debito"
 #: bin/gl.pl:204
 #, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "Transaccion del Libro Mayor: %1"
+msgstr "Transaccion del Libro Mayor: [_1]"
 
 #: bin/arap.pl:173
 #, fuzzy
 msgid "[_1] Number"
-msgstr "Numero %1"
+msgstr "Numero [_1]"
 
 #: bin/aa.pl:388
 #, fuzzy
@@ -9623,12 +9610,12 @@ msgstr "Transaccion de Egreso"
 #: bin/ic.pl:1656
 #, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "El proveedor no esta en el archivo: %1 !"
+msgstr "El proveedor no esta en el archivo: [_1] !"
 
 #: bin/ic.pl:1578
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "El proveedor no esta en el archivo: %1 !"
+msgstr "El proveedor no esta en el archivo: [_1] !"
 
 #: LedgerSMB/Form.pm:710
 #, fuzzy
@@ -9757,7 +9744,7 @@ msgstr "Produccion"
 #: LedgerSMB/Scripts/setup.pm:226
 #, fuzzy
 msgid "psql not found."
-msgstr "Factura %1 anunciada!"
+msgstr "Factura [_1] anunciada!"
 
 #: bin/arap.pl:809 bin/io.pl:1922
 msgid "sent"
@@ -9797,20 +9784,9 @@ msgstr "uso de un sobrepago"
 #~ msgid " missing!"
 #~ msgstr " faltante!"
 
-#~ msgid "%1 Business"
-#~ msgstr "Negocio %1"
-
-#~ msgid "%1 Department"
-#~ msgstr "Departamento %1"
-
-#~ msgid "%1 Language"
-#~ msgstr "Idioma %1"
-
-#~ msgid "%1 To %2"
-#~ msgstr "%1 A %2"
-
-#~ msgid "%1 Warehouse"
-#~ msgstr "Deposito %1"
+#, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Agregar Empleado"
 
 #, fuzzy
 #~ msgid "A"
@@ -9828,8 +9804,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Account saved!"
 #~ msgstr "Cuenta guardada!"
 
-#~ msgid "Account: %1"
-#~ msgstr "Cuenta %1"
+#~ msgid "Account: [_1]"
+#~ msgstr "Cuenta [_1]"
 
 #, fuzzy
 #~ msgid "Accounts can\\"
@@ -9856,14 +9832,14 @@ msgstr "uso de un sobrepago"
 #~ msgid "All Items"
 #~ msgstr "Todos los Items"
 
-#~ msgid "Are you sure you want to delete Invoice Number %1?"
-#~ msgstr "Esta seguro de eliminar la Factura numero %1?"
+#~ msgid "Are you sure you want to delete Invoice Number [_1]?"
+#~ msgstr "Esta seguro de eliminar la Factura numero [_1]?"
 
-#~ msgid "Are you sure you want to delete Transaction %1"
-#~ msgstr "Esta usted seguro que quiere eliminar la Transaccion %1"
+#~ msgid "Are you sure you want to delete Transaction [_1]"
+#~ msgstr "Esta usted seguro que quiere eliminar la Transaccion [_1]"
 
-#~ msgid "Are you sure you want to delete time card for %1 %2 %3"
-#~ msgstr "Esta seguro de eliminar la ficah de horario para %1 %2 %3"
+#~ msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
+#~ msgstr "Esta seguro de eliminar la ficah de horario para [_1] [_2] [_3]"
 
 #~ msgid "Are you sure you want to remove the marked entries from the queue?"
 #~ msgstr "Esta seguro de remover las entradas seleccionadas de la cola?"
@@ -9887,8 +9863,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Automatically Logout"
 #~ msgstr "Automatico"
 
-#~ msgid "Backup sent to %1"
-#~ msgstr "Backup enviado a %1"
+#~ msgid "Backup sent to [_1]"
+#~ msgstr "Backup enviado a [_1]"
 
 #~ msgid "Batch Printing"
 #~ msgstr "Lote de Impresion"
@@ -9959,8 +9935,8 @@ msgstr "uso de un sobrepago"
 #~ "No se puede definir una cuenta para mas de uno de Ingreso, Egreso o "
 #~ "Inventario"
 
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "No se puede definir opciones multiples para %1"
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "No se puede definir opciones multiples para [_1]"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "No se puede aprovisionar la Manufactura!"
@@ -9981,7 +9957,7 @@ msgstr "uso de un sobrepago"
 #~ msgstr "Cerra Caja"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerra Caja"
 
 #~ msgid "Components"
@@ -9999,8 +9975,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Customer Invoice"
 #~ msgstr "Factura Cliente"
 
-#~ msgid "Customer: %1"
-#~ msgstr "Cliente: %1"
+#~ msgid "Customer: [_1]"
+#~ msgstr "Cliente: [_1]"
 
 #~ msgid "Default Template"
 #~ msgstr "Plantilla por Defecto"
@@ -10017,11 +9993,11 @@ msgstr "uso de un sobrepago"
 #~ msgid "Department saved!"
 #~ msgstr "Departamento guardado!"
 
-#~ msgid "Department: %1"
-#~ msgstr "Departamento: %1"
+#~ msgid "Department: [_1]"
+#~ msgstr "Departamento: [_1]"
 
-#~ msgid "Description: %1"
-#~ msgstr "Descripcion: %1"
+#~ msgid "Description: [_1]"
+#~ msgstr "Descripcion: [_1]"
 
 #~ msgid "Development version found.  Please upgrade first"
 #~ msgstr "Version de desarrollo encontrada. Por favor primero actualice"
@@ -10036,8 +10012,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Edit POS Invoice"
 #~ msgstr "Editar Factura del PDV"
 
-#~ msgid "Edit Preferences for %1"
-#~ msgstr "Editar Preferencias para %1"
+#~ msgid "Edit Preferences for [_1]"
+#~ msgstr "Editar Preferencias para [_1]"
 
 #~ msgid "Edit Time Card"
 #~ msgstr "Editar Ficha de Horario"
@@ -10055,20 +10031,24 @@ msgstr "uso de un sobrepago"
 #~ msgid "Exchange rate hasn\\"
 #~ msgstr "Falta la tasa de cambio!"
 
-#~ msgid "From %1"
-#~ msgstr "De %1"
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Pagos Inversos"
+
+#~ msgid "From [_1]"
+#~ msgstr "De [_1]"
 
 #~ msgid "GL Transaction"
 #~ msgstr "Transaccion del Libro Mayor"
 
-#~ msgid "GL report sent to %1"
-#~ msgstr "Reporte de Libro Mayor enviado a %1"
+#~ msgid "GL report sent to [_1]"
+#~ msgstr "Reporte de Libro Mayor enviado a [_1]"
 
 #~ msgid "General Ledger"
 #~ msgstr "Libro Mayor"
 
-#~ msgid "General Ledger: %1 %2"
-#~ msgstr "Libro Mayor: %1 %2"
+#~ msgid "General Ledger: [_1] [_2]"
+#~ msgstr "Libro Mayor: [_1] [_2]"
 
 #~ msgid "Generate Sales Order"
 #~ msgstr "Generar Orden de Venta"
@@ -10082,8 +10062,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Inactive"
 #~ msgstr "Inactivo"
 
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Numero de Factura: %1"
+#~ msgid "Invoice Number: [_1]"
+#~ msgstr "Numero de Factura: [_1]"
 
 #~ msgid "Invoice deleted!"
 #~ msgstr "Factura eliminada!"
@@ -10168,8 +10148,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "No database specified"
 #~ msgstr "Base de Datos No Especificada"
 
-#~ msgid "No email address for %1"
-#~ msgstr "Sin direccion de correo electronico para %1"
+#~ msgid "No email address for [_1]"
+#~ msgstr "Sin direccion de correo electronico para [_1]"
 
 #~ msgid "No open Jobs!"
 #~ msgstr "No hay Trabajos abiertos!"
@@ -10187,8 +10167,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Open Till"
 #~ msgstr "Abrir Caja"
 
-#~ msgid "Order Number: %1"
-#~ msgstr "Numero de Orden: %1"
+#~ msgid "Order Number: [_1]"
+#~ msgstr "Numero de Orden: [_1]"
 
 #~ msgid "Orphaned"
 #~ msgstr "Huerfano"
@@ -10226,8 +10206,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Pricegroups"
 #~ msgstr "Grupos de Precios"
 
-#~ msgid "Print %1"
-#~ msgstr "Imprimir %1"
+#~ msgid "Print [_1]"
+#~ msgstr "Imprimir [_1]"
 
 #~ msgid "Print and Post as new"
 #~ msgstr "Imprimir y Anunciar como Nuevo"
@@ -10244,8 +10224,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Project Number missing!"
 #~ msgstr "Falta el numero de proyecto!"
 
-#~ msgid "Project Number: %1"
-#~ msgstr "Numero Proyecto: %1"
+#~ msgid "Project Number: [_1]"
+#~ msgstr "Numero Proyecto: [_1]"
 
 #~ msgid "Project Transactions"
 #~ msgstr "Transacciones Proyecto"
@@ -10272,8 +10252,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Queued"
 #~ msgstr "Encolado"
 
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Numero de Presupuesto: %1"
+#~ msgid "Quotation Number: [_1]"
+#~ msgstr "Numero de Presupuesto: [_1]"
 
 #~ msgid "Remove"
 #~ msgstr "Eliminar"
@@ -10315,8 +10295,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Spoolfile"
 #~ msgstr "Archivo encolado"
 
-#~ msgid "Statement - %1"
-#~ msgstr "Declaracion - %1"
+#~ msgid "Statement - [_1]"
+#~ msgstr "Declaracion - [_1]"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Declaraciones enviadas a la impresora!"
@@ -10355,8 +10335,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Time Card saved!"
 #~ msgstr "Ficha de Horario salvada!"
 
-#~ msgid "To %1"
-#~ msgstr "A %1"
+#~ msgid "To [_1]"
+#~ msgstr "A [_1]"
 
 #~ msgid "Top Level"
 #~ msgstr "Nivel Superior"
@@ -10365,8 +10345,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Transaction posted!"
 #~ msgstr "Transaccion eliminada!"
 
-#~ msgid "Transaction reversal enforced up to %1"
-#~ msgstr "Forzar transaccion inversa hasta %1"
+#~ msgid "Transaction reversal enforced up to [_1]"
+#~ msgstr "Forzar transaccion inversa hasta [_1]"
 
 #, fuzzy
 #~ msgid "Trial Balance List"
@@ -10381,8 +10361,8 @@ msgstr "uso de un sobrepago"
 #~ msgid "Vendor Invoices"
 #~ msgstr "Facturas Proveedor"
 
-#~ msgid "Vendor: %1"
-#~ msgstr "Proveedor: %1"
+#~ msgid "Vendor: [_1]"
+#~ msgstr "Proveedor: [_1]"
 
 #~ msgid "Vendors"
 #~ msgstr "Proveedores"
@@ -10414,14 +10394,29 @@ msgstr "uso de un sobrepago"
 #~ msgid "You are saving an existing transaction!"
 #~ msgstr "Usted esta salvando una transaccion existente!"
 
+#~ msgid "[_1] Business"
+#~ msgstr "Negocio [_1]"
+
+#~ msgid "[_1] Department"
+#~ msgstr "Departamento [_1]"
+
+#~ msgid "[_1] Language"
+#~ msgstr "Idioma [_1]"
+
+#~ msgid "[_1] To [_2]"
+#~ msgstr "[_1] A [_2]"
+
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Deposito [_1]"
+
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "la cuenta no puede ser definida a cualquier otro tipo de cuenta"
 
 #~ msgid "edit"
 #~ msgstr "editar"
 
-#~ msgid "for Period To %1"
-#~ msgstr "por Periodo a %1"
+#~ msgid "for Period To [_1]"
+#~ msgstr "por Periodo a [_1]"
 
 #, fuzzy
 #~ msgid "payment"

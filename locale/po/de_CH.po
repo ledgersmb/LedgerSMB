@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -45,16 +45,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Rechnungen"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Arbeitnehmer bearbeiten"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3780,10 +3770,6 @@ msgstr "Kontodaten bearbeiten"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "als Anhang"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Zahlungen"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9859,24 +9845,8 @@ msgstr "Anzahlung"
 #~ msgstr "Sprachcode fehlt!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Branche"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Sprache"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Euro-SIC erfassen"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Warenlager"
+#~ msgid "$operation Employee"
+#~ msgstr "Arbeitnehmer bearbeiten"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9900,7 +9870,7 @@ msgstr "Anzahlung"
 #~ msgstr "Konto gespeichert!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10102,12 +10072,12 @@ msgstr "Anzahlung"
 #~ "AR, AP und IC Konten können nicht auf andere Konten gleichzeitig "
 #~ "eingestellt werden"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Mehr als eine Optionen nicht erlaubt für : "
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Mehr als eine Auswahl ist nicht erlaubt"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Mehr als eine Optionen nicht erlaubt für : "
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Erzeugnis kann nicht eingelagert werden!"
@@ -10129,7 +10099,7 @@ msgstr "Anzahlung"
 #~ msgstr "Geschlossen"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Geschlossen"
 
 #~ msgid "Components"
@@ -10157,7 +10127,7 @@ msgstr "Anzahlung"
 #~ msgstr "Kunde gespeichert!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10212,7 +10182,7 @@ msgstr "Anzahlung"
 #~ msgstr "Abteilung gespeichert!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Abteilung"
 
 #~ msgid "Directory"
@@ -10299,11 +10269,15 @@ msgstr "Anzahlung"
 #~ msgid "Expiry Date"
 #~ msgstr "Verfallsdatum"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Zahlungen"
+
 #~ msgid "Friday"
 #~ msgstr "Freitag"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Von"
 
 #~ msgid "Generate Sales Order"
@@ -10337,7 +10311,7 @@ msgstr "Anzahlung"
 #~ msgstr "Erhöhen"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Rechnungsnummer"
 
 #~ msgid "Invoice deleted!"
@@ -10473,7 +10447,7 @@ msgstr "Anzahlung"
 #~ msgstr "Oracle Datenbankverwaltung"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Bestellnummer"
 
 #~ msgid "Order saved!"
@@ -10545,7 +10519,7 @@ msgstr "Anzahlung"
 #~ msgstr "Preisgruppen"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Drucken"
 
 #~ msgid "Print and Post as new"
@@ -10561,7 +10535,7 @@ msgstr "Anzahlung"
 #~ msgstr "Projektnummer fehlt!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektnummer"
 
 #~ msgid "Project Transactions"
@@ -10589,7 +10563,7 @@ msgstr "Anzahlung"
 #~ msgstr "In Warteschlange"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Offertenummer"
 
 #~ msgid "R"
@@ -10811,7 +10785,7 @@ msgstr "Anzahlung"
 #~ msgstr "Lieferant gespeichert!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Lieferant"
 
 #~ msgid "Vendors"
@@ -10836,7 +10810,7 @@ msgstr "Anzahlung"
 #~ msgstr "Jahresabschluss nicht gebucht!"
 
 #, fuzzy
-#~ msgid "You are over by %1"
+#~ msgid "You are over by [_1]"
 #~ msgstr "Sie sind abgemeldet"
 
 #~ msgid "You are posting an existing transaction!"
@@ -10876,8 +10850,16 @@ msgstr "Anzahlung"
 #~ msgstr "Branche"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Sprache"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Euro-SIC erfassen"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"
