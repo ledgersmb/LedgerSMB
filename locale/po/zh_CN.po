@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 22:32+0000\n"
+"POT-Creation-Date: 2015-12-27 23:51+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1030,6 +1030,8 @@ msgstr "调和报告"
 msgid "Asset Tag"
 msgstr "资产"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2887
 #, fuzzy
 msgid "Assets"
@@ -2229,6 +2231,8 @@ msgstr "币别"
 msgid "Current"
 msgstr "现有"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:81
 #, fuzzy
 msgid "Current earnings"
@@ -3450,9 +3454,15 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:200 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "股权"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+msgid "Equity & Liabilities"
+msgstr ""
 
 #: UI/accounts/edit.html:201
 msgid "Equity (Temporary)"
@@ -3547,6 +3557,12 @@ msgstr "列出帐号"
 #: UI/accounts/edit.html:328
 msgid "Expense/Asset"
 msgstr "费用/资产"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "费用"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -4228,7 +4244,9 @@ msgstr "一并显示"
 msgid "Including partnumber"
 msgstr "一并显示"
 
-#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Scripts/configuration.pm:87
+#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:87
 #: UI/accounts/edit.html:202 UI/accounts/edit.html:285
 #: UI/accounts/edit.html:367 UI/accounts/edit.html:406
 #: UI/Reports/filters/gl.html:145
@@ -4764,6 +4782,12 @@ msgstr "应收未收"
 #: sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "负债"
 
 #: UI/accounts/edit.html:199 UI/Reports/filters/gl.html:133
 msgid "Liability"
@@ -9422,6 +9446,12 @@ msgstr "邮编"
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "邮编"
+
+#: LedgerSMB/Report/PNL.pm:146
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr ""
 
 #: bin/gl.pl:201
 #, fuzzy
