@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fakturor"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Redigera anställd"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3771,10 +3761,6 @@ msgstr "Redigera konto"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Bilaga"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Utbetalningar"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9841,6 +9827,10 @@ msgstr "Förskottsbetald"
 #~ msgstr "Kod saknas"
 
 #, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Redigera anställd"
+
+#, fuzzy
 #~ msgid "%1 Business"
 #~ msgstr "Verksamhet"
 
@@ -10260,6 +10250,10 @@ msgstr "Förskottsbetald"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Existerande Dataset"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Utbetalningar"
 
 #~ msgid "Friday"
 #~ msgstr "Fredag"

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Håvard Sørli <havard@anix.no>\n"
 "Language-Team: \n"
@@ -44,16 +44,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fakturaer"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Endre ansatt"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3785,10 +3775,6 @@ msgstr "Endre konto"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Vedlegg"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Betalinger"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9867,6 +9853,10 @@ msgstr "Forskuddsbetaling"
 #~ msgstr "Mangler kode"
 
 #, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Endre ansatt"
+
+#, fuzzy
 #~ msgid "%1 Business"
 #~ msgstr "Organisasjon"
 
@@ -10204,6 +10194,10 @@ msgstr "Forskuddsbetaling"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Eksisterende datasett"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Betalinger"
 
 #, fuzzy
 #~ msgid "From %1"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.3.29\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2013-08-27 08:52+0200\n"
 "Last-Translator: István <pongracz.istvan@startit.hu>\n"
 "Language-Team: StartIT Kft <info@startit.hu>\n"
@@ -36,15 +36,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Számlák"
-
-msgid "$entity_classname Number"
-msgstr "$entity_classname Azonosító"
-
-msgid "$operation $entity_classname"
-msgstr "$operation $entity_classname"
-
-msgid "$operation Employee"
-msgstr "$operation Alkalmazott"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3599,9 +3590,6 @@ msgstr "Hitel számla"
 #: UI/Contact/divs/files.html:17
 msgid "Files attached to Entity"
 msgstr ""
-
-msgid "Filtering $t"
-msgstr "Szűrés $t"
 
 #: UI/payments/payments_detail.html:114
 msgid "Filtering From:"
@@ -9499,6 +9487,9 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "$contact_type Number"
 #~ msgstr "$contact_type Azonosító"
 
+#~ msgid "$entity_classname Number"
+#~ msgstr "$entity_classname Azonosító"
+
 #~ msgid "$entity_classname Number:"
 #~ msgstr "$entity_classname azonosító:"
 
@@ -9507,6 +9498,12 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "$entity_type Search"
 #~ msgstr "$entitiy_type keresés"
+
+#~ msgid "$operation $entity_classname"
+#~ msgstr "$operation $entity_classname"
+
+#~ msgid "$operation Employee"
+#~ msgstr "$operation Alkalmazott"
 
 #~ msgid "$operation Person"
 #~ msgstr "$operation Személy"
@@ -10201,6 +10198,9 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Field \\\"Name\\\" Not Defined"
 #~ msgstr "A \\\"Name\\\" mező nincs definiálva"
+
+#~ msgid "Filtering $t"
+#~ msgstr "Szűrés $t"
 
 #~ msgid "First"
 #~ msgstr "Első"

@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "發票"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "編輯職員"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3772,10 +3762,6 @@ msgstr "編輯帳戶"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "附件"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "付款"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9836,6 +9822,10 @@ msgstr "預繳"
 #~ msgstr "未指明編碼！"
 
 #, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "編輯職員"
+
+#, fuzzy
 #~ msgid "%1 Business"
 #~ msgstr "業務"
 
@@ -10197,6 +10187,10 @@ msgstr "預繳"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "既有的資料集"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "付款"
 
 #~ msgid "Friday"
 #~ msgstr "星期五"

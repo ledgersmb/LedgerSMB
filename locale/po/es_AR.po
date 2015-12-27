@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2012-06-20 13:35-0300\n"
 "Last-Translator: Andres Basile <basile@gmail.com>\n"
 "Language-Team: \n"
@@ -17,16 +17,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Factura"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Agregar Empleado"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 #, fuzzy
@@ -3717,10 +3707,6 @@ msgstr "Editar Cuenta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Adjuntado al Tipo"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagos Inversos"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9797,6 +9783,10 @@ msgstr "uso de un sobrepago"
 #~ msgid " missing!"
 #~ msgstr " faltante!"
 
+#, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Agregar Empleado"
+
 #~ msgid "%1 Business"
 #~ msgstr "Negocio %1"
 
@@ -10054,6 +10044,10 @@ msgstr "uso de un sobrepago"
 #, fuzzy
 #~ msgid "Exchange rate hasn\\"
 #~ msgstr "Falta la tasa de cambio!"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Pagos Inversos"
 
 #~ msgid "From %1"
 #~ msgstr "De %1"

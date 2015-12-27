@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2014-12-7 14:00+ZONE\n"
 "Last-Translator: kaiserfarrell <kaiserfarrell@gmail.com>\n"
 "Language-Team: LedgerSMB Malaysia <https://www.fb.me/groups/1512686172349251/"
@@ -21,15 +21,6 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
 msgstr "Invois"
-
-msgid "$entity_classname Number"
-msgstr "Jumlah entity_namakelas"
-
-msgid "$operation $entity_classname"
-msgstr "$operasi $entiti_namakelas"
-
-msgid "$operation Employee"
-msgstr "$operasi Pekerja"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3599,9 +3590,6 @@ msgstr "Akaun Kredit"
 #: UI/Contact/divs/files.html:17
 msgid "Files attached to Entity"
 msgstr ""
-
-msgid "Filtering $t"
-msgstr "Ditapis $t"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9505,8 +9493,17 @@ msgstr "guna lebihan bayaran"
 #~ msgid " missing!"
 #~ msgstr "Hilang!"
 
+#~ msgid "$entity_classname Number"
+#~ msgstr "Jumlah entity_namakelas"
+
 #~ msgid "$entity_classname Number:"
 #~ msgstr "$entiti_namakelas Nombor"
+
+#~ msgid "$operation $entity_classname"
+#~ msgstr "$operasi $entiti_namakelas"
+
+#~ msgid "$operation Employee"
+#~ msgstr "$operasi Pekerja"
 
 #~ msgid "$operation Person"
 #~ msgstr "$operasi perseorangan"
@@ -9643,6 +9640,9 @@ msgstr "guna lebihan bayaran"
 
 #~ msgid "Field \\\"Name\\\" Not Defined"
 #~ msgstr "Bidang\\\"Nama\\\" Tidak Ditentukan"
+
+#~ msgid "Filtering $t"
+#~ msgstr "Ditapis $t"
 
 #~ msgid "From %1"
 #~ msgstr "Dari %1"

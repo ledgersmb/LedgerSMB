@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2014-10-22 18:01+0200\n"
 "Last-Translator: Frans <f.van.der.star@gmail.com>\n"
 "Language: nl\n"
@@ -41,17 +41,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturen"
-
-msgid "$entity_classname Number"
-msgstr "Bedrijfseenheid Naam Nummer"
-
-#, fuzzy
-msgid "$operation $entity_classname"
-msgstr "Bedrijfseenheid Naam Nummer"
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Werknemer Wijzigen"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 #, fuzzy
@@ -3698,10 +3687,6 @@ msgstr "Rekening Wijzigen"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Bijgevoegd bestandstype"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Terug Betalingen"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9716,6 +9701,17 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid " missing!"
 #~ msgstr "Code ontbreekt!"
 
+#~ msgid "$entity_classname Number"
+#~ msgstr "Bedrijfseenheid Naam Nummer"
+
+#, fuzzy
+#~ msgid "$operation $entity_classname"
+#~ msgstr "Bedrijfseenheid Naam Nummer"
+
+#, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Werknemer Wijzigen"
+
 #~ msgid "$operation Person"
 #~ msgstr "Uitvoerende persoon"
 
@@ -10207,6 +10203,10 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Bestaande Datasets"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Terug Betalingen"
 
 #~ msgid "Friday"
 #~ msgstr "vrijdag"

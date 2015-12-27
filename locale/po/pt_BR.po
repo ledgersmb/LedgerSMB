@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Faturas"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Editar o Empregado"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3772,10 +3762,6 @@ msgstr "Editar a Conta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Anexo"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagamentos"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9849,6 +9835,10 @@ msgstr "Pré-pagamento"
 #~ msgstr "Código faltando!"
 
 #, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Editar o Empregado"
+
+#, fuzzy
 #~ msgid "%1 Business"
 #~ msgstr "Negócio"
 
@@ -10253,6 +10243,10 @@ msgstr "Pré-pagamento"
 
 #~ msgid "Existing Datasets"
 #~ msgstr "Conjunto de dados existentes"
+
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Pagamentos"
 
 #~ msgid "Friday"
 #~ msgstr "Sexta-feira"

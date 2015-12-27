@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2014-11-30 09:55+0200\n"
 "Last-Translator: Adrian <meibomberlin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,15 +34,6 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
 msgstr "# Rechnungen"
-
-msgid "$entity_classname Number"
-msgstr "$entity_classname Nummer"
-
-msgid "$operation $entity_classname"
-msgstr "$operation $entity_classname"
-
-msgid "$operation Employee"
-msgstr "$operation Arbeitnehmer"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 #, fuzzy
@@ -3628,9 +3619,6 @@ msgstr "Kreditkonto"
 #: UI/Contact/divs/files.html:17
 msgid "Files attached to Entity"
 msgstr ""
-
-msgid "Filtering $t"
-msgstr "Filtern $t"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9545,8 +9533,17 @@ msgstr "Nutzen einer Ãœberzahlung"
 #~ msgid " missing!"
 #~ msgstr " fehlt!"
 
+#~ msgid "$entity_classname Number"
+#~ msgstr "$entity_classname Nummer"
+
 #~ msgid "$entity_classname Number:"
 #~ msgstr "$entity_classname Nummer:"
+
+#~ msgid "$operation $entity_classname"
+#~ msgstr "$operation $entity_classname"
+
+#~ msgid "$operation Employee"
+#~ msgstr "$operation Arbeitnehmer"
 
 #~ msgid "$operation Person"
 #~ msgstr "$operation Person"
@@ -9654,6 +9651,9 @@ msgstr "Nutzen einer Ãœberzahlung"
 
 #~ msgid "Field \\\"Name\\\" Not Defined"
 #~ msgstr "Feld \\\"Name\\\" nicht definiert"
+
+#~ msgid "Filtering $t"
+#~ msgstr "Filtern $t"
 
 #~ msgid "From [_1]"
 #~ msgstr "Von [_1]"
