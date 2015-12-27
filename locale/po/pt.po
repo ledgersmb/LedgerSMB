@@ -9927,11 +9927,11 @@ msgstr "Pagamento"
 #~ msgstr "Funcionário"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "CFOP - Código Fiscal da Operação"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Língua"
 
 #, fuzzy
@@ -9948,7 +9948,7 @@ msgstr "Pagamento"
 #~ msgstr "Tipo de Conta não encontrado!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Conta"
 
 #~ msgid "Accounting"
@@ -10005,7 +10005,7 @@ msgstr "Pagamento"
 #~ msgstr "Fechado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Fechado"
 
 #~ msgid "Connect to"
@@ -10018,7 +10018,7 @@ msgstr "Pagamento"
 #~ msgstr "Cliente apagado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "DBI not installed!"
@@ -10068,7 +10068,7 @@ msgstr "Pagamento"
 #~ msgstr "Pagamentos"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Host"
@@ -10081,7 +10081,7 @@ msgstr "Pagamento"
 #~ msgstr "Versão Dataset incorrecta!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de Factura"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10146,7 +10146,7 @@ msgstr "Pagamento"
 #~ msgstr "Processar como novo"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10154,7 +10154,7 @@ msgstr "Pagamento"
 #~ msgstr "Imprimir"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Falta o número do projecto"
 
 #~ msgid "Project deleted!"
@@ -10239,7 +10239,7 @@ msgstr "Pagamento"
 #~ msgstr "Fornecedor apagado"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fornecedor"
 
 #~ msgid "You did not enter a name!"

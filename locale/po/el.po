@@ -9923,7 +9923,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Επεξεργασία Εργαζομένου"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Γλώσσα"
 
 #, fuzzy
@@ -9934,7 +9934,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Ο τύπος του κωδικού λείπει"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Λογαριασμός"
 
 #~ msgid "Accounting"
@@ -9994,7 +9994,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Κλεισμένο"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Κλεισμένο"
 
 #~ msgid "Components"
@@ -10010,7 +10010,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Ο πελάτης διαγράφηκε!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Πελάτης"
 
 #~ msgid "Customers"
@@ -10044,7 +10044,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Τμήμα διαγράφηκε"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Τμήμα"
 
 #~ msgid "Directory"
@@ -10085,7 +10085,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Προπληρωμή"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Από"
 
 #~ msgid "Host"
@@ -10098,7 +10098,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Αύξηση"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Αρ. τιμολογίου"
 
 #~ msgid "Languages"
@@ -10158,7 +10158,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Port"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Εκτύπωση"
 
 #, fuzzy
@@ -10169,7 +10169,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Εκτυπώνεται..."
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Αριθμός έργου"
 
 #, fuzzy
@@ -10212,7 +10212,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Creditor saved!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Creditor"
 
 #~ msgid "Vendors"

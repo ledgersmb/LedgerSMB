@@ -9920,11 +9920,11 @@ msgstr "Greislur"
 #~ msgstr "Starfsmenn"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Túngumál"
 
 #, fuzzy
@@ -9941,7 +9941,7 @@ msgstr "Greislur"
 #~ msgstr "Reikningstegund vantar!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Reikningur"
 
 #~ msgid "Accounting"
@@ -9998,7 +9998,7 @@ msgstr "Greislur"
 #~ msgstr "Lokað"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Lokað"
 
 #~ msgid "Connect to"
@@ -10011,7 +10011,7 @@ msgstr "Greislur"
 #~ msgstr "Viðskiptavini eytt!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Viðskiptavinur"
 
 #~ msgid "DBI not installed!"
@@ -10061,7 +10061,7 @@ msgstr "Greislur"
 #~ msgstr "Greiðslur"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Frá"
 
 #~ msgid "Host"
@@ -10074,7 +10074,7 @@ msgstr "Greislur"
 #~ msgstr "Röng útgáfa af gagnasfni!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Sölureikningur Númer"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10141,7 +10141,7 @@ msgstr "Greislur"
 #~ msgstr "Bókfæra sem nýjan"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Prenta"
 
 #, fuzzy
@@ -10149,7 +10149,7 @@ msgstr "Greislur"
 #~ msgstr "Prenta"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Verkefnisnúmer vantar!"
 
 #~ msgid "Project deleted!"
@@ -10243,7 +10243,7 @@ msgstr "Greislur"
 #~ msgstr "Byrgja eytt!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Byrgir"
 
 #~ msgid "You did not enter a name!"

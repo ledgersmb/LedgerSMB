@@ -6354,7 +6354,7 @@ msgstr "Preferencias guardadas"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Preferencias de %1"
+msgstr "Preferencias de [_1]"
 
 #: UI/Configuration/sequence.html:14
 msgid "Prefix"
@@ -6421,7 +6421,7 @@ msgstr "Lista de Precios"
 #: UI/Contact/pricelist.tex:65
 #, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Preferencias de %1"
+msgstr "Preferencias de [_1]"
 
 #: sql/Pg-database.sql:795
 #, fuzzy
@@ -9850,23 +9850,23 @@ msgstr "Prepago"
 #~ msgstr "Editar Empleado"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Negocio"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Plan Único de Cuentas (PUC)"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Lenguaje"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Adicionar SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Bodega"
 
 #~ msgid "A"
@@ -9888,7 +9888,7 @@ msgstr "Prepago"
 #~ msgstr "¡Cuenta guardada!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Cuenta"
 
 #~ msgid "Accounting"
@@ -10007,7 +10007,7 @@ msgstr "Prepago"
 #~ msgstr "Tiene que seleccionar cuenta!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "No se puede iniciar opciones multiples para"
 
 #~ msgid "Change"
@@ -10024,7 +10024,7 @@ msgstr "Prepago"
 #~ msgstr "Cerrado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerrado"
 
 #~ msgid "Components"
@@ -10046,7 +10046,7 @@ msgstr "Prepago"
 #~ msgstr "¡Cliente guardado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "Customers"
@@ -10092,7 +10092,7 @@ msgstr "Prepago"
 #~ msgstr "¡Guardado Departamento!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departamento"
 
 #~ msgid "Directory"
@@ -10121,7 +10121,7 @@ msgstr "Prepago"
 #~ msgstr "Editar Factura POS"
 
 #, fuzzy
-#~ msgid "Edit Preferences for %1"
+#~ msgid "Edit Preferences for [_1]"
 #~ msgstr "Editar preferencias de"
 
 #~ msgid "Edit Project"
@@ -10170,7 +10170,7 @@ msgstr "Prepago"
 #~ msgstr "Vencimientos impagados"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Desde"
 
 #~ msgid "Group Items"
@@ -10195,7 +10195,7 @@ msgstr "Prepago"
 #~ msgstr "Aumentar"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de factura"
 
 #~ msgid "Invoice deleted!"
@@ -10289,7 +10289,7 @@ msgstr "Prepago"
 #~ msgstr "Administración de la base de datos Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Número de orden"
 
 #~ msgid "Order saved!"
@@ -10341,7 +10341,7 @@ msgstr "Prepago"
 #~ msgstr "Preciogrupos"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10355,7 +10355,7 @@ msgstr "Prepago"
 #~ msgstr "¡Falta el número de proyecto!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "número del projecto"
 
 #~ msgid "Project deleted!"
@@ -10368,7 +10368,7 @@ msgstr "Prepago"
 #~ msgstr "¡Proyecto guardado "
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Número de Cotización"
 
 #~ msgid "R"
@@ -10534,7 +10534,7 @@ msgstr "Prepago"
 #~ msgstr "¡Proveedor guardado!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveedor"
 
 #~ msgid "Vendors"

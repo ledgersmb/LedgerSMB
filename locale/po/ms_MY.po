@@ -271,12 +271,12 @@ msgstr "Nama Akaun"
 #: LedgerSMB/GL.pm:206
 #, fuzzy
 msgid "Account [_1] not found"
-msgstr "Akaun %1 gagal dicari"
+msgstr "Akaun [_1] gagal dicari"
 
 #: bin/gl.pl:634
 #, fuzzy
 msgid "Account [_1] not found."
-msgstr "Akaun %1 Tidak Dijumpai "
+msgstr "Akaun [_1] Tidak Dijumpai "
 
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
@@ -348,7 +348,7 @@ msgstr "Tindakan tidak ditakrif: "
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 #, fuzzy
 msgid "Action: [_1], ID: [_2]"
-msgstr "Tindakan: %1, ID: [_2]"
+msgstr "Tindakan: [_1], ID: [_2]"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -1280,7 +1280,7 @@ msgstr ""
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Kepada: %1"
+msgstr "Kepada: [_1]"
 
 #: UI/reconciliation/report.html:26
 #, fuzzy
@@ -1557,7 +1557,7 @@ msgstr "Cukai tidak disimpan!"
 #: LedgerSMB/Budget.pm:240
 #, fuzzy
 msgid "Cannot specify both debits and credits for budget line [_1]"
-msgstr "Debit dan kredit untuk bajet baris %1 tidak dapat dinyatakan"
+msgstr "Debit dan kredit untuk bajet baris [_1] tidak dapat dinyatakan"
 
 #: bin/ic.pl:2244
 msgid "Cannot stock assemblies!"
@@ -1590,7 +1590,7 @@ msgstr ""
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Kepada: %1"
+msgstr "Kepada: [_1]"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -1927,7 +1927,7 @@ msgstr ""
 #: bin/gl.pl:95
 #, fuzzy
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
-msgstr "Gagal membuka pos.conf.pl dalam %1 baris [_2]: [_3]"
+msgstr "Gagal membuka pos.conf.pl dalam [_1] baris [_2]: [_3]"
 
 #: bin/ir.pl:1344 bin/is.pl:1319 bin/oe.pl:1257
 msgid "Could not save the data.  Please try again"
@@ -2364,7 +2364,7 @@ msgstr "Tarikh kepada"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Tarikh: %1"
+msgstr "Tarikh: [_1]"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 #, fuzzy
@@ -2520,7 +2520,7 @@ msgstr "Padam Baucer"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "Bahasa yang dipadam juga akan memadamkan templat untuk bahasa %1"
+msgstr "Bahasa yang dipadam juga akan memadamkan templat untuk bahasa [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -3340,7 +3340,7 @@ msgstr "Kesalahan daripada fungsi"
 #: LedgerSMB/Scripts/setup.pm:452
 #, fuzzy
 msgid "Error while opening directory: [_1]"
-msgstr "Kesalahan ketika membuka panduan:%1"
+msgstr "Kesalahan ketika membuka panduan:[_1]"
 
 #: UI/payments/check_job.html:31
 msgid "Error:"
@@ -3385,7 +3385,7 @@ msgstr "Pertukaran kadar tidak diisi"
 #, fuzzy
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
-"Kadar pertukaran tidak sejajar dengan pangkalan data. Dapat %1, jangkaan"
+"Kadar pertukaran tidak sejajar dengan pangkalan data. Dapat [_1], jangkaan"
 
 #: bin/aa.pl:1325 bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1194 bin/oe.pl:1550
 msgid "Exchange rate missing!"
@@ -4200,7 +4200,7 @@ msgstr ""
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
 msgstr ""
 "Kuantiti bahan mestilah dalam nilai sifar sebelum anda tetapkan kepada tempoh "
-"tamat %1 "
+"tamat [_1] "
 
 #: bin/ic.pl:1825
 #, fuzzy
@@ -4208,14 +4208,14 @@ msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
 "Kuantiti bahan mestilah dalam nilai sifar sebelum anda tetapkan kepada tempoh "
-"tamat %1 "
+"tamat [_1] "
 
 #: bin/ic.pl:1824
 #, fuzzy
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 "Kuantiti bahan mestilah dalam nilai sifar sebelum anda tetapkan kepada tempoh "
-"tamat %1 "
+"tamat [_1] "
 
 #: bin/oe.pl:1995
 msgid "Inventory saved!"
@@ -4707,7 +4707,7 @@ msgstr "Deskripsi Akaun"
 #: UI/payments/payments_detail.html:404
 #, fuzzy
 msgid "Locked by [_1]"
-msgstr "tidak dibenarkan oleh %1"
+msgstr "tidak dibenarkan oleh [_1]"
 
 #: UI/setup/confirm_operation.html:9
 #, fuzzy
@@ -5072,7 +5072,7 @@ msgstr "Tiada Akaun AR atau AP Terpilih"
 #: LedgerSMB/DBObject/TransTemplate.pm:27
 #, fuzzy
 msgid "No Account id for [_1]"
-msgstr "Tiada Akaun id untuk %1"
+msgstr "Tiada Akaun id untuk [_1]"
 
 #: LedgerSMB/Report/File.pm:49
 #, fuzzy
@@ -5321,7 +5321,7 @@ msgstr "Nombor"
 #: bin/io.pl:1191
 #, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Tiada Nombor di Baris %1"
+msgstr "Tiada Nombor di Baris [_1]"
 
 #: UI/Contact/pricelist.html:107 UI/Reports/aging_report.html:125
 #: UI/Reports/display_report.html:74
@@ -6076,12 +6076,12 @@ msgstr "Tarikh disimpan"
 #: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Simpan transaksi GL %1 "
+msgstr "Simpan transaksi GL [_1] "
 
 #: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Simpan Invois Jualan %1 "
+msgstr "Simpan Invois Jualan [_1] "
 
 #: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
@@ -6091,7 +6091,7 @@ msgstr "Simpan Transaksi"
 #: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Simpan Invois Pembekal %1"
+msgstr "Simpan Invois Pembekal [_1]"
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 msgid "Postscript"
@@ -6109,7 +6109,7 @@ msgstr "Pilihan disimpan!"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "keutamaan edit untuk %1"
+msgstr "keutamaan edit untuk [_1]"
 
 #: UI/Configuration/sequence.html:14
 #, fuzzy
@@ -6221,17 +6221,17 @@ msgstr "Simpan Transaksi"
 #: bin/am.pl:1420
 #, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "Simpan Invois Pembekal %1"
+msgstr "Simpan Invois Pembekal [_1]"
 
 #: bin/am.pl:1421
 #, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "Simpan Invois Jualan %1 "
+msgstr "Simpan Invois Jualan [_1] "
 
 #: bin/am.pl:1419
 #, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "Simpan Invois Jualan %1 "
+msgstr "Simpan Invois Jualan [_1] "
 
 #: bin/am.pl:1422
 #, fuzzy
@@ -6250,7 +6250,7 @@ msgstr "Ubah Pesanan Pembelian"
 #: bin/am.pl:1424
 #, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "Simpan Invois Jualan %1 "
+msgstr "Simpan Invois Jualan [_1] "
 
 #: bin/am.pl:1418
 #, fuzzy
@@ -6736,7 +6736,7 @@ msgstr "Laporan"
 #: LedgerSMB/Scripts/asset.pm:630
 #, fuzzy
 msgid "Report [_1] on date [_2]"
-msgstr "Laporan %1 Pada Tarikh [_2]"
+msgstr "Laporan [_1] Pada Tarikh [_2]"
 
 #: UI/rp-search-generate_tax_report.html:67
 #, fuzzy
@@ -6900,7 +6900,7 @@ msgstr ""
 #: UI/Reports/filters/inventory_adj.html:35
 #, fuzzy
 msgid "Run Report"
-msgstr "%1 Laporan"
+msgstr "[_1] Laporan"
 
 #: UI/Contact/divs/company.html:125 sql/Pg-database.sql:2871
 msgid "SIC"
@@ -7106,7 +7106,7 @@ msgstr "Simpan sebagai baru"
 #: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "simpanan %1 [_2]"
+msgstr "simpanan [_1] [_2]"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7352,7 +7352,7 @@ msgstr "Penambahan Invois debit"
 #: bin/am.pl:1464
 #, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "Simpan Invois Jualan %1 "
+msgstr "Simpan Invois Jualan [_1] "
 
 #: bin/am.pl:1467
 #, fuzzy
@@ -7867,12 +7867,12 @@ msgstr ""
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
 #, fuzzy
 msgid "Subject"
-msgstr "Subjek: %1"
+msgstr "Subjek: [_1]"
 
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Subjek: %1"
+msgstr "Subjek: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8066,7 +8066,7 @@ msgstr "Nombor Seterusnya"
 #: templates/xedemo/ar_transaction.tex:71
 #, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Nombor Pesanan: %1"
+msgstr "Nombor Pesanan: [_1]"
 
 #: UI/am-taxes.html:17
 msgid "Tax Rules"
@@ -8521,7 +8521,7 @@ msgstr "Kepada"
 #: bin/arap.pl:802 bin/io.pl:1916
 #, fuzzy
 msgid "To: [_1]"
-msgstr "Kepada: %1"
+msgstr "Kepada: [_1]"
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -9309,7 +9309,7 @@ msgstr "Transaksi Am Lejar"
 #: bin/arap.pl:173
 #, fuzzy
 msgid "[_1] Number"
-msgstr "%1 nombor"
+msgstr "[_1] nombor"
 
 #: bin/aa.pl:388
 #, fuzzy
@@ -9319,12 +9319,12 @@ msgstr "Transaksi"
 #: bin/ic.pl:1656
 #, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "%1: Pelanggan tidak terdapat dalam fail"
+msgstr "[_1]: Pelanggan tidak terdapat dalam fail"
 
 #: bin/ic.pl:1578
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "%1: Pembekal tidak terdapat di dalam fail"
+msgstr "[_1]: Pembekal tidak terdapat di dalam fail"
 
 #: LedgerSMB/Form.pm:710
 #, fuzzy
@@ -9508,20 +9508,20 @@ msgstr "guna lebihan bayaran"
 #~ msgid "$operation Person"
 #~ msgstr "$operasi perseorangan"
 
-#~ msgid "%1 Business"
-#~ msgstr "%1 Bisnes"
+#~ msgid "[_1] Business"
+#~ msgstr "[_1] Bisnes"
 
-#~ msgid "%1 GIFI"
-#~ msgstr "%1 GIFI"
+#~ msgid "[_1] GIFI"
+#~ msgstr "[_1] GIFI"
 
-#~ msgid "%1 Language"
-#~ msgstr "%1 Bahasa"
+#~ msgid "[_1] Language"
+#~ msgstr "[_1] Bahasa"
 
-#~ msgid "%1 SIC"
-#~ msgstr "%1 SIC"
+#~ msgid "[_1] SIC"
+#~ msgstr "[_1] SIC"
 
-#~ msgid "%1 Warehouse"
-#~ msgstr "%1 Gudang"
+#~ msgid "[_1] Warehouse"
+#~ msgstr "[_1] Gudang"
 
 #~ msgid "= Variance"
 #~ msgstr "= Varian"
@@ -9539,8 +9539,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Account saved!"
 #~ msgstr "Akaun disimpan!"
 
-#~ msgid "Account: %1"
-#~ msgstr "Akaun: %1"
+#~ msgid "Account: [_1]"
+#~ msgstr "Akaun: [_1]"
 
 #, fuzzy
 #~ msgid "Accounts can\\"
@@ -9586,8 +9586,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "Tidak boleh tentukan akaun untuk lebih daripada satu AR,AP atau IC"
 
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Tidak boleh tentukan banyak pilihan untuk %1"
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Tidak boleh tentukan banyak pilihan untuk [_1]"
 
 #~ msgid "Cash Breakdown:"
 #~ msgstr "Pecahan Tunai:"
@@ -9598,8 +9598,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Close Till"
 #~ msgstr "Tutup Till"
 
-#~ msgid "Closing Till For %1"
-#~ msgstr "Penutup Till Untuk%1"
+#~ msgid "Closing Till For [_1]"
+#~ msgstr "Penutup Till Untuk[_1]"
 
 #~ msgid "Congratulations!  Your till is exactly balanced."
 #~ msgstr "Tahniah! Till anda seimbang."
@@ -9607,14 +9607,14 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Credit Card Track"
 #~ msgstr "Track Kad Kredit"
 
-#~ msgid "Cumulative Error: %1"
-#~ msgstr "Ralat terkumpul:%1"
+#~ msgid "Cumulative Error: [_1]"
+#~ msgstr "Ralat terkumpul:[_1]"
 
-#~ msgid "Customer: %1"
-#~ msgstr "Pelanggan: %1"
+#~ msgid "Customer: [_1]"
+#~ msgstr "Pelanggan: [_1]"
 
-#~ msgid "Department: %1"
-#~ msgstr "Jabatan: %1"
+#~ msgid "Department: [_1]"
+#~ msgstr "Jabatan: [_1]"
 
 #~ msgid "Development version found.  Please upgrade first"
 #~ msgstr "Versi baru dijumpai. Sila naik taraf dahulu"
@@ -9644,8 +9644,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Filtering $t"
 #~ msgstr "Ditapis $t"
 
-#~ msgid "From %1"
-#~ msgstr "Dari %1"
+#~ msgid "From [_1]"
+#~ msgstr "Dari [_1]"
 
 #~ msgid "Groups"
 #~ msgstr "Kumpulan"
@@ -9653,8 +9653,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Inactive"
 #~ msgstr "Tidak Aktif"
 
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Nombor Invois: %1"
+#~ msgid "Invoice Number: [_1]"
+#~ msgstr "Nombor Invois: [_1]"
 
 #~ msgid "Languages"
 #~ msgstr "Bahasa"
@@ -9671,8 +9671,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Legacy version found.  Please upgrade first"
 #~ msgstr "Versi Legacy dijumpai. Sila naik taraf pertama"
 
-#~ msgid "Less Cash in Till At Start: %1"
-#~ msgstr "Tunai kurang di Till pada mula:%1"
+#~ msgid "Less Cash in Till At Start: [_1]"
+#~ msgstr "Tunai kurang di Till pada mula:[_1]"
 
 #~ msgid "Margin Report for Customer"
 #~ msgstr "Laporan Margin Pelanggan"
@@ -9731,8 +9731,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Posted!"
 #~ msgstr "Sudah Disimpan"
 
-#~ msgid "Print %1"
-#~ msgstr "Cetak %1"
+#~ msgid "Print [_1]"
+#~ msgstr "Cetak [_1]"
 
 #~ msgid "Print and Post"
 #~ msgstr "Cetak dan Simpan"
@@ -9740,8 +9740,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Printing"
 #~ msgstr "percetakan"
 
-#~ msgid "Project Number: %1"
-#~ msgstr "Nombor Projek: %1"
+#~ msgid "Project Number: [_1]"
+#~ msgstr "Nombor Projek: [_1]"
 
 #~ msgid "Project not on file!"
 #~ msgstr "Projek tiada dalam fail"
@@ -9749,8 +9749,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Queue"
 #~ msgstr "Queue"
 
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Nombor Sebut Harga: %1"
+#~ msgid "Quotation Number: [_1]"
+#~ msgstr "Nombor Sebut Harga: [_1]"
 
 #~ msgid "Rebuild/Upgrade?"
 #~ msgstr "Menbina semula/menaik taraf"
@@ -9767,8 +9767,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Requirements"
 #~ msgstr "Keperluan"
 
-#~ msgid "Reset Till By %1"
-#~ msgstr "Reset Till oleh%1"
+#~ msgid "Reset Till By [_1]"
+#~ msgstr "Reset Till oleh[_1]"
 
 #~ msgid "SO"
 #~ msgstr "Nota Penjualan"
@@ -9794,11 +9794,11 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Template saved!"
 #~ msgstr "Templat disimpan"
 
-#~ msgid "To %1"
-#~ msgstr "Kepada %1"
+#~ msgid "To [_1]"
+#~ msgstr "Kepada [_1]"
 
-#~ msgid "Total Cash in Drawer: %1"
-#~ msgstr "Jumlah Tunai dalam laci:%1"
+#~ msgid "Total Cash in Drawer: [_1]"
+#~ msgstr "Jumlah Tunai dalam laci:[_1]"
 
 #~ msgid "Transaction posted!"
 #~ msgstr "Transaksi berjaya di hantar!"
@@ -9806,8 +9806,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Trial Balance List"
 #~ msgstr "Senarai Baki Percubaan"
 
-#~ msgid "Unable to save %1 object"
-#~ msgstr "Tidak dapat menyimpan objek %1"
+#~ msgid "Unable to save [_1] object"
+#~ msgstr "Tidak dapat menyimpan objek [_1]"
 
 #~ msgid "Unknown version found."
 #~ msgstr "Versi tidak dikenali dijumpai"
@@ -9818,8 +9818,8 @@ msgstr "guna lebihan bayaran"
 #~ msgid "Vendor audit information not found."
 #~ msgstr "Maklumat audit Pembekal tidak dijumpai."
 
-#~ msgid "Vendor: %1"
-#~ msgstr "Pembekal: %1"
+#~ msgid "Vendor: [_1]"
+#~ msgstr "Pembekal: [_1]"
 
 #~ msgid "Warehouse deleted!"
 #~ msgstr "Gudang dipadam!"

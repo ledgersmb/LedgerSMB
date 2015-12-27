@@ -9936,11 +9936,11 @@ msgstr "Platba"
 #~ msgstr "Upravit šablonu"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Účtovací řetězec"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Jazyk"
 
 #, fuzzy
@@ -9954,7 +9954,7 @@ msgstr "Platba"
 #~ msgstr "Chybí typ účtu!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Účet"
 
 #~ msgid "Accounting"
@@ -9987,7 +9987,7 @@ msgstr "Platba"
 #~ msgstr "Zaplaceno"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Zaplaceno"
 
 #~ msgid "Connect to"
@@ -9997,7 +9997,7 @@ msgstr "Platba"
 #~ msgstr "Vytvořit účtový rozvrh"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Odběratel"
 
 #~ msgid "DBI not installed!"
@@ -10040,7 +10040,7 @@ msgstr "Platba"
 #~ msgstr "Platby"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "z"
 
 #~ msgid "Host"
@@ -10050,7 +10050,7 @@ msgstr "Platba"
 #~ msgstr "Špatná verze dat!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Číslo faktury"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10111,7 +10111,7 @@ msgstr "Platba"
 #~ msgstr "Tiskárna"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Objednávka číslo"
 
 #, fuzzy
@@ -10171,7 +10171,7 @@ msgstr "Platba"
 #~ msgstr "Využít šablony"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Dodavatel"
 
 #~ msgid "You did not enter a name!"

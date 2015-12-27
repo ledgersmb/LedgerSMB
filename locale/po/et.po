@@ -9836,23 +9836,23 @@ msgstr "Ettemaksmine"
 #~ msgstr "Muuda Töötaja"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Ettevõte"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Keel"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Lisa Standardiseeritud Tööstuskood"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Kaubaladu"
 
 #~ msgid "A"
@@ -9877,7 +9877,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Konto on salvestatud"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10060,7 +10060,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Konto saab olla, kas Nõue, Kohustuse või Tulu/Kulu tüüpi"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Ei saa märgistada mitut valikut"
 
 #~ msgid "Cannot set multiple options for Item"
@@ -10084,7 +10084,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Suletud"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Suletud"
 
 #~ msgid "Components"
@@ -10112,7 +10112,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Klient salvestatud!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klient"
 
 #~ msgid "Customers"
@@ -10164,7 +10164,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Osakond salvestatud!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Osakond"
 
 #~ msgid "Directory"
@@ -10247,7 +10247,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Reede"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Alates"
 
 #~ msgid "Generate Sales Order"
@@ -10278,7 +10278,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Vale Andmekogu versioon"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Kaubaarve Number"
 
 #~ msgid "Invoice deleted!"
@@ -10406,7 +10406,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Oracle Andmebaasi Administreerimine"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Tellimuse Number"
 
 #~ msgid "Order saved!"
@@ -10478,7 +10478,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Hinnagrupid"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Trüki"
 
 #~ msgid "Print and Post as new"
@@ -10494,7 +10494,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Projekti Number puudu!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projekti Number"
 
 #~ msgid "Project Transactions"
@@ -10522,7 +10522,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Järjekorras"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Koteeringu Number"
 
 #~ msgid "R"
@@ -10729,7 +10729,7 @@ msgstr "Ettemaksmine"
 #~ msgstr "Tarnija salvestatud!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Tarnija"
 
 #~ msgid "Vendors"

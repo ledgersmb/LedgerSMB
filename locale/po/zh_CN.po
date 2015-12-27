@@ -9843,23 +9843,23 @@ msgstr "预缴"
 #~ msgstr "编辑职员"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "业务"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "新增 GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "语言"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "新增原文"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "仓库"
 
 #, fuzzy
@@ -9882,7 +9882,7 @@ msgstr "预缴"
 #~ msgstr "巳储存帐户"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "帐户"
 
 #~ msgid "Accounting"
@@ -10031,7 +10031,7 @@ msgstr "预缴"
 #~ msgstr "已关闭"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "已关闭"
 
 #~ msgid "Components"
@@ -10050,7 +10050,7 @@ msgstr "预缴"
 #~ msgstr "巳储存客户"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "客户"
 
 #~ msgid "Customers"
@@ -10096,7 +10096,7 @@ msgstr "预缴"
 #~ msgstr "巳储存部门"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "部门"
 
 #~ msgid "Directory"
@@ -10167,7 +10167,7 @@ msgstr "预缴"
 #~ msgstr "付款"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "从"
 
 #~ msgid "Group Items"
@@ -10192,7 +10192,7 @@ msgstr "预缴"
 #~ msgstr "增加"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "发票编号"
 
 #~ msgid "Invoice deleted!"
@@ -10275,7 +10275,7 @@ msgstr "预缴"
 #~ msgstr "Oracle 资料库管理"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "订单编号"
 
 #~ msgid "Order saved!"
@@ -10330,7 +10330,7 @@ msgstr "预缴"
 #~ msgstr "价格组"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "列印"
 
 #~ msgid "Print and Post as new"
@@ -10346,7 +10346,7 @@ msgstr "预缴"
 #~ msgstr "未指明方案号码"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "方案号码"
 
 #~ msgid "Project deleted!"
@@ -10359,7 +10359,7 @@ msgstr "预缴"
 #~ msgstr "巳储存方案"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "报价单号码"
 
 #~ msgid "R"
@@ -10508,7 +10508,7 @@ msgstr "预缴"
 #~ msgstr "巳储存供应商"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "供应商"
 
 #~ msgid "Vendors"

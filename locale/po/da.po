@@ -1192,7 +1192,7 @@ msgstr "august"
 #: UI/Contact/divs/notes.html:79
 #, fuzzy
 msgid "Author: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: bin/ir.pl:648 bin/is.pl:408 bin/is.pl:703
 msgid "Automatic"
@@ -1385,7 +1385,7 @@ msgstr "Blind kopi"
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Bcc: %1"
+msgstr "Bcc: [_1]"
 
 #: UI/reconciliation/report.html:26
 #, fuzzy
@@ -1703,7 +1703,7 @@ msgstr "Cc"
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Cc: %1"
+msgstr "Cc: [_1]"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -2499,7 +2499,7 @@ msgstr "Dato"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Dato: %1"
+msgstr "Dato: [_1]"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2670,7 +2670,7 @@ msgstr "Slet planlægning"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "Sletning af et sprog vil også slette skabelonerne for sproget %1"
+msgstr "Sletning af et sprog vil også slette skabelonerne for sproget [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -3096,7 +3096,7 @@ msgstr "E-post"
 #: UI/rp-email.html:8
 #, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "E-post opgørelse sendt til %1"
+msgstr "E-post opgørelse sendt til [_1]"
 
 #: UI/io-email.html:7
 #, fuzzy
@@ -4543,7 +4543,7 @@ msgstr "Fakturanummer"
 #: LedgerSMB/DBObject/Asset.pm:290
 #, fuzzy
 msgid "Invoice not found"
-msgstr "Faktura %1 slettet!"
+msgstr "Faktura [_1] slettet!"
 
 #: UI/Reports/filters/purchase_history.html:174
 #, fuzzy
@@ -5518,7 +5518,7 @@ msgstr "Numerisk format"
 #: bin/io.pl:1191
 #, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Tal mangler i række %1"
+msgstr "Tal mangler i række [_1]"
 
 #: UI/Contact/pricelist.html:107 UI/Reports/aging_report.html:125
 #: UI/Reports/display_report.html:74
@@ -6291,22 +6291,22 @@ msgstr "Bogfør som ny"
 #: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Posterer i hovedbog %1"
+msgstr "Posterer i hovedbog [_1]"
 
 #: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Posterer leverandørfaktura %1"
+msgstr "Posterer leverandørfaktura [_1]"
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 msgid "Postscript"
@@ -6324,7 +6324,7 @@ msgstr "Indstillinger gemt!"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Redigér opsætning for %1"
+msgstr "Redigér opsætning for [_1]"
 
 #: UI/Configuration/sequence.html:14
 #, fuzzy
@@ -6392,7 +6392,7 @@ msgstr "Prisliste"
 #: UI/Contact/pricelist.tex:65
 #, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Redigér opsætning for %1"
+msgstr "Redigér opsætning for [_1]"
 
 #: sql/Pg-database.sql:795
 #, fuzzy
@@ -6431,22 +6431,22 @@ msgstr "Printer"
 #: bin/am.pl:1427
 #, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1420
 #, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "Posterer leverandørfaktura %1"
+msgstr "Posterer leverandørfaktura [_1]"
 
 #: bin/am.pl:1421
 #, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1419
 #, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1422
 #, fuzzy
@@ -6465,12 +6465,12 @@ msgstr "Redigér indkøbsordre"
 #: bin/am.pl:1424
 #, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1418
 #, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6867,7 +6867,7 @@ msgstr "Rapport for"
 #: bin/arap.pl:566
 #, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Gentagen transaktion for %1"
+msgstr "Gentagen transaktion for [_1]"
 
 #: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -7354,7 +7354,7 @@ msgstr "Gem som ny"
 #: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "Gemmer %1 %2"
+msgstr "Gemmer [_1] [_2]"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7612,7 +7612,7 @@ msgstr "Debitor faktura"
 #: bin/am.pl:1464
 #, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1467
 #, fuzzy
@@ -7636,7 +7636,7 @@ msgstr "Redigér salgsordre"
 #: bin/am.pl:1463
 #, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1470
 #, fuzzy
@@ -8137,7 +8137,7 @@ msgstr "Emne"
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8401,7 +8401,7 @@ msgstr "Varenummer"
 #: templates/xedemo/ap_transaction.html:62
 #, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8490,7 +8490,7 @@ msgstr ""
 #: templates/xedemo/work_order.tex:96
 #, fuzzy
 msgid "Tel: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 #, fuzzy
@@ -8811,7 +8811,7 @@ msgstr "til"
 #: bin/arap.pl:802 bin/io.pl:1916
 #, fuzzy
 msgid "To: [_1]"
-msgstr "To: %1"
+msgstr "To: [_1]"
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -9628,12 +9628,12 @@ msgstr "Leverandørfaktura"
 #: bin/ic.pl:1656
 #, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "%1: Kunde ikke i databasen!"
+msgstr "[_1]: Kunde ikke i databasen!"
 
 #: bin/ic.pl:1578
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "%1: Leverandør ikke i databasen!"
+msgstr "[_1]: Leverandør ikke i databasen!"
 
 #: LedgerSMB/Form.pm:710
 #, fuzzy
@@ -9763,7 +9763,7 @@ msgstr "Fradrag i løn"
 #: LedgerSMB/Scripts/setup.pm:226
 #, fuzzy
 msgid "psql not found."
-msgstr "Faktura %1 slettet!"
+msgstr "Faktura [_1] slettet!"
 
 #: bin/arap.pl:809 bin/io.pl:1922
 msgid "sent"
@@ -9812,27 +9812,27 @@ msgstr "Forudbetaling"
 #~ msgstr "Redigér medarbejder"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Forretning"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Sprog"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Ny SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Lager"
 
-#~ msgid "%1 is already a member!"
-#~ msgstr "%1 er allerede medlem!"
+#~ msgid "[_1] is already a member!"
+#~ msgstr "[_1] er allerede medlem!"
 
 #, fuzzy
 #~ msgid "A"
@@ -9857,7 +9857,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Konto gemt!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -9903,14 +9903,14 @@ msgstr "Forudbetaling"
 #~ msgid "Application Login"
 #~ msgstr "Applikation login"
 
-#~ msgid "Are you sure you want to delete Invoice Number %1?"
-#~ msgstr "Er du sikker på du vil fjerne fakturanummer %1?"
+#~ msgid "Are you sure you want to delete Invoice Number [_1]?"
+#~ msgstr "Er du sikker på du vil fjerne fakturanummer [_1]?"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Er du sikker på du vil fjerne postering"
 
-#~ msgid "Are you sure you want to delete Transaction %1"
-#~ msgstr "Er du sikker på du vil fjerne postering %1"
+#~ msgid "Are you sure you want to delete Transaction [_1]"
+#~ msgstr "Er du sikker på du vil fjerne postering [_1]"
 
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Er du sikker på at du vil slette timesedlen for"
@@ -9936,8 +9936,8 @@ msgstr "Forudbetaling"
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Revisionssporing fjernet indtil"
 
-#~ msgid "Backup sent to %1"
-#~ msgstr "Sikkerhedskopi sendt til %1"
+#~ msgid "Backup sent to [_1]"
+#~ msgstr "Sikkerhedskopi sendt til [_1]"
 
 #~ msgid "Based on"
 #~ msgstr "Baseret på"
@@ -10018,8 +10018,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Kan ikke sætte konto for mere end én af AR, AP eller IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan ikke sætte flere muligheder for %1"
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan ikke sætte flere muligheder for [_1]"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan ikke sætte produkt på lager!"
@@ -10049,8 +10049,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Kasseopgørelse"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Kasseopgørelse for %1"
+#~ msgid "Closing Till For [_1]"
+#~ msgstr "Kasseopgørelse for [_1]"
 
 #~ msgid "Components"
 #~ msgstr "Komponenter"
@@ -10074,12 +10074,12 @@ msgstr "Forudbetaling"
 #~ msgstr "Opret kontoplan"
 
 #, fuzzy
-#~ msgid "Cumulative Error: %1"
+#~ msgid "Cumulative Error: [_1]"
 #~ msgstr "Opsamlet fejl:"
 
 #, fuzzy
 #~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Opsamlet fejl: %1"
+#~ msgstr "Opsamlet fejl: [_1]"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Kunde slettet!"
@@ -10088,7 +10088,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Kunde gemt!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10106,8 +10106,8 @@ msgstr "Forudbetaling"
 #~ msgid "Database User missing!"
 #~ msgstr "Bruger af database mangler!"
 
-#~ msgid "Dataset %1 successfully created!"
-#~ msgstr "Datasæt %1 success-fuldt oprettet!"
+#~ msgid "Dataset [_1] successfully created!"
+#~ msgstr "Datasæt [_1] success-fuldt oprettet!"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "Datasæt er nyere end version!"
@@ -10140,11 +10140,11 @@ msgstr "Forudbetaling"
 #~ msgstr "Afdeling gemt!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Afdeling"
 
-#~ msgid "Directory %1 does not exist"
-#~ msgstr "Directory %1 findes ikke"
+#~ msgid "Directory [_1] does not exist"
+#~ msgstr "Directory [_1] findes ikke"
 
 #~ msgid "Discover"
 #~ msgstr "Discover"
@@ -10219,7 +10219,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Fredag"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Fra"
 
 #~ msgid "GL Transaction"
@@ -10253,7 +10253,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Forkert version af datasæt!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice deleted!"
@@ -10293,8 +10293,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Løbenumre og standardkonti"
 
 #, fuzzy
-#~ msgid "Less Cash in Till At Start: %1"
-#~ msgstr "Mindre initiel kassebeholdning: %1"
+#~ msgid "Less Cash in Till At Start: [_1]"
+#~ msgstr "Mindre initiel kassebeholdning: [_1]"
 
 #~ msgid "Licensed to"
 #~ msgstr "Udført for"
@@ -10359,8 +10359,8 @@ msgstr "Forudbetaling"
 #~ msgid "No Services on file!"
 #~ msgstr "Ingen serviceydelser i databasen!"
 
-#~ msgid "No email address for %1"
-#~ msgstr "Ingen e-mail-adresse for %1"
+#~ msgid "No email address for [_1]"
+#~ msgstr "Ingen e-mail-adresse for [_1]"
 
 #~ msgid "No open Jobs!"
 #~ msgstr "Ingen åbne projekter!"
@@ -10385,7 +10385,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Kasseopgørelse"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Ordrenummer"
 
 #~ msgid "Order saved!"
@@ -10451,7 +10451,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Prisgrupper"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Udskriv"
 
 #~ msgid "Print and Post as new"
@@ -10464,7 +10464,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Projektnummer mangler!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektnummer"
 
 #~ msgid "Project deleted!"
@@ -10489,7 +10489,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Sat i kø"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tilbudsnummer"
 
 #~ msgid "R"
@@ -10514,8 +10514,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Krav"
 
 #, fuzzy
-#~ msgid "Reset Till By %1"
-#~ msgstr "Nulstil kasse med %1"
+#~ msgid "Reset Till By [_1]"
+#~ msgstr "Nulstil kasse med [_1]"
 
 #~ msgid "Role"
 #~ msgstr "Rolle"
@@ -10559,11 +10559,11 @@ msgstr "Forudbetaling"
 #~ msgid "Spoolfile"
 #~ msgstr "køfil"
 
-#~ msgid "Statement - %1"
-#~ msgstr "Opgørelse - %1"
+#~ msgid "Statement - [_1]"
+#~ msgstr "Opgørelse - [_1]"
 
-#~ msgid "Statement sent to %1"
-#~ msgstr "Opgørelse sendt til %1"
+#~ msgid "Statement sent to [_1]"
+#~ msgstr "Opgørelse sendt til [_1]"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Opgørelser sendt til printer"
@@ -10628,8 +10628,8 @@ msgstr "Forudbetaling"
 #~ msgid "Time Card deleted!"
 #~ msgstr "Timeseddel slettet!"
 
-#~ msgid "To %1"
-#~ msgstr "Til %1"
+#~ msgid "To [_1]"
+#~ msgstr "Til [_1]"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -10641,8 +10641,8 @@ msgstr "Forudbetaling"
 #~ "indstillinger under det nye brugernavn."
 
 #, fuzzy
-#~ msgid "Total Cash in Drawer: %1"
-#~ msgstr "Totalt kontant i skuffen: %1"
+#~ msgid "Total Cash in Drawer: [_1]"
+#~ msgstr "Totalt kontant i skuffen: [_1]"
 
 #~ msgid "Transaction deleted!"
 #~ msgstr "Postering slettet!"
@@ -10666,8 +10666,8 @@ msgstr "Forudbetaling"
 #~ msgid "Tuesday"
 #~ msgstr "Tirsdag"
 
-#~ msgid "Upgrading to Version %1 ..."
-#~ msgstr "Opgraderer til version %1 ..."
+#~ msgid "Upgrading to Version [_1] ..."
+#~ msgstr "Opgraderer til version [_1] ..."
 
 #~ msgid "Use Templates"
 #~ msgstr "Brug skabeloner"
@@ -10688,7 +10688,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Leverandør gemt!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverandør"
 
 #~ msgid "Vendors"
@@ -10719,8 +10719,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Du er logget ud"
 
 #, fuzzy
-#~ msgid "You are over by %1"
-#~ msgstr "Du har %1 for meget"
+#~ msgid "You are over by [_1]"
+#~ msgstr "Du har [_1] for meget"
 
 #~ msgid "You are printing and saving an existing order"
 #~ msgstr "Du udskriver og gemmer en eksisterende ordre"
@@ -10735,8 +10735,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Du gemmer et eksisterende tilbud"
 
 #, fuzzy
-#~ msgid "You are under by %1"
-#~ msgstr "Du har %1 for lidt"
+#~ msgid "You are under by [_1]"
+#~ msgstr "Du har [_1] for lidt"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Du angav ikke et navn"

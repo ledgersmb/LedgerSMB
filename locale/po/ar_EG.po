@@ -9913,11 +9913,11 @@ msgstr "الدفع النقدى"
 #~ msgstr "اضافة موظف"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "اللغة"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "اضافة كود صناعى قياسى"
 
 #, fuzzy
@@ -9934,7 +9934,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "نوع الحساب غير موجود"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "حساب"
 
 #~ msgid "Accounting"
@@ -9994,7 +9994,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "مغلق"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "مغلق"
 
 #~ msgid "Components"
@@ -10010,7 +10010,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "الغي العميل"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "العميل"
 
 #~ msgid "Customers"
@@ -10029,7 +10029,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "تناقص"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "قسم"
 
 #, fuzzy
@@ -10070,7 +10070,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "المدفوعات"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "من"
 
 #~ msgid "Group Items"
@@ -10092,7 +10092,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "زيادة"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "رقم الفاتورة"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10148,7 +10148,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "سجل"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "طباعة"
 
 #, fuzzy
@@ -10159,7 +10159,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "رقم المشروع غير موجود"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "رقم المشروع"
 
 #~ msgid "Project deleted!"
@@ -10172,7 +10172,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "خزن المشروع"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "رقم عرض السعر"
 
 #, fuzzy
@@ -10239,7 +10239,7 @@ msgstr "الدفع النقدى"
 #~ msgstr "الغي المورد"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "المورد"
 
 #~ msgid "Vendors"

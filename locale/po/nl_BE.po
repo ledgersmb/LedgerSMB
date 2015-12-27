@@ -9892,23 +9892,23 @@ msgstr "Voorschot"
 #~ msgstr "Werknemer wijzigen"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Zaaktype"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Taal"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "SIC toevoegen"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Magazijn"
 
 #~ msgid "A"
@@ -9930,7 +9930,7 @@ msgstr "Voorschot"
 #~ msgstr "Rekening opgeslagen"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Rekening"
 
 #~ msgid "Accounting"
@@ -10052,7 +10052,7 @@ msgstr "Voorschot"
 #~ "inventarisrekening"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Kan de meerdere opties voor niet instellen"
 
 #~ msgid "Change"
@@ -10069,7 +10069,7 @@ msgstr "Voorschot"
 #~ msgstr "Afgesloten"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Afgesloten"
 
 #~ msgid "Components"
@@ -10088,7 +10088,7 @@ msgstr "Voorschot"
 #~ msgstr "Klant opgeslagen!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klant"
 
 #~ msgid "Customers"
@@ -10134,7 +10134,7 @@ msgstr "Voorschot"
 #~ msgstr "Afdeling opgeslagen!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Afdeling"
 
 #~ msgid "Directory"
@@ -10202,7 +10202,7 @@ msgstr "Voorschot"
 #~ msgstr "Betalingen"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Van"
 
 #~ msgid "Group Items"
@@ -10231,7 +10231,7 @@ msgstr "Voorschot"
 #~ msgstr "Toename"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Factuurnummer"
 
 #~ msgid "Invoice deleted!"
@@ -10319,7 +10319,7 @@ msgstr "Voorschot"
 #~ msgstr "Oracle Database Administratie"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Referentie"
 
 #~ msgid "Order saved!"
@@ -10368,7 +10368,7 @@ msgstr "Voorschot"
 #~ msgstr "Prijsgroepen"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Afdrukken"
 
 #, fuzzy
@@ -10382,7 +10382,7 @@ msgstr "Voorschot"
 #~ msgstr "Projectnummer ontbreekt!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projectnummer"
 
 #~ msgid "Project deleted!"
@@ -10395,7 +10395,7 @@ msgstr "Voorschot"
 #~ msgstr "Project opgeslagen!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Offertenummer"
 
 #~ msgid "R"
@@ -10541,7 +10541,7 @@ msgstr "Voorschot"
 #~ msgstr "Leverancier opgeslagen!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverancier"
 
 #~ msgid "Vendors"

@@ -9864,23 +9864,23 @@ msgstr "Przedpłata"
 #~ msgstr "Zmiany Pracownika"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Działalność"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Język"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Dodaj EKD"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Magazyn"
 
 #~ msgid "A"
@@ -9902,7 +9902,7 @@ msgstr "Przedpłata"
 #~ msgstr "Zapisano Konto"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -10018,7 +10018,7 @@ msgstr "Przedpłata"
 #~ msgstr "Nie można ustawić konta na więcej niż jeden rodzaj"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Nie można umieszczać wielokrotnego wyboru dla"
 
 #~ msgid "Change"
@@ -10035,7 +10035,7 @@ msgstr "Przedpłata"
 #~ msgstr "Zamknięto"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Zamknięto"
 
 #~ msgid "Components"
@@ -10057,7 +10057,7 @@ msgstr "Przedpłata"
 #~ msgstr "Odbiorca zapisany!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Odbiorca"
 
 #~ msgid "Customers"
@@ -10103,7 +10103,7 @@ msgstr "Przedpłata"
 #~ msgstr "Wydział zapisany"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Wydział"
 
 #~ msgid "Directory"
@@ -10172,7 +10172,7 @@ msgstr "Przedpłata"
 #~ msgstr "Wypłaty"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Od"
 
 #~ msgid "Group Items"
@@ -10197,7 +10197,7 @@ msgstr "Przedpłata"
 #~ msgstr "Zwiększenie"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Numer Faktury"
 
 #~ msgid "Invoice deleted!"
@@ -10286,7 +10286,7 @@ msgstr "Przedpłata"
 #~ msgstr "Administracja Bazy Danych Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Numer ZLecenia"
 
 #~ msgid "Order saved!"
@@ -10335,7 +10335,7 @@ msgstr "Przedpłata"
 #~ msgstr "Grupy cenowa"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Wydrukuj"
 
 #, fuzzy
@@ -10349,7 +10349,7 @@ msgstr "Przedpłata"
 #~ msgstr "Brak Numeru Projektu"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Numer Projektu"
 
 #~ msgid "Project deleted!"
@@ -10362,7 +10362,7 @@ msgstr "Przedpłata"
 #~ msgstr "Projekt zapisany"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Numer Oferty"
 
 #~ msgid "R"
@@ -10521,7 +10521,7 @@ msgstr "Przedpłata"
 #~ msgstr "Dostawca zapisany"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Dostawca"
 
 #~ msgid "Vendors"

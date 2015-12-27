@@ -9839,23 +9839,23 @@ msgstr "Авансово плащане"
 #~ msgstr "Редакция на сътрудник"
 
 #, fuzzy
-#~ msgid "%1 Business"
+#~ msgid "[_1] Business"
 #~ msgstr "Направления"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "GIFI"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Език"
 
 #, fuzzy
-#~ msgid "%1 SIC"
+#~ msgid "[_1] SIC"
 #~ msgstr "Добави SIC"
 
 #, fuzzy
-#~ msgid "%1 Warehouse"
+#~ msgid "[_1] Warehouse"
 #~ msgstr "Склад"
 
 #~ msgid "A"
@@ -9880,7 +9880,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Сметката е запазена!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Сметка"
 
 #~ msgid "Accounting"
@@ -10017,7 +10017,7 @@ msgstr "Авансово плащане"
 #~ "инвентар)!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Не задавай повече от едно значение за"
 
 #~ msgid "Cannot stock Assembly!"
@@ -10038,7 +10038,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Затворено"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Затворено"
 
 #~ msgid "Components"
@@ -10066,7 +10066,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Клиента е запазен!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Клиент"
 
 #~ msgid "Customers"
@@ -10118,7 +10118,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Отделът е запазен!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Отдел"
 
 #~ msgid "Directory"
@@ -10193,7 +10193,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Плащания"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "От"
 
 #~ msgid "Generate Sales Order"
@@ -10224,7 +10224,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Коригирай версията на базата-данни!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Фактура номер"
 
 #~ msgid "Invoice deleted!"
@@ -10325,7 +10325,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Адмистриране на бази-данни Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Поръчка номер"
 
 #~ msgid "Order saved!"
@@ -10397,7 +10397,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Ценова група"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Печат"
 
 #~ msgid "Print and Post as new"
@@ -10407,7 +10407,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Разпечатано"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Номер на проекта"
 
 #~ msgid "Project Transactions"
@@ -10429,7 +10429,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Изпълнено заданието"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Номер на задание"
 
 #~ msgid "R"
@@ -10592,7 +10592,7 @@ msgstr "Авансово плащане"
 #~ msgstr "Доставчика е запазен!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Доставчик"
 
 #~ msgid "Vendors"

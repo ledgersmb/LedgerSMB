@@ -9921,7 +9921,7 @@ msgstr "Ödeme"
 #~ msgstr "Şablonu Düzenle"
 
 #, fuzzy
-#~ msgid "%1 Language"
+#~ msgid "[_1] Language"
 #~ msgstr "Dil"
 
 #, fuzzy
@@ -9932,7 +9932,7 @@ msgstr "Ödeme"
 #~ msgstr "Program bilgileri"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Hesap"
 
 #~ msgid "Accounting"
@@ -9964,7 +9964,7 @@ msgstr "Ödeme"
 #~ msgstr "Hesap Planı Oluştur"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Alıcı"
 
 #~ msgid "DBI not installed!"
@@ -10007,14 +10007,14 @@ msgstr "Ödeme"
 #~ msgstr "Ödemeler"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Başlangıç"
 
 #~ msgid "Host"
 #~ msgstr "Host"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fatura No"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10068,7 +10068,7 @@ msgstr "Ödeme"
 #~ msgstr "Yazıcı"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Sipariş No"
 
 #, fuzzy
@@ -10117,7 +10117,7 @@ msgstr "Ödeme"
 #~ msgstr "Update Dataset"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Satıcı"
 
 #~ msgid "You did not enter a name!"

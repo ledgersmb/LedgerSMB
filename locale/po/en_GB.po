@@ -9723,7 +9723,7 @@ msgstr "Create Chart of Accounts"
 #~ msgstr "Connect to"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Debtor"
 
 #~ msgid "DBI not installed!"
@@ -9788,7 +9788,7 @@ msgstr "Create Chart of Accounts"
 #~ msgstr "Port"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Debtor Number"
 
 #~ msgid "Send by E-Mail"
@@ -9820,7 +9820,7 @@ msgstr "Create Chart of Accounts"
 #~ msgstr "Update Dataset"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Creditor"
 
 #~ msgid "You must enter a host and port for local and remote connections!"

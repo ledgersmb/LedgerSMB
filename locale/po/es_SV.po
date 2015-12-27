@@ -9919,7 +9919,7 @@ msgstr "Pago"
 #~ msgstr "Empleado"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
+#~ msgid "[_1] GIFI"
 #~ msgstr "Código GIFI"
 
 #, fuzzy
@@ -9936,7 +9936,7 @@ msgstr "Pago"
 #~ msgstr "No existe el tipo de la cuenta!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Cuenta"
 
 #~ msgid "Accounting"
@@ -9993,7 +9993,7 @@ msgstr "Pago"
 #~ msgstr "Cerrado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerrado"
 
 #~ msgid "Connect to"
@@ -10006,7 +10006,7 @@ msgstr "Pago"
 #~ msgstr "Cliente borrado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "DBI not installed!"
@@ -10071,7 +10071,7 @@ msgstr "Pago"
 #~ msgstr "Pagos"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Desde"
 
 #~ msgid "Group Items"
@@ -10093,7 +10093,7 @@ msgstr "Pago"
 #~ msgstr "Incrementa"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de Factura"
 
 #~ msgid "Licensed to"
@@ -10166,7 +10166,7 @@ msgstr "Pago"
 #~ msgstr "Enviado!"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10177,7 +10177,7 @@ msgstr "Pago"
 #~ msgstr "Falta número de proyecto!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número de Proyecto"
 
 #~ msgid "Project deleted!"
@@ -10271,7 +10271,7 @@ msgstr "Pago"
 #~ msgstr "Proveedor borrado!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveedor"
 
 #~ msgid "Vendors"
