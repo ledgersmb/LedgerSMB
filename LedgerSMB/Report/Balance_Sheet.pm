@@ -75,7 +75,7 @@ sub run_report {
     my @lines = $self->exec_method(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);
-    my $earn_id = ($row) ? $row->{value} : -1;
+    my $earn_id = ($row && $row->{value}) ? $row->{value} : -1;
     my $row_map = ($self->gifi) ?
         sub { my ($line) = @_;
               return ($line->{account_type} eq 'H')
@@ -92,22 +92,35 @@ sub run_report {
                   # If the 'earn_id' configuration is missing,
                   #  this is the case we hit
                   # (the query doesn't know which node to aggregate into)
-                  return [ [ 'Q', 'q' ],
-                           [ 'Q' ],
+                  return [ [ 'QL', 'Q', 'q' ],
+                           [ 'QL', 'Q' ],
+                           [ 'QL' ],
                       ];
               }
               elsif ($line->{account_type} eq 'A') {
-                  return [ [ $line->{account_category},
-                             $line->{account_number} ],
-                           [ $line->{account_category} ],
-                      ];
+                  if ($line->{account_category} eq 'A') {
+                      return [ [ $line->{account_category},
+                                 $line->{account_number} ],
+                               [ $line->{account_category} ],
+                          ];
+                  }
+                  else {
+                      return [ [ 'QL',
+                                 $line->{account_category},
+                                 $line->{account_number} ],
+                               [ 'QL',
+                                 $line->{account_category} ],
+                               [ 'QL' ],
+                          ];
+                  }
               }
               elsif ($line->{account_type} eq 'H'
                      && $line->{account_id} == $earn_id) {
                   # If the 'earn_id' is configured, we hit this case
                   # be sure to map the heading
-                  return [ [ 'Q', 'q' ],
-                           [ 'Q' ],
+                  return [ [ 'QL', 'Q', 'q' ],
+                           [ 'QL', 'Q' ],
+                           [ 'QL' ],
                       ];
               }
               return [];
@@ -163,45 +176,59 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Expenses'),
+                                      $self->Text('Expenses'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Expenses') },
+                                      $self->Text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Income'),
+                                      $self->Text('Income'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Income') },
-                         'A' => { 'account_number' => 'A',
+                                      $self->Text('Income') },
+                         'A' => { 'order' => '1',
+                                  'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Assets'),
+                                      $self->Text('Assets'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Assets') },
-                         'L' => { 'account_number' => 'L',
+                                      $self->Text('Assets') },
+                         'QL' => { 'order' => '2',
+                                  'account_number' => '',
+                                  'account_category' => 'QL',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->Text('Equity & Liabilities'),
+                                  'account_description' =>
+                                      $self->Text('Equity & Liabilities') },
+                         'L' => { 'order' => '2',
+                                  'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
+                                  'heading_path' => [ 'QL' ],
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Liabilities'),
+                                      $self->Text('Liabilities'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Liabilities') },
-                         'Q' => { 'account_number' => 'Q',
+                                      $self->Text('Liabilities') },
+                         'Q' => { 'order' => '3',
+                                  'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
+                                  'heading_path' => [ 'QL' ],
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Equity'),
+                                      $self->Text('Equity'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Equity') },
-                         'q' => { 'account_number' => '',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
-                                  'heading_path' => [ 'Q' ],
+                                      $self->Text('Equity') },
+                         'q' => { 'order' => '1',
+                                  'account_number' => '',
+                                  'account_category' => '',
+                                  'account_type' => 'A',
+                                  'heading_path' => [ 'QL', 'Q' ],
                                   'account_desc' =>
-                                      LedgerSMB::Report::text('Current earnings'),
+                                      $self->Text('Current earnings'),
                                   'account_description' =>
-                                      LedgerSMB::Report::text('Current earnings') },
+                                      $self->Text('Current earnings') },
             );
     }
     else {

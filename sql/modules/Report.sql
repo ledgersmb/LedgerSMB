@@ -627,6 +627,7 @@ END LOOP;
 END;
 $$;
 
+DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date);
 DROP TYPE IF EXISTS balance_sheet_line CASCADE;
 
 CREATE TYPE balance_sheet_line AS (
@@ -642,7 +643,9 @@ CREATE TYPE balance_sheet_line AS (
     heading_path int[]
 );
 
-CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date)
+
+CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date,
+                                                 in_language text)
 RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
 $$
 WITH hdr_meta AS (
@@ -653,10 +656,14 @@ WITH hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($2,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
            -- legacy (no earn_id) returns all headers
@@ -671,10 +678,14 @@ acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($2,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
            -- legacy (no earn_id) returns all accounts; bug?
@@ -687,6 +698,7 @@ acc_balance AS (
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount) <> 0.00
 ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -708,9 +720,10 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-COMMENT ON function report__balance_sheet(date) IS
+COMMENT ON function report__balance_sheet(date, text) IS
 $$ This produces a balance sheet and the paths (acount numbers) of all headings
-necessary. $$;
+necessary; output is generated in the language requested, or in the
+users default language if not available. $$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 

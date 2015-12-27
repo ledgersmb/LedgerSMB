@@ -1,0 +1,54 @@
+#!/usr/bin/perl
+
+my %dict;
+
+sub ensure_entry {
+    my ($string) = @_;
+
+    $dict{$string} = []
+        unless exists $dict{$string};
+}
+
+
+while (<>) {
+    chomp;
+    my $file = $_;
+    open SOURCE, "<:encoding(UTF-8)", $file
+        or die "Error opening '$file' for reading: $!";
+
+    my $line_no = 0;
+    while (<SOURCE>) {
+        ++$line_no;
+        if (m/text\s*\(\s*"((\\.|[^"])*)"/) {
+            my $match = $1;
+
+            if ($match !~ m/(?<!\\)\$/g) {
+                &ensure_entry($match);
+                push @{$dict{$match}}, "#: $file:$line_no";
+            }
+            else {
+                warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
+            }
+        }
+        elsif (m/text\s*\(\s*'((''|[^'])*)'/) {
+            my $match = $1;
+
+            # recode 'match' to double quoting
+            $match =~ s/''/'/g;
+            $match =~ s/\\/\\\\/g;
+            $match =~ s/"/\\"/g;
+
+            &ensure_entry($match);
+            push @{$dict{$match}}, "#: $file:$line_no";
+        }
+    }
+    close SOURCE;
+}
+
+foreach my $string (keys %dict) {
+    foreach my $location (@{$dict{$string}}) {
+        print "$location\n";
+    }
+    print "msgid \"$string\"\n";
+    print "msgstr \"\"\n\n";
+}

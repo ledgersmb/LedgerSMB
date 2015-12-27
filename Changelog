@@ -1,6 +1,19 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.21
+* Added drilldown to AR outstanding report (Chris T GH1053)
+* Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
+* Fixed order of PNL Account Category is Off (Erik H, GH1069)
+* FEATURE: Added (back) user-selectable report language (Erik H GH1106)
+* Fixed missing report styling on financial reports (Erik H GH1080)
+* Fixed reports show totals above sections (Erik H GH1083)
+* Fixed 'Defaults' screen saves NULL 'earn_id' breaks PNL (Erik H GH1117)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
 * Added running balance to report drill downs (Chris T, GH1007)
@@ -38,6 +51,7 @@ Changelog for 1.4.19
 
 Chris T is Chris Travers
 
+
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
 * Fixed Net Book Value reporting '0' before depreciation (GH 879, ChrisT)
@@ -59,6 +73,7 @@ Changelog for 1.4.18
 ChrisT is Chris Travers
 NickP is Nick Prater
 Rami H is Rami Hovi
+
 
 
 Changelog for 1.4.17

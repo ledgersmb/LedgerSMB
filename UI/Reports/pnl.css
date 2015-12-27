@@ -30,8 +30,9 @@ tr.sectionhead {
 tr.sectionhead th {
         padding-top: 2em;
         margin-top: 4em;
-        font-size: 120%;
         font-weight: bold;
+        white-space: pre;
+        text-align: right;
 }
 
 td.total {
@@ -42,7 +43,7 @@ td.total {
 }
 
 th {
-	vertical-align: bottom;	
+	vertical-align: bottom;
 }
 
 table {
