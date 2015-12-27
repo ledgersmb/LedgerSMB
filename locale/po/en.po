@@ -2,22 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
-msgstr ""
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-msgid "$operation Employee"
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
@@ -3375,9 +3366,6 @@ msgstr ""
 
 #: UI/Contact/divs/files.html:17
 msgid "Files attached to Entity"
-msgstr ""
-
-msgid "Filtering $t"
 msgstr ""
 
 #: UI/payments/payments_detail.html:114

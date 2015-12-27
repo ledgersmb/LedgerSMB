@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "Last-Translator: Dimitris Andavoglou <dimitrisand@nortech.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,16 +34,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Τιμολόγια"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Επεξεργασία Εργαζομένου"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3806,10 +3796,6 @@ msgstr "Επεξεργασία λογαριασμού"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Εξάρτημα"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Προπληρωμή"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9933,8 +9919,8 @@ msgid "use of an overpayment"
 msgstr "Προπληρωμή"
 
 #, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Γλώσσα"
+#~ msgid "$operation Employee"
+#~ msgstr "Επεξεργασία Εργαζομένου"
 
 #, fuzzy
 #~ msgid "A"
@@ -9944,7 +9930,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Ο τύπος του κωδικού λείπει"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Λογαριασμός"
 
 #~ msgid "Accounting"
@@ -10004,7 +9990,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Κλεισμένο"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Κλεισμένο"
 
 #~ msgid "Components"
@@ -10020,7 +10006,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Ο πελάτης διαγράφηκε!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Πελάτης"
 
 #~ msgid "Customers"
@@ -10054,7 +10040,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Τμήμα διαγράφηκε"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Τμήμα"
 
 #~ msgid "Directory"
@@ -10091,7 +10077,11 @@ msgstr "Προπληρωμή"
 #~ msgstr "Existing Datasets"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Προπληρωμή"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Από"
 
 #~ msgid "Host"
@@ -10104,7 +10094,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Αύξηση"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Αρ. τιμολογίου"
 
 #~ msgid "Languages"
@@ -10164,7 +10154,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Port"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Εκτύπωση"
 
 #, fuzzy
@@ -10175,7 +10165,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Εκτυπώνεται..."
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Αριθμός έργου"
 
 #, fuzzy
@@ -10218,7 +10208,7 @@ msgstr "Προπληρωμή"
 #~ msgstr "Creditor saved!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Creditor"
 
 #~ msgid "Vendors"

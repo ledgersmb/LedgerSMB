@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturas"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Funcionário"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3806,10 +3796,6 @@ msgstr "Editar Conta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Attachment"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagamentos"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9937,12 +9923,8 @@ msgid "use of an overpayment"
 msgstr "Pagamento"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "CFOP - Código Fiscal da Operação"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Língua"
+#~ msgid "$operation Employee"
+#~ msgstr "Funcionário"
 
 #, fuzzy
 #~ msgid "A"
@@ -9958,7 +9940,7 @@ msgstr "Pagamento"
 #~ msgstr "Tipo de Conta não encontrado!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Conta"
 
 #~ msgid "Accounting"
@@ -10015,7 +9997,7 @@ msgstr "Pagamento"
 #~ msgstr "Fechado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Fechado"
 
 #~ msgid "Connect to"
@@ -10028,7 +10010,7 @@ msgstr "Pagamento"
 #~ msgstr "Cliente apagado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "DBI not installed!"
@@ -10074,7 +10056,11 @@ msgstr "Pagamento"
 #~ msgstr "Datasets Existentes"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pagamentos"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Host"
@@ -10087,7 +10073,7 @@ msgstr "Pagamento"
 #~ msgstr "Versão Dataset incorrecta!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de Factura"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10152,7 +10138,7 @@ msgstr "Pagamento"
 #~ msgstr "Processar como novo"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10160,7 +10146,7 @@ msgstr "Pagamento"
 #~ msgstr "Imprimir"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Falta o número do projecto"
 
 #~ msgid "Project deleted!"
@@ -10245,7 +10231,7 @@ msgstr "Pagamento"
 #~ msgstr "Fornecedor apagado"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Fornecedor"
 
 #~ msgid "You did not enter a name!"
@@ -10253,6 +10239,10 @@ msgstr "Pagamento"
 
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr "Tem de indicar host e port para ligações locais e remotas!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "CFOP - Código Fiscal da Operação"
 
 #, fuzzy
 #~ msgid "[_1] Language"

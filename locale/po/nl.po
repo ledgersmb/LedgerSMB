@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "PO-Revision-Date: 2014-10-22 18:01+0200\n"
 "Last-Translator: Frans <f.van.der.star@gmail.com>\n"
 "Language: nl\n"
@@ -41,17 +41,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturen"
-
-msgid "$entity_classname Number"
-msgstr "Bedrijfseenheid Naam Nummer"
-
-#, fuzzy
-msgid "$operation $entity_classname"
-msgstr "Bedrijfseenheid Naam Nummer"
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Werknemer Wijzigen"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 #, fuzzy
@@ -316,7 +305,7 @@ msgstr "Rekening niet gevonden"
 #: bin/gl.pl:634
 #, fuzzy
 msgid "Account [_1] not found."
-msgstr "Rekening %1 niet gevonden"
+msgstr "Rekening [_1] niet gevonden"
 
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
@@ -1362,7 +1351,7 @@ msgstr "Bcc"
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Bcc: %1"
+msgstr "Bcc: [_1]"
 
 #: UI/reconciliation/report.html:26
 #, fuzzy
@@ -1680,7 +1669,7 @@ msgstr "Cc"
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Cc: %1"
+msgstr "Cc: [_1]"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -2468,7 +2457,7 @@ msgstr "Datum tot"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Datum : %1"
+msgstr "Datum : [_1]"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -3048,7 +3037,7 @@ msgstr "E-mail"
 #: UI/rp-email.html:8
 #, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "E-mail Overzicht aan %1"
+msgstr "E-mail Overzicht aan [_1]"
 
 #: UI/io-email.html:7
 #, fuzzy
@@ -3450,7 +3439,7 @@ msgstr "Functionele fout"
 #: LedgerSMB/Scripts/setup.pm:452
 #, fuzzy
 msgid "Error while opening directory: [_1]"
-msgstr "Four bij het openen van de directory %1"
+msgstr "Four bij het openen van de directory [_1]"
 
 #: UI/payments/check_job.html:31
 msgid "Error:"
@@ -3698,10 +3687,6 @@ msgstr "Rekening Wijzigen"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Bijgevoegd bestandstype"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Terug Betalingen"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -4493,7 +4478,7 @@ msgstr "Factuurcode"
 #: LedgerSMB/DBObject/Asset.pm:290
 #, fuzzy
 msgid "Invoice not found"
-msgstr "Factuur %1 verwijderd!"
+msgstr "Factuur [_1] verwijderd!"
 
 #: UI/Reports/filters/purchase_history.html:174
 #, fuzzy
@@ -4849,17 +4834,17 @@ msgstr "Geblokkeerd door"
 #: UI/setup/confirm_operation.html:9
 #, fuzzy
 msgid "Logged in as"
-msgstr "Login in %1"
+msgstr "Login in [_1]"
 
 #: UI/menu/expanding.html:6
 #, fuzzy
 msgid "Logged in as [_1]"
-msgstr "Login in %1"
+msgstr "Login in [_1]"
 
 #: UI/menu/expanding.html:5
 #, fuzzy
 msgid "Logged into [_1]"
-msgstr "Login in %1"
+msgstr "Login in [_1]"
 
 #: UI/logout.html:26
 msgid "Logged out due to inactivity"
@@ -6805,7 +6790,7 @@ msgstr "Rapport voor"
 #: bin/arap.pl:566
 #, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Herhalende Transactie voor %1"
+msgstr "Herhalende Transactie voor [_1]"
 
 #: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -7525,7 +7510,7 @@ msgstr "Verkoopprijs"
 #: bin/am.pl:1472
 #, fuzzy
 msgid "Sending Bin List [_1]"
-msgstr "Login in %1"
+msgstr "Login in [_1]"
 
 #: bin/am.pl:1465
 #, fuzzy
@@ -8064,7 +8049,7 @@ msgstr "Onderwerp"
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Onderwerp: %1"
+msgstr "Onderwerp: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8323,7 +8308,7 @@ msgstr "Artikel Nummer"
 #: templates/xedemo/ap_transaction.html:62
 #, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Onderwerp: %1"
+msgstr "Onderwerp: [_1]"
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8412,7 +8397,7 @@ msgstr ""
 #: templates/xedemo/work_order.tex:96
 #, fuzzy
 msgid "Tel: [_1]"
-msgstr "Onderwerp: %1"
+msgstr "Onderwerp: [_1]"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 #, fuzzy
@@ -9673,7 +9658,7 @@ msgstr "Productie"
 #: LedgerSMB/Scripts/setup.pm:226
 #, fuzzy
 msgid "psql not found."
-msgstr "Factuur %1 verwijderd!"
+msgstr "Factuur [_1] verwijderd!"
 
 #: bin/arap.pl:809 bin/io.pl:1922
 msgid "sent"
@@ -9716,31 +9701,19 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid " missing!"
 #~ msgstr "Code ontbreekt!"
 
+#~ msgid "$entity_classname Number"
+#~ msgstr "Bedrijfseenheid Naam Nummer"
+
+#, fuzzy
+#~ msgid "$operation $entity_classname"
+#~ msgstr "Bedrijfseenheid Naam Nummer"
+
+#, fuzzy
+#~ msgid "$operation Employee"
+#~ msgstr "Werknemer Wijzigen"
+
 #~ msgid "$operation Person"
 #~ msgstr "Uitvoerende persoon"
-
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Bedrijfsactiviteit"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Taal"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "SIC"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Magazijn"
-
-#~ msgid "%1 locked!"
-#~ msgstr "%1 geblokkeerd!"
 
 #~ msgid "- Used"
 #~ msgstr "Verbruikt"
@@ -9773,7 +9746,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Rekening Opgeslagen"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Rekening"
 
 #~ msgid "Accounting"
@@ -9987,12 +9960,12 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ "Kan rekening niet toekennen behalve aan ofwel Debiteuren, Crediteuren of "
 #~ "Inventaris"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan slechts één menuoptie instellen voor"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Kan niet verschillende opties voor Artikel toekennen"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan slechts één menuoptie instellen voor"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan assemblage niet inslaan"
@@ -10022,8 +9995,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Sluit Kassa"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Afsluiten Kassa voor %1"
+#~ msgid "Closing Till For [_1]"
+#~ msgstr "Afsluiten Kassa voor [_1]"
 
 #~ msgid "Components"
 #~ msgstr "Componenten"
@@ -10053,12 +10026,12 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Kredietkaart Track"
 
 #, fuzzy
-#~ msgid "Cumulative Error: %1"
-#~ msgstr "Cumulatieve Fout:"
-
-#, fuzzy
 #~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Cumulatieve Fout: %1"
+#~ msgstr ""
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Cumulatieve Fout:\n"
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Cumulatieve Fout: [_1]"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Klant verwijderd!"
@@ -10067,7 +10040,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Klant opgeslagen!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klant"
 
 #~ msgid "Customers"
@@ -10122,7 +10095,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Afdeling opgeslagen!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Afdeling"
 
 #~ msgid "Depreciation saved!"
@@ -10208,11 +10181,15 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "Existing Datasets"
 #~ msgstr "Bestaande Datasets"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Terug Betalingen"
+
 #~ msgid "Friday"
 #~ msgstr "vrijdag"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Van"
 
 #~ msgid "Generate Sales Order"
@@ -10252,7 +10229,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Toename"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Factuurnummer"
 
 #~ msgid "Invoice deleted!"
@@ -10308,8 +10285,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "ledgerSMB 1.4 aangetroffen"
 
 #, fuzzy
-#~ msgid "Less Cash in Till At Start: %1"
-#~ msgstr "Minder Geld in Kassa aan Begin: %1"
+#~ msgid "Less Cash in Till At Start: [_1]"
+#~ msgstr "Minder Geld in Kassa aan Begin: [_1]"
 
 #~ msgid "Licensed to"
 #~ msgstr "Gelicenseerd aan"
@@ -10412,7 +10389,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Oracle Database Administratie"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Order Nummer"
 
 #~ msgid "Order saved!"
@@ -10492,7 +10469,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Prijsgroepen"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Afdrukken"
 
 #~ msgid "Print and Post"
@@ -10511,7 +10488,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Projectcode ontbreekt!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Project Nummer"
 
 #~ msgid "Project Transactions"
@@ -10539,7 +10516,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "In Wachtrij Gezet"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Offertenummer"
 
 #~ msgid "R"
@@ -10573,8 +10550,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Vereisten"
 
 #, fuzzy
-#~ msgid "Reset Till By %1"
-#~ msgstr "Reset Kassa Op %1"
+#~ msgid "Reset Till By [_1]"
+#~ msgstr "Reset Kassa Op [_1]"
 
 #~ msgid "Role"
 #~ msgstr "Rol"
@@ -10639,11 +10616,11 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "Spoolfile"
 #~ msgstr "Spoolfile"
 
-#~ msgid "Statement - %1"
-#~ msgstr "Overzicht - %1"
+#~ msgid "Statement - [_1]"
+#~ msgstr "Overzicht - [_1]"
 
-#~ msgid "Statement sent to %1"
-#~ msgstr "Overzicht verzonden aan %1"
+#~ msgid "Statement sent to [_1]"
+#~ msgstr "Overzicht verzonden aan [_1]"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Overzichten naar de printer gestuurd!"
@@ -10722,8 +10699,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "Time Card deleted!"
 #~ msgstr "Tijdkaart verwijderd!"
 
-#~ msgid "To %1"
-#~ msgstr "Aan %1"
+#~ msgid "To [_1]"
+#~ msgstr "Aan [_1]"
 
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
@@ -10734,12 +10711,12 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ "gebruikersnaam te wijzigen en op te slaan. Een nieuwe gebruiker zal dan "
 #~ "worder opgeslagen met dezelfde gegevens onder de nieuwe gebruikersnaam."
 
-#~ msgid "To: %1\\n%2%3"
-#~ msgstr "Aan: %1\\n%2%3"
+#~ msgid "To: [_1]\\n[_2][_3]"
+#~ msgstr "Aan: [_1]\\n[_2][_3]"
 
 #, fuzzy
-#~ msgid "Total Cash in Drawer: %1"
-#~ msgstr "Totaal in Lade: %1"
+#~ msgid "Total Cash in Drawer: [_1]"
+#~ msgstr "Totaal in Lade: [_1]"
 
 #~ msgid "Transaction deleted!"
 #~ msgstr "Boeking verwijderd!"
@@ -10764,7 +10741,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "dinsdag"
 
 #, fuzzy
-#~ msgid "Unable to save %1 object"
+#~ msgid "Unable to save [_1] object"
 #~ msgstr "Kan Object niet opslaan"
 
 #~ msgid "Unit Rate"
@@ -10807,7 +10784,7 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "Leverancier opgeslagen!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverancier"
 
 #~ msgid "Vendors"
@@ -10844,8 +10821,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "U bent afgemeld"
 
 #, fuzzy
-#~ msgid "You are over by %1"
-#~ msgstr "Teveel op %1"
+#~ msgid "You are over by [_1]"
+#~ msgstr "Teveel op [_1]"
 
 #~ msgid "You are posting an existing transaction!"
 #~ msgstr "U boekt een bestaande transactie!"
@@ -10872,8 +10849,8 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgstr "U bent een bestaande transactie aan het opslaan!"
 
 #, fuzzy
-#~ msgid "You are under by %1"
-#~ msgstr "Tekort op %1"
+#~ msgid "You are under by [_1]"
+#~ msgstr "Tekort op [_1]"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "U heeft geen gebruikersnaam gegeven!"
@@ -10883,15 +10860,30 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #, fuzzy
 #~ msgid "[_1] Business"
-#~ msgstr "Branche"
+#~ msgstr ""
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Bedrijfsactiviteit\n"
+#~ "#-#-#-#-#  nl.po (LedgerSMB 1.4)  #-#-#-#-#\n"
+#~ "Branche"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
 
 #, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Taal"
 
 #, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "SIC"
+
+#, fuzzy
 #~ msgid "[_1] Warehouse"
 #~ msgstr "Magazijn"
+
+#~ msgid "[_1] locked!"
+#~ msgstr "[_1] geblokkeerd!"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "Rekening kan niet omgezet worden naar ander type rekening"

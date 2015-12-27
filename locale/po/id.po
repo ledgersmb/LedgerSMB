@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Invoice"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Edit Karyawan"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3782,10 +3772,6 @@ msgstr "Edit Akun"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Lampiran"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pembayaran"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9885,16 +9871,8 @@ msgid "use of an overpayment"
 msgstr "Pilih pembayaran"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Bisnis"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Bahasa"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Gudang"
+#~ msgid "$operation Employee"
+#~ msgstr "Edit Karyawan"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9912,7 +9890,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kode Akun sudah disimpan"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Akun"
 
 #~ msgid "Accounting"
@@ -9999,7 +9977,7 @@ msgstr "Pilih pembayaran"
 #~ "Tidak dapat men-set akun untuk selain AR (Piutang), AP (Hutang) or IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Tidak dapat men-set multiple option untuk "
 
 #~ msgid "Change"
@@ -10024,7 +10002,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Pelanggan sudah dihapus!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Pelanggan"
 
 #~ msgid "Customers"
@@ -10052,7 +10030,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Departemen telah disimpan"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departemen"
 
 #~ msgid "Directory"
@@ -10098,7 +10076,11 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kurs harap diisi!"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pembayaran"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Dari"
 
 #~ msgid "Hostname missing!"
@@ -10108,7 +10090,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Versi Dataset tidak benar!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Nomor Invoice"
 
 #~ msgid "Invoice deleted!"
@@ -10158,7 +10140,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Tidak ada yang akan dicetak!"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Nomor Pesanan"
 
 #, fuzzy
@@ -10189,7 +10171,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kelompok Harga"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Cetak"
 
 #, fuzzy
@@ -10203,7 +10185,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Nomor Proyek harap diisi!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Nomor Proyek"
 
 #~ msgid "Project deleted!"
@@ -10216,7 +10198,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Proyek sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Nomor Quotation"
 
 #, fuzzy
@@ -10301,7 +10283,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Supplier sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Supplier"
 
 #~ msgid "Vendors"

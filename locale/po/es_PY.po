@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,16 +38,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturas"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Modificar Empleado"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3778,10 +3768,6 @@ msgstr "Modificar cuenta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Adjunto"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagos"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9862,24 +9848,8 @@ msgstr "Anticipo"
 #~ msgstr "¡Falta el Código!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Negocio"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "Plan de Cuentas Fiscal (PCF)"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Idioma"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Agregar CIS"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Almacén"
+#~ msgid "$operation Employee"
+#~ msgstr "Modificar Empleado"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9900,7 +9870,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Cuenta guardada!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Cuenta"
 
 #~ msgid "Accounting"
@@ -10021,7 +9991,7 @@ msgstr "Anticipo"
 #~ "o IC)"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "No se pueden configurar opciones múltiples para"
 
 #~ msgid "Change"
@@ -10038,7 +10008,7 @@ msgstr "Anticipo"
 #~ msgstr "Cerrado"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Cerrado"
 
 #~ msgid "Components"
@@ -10060,7 +10030,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Cliente guardado!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Cliente"
 
 #~ msgid "Customers"
@@ -10106,7 +10076,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Departamento guardado!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departamento"
 
 #~ msgid "Directory"
@@ -10176,7 +10146,11 @@ msgstr "Anticipo"
 #~ msgstr "Bases de datos existentes"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pagos"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Desde"
 
 #~ msgid "Group Items"
@@ -10201,7 +10175,7 @@ msgstr "Anticipo"
 #~ msgstr "Aumentar"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Número de factura"
 
 #~ msgid "Invoice deleted!"
@@ -10292,7 +10266,7 @@ msgstr "Anticipo"
 #~ msgstr "Administración de la base de datos Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Número de la orden"
 
 #~ msgid "Order saved!"
@@ -10344,7 +10318,7 @@ msgstr "Anticipo"
 #~ msgstr "Grupos de precios"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Imprimir"
 
 #, fuzzy
@@ -10358,7 +10332,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Falta el número de proyecto!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número del Proyecto"
 
 #~ msgid "Project deleted!"
@@ -10371,7 +10345,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Proyecto guardado!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Número de Cotización"
 
 #~ msgid "R"
@@ -10535,7 +10509,7 @@ msgstr "Anticipo"
 #~ msgstr "¡Proveedor guardado!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveedor"
 
 #~ msgid "Vendors"
@@ -10565,8 +10539,16 @@ msgstr "Anticipo"
 #~ msgstr "Negocio"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Plan de Cuentas Fiscal (PCF)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Idioma"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Agregar CIS"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

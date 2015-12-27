@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Faktura"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Upravit šablonu"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3818,10 +3808,6 @@ msgstr "Upravit účet"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Přílohy"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Platby"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9946,12 +9932,8 @@ msgid "use of an overpayment"
 msgstr "Platba"
 
 #, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "Účtovací řetězec"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Jazyk"
+#~ msgid "$operation Employee"
+#~ msgstr "Upravit šablonu"
 
 #, fuzzy
 #~ msgid "A"
@@ -9964,7 +9946,7 @@ msgstr "Platba"
 #~ msgstr "Chybí typ účtu!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Účet"
 
 #~ msgid "Accounting"
@@ -9997,7 +9979,7 @@ msgstr "Platba"
 #~ msgstr "Zaplaceno"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Zaplaceno"
 
 #~ msgid "Connect to"
@@ -10007,7 +9989,7 @@ msgstr "Platba"
 #~ msgstr "Vytvořit účtový rozvrh"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Odběratel"
 
 #~ msgid "DBI not installed!"
@@ -10046,7 +10028,11 @@ msgstr "Platba"
 #~ msgstr "Datasety"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Platby"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "z"
 
 #~ msgid "Host"
@@ -10056,7 +10042,7 @@ msgstr "Platba"
 #~ msgstr "Špatná verze dat!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Číslo faktury"
 
 #~ msgid "Last Numbers & Default Accounts"
@@ -10117,7 +10103,7 @@ msgstr "Platba"
 #~ msgstr "Tiskárna"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Objednávka číslo"
 
 #, fuzzy
@@ -10177,7 +10163,7 @@ msgstr "Platba"
 #~ msgstr "Využít šablony"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Dodavatel"
 
 #~ msgid "You did not enter a name!"
@@ -10186,6 +10172,10 @@ msgstr "Platba"
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr ""
 #~ "Pro lokální i vzdálené připojení je nutné  zadat adresu serveru a port!"
+
+#, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "Účtovací řetězec"
 
 #, fuzzy
 #~ msgid "[_1] Language"

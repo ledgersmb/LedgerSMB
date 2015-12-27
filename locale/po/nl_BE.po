@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,16 +34,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Facturen"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Werknemer wijzigen"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3783,10 +3773,6 @@ msgstr "Rekening wijzigen"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Bijlage"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Betalingen"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9902,24 +9888,8 @@ msgstr "Voorschot"
 #~ msgstr "Code ontbreekt!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Zaaktype"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Taal"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "SIC toevoegen"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Magazijn"
+#~ msgid "$operation Employee"
+#~ msgstr "Werknemer wijzigen"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9940,7 +9910,7 @@ msgstr "Voorschot"
 #~ msgstr "Rekening opgeslagen"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Rekening"
 
 #~ msgid "Accounting"
@@ -10062,7 +10032,7 @@ msgstr "Voorschot"
 #~ "inventarisrekening"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Kan de meerdere opties voor niet instellen"
 
 #~ msgid "Change"
@@ -10079,7 +10049,7 @@ msgstr "Voorschot"
 #~ msgstr "Afgesloten"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Afgesloten"
 
 #~ msgid "Components"
@@ -10098,7 +10068,7 @@ msgstr "Voorschot"
 #~ msgstr "Klant opgeslagen!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Klant"
 
 #~ msgid "Customers"
@@ -10144,7 +10114,7 @@ msgstr "Voorschot"
 #~ msgstr "Afdeling opgeslagen!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Afdeling"
 
 #~ msgid "Directory"
@@ -10208,7 +10178,11 @@ msgstr "Voorschot"
 #~ msgstr "Bestaande datasets"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Betalingen"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Van"
 
 #~ msgid "Group Items"
@@ -10237,7 +10211,7 @@ msgstr "Voorschot"
 #~ msgstr "Toename"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Factuurnummer"
 
 #~ msgid "Invoice deleted!"
@@ -10325,7 +10299,7 @@ msgstr "Voorschot"
 #~ msgstr "Oracle Database Administratie"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Referentie"
 
 #~ msgid "Order saved!"
@@ -10374,7 +10348,7 @@ msgstr "Voorschot"
 #~ msgstr "Prijsgroepen"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Afdrukken"
 
 #, fuzzy
@@ -10388,7 +10362,7 @@ msgstr "Voorschot"
 #~ msgstr "Projectnummer ontbreekt!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projectnummer"
 
 #~ msgid "Project deleted!"
@@ -10401,7 +10375,7 @@ msgstr "Voorschot"
 #~ msgstr "Project opgeslagen!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Offertenummer"
 
 #~ msgid "R"
@@ -10547,7 +10521,7 @@ msgstr "Voorschot"
 #~ msgstr "Leverancier opgeslagen!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverancier"
 
 #~ msgid "Vendors"
@@ -10576,8 +10550,16 @@ msgstr "Voorschot"
 #~ msgstr "Zaaktype"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Taal"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "SIC toevoegen"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"

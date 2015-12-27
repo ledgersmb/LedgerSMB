@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-27 21:36+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Factura"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Editar Plantilla"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -3838,10 +3828,6 @@ msgstr "Editar Compta"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Adjunt"
-
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pagaments"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -9996,8 +9982,8 @@ msgstr "Pagament"
 #~ msgstr "Falta Port!"
 
 #, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Idioma"
+#~ msgid "$operation Employee"
+#~ msgstr "Editar Plantilla"
 
 #, fuzzy
 #~ msgid "A"
@@ -10013,7 +9999,7 @@ msgstr "Pagament"
 #~ msgstr "Falta el Tipus de Compta!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Compta"
 
 #~ msgid "Accounting"
@@ -10066,7 +10052,7 @@ msgstr "Pagament"
 #~ msgstr "Tancat"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Tancat"
 
 #~ msgid "Connect to"
@@ -10076,7 +10062,7 @@ msgstr "Pagament"
 #~ msgstr "Crear la Taula de Comptes"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Client"
 
 #~ msgid "DBI not installed!"
@@ -10113,7 +10099,11 @@ msgstr "Pagament"
 #~ "les monedes nacionals i estrangeres"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pagaments"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "De"
 
 #~ msgid "Host"
@@ -10123,7 +10113,7 @@ msgstr "Pagament"
 #~ msgstr "Versió Incorrecta del Conjunt de Dades!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Núm Fra."
 
 #, fuzzy
@@ -10174,7 +10164,7 @@ msgstr "Pagament"
 #~ msgstr "Administració Base de Dades Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Número Ordre"
 
 #~ msgid "Orphaned"
@@ -10202,7 +10192,7 @@ msgstr "Pagament"
 #~ msgstr "Preu"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Impressora"
 
 #, fuzzy
@@ -10210,7 +10200,7 @@ msgstr "Pagament"
 #~ msgstr "Impressora"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Número Ordre"
 
 #, fuzzy
@@ -10218,7 +10208,7 @@ msgstr "Pagament"
 #~ msgstr "No es troba cap arxiu amb aquest element!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Núm. Negoci"
 
 #, fuzzy
@@ -10282,7 +10272,7 @@ msgstr "Pagament"
 #~ msgstr "Emprar Plantilles"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Proveïdor"
 
 #, fuzzy

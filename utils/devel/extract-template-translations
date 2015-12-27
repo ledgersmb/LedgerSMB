@@ -22,8 +22,8 @@ while (<>) {
         if (m/text\s*\(\s*"((\\.|[^"])*)"/) {
             my $match = $1;
 
-            &ensure_entry($match);
             if ($match !~ m/(?<!\\)\$/g) {
+                &ensure_entry($match);
                 push @{$dict{$match}}, "#: $file:$line_no";
             }
             else {
