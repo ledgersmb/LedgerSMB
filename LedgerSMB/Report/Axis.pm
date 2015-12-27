@@ -32,10 +32,15 @@ E.g.:
  { 'head1' => { id => 1,
                 accno => 'head1',
                 path => [ 'head1' ],
-                children => { 'head2' => { id => 2,
+                section => { id => 2,
+                             props => { section_for => 1 }
+                           },
+                children => { 'head2' => { id => 3,
                                            accno => 'head2',
                                            path => [ 'head1', 'head2' ],
-                                           children => {} }
+                                           children => {},
+                                           parent_id => 1
+                                         }
                             }
               }
  }
@@ -48,7 +53,9 @@ has 'tree' => ( is => 'ro',
 
 =item ids
 
-Read-only accessor; a list of IDs of axis elements.
+Read-only accessor; a list of IDs of axis elements, including section heads.
+
+To skip section heads, skip IDs for which a props key 'section_for' exists.
 
 =cut
 
@@ -101,12 +108,25 @@ sub _new_elem {
         parent_id => $parent->{id},
     };
     $self->ids->{$subtree->{$step}->{id}} = $subtree->{$step};
+
+    my $section = {
+        id => $self->_last_id($self->_last_id + 1),
+        path => [ (@$path) ],
+        props => {
+            section_for => $subtree->{$step}->{id},
+        },
+    };
+    $self->ids->{$section->{id}} = $section;
+    $subtree->{$step}->{section} = $section;
+
+    return $subtree->{$step};
 }
 
 =item sort
 
 Returns an array reference with axis IDs, alphabetically sorted
-by the elements in the path (usually header and account numbers)
+by the elements in the path (usually header and account numbers),
+unless the 'order' property is defined, in which case that's used.
 
 =cut
 
@@ -120,9 +140,15 @@ sub _sort_aux {
     my ($subtree) = @_;
 
     my @sorted;
-    for (sort { $a cmp $b } keys %$subtree) {
-        push @sorted, $subtree->{$_}->{id};
+    my $cmpv = sub {
+        return ((defined $subtree->{$_[0]}->{props}
+                 && $subtree->{$_[0]}->{props}->{order}) || $_[0]);
+    };
+    for (sort { &$cmpv($a) cmp &$cmpv($b) } keys %$subtree) {
+        push @sorted, $subtree->{$_}->{section}->{id}
+            if scalar(keys %{$subtree->{$_}->{children}}) > 0;
         push @sorted, @{_sort_aux($subtree->{$_}->{children})};
+        push @sorted, $subtree->{$_}->{id};
     }
     return \@sorted;
 }

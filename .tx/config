@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[ledgersmb.LedgerSMB]
+file_filter = locale/po/<lang>.po
+source_file = locale/LedgerSMB.pot
+source_lang = en
+type = PO
+

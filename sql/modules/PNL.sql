@@ -9,6 +9,7 @@ BEGIN;
 -- reports do not return total and summary lines.  These must be done by the
 -- application handling this.
 
+DROP FUNCTION IF EXISTS pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[]);
 DROP TYPE IF EXISTS pnl_line CASCADE;
 CREATE TYPE pnl_line AS (
     account_id int,
@@ -23,7 +24,7 @@ CREATE TYPE pnl_line AS (
     heading_path int[]
 );
 
-CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[])
+CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[], in_language text)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
@@ -39,16 +40,21 @@ WITH acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($5,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -63,10 +69,14 @@ hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($5,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
            AND array_splice_from((SELECT value::int FROM defaults
@@ -104,6 +114,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount) <> 0.00
     UNION
    SELECT ac.chart_id,
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
@@ -120,6 +131,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
+   HAVING sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -141,8 +153,8 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-
-CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
+DROP FUNCTION IF EXISTS  pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
+CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
   RETURNS SETOF pnl_line AS
 $BODY$
 WITH acc_meta AS (
@@ -158,16 +170,21 @@ WITH acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($5,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                               AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -182,10 +199,14 @@ hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($5,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
            AND array_splice_from((SELECT value::int FROM defaults
@@ -229,6 +250,7 @@ acc_balance AS (
                                    HAVING max(trans_id) = gl.id))
               )
    GROUP BY ac.chart_id
+     HAVING sum(ac.amount) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -252,7 +274,8 @@ $BODY$
   LANGUAGE sql;
 
 
-CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
+DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
+CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
@@ -268,16 +291,21 @@ WITH acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($5,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -292,10 +320,14 @@ hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($5,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
            AND array_splice_from((SELECT value::int FROM defaults
@@ -343,6 +375,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount * ca.portion) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -364,7 +397,8 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer)
+DROP FUNCTION IF EXISTS pnl__invoice(in_id integer);
+CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer, in_language text)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
@@ -380,16 +414,21 @@ WITH acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($2,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -404,10 +443,14 @@ hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($2,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
            AND array_splice_from((SELECT value::int FROM defaults
@@ -446,7 +489,8 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date)
+DROP FUNCTION IF EXISTS pnl__customer(in_id integer, in_from_date date, in_to_date date);
+CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date, in_language text)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
 WITH acc_meta AS (
@@ -462,16 +506,21 @@ WITH acc_meta AS (
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+                  FROM account_translation
+                 WHERE language_code =
+                        coalesce($4,
+                          (SELECT up.language
+                             FROM user_preference up
+                       INNER JOIN users ON up.id = users.id
+                            WHERE users.username = SESSION_USER))) at
+               ON a.id = at.trans_id
    WHERE array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path)
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -486,10 +535,14 @@ hdr_meta AS (
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
     LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+                 FROM account_translation
+                WHERE language_code =
+                       coalesce($4,
+                         (SELECT up.language
+                            FROM user_preference up
+                      INNER JOIN users ON up.id = users.id
+                           WHERE users.username = SESSION_USER))) at
+              ON aht.id = at.trans_id
     WHERE ((SELECT value::int FROM defaults
                               WHERE setting_key = 'earn_id') IS NOT NULL
            AND array_splice_from((SELECT value::int FROM defaults
@@ -515,6 +568,7 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance

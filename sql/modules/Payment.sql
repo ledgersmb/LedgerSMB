@@ -500,12 +500,12 @@ BEGIN
                 ELSIF t_batch.locked_by IS NOT NULL THEN
                     PERFORM * FROM session 
                        JOIN users ON (session.users_id = users.id)
-                      WHERE id = t_batch.locked_by 
-                            AND users.user_id = SESSION_USER;
+                      WHERE session_id = t_batch.locked_by 
+                            AND users.username = SESSION_USER;
 
                     IF NOT FOUND THEN
                         -- locked by someone else
-                        RAISE EXCEPTION 'Locked Batch';
+                        RAISE EXCEPTION 'batch locked by %, I am %', t_batch.locked_by, session_user;
                     END IF;
                 END IF;
                 INSERT INTO voucher (batch_id, batch_class, trans_id)

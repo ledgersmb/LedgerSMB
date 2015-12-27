@@ -40,6 +40,8 @@ UI/reports/display_report template will be used.
 package LedgerSMB::Report;
 use Moose;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
+use LedgerSMB::Setting;
+
 use LedgerSMB::Template;
 use LedgerSMB::App_State;
 
@@ -333,13 +335,13 @@ sub render {
 
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,
-        locale => $LedgerSMB::App_State::Locale,
+        locale => $self->locale,
         path => 'UI',
         template => $template,
         output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
-    # needed to get aroud escaping of header line names 
+    # needed to get aroud escaping of header line names
     # i.e. ignore_yearends -> ignore\_yearends
     # in latex
     my $replace_hnames = sub {
@@ -348,6 +350,8 @@ sub render {
         return [map { { %$_, %{shift @newlines} } } @$lines ];
     };
     $template->render({report => $self,
+                 company_name => LedgerSMB::Setting->get('company_name'),
+              company_address => LedgerSMB::Setting->get('company_address'),
                       request => $request,
                     new_heads => $replace_hnames,
                          name => $self->name,

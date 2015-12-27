@@ -5,7 +5,7 @@ use warnings;
 use inc::Module::Install 0.65;
 use File::Copy;
 
-copy ('ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
+copy ('conf/ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
 
 name 'LedgerSMB';
 version_from 'LedgerSMB.pm';
@@ -63,7 +63,7 @@ feature 'Standalone Server w/Starman',
     'CGI::Emulate::PSGI' => 0,
     'Plack::Builder' => 0,
     'Plack::Middleware::Static' => 0;
-  
+
 
 feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,

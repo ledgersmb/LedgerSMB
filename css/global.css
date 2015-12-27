@@ -18,8 +18,46 @@ html, body {
     padding: 0;
 }
 
+.flat-hierarchy .balancesheet .report-head th {
+    text-align: right;
+    font-weight: bold;
+}
+
+.flat-hierarchy .balancesheet .section1.QL,
+.flat-hierarchy .income_statement .section1 {
+    display: none;
+    border: none;
+}
+
+
+.flat-hierarchy .balancesheet .section1,
+.flat-hierarchy .balancesheet .section2,
+.flat-hierarchy .income_statement .section2 {
+    font-size: large;
+    border-bottom: 3px double black;
+}
+
+.financial-statement.flat-hierarchy .heading1,
+.financial-statement.flat-hierarchy .balancesheet .heading2 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.financial-statement.flat-hierarchy .income_statement .heading2 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-style: italic;
+    font-size: bigger;
+}
+
 #maindiv {
     overflow-y: auto;
+]
+.financial-statement.flat-hierarchy table {
+    min-width: 60ex;
 }
 
 #appLayout {
@@ -27,12 +65,29 @@ html, body {
 }
 #leftCol {
     width: 14em;
+    margin-top: 3em;
+}
+
+.financial-statement.flat-hierarchy table td,
+.financial-statement.flat-hierarchy table th {
+    padding-bottom: 3px; /* add space for the dashed line underlining hovered amounts */
+}
+
+
+.financial-statement .company-name {
+   margin-top: 2em;
+   font-family: monospace;
+   text-align: center;
 }
 
 .claro .demoLayout .edgePanel {
     background-color: #d0e9fc;
 }
-
+.financial-statement .company-address {
+   font-family: monospace;
+   text-align: center;
+   font-size: smaller;
+}
 #viewsChart {
     width: 550px;
     height: 550px;
@@ -188,8 +243,9 @@ html, body {
 #PNL tr.sectionhead th {
         padding-top: 2em;
         margin-top: 4em;
-        font-size: 120%;
         font-weight: bold;
+	white-space: pre;
+	text-align: right;
 }
 
 #PNL td.total {
@@ -309,4 +365,23 @@ html, body {
 #payments img.details-toggler {
     height: 0.5em;
     width: auto;
+}
+
+@media print {
+  .export-links {
+     display: none;
+  }
+}
+
+@media not print {
+  .export-links {
+      margin-top: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+  }
+
+  .export-link {
+      display: inline;
+  }
 }

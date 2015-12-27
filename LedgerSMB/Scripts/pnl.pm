@@ -39,6 +39,7 @@ sub generate_income_statement {
     my ($request) = @_;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
     my $rpt;
+    $request->{pnl_type} = '' unless defined $request->{pnl_type};
     if ($request->{pnl_type} eq 'invoice'){
         $rpt = LedgerSMB::Report::PNL::Invoice->new(%$request);
     } elsif ($request->{pnl_type} eq 'eca'){

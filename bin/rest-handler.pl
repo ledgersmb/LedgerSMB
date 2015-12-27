@@ -23,7 +23,7 @@ Similarly to retrieve all notes for this customer:
 
 =head2 URL Syntax
 
-Everything before the /rest/ part of the URL is ignored.  After the /rest/ 
+Everything before the /rest/ part of the URL is ignored.  After the /rest/
 the url is given fixed semantic meaning based on the following pattern:
 [company_name]/[object class][/id][/subresource][.format]
 
@@ -123,7 +123,7 @@ the http error number and a brief description.  Examples might be:
 
  die '401  Unauthorized';
 
-or 
+or
 
  die "500  Error from function: $DBH->errstr";
 
@@ -134,7 +134,7 @@ plan to port the entire application over to a more flexible framework.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2012 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 
@@ -157,12 +157,12 @@ use LedgerSMB::Template::TXT;
 use strict;
 use warnings;
 
-# Some modules depend on locale being set for error handling, but we want to 
+# Some modules depend on locale being set for error handling, but we want to
 # ensure that only the default language is used to ensure nothing strange
 # happens.  So hard-coded to English here.  --CT
 my $locale = LedgerSMB::Locale->get_handle('en');
 $LedgerSMB::App_State::Locale = $locale;
-$LedgerSMB::App_State::User = {numberformat => '1000.00', 
+$LedgerSMB::App_State::User = {numberformat => '1000.00',
                                  dateformat => 'YYYY-MM-DD'};
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
@@ -234,8 +234,8 @@ sub process_request{
         $ctype = $fmtpackage->can('mime_type')->();
     }
 
-    return output({state => '200 Success', 
-                 content => $content, 
+    return output({state => '200 Success',
+                 content => $content,
                  content_type => $ctype});
   } catch {
     return error_handler($_);
@@ -245,8 +245,8 @@ sub process_request{
 sub error_handler {
     my ($error) = @_;
     warn $error;
-    # Sometimes the two lines below can be useful for debugging.  Note they 
-    # turn all errors into internal server errors and populate the logs with 
+    # Sometimes the two lines below can be useful for debugging.  Note they
+    # turn all errors into internal server errors and populate the logs with
     # all kinds of stuff --CT
     # use Carp;
     # Carp::confess();
@@ -283,8 +283,8 @@ sub get_request_properties {
     my $company = shift @components;
     die "400 Unsupported version ($version)" if ($version ne '1.4');
     $LedgerSMB::App_State::DBH = DBI->connect(
-        "dbi:Pg:dbname=$company", 
-        "$creds->{login}", "$creds->{password}", 
+        "dbi:Pg:dbname=$company",
+        "$creds->{login}", "$creds->{password}",
             { AutoCommit => 0 }
     );
     $request->{args}->{dbh} = $LedgerSMB::App_State::DBH;
@@ -308,11 +308,11 @@ sub get_request_properties {
         $request->{class_name} .= "::$class";
         $request->{classes}->{$request->{class_name}} = $id;
     }
-    
+
     return $request;
 }
 
-# Isolating output routine 
+# Isolating output routine
 sub output {
     my ($args) = @_;
     my $ctype;

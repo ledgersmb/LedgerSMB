@@ -53,6 +53,7 @@ sub connect {
     my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
            { AutoCommit => 0, pg_enable_utf8 => 1, pg_server_prepare => 0 });
     my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
+    $dbh->do("set client_min_messages = 'warning'");
     if($dbi_trace)
     {
      $dbh->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
@@ -106,7 +107,7 @@ sub require_version {
     return if $ignore_version;
 
     my $version = LedgerSMB::Setting->get('version');
-    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was $version, expected $expected_version.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>")
+    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was [_1], expected [_2].  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>", $version, $expected_version)
        unless $version eq $expected_version;
     return 0;
 }

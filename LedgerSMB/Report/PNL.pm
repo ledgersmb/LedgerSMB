@@ -141,12 +141,12 @@ sub run_report {
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id,
                             { description =>
-                                  $self->_locale->text(
-                                      '[_1] to [_2]',
+                                  $self->Text(
+                                      "[_1]\n[_2]",
                                       $self->from_date->to_output,
                                       $self->to_date->to_output),
-                              from_date => $self->date_from->to_output,
-                              to_date => $self->date_to->to_output,
+                              from_date => $self->from_date->to_output,
+                              to_date => $self->to_date->to_output,
                             });
 
     for my $line (@lines) {
@@ -166,49 +166,51 @@ sub run_report {
     # Header rows don't have descriptions
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
-        %header_desc = ( 'E' => { 'account_number' => 'E',
+        %header_desc = ( 'E' => { 'order' => '2', # Sort *after* Income
+                                  'account_number' => '',
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Expenses'),
+                                      $self->Text('Expenses'),
                                   'account_description' =>
-                                      $self->_locale->text('Expenses') },
-                         'I' => { 'account_number' => 'I',
+                                      $self->Text('Expenses') },
+                         'I' => { 'order' => '1', # Sort *before* Expenses
+                                  'account_number' => '',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Income'),
+                                      $self->Text('Income'),
                                   'account_description' =>
-                                      $self->_locale->text('Income') },
+                                      $self->Text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Assets'),
+                                      $self->Text('Assets'),
                                   'account_description' =>
-                                      $self->_locale->text('Assets') },
+                                      $self->Text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Liabilities'),
+                                      $self->Text('Liabilities'),
                                   'account_description' =>
-                                      $self->_locale->text('Liabilities') },
+                                      $self->Text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Equity'),
+                                      $self->Text('Equity'),
                                   'account_description' =>
-                                      $self->_locale->text('Equity') },
+                                      $self->Text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'Q', 'q' ],
                                   'account_desc' =>
-                                      $self->_locale->text('Current earnings'),
+                                      $self->Text('Current earnings'),
                                   'account_description' =>
-                                      $self->_locale->text('Current earnings') },
+                                      $self->Text('Current earnings') },
             );
     }
     else {

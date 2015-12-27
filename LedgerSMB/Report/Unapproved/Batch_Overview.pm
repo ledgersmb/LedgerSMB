@@ -169,7 +169,7 @@ sub subtotal_cols {
 
 sub text {
     my ($self) = @_;
-    return $self->_locale->text(@_);
+    return $self->_locale->maketext(@_);
 }
 
 =back

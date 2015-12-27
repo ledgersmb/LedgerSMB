@@ -674,15 +674,68 @@ sub redirect {
     my ( $self, $msg ) = @_;
 
     if ( $self->{callback} || !$msg ) {
-    $logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
-        lsmb_legacy::redirect();
-    $self->finalize_request();
+        $logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
+        $self->_redirect();
+        $self->finalize_request();
     }
     else {
-
         $self->info($msg);
     }
 }
+
+sub _redirect {
+    # referenced directly from am.pl, because of the need of our return value
+    use List::Util qw(first);
+    my ($form) = @_;
+
+    my ( $script, $argv ) = split( /\?/, $form->{callback} );
+
+    my @common_attrs = qw(
+      dbh login favicon stylesheet titlebar password custom_db_fields vc header
+    );
+
+    if ( !$script ) {    # http redirect to login.pl if called w/no args
+        print "Location: login.pl\n";
+        print "Content-type: text/html\n\n";
+        return;
+    }
+    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}){
+        print "Location: $form->{callback}\n";
+        print "Content-type: text/html\n\n";
+        return;
+    }
+    $form->error(
+        $form->_locale->text(
+            "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
+    ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
+
+    my %temphash;
+    for (@common_attrs) {
+        $temphash{$_} = $form->{$_};
+    }
+    $temphash{action} = $form->{action};
+
+    undef $form;
+    $form = new Form($argv);
+
+    for (@common_attrs) {
+        $form->{$_} = $temphash{$_};
+    }
+    $form->{action} ||= $temphash{action}; # default to old action if not set
+
+    $form->{script} = $script;
+
+    my %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+    if ( !$form->{dbh} and ( $script ne 'admin.pl' ) ) {
+        $form->db_init( \%myconfig );
+    }
+
+    require "bin/$script";
+
+    &{ $form->{action} };
+
+}
+
 
 =item $form->sort_columns(@columns);
 
@@ -2316,8 +2369,8 @@ sub create_links {
                   FROM chart a
                   JOIN account ON a.id = account.id AND NOT account.obsolete
                  WHERE (link LIKE ?) OR account.tax
-                       AND (a.id in (select acc_trans.chart_id 
-                                       FROM acc_trans 
+                       AND (a.id in (select acc_trans.chart_id
+                                       FROM acc_trans
                                       WHERE trans_id = coalesce(?, -1))
                            OR NOT account.obsolete)
               ORDER BY accno|;

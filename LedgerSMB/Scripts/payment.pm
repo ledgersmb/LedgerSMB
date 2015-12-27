@@ -1056,7 +1056,7 @@ my $locale       = $request->{_locale};
 my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 
 if (!$request->{exrate}) {
-     $Payment->error($locale->text('Exchange rate hasn\'t been defined').'!');}
+     $Payment->error($locale->text('Exchange rate hasn\'t been defined!'));}
 # LETS GET THE CUSTOMER/VENDOR INFORMATION
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 # LETS GET THE DEPARTMENT INFO

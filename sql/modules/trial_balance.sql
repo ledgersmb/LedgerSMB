@@ -16,9 +16,15 @@ DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[]);
 
+DROP FUNCTION IF EXISTS trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int);
+
+
 CREATE OR REPLACE FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int)
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean)
 returns setof tb_row AS
 $$
 DECLARE
@@ -136,7 +142,7 @@ BEGIN
               case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
               COALESCE(t_balance_sign, 
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount_bc, 0) + sum(ac.amount_bc)),
+              * (coalesce(cp.amount_bc, 0) + sum(coalesce(ac.amount_bc, 0))),
               CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) < 0 
                    THEN (sum(ac.amount_bc) + coalesce(cp.amount_bc, 0)) * -1 
                    ELSE NULL END,
@@ -156,36 +162,21 @@ BEGIN
               AND (in_heading IS NULL OR in_heading = a.heading)
      GROUP BY a.id, a.accno, a.description, a.category, a.gifi_accno,
               cp.end_date, cp.account_id, cp.amount_bc, cp.debits, cp.credits
-       HAVING abs(cp.amount_bc) > 0 or count(ac) > 0
+       HAVING abs(cp.amount) > 0 or count(ac) > 0 or in_all_accounts
      ORDER BY a.accno;
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION trial_balance__accounts (
-    in_report_id INT
-) RETURNS SETOF account AS $body$
 
-    SELECT a.*
-      FROM account a
-      JOIN trial_balance__account_to_report tbr ON a.id = tbr.account_id
-     WHERE tbr.report_id = $1
+COMMENT ON FUNCTION trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean) IS
+$$Returns a row for each account which has transactions or a starting or
+ending balance over the indicated period, except when in_all_accounts
+is true, in which case a record is returned for all accounts, even ones
+unused over the reporting period.$$;
 
-     UNION
-
-     SELECT a.*
-       FROM account a
-       JOIN trial_balance__heading_to_report tbhr ON a.heading = tbhr.heading_id
-      WHERE tbhr.report_id = $1
-
-      ORDER BY accno DESC;
-$body$ LANGUAGE SQL;
-
--- Just lists all valid report_ids
-
-CREATE OR REPLACE FUNCTION trial_balance__list (
-) RETURNS SETOF trial_balance AS $body$
-    SELECT * FROM trial_balance ORDER BY id ASC;
-$body$ LANGUAGE SQL STABLE;
 
 DROP TYPE IF EXISTS trial_balance__heading CASCADE;
 CREATE TYPE trial_balance__heading AS (
@@ -207,23 +198,6 @@ CREATE OR REPLACE FUNCTION trial_balance__heading_accounts (
     SELECT * FROM account WHERE id in (SELECT unnest($1));
 $body$ LANGUAGE SQL IMMUTABLE;
 
-
-CREATE OR REPLACE FUNCTION trial_balance__delete (
-    in_report_id int
-) RETURNS boolean AS $body$
-
-    BEGIN
-        PERFORM id FROM trial_balance WHERE id = in_report_id;
-
-        IF FOUND THEN
-            DELETE FROM trial_balance__heading_to_report WHERE report_id = in_report_id;
-            DELETE FROM trial_balance__account_to_report WHERE report_id = in_report_id;
-            DELETE FROM trial_balance WHERE id = in_report_id;
-            RETURN TRUE;
-        END IF;
-        RETURN FALSE;
-    END;
-$body$ LANGUAGE PLPGSQL;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 

@@ -1,8 +1,8 @@
 # This file is an installer for the LedgerSMB system.  It is designed to run
-# explicitly with the perl interpreter (i.e. perl install.pl).  Most behavior 
+# explicitly with the perl interpreter (i.e. perl install.pl).  Most behavior
 # is system dependent using standard tools and so there is no issue there.  To
-# tell the program where to install the web app to, you can either set a 
-# WEBAPPDIR environment variable or pass this to the first argument on the 
+# tell the program where to install the web app to, you can either set a
+# WEBAPPDIR environment variable or pass this to the first argument on the
 # command line.
 #
 # example on UNIX:
@@ -48,7 +48,7 @@ exit_with_help('Web app directory not set', 1) if !defined $dest_dir;
 
 # Basic set up
 
-fcopy('ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
+fcopy('conf/ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
 
 mkdir 'build';
 mkdir 'build/webapp';
@@ -79,7 +79,7 @@ system('make install');
 
 chdir '../..';
 dircopy('build/webapp', $dest_dir);
-fcopy('ledgersmb.conf.default', "$dest_dir/ledgersmb.conf") 
+fcopy('conf/ledgersmb.conf.default', "$dest_dir/ledgersmb.conf")
                                           unless -f "$dest_dir/ledgersmb.conf";
 
 

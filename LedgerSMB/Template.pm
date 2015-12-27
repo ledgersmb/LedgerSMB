@@ -337,7 +337,7 @@ sub render {
         $cleanvars->{escape} = sub { return $format->escape(@_)};
     if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
         $cleanvars->{text} = sub {
-                    return $self->escape($self->{locale}->text(@_))
+                    return $self->escape($self->{locale}->maketext(@_))
                         if defined $_[0]};
     }
     else {
@@ -569,10 +569,10 @@ sub column_heading {
         # pairs. The latter is used to include urls in column headers.
 
         if (ref $names->{$attname} eq 'HASH') {
-            my $t = $self->{locale}->text($names->{$attname}{text});
+            my $t = $self->{locale}->maketext($names->{$attname}{text});
             $names->{$attname}{text} = $t;
         } else {
-            my $t = $self->{locale}->text($names->{$attname});
+            my $t = $self->{locale}->maketext($names->{$attname});
             if (defined $sorturls{$attname}) {
                 $names->{$attname} =
                 {

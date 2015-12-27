@@ -43,7 +43,7 @@ sub app {
        my $nscript = $script;
        $nscript =~ s/l$/m/;
        if ($uri =~ m|/rest/|){
-         do 'rest-handler.pl';
+         do 'bin/rest-handler.pl';
        } elsif (-f "LedgerSMB/Scripts/$nscript"){
          _run_new($script);
        } else {
@@ -68,7 +68,7 @@ sub _run_old {
        wait;
     } else {
        &$pre_dispatch() if $pre_dispatch;
-       do 'old-handler.pl';
+       do 'bin/old-handler.pl';
        &$post_dispatch() if $post_dispatch;
        exit;
     }
@@ -77,9 +77,9 @@ sub _run_old {
 sub _run_new {
     my ($script) = @_;
     &$pre_dispatch() if $pre_dispatch;
-    if (-f 'lsmb-request.pl'){
+    if (-f 'bin/lsmb-request.pl'){
         try {
-            do 'lsmb-request.pl';
+            do 'bin/lsmb-request.pl';
         }
         catch {
             # simple 'die' statements are request terminations

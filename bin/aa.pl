@@ -389,14 +389,16 @@ sub form_header {
     my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
-       $form->{title} = $locale->text($title_msgid);
+       $form->{title} = $locale->maketext($title_msgid);
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
-           $title_msgid="$title Credit Note";$form->{title}=$locale->text($title_msgid);
+           $title_msgid="$title Credit Note";
+           $form->{title}=$locale->maketext($title_msgid);
            #$form->{title} = $locale->text("[_1] Credit Note", $title);
        } elsif ($form->{subtype} eq 'debit_note'){
-           $title_msgid="$title Debit Note";$form->{title}=$locale->text($title_msgid);
+           $title_msgid="$title Debit Note";
+           $form->{title}=$locale->maketext($title_msgid);
            #$form->{title} = $locale->text("[_1] Debit Note", $title);
        } else {
            $form->error("Unknown subtype $form->{subtype} in $form->{ARAP} "
@@ -668,7 +670,7 @@ $form->open_status_div . qq|
       <th>| . $locale->text('Tax Form Applied') . qq|</th>|;
     for my $cls (@{$form->{bu_class}}){
         if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-            print qq|<th>| . $locale->text($cls->{label}) . qq|</th>|;
+            print qq|<th>| . $locale->maketext($cls->{label}) . qq|</th>|;
         }
     }
     print qq|
@@ -1107,6 +1109,8 @@ sub save_temp {
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
     $lsmb->{is_invoice} = 1;
+    $lsmb->{due} = $form->{invtotal};
+    $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
     my ($department_name, $department_id) = split/--/, $form->{department};
      if (!$lsmb->{language_code}){
         delete $lsmb->{language_code};
@@ -1118,7 +1122,7 @@ sub save_temp {
     } else {
         $lsmb->{entity_class} = 1;
     }
-    $lsmb->{transaction_date} = $form->{transdate};
+    $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"AP_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
@@ -1551,7 +1555,7 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
         for ( sort keys %{ $form->{all_month} } ) {
             $form->{selectaccountingmonth} .=
               qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|</option>\n|;
+              . $locale->maketext( $form->{all_month}{$_} ) . qq|</option>\n|;
         }
 
         $selectfrom = qq|

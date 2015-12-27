@@ -43,12 +43,12 @@ our $ttfuncs = {};
 $ttfuncs->{gettext} = sub {
     my $locale = shift;
     if (ref $locale) {
-        return $locale->text(@_);
+        return $locale->maketext(@_);
     } elsif ($locales{$locale}) {
-        return $locales{$locale}->text(@_);
+        return $locales{$locale}->maketext(@_);
     } else {
         $locales{$locale} = LedgerSMB::Locale->get_handle($locale);
-        return $locales{$locale}->text(@_);
+        return $locales{$locale}->maketext(@_);
     }
 };
 
