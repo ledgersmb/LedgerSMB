@@ -22,8 +22,13 @@ while (<>) {
         if (m/text\s*\(\s*"((\\.|[^"])*)"/) {
             my $match = $1;
 
-            &ensure_entry($match);
-            push @{$dict{$match}}, "#: $file:$line_no";
+            if ($match !~ m/(?<!\\)\$/g) {
+                &ensure_entry($match);
+                push @{$dict{$match}}, "#: $file:$line_no";
+            }
+            else {
+                warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
+            }
         }
         elsif (m/text\s*\(\s*'((''|[^'])*)'/) {
             my $match = $1;
@@ -37,6 +42,7 @@ while (<>) {
             push @{$dict{$match}}, "#: $file:$line_no";
         }
     }
+    close SOURCE;
 }
 
 foreach my $string (keys %dict) {
