@@ -9009,9 +9009,8 @@ msgid "To Warehouse"
 msgstr "Entrepôt"
 
 #: t/data/04-strings-for-translation.html:7
-#, fuzzy
 msgid "To [_1]"
-msgstr "Société"
+msgstr "A [_1]"
 
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
