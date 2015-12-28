@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 22:33+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "PO-Revision-Date: 2014-10-22 18:01+0200\n"
 "Last-Translator: Frans <f.van.der.star@gmail.com>\n"
 "Language: nl\n"
@@ -347,7 +347,7 @@ msgstr "Rekeningen"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -3560,7 +3560,7 @@ msgstr "Wisselkoers voor betaling ontbreekt!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Wisselkoers ontbreekt!"
 
 #: LedgerSMB/DBObject/Payment.pm:750

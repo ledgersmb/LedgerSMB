@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 22:33+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "PO-Revision-Date: 2014-12-7 14:00+ZONE\n"
 "Last-Translator: kaiserfarrell <kaiserfarrell@gmail.com>\n"
 "Language-Team: LedgerSMB Malaysia <https://www.fb,me/groups/1512686172349251/"
@@ -319,7 +319,7 @@ msgstr "No. Akaun"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -3461,7 +3461,7 @@ msgstr "Kadar pertukaran pembayaran hilang!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Pertukaran kadar tidak diisi"
 
 #: LedgerSMB/DBObject/Payment.pm:750

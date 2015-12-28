@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 22:33+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "PO-Revision-Date: 2014-11-30 09:55+0200\n"
 "Last-Translator: Adrian <meibomberlin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -333,7 +333,7 @@ msgstr "Konten"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -3490,7 +3490,7 @@ msgstr "Wechselkurs fÃ¼r Zahlung fehlt!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Wechselkurs wurde nicht definiert"
 
 #: LedgerSMB/DBObject/Payment.pm:750
