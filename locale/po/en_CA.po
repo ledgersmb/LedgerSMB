@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:37+0000\n"
+"POT-Creation-Date: 2015-12-28 22:33+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1008,6 +1008,8 @@ msgstr ""
 msgid "Asset Tag"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 msgid "Assets"
 msgstr ""
@@ -2172,6 +2174,8 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 msgid "Current earnings"
 msgstr ""
@@ -3366,8 +3370,14 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
+msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+msgid "Equity & Liabilities"
 msgstr ""
 
 #: UI/accounts/edit.html:206
@@ -3461,6 +3471,11 @@ msgstr ""
 
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
+msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+msgid "Expenses"
 msgstr ""
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
@@ -4125,7 +4140,9 @@ msgstr ""
 msgid "Including partnumber"
 msgstr ""
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4636,6 +4653,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
+msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+msgid "Liabilities"
 msgstr ""
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
@@ -9283,6 +9305,12 @@ msgstr "Labour Code"
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
 msgid "Zip/Postal Code"
+msgstr ""
+
+#: LedgerSMB/Report/PNL.pm:146
+msgid ""
+"[_1]\n"
+"[_2]"
 msgstr ""
 
 #: bin/gl.pl:201
