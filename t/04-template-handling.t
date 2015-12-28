@@ -210,7 +210,7 @@ is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-	'template' => \'Look at me <?lsmb login ?>.', 'no_auto_output' => 1);
+	'template' => \ 'Look at me <?lsmb login ?>.', 'no_auto_output' => 1);
 ok(defined $template,
 	'Template, new (HTML): Object creation with string template');
 isa_ok($template, 'LedgerSMB::Template',
@@ -243,7 +243,7 @@ open($FH, '<', "t/var/04-gettext.html");
 close($FH);
 chomp(@r);
 is(join("\n", @r),
-	"I am a foo&amp;bar.\nLook at me Juin.\njuni\nAan foo&amp;bar",
+	"I am a foo&amp;bar.\nLook at me Juin.\njuni\nTo foo&amp;bar",
 	'Template, render (HTML): Gettext HTML template, correct output');
 is(unlink("t/var/04-gettext.html"), 1,
 	'Template, render (HTML): removing testfile');
