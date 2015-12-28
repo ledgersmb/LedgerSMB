@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.3.29\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 00:10+0000\n"
+"POT-Creation-Date: 2015-12-28 21:28+0000\n"
 "PO-Revision-Date: 2013-08-27 08:52+0200\n"
 "Last-Translator: István <pongracz.istvan@startit.hu>\n"
 "Language-Team: StartIT Kft <info@startit.hu>\n"
@@ -105,8 +105,9 @@ msgstr "Szállító lejárati lista"
 msgid "AP Outstanding"
 msgstr "Kifizetetlen szállítószámlák"
 
-#: bin/aa.pl:2444 bin/gl.pl:845 templates/demo/ap_transaction.html:4
-#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
+#: bin/aa.pl:2444 bin/gl.pl:845 t/data/04-complex_template.html:325
+#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
+#: templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -183,8 +184,8 @@ msgstr "Hozzáférés megtagadva"
 #: bin/aa.pl:656 bin/aa.pl:719 bin/aa.pl:850 bin/aa.pl:1744 bin/aa.pl:1883
 #: bin/aa.pl:2074 bin/aa.pl:2124 bin/am.pl:193 bin/ca.pl:201 bin/gl.pl:549
 #: bin/ic.pl:2919 bin/ir.pl:485 bin/ir.pl:790 bin/is.pl:539 bin/is.pl:878
-#: bin/oe.pl:474 scripts/recon.pl:186 templates/demo/invoice.html:248
-#: templates/demo/printPayment.html:44
+#: bin/oe.pl:474 scripts/recon.pl:186 t/data/04-complex_template.html:27
+#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -203,8 +204,8 @@ msgid "Account Description"
 msgstr "Számla leírása"
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
-#: UI/accounts/edit.html:26 UI/Contact/contact.html:1052
-#: UI/payments/use_overpayment2.html:116
+#: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
+#: UI/Contact/contact.html:1052 UI/payments/use_overpayment2.html:116
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 #: UI/taxform/details_report.html:20 UI/taxform/summary_report.html:20
@@ -288,10 +289,16 @@ msgstr "A művelet nincs meghatározva: "
 msgid "Action: [_1], ID: [_2]"
 msgstr "Művelet: %1, ID: %2"
 
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
 msgid "Actions"
 msgstr "Műveletek"
+
+# 87%
+#: t/data/04-complex_template.html:496
+msgid "Actions:"
+msgstr "Műveletek:"
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
@@ -364,7 +371,8 @@ msgstr "Új számlakorrekció"
 msgid "Add Credit Note"
 msgstr "Új kredit note"
 
-#: UI/Contact/contact.html:56 sql/Pg-database.sql:2395
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:56
+#: sql/Pg-database.sql:2395
 msgid "Add Customer"
 msgstr "Új vevő"
 
@@ -381,7 +389,8 @@ msgstr "Új debit note"
 msgid "Add Department"
 msgstr "Új center"
 
-#: UI/Contact/contact.html:60 sql/Pg-database.sql:2426
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:60
+#: sql/Pg-database.sql:2426
 msgid "Add Employee"
 msgstr "Új alkalmazott"
 
@@ -491,7 +500,8 @@ msgstr "Új kéziszámla"
 msgid "Add User"
 msgstr "Új felhasználó"
 
-#: UI/Contact/contact.html:58 sql/Pg-database.sql:2412
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:58
+#: sql/Pg-database.sql:2412
 msgid "Add Vendor"
 msgstr "Új szállító"
 
@@ -522,6 +532,16 @@ msgstr "Címsor 3 "
 msgid "Address"
 msgstr "Cím"
 
+# 87%
+#: t/data/04-complex_template.html:385
+msgid "Address1"
+msgstr "Címsor1"
+
+# 87%
+#: t/data/04-complex_template.html:420
+msgid "Address:"
+msgstr "Cím:"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -530,7 +550,7 @@ msgid "Address: [_1]"
 msgstr "Cím: %1"
 
 # 77%
-#: UI/Contact/contact.html:72
+#: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
 msgid "Addresses"
 msgstr "Címek"
 
@@ -1008,9 +1028,14 @@ msgstr "Bank azonosító kód"
 msgid "BIC"
 msgstr "Bank azonosító kód"
 
-#: UI/Contact/contact.html:1051 UI/Contact/contact.html:1100
+#: t/data/04-complex_template.html:557 UI/Contact/contact.html:1051
+#: UI/Contact/contact.html:1100
 msgid "BIC/SWIFT Code"
 msgstr "SWIFT kód"
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
+msgstr "SWIFT kód:"
 
 #: bin/ic.pl:1205 bin/ic.pl:1435 bin/ic.pl:3066
 msgid "BOM"
@@ -1053,6 +1078,13 @@ msgid "Bank Account"
 msgstr "Bankszámla"
 
 # 84%
+# 92%
+#: t/data/04-complex_template.html:601
+msgid "Bank Account:"
+msgstr "Bankszámla:"
+
+# 84%
+#: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
 msgid "Bank Accounts"
 msgstr "Bankszámlák"
@@ -1215,6 +1247,11 @@ msgstr "Adószám"
 #: UI/Contact/contact.html:571
 msgid "Business Type"
 msgstr "Partnercsoport"
+
+# 92%
+#: t/data/04-complex_template.html:294
+msgid "Business Type:"
+msgstr "Üzlettípus:"
 
 #: bin/am.pl:874
 msgid "Business deleted!"
@@ -1470,7 +1507,7 @@ msgid "Card ID"
 msgstr "Kártya ID"
 
 # Készpénz is lehet, majd meg kell nézni a kontextust.
-#: bin/ic.pl:1069 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr "Pénzmozgások"
 
@@ -1523,7 +1560,7 @@ msgstr "Átalánydíj"
 msgid "Chart of Accounts"
 msgstr "Számlatükör"
 
-#: bin/bp.pl:96 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Csekk"
 
@@ -1556,11 +1593,17 @@ msgstr "Csekkek"
 msgid "Choose a company"
 msgstr "Válasszon ki egy céget"
 
-#: bin/arap.pl:176 UI/Contact/contact.html:784 UI/Contact/contact.html:872
+#: bin/arap.pl:176 t/data/04-complex_template.html:386
+#: UI/Contact/contact.html:784 UI/Contact/contact.html:872
 #: UI/Contact/history_filter.html:88 UI/Contact/search.html:84
 #: UI/employee.html:53
 msgid "City"
 msgstr "Város"
+
+# 80%
+#: t/data/04-complex_template.html:445
+msgid "City:"
+msgstr "Város:"
 
 #: scripts/asset.pl:317 UI/Contact/contact.html:309
 msgid "Class"
@@ -1716,12 +1759,18 @@ msgstr "Vevő rendelések összevonása"
 msgid "Contact"
 msgstr "Kapcsolat"
 
-#: UI/Contact/contact.html:73 UI/Contact/contact.html:932
-#: UI/Contact/contact.html:1022 UI/Contact/history_filter.html:41
+#: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
+#: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
+#: UI/Contact/history_filter.html:41
 msgid "Contact Info"
 msgstr "Kapcsolati infók"
 
-#: UI/Contact/contact.html:927
+# 92%
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+msgid "Contact Info:"
+msgstr "Kapcsolati infók:"
+
+#: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
 msgstr "Kapcsolat információk"
 
@@ -1808,11 +1857,11 @@ msgstr "Nem lehet a készletet áthelyezni!"
 msgid "Counted"
 msgstr "Számlált"
 
-#: bin/io.pl:2046 scripts/taxform.pl:282 UI/Admin/edit_user.html:127
-#: UI/Contact/contact.html:174 UI/Contact/contact.html:345
-#: UI/Contact/contact.html:787 UI/Contact/contact.html:905
-#: UI/Contact/history_filter.html:112 UI/Contact/search.html:99
-#: UI/employee.html:71
+#: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
+#: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
+#: UI/Contact/contact.html:345 UI/Contact/contact.html:787
+#: UI/Contact/contact.html:905 UI/Contact/history_filter.html:112
+#: UI/Contact/search.html:99 UI/employee.html:71
 msgid "Country"
 msgstr "Ország"
 
@@ -1822,7 +1871,7 @@ msgid "Country Code"
 msgstr "Ország kód"
 
 # 87%
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
 msgstr "Ország:"
 
@@ -1879,6 +1928,11 @@ msgstr "Új számlakorrekció"
 #: UI/orders/order.html:34
 msgid "Credit Limit"
 msgstr "Hitelkeret"
+
+# 92%
+#: t/data/04-complex_template.html:201
+msgid "Credit Limit:"
+msgstr "Hitelkeret:"
 
 #: sql/Pg-database.sql:2549
 msgid "Credit Note"
@@ -1996,6 +2050,11 @@ msgstr "Écs."
 #: UI/employee/filter.html:182 UI/employee.html:139
 msgid "DOB"
 msgstr "Szül.nap"
+
+# 75%
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr "Szül.nap:"
 
 #: bin/aa.pl:1296 scripts/payment.pl:437
 msgid "Data not saved.  Please try again."
@@ -2258,7 +2317,8 @@ msgstr "Alapértelmezett beállítások elmentve!"
 #: bin/oe.pl:851 bin/pe.pl:448 bin/pe.pl:460 bin/pe.pl:1248 bin/pe.pl:1577
 #: bin/pe.pl:1783 bin/pe.pl:2155 bin/pos.pl:613 bin/pos.pl:626
 #: scripts/account.pl:144 scripts/admin.pl:358 scripts/drafts.pl:257
-#: scripts/vouchers.pl:342 scripts/vouchers.pl:356 UI/Contact/contact.html:960
+#: scripts/vouchers.pl:342 scripts/vouchers.pl:356
+#: t/data/04-complex_template.html:510 UI/Contact/contact.html:960
 #: UI/Contact/contact.html:1066 UI/Contact/pricelist.html:66
 #: UI/reconciliation/report.html:288
 msgid "Delete"
@@ -2549,6 +2609,15 @@ msgstr "Engedmény"
 msgid "Discount %"
 msgstr "Árengedmény"
 
+# 88%
+#: t/data/04-complex_template.html:242
+msgid "Discount:"
+msgstr "Kedvezmény:"
+
+#: pos.conf.pl:41
+msgid "Discover"
+msgstr "Discover"
+
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
 msgstr ""
@@ -2684,7 +2753,8 @@ msgstr "E-mail üzenet"
 msgid "E-mailed"
 msgstr "E-mail elküldve"
 
-#: bin/aa.pl:144 UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
+#: bin/aa.pl:144 t/data/04-complex_template.html:506
+#: UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -2717,7 +2787,7 @@ msgstr "Partnercsoport módosítása"
 msgid "Edit Credit Note"
 msgstr "Új kredit note"
 
-#: UI/Contact/contact.html:57
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
 msgid "Edit Customer"
 msgstr "Vevő szerkesztése"
 
@@ -2734,7 +2804,7 @@ msgstr "Költséghely/profitcenter módosítása"
 msgid "Edit Description Translations"
 msgstr "Megnevezés fordítások szerkesztése"
 
-#: UI/Contact/contact.html:61
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:61
 msgid "Edit Employee"
 msgstr "Munkatárs módosítás"
 
@@ -2819,7 +2889,7 @@ msgstr "Munkalap módosítása"
 msgid "Edit User"
 msgstr "Felhasználó módosítása"
 
-#: UI/Contact/contact.html:59
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:59
 msgid "Edit Vendor"
 msgstr "Szállító módosítása"
 
@@ -2889,9 +2959,10 @@ msgstr "Alkalmazott"
 msgid "Employee No."
 msgstr "Alkalmazott ID"
 
-#: bin/am.pl:66 scripts/employee.pl:310 UI/am-defaults.html:172
-#: UI/Contact/contact.html:181 UI/employee/filter.html:18
-#: UI/employee/filter.html:112 UI/setup/new_user.html:84
+#: bin/am.pl:66 scripts/employee.pl:310 t/data/04-complex_template.html:92
+#: UI/am-defaults.html:172 UI/Contact/contact.html:181
+#: UI/employee/filter.html:18 UI/employee/filter.html:112
+#: UI/setup/new_user.html:84
 msgid "Employee Number"
 msgstr "Alkalmazott azonosítója"
 
@@ -2913,6 +2984,10 @@ msgstr "Üres"
 #: UI/employee/filter.html:210 UI/employee.html:127
 msgid "End Date"
 msgstr "Végdátum"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+msgid "End Date:"
+msgstr "Végdátum:"
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
 msgid "Enddate"
@@ -2963,7 +3038,7 @@ msgstr "Rögzítette"
 msgid "Entered at"
 msgstr "Felrögzítve"
 
-#: UI/Contact/contact.html:1192
+#: t/data/04-complex_template.html:629 UI/Contact/contact.html:1192
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Bevitel: %1"
@@ -3242,6 +3317,10 @@ msgstr "Pénzmozgások szűrése"
 msgid "Filtering Receipts"
 msgstr "Bevételek szűrése"
 
+#: t/data/04-complex_template.html:53
+msgid "First"
+msgstr "Első"
+
 #: scripts/employee.pl:311 UI/Admin/edit_user.html:95
 #: UI/Admin/user_search.html:21 UI/Contact/contact.html:106
 #: UI/employee/filter.html:29 UI/employee/filter.html:140
@@ -3449,6 +3528,14 @@ msgstr "Értékesítési rendelések készítése"
 msgid "Generic Jabber"
 msgstr "Generálás"
 
+#: pos.conf.pl:44
+msgid "Gift Cert"
+msgstr "Gift Cert"
+
+#: t/data/04-strings-for-translation.html:8
+msgid "Goods & Services"
+msgstr "Áruk és szolgáltatások"
+
 # 83%
 #: sql/Pg-database.sql:2386
 msgid "Goods and Services"
@@ -3494,7 +3581,8 @@ msgstr "Csoportok"
 msgid "Gtalk"
 msgstr ""
 
-#: UI/Contact/contact.html:65 sql/Pg-database.sql:2381
+#: t/data/04-complex_template.html:25 UI/Contact/contact.html:65
+#: sql/Pg-database.sql:2381
 msgid "HR"
 msgstr "Személyügy"
 
@@ -3509,7 +3597,8 @@ msgstr "HTML sablonok"
 msgid "Heading"
 msgstr "Fejléc"
 
-#: UI/Contact/contact.html:77 sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
+#: t/data/04-complex_template.html:35 UI/Contact/contact.html:77
+#: sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
 msgid "History"
 msgstr "Történet"
 
@@ -3978,6 +4067,10 @@ msgstr "A feladat azonosítója hiányzik!"
 msgid "Job Title"
 msgstr "Feladat megnevezése"
 
+#: t/data/04-complex_template.html:78
+msgid "Job Title:"
+msgstr "Feladat megnevezése:"
+
 #: bin/pe.pl:1377
 msgid "Job deleted!"
 msgstr "A feladat törlése megtörtént!"
@@ -4026,6 +4119,7 @@ msgstr "Jún."
 
 #: bin/aa.pl:71 bin/ca.pl:63 bin/gl.pl:66 bin/io.pl:67
 #: LedgerSMB/App_State.pm:174 LedgerSMB/DBObject/Date.pm:65
+#: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Június"
 
@@ -4082,6 +4176,11 @@ msgstr "Nyelvek"
 #: bin/pe.pl:2033
 msgid "Languages not defined!"
 msgstr "Nincsenek megadva nyelvek!"
+
+# 75%
+#: t/data/04-complex_template.html:67
+msgid "Last"
+msgstr "Utolsó"
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4244,7 +4343,7 @@ msgid "Location"
 msgstr "Hely"
 
 # 88%
-#: UI/Contact/contact.html:746
+#: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
 msgid "Locations"
 msgstr "Címek"
 
@@ -4318,6 +4417,11 @@ msgstr "Menedzser ID"
 #: scripts/employee.pl:324 UI/employee/filter.html:294
 msgid "Manager Last Name"
 msgstr "Menedzser vezetékneve"
+
+# 87%
+#: t/data/04-complex_template.html:98
+msgid "Manager:"
+msgstr "Menedzser:"
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
 msgid "Manual"
@@ -4396,6 +4500,10 @@ msgstr "Alapértelmezett mód"
 #: bin/ic.pl:508 bin/ic.pl:1170 bin/ic.pl:1184 bin/ic.pl:1661 bin/ic.pl:1887
 msgid "Microfiche"
 msgstr "Mikrofilm"
+
+#: t/data/04-complex_template.html:60
+msgid "Middle"
+msgstr "Középső"
 
 #: scripts/employee.pl:312 UI/Contact/contact.html:115
 #: UI/employee/filter.html:38 UI/employee/filter.html:154
@@ -4476,6 +4584,7 @@ msgid "Name"
 msgstr "Név"
 
 # 80%
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
 msgid "Name:"
 msgstr "Név:"
@@ -4679,6 +4788,7 @@ msgstr "Megjegyzés osztálya"
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
 #: bin/is.pl:814 bin/jc.pl:557 bin/oe.pl:748 bin/pe.pl:374
+#: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
 #: templates/demo/printPayment.html:124 templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
 #: templates/demo/sales_order.html:205 templates/demo/sales_quotation.html:173
@@ -4699,6 +4809,10 @@ msgstr "Megjegyzés osztálya"
 #: UI/payments/use_overpayment2.html:72
 msgid "Notes"
 msgstr "Megjegyzés"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr "Feljegyzések:<br />"
 
 #: bin/oe.pl:3075
 msgid "Nothing entered!"
@@ -5213,7 +5327,8 @@ msgstr "Fizetés az ő nevében"
 msgid "Payables"
 msgstr "Kötelezettségek"
 
-#: scripts/payment.pl:1135 UI/accounts/edit.html:180 UI/accounts/edit.html:222
+#: scripts/payment.pl:1135 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:180 UI/accounts/edit.html:222
 #: UI/Contact/contact.html:547 UI/payments/payments_detail.html:214
 #: sql/Pg-database.sql:2418
 msgid "Payment"
@@ -5503,7 +5618,8 @@ msgstr "Az árcsoport mentése megtörtént!"
 msgid "Pricegroups"
 msgstr "Árcsoportok"
 
-#: UI/Contact/contact.html:737 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/contact.html:737
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Árlista"
 
@@ -5661,8 +5777,9 @@ msgstr "Vásárlás dátuma:"
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
-#: bin/oe.pl:1713 bin/oe.pl:2286 templates/demo/purchase_order.html:4
-#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
+#: bin/oe.pl:1713 bin/oe.pl:2286 t/data/04-complex_template.html:343
+#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
+#: templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -5814,7 +5931,8 @@ msgid "Quotations"
 msgstr "Ajánlatok"
 
 #: bin/ic.pl:1031 bin/ic.pl:1542 bin/io.pl:1348 bin/oe.pl:291 bin/oe.pl:806
-#: bin/oe.pl:849 bin/oe.pl:1745 bin/oe.pl:1750 UI/Contact/contact.html:728
+#: bin/oe.pl:849 bin/oe.pl:1745 bin/oe.pl:1750
+#: t/data/04-complex_template.html:352 UI/Contact/contact.html:728
 #: sql/Pg-database.sql:1537 sql/Pg-database.sql:2443 sql/Pg-database.sql:2525
 #: sql/Pg-database.sql:2541
 msgid "RFQ"
@@ -5978,9 +6096,13 @@ msgstr "Maradék élettartam"
 msgid "Remaining"
 msgstr "Maradék"
 
-#: UI/Contact/contact.html:1053 UI/Contact/contact.html:1118
-#: UI/employee.html:151
+#: t/data/04-complex_template.html:559 UI/Contact/contact.html:1053
+#: UI/Contact/contact.html:1118 UI/employee.html:151
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: bin/bp.pl:500 bin/bp.pl:508
@@ -6147,6 +6269,11 @@ msgstr "TEÁOR/SZJ törölve!"
 msgid "SIC saved!"
 msgstr "TEÁOR/SZJ elmentve!"
 
+# 75%
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr "Oszt.kód:"
+
 # Ezt így hagyom, minden más csak rosszabb lenne.
 #: bin/io.pl:231 bin/io.pl:511 bin/oe.pl:2914 bin/oe.pl:3500
 msgid "SKU"
@@ -6215,6 +6342,11 @@ msgstr "Vevőrendelések"
 msgid "Sales Quotation Number"
 msgstr "Ajánlat azonosító"
 
+# 83%
+#: t/data/04-complex_template.html:85
+msgid "Sales:"
+msgstr "Értékesítés:"
+
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
 #: bin/oe.pl:1762 bin/oe.pl:1776 bin/oe.pl:1801 bin/oe.pl:1899 bin/pos.pl:264
@@ -6251,8 +6383,10 @@ msgstr "Szombat"
 #: bin/jc.pl:699 bin/jc.pl:932 bin/jc.pl:945 bin/oe.pl:796 bin/oe.pl:816
 #: bin/pe.pl:447 bin/pe.pl:456 bin/pe.pl:1244 bin/pe.pl:1570 bin/pe.pl:1776
 #: bin/pe.pl:2154 scripts/account.pl:138 scripts/account.pl:149
-#: scripts/asset.pl:549 UI/am-defaults.html:205 UI/am-taxes.html:45
-#: UI/am-userconfig.html:64 UI/asset/edit_asset.html:206
+#: scripts/asset.pl:549 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-defaults.html:205
+#: UI/am-taxes.html:45 UI/am-userconfig.html:64 UI/asset/edit_asset.html:206
 #: UI/asset/edit_class.html:56 UI/asset/import_asset.html:57
 #: UI/Contact/contact.html:233 UI/Contact/contact.html:374
 #: UI/Contact/contact.html:1128 UI/Contact/contact.html:1182
@@ -6274,7 +6408,7 @@ msgstr "Köteg mentése"
 msgid "Save Changes"
 msgstr "Változások mentése"
 
-#: UI/Contact/contact.html:1032
+#: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
 msgid "Save Contact"
 msgstr "Kapcsolat mentése"
 
@@ -6286,7 +6420,7 @@ msgstr "Csoportok mentése"
 msgid "Save Info"
 msgstr "Infó mentése"
 
-#: UI/Contact/contact.html:914
+#: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr "Hely mentése"
 
@@ -6837,6 +6971,12 @@ msgstr "TEÁOR/SZJ kód (SIC)"
 msgid "Start Date"
 msgstr "Kezdő dátum"
 
+# 80%
+# 90%
+#: t/data/04-complex_template.html:114
+msgid "Start Date:"
+msgstr "Kezdő dátum:"
+
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
 msgstr "Bizonylatszám számozás kezdete:"
@@ -6854,15 +6994,24 @@ msgstr "Kezdő dátum"
 msgid "Starting Date"
 msgstr "Kezdési dátum"
 
+#: t/data/04-complex_template.html:177
+msgid "Starting Date:"
+msgstr "Kezdő dátum:"
+
 #: bin/io.pl:2040
 msgid "State"
 msgstr "Megye"
 
-#: UI/Contact/contact.html:785 UI/Contact/contact.html:881
-#: UI/Contact/history_filter.html:96 UI/Contact/search.html:89
-#: UI/employee.html:59
+#: t/data/04-complex_template.html:387 UI/Contact/contact.html:785
+#: UI/Contact/contact.html:881 UI/Contact/history_filter.html:96
+#: UI/Contact/search.html:89 UI/employee.html:59
 msgid "State/Province"
 msgstr "Állam/Régió"
+
+# 93%
+#: t/data/04-complex_template.html:454
+msgid "State/Province:"
+msgstr "Állam/Régió:"
 
 #: bin/rp.pl:1325 templates/demo/statement.html:4
 #: templates/demo/statement.html:20 templates/demo/statement.tex:49
@@ -6933,6 +7082,11 @@ msgstr "Tároló kartonok"
 #: sql/Pg-database.sql:2591
 msgid "Stylesheet"
 msgstr "Stíluslap"
+
+# 88%
+#: t/data/04-complex_template.html:231
+msgid "Subcontract GIFI:"
+msgstr "Alvállalkozó gyűtőkód:"
 
 #: UI/Contact/contact.html:1159 UI/io-email.html:22 UI/rp-email.html:21
 msgid "Subject"
@@ -7097,6 +7251,11 @@ msgstr "Adót tartalmazza"
 #: UI/Contact/contact.html:352
 msgid "Tax Number/SSN"
 msgstr "Adószám (SSN)"
+
+# 81%
+#: t/data/04-complex_template.html:222
+msgid "Tax Number/SSN:"
+msgstr "Adószám (SSN):"
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
@@ -7277,6 +7436,11 @@ msgstr "Határidő"
 msgid "Terms Net [_1] days"
 msgstr "Fizetési határidő %1 nap"
 
+# 83%
+#: t/data/04-complex_template.html:210
+msgid "Terms:"
+msgstr "Határidő:"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -7384,7 +7548,7 @@ msgstr "ezer"
 msgid "Three"
 msgstr "három"
 
-#: UI/Contact/contact.html:580
+#: t/data/04-complex_template.html:302 UI/Contact/contact.html:580
 msgid "Threshold"
 msgstr "Küszöb"
 
@@ -7466,6 +7630,10 @@ msgstr "-szor"
 #: UI/rp-search-projects.html:14
 msgid "To"
 msgstr "Meddig"
+
+#: t/data/04-strings-for-translation.html:7
+msgid "To %1"
+msgstr "Meddig: %1"
 
 #: UI/reconciliation/upload.html:35
 msgid "To Date"
@@ -7795,15 +7963,21 @@ msgstr "huszonkettő"
 msgid "Two"
 msgstr "kettő"
 
-#: bin/io.pl:2099 scripts/asset.pl:634 UI/Contact/contact.html:395
-#: UI/Contact/contact.html:782 UI/Contact/contact.html:837
-#: UI/Contact/contact.html:930
+#: bin/io.pl:2099 scripts/asset.pl:634 t/data/04-complex_template.html:384
+#: UI/Contact/contact.html:395 UI/Contact/contact.html:782
+#: UI/Contact/contact.html:837 UI/Contact/contact.html:930
 msgid "Type"
 msgstr "Típus"
 
 #: bin/am.pl:786 UI/am-business-form.html:12 sql/Pg-database.sql:2578
 msgid "Type of Business"
 msgstr "Partnercsoportok"
+
+# 80%
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+msgid "Type:"
+msgstr "Típus:"
 
 #: UI/payments/use_overpayment2.html:264
 msgid "UPDATE"
@@ -7948,7 +8122,8 @@ msgstr "Szállítási cím"
 msgid "Use overpayment/prepayment"
 msgstr "Használja a túlfizetést/előutalást"
 
-#: UI/am-company-logo.html:12 UI/Contact/contact.html:78 UI/employee.html:94
+#: t/data/04-complex_template.html:36 UI/am-company-logo.html:12
+#: UI/Contact/contact.html:78 UI/employee.html:94
 msgid "User"
 msgstr "Felhasználó"
 
@@ -8011,7 +8186,8 @@ msgid "Vendor History"
 msgstr "Szállító történet"
 
 #: bin/aa.pl:2449 bin/gl.pl:852 bin/ic.pl:1552 bin/oe.pl:804 bin/oe.pl:842
-#: UI/Contact/contact.html:710 sql/Pg-database.sql:2552
+#: t/data/04-complex_template.html:334 UI/Contact/contact.html:710
+#: sql/Pg-database.sql:2552
 msgid "Vendor Invoice"
 msgstr "Új beszerzési számla"
 
@@ -8078,6 +8254,10 @@ msgstr "Verzió %1"
 #: scripts/recon.pl:219
 msgid "View"
 msgstr "Megtekint"
+
+#: pos.conf.pl:40
+msgid "Visa/MC"
+msgstr "Visa/MC"
 
 #: bin/is.pl:1015
 msgid "Void"
@@ -8286,7 +8466,7 @@ msgstr "Hiánya van ennyivel: %1"
 msgid "Your password will expire in [_1]"
 msgstr "A jelszava érvényessége még %1"
 
-#: UI/Contact/contact.html:786
+#: t/data/04-complex_template.html:388 UI/Contact/contact.html:786
 msgid "ZIP/Post Code"
 msgstr "Irányítószám"
 
@@ -8301,6 +8481,11 @@ msgstr "Ir. szám."
 #: UI/Contact/contact.html:890
 msgid "Zip/Post Code"
 msgstr "Irányítószám"
+
+# 80%
+#: t/data/04-complex_template.html:463
+msgid "Zip/Post Code:"
+msgstr "Irányítószám:"
 
 #: UI/Contact/history_filter.html:104 UI/Contact/search.html:94
 #: UI/employee.html:65
@@ -8398,7 +8583,8 @@ msgstr "pénztárbizonylat"
 msgid "city"
 msgstr "város"
 
-#: bin/ic.pl:2875 bin/oe.pl:408 UI/Contact/contact.html:511
+#: bin/ic.pl:2875 bin/oe.pl:408 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/contact.html:511
 #: UI/Contact/contact.html:530
 msgid "days"
 msgstr "nap"
@@ -8456,6 +8642,11 @@ msgstr "Időszak"
 msgid "for Period To [_1]"
 msgstr "időszakhoz %1"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "for"
+
 #: sql/Pg-database.sql:3777
 #, fuzzy
 msgid "import"
@@ -8495,6 +8686,10 @@ msgstr "nulla"
 #: bin/am.pl:2154
 msgid "localhost"
 msgstr "localhost"
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
+msgstr "nl"
 
 # 80%
 #: UI/employee.html:164
@@ -8536,6 +8731,10 @@ msgstr "váratlan hiba!"
 #: scripts/payment.pl:2006
 msgid "use of an overpayment"
 msgstr "felhasznál egy túlfizetést"
+
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
 
 #~ msgid " "
 #~ msgstr " "
@@ -8633,10 +8832,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Accounting Menu"
 #~ msgstr "Menü"
 
-# 87%
-#~ msgid "Actions:"
-#~ msgstr "Műveletek:"
-
 #~ msgid "Add Budget"
 #~ msgstr "Új költségvetés"
 
@@ -8648,14 +8843,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Add General Ledger Transaction"
 #~ msgstr "Új főkönyvi könyvelés"
-
-# 87%
-#~ msgid "Address1"
-#~ msgstr "Címsor1"
-
-# 87%
-#~ msgid "Address:"
-#~ msgstr "Cím:"
 
 #~ msgid "Administration"
 #~ msgstr "Rendszerfelügyelet"
@@ -8703,19 +8890,11 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
 
-#~ msgid "BIC/SWIFT Code:"
-#~ msgstr "SWIFT kód:"
-
 #~ msgid "Backup sent to"
 #~ msgstr "Biztonsági másolat elküldve:"
 
 #~ msgid "Balance y Mayor"
 #~ msgstr "Egyenleg"
-
-# 84%
-# 92%
-#~ msgid "Bank Account:"
-#~ msgstr "Bankszámla:"
 
 #~ msgid "Based on"
 #~ msgstr "Alapján"
@@ -8749,10 +8928,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Budgets"
 #~ msgstr "Költségvetés"
-
-# 92%
-#~ msgid "Business Type:"
-#~ msgstr "Üzlettípus:"
 
 #~ msgid "COGS account does not exist!"
 #~ msgstr "Nincs ELÁBÉ számla!"
@@ -8821,10 +8996,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Chart ID"
 #~ msgstr "Táblázat ID"
 
-# 80%
-#~ msgid "City:"
-#~ msgstr "Város:"
-
 #~ msgid "Click on login name to edit!"
 #~ msgstr "Módosításhoz klikkeljen a felhasználó nevére!"
 
@@ -8833,10 +9004,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Connect to"
 #~ msgstr "Csatlakozva ehhez:"
-
-# 92%
-#~ msgid "Contact Info:"
-#~ msgstr "Kapcsolati infók:"
 
 #~ msgid "Contact Search"
 #~ msgstr "Kapcsolat keresése"
@@ -8859,10 +9026,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Credit Accounts"
 #~ msgstr "Hitel számla"
 
-# 92%
-#~ msgid "Credit Limit:"
-#~ msgstr "Hitelkeret:"
-
 #~ msgid "Customer Invoice"
 #~ msgstr "Vevő számla"
 
@@ -8877,10 +9040,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "DBI not installed!"
 #~ msgstr "DBI program nincs installálva!"
-
-# 75%
-#~ msgid "DOB:"
-#~ msgstr "Szül.nap:"
 
 #~ msgid "Database Administration"
 #~ msgstr "Adatbázis felügyelet"
@@ -8938,13 +9097,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Disc"
 #~ msgstr "Árk"
-
-# 88%
-#~ msgid "Discount:"
-#~ msgstr "Kedvezmény:"
-
-#~ msgid "Discover"
-#~ msgstr "Discover"
 
 #~ msgid "Document"
 #~ msgstr "Dokumentum"
@@ -9013,9 +9165,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "End Balance"
 #~ msgstr "Záró egyenleg"
 
-#~ msgid "End Date:"
-#~ msgstr "Végdátum:"
-
 #~ msgid "Ending Balance"
 #~ msgstr "Záró egyenleg"
 
@@ -9046,20 +9195,11 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Filtering $t"
 #~ msgstr "Szűrés $t"
 
-#~ msgid "First"
-#~ msgstr "Első"
-
 #~ msgid "From date"
 #~ msgstr "Kezdő dátum"
 
 #~ msgid "General Ledger Report"
 #~ msgstr "Főkönyvi jelentés"
-
-#~ msgid "Gift Cert"
-#~ msgstr "Gift Cert"
-
-#~ msgid "Goods & Services"
-#~ msgstr "Áruk és szolgáltatások"
 
 #~ msgid "Group Items"
 #~ msgstr "Tételek rendezése csoport alapján"
@@ -9112,15 +9252,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Item already on pricelist!"
 #~ msgstr "A cikk már szerepel az árlistában!"
 
-#~ msgid "Job Title:"
-#~ msgstr "Feladat megnevezése:"
-
 #~ msgid "Label"
 #~ msgstr "Címke"
-
-# 75%
-#~ msgid "Last"
-#~ msgstr "Utolsó"
 
 #~ msgid "Last Used"
 #~ msgstr "Legutóbbi aktivitás"
@@ -9153,10 +9286,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Login name missing!"
 #~ msgstr "Belépési azonosító hiányzik!"
 
-# 87%
-#~ msgid "Manager:"
-#~ msgstr "Menedzser:"
-
 #~ msgid "Margin Report for Customer"
 #~ msgstr "Árrés jelentés vevőre"
 
@@ -9171,9 +9300,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Menu Width"
 #~ msgstr "Menü szélesség"
-
-#~ msgid "Middle"
-#~ msgstr "Középső"
 
 #~ msgid "Multibyte Encoding"
 #~ msgstr "Multibyte kódolás"
@@ -9207,9 +9333,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Non-taxable Sales"
 #~ msgstr "Adómentes eladások"
-
-#~ msgid "Notes:<br />"
-#~ msgstr "Feljegyzések:<br />"
 
 #~ msgid "Nothing open!"
 #~ msgstr "Nincs nyitva"
@@ -9328,19 +9451,11 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Revenue"
 #~ msgstr "Bevétel"
 
-# 75%
-#~ msgid "SIC:"
-#~ msgstr "Oszt.kód:"
-
 #~ msgid "Sales Invoice "
 #~ msgstr "Vevőszámla "
 
 #~ msgid "Sales Invoice."
 #~ msgstr "Vevőszámla."
-
-# 83%
-#~ msgid "Sales:"
-#~ msgstr "Értékesítés:"
 
 #~ msgid "Save Pricelist"
 #~ msgstr "Árlista mentése"
@@ -9393,20 +9508,8 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Start Balance"
 #~ msgstr "Nyitó egyenleg"
 
-# 80%
-# 90%
-#~ msgid "Start Date:"
-#~ msgstr "Kezdő dátum:"
-
 #~ msgid "Starting Balance"
 #~ msgstr "Nyitó egyenleg"
-
-#~ msgid "Starting Date:"
-#~ msgstr "Kezdő dátum:"
-
-# 93%
-#~ msgid "State/Province:"
-#~ msgstr "Állam/Régió:"
 
 #~ msgid "Statement sent to"
 #~ msgstr "Kimutatás elküldve:"
@@ -9416,10 +9519,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Sub-contract GIFI"
 #~ msgstr "Sub-contract GIFI"
-
-# 88%
-#~ msgid "Subcontract GIFI:"
-#~ msgstr "Alvállalkozó gyűtőkód:"
 
 #~ msgid "Suffix"
 #~ msgstr "Utótag"
@@ -9437,10 +9536,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Tax Number / SSN"
 #~ msgstr "Tax Number / SSN"
 
-# 81%
-#~ msgid "Tax Number/SSN:"
-#~ msgstr "Adószám (SSN):"
-
 #~ msgid "Tax collected"
 #~ msgstr "Fizetendő ÁFA"
 
@@ -9449,10 +9544,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Templates"
 #~ msgstr "Sablonok"
-
-# 83%
-#~ msgid "Terms:"
-#~ msgstr "Határidő:"
 
 #~ msgid "Text"
 #~ msgstr "Szöveg"
@@ -9479,9 +9570,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Timecards"
 #~ msgstr "Időkártyák"
 
-#~ msgid "To %1"
-#~ msgstr "Meddig: %1"
-
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
@@ -9499,10 +9587,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Trial Balance List"
 #~ msgstr "Mérleg lista"
-
-# 80%
-#~ msgid "Type:"
-#~ msgstr "Típus:"
 
 #~ msgid "Unit of measure"
 #~ msgstr "Mértékegység"
@@ -9547,9 +9631,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "Vendor saved!"
 #~ msgstr "Szállító elmentve!"
 
-#~ msgid "Visa/MC"
-#~ msgstr "Visa/MC"
-
 #~ msgid "Voucher List"
 #~ msgstr "Utalványok"
 
@@ -9569,10 +9650,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgstr ""
 #~ "A helyi és távoli kapcsolat eléréséhez írjon be helyet, és portszámot!"
 
-# 80%
-#~ msgid "Zip/Post Code:"
-#~ msgstr "Irányítószám:"
-
 #~ msgid "ap"
 #~ msgstr "szállító"
 
@@ -9582,9 +9659,6 @@ msgstr "felhasznál egy túlfizetést"
 #~ msgid "does not exist"
 #~ msgstr "nem létezik"
 
-#~ msgid "for"
-#~ msgstr "for"
-
 #~ msgid "gl"
 #~ msgstr "vegyeskönyvelés"
 
@@ -9593,9 +9667,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "locked!"
 #~ msgstr "lezárva"
-
-#~ msgid "nl"
-#~ msgstr "nl"
 
 #~ msgid "partsgroup"
 #~ msgstr "cikkcsoport"

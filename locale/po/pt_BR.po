@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 00:10+0000\n"
+"POT-Creation-Date: 2015-12-28 21:28+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -99,8 +99,9 @@ msgstr "Contas a Pagar Vencidas"
 msgid "AP Outstanding"
 msgstr "Contas a Pagar Pendentes"
 
-#: bin/aa.pl:2444 bin/gl.pl:845 templates/demo/ap_transaction.html:4
-#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
+#: bin/aa.pl:2444 bin/gl.pl:845 t/data/04-complex_template.html:325
+#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
+#: templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -177,8 +178,8 @@ msgstr "Acesso Negado"
 #: bin/aa.pl:656 bin/aa.pl:719 bin/aa.pl:850 bin/aa.pl:1744 bin/aa.pl:1883
 #: bin/aa.pl:2074 bin/aa.pl:2124 bin/am.pl:193 bin/ca.pl:201 bin/gl.pl:549
 #: bin/ic.pl:2919 bin/ir.pl:485 bin/ir.pl:790 bin/is.pl:539 bin/is.pl:878
-#: bin/oe.pl:474 scripts/recon.pl:186 templates/demo/invoice.html:248
-#: templates/demo/printPayment.html:44
+#: bin/oe.pl:474 scripts/recon.pl:186 t/data/04-complex_template.html:27
+#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -198,8 +199,8 @@ msgid "Account Description"
 msgstr "Descrição do serviço"
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
-#: UI/accounts/edit.html:26 UI/Contact/contact.html:1052
-#: UI/payments/use_overpayment2.html:116
+#: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
+#: UI/Contact/contact.html:1052 UI/payments/use_overpayment2.html:116
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 #: UI/taxform/details_report.html:20 UI/taxform/summary_report.html:20
@@ -278,10 +279,16 @@ msgstr ""
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
 #, fuzzy
 msgid "Actions"
+msgstr "Deduções"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
 msgstr "Deduções"
 
 #: UI/am-audit-control.html:23
@@ -359,7 +366,8 @@ msgstr "Adicionar Fatura de Compra"
 msgid "Add Credit Note"
 msgstr ""
 
-#: UI/Contact/contact.html:56 sql/Pg-database.sql:2395
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:56
+#: sql/Pg-database.sql:2395
 msgid "Add Customer"
 msgstr "Adicionar Cliente"
 
@@ -376,7 +384,8 @@ msgstr ""
 msgid "Add Department"
 msgstr "Adicionar Departamento"
 
-#: UI/Contact/contact.html:60 sql/Pg-database.sql:2426
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:60
+#: sql/Pg-database.sql:2426
 msgid "Add Employee"
 msgstr "Adicionar Empregado"
 
@@ -489,7 +498,8 @@ msgstr "Adicionar Transação"
 msgid "Add User"
 msgstr "Adicionar Usuário"
 
-#: UI/Contact/contact.html:58 sql/Pg-database.sql:2412
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:58
+#: sql/Pg-database.sql:2412
 msgid "Add Vendor"
 msgstr "Adicionar Fornecedor"
 
@@ -523,6 +533,16 @@ msgstr "Adicionar Atividade Comercial"
 msgid "Address"
 msgstr "Endereço"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Endereço"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Endereço"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -530,7 +550,7 @@ msgstr "Endereço"
 msgid "Address: [_1]"
 msgstr "Endereço"
 
-#: UI/Contact/contact.html:72
+#: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
 #, fuzzy
 msgid "Addresses"
 msgstr "Endereço"
@@ -1013,8 +1033,13 @@ msgstr "BIC"
 msgid "BIC"
 msgstr "BIC"
 
-#: UI/Contact/contact.html:1051 UI/Contact/contact.html:1100
+#: t/data/04-complex_template.html:557 UI/Contact/contact.html:1051
+#: UI/Contact/contact.html:1100
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1205 bin/ic.pl:1435 bin/ic.pl:3066
@@ -1059,6 +1084,12 @@ msgstr "Folha de Balanço"
 msgid "Bank Account"
 msgstr "Associar Contas"
 
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Associar Contas"
+
+#: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
 #, fuzzy
 msgid "Bank Accounts"
@@ -1226,6 +1257,11 @@ msgstr "Número de negócio"
 #: UI/Contact/contact.html:571
 #, fuzzy
 msgid "Business Type"
+msgstr "Negócio"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Negócio"
 
 #: bin/am.pl:874
@@ -1491,7 +1527,7 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr "Caixa"
 
@@ -1543,7 +1579,7 @@ msgstr "Faturáveis"
 msgid "Chart of Accounts"
 msgstr "Plano de Contas"
 
-#: bin/bp.pl:96 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Cheque"
 
@@ -1577,10 +1613,16 @@ msgstr "Cheques"
 msgid "Choose a company"
 msgstr "Empresa"
 
-#: bin/arap.pl:176 UI/Contact/contact.html:784 UI/Contact/contact.html:872
+#: bin/arap.pl:176 t/data/04-complex_template.html:386
+#: UI/Contact/contact.html:784 UI/Contact/contact.html:872
 #: UI/Contact/history_filter.html:88 UI/Contact/search.html:84
 #: UI/employee.html:53
 msgid "City"
+msgstr "Cidade"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "Cidade"
 
 #: scripts/asset.pl:317 UI/Contact/contact.html:309
@@ -1739,13 +1781,19 @@ msgstr "Consolidar pedidos de venda"
 msgid "Contact"
 msgstr "Contato"
 
-#: UI/Contact/contact.html:73 UI/Contact/contact.html:932
-#: UI/Contact/contact.html:1022 UI/Contact/history_filter.html:41
+#: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
+#: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
+#: UI/Contact/history_filter.html:41
 #, fuzzy
 msgid "Contact Info"
 msgstr "Contato"
 
-#: UI/Contact/contact.html:927
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Contato"
+
+#: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
 msgstr ""
 
@@ -1836,11 +1884,11 @@ msgstr "Não é possível transferir inventário!"
 msgid "Counted"
 msgstr "País"
 
-#: bin/io.pl:2046 scripts/taxform.pl:282 UI/Admin/edit_user.html:127
-#: UI/Contact/contact.html:174 UI/Contact/contact.html:345
-#: UI/Contact/contact.html:787 UI/Contact/contact.html:905
-#: UI/Contact/history_filter.html:112 UI/Contact/search.html:99
-#: UI/employee.html:71
+#: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
+#: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
+#: UI/Contact/contact.html:345 UI/Contact/contact.html:787
+#: UI/Contact/contact.html:905 UI/Contact/history_filter.html:112
+#: UI/Contact/search.html:99 UI/employee.html:71
 msgid "Country"
 msgstr "País"
 
@@ -1849,7 +1897,7 @@ msgstr "País"
 msgid "Country Code"
 msgstr "País"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "País"
@@ -1909,6 +1957,11 @@ msgstr "Editar o Fatura de PDV"
 #: UI/Contact/contact.html:398 UI/Contact/contact.html:497
 #: UI/orders/order.html:34
 msgid "Credit Limit"
+msgstr "Limite de Crédito"
+
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
 msgstr "Limite de Crédito"
 
 #: sql/Pg-database.sql:2549
@@ -2028,6 +2081,10 @@ msgstr ""
 #: UI/employee/filter.html:182 UI/employee.html:139
 msgid "DOB"
 msgstr "Aniversário"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1296 scripts/payment.pl:437
 msgid "Data not saved.  Please try again."
@@ -2305,7 +2362,8 @@ msgstr "Configurações padrão salvas!"
 #: bin/oe.pl:851 bin/pe.pl:448 bin/pe.pl:460 bin/pe.pl:1248 bin/pe.pl:1577
 #: bin/pe.pl:1783 bin/pe.pl:2155 bin/pos.pl:613 bin/pos.pl:626
 #: scripts/account.pl:144 scripts/admin.pl:358 scripts/drafts.pl:257
-#: scripts/vouchers.pl:342 scripts/vouchers.pl:356 UI/Contact/contact.html:960
+#: scripts/vouchers.pl:342 scripts/vouchers.pl:356
+#: t/data/04-complex_template.html:510 UI/Contact/contact.html:960
 #: UI/Contact/contact.html:1066 UI/Contact/pricelist.html:66
 #: UI/reconciliation/report.html:288
 msgid "Delete"
@@ -2604,6 +2662,16 @@ msgstr "Desconto"
 msgid "Discount %"
 msgstr "Desconto"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Desconto"
+
+#: pos.conf.pl:41
+#, fuzzy
+msgid "Discover"
+msgstr "Desconto"
+
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
 msgstr ""
@@ -2739,7 +2807,8 @@ msgstr "Mensagem do e-mail"
 msgid "E-mailed"
 msgstr "Enviado por e-mail"
 
-#: bin/aa.pl:144 UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
+#: bin/aa.pl:144 t/data/04-complex_template.html:506
+#: UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
 msgid "Edit"
 msgstr "Editar"
 
@@ -2773,7 +2842,7 @@ msgstr "Editar o Negócio"
 msgid "Edit Credit Note"
 msgstr "Editar o Cliente"
 
-#: UI/Contact/contact.html:57
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
 msgid "Edit Customer"
 msgstr "Editar o Cliente"
 
@@ -2790,7 +2859,7 @@ msgstr "Editar o Departamento"
 msgid "Edit Description Translations"
 msgstr "Editar o Traduções de Descrições"
 
-#: UI/Contact/contact.html:61
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:61
 msgid "Edit Employee"
 msgstr "Editar o Empregado"
 
@@ -2876,7 +2945,7 @@ msgstr "Editar o Apontamento"
 msgid "Edit User"
 msgstr "Editar o Usuário"
 
-#: UI/Contact/contact.html:59
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:59
 msgid "Edit Vendor"
 msgstr "Editar o Fornecedor"
 
@@ -2949,9 +3018,10 @@ msgstr "Empregado"
 msgid "Employee No."
 msgstr "Nome do Empregado"
 
-#: bin/am.pl:66 scripts/employee.pl:310 UI/am-defaults.html:172
-#: UI/Contact/contact.html:181 UI/employee/filter.html:18
-#: UI/employee/filter.html:112 UI/setup/new_user.html:84
+#: bin/am.pl:66 scripts/employee.pl:310 t/data/04-complex_template.html:92
+#: UI/am-defaults.html:172 UI/Contact/contact.html:181
+#: UI/employee/filter.html:18 UI/employee/filter.html:112
+#: UI/setup/new_user.html:84
 msgid "Employee Number"
 msgstr "Número do Empregado"
 
@@ -2973,6 +3043,11 @@ msgstr ""
 #: UI/employee/filter.html:210 UI/employee.html:127
 #, fuzzy
 msgid "End Date"
+msgstr "Data do Pedido"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Data do Pedido"
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
@@ -3027,7 +3102,7 @@ msgstr ""
 msgid "Entered at"
 msgstr ""
 
-#: UI/Contact/contact.html:1192
+#: t/data/04-complex_template.html:629 UI/Contact/contact.html:1192
 msgid "Entered at: [_1]"
 msgstr ""
 
@@ -3301,6 +3376,11 @@ msgstr "Pagamentos"
 msgid "Filtering Receipts"
 msgstr "Recibimentos"
 
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Nome do Projeto"
+
 #: scripts/employee.pl:311 UI/Admin/edit_user.html:95
 #: UI/Admin/user_search.html:21 UI/Contact/contact.html:106
 #: UI/employee/filter.html:29 UI/employee/filter.html:140
@@ -3513,6 +3593,15 @@ msgstr "Pedidos de Venda"
 msgid "Generic Jabber"
 msgstr "Gerar"
 
+#: pos.conf.pl:44
+msgid "Gift Cert"
+msgstr ""
+
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Produtos e Serviços"
+
 #: sql/Pg-database.sql:2386
 #, fuzzy
 msgid "Goods and Services"
@@ -3560,7 +3649,8 @@ msgstr "Grupos"
 msgid "Gtalk"
 msgstr ""
 
-#: UI/Contact/contact.html:65 sql/Pg-database.sql:2381
+#: t/data/04-complex_template.html:25 UI/Contact/contact.html:65
+#: sql/Pg-database.sql:2381
 msgid "HR"
 msgstr "Recursos Humanos"
 
@@ -3575,7 +3665,8 @@ msgstr "Modelos HTML"
 msgid "Heading"
 msgstr "Cabeçalho"
 
-#: UI/Contact/contact.html:77 sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
+#: t/data/04-complex_template.html:35 UI/Contact/contact.html:77
+#: sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
 msgid "History"
 msgstr "Histórico"
 
@@ -4046,6 +4137,11 @@ msgstr "Faltando o número do serviço"
 msgid "Job Title"
 msgstr ""
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Serviço salvo"
+
 #: bin/pe.pl:1377
 msgid "Job deleted!"
 msgstr "Serviço apagado"
@@ -4097,6 +4193,7 @@ msgstr "Jun"
 
 #: bin/aa.pl:71 bin/ca.pl:63 bin/gl.pl:66 bin/io.pl:67
 #: LedgerSMB/App_State.pm:174 LedgerSMB/DBObject/Date.pm:65
+#: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Junho"
 
@@ -4154,6 +4251,11 @@ msgstr "Idiomas"
 #: bin/pe.pl:2033
 msgid "Languages not defined!"
 msgstr "Idiomas não definidos!"
+
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Último Custo"
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4322,7 +4424,7 @@ msgstr "Listar Almoxarifados"
 msgid "Location"
 msgstr "Cotação"
 
-#: UI/Contact/contact.html:746
+#: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
 #, fuzzy
 msgid "Locations"
 msgstr "Cotações"
@@ -4396,6 +4498,11 @@ msgstr "Gerente"
 #: scripts/employee.pl:324 UI/employee/filter.html:294
 msgid "Manager Last Name"
 msgstr ""
+
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Gerente"
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
 #, fuzzy
@@ -4477,6 +4584,10 @@ msgstr "Configurações padrão"
 msgid "Microfiche"
 msgstr "Microficha"
 
+#: t/data/04-complex_template.html:60
+msgid "Middle"
+msgstr ""
+
 #: scripts/employee.pl:312 UI/Contact/contact.html:115
 #: UI/employee/filter.html:38 UI/employee/filter.html:154
 msgid "Middle Name"
@@ -4557,6 +4668,7 @@ msgstr "N/D"
 msgid "Name"
 msgstr "Nome"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
 #, fuzzy
 msgid "Name:"
@@ -4759,6 +4871,7 @@ msgstr "Notas"
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
 #: bin/is.pl:814 bin/jc.pl:557 bin/oe.pl:748 bin/pe.pl:374
+#: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
 #: templates/demo/printPayment.html:124 templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
 #: templates/demo/sales_order.html:205 templates/demo/sales_quotation.html:173
@@ -4779,6 +4892,10 @@ msgstr "Notas"
 #: UI/payments/use_overpayment2.html:72
 msgid "Notes"
 msgstr "Notas"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:3075
 msgid "Nothing entered!"
@@ -5303,7 +5420,8 @@ msgstr ""
 msgid "Payables"
 msgstr "A Pagar"
 
-#: scripts/payment.pl:1135 UI/accounts/edit.html:180 UI/accounts/edit.html:222
+#: scripts/payment.pl:1135 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:180 UI/accounts/edit.html:222
 #: UI/Contact/contact.html:547 UI/payments/payments_detail.html:214
 #: sql/Pg-database.sql:2418
 msgid "Payment"
@@ -5601,7 +5719,8 @@ msgstr "Grupo de Preço salvo!"
 msgid "Pricegroups"
 msgstr "Grupos de Preços"
 
-#: UI/Contact/contact.html:737 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/contact.html:737
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Lista de Preços"
 
@@ -5762,8 +5881,9 @@ msgstr "Ordem de Compra"
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
-#: bin/oe.pl:1713 bin/oe.pl:2286 templates/demo/purchase_order.html:4
-#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
+#: bin/oe.pl:1713 bin/oe.pl:2286 t/data/04-complex_template.html:343
+#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
+#: templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -5915,7 +6035,8 @@ msgid "Quotations"
 msgstr "Cotações"
 
 #: bin/ic.pl:1031 bin/ic.pl:1542 bin/io.pl:1348 bin/oe.pl:291 bin/oe.pl:806
-#: bin/oe.pl:849 bin/oe.pl:1745 bin/oe.pl:1750 UI/Contact/contact.html:728
+#: bin/oe.pl:849 bin/oe.pl:1745 bin/oe.pl:1750
+#: t/data/04-complex_template.html:352 UI/Contact/contact.html:728
 #: sql/Pg-database.sql:1537 sql/Pg-database.sql:2443 sql/Pg-database.sql:2525
 #: sql/Pg-database.sql:2541
 msgid "RFQ"
@@ -6083,9 +6204,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "Restante"
 
-#: UI/Contact/contact.html:1053 UI/Contact/contact.html:1118
-#: UI/employee.html:151
+#: t/data/04-complex_template.html:559 UI/Contact/contact.html:1053
+#: UI/Contact/contact.html:1118 UI/employee.html:151
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: bin/bp.pl:500 bin/bp.pl:508
@@ -6256,6 +6381,10 @@ msgstr "SIC apagado"
 msgid "SIC saved!"
 msgstr "SIC salvo"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:231 bin/io.pl:511 bin/oe.pl:2914 bin/oe.pl:3500
 msgid "SKU"
 msgstr "SKU"
@@ -6323,6 +6452,11 @@ msgstr "Pedidos de Venda"
 msgid "Sales Quotation Number"
 msgstr "Númenro da Cotação de Vendas"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Vendas"
+
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
 #: bin/oe.pl:1762 bin/oe.pl:1776 bin/oe.pl:1801 bin/oe.pl:1899 bin/pos.pl:264
@@ -6360,8 +6494,10 @@ msgstr "Sábado"
 #: bin/jc.pl:699 bin/jc.pl:932 bin/jc.pl:945 bin/oe.pl:796 bin/oe.pl:816
 #: bin/pe.pl:447 bin/pe.pl:456 bin/pe.pl:1244 bin/pe.pl:1570 bin/pe.pl:1776
 #: bin/pe.pl:2154 scripts/account.pl:138 scripts/account.pl:149
-#: scripts/asset.pl:549 UI/am-defaults.html:205 UI/am-taxes.html:45
-#: UI/am-userconfig.html:64 UI/asset/edit_asset.html:206
+#: scripts/asset.pl:549 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-defaults.html:205
+#: UI/am-taxes.html:45 UI/am-userconfig.html:64 UI/asset/edit_asset.html:206
 #: UI/asset/edit_class.html:56 UI/asset/import_asset.html:57
 #: UI/Contact/contact.html:233 UI/Contact/contact.html:374
 #: UI/Contact/contact.html:1128 UI/Contact/contact.html:1182
@@ -6386,7 +6522,7 @@ msgstr "Salvar a Programação"
 msgid "Save Changes"
 msgstr "Salvar como novo"
 
-#: UI/Contact/contact.html:1032
+#: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
 #, fuzzy
 msgid "Save Contact"
 msgstr "Contato"
@@ -6401,7 +6537,7 @@ msgstr "Grupos"
 msgid "Save Info"
 msgstr "Salvar"
 
-#: UI/Contact/contact.html:914
+#: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr ""
 
@@ -6969,6 +7105,11 @@ msgstr "Códigos Industriais Padrão"
 msgid "Start Date"
 msgstr "Data Inicial"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Data Inicial"
+
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -6987,14 +7128,24 @@ msgstr "Data Inicial"
 msgid "Starting Date"
 msgstr "Data da Estocagem"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Data da Estocagem"
+
 #: bin/io.pl:2040
 msgid "State"
 msgstr "Estado"
 
-#: UI/Contact/contact.html:785 UI/Contact/contact.html:881
-#: UI/Contact/history_filter.html:96 UI/Contact/search.html:89
-#: UI/employee.html:59
+#: t/data/04-complex_template.html:387 UI/Contact/contact.html:785
+#: UI/Contact/contact.html:881 UI/Contact/history_filter.html:96
+#: UI/Contact/search.html:89 UI/employee.html:59
 msgid "State/Province"
+msgstr "Estado / Província"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Estado / Província"
 
 #: bin/rp.pl:1325 templates/demo/statement.html:4
@@ -7068,6 +7219,11 @@ msgstr "Cartões de Loja"
 #: sql/Pg-database.sql:2591
 msgid "Stylesheet"
 msgstr "Folha de estilos"
+
+#: t/data/04-complex_template.html:231
+#, fuzzy
+msgid "Subcontract GIFI:"
+msgstr "CFOP do sub contrato"
 
 #: UI/Contact/contact.html:1159 UI/io-email.html:22 UI/rp-email.html:21
 msgid "Subject"
@@ -7236,6 +7392,11 @@ msgstr "Impostos incluídos"
 #: UI/Contact/contact.html:352
 #, fuzzy
 msgid "Tax Number/SSN"
+msgstr "Número do Imposto / SSN"
+
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
 msgstr "Número do Imposto / SSN"
 
 #: templates/demo/ar_transaction.tex:71
@@ -7420,6 +7581,11 @@ msgstr "Crédito Líquido"
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Crédito Líquido"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -7525,7 +7691,7 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/contact.html:580
+#: t/data/04-complex_template.html:302 UI/Contact/contact.html:580
 msgid "Threshold"
 msgstr ""
 
@@ -7609,6 +7775,10 @@ msgstr "Vêzes"
 #: UI/rp-search-projects.html:14
 msgid "To"
 msgstr "Até"
+
+#: t/data/04-strings-for-translation.html:7
+msgid "To %1"
+msgstr ""
 
 #: UI/reconciliation/upload.html:35
 #, fuzzy
@@ -7940,15 +8110,20 @@ msgstr ""
 msgid "Two"
 msgstr "Até"
 
-#: bin/io.pl:2099 scripts/asset.pl:634 UI/Contact/contact.html:395
-#: UI/Contact/contact.html:782 UI/Contact/contact.html:837
-#: UI/Contact/contact.html:930
+#: bin/io.pl:2099 scripts/asset.pl:634 t/data/04-complex_template.html:384
+#: UI/Contact/contact.html:395 UI/Contact/contact.html:782
+#: UI/Contact/contact.html:837 UI/Contact/contact.html:930
 msgid "Type"
 msgstr ""
 
 #: bin/am.pl:786 UI/am-business-form.html:12 sql/Pg-database.sql:2578
 msgid "Type of Business"
 msgstr "Tipo de Negócio"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+msgid "Type:"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:264
 msgid "UPDATE"
@@ -8097,7 +8272,8 @@ msgstr "Enviar para"
 msgid "Use overpayment/prepayment"
 msgstr ""
 
-#: UI/am-company-logo.html:12 UI/Contact/contact.html:78 UI/employee.html:94
+#: t/data/04-complex_template.html:36 UI/am-company-logo.html:12
+#: UI/Contact/contact.html:78 UI/employee.html:94
 msgid "User"
 msgstr "Usuário"
 
@@ -8163,7 +8339,8 @@ msgid "Vendor History"
 msgstr "Histórico do Fornecedor"
 
 #: bin/aa.pl:2449 bin/gl.pl:852 bin/ic.pl:1552 bin/oe.pl:804 bin/oe.pl:842
-#: UI/Contact/contact.html:710 sql/Pg-database.sql:2552
+#: t/data/04-complex_template.html:334 UI/Contact/contact.html:710
+#: sql/Pg-database.sql:2552
 msgid "Vendor Invoice"
 msgstr "Fatura de Compra"
 
@@ -8232,6 +8409,10 @@ msgstr "Versão"
 
 #: scripts/recon.pl:219
 msgid "View"
+msgstr ""
+
+#: pos.conf.pl:40
+msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8439,7 +8620,7 @@ msgstr ""
 msgid "Your password will expire in [_1]"
 msgstr ""
 
-#: UI/Contact/contact.html:786
+#: t/data/04-complex_template.html:388 UI/Contact/contact.html:786
 #, fuzzy
 msgid "ZIP/Post Code"
 msgstr "CEP"
@@ -8456,6 +8637,11 @@ msgstr "CEP"
 #: UI/Contact/contact.html:890
 #, fuzzy
 msgid "Zip/Post Code"
+msgstr "CEP"
+
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
 msgstr "CEP"
 
 #: UI/Contact/history_filter.html:104 UI/Contact/search.html:94
@@ -8543,7 +8729,8 @@ msgstr "Cheque"
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:2875 bin/oe.pl:408 UI/Contact/contact.html:511
+#: bin/ic.pl:2875 bin/oe.pl:408 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/contact.html:511
 #: UI/Contact/contact.html:530
 msgid "days"
 msgstr "dias"
@@ -8601,6 +8788,11 @@ msgstr "pelo período"
 msgid "for Period To [_1]"
 msgstr "pelo período"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "para"
+
 #: sql/Pg-database.sql:3777
 #, fuzzy
 msgid "import"
@@ -8640,6 +8832,10 @@ msgstr ""
 msgid "localhost"
 msgstr "servidor local"
 
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
+msgstr ""
+
 #: UI/employee.html:164
 #, fuzzy
 msgid "notes"
@@ -8678,6 +8874,10 @@ msgstr "erro não esperado"
 #: scripts/payment.pl:1917 scripts/payment.pl:1934 scripts/payment.pl:1989
 #: scripts/payment.pl:2006
 msgid "use of an overpayment"
+msgstr ""
+
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
 msgstr ""
 
 #~ msgid "Above"
@@ -9020,9 +9220,6 @@ msgstr ""
 #~ msgid "Shipping Address"
 #~ msgstr "Endereço para entrega"
 
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "CFOP do sub contrato"
-
 #~ msgid "Tax Accounts"
 #~ msgstr "Contas de Impostos"
 
@@ -9100,9 +9297,6 @@ msgstr ""
 #~ msgid "You must enter a host and port for local and remote connections!"
 #~ msgstr ""
 #~ "Você precisa entrar um servidor e uma porta para conexões locais e remotas!"
-
-#~ msgid "for"
-#~ msgstr "para"
 
 #~ msgid "is already a member!"
 #~ msgstr "já é um membro!"
