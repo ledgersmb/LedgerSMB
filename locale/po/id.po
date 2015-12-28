@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 21:36+0000\n"
+"POT-Creation-Date: 2015-12-27 23:44+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,6 +33,16 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Invoice"
+
+msgid "$entity_classname Number"
+msgstr ""
+
+msgid "$operation $entity_classname"
+msgstr ""
+
+#, fuzzy
+msgid "$operation Employee"
+msgstr "Edit Karyawan"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -1024,6 +1034,8 @@ msgstr "Laporan Rekonsiliasi"
 msgid "Asset Tag"
 msgstr "Aktiva"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 #, fuzzy
 msgid "Assets"
@@ -2240,6 +2252,8 @@ msgstr "Mata Uang"
 msgid "Current"
 msgstr "Mata Uang"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 #, fuzzy
 msgid "Current earnings"
@@ -3490,9 +3504,16 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
 msgstr "Modal"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "Daftar Akun"
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
@@ -3589,6 +3610,12 @@ msgstr "Daftar Akun"
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
 msgstr "Biaya/Aktiva"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "Biaya"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3772,6 +3799,10 @@ msgstr "Edit Akun"
 #, fuzzy
 msgid "Files attached to Entity"
 msgstr "Lampiran"
+
+#, fuzzy
+msgid "Filtering $t"
+msgstr "Pembayaran"
 
 #: UI/payments/payments_detail.html:114
 #, fuzzy
@@ -4284,7 +4315,9 @@ msgstr "Tampilkan pada <br>laporan"
 msgid "Including partnumber"
 msgstr "Tampilkan pada <br>laporan"
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4818,6 +4851,12 @@ msgstr "Piutang Belum Lunas"
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Hutang"
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
@@ -9671,6 +9710,12 @@ msgstr "Kode Pos"
 msgid "Zip/Postal Code"
 msgstr "Kode Pos"
 
+#: LedgerSMB/Report/PNL.pm:146
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr ""
+
 #: bin/gl.pl:201
 #, fuzzy
 msgid "[_1] Cash Transfer Transaction"
@@ -9871,8 +9916,16 @@ msgid "use of an overpayment"
 msgstr "Pilih pembayaran"
 
 #, fuzzy
-#~ msgid "$operation Employee"
-#~ msgstr "Edit Karyawan"
+#~ msgid "%1 Business"
+#~ msgstr "Bisnis"
+
+#, fuzzy
+#~ msgid "%1 Language"
+#~ msgstr "Bahasa"
+
+#, fuzzy
+#~ msgid "%1 Warehouse"
+#~ msgstr "Gudang"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9890,7 +9943,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kode Akun sudah disimpan"
 
 #, fuzzy
-#~ msgid "Account: [_1]"
+#~ msgid "Account: %1"
 #~ msgstr "Akun"
 
 #~ msgid "Accounting"
@@ -9977,7 +10030,7 @@ msgstr "Pilih pembayaran"
 #~ "Tidak dapat men-set akun untuk selain AR (Piutang), AP (Hutang) or IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for [_1]"
+#~ msgid "Cannot set multiple options for %1"
 #~ msgstr "Tidak dapat men-set multiple option untuk "
 
 #~ msgid "Change"
@@ -10002,7 +10055,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Pelanggan sudah dihapus!"
 
 #, fuzzy
-#~ msgid "Customer: [_1]"
+#~ msgid "Customer: %1"
 #~ msgstr "Pelanggan"
 
 #~ msgid "Customers"
@@ -10030,7 +10083,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Departemen telah disimpan"
 
 #, fuzzy
-#~ msgid "Department: [_1]"
+#~ msgid "Department: %1"
 #~ msgstr "Departemen"
 
 #~ msgid "Directory"
@@ -10076,11 +10129,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kurs harap diisi!"
 
 #, fuzzy
-#~ msgid "Filtering $t"
-#~ msgstr "Pembayaran"
-
-#, fuzzy
-#~ msgid "From [_1]"
+#~ msgid "From %1"
 #~ msgstr "Dari"
 
 #~ msgid "Hostname missing!"
@@ -10090,7 +10139,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Versi Dataset tidak benar!"
 
 #, fuzzy
-#~ msgid "Invoice Number: [_1]"
+#~ msgid "Invoice Number: %1"
 #~ msgstr "Nomor Invoice"
 
 #~ msgid "Invoice deleted!"
@@ -10140,7 +10189,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Tidak ada yang akan dicetak!"
 
 #, fuzzy
-#~ msgid "Order Number: [_1]"
+#~ msgid "Order Number: %1"
 #~ msgstr "Nomor Pesanan"
 
 #, fuzzy
@@ -10171,7 +10220,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kelompok Harga"
 
 #, fuzzy
-#~ msgid "Print [_1]"
+#~ msgid "Print %1"
 #~ msgstr "Cetak"
 
 #, fuzzy
@@ -10185,7 +10234,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Nomor Proyek harap diisi!"
 
 #, fuzzy
-#~ msgid "Project Number: [_1]"
+#~ msgid "Project Number: %1"
 #~ msgstr "Nomor Proyek"
 
 #~ msgid "Project deleted!"
@@ -10198,7 +10247,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Proyek sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Quotation Number: [_1]"
+#~ msgid "Quotation Number: %1"
 #~ msgstr "Nomor Quotation"
 
 #, fuzzy
@@ -10283,7 +10332,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Supplier sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Vendor: [_1]"
+#~ msgid "Vendor: %1"
 #~ msgstr "Supplier"
 
 #~ msgid "Vendors"
