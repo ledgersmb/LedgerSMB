@@ -2,22 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 23:44+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
-msgstr ""
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-msgid "$operation Employee"
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
@@ -91,8 +82,8 @@ msgstr ""
 msgid "AP Outstanding"
 msgstr ""
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -187,7 +178,8 @@ msgstr ""
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -234,10 +226,11 @@ msgstr ""
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -301,7 +294,7 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -330,6 +323,14 @@ msgstr ""
 
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
+msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+msgid "Actions"
+msgstr ""
+
+#: t/data/04-complex_template.html:496
+msgid "Actions:"
 msgstr ""
 
 #: UI/am-audit-control.html:28
@@ -413,7 +414,7 @@ msgstr ""
 msgid "Add Credit Note"
 msgstr ""
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr ""
 
@@ -429,7 +430,8 @@ msgstr ""
 msgid "Add Debit Note"
 msgstr ""
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr ""
 
@@ -538,7 +540,7 @@ msgstr ""
 msgid "Add User"
 msgstr ""
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr ""
 
@@ -581,13 +583,22 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
+#: t/data/04-complex_template.html:385
+msgid "Address1"
+msgstr ""
+
+#: t/data/04-complex_template.html:420
+msgid "Address:"
+msgstr ""
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
 msgid "Address: [_1]"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr ""
 
@@ -1088,8 +1099,13 @@ msgstr ""
 msgid "BCC"
 msgstr ""
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1137,7 +1153,12 @@ msgstr ""
 msgid "Bank Account"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+msgid "Bank Account:"
+msgstr ""
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 msgid "Bank Accounts"
 msgstr ""
@@ -1321,6 +1342,10 @@ msgstr ""
 #: LedgerSMB/Report/Contact/Search.pm:78 UI/Contact/divs/credit.html:235
 #: UI/Contact/divs/credit.html:236
 msgid "Business Type"
+msgstr ""
+
+#: t/data/04-complex_template.html:294
+msgid "Business Type:"
 msgstr ""
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1555,10 +1580,15 @@ msgstr ""
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr ""
+
+#: t/data/04-complex_template.html:445
+msgid "City:"
 msgstr ""
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1712,13 +1742,18 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 msgid "Contact Info"
 msgstr ""
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+msgid "Contact Info:"
+msgstr ""
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 msgid "Contact Information"
 msgstr ""
 
@@ -1851,7 +1886,8 @@ msgid "Counterparty Code"
 msgstr ""
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -1868,7 +1904,7 @@ msgstr ""
 msgid "Country Name"
 msgstr ""
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
 msgstr ""
 
@@ -1932,6 +1968,10 @@ msgstr ""
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:145
 #: UI/Contact/divs/credit.html:146 UI/orders/order.html:34
 msgid "Credit Limit"
+msgstr ""
+
+#: t/data/04-complex_template.html:201
+msgid "Credit Limit:"
 msgstr ""
 
 #: sql/Pg-database.sql:2899
@@ -2058,6 +2098,10 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
+msgstr ""
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
 msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
@@ -2359,9 +2403,10 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr ""
 
@@ -2632,6 +2677,10 @@ msgstr ""
 msgid "Discount (%)"
 msgstr ""
 
+#: t/data/04-complex_template.html:242
+msgid "Discount:"
+msgstr ""
+
 #: LedgerSMB/Scripts/asset.pm:702
 msgid "Disp. Aquired Value"
 msgstr ""
@@ -2802,8 +2851,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
 msgstr ""
 
@@ -2839,7 +2888,7 @@ msgstr ""
 msgid "Edit Credit Note"
 msgstr ""
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr ""
 
@@ -2855,7 +2904,7 @@ msgstr ""
 msgid "Edit Description Translations"
 msgstr ""
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr ""
 
@@ -2923,7 +2972,7 @@ msgstr ""
 msgid "Edit User"
 msgstr ""
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr ""
 
@@ -2986,8 +3035,8 @@ msgstr ""
 msgid "Employee"
 msgstr ""
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr ""
 
@@ -3025,6 +3074,10 @@ msgstr ""
 #: UI/Contact/divs/credit.html:123 UI/Contact/divs/employee.html:191
 #: UI/Reports/filters/budget_search.html:48
 msgid "End Date"
+msgstr ""
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+msgid "End Date:"
 msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3084,7 +3137,7 @@ msgstr ""
 msgid "Entered at"
 msgstr ""
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 msgid "Entered at: [_1]"
 msgstr ""
 
@@ -3184,7 +3237,7 @@ msgid "Exchange rate for payment missing!"
 msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:1065
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3392,9 +3445,6 @@ msgstr ""
 msgid "Files attached to Entity"
 msgstr ""
 
-msgid "Filtering $t"
-msgstr ""
-
 #: UI/payments/payments_detail.html:114
 msgid "Filtering From:"
 msgstr ""
@@ -3405,6 +3455,10 @@ msgstr ""
 
 #: UI/payments/payments_filter.html:10
 msgid "Filtering Receipts"
+msgstr ""
+
+#: t/data/04-complex_template.html:53
+msgid "First"
 msgstr ""
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
@@ -3630,6 +3684,10 @@ msgstr ""
 msgid "Given Name"
 msgstr ""
 
+#: t/data/04-strings-for-translation.html:8
+msgid "Goods & Services"
+msgstr ""
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 msgid "Goods and Services"
 msgstr ""
@@ -3672,7 +3730,7 @@ msgstr ""
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr ""
 
@@ -3689,6 +3747,10 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:36
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
+msgstr ""
+
+#: t/data/04-complex_template.html:35
+msgid "History"
 msgstr ""
 
 #: sql/Pg-database.sql:805
@@ -4208,6 +4270,10 @@ msgstr ""
 msgid "Job Title"
 msgstr ""
 
+#: t/data/04-complex_template.html:78
+msgid "Job Title:"
+msgstr ""
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4237,7 +4303,7 @@ msgid "Jun"
 msgstr ""
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr ""
 
@@ -4291,6 +4357,10 @@ msgstr ""
 
 #: bin/pe.pl:500
 msgid "Languages not defined!"
+msgstr ""
+
+#: t/data/04-complex_template.html:67
+msgid "Last"
 msgstr ""
 
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
@@ -4435,7 +4505,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 msgid "Locations"
 msgstr ""
 
@@ -4536,6 +4606,10 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
+#: t/data/04-complex_template.html:98
+msgid "Manager:"
+msgstr ""
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 msgid "Manual"
 msgstr ""
@@ -4609,6 +4683,10 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:73
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
+msgstr ""
+
+#: t/data/04-complex_template.html:60
+msgid "Middle"
 msgstr ""
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
@@ -4710,6 +4788,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 msgid "Name:"
 msgstr ""
@@ -4914,7 +4993,8 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -4940,6 +5020,10 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:340
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
+msgstr ""
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
 msgstr ""
 
 #: bin/oe.pl:1992
@@ -5470,10 +5554,10 @@ msgstr ""
 msgid "Payables"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr ""
 
@@ -5813,7 +5897,8 @@ msgstr ""
 msgid "Pricegroup saved!"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr ""
 
@@ -5979,8 +6064,8 @@ msgstr ""
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6130,8 +6215,9 @@ msgid "Quotations"
 msgstr ""
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr ""
 
@@ -6309,8 +6395,13 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -6512,6 +6603,10 @@ msgstr ""
 msgid "SIC saved!"
 msgstr ""
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr ""
@@ -6572,6 +6667,10 @@ msgstr ""
 msgid "Sales Tax ID"
 msgstr ""
 
+#: t/data/04-complex_template.html:85
+msgid "Sales:"
+msgstr ""
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -6612,7 +6711,9 @@ msgstr ""
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -6641,7 +6742,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 msgid "Save Contact"
 msgstr ""
 
@@ -6657,7 +6758,7 @@ msgstr ""
 msgid "Save Info"
 msgstr ""
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 msgid "Save Location"
 msgstr ""
 
@@ -7337,6 +7438,10 @@ msgstr ""
 msgid "Start Date"
 msgstr ""
 
+#: t/data/04-complex_template.html:114
+msgid "Start Date:"
+msgstr ""
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -7359,14 +7464,22 @@ msgstr ""
 msgid "Starting Date"
 msgstr ""
 
+#: t/data/04-complex_template.html:177
+msgid "Starting Date:"
+msgstr ""
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr ""
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr ""
+
+#: t/data/04-complex_template.html:454
+msgid "State/Province:"
 msgstr ""
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -7406,6 +7519,10 @@ msgstr ""
 
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
+msgstr ""
+
+#: t/data/04-complex_template.html:231
+msgid "Subcontract GIFI:"
 msgstr ""
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
@@ -7595,6 +7712,10 @@ msgstr ""
 msgid "Tax Number/SSN"
 msgstr ""
 
+#: t/data/04-complex_template.html:222
+msgid "Tax Number/SSN:"
+msgstr ""
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -7782,6 +7903,10 @@ msgstr ""
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+msgid "Terms:"
+msgstr ""
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -7896,7 +8021,8 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8002,6 +8128,10 @@ msgstr ""
 
 #: bin/oe.pl:2150
 msgid "To Warehouse"
+msgstr ""
+
+#: t/data/04-strings-for-translation.html:7
+msgid "To [_1]"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:126
@@ -8262,14 +8392,19 @@ msgstr ""
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 msgid "Type"
 msgstr ""
 
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
+msgstr ""
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+msgid "Type:"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:345
@@ -8452,8 +8587,8 @@ msgstr ""
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr ""
 
@@ -8530,8 +8665,8 @@ msgstr ""
 msgid "Vendor History"
 msgstr ""
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr ""
 
@@ -8743,6 +8878,10 @@ msgstr ""
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+msgid "ZIP/Post Code"
+msgstr ""
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr ""
@@ -8753,6 +8892,10 @@ msgstr ""
 
 #: UI/Contact/divs/address.html:88 UI/Contact/divs/address.html:180
 msgid "Zip/Post Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:463
+msgid "Zip/Post Code:"
 msgstr ""
 
 #: UI/Reports/filters/contact_search.html:102
@@ -8826,7 +8969,8 @@ msgstr ""
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr ""
@@ -8863,6 +9007,10 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
+#: t/data/04-gettext.tex:10
+msgid "fr"
+msgstr ""
+
 #: sql/Pg-database.sql:3832
 msgid "import"
 msgstr ""
@@ -8893,6 +9041,10 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
@@ -8942,4 +9094,8 @@ msgstr ""
 #: LedgerSMB/Scripts/payment.pm:1717 LedgerSMB/Scripts/payment.pm:1734
 #: LedgerSMB/Scripts/payment.pm:1789 LedgerSMB/Scripts/payment.pm:1806
 msgid "use of an overpayment"
+msgstr ""
+
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
 msgstr ""

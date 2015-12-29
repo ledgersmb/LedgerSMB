@@ -76,6 +76,7 @@ while (<>) {
               m/^[\s\t\n]*'(([^'\\]|''|\\.)*)'/g
               && do { $state = TXT_FIN;
                       my $string = $1;
+                      $string =~ s/\\'/'/g;
                       $string =~ s/\\/\\\\/g;
                       $string =~ s/"/\\"/g;
                       $string =~ s/\$/\\\$/g;

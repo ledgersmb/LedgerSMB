@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 23:44+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -40,16 +40,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Laskut"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Muokkaa työntekijää"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -125,8 +115,8 @@ msgstr "Käteiskauppalasku"
 msgid "AP Outstanding"
 msgstr "Ei maksetut ostolaskut"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -228,7 +218,8 @@ msgstr "Pääsy kielletty"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -279,10 +270,11 @@ msgstr "Tili"
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -357,7 +349,7 @@ msgstr "Tilit"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -391,6 +383,16 @@ msgstr "Kielet ei ole määritelty"
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "Tarjous"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "Tarjous"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -484,7 +486,7 @@ msgstr "Hyvityslasku"
 msgid "Add Credit Note"
 msgstr "Hyvityslasku"
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr "Lisää asiakas"
 
@@ -503,7 +505,8 @@ msgstr "Lasku"
 msgid "Add Debit Note"
 msgstr "Lasku"
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr "Lisää työntekijä"
 
@@ -624,7 +627,7 @@ msgstr "Yksikkö"
 msgid "Add User"
 msgstr "Muokkaa käyttäjää"
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr "Lisää toimittaja"
 
@@ -673,6 +676,16 @@ msgstr "Lisää vaihtokurssi"
 msgid "Address"
 msgstr "Osoite"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Osoite"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Osoite"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -680,7 +693,8 @@ msgstr "Osoite"
 msgid "Address: [_1]"
 msgstr "Osoite"
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Addresses"
 msgstr "Osoite"
@@ -1243,8 +1257,13 @@ msgstr "Kesk. kust."
 msgid "BCC"
 msgstr "SWIFT"
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1298,7 +1317,13 @@ msgstr "Tase"
 msgid "Bank Account"
 msgstr "Linkkaa tilit"
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Linkkaa tilit"
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 #, fuzzy
 msgid "Bank Accounts"
@@ -1516,6 +1541,11 @@ msgstr "Y-numero"
 #: UI/Contact/divs/credit.html:236
 #, fuzzy
 msgid "Business Type"
+msgstr "Yritys"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Yritys"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1776,10 +1806,16 @@ msgstr "Yritys"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "Kaupunki"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "Kaupunki"
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1947,14 +1983,20 @@ msgstr ""
 msgid "Contact"
 msgstr "Yhteyshenkilö"
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "Yhteyshenkilö"
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Yhteyshenkilö"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 #, fuzzy
 msgid "Contact Information"
 msgstr "Yhteyshenkilö"
@@ -2098,7 +2140,8 @@ msgid "Counterparty Code"
 msgstr "Työkoodi"
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -2117,7 +2160,7 @@ msgstr "Työkoodi"
 msgid "Country Name"
 msgstr "Työkoodi"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "Maa"
@@ -2193,6 +2236,11 @@ msgstr "Hyvityslasku"
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:145
 #: UI/Contact/divs/credit.html:146 UI/orders/order.html:34
 msgid "Credit Limit"
+msgstr "Luottoraja"
+
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
 msgstr "Luottoraja"
 
 #: sql/Pg-database.sql:2899
@@ -2327,6 +2375,10 @@ msgstr ""
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "Syntymäaika"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
 msgid "Data not saved.  Please try again."
@@ -2660,9 +2712,10 @@ msgstr "Oletukset"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr "Poista"
 
@@ -2958,6 +3011,11 @@ msgstr "Alennus"
 msgid "Discount (%)"
 msgstr "Alennus"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Alennus"
+
 #: LedgerSMB/Scripts/asset.pm:702
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3147,8 +3205,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -3189,7 +3247,7 @@ msgstr "Hyvityslasku"
 msgid "Edit Credit Note"
 msgstr "Hyvityslasku"
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "Muokkaa asiakasta"
 
@@ -3207,7 +3265,7 @@ msgstr "Lasku"
 msgid "Edit Description Translations"
 msgstr "Muokkaa kuvauskäännöksiä"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr "Muokkaa työntekijää"
 
@@ -3279,7 +3337,7 @@ msgstr "Listaa toimipisteet"
 msgid "Edit User"
 msgstr "Muokkaa käyttäjää"
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr "Muokkaa myyjää"
 
@@ -3349,8 +3407,8 @@ msgstr "Sähköposti"
 msgid "Employee"
 msgstr "Työntekijä"
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr "Työntekijän numero"
 
@@ -3392,6 +3450,11 @@ msgstr "Toimittajanumero"
 #: UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "Tilauspäivämäärä"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Tilauspäivämäärä"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3460,7 +3523,7 @@ msgstr "Toimituspäivä"
 msgid "Entered at"
 msgstr "Toimituspäivä"
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Toimituspäivä"
@@ -3568,7 +3631,7 @@ msgstr "Maksun vaihtokurssi puuttuu"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Vaihtokurssi puuttuu"
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3790,10 +3853,6 @@ msgstr "Muokkaa tiliä"
 msgid "Files attached to Entity"
 msgstr "Liite"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Maksut"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3808,6 +3867,11 @@ msgstr "Maksut"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "Kuitit"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Projektin nimi"
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -4052,6 +4116,11 @@ msgstr "Luo"
 msgid "Given Name"
 msgstr "Toimittajanumero"
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Hyödykkeet ja palvelut"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 #, fuzzy
 msgid "Goods and Services"
@@ -4097,7 +4166,7 @@ msgstr "Ryhmä tallennettu"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr "Henkilöstöhallinta"
 
@@ -4115,6 +4184,10 @@ msgstr "Otsikko"
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
 msgstr ""
+
+#: t/data/04-complex_template.html:35
+msgid "History"
+msgstr "Historia"
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
@@ -4686,6 +4759,11 @@ msgstr "Työ tallennettu"
 msgid "Job Title"
 msgstr "Tilityyppi"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Tilityyppi"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4718,7 +4796,7 @@ msgid "Jun"
 msgstr "Kes"
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Kesäkuu"
 
@@ -4775,6 +4853,11 @@ msgstr "Kieli tallennettu"
 #: bin/pe.pl:500
 msgid "Languages not defined!"
 msgstr "Kielet ei ole määritelty"
+
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Viimeksi toteutunut kustannus"
 
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4936,7 +5019,7 @@ msgstr "LaTeX mallit"
 msgid "Location"
 msgstr "Tarjous"
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 #, fuzzy
 msgid "Locations"
 msgstr "Tarjous"
@@ -5047,6 +5130,11 @@ msgstr "Vastuuhenkilö"
 msgid "Manager"
 msgstr "Vastuuhenkilö"
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Vastuuhenkilö"
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 #, fuzzy
 msgid "Manual"
@@ -5125,6 +5213,11 @@ msgstr "Oletukset"
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
 msgstr "Mikrokuva"
+
+#: t/data/04-complex_template.html:60
+#, fuzzy
+msgid "Middle"
+msgstr "Käyttäjä tallennettu!"
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 #, fuzzy
@@ -5235,6 +5328,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nimi"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 #, fuzzy
 msgid "Name:"
@@ -5457,7 +5551,8 @@ msgstr "Lisätietoja"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5484,6 +5579,10 @@ msgstr "Lisätietoja"
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "Lisätietoja"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -6061,10 +6160,10 @@ msgstr "Erääntyvät"
 msgid "Payables"
 msgstr "Erääntyvät"
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Maksu"
 
@@ -6438,7 +6537,8 @@ msgstr "Hintaryhmä puuttuu"
 msgid "Pricegroup saved!"
 msgstr "Hintaryhmä tallennettu"
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Hinnasto"
 
@@ -6624,8 +6724,8 @@ msgstr "Asiakashistoria"
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6781,8 +6881,9 @@ msgid "Quotations"
 msgstr "Tarjoukset"
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr "Tarjouspyyntö"
 
@@ -6979,8 +7080,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "Jäljellä"
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -7209,6 +7315,10 @@ msgstr "Teollisuusluokite poistettu!"
 msgid "SIC saved!"
 msgstr "Teollisuusluokite tallennettu!"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "Varastoyksikkö"
@@ -7271,6 +7381,11 @@ msgstr "Myynnntitarjousnumero"
 msgid "Sales Tax ID"
 msgstr "Yrityksen nimi"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Myynnit"
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -7314,7 +7429,9 @@ msgstr "Osavaltio"
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -7346,7 +7463,7 @@ msgstr "Tallenna aikataulu"
 msgid "Save Changes"
 msgstr "Tallenna uutena"
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 #, fuzzy
 msgid "Save Contact"
 msgstr "Yhteyshenkilö"
@@ -7366,7 +7483,7 @@ msgstr "Etsi"
 msgid "Save Info"
 msgstr "Tallenna"
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 #, fuzzy
 msgid "Save Location"
 msgstr "Tarjous"
@@ -8111,6 +8228,11 @@ msgstr "Teollisuusluokitteet"
 msgid "Start Date"
 msgstr "Aloituspäivä"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Aloituspäivä"
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -8135,14 +8257,24 @@ msgstr "Tiliotteen tase"
 msgid "Starting Date"
 msgstr "Aloituspäivä"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Aloituspäivä"
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr "Osavaltio"
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "Lääni"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Lääni"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -8185,6 +8317,11 @@ msgstr "Varastoi tuote"
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
 msgstr "Tyylitiedosto"
+
+#: t/data/04-complex_template.html:231
+#, fuzzy
+msgid "Subcontract GIFI:"
+msgstr "Alihankinta GIFI"
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
@@ -8393,6 +8530,11 @@ msgstr "ALV sisältyy"
 msgid "Tax Number/SSN"
 msgstr "Y-n:o / Sotu"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "Y-n:o / Sotu"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8591,6 +8733,11 @@ msgstr "Maksuehto"
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Maksuehto"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -8714,7 +8861,8 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8830,6 +8978,11 @@ msgstr ""
 #: bin/oe.pl:2150
 msgid "To Warehouse"
 msgstr "Varastoon"
+
+#: t/data/04-strings-for-translation.html:7
+#, fuzzy
+msgid "To [_1]"
+msgstr "Yritys"
 
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
@@ -9104,9 +9257,9 @@ msgstr "Hetkeen"
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #, fuzzy
 msgid "Type"
 msgstr "Yritys"
@@ -9114,6 +9267,12 @@ msgstr "Yritys"
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
 msgstr "Liiketoiminnan tyyppi"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "Yritys"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -9316,8 +9475,8 @@ msgstr "Ennakkomaksu"
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "Käyttäjä"
 
@@ -9402,8 +9561,8 @@ msgstr "Lisää tili"
 msgid "Vendor History"
 msgstr "Toimittajahistoria"
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr "Ostolasku"
 
@@ -9634,6 +9793,11 @@ msgstr "Olet kirjautunut ulos"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "Postinumero"
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr ""
@@ -9646,6 +9810,11 @@ msgstr "Postinumero"
 #: UI/Contact/divs/address.html:88 UI/Contact/divs/address.html:180
 #, fuzzy
 msgid "Zip/Post Code"
+msgstr "Postinumero"
+
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
 msgstr "Postinumero"
 
 #: UI/Reports/filters/contact_search.html:102
@@ -9733,7 +9902,8 @@ msgstr "Sekki"
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "päivää"
@@ -9774,6 +9944,11 @@ msgstr "kpl"
 msgid "failed"
 msgstr "epäonnistui"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "for"
+
 #: sql/Pg-database.sql:3832
 #, fuzzy
 msgid "import"
@@ -9807,6 +9982,10 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
@@ -9865,6 +10044,10 @@ msgstr "odottamaton virhe"
 msgid "use of an overpayment"
 msgstr "Ennakkomaksu"
 
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
+
 #, fuzzy
 #~ msgid " Date missing!"
 #~ msgstr "Pvm puuttuu"
@@ -9874,24 +10057,8 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Koodi puuttuu!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Yritys"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Kieli"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Lisää teollisuusluokite"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Varasto"
+#~ msgid "$operation Employee"
+#~ msgstr "Muokkaa työntekijää"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9915,7 +10082,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Tili lisätty"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Tili"
 
 #~ msgid "Accounting"
@@ -10106,12 +10273,12 @@ msgstr "Ennakkomaksu"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "Tili voi olla vain joko Myynti, Osto tai Varasto"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Ei voi asettaa useita asetuksia"
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "Ei voi asettaa nimikkeelle useita asetuksia"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Ei voi asettaa useita asetuksia"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Tuoteen varastointi ei onnistu"
@@ -10136,7 +10303,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Suljettu"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Suljettu"
 
 #~ msgid "Components"
@@ -10164,7 +10331,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Asiakas tallennettu!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Asiakas"
 
 #~ msgid "Customers"
@@ -10219,7 +10386,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Osasto tallennettu"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Osasto"
 
 #~ msgid "Directory"
@@ -10300,11 +10467,15 @@ msgstr "Ennakkomaksu"
 #~ msgid "Existing Datasets"
 #~ msgstr "Nykyiset tietokannat"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Maksut"
+
 #~ msgid "Friday"
 #~ msgstr "Perjantai"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Alkaen"
 
 #~ msgid "Generate Sales Order"
@@ -10315,9 +10486,6 @@ msgstr "Ennakkomaksu"
 
 #~ msgid "Groups"
 #~ msgstr "Ryhmät"
-
-#~ msgid "History"
-#~ msgstr "Historia"
 
 #~ msgid "Host"
 #~ msgstr "Palvelin"
@@ -10338,7 +10506,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Lisää"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Laskun numero"
 
 #~ msgid "Invoice deleted!"
@@ -10469,7 +10637,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Oracle-tietokannan ylläpito"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Tilausnumero"
 
 #~ msgid "Order saved!"
@@ -10541,7 +10709,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Hintaryhmät"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Tulosta"
 
 #~ msgid "Print and Post as new"
@@ -10557,7 +10725,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Projektin numero puuttuu!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektin numero"
 
 #~ msgid "Project Transactions"
@@ -10585,7 +10753,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Jonotettu"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tarjousnumero"
 
 #~ msgid "R"
@@ -10680,9 +10848,6 @@ msgstr "Ennakkomaksu"
 
 #~ msgid "Stores Cards"
 #~ msgstr "Varastokortit"
-
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "Alihankinta GIFI"
 
 #~ msgid "Sunday"
 #~ msgstr "Sunnuntai"
@@ -10792,7 +10957,7 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Toimittaja tallennettu!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Toimittaja"
 
 #~ msgid "Vendors"
@@ -10852,8 +11017,16 @@ msgstr "Ennakkomaksu"
 #~ msgstr "Yritys"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Kieli"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Lisää teollisuusluokite"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"
@@ -10865,9 +11038,6 @@ msgstr "Ennakkomaksu"
 #, fuzzy
 #~ msgid "ar"
 #~ msgstr "Maa"
-
-#~ msgid "for"
-#~ msgstr "for"
 
 #~ msgid "for Period"
 #~ msgstr "jaksolle"
