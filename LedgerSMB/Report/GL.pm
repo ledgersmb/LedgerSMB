@@ -77,88 +77,88 @@ Read-only accessor, returns a list of columns.
 =cut
 
 sub columns {
-
+    my ($self) = @_;
     my @COLS = (
     {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
+       name => $self->Text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => LedgerSMB::Report::text('Date'),
+       name => $self->Text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => LedgerSMB::Report::text('Reference'),
+       name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'entry_id',
-       name => LedgerSMB::Report::text('Entry ID'),
+       name => $self->Text('Entry ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debits',
-       name => LedgerSMB::Report::text('Debits'),
+       name => $self->Text('Debits'),
        type => 'text',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'credits',
-       name => LedgerSMB::Report::text('Credits'),
+       name => $self->Text('Credits'),
        type => 'text',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'source',
-       name => LedgerSMB::Report::text('Source'),
+       name => $self->Text('Source'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'memo',
-       name => LedgerSMB::Report::text('Memo'),
+       name => $self->Text('Memo'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'cleared',
-       name => LedgerSMB::Report::text('Cleared'),
+       name => $self->Text('Cleared'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'till',
-       name => LedgerSMB::Report::text('Till'),
+       name => $self->Text('Till'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'chart_id',
-       name => LedgerSMB::Report::text('Chart ID'),
+       name => $self->Text('Chart ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'accno',
-       name => LedgerSMB::Report::text('Account No.'),
+       name => $self->Text('Account No.'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'accname',
-       name => LedgerSMB::Report::text('Account Name'),
+       name => $self->Text('Account Name'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'gifi_accno',
-       name => LedgerSMB::Report::text('GIFI'),
+       name => $self->Text('GIFI'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'running_balance',
-       name => LedgerSMB::Report::text('Balance'),
+       name => $self->Text('Balance'),
        type => 'text',
       money => 1,
      pwidth => '3', },
@@ -190,7 +190,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('General Ledger Report');
+    my ($self) = @_;
+    return $self->Text('General Ledger Report');
 }
 
 =item header_lines
@@ -200,16 +201,17 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'from_date',
-             text => LedgerSMB::Report::text('Start Date')},
+             text => $self->Text('Start Date')},
             {name => 'to_date',
-             text => LedgerSMB::Report::text('End Date')},
+             text => $self->Text('End Date')},
             {name => 'accno',
-             text => LedgerSMB::Report::text('Account Number')},
+             text => $self->Text('Account Number')},
             {name => 'reference',
-             text => LedgerSMB::Report::text('Reference')},
+             text => $self->Text('Reference')},
             {name => 'source',
-             text => LedgerSMB::Report::text('Source')}];
+             text => $self->Text('Source')}];
 }
 
 =item subtotal_cols
