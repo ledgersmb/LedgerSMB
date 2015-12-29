@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.3.29\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 22:32+0000\n"
+"POT-Creation-Date: 2015-12-27 23:51+0000\n"
 "PO-Revision-Date: 2013-08-27 08:52+0200\n"
 "Last-Translator: István <pongracz.istvan@startit.hu>\n"
 "Language-Team: StartIT Kft <info@startit.hu>\n"
@@ -997,6 +997,8 @@ msgid "Asset Tag"
 msgstr "Eszköz címke"
 
 # 83%
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2887
 msgid "Assets"
 msgstr "Eszközök"
@@ -2147,6 +2149,8 @@ msgstr "Pénznem"
 msgid "Current"
 msgstr "Aktuális"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:81
 #, fuzzy
 msgid "Current earnings"
@@ -3320,9 +3324,16 @@ msgstr "Bejegyzés ID"
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:200 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "Tőke"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "Kötelezettségek"
 
 #: UI/accounts/edit.html:201
 msgid "Equity (Temporary)"
@@ -3419,6 +3430,12 @@ msgstr "Költségszámla"
 #: UI/accounts/edit.html:328
 msgid "Expense/Asset"
 msgstr "Ktg./Eszköz"
+
+# 87%
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+msgid "Expenses"
+msgstr "Költségek"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -4086,7 +4103,9 @@ msgstr "Kifizetéssel együtt"
 msgid "Including partnumber"
 msgstr "Cikkszámmal"
 
-#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Scripts/configuration.pm:87
+#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:87
 #: UI/accounts/edit.html:202 UI/accounts/edit.html:285
 #: UI/accounts/edit.html:367 UI/accounts/edit.html:406
 #: UI/Reports/filters/gl.html:145
@@ -4612,6 +4631,12 @@ msgstr "Kifizetetlen vevőszámlák"
 #: sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
 msgid "Letterhead"
 msgstr "Levélfejléc"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Kötelezettség"
 
 #: UI/accounts/edit.html:199 UI/Reports/filters/gl.html:133
 msgid "Liability"
@@ -9179,6 +9204,13 @@ msgstr "Irányítószám"
 msgid "Zip/Postal Code"
 msgstr "Irányítószám"
 
+#: LedgerSMB/Report/PNL.pm:146
+#, fuzzy
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr "Mentés %1 %2"
+
 # 89%
 # 90%
 #: bin/gl.pl:201
@@ -10085,10 +10117,6 @@ msgstr "felhasznál egy túlfizetést"
 
 #~ msgid "Expense account does not exist!"
 #~ msgstr "Nincs Költségszámla!"
-
-# 87%
-#~ msgid "Expenses"
-#~ msgstr "Költségek"
 
 #~ msgid "Field \\\"Name\\\" Not Defined"
 #~ msgstr "A \\\"Name\\\" mező nincs definiálva"

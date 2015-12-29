@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 22:32+0000\n"
+"POT-Creation-Date: 2015-12-27 23:51+0000\n"
 "PO-Revision-Date: 2012-06-20 13:35-0300\n"
 "Last-Translator: Andres Basile <basile@gmail.com>\n"
 "Language-Team: \n"
@@ -994,6 +994,8 @@ msgstr "Reporte de Disposicion"
 msgid "Asset Tag"
 msgstr "Etiqueta de Activo"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2887
 msgid "Assets"
 msgstr "Activos"
@@ -2176,6 +2178,8 @@ msgstr "Moneda"
 msgid "Current"
 msgstr "Actual"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:81
 #, fuzzy
 msgid "Current earnings"
@@ -3393,9 +3397,15 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:200 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "Patrimonio Neto"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+msgid "Equity & Liabilities"
+msgstr ""
 
 #: UI/accounts/edit.html:201
 msgid "Equity (Temporary)"
@@ -3491,6 +3501,12 @@ msgstr "Cuenta de Activos"
 #: UI/accounts/edit.html:328
 #, fuzzy
 msgid "Expense/Asset"
+msgstr "Gasto"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
 msgstr "Gasto"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
@@ -4174,7 +4190,9 @@ msgstr "Declaracion de Ganancias"
 msgid "Including partnumber"
 msgstr "Incluir en Reporte"
 
-#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Scripts/configuration.pm:87
+#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:87
 #: UI/accounts/edit.html:202 UI/accounts/edit.html:285
 #: UI/accounts/edit.html:367 UI/accounts/edit.html:406
 #: UI/Reports/filters/gl.html:145
@@ -4715,6 +4733,12 @@ msgstr "Sobresaliente"
 #: sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
 msgid "Letterhead"
 msgstr "Encabezado"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Pasivo"
 
 #: UI/accounts/edit.html:199 UI/Reports/filters/gl.html:133
 msgid "Liability"
@@ -9372,6 +9396,13 @@ msgstr "Codigo"
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "Codigo"
+
+#: LedgerSMB/Report/PNL.pm:146
+#, fuzzy
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr "Guardando %1 %1"
 
 #: bin/gl.pl:201
 #, fuzzy
