@@ -90,58 +90,59 @@ has jctype => (is => 'ro', isa => 'Int', required => 0);
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     {col_id => 'weekstarting',
-       name => LedgerSMB::Report::text('Week Starting'),
+       name => $self->Text('Week Starting'),
        type => 'text',
      pwidth => '2', },
     {col_id => 'business_unit_code',
-       name => LedgerSMB::Report::text('Project/Department Number'),
+       name => $self->Text('Project/Department Number'),
        type => 'text',
      pwidth => '4', },
     {col_id => 'business_unit_description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '4', },
     {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
+       name => $self->Text('ID'),
        type => 'href',
   href_base => 'timecard.pl?action=get&id=',
      pwidth => '1', },
     {col_id => 'partnumber',
-       name => LedgerSMB::Report::text('Partnumber'),
+       name => $self->Text('Partnumber'),
        type => 'text',
      pwidth => '4', },
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'text',
      pwidth => '4', },
     {col_id => 'day0',
-       name => LedgerSMB::Report::text('Sun'),
+       name => $self->Text('Sun'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day1',
-       name => LedgerSMB::Report::text('Mon'),
+       name => $self->Text('Mon'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day2',
-       name => LedgerSMB::Report::text('Tue'),
+       name => $self->Text('Tue'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day3',
-       name => LedgerSMB::Report::text('Wed'),
+       name => $self->Text('Wed'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day4',
-       name => LedgerSMB::Report::text('Thu'),
+       name => $self->Text('Thu'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day5',
-       name => LedgerSMB::Report::text('Fri'),
+       name => $self->Text('Fri'),
        type => 'text',
      pwidth => '1', },
     {col_id => 'day6',
-       name => LedgerSMB::Report::text('Sat'),
+       name => $self->Text('Sat'),
        type => 'text',
      pwidth => '1', },
     ];
@@ -152,12 +153,13 @@ sub columns {
 =cut
 
 sub header_lines  {
+    my ($self) = @_;
     return [{ name => 'date_from',
-              text => LedgerSMB::Report::text('From Date'), },
+              text => $self->Text('From Date'), },
             { name => 'date_to',
-              text => LedgerSMB::Report::text('To Date'), },
+              text => $self->Text('To Date'), },
             { name => 'partnumber',
-              text => LedgerSMB::Report::text('Partnumber'), },
+              text => $self->Text('Partnumber'), },
     ];
 }
 
@@ -166,7 +168,8 @@ sub header_lines  {
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Timecards');
+    my ($self) = @_;
+    return $self->Text('Timecards');
 }
 
 =back

@@ -66,17 +66,20 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Proft/Loss on Inventory Sales') }
+sub name { my ($self) = @_;
+           return $self->Text('Proft/Loss on Inventory Sales');
+}
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'partnumber',
-            text => LedgerSMB::Report::text('Part Number') },
+            text => $self->Text('Part Number') },
             {name => 'description',
-            text => LedgerSMB::Report::text('Description') },
+            text => $self->Text('Description') },
     ];
 }
 
