@@ -81,49 +81,50 @@ admin users.
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
     {col_id => 'accno',
-       name => LedgerSMB::Report::text('Account Number'),
+       name => $self->Text('Account Number'),
        type => 'href',
    href_base => '',
      pwidth => '2', },
 
     {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
+       name => $self->Text('Description'),
        type => 'href',
   href_base => '',
      pwidth => '6', },
 
     {col_id => 'gifi',
-       name => LedgerSMB::Report::text('GIFI'),
+       name => $self->Text('GIFI'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debit_balance',
-       name => LedgerSMB::Report::text('Debits'),
+       name => $self->Text('Debits'),
        type => 'text',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'credit_balance',
-       name => LedgerSMB::Report::text('Credits'),
+       name => $self->Text('Credits'),
        type => 'text',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'link',
-       name => LedgerSMB::Report::text('Dropdowns'),
+       name => $self->Text('Dropdowns'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'edit',
-       name => LedgerSMB::Report::text('Edit'),
+       name => $self->Text('Edit'),
        type => 'href',
   href_base => '',
   html_only => 1, },
 
     {col_id => 'delete',
-       name => LedgerSMB::Report::text('Delete'),
+       name => $self->Text('Delete'),
        type => 'href',
   href_base => '',
   html_only => '1', },
@@ -137,7 +138,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Chart of Accounts');
+    my ($self) = @_;
+    return $self->Text('Chart of Accounts');
 }
 
 =item header_lines
@@ -186,8 +188,8 @@ sub run_report{
         } else {
            $ct = 'A';
         }
-        $r->{edit} = '['.LedgerSMB::Report::text('Edit').']';
-        $r->{delete} = '['.LedgerSMB::Report::text('Delete').']' 
+        $r->{edit} = '['.$self->Text('Edit').']';
+        $r->{delete} = '['.$self->Text('Delete').']'
                   if !$r->{rowcount};
         $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
            "&charttype=$ct";

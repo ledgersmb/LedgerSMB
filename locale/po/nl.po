@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-27 23:51+0000\n"
+"POT-Creation-Date: 2015-12-29 00:16+0000\n"
 "PO-Revision-Date: 2014-10-22 18:01+0200\n"
 "Last-Translator: Frans <f.van.der.star@gmail.com>\n"
 "Language: nl\n"
@@ -136,8 +136,8 @@ msgstr "Inkoopfactuur"
 msgid "AP Outstanding"
 msgstr "Openstaande Crediteuren"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -235,7 +235,8 @@ msgstr "Toegang Geweigerd!"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:66
 #: LedgerSMB/Report/Invoices/Outstanding.pm:209
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -282,10 +283,11 @@ msgstr "Rekening"
 #: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:91
 #: LedgerSMB/Report/Taxform/Detail.pm:82 LedgerSMB/Report/Taxform/Detail.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:145 UI/accounts/edit.html:25
-#: UI/accounts/edit.html:117 UI/Contact/divs/bank_act.html:18
-#: UI/payments/use_overpayment2.html:116 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:145 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:25 UI/accounts/edit.html:117
+#: UI/Contact/divs/bank_act.html:18 UI/payments/use_overpayment2.html:116
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -388,6 +390,16 @@ msgstr "aktie niet gedefinieerd!"
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "Plaats"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "Plaats"
+
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
 msgstr "Activeer Transactielogboek"
@@ -472,7 +484,7 @@ msgstr "Creditfactuur aanmaken"
 msgid "Add Credit Note"
 msgstr "Creditfactuur"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:36
 msgid "Add Customer"
 msgstr "Klant Toevoegen"
 
@@ -491,7 +503,8 @@ msgstr "Debitfactuur"
 msgid "Add Debit Note"
 msgstr "Debitfactuur"
 
-#: UI/Contact/contact.html:40 sql/Pg-database.sql:2810
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:40
+#: sql/Pg-database.sql:2810
 msgid "Add Employee"
 msgstr "Werknemer Toevoegen"
 
@@ -610,7 +623,7 @@ msgstr "Eenheid"
 msgid "Add User"
 msgstr "Gebruiker Toevoegen"
 
-#: UI/Contact/contact.html:38
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:38
 msgid "Add Vendor"
 msgstr "Leverancier Toevoegen"
 
@@ -659,6 +672,16 @@ msgstr "Wisselkoers Toevoegen"
 msgid "Address"
 msgstr "Adres"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Adres"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Adres"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -666,7 +689,8 @@ msgstr "Adres"
 msgid "Address: [_1]"
 msgstr "Adres"
 
-#: LedgerSMB/Scripts/contact.pm:170 UI/Contact/divs/address.html:1
+#: LedgerSMB/Scripts/contact.pm:170 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:1
 #, fuzzy
 msgid "Addresses"
 msgstr "Adres"
@@ -1203,8 +1227,13 @@ msgstr "Gem. Kostpr."
 msgid "BCC"
 msgstr "BIC"
 
-#: UI/Contact/divs/bank_act.html:16 UI/Contact/divs/bank_act.html:47
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:16
+#: UI/Contact/divs/bank_act.html:47
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1283
@@ -1258,7 +1287,13 @@ msgstr "Saldo"
 msgid "Bank Account"
 msgstr "Bank rekening"
 
-#: LedgerSMB/Scripts/contact.pm:172 UI/Contact/divs/bank_act.html:1
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Bank rekening"
+
+#: LedgerSMB/Scripts/contact.pm:172 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:1
 #: UI/Contact/divs/bank_act.html:2
 msgid "Bank Accounts"
 msgstr "Bank rekening"
@@ -1462,6 +1497,11 @@ msgstr "KvK-nummer"
 #: LedgerSMB/Report/Contact/Search.pm:77 UI/Contact/divs/credit.html:216
 #, fuzzy
 msgid "Business Type"
+msgstr "Branche"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Branche"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1719,10 +1759,16 @@ msgstr "Bedrijf"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:82
-#: UI/Contact/divs/address.html:152 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:82 UI/Contact/divs/address.html:152
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "(Woon)Plaats"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "(Woon)Plaats"
 
 #: UI/Contact/divs/company.html:65 UI/Contact/divs/credit.html:66
@@ -1884,14 +1930,20 @@ msgstr "Conflicteert met bestaande gegevens. Misschien heeft u het al ingevoerd"
 msgid "Contact"
 msgstr "Contact"
 
-#: LedgerSMB/Scripts/contact.pm:171 UI/Contact/divs/contact_info.html:1
-#: UI/Contact/divs/contact_info.html:31 UI/Contact/divs/contact_info.html:108
+#: LedgerSMB/Scripts/contact.pm:171 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:1 UI/Contact/divs/contact_info.html:31
+#: UI/Contact/divs/contact_info.html:108
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "Contact"
 
-#: UI/Contact/divs/contact_info.html:2
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Contact"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:2
 #, fuzzy
 msgid "Contact Information"
 msgstr "Gegevens Firma"
@@ -2032,7 +2084,8 @@ msgid "Counterparty Code"
 msgstr "Control Code"
 
 #: bin/io.pl:2123 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Admin/edit_user.html:125
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Admin/edit_user.html:125
 #: UI/Contact/divs/address.html:85 UI/Contact/divs/address.html:187
 #: UI/Contact/divs/company.html:93 UI/Contact/divs/employee.html:112
 #: UI/Contact/divs/person.html:131 UI/payroll/deduction.html:20
@@ -2051,7 +2104,7 @@ msgstr "Control Code"
 msgid "Country Name"
 msgstr "Firmanaam"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "Land"
@@ -2131,6 +2184,11 @@ msgstr "Creditfactuur"
 #: UI/Contact/divs/credit.html:23 UI/Contact/divs/credit.html:133
 #: UI/orders/order.html:34
 msgid "Credit Limit"
+msgstr "Kredietlimiet"
+
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
 msgstr "Kredietlimiet"
 
 #: sql/Pg-database.sql:2905
@@ -2264,6 +2322,10 @@ msgstr "Dag Maand"
 #: UI/Contact/divs/employee.html:152
 msgid "DOB"
 msgstr "Geb. datum"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1372 LedgerSMB/Scripts/payment.pm:329
 msgid "Data not saved.  Please try again."
@@ -2585,9 +2647,10 @@ msgstr "Standaardinstellingen"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
-#: UI/business_units/list_classes.html:89 UI/Contact/divs/address.html:48
-#: UI/Contact/divs/bank_act.html:10 UI/Contact/divs/contact_info.html:7
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:300
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
+#: UI/Contact/divs/address.html:48 UI/Contact/divs/bank_act.html:10
+#: UI/Contact/divs/contact_info.html:7 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:300
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -2874,6 +2937,11 @@ msgstr "Korting"
 msgid "Discount (%)"
 msgstr "Korting %"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Korting"
+
 #: LedgerSMB/Scripts/asset.pm:698
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3057,8 +3125,9 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:147 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Admin/edit_user.html:151 UI/Contact/divs/address.html:47
-#: UI/Contact/divs/contact_info.html:6 UI/templates/preview.html:59
+#: t/data/04-complex_template.html:506 UI/Admin/edit_user.html:151
+#: UI/Contact/divs/address.html:47 UI/Contact/divs/contact_info.html:6
+#: UI/templates/preview.html:59
 msgid "Edit"
 msgstr "Tonen"
 
@@ -3097,7 +3166,7 @@ msgstr "Creditfactuur aanmaken"
 msgid "Edit Credit Note"
 msgstr "Creditfactuur"
 
-#: UI/Contact/contact.html:37
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:37
 msgid "Edit Customer"
 msgstr "Klant Wijzigen"
 
@@ -3115,7 +3184,7 @@ msgstr "Debitfactuur"
 msgid "Edit Description Translations"
 msgstr "Vertalingen Omschrijving Wijzigen"
 
-#: UI/Contact/contact.html:41
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:41
 msgid "Edit Employee"
 msgstr "Werknemer Wijzigen"
 
@@ -3186,7 +3255,7 @@ msgstr "Lijst Belastingformulieren"
 msgid "Edit User"
 msgstr "Gebruiker Wijzigen"
 
-#: UI/Contact/contact.html:39
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:39
 msgid "Edit Vendor"
 msgstr "Leverancier Wijzigen"
 
@@ -3258,8 +3327,8 @@ msgstr "Werknemer"
 msgid "Employee No."
 msgstr "Naam Werknemer"
 
-#: LedgerSMB/Scripts/configuration.pm:111 UI/Contact/divs/employee.html:119
-#: UI/setup/new_user.html:87
+#: LedgerSMB/Scripts/configuration.pm:111 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:119 UI/setup/new_user.html:87
 msgid "Employee Number"
 msgstr "Werknemer Nummer"
 
@@ -3290,6 +3359,11 @@ msgstr "Werknemers"
 #: UI/Contact/divs/employee.html:173 UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "Orderdatum"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Orderdatum"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3355,7 +3429,7 @@ msgstr "Ingevoerd door"
 msgid "Entered at"
 msgstr "Ingeboekt op"
 
-#: UI/Contact/divs/notes.html:71
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:71
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Ingeboekt op"
@@ -3461,7 +3535,7 @@ msgstr "Wisselkoers voor betaling ontbreekt!"
 
 #: LedgerSMB/Scripts/payment.pm:1161
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined"
+msgid "Exchange rate hasn't been defined"
 msgstr "Wisselkoers ontbreekt!"
 
 #: LedgerSMB/DBObject/Payment.pm:748
@@ -3691,6 +3765,11 @@ msgstr "Terug Betalingen"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "Ontvangstbewijzen"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Projectnaam"
 
 #: UI/Admin/edit_user.html:93 UI/Admin/user_search.html:21
 #: UI/Contact/divs/employee.html:37 UI/setup/new_user.html:67
@@ -3931,6 +4010,11 @@ msgstr "Genereer"
 msgid "Given Name"
 msgstr ""
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Goederen & Diensten"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2923
 #, fuzzy
 msgid "Goods and Services"
@@ -3976,7 +4060,7 @@ msgstr "Productgroep opgeslagen!"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2918
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2918
 msgid "HR"
 msgstr "Personeelszaken"
 
@@ -3995,6 +4079,10 @@ msgstr "Kopregel"
 #, fuzzy
 msgid "Hierarchy type"
 msgstr "Bestandstype"
+
+#: t/data/04-complex_template.html:35
+msgid "History"
+msgstr "Historie"
 
 #: sql/Pg-database.sql:820
 msgid "Home Phone"
@@ -4566,6 +4654,11 @@ msgstr "Job opgeslagen!"
 msgid "Job Title"
 msgstr "Rekeningtype"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Rekeningtype"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4597,7 +4690,7 @@ msgid "Jun"
 msgstr "jun"
 
 #: bin/aa.pl:74 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:65
+#: LedgerSMB/DBObject/Date.pm:65 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "juni"
 
@@ -4653,6 +4746,11 @@ msgstr "Taal opgeslagen!"
 #: bin/pe.pl:500
 msgid "Languages not defined!"
 msgstr "Talen niet gedefinieerd!"
+
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Laaste Kostprijs"
 
 #: bin/ic.pl:458 bin/ic.pl:640 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4816,7 +4914,7 @@ msgstr "LaTeX Sjablonen"
 msgid "Location"
 msgstr "Plaats"
 
-#: UI/Contact/divs/address.html:2
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Locations"
 msgstr "Plaats"
@@ -4930,6 +5028,11 @@ msgstr "Toekennen bevoegdheden aan gebruikers"
 msgid "Manager"
 msgstr "Manager"
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Manager"
+
 #: bin/ir.pl:715 bin/is.pl:513 bin/is.pl:809
 msgid "Manual"
 msgstr "Handmatig"
@@ -5006,6 +5109,10 @@ msgstr "Standaardinstellingen"
 #: UI/Reports/filters/search_goods.html:326
 msgid "Microfiche"
 msgstr "Microfiche"
+
+#: t/data/04-complex_template.html:60
+msgid "Middle"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:47 UI/Contact/divs/person.html:97
 msgid "Middle Name"
@@ -5111,6 +5218,7 @@ msgstr "Moet een Krediet of Bedrijfseenheid id bevatten"
 msgid "Name"
 msgstr "Naam"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:34
 #, fuzzy
 msgid "Name:"
@@ -5335,7 +5443,8 @@ msgstr "Opmerkingen"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:255
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:173 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:173 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5362,6 +5471,10 @@ msgstr "Opmerkingen"
 #: UI/Reports/filters/search_goods.html:305 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "Opmerkingen"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:2117
 msgid "Nothing entered!"
@@ -5935,9 +6048,10 @@ msgstr "Betalingen"
 msgid "Payables"
 msgstr "Betalingen"
 
-#: LedgerSMB/Scripts/payment.pm:1060 UI/accounts/edit.html:295
-#: UI/accounts/edit.html:337 UI/Contact/divs/credit.html:192
-#: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2803
+#: LedgerSMB/Scripts/payment.pm:1060 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:295 UI/accounts/edit.html:337
+#: UI/Contact/divs/credit.html:192 UI/payments/payments_detail.html:217
+#: sql/Pg-database.sql:2803
 msgid "Payment"
 msgstr "Betaling"
 
@@ -6272,7 +6386,8 @@ msgstr "Prijsgroep ontbreekt!"
 msgid "Pricegroup saved!"
 msgstr "Prijsgroep opgeslagen!"
 
-#: UI/Contact/divs/credit.html:354 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:354
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Prijslijst"
 
@@ -6410,8 +6525,8 @@ msgstr "Inkoophistorie"
 
 #: bin/am.pl:1305 bin/am.pl:1510 bin/io.pl:1422 bin/io.pl:1641 bin/ir.pl:626
 #: bin/ir.pl:1030 bin/oe.pl:317 bin/oe.pl:748 bin/oe.pl:950 bin/oe.pl:1317
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6565,8 +6680,9 @@ msgid "Quotations"
 msgstr "Offertes"
 
 #: bin/io.pl:1400 bin/oe.pl:292 bin/oe.pl:750 bin/oe.pl:948
-#: UI/Contact/divs/credit.html:351 sql/Pg-database.sql:1941
-#: sql/Pg-database.sql:2826 sql/Pg-database.sql:2958 sql/Pg-database.sql:2973
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:351
+#: sql/Pg-database.sql:1941 sql/Pg-database.sql:2826 sql/Pg-database.sql:2958
+#: sql/Pg-database.sql:2973
 msgid "RFQ"
 msgstr "Prijsaanvraag"
 
@@ -6758,8 +6874,13 @@ msgstr "Verwachte resterende levensduur"
 msgid "Remaining"
 msgstr "Resterend"
 
-#: UI/Contact/divs/bank_act.html:19 UI/Contact/divs/bank_act.html:66
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:19
+#: UI/Contact/divs/bank_act.html:66
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -6979,6 +7100,10 @@ msgstr "SIC verwijderd!"
 msgid "SIC saved!"
 msgstr "SIC opgeslagen!"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:563 bin/oe.pl:1956 bin/oe.pl:2543
 msgid "SKU"
 msgstr "SKU"
@@ -7041,6 +7166,11 @@ msgstr "Verkoopofferte Nummer"
 msgid "Sales Tax ID"
 msgstr "Firma BTW Nummer"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Verkoop"
+
 #: bin/aa.pl:529 bin/aa.pl:1551 bin/is.pl:459 bin/oe.pl:597
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:263
@@ -7083,7 +7213,9 @@ msgstr "Zater"
 #: bin/is.pl:699 bin/oe.pl:717 bin/oe.pl:938 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:151
 #: LedgerSMB/Scripts/account.pm:164 LedgerSMB/Scripts/asset.pm:442
-#: LedgerSMB/Scripts/budgets.pm:99 UI/am-taxes.html:62
+#: LedgerSMB/Scripts/budgets.pm:99 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:62
 #: UI/asset/edit_asset.html:206 UI/asset/edit_class.html:57
 #: UI/asset/import_asset.html:57 UI/business_units/edit.html:93
 #: UI/business_units/list_classes.html:81 UI/Configuration/sequence.html:10
@@ -7115,7 +7247,7 @@ msgstr "Planning Opslaan"
 msgid "Save Changes"
 msgstr "Opslaan als nieuw"
 
-#: UI/Contact/divs/contact_info.html:119
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:119
 #, fuzzy
 msgid "Save Contact"
 msgstr "Contact"
@@ -7135,7 +7267,7 @@ msgstr "Zoek"
 msgid "Save Info"
 msgstr "Opslaan info"
 
-#: UI/Contact/divs/address.html:199
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:199
 #, fuzzy
 msgid "Save Location"
 msgstr "Plaats"
@@ -7838,6 +7970,11 @@ msgstr "Standaard Industiële Codes"
 msgid "Start Date"
 msgstr "Begindatum"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Begindatum"
+
 #: UI/payments/payments_filter.html:172
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -7861,14 +7998,24 @@ msgstr "Saldo Overzicht"
 msgid "Starting Date"
 msgstr "Begindatum"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Begindatum"
+
 #: bin/io.pl:2117
 msgid "State"
 msgstr "Provincie"
 
-#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:162
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:83
+#: UI/Contact/divs/address.html:162 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "Staat/Provincie"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Staat/Provincie"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -7910,6 +8057,11 @@ msgstr "Assemblagevoorraad"
 #: UI/users/preferences.html:87
 msgid "Stylesheet"
 msgstr "Stylesheet"
+
+#: t/data/04-complex_template.html:231
+#, fuzzy
+msgid "Subcontract GIFI:"
+msgstr "GIFI rubricering"
 
 #: UI/budgetting/budget_entry.html:156 UI/budgetting/budget_entry.html:184
 #: UI/Contact/divs/notes.html:27 UI/io-email.html:22 UI/rp-email.html:21
@@ -8113,6 +8265,11 @@ msgstr "Belasting Inbegrepen"
 msgid "Tax Number/SSN"
 msgstr "Belastingnummer / Sofinummer"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "Belastingnummer / Sofinummer"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8310,6 +8467,11 @@ msgstr "Betalingstermijn"
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Betalingstermijn"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -8430,7 +8592,7 @@ msgstr "Duizend"
 msgid "Three"
 msgstr "Drie"
 
-#: UI/Contact/divs/credit.html:128
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:128
 msgid "Threshold"
 msgstr ""
 
@@ -8545,6 +8707,11 @@ msgstr ""
 #: bin/oe.pl:2290
 msgid "To Warehouse"
 msgstr "Naar Magazijn"
+
+#: t/data/04-strings-for-translation.html:7
+#, fuzzy
+msgid "To [_1]"
+msgstr "Naar"
 
 #: UI/payments/use_overpayment2.html:119
 msgid "To be used"
@@ -8815,15 +8982,21 @@ msgstr "Twee"
 #: bin/io.pl:2176 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:87
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:527
-#: UI/Contact/divs/address.html:80 UI/Contact/divs/address.html:119
-#: UI/Contact/divs/contact_info.html:29 UI/Contact/divs/credit.html:19
-#: UI/Contact/divs/wage.html:4
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:80
+#: UI/Contact/divs/address.html:119 UI/Contact/divs/contact_info.html:29
+#: UI/Contact/divs/credit.html:19 UI/Contact/divs/wage.html:4
 msgid "Type"
 msgstr "Type"
 
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2879
 msgid "Type of Business"
 msgstr "Branche"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "Type"
 
 #: UI/payments/use_overpayment2.html:264
 msgid "UPDATE"
@@ -9003,8 +9176,8 @@ msgstr "Gebruik meerbetaling/vooruitbetaling"
 msgid "Used"
 msgstr "al in gebruik"
 
-#: LedgerSMB/Scripts/contact.pm:167 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:2
+#: LedgerSMB/Scripts/contact.pm:167 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:2
 msgid "User"
 msgstr "Gebruiker"
 
@@ -9088,8 +9261,8 @@ msgstr "Leveranciers Rekening "
 msgid "Vendor History"
 msgstr "Leverancierhistorie"
 
-#: bin/oe.pl:743 bin/oe.pl:946 UI/Contact/divs/credit.html:333
-#: sql/Pg-database.sql:2900
+#: bin/oe.pl:743 bin/oe.pl:946 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:333 sql/Pg-database.sql:2900
 msgid "Vendor Invoice"
 msgstr "Inkoopfactuur"
 
@@ -9315,6 +9488,11 @@ msgstr "U bent afgemeld!"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "Postcode"
+
 #: LedgerSMB/Num2text.pm:60
 msgid "Zero"
 msgstr "nul"
@@ -9327,6 +9505,11 @@ msgstr "Postcode"
 #: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:171
 #, fuzzy
 msgid "Zip/Post Code"
+msgstr "Postcode"
+
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
 msgstr "Postcode"
 
 #: UI/Reports/filters/contact_search.html:102
@@ -9410,7 +9593,8 @@ msgstr "Cheque"
 msgid "city"
 msgstr "(Woon)plaats"
 
-#: bin/ic.pl:1092 bin/oe.pl:431 UI/Contact/divs/credit.html:149
+#: bin/ic.pl:1092 bin/oe.pl:431 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:149
 #: UI/Contact/divs/credit.html:166
 msgid "days"
 msgstr "dagen"
@@ -9451,6 +9635,11 @@ msgstr "p.st."
 msgid "failed"
 msgstr "mislukt"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "gedurende"
+
 #: sql/Pg-database.sql:3838
 #, fuzzy
 msgid "import"
@@ -9484,6 +9673,10 @@ msgstr "is nihiel"
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:476
@@ -9540,6 +9733,10 @@ msgstr "onverwachte fout!"
 #: LedgerSMB/Scripts/payment.pm:1934 LedgerSMB/Scripts/payment.pm:1950
 msgid "use of an overpayment"
 msgstr "Gebruik van een vooruitbetaling"
+
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
 
 #, fuzzy
 #~ msgid " Date missing!"
@@ -10059,9 +10256,6 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "Help"
 #~ msgstr "Hulp"
 
-#~ msgid "History"
-#~ msgstr "Historie"
-
 #~ msgid "Host"
 #~ msgstr "Host"
 
@@ -10480,9 +10674,6 @@ msgstr "Gebruik van een vooruitbetaling"
 #~ msgid "Stores Cards"
 #~ msgstr "Materiaalkaarten"
 
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "GIFI rubricering"
-
 #~ msgid "Sunday"
 #~ msgstr "zondag"
 
@@ -10719,9 +10910,6 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #~ msgid "ar"
 #~ msgstr "Debiteuren"
-
-#~ msgid "for"
-#~ msgstr "gedurende"
 
 #~ msgid "for Period"
 #~ msgstr "voor Periode"

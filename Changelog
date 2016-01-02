@@ -1,6 +1,22 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.22
+* Fixed balance sheet language selection (Erik H)
+* Fixed column headings translated in report language (Erik H)
+* Fixed add report styling for financial reports PDF (Erik H, GH1080)
+* Enhanced all accounts can be selected in trial balance (Erik H, GH1107)
+* Fixed syntax errors in ms_MY.po and de.po (Erik H)
+* Fixed translatable string detection (Erik H)
+* Updated translation (source) files (Erik H)
+* Integrated Transifex (transifex.com) translation process (Erik H)
+  Note: To start helping to translate LedgerSMB, check out
+     http://ledgersmb.org/community-guide/community-guide/translating
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
 * Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
