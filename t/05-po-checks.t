@@ -20,7 +20,7 @@ while (my $entry = readdir PO_DIR) {
     next unless $entry =~ m/.po$/;
 
     $entry = "locale/po/$entry";
-    system("msgfmt -c '$entry' 2>/dev/null 1>/dev/null");
+    system("msgfmt -o /dev/null -c '$entry' 2>/dev/null 1>/dev/null");
     ok( $? == 0, "'$entry' passes 'msgfmt -c' validation");
 }
 

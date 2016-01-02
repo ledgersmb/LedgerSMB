@@ -72,19 +72,20 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Invoice Profit/Loss') }
+sub name { my ($self) = @_; return $self->Text('Invoice Profit/Loss') }
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'name',
-            text => LedgerSMB::Report::text('Name') },
+            text => $self->Text('Name') },
             {name => 'invnumber',
-            text => LedgerSMB::Report::text('Invoice Number') },
+            text => $self->Text('Invoice Number') },
             {name => 'transdate',
-            text => LedgerSMB::Report::text('Transaction Date') },
+            text => $self->Text('Transaction Date') },
     ];
 }
 

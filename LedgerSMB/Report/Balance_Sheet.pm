@@ -280,7 +280,8 @@ Implements LedgerSMB::Report's abstract 'name' method.
 =cut
 
 sub name {
-    return 'Balance sheet';
+    my ($self) = @_;
+    return $self->Text('Balance sheet');
 }
 
 =head1 COPYRIGHT

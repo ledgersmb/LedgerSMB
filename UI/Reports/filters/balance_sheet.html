@@ -69,6 +69,7 @@ PROCESS input element_data = {
 <div class="setupwarning" id="warning-hierarchy-not-setup">
   <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
 </div>
+<?lsmb END ?>
 <div class="subsection">
 <?lsmb
 PROCESS select element_data = {
@@ -81,7 +82,6 @@ default_values = [USER.language]
 }
 ?>
 </div>
-<?lsmb END ?>
 <div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
 <?lsmb FOR ct IN [1, 2, 3]; ?>
 <div class="inputrow"><?lsmb
