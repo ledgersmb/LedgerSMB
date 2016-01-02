@@ -25,19 +25,19 @@ createEmail() {
 	To: $1
 	From: ${cfgValue[mail_FromAddress]}
 	Subject: LedgerSMB $release_version released
-	
+
 	The LedgerSMB development team is happy to announce yet another new
 	version of its open source ERP and accounting application. This release
 	contains the following fixes and improvements:
-	
-	$extracted_changelog
-	
+
+	$release_changelog
+
 	The release can be downloaded from sourceforge at
 	  https://sourceforge.net/projects/ledger-smb/files/$prj_url_dir/$release_version/
-	
+
 	These are the sha256 checksums of the uploaded files:
-	$extracted_sha256sums
-	
+	$release_sha256sums
+
 EOF
     $Editor /tmp/msg.txt
     GetKey "Yn" "Send email Now? "
