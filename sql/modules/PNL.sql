@@ -250,7 +250,7 @@ acc_balance AS (
                                    HAVING max(trans_id) = gl.id))
               )
    GROUP BY ac.chart_id
-     HAVING sum(ac.amount) <> 0.00
+     HAVING sum(ac.amount_bc) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -375,7 +375,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount * ca.portion) <> 0.00
+   HAVING sum(ac.amount_bc * ca.portion) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -568,7 +568,7 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
+   HAVING sum(ac.amount_bc) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
