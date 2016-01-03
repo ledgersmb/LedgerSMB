@@ -183,17 +183,17 @@ sub columns {
     my $ORDNUMBER;
     my $METANUMBER;
     if (1 == $self->oe_class_id){ 
-       $ORDNUMBER = LedgerSMB::Report::text('Sales Orders');
-       $METANUMBER = LedgerSMB::Report::text('Customer');
+       $ORDNUMBER = $self->Text('Sales Orders');
+       $METANUMBER = $self->Text('Customer');
     } elsif (2 == $self->oe_class_id){
-       $ORDNUMBER = LedgerSMB::Report::text('Purchase Orders');
-       $METANUMBER = LedgerSMB::Report::text('Vendor');
+       $ORDNUMBER = $self->Text('Purchase Orders');
+       $METANUMBER = $self->Text('Vendor');
     } elsif (3 == $self->oe_class_id){
-       $ORDNUMBER = LedgerSMB::Report::text('Quotations');
-       $METANUMBER = LedgerSMB::Report::text('Customer');
+       $ORDNUMBER = $self->Text('Quotations');
+       $METANUMBER = $self->Text('Customer');
     } elsif (4 == $self->oe_class_id){
-       $ORDNUMBER = LedgerSMB::Report::text('RFQs');
-       $METANUMBER = LedgerSMB::Report::text('Vendor');
+       $ORDNUMBER = $self->Text('RFQs');
+       $METANUMBER = $self->Text('Vendor');
     } else {
         die 'Unsupported OE Class Type';
     }
@@ -205,11 +205,11 @@ sub columns {
            type => 'checkbox' },
 
        {col_id => 'id',
-          name => LedgerSMB::Report::text('ID'),
+          name => $self->Text('ID'),
           type => 'text', },
 
        {col_id => 'transdate',
-          name => LedgerSMB::Report::text('Date'),
+          name => $self->Text('Date'),
           type => 'text', },
 
        {col_id => 'ordnumber',
@@ -218,7 +218,7 @@ sub columns {
      href_base => "oe.pl?action=$HREF_ACTION&id=", },
 
        {col_id => 'reqdate',
-          name => LedgerSMB::Report::text('Required Date'),
+          name => $self->Text('Required Date'),
           type => 'text', },
 
        {col_id => 'meta_number',
@@ -226,44 +226,44 @@ sub columns {
           type => 'text', } ,
 
        {col_id => 'legal_name',
-          name => LedgerSMB::Report::text('Name'),
+          name => $self->Text('Name'),
           type => 'text', },
 
        {col_id => 'amount',
-          name => LedgerSMB::Report::text('Amount'),
+          name => $self->Text('Amount'),
          money => 1,
           type => 'text', },
 
        {col_id => 'curr',
-          name => LedgerSMB::Report::text('Currency'),
+          name => $self->Text('Currency'),
           type => 'text', },
 
        {col_id => 'Closed',
-          name => LedgerSMB::Report::text('Closed'),
+          name => $self->Text('Closed'),
           type => 'text', },
 
        {col_id => 'ponumber',
-          name => LedgerSMB::Report::text('PO Number'),
+          name => $self->Text('PO Number'),
           type => 'text', },
 
        {col_id => 'quonumber',
-          name => LedgerSMB::Report::text('Quotation'),
+          name => $self->Text('Quotation'),
           type => 'text', },
 
        {col_id => 'shippingpoint',
-          name => LedgerSMB::Report::text('Shipping Point'),
+          name => $self->Text('Shipping Point'),
           type => 'text', },
 
        {col_id => 'shipvia',
-          name => LedgerSMB::Report::text('Ship Via'),
+          name => $self->Text('Ship Via'),
           type => 'text', },
 
        {col_id => 'employee',
-          name => LedgerSMB::Report::text('Employee'),
+          name => $self->Text('Employee'),
           type => 'text', },
 
        {col_id => 'manager',
-          name => LedgerSMB::Report::text('Manager'),
+          name => $self->Text('Manager'),
           type => 'text', },
     ];
     return $cols;
@@ -284,13 +284,13 @@ sub header_lines {
 sub name {
     my ($self) = @_;
     if (1 == $self->oe_class_id){ 
-       return LedgerSMB::Report::text('Sales Orders');
+       return $self->Text('Sales Orders');
     } elsif (2 == $self->oe_class_id){
-       return LedgerSMB::Report::text('Purchase Orders');
+       return $self->Text('Purchase Orders');
     } elsif (3 == $self->oe_class_id){
-       return LedgerSMB::Report::text('Quotations');
+       return $self->Text('Quotations');
     } elsif (4 == $self->oe_class_id){
-       return LedgerSMB::Report::text('RFQs');
+       return $self->Text('RFQs');
     } else {
         die 'Unsupported OE Class Type';
     }
