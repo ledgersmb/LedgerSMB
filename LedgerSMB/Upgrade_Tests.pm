@@ -239,7 +239,8 @@ push @tests, __PACKAGE__->new(
                   and partnumber in
                   (select partnumber from parts
                   WHERE obsolete is not true
-                  group by partnumber having count(*) > 1)",
+                  group by partnumber having count(*) > 1)
+                  order by partnumber",
          name => 'duplicate_partnumbers',
  display_name => $locale->text('Unique nonobsolete partnumbers'),
  instructions => $locale->text(
@@ -588,7 +589,8 @@ push @tests, __PACKAGE__->new(
                   and partnumber in
                   (select partnumber from parts
                   WHERE obsolete is not true
-                  group by partnumber having count(*) > 1)",
+                  group by partnumber having count(*) > 1)
+                  order by partnumber",
          name => 'duplicate_partnumbers',
  display_name => $locale->text('Unique nonobsolete partnumbers'),
  instructions => $locale->text(
@@ -723,27 +725,6 @@ push @tests, __PACKAGE__->new(
     max_version => '2.8'
     );
 
-
-push @tests, __PACKAGE__->new(
-    test_query => "select *
-                     from chart
-                    where charttype = 'A'
-                          and exists (select 1
-                                       from (select unnest(array_from_string(link,':') as single_link))
-                                      where single_link in ('AR', 'AP', 'IC'))
-                          and exists (select 1
-                                       from (select unnest(array_from_string(link,':') as single_link))
-                                      where single_link ~ '^(AR|AP|IC)_')",
-    display_name => $locale->text('Accounts can\'t be simultaneously used as summary accounts (AR,AP,IC) and be listed in dropdowns elsewhere.'),
-    name => 'disallowed_link_combinations',
-    display_cols => ['accno', 'description', 'link'],
- instructions => $locale->text(
-                   'Please unmark accounts as summary accounts, or remove dropdown checkmarks (in the standard SL UI)'),
-    table => 'chart',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '2.8'
-    );
 
 
 #  ### On the vendor side, SL doesn't use pricegroups
