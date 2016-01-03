@@ -3011,6 +3011,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 5	Search	1	8
 4	Reports	1	10
 249	Vouchers	1	9
+254	Currency	128	0
+255	Edit currencies	254	0
+256	Edit rate types	254	2
+257	Edit rates	254	3
 \.
 
 
@@ -3629,6 +3633,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 129	module	is.pl	251
 129	action	add	252
 129	type	customer_return	253
+254	menu	128	682
+255	module	currency.pl	683
+255	action	list_currencies	684
+256	module	currency.pl	685
+256	action	list_exchangerate_types	686
+257	module	currency.pl	687
+257	action	list_exchangerates	688
 \.
 
 --
