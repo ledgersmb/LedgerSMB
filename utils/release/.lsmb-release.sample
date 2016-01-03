@@ -1,0 +1,58 @@
+[mail]
+FromAddress  = foo@foobar.foo
+AnnounceList = ledger-smb-announce@lists.sourceforge.net
+UsersList    = ledger-smb-users@lists.sourceforge.net
+DevelList    = ledger-smb-devel@lists.sourceforge.net
+Password     = testPW
+MTAbinary    = ssmtp
+
+[wiki]
+PageToEdit   = Wikipedia:Sandbox
+User         = foobar
+Password     =
+
+[drupal]
+URL          = www.ledgersmb.org
+User         = foobar
+Password     =
+
+[sourceforge]
+Debug               = true
+ApiKey              = 
+Project             = ledger-smb
+ReadlineHistory     = /tmp/sourceforge.history
+DefaultFileTemplate = Releases/${release_version}/ledgersmb-${release_version}.tar.gz
+download_label      = Download Latest (${release_version})
+                    # As of 9th december 2015 these OS types are available
+                    # windows mac linux android bsd solaris others
+OS_List             = windows mac linux android bsd solaris others
+
+
+[irc]
+Server              = chat.freenode.net
+Port                = 6667
+User                = ledgersmb_u_bot
+Nick                = ledgersmb_u_bot
+Password            = ledgersmb_u_bot
+Channel             = #ledgersmb
+                      # try changing the topic as soon as we have +o in the channel
+auto_TOPIC_change   = true
+                      # available variables for the template are $Version_Stable  and $Version_Preview
+TOPIC_template      = http://www.ledgersmb.org/ | LedgerSMB Development and discussion | latest stable: $Version_Stable | latest preview: $Version_Preview
+TOPIC_suffix        = | http://ledgersmb.org/news/fundraising-multi-currency-after-thought-core-feature
+                      # The two regex's are actually just shell globs. 
+                      # There is some magic in the script that replaces any [foo] chuncks with a single space in the result.
+TOPIC_regex_stable  = latest stable:[[:space:]]
+TOPIC_regex_preview = latest preview:[[:space:]]
+QuitMessage         = Our Work Here is Done
+                      # ChanServ and NickServ should never need to change, even across different IRC networks
+ChanServ            = :ChanServ!ChanServ@services.
+NickServ            = :NickServ!NickServ@services.
+                      # formatted raw IRC traffic log.
+Log                 = /tmp/irc.log
+                      # Not really a need to keep old logs. would only use for debugging anyway.
+LogOverwrite        = true
+                      # Auto Quit once topic changed.
+AutoQuit            = true
+                      # file to store readline history for user input
+ReadlineHistory     = /tmp/irc.history

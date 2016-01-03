@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Invoice"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Edit Karyawan"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -118,8 +108,8 @@ msgstr "Invoice Kasir"
 msgid "AP Outstanding"
 msgstr "Hutang Belum Lunas"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -221,7 +211,8 @@ msgstr ""
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -272,10 +263,11 @@ msgstr "Akun"
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -350,7 +342,7 @@ msgstr "Daftar Akun"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -382,6 +374,16 @@ msgstr "Bahasa tidak terdefinisi!"
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "Quotation"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "Quotation"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -475,7 +477,7 @@ msgstr "Tambah Invoice Supplier"
 msgid "Add Credit Note"
 msgstr "Edit Invoice Kasir"
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr "Tambah Pelanggan"
 
@@ -494,7 +496,8 @@ msgstr "Tambah Invoice Penjualan"
 msgid "Add Debit Note"
 msgstr "Invoice"
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr "Tambah Karyawan"
 
@@ -616,7 +619,7 @@ msgstr "Satuan"
 msgid "Add User"
 msgstr "Edit Pelanggan"
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr "Tambah Supplier"
 
@@ -665,6 +668,16 @@ msgstr "Tambah Kurs"
 msgid "Address"
 msgstr "Alamat"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Alamat"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Alamat"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -672,7 +685,8 @@ msgstr "Alamat"
 msgid "Address: [_1]"
 msgstr "Alamat"
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Addresses"
 msgstr "Alamat"
@@ -1034,6 +1048,8 @@ msgstr "Laporan Rekonsiliasi"
 msgid "Asset Tag"
 msgstr "Aktiva"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 #, fuzzy
 msgid "Assets"
@@ -1230,8 +1246,13 @@ msgstr "Biaya"
 msgid "BCC"
 msgstr ""
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1286,7 +1307,13 @@ msgstr "Saldo"
 msgid "Bank Account"
 msgstr "Akun yg Berhubungan"
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Akun yg Berhubungan"
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 #, fuzzy
 msgid "Bank Accounts"
@@ -1506,6 +1533,11 @@ msgstr "Nomor Bisnis"
 #: UI/Contact/divs/credit.html:236
 #, fuzzy
 msgid "Business Type"
+msgstr "Bisnis"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Bisnis"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1765,10 +1797,16 @@ msgstr "Perusahaan"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "Kota"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "Kota"
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1936,14 +1974,20 @@ msgstr ""
 msgid "Contact"
 msgstr "Kontra"
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "Kontra"
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Kontra"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 #, fuzzy
 msgid "Contact Information"
 msgstr "Keterangan"
@@ -2090,7 +2134,8 @@ msgid "Counterparty Code"
 msgstr "Negara"
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -2109,7 +2154,7 @@ msgstr "Negara"
 msgid "Country Name"
 msgstr "Negara"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "Negara"
@@ -2188,6 +2233,11 @@ msgstr "Edit Invoice Kasir"
 msgid "Credit Limit"
 msgstr "Batas Kredit"
 
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
+msgstr "Batas Kredit"
+
 #: sql/Pg-database.sql:2899
 #, fuzzy
 msgid "Credit Note"
@@ -2250,6 +2300,8 @@ msgstr "Mata Uang"
 msgid "Current"
 msgstr "Mata Uang"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 #, fuzzy
 msgid "Current earnings"
@@ -2318,6 +2370,10 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
+msgstr ""
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
 msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
@@ -2657,9 +2713,10 @@ msgstr "Default"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr "Hapus"
 
@@ -2956,6 +3013,11 @@ msgstr "Diskon"
 msgid "Discount (%)"
 msgstr "Diskon"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Diskon"
+
 #: LedgerSMB/Scripts/asset.pm:702
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3142,8 +3204,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 #, fuzzy
 msgid "Edit"
 msgstr "Edit Barang"
@@ -3185,7 +3247,7 @@ msgstr "Tambah Invoice Supplier"
 msgid "Edit Credit Note"
 msgstr "Edit Invoice Kasir"
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "Edit Pelanggan"
 
@@ -3204,7 +3266,7 @@ msgstr "Invoice"
 msgid "Edit Description Translations"
 msgstr "Edit Transaksi Hutang"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr "Edit Karyawan"
 
@@ -3281,7 +3343,7 @@ msgstr "Daftar Departemen"
 msgid "Edit User"
 msgstr "Edit Pelanggan"
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr "Edit Supplier"
 
@@ -3351,8 +3413,8 @@ msgstr ""
 msgid "Employee"
 msgstr "Karyawan"
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr "Nomor Karyawan"
 
@@ -3394,6 +3456,11 @@ msgstr "Nomor Supplier"
 #: UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "Tanggal Pesanan"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Tanggal Pesanan"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3462,7 +3529,7 @@ msgstr "Tanggal Kirim"
 msgid "Entered at"
 msgstr "Tanggal Kirim"
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Tanggal Kirim"
@@ -3500,9 +3567,16 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
 msgstr "Modal"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "Daftar Akun"
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
@@ -3565,7 +3639,7 @@ msgstr "Kurs harap diisi!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Kurs harap diisi!"
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3599,6 +3673,12 @@ msgstr "Daftar Akun"
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
 msgstr "Biaya/Aktiva"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "Biaya"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3783,10 +3863,6 @@ msgstr "Edit Akun"
 msgid "Files attached to Entity"
 msgstr "Lampiran"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Pembayaran"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3801,6 +3877,11 @@ msgstr "Pembayaran"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "Penerimaan"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Nomor Pajak"
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -4053,6 +4134,11 @@ msgstr ""
 msgid "Given Name"
 msgstr "Nomor Supplier"
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Barang dan Jasa"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 #, fuzzy
 msgid "Goods and Services"
@@ -4104,7 +4190,7 @@ msgstr "Kelompok Harga sudah disimpan!"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr ""
 
@@ -4123,6 +4209,11 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
 msgstr ""
+
+#: t/data/04-complex_template.html:35
+#, fuzzy
+msgid "History"
+msgstr "Historis"
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
@@ -4298,7 +4389,9 @@ msgstr "Tampilkan pada <br>laporan"
 msgid "Including partnumber"
 msgstr "Tampilkan pada <br>laporan"
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4689,6 +4782,11 @@ msgstr "Jenis Akun"
 msgid "Job Title"
 msgstr "Jenis Akun"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Jenis Akun"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4723,7 +4821,7 @@ msgid "Jun"
 msgstr "Juni"
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Juni"
 
@@ -4781,6 +4879,11 @@ msgstr "Bahasa sudah disimpan!"
 msgid "Languages not defined!"
 msgstr "Bahasa tidak terdefinisi!"
 
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Biaya"
+
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:259
@@ -4832,6 +4935,12 @@ msgstr "Piutang Belum Lunas"
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Hutang"
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
@@ -4935,7 +5044,7 @@ msgstr "Template LaTeX"
 msgid "Location"
 msgstr "Quotation"
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 #, fuzzy
 msgid "Locations"
 msgstr "Quotation"
@@ -5045,6 +5154,11 @@ msgstr "Tambah User"
 msgid "Manager"
 msgstr ""
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Tambah User"
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 #, fuzzy
 msgid "Manual"
@@ -5125,6 +5239,11 @@ msgstr "Default"
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
 msgstr ""
+
+#: t/data/04-complex_template.html:60
+#, fuzzy
+msgid "Middle"
+msgstr "User sudah disimpan!"
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 #, fuzzy
@@ -5234,6 +5353,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nama"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 #, fuzzy
 msgid "Name:"
@@ -5457,7 +5577,8 @@ msgstr "Catatan"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5484,6 +5605,10 @@ msgstr "Catatan"
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "Catatan"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -6063,10 +6188,10 @@ msgstr "Hutang"
 msgid "Payables"
 msgstr "Hutang"
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Pembayaran"
 
@@ -6443,7 +6568,8 @@ msgstr "Kelompok Harga harap diisi!"
 msgid "Pricegroup saved!"
 msgstr "Kelompok Harga sudah disimpan!"
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Daftar Harga"
 
@@ -6635,8 +6761,8 @@ msgstr "Historis Pelanggan"
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6792,8 +6918,9 @@ msgid "Quotations"
 msgstr "Quotation"
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr ""
 
@@ -6990,8 +7117,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "Sisa"
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -7224,6 +7356,10 @@ msgstr "Barang sudah dihapus!"
 msgid "SIC saved!"
 msgstr "Pelanggan telah disimpan!"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr ""
@@ -7286,6 +7422,11 @@ msgstr "Nomor Sales Quotation"
 msgid "Sales Tax ID"
 msgstr "Nama Perusahaan"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Penjualan"
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -7329,7 +7470,9 @@ msgstr "Negara Bagian"
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -7361,7 +7504,7 @@ msgstr "Hapus Dataset"
 msgid "Save Changes"
 msgstr "Simpan sbg yg baru"
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 #, fuzzy
 msgid "Save Contact"
 msgstr "Kontra"
@@ -7381,7 +7524,7 @@ msgstr "Cari"
 msgid "Save Info"
 msgstr "Simpan"
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 #, fuzzy
 msgid "Save Location"
 msgstr "Quotation"
@@ -8132,6 +8275,11 @@ msgstr ""
 msgid "Start Date"
 msgstr "Tanggal Mulai"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Tanggal Mulai"
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -8156,14 +8304,24 @@ msgstr "Neraca Percobaan"
 msgid "Starting Date"
 msgstr "Tanggal Mulai"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Tanggal Mulai"
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr "Negara Bagian"
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "Provinsi"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Provinsi"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -8207,6 +8365,10 @@ msgstr "Rakitan"
 
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
+msgstr ""
+
+#: t/data/04-complex_template.html:231
+msgid "Subcontract GIFI:"
 msgstr ""
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
@@ -8418,6 +8580,11 @@ msgstr "Termasuk Pajak"
 msgid "Tax Number/SSN"
 msgstr "Nomor Pajak/ SSN"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "Nomor Pajak/ SSN"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8614,6 +8781,11 @@ msgstr "Termin"
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Termin"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -8737,7 +8909,8 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8849,6 +9022,11 @@ msgstr ""
 #, fuzzy
 msgid "To Warehouse"
 msgstr "Gudang"
+
+#: t/data/04-strings-for-translation.html:7
+#, fuzzy
+msgid "To [_1]"
+msgstr "Perusahaan"
 
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
@@ -9132,9 +9310,9 @@ msgstr "Sampai"
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #, fuzzy
 msgid "Type"
 msgstr "Bisnis"
@@ -9142,6 +9320,12 @@ msgstr "Bisnis"
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
 msgstr "Jenis Bisnis"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "Bisnis"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -9343,8 +9527,8 @@ msgstr "Pilih pembayaran"
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 #, fuzzy
 msgid "User"
 msgstr "Tambah User"
@@ -9432,8 +9616,8 @@ msgstr "Tambah Akun"
 msgid "Vendor History"
 msgstr "Historis Supplier"
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr "Invoice Supplier"
 
@@ -9665,6 +9849,11 @@ msgstr "Anda sudah Logout"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "Kode Pos"
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr ""
@@ -9679,11 +9868,22 @@ msgstr "Kode Pos"
 msgid "Zip/Post Code"
 msgstr "Kode Pos"
 
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
+msgstr "Kode Pos"
+
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "Kode Pos"
+
+#: LedgerSMB/Report/PNL.pm:146
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr ""
 
 #: bin/gl.pl:201
 #, fuzzy
@@ -9756,7 +9956,8 @@ msgstr ""
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "hari"
@@ -9797,6 +9998,10 @@ msgstr "Tahun"
 msgid "failed"
 msgstr "Jenis Akun"
 
+#: t/data/04-gettext.tex:10
+msgid "fr"
+msgstr ""
+
 #: sql/Pg-database.sql:3832
 #, fuzzy
 msgid "import"
@@ -9828,6 +10033,10 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
@@ -9884,17 +10093,13 @@ msgstr ""
 msgid "use of an overpayment"
 msgstr "Pilih pembayaran"
 
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Bisnis"
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
 
 #, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Bahasa"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Gudang"
+#~ msgid "$operation Employee"
+#~ msgstr "Edit Karyawan"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -9912,7 +10117,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kode Akun sudah disimpan"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Akun"
 
 #~ msgid "Accounting"
@@ -9999,7 +10204,7 @@ msgstr "Pilih pembayaran"
 #~ "Tidak dapat men-set akun untuk selain AR (Piutang), AP (Hutang) or IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Tidak dapat men-set multiple option untuk "
 
 #~ msgid "Change"
@@ -10024,7 +10229,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Pelanggan sudah dihapus!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Pelanggan"
 
 #~ msgid "Customers"
@@ -10052,7 +10257,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Departemen telah disimpan"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Departemen"
 
 #~ msgid "Directory"
@@ -10098,7 +10303,11 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kurs harap diisi!"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Pembayaran"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Dari"
 
 #~ msgid "Hostname missing!"
@@ -10108,7 +10317,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Versi Dataset tidak benar!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Nomor Invoice"
 
 #~ msgid "Invoice deleted!"
@@ -10138,10 +10347,6 @@ msgstr "Pilih pembayaran"
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Tidak ada Database Driver yang tersedia!"
 
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Historis"
-
 #~ msgid "No email address for"
 #~ msgstr "Tidak ada alamat email untuk"
 
@@ -10158,7 +10363,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Tidak ada yang akan dicetak!"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Nomor Pesanan"
 
 #, fuzzy
@@ -10189,7 +10394,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Kelompok Harga"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Cetak"
 
 #, fuzzy
@@ -10203,7 +10408,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Nomor Proyek harap diisi!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Nomor Proyek"
 
 #~ msgid "Project deleted!"
@@ -10216,7 +10421,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Proyek sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Nomor Quotation"
 
 #, fuzzy
@@ -10301,7 +10506,7 @@ msgstr "Pilih pembayaran"
 #~ msgstr "Data Supplier sudah disimpan!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Supplier"
 
 #~ msgid "Vendors"

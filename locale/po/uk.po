@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,16 +33,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Рахунки-фактури"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Редагувати працівника"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -118,8 +108,8 @@ msgstr "Рахунок-фактура"
 msgid "AP Outstanding"
 msgstr "Несплачені рахунки витрат"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -220,7 +210,8 @@ msgstr ""
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -271,10 +262,11 @@ msgstr "Рахунок"
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -349,7 +341,7 @@ msgstr "Рахунки"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -381,6 +373,16 @@ msgstr "Мови не визначено!"
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "Котирування"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "Котирування"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -474,7 +476,7 @@ msgstr "Новий купівельний рахунок-фактура"
 msgid "Add Credit Note"
 msgstr "Дебит"
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr "Новий клієнт"
 
@@ -493,7 +495,8 @@ msgstr "Новий Рахуно-фактура"
 msgid "Add Debit Note"
 msgstr "Дебит"
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr "Додати працівника"
 
@@ -615,7 +618,7 @@ msgstr "Одиниця"
 msgid "Add User"
 msgstr "Редагувати користувача"
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr "Новий постачальник"
 
@@ -664,6 +667,16 @@ msgstr "Додати курс"
 msgid "Address"
 msgstr "Адреса"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Адреса"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Адреса"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -671,7 +684,8 @@ msgstr "Адреса"
 msgid "Address: [_1]"
 msgstr "Адреса"
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Addresses"
 msgstr "Адреса"
@@ -1036,6 +1050,8 @@ msgstr "Узгодження"
 msgid "Asset Tag"
 msgstr "Актив"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 #, fuzzy
 msgid "Assets"
@@ -1233,8 +1249,13 @@ msgstr "Затрати"
 msgid "BCC"
 msgstr "BIC"
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1288,7 +1309,13 @@ msgstr "Баланс"
 msgid "Bank Account"
 msgstr "Повязати Рахунки"
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Повязати Рахунки"
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 #, fuzzy
 msgid "Bank Accounts"
@@ -1506,6 +1533,11 @@ msgstr "Бізнес-номер"
 #: UI/Contact/divs/credit.html:236
 #, fuzzy
 msgid "Business Type"
+msgstr "Бізнес"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Бізнес"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1768,10 +1800,16 @@ msgstr "Підприємство"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "Місто"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "Місто"
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1939,14 +1977,20 @@ msgstr ""
 msgid "Contact"
 msgstr "Контактна особа"
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "Контактна особа"
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Контактна особа"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 #, fuzzy
 msgid "Contact Information"
 msgstr "Контактна особа"
@@ -2091,7 +2135,8 @@ msgid "Counterparty Code"
 msgstr "Країна"
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -2110,7 +2155,7 @@ msgstr "Країна"
 msgid "Country Name"
 msgstr "Країна"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "Країна"
@@ -2189,6 +2234,11 @@ msgstr "Рахунок-фактура"
 msgid "Credit Limit"
 msgstr "Ліміт кредиту"
 
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
+msgstr "Ліміт кредиту"
+
 #: sql/Pg-database.sql:2899
 #, fuzzy
 msgid "Credit Note"
@@ -2250,6 +2300,8 @@ msgstr "Валюта"
 msgid "Current"
 msgstr "Поточний"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 #, fuzzy
 msgid "Current earnings"
@@ -2319,6 +2371,10 @@ msgstr ""
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "DOB"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
 msgid "Data not saved.  Please try again."
@@ -2653,9 +2709,10 @@ msgstr "Типові значення"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr "Видалити"
 
@@ -2951,6 +3008,11 @@ msgstr "Знижка"
 msgid "Discount (%)"
 msgstr "Знижка"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Знижка"
+
 #: LedgerSMB/Scripts/asset.pm:702
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3139,8 +3201,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
 msgstr "Редагувати"
 
@@ -3181,7 +3243,7 @@ msgstr "Новий купівельний рахунок-фактура"
 msgid "Edit Credit Note"
 msgstr "Дебит"
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "Редагувати Клієнта"
 
@@ -3200,7 +3262,7 @@ msgstr "Дебит"
 msgid "Edit Description Translations"
 msgstr "Переклади опису"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr "Редагувати працівника"
 
@@ -3273,7 +3335,7 @@ msgstr "Список відділів"
 msgid "Edit User"
 msgstr "Редагувати користувача"
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr "Редагувати постачальника"
 
@@ -3343,8 +3405,8 @@ msgstr "Ел. пошта"
 msgid "Employee"
 msgstr "Працівник"
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr "Номер працівника"
 
@@ -3386,6 +3448,11 @@ msgstr "Номер постачальника"
 #: UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "Дата замовлення"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Дата замовлення"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3454,7 +3521,7 @@ msgstr "Термін доставки"
 msgid "Entered at"
 msgstr "Термін доставки"
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Термін доставки"
@@ -3492,9 +3559,16 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
 msgstr "Капітал"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "Список Рахунків"
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
@@ -3555,7 +3629,7 @@ msgstr "Не вказаний курс валюти для платежу!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Не вказаний курс валюти!"
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3589,6 +3663,12 @@ msgstr "Список Рахунків"
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
 msgstr "Видаток/Актив"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "Видатки"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3772,10 +3852,6 @@ msgstr "Редагувати рахунок"
 msgid "Files attached to Entity"
 msgstr "Додаток"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Платежі"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3790,6 +3866,11 @@ msgstr "Платежі"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "Квитанції"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Податковий номер"
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -4036,6 +4117,11 @@ msgstr "Створити"
 msgid "Given Name"
 msgstr "Номер постачальника"
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Товари і Послуги"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 #, fuzzy
 msgid "Goods and Services"
@@ -4082,7 +4168,7 @@ msgstr "Групу збережено!"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr "HR"
 
@@ -4100,6 +4186,11 @@ msgstr "Розділ"
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
 msgstr ""
+
+#: t/data/04-complex_template.html:35
+#, fuzzy
+msgid "History"
+msgstr "Історія"
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
@@ -4274,7 +4365,9 @@ msgstr "Включити плтіж"
 msgid "Including partnumber"
 msgstr "Додати до звіту"
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4671,6 +4764,11 @@ msgstr "зазнало невдачі"
 msgid "Job Title"
 msgstr "Вид рахунку"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Вид рахунку"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4703,7 +4801,7 @@ msgid "Jun"
 msgstr "червня"
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Червень"
 
@@ -4761,6 +4859,11 @@ msgstr "Мову збережено!"
 msgid "Languages not defined!"
 msgstr "Мови не визначено!"
 
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Затрати"
+
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:259
@@ -4813,6 +4916,12 @@ msgstr "Несплачені рахунки доходів"
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Пассив"
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
@@ -4915,7 +5024,7 @@ msgstr "Шаблони LaTeX"
 msgid "Location"
 msgstr "Котирування"
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 #, fuzzy
 msgid "Locations"
 msgstr "Котирування"
@@ -5026,6 +5135,11 @@ msgstr "Менеджер"
 msgid "Manager"
 msgstr "Менеджер"
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Менеджер"
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 #, fuzzy
 msgid "Manual"
@@ -5104,6 +5218,11 @@ msgstr "Типові значення"
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
 msgstr "Мікрофіша"
+
+#: t/data/04-complex_template.html:60
+#, fuzzy
+msgid "Middle"
+msgstr "Користувач збережений"
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 #, fuzzy
@@ -5215,6 +5334,7 @@ msgstr ""
 msgid "Name"
 msgstr "Назва"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 #, fuzzy
 msgid "Name:"
@@ -5440,7 +5560,8 @@ msgstr "Примітки"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5467,6 +5588,10 @@ msgstr "Примітки"
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "Примітки"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -6041,10 +6166,10 @@ msgstr "Зобовязання (платіжні)"
 msgid "Payables"
 msgstr "Зобовязання (платіжні)"
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Платіж"
 
@@ -6418,7 +6543,8 @@ msgstr "Відсутня цінова група!"
 msgid "Pricegroup saved!"
 msgstr "Цінову групу збережено!"
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Ціновий список"
 
@@ -6606,8 +6732,8 @@ msgstr "Історія клієнта"
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6763,8 +6889,9 @@ msgid "Quotations"
 msgstr "Котирування"
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr "RFQ"
 
@@ -6961,8 +7088,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "Залишилось"
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -7190,6 +7322,10 @@ msgstr "SIC видалено!"
 msgid "SIC saved!"
 msgstr "SIC збережено!"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "SKU"
@@ -7254,6 +7390,11 @@ msgstr "Номер котирування"
 msgid "Sales Tax ID"
 msgstr "Назва підприємства"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Продаж"
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -7297,7 +7438,9 @@ msgstr "Штат"
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -7329,7 +7472,7 @@ msgstr "Зберегти розклад"
 msgid "Save Changes"
 msgstr "Зберегти як нове"
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 #, fuzzy
 msgid "Save Contact"
 msgstr "Контактна особа"
@@ -7349,7 +7492,7 @@ msgstr "Пошук"
 msgid "Save Info"
 msgstr "Зберегти"
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 #, fuzzy
 msgid "Save Location"
 msgstr "Котирування"
@@ -8097,6 +8240,11 @@ msgstr "Стандартні індустріальні коди"
 msgid "Start Date"
 msgstr "Дата початку"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Дата початку"
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -8121,14 +8269,24 @@ msgstr "Балансовий Звіт"
 msgid "Starting Date"
 msgstr "Дата початку"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Дата початку"
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr "Штат"
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "Штат/область"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Штат/область"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -8170,6 +8328,10 @@ msgstr "Інвентар комплекту"
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
 msgstr "Оформленння"
+
+#: t/data/04-complex_template.html:231
+msgid "Subcontract GIFI:"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
@@ -8378,6 +8540,11 @@ msgstr "Податок включено"
 msgid "Tax Number/SSN"
 msgstr "Податковий номер / персональний номер"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "Податковий номер / персональний номер"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8577,6 +8744,11 @@ msgstr "Умови: "
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Умови: "
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -8700,7 +8872,8 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8822,6 +8995,11 @@ msgstr ""
 #, fuzzy
 msgid "To Warehouse"
 msgstr "Склад"
+
+#: t/data/04-strings-for-translation.html:7
+#, fuzzy
+msgid "To [_1]"
+msgstr "Підприємство"
 
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
@@ -9100,9 +9278,9 @@ msgstr "До"
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #, fuzzy
 msgid "Type"
 msgstr "Бізнес"
@@ -9110,6 +9288,12 @@ msgstr "Бізнес"
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
 msgstr "Тип бізнесу"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "Бізнес"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -9312,8 +9496,8 @@ msgstr "Передплата"
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "Користувач"
 
@@ -9400,8 +9584,8 @@ msgstr "Додати рахунок"
 msgid "Vendor History"
 msgstr "Історія постачальника"
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr "Рахунок-фактура"
 
@@ -9636,6 +9820,11 @@ msgstr "Ви вийшли з системи"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "Поштовий код"
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr ""
@@ -9650,11 +9839,23 @@ msgstr "Поштовий код"
 msgid "Zip/Post Code"
 msgstr "Поштовий код"
 
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
+msgstr "Поштовий код"
+
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "Поштовий код"
+
+#: LedgerSMB/Report/PNL.pm:146
+#, fuzzy
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr "Збереження"
 
 #: bin/gl.pl:201
 #, fuzzy
@@ -9728,7 +9929,8 @@ msgstr "Чек"
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "днів"
@@ -9770,6 +9972,11 @@ msgstr "шт."
 msgid "failed"
 msgstr "Ел. пошту відіслано"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "для"
+
 #: sql/Pg-database.sql:3832
 #, fuzzy
 msgid "import"
@@ -9801,6 +10008,10 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
@@ -9859,6 +10070,10 @@ msgstr ""
 msgid "use of an overpayment"
 msgstr "Передплата"
 
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
+
 #, fuzzy
 #~ msgid " Date missing!"
 #~ msgstr "Не вказана дата!"
@@ -9868,24 +10083,8 @@ msgstr "Передплата"
 #~ msgstr "Відсутній код"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Бізнес"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Мова"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Додати SIC"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Склад"
+#~ msgid "$operation Employee"
+#~ msgstr "Редагувати працівника"
 
 #~ msgid "A"
 #~ msgstr "А"
@@ -9906,7 +10105,7 @@ msgstr "Передплата"
 #~ msgstr "Рахунок збережено"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Рахунок"
 
 #~ msgid "Accounting"
@@ -10025,7 +10224,7 @@ msgstr "Передплата"
 #~ msgstr "Не вдається зберегти вподобання!"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
+#~ msgid "Cannot set multiple options for [_1]"
 #~ msgstr "Не вдається наставити декілька параметрів для"
 
 #~ msgid "Change"
@@ -10042,7 +10241,7 @@ msgstr "Передплата"
 #~ msgstr "Закрито"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "Закрито"
 
 #~ msgid "Components"
@@ -10064,7 +10263,7 @@ msgstr "Передплата"
 #~ msgstr "Клієнта збережено!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Клієнт"
 
 #~ msgid "Customers"
@@ -10116,7 +10315,7 @@ msgstr "Передплата"
 #~ msgstr "Відділ збережено!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Відділ"
 
 #~ msgid "Directory"
@@ -10175,7 +10374,11 @@ msgstr "Передплата"
 #~ msgstr "Існуючі бази даних"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "Filtering $t"
+#~ msgstr "Платежі"
+
+#, fuzzy
+#~ msgid "From [_1]"
 #~ msgstr "Від/З"
 
 #~ msgid "Group Items"
@@ -10204,7 +10407,7 @@ msgstr "Передплата"
 #~ msgstr "Збільшити"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Номер рахунка-фактури"
 
 #~ msgid "Invoice deleted!"
@@ -10268,10 +10471,6 @@ msgstr "Передплата"
 #~ msgid "No Database Drivers available!"
 #~ msgstr "Недоступний драйвер Бази Даних!"
 
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "Історія"
-
 #~ msgid "No email address for"
 #~ msgstr "Не вказана адреса ел. пошти для"
 
@@ -10289,7 +10488,7 @@ msgstr "Передплата"
 #~ msgstr "Адміністрування бази даних Oracle"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Номер замовлення"
 
 #~ msgid "Order saved!"
@@ -10342,7 +10541,7 @@ msgstr "Передплата"
 #~ msgstr "Цінові групи"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Надрукувати"
 
 #~ msgid "Printing"
@@ -10355,7 +10554,7 @@ msgstr "Передплата"
 #~ msgstr "Не вказаний номер проекту!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Номер проекту"
 
 #~ msgid "Project Transactions"
@@ -10371,7 +10570,7 @@ msgstr "Передплата"
 #~ msgstr "Проект збережено!"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Номер котирування"
 
 #~ msgid "R"
@@ -10530,7 +10729,7 @@ msgstr "Передплата"
 #~ msgstr "Постачальника збережено"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Постачальник"
 
 #~ msgid "Vendors"
@@ -10580,8 +10779,16 @@ msgstr "Передплата"
 #~ msgstr "Бізнес"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Мова"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Додати SIC"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"
@@ -10590,9 +10797,6 @@ msgstr "Передплата"
 #, fuzzy
 #~ msgid "ar"
 #~ msgstr "березня"
-
-#~ msgid "for"
-#~ msgstr "для"
 
 #~ msgid "for Period"
 #~ msgstr "за період"

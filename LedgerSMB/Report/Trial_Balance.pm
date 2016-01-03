@@ -136,7 +136,8 @@ methods.
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Trial Balance');
+    my ($self) = @_;
+    return $self->Text('Trial Balance');
 };
 
 =item columns
@@ -144,47 +145,48 @@ sub name {
 =cut
 
 sub columns {
+    my ($self) = @_;
     return [
       {col_id => 'account_number',
          type => 'href',
     href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('Account Number'),
+         name => $self->Text('Account Number'),
        pwidth => 1,},
 
       {col_id => 'account_desc',
          type => 'href',
     href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('Account Description'),
+         name => $self->Text('Account Description'),
        pwidth => 3,},
 
       {col_id => 'gifi_accno',
          type => 'href',
     href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('GIFI'),
+         name => $self->Text('GIFI'),
        pwidth => 1, } ,
 
       {col_id => 'starting_balance',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Starting Balance'),
+         name => $self->Text('Starting Balance'),
        pwidth => 1,} ,
 
       {col_id => 'debits',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Debits'),
+         name => $self->Text('Debits'),
        pwidth => 1} ,
 
       {col_id => 'credits',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Credits'),
+         name => $self->Text('Credits'),
        pwidth => 1} ,
 
       {col_id => 'ending_balance',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Ending Balance'),
+         name => $self->Text('Ending Balance'),
         pwidth => 1} ,
 
 
@@ -196,12 +198,13 @@ sub columns {
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'from_date',
-             text => LedgerSMB::Report::text('From date') },
+             text => $self->Text('From date') },
             {name => 'to_date',
-             text => LedgerSMB::Report::text('To Date') },
+             text => $self->Text('To Date') },
             {name => 'ignore_yearend',
-             text => LedgerSMB::Report::text('Ignore Yearends') },
+             text => $self->Text('Ignore Yearends') },
             ];
 }
 

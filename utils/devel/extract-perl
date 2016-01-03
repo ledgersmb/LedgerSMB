@@ -68,13 +68,15 @@ while (<>) {
               && do { $state = NUL; next; };
 
           $state==NUL &&
-              m/(?<![\w\d_])text[\s\t\n]*\(/g
+              # the reports use a workaround with a function called Text()
+              m/(?<![\w\d_])[tT]ext[\s\t\n]*\(/g
               && do { $state = TXT; redo; };
 
           $state==TXT &&
               m/^[\s\t\n]*'(([^'\\]|''|\\.)*)'/g
               && do { $state = TXT_FIN;
                       my $string = $1;
+                      $string =~ s/\\'/'/g;
                       $string =~ s/\\/\\\\/g;
                       $string =~ s/"/\\"/g;
                       $string =~ s/\$/\\\$/g;

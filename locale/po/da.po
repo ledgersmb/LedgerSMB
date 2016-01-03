@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.2.0\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "PO-Revision-Date: 2006-11-27 23:20+0100\n"
 "Last-Translator: Mads Kiilerich <mads@kiilerich.com>\n"
 "Language-Team: \n"
@@ -40,16 +40,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "Fakturaer"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "Redigér medarbejder"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -125,8 +115,8 @@ msgstr "Salgssted faktura"
 msgid "AP Outstanding"
 msgstr "Udestående kreditorer"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -228,7 +218,8 @@ msgstr "Adgang nægtet!"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -279,10 +270,11 @@ msgstr "Konto"
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -357,7 +349,7 @@ msgstr "Konti"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -391,6 +383,16 @@ msgstr "action= ikke defineret!"
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "Tilbud"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "Tilbud"
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -484,7 +486,7 @@ msgstr "Kreditor faktura"
 msgid "Add Credit Note"
 msgstr "Kreditor faktura"
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr "Ny kunde"
 
@@ -503,7 +505,8 @@ msgstr "Debitor faktura"
 msgid "Add Debit Note"
 msgstr "Debitor faktura"
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr "Ny medarbejder"
 
@@ -625,7 +628,7 @@ msgstr "Enhed"
 msgid "Add User"
 msgstr "Redigér bruger"
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr "Ny leverandør"
 
@@ -674,6 +677,16 @@ msgstr "Ny vekselkurs"
 msgid "Address"
 msgstr "Adresse"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "Adresse"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "Adresse"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -681,7 +694,8 @@ msgstr "Adresse"
 msgid "Address: [_1]"
 msgstr "Adresse"
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Addresses"
 msgstr "Adresse"
@@ -1047,6 +1061,8 @@ msgstr "Afstemningsrapport"
 msgid "Asset Tag"
 msgstr "Aktiv"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 #, fuzzy
 msgid "Assets"
@@ -1202,7 +1218,7 @@ msgstr "august"
 #: UI/Contact/divs/notes.html:79
 #, fuzzy
 msgid "Author: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: bin/ir.pl:648 bin/is.pl:408 bin/is.pl:703
 msgid "Automatic"
@@ -1243,8 +1259,13 @@ msgstr "Gns. kost"
 msgid "BCC"
 msgstr "BIC/SWIFT"
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1298,7 +1319,13 @@ msgstr "Balance"
 msgid "Bank Account"
 msgstr "Forbind konti"
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "Forbind konti"
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 #, fuzzy
 msgid "Bank Accounts"
@@ -1395,7 +1422,7 @@ msgstr "Blind kopi"
 #: bin/arap.pl:795 bin/io.pl:1897
 #, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Bcc: %1"
+msgstr "Bcc: [_1]"
 
 #: UI/reconciliation/report.html:26
 #, fuzzy
@@ -1516,6 +1543,11 @@ msgstr "Forretningsnummer"
 #: UI/Contact/divs/credit.html:236
 #, fuzzy
 msgid "Business Type"
+msgstr "Forretning"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "Forretning"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1713,7 +1745,7 @@ msgstr "Cc"
 #: bin/arap.pl:794 bin/io.pl:1896
 #, fuzzy
 msgid "Cc: [_1]"
-msgstr "Cc: %1"
+msgstr "Cc: [_1]"
 
 #: sql/Pg-database.sql:797
 #, fuzzy
@@ -1770,10 +1802,16 @@ msgstr "Firma"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "By"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "By"
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1941,14 +1979,20 @@ msgstr ""
 msgid "Contact"
 msgstr "Kontakt"
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "Kontakt"
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "Kontakt"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 #, fuzzy
 msgid "Contact Information"
 msgstr "Kontakt"
@@ -2092,7 +2136,8 @@ msgid "Counterparty Code"
 msgstr "Opgave"
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -2111,7 +2156,7 @@ msgstr "Opgave"
 msgid "Country Name"
 msgstr "Opgave"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "Land"
@@ -2189,6 +2234,11 @@ msgstr "Kreditor faktura"
 msgid "Credit Limit"
 msgstr "Kreditgrænse"
 
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
+msgstr "Kreditgrænse"
+
 #: sql/Pg-database.sql:2899
 #, fuzzy
 msgid "Credit Note"
@@ -2250,6 +2300,8 @@ msgstr "Valuta"
 msgid "Current"
 msgstr "Aktuel"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 #, fuzzy
 msgid "Current earnings"
@@ -2319,6 +2371,10 @@ msgstr ""
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "Født"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
 msgid "Data not saved.  Please try again."
@@ -2509,7 +2565,7 @@ msgstr "Dato"
 #: bin/arap.pl:801 bin/io.pl:1915
 #, fuzzy
 msgid "Date: [_1]"
-msgstr "Dato: %1"
+msgstr "Dato: [_1]"
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2652,9 +2708,10 @@ msgstr "Standardopsætning"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr "Fjern"
 
@@ -2680,7 +2737,7 @@ msgstr "Slet planlægning"
 #: bin/am.pl:532
 #, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "Sletning af et sprog vil også slette skabelonerne for sproget %1"
+msgstr "Sletning af et sprog vil også slette skabelonerne for sproget [_1]"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -2950,6 +3007,11 @@ msgstr "Rabat"
 msgid "Discount (%)"
 msgstr "Rabat"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "Rabat"
+
 #: LedgerSMB/Scripts/asset.pm:702
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3106,7 +3168,7 @@ msgstr "E-post"
 #: UI/rp-email.html:8
 #, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "E-post opgørelse sendt til %1"
+msgstr "E-post opgørelse sendt til [_1]"
 
 #: UI/io-email.html:7
 #, fuzzy
@@ -3139,8 +3201,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
 msgstr "Redigér"
 
@@ -3180,7 +3242,7 @@ msgstr "Kreditor faktura"
 msgid "Edit Credit Note"
 msgstr "Kreditor faktura"
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "Redigér kunde"
 
@@ -3198,7 +3260,7 @@ msgstr "Debitor faktura"
 msgid "Edit Description Translations"
 msgstr "Redigér oversættelser af beskrivelser"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr "Redigér medarbejder"
 
@@ -3269,7 +3331,7 @@ msgstr "Vis afdelinger"
 msgid "Edit User"
 msgstr "Redigér bruger"
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr "Redigér leverandør"
 
@@ -3335,8 +3397,8 @@ msgstr "E-post"
 msgid "Employee"
 msgstr "Medarbejder"
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr "Medarbejdernummer"
 
@@ -3378,6 +3440,11 @@ msgstr "Leverandørnummer"
 #: UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "Ordredato"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "Ordredato"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3446,7 +3513,7 @@ msgstr "Bestilt af"
 msgid "Entered at"
 msgstr "Bestilt af"
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "Bestilt af"
@@ -3484,9 +3551,16 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
 msgstr "Egenkapital"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "Vis konti"
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
@@ -3548,7 +3622,7 @@ msgstr "Valutakurs for betaling mangler!"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "Vekselkurs mangler!"
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3581,6 +3655,12 @@ msgstr "Vis konti"
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
 msgstr "Udgift/Aktiv"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "Udgift"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3763,10 +3843,6 @@ msgstr "Redigér konto"
 msgid "Files attached to Entity"
 msgstr "Bilag"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "Betalinger"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3781,6 +3857,11 @@ msgstr "Betalinger"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "Kvitteringer"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "Projektnavn"
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -4025,6 +4106,11 @@ msgstr "Generer"
 msgid "Given Name"
 msgstr "Leverandørnummer"
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "Varer og serviceydelser"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 #, fuzzy
 msgid "Goods and Services"
@@ -4070,7 +4156,7 @@ msgstr "Varegruppe gemt!"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr "HR"
 
@@ -4088,6 +4174,10 @@ msgstr "Overskrift"
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
 msgstr ""
+
+#: t/data/04-complex_template.html:35
+msgid "History"
+msgstr "Historik"
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
@@ -4264,7 +4354,9 @@ msgstr "Inkludér betaling"
 msgid "Including partnumber"
 msgstr "Inkludér i rapport"
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4557,7 +4649,7 @@ msgstr "Fakturanummer"
 #: LedgerSMB/DBObject/Asset.pm:290
 #, fuzzy
 msgid "Invoice not found"
-msgstr "Faktura %1 slettet!"
+msgstr "Faktura [_1] slettet!"
 
 #: UI/Reports/filters/purchase_history.html:174
 #, fuzzy
@@ -4652,6 +4744,11 @@ msgstr "Projekt gemt!"
 msgid "Job Title"
 msgstr "Kontotype"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "Kontotype"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4684,7 +4781,7 @@ msgid "Jun"
 msgstr "jun"
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "juni"
 
@@ -4742,6 +4839,11 @@ msgstr "Sprog gemt!"
 msgid "Languages not defined!"
 msgstr "Sprog ikke definerede!"
 
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "Sidste kostpris"
+
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:259
@@ -4795,6 +4897,12 @@ msgstr "Udestående debitorer"
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "Passiv"
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
@@ -4897,7 +5005,7 @@ msgstr "LaTeX-skabeloner"
 msgid "Location"
 msgstr "Tilbud"
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 #, fuzzy
 msgid "Locations"
 msgstr "Tilbud"
@@ -5008,6 +5116,11 @@ msgstr "Leder"
 msgid "Manager"
 msgstr "Leder"
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "Leder"
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 #, fuzzy
 msgid "Manual"
@@ -5085,6 +5198,11 @@ msgstr "Standardopsætning"
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
 msgstr "Mikrofilm"
+
+#: t/data/04-complex_template.html:60
+#, fuzzy
+msgid "Middle"
+msgstr "Bruger gemt!"
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 #, fuzzy
@@ -5194,6 +5312,7 @@ msgstr ""
 msgid "Name"
 msgstr "Navn"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 #, fuzzy
 msgid "Name:"
@@ -5417,7 +5536,8 @@ msgstr "Bemærkninger"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5444,6 +5564,10 @@ msgstr "Bemærkninger"
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "Bemærkninger"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -5532,7 +5656,7 @@ msgstr "Numerisk format"
 #: bin/io.pl:1191
 #, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Tal mangler i række %1"
+msgstr "Tal mangler i række [_1]"
 
 #: UI/Contact/pricelist.html:107 UI/Reports/aging_report.html:125
 #: UI/Reports/display_report.html:74
@@ -6021,10 +6145,10 @@ msgstr "Udeståender"
 msgid "Payables"
 msgstr "Udeståender"
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Betaling"
 
@@ -6305,22 +6429,22 @@ msgstr "Bogfør som ny"
 #: bin/am.pl:1392
 #, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Posterer i hovedbog %1"
+msgstr "Posterer i hovedbog [_1]"
 
 #: bin/am.pl:1232
 #, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1254 bin/am.pl:1263
 #, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1242
 #, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Posterer leverandørfaktura %1"
+msgstr "Posterer leverandørfaktura [_1]"
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 msgid "Postscript"
@@ -6338,7 +6462,7 @@ msgstr "Indstillinger gemt!"
 #: UI/users/preferences.html:18
 #, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Redigér opsætning for %1"
+msgstr "Redigér opsætning for [_1]"
 
 #: UI/Configuration/sequence.html:14
 #, fuzzy
@@ -6399,14 +6523,15 @@ msgstr "Prisgruppe mangler!"
 msgid "Pricegroup saved!"
 msgstr "Prisgruppe gemt!"
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "Prisliste"
 
 #: UI/Contact/pricelist.tex:65
 #, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Redigér opsætning for %1"
+msgstr "Redigér opsætning for [_1]"
 
 #: sql/Pg-database.sql:795
 #, fuzzy
@@ -6445,22 +6570,22 @@ msgstr "Printer"
 #: bin/am.pl:1427
 #, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1420
 #, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "Posterer leverandørfaktura %1"
+msgstr "Posterer leverandørfaktura [_1]"
 
 #: bin/am.pl:1421
 #, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1419
 #, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1422
 #, fuzzy
@@ -6479,12 +6604,12 @@ msgstr "Redigér indkøbsordre"
 #: bin/am.pl:1424
 #, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1418
 #, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6586,8 +6711,8 @@ msgstr "Kundehistorik"
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6743,8 +6868,9 @@ msgid "Quotations"
 msgstr "Tilbud"
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr "Tilbudsønske"
 
@@ -6881,7 +7007,7 @@ msgstr "Rapport for"
 #: bin/arap.pl:566
 #, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Gentagen transaktion for %1"
+msgstr "Gentagen transaktion for [_1]"
 
 #: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -6939,8 +7065,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "Resterer"
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -7169,6 +7300,10 @@ msgstr "SIC slettet!"
 msgid "SIC saved!"
 msgstr "SIC gemt!"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "Varenummer"
@@ -7231,6 +7366,11 @@ msgstr "Salgstilbudsnummer"
 msgid "Sales Tax ID"
 msgstr "Firmanavn"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "Salg"
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -7274,7 +7414,9 @@ msgstr "Stat"
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -7306,7 +7448,7 @@ msgstr "Gem planlægning"
 msgid "Save Changes"
 msgstr "Gem som ny"
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 #, fuzzy
 msgid "Save Contact"
 msgstr "Kontakt"
@@ -7326,7 +7468,7 @@ msgstr "Søg"
 msgid "Save Info"
 msgstr "Gem"
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 #, fuzzy
 msgid "Save Location"
 msgstr "Tilbud"
@@ -7368,7 +7510,7 @@ msgstr "Gem som ny"
 #: bin/am.pl:1338
 #, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "Gemmer %1 %2"
+msgstr "Gemmer [_1] [_2]"
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7626,7 +7768,7 @@ msgstr "Debitor faktura"
 #: bin/am.pl:1464
 #, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "Posterer salgsfaktura %1"
+msgstr "Posterer salgsfaktura [_1]"
 
 #: bin/am.pl:1467
 #, fuzzy
@@ -7650,7 +7792,7 @@ msgstr "Redigér salgsordre"
 #: bin/am.pl:1463
 #, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "Posterer postering %1"
+msgstr "Posterer postering [_1]"
 
 #: bin/am.pl:1470
 #, fuzzy
@@ -8068,6 +8210,11 @@ msgstr "Standard industrikoder (SIC)"
 msgid "Start Date"
 msgstr "Startdato"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "Startdato"
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -8092,14 +8239,24 @@ msgstr "Balanceopgørelse"
 msgid "Starting Date"
 msgstr "Startdato"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "Startdato"
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr "Stat"
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "Stat/provins"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "Stat/provins"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -8143,6 +8300,11 @@ msgstr "Sæt produkt på lager"
 msgid "Stylesheet"
 msgstr "Stylesheet"
 
+#: t/data/04-complex_template.html:231
+#, fuzzy
+msgid "Subcontract GIFI:"
+msgstr "Underleverandørs GIFI"
+
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
 msgid "Subject"
@@ -8151,7 +8313,7 @@ msgstr "Emne"
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
 #, fuzzy
 msgid "Subject: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8350,6 +8512,11 @@ msgstr "Inkl. moms og afgifter"
 msgid "Tax Number/SSN"
 msgstr "CVR / CPR"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "CVR / CPR"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8415,7 +8582,7 @@ msgstr "Varenummer"
 #: templates/xedemo/ap_transaction.html:62
 #, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8504,7 +8671,7 @@ msgstr ""
 #: templates/xedemo/work_order.tex:96
 #, fuzzy
 msgid "Tel: [_1]"
-msgstr "Emne: %1"
+msgstr "Emne: [_1]"
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
 #, fuzzy
@@ -8548,6 +8715,11 @@ msgstr "Netto"
 #: templates/xedemo/sales_quotation.html:151
 msgid "Terms Net [_1] days"
 msgstr ""
+
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "Netto"
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
@@ -8670,7 +8842,8 @@ msgstr "Tusinde"
 msgid "Three"
 msgstr "Tre"
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8789,6 +8962,10 @@ msgstr ""
 msgid "To Warehouse"
 msgstr "Til lager"
 
+#: t/data/04-strings-for-translation.html:7
+msgid "To [_1]"
+msgstr "Til [_1]"
+
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
 msgid "To be used"
@@ -8825,7 +9002,7 @@ msgstr "til"
 #: bin/arap.pl:802 bin/io.pl:1916
 #, fuzzy
 msgid "To: [_1]"
-msgstr "To: %1"
+msgstr "To: [_1]"
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -9060,9 +9237,9 @@ msgstr "To"
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #, fuzzy
 msgid "Type"
 msgstr "Forretning"
@@ -9070,6 +9247,12 @@ msgstr "Forretning"
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
 msgstr "Type forretning"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "Forretning"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -9272,8 +9455,8 @@ msgstr "Forudbetaling"
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "Bruger"
 
@@ -9358,8 +9541,8 @@ msgstr "Ny konto"
 msgid "Vendor History"
 msgstr "Leverandørhistorik"
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr "Leverandørfaktura"
 
@@ -9589,6 +9772,11 @@ msgstr "Du er logget ud1"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "Postnummer"
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr "Nul"
@@ -9603,11 +9791,23 @@ msgstr "Postnummer"
 msgid "Zip/Post Code"
 msgstr "Postnummer"
 
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
+msgstr "Postnummer"
+
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "Postnummer"
+
+#: LedgerSMB/Report/PNL.pm:146
+#, fuzzy
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr "Gemmer [_1] [_2]"
 
 #: bin/gl.pl:201
 #, fuzzy
@@ -9642,12 +9842,12 @@ msgstr "Leverandørfaktura"
 #: bin/ic.pl:1656
 #, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "%1: Kunde ikke i databasen!"
+msgstr "[_1]: Kunde ikke i databasen!"
 
 #: bin/ic.pl:1578
 #, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "%1: Leverandør ikke i databasen!"
+msgstr "[_1]: Leverandør ikke i databasen!"
 
 #: LedgerSMB/Form.pm:710
 #, fuzzy
@@ -9681,7 +9881,8 @@ msgstr "Check"
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "dage"
@@ -9722,6 +9923,10 @@ msgstr "stk"
 msgid "failed"
 msgstr "fejlede"
 
+#: t/data/04-gettext.tex:10
+msgid "fr"
+msgstr ""
+
 #: sql/Pg-database.sql:3832
 #, fuzzy
 msgid "import"
@@ -9757,6 +9962,10 @@ msgstr ""
 msgid "label"
 msgstr ""
 
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
+msgstr ""
+
 #: LedgerSMB/DBObject/Payment.pm:479
 msgid "other"
 msgstr ""
@@ -9777,7 +9986,7 @@ msgstr "Fradrag i løn"
 #: LedgerSMB/Scripts/setup.pm:226
 #, fuzzy
 msgid "psql not found."
-msgstr "Faktura %1 slettet!"
+msgstr "Faktura [_1] slettet!"
 
 #: bin/arap.pl:809 bin/io.pl:1922
 msgid "sent"
@@ -9813,6 +10022,10 @@ msgstr "uventet fejl!"
 msgid "use of an overpayment"
 msgstr "Forudbetaling"
 
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
+
 #, fuzzy
 #~ msgid " Date missing!"
 #~ msgstr "Dato mangler!"
@@ -9822,27 +10035,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Kode mangler!"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Forretning"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "GIFI"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Sprog"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "Ny SIC"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Lager"
-
-#~ msgid "%1 is already a member!"
-#~ msgstr "%1 er allerede medlem!"
+#~ msgid "$operation Employee"
+#~ msgstr "Redigér medarbejder"
 
 #, fuzzy
 #~ msgid "A"
@@ -9867,7 +10061,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Konto gemt!"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "Konto"
 
 #~ msgid "Accounting"
@@ -9913,14 +10107,14 @@ msgstr "Forudbetaling"
 #~ msgid "Application Login"
 #~ msgstr "Applikation login"
 
-#~ msgid "Are you sure you want to delete Invoice Number %1?"
-#~ msgstr "Er du sikker på du vil fjerne fakturanummer %1?"
+#~ msgid "Are you sure you want to delete Invoice Number [_1]?"
+#~ msgstr "Er du sikker på du vil fjerne fakturanummer [_1]?"
 
 #~ msgid "Are you sure you want to delete Transaction"
 #~ msgstr "Er du sikker på du vil fjerne postering"
 
-#~ msgid "Are you sure you want to delete Transaction %1"
-#~ msgstr "Er du sikker på du vil fjerne postering %1"
+#~ msgid "Are you sure you want to delete Transaction [_1]"
+#~ msgstr "Er du sikker på du vil fjerne postering [_1]"
 
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Er du sikker på at du vil slette timesedlen for"
@@ -9946,8 +10140,8 @@ msgstr "Forudbetaling"
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Revisionssporing fjernet indtil"
 
-#~ msgid "Backup sent to %1"
-#~ msgstr "Sikkerhedskopi sendt til %1"
+#~ msgid "Backup sent to [_1]"
+#~ msgstr "Sikkerhedskopi sendt til [_1]"
 
 #~ msgid "Based on"
 #~ msgstr "Baseret på"
@@ -10028,8 +10222,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Kan ikke sætte konto for mere end én af AR, AP eller IC"
 
 #, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Kan ikke sætte flere muligheder for %1"
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "Kan ikke sætte flere muligheder for [_1]"
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "Kan ikke sætte produkt på lager!"
@@ -10059,8 +10253,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Kasseopgørelse"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
-#~ msgstr "Kasseopgørelse for %1"
+#~ msgid "Closing Till For [_1]"
+#~ msgstr "Kasseopgørelse for [_1]"
 
 #~ msgid "Components"
 #~ msgstr "Komponenter"
@@ -10084,12 +10278,12 @@ msgstr "Forudbetaling"
 #~ msgstr "Opret kontoplan"
 
 #, fuzzy
-#~ msgid "Cumulative Error: %1"
-#~ msgstr "Opsamlet fejl:"
-
-#, fuzzy
 #~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Opsamlet fejl: %1"
+#~ msgstr ""
+#~ "#-#-#-#-#  da.po (LedgerSMB 1.2.0)  #-#-#-#-#\n"
+#~ "Opsamlet fejl:\n"
+#~ "#-#-#-#-#  da.po (LedgerSMB 1.2.0)  #-#-#-#-#\n"
+#~ "Opsamlet fejl: [_1]"
 
 #~ msgid "Customer deleted!"
 #~ msgstr "Kunde slettet!"
@@ -10098,7 +10292,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Kunde gemt!"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "Kunde"
 
 #~ msgid "Customers"
@@ -10116,8 +10310,8 @@ msgstr "Forudbetaling"
 #~ msgid "Database User missing!"
 #~ msgstr "Bruger af database mangler!"
 
-#~ msgid "Dataset %1 successfully created!"
-#~ msgstr "Datasæt %1 success-fuldt oprettet!"
+#~ msgid "Dataset [_1] successfully created!"
+#~ msgstr "Datasæt [_1] success-fuldt oprettet!"
 
 #~ msgid "Dataset is newer than version!"
 #~ msgstr "Datasæt er nyere end version!"
@@ -10150,11 +10344,11 @@ msgstr "Forudbetaling"
 #~ msgstr "Afdeling gemt!"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "Afdeling"
 
-#~ msgid "Directory %1 does not exist"
-#~ msgstr "Directory %1 findes ikke"
+#~ msgid "Directory [_1] does not exist"
+#~ msgstr "Directory [_1] findes ikke"
 
 #~ msgid "Discover"
 #~ msgstr "Discover"
@@ -10221,11 +10415,15 @@ msgstr "Forudbetaling"
 #~ msgid "Existing Datasets"
 #~ msgstr "Eksisterende datasæt"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "Betalinger"
+
 #~ msgid "Friday"
 #~ msgstr "Fredag"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "Fra"
 
 #~ msgid "GL Transaction"
@@ -10243,9 +10441,6 @@ msgstr "Forudbetaling"
 #~ msgid "Help"
 #~ msgstr "Hjælp"
 
-#~ msgid "History"
-#~ msgstr "Historik"
-
 #~ msgid "Host"
 #~ msgstr "Host"
 
@@ -10259,7 +10454,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Forkert version af datasæt!"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "Fakturanummer"
 
 #~ msgid "Invoice deleted!"
@@ -10299,8 +10494,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Løbenumre og standardkonti"
 
 #, fuzzy
-#~ msgid "Less Cash in Till At Start: %1"
-#~ msgstr "Mindre initiel kassebeholdning: %1"
+#~ msgid "Less Cash in Till At Start: [_1]"
+#~ msgstr "Mindre initiel kassebeholdning: [_1]"
 
 #~ msgid "Licensed to"
 #~ msgstr "Udført for"
@@ -10365,8 +10560,8 @@ msgstr "Forudbetaling"
 #~ msgid "No Services on file!"
 #~ msgstr "Ingen serviceydelser i databasen!"
 
-#~ msgid "No email address for %1"
-#~ msgstr "Ingen e-mail-adresse for %1"
+#~ msgid "No email address for [_1]"
+#~ msgstr "Ingen e-mail-adresse for [_1]"
 
 #~ msgid "No open Jobs!"
 #~ msgstr "Ingen åbne projekter!"
@@ -10391,7 +10586,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Kasseopgørelse"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "Ordrenummer"
 
 #~ msgid "Order saved!"
@@ -10457,7 +10652,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Prisgrupper"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "Udskriv"
 
 #~ msgid "Print and Post as new"
@@ -10470,7 +10665,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Projektnummer mangler!"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "Projektnummer"
 
 #~ msgid "Project deleted!"
@@ -10495,7 +10690,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Sat i kø"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "Tilbudsnummer"
 
 #~ msgid "R"
@@ -10520,8 +10715,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Krav"
 
 #, fuzzy
-#~ msgid "Reset Till By %1"
-#~ msgstr "Nulstil kasse med %1"
+#~ msgid "Reset Till By [_1]"
+#~ msgstr "Nulstil kasse med [_1]"
 
 #~ msgid "Role"
 #~ msgstr "Rolle"
@@ -10565,20 +10760,17 @@ msgstr "Forudbetaling"
 #~ msgid "Spoolfile"
 #~ msgstr "køfil"
 
-#~ msgid "Statement - %1"
-#~ msgstr "Opgørelse - %1"
+#~ msgid "Statement - [_1]"
+#~ msgstr "Opgørelse - [_1]"
 
-#~ msgid "Statement sent to %1"
-#~ msgstr "Opgørelse sendt til %1"
+#~ msgid "Statement sent to [_1]"
+#~ msgstr "Opgørelse sendt til [_1]"
 
 #~ msgid "Statements sent to printer!"
 #~ msgstr "Opgørelser sendt til printer"
 
 #~ msgid "Stock Finished Goods"
 #~ msgstr "Sæt færdige varer på lager"
-
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "Underleverandørs GIFI"
 
 #~ msgid "Sunday"
 #~ msgstr "Søndag"
@@ -10634,9 +10826,6 @@ msgstr "Forudbetaling"
 #~ msgid "Time Card deleted!"
 #~ msgstr "Timeseddel slettet!"
 
-#~ msgid "To %1"
-#~ msgstr "Til %1"
-
 #~ msgid ""
 #~ "To add a user to a group edit a name, change the login name and save.  A "
 #~ "new user with the same variables will then be saved under the new login "
@@ -10647,8 +10836,8 @@ msgstr "Forudbetaling"
 #~ "indstillinger under det nye brugernavn."
 
 #, fuzzy
-#~ msgid "Total Cash in Drawer: %1"
-#~ msgstr "Totalt kontant i skuffen: %1"
+#~ msgid "Total Cash in Drawer: [_1]"
+#~ msgstr "Totalt kontant i skuffen: [_1]"
 
 #~ msgid "Transaction deleted!"
 #~ msgstr "Postering slettet!"
@@ -10672,8 +10861,8 @@ msgstr "Forudbetaling"
 #~ msgid "Tuesday"
 #~ msgstr "Tirsdag"
 
-#~ msgid "Upgrading to Version %1 ..."
-#~ msgstr "Opgraderer til version %1 ..."
+#~ msgid "Upgrading to Version [_1] ..."
+#~ msgstr "Opgraderer til version [_1] ..."
 
 #~ msgid "Use Templates"
 #~ msgstr "Brug skabeloner"
@@ -10694,7 +10883,7 @@ msgstr "Forudbetaling"
 #~ msgstr "Leverandør gemt!"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "Leverandør"
 
 #~ msgid "Vendors"
@@ -10725,8 +10914,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Du er logget ud"
 
 #, fuzzy
-#~ msgid "You are over by %1"
-#~ msgstr "Du har %1 for meget"
+#~ msgid "You are over by [_1]"
+#~ msgstr "Du har [_1] for meget"
 
 #~ msgid "You are printing and saving an existing order"
 #~ msgstr "Du udskriver og gemmer en eksisterende ordre"
@@ -10741,8 +10930,8 @@ msgstr "Forudbetaling"
 #~ msgstr "Du gemmer et eksisterende tilbud"
 
 #, fuzzy
-#~ msgid "You are under by %1"
-#~ msgstr "Du har %1 for lidt"
+#~ msgid "You are under by [_1]"
+#~ msgstr "Du har [_1] for lidt"
 
 #~ msgid "You did not enter a name!"
 #~ msgstr "Du angav ikke et navn"
@@ -10752,12 +10941,23 @@ msgstr "Forudbetaling"
 #~ msgstr "Forretning"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "GIFI"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "Sprog"
 
 #, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "Ny SIC"
+
+#, fuzzy
 #~ msgid "[_1] Warehouse"
 #~ msgstr "Lager"
+
+#~ msgid "[_1] is already a member!"
+#~ msgstr "[_1] er allerede medlem!"
 
 #~ msgid "account cannot be set to any other type of account"
 #~ msgstr "konto kan ikke sættes til nogen anden type konto"

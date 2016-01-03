@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-25 21:12+0000\n"
+"POT-Creation-Date: 2015-12-28 23:45+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,16 +35,6 @@ msgstr ""
 #, fuzzy
 msgid "# Invoices"
 msgstr "發票"
-
-msgid "$entity_classname Number"
-msgstr ""
-
-msgid "$operation $entity_classname"
-msgstr ""
-
-#, fuzzy
-msgid "$operation Employee"
-msgstr "編輯職員"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -120,8 +110,8 @@ msgstr "POS發票"
 msgid "AP Outstanding"
 msgstr "應付未付"
 
-#: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
-#: templates/demo/ap_transaction.tex:18
+#: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
+#: templates/demo/ap_transaction.html:18 templates/demo/ap_transaction.tex:18
 #: templates/demo_with_images/ap_transaction.html:4
 #: templates/demo_with_images/ap_transaction.html:18
 #: templates/demo_with_images/ap_transaction.tex:18
@@ -223,7 +213,8 @@ msgstr "拒絕存取！"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:67
 #: LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: LedgerSMB/Report/Reconciliation/Summary.pm:132
-#: templates/demo/invoice.html:248 templates/demo/printPayment.html:44
+#: t/data/04-complex_template.html:27 templates/demo/invoice.html:248
+#: templates/demo/printPayment.html:44
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
@@ -274,10 +265,11 @@ msgstr "帳戶"
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -352,7 +344,7 @@ msgstr "帳戶"
 
 #: LedgerSMB/Upgrade_Tests.pm:733
 msgid ""
-"Accounts can\\'t be simultaneously used as summary accounts (AR,AP,IC) and be "
+"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
 "listed in dropdowns elsewhere."
 msgstr ""
 
@@ -386,6 +378,16 @@ msgstr "不能辨認語言！"
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
+
+#: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
+#, fuzzy
+msgid "Actions"
+msgstr "報價單"
+
+#: t/data/04-complex_template.html:496
+#, fuzzy
+msgid "Actions:"
+msgstr "報價單"
 
 #: UI/am-audit-control.html:28
 #, fuzzy
@@ -480,7 +482,7 @@ msgstr "新增供應商發票"
 msgid "Add Credit Note"
 msgstr "貸方"
 
-#: UI/Contact/contact.html:31
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr "新增客戶"
 
@@ -499,7 +501,8 @@ msgstr "新增銷售發票"
 msgid "Add Debit Note"
 msgstr "借方"
 
-#: UI/Contact/contact.html:35 sql/Pg-database.sql:2804
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
+#: sql/Pg-database.sql:2804
 msgid "Add Employee"
 msgstr "新增職員"
 
@@ -620,7 +623,7 @@ msgstr "單位"
 msgid "Add User"
 msgstr "編輯使用者"
 
-#: UI/Contact/contact.html:33
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
 msgstr "新增供應商"
 
@@ -669,6 +672,16 @@ msgstr "新增外匯率"
 msgid "Address"
 msgstr "地址"
 
+#: t/data/04-complex_template.html:385
+#, fuzzy
+msgid "Address1"
+msgstr "地址"
+
+#: t/data/04-complex_template.html:420
+#, fuzzy
+msgid "Address:"
+msgstr "地址"
+
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
@@ -676,7 +689,8 @@ msgstr "地址"
 msgid "Address: [_1]"
 msgstr "地址"
 
-#: LedgerSMB/Scripts/contact.pm:181 UI/Contact/divs/address.html:2
+#: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
+#: UI/Contact/divs/address.html:2
 #, fuzzy
 msgid "Addresses"
 msgstr "地址"
@@ -1042,6 +1056,8 @@ msgstr "調節報告"
 msgid "Asset Tag"
 msgstr "資產"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
 #, fuzzy
 msgid "Assets"
@@ -1238,8 +1254,13 @@ msgstr "平均成本"
 msgid "BCC"
 msgstr "銀行識別編號(BIC)"
 
-#: UI/Contact/divs/bank_act.html:20 UI/Contact/divs/bank_act.html:52
+#: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
+#: UI/Contact/divs/bank_act.html:52
 msgid "BIC/SWIFT Code"
+msgstr ""
+
+#: t/data/04-complex_template.html:592
+msgid "BIC/SWIFT Code:"
 msgstr ""
 
 #: bin/ic.pl:1275
@@ -1293,7 +1314,13 @@ msgstr "餘額"
 msgid "Bank Account"
 msgstr "連結帳戶"
 
-#: LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/bank_act.html:2
+#: t/data/04-complex_template.html:601
+#, fuzzy
+msgid "Bank Account:"
+msgstr "連結帳戶"
+
+#: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
+#: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 #, fuzzy
 msgid "Bank Accounts"
@@ -1511,6 +1538,11 @@ msgstr "業務編號"
 #: UI/Contact/divs/credit.html:236
 #, fuzzy
 msgid "Business Type"
+msgstr "業務"
+
+#: t/data/04-complex_template.html:294
+#, fuzzy
+msgid "Business Type:"
 msgstr "業務"
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
@@ -1772,10 +1804,16 @@ msgstr "公司"
 msgid "Chord"
 msgstr ""
 
-#: bin/arap.pl:177 UI/Contact/divs/address.html:86
-#: UI/Contact/divs/address.html:159 UI/Reports/filters/contact_search.html:92
+#: bin/arap.pl:177 t/data/04-complex_template.html:386
+#: UI/Contact/divs/address.html:86 UI/Contact/divs/address.html:159
+#: UI/Reports/filters/contact_search.html:92
 #: UI/Reports/filters/purchase_history.html:78
 msgid "City"
+msgstr "城市"
+
+#: t/data/04-complex_template.html:445
+#, fuzzy
+msgid "City:"
 msgstr "城市"
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
@@ -1943,14 +1981,20 @@ msgstr ""
 msgid "Contact"
 msgstr "連絡人"
 
-#: LedgerSMB/Scripts/contact.pm:182 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:35 UI/Contact/divs/contact_info.html:115
+#: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
+#: UI/Contact/divs/contact_info.html:115
 #: UI/Reports/filters/purchase_history.html:31
 #, fuzzy
 msgid "Contact Info"
 msgstr "連絡人"
 
-#: UI/Contact/divs/contact_info.html:6
+#: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
+#, fuzzy
+msgid "Contact Info:"
+msgstr "連絡人"
+
+#: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 #, fuzzy
 msgid "Contact Information"
 msgstr "連絡人"
@@ -2094,7 +2138,8 @@ msgid "Counterparty Code"
 msgstr "直接人工代碼"
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
-#: LedgerSMB/Report/Payroll/Income_Types.pm:31 UI/Contact/divs/address.html:89
+#: LedgerSMB/Report/Payroll/Income_Types.pm:31
+#: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:89
 #: UI/Contact/divs/address.html:197 UI/Contact/divs/company.html:105
 #: UI/Contact/divs/employee.html:124 UI/Contact/divs/person.html:141
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
@@ -2113,7 +2158,7 @@ msgstr "直接人工代碼"
 msgid "Country Name"
 msgstr "直接人工代碼"
 
-#: UI/taxform/add_taxform.html:34
+#: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 #, fuzzy
 msgid "Country:"
 msgstr "國家"
@@ -2192,6 +2237,11 @@ msgstr "編輯POS"
 msgid "Credit Limit"
 msgstr "信用額度"
 
+#: t/data/04-complex_template.html:201
+#, fuzzy
+msgid "Credit Limit:"
+msgstr "信用額度"
+
 #: sql/Pg-database.sql:2899
 #, fuzzy
 msgid "Credit Note"
@@ -2253,6 +2303,8 @@ msgstr "幣別"
 msgid "Current"
 msgstr "現有"
 
+#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
 #, fuzzy
 msgid "Current earnings"
@@ -2322,6 +2374,10 @@ msgstr ""
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "出生日期"
+
+#: t/data/04-complex_template.html:106
+msgid "DOB:"
+msgstr ""
 
 #: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
 msgid "Data not saved.  Please try again."
@@ -2656,9 +2712,10 @@ msgstr "預設"
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
-#: UI/business_units/list_classes.html:92 UI/Contact/divs/address.html:52
-#: UI/Contact/divs/bank_act.html:14 UI/Contact/divs/contact_info.html:11
-#: UI/Contact/pricelist.html:65 UI/reconciliation/report.html:303
+#: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:92
+#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:14
+#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
+#: UI/reconciliation/report.html:303
 msgid "Delete"
 msgstr "刪除"
 
@@ -2954,6 +3011,11 @@ msgstr "折扣"
 msgid "Discount (%)"
 msgstr "折扣"
 
+#: t/data/04-complex_template.html:242
+#, fuzzy
+msgid "Discount:"
+msgstr "折扣"
+
 #: LedgerSMB/Scripts/asset.pm:702
 #, fuzzy
 msgid "Disp. Aquired Value"
@@ -3143,8 +3205,8 @@ msgid "EDI Interchange ID"
 msgstr ""
 
 #: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
-#: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
-#: UI/templates/preview.html:60
+#: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
+#: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
 msgstr "編輯"
 
@@ -3185,7 +3247,7 @@ msgstr "新增供應商發票"
 msgid "Edit Credit Note"
 msgstr "貸方"
 
-#: UI/Contact/contact.html:32
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "編輯客戶"
 
@@ -3203,7 +3265,7 @@ msgstr "借方"
 msgid "Edit Description Translations"
 msgstr "編輯翻譯描述"
 
-#: UI/Contact/contact.html:36
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
 msgstr "編輯職員"
 
@@ -3275,7 +3337,7 @@ msgstr "列出部門"
 msgid "Edit User"
 msgstr "編輯使用者"
 
-#: UI/Contact/contact.html:34
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
 msgstr "編輯供應商"
 
@@ -3345,8 +3407,8 @@ msgstr "電子郵件"
 msgid "Employee"
 msgstr "職員"
 
-#: LedgerSMB/Scripts/configuration.pm:114 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:91
+#: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
 msgid "Employee Number"
 msgstr "職員編號"
 
@@ -3388,6 +3450,11 @@ msgstr "供應商號碼"
 #: UI/Reports/filters/budget_search.html:48
 #, fuzzy
 msgid "End Date"
+msgstr "下單日期"
+
+#: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
+#, fuzzy
+msgid "End Date:"
 msgstr "下單日期"
 
 #: UI/Reports/filters/trial_balance.html:11
@@ -3456,7 +3523,7 @@ msgstr "要求交付日期"
 msgid "Entered at"
 msgstr "要求交付日期"
 
-#: UI/Contact/divs/notes.html:78
+#: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
 #, fuzzy
 msgid "Entered at: [_1]"
 msgstr "要求交付日期"
@@ -3494,9 +3561,16 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
+#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
 msgstr "股權"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#, fuzzy
+msgid "Equity & Liabilities"
+msgstr "列出帳號"
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
@@ -3557,7 +3631,7 @@ msgstr "未指明付款的匯率！"
 
 #: LedgerSMB/Scripts/payment.pm:1065
 #, fuzzy
-msgid "Exchange rate hasn\\'t been defined!"
+msgid "Exchange rate hasn't been defined!"
 msgstr "未指明匯率！"
 
 #: LedgerSMB/DBObject/Payment.pm:750
@@ -3591,6 +3665,12 @@ msgstr "列出帳號"
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
 msgstr "費用/資產"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
+#, fuzzy
+msgid "Expenses"
+msgstr "費用"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3773,10 +3853,6 @@ msgstr "編輯帳戶"
 msgid "Files attached to Entity"
 msgstr "附件"
 
-#, fuzzy
-msgid "Filtering $t"
-msgstr "付款"
-
 #: UI/payments/payments_detail.html:114
 #, fuzzy
 msgid "Filtering From:"
@@ -3791,6 +3867,11 @@ msgstr "付款"
 #, fuzzy
 msgid "Filtering Receipts"
 msgstr "收據"
+
+#: t/data/04-complex_template.html:53
+#, fuzzy
+msgid "First"
+msgstr "項目名稱"
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -4034,6 +4115,11 @@ msgstr "生成"
 msgid "Given Name"
 msgstr "供應商號碼"
 
+#: t/data/04-strings-for-translation.html:8
+#, fuzzy
+msgid "Goods & Services"
+msgstr "貨物及服務"
+
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 #, fuzzy
 msgid "Goods and Services"
@@ -4080,7 +4166,7 @@ msgstr "組別已被儲存！"
 msgid "Gtalk"
 msgstr ""
 
-#: sql/Pg-database.sql:2912
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2912
 msgid "HR"
 msgstr "人事管理"
 
@@ -4098,6 +4184,11 @@ msgstr "標題"
 #: UI/Reports/filters/income_statement.html:72
 msgid "Hierarchy type"
 msgstr ""
+
+#: t/data/04-complex_template.html:35
+#, fuzzy
+msgid "History"
+msgstr "歷史"
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
@@ -4273,7 +4364,9 @@ msgstr "包括付款"
 msgid "Including partnumber"
 msgstr "一併顯示"
 
-#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Scripts/configuration.pm:90
+#: bin/ic.pl:524 bin/ic.pl:657 LedgerSMB/Report/Balance_Sheet.pm:187
+#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:90
 #: UI/accounts/edit.html:207 UI/accounts/edit.html:290
 #: UI/accounts/edit.html:372 UI/accounts/edit.html:411
 #: UI/Reports/filters/gl.html:157
@@ -4664,6 +4757,11 @@ msgstr "工作已被儲存！"
 msgid "Job Title"
 msgstr "帳戶類別"
 
+#: t/data/04-complex_template.html:78
+#, fuzzy
+msgid "Job Title:"
+msgstr "帳戶類別"
+
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
@@ -4696,7 +4794,7 @@ msgid "Jun"
 msgstr "六月"
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
-#: LedgerSMB/DBObject/Date.pm:67
+#: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "六月"
 
@@ -4754,6 +4852,11 @@ msgstr "已儲存語言！"
 msgid "Languages not defined!"
 msgstr "不能辨認語言！"
 
+#: t/data/04-complex_template.html:67
+#, fuzzy
+msgid "Last"
+msgstr "上次的成本"
+
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:259
@@ -4806,6 +4909,12 @@ msgstr "應收未收"
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2969
 msgid "Letterhead"
 msgstr ""
+
+#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
+#, fuzzy
+msgid "Liabilities"
+msgstr "負債"
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
@@ -4908,7 +5017,7 @@ msgstr "LaTex 模版"
 msgid "Location"
 msgstr "報價單"
 
-#: UI/Contact/divs/address.html:6
+#: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 #, fuzzy
 msgid "Locations"
 msgstr "報價單"
@@ -5019,6 +5128,11 @@ msgstr "經理"
 msgid "Manager"
 msgstr "經理"
 
+#: t/data/04-complex_template.html:98
+#, fuzzy
+msgid "Manager:"
+msgstr "經理"
+
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 #, fuzzy
 msgid "Manual"
@@ -5097,6 +5211,11 @@ msgstr "預設"
 #: UI/Reports/filters/search_goods.html:331
 msgid "Microfiche"
 msgstr "單片縮影膠片"
+
+#: t/data/04-complex_template.html:60
+#, fuzzy
+msgid "Middle"
+msgstr "已儲存使用者！"
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 #, fuzzy
@@ -5207,6 +5326,7 @@ msgstr ""
 msgid "Name"
 msgstr "名稱"
 
+#: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 #, fuzzy
 msgid "Name:"
@@ -5429,7 +5549,8 @@ msgstr "備註"
 #: LedgerSMB/Report/Inventory/Search.pm:270
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253
 #: LedgerSMB/Report/Invoices/Transactions.pm:292
-#: LedgerSMB/Scripts/contact.pm:184 templates/demo/printPayment.html:124
+#: LedgerSMB/Scripts/contact.pm:184 t/data/04-complex_template.html:33
+#: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:217
 #: templates/demo/purchase_order.html:219
 #: templates/demo/request_quotation.html:175
@@ -5456,6 +5577,10 @@ msgstr "備註"
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
 msgstr "備註"
+
+#: t/data/04-complex_template.html:639
+msgid "Notes:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -6027,10 +6152,10 @@ msgstr "應付科目"
 msgid "Payables"
 msgstr "應付科目"
 
-#: LedgerSMB/Scripts/payment.pm:982 UI/accounts/edit.html:300
-#: UI/accounts/edit.html:342 UI/Contact/divs/credit.html:209
-#: UI/Contact/divs/credit.html:210 UI/payments/payments_detail.html:216
-#: sql/Pg-database.sql:2797
+#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: UI/accounts/edit.html:300 UI/accounts/edit.html:342
+#: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
+#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "付款"
 
@@ -6404,7 +6529,8 @@ msgstr "未指明價格組別！"
 msgid "Pricegroup saved!"
 msgstr "已儲存價格組別！"
 
-#: UI/Contact/divs/credit.html:379 UI/Contact/pricelist.html:16
+#: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
+#: UI/Contact/pricelist.html:16
 msgid "Pricelist"
 msgstr "價格清單"
 
@@ -6590,8 +6716,8 @@ msgstr "客戶歷史"
 
 #: bin/am.pl:1299 bin/am.pl:1522 bin/io.pl:1418 bin/io.pl:1637 bin/ir.pl:563
 #: bin/ir.pl:967 bin/oe.pl:259 bin/oe.pl:667 bin/oe.pl:868 bin/oe.pl:1216
-#: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
-#: templates/demo/purchase_order.tex:100
+#: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
+#: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo_with_images/purchase_order.tex:100
@@ -6747,8 +6873,9 @@ msgid "Quotations"
 msgstr "報價單"
 
 #: bin/io.pl:1396 bin/oe.pl:234 bin/oe.pl:669 bin/oe.pl:866
-#: UI/Contact/divs/credit.html:376 sql/Pg-database.sql:1934
-#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2952 sql/Pg-database.sql:2967
+#: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:376
+#: sql/Pg-database.sql:1934 sql/Pg-database.sql:2820 sql/Pg-database.sql:2952
+#: sql/Pg-database.sql:2967
 msgid "RFQ"
 msgstr "報價請求(RFQ) "
 
@@ -6945,8 +7072,13 @@ msgstr ""
 msgid "Remaining"
 msgstr "尚餘"
 
-#: UI/Contact/divs/bank_act.html:23 UI/Contact/divs/bank_act.html:73
+#: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:23
+#: UI/Contact/divs/bank_act.html:73
 msgid "Remark"
+msgstr ""
+
+#: t/data/04-complex_template.html:610
+msgid "Remark:"
 msgstr ""
 
 #: UI/accounts/yearend.html:85
@@ -7175,6 +7307,10 @@ msgstr "已刪除標準工業分類代碼！"
 msgid "SIC saved!"
 msgstr "已儲存標準工業分類代碼！"
 
+#: t/data/04-complex_template.html:259
+msgid "SIC:"
+msgstr ""
+
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "庫存單位"
@@ -7237,6 +7373,11 @@ msgstr "銷售報價單編號"
 msgid "Sales Tax ID"
 msgstr "公司名稱"
 
+#: t/data/04-complex_template.html:85
+#, fuzzy
+msgid "Sales:"
+msgstr "銷售"
+
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
@@ -7280,7 +7421,9 @@ msgstr "州"
 #: bin/is.pl:597 bin/oe.pl:636 bin/oe.pl:856 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:153
 #: LedgerSMB/Scripts/account.pm:166 LedgerSMB/Scripts/asset.pm:447
-#: LedgerSMB/Scripts/budgets.pm:102 UI/am-taxes.html:66
+#: LedgerSMB/Scripts/budgets.pm:102 t/data/04-complex_template.html:131
+#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
+#: t/data/04-complex_template.html:644 UI/am-taxes.html:66
 #: UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:94
 #: UI/business_units/list_classes.html:84 UI/Configuration/sequence.html:10
@@ -7312,7 +7455,7 @@ msgstr "儲存時間表"
 msgid "Save Changes"
 msgstr "當新的儲存"
 
-#: UI/Contact/divs/contact_info.html:127
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:127
 #, fuzzy
 msgid "Save Contact"
 msgstr "連絡人"
@@ -7332,7 +7475,7 @@ msgstr "搜尋"
 msgid "Save Info"
 msgstr "儲存"
 
-#: UI/Contact/divs/address.html:210
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:210
 #, fuzzy
 msgid "Save Location"
 msgstr "報價單"
@@ -8077,6 +8220,11 @@ msgstr "標準工業編碼"
 msgid "Start Date"
 msgstr "開始日期"
 
+#: t/data/04-complex_template.html:114
+#, fuzzy
+msgid "Start Date:"
+msgstr "開始日期"
+
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
 msgstr ""
@@ -8101,14 +8249,24 @@ msgstr "會計帳餘額"
 msgid "Starting Date"
 msgstr "開始日期"
 
+#: t/data/04-complex_template.html:177
+#, fuzzy
+msgid "Starting Date:"
+msgstr "開始日期"
+
 #: bin/io.pl:2113
 msgid "State"
 msgstr "州"
 
-#: UI/Contact/divs/address.html:87 UI/Contact/divs/address.html:170
-#: UI/Reports/filters/contact_search.html:97
+#: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
+#: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
 #: UI/Reports/filters/purchase_history.html:86
 msgid "State/Province"
+msgstr "省"
+
+#: t/data/04-complex_template.html:454
+#, fuzzy
+msgid "State/Province:"
 msgstr "省"
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
@@ -8151,6 +8309,11 @@ msgstr "把製成品入貨"
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
 msgstr "樣式表"
+
+#: t/data/04-complex_template.html:231
+#, fuzzy
+msgid "Subcontract GIFI:"
+msgstr "轉包合同GIFI"
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
@@ -8359,6 +8522,11 @@ msgstr "已含稅金"
 msgid "Tax Number/SSN"
 msgstr "稅號/社會保障編號"
 
+#: t/data/04-complex_template.html:222
+#, fuzzy
+msgid "Tax Number/SSN:"
+msgstr "稅號/社會保障編號"
+
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
@@ -8558,6 +8726,11 @@ msgstr "票期淨計"
 msgid "Terms Net [_1] days"
 msgstr ""
 
+#: t/data/04-complex_template.html:210
+#, fuzzy
+msgid "Terms:"
+msgstr "票期淨計"
+
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
@@ -8681,7 +8854,8 @@ msgstr ""
 msgid "Three"
 msgstr ""
 
-#: UI/Contact/divs/credit.html:139 UI/Contact/divs/credit.html:140
+#: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
+#: UI/Contact/divs/credit.html:140
 msgid "Threshold"
 msgstr ""
 
@@ -8797,6 +8971,11 @@ msgstr ""
 #: bin/oe.pl:2150
 msgid "To Warehouse"
 msgstr "到倉庫"
+
+#: t/data/04-strings-for-translation.html:7
+#, fuzzy
+msgid "To [_1]"
+msgstr "公司"
 
 #: UI/payments/use_overpayment2.html:126
 #, fuzzy
@@ -9071,9 +9250,9 @@ msgstr "至"
 #: bin/io.pl:2172 LedgerSMB/Report/Inventory/History.pm:146
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: LedgerSMB/Report/Unapproved/Drafts.pm:80 LedgerSMB/Scripts/asset.pm:533
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:124
-#: UI/Contact/divs/contact_info.html:33 UI/Contact/divs/credit.html:25
-#: UI/Contact/divs/wage.html:7
+#: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
+#: UI/Contact/divs/address.html:124 UI/Contact/divs/contact_info.html:33
+#: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #, fuzzy
 msgid "Type"
 msgstr "業務"
@@ -9081,6 +9260,12 @@ msgstr "業務"
 #: UI/am-business-form.html:12 sql/Pg-database.sql:2873
 msgid "Type of Business"
 msgstr "業務種類"
+
+#: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
+#: t/data/04-complex_template.html:526
+#, fuzzy
+msgid "Type:"
+msgstr "業務"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -9283,8 +9468,8 @@ msgstr "預繳"
 msgid "Used"
 msgstr ""
 
-#: LedgerSMB/Scripts/contact.pm:178 UI/am-company-logo.html:12
-#: UI/Contact/divs/user.html:3
+#: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
+#: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "使用者"
 
@@ -9371,8 +9556,8 @@ msgstr "新增帳戶"
 msgid "Vendor History"
 msgstr "供應商歷史"
 
-#: bin/oe.pl:662 bin/oe.pl:864 UI/Contact/divs/credit.html:358
-#: sql/Pg-database.sql:2894
+#: bin/oe.pl:662 bin/oe.pl:864 t/data/04-complex_template.html:334
+#: UI/Contact/divs/credit.html:358 sql/Pg-database.sql:2894
 msgid "Vendor Invoice"
 msgstr "供應商發票"
 
@@ -9603,6 +9788,11 @@ msgstr "你已登出"
 msgid "Your password will expire in [_1]"
 msgstr ""
 
+#: t/data/04-complex_template.html:388
+#, fuzzy
+msgid "ZIP/Post Code"
+msgstr "郵政編碼"
+
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
 msgstr ""
@@ -9617,11 +9807,23 @@ msgstr "郵政編碼"
 msgid "Zip/Post Code"
 msgstr "郵政編碼"
 
+#: t/data/04-complex_template.html:463
+#, fuzzy
+msgid "Zip/Post Code:"
+msgstr "郵政編碼"
+
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
 #, fuzzy
 msgid "Zip/Postal Code"
 msgstr "郵政編碼"
+
+#: LedgerSMB/Report/PNL.pm:146
+#, fuzzy
+msgid ""
+"[_1]\n"
+"[_2]"
+msgstr "正在儲存"
 
 #: bin/gl.pl:201
 #, fuzzy
@@ -9695,7 +9897,8 @@ msgstr "檢查"
 msgid "city"
 msgstr ""
 
-#: bin/ic.pl:1084 bin/oe.pl:358 UI/Contact/divs/credit.html:163
+#: bin/ic.pl:1084 bin/oe.pl:358 t/data/04-complex_template.html:215
+#: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
 msgstr "日"
@@ -9736,6 +9939,11 @@ msgstr "個"
 msgid "failed"
 msgstr "失敗"
 
+#: t/data/04-gettext.tex:10
+#, fuzzy
+msgid "fr"
+msgstr "為了"
+
 #: sql/Pg-database.sql:3832
 #, fuzzy
 msgid "import"
@@ -9769,6 +9977,10 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:12
 msgid "label"
+msgstr ""
+
+#: t/data/04-gettext.html:3 t/data/04-gettext.html:4
+msgid "nl"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
@@ -9827,6 +10039,10 @@ msgstr "沒有預期的錯誤！"
 msgid "use of an overpayment"
 msgstr "預繳"
 
+#: t/data/04-gettext.tex:8
+msgid "zh_CN"
+msgstr ""
+
 #, fuzzy
 #~ msgid " Date missing!"
 #~ msgstr "未指明日期！"
@@ -9836,24 +10052,8 @@ msgstr "預繳"
 #~ msgstr "未指明編碼！"
 
 #, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "業務"
-
-#, fuzzy
-#~ msgid "%1 GIFI"
-#~ msgstr "財務訊息通用索引(GIFI)"
-
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "語言"
-
-#, fuzzy
-#~ msgid "%1 SIC"
-#~ msgstr "新增標準工業分類代碼"
-
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "倉庫"
+#~ msgid "$operation Employee"
+#~ msgstr "編輯職員"
 
 #, fuzzy
 #~ msgid "A"
@@ -9878,7 +10078,7 @@ msgstr "預繳"
 #~ msgstr "已儲存帳戶！"
 
 #, fuzzy
-#~ msgid "Account: %1"
+#~ msgid "Account: [_1]"
 #~ msgstr "帳戶"
 
 #~ msgid "Accounting"
@@ -10025,12 +10225,12 @@ msgstr "預繳"
 #~ msgid "Cannot set account for more than one of AR, AP or IC"
 #~ msgstr "不能設置多於一個應收帳款, 應付帳款或IC"
 
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "不能對以下物件設定多個選項："
-
 #~ msgid "Cannot set multiple options for Item"
 #~ msgstr "不能對以物件設定多個選項"
+
+#, fuzzy
+#~ msgid "Cannot set multiple options for [_1]"
+#~ msgstr "不能對以下物件設定多個選項："
 
 #~ msgid "Cannot stock Assembly!"
 #~ msgstr "不能把製成品入貨！"
@@ -10049,7 +10249,7 @@ msgstr "預繳"
 #~ msgstr "已關閉"
 
 #, fuzzy
-#~ msgid "Closing Till For %1"
+#~ msgid "Closing Till For [_1]"
 #~ msgstr "已關閉"
 
 #~ msgid "Components"
@@ -10071,7 +10271,7 @@ msgstr "預繳"
 #~ msgstr "已儲存客戶！"
 
 #, fuzzy
-#~ msgid "Customer: %1"
+#~ msgid "Customer: [_1]"
 #~ msgstr "客戶"
 
 #~ msgid "Customers"
@@ -10123,7 +10323,7 @@ msgstr "預繳"
 #~ msgstr "已儲存部門！"
 
 #, fuzzy
-#~ msgid "Department: %1"
+#~ msgid "Department: [_1]"
 #~ msgstr "部門"
 
 #~ msgid "Directory"
@@ -10198,11 +10398,15 @@ msgstr "預繳"
 #~ msgid "Existing Datasets"
 #~ msgstr "既有的資料集"
 
+#, fuzzy
+#~ msgid "Filtering $t"
+#~ msgstr "付款"
+
 #~ msgid "Friday"
 #~ msgstr "星期五"
 
 #, fuzzy
-#~ msgid "From %1"
+#~ msgid "From [_1]"
 #~ msgstr "從"
 
 #~ msgid "Generate Sales Order"
@@ -10233,7 +10437,7 @@ msgstr "預繳"
 #~ msgstr "增加"
 
 #, fuzzy
-#~ msgid "Invoice Number: %1"
+#~ msgid "Invoice Number: [_1]"
 #~ msgstr "發票編號"
 
 #~ msgid "Invoice deleted!"
@@ -10319,10 +10523,6 @@ msgstr "預繳"
 #~ msgid "No Employees on file!"
 #~ msgstr "沒有任何僱員的記錄！"
 
-#, fuzzy
-#~ msgid "No History!"
-#~ msgstr "歷史"
-
 #~ msgid "No Labor codes on file!"
 #~ msgstr "沒有任何直接人工代碼的記錄！"
 
@@ -10352,7 +10552,7 @@ msgstr "預繳"
 #~ msgstr "Oracle資料庫管理"
 
 #, fuzzy
-#~ msgid "Order Number: %1"
+#~ msgid "Order Number: [_1]"
 #~ msgstr "訂單編號"
 
 #~ msgid "Order saved!"
@@ -10422,7 +10622,7 @@ msgstr "預繳"
 #~ msgstr "所有價格組別"
 
 #, fuzzy
-#~ msgid "Print %1"
+#~ msgid "Print [_1]"
 #~ msgstr "列印"
 
 #~ msgid "Print and Post as new"
@@ -10444,7 +10644,7 @@ msgstr "預繳"
 #~ msgstr "未指明項目號碼！"
 
 #, fuzzy
-#~ msgid "Project Number: %1"
+#~ msgid "Project Number: [_1]"
 #~ msgstr "項目號碼"
 
 #~ msgid "Project Transactions"
@@ -10466,7 +10666,7 @@ msgstr "預繳"
 #~ msgstr "項目/工作號碼"
 
 #, fuzzy
-#~ msgid "Quotation Number: %1"
+#~ msgid "Quotation Number: [_1]"
 #~ msgstr "報價單號碼"
 
 #~ msgid "Rate missing!"
@@ -10538,9 +10738,6 @@ msgstr "預繳"
 
 #~ msgid "Stocking Date"
 #~ msgstr "入貨日期"
-
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "轉包合同GIFI"
 
 #~ msgid "Sunday"
 #~ msgstr "星期日"
@@ -10639,7 +10836,7 @@ msgstr "預繳"
 #~ msgstr "已儲存供應商！"
 
 #, fuzzy
-#~ msgid "Vendor: %1"
+#~ msgid "Vendor: [_1]"
 #~ msgstr "供應商"
 
 #~ msgid "Vendors"
@@ -10698,8 +10895,16 @@ msgstr "預繳"
 #~ msgstr "業務"
 
 #, fuzzy
+#~ msgid "[_1] GIFI"
+#~ msgstr "財務訊息通用索引(GIFI)"
+
+#, fuzzy
 #~ msgid "[_1] Language"
 #~ msgstr "語言"
+
+#, fuzzy
+#~ msgid "[_1] SIC"
+#~ msgstr "新增標準工業分類代碼"
 
 #, fuzzy
 #~ msgid "[_1] Warehouse"
@@ -10711,9 +10916,6 @@ msgstr "預繳"
 #, fuzzy
 #~ msgid "ar"
 #~ msgstr "三月"
-
-#~ msgid "for"
-#~ msgstr "為了"
 
 #~ msgid "for Period"
 #~ msgstr "期間"
