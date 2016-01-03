@@ -379,7 +379,7 @@ sub load_coa {
             log   => $log
     );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
-        $self->exec_script(
+        $self->run_file(
              file => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
              log  => $log );
     }

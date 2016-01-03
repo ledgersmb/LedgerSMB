@@ -1013,11 +1013,11 @@ sub process_and_run_upgrade_script {
         output_file => 'upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $database->exec_script(
-        { script =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
-          log => $temp . "_stdout",
-          errlog => $temp . "_stderr"
-        });
+    $database->run_file(
+        file =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
+        log => $temp . "_stdout",
+        errlog => $temp . "_stderr"
+        );
 
 
     my $sth = $dbh->prepare(qq(select value='yes'
