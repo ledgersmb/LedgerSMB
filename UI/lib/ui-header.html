@@ -9,17 +9,24 @@
 		content="<?lsmb refresh.delay ?>;<?lsmb refresh.url ?>">
 	<?lsmb END -?>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="UI/lib/dojo/dojo/resources/dojo.css" type="text/css" title="Dojo stylesheet" />
-	<link rel="stylesheet" href="UI/lib/dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" title="Selected theme stylesheet" />
-	<link rel="stylesheet" href="css/global.css" type="text/css" title="LedgerSMB stylesheet" />
+   <?lsmb
+      # source comment only!
+      #
+      # don't specify a title on the stylesheets: we want them to be
+      # *persistent*
+      # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
+      ?>
+	<link rel="stylesheet" href="UI/lib/dojo/dojo/resources/dojo.css" type="text/css" />
+	<link rel="stylesheet" href="UI/lib/dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+	<link rel="stylesheet" href="css/global.css" type="text/css" />
 	<?lsmb IF form.stylesheet ?>
-	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" title="User selected stylesheet" />
+	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
 	<?lsmb ELSIF stylesheet ?>
-	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" title="User selected stylesheet" />
+	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
 	<?lsmb ELSE ?>
 	<?lsmb END ?>
 	<?lsmb FOREACH s = include_stylesheet ?>
-	<link rel="stylesheet" href="<?lsmb s ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
 	<?lsmb END ?>
 	<?lsmb IF warn_expire ?>
 	<script type="text/javascript" language="JavaScript">
