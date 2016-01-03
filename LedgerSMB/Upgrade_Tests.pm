@@ -16,6 +16,7 @@ package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
+use LedgerSMB::App_State;
 
 =head1 FUNCTIONS
 
@@ -139,11 +140,11 @@ Human readable instructions for test, localized.
 has instructions => (is => 'ro', isa => 'Str', required => 1);
 
 
-sub _tests {
+sub _get_tests {
     my ($request) = @_;
 
     my @tests;
-    my $locale = $request->{_locale};
+    my $locale = LedgerSMB::App_State::Locale;
 
 
 # 1.2-1.3 tests
@@ -303,7 +304,8 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -318,7 +320,8 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -395,7 +398,8 @@ push @tests,__PACKAGE__->new(
     test_query => "select *
                     from chart
                    where charttype = 'A'
-                     and regexp_match(link,':?(AR|AP|IC)(:|$)",
+                     and link ~ '(^|:)(AR|AP|IC)(:|\$)'
+                     and link ~ '(AR|AP|IC)[^:]'",
     display_name => $locale->text('Unsupported account link combinations'),
     name => 'unsupported_account_links',
     display_cols => ['accno', 'description', 'link'],
@@ -403,7 +407,7 @@ push @tests,__PACKAGE__->new(
                    'An account can either be a summary account (which have a
 link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-    column => 'category',
+    column => 'link',
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -452,7 +456,8 @@ push @tests,__PACKAGE__->new(
                    where customernumber in (select customernumber
                                               from customer
                                              group by customernumber
-                                             having count(*) > 1)",
+                                             having count(*) > 1)
+                    order by customernumber",
     display_name => $locale->text('Double customernumbers'),
     name => 'no_double_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
