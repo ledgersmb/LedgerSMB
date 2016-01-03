@@ -114,7 +114,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
+   HAVING sum(ac.amount_bc) <> 0.00
     UNION
    SELECT ac.chart_id,
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
