@@ -1,7 +1,7 @@
 # ledgersmb-release-scripts
 Tools to assist LedgerSMB developers release a new version
 
-######Copyright (c) 20015 SB Tech Services info@sbts.com.au
+######Copyright (c) 2015 SB Tech Services info@sbts.com.au
 
     Exclusively Licensed for use in the LedgerSMB Project
     Use in whole or part outside of the LedgerSMB Project is Not Permitted
