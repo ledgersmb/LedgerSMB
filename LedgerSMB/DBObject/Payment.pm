@@ -280,9 +280,9 @@ sub get_open_invoices {
 
 =item $payment->get_open_invoice()
 
-This function is an especific case of get_open_invoices(), because get_open_invoice() 
-can search for a specific invoice, wich can be searched by the $payment->{invnumber} 
-variable 
+This function is an especific case of get_open_invoices(), because get_open_invoice()
+can search for a specific invoice, which can be searched by the $payment->{invnumber}
+variable
 
 =back
 
@@ -421,7 +421,7 @@ The list is attached to $self->{departments} and returned.
 This method gets a list of the open currencies inside the database, it requires that  
 $self->{account_class} (must be 1 or 2)  exist to work. 
 
-WARNING THIS IS NOT BEEING USED BY THE SINGLE PAYMENT SYSTEM.... 
+WARNING THIS IS NOT BEING USED BY THE SINGLE PAYMENT SYSTEM....
 
 =back
 
