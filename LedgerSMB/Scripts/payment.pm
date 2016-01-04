@@ -974,7 +974,7 @@ if (${LedgerSMB::Sysconfig::latex}) {
 }
 # LETS BUILD THE SELECTION FOR THE UI
 # Notice that the first data inside this selection is the firs_load, this
-# will help payment2.html to know wether it is beeing called for the first time
+# will help payment2.html to know wether it is being called for the first time
 my $select = {
   first_load => $request->{first_load},
   stylesheet => $request->{_user}->{stylesheet},
@@ -1485,7 +1485,7 @@ while ($Payment->{"entity_id_$count"})
 }
 
 
-#lets search wich available invoice do we have for the selected entity
+#lets search which available invoice do we have for the selected entity
 if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
 {
   #lets create an object who has the entity_credit_id of the selected entity
@@ -1615,7 +1615,7 @@ my @cash_account_id;
 my @memo;
 my @source;
 my @transaction_id;
-#this variables will store all the unused overpayment wich will be used to pay the invoices
+#this variables will store all the unused overpayment which will be used to pay the invoices
 my %entity_unused_ovp;
 my $unused_ovp_index;
 
@@ -1635,7 +1635,7 @@ while ($request->{"entity_id_$count"})
   my ($entity_id,$entity_name) = split(/--/, $request->{"entity_id_$count"});
   my ($ovp_chart_id, $ovp_selected_accno) = split(/--/, $request->{"selected_accno_$count"});
 
-  #Let's see wich will the amount of the invoice due that will be paid from an overpayment
+  #Let's see which will the amount of the invoice due that will be paid from an overpayment
   my $applied_due = ($request->{"optional_discount_$count"} && $request->{"amount_$count"} == $request->{"due_$count"})?
                         $request->{"due_$count"}:
                         $request->{"due_$count"} + $request->{"discount_$count"};
@@ -1741,7 +1741,7 @@ while ($request->{"entity_id_$count"})
     }
 
   }else {
-    #Create an Payment object if this entity has not been saved, this object will encapsulate all the entity info wich will be needed to
+    #Create an Payment object if this entity has not been saved, this object will encapsulate all the entity info which will be needed to
     #call the sql payment_post method
     $entity_list{"$entity_id"} = LedgerSMB::DBObject::Payment->new({'base' => $request});
     $entity_list{"$entity_id"}->{"entity_credit_id"} = $entity_id;
