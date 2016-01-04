@@ -1051,7 +1051,7 @@ sub payment2 {
 
     # LETS BUILD THE SELECTION FOR THE UI
     # Notice that the first data inside this selection is the firs_load, this
-    # will help payment2.html to know wether it is beeing called for the first time
+    # will help payment2.html to know wether it is being called for the first time
     my $select = {
         first_load => $request->{first_load},
         stylesheet => $request->{_user}->{stylesheet},
