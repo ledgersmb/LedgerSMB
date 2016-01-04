@@ -726,6 +726,26 @@ push @tests, __PACKAGE__->new(
     );
 
 
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from tax t
+                     join chart c on t.chart_id = c.id
+                    where c.id in (select chart_id
+                                     from tax
+                                 group by chart_id, validto
+                                   having count(*) > 1)",
+    display_name => $locale->text(''),
+    name => 'tax_rates_unique_end_dates',
+    display_cols => ['accno', 'description', 'validto', 'rate'],
+ instructions => $locale->text(
+                   'Multiple tax rates with the same end date have been detected for a tax account;'),
+    table => 'tax',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
 
 #  ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
