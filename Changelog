@@ -37,6 +37,14 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.23
+* Fixed running balance column of GL report double-counting (Erik H, #1205)
+* Fixed spelling errors (David G, #1178)
+
+David G is David Godfrey
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.22
 * Fixed balance sheet language selection (Erik H)
 * Fixed column headings translated in report language (Erik H)
