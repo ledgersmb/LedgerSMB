@@ -243,9 +243,10 @@ IF in_from_date IS NULL THEN
    t_balance := 0;
 ELSIF in_accno IS NOT NULL THEN
    SELECT id INTO t_chart_id FROM account WHERE accno  = in_accno;
-   t_balance := account__obtain_balance(in_from_date ,
-                                       (select id from account
-                                         where accno = in_accno));
+   t_balance :=
+      account__obtain_balance((in_from_date - '1 day'::interval)::date,
+                              (select id from account
+                                where accno = in_accno));
 ELSE
    t_balance := null;
 END IF;
