@@ -3338,7 +3338,7 @@ sub save_recurring {
 
                 $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
 
-                ($nextdate) = $dbh->selectrow_array($query, undef, $s{startdate});
+                ($nextdate) = $dbh->selectrow_array($query, undef, $s{startdate}) || $self->dberror($query);
             }
 
         }
@@ -3362,15 +3362,15 @@ sub save_recurring {
         $query = qq|
             INSERT INTO recurring
                 (id, reference, startdate, enddate, nextdate,
-                repeat, unit, howmany, payment)
-            VALUES (?, null, ?, ?, ?, ?, ?, ?, ?)|;
+				recurring_interval, howmany, payment)
+			VALUES (?, null, ?, ?, ?, ?::interval, ?, ?)|;
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute(
             $self->{id}, $s{startdate},
-            $enddate,    $nextdate,     $s{repeat},
-            $s{unit},    $s{howmany},   $s{payment}
-        );
+            $enddate,    $nextdate,     "$s{repeat} $s{unit}",
+            $s{howmany},   $s{payment}
+        ) || $self->dberror($query);
 
         my @p;
         my $p;
@@ -3389,7 +3389,8 @@ sub save_recurring {
             $sth = $dbh->prepare($query) || $self->dberror($query);
 
             for ( $i = 0 ; $i <= $#p ; $i += 2 ) {
-                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $s{message} );
+                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $s{message} )
+                    || $self->dberror($query);
             }
 
             $sth->finish;
@@ -3408,7 +3409,8 @@ sub save_recurring {
 
             for ( $i = 0 ; $i <= $#p ; $i += 3 ) {
                 $p = ( $p[ $i + 2 ] ) ? $p[ $i + 2 ] : "";
-                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $p );
+                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $p )
+                    || $self->dberror($query);
             }
 
             $sth->finish;
