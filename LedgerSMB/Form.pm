@@ -3155,7 +3155,10 @@ sub get_recurring {
 
     my $dbh = $self->{dbh};
     my $query = qq/
-        SELECT s.*, se.formname || ':' || se.format AS emaila,
+		SELECT extract(days from recurring_interval) as days,
+             extract(months from recurring_interval) as months,
+             extract(years from recurring_interval) as years,
+             s.*, se.formname || ':' || se.format AS emaila,
             se.message, sp.formname || ':' ||
                 sp.format || ':' || sp.printer AS printa
         FROM recurring s
@@ -3179,7 +3182,25 @@ sub get_recurring {
     chop $self->{recurringemail};
     chop $self->{recurringprint};
 
+    if ( $self->{recurringyears} ) {
+        $self->{recurringunit} = 'years';
+        $self->{recurringrepeat} = $self->{recurringyears};
+    }
+    elsif ( $self->{recurringmonths} ) {
+        $self->{recurringunit} = 'months';
+        $self->{recurringrepeat} = $self->{recurringmonths};
+    }
+    elsif ( $self->{recurringdays} && ( $self->{recurringdays} % 7 == 0 ) ) {
+        $self->{recurringunit} = 'weeks';
+        $self->{recurringrepeat} = $self->{recurringdays} / 7;
+    }
+    elsif ( $self->{recurringdays} ) {
+        $self->{recurringunit} = 'days';
+        $self->{recurringrepeat} = $self->{recurringdays};
+    }
+
     if ( $self->{recurringstartdate} ) {
+
         $self->{recurringreference} =
           $self->escape( $self->{recurringreference}, 1 );
         $self->{recurringmessage} =
