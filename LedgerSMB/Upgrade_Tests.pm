@@ -16,6 +16,7 @@ package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
+use LedgerSMB::App_State;
 
 =head1 FUNCTIONS
 
@@ -139,11 +140,11 @@ Human readable instructions for test, localized.
 has instructions => (is => 'ro', isa => 'Str', required => 1);
 
 
-sub _tests {
+sub _get_tests {
     my ($request) = @_;
 
     my @tests;
-    my $locale = $request->{_locale};
+    my $locale = LedgerSMB::App_State::Locale;
 
 
 # 1.2-1.3 tests
@@ -238,7 +239,8 @@ push @tests, __PACKAGE__->new(
                   and partnumber in
                   (select partnumber from parts
                   WHERE obsolete is not true
-                  group by partnumber having count(*) > 1)",
+                  group by partnumber having count(*) > 1)
+                  order by partnumber",
          name => 'duplicate_partnumbers',
  display_name => $locale->text('Unique nonobsolete partnumbers'),
  instructions => $locale->text(
@@ -303,7 +305,8 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -318,7 +321,8 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -395,7 +399,8 @@ push @tests,__PACKAGE__->new(
     test_query => "select *
                     from chart
                    where charttype = 'A'
-                     and regexp_match(link,':?(AR|AP|IC)(:|$)",
+                     and link ~ '(^|:)(AR|AP|IC)(:|\$)'
+                     and link ~ '(AR|AP|IC)[^:]'",
     display_name => $locale->text('Unsupported account link combinations'),
     name => 'unsupported_account_links',
     display_cols => ['accno', 'description', 'link'],
@@ -403,7 +408,7 @@ push @tests,__PACKAGE__->new(
                    'An account can either be a summary account (which have a
 link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-    column => 'category',
+    column => 'link',
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -452,7 +457,8 @@ push @tests,__PACKAGE__->new(
                    where customernumber in (select customernumber
                                               from customer
                                              group by customernumber
-                                             having count(*) > 1)",
+                                             having count(*) > 1)
+                    order by customernumber",
     display_name => $locale->text('Double customernumbers'),
     name => 'no_double_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
@@ -583,7 +589,8 @@ push @tests, __PACKAGE__->new(
                   and partnumber in
                   (select partnumber from parts
                   WHERE obsolete is not true
-                  group by partnumber having count(*) > 1)",
+                  group by partnumber having count(*) > 1)
+                  order by partnumber",
          name => 'duplicate_partnumbers',
  display_name => $locale->text('Unique nonobsolete partnumbers'),
  instructions => $locale->text(
@@ -721,24 +728,23 @@ push @tests, __PACKAGE__->new(
 
 push @tests, __PACKAGE__->new(
     test_query => "select *
-                     from chart
-                    where charttype = 'A'
-                          and exists (select 1
-                                       from (select unnest(array_from_string(link,':') as single_link))
-                                      where single_link in ('AR', 'AP', 'IC'))
-                          and exists (select 1
-                                       from (select unnest(array_from_string(link,':') as single_link))
-                                      where single_link ~ '^(AR|AP|IC)_')",
-    display_name => $locale->text('Accounts can\'t be simultaneously used as summary accounts (AR,AP,IC) and be listed in dropdowns elsewhere.'),
-    name => 'disallowed_link_combinations',
-    display_cols => ['accno', 'description', 'link'],
+                     from tax t
+                     join chart c on t.chart_id = c.id
+                    where c.id in (select chart_id
+                                     from tax
+                                 group by chart_id, validto
+                                   having count(*) > 1)",
+    display_name => $locale->text(''),
+    name => 'tax_rates_unique_end_dates',
+    display_cols => ['accno', 'description', 'validto', 'rate'],
  instructions => $locale->text(
-                   'Please unmark accounts as summary accounts, or remove dropdown checkmarks (in the standard SL UI)'),
-    table => 'chart',
+                   'Multiple tax rates with the same end date have been detected for a tax account;'),
+    table => 'tax',
     appname => 'sql-ledger',
     min_version => '2.7',
     max_version => '2.8'
     );
+
 
 
 #  ### On the vendor side, SL doesn't use pricegroups
