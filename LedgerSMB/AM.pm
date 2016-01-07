@@ -971,14 +971,14 @@ sub update_recurring {
 
     $id = $dbh->quote($id);
     my $query = qq|
-		SELECT nextdate, repeat, unit
+		SELECT nextdate, recurring_interval
 		  FROM recurring
 		 WHERE id = $id|;
 
-    my ( $nextdate, $repeat, $unit ) = $dbh->selectrow_array($query);
+    my ( $nextdate, $recurring_interval ) = $dbh->selectrow_array($query);
 
     $nextdate = $dbh->quote($nextdate);
-    my $interval = $dbh->quote("$repeat $unit");
+    my $interval = $dbh->quote($recurring_interval);
 
     # check if it is the last date
     $query = qq|
