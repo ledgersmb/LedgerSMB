@@ -3046,7 +3046,7 @@ sub save_recurring {
     $query = qq|DELETE FROM recurringemail
 				 WHERE id = ?|;
 
-    $sth = $dbh->prepare($query) || $self->dberror($query);
+    my $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     $query = qq|DELETE FROM recurringprint
@@ -3058,7 +3058,7 @@ sub save_recurring {
     $query = qq|DELETE FROM recurring
 				 WHERE id = ?|;
 
-    my $sth = $dbh->prepare($query) || $self->dberror($query);
+    $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
     if ( $self->{recurring} ) {
