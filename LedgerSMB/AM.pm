@@ -641,7 +641,7 @@ sub recurring_transactions {
     $query = qq|
            SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
                   e.name AS description, a.amount,
-		          extract(days from recurring_interval) as days,
+                          extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
@@ -665,7 +665,7 @@ sub recurring_transactions {
 
           SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
                   e.name AS description, a.amount,
-		          extract(days from recurring_interval) as days,
+                          extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
@@ -691,7 +691,7 @@ sub recurring_transactions {
              FROM acc_trans ac
             WHERE ac.trans_id = a.id
               AND ac.amount > 0) AS amount,
-		          extract(days from recurring_interval) as days,
+                          extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
@@ -709,7 +709,7 @@ sub recurring_transactions {
 
            SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
                   e.name AS description, a.amount,
-		          extract(days from recurring_interval) as days,
+                          extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
@@ -732,7 +732,7 @@ sub recurring_transactions {
 
            SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
                   e.name AS description, a.amount,
-		          extract(days from recurring_interval) as days,
+                          extract(days from recurring_interval) as days,
                 extract(months from recurring_interval) as months,
                 extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
@@ -971,7 +971,7 @@ sub update_recurring {
 
     $id = $dbh->quote($id);
     my $query = qq|
-		SELECT nextdate, recurring_interval
+                SELECT nextdate, recurring_interval
           FROM recurring
          WHERE id = $id|;
 
