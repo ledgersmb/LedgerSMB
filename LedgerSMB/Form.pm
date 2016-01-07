@@ -3155,7 +3155,7 @@ sub get_recurring {
 
     my $dbh = $self->{dbh};
     my $query = qq/
-		SELECT extract(days from recurring_interval) as days,
+                SELECT extract(days from recurring_interval) as days,
              extract(months from recurring_interval) as months,
              extract(years from recurring_interval) as years,
              s.*, se.formname || ':' || se.format AS emaila,
@@ -3383,8 +3383,8 @@ sub save_recurring {
         $query = qq|
             INSERT INTO recurring
                 (id, reference, startdate, enddate, nextdate,
-				recurring_interval, howmany, payment)
-			VALUES (?, null, ?, ?, ?, ?::interval, ?, ?)|;
+                                recurring_interval, howmany, payment)
+                        VALUES (?, null, ?, ?, ?, ?::interval, ?, ?)|;
 
         $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute(
