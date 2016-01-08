@@ -269,7 +269,7 @@ sub columns {
            type => 'text',
          pwidth => 10, },
         {col_id => 'ship_via',
-           name => LedgerSMB::Report::text('Ship_Via'),
+           name => LedgerSMB::Report::text('Ship Via'),
            type => 'text',
          pwidth => 10, },
     ];
