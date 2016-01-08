@@ -107,7 +107,8 @@ our %printer = ();
 my $cfg=Config::IniFiles->new();
 if ( -r 'ledgersmb.conf' ) {
     # Try Loading the config file
-    $cfg->ReadFile('ledgersmb.conf' );
+    $cfg->SetFileName('ledgersmb.conf' );
+    $cfg->ReadConfig();
 } else {
     warn "Could not load 'ledgersmb.conf'";
 }
