@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html'
                 stylesheet = stylesheet
 		include_stylesheet = [
-			'css/global.css' 
+			'css/global.css'
 			'UI/payments/payments.css'
 		]
 		titlebar = text('Selection')
@@ -12,25 +12,25 @@
 	<!-- CT:  Strings for locales:
 	<?lsmb text('Filtering Receipts') ?>
 	<?lsmb text('Filtering Payments') ?> -->
-	<?lsmb IF account_class == 1 ?><?lsmb t = 'Payments' 
-	?><?lsmb ELSE ?><?lsmb t = 'Receipts' 
+	<?lsmb IF account_class == 1 ?><?lsmb t = 'Payments'
+	?><?lsmb ELSE ?><?lsmb t = 'Receipts'
 	?><?lsmb END ?>
 	<?lsmb text("Filtering $t") ?>
 </div>
 <form data-dojo-type="lsmb/lib/Form" name="search" method="post" action="payment.pl">
-	
 
-<?lsmb INCLUDE input element_data={
+
+<?lsmb PROCESS input element_data={
 	value = account_class
 	type = "hidden"
 	name = "account_class"
 } ?>
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
 	value = batch_id
 	type = "hidden"
 	name = "batch_id"
 } ?>
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
 	value = batch_date
 	type = "hidden"
 	name = "batch_date"
@@ -120,32 +120,38 @@
 </div>
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
 <label for="currency"><?lsmb text('Currency')?></label>
-<select name="currency" id="currency">
-<?lsmb FOREACH c = openCurrencies ?><?lsmb k = c.keys.first ?>
-<option value = "<?lsmb c.$k ?>"><?lsmb c.$k ?></option>
-<?lsmb END ?>
-</select>
+<?lsmb
+   curr = [];
+   FOREACH c IN currencies ;
+     curr.push( { text = c, value = c } );
+   END;
+   PROCESS select element_data = {
+       id = 'currency'
+       name = 'currency'
+       options = curr
+       default_values = [ default_currency ]
+} ?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
-	
-      <?lsmb 
+
+      <?lsmb
           IF account_class == 1; pay_label = text('Pay From');#'
           ELSIF account_class == 2; pay_label = text('Pay To'); #'
           END;
-          INCLUDE select element_data = {
+          PROCESS select element_data = {
 		name = "cash_accno"
 		default_values = [cash_accno]
 		options = cash_accounts
 		value_attr = "accno"
 		text_attr = "text"
 		label = pay_label _ ':'
-	} ?> 
+	} ?>
 
 <?lsmb IF payment_types ?>
 
 <div id = "payments-filter-payment_types" class="inputpayment">
-  
+
  <?lsmb PROCESS select element_data = {
 		name = "payment_type_id"
 		default_values = []
@@ -153,7 +159,7 @@
 		value_attr = "id"
 		text_attr = "label"
 		label = text('Payment Type:') #'
-	} ?> 
+	} ?>
 
 
 </div>
@@ -165,7 +171,7 @@
 
 
 <div class = "inputgroup">
-<?lsmb INCLUDE input element_data = {
+<?lsmb PROCESS input element_data = {
 	type = "text"
 	size = "20"
 	name = "source_start"
@@ -173,7 +179,7 @@
 } # '?>
 </div>
 <div>
-<?lsmb INCLUDE button element_data = {
+<?lsmb PROCESS button element_data = {
 	type = "submit"
 	name = "action"
 	text = text('Continue')
