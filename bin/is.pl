@@ -44,6 +44,9 @@
 #======================================================================
 
 package lsmb_legacy;
+
+use List::Util qw(max min);
+
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
@@ -1186,10 +1189,25 @@ sub update {
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
-    for my $i ( 1 .. $form->{rowcount}
-                   + $LedgerSMB::Company_Config::settings->{min_empty}
-          ){
-        $form->{rowcount} = $i;
+    my $non_empty_rows = 0;
+    for my $i (1 .. $form->{rowcount}) {
+        $non_empty_rows++
+            if $form->{"id_$i"}
+               || ! ( ( $form->{"partnumber_$i"} eq "" )
+                      && ( $form->{"description_$i"} eq "" )
+                      && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+
+    my $current_empties = $form->{rowcount} - $non_empty_rows;
+    my $new_empties =
+        max(0,
+            $LedgerSMB::Company_Config::settings->{min_empty}
+            - $current_empties);
+
+
+    $form->{rowcount} += $new_empties;
+    for my $i ( 1 .. $form->{rowcount}){
+        next if $form->{"id_$i"};
         next if $form->{"id_$i"};
         if (   ( $form->{"partnumber_$i"} eq "" )
             && ( $form->{"description_$i"} eq "" )
@@ -1198,11 +1216,11 @@ sub update {
 
             $form->{creditremaining} +=
               ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
-            &check_form;
 
         }
         else {
             ($form->{"partnumber_$i"}) = split(/--/, $form->{"partnumber_$i"});
+            $form->{rowcount} = $i;
             IS->retrieve_item( \%myconfig, \%$form );
 
             $rows = scalar @{ $form->{item_list} };
@@ -1309,6 +1327,7 @@ sub update {
             }
         }
     }
+    $form->{rowcount}--;
     display_form();
 }
 
