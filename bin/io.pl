@@ -39,6 +39,7 @@
 #######################################################################
 
 package lsmb_legacy;
+use List::Util qw(max);
 use Try::Tiny;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
@@ -273,7 +274,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $exchangerate = ($exchangerate) ? $exchangerate : 1;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
-    for $i ( 1 .. $numrows  + $min_lines) {
+    for $i ( 1 .. max($numrows, $min_lines)) {
         $desc_disabled = '' if $i == $numrows;
         if ( $spc eq '.' ) {
             ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
