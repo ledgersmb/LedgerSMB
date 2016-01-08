@@ -467,7 +467,6 @@ sub display_payments {
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3],
                                                     money  => 1);
-            $contact_to_pay += $invoice->[3];
             $invoice->[4] = $payment->format_amount(amount => $invoice->[4],
                                                     money  => 1);
             $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
@@ -477,6 +476,7 @@ sub display_payments {
                     - $payment->parse_amount(amount => $invoice->[4])
                     - $payment->parse_amount(amount => $invoice->[5])),
                                                     money  => 1);
+            $contact_to_pay += $invoice->[6];
             my $fld = "payment_" . $invoice->[0];
 
             if ('display_payments' eq $request->{action} ){
