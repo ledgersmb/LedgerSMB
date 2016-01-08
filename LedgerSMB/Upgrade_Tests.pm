@@ -659,7 +659,7 @@ push @tests, __PACKAGE__->new(
     test_query => "select *
                      from chart
                     where not charttype in ('H', 'A')",
-    display_name => $locale->text('Unknown charttype; should be H(eader)/A(ccount))'),
+    display_name => $locale->text('Unknown charttype; should be H(eader)/A(ccount)'),
     name => 'unknown_charttype',
     display_cols => ['accno', 'charttype', 'description'],
     column => 'charttype',

@@ -378,7 +378,7 @@ sub schedule {
         $postpayment = qq|
      <tr>
       <th align=right nowrap>| . $locale->text('Include Payment') . qq|</th>
-      <td><input name=recurringpayment type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $recurringpayment></td>
+      <td><input id="recurringpayment" name=recurringpayment type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $recurringpayment></td>
     </tr>
 |;
     }
@@ -387,7 +387,7 @@ sub schedule {
         $nextdate = qq|
           <tr>
         <th align=right nowrap>| . $locale->text('Next Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
+        <td><input class="date" id="recurringnextdate" data-dojo-type="lsmb/lib/DateTextBox" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
           </tr>
 |;
     }
@@ -432,9 +432,9 @@ sub schedule {
 
             $email .= qq|
         <tr>
-          <td><input name="email$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
+          <td><input id="email$item" name="email$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
           <th align=left>$formname{$item}</th>
-          <td><select data-dojo-type="dijit/form/Select" name="emailformat$item">$selectformat</select></td>
+          <td><select id="emailformat$item" data-dojo-type="dijit/form/Select" name="emailformat$item">$selectformat</select></td>
         </tr>
 |;
         }
@@ -453,7 +453,7 @@ sub schedule {
       </tr>
 
       <tr>
-        <td><textarea data-dojo-type="dijit/form/Textarea" name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
+        <td><textarea id="recurringmessage" data-dojo-type="dijit/form/Textarea" name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
       </tr>
     </table>
 |;
@@ -506,10 +506,10 @@ sub schedule {
 
             $print .= qq|
         <tr>
-          <td><input name="print$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
+          <td><input id="print$item" name="print$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
           <th align=left>$formname{$item}</th>
-          <td><select data-dojo-type="dijit/form/Select" name="printprinter$item">$selectprinter</select></td>
-          <td><select data-dojo-type="dijit/form/Select" name="printformat$item">$selectformat</select></td>
+          <td><select id="printprinter$item" data-dojo-type="dijit/form/Select" name="printprinter$item">$selectprinter</select></td>
+          <td><select id="printformat$item" data-dojo-type="dijit/form/Select" name="printformat$item">$selectformat</select></td>
         </tr>
 |;
         }
@@ -584,11 +584,11 @@ sub schedule {
         <table>
           <tr>
         <th align=right nowrap>| . $locale->text('Reference') . qq|</th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=recurringreference size=20 value="$form->{recurringreference}"></td>
+        <td><input id="recurringreference" data-dojo-type="dijit/form/TextBox" name=recurringreference size=20 value="$form->{recurringreference}"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
+        <td><input class="date" id="recurringstartdate"  data-dojo-type="lsmb/lib/DateTextBox" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
           </tr>
           $nextdate
         </table>
