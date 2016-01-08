@@ -104,7 +104,7 @@ our $DBI_TRACE=0;
 our %printer = ();
 
 # Start With an empty default config
-my $cfg=Config::IniFiles->();
+my $cfg=Config::IniFiles->new();
 if ( -r 'ledgersmb.conf' ) {
     # Try Loading the config file
     $cfg->ReadFile('ledgersmb.conf' );
