@@ -59,17 +59,17 @@ sub columns {
 
 sub header_lines {
     return [{name => 'partsgroup',
-             text => LedgerSMB::Report::text('Parts Group') }];
+             text => LedgerSMB::Report::text('Partsgroup') }];
 }
 
 =head2 name
 
-Parts Groups
+Partsgroups
 
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Parts Groups');
+    return LedgerSMB::Report::text('Partsgroups');
 }
 
 =head1 METHODS
