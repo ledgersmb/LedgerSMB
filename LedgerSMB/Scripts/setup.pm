@@ -366,18 +366,22 @@ sub run_backup {
     $backupfile or $request->error($request->{_locale}->text('Error creating backup file'));
 
     if ($request->{backup_type} eq 'email'){
+        # suppress warning of single usage of $LedgerSMB::Sysconfig::...
+        no warnings 'once';
+
         my $csettings = $LedgerSMB::Company_Config::settings;
-    my $mail = new LedgerSMB::Mailer(
-        from          => $LedgerSMB::Sysconfig::backup_email_from,
-        to            => $request->{email},
-        subject       => "Email of Backup",
-        message       => 'The Backup is Attached',
-    );
-    $mail->attach(
+        my $mail = new LedgerSMB::Mailer(
+            from          => $LedgerSMB::Sysconfig::backup_email_from,
+            to            => $request->{email},
+            subject       => "Email of Backup",
+            message       => 'The Backup is Attached',
+            );
+        $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
-    );        $mail->send;
+            );
+        $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
@@ -980,7 +984,7 @@ sub process_and_run_upgrade_script {
     my $rc;
 
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::dbn_amespace (" . $dbh->errstr . ")";
+    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
     $dbh->begin_work;
 

@@ -641,6 +641,9 @@ sub recurring_transactions {
     $query = qq|
            SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
                   e.name AS description, a.amount,
+                          extract(days from recurring_interval) as days,
+                extract(months from recurring_interval) as months,
+                extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue,
@@ -662,6 +665,9 @@ sub recurring_transactions {
 
           SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
                   e.name AS description, a.amount,
+                          extract(days from recurring_interval) as days,
+                extract(months from recurring_interval) as months,
+                extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, 'vendor' AS vc,
@@ -685,6 +691,9 @@ sub recurring_transactions {
              FROM acc_trans ac
             WHERE ac.trans_id = a.id
               AND ac.amount > 0) AS amount,
+                          extract(days from recurring_interval) as days,
+                extract(months from recurring_interval) as months,
+                extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, '' AS vc,
@@ -700,6 +709,9 @@ sub recurring_transactions {
 
            SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
                   e.name AS description, a.amount,
+                          extract(days from recurring_interval) as days,
+                extract(months from recurring_interval) as months,
+                extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue,
@@ -720,6 +732,9 @@ sub recurring_transactions {
 
            SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
                   e.name AS description, a.amount,
+                          extract(days from recurring_interval) as days,
+                extract(months from recurring_interval) as months,
+                extract(years from recurring_interval) as years,
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, 'vendor' AS vc,
@@ -749,6 +764,24 @@ sub recurring_transactions {
 
         $ref->{exchangerate} ||= 1;
         $form->db_parse_numeric(sth => $sth, hashref => $ref);
+
+        if ( $ref->{years} ) {
+            $ref->{unit} = 'years';
+            $ref->{repeat} = $ref->{years};
+        }
+        elsif ( $ref->{months} ) {
+            $ref->{unit} = 'months';
+            $ref->{repeat} = $ref->{months};
+        }
+        elsif ( $ref->{days} && ( $ref->{days} % 7 == 0 )) {
+            $ref->{unit} = 'weeks';
+            $ref->{repeat} = $ref->{days} / 7;
+        }
+        elsif ( $ref->{days} ) {
+            $ref->{unit} = 'days';
+            $ref->{repeat} = $ref->{days};
+        }
+
 
         if ( $ref->{id} != $id ) {
 
@@ -938,14 +971,14 @@ sub update_recurring {
 
     $id = $dbh->quote($id);
     my $query = qq|
-        SELECT nextdate, repeat, unit
+                SELECT nextdate, recurring_interval
           FROM recurring
          WHERE id = $id|;
 
-    my ( $nextdate, $repeat, $unit ) = $dbh->selectrow_array($query);
+    my ( $nextdate, $recurring_interval ) = $dbh->selectrow_array($query);
 
     $nextdate = $dbh->quote($nextdate);
-    my $interval = $dbh->quote("$repeat $unit");
+    my $interval = $dbh->quote($recurring_interval);
 
     # check if it is the last date
     $query = qq|
