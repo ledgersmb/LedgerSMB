@@ -103,11 +103,14 @@ our $DBI_TRACE=0;
 # available printers
 our %printer = ();
 
-my $cfg;
-# Try Loading the config file
-eval { $cfg = Config::IniFiles->new( -allowempty => 1, -reloadwarn => 1, -file => "ledgersmb.conf" ); }
-# Fall back to an empty default config
-if ( ! $cfg ); $cfg=new Config::IniFiles( );
+# Start With an empty default config
+my $cfg=Config::IniFiles->();
+if ( -r 'ledgersmb.conf' ) {
+    # Try Loading the config file
+    $cfg->ReadFile('ledgersmb.conf' );
+} else {
+    warn "Could not load 'ledgersmb.conf'";
+}
 
 # Root variables
 for my $var (
