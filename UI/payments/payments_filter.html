@@ -121,15 +121,17 @@
 </div>
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
 <label for="currency"><?lsmb text('Currency')?></label>
-<?lsmb currencies = [];
-	    FOREACH c IN payment.openCurrencies ;
-          k = c.keys.first;
-		    currencies.push( { value = c.$k, text = c.$k } );
-       END;
-	    PROCESS select element_data = {
-		      name="currency"
-		      id="currency"
-		      options=currencies } ?>
+<?lsmb
+   curr = [];
+   FOREACH c IN currencies ;
+     curr.push( { text = c, value = c } );
+   END;
+   PROCESS select element_data = {
+        id = 'currency'
+       name = 'currency'
+       options = curr
+       default_values = [ default_currency ]
+} ?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
