@@ -1,0 +1,15 @@
+<?lsmb FILTER latex ?>
+\documentclass{scrartcl}
+\usepackage{tabularx}
+\usepackage[paperheight=11cm, paperwidth=23cm,top=3.5cm,bottom=3cm,left=12cm,right=1cm]{geometry}
+\begin{document}
+\thispagestyle{empty}
+\noindent <?lsmb name ?>\\
+<?lsmb address1 ?> \\
+<?lsmb- IF address2 ?>
+<?lsmb address2 ?> \\
+<?lsmb- END ?>
+<?lsmb city ?>
+<?lsmb- IF state -?>, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>\\
+\end{document}
+<?lsmb END ?>
