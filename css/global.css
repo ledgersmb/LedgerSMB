@@ -11,7 +11,12 @@ div.input {
 div.date {
     width: 13ex;
 }
-
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
 
 .flat-hierarchy .balancesheet .report-head th {
     text-align: right;

@@ -156,6 +156,7 @@
 					type  = 'text'
 					class = "numeric"
 					name  = 'exchangerate'
+               id = 'exchangerate'
 					value = payment.exchangerate
 					size  = 20
 				};
@@ -239,6 +240,7 @@
 					<?lsmb # END # IF action ... -?>
 					<?lsmb INCLUDE input element_data = {
 						type    = "checkbox"
+						id      = "id_" _ r.contact_id
 						name    = "id_" _ r.contact_id
 						value   = r.contact_id
 						checked = (r.selected) ? "checked" : undef
@@ -294,6 +296,7 @@
 				<td rowspan = 2>
 					<?lsmb INCLUDE input element_data = {
 						name  = "source_$r.contact_id"
+                  id    = "source_$r.contact_id"
 						value = (payment.${"source_$r.contact_id"}) ? ${"source_$r.contact_id"} : r.source
 						type  = "text"
 						size  = "20"
@@ -365,7 +368,8 @@
 									<td class="to_pay_list">
 										<?lsmb PROCESS input element_data = {
 											name = "payment_$i.0"
-											value = ${"payment_$i.0"}
+                                 id   = "payment_$i.0"
+											value = i.6
 											size = 20
 											type = "text"
 											class = "monetary" } ?>
@@ -453,7 +457,7 @@
 	<?lsmb INCLUDE input element_data = {
 		type  = "hidden"
 		name  = "contact_count"
-		value = payment.count
+		value = payment.contact_invoices.size
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		name  = "multiple"

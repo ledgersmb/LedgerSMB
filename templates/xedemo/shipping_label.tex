@@ -1,0 +1,23 @@
+<?lsmb FILTER latex ?>
+\documentclass{scrartcl}
+\usepackage{tabularx}
+\usepackage[paperheight=10.5cm, paperwidth=16.2cm,top=1cm,bottom=1.5cm,left=2cm,right=2cm]{geometry}
+\begin{document}
+<?lsmb IF shiptoaddress1 ?>
+\noindent <?lsmb name ?>\\
+<?lsmb shiptoaddress1 ?>\\
+<?lsmb IF shiptoaddress2; shiptoaddress2 ?>\\ <?lsmb END ?>
+<?lsmb- shiptocity ?>
+<?lsmb IF shiptostate -?>
+\hspace{-0.1cm}, <?lsmb shiptostate ?><?lsmb END ?> <?lsmb shiptozipcode ?>\\
+<?lsmb shiptocountry ?>
+<?lsmb ELSE ?>
+\noindent <?lsmb name ?>\\
+<?lsmb address1 ?> \\
+<?lsmb- IF address2; address2 ?> \\<?lsmb END ?>
+<?lsmb- city ?>
+<?lsmb- IF state -?>, <?lsmb state ?> <?lsmb END ?> <?lsmb zipcode ?>\\
+<?lsmb END ?>
+
+\end{document}
+<?lsmb END ?>

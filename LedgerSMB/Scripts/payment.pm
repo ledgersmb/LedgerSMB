@@ -85,7 +85,7 @@ sub payments {
         $payment->error("No Batch Date!");
     }
     my @curr = LedgerSMB::Setting->new()->get_currencies;
-    $payment->{default_currency} = @curr[0];
+    $payment->{default_currency} = $curr[0];
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -169,11 +169,7 @@ sub pre_bulk_post_report {
                    };
             for my $invrow (1 .. $request->{"invoice_count_$cid"}){
                  my $inv_id = $request->{"invoice_${cid}_$invrow"};
-                 if ($request->{"paid_$cid"} eq 'all'){
-                     $ref->{amount} += $request->{"payment_$inv_id"};
-                 } else {
-                     $ref->{amount} += $request->{"net_$inv_id"};
-                 }
+                 $ref->{amount} += $request->{"payment_$inv_id"};
              }
              # If vendor, this is debit-normal so multiply by -1
              if ($request->{account_class} == 1){ # vendor
@@ -482,7 +478,6 @@ sub display_payments {
             if ('display_payments' eq $request->{action} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
-            $contact_total +=  $payment->parse_amount(amount => $payment->{$fld});
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;

@@ -40,6 +40,13 @@ Released 2014-09-15
 Changelog for 1.4.23
 * Fixed running balance column of GL report double-counting (Erik H, #1205)
 * Fixed spelling errors (David G, #1178)
+* Fixed spelling errors (Erik H, #1183, #1170)
+* Fixed handling of recurring transactions (Erik H, #1227)
+* Fixed selected currency in vouchers -> payments isn't default (Erik H, #1186)
+* Fixed CoA screen offering Delete for referenced accounts (Erik H, #972)
+* Fixed vouchers print total instead of due amount (Erik H, #1068)
+* Fixed missing envelope and shipping label templates (Erik H, #874)
+* Fixed detailed (AR/AP) aging statements not working (Erik H, #1177)
 
 David G is David Godfrey
 Erik H is Erik Huelsmann
