@@ -254,6 +254,12 @@ Customer/Vendor entity id
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
+has c0total => (is => 'rw', init_arg => undef);
+has c30total => (is => 'rw', init_arg => undef);
+has c60total => (is => 'rw', init_arg => undef);
+has c90total => (is => 'rw', init_arg => undef);
+has total => (is => 'rw', init_arg => undef);
+
 =back
 
 =head1 METHODS
@@ -276,7 +282,12 @@ sub run_report{
         } else {
             $row->{row_id} = "$row->{account_number}:$row->{entity_id}";
         }
+        $self->c0total($self->c0total + $row->{c0});
+        $self->c30total($self->c30total + $row->{c30});
+        $self->c60total($self->c60total + $row->{c60});
+        $self->c90total($self->c90total + $row->{c90});
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
+        $self->total($self->total + $row->{total});
     }
     $self->rows(\@rows);
 }
