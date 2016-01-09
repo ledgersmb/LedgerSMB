@@ -80,6 +80,10 @@ LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
 For lwp tests (63)
 ------------------
 
+lwp stands for `libwww-perl`, a Perl library for programming for the World Wide Web (HTTP).
+It is used to send requests to the LedgerSMB instance at `LSMB_BASE_URL` and validates
+the responses.
+
 ````plain
 LSMB_TEST_LWP     enable LWP tests
 LSMB_USER         name of LedgerSMB application user to run tests
