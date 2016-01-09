@@ -13,15 +13,12 @@ Environment variables can be used as flags to disable/enable tests >= 40
 
 LSMB_TEST_DB must be set to a defined value if databases are going to be tested.
 
-if LSMB_NEW_DB is set, test 40 will create a database with the name from this 
-environment variable, and subsequent database tests will run against that 
-database.  If this is not set, and PGDATABASE is set, tests will run on that 
+if LSMB_NEW_DB is set, test 40 will create a database with the name from this
+environment variable, and subsequent database tests will run against that
+database.  If this is not set, and PGDATABASE is set, tests will run on that
 database. If neither are set, the tests will bail out.
 
 Special notes on specific test cases:
-
-42-dbobject.t:  Some tests will run even if LSMB_TEST_DB is not enabled.  These 
-tests do not require a database connection.
 
 43-dbtest.t:  This runs defined test cases from sql/modules/test/.  If new
 scripts are added, they must be listed in this script as well.
@@ -46,12 +43,12 @@ LSMB_USER and LSMB_PASS for LWP tests
 
 Variables to configure test suites:
    PGDATABASE directs to the database (or company element in LWP tests)
-LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested. 
+LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested.
 
-If you wish to make a new db for tests, you must set the following environment 
+If you wish to make a new db for tests, you must set the following environment
 variable:
 
-   LSMB_NEW_DB is the name of the new db.  If this database cannot be created, 
+   LSMB_NEW_DB is the name of the new db.  If this database cannot be created,
                the tests will bail out.
 
 Additionally, if LSMB_INSTALL_DB is set, the database will NOT be removed after
@@ -59,7 +56,7 @@ test cases are run.  This can be a useful way of installing the for production
 use, though currently an admin user is not created in this process and would
 need to be created manually.
 
-When a database is created, these environment variables are used to control 
+When a database is created, these environment variables are used to control
 flow.  If these are not set, relevant portions are skipped.
 
 Admin user creation:
@@ -68,12 +65,12 @@ LSMB_ADMIN_USERNAME username for admin user
 LSMB_ADMIN_PASSWORD password for admin user
    LSMB_ADMIN_FNAME Admin's first name
    LSMB_ADMIN_LNAME Admin's last name
-  LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
+  LSMB_COUNTRY_CODE Country code for administrator and for loading chart of
                     accounts
 
 Chart of accounts loading
 -------------------------
     LSMB_LOAD_COA name of the Chart of Accounts file, not including extension
    LSMB_LOAD_GIFI name of the GIFI file, not including extension
-LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
+LSMB_COUNTRY_CODE Country code for administrator and for loading chart of
                   accounts
