@@ -204,7 +204,7 @@ sub header_lines {
             {name => 'to_date',
              text => $self->Text('To Date') },
             {name => 'ignore_yearend',
-             text => $self->Text('Ignore Yearends') },
+             text => $self->Text('Ignore Year-ends') },
             ];
 }
 
