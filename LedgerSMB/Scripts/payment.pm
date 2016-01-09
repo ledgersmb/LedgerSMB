@@ -85,7 +85,7 @@ sub payments {
         $payment->error("No Batch Date!");
     }
     my @curr = LedgerSMB::Setting->new()->get_currencies;
-    $payment->{default_currency} = @curr[0];
+    $payment->{default_currency} = $curr[0];
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},

@@ -1,12 +1,14 @@
+#!perl
+
 use Test::More;
 use LWP;
 use LedgerSMB::Sysconfig;
 use HTTP::Cookies;
 
 if (!$ENV{'LSMB_TEST_LWP'}){
-	plan 'skip_all' => 'LWP Test not enabled!';
+	plan 'skip_all' => 'LSMB_TEST_LWP not set';
 } elsif ($ENV{'LSMB_INSTALL_DB'}){
-        plan 'skip_all' => 'Tests not save for production db';
+   plan 'skip_all' => 'Tests not safe for production db';
 } else {
 	plan 'no_plan';
 }
@@ -19,7 +21,7 @@ if ($host !~ /\/$/){
 $host =~ /https?:\/\/([^\/]+)\//;
 $hostname = $1;
 my $db = $ENV{LSMB_NEW_DB} || $ENV{PGDATABASE};
-#my $test_request_data = use { 't/data/62-request-data' };
+
 do 't/data/62-request-data';
 my $browser = LWP::UserAgent->new( );
 if ($host !~ /https?:.+:/){
@@ -71,27 +73,27 @@ for my $test (@$test_request_data){
 	my $url="$host$module?$argstr&company=$db";
 	my $response = $browser->get($url);
     my $retstr = "";
-    if ( defined $test->{_test_id} ) 
-    { 
-        $retstr = "$test->{_test_id} RESPONSE 200"  
-    } 
-    else 
-    { 
-        $retstr="\$test->{_test_id} is undefined. RESPONSE 200" 
+    if ( defined $test->{_test_id} )
+    {
+        $retstr = "$test->{_test_id} RESPONSE 200"
+    }
+    else
+    {
+        $retstr="\$test->{_test_id} is undefined. RESPONSE 200"
     }
 	ok($response->is_success(), $retstr)
 		|| print STDERR "# " .$response->status_line() . ":$url\n";
 	if ( ( defined $test->{format} ) && ($test->{format} eq 'PDF' and defined $test->{form_id}) ){
-		cmp_ok($response->header('content-type'), 'eq', 
+		cmp_ok($response->header('content-type'), 'eq',
 			'application/pdf', "$test->{_test_id} PDF sent");
 	} else {
-        if ( defined $test->{_test_id} ) 
-        { 
-            $retstr = "$test->{_test_id} HTML sent"  
-        } 
-        else 
-        { 
-            $retstr="\$test->{_test_id} is undefined. HTML sent" 
+        if ( defined $test->{_test_id} )
+        {
+            $retstr = "$test->{_test_id} HTML sent"
+        }
+        else
+        {
+            $retstr="\$test->{_test_id} is undefined. HTML sent"
         }
 		like($response->header('content-type'), qr/^text\/html/, $retstr);
 	}

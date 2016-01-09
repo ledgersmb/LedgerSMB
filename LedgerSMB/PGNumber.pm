@@ -6,8 +6,8 @@ LedgerSMB::PGNumeric
 
 
 package LedgerSMB::PGNumber;
-# ensure we're using the GMP library for Math::BigFloat (for speed)
-use Math::BigFloat lib => 'GMP';
+# try using the GMP library for Math::BigFloat for speed
+use Math::BigFloat try => 'GMP';
 use base qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
