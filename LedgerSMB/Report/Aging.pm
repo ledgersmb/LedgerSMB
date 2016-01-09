@@ -254,11 +254,11 @@ Customer/Vendor entity id
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
-has c0total => (is => 'rw');
-has c30total => (is => 'rw');
-has c60total => (is => 'rw');
-has c90total => (is => 'rw');
-has total => (is => 'rw');
+has c0total => (is => 'rw', init_arg => undef);
+has c30total => (is => 'rw', init_arg => undef);
+has c60total => (is => 'rw', init_arg => undef);
+has c90total => (is => 'rw', init_arg => undef);
+has total => (is => 'rw', init_arg => undef);
 
 =back
 
