@@ -1,4 +1,4 @@
-<?lsmb INCLUDE "ui-header.html" 
+<?lsmb INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
@@ -6,7 +6,7 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <?lsmb # notice, message, and operation are all localized. ?>
-<div id="username"><?lsmb text('Logged in as') ?> <?lsmb login_name ?></div>
+<div id="username"><?lsmb text('Logged in as [_1]', login_name) ?></div>
 <div id="notice"><?lsmb notice ?></div>
 <div id="message"><?lsmb message ?></div>
 <div id="operation"><?lsmb operation ?></div>
@@ -22,7 +22,7 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
    value = next_action
     type = 'submit'
    class = 'submit'
-    text = text('Yes') 
+    text = text('Yes')
 } ?>
 </div>
 <div id="sep" class="listheading"><?lsmb text('Other Actions') ?></div>
@@ -67,13 +67,13 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
     type = 'submit'
    class = 'submit'
     text = text('Load Templates') #'
-}; 
+};
 INCLUDE input element_data = {
     name = "only_templates"
    value = "1"
     type = "hidden"
 }; ?>
-<?lsmb END ?> 
+<?lsmb END ?>
 <?lsmb IF next_action != 'create_db' ?>
 <div id="others"><?lsmb text('Backup') ?></div>
 <div class="inputrow">
@@ -89,7 +89,7 @@ INCLUDE input element_data = {
    value = 'backup_roles'
     type = 'submit'
    class = 'next'
-    text = text('Backup Roles') #' 
+    text = text('Backup Roles') #'
 } ?>
 </div>
 <?lsmb END ?>
