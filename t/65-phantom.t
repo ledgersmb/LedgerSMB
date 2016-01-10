@@ -19,5 +19,5 @@ use Test::More;
 
     $driver->get('http://localhost:5000/setup.pl');
 
-    ok($driver->find_element_by_name('s_passwd'), 'got a password');
+    ok($driver->find_element_by_name('s_password'), 'got a user');
 #}
