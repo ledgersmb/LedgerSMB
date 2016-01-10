@@ -17,7 +17,7 @@
              type = 'hidden'
              name = 'bc_count'
              value = bu_classes.size
-        }; 
+        };
 END # BLOCK -?>
 
 <?lsmb BLOCK business_classes_div ?>
@@ -96,27 +96,27 @@ END # BLOCK -?>
 
 	  <th align="right"><?lsmb text('From') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
-               class="date" 
-               name="from_date" _ SUFFIX 
-               id="from_date" _ SUFFIX 
-               size="11" 
+               class="date"
+               name="from_date" _ SUFFIX
+               id="from_date" _ SUFFIX
+               size="11"
                title=datestyle } ?></td>
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
-                 class="date" 
-                 name="to_date" _ SUFFIX 
-                 id="to_date" _ SUFFIX 
-                 size="11" 
+                 class="date"
+                 name="to_date" _ SUFFIX
+                 id="to_date" _ SUFFIX
+                 size="11"
                  title=datestyle } ?></td>
 	</tr>
-	
+
         <tr>
 	<th align="right"><?lsmb text('Period') ?></th>
 
 	<td colspan="5">
-        <?lsmb 
+        <?lsmb
         all_months.unshift({});
-        all_years.unshift({}); 
+        all_years.unshift({});
         PROCESS select element_data = {
                name = "from_month" _ SUFFIX
                id = "from_month" _ SUFFIX
@@ -135,13 +135,13 @@ END # BLOCK -?>
                id="interval" _ SUFFIX _ "current"
                class="radio"
                type="radio"
-               value="none" 
+               value="none"
                checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
-	<?lsmb PROCESS input element_data = { 
+	<?lsmb PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "month"
-               class="radio" 
-               type="radio" 
+               class="radio"
+               type="radio"
                value="month" } ?>&nbsp;<?lsmb text('Month') ?>
 	<?lsmb PROCESS input element_data = {
                name="interval" _ SUFFIX
@@ -155,7 +155,7 @@ END # BLOCK -?>
                class="radio"
                type="radio"
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
-              
+
 	</td>
       </tr>
 <?lsmb END #BLOCK ?>
@@ -164,26 +164,26 @@ END # BLOCK -?>
           <div class="input_group">
 	  <?lsmb PROCESS input element_data = {
                label=text('From')
-               class="date" 
-               name="from_date" 
-               id="from_date" 
-               size="11" 
+               class="date"
+               name="from_date"
+               id="from_date"
+               size="11"
                title=datestyle } ?></div>
           <div class="input_group">
 	  <?lsmb PROCESS input element_data = {
                label=text('To')
-                 class="date" 
-                 name="to_date" 
-                 id="to_date" 
-                 size="11" 
+                 class="date"
+                 name="to_date"
+                 id="to_date"
+                 size="11"
                  title=datestyle } ?></div>
         <div class="input_row">
           <div class="input_group">
 	<label align="right"><?lsmb text('Period') ?></label>
 
-        <?lsmb 
+        <?lsmb
         all_months.unshift({});
-        all_years.unshift({}); 
+        all_years.unshift({});
         PROCESS select element_data = {
                name = "from_month"
                id = "from_month"
@@ -202,13 +202,13 @@ END # BLOCK -?>
                id="interval-current"
                class="radio"
                type="radio"
-               value="none" 
+               value="none"
                checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
-	<?lsmb PROCESS input element_data = { 
-               name="interval" 
+	<?lsmb PROCESS input element_data = {
+               name="interval"
                id="interval-month"
-               class="radio" 
-               type="radio" 
+               class="radio"
+               type="radio"
                value="month" } ?>&nbsp;<?lsmb text('Month') ?>
 	<?lsmb PROCESS input element_data = {
                name="interval"
@@ -222,12 +222,12 @@ END # BLOCK -?>
                class="radio"
                type="radio"
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
-              
+
 	</div>
       </div>
 <?lsmb END #BLOCK ?>
 
-<?lsmb 
+<?lsmb
 
   BLOCK employee_row;
   # DEFAULTS
