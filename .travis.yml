@@ -68,7 +68,7 @@ install:
 
 before_script:
   - coverage-setup 2>/dev/null
-  - phantomjs --webdriver=4422
+  - phantomjs --webdriver=4422 2>/dev/null >/dev/null &
 
 script:
    - starman --daemonize tools/starman.psgi
