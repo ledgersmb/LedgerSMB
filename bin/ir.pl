@@ -1225,12 +1225,13 @@ sub update {
     my $current_empties = $form->{rowcount} - $non_empty_rows;
     my $new_empties =
         max(0,
-            $LedgerSMB::Company_Config::settings->{min_empty}
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
             - $current_empties);
 
 
     $form->{rowcount} += $new_empties;
     for my $i (1 .. $form->{rowcount}){
+        $form->{rowcount} = $i;
         next if $form->{"id_$i"};
 
         for (qw(partsgroup projectnumber)) {
@@ -1249,7 +1250,6 @@ sub update {
         }
         else {
             ($form->{"partnumber_$i"}) = split (/--/, $form->{"partnumber_$i"});
-            $form->{rowcount} = $i;
             IR->retrieve_item( \%myconfig, \%$form );
 
             my $rows = scalar @{ $form->{item_list} };
@@ -1350,6 +1350,7 @@ sub update {
         }
     }
      $form->generate_selects();
+     $form->{rowcount}--;
     display_form();
 }
 

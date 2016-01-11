@@ -1201,13 +1201,13 @@ sub update {
     my $current_empties = $form->{rowcount} - $non_empty_rows;
     my $new_empties =
         max(0,
-            $LedgerSMB::Company_Config::settings->{min_empty}
+            max($LedgerSMB::Company_Config::settings->{min_empty},1)
             - $current_empties);
 
 
     $form->{rowcount} += $new_empties;
     for my $i ( 1 .. $form->{rowcount}){
-        next if $form->{"id_$i"};
+        $form->{rowcount} = $i;
         next if $form->{"id_$i"};
         if (   ( $form->{"partnumber_$i"} eq "" )
             && ( $form->{"description_$i"} eq "" )
@@ -1220,7 +1220,6 @@ sub update {
         }
         else {
             ($form->{"partnumber_$i"}) = split(/--/, $form->{"partnumber_$i"});
-            $form->{rowcount} = $i;
             IS->retrieve_item( \%myconfig, \%$form );
 
             $rows = scalar @{ $form->{item_list} };
