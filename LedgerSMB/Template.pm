@@ -310,7 +310,7 @@ sub render {
                     ];
             };
         }
-        for (keys %LedgerSMB::Sysconfig::printers){
+        for (keys %LedgerSMB::Sysconfig::printer){
             push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
         }
 

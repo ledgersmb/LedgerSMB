@@ -52,12 +52,44 @@ sub no_db {
 sub __default {
 
     my ($request) = @_;
+#    my $rx_db_ignore_dbs = 'postgres|template0|template1';
+    my $rx_db_ignore_dbs = $LedgerSMB::Sysconfig::IgnoreDatabaseRegex; #'postgres|template0|template1';
+    my $rx_db_ignore_users = 'postgres';
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'credentials',
         format => 'HTML',
     );
-    $template->render($request);
+
+    my $usernames = [ ];
+    my $defaultuser = '';
+    #print STDERR ">>Trying to get a list of available DB's<<\n";
+    my @available_users = `sudo --non-interactive --user postgres psql -c 'copy (SELECT u.usename AS "User name" FROM pg_catalog.pg_user u WHERE u.usecreatedb ORDER BY 1) to stdout'`;
+    chomp(@available_users);
+    #print STDERR ">>DONE<<\n";
+    foreach (@available_users) {
+        next if m/$rx_db_ignore_users/;
+        push  @$usernames, { text => $_ } ;
+        $defaultuser = $_ if m/lsmb/;
+    }
+
+    my $dbnames = [ ];
+    my $defaultdb = '';
+    #print STDERR ">>Trying to get a list of available DB's<<\n";
+    my @available_DBs = `sudo --non-interactive --user postgres psql -c 'copy (select datname from pg_database) to stdout'`;
+    #print STDERR ">>DONE<<\n";
+    chomp(@available_DBs);
+    foreach (@available_DBs) {
+        next if m/$rx_db_ignore_dbs/;
+        push  @$dbnames, { text => $_ } ;
+    }
+    $template->render( {
+        request => $request,
+        dbnames => $dbnames,
+        usernames => $usernames,
+        defaultdb => $defaultdb,
+        defaultuser => $defaultuser,
+    } );
 }
 
 sub _get_database {

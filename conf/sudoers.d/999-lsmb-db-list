@@ -1,0 +1,10 @@
+# Allow any user to get a list of the available databases without
+# requiring user authentication.
+
+Cmnd_Alias DBLIST = /usr/bin/psql -c copy (select datname from pg_database) to stdout
+Cmnd_Alias DBLISTSUPERUSERS = /usr/bin/psql -c copy (SELECT u.usename AS "User name" FROM pg_catalog.pg_user u WHERE u.usecreatedb ORDER BY 1) to stdout
+
+%sudo ALL=(postgres) NOPASSWD: DBLIST
+%sudo ALL=(postgres) NOPASSWD: DBLISTSUPERUSERS
+
+

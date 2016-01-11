@@ -59,6 +59,7 @@ our $cookie_name = "LedgerSMB-1.3";
 our $spool = "spool";
 
 our $cache_templates = 0;
+
 # path to user configuration files
 our $userspath = "users";
 
@@ -82,6 +83,8 @@ our $smtppass   = '';
 our $smtpauthmethod = '';
 our $zip = 'zip -r %dir %dir';
 
+our $backup_email_from = '';
+
 # set language for login and admin
 our $language = "en";
 
@@ -98,9 +101,17 @@ our $no_db_str = 'database';
 our $log_level = 'ERROR';
 our $DBI_TRACE=0;
 # available printers
-our %printer;
+our %printer = ();
 
-my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
+# Start With an empty default config
+my $cfg=Config::IniFiles->new();
+if ( -r 'ledgersmb.conf' ) {
+    # Try Loading the config file
+    $cfg->SetFileName('ledgersmb.conf' );
+    $cfg->ReadConfig();
+} else {
+    warn "Could not load 'ledgersmb.conf'";
+}
 
 # Root variables
 for my $var (
@@ -195,15 +206,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
-our $db_host = $cfg->val('database', 'host');
-our $db_port = $cfg->val('database', 'port');
-
-$ENV{PGHOST} = $db_host;
-$ENV{PGPORT} = $db_port;
-our $default_db = $cfg->val('database', 'default_db');
-our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
-$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode')
-    if $cfg->val('database', 'sslmode');
 
 $ENV{HOME} = $tempdir;
 
@@ -220,5 +222,32 @@ if(!(-d "$tempdir")){
      #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
      }
 }
+
+# Database Related Defaults
+our $IgnoreDatabaseRegex = 'postgres|template0|template1';
+our $IgnoreDbSuperUserRegex = '';
+our $DefaultDbSuperUser = 'lsmb_dbadmin';
+our $db_host = 'localhost';
+our $db_port = '5432';
+our $default_db = '';
+our $db_namespace = 'public';
+for my $var (qw(IgnoreDatabaseRegex IgnoreDbSuperUserRegex DefaultDbSuperUser db_host db_port default_db db_namespace))
+{
+    no strict 'refs';
+    ${$var} = $cfg->val('database', $var) if $cfg->val('database', $var);
+}
+
+# pgssl mode:   run the server in ssl mode or not
+#               can be one of
+            #           require
+            #           allow
+            #           prefer
+            #           disable
+our $sslmode = 'prefer';
+$sslmode = $cfg->val('database', 'sslmode') if $cfg->val('database', 'sslmode');
+
+$ENV{PGHOST} = $db_host;
+$ENV{PGPORT} = $db_port;
+$ENV{PGSSLMODE} = $sslmode;
 
 1;

@@ -956,7 +956,7 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
 # We need to set the available media and format from printing
 my @media_options;
 push  @media_options, {value => 1, text => "Screen"};
-if ($#{LedgerSMB::Sysconfig::printer}) {
+if ( %{LedgerSMB::Sysconfig::printer}) {
     for (keys %{LedgerSMB::Sysconfig::printer}) {
       push  @media_options, {value => 1, text => $_};
     }
