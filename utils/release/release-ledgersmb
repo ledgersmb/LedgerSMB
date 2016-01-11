@@ -40,6 +40,7 @@ verify_dependency() {
 }
 
 verify_dependencies() {
+   verify_dependency "find"
    verify_dependency "sftp"
    verify_dependency "gpg"
    verify_dependency "git"
@@ -78,8 +79,9 @@ populate_workspace() {
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
-    ($find . -name '~*' -o -name '*.orig' | xargs rm ) && \
-    $git add locale && $git push origin "$branch") \
+    ($find . -name '~*' -o -name '*.orig' -exec rm {} + ) && \
+    $git add locale && git commit -m "* Automated release language update" \
+    && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
 }
 
@@ -230,6 +232,7 @@ verify_dependencies
 verify_release_key
 setup_workspace
 populate_workspace
+update_translations
 detect_current_version
 detect_versionpatch_files
 patch_version "$current_version" "$release_version"
