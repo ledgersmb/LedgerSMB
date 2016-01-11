@@ -1423,7 +1423,6 @@ sub update {
         }
     }
     $form->{rowcount}--;
-     $form->{rowcount}--;
     display_form();
 }
 
