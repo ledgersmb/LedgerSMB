@@ -1131,12 +1131,13 @@ sub update {
     my $current_empties = $form->{rowcount} - $non_empty_rows;
     my $new_empties =
         max(0,
-            $LedgerSMB::Company_Config::settings->{min_empty}
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
             - $current_empties);
 
 
     $form->{rowcount} += $new_empties;
     for my $i (1 .. $form->{rowcount}){
+        $form->{rowcount} = $i;
         next if $form->{"id_$i"};
 
         if (   ( $form->{"partnumber_$i"} eq "" )
@@ -1149,8 +1150,6 @@ sub update {
 
         }
         else {
-            warn $i;
-            $form->{rowcount} = $i;
 
             $retrieve_item = "";
             if (   $form->{type} eq 'purchase_order'
