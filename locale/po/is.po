@@ -1,17 +1,18 @@
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 23:45+0000\n"
+"POT-Creation-Date: 2016-01-11 08:46+0000\n"
 "PO-Revision-Date: 2015-12-29 12:32+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Icelandic (http://www.transifex.com/ledgersmb/ledgersmb/language/is/)\n"
+"Language-Team: Icelandic (http://www.transifex.com/ledgersmb/ledgersmb/"
+"language/is/)\n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
@@ -57,8 +58,8 @@ msgstr ""
 #: templates/demo_with_images/packing_list.tex:22
 #: templates/xedemo/invoice.tex:31 templates/xedemo/packing_list.tex:22
 msgid ""
-"A return authorization must be obtained from [_1] before goods are returned."
-" Returns must be shipped prepaid and properly insured. [_1] will not be "
+"A return authorization must be obtained from [_1] before goods are returned. "
+"Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
 
@@ -175,7 +176,7 @@ msgid "Acc_trans Sum"
 msgstr ""
 
 #: LedgerSMB.pm:603 LedgerSMB.pm:604 LedgerSMB/Scripts/configuration.pm:332
-#: LedgerSMB/Scripts/setup.pm:779
+#: LedgerSMB/Scripts/setup.pm:783
 msgid "Access Denied"
 msgstr ""
 
@@ -195,7 +196,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:188 UI/journal/journal_entry.html:113
 #: UI/orders/order.html:253 UI/payments/payment2.html:87
 #: UI/payments/payment2.html:215 UI/payments/payment2.html:281
-#: UI/payments/payments_detail.html:212 UI/payments/payments_filter.html:95
+#: UI/payments/payments_detail.html:213 UI/payments/payments_filter.html:95
 #: UI/payroll/deduction.html:50 UI/payroll/income.html:52
 #: UI/rc-reconciliation.html:12 UI/reconciliation/upload.html:25
 #: UI/Reports/filters/aging.html:25 UI/Reports/filters/gl.html:32
@@ -206,7 +207,7 @@ msgstr ""
 msgid "Account"
 msgstr "Reikningur"
 
-#: LedgerSMB/Report/Trial_Balance.pm:158 UI/payments/use_overpayment2.html:124
+#: LedgerSMB/Report/Trial_Balance.pm:160 UI/payments/use_overpayment2.html:124
 msgid "Account Description"
 msgstr ""
 
@@ -224,20 +225,20 @@ msgid "Account No."
 msgstr ""
 
 #: bin/ic.pl:1027 bin/ic.pl:1689 LedgerSMB/Report/Budget/Search.pm:124
-#: LedgerSMB/Report/Budget/Variance.pm:73 LedgerSMB/Report/COA.pm:87
+#: LedgerSMB/Report/Budget/Variance.pm:73 LedgerSMB/Report/COA.pm:88
 #: LedgerSMB/Report/Contact/History.pm:60
 #: LedgerSMB/Report/Contact/History.pm:141
 #: LedgerSMB/Report/Contact/Purchase.pm:143
-#: LedgerSMB/Report/Contact/Search.pm:101 LedgerSMB/Report/GL.pm:209
-#: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:91
+#: LedgerSMB/Report/Contact/Search.pm:101 LedgerSMB/Report/GL.pm:211
+#: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:92
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
-#: LedgerSMB/Report/Taxform/Summary.pm:79
-#: LedgerSMB/Report/Trial_Balance.pm:152 LedgerSMB/Scripts/payment.pm:149
-#: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
-#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
-#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
-#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
+#: LedgerSMB/Scripts/payment.pm:151 t/data/04-complex_template.html:558
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
+#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
+#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
+#: UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
@@ -251,7 +252,7 @@ msgstr ""
 msgid "Account Number Start"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Scripts/payment.pm:152
 msgid "Account Title"
 msgstr ""
 
@@ -299,13 +300,7 @@ msgstr ""
 msgid "Accounts To"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:733
-msgid ""
-"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
-"listed in dropdowns elsewhere."
-msgstr ""
-
-#: LedgerSMB/Upgrade_Tests.pm:422
+#: LedgerSMB/Upgrade_Tests.pm:427
 msgid "Accounts without heading"
 msgstr ""
 
@@ -360,7 +355,7 @@ msgstr ""
 msgid "Active Sessions"
 msgstr ""
 
-#: bin/am.pl:1546 bin/ic.pl:2121 LedgerSMB/Report/File/Incoming.pm:101
+#: bin/am.pl:1546 bin/ic.pl:2120 LedgerSMB/Report/File/Incoming.pm:101
 #: LedgerSMB/Report/File/Internal.pm:89
 msgid "Add"
 msgstr "Nýr"
@@ -641,11 +636,11 @@ msgstr ""
 msgid "Aged"
 msgstr ""
 
-#: LedgerSMB/Report/Aging.pm:176 UI/Reports/filters/aging.html:7
+#: LedgerSMB/Report/Aging.pm:177 UI/Reports/filters/aging.html:7
 msgid "Aging Report"
 msgstr ""
 
-#: UI/payments/payments_detail.html:285 UI/Reports/filters/gl.html:129
+#: UI/payments/payments_detail.html:287 UI/Reports/filters/gl.html:129
 #: UI/Reports/filters/invoice_outstanding.html:78
 #: UI/Reports/filters/invoice_search.html:171
 msgid "All"
@@ -694,8 +689,7 @@ msgstr ""
 #: templates/demo_with_images/sales_order.tex:158
 #: templates/demo_with_images/sales_quotation.tex:123
 #: templates/xedemo/invoice.tex:184 templates/xedemo/product_receipt.tex:147
-#: templates/xedemo/purchase_order.tex:153
-#: templates/xedemo/sales_order.tex:158
+#: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
 msgid "All prices in [_1]."
 msgstr ""
@@ -712,18 +706,17 @@ msgstr ""
 #: bin/ir.pl:862 bin/is.pl:745 bin/is.pl:908 bin/pe.pl:1067
 #: LedgerSMB/Report/Contact/Purchase.pm:82
 #: LedgerSMB/Report/Invoices/Outstanding.pm:216
-#: LedgerSMB/Report/Invoices/Transactions.pm:271
-#: LedgerSMB/Report/Orders.pm:234
+#: LedgerSMB/Report/Invoices/Transactions.pm:271 LedgerSMB/Report/Orders.pm:234
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:119
 #: templates/demo/ap_transaction.html:196
-#: templates/demo/ar_transaction.html:194
-#: templates/demo/ar_transaction.tex:129 templates/demo/invoice.html:250
-#: templates/demo/invoice.tex:141 templates/demo/invoice.tex:202
-#: templates/demo/printPayment.html:53 templates/demo/product_receipt.html:131
+#: templates/demo/ar_transaction.html:194 templates/demo/ar_transaction.tex:129
+#: templates/demo/invoice.html:250 templates/demo/invoice.tex:141
+#: templates/demo/invoice.tex:202 templates/demo/printPayment.html:53
+#: templates/demo/product_receipt.html:131
 #: templates/demo/product_receipt.tex:120
-#: templates/demo/purchase_order.html:133
-#: templates/demo/purchase_order.tex:120 templates/demo/sales_order.html:135
-#: templates/demo/sales_order.tex:122 templates/demo/sales_quotation.html:104
+#: templates/demo/purchase_order.html:133 templates/demo/purchase_order.tex:120
+#: templates/demo/sales_order.html:135 templates/demo/sales_order.tex:122
+#: templates/demo/sales_quotation.html:104
 #: templates/demo/sales_quotation.tex:90
 #: templates/demo_with_images/ap_transaction.html:196
 #: templates/demo_with_images/ar_transaction.html:194
@@ -755,8 +748,7 @@ msgstr ""
 #: UI/payments/payment2.html:285 UI/Reports/filters/gl.html:102
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:287
-#: UI/Reports/filters/orders.html:168
-#: UI/rp-search-generate_tax_report.html:158
+#: UI/Reports/filters/orders.html:168 UI/rp-search-generate_tax_report.html:158
 msgid "Amount"
 msgstr "Upphæð"
 
@@ -765,7 +757,7 @@ msgid "Amount Budgetted"
 msgstr ""
 
 #: bin/aa.pl:1649 LedgerSMB/Report/Invoices/Outstanding.pm:236
-#: LedgerSMB/Scripts/payment.pm:754 LedgerSMB/Scripts/payment.pm:760
+#: LedgerSMB/Scripts/payment.pm:751 LedgerSMB/Scripts/payment.pm:757
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -813,15 +805,15 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1143
+#: LedgerSMB/Scripts/payment.pm:1140
 msgid "Applied discount"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1694 LedgerSMB/Scripts/payment.pm:1772
+#: LedgerSMB/Scripts/payment.pm:1691 LedgerSMB/Scripts/payment.pm:1769
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:752
+#: LedgerSMB/Scripts/payment.pm:749
 msgid "Apply Disc"
 msgstr ""
 
@@ -885,7 +877,7 @@ msgstr "Ert þú viss um að þú viljir eyða pöntun númer"
 msgid "Are you sure you want to delete Quotation Number"
 msgstr ""
 
-#: bin/ic.pl:2241
+#: bin/ic.pl:2240
 msgid "Assemblies restocked!"
 msgstr "Samsetningar endurunnar"
 
@@ -1018,10 +1010,10 @@ msgstr "Hjálagt"
 #: templates/demo/bin_list.html:51 templates/demo/bin_list.html:84
 #: templates/demo/packing_list.html:52 templates/demo/pick_list.html:51
 #: templates/demo/product_receipt.html:50
-#: templates/demo/product_receipt.html:78
-#: templates/demo/product_receipt.tex:47 templates/demo/product_receipt.tex:82
-#: templates/demo/purchase_order.html:50 templates/demo/purchase_order.html:78
-#: templates/demo/purchase_order.tex:47 templates/demo/purchase_order.tex:82
+#: templates/demo/product_receipt.html:78 templates/demo/product_receipt.tex:47
+#: templates/demo/product_receipt.tex:82 templates/demo/purchase_order.html:50
+#: templates/demo/purchase_order.html:78 templates/demo/purchase_order.tex:47
+#: templates/demo/purchase_order.tex:82
 #: templates/demo/request_quotation.html:51
 #: templates/demo/request_quotation.html:79 templates/demo/sales_order.html:49
 #: templates/demo/sales_quotation.html:44
@@ -1055,8 +1047,7 @@ msgstr "Hjálagt"
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
-#: templates/xedemo/sales_quotation.html:44
-#: templates/xedemo/work_order.html:49
+#: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
 msgid "Attn: [_1]"
 msgstr ""
 
@@ -1142,8 +1133,8 @@ msgstr "Afstemming"
 
 #: templates/demo/invoice.html:197 templates/demo/invoice.tex:170
 #: templates/demo_with_images/invoice.html:197
-#: templates/demo_with_images/invoice.tex:169
-#: templates/xedemo/invoice.html:197 templates/xedemo/invoice.tex:168
+#: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
+#: templates/xedemo/invoice.tex:168
 msgid "Balance Due"
 msgstr ""
 
@@ -1152,7 +1143,12 @@ msgstr ""
 msgid "Balance Sheet"
 msgstr "Staða"
 
-#: LedgerSMB/Report/co/Balance_y_Mayor.pm:120 UI/Reports/co/filter_bm.html:14
+#: LedgerSMB/Report/Balance_Sheet.pm:285
+#, fuzzy
+msgid "Balance sheet"
+msgstr "Staða"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:120
 msgid "Balance y Mayor"
 msgstr ""
 
@@ -1275,7 +1271,7 @@ msgstr ""
 msgid "Billion"
 msgstr ""
 
-#: bin/ic.pl:491 bin/ic.pl:2114 bin/io.pl:243 bin/oe.pl:1849
+#: bin/ic.pl:491 bin/ic.pl:2113 bin/io.pl:243 bin/oe.pl:1849
 #: LedgerSMB/Report/Inventory/History.pm:134
 #: LedgerSMB/Report/Inventory/Search.pm:214 templates/demo/bin_list.html:154
 #: templates/demo/bin_list.tex:109 templates/demo/pick_list.html:116
@@ -1293,9 +1289,8 @@ msgid "Bin"
 msgstr "Vörulager"
 
 #: bin/am.pl:1523 bin/io.pl:1422 bin/io.pl:1436 bin/io.pl:1644 bin/oe.pl:260
-#: bin/oe.pl:272 templates/demo/bin_list.html:4
-#: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
-#: templates/demo_with_images/bin_list.html:4
+#: bin/oe.pl:272 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
+#: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
@@ -1381,7 +1376,7 @@ msgstr ""
 msgid "Business saved!"
 msgstr ""
 
-#: UI/payments/payments_detail.html:168
+#: UI/payments/payments_detail.html:169
 msgid "Business:"
 msgstr ""
 
@@ -1408,7 +1403,7 @@ msgstr ""
 msgid "CSV File:"
 msgstr ""
 
-#: LedgerSMB/Report/co/Caja_Diaria.pm:114 UI/Reports/co/filter_cd.html:14
+#: LedgerSMB/Report/co/Caja_Diaria.pm:114
 msgid "Caja Diaria"
 msgstr ""
 
@@ -1460,7 +1455,7 @@ msgstr ""
 msgid "Cannot create Service; Income account does not exist!"
 msgstr ""
 
-#: bin/ic.pl:2007
+#: bin/ic.pl:2006
 msgid "Cannot delete item!"
 msgstr "Get ekki eytt hlut!"
 
@@ -1513,14 +1508,14 @@ msgstr ""
 msgid "Cannot specify both debits and credits for budget line [_1]"
 msgstr ""
 
-#: bin/ic.pl:2244
+#: bin/ic.pl:2243
 msgid "Cannot stock assemblies!"
 msgstr "Get ekki fært samsetningar"
 
 #: templates/demo/timecard.html:44 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:44
-#: templates/demo_with_images/timecard.tex:27
-#: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:27
+#: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
+#: templates/xedemo/timecard.tex:27
 msgid "Card ID"
 msgstr ""
 
@@ -1560,7 +1555,7 @@ msgstr ""
 msgid "Chart ID"
 msgstr ""
 
-#: LedgerSMB/Report/COA.pm:141 sql/Pg-database.sql:2786
+#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2786
 msgid "Chart of Accounts"
 msgstr "Listi yfir lykkla/reikninga"
 
@@ -1568,7 +1563,7 @@ msgstr "Listi yfir lykkla/reikninga"
 msgid "Check"
 msgstr "Ávísun"
 
-#: bin/ic.pl:2045
+#: bin/ic.pl:2044
 msgid "Check Inventory"
 msgstr ""
 
@@ -1632,16 +1627,14 @@ msgid "Close Books up to"
 msgstr "Loka bókhaldi til dags"
 
 #: bin/aa.pl:1529 bin/oe.pl:313 LedgerSMB/Report/Orders.pm:243
-#: UI/Reports/filters/invoice_search.html:212
-#: UI/Reports/filters/orders.html:97
+#: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
 #: UI/Reports/filters/purchase_history.html:212
 #: UI/Reports/filters/timecards.html:36
 msgid "Closed"
 msgstr "Lokað"
 
-#: LedgerSMB/Report/Listings/Language.pm:46
-#: LedgerSMB/Report/Listings/SIC.pm:44 UI/am-language-form.html:12
-#: UI/am-sic-form.html:12
+#: LedgerSMB/Report/Listings/Language.pm:46 LedgerSMB/Report/Listings/SIC.pm:44
+#: UI/am-language-form.html:12 UI/am-sic-form.html:12
 msgid "Code"
 msgstr ""
 
@@ -1748,8 +1741,7 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:106
 #: templates/demo_with_images/sales_quotation.html:74
 #: templates/xedemo/bin_list.html:110 templates/xedemo/packing_list.html:81
-#: templates/xedemo/pick_list.html:80
-#: templates/xedemo/product_receipt.html:105
+#: templates/xedemo/pick_list.html:80 templates/xedemo/product_receipt.html:105
 #: templates/xedemo/purchase_order.html:105
 #: templates/xedemo/request_quotation.html:106
 #: templates/xedemo/sales_quotation.html:74
@@ -1777,7 +1769,7 @@ msgstr ""
 msgid "Contact Search"
 msgstr ""
 
-#: UI/payments/payments_detail.html:418
+#: UI/payments/payments_detail.html:422
 msgid "Contact Total (if paying \"some\")"
 msgstr ""
 
@@ -1790,15 +1782,15 @@ msgid "Content"
 msgstr ""
 
 #: bin/aa.pl:1752 bin/arap.pl:269 bin/arapprn.pl:423 bin/ic.pl:959
-#: bin/ic.pl:1781 bin/ic.pl:2064 bin/ic.pl:2218 bin/io.pl:682 bin/io.pl:882
+#: bin/ic.pl:1781 bin/ic.pl:2063 bin/ic.pl:2217 bin/io.pl:682 bin/io.pl:882
 #: bin/io.pl:1323 bin/oe.pl:1537 bin/oe.pl:2065 bin/oe.pl:2576 bin/pe.pl:339
-#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:594
-#: LedgerSMB/Scripts/payment.pm:659 LedgerSMB/Scripts/payment.pm:1307
+#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:591
+#: LedgerSMB/Scripts/payment.pm:656 LedgerSMB/Scripts/payment.pm:1304
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
 #: UI/asset/begin_depreciation_all.html:26 UI/asset/begin_report.html:61
 #: UI/Contact/divs/credit.html:401 UI/create_batch.html:52
 #: UI/inventory/adjustment_setup.html:37 UI/oe-save_warn.html:19
-#: UI/payments/payments_filter.html:184 UI/Reports/co/filter_bm.html:140
+#: UI/payments/payments_filter.html:186 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
 #: UI/Reports/filters/gl.html:302 UI/Reports/filters/income_statement.html:142
 #: UI/Reports/filters/inventory_activity.html:32
@@ -1821,8 +1813,8 @@ msgid "Contra"
 msgstr ""
 
 #: bin/arap.pl:171 LedgerSMB/Report/Contact/Search.pm:65
-#: LedgerSMB/Report/Listings/Business_Unit.pm:56
-#: LedgerSMB/Report/PNL/ECA.pm:93 LedgerSMB/Report/Taxform/Summary.pm:83
+#: LedgerSMB/Report/Listings/Business_Unit.pm:56 LedgerSMB/Report/PNL/ECA.pm:94
+#: LedgerSMB/Report/Taxform/Summary.pm:83
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:104
 #: UI/business_units/edit.html:28 UI/business_units/filter.html:19
 #: UI/Contact/divs/company.html:52 UI/Contact/divs/person.html:47
@@ -1993,8 +1985,8 @@ msgstr ""
 msgid "Credit Note"
 msgstr ""
 
-#: LedgerSMB/Report/COA.pm:110 LedgerSMB/Report/GL.pm:116
-#: LedgerSMB/Report/Trial_Balance.pm:182 LedgerSMB/Scripts/payment.pm:155
+#: LedgerSMB/Report/COA.pm:111 LedgerSMB/Report/GL.pm:116
+#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:157
 #: UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr ""
@@ -2037,13 +2029,12 @@ msgstr "Gjaldmiðill"
 
 #: bin/aa.pl:1576 bin/pe.pl:839 LedgerSMB/DBObject/Date.pm:79
 #: LedgerSMB/Report/Aging.pm:126 templates/demo/statement.html:64
-#: templates/demo/statement.tex:38
-#: templates/demo_with_images/statement.html:64
+#: templates/demo/statement.tex:38 templates/demo_with_images/statement.html:64
 #: templates/demo_with_images/statement.tex:38
 #: templates/xedemo/statement.html:64 templates/xedemo/statement.tex:38
-#: UI/bp-search.html:40 UI/lib/report_base.html:139
-#: UI/lib/report_base.html:206 UI/rc-reconciliation.html:40
-#: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
+#: UI/bp-search.html:40 UI/lib/report_base.html:139 UI/lib/report_base.html:206
+#: UI/rc-reconciliation.html:40 UI/Reports/co/filter_bm.html:53
+#: UI/Reports/filters/aging.html:99
 #: UI/rp-search-generate_income_statement.html:33
 #: UI/rp-search-generate_tax_report.html:29
 msgid "Current"
@@ -2058,12 +2049,11 @@ msgstr ""
 #: bin/aa.pl:513 bin/aa.pl:1588 bin/ic.pl:1127 bin/is.pl:429 bin/pe.pl:1039
 #: bin/pe.pl:1194 LedgerSMB/Report/Aging.pm:83
 #: LedgerSMB/Report/Invoices/Outstanding.pm:177
-#: LedgerSMB/Report/Invoices/Transactions.pm:250
-#: LedgerSMB/Report/Orders.pm:188 LedgerSMB/Report/Orders.pm:194
-#: UI/business_units/edit.html:83 UI/Contact/divs/credit.html:14
-#: UI/Contact/divs/credit.html:15 UI/orders/order.html:21
-#: UI/payments/use_overpayment1.html:29 UI/payments/use_overpayment2.html:25
-#: UI/Reports/filters/aging.html:15
+#: LedgerSMB/Report/Invoices/Transactions.pm:250 LedgerSMB/Report/Orders.pm:188
+#: LedgerSMB/Report/Orders.pm:194 UI/business_units/edit.html:83
+#: UI/Contact/divs/credit.html:14 UI/Contact/divs/credit.html:15
+#: UI/orders/order.html:21 UI/payments/use_overpayment1.html:29
+#: UI/payments/use_overpayment2.html:25 UI/Reports/filters/aging.html:15
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
 #: UI/rp-search-generate_tax_report.html:139 sql/Pg-database.sql:543
@@ -2121,7 +2111,7 @@ msgstr ""
 msgid "DOB:"
 msgstr ""
 
-#: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
+#: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:331
 msgid "Data not saved.  Please try again."
 msgstr ""
 
@@ -2129,7 +2119,7 @@ msgstr ""
 msgid "Data not saved.  Please update again."
 msgstr ""
 
-#: UI/setup/credentials.html:43 UI/setup/list_databases.html:11
+#: UI/setup/credentials.html:46 UI/setup/list_databases.html:11
 msgid "Database"
 msgstr "Gagnagrunnur"
 
@@ -2138,10 +2128,10 @@ msgid "Database Host"
 msgstr "Gagnagrunns-netþjónn"
 
 #: UI/setup/begin_backup.html:6 UI/setup/complete.html:10
-#: UI/setup/complete_migration_revert.html:10
-#: UI/setup/confirm_operation.html:6 UI/setup/credentials.html:7
-#: UI/setup/new_user.html:6 UI/setup/select_coa.html:6
-#: UI/setup/template_info.html:4 UI/setup/upgrade_info.html:6
+#: UI/setup/complete_migration_revert.html:10 UI/setup/confirm_operation.html:6
+#: UI/setup/credentials.html:7 UI/setup/new_user.html:6
+#: UI/setup/select_coa.html:6 UI/setup/template_info.html:4
+#: UI/setup/upgrade_info.html:6
 msgid "Database Management Console"
 msgstr ""
 
@@ -2156,8 +2146,7 @@ msgstr ""
 #: LedgerSMB/DBH.pm:111
 msgid ""
 "Database is not the expected version.  Was [_1], expected [_2].  Please re-"
-"run setup.pl against this database to correct.<a "
-"href='setup.pl'>setup.pl</a>"
+"run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>"
 msgstr ""
 
 #: UI/am-company-logo.html:16
@@ -2170,21 +2159,20 @@ msgstr "Gagnasafn"
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:95
 #: LedgerSMB/Report/Invoices/Outstanding.pm:187
 #: LedgerSMB/Report/Invoices/Transactions.pm:258
-#: LedgerSMB/Report/Listings/Overpayments.pm:136
-#: LedgerSMB/Report/Orders.pm:213
+#: LedgerSMB/Report/Listings/Overpayments.pm:136 LedgerSMB/Report/Orders.pm:213
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:532
-#: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:748
-#: templates/demo/ap_transaction.html:73
-#: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
-#: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
-#: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
-#: templates/demo/ar_transaction.tex:128 templates/demo/bin_list.html:109
-#: templates/demo/invoice.html:107 templates/demo/invoice.html:247
-#: templates/demo/invoice.tex:201 templates/demo/packing_list.html:80
-#: templates/demo/packing_list.tex:88 templates/demo/pick_list.html:79
-#: templates/demo/pick_list.tex:81 templates/demo/printPayment.html:78
+#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Scripts/payment.pm:745
+#: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
+#: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
+#: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
+#: templates/demo/ar_transaction.tex:77 templates/demo/ar_transaction.tex:128
+#: templates/demo/bin_list.html:109 templates/demo/invoice.html:107
+#: templates/demo/invoice.html:247 templates/demo/invoice.tex:201
+#: templates/demo/packing_list.html:80 templates/demo/packing_list.tex:88
+#: templates/demo/pick_list.html:79 templates/demo/pick_list.tex:81
+#: templates/demo/printPayment.html:78
 #: templates/demo/request_quotation.html:104
 #: templates/demo/sales_quotation.html:72 templates/demo/statement.html:62
 #: templates/demo/statement.tex:37 templates/demo/timecard.html:48
@@ -2231,10 +2219,9 @@ msgstr "Gagnasafn"
 #: templates/xedemo/timecard.tex:28 UI/asset/begin_depreciation_all.html:13
 #: UI/asset/begin_report.html:23 UI/inventory/adjustment_setup.html:19
 #: UI/journal/journal_entry.html:40 UI/orders/order.html:246
-#: UI/payments/payment2.html:100 UI/payments/payments_detail.html:317
+#: UI/payments/payment2.html:100 UI/payments/payments_detail.html:320
 #: UI/payments/use_overpayment2.html:87 UI/Reports/filters/gl.html:183
-#: UI/Reports/filters/orders.html:125
-#: UI/rp-search-generate_tax_report.html:127
+#: UI/Reports/filters/orders.html:125 UI/rp-search-generate_tax_report.html:127
 msgid "Date"
 msgstr "Dagsetning"
 
@@ -2328,8 +2315,8 @@ msgstr ""
 msgid "Debit Note"
 msgstr ""
 
-#: LedgerSMB/Report/COA.pm:104 LedgerSMB/Report/GL.pm:110
-#: LedgerSMB/Report/Trial_Balance.pm:176 LedgerSMB/Scripts/payment.pm:154
+#: LedgerSMB/Report/COA.pm:105 LedgerSMB/Report/GL.pm:110
+#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:156
 #: UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr ""
@@ -2419,7 +2406,7 @@ msgstr ""
 #: bin/aa.pl:914 bin/aa.pl:943 bin/am.pl:69 bin/am.pl:81 bin/am.pl:175
 #: bin/am.pl:184 bin/ic.pl:833 bin/ic.pl:855 bin/ir.pl:968 bin/is.pl:1019
 #: bin/oe.pl:673 bin/oe.pl:862 bin/pe.pl:173 bin/pe.pl:250 bin/pe.pl:622
-#: LedgerSMB/Report/COA.pm:127 LedgerSMB/Report/COA.pm:191
+#: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
@@ -2447,15 +2434,13 @@ msgid "Delete Vouchers"
 msgstr ""
 
 #: bin/am.pl:532
-msgid ""
-"Deleting a language will also delete the templates for the language [_1]"
+msgid "Deleting a language will also delete the templates for the language [_1]"
 msgstr ""
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
-#: templates/xedemo/invoice.tex:135
-#: templates/xedemo/request_quotation.html:144
+#: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
 msgid "Delivery"
 msgstr ""
 
@@ -2539,16 +2524,15 @@ msgid "Depreciation Successful"
 msgstr ""
 
 #: bin/aa.pl:612 bin/aa.pl:663 bin/aa.pl:1514 bin/am.pl:853 bin/ic.pl:744
-#: bin/ic.pl:1268 bin/ic.pl:2038 bin/ic.pl:2110 bin/io.pl:231 bin/io.pl:566
+#: bin/ic.pl:1268 bin/ic.pl:2037 bin/ic.pl:2109 bin/io.pl:231 bin/io.pl:566
 #: bin/io.pl:2178 bin/ir.pl:495 bin/is.pl:489 bin/oe.pl:1842 bin/oe.pl:2046
 #: bin/oe.pl:2124 bin/oe.pl:2158 bin/oe.pl:2407 bin/pe.pl:320 bin/pe.pl:366
 #: bin/pe.pl:395 bin/pe.pl:1062 LedgerSMB/Report/Aging.pm:109
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:76
 #: LedgerSMB/Report/Budget/Search.pm:85 LedgerSMB/Report/Budget/Variance.pm:69
-#: LedgerSMB/Report/Budget/Variance.pm:116 LedgerSMB/Report/COA.pm:93
+#: LedgerSMB/Report/Budget/Variance.pm:116 LedgerSMB/Report/COA.pm:94
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:72
-#: LedgerSMB/Report/co/Caja_Diaria.pm:73
-#: LedgerSMB/Report/Contact/History.pm:83
+#: LedgerSMB/Report/co/Caja_Diaria.pm:73 LedgerSMB/Report/Contact/History.pm:83
 #: LedgerSMB/Report/Contact/Search.pm:74 LedgerSMB/Report/File/Incoming.pm:50
 #: LedgerSMB/Report/File/Internal.pm:48 LedgerSMB/Report/GL.pm:100
 #: LedgerSMB/Report/Inventory/Activity.pm:80
@@ -2556,16 +2540,13 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: LedgerSMB/Report/Inventory/History.pm:122
 #: LedgerSMB/Report/Inventory/Search.pm:198
-#: LedgerSMB/Report/Listings/Asset.pm:86
-#: LedgerSMB/Report/Listings/Asset.pm:120
+#: LedgerSMB/Report/Listings/Asset.pm:86 LedgerSMB/Report/Listings/Asset.pm:120
 #: LedgerSMB/Report/Listings/Business_Type.pm:47
 #: LedgerSMB/Report/Listings/Business_Unit.pm:60
 #: LedgerSMB/Report/Listings/GIFI.pm:49
-#: LedgerSMB/Report/Listings/Language.pm:50
-#: LedgerSMB/Report/Listings/SIC.pm:48
-#: LedgerSMB/Report/Listings/Warehouse.pm:39
-#: LedgerSMB/Report/PNL/Product.pm:80 LedgerSMB/Report/Timecards.pm:104
-#: LedgerSMB/Report/Timecards.pm:117
+#: LedgerSMB/Report/Listings/Language.pm:50 LedgerSMB/Report/Listings/SIC.pm:48
+#: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:83
+#: LedgerSMB/Report/Timecards.pm:105 LedgerSMB/Report/Timecards.pm:118
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:114
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:110
 #: LedgerSMB/Report/Unapproved/Drafts.pm:100 LedgerSMB/Scripts/asset.pm:397
@@ -2604,9 +2585,9 @@ msgstr ""
 #: templates/demo/work_order.html:130 templates/demo/work_order.tex:125
 #: templates/xedemo/bin_list.html:148 templates/xedemo/bin_list.tex:106
 #: templates/xedemo/invoice.html:136 templates/xedemo/invoice.tex:134
-#: templates/xedemo/packing_list.html:120
-#: templates/xedemo/packing_list.tex:114 templates/xedemo/pick_list.html:112
-#: templates/xedemo/pick_list.tex:100 templates/xedemo/printPayment.html:47
+#: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
+#: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
+#: templates/xedemo/printPayment.html:47
 #: templates/xedemo/product_receipt.html:128
 #: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
@@ -2629,10 +2610,8 @@ msgstr ""
 #: UI/reconciliation/report.html:82 UI/reconciliation/report.html:145
 #: UI/reconciliation/report.html:204 UI/Reports/filters/budget_search.html:26
 #: UI/Reports/filters/cogs_lines.html:19 UI/Reports/filters/gl.html:83
-#: UI/Reports/filters/gl.html:197
-#: UI/Reports/filters/inventory_activity.html:19
-#: UI/Reports/filters/invoice_search.html:138
-#: UI/Reports/filters/orders.html:68
+#: UI/Reports/filters/gl.html:197 UI/Reports/filters/inventory_activity.html:19
+#: UI/Reports/filters/invoice_search.html:138 UI/Reports/filters/orders.html:68
 #: UI/Reports/filters/purchase_history.html:256
 #: UI/Reports/filters/search_goods.html:19
 #: UI/Reports/filters/search_goods.html:205
@@ -2662,7 +2641,7 @@ msgstr ""
 msgid "Detail"
 msgstr ""
 
-#: UI/payments/payments_detail.html:217
+#: UI/payments/payments_detail.html:218
 #: UI/Reports/filters/invoice_outstanding.html:122
 msgid "Details"
 msgstr ""
@@ -2693,10 +2672,10 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:751 UI/accounts/edit.html:320
+#: LedgerSMB/Scripts/payment.pm:748 UI/accounts/edit.html:320
 #: UI/accounts/edit.html:360 UI/am-business-form.html:16
 #: UI/Contact/divs/credit.html:167 UI/Contact/divs/credit.html:168
-#: UI/payments/payments_detail.html:324
+#: UI/payments/payments_detail.html:327
 #: UI/Reports/filters/purchase_history.html:306
 msgid "Discount"
 msgstr "Afsláttur"
@@ -2750,7 +2729,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:406
+#: LedgerSMB/Scripts/setup.pm:410
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -2758,11 +2737,11 @@ msgstr ""
 msgid "Done"
 msgstr "Búið"
 
-#: LedgerSMB/Upgrade_Tests.pm:457
+#: LedgerSMB/Upgrade_Tests.pm:463
 msgid "Double customernumbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:492
+#: LedgerSMB/Upgrade_Tests.pm:498
 msgid "Double vendornumbers"
 msgstr ""
 
@@ -2792,7 +2771,7 @@ msgstr ""
 msgid "Drawing"
 msgstr "Dregið"
 
-#: LedgerSMB/Report/COA.pm:116
+#: LedgerSMB/Report/COA.pm:117
 msgid "Dropdowns"
 msgstr ""
 
@@ -2836,7 +2815,7 @@ msgstr "Vantar dags. lokið!"
 msgid "Duplicate User Found: Importing User"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:226
+#: LedgerSMB/Upgrade_Tests.pm:227
 msgid "Duplicate employee numbers"
 msgstr ""
 
@@ -2878,7 +2857,7 @@ msgstr ""
 msgid "EDI Interchange ID"
 msgstr ""
 
-#: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
+#: bin/aa.pl:150 LedgerSMB/Report/COA.pm:122 LedgerSMB/Report/COA.pm:192
 #: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
 #: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
@@ -3072,21 +3051,20 @@ msgstr ""
 msgid "Employee Search"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:208
+#: LedgerSMB/Upgrade_Tests.pm:209
 msgid ""
-"Employee name doesn't meet minimal requirements (e.g. non-empty, "
-"alphanumeric)"
+"Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
 #: UI/lib/report_base.html:244 sql/Pg-database.sql:2803
 msgid "Employees"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:438
+#: LedgerSMB/Upgrade_Tests.pm:443
 msgid "Empty customernumbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:473
+#: LedgerSMB/Upgrade_Tests.pm:479
 msgid "Empty vendornumbers"
 msgstr ""
 
@@ -3094,7 +3072,7 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Variance.pm:120
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:133
 #: LedgerSMB/Report/co/Caja_Diaria.pm:127
-#: LedgerSMB/Report/Contact/History.pm:146 LedgerSMB/Report/GL.pm:207
+#: LedgerSMB/Report/Contact/History.pm:146 LedgerSMB/Report/GL.pm:209
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:79
 #: LedgerSMB/Report/Invoices/COGS.pm:157
 #: LedgerSMB/Report/Listings/Business_Unit.pm:68
@@ -3113,7 +3091,7 @@ msgstr ""
 msgid "Ending"
 msgstr ""
 
-#: LedgerSMB/Report/Trial_Balance.pm:188
+#: LedgerSMB/Report/Trial_Balance.pm:190
 msgid "Ending Balance"
 msgstr ""
 
@@ -3141,7 +3119,7 @@ msgstr ""
 msgid "Enter User"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:194
+#: LedgerSMB/Upgrade_Tests.pm:195
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
@@ -3228,7 +3206,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:452
+#: LedgerSMB/Scripts/setup.pm:456
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3254,10 +3232,10 @@ msgstr "Vx"
 
 #: bin/aa.pl:435 bin/ir.pl:354 bin/is.pl:312 bin/oe.pl:334 bin/oe.pl:342
 #: bin/oe.pl:1523 LedgerSMB/Report/Contact/History.pm:116
-#: LedgerSMB/Scripts/payment.pm:759 UI/orders/order.html:54
+#: LedgerSMB/Scripts/payment.pm:756 UI/orders/order.html:54
 #: UI/payments/payment2.html:134 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
-#: UI/Reports/filters/payments.html:110
+#: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
 msgid "Exchange Rate"
 msgstr "Vextir"
 
@@ -3265,7 +3243,7 @@ msgstr "Vextir"
 msgid "Exchange rate for payment missing!"
 msgstr "Vextir fyrir greiðslu vantar!"
 
-#: LedgerSMB/Scripts/payment.pm:1065
+#: LedgerSMB/Scripts/payment.pm:1062
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -3276,10 +3254,6 @@ msgstr ""
 #: bin/aa.pl:1325 bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1194 bin/oe.pl:1550
 msgid "Exchange rate missing!"
 msgstr "Vantar vexti!"
-
-#: UI/Reports/filters/overpayments.html:51
-msgid "Exhchange Rate"
-msgstr ""
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:96
 msgid "Expected"
@@ -3343,10 +3317,10 @@ msgstr ""
 #: templates/demo/invoice.html:53 templates/demo/invoice.html:86
 #: templates/demo/letterhead.html:22 templates/demo/packing_list.html:60
 #: templates/demo/pick_list.html:59 templates/demo/product_receipt.html:58
-#: templates/demo/product_receipt.html:86
-#: templates/demo/product_receipt.tex:56 templates/demo/product_receipt.tex:91
-#: templates/demo/purchase_order.html:58 templates/demo/purchase_order.html:86
-#: templates/demo/purchase_order.tex:56 templates/demo/purchase_order.tex:91
+#: templates/demo/product_receipt.html:86 templates/demo/product_receipt.tex:56
+#: templates/demo/product_receipt.tex:91 templates/demo/purchase_order.html:58
+#: templates/demo/purchase_order.html:86 templates/demo/purchase_order.tex:56
+#: templates/demo/purchase_order.tex:91
 #: templates/demo/request_quotation.html:59
 #: templates/demo/request_quotation.html:87
 #: templates/demo/request_quotation.tex:56
@@ -3384,8 +3358,10 @@ msgstr ""
 #: templates/demo_with_images/work_order.html:55
 #: templates/demo_with_images/work_order.html:83
 #: templates/demo_with_images/work_order.tex:65
+#: templates/demo_with_images/work_order.tex:100
 #: templates/demo/work_order.html:55 templates/demo/work_order.html:83
-#: templates/demo/work_order.tex:65 templates/xedemo/ap_transaction.html:54
+#: templates/demo/work_order.tex:65 templates/demo/work_order.tex:100
+#: templates/xedemo/ap_transaction.html:54
 #: templates/xedemo/ar_transaction.tex:65 templates/xedemo/bin_list.html:59
 #: templates/xedemo/bin_list.html:92 templates/xedemo/invoice.html:53
 #: templates/xedemo/invoice.html:86 templates/xedemo/letterhead.html:22
@@ -3407,12 +3383,8 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:52
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
+#: templates/xedemo/work_order.tex:100
 msgid "Fax: [_1]"
-msgstr ""
-
-#: templates/demo_with_images/work_order.tex:100
-#: templates/demo/work_order.tex:100 templates/xedemo/work_order.tex:100
-msgid "Fax:[_1]"
 msgstr ""
 
 #: bin/aa.pl:87 bin/gl.pl:80 bin/io.pl:80 LedgerSMB/App_State.pm:238
@@ -3551,17 +3523,17 @@ msgstr ""
 msgid "Fourteen"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:141
+#: LedgerSMB/Report/Timecards.pm:142
 msgid "Fri"
 msgstr ""
 
 #: bin/aa.pl:1691 bin/ic.pl:1133 bin/oe.pl:2132 bin/pe.pl:855
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
-#: templates/demo_with_images/bin_list.tex:35
-#: templates/xedemo/bin_list.html:28 templates/xedemo/bin_list.tex:35
-#: UI/asset/begin_approval.html:24 UI/asset/search_reports.html:26
-#: UI/bp-search.html:27 UI/ca-list-selector.html:31 UI/lib/report_base.html:97
+#: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
+#: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:24
+#: UI/asset/search_reports.html:26 UI/bp-search.html:27
+#: UI/ca-list-selector.html:31 UI/lib/report_base.html:97
 #: UI/lib/report_base.html:166 UI/rc-reconciliation.html:16
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:114
@@ -3582,7 +3554,7 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Payments.pm:193
 #: LedgerSMB/Report/Reconciliation/Summary.pm:176
 #: LedgerSMB/Report/Taxform/Details.pm:108
-#: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:157
+#: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:159
 msgid "From Date"
 msgstr ""
 
@@ -3595,7 +3567,7 @@ msgstr ""
 msgid "From Warehouse"
 msgstr ""
 
-#: LedgerSMB/Report/Trial_Balance.pm:201
+#: LedgerSMB/Report/Trial_Balance.pm:204
 msgid "From date"
 msgstr ""
 
@@ -3605,14 +3577,14 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:876 LedgerSMB/Scripts/setup.pm:934
-#: LedgerSMB/Scripts/setup.pm:1119
+#: LedgerSMB/Scripts/setup.pm:880 LedgerSMB/Scripts/setup.pm:938
+#: LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr ""
 
-#: LedgerSMB/Report/COA.pm:99 LedgerSMB/Report/GL.pm:157
+#: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
-#: LedgerSMB/Report/Trial_Balance.pm:164 UI/accounts/edit.html:183
+#: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:183
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:72
 #: UI/Reports/filters/balance_sheet.html:19 UI/Reports/filters/gl.html:254
 #: UI/Reports/filters/income_statement.html:62
@@ -3621,8 +3593,8 @@ msgstr ""
 msgid "GIFI"
 msgstr "GIFI"
 
-#: LedgerSMB/Upgrade_Tests.pm:308 LedgerSMB/Upgrade_Tests.pm:323
-#: LedgerSMB/Upgrade_Tests.pm:339
+#: LedgerSMB/Upgrade_Tests.pm:311 LedgerSMB/Upgrade_Tests.pm:327
+#: LedgerSMB/Upgrade_Tests.pm:343
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -3667,7 +3639,7 @@ msgstr ""
 msgid "General Journal"
 msgstr ""
 
-#: LedgerSMB/Report/GL.pm:194
+#: LedgerSMB/Report/GL.pm:195
 msgid "General Ledger Report"
 msgstr ""
 
@@ -3725,7 +3697,7 @@ msgstr ""
 msgid "Goods and Services History"
 msgstr ""
 
-#: UI/payments/payments_detail.html:439
+#: UI/payments/payments_detail.html:443
 msgid "Grand Total"
 msgstr ""
 
@@ -3796,8 +3768,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
-#: templates/demo_with_images/timecard.tex:31
-#: templates/xedemo/timecard.html:60 templates/xedemo/timecard.tex:31
+#: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:60
+#: templates/xedemo/timecard.tex:31
 msgid "Hours"
 msgstr ""
 
@@ -3812,19 +3784,18 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:191
 #: LedgerSMB/Report/Invoices/Transactions.pm:255
 #: LedgerSMB/Report/Listings/Asset_Class.pm:64 LedgerSMB/Report/Orders.pm:209
-#: LedgerSMB/Report/Timecards.pm:108
+#: LedgerSMB/Report/Timecards.pm:109
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:93
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:94
 #: LedgerSMB/Report/Unapproved/Drafts.pm:84 LedgerSMB/Scripts/asset.pm:531
 #: templates/demo/timecard.html:35 templates/demo/timecard.tex:23
 #: templates/demo_with_images/timecard.html:35
-#: templates/demo_with_images/timecard.tex:23
-#: templates/xedemo/timecard.html:35 templates/xedemo/timecard.tex:23
-#: UI/business_units/list_classes.html:12 UI/Reports/filters/gl.html:176
+#: templates/demo_with_images/timecard.tex:23 templates/xedemo/timecard.html:35
+#: templates/xedemo/timecard.tex:23 UI/business_units/list_classes.html:12
+#: UI/Reports/filters/gl.html:176
 #: UI/Reports/filters/invoice_outstanding.html:136
 #: UI/Reports/filters/invoice_search.html:226
-#: UI/Reports/filters/orders.html:112
-#: UI/rp-search-generate_tax_report.html:111
+#: UI/Reports/filters/orders.html:112 UI/rp-search-generate_tax_report.html:111
 msgid "ID"
 msgstr "ID"
 
@@ -3842,13 +3813,10 @@ msgstr ""
 msgid "If you would like to access this report again, please try this URL"
 msgstr ""
 
-#: UI/lib/report_base.html:80 UI/Reports/filters/income_statement.html:36
+#: LedgerSMB/Report/Trial_Balance.pm:208 UI/lib/report_base.html:80
+#: UI/Reports/filters/income_statement.html:36
 #: UI/Reports/filters/trial_balance.html:49 UI/rp-search.html:44
 msgid "Ignore Year-ends"
-msgstr ""
-
-#: LedgerSMB/Report/Trial_Balance.pm:205
-msgid "Ignore Yearends"
 msgstr ""
 
 #: bin/ic.pl:501 LedgerSMB/Report/Inventory/Search.pm:258
@@ -3896,8 +3864,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
 #: templates/demo_with_images/timecard.html:52
-#: templates/demo_with_images/timecard.tex:29
-#: templates/xedemo/timecard.html:52 templates/xedemo/timecard.tex:29
+#: templates/demo_with_images/timecard.tex:29 templates/xedemo/timecard.html:52
+#: templates/xedemo/timecard.tex:29
 msgid "In"
 msgstr ""
 
@@ -3921,8 +3889,7 @@ msgstr ""
 #: UI/Reports/co/filter_cd.html:54 UI/Reports/filters/aging.html:71
 #: UI/Reports/filters/gl.html:116
 #: UI/Reports/filters/invoice_outstanding.html:102
-#: UI/Reports/filters/invoice_search.html:194
-#: UI/Reports/filters/orders.html:79
+#: UI/Reports/filters/invoice_search.html:194 UI/Reports/filters/orders.html:79
 #: UI/Reports/filters/purchase_history.html:163
 #: UI/Reports/filters/search_goods.html:180
 #: UI/rp-search-generate_balance_sheet.html:70
@@ -3985,9 +3952,9 @@ msgstr "Sjálfstæðir hlutir"
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
 msgid ""
-"Interest on overdue amounts will acrue at the rate of 12% per annum starting"
-" from [_1] until paid in full. Items returned are subject to a 10% "
-"restocking charge."
+"Interest on overdue amounts will acrue at the rate of 12% per annum starting "
+"from [_1] until paid in full. Items returned are subject to a 10% restocking "
+"charge."
 msgstr ""
 
 #: LedgerSMB.pm:602
@@ -4007,7 +3974,7 @@ msgstr ""
 msgid "Internal Notes"
 msgstr ""
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:83
+#: LedgerSMB/Report/PNL/Income_Statement.pm:84
 msgid "Invalid Reporting Basis"
 msgstr ""
 
@@ -4031,8 +3998,7 @@ msgstr ""
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
-#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:87
-#: sql/Pg-database.sql:2939
+#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:87 sql/Pg-database.sql:2939
 msgid "Inventory"
 msgstr "Lager"
 
@@ -4064,16 +4030,12 @@ msgstr ""
 msgid "Inventory and COGS"
 msgstr ""
 
-#: bin/ic.pl:1818
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
-msgstr ""
-
-#: bin/ic.pl:1825
+#: bin/ic.pl:1824
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr "Lagerbeholdning skal være nul for at du kan forælde denne sammensætning"
 
-#: bin/ic.pl:1824
+#: bin/ic.pl:1823
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 
@@ -4089,7 +4051,7 @@ msgstr ""
 #: LedgerSMB/Report/Aging.pm:103 LedgerSMB/Report/Inventory/Search.pm:278
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
-#: LedgerSMB/Scripts/payment.pm:747 templates/demo/invoice.html:12
+#: LedgerSMB/Scripts/payment.pm:744 templates/demo/invoice.html:12
 #: templates/demo/invoice.tex:112 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:12
 #: templates/demo_with_images/invoice.tex:112
@@ -4146,9 +4108,8 @@ msgid "Invoice Created Date missing!"
 msgstr ""
 
 #: bin/aa.pl:636 bin/aa.pl:1619 bin/ir.pl:519 bin/is.pl:523
-#: LedgerSMB/Report/Invoices/COGS.pm:94
-#: templates/demo/product_receipt.html:103 UI/orders/order.html:90
-#: UI/Reports/filters/invoice_outstanding.html:163
+#: LedgerSMB/Report/Invoices/COGS.pm:94 templates/demo/product_receipt.html:103
+#: UI/orders/order.html:90 UI/Reports/filters/invoice_outstanding.html:163
 #: UI/Reports/filters/invoice_search.html:253
 msgid "Invoice Date"
 msgstr "Sölureikningur dags."
@@ -4164,11 +4125,11 @@ msgstr ""
 
 #: bin/aa.pl:623 bin/aa.pl:1498 bin/aa.pl:1612 bin/ir.pl:505 bin/is.pl:510
 #: LedgerSMB/Report/Contact/History.pm:68
-#: LedgerSMB/Report/Contact/Purchase.pm:65
-#: LedgerSMB/Report/Invoices/COGS.pm:88 LedgerSMB/Report/PNL/Invoice.pm:86
-#: LedgerSMB/Report/Taxform/Details.pm:86 UI/asset/edit_asset.html:207
-#: UI/asset/search_asset.html:175 UI/orders/order.html:78
-#: UI/payments/payments_detail.html:320 UI/payments/use_overpayment2.html:150
+#: LedgerSMB/Report/Contact/Purchase.pm:65 LedgerSMB/Report/Invoices/COGS.pm:88
+#: LedgerSMB/Report/PNL/Invoice.pm:87 LedgerSMB/Report/Taxform/Details.pm:86
+#: UI/asset/edit_asset.html:207 UI/asset/search_asset.html:175
+#: UI/orders/order.html:78 UI/payments/payments_detail.html:323
+#: UI/payments/use_overpayment2.html:150
 #: UI/Reports/filters/invoice_outstanding.html:142
 #: UI/Reports/filters/invoice_search.html:87
 #: UI/Reports/filters/invoice_search.html:232
@@ -4193,7 +4154,7 @@ msgstr ""
 msgid "Invoice Sum"
 msgstr ""
 
-#: UI/payments/payments_detail.html:215
+#: UI/payments/payments_detail.html:216
 msgid "Invoice Total"
 msgstr ""
 
@@ -4245,9 +4206,9 @@ msgstr ""
 #: templates/demo/work_order.html:128 templates/demo/work_order.tex:124
 #: templates/xedemo/bin_list.html:146 templates/xedemo/bin_list.tex:105
 #: templates/xedemo/invoice.html:134 templates/xedemo/invoice.tex:132
-#: templates/xedemo/packing_list.html:118
-#: templates/xedemo/packing_list.tex:113 templates/xedemo/pick_list.html:110
-#: templates/xedemo/pick_list.tex:99 templates/xedemo/product_receipt.html:126
+#: templates/xedemo/packing_list.html:118 templates/xedemo/packing_list.tex:113
+#: templates/xedemo/pick_list.html:110 templates/xedemo/pick_list.tex:99
+#: templates/xedemo/product_receipt.html:126
 #: templates/xedemo/purchase_order.html:126
 #: templates/xedemo/request_quotation.html:139
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
@@ -4257,7 +4218,7 @@ msgstr ""
 msgid "Item"
 msgstr ""
 
-#: bin/ic.pl:2004
+#: bin/ic.pl:2003
 msgid "Item deleted!"
 msgstr "Hlut eytt!"
 
@@ -4280,10 +4241,10 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:176
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return "
-"authorization must be obtained from [_1] before goods are returned. Returns "
-"must be shipped prepaid and properly insured. [_1] will not be responsible "
-"for damages during transit."
+"Items returned are subject to a 10% restocking charge. A return authorization "
+"must be obtained from [_1] before goods are returned. Returns must be shipped "
+"prepaid and properly insured. [_1] will not be responsible for damages during "
+"transit."
 msgstr ""
 
 #: bin/aa.pl:86 bin/gl.pl:79 bin/io.pl:79 LedgerSMB/App_State.pm:237
@@ -4309,8 +4270,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
-#: templates/demo_with_images/timecard.tex:37
-#: templates/xedemo/timecard.html:81 templates/xedemo/timecard.tex:37
+#: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
+#: templates/xedemo/timecard.tex:37
 msgid "Job/Project #"
 msgstr ""
 
@@ -4366,15 +4327,15 @@ msgstr ""
 
 #: templates/demo/timecard.html:89 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:89
-#: templates/demo_with_images/timecard.tex:39
-#: templates/xedemo/timecard.html:89 templates/xedemo/timecard.tex:39
+#: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
+#: templates/xedemo/timecard.tex:39
 msgid "Labor/Service Code"
 msgstr ""
 
 #: bin/ir.pl:333 bin/pe.pl:399 bin/pe.pl:577 LedgerSMB/Report/Aging.pm:96
 #: LedgerSMB/Report/Listings/Language.pm:68
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:273
-#: UI/Contact/divs/credit.html:274 UI/Reports/filters/balance_sheet.html:75
+#: UI/Contact/divs/credit.html:274 UI/Reports/filters/balance_sheet.html:76
 #: UI/Reports/filters/income_statement.html:110 UI/users/preferences.html:78
 #: sql/Pg-database.sql:2872
 msgid "Language"
@@ -4546,15 +4507,11 @@ msgstr ""
 msgid "Lock Item Description"
 msgstr ""
 
-#: UI/payments/payments_detail.html:404
+#: UI/payments/payments_detail.html:408
 msgid "Locked by [_1]"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:9
-msgid "Logged in as"
-msgstr ""
-
-#: UI/menu/expanding.html:6
+#: UI/menu/expanding.html:6 UI/setup/confirm_operation.html:9
 msgid "Logged in as [_1]"
 msgstr ""
 
@@ -4570,7 +4527,7 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: bin/old-handler.pl:132 UI/login.html:76 UI/setup/credentials.html:52
+#: bin/old-handler.pl:132 UI/login.html:76 UI/setup/credentials.html:55
 msgid "Login"
 msgstr "Tengjast"
 
@@ -4604,37 +4561,36 @@ msgstr ""
 msgid "Make"
 msgstr "Tegund"
 
-#: LedgerSMB/Upgrade_Tests.pm:228
+#: LedgerSMB/Upgrade_Tests.pm:229
 msgid "Make employee numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:261
+#: LedgerSMB/Upgrade_Tests.pm:263
 msgid "Make invoice numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:591
+#: LedgerSMB/Upgrade_Tests.pm:248 LedgerSMB/Upgrade_Tests.pm:598
 msgid "Make non-obsolete partnumbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:297
+#: LedgerSMB/Upgrade_Tests.pm:299
 msgid "Make sure all meta numbers are unique."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:210
+#: LedgerSMB/Upgrade_Tests.pm:211
 msgid ""
 "Make sure every name consists of alphanumeric characters (and underscores) "
 "only and is at least one character long"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:875 LedgerSMB/Scripts/setup.pm:933
-#: LedgerSMB/Scripts/setup.pm:1118
+#: LedgerSMB/Scripts/setup.pm:879 LedgerSMB/Scripts/setup.pm:937
+#: LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr ""
 
 #: bin/aa.pl:1488 LedgerSMB/Report/Invoices/Outstanding.pm:265
-#: LedgerSMB/Report/Invoices/Transactions.pm:301
-#: LedgerSMB/Report/Orders.pm:267 UI/Contact/divs/employee.html:105
-#: UI/Contact/divs/employee.html:143
+#: LedgerSMB/Report/Invoices/Transactions.pm:301 LedgerSMB/Report/Orders.pm:267
+#: UI/Contact/divs/employee.html:105 UI/Contact/divs/employee.html:143
 #: UI/Reports/filters/invoice_outstanding.html:189
 #: UI/Reports/filters/invoice_search.html:279
 msgid "Manager"
@@ -4680,8 +4636,8 @@ msgid "May "
 msgstr "maí"
 
 #: bin/aa.pl:821 bin/ir.pl:690 bin/ir.pl:866 bin/is.pl:749 bin/is.pl:912
-#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:153
-#: LedgerSMB/Scripts/payment.pm:753 templates/demo/ap_transaction.html:195
+#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:155
+#: LedgerSMB/Scripts/payment.pm:750 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
 #: UI/orders/order.html:248 UI/payments/payment2.html:284
@@ -4761,14 +4717,13 @@ msgstr ""
 msgid "Model"
 msgstr "Model"
 
-#: LedgerSMB/Report/Timecards.pm:125
+#: LedgerSMB/Report/Timecards.pm:126
 msgid "Mon"
 msgstr ""
 
 #: bin/aa.pl:1578 bin/am.pl:818 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:84
-#: UI/bp-search.html:44 UI/lib/report_base.html:145
-#: UI/lib/report_base.html:212 UI/rc-reconciliation.html:47
-#: UI/Reports/co/filter_bm.html:58
+#: UI/bp-search.html:44 UI/lib/report_base.html:145 UI/lib/report_base.html:212
+#: UI/rc-reconciliation.html:47 UI/Reports/co/filter_bm.html:58
 #: UI/rp-search-generate_income_statement.html:40
 #: UI/rp-search-generate_tax_report.html:36
 msgid "Month"
@@ -4802,6 +4757,12 @@ msgstr ""
 msgid "Multiple dates"
 msgstr ""
 
+#: LedgerSMB/Upgrade_Tests.pm:742
+msgid ""
+"Multiple tax rates with the same end date have been detected for a tax "
+"account;"
+msgstr ""
+
 #: LedgerSMB/Report/Invoices/Payments.pm:224
 msgid "Must have cash account in batch"
 msgstr ""
@@ -4815,9 +4776,9 @@ msgstr ""
 #: LedgerSMB/Report/Contact/Purchase.pm:60
 #: LedgerSMB/Report/Contact/Purchase.pm:141
 #: LedgerSMB/Report/Contact/Search.pm:60 LedgerSMB/Report/Contact/Search.pm:99
-#: LedgerSMB/Report/Orders.pm:230 LedgerSMB/Report/PNL/ECA.pm:89
-#: LedgerSMB/Report/PNL/Invoice.pm:84 UI/Contact/divs/company.html:83
-#: UI/payments/payments_detail.html:214
+#: LedgerSMB/Report/Orders.pm:230 LedgerSMB/Report/PNL/ECA.pm:90
+#: LedgerSMB/Report/PNL/Invoice.pm:85 UI/Contact/divs/company.html:83
+#: UI/payments/payments_detail.html:215
 #: UI/Reports/filters/contact_search.html:31
 #: UI/Reports/filters/overpayments.html:32 UI/Reports/filters/payments.html:54
 msgid "Name"
@@ -4832,7 +4793,7 @@ msgstr ""
 msgid "Net Book Value"
 msgstr ""
 
-#: UI/payments/payments_detail.html:325
+#: UI/payments/payments_detail.html:328
 msgid "Net Due"
 msgstr ""
 
@@ -4916,15 +4877,15 @@ msgstr ""
 msgid "No ID Set"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:275
+#: LedgerSMB/Upgrade_Tests.pm:277
 msgid "No NULL Amounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:192
+#: LedgerSMB/Upgrade_Tests.pm:193
 msgid "No Null employeenumber"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:1120
+#: LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
 msgstr ""
 
@@ -4932,7 +4893,7 @@ msgstr ""
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:292
+#: LedgerSMB/Upgrade_Tests.pm:294
 msgid "No duplicate meta_numbers"
 msgstr ""
 
@@ -4948,7 +4909,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1181
+#: LedgerSMB/Scripts/payment.pm:1178
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -4982,11 +4943,11 @@ msgstr ""
 msgid "Non-cash"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:641
+#: LedgerSMB/Upgrade_Tests.pm:648
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:752
+#: LedgerSMB/Upgrade_Tests.pm:758
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -4994,7 +4955,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:547 LedgerSMB/Upgrade_Tests.pm:569
+#: LedgerSMB/Upgrade_Tests.pm:553 LedgerSMB/Upgrade_Tests.pm:575
 msgid "Non-unique invoice numbers"
 msgstr ""
 
@@ -5082,31 +5043,29 @@ msgstr "nóv"
 msgid "November"
 msgstr "nóvember"
 
-#: LedgerSMB/Upgrade_Tests.pm:508 LedgerSMB/Upgrade_Tests.pm:527
+#: LedgerSMB/Upgrade_Tests.pm:514 LedgerSMB/Upgrade_Tests.pm:533
 msgid "Null employee numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:622
+#: LedgerSMB/Upgrade_Tests.pm:629
 msgid "Null make numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:605
+#: LedgerSMB/Upgrade_Tests.pm:612
 msgid "Null model numbers"
 msgstr ""
 
-#: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2032 bin/ic.pl:2106 bin/io.pl:228
+#: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2031 bin/ic.pl:2105 bin/io.pl:228
 #: bin/io.pl:562 bin/oe.pl:1839 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:135
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:119
 #: templates/demo/pick_list.html:111 templates/demo/product_receipt.html:125
 #: templates/demo/product_receipt.tex:117
-#: templates/demo/purchase_order.html:127
-#: templates/demo/purchase_order.tex:117
+#: templates/demo/purchase_order.html:127 templates/demo/purchase_order.tex:117
 #: templates/demo/request_quotation.html:140
-#: templates/demo/request_quotation.tex:122
-#: templates/demo/sales_order.html:129 templates/demo/sales_quotation.html:71
-#: templates/demo/sales_quotation.html:98
-#: templates/demo/sales_quotation.tex:87
+#: templates/demo/request_quotation.tex:122 templates/demo/sales_order.html:129
+#: templates/demo/sales_quotation.html:71
+#: templates/demo/sales_quotation.html:98 templates/demo/sales_quotation.tex:87
 #: templates/demo_with_images/bin_list.html:147
 #: templates/demo_with_images/invoice.html:135
 #: templates/demo_with_images/invoice.tex:134
@@ -5135,9 +5094,8 @@ msgstr ""
 #: templates/xedemo/sales_order.html:129
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98
-#: templates/xedemo/sales_quotation.tex:88
-#: templates/xedemo/work_order.html:129 UI/am-taxes.html:14
-#: UI/Contact/divs/credit.html:26 UI/io-email.html:99
+#: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
+#: UI/am-taxes.html:14 UI/Contact/divs/credit.html:26 UI/io-email.html:99
 msgid "Number"
 msgstr "Númer"
 
@@ -5159,7 +5117,7 @@ msgid "OH"
 msgstr ""
 
 #: UI/payments/payment2.html:277
-msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
+msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr ""
 
 #: bin/ic.pl:708 LedgerSMB/Scripts/budgets.pm:126 UI/accounts/edit.html:136
@@ -5242,8 +5200,8 @@ msgstr "opna"
 
 #: UI/logout.html:15
 msgid ""
-"Opera detected.  To complete this logout, please close your browser window "
-"or clear private/authentication information"
+"Opera detected.  To complete this logout, please close your browser window or "
+"clear private/authentication information"
 msgstr ""
 
 #: UI/accounts/edit.html:218
@@ -5267,9 +5225,9 @@ msgstr "Pöntun"
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
 #: templates/demo/bin_list.html:108 templates/demo/invoice.html:109
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
-#: templates/demo/purchase_order.html:102
-#: templates/demo/purchase_order.tex:105 templates/demo/sales_order.html:102
-#: templates/demo/sales_order.tex:105
+#: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
+#: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/statement.html:61
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -5282,6 +5240,7 @@ msgstr "Pöntun"
 #: templates/demo_with_images/purchase_order.tex:105
 #: templates/demo_with_images/sales_order.html:102
 #: templates/demo_with_images/sales_order.tex:105
+#: templates/demo_with_images/statement.html:61
 #: templates/demo_with_images/work_order.html:102
 #: templates/demo/work_order.html:102 templates/xedemo/ap_transaction.html:88
 #: templates/xedemo/ap_transaction.tex:66
@@ -5291,7 +5250,7 @@ msgstr "Pöntun"
 #: templates/xedemo/pick_list.html:78 templates/xedemo/purchase_order.html:102
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
-#: templates/xedemo/work_order.html:102
+#: templates/xedemo/statement.html:61 templates/xedemo/work_order.html:102
 msgid "Order #"
 msgstr ""
 
@@ -5321,8 +5280,8 @@ msgstr "Pöntunarblað"
 #: bin/oe.pl:381 bin/oe.pl:1790 LedgerSMB/Report/Contact/Purchase.pm:69
 #: UI/orders/order.html:84 UI/Reports/filters/invoice_outstanding.html:149
 #: UI/Reports/filters/invoice_search.html:97
-#: UI/Reports/filters/invoice_search.html:239
-#: UI/Reports/filters/orders.html:38 UI/Reports/filters/orders.html:119
+#: UI/Reports/filters/invoice_search.html:239 UI/Reports/filters/orders.html:38
+#: UI/Reports/filters/orders.html:119
 msgid "Order Number"
 msgstr "Pöntun númer"
 
@@ -5336,12 +5295,6 @@ msgstr "Pöntun eytt"
 
 #: bin/oe.pl:2545
 msgid "Order generation failed!"
-msgstr ""
-
-#: templates/demo/statement.html:61
-#: templates/demo_with_images/statement.html:61
-#: templates/xedemo/statement.html:61
-msgid "Order#"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/History.pm:138
@@ -5381,8 +5334,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
-#: templates/demo_with_images/timecard.tex:30
-#: templates/xedemo/timecard.html:56 templates/xedemo/timecard.tex:30
+#: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
+#: templates/xedemo/timecard.tex:30
 msgid "Out"
 msgstr ""
 
@@ -5442,8 +5395,8 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:203 LedgerSMB/Report/Orders.pm:247
 #: UI/orders/order.html:102 UI/Reports/filters/invoice_outstanding.html:155
 #: UI/Reports/filters/invoice_search.html:107
-#: UI/Reports/filters/invoice_search.html:245
-#: UI/Reports/filters/orders.html:48 UI/Reports/filters/orders.html:132
+#: UI/Reports/filters/invoice_search.html:245 UI/Reports/filters/orders.html:48
+#: UI/Reports/filters/orders.html:132
 msgid "PO Number"
 msgstr ""
 
@@ -5456,9 +5409,8 @@ msgid "POST AND PRINT"
 msgstr ""
 
 #: bin/am.pl:1518 bin/io.pl:1413 bin/io.pl:1431 bin/io.pl:1603 bin/is.pl:238
-#: bin/is.pl:993 bin/oe.pl:248 bin/oe.pl:267
-#: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
-#: templates/demo/packing_list.tex:81
+#: bin/is.pl:993 bin/oe.pl:248 bin/oe.pl:267 templates/demo/packing_list.html:4
+#: templates/demo/packing_list.html:18 templates/demo/packing_list.tex:81
 #: templates/demo_with_images/packing_list.html:4
 #: templates/demo_with_images/packing_list.html:18
 #: templates/demo_with_images/packing_list.tex:81
@@ -5480,11 +5432,10 @@ msgstr "Númer fylgiseðils vantar!"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:231
 #: LedgerSMB/Report/Invoices/Transactions.pm:280
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
-#: LedgerSMB/Scripts/payment.pm:750 templates/demo/invoice.html:184
+#: LedgerSMB/Scripts/payment.pm:747 templates/demo/invoice.html:184
 #: templates/demo/invoice.tex:165 templates/demo_with_images/invoice.html:184
-#: templates/demo_with_images/invoice.tex:164
-#: templates/xedemo/invoice.html:184 templates/xedemo/invoice.tex:163
-#: UI/payments/payments_detail.html:323
+#: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
+#: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:326
 #: UI/Reports/filters/invoice_outstanding.html:230
 #: UI/Reports/filters/invoice_search.html:320
 msgid "Paid"
@@ -5513,7 +5464,7 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/History.pm:118
 #: LedgerSMB/Report/Inventory/Search.pm:194
 #: LedgerSMB/Report/Invoices/COGS.pm:99 LedgerSMB/Report/Invoices/COGS.pm:159
-#: LedgerSMB/Report/PNL/Product.pm:78 LedgerSMB/Scripts/configuration.pm:112
+#: LedgerSMB/Report/PNL/Product.pm:81 LedgerSMB/Scripts/configuration.pm:112
 #: UI/Reports/filters/cogs_lines.html:9
 #: UI/Reports/filters/inventory_activity.html:11
 #: UI/Reports/filters/purchase_history.html:246
@@ -5531,10 +5482,10 @@ msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
-#: LedgerSMB/Report/Inventory/Activity.pm:130
-#: LedgerSMB/Report/Timecards.pm:113 LedgerSMB/Report/Timecards.pm:161
-#: UI/Contact/pricelist.csv:7 UI/Contact/pricelist.html:22
-#: UI/Contact/pricelist.tex:12 UI/inventory/adjustment_entry.html:27
+#: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:114
+#: LedgerSMB/Report/Timecards.pm:163 UI/Contact/pricelist.csv:7
+#: UI/Contact/pricelist.html:22 UI/Contact/pricelist.tex:12
+#: UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/invoice_search.html:117
 #: UI/Reports/filters/timecards.html:10 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:89
@@ -5542,19 +5493,16 @@ msgid "Partnumber"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Partsgroups.pm:63
-#: UI/Reports/filters/search_partsgroups.html:12
-msgid "Parts Group"
-msgstr ""
-
-#: LedgerSMB/Report/Inventory/Partsgroups.pm:73
-msgid "Parts Groups"
-msgstr ""
-
-#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2826
+#: LedgerSMB/Report/Inventory/Search.pm:274
+#: UI/Reports/filters/search_partsgroups.html:12 sql/Pg-database.sql:2826
 msgid "Partsgroup"
 msgstr ""
 
-#: UI/Contact/divs/user.html:48 UI/login.html:53 UI/setup/credentials.html:32
+#: LedgerSMB/Report/Inventory/Partsgroups.pm:73
+msgid "Partsgroups"
+msgstr ""
+
+#: UI/Contact/divs/user.html:48 UI/login.html:53 UI/setup/credentials.html:35
 #: UI/setup/edit_user.html:48 UI/setup/new_user.html:29
 #: UI/users/preferences.html:42
 msgid "Password"
@@ -5572,12 +5520,12 @@ msgstr ""
 msgid "Passwords must match."
 msgstr ""
 
-#: UI/payments/payments_detail.html:190 UI/payments/payments_filter.html:138
+#: UI/payments/payments_detail.html:191 UI/payments/payments_filter.html:140
 msgid "Pay From"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:148 UI/Contact/divs/credit.html:97
-#: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:139
+#: LedgerSMB/Scripts/payment.pm:150 UI/Contact/divs/credit.html:97
+#: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:141
 msgid "Pay To"
 msgstr ""
 
@@ -5595,10 +5543,10 @@ msgstr ""
 msgid "Payables"
 msgstr "Útistandandi"
 
-#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: LedgerSMB/Scripts/payment.pm:979 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:342
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
-#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
+#: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Greislur"
 
@@ -5612,7 +5560,7 @@ msgstr ""
 msgid "Payment Order Number [_1]"
 msgstr ""
 
-#: UI/payments/payments_filter.html:135
+#: UI/payments/payments_filter.html:137
 msgid "Payment Processing"
 msgstr ""
 
@@ -5628,11 +5576,7 @@ msgstr ""
 msgid "Payment Terms"
 msgstr ""
 
-#: UI/payments/payments_detail.html:180
-msgid "Payment Type :"
-msgstr ""
-
-#: UI/payments/payments_filter.html:160
+#: UI/payments/payments_detail.html:181 UI/payments/payments_filter.html:162
 msgid "Payment Type:"
 msgstr ""
 
@@ -5651,11 +5595,9 @@ msgid "Payment due by [_1]."
 msgstr ""
 
 #: bin/aa.pl:801 bin/ir.pl:850 bin/is.pl:896
-#: templates/demo/ap_transaction.html:179
-#: templates/demo/ap_transaction.tex:109
-#: templates/demo/ar_transaction.html:178
-#: templates/demo/ar_transaction.tex:126 templates/demo/invoice.html:237
-#: templates/demo/invoice.tex:199
+#: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
+#: templates/demo/ar_transaction.html:178 templates/demo/ar_transaction.tex:126
+#: templates/demo/invoice.html:237 templates/demo/invoice.tex:199
 #: templates/demo_with_images/ap_transaction.html:179
 #: templates/demo_with_images/ap_transaction.tex:109
 #: templates/demo_with_images/ar_transaction.html:178
@@ -5725,60 +5667,60 @@ msgstr ""
 msgid "Pick List"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:715
+#: LedgerSMB/Upgrade_Tests.pm:722
 msgid ""
 "Please add a header to the CoA which sorts before the listed accounts "
 "(usually \"0000\" works) (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:696
+#: LedgerSMB/Upgrade_Tests.pm:703
 msgid ""
 "Please add at least one header to your CoA which sorts before all other "
 "account numbers (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:661
+#: LedgerSMB/Upgrade_Tests.pm:668
 msgid "Please fix the presented rows to either be \"H\" or \"A\""
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:645 LedgerSMB/Upgrade_Tests.pm:679
+#: LedgerSMB/Upgrade_Tests.pm:652 LedgerSMB/Upgrade_Tests.pm:686
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:553
+#: LedgerSMB/Upgrade_Tests.pm:559
 msgid "Please make all AR invoice numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:461
+#: LedgerSMB/Upgrade_Tests.pm:162 LedgerSMB/Upgrade_Tests.pm:467
 msgid "Please make all customer numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:532
+#: LedgerSMB/Upgrade_Tests.pm:538
 msgid "Please make all employee numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:496
+#: LedgerSMB/Upgrade_Tests.pm:181 LedgerSMB/Upgrade_Tests.pm:502
 msgid "Please make all vendor numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:512
+#: LedgerSMB/Upgrade_Tests.pm:518
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:627
+#: LedgerSMB/Upgrade_Tests.pm:634
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:609
+#: LedgerSMB/Upgrade_Tests.pm:616
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:442
+#: LedgerSMB/Upgrade_Tests.pm:447
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:477
+#: LedgerSMB/Upgrade_Tests.pm:483
 msgid "Please make sure there are no empty vendor numbers."
 msgstr ""
 
@@ -5803,21 +5745,15 @@ msgstr ""
 msgid "Please select a vendor with unused overpayments"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:737
-msgid ""
-"Please unmark accounts as summary accounts, or remove dropdown checkmarks "
-"(in the standard SL UI)"
-msgstr ""
-
-#: LedgerSMB/Upgrade_Tests.pm:312
+#: LedgerSMB/Upgrade_Tests.pm:315
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:343
+#: LedgerSMB/Upgrade_Tests.pm:347
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:327
+#: LedgerSMB/Upgrade_Tests.pm:331
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -5956,8 +5892,8 @@ msgstr ""
 #: bin/aa.pl:909 bin/aa.pl:938 bin/am.pl:867 bin/arap.pl:486 bin/ir.pl:556
 #: bin/is.pl:574 bin/is.pl:1013 bin/oe.pl:635 bin/oe.pl:854 bin/oe.pl:1943
 #: LedgerSMB/Report/Taxform/Details.pm:129
-#: LedgerSMB/Report/Taxform/Summary.pm:127
-#: UI/payments/payments_detail.html:490 UI/timecards/timecard.html:158
+#: LedgerSMB/Report/Taxform/Summary.pm:127 UI/payments/payments_detail.html:494
+#: UI/timecards/timecard.html:158
 msgid "Print"
 msgstr "Prenta"
 
@@ -6061,7 +5997,7 @@ msgstr ""
 msgid "Profit/Loss"
 msgstr ""
 
-#: LedgerSMB/Report/PNL/Product.pm:70
+#: LedgerSMB/Report/PNL/Product.pm:71
 msgid "Proft/Loss on Inventory Sales"
 msgstr ""
 
@@ -6083,7 +6019,7 @@ msgstr ""
 msgid "Project Numbers"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:100
+#: LedgerSMB/Report/Timecards.pm:101
 msgid "Project/Department Number"
 msgstr ""
 
@@ -6091,8 +6027,8 @@ msgstr ""
 msgid "Projects"
 msgstr "Verkefni"
 
-#: LedgerSMB/Report/Listings/Asset.pm:89
-#: LedgerSMB/Report/Listings/Asset.pm:121 LedgerSMB/Scripts/asset.pm:398
+#: LedgerSMB/Report/Listings/Asset.pm:89 LedgerSMB/Report/Listings/Asset.pm:121
+#: LedgerSMB/Scripts/asset.pm:398
 msgid "Purchase Date"
 msgstr ""
 
@@ -6131,8 +6067,8 @@ msgstr ""
 msgid "Purchase Orders"
 msgstr "Innkaupspantanir"
 
-#: LedgerSMB/Report/Listings/Asset.pm:92
-#: LedgerSMB/Report/Listings/Asset.pm:123 LedgerSMB/Scripts/asset.pm:399
+#: LedgerSMB/Report/Listings/Asset.pm:92 LedgerSMB/Report/Listings/Asset.pm:123
+#: LedgerSMB/Scripts/asset.pm:399
 msgid "Purchase Value"
 msgstr ""
 
@@ -6144,7 +6080,7 @@ msgstr ""
 msgid "Purchased"
 msgstr ""
 
-#: bin/ic.pl:1260 bin/ic.pl:2117 bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845
+#: bin/ic.pl:1260 bin/ic.pl:2116 bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845
 #: bin/oe.pl:2137 bin/pe.pl:1065 LedgerSMB/Report/Contact/History.pm:87
 #: LedgerSMB/Report/Inventory/History.pm:155
 #: LedgerSMB/Report/Inventory/Search.pm:294 templates/demo/bin_list.html:151
@@ -6153,11 +6089,10 @@ msgstr ""
 #: templates/demo/packing_list.tex:116 templates/demo/pick_list.html:113
 #: templates/demo/pick_list.tex:101 templates/demo/product_receipt.html:127
 #: templates/demo/product_receipt.tex:118
-#: templates/demo/purchase_order.html:129
-#: templates/demo/purchase_order.tex:118
+#: templates/demo/purchase_order.html:129 templates/demo/purchase_order.tex:118
 #: templates/demo/request_quotation.html:142
-#: templates/demo/request_quotation.tex:123
-#: templates/demo/sales_order.html:131 templates/demo/sales_quotation.html:100
+#: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:131
+#: templates/demo/sales_quotation.html:100
 #: templates/demo/sales_quotation.tex:88
 #: templates/demo_with_images/bin_list.html:151
 #: templates/demo_with_images/bin_list.tex:108
@@ -6181,8 +6116,7 @@ msgstr ""
 #: templates/xedemo/bin_list.tex:108 templates/xedemo/invoice.html:138
 #: templates/xedemo/invoice.tex:136 templates/xedemo/packing_list.html:123
 #: templates/xedemo/packing_list.tex:116 templates/xedemo/pick_list.html:113
-#: templates/xedemo/pick_list.tex:101
-#: templates/xedemo/product_receipt.html:129
+#: templates/xedemo/pick_list.tex:101 templates/xedemo/product_receipt.html:129
 #: templates/xedemo/product_receipt.tex:118
 #: templates/xedemo/purchase_order.html:129
 #: templates/xedemo/purchase_order.tex:118
@@ -6190,8 +6124,7 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:123
 #: templates/xedemo/sales_order.html:131
 #: templates/xedemo/sales_quotation.html:100
-#: templates/xedemo/sales_quotation.tex:89
-#: templates/xedemo/work_order.html:131
+#: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
 #: UI/Reports/filters/purchase_history.html:286
 #: UI/timecards/timecard-week.html:98
 msgid "Qty"
@@ -6201,14 +6134,13 @@ msgstr "Magn"
 msgid "Quantity"
 msgstr ""
 
-#: bin/ic.pl:2234
+#: bin/ic.pl:2233
 msgid "Quantity exceeds available units to stock!"
 msgstr ""
 
 #: bin/aa.pl:1580 bin/pe.pl:843 LedgerSMB/DBObject/Date.pm:90
-#: UI/bp-search.html:47 UI/lib/report_base.html:151
-#: UI/lib/report_base.html:218 UI/rc-reconciliation.html:53
-#: UI/Reports/co/filter_bm.html:63
+#: UI/bp-search.html:47 UI/lib/report_base.html:151 UI/lib/report_base.html:218
+#: UI/rc-reconciliation.html:53 UI/Reports/co/filter_bm.html:63
 #: UI/rp-search-generate_income_statement.html:46
 #: UI/rp-search-generate_tax_report.html:42
 msgid "Quarter"
@@ -6217,8 +6149,7 @@ msgstr ""
 #: bin/io.pl:1391 bin/io.pl:1651 bin/io.pl:1658 bin/oe.pl:225 bin/oe.pl:658
 #: bin/oe.pl:865 bin/oe.pl:1227 LedgerSMB/Report/Inventory/Search.pm:286
 #: LedgerSMB/Report/Orders.pm:251 templates/demo/sales_quotation.html:4
-#: templates/demo/sales_quotation.html:17
-#: templates/demo/sales_quotation.tex:69
+#: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
 #: templates/demo_with_images/sales_quotation.tex:69
@@ -6287,7 +6218,7 @@ msgstr ""
 msgid "RFQs"
 msgstr ""
 
-#: bin/ic.pl:484 bin/ic.pl:2119 LedgerSMB/Report/Inventory/Search.pm:210
+#: bin/ic.pl:484 bin/ic.pl:2118 LedgerSMB/Report/Inventory/Search.pm:210
 #: UI/Reports/filters/search_goods.html:295
 msgid "ROP"
 msgstr ""
@@ -6317,7 +6248,7 @@ msgstr ""
 msgid "Recd"
 msgstr "Mótt:"
 
-#: LedgerSMB/Scripts/payment.pm:982 sql/Pg-database.sql:2796
+#: LedgerSMB/Scripts/payment.pm:979 sql/Pg-database.sql:2796
 #: sql/Pg-database.sql:2965
 msgid "Receipt"
 msgstr "Kvittun"
@@ -6351,7 +6282,7 @@ msgstr ""
 msgid "Receive Merchandise"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:806
+#: LedgerSMB/Scripts/payment.pm:803
 msgid "Received"
 msgstr ""
 
@@ -6397,7 +6328,7 @@ msgstr ""
 
 #: bin/am.pl:848 bin/arap.pl:587 LedgerSMB/Report/Budget/Search.pm:80
 #: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:94
-#: LedgerSMB/Report/GL.pm:211 LedgerSMB/Report/Inventory/Search_Adj.pm:99
+#: LedgerSMB/Report/GL.pm:213 LedgerSMB/Report/Inventory/Search_Adj.pm:99
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:108
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
 #: LedgerSMB/Report/Unapproved/Drafts.pm:94
@@ -6417,8 +6348,7 @@ msgstr ""
 msgid "Referral"
 msgstr ""
 
-#: templates/demo/ar_transaction.html:224
-#: templates/demo/ar_transaction.tex:143
+#: templates/demo/ar_transaction.html:224 templates/demo/ar_transaction.tex:143
 #: templates/demo_with_images/ar_transaction.html:224
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
@@ -6494,7 +6424,7 @@ msgstr "Skýrsla fyrir"
 msgid "Report in"
 msgstr ""
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:67
+#: LedgerSMB/Report/PNL/Income_Statement.pm:68
 msgid "Reporting Basis"
 msgstr ""
 
@@ -6545,11 +6475,10 @@ msgid "Required attribute not provided: [_1]"
 msgstr ""
 
 #: bin/io.pl:269 bin/oe.pl:391 bin/oe.pl:447
-#: templates/demo/purchase_order.html:104
-#: templates/demo/purchase_order.tex:106
+#: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
 #: templates/demo/request_quotation.html:105
-#: templates/demo/request_quotation.tex:107
-#: templates/demo/sales_order.html:104 templates/demo/sales_order.tex:106
+#: templates/demo/request_quotation.tex:107 templates/demo/sales_order.html:104
+#: templates/demo/sales_order.tex:106
 #: templates/demo_with_images/purchase_order.html:104
 #: templates/demo_with_images/purchase_order.tex:106
 #: templates/demo_with_images/request_quotation.html:105
@@ -6557,8 +6486,7 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:104
 #: templates/demo_with_images/sales_order.tex:106
 #: templates/demo_with_images/work_order.html:104
-#: templates/demo/work_order.html:104
-#: templates/xedemo/product_receipt.html:104
+#: templates/demo/work_order.html:104 templates/xedemo/product_receipt.html:104
 #: templates/xedemo/product_receipt.tex:106
 #: templates/xedemo/purchase_order.html:104
 #: templates/xedemo/purchase_order.tex:106
@@ -6753,7 +6681,7 @@ msgstr ""
 msgid "Salvage Value:"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:145
+#: LedgerSMB/Report/Timecards.pm:146
 msgid "Sat"
 msgstr ""
 
@@ -6785,7 +6713,7 @@ msgstr "Geyma"
 msgid "Save As New"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:221
+#: LedgerSMB/Scripts/payment.pm:219
 msgid "Save Batch"
 msgstr ""
 
@@ -6829,7 +6757,7 @@ msgstr ""
 msgid "Save Template"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:698
+#: LedgerSMB/Scripts/setup.pm:702
 msgid "Save and Retry"
 msgstr ""
 
@@ -6859,7 +6787,7 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: bin/arapprn.pl:466 bin/io.pl:1465 LedgerSMB/Scripts/payment.pm:507
+#: bin/arapprn.pl:466 bin/io.pl:1465 LedgerSMB/Scripts/payment.pm:504
 #: LedgerSMB/Template.pm:309 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Skjá"
@@ -6869,8 +6797,7 @@ msgstr "Skjá"
 #: UI/business_units/filter.html:45 UI/Reports/filters/budget_search.html:72
 #: UI/Reports/filters/cogs_lines.html:36
 #: UI/Reports/filters/contact_search.html:140
-#: UI/Reports/filters/overpayments.html:61
-#: UI/Reports/filters/payments.html:126
+#: UI/Reports/filters/overpayments.html:61 UI/Reports/filters/payments.html:126
 #: UI/Reports/filters/reconciliation_search.html:103
 #: UI/Reports/filters/search_goods.html:385
 #: UI/Reports/filters/search_partsgroups.html:18
@@ -6923,7 +6850,7 @@ msgid "Search Inventory Entry"
 msgstr ""
 
 #: UI/Reports/filters/search_partsgroups.html:4
-msgid "Search Parts Groups"
+msgid "Search Partsgroups"
 msgstr ""
 
 #: UI/Reports/filters/payments.html:7 UI/Reports/filters/payments.html:17
@@ -6997,6 +6924,11 @@ msgstr ""
 #: UI/setup/template_info.html:6
 msgid "Select Templates to Load"
 msgstr ""
+
+#: UI/setup/credentials.html:16
+#, fuzzy
+msgid "Select User"
+msgstr "Breyta notanda"
 
 #: bin/oe.pl:2522
 msgid "Select Vendor"
@@ -7219,8 +7151,7 @@ msgid "Ship To"
 msgstr ""
 
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
-#: templates/demo/product_receipt.html:30
-#: templates/demo/purchase_order.html:30
+#: templates/demo/product_receipt.html:30 templates/demo/purchase_order.html:30
 #: templates/demo/request_quotation.html:30
 #: templates/demo_with_images/packing_list.html:29
 #: templates/demo_with_images/pick_list.html:28
@@ -7235,8 +7166,9 @@ msgid "Ship To:"
 msgstr ""
 
 #: LedgerSMB/Report/Contact/Purchase.pm:117
-#: LedgerSMB/Report/Invoices/Transactions.pm:307
-#: LedgerSMB/Report/Orders.pm:259 templates/demo/product_receipt.html:106
+#: LedgerSMB/Report/Invoices/Outstanding.pm:273
+#: LedgerSMB/Report/Invoices/Transactions.pm:307 LedgerSMB/Report/Orders.pm:259
+#: templates/demo/product_receipt.html:106
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109
 #: templates/demo_with_images/product_receipt.html:106
@@ -7244,16 +7176,15 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:107
 #: templates/demo_with_images/sales_order.tex:109
 #: templates/demo_with_images/work_order.html:107
-#: templates/demo/work_order.html:107
-#: templates/xedemo/product_receipt.html:107
+#: templates/demo/work_order.html:107 templates/xedemo/product_receipt.html:107
 #: templates/xedemo/purchase_order.html:107
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
 #: UI/Reports/filters/invoice_outstanding.html:65
 #: UI/Reports/filters/invoice_outstanding.html:270
 #: UI/Reports/filters/invoice_search.html:158
-#: UI/Reports/filters/invoice_search.html:360
-#: UI/Reports/filters/orders.html:58 UI/Reports/filters/orders.html:161
+#: UI/Reports/filters/invoice_search.html:360 UI/Reports/filters/orders.html:58
+#: UI/Reports/filters/orders.html:161
 msgid "Ship Via"
 msgstr ""
 
@@ -7270,8 +7201,7 @@ msgstr "Senda til"
 #: templates/demo/purchase_order.tex:108
 #: templates/demo/request_quotation.html:108
 #: templates/demo/request_quotation.tex:109
-#: templates/demo/sales_quotation.html:76
-#: templates/demo/sales_quotation.tex:78
+#: templates/demo/sales_quotation.html:76 templates/demo/sales_quotation.tex:78
 #: templates/demo_with_images/bin_list.html:115
 #: templates/demo_with_images/invoice.html:112
 #: templates/demo_with_images/invoice.tex:122
@@ -7297,10 +7227,6 @@ msgstr "Senda til"
 msgid "Ship via"
 msgstr "Senda með"
 
-#: LedgerSMB/Report/Invoices/Outstanding.pm:273
-msgid "Ship_Via"
-msgstr ""
-
 #: LedgerSMB/Entity/Location.pm:114 UI/Contact/divs/address.html:44
 #: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
 msgid "Shipping"
@@ -7321,19 +7247,17 @@ msgstr ""
 #: bin/aa.pl:1655 bin/is.pl:495 bin/oe.pl:594 bin/oe.pl:1774
 #: LedgerSMB/Report/Contact/Purchase.pm:113
 #: LedgerSMB/Report/Invoices/Outstanding.pm:269
-#: LedgerSMB/Report/Invoices/Transactions.pm:304
-#: LedgerSMB/Report/Orders.pm:255 templates/demo/bin_list.html:114
-#: templates/demo/bin_list.tex:84 templates/demo/invoice.html:111
-#: templates/demo/invoice.tex:121 templates/demo/packing_list.html:85
-#: templates/demo/packing_list.tex:92 templates/demo/pick_list.html:82
-#: templates/demo/pick_list.tex:83 templates/demo/product_receipt.html:105
+#: LedgerSMB/Report/Invoices/Transactions.pm:304 LedgerSMB/Report/Orders.pm:255
+#: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
+#: templates/demo/invoice.html:111 templates/demo/invoice.tex:121
+#: templates/demo/packing_list.html:85 templates/demo/packing_list.tex:92
+#: templates/demo/pick_list.html:82 templates/demo/pick_list.tex:83
+#: templates/demo/product_receipt.html:105
 #: templates/demo/product_receipt.tex:107
-#: templates/demo/purchase_order.html:106
-#: templates/demo/purchase_order.tex:107
+#: templates/demo/purchase_order.html:106 templates/demo/purchase_order.tex:107
 #: templates/demo/request_quotation.html:107
-#: templates/demo/request_quotation.tex:108
-#: templates/demo/sales_order.html:106 templates/demo/sales_order.tex:108
-#: templates/demo/sales_quotation.html:75
+#: templates/demo/request_quotation.tex:108 templates/demo/sales_order.html:106
+#: templates/demo/sales_order.tex:108 templates/demo/sales_quotation.html:75
 #: templates/demo/sales_quotation.tex:77
 #: templates/demo_with_images/bin_list.html:114
 #: templates/demo_with_images/bin_list.tex:84
@@ -7366,9 +7290,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:108
 #: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:108
 #: templates/xedemo/sales_quotation.html:75
-#: templates/xedemo/sales_quotation.tex:78
-#: templates/xedemo/work_order.html:106 UI/orders/order.html:62
-#: UI/Reports/filters/invoice_outstanding.html:264
+#: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
+#: UI/orders/order.html:62 UI/Reports/filters/invoice_outstanding.html:264
 #: UI/Reports/filters/invoice_search.html:354
 msgid "Shipping Point"
 msgstr ""
@@ -7419,7 +7342,7 @@ msgstr ""
 msgid "Sold"
 msgstr ""
 
-#: UI/payments/payments_detail.html:272
+#: UI/payments/payments_detail.html:274
 msgid "Some"
 msgstr ""
 
@@ -7429,8 +7352,8 @@ msgstr ""
 
 #: bin/aa.pl:820 bin/aa.pl:1510 bin/ir.pl:865 bin/is.pl:911
 #: LedgerSMB/Report/Budget/Search.pm:128 LedgerSMB/Report/GL.pm:122
-#: LedgerSMB/Report/GL.pm:213 LedgerSMB/Report/Inventory/Adj_Details.pm:75
-#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Report/GL.pm:215 LedgerSMB/Report/Inventory/Adj_Details.pm:75
+#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:154
 #: LedgerSMB/Scripts/recon.pm:221 templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:249
 #: templates/demo/printPayment.html:50
@@ -7443,7 +7366,7 @@ msgstr ""
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:29
 #: UI/journal/journal_entry.html:117 UI/orders/order.html:247
 #: UI/payments/payment2.html:106 UI/payments/payment2.html:228
-#: UI/payments/payment2.html:283 UI/payments/payments_detail.html:300
+#: UI/payments/payment2.html:283 UI/payments/payments_detail.html:303
 #: UI/reconciliation/report.html:80 UI/reconciliation/report.html:143
 #: UI/reconciliation/report.html:202 UI/Reports/filters/gl.html:66
 #: UI/Reports/filters/gl.html:221 UI/Reports/filters/inventory_adj.html:11
@@ -7486,7 +7409,7 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Variance.pm:118
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:131
 #: LedgerSMB/Report/co/Caja_Diaria.pm:125
-#: LedgerSMB/Report/Contact/History.pm:143 LedgerSMB/Report/GL.pm:205
+#: LedgerSMB/Report/Contact/History.pm:143 LedgerSMB/Report/GL.pm:207
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:77
 #: LedgerSMB/Report/Invoices/COGS.pm:155
 #: LedgerSMB/Report/Listings/Business_Unit.pm:64
@@ -7500,7 +7423,7 @@ msgstr ""
 msgid "Start Date:"
 msgstr ""
 
-#: UI/payments/payments_filter.html:177
+#: UI/payments/payments_filter.html:179
 msgid "Start Source Numbering At:"
 msgstr ""
 
@@ -7513,7 +7436,7 @@ msgid "Startdate"
 msgstr ""
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:77
-#: LedgerSMB/Report/Trial_Balance.pm:170
+#: LedgerSMB/Report/Trial_Balance.pm:172
 msgid "Starting Balance"
 msgstr ""
 
@@ -7571,7 +7494,7 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: bin/ic.pl:2014 bin/ic.pl:2126 sql/Pg-database.sql:2931
+#: bin/ic.pl:2013 bin/ic.pl:2125 sql/Pg-database.sql:2931
 msgid "Stock Assembly"
 msgstr "Lager samsetning"
 
@@ -7659,11 +7582,11 @@ msgstr ""
 msgid "Summary account for"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:121
+#: LedgerSMB/Report/Timecards.pm:122
 msgid "Sun"
 msgstr ""
 
-#: UI/setup/credentials.html:22
+#: UI/setup/credentials.html:23
 msgid "Super-user login"
 msgstr ""
 
@@ -7694,9 +7617,9 @@ msgid "TOTAL"
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:72
-#: LedgerSMB/Report/Listings/Asset.pm:82
-#: LedgerSMB/Report/Listings/Asset.pm:119 LedgerSMB/Scripts/asset.pm:633
-#: LedgerSMB/Scripts/asset.pm:696 LedgerSMB/Scripts/asset.pm:764
+#: LedgerSMB/Report/Listings/Asset.pm:82 LedgerSMB/Report/Listings/Asset.pm:119
+#: LedgerSMB/Scripts/asset.pm:633 LedgerSMB/Scripts/asset.pm:696
+#: LedgerSMB/Scripts/asset.pm:764
 msgid "Tag"
 msgstr ""
 
@@ -7711,8 +7634,7 @@ msgstr ""
 #: UI/accounts/edit.html:399 UI/accounts/edit.html:429
 #: UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:293
-#: UI/Reports/filters/orders.html:176
-#: UI/rp-search-generate_tax_report.html:167
+#: UI/Reports/filters/orders.html:176 UI/rp-search-generate_tax_report.html:167
 msgid "Tax"
 msgstr "Virðisaukaskattur"
 
@@ -7852,10 +7774,10 @@ msgstr ""
 #: templates/demo/letterhead.html:21 templates/demo/packing_list.html:56
 #: templates/demo/pick_list.html:55 templates/demo/printPayment.html:27
 #: templates/demo/product_receipt.html:54
-#: templates/demo/product_receipt.html:82
-#: templates/demo/product_receipt.tex:52 templates/demo/product_receipt.tex:87
-#: templates/demo/purchase_order.html:54 templates/demo/purchase_order.html:82
-#: templates/demo/purchase_order.tex:52 templates/demo/purchase_order.tex:87
+#: templates/demo/product_receipt.html:82 templates/demo/product_receipt.tex:52
+#: templates/demo/product_receipt.tex:87 templates/demo/purchase_order.html:54
+#: templates/demo/purchase_order.html:82 templates/demo/purchase_order.tex:52
+#: templates/demo/purchase_order.tex:87
 #: templates/demo/request_quotation.html:55
 #: templates/demo/request_quotation.html:83
 #: templates/demo/request_quotation.tex:52
@@ -7996,15 +7918,15 @@ msgstr ""
 msgid "The amount of"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1457 LedgerSMB/Scripts/payment.pm:1463
+#: LedgerSMB/Scripts/payment.pm:1454 LedgerSMB/Scripts/payment.pm:1460
 msgid "The amount of the invoice number"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1709
+#: LedgerSMB/Scripts/payment.pm:1706
 msgid "The amount to be pay from the accno"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1677
+#: LedgerSMB/Scripts/payment.pm:1674
 msgid "The amount to be pay of the invoice number"
 msgstr ""
 
@@ -8021,8 +7943,7 @@ msgid "Their Debits"
 msgstr ""
 
 #: UI/reconciliation/report.html:9
-msgid ""
-"There are unapproved reconciliations before the end date of this report."
+msgid "There are unapproved reconciliations before the end date of this report."
 msgstr ""
 
 #: UI/reconciliation/report.html:7
@@ -8065,11 +7986,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1079
+#: LedgerSMB/Scripts/payment.pm:1076
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1762
+#: LedgerSMB/Scripts/payment.pm:1759
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -8091,14 +8012,13 @@ msgstr ""
 msgid "Through date"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:137
+#: LedgerSMB/Report/Timecards.pm:138
 msgid "Thu"
 msgstr ""
 
 #: bin/aa.pl:1594 LedgerSMB/Report/GL.pm:137
 #: LedgerSMB/Report/Invoices/Outstanding.pm:257
-#: LedgerSMB/Report/Invoices/Transactions.pm:295
-#: UI/Reports/filters/gl.html:241
+#: LedgerSMB/Report/Invoices/Transactions.pm:295 UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/invoice_outstanding.html:256
 #: UI/Reports/filters/invoice_search.html:346
 msgid "Till"
@@ -8140,7 +8060,7 @@ msgstr ""
 msgid "Timecard Criteria"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:170 sql/Pg-database.sql:2934
+#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2934
 msgid "Timecards"
 msgstr ""
 
@@ -8158,10 +8078,10 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:27
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
 #: UI/asset/begin_approval.html:32 UI/asset/search_reports.html:35
-#: UI/bp-search.html:29 UI/ca-list-selector.html:33
-#: UI/lib/report_base.html:104 UI/lib/report_base.html:174
-#: UI/rc-reconciliation.html:22 UI/Reports/co/filter_bm.html:27
-#: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
+#: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:104
+#: UI/lib/report_base.html:174 UI/rc-reconciliation.html:22
+#: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
+#: UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8178,12 +8098,12 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Payments.pm:195
 #: LedgerSMB/Report/Reconciliation/Summary.pm:178
 #: LedgerSMB/Report/Taxform/Details.pm:109
-#: LedgerSMB/Report/Taxform/Summary.pm:107 LedgerSMB/Report/Timecards.pm:159
-#: LedgerSMB/Report/Trial_Balance.pm:203 UI/reconciliation/upload.html:36
+#: LedgerSMB/Report/Taxform/Summary.pm:107 LedgerSMB/Report/Timecards.pm:161
+#: LedgerSMB/Report/Trial_Balance.pm:206 UI/reconciliation/upload.html:36
 msgid "To Date"
 msgstr ""
 
-#: UI/payments/payments_detail.html:326
+#: UI/payments/payments_detail.html:329
 msgid "To Pay"
 msgstr ""
 
@@ -8207,12 +8127,11 @@ msgstr ""
 msgid "To my browser"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:803
+#: LedgerSMB/Scripts/payment.pm:800
 msgid "To pay"
 msgstr ""
 
-#: templates/demo/product_receipt.html:29
-#: templates/demo/purchase_order.html:29
+#: templates/demo/product_receipt.html:29 templates/demo/purchase_order.html:29
 #: templates/demo/request_quotation.html:28
 #: templates/demo_with_images/product_receipt.html:29
 #: templates/demo_with_images/purchase_order.html:29
@@ -8246,7 +8165,7 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Transactions.pm:277
 #: LedgerSMB/Report/Taxform/Details.pm:98
 #: LedgerSMB/Report/Taxform/Summary.pm:96 LedgerSMB/Scripts/asset.pm:537
-#: LedgerSMB/Scripts/payment.pm:200 LedgerSMB/Scripts/payment.pm:749
+#: LedgerSMB/Scripts/payment.pm:198 LedgerSMB/Scripts/payment.pm:746
 #: templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
@@ -8289,12 +8208,12 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:185
 #: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
 #: templates/xedemo/sales_quotation.html:127
-#: templates/xedemo/sales_quotation.html:154
-#: templates/xedemo/timecard.html:105 templates/xedemo/timecard.tex:45
-#: UI/orders/order.html:225 UI/payments/payment1.html:86
-#: UI/payments/payment1.html:95 UI/payments/payment2.html:430
-#: UI/payments/payments_detail.html:322 UI/reconciliation/report.html:130
-#: UI/reconciliation/report.html:189 UI/reconciliation/report.html:237
+#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
+#: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
+#: UI/payments/payment1.html:86 UI/payments/payment1.html:95
+#: UI/payments/payment2.html:430 UI/payments/payments_detail.html:325
+#: UI/reconciliation/report.html:130 UI/reconciliation/report.html:189
+#: UI/reconciliation/report.html:237
 #: UI/Reports/filters/invoice_outstanding.html:209
 #: UI/Reports/filters/invoice_search.html:299
 #: UI/rp-search-generate_tax_report.html:175
@@ -8331,7 +8250,7 @@ msgstr ""
 msgid "Transaction Approval"
 msgstr ""
 
-#: LedgerSMB/Report/PNL/Invoice.pm:88 UI/import_csv/import_csv.html:47
+#: LedgerSMB/Report/PNL/Invoice.pm:89 UI/import_csv/import_csv.html:47
 #: UI/import_csv/import_inventory_csv.html:33
 #: UI/Reports/filters/purchase_history.html:132
 msgid "Transaction Date"
@@ -8387,7 +8306,7 @@ msgstr ""
 msgid "Translations saved!"
 msgstr ""
 
-#: LedgerSMB/Report/Trial_Balance.pm:140 sql/Pg-database.sql:2857
+#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2857
 msgid "Trial Balance"
 msgstr "Prufu staða"
 
@@ -8395,7 +8314,7 @@ msgstr "Prufu staða"
 msgid "Trillion"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:129
+#: LedgerSMB/Report/Timecards.pm:130
 msgid "Tue"
 msgstr ""
 
@@ -8481,6 +8400,10 @@ msgstr ""
 msgid "Unable to save contact information"
 msgstr ""
 
+#: UI/Reports/filters/unapproved.html:72
+msgid "Unapproved"
+msgstr ""
+
 #: UI/rc-display-form.html:78
 msgid "Under"
 msgstr ""
@@ -8489,19 +8412,19 @@ msgstr ""
 msgid "Unexpected file name, expected [_1], got [_2]"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:259
+#: LedgerSMB/Upgrade_Tests.pm:261
 msgid "Unique AR Invoice numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:159
+#: LedgerSMB/Upgrade_Tests.pm:160
 msgid "Unique Customernumber"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:178
+#: LedgerSMB/Upgrade_Tests.pm:179
 msgid "Unique Vendornumber"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:589
+#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:596
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
@@ -8509,16 +8432,15 @@ msgstr ""
 #: LedgerSMB/Report/Contact/History.pm:91
 #: LedgerSMB/Report/Inventory/History.pm:130
 #: LedgerSMB/Report/Inventory/Search.pm:206 templates/demo/invoice.tex:138
-#: templates/demo/product_receipt.tex:119
-#: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
+#: templates/demo/product_receipt.tex:119 templates/demo/purchase_order.tex:119
+#: templates/demo/sales_order.tex:120
 #: templates/demo_with_images/invoice.tex:138
 #: templates/demo_with_images/product_receipt.tex:119
 #: templates/demo_with_images/purchase_order.tex:119
 #: templates/demo_with_images/sales_order.tex:120
 #: templates/xedemo/invoice.tex:137 templates/xedemo/product_receipt.tex:119
-#: templates/xedemo/purchase_order.tex:119
-#: templates/xedemo/sales_order.tex:120 UI/payroll/income.html:74
-#: UI/Reports/filters/purchase_history.html:296
+#: templates/xedemo/purchase_order.tex:119 templates/xedemo/sales_order.tex:120
+#: UI/payroll/income.html:74 UI/Reports/filters/purchase_history.html:296
 #: UI/Reports/filters/search_goods.html:221
 msgid "Unit"
 msgstr "Einingar"
@@ -8534,18 +8456,18 @@ msgstr "Einingar"
 msgid "Unit Price"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:692
+#: LedgerSMB/Upgrade_Tests.pm:699
 msgid "Unknown "
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:674
+#: LedgerSMB/Upgrade_Tests.pm:681
 msgid ""
-"Unknown account category (should be "
-"A(sset)/L(iability)/E(xpense)/I(ncome)/(e)Q(uity))"
+"Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
+"(e)Q(uity))"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:656
-msgid "Unknown charttype; should be H(eader)/A(ccount))"
+#: LedgerSMB/Upgrade_Tests.pm:663
+msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:187
@@ -8560,19 +8482,15 @@ msgstr ""
 msgid "Unlock Batch"
 msgstr ""
 
-#: UI/Reports/filters/unapproved.html:72
-msgid "Unpproved"
-msgstr ""
-
 #: UI/Reports/filters/payments.html:23
 msgid "Unsupported Number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:382
+#: LedgerSMB/Upgrade_Tests.pm:386
 msgid "Unsupported account categories"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:400
+#: LedgerSMB/Upgrade_Tests.pm:405
 msgid "Unsupported account link combinations"
 msgstr ""
 
@@ -8592,7 +8510,7 @@ msgstr ""
 #: bin/ir.pl:550 bin/ir.pl:963 bin/is.pl:568 bin/is.pl:1012 bin/oe.pl:633
 #: bin/oe.pl:853 bin/oe.pl:1942 bin/pe.pl:620 LedgerSMB/Scripts/budgets.pm:96
 #: UI/am-taxes.html:65 UI/payments/payment2.html:440
-#: UI/payments/payments_detail.html:464 UI/payroll/deduction.html:90
+#: UI/payments/payments_detail.html:468 UI/payroll/deduction.html:90
 #: UI/payroll/income.html:96 UI/reconciliation/report.html:263
 msgid "Update"
 msgstr "Uppfærsla"
@@ -8642,7 +8560,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1584
+#: LedgerSMB/Scripts/payment.pm:1581
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -8659,7 +8577,7 @@ msgstr "Notandi"
 msgid "User Name"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:920
+#: LedgerSMB/Scripts/setup.pm:924
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -8683,8 +8601,8 @@ msgstr ""
 msgid "Valid From"
 msgstr ""
 
-#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37
-#: UI/Contact/pricelist.html:50 UI/Contact/pricelist.tex:50
+#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:50
+#: UI/Contact/pricelist.tex:50
 msgid "Valid To"
 msgstr ""
 
@@ -8709,12 +8627,11 @@ msgstr ""
 #: bin/aa.pl:516 bin/aa.pl:1597 bin/ic.pl:1026 bin/ir.pl:436 bin/oe.pl:2409
 #: bin/oe.pl:2565 bin/pe.pl:1040 bin/pe.pl:1195 LedgerSMB/Report/Aging.pm:80
 #: LedgerSMB/Report/Invoices/Outstanding.pm:175
-#: LedgerSMB/Report/Invoices/Transactions.pm:247
-#: LedgerSMB/Report/Orders.pm:191 LedgerSMB/Report/Orders.pm:197
-#: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
-#: UI/payments/payments_detail.html:8 UI/payments/use_overpayment1.html:27
-#: UI/payments/use_overpayment2.html:23 UI/payments/use_overpayment2.html:151
-#: UI/Reports/filters/aging.html:14
+#: LedgerSMB/Report/Invoices/Transactions.pm:247 LedgerSMB/Report/Orders.pm:191
+#: LedgerSMB/Report/Orders.pm:197 UI/Contact/divs/credit.html:11
+#: UI/Contact/divs/credit.html:12 UI/payments/payments_detail.html:8
+#: UI/payments/use_overpayment1.html:27 UI/payments/use_overpayment2.html:23
+#: UI/payments/use_overpayment2.html:151 UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:6
 #: UI/Reports/filters/invoice_search.html:6 UI/Reports/filters/orders.html:5
 #: UI/rp-search-generate_tax_report.html:141 sql/Pg-database.sql:542
@@ -8807,8 +8724,7 @@ msgstr ""
 #: bin/oe.pl:1730 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
 #: templates/demo/packing_list.tex:90 templates/demo/pick_list.html:81
-#: templates/demo/pick_list.tex:82
-#: templates/demo_with_images/bin_list.html:112
+#: templates/demo/pick_list.tex:82 templates/demo_with_images/bin_list.html:112
 #: templates/demo_with_images/bin_list.tex:82
 #: templates/demo_with_images/packing_list.html:83
 #: templates/demo_with_images/packing_list.tex:90
@@ -8829,11 +8745,11 @@ msgstr ""
 msgid "Warning!"
 msgstr ""
 
-#: UI/lib/ui-header.html:26
+#: UI/lib/ui-header.html:33
 msgid "Warning:  Your password will expire in [_1]"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:133
+#: LedgerSMB/Report/Timecards.pm:134
 msgid "Wed"
 msgstr ""
 
@@ -8841,7 +8757,7 @@ msgstr ""
 msgid "Week"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:96
+#: LedgerSMB/Report/Timecards.pm:97
 msgid "Week Starting"
 msgstr ""
 
@@ -8903,9 +8819,8 @@ msgid "Yahoo"
 msgstr ""
 
 #: bin/aa.pl:1582 bin/am.pl:822 bin/pe.pl:845 LedgerSMB/DBObject/Date.pm:95
-#: UI/bp-search.html:50 UI/lib/report_base.html:157
-#: UI/lib/report_base.html:224 UI/rc-reconciliation.html:59
-#: UI/rp-search-generate_income_statement.html:52
+#: UI/bp-search.html:50 UI/lib/report_base.html:157 UI/lib/report_base.html:224
+#: UI/rc-reconciliation.html:59 UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
 msgid "Year"
 msgstr ""
@@ -9089,19 +9004,19 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1709
+#: LedgerSMB/Scripts/payment.pm:1706
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1463
+#: LedgerSMB/Scripts/payment.pm:1460
 msgid "is lesser than 0"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1457
+#: LedgerSMB/Scripts/payment.pm:1454
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1677
+#: LedgerSMB/Scripts/payment.pm:1674
 msgid "is null"
 msgstr ""
 
@@ -9157,8 +9072,8 @@ msgstr ""
 msgid "unexpected error!"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1717 LedgerSMB/Scripts/payment.pm:1734
-#: LedgerSMB/Scripts/payment.pm:1789 LedgerSMB/Scripts/payment.pm:1806
+#: LedgerSMB/Scripts/payment.pm:1714 LedgerSMB/Scripts/payment.pm:1731
+#: LedgerSMB/Scripts/payment.pm:1786 LedgerSMB/Scripts/payment.pm:1803
 msgid "use of an overpayment"
 msgstr ""
 
