@@ -39,7 +39,6 @@
 #######################################################################
 
 package lsmb_legacy;
-use List::Util qw(max);
 use Try::Tiny;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
@@ -47,7 +46,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
-use List::Util 'reduce';
+use List::Util qw(max reduce);
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
