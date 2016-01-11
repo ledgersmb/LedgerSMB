@@ -1,38 +1,22 @@
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2005
-#
-# British English texts:
-#
-#  Author:
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-12-28 23:45+0000\n"
+"PO-Revision-Date: 2015-12-29 12:32+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: English (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/language/en_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en_CA\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
-#, fuzzy
 msgid "# Invoices"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -73,8 +57,8 @@ msgstr ""
 #: templates/demo_with_images/packing_list.tex:22
 #: templates/xedemo/invoice.tex:31 templates/xedemo/packing_list.tex:22
 msgid ""
-"A return authorization must be obtained from [_1] before goods are returned. "
-"Returns must be shipped prepaid and properly insured. [_1] will not be "
+"A return authorization must be obtained from [_1] before goods are returned."
+" Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
 
@@ -93,9 +77,8 @@ msgid "AP Aging"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:106
-#, fuzzy
 msgid "AP Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:160
 msgid "AP Invoices"
@@ -119,9 +102,8 @@ msgid "AP Transaction"
 msgstr ""
 
 #: bin/aa.pl:1494 LedgerSMB/Report/Contact/Purchase.pm:128
-#, fuzzy
 msgid "AP Transactions"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2908
 msgid "AP Voucher"
@@ -142,9 +124,8 @@ msgid "AR Aging"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:102
-#, fuzzy
 msgid "AR Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:137
 msgid "AR Invoices"
@@ -168,9 +149,8 @@ msgid "AR Transaction"
 msgstr ""
 
 #: bin/aa.pl:1493 LedgerSMB/Report/Contact/Purchase.pm:130
-#, fuzzy
 msgid "AR Transactions"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2907
 msgid "AR Voucher"
@@ -231,9 +211,8 @@ msgid "Account Description"
 msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:77
-#, fuzzy
 msgid "Account Label"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/GL.pm:152 UI/Reports/co/filter_bm.html:85
 #: UI/Reports/co/filter_cd.html:69 UI/Reports/filters/gl.html:260
@@ -241,9 +220,8 @@ msgid "Account Name"
 msgstr ""
 
 #: LedgerSMB/Report/GL.pm:147
-#, fuzzy
 msgid "Account No."
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ic.pl:1027 bin/ic.pl:1689 LedgerSMB/Report/Budget/Search.pm:124
 #: LedgerSMB/Report/Budget/Variance.pm:73 LedgerSMB/Report/COA.pm:87
@@ -254,32 +232,28 @@ msgstr "Labour Code"
 #: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:91
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
-#: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
-#: UI/accounts/edit.html:26 UI/accounts/edit.html:122
-#: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
-#: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
-#: UI/Reports/filters/contact_search.html:82
+#: LedgerSMB/Report/Taxform/Summary.pm:79
+#: LedgerSMB/Report/Trial_Balance.pm:152 LedgerSMB/Scripts/payment.pm:149
+#: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
+#: UI/accounts/edit.html:122 UI/Contact/divs/bank_act.html:22
+#: UI/payments/use_overpayment2.html:123 UI/Reports/co/filter_bm.html:78
+#: UI/Reports/co/filter_cd.html:62 UI/Reports/filters/contact_search.html:82
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
-#, fuzzy
 msgid "Account Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:131
-#, fuzzy
 msgid "Account Number End"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:129
-#, fuzzy
 msgid "Account Number Start"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:150
-#, fuzzy
 msgid "Account Title"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:78
 #: LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:199
@@ -305,9 +279,8 @@ msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:28
 #: UI/Reports/filters/income_statement.html:68
-#, fuzzy
 msgid "Account numbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/payments/payments_detail.html:132 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
@@ -360,14 +333,12 @@ msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
-#, fuzzy
 msgid "Actions"
-msgstr "Email Statement to"
+msgstr ""
 
 #: t/data/04-complex_template.html:496
-#, fuzzy
 msgid "Actions:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -395,52 +366,44 @@ msgid "Add"
 msgstr ""
 
 #: bin/aa.pl:378 bin/aa.pl:415
-#, fuzzy
 msgid "Add AP Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:377
-#, fuzzy
 msgid "Add AR Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Scripts/account.pm:43
-#, fuzzy
 msgid "Add Account"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2787
 msgid "Add Accounts"
 msgstr ""
 
 #: bin/ic.pl:65 sql/Pg-database.sql:2862
-#, fuzzy
 msgid "Add Assembly"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:213
-#, fuzzy
 msgid "Add Asset"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:105
-#, fuzzy
 msgid "Add Asset Class"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2884
-#, fuzzy
 msgid "Add Assets"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2909
 msgid "Add Budget"
 msgstr ""
 
 #: bin/am.pl:279 sql/Pg-database.sql:2836
-#, fuzzy
 msgid "Add Business"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2882
 msgid "Add Class"
@@ -451,33 +414,28 @@ msgid "Add Contact"
 msgstr ""
 
 #: bin/is.pl:101
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/aa.pl:413
-#, fuzzy
 msgid "Add Credit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
 msgstr ""
 
 #: bin/is.pl:105
-#, fuzzy
 msgid "Add Customer Return"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ir.pl:116 bin/ir.pl:143
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/aa.pl:411
-#, fuzzy
 msgid "Add Debit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:35
 #: sql/Pg-database.sql:2804
@@ -485,9 +443,8 @@ msgid "Add Employee"
 msgstr ""
 
 #: bin/oe.pl:1501
-#, fuzzy
 msgid "Add Exchange Rate"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/am.pl:156 sql/Pg-database.sql:2903
 msgid "Add GIFI"
@@ -498,47 +455,40 @@ msgid "Add Group"
 msgstr ""
 
 #: bin/ic.pl:66
-#, fuzzy
 msgid "Add Labor/Overhead"
-msgstr "Labour/Overhead"
+msgstr "Add Labour/Overhead"
 
 #: bin/am.pl:453 sql/Pg-database.sql:2838
 msgid "Add Language"
 msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:80
-#, fuzzy
 msgid "Add New Tax Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:175
-#, fuzzy
 msgid "Add Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Edit Labour/Overhead"
+msgstr ""
 
 #: bin/ic.pl:63 sql/Pg-database.sql:2860
-#, fuzzy
 msgid "Add Part"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/pe.pl:195 sql/Pg-database.sql:2930
 msgid "Add Pricegroup"
 msgstr ""
 
 #: bin/io.pl:1198 bin/oe.pl:62
-#, fuzzy
 msgid "Add Purchase Order"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/io.pl:1231 bin/oe.pl:74
-#, fuzzy
 msgid "Add Quotation"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/business_units/edit.html:13
 msgid "Add Reporting Unit"
@@ -549,97 +499,81 @@ msgid "Add Request for Quotation"
 msgstr ""
 
 #: sql/Pg-database.sql:2972
-#, fuzzy
 msgid "Add Return"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:365 sql/Pg-database.sql:2840
 msgid "Add SIC"
 msgstr ""
 
 #: bin/is.pl:110 bin/oe.pl:1417
-#, fuzzy
 msgid "Add Sales Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/io.pl:1209 bin/oe.pl:66
-#, fuzzy
 msgid "Add Sales Order"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ic.pl:64 sql/Pg-database.sql:2861
-#, fuzzy
 msgid "Add Service"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2868
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:2
-#, fuzzy
 msgid "Add TaxForm"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:2827
-#, fuzzy
 msgid "Add Timecard"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/io.pl:2285
-#, fuzzy
 msgid "Add To List"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
 msgid "Add Transaction"
 msgstr ""
 
 #: UI/business_units/list_classes.html:103
-#, fuzzy
 msgid "Add Unit"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:98
 #: UI/setup/confirm_operation.html:52 UI/setup/edit_user.html:93
-#, fuzzy
 msgid "Add User"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
-#, fuzzy
 msgid "Add Vendor"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ir.pl:125 bin/oe.pl:1409
-#, fuzzy
 msgid "Add Vendor Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ir.pl:120
-#, fuzzy
 msgid "Add Vendor Return"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:780 sql/Pg-database.sql:2834
 msgid "Add Warehouse"
 msgstr ""
 
 #: bin/io.pl:2100
-#, fuzzy
 msgid "Add line1"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/io.pl:2103
-#, fuzzy
 msgid "Add line2"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/io.pl:2107
-#, fuzzy
 msgid "Add line3 "
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Contact/divs/wage.html:72
 msgid "Add/Change Deductions"
@@ -680,9 +614,8 @@ msgid "Adj"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:772
-#, fuzzy
 msgid "Adjusted Basis"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/gl.pl:138
 msgid "Adjusting Till: (till) Source: (source)"
@@ -693,19 +626,16 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:31
-#, fuzzy
 msgid "Adjustment"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:13
-#, fuzzy
 msgid "Adjustment Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/inventory/adjustment_setup.html:9
-#, fuzzy
 msgid "Adjustment Details"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Reports/filters/aging.html:80
 msgid "Aged"
@@ -722,14 +652,12 @@ msgid "All"
 msgstr ""
 
 #: bin/aa.pl:1703
-#, fuzzy
 msgid "All Invoices"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:38
-#, fuzzy
 msgid "All accounts"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Reports/co/filter_cd.html:15
 msgid "All fields are required"
@@ -766,7 +694,8 @@ msgstr ""
 #: templates/demo_with_images/sales_order.tex:158
 #: templates/demo_with_images/sales_quotation.tex:123
 #: templates/xedemo/invoice.tex:184 templates/xedemo/product_receipt.tex:147
-#: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
+#: templates/xedemo/purchase_order.tex:153
+#: templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
 msgid "All prices in [_1]."
 msgstr ""
@@ -783,17 +712,18 @@ msgstr ""
 #: bin/ir.pl:862 bin/is.pl:745 bin/is.pl:908 bin/pe.pl:1067
 #: LedgerSMB/Report/Contact/Purchase.pm:82
 #: LedgerSMB/Report/Invoices/Outstanding.pm:216
-#: LedgerSMB/Report/Invoices/Transactions.pm:271 LedgerSMB/Report/Orders.pm:234
+#: LedgerSMB/Report/Invoices/Transactions.pm:271
+#: LedgerSMB/Report/Orders.pm:234
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:119
 #: templates/demo/ap_transaction.html:196
-#: templates/demo/ar_transaction.html:194 templates/demo/ar_transaction.tex:129
-#: templates/demo/invoice.html:250 templates/demo/invoice.tex:141
-#: templates/demo/invoice.tex:202 templates/demo/printPayment.html:53
-#: templates/demo/product_receipt.html:131
+#: templates/demo/ar_transaction.html:194
+#: templates/demo/ar_transaction.tex:129 templates/demo/invoice.html:250
+#: templates/demo/invoice.tex:141 templates/demo/invoice.tex:202
+#: templates/demo/printPayment.html:53 templates/demo/product_receipt.html:131
 #: templates/demo/product_receipt.tex:120
-#: templates/demo/purchase_order.html:133 templates/demo/purchase_order.tex:120
-#: templates/demo/sales_order.html:135 templates/demo/sales_order.tex:122
-#: templates/demo/sales_quotation.html:104
+#: templates/demo/purchase_order.html:133
+#: templates/demo/purchase_order.tex:120 templates/demo/sales_order.html:135
+#: templates/demo/sales_order.tex:122 templates/demo/sales_quotation.html:104
 #: templates/demo/sales_quotation.tex:90
 #: templates/demo_with_images/ap_transaction.html:196
 #: templates/demo_with_images/ar_transaction.html:194
@@ -825,7 +755,8 @@ msgstr ""
 #: UI/payments/payment2.html:285 UI/Reports/filters/gl.html:102
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:287
-#: UI/Reports/filters/orders.html:168 UI/rp-search-generate_tax_report.html:158
+#: UI/Reports/filters/orders.html:168
+#: UI/rp-search-generate_tax_report.html:158
 msgid "Amount"
 msgstr ""
 
@@ -975,9 +906,8 @@ msgid "Asset Class"
 msgstr ""
 
 #: LedgerSMB/Report/Listings/Asset_Class.pm:104
-#, fuzzy
 msgid "Asset Class List"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/asset/edit_asset.html:60 UI/asset/search_asset.html:51
 msgid "Asset Class:"
@@ -996,9 +926,8 @@ msgid "Asset Disposal Report"
 msgstr ""
 
 #: LedgerSMB/Report/Listings/Asset.pm:133
-#, fuzzy
 msgid "Asset Listing"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:461
 msgid "Asset Partial Disposal Report"
@@ -1083,17 +1012,16 @@ msgid "Attached by"
 msgstr ""
 
 #: bin/io.pl:1453
-#, fuzzy
 msgid "Attachment"
-msgstr "Email Statement to"
+msgstr ""
 
 #: templates/demo/bin_list.html:51 templates/demo/bin_list.html:84
 #: templates/demo/packing_list.html:52 templates/demo/pick_list.html:51
 #: templates/demo/product_receipt.html:50
-#: templates/demo/product_receipt.html:78 templates/demo/product_receipt.tex:47
-#: templates/demo/product_receipt.tex:82 templates/demo/purchase_order.html:50
-#: templates/demo/purchase_order.html:78 templates/demo/purchase_order.tex:47
-#: templates/demo/purchase_order.tex:82
+#: templates/demo/product_receipt.html:78
+#: templates/demo/product_receipt.tex:47 templates/demo/product_receipt.tex:82
+#: templates/demo/purchase_order.html:50 templates/demo/purchase_order.html:78
+#: templates/demo/purchase_order.tex:47 templates/demo/purchase_order.tex:82
 #: templates/demo/request_quotation.html:51
 #: templates/demo/request_quotation.html:79 templates/demo/sales_order.html:49
 #: templates/demo/sales_quotation.html:44
@@ -1127,7 +1055,8 @@ msgstr "Email Statement to"
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
-#: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
+#: templates/xedemo/sales_quotation.html:44
+#: templates/xedemo/work_order.html:49
 msgid "Attn: [_1]"
 msgstr ""
 
@@ -1208,14 +1137,13 @@ msgstr ""
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:94 LedgerSMB/Report/GL.pm:162
 #: UI/Reports/filters/gl.html:266
-#, fuzzy
 msgid "Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: templates/demo/invoice.html:197 templates/demo/invoice.tex:170
 #: templates/demo_with_images/invoice.html:197
-#: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
-#: templates/xedemo/invoice.tex:168
+#: templates/demo_with_images/invoice.tex:169
+#: templates/xedemo/invoice.html:197 templates/xedemo/invoice.tex:168
 msgid "Balance Due"
 msgstr ""
 
@@ -1237,9 +1165,8 @@ msgid "Bank Account"
 msgstr ""
 
 #: t/data/04-complex_template.html:601
-#, fuzzy
 msgid "Bank Account:"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
@@ -1252,76 +1179,64 @@ msgid "Bank Register Mode"
 msgstr ""
 
 #: bin/ic.pl:986
-#, fuzzy
 msgid "Bar Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ir.pl:688 bin/is.pl:747 LedgerSMB/Report/Assets/Net_Book_Value.pm:92
 msgid "Basis"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:153
-#, fuzzy
 msgid "Batch"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:98
-#, fuzzy
 msgid "Batch Class"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:569
-#, fuzzy
 msgid "Batch Control Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/create_batch.html:36
-#, fuzzy
 msgid "Batch Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:150
-#, fuzzy
 msgid "Batch Description"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:146
-#, fuzzy
 msgid "Batch ID"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/GL.pm:148 LedgerSMB/IR.pm:384 LedgerSMB/IS.pm:1123
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/import_csv/import_csv.html:18
 msgid "Batch Information"
 msgstr ""
 
 #: bin/aa.pl:574
-#, fuzzy
 msgid "Batch Name"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/create_batch.html:15
-#, fuzzy
 msgid "Batch Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:140
-#, fuzzy
 msgid "Batch Search"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/unapproved.html:6
 msgid "Batch Selection"
 msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:152
-#, fuzzy
 msgid "Batch Type"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2781
 msgid "Batches"
@@ -1332,14 +1247,12 @@ msgid "Bcc"
 msgstr ""
 
 #: bin/arap.pl:795 bin/io.pl:1897
-#, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: UI/reconciliation/report.html:26
-#, fuzzy
 msgid "Beginning Statement Balance:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:112 UI/Contact/divs/address.html:40
 #: sql/Pg-database.sql:659
@@ -1380,8 +1293,9 @@ msgid "Bin"
 msgstr ""
 
 #: bin/am.pl:1523 bin/io.pl:1422 bin/io.pl:1436 bin/io.pl:1644 bin/oe.pl:260
-#: bin/oe.pl:272 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
-#: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
+#: bin/oe.pl:272 templates/demo/bin_list.html:4
+#: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
+#: templates/demo_with_images/bin_list.html:4
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
@@ -1406,9 +1320,8 @@ msgid "Budget"
 msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:114
-#, fuzzy
 msgid "Budget Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:109
 msgid "Budget Search Results"
@@ -1427,61 +1340,50 @@ msgid "Bug: No such account"
 msgstr ""
 
 #: bin/is.pl:343 bin/oe.pl:366
-#, fuzzy
 msgid "Business"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/payments/payments_filter.html:79
-#, fuzzy
 msgid "Business Class"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:32
-#, fuzzy
 msgid "Business Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Report/Contact/Search.pm:78 UI/Contact/divs/credit.html:235
 #: UI/Contact/divs/credit.html:236
-#, fuzzy
 msgid "Business Type"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: t/data/04-complex_template.html:294
-#, fuzzy
 msgid "Business Type:"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
-#, fuzzy
 msgid "Business Unit List"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:113
-#, fuzzy
 msgid "Business Unit Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:170
 #: UI/Reports/filters/invoice_search.html:260
-#, fuzzy
 msgid "Business Units"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:303
-#, fuzzy
 msgid "Business deleted!"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:296
-#, fuzzy
 msgid "Business saved!"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/payments/payments_detail.html:168
-#, fuzzy
 msgid "Business:"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: sql/Pg-database.sql:809
 msgid "CC"
@@ -1519,18 +1421,16 @@ msgid "Can't void a voided invoice!"
 msgstr ""
 
 #: bin/io.pl:2289
-#, fuzzy
 msgid "Cancel"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:189
 msgid "Cancel?"
 msgstr ""
 
 #: bin/gl.pl:670
-#, fuzzy
 msgid "Cannot Repost Transaction"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/ic.pl:162
 msgid "Cannot create Labor; COGS account does not exist!"
@@ -1561,24 +1461,20 @@ msgid "Cannot create Service; Income account does not exist!"
 msgstr ""
 
 #: bin/ic.pl:2007
-#, fuzzy
 msgid "Cannot delete item!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/oe.pl:1331
-#, fuzzy
 msgid "Cannot delete order!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/gl.pl:699
-#, fuzzy
 msgid "Cannot delete posted transaction"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/oe.pl:1335
-#, fuzzy
 msgid "Cannot delete quotation!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/ir.pl:1366 bin/is.pl:1340
 msgid "Cannot post invoice for a closed period!"
@@ -1598,24 +1494,20 @@ msgid ""
 msgstr ""
 
 #: bin/aa.pl:1384
-#, fuzzy
 msgid "Cannot post transaction!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/oe.pl:1222
-#, fuzzy
 msgid "Cannot save order!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/oe.pl:1239
-#, fuzzy
 msgid "Cannot save quotation!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/am.pl:722
-#, fuzzy
 msgid "Cannot save taxes!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: LedgerSMB/Budget.pm:240
 msgid "Cannot specify both debits and credits for budget line [_1]"
@@ -1627,8 +1519,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:44 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:44
-#: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
-#: templates/xedemo/timecard.tex:27
+#: templates/demo_with_images/timecard.tex:27
+#: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:27
 msgid "Card ID"
 msgstr ""
 
@@ -1649,9 +1541,8 @@ msgid "Cc"
 msgstr ""
 
 #: bin/arap.pl:794 bin/io.pl:1896
-#, fuzzy
 msgid "Cc: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: sql/Pg-database.sql:797
 msgid "Cell Phone"
@@ -1686,14 +1577,12 @@ msgid "Check Prefix"
 msgstr ""
 
 #: UI/payments/check_job.html:7
-#, fuzzy
 msgid "Checking Job"
-msgstr "Cheque"
+msgstr ""
 
 #: UI/payments/check_job.html:15
-#, fuzzy
 msgid "Checking Job [_1]"
-msgstr "Cheque"
+msgstr ""
 
 #: UI/payments/payment1_5.html:23
 msgid "Choose a company"
@@ -1743,22 +1632,22 @@ msgid "Close Books up to"
 msgstr ""
 
 #: bin/aa.pl:1529 bin/oe.pl:313 LedgerSMB/Report/Orders.pm:243
-#: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
+#: UI/Reports/filters/invoice_search.html:212
+#: UI/Reports/filters/orders.html:97
 #: UI/Reports/filters/purchase_history.html:212
 #: UI/Reports/filters/timecards.html:36
 msgid "Closed"
 msgstr ""
 
-#: LedgerSMB/Report/Listings/Language.pm:46 LedgerSMB/Report/Listings/SIC.pm:44
-#: UI/am-language-form.html:12 UI/am-sic-form.html:12
-#, fuzzy
+#: LedgerSMB/Report/Listings/Language.pm:46
+#: LedgerSMB/Report/Listings/SIC.pm:44 UI/am-language-form.html:12
+#: UI/am-sic-form.html:12
 msgid "Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/am.pl:381 bin/am.pl:465
-#, fuzzy
 msgid "Code missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: sql/Pg-database.sql:549
 msgid "Cold Lead"
@@ -1769,14 +1658,12 @@ msgid "Combine"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:71
-#, fuzzy
 msgid "Combine Purchase Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:63
-#, fuzzy
 msgid "Combine Sales Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:74
 #: LedgerSMB/Report/Taxform/Summary.pm:71 LedgerSMB/Scripts/contact.pm:175
@@ -1799,9 +1686,8 @@ msgid "Company Information"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:44
-#, fuzzy
 msgid "Company License Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:147
 #: LedgerSMB/Scripts/configuration.pm:26
@@ -1862,7 +1748,8 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:106
 #: templates/demo_with_images/sales_quotation.html:74
 #: templates/xedemo/bin_list.html:110 templates/xedemo/packing_list.html:81
-#: templates/xedemo/pick_list.html:80 templates/xedemo/product_receipt.html:105
+#: templates/xedemo/pick_list.html:80
+#: templates/xedemo/product_receipt.html:105
 #: templates/xedemo/purchase_order.html:105
 #: templates/xedemo/request_quotation.html:106
 #: templates/xedemo/sales_quotation.html:74
@@ -1934,21 +1821,19 @@ msgid "Contra"
 msgstr ""
 
 #: bin/arap.pl:171 LedgerSMB/Report/Contact/Search.pm:65
-#: LedgerSMB/Report/Listings/Business_Unit.pm:56 LedgerSMB/Report/PNL/ECA.pm:93
-#: LedgerSMB/Report/Taxform/Summary.pm:83
+#: LedgerSMB/Report/Listings/Business_Unit.pm:56
+#: LedgerSMB/Report/PNL/ECA.pm:93 LedgerSMB/Report/Taxform/Summary.pm:83
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:104
 #: UI/business_units/edit.html:28 UI/business_units/filter.html:19
 #: UI/Contact/divs/company.html:52 UI/Contact/divs/person.html:47
 #: UI/payroll/income.html:63 UI/Reports/filters/contact_search.html:37
 #: UI/Reports/filters/overpayments.html:10
-#, fuzzy
 msgid "Control Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/create_batch.html:78
-#, fuzzy
 msgid "Control Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/io-email.html:65
 msgid "Copies"
@@ -1995,9 +1880,8 @@ msgid "Could not save the data.  Please try again"
 msgstr ""
 
 #: bin/oe.pl:1998
-#, fuzzy
 msgid "Could not save!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/oe.pl:2278
 msgid "Could not transfer Inventory!"
@@ -2005,19 +1889,16 @@ msgstr ""
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:93
 #: UI/inventory/adjustment_entry.html:29
-#, fuzzy
 msgid "Counted"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:132
-#, fuzzy
 msgid "Counterparty"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:101
-#, fuzzy
 msgid "Counterparty Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
 #: LedgerSMB/Report/Payroll/Income_Types.pm:31
@@ -2027,24 +1908,20 @@ msgstr "Labour Code"
 #: UI/payroll/deduction.html:20 UI/payroll/income.html:22
 #: UI/Reports/filters/contact_search.html:107
 #: UI/Reports/filters/purchase_history.html:102
-#, fuzzy
 msgid "Country"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/setup/select_coa.html:30
-#, fuzzy
 msgid "Country Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:52
-#, fuzzy
 msgid "Country Name"
-msgstr "Labour Code"
+msgstr ""
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
-#, fuzzy
 msgid "Country:"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2063,9 +1940,8 @@ msgid "Create New Report"
 msgstr ""
 
 #: UI/taxform/add_taxform.html:13
-#, fuzzy
 msgid "Create New Tax Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/setup/new_user.html:138
 msgid "Create User"
@@ -2088,14 +1964,12 @@ msgid "Credit"
 msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:303
-#, fuzzy
 msgid "Credit Account"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Contact/Search.pm:70
-#, fuzzy
 msgid "Credit Account Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:180 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
@@ -2163,12 +2037,13 @@ msgstr ""
 
 #: bin/aa.pl:1576 bin/pe.pl:839 LedgerSMB/DBObject/Date.pm:79
 #: LedgerSMB/Report/Aging.pm:126 templates/demo/statement.html:64
-#: templates/demo/statement.tex:38 templates/demo_with_images/statement.html:64
+#: templates/demo/statement.tex:38
+#: templates/demo_with_images/statement.html:64
 #: templates/demo_with_images/statement.tex:38
 #: templates/xedemo/statement.html:64 templates/xedemo/statement.tex:38
-#: UI/bp-search.html:40 UI/lib/report_base.html:139 UI/lib/report_base.html:206
-#: UI/rc-reconciliation.html:40 UI/Reports/co/filter_bm.html:53
-#: UI/Reports/filters/aging.html:99
+#: UI/bp-search.html:40 UI/lib/report_base.html:139
+#: UI/lib/report_base.html:206 UI/rc-reconciliation.html:40
+#: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
 #: UI/rp-search-generate_income_statement.html:33
 #: UI/rp-search-generate_tax_report.html:29
 msgid "Current"
@@ -2183,11 +2058,12 @@ msgstr ""
 #: bin/aa.pl:513 bin/aa.pl:1588 bin/ic.pl:1127 bin/is.pl:429 bin/pe.pl:1039
 #: bin/pe.pl:1194 LedgerSMB/Report/Aging.pm:83
 #: LedgerSMB/Report/Invoices/Outstanding.pm:177
-#: LedgerSMB/Report/Invoices/Transactions.pm:250 LedgerSMB/Report/Orders.pm:188
-#: LedgerSMB/Report/Orders.pm:194 UI/business_units/edit.html:83
-#: UI/Contact/divs/credit.html:14 UI/Contact/divs/credit.html:15
-#: UI/orders/order.html:21 UI/payments/use_overpayment1.html:29
-#: UI/payments/use_overpayment2.html:25 UI/Reports/filters/aging.html:15
+#: LedgerSMB/Report/Invoices/Transactions.pm:250
+#: LedgerSMB/Report/Orders.pm:188 LedgerSMB/Report/Orders.pm:194
+#: UI/business_units/edit.html:83 UI/Contact/divs/credit.html:14
+#: UI/Contact/divs/credit.html:15 UI/orders/order.html:21
+#: UI/payments/use_overpayment1.html:29 UI/payments/use_overpayment2.html:25
+#: UI/Reports/filters/aging.html:15
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
 #: UI/rp-search-generate_tax_report.html:139 sql/Pg-database.sql:543
@@ -2195,9 +2071,8 @@ msgid "Customer"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:249
-#, fuzzy
 msgid "Customer Account"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:2784
 msgid "Customer History"
@@ -2215,23 +2090,20 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:11
 #: UI/Reports/filters/overpayments.html:21 UI/Reports/filters/payments.html:21
 #: UI/Reports/filters/purchase_history.html:59
-#, fuzzy
 msgid "Customer Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:12
 msgid "Customer Search"
 msgstr ""
 
 #: bin/aa.pl:1304 bin/is.pl:1328 bin/oe.pl:1190 bin/pe.pl:1273
-#, fuzzy
 msgid "Customer missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/arap.pl:148 bin/pe.pl:1248
-#, fuzzy
 msgid "Customer not on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: UI/setup/complete.html:27 UI/setup/confirm_operation.html:109
 msgid "Customer/Vendor Accounts"
@@ -2266,10 +2138,10 @@ msgid "Database Host"
 msgstr ""
 
 #: UI/setup/begin_backup.html:6 UI/setup/complete.html:10
-#: UI/setup/complete_migration_revert.html:10 UI/setup/confirm_operation.html:6
-#: UI/setup/credentials.html:7 UI/setup/new_user.html:6
-#: UI/setup/select_coa.html:6 UI/setup/template_info.html:4
-#: UI/setup/upgrade_info.html:6
+#: UI/setup/complete_migration_revert.html:10
+#: UI/setup/confirm_operation.html:6 UI/setup/credentials.html:7
+#: UI/setup/new_user.html:6 UI/setup/select_coa.html:6
+#: UI/setup/template_info.html:4 UI/setup/upgrade_info.html:6
 msgid "Database Management Console"
 msgstr ""
 
@@ -2284,7 +2156,8 @@ msgstr ""
 #: LedgerSMB/DBH.pm:111
 msgid ""
 "Database is not the expected version.  Was [_1], expected [_2].  Please re-"
-"run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>"
+"run setup.pl against this database to correct.<a "
+"href='setup.pl'>setup.pl</a>"
 msgstr ""
 
 #: UI/am-company-logo.html:16
@@ -2297,20 +2170,21 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:95
 #: LedgerSMB/Report/Invoices/Outstanding.pm:187
 #: LedgerSMB/Report/Invoices/Transactions.pm:258
-#: LedgerSMB/Report/Listings/Overpayments.pm:136 LedgerSMB/Report/Orders.pm:213
+#: LedgerSMB/Report/Listings/Overpayments.pm:136
+#: LedgerSMB/Report/Orders.pm:213
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:532
 #: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:748
-#: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
-#: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
-#: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
-#: templates/demo/ar_transaction.tex:77 templates/demo/ar_transaction.tex:128
-#: templates/demo/bin_list.html:109 templates/demo/invoice.html:107
-#: templates/demo/invoice.html:247 templates/demo/invoice.tex:201
-#: templates/demo/packing_list.html:80 templates/demo/packing_list.tex:88
-#: templates/demo/pick_list.html:79 templates/demo/pick_list.tex:81
-#: templates/demo/printPayment.html:78
+#: templates/demo/ap_transaction.html:73
+#: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
+#: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
+#: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
+#: templates/demo/ar_transaction.tex:128 templates/demo/bin_list.html:109
+#: templates/demo/invoice.html:107 templates/demo/invoice.html:247
+#: templates/demo/invoice.tex:201 templates/demo/packing_list.html:80
+#: templates/demo/packing_list.tex:88 templates/demo/pick_list.html:79
+#: templates/demo/pick_list.tex:81 templates/demo/printPayment.html:78
 #: templates/demo/request_quotation.html:104
 #: templates/demo/sales_quotation.html:72 templates/demo/statement.html:62
 #: templates/demo/statement.tex:37 templates/demo/timecard.html:48
@@ -2359,14 +2233,14 @@ msgstr ""
 #: UI/journal/journal_entry.html:40 UI/orders/order.html:246
 #: UI/payments/payment2.html:100 UI/payments/payments_detail.html:317
 #: UI/payments/use_overpayment2.html:87 UI/Reports/filters/gl.html:183
-#: UI/Reports/filters/orders.html:125 UI/rp-search-generate_tax_report.html:127
+#: UI/Reports/filters/orders.html:125
+#: UI/rp-search-generate_tax_report.html:127
 msgid "Date"
 msgstr ""
 
 #: UI/users/preferences.html:58
-#, fuzzy
 msgid "Date Format"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ic.pl:951 LedgerSMB/Report/Listings/Overpayments.pm:102
 #: UI/Reports/filters/reconciliation_search.html:11
@@ -2387,18 +2261,16 @@ msgid "Date Paid"
 msgstr ""
 
 #: bin/oe.pl:1725
-#, fuzzy
 msgid "Date Received"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:81 UI/Reports/filters/payments.html:97
 msgid "Date Reversed"
 msgstr ""
 
 #: bin/ic.pl:954 LedgerSMB/Report/Listings/Overpayments.pm:103
-#, fuzzy
 msgid "Date To"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/payments/payments_filter.html:114
 msgid "Date To:"
@@ -2417,9 +2289,8 @@ msgid "Date of Birth"
 msgstr ""
 
 #: bin/oe.pl:1983
-#, fuzzy
 msgid "Date received missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/aa.pl:1693 UI/payments/payment1.html:73
 #: UI/Reports/filters/contact_search.html:121
@@ -2427,9 +2298,8 @@ msgid "Date to"
 msgstr ""
 
 #: bin/arap.pl:801 bin/io.pl:1915
-#, fuzzy
 msgid "Date: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2475,14 +2345,12 @@ msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
-#, fuzzy
 msgid "Decimal Places"
-msgstr "Decimal places"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:130
-#, fuzzy
 msgid "Decimal Places for Money"
-msgstr "Decimal places"
+msgstr ""
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:35 UI/payroll/deduction.html:33
 msgid "Deduction Class"
@@ -2529,9 +2397,8 @@ msgid "Default Email To"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:56
-#, fuzzy
 msgid "Default Format"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:52
 msgid "Default Language"
@@ -2580,13 +2447,15 @@ msgid "Delete Vouchers"
 msgstr ""
 
 #: bin/am.pl:532
-msgid "Deleting a language will also delete the templates for the language [_1]"
+msgid ""
+"Deleting a language will also delete the templates for the language [_1]"
 msgstr ""
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
-#: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
+#: templates/xedemo/invoice.tex:135
+#: templates/xedemo/request_quotation.html:144
 msgid "Delivery"
 msgstr ""
 
@@ -2625,14 +2494,12 @@ msgstr ""
 #: UI/ca-list-selector.html:51 UI/payments/payment2.html:78
 #: UI/payments/payments_detail.html:123 UI/payments/payments_filter.html:52
 #: UI/rp-search.html:13
-#, fuzzy
 msgid "Department"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payment1.html:28
-#, fuzzy
 msgid "Departments"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2887
 msgid "Depreciate"
@@ -2680,7 +2547,8 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Search.pm:85 LedgerSMB/Report/Budget/Variance.pm:69
 #: LedgerSMB/Report/Budget/Variance.pm:116 LedgerSMB/Report/COA.pm:93
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:72
-#: LedgerSMB/Report/co/Caja_Diaria.pm:73 LedgerSMB/Report/Contact/History.pm:83
+#: LedgerSMB/Report/co/Caja_Diaria.pm:73
+#: LedgerSMB/Report/Contact/History.pm:83
 #: LedgerSMB/Report/Contact/Search.pm:74 LedgerSMB/Report/File/Incoming.pm:50
 #: LedgerSMB/Report/File/Internal.pm:48 LedgerSMB/Report/GL.pm:100
 #: LedgerSMB/Report/Inventory/Activity.pm:80
@@ -2688,13 +2556,16 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: LedgerSMB/Report/Inventory/History.pm:122
 #: LedgerSMB/Report/Inventory/Search.pm:198
-#: LedgerSMB/Report/Listings/Asset.pm:86 LedgerSMB/Report/Listings/Asset.pm:120
+#: LedgerSMB/Report/Listings/Asset.pm:86
+#: LedgerSMB/Report/Listings/Asset.pm:120
 #: LedgerSMB/Report/Listings/Business_Type.pm:47
 #: LedgerSMB/Report/Listings/Business_Unit.pm:60
 #: LedgerSMB/Report/Listings/GIFI.pm:49
-#: LedgerSMB/Report/Listings/Language.pm:50 LedgerSMB/Report/Listings/SIC.pm:48
-#: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:80
-#: LedgerSMB/Report/Timecards.pm:104 LedgerSMB/Report/Timecards.pm:117
+#: LedgerSMB/Report/Listings/Language.pm:50
+#: LedgerSMB/Report/Listings/SIC.pm:48
+#: LedgerSMB/Report/Listings/Warehouse.pm:39
+#: LedgerSMB/Report/PNL/Product.pm:80 LedgerSMB/Report/Timecards.pm:104
+#: LedgerSMB/Report/Timecards.pm:117
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:114
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:110
 #: LedgerSMB/Report/Unapproved/Drafts.pm:100 LedgerSMB/Scripts/asset.pm:397
@@ -2733,9 +2604,9 @@ msgstr ""
 #: templates/demo/work_order.html:130 templates/demo/work_order.tex:125
 #: templates/xedemo/bin_list.html:148 templates/xedemo/bin_list.tex:106
 #: templates/xedemo/invoice.html:136 templates/xedemo/invoice.tex:134
-#: templates/xedemo/packing_list.html:120 templates/xedemo/packing_list.tex:114
-#: templates/xedemo/pick_list.html:112 templates/xedemo/pick_list.tex:100
-#: templates/xedemo/printPayment.html:47
+#: templates/xedemo/packing_list.html:120
+#: templates/xedemo/packing_list.tex:114 templates/xedemo/pick_list.html:112
+#: templates/xedemo/pick_list.tex:100 templates/xedemo/printPayment.html:47
 #: templates/xedemo/product_receipt.html:128
 #: templates/xedemo/purchase_order.html:128
 #: templates/xedemo/request_quotation.html:141
@@ -2758,8 +2629,10 @@ msgstr ""
 #: UI/reconciliation/report.html:82 UI/reconciliation/report.html:145
 #: UI/reconciliation/report.html:204 UI/Reports/filters/budget_search.html:26
 #: UI/Reports/filters/cogs_lines.html:19 UI/Reports/filters/gl.html:83
-#: UI/Reports/filters/gl.html:197 UI/Reports/filters/inventory_activity.html:19
-#: UI/Reports/filters/invoice_search.html:138 UI/Reports/filters/orders.html:68
+#: UI/Reports/filters/gl.html:197
+#: UI/Reports/filters/inventory_activity.html:19
+#: UI/Reports/filters/invoice_search.html:138
+#: UI/Reports/filters/orders.html:68
 #: UI/Reports/filters/purchase_history.html:256
 #: UI/Reports/filters/search_goods.html:19
 #: UI/Reports/filters/search_goods.html:205
@@ -2770,14 +2643,12 @@ msgid "Description"
 msgstr ""
 
 #: bin/pe.pl:272
-#, fuzzy
 msgid "Description Translations"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/am.pl:294 bin/am.pl:382 bin/am.pl:466 bin/am.pl:795
-#, fuzzy
 msgid "Description missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/asset/edit_asset.html:67 UI/asset/search_asset.html:56
 #: UI/business_units/edit.html:73 UI/business_units/filter.html:26
@@ -2852,9 +2723,8 @@ msgid "Disposal"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:767
-#, fuzzy
 msgid "Disposal Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:401
 msgid "Disposal Method"
@@ -2889,14 +2759,12 @@ msgid "Done"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:457
-#, fuzzy
 msgid "Double customernumbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:492
-#, fuzzy
 msgid "Double vendornumbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Entity/Person.pm:104 sql/Pg-database.sql:723
 msgid "Dr."
@@ -2957,23 +2825,20 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Transactions.pm:289 UI/orders/order.html:96
 #: UI/Reports/filters/invoice_outstanding.html:237
 #: UI/Reports/filters/invoice_search.html:327
-#, fuzzy
 msgid "Due Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:1309
-#, fuzzy
 msgid "Due Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/Contact/divs/user.html:10 UI/setup/edit_user.html:10
 msgid "Duplicate User Found: Importing User"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:226
-#, fuzzy
 msgid "Duplicate employee numbers"
-msgstr "Licenced to"
+msgstr ""
 
 #: bin/am.pl:866 bin/arap.pl:411 bin/is.pl:579 bin/is.pl:1018 bin/oe.pl:640
 #: bin/oe.pl:861 bin/oe.pl:1946 UI/io-email.html:16
@@ -2982,14 +2847,12 @@ msgid "E-mail"
 msgstr "Email"
 
 #: UI/rp-email.html:8
-#, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Email"
+msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "Email"
+msgstr ""
 
 #: bin/am.pl:1485 bin/io.pl:1698
 msgid "E-mail address missing!"
@@ -3004,9 +2867,8 @@ msgid "E-mailed"
 msgstr "Emailed"
 
 #: LedgerSMB/Report/PNL/ECA.pm:81
-#, fuzzy
 msgid "ECA Income Statement"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:815
 msgid "EDI ID"
@@ -3023,63 +2885,52 @@ msgid "Edit"
 msgstr ""
 
 #: bin/aa.pl:380 bin/aa.pl:416
-#, fuzzy
 msgid "Edit AP Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:379
-#, fuzzy
 msgid "Edit AR Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Scripts/account.pm:70
-#, fuzzy
 msgid "Edit Account"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ic.pl:98 bin/ic.pl:718
-#, fuzzy
 msgid "Edit Assembly"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:103
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:280
-#, fuzzy
 msgid "Edit Business"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/is.pl:129
-#, fuzzy
 msgid "Edit Credit Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/aa.pl:414
-#, fuzzy
 msgid "Edit Credit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr ""
 
 #: bin/is.pl:126
-#, fuzzy
 msgid "Edit Customer Return"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/aa.pl:412
-#, fuzzy
 msgid "Edit Debit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/pe.pl:524
-#, fuzzy
 msgid "Edit Description Translations"
-msgstr "Email address missing"
+msgstr ""
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:36
 msgid "Edit Employee"
@@ -3090,37 +2941,32 @@ msgid "Edit GIFI"
 msgstr ""
 
 #: bin/pe.pl:107
-#, fuzzy
 msgid "Edit Group"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ic.pl:99
-#, fuzzy
 msgid "Edit Labor/Overhead"
-msgstr "Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:454
 msgid "Edit Language"
 msgstr ""
 
 #: bin/ic.pl:96 bin/ic.pl:716
-#, fuzzy
 msgid "Edit Part"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/pe.pl:196
-#, fuzzy
 msgid "Edit Pricegroup"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/oe.pl:93
 msgid "Edit Purchase Order"
 msgstr ""
 
 #: bin/oe.pl:107
-#, fuzzy
 msgid "Edit Quotation"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/business_units/edit.html:11
 msgid "Edit Reporting Unit"
@@ -3131,29 +2977,24 @@ msgid "Edit Request for Quotation"
 msgstr ""
 
 #: bin/am.pl:366
-#, fuzzy
 msgid "Edit SIC"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/is.pl:132
-#, fuzzy
 msgid "Edit Sales Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/oe.pl:98
-#, fuzzy
 msgid "Edit Sales Order"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ic.pl:97 bin/ic.pl:717
-#, fuzzy
 msgid "Edit Service"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Tax Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:214
 msgid "Edit User"
@@ -3164,19 +3005,16 @@ msgid "Edit Vendor"
 msgstr ""
 
 #: bin/ir.pl:146
-#, fuzzy
 msgid "Edit Vendor Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/ir.pl:140
-#, fuzzy
 msgid "Edit Vendor Return"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:781
-#, fuzzy
 msgid "Edit Warehouse"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Contact/divs/user.html:13 UI/setup/edit_user.html:13
 msgid "Editing User"
@@ -3203,9 +3041,8 @@ msgid "Eleven-o"
 msgstr ""
 
 #: UI/Reports/aging_report.html:70 sql/Pg-database.sql:808
-#, fuzzy
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: bin/aa.pl:479 bin/aa.pl:1474 bin/oe.pl:530 bin/pe.pl:884
 #: LedgerSMB/Report/Orders.pm:263 LedgerSMB/Scripts/contact.pm:177
@@ -3228,9 +3065,8 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:114 t/data/04-complex_template.html:92
 #: UI/Contact/divs/employee.html:132 UI/setup/new_user.html:91
-#, fuzzy
 msgid "Employee Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:14
 msgid "Employee Search"
@@ -3238,7 +3074,8 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:208
 msgid ""
-"Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
+"Employee name doesn't meet minimal requirements (e.g. non-empty, "
+"alphanumeric)"
 msgstr ""
 
 #: UI/lib/report_base.html:244 sql/Pg-database.sql:2803
@@ -3246,14 +3083,12 @@ msgid "Employees"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:438
-#, fuzzy
 msgid "Empty customernumbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:473
-#, fuzzy
 msgid "Empty vendornumbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:75 LedgerSMB/Report/Budget/Search.pm:122
 #: LedgerSMB/Report/Budget/Variance.pm:120
@@ -3271,29 +3106,24 @@ msgid "End Date"
 msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
-#, fuzzy
 msgid "End Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:11
-#, fuzzy
 msgid "Ending"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:188
-#, fuzzy
 msgid "Ending Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:52
-#, fuzzy
 msgid "Ending GL Balance:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:30 UI/reconciliation/report.html:44
-#, fuzzy
 msgid "Ending Statement Balance:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:859
 msgid "Ends"
@@ -3349,14 +3179,12 @@ msgid "Entity Class"
 msgstr ""
 
 #: bin/ir.pl:467 bin/is.pl:458 bin/oe.pl:424
-#, fuzzy
 msgid "Entity Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:588
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:1056
 msgid "Entity Credit Account"
@@ -3434,23 +3262,20 @@ msgid "Exchange Rate"
 msgstr ""
 
 #: bin/aa.pl:1343 bin/ir.pl:1388 bin/is.pl:1362
-#, fuzzy
 msgid "Exchange rate for payment missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:1065
-#, fuzzy
 msgid "Exchange rate hasn't been defined!"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:750
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
 
 #: bin/aa.pl:1325 bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1194 bin/oe.pl:1550
-#, fuzzy
 msgid "Exchange rate missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/Reports/filters/overpayments.html:51
 msgid "Exhchange Rate"
@@ -3496,9 +3321,8 @@ msgid "FX"
 msgstr ""
 
 #: bin/pe.pl:1341
-#, fuzzy
 msgid "Failed to save order!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: sql/Pg-database.sql:803
 msgid "Fax"
@@ -3519,10 +3343,10 @@ msgstr ""
 #: templates/demo/invoice.html:53 templates/demo/invoice.html:86
 #: templates/demo/letterhead.html:22 templates/demo/packing_list.html:60
 #: templates/demo/pick_list.html:59 templates/demo/product_receipt.html:58
-#: templates/demo/product_receipt.html:86 templates/demo/product_receipt.tex:56
-#: templates/demo/product_receipt.tex:91 templates/demo/purchase_order.html:58
-#: templates/demo/purchase_order.html:86 templates/demo/purchase_order.tex:56
-#: templates/demo/purchase_order.tex:91
+#: templates/demo/product_receipt.html:86
+#: templates/demo/product_receipt.tex:56 templates/demo/product_receipt.tex:91
+#: templates/demo/purchase_order.html:58 templates/demo/purchase_order.html:86
+#: templates/demo/purchase_order.tex:56 templates/demo/purchase_order.tex:91
 #: templates/demo/request_quotation.html:59
 #: templates/demo/request_quotation.html:87
 #: templates/demo/request_quotation.tex:56
@@ -3583,9 +3407,8 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:52
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
-#, fuzzy
 msgid "Fax: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: templates/demo_with_images/work_order.tex:100
 #: templates/demo/work_order.tex:100 templates/xedemo/work_order.tex:100
@@ -3685,18 +3508,16 @@ msgid "Five Hundred"
 msgstr ""
 
 #: UI/accounts/edit.html:441
-#, fuzzy
 msgid "Fixed Asset"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/accounts/edit.html:435 sql/Pg-database.sql:2921
 msgid "Fixed Assets"
 msgstr ""
 
 #: bin/arap.pl:559
-#, fuzzy
 msgid "For"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:96
 msgid "Foreign Exchange Gain"
@@ -3707,19 +3528,16 @@ msgid "Foreign Exchange Loss"
 msgstr ""
 
 #: UI/Reports/filters/taxforms.html:28
-#, fuzzy
 msgid "Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:48
-#, fuzzy
 msgid "Form Name"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Templates.pm:54
-#, fuzzy
 msgid "Format"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:107
 msgid "Forty"
@@ -3740,10 +3558,10 @@ msgstr ""
 #: bin/aa.pl:1691 bin/ic.pl:1133 bin/oe.pl:2132 bin/pe.pl:855
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
-#: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
-#: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:24
-#: UI/asset/search_reports.html:26 UI/bp-search.html:27
-#: UI/ca-list-selector.html:31 UI/lib/report_base.html:97
+#: templates/demo_with_images/bin_list.tex:35
+#: templates/xedemo/bin_list.html:28 templates/xedemo/bin_list.tex:35
+#: UI/asset/begin_approval.html:24 UI/asset/search_reports.html:26
+#: UI/bp-search.html:27 UI/ca-list-selector.html:31 UI/lib/report_base.html:97
 #: UI/lib/report_base.html:166 UI/rc-reconciliation.html:16
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:114
@@ -3757,18 +3575,16 @@ msgid "From"
 msgstr ""
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:180
-#, fuzzy
 msgid "From Amount"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:132
 #: LedgerSMB/Report/Invoices/Payments.pm:193
 #: LedgerSMB/Report/Reconciliation/Summary.pm:176
 #: LedgerSMB/Report/Taxform/Details.pm:108
 #: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:157
-#, fuzzy
 msgid "From Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/asset/import_asset.html:52 UI/import_csv/import_csv.html:59
 #: UI/import_csv/import_inventory_csv.html:75
@@ -3776,14 +3592,12 @@ msgid "From File"
 msgstr ""
 
 #: bin/oe.pl:2145
-#, fuzzy
 msgid "From Warehouse"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:201
-#, fuzzy
 msgid "From date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:49
 #: UI/Reports/filters/income_statement.html:85
@@ -3817,9 +3631,8 @@ msgid "GIFI deleted!"
 msgstr ""
 
 #: bin/am.pl:213
-#, fuzzy
 msgid "GIFI missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/am.pl:215
 msgid "GIFI saved!"
@@ -3831,9 +3644,8 @@ msgid "GL"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:103
-#, fuzzy
 msgid "GL Reference Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/accounts/edit.html:468
 msgid "Gain"
@@ -3870,34 +3682,28 @@ msgid "Generate"
 msgstr ""
 
 #: UI/Contact/divs/company.html:165 UI/Contact/divs/person.html:181
-#, fuzzy
 msgid "Generate Control Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/oe.pl:2517
-#, fuzzy
 msgid "Generate Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/oe.pl:2422
-#, fuzzy
 msgid "Generate Purchase Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:61
-#, fuzzy
 msgid "Generate Purchase Orders from Sales Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/pe.pl:890 bin/pe.pl:1070 bin/pe.pl:1160
-#, fuzzy
 msgid "Generate Sales Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:74
-#, fuzzy
 msgid "Generate Sales Orders from Purchase Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:804
 msgid "Generic Jabber"
@@ -3908,9 +3714,8 @@ msgid "Given Name"
 msgstr ""
 
 #: t/data/04-strings-for-translation.html:8
-#, fuzzy
 msgid "Goods & Services"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 msgid "Goods and Services"
@@ -3931,9 +3736,8 @@ msgid "Group"
 msgstr ""
 
 #: bin/pe.pl:284
-#, fuzzy
 msgid "Group Translations"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/io-email.html:81 UI/orders/order.html:297
 msgid "Group by"
@@ -3944,14 +3748,12 @@ msgid "Group deleted!"
 msgstr ""
 
 #: bin/pe.pl:70
-#, fuzzy
 msgid "Group missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/pe.pl:72
-#, fuzzy
 msgid "Group saved!"
-msgstr "Email address missing"
+msgstr ""
 
 #: sql/Pg-database.sql:800
 msgid "Gtalk"
@@ -3994,8 +3796,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
-#: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:60
-#: templates/xedemo/timecard.tex:31
+#: templates/demo_with_images/timecard.tex:31
+#: templates/xedemo/timecard.html:60 templates/xedemo/timecard.tex:31
 msgid "Hours"
 msgstr ""
 
@@ -4016,12 +3818,13 @@ msgstr ""
 #: LedgerSMB/Report/Unapproved/Drafts.pm:84 LedgerSMB/Scripts/asset.pm:531
 #: templates/demo/timecard.html:35 templates/demo/timecard.tex:23
 #: templates/demo_with_images/timecard.html:35
-#: templates/demo_with_images/timecard.tex:23 templates/xedemo/timecard.html:35
-#: templates/xedemo/timecard.tex:23 UI/business_units/list_classes.html:12
-#: UI/Reports/filters/gl.html:176
+#: templates/demo_with_images/timecard.tex:23
+#: templates/xedemo/timecard.html:35 templates/xedemo/timecard.tex:23
+#: UI/business_units/list_classes.html:12 UI/Reports/filters/gl.html:176
 #: UI/Reports/filters/invoice_outstanding.html:136
 #: UI/Reports/filters/invoice_search.html:226
-#: UI/Reports/filters/orders.html:112 UI/rp-search-generate_tax_report.html:111
+#: UI/Reports/filters/orders.html:112
+#: UI/rp-search-generate_tax_report.html:111
 msgid "ID"
 msgstr ""
 
@@ -4093,8 +3896,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
 #: templates/demo_with_images/timecard.html:52
-#: templates/demo_with_images/timecard.tex:29 templates/xedemo/timecard.html:52
-#: templates/xedemo/timecard.tex:29
+#: templates/demo_with_images/timecard.tex:29
+#: templates/xedemo/timecard.html:52 templates/xedemo/timecard.tex:29
 msgid "In"
 msgstr ""
 
@@ -4111,15 +3914,15 @@ msgid "Include Exchange Rate Difference"
 msgstr ""
 
 #: bin/arap.pl:381
-#, fuzzy
 msgid "Include Payment"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:1714 UI/ca-list-selector.html:70 UI/Reports/co/filter_bm.html:67
 #: UI/Reports/co/filter_cd.html:54 UI/Reports/filters/aging.html:71
 #: UI/Reports/filters/gl.html:116
 #: UI/Reports/filters/invoice_outstanding.html:102
-#: UI/Reports/filters/invoice_search.html:194 UI/Reports/filters/orders.html:79
+#: UI/Reports/filters/invoice_search.html:194
+#: UI/Reports/filters/orders.html:79
 #: UI/Reports/filters/purchase_history.html:163
 #: UI/Reports/filters/search_goods.html:180
 #: UI/rp-search-generate_balance_sheet.html:70
@@ -4156,9 +3959,8 @@ msgstr ""
 #: LedgerSMB/Report/PNL/Income_Statement.pm:59
 #: UI/Reports/filters/income_statement.html:12 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2858
-#, fuzzy
 msgid "Income Statement"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payroll/income.html:9
 msgid "Income Type"
@@ -4183,9 +3985,9 @@ msgstr ""
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
 msgid ""
-"Interest on overdue amounts will acrue at the rate of 12% per annum starting "
-"from [_1] until paid in full. Items returned are subject to a 10% restocking "
-"charge."
+"Interest on overdue amounts will acrue at the rate of 12% per annum starting"
+" from [_1] until paid in full. Items returned are subject to a 10% "
+"restocking charge."
 msgstr ""
 
 #: LedgerSMB.pm:602
@@ -4229,7 +4031,8 @@ msgstr ""
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
-#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:87 sql/Pg-database.sql:2939
+#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:87
+#: sql/Pg-database.sql:2939
 msgid "Inventory"
 msgstr ""
 
@@ -4238,14 +4041,12 @@ msgid "Inventory Activity"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:145
-#, fuzzy
 msgid "Inventory Activity Report"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:68
-#, fuzzy
 msgid "Inventory Adjustment Details"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:2
 msgid "Inventory Adjustment Entry"
@@ -4256,9 +4057,8 @@ msgid "Inventory Adjustment Setup"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:69
-#, fuzzy
 msgid "Inventory Adjustments"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2940
 msgid "Inventory and COGS"
@@ -4338,26 +4138,24 @@ msgid "Invoice #"
 msgstr ""
 
 #: bin/aa.pl:632 bin/aa.pl:1645 bin/ir.pl:515 bin/is.pl:519
-#, fuzzy
 msgid "Invoice Created"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:1310
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/aa.pl:636 bin/aa.pl:1619 bin/ir.pl:519 bin/is.pl:523
-#: LedgerSMB/Report/Invoices/COGS.pm:94 templates/demo/product_receipt.html:103
-#: UI/orders/order.html:90 UI/Reports/filters/invoice_outstanding.html:163
+#: LedgerSMB/Report/Invoices/COGS.pm:94
+#: templates/demo/product_receipt.html:103 UI/orders/order.html:90
+#: UI/Reports/filters/invoice_outstanding.html:163
 #: UI/Reports/filters/invoice_search.html:253
 msgid "Invoice Date"
 msgstr ""
 
 #: bin/aa.pl:1308 bin/io.pl:1701 bin/ir.pl:1353 bin/is.pl:1327
-#, fuzzy
 msgid "Invoice Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
@@ -4366,39 +4164,34 @@ msgstr ""
 
 #: bin/aa.pl:623 bin/aa.pl:1498 bin/aa.pl:1612 bin/ir.pl:505 bin/is.pl:510
 #: LedgerSMB/Report/Contact/History.pm:68
-#: LedgerSMB/Report/Contact/Purchase.pm:65 LedgerSMB/Report/Invoices/COGS.pm:88
-#: LedgerSMB/Report/PNL/Invoice.pm:86 LedgerSMB/Report/Taxform/Details.pm:86
-#: UI/asset/edit_asset.html:207 UI/asset/search_asset.html:175
-#: UI/orders/order.html:78 UI/payments/payments_detail.html:320
-#: UI/payments/use_overpayment2.html:150
+#: LedgerSMB/Report/Contact/Purchase.pm:65
+#: LedgerSMB/Report/Invoices/COGS.pm:88 LedgerSMB/Report/PNL/Invoice.pm:86
+#: LedgerSMB/Report/Taxform/Details.pm:86 UI/asset/edit_asset.html:207
+#: UI/asset/search_asset.html:175 UI/orders/order.html:78
+#: UI/payments/payments_detail.html:320 UI/payments/use_overpayment2.html:150
 #: UI/Reports/filters/invoice_outstanding.html:142
 #: UI/Reports/filters/invoice_search.html:87
 #: UI/Reports/filters/invoice_search.html:232
-#, fuzzy
 msgid "Invoice Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: bin/io.pl:1711
-#, fuzzy
 msgid "Invoice Number missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Report/PNL/Invoice.pm:76
-#, fuzzy
 msgid "Invoice Profit/Loss"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:76
 #: UI/Reports/filters/invoice_search.html:169
-#, fuzzy
 msgid "Invoice Status"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:94
 #: LedgerSMB/Report/Taxform/Summary.pm:91
-#, fuzzy
 msgid "Invoice Sum"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payments_detail.html:215
 msgid "Invoice Total"
@@ -4417,9 +4210,8 @@ msgid "Invoice due"
 msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:290
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:174
 msgid "Invoices"
@@ -4453,9 +4245,9 @@ msgstr ""
 #: templates/demo/work_order.html:128 templates/demo/work_order.tex:124
 #: templates/xedemo/bin_list.html:146 templates/xedemo/bin_list.tex:105
 #: templates/xedemo/invoice.html:134 templates/xedemo/invoice.tex:132
-#: templates/xedemo/packing_list.html:118 templates/xedemo/packing_list.tex:113
-#: templates/xedemo/pick_list.html:110 templates/xedemo/pick_list.tex:99
-#: templates/xedemo/product_receipt.html:126
+#: templates/xedemo/packing_list.html:118
+#: templates/xedemo/packing_list.tex:113 templates/xedemo/pick_list.html:110
+#: templates/xedemo/pick_list.tex:99 templates/xedemo/product_receipt.html:126
 #: templates/xedemo/purchase_order.html:126
 #: templates/xedemo/request_quotation.html:139
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
@@ -4466,14 +4258,12 @@ msgid "Item"
 msgstr ""
 
 #: bin/ic.pl:2004
-#, fuzzy
 msgid "Item deleted!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/io.pl:852
-#, fuzzy
 msgid "Item not on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:128
 msgid "Items Found In"
@@ -4490,10 +4280,10 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:176
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from [_1] before goods are returned. Returns must be shipped "
-"prepaid and properly insured. [_1] will not be responsible for damages during "
-"transit."
+"Items returned are subject to a 10% restocking charge. A return "
+"authorization must be obtained from [_1] before goods are returned. Returns "
+"must be shipped prepaid and properly insured. [_1] will not be responsible "
+"for damages during transit."
 msgstr ""
 
 #: bin/aa.pl:86 bin/gl.pl:79 bin/io.pl:79 LedgerSMB/App_State.pm:237
@@ -4514,14 +4304,13 @@ msgid "Job Title"
 msgstr ""
 
 #: t/data/04-complex_template.html:78
-#, fuzzy
 msgid "Job Title:"
-msgstr "Labour Code"
+msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
-#: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
-#: templates/xedemo/timecard.tex:37
+#: templates/demo_with_images/timecard.tex:37
+#: templates/xedemo/timecard.html:81 templates/xedemo/timecard.tex:37
 msgid "Job/Project #"
 msgstr ""
 
@@ -4577,11 +4366,10 @@ msgstr "Labour/Overhead"
 
 #: templates/demo/timecard.html:89 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:89
-#: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
-#: templates/xedemo/timecard.tex:39
-#, fuzzy
+#: templates/demo_with_images/timecard.tex:39
+#: templates/xedemo/timecard.html:89 templates/xedemo/timecard.tex:39
 msgid "Labor/Service Code"
-msgstr "Service/Labour Code"
+msgstr ""
 
 #: bin/ir.pl:333 bin/pe.pl:399 bin/pe.pl:577 LedgerSMB/Report/Aging.pm:96
 #: LedgerSMB/Report/Listings/Language.pm:68
@@ -4665,9 +4453,8 @@ msgid "Liability"
 msgstr ""
 
 #: UI/Contact/divs/company.html:149
-#, fuzzy
 msgid "License Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/asset/search_class.html:32
 msgid "Lifetime Measured In"
@@ -4719,9 +4506,8 @@ msgid "List SIC"
 msgstr ""
 
 #: sql/Pg-database.sql:2877
-#, fuzzy
 msgid "List Tax Forms"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/ca-list-selector.html:97
 msgid "List Transactions"
@@ -4740,9 +4526,8 @@ msgid "List Warehouse"
 msgstr ""
 
 #: LedgerSMB/Report/Listings/Business_Type.pm:73
-#, fuzzy
 msgid "List of Business Types"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:69 UI/setup/template_info.html:25
 msgid "Load Templates"
@@ -4806,9 +4591,8 @@ msgid "Loss Account"
 msgstr ""
 
 #: sql/Pg-database.sql:801
-#, fuzzy
 msgid "MSN"
-msgstr "SIN"
+msgstr ""
 
 #: sql/Pg-database.sql:663
 msgid "Mailing"
@@ -4821,9 +4605,8 @@ msgid "Make"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:228
-#, fuzzy
 msgid "Make employee numbers unique"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:261
 msgid "Make invoice numbers unique"
@@ -4834,9 +4617,8 @@ msgid "Make non-obsolete partnumbers unique"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:297
-#, fuzzy
 msgid "Make sure all meta numbers are unique."
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:210
 msgid ""
@@ -4850,8 +4632,9 @@ msgid "Manage Users"
 msgstr ""
 
 #: bin/aa.pl:1488 LedgerSMB/Report/Invoices/Outstanding.pm:265
-#: LedgerSMB/Report/Invoices/Transactions.pm:301 LedgerSMB/Report/Orders.pm:267
-#: UI/Contact/divs/employee.html:105 UI/Contact/divs/employee.html:143
+#: LedgerSMB/Report/Invoices/Transactions.pm:301
+#: LedgerSMB/Report/Orders.pm:267 UI/Contact/divs/employee.html:105
+#: UI/Contact/divs/employee.html:143
 #: UI/Reports/filters/invoice_outstanding.html:189
 #: UI/Reports/filters/invoice_search.html:279
 msgid "Manager"
@@ -4907,9 +4690,8 @@ msgid "Memo"
 msgstr ""
 
 #: LedgerSMB/Scripts/transtemplate.pm:183
-#, fuzzy
 msgid "Memorized Transaction List"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/io.pl:1920 UI/io-email.html:34 UI/rp-email.html:33
 msgid "Message"
@@ -4950,9 +4732,8 @@ msgid "Million"
 msgstr ""
 
 #: LedgerSMB/Report/File/Incoming.pm:53 LedgerSMB/Report/File/Internal.pm:51
-#, fuzzy
 msgid "Mime Type"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:135
 msgid "Min Empty Lines"
@@ -4963,9 +4744,8 @@ msgid "Min Taxable"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:118
-#, fuzzy
 msgid "Misc Settings"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:137
 msgid "Mismatched Transactions (From Upload)"
@@ -4986,8 +4766,9 @@ msgid "Mon"
 msgstr ""
 
 #: bin/aa.pl:1578 bin/am.pl:818 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:84
-#: UI/bp-search.html:44 UI/lib/report_base.html:145 UI/lib/report_base.html:212
-#: UI/rc-reconciliation.html:47 UI/Reports/co/filter_bm.html:58
+#: UI/bp-search.html:44 UI/lib/report_base.html:145
+#: UI/lib/report_base.html:212 UI/rc-reconciliation.html:47
+#: UI/Reports/co/filter_bm.html:58
 #: UI/rp-search-generate_income_statement.html:40
 #: UI/rp-search-generate_tax_report.html:36
 msgid "Month"
@@ -5086,14 +4867,12 @@ msgid "Next"
 msgstr ""
 
 #: bin/arap.pl:390
-#, fuzzy
 msgid "Next Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:926
-#, fuzzy
 msgid "Next Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:101
 #: LedgerSMB/Scripts/configuration.pm:305
@@ -5142,9 +4921,8 @@ msgid "No NULL Amounts"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:192
-#, fuzzy
 msgid "No Null employeenumber"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:1120
 msgid "No changes"
@@ -5217,9 +4995,8 @@ msgid "Non-tracking Items"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:547 LedgerSMB/Upgrade_Tests.pm:569
-#, fuzzy
 msgid "Non-unique invoice numbers"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:66
 msgid "Nontaxable"
@@ -5302,14 +5079,12 @@ msgstr ""
 
 #: bin/aa.pl:82 bin/gl.pl:75 bin/io.pl:75 LedgerSMB/App_State.pm:249
 #: LedgerSMB/DBObject/Date.pm:72
-#, fuzzy
 msgid "November"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:508 LedgerSMB/Upgrade_Tests.pm:527
-#, fuzzy
 msgid "Null employee numbers"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:622
 msgid "Null make numbers"
@@ -5325,11 +5100,13 @@ msgstr ""
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:119
 #: templates/demo/pick_list.html:111 templates/demo/product_receipt.html:125
 #: templates/demo/product_receipt.tex:117
-#: templates/demo/purchase_order.html:127 templates/demo/purchase_order.tex:117
+#: templates/demo/purchase_order.html:127
+#: templates/demo/purchase_order.tex:117
 #: templates/demo/request_quotation.html:140
-#: templates/demo/request_quotation.tex:122 templates/demo/sales_order.html:129
-#: templates/demo/sales_quotation.html:71
-#: templates/demo/sales_quotation.html:98 templates/demo/sales_quotation.tex:87
+#: templates/demo/request_quotation.tex:122
+#: templates/demo/sales_order.html:129 templates/demo/sales_quotation.html:71
+#: templates/demo/sales_quotation.html:98
+#: templates/demo/sales_quotation.tex:87
 #: templates/demo_with_images/bin_list.html:147
 #: templates/demo_with_images/invoice.html:135
 #: templates/demo_with_images/invoice.tex:134
@@ -5358,11 +5135,11 @@ msgstr ""
 #: templates/xedemo/sales_order.html:129
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98
-#: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
-#: UI/am-taxes.html:14 UI/Contact/divs/credit.html:26 UI/io-email.html:99
-#, fuzzy
+#: templates/xedemo/sales_quotation.tex:88
+#: templates/xedemo/work_order.html:129 UI/am-taxes.html:14
+#: UI/Contact/divs/credit.html:26 UI/io-email.html:99
 msgid "Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/users/preferences.html:68
 msgid "Number Format"
@@ -5465,8 +5242,8 @@ msgstr ""
 
 #: UI/logout.html:15
 msgid ""
-"Opera detected.  To complete this logout, please close your browser window or "
-"clear private/authentication information"
+"Opera detected.  To complete this logout, please close your browser window "
+"or clear private/authentication information"
 msgstr ""
 
 #: UI/accounts/edit.html:218
@@ -5483,16 +5260,16 @@ msgstr ""
 
 #: bin/oe.pl:2411 LedgerSMB/Report/Inventory/Search.pm:282
 #: LedgerSMB/Report/Invoices/Outstanding.pm:199
-#, fuzzy
 msgid "Order"
-msgstr "Email Statement to"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:88 templates/demo/ap_transaction.tex:66
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
 #: templates/demo/bin_list.html:108 templates/demo/invoice.html:109
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
-#: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
-#: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/purchase_order.html:102
+#: templates/demo/purchase_order.tex:105 templates/demo/sales_order.html:102
+#: templates/demo/sales_order.tex:105
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -5529,14 +5306,12 @@ msgstr ""
 #: templates/demo_with_images/work_order.html:103
 #: templates/demo/work_order.html:103 templates/xedemo/purchase_order.html:103
 #: templates/xedemo/sales_order.html:103 templates/xedemo/work_order.html:103
-#, fuzzy
 msgid "Order Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/io.pl:1703 bin/oe.pl:1180 bin/oe.pl:1353
-#, fuzzy
 msgid "Order Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: sql/Pg-database.sql:2913
 msgid "Order Entry"
@@ -5546,26 +5321,22 @@ msgstr ""
 #: bin/oe.pl:381 bin/oe.pl:1790 LedgerSMB/Report/Contact/Purchase.pm:69
 #: UI/orders/order.html:84 UI/Reports/filters/invoice_outstanding.html:149
 #: UI/Reports/filters/invoice_search.html:97
-#: UI/Reports/filters/invoice_search.html:239 UI/Reports/filters/orders.html:38
-#: UI/Reports/filters/orders.html:119
-#, fuzzy
+#: UI/Reports/filters/invoice_search.html:239
+#: UI/Reports/filters/orders.html:38 UI/Reports/filters/orders.html:119
 msgid "Order Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/io.pl:1713 bin/oe.pl:1352
-#, fuzzy
 msgid "Order Number missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/oe.pl:1330
-#, fuzzy
 msgid "Order deleted!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/oe.pl:2545
-#, fuzzy
 msgid "Order generation failed!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: templates/demo/statement.html:61
 #: templates/demo_with_images/statement.html:61
@@ -5574,9 +5345,8 @@ msgid "Order#"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/History.pm:138
-#, fuzzy
 msgid "Order/Invoice"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/am-taxes.html:16 UI/business_units/list_classes.html:15
 msgid "Ordering"
@@ -5588,18 +5358,16 @@ msgid "Orders"
 msgstr ""
 
 #: bin/pe.pl:1348
-#, fuzzy
 msgid "Orders generated!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:28
 msgid "Other Actions"
 msgstr ""
 
 #: LedgerSMB/Scripts/recon.pm:223
-#, fuzzy
 msgid "Our Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:84 UI/reconciliation/report.html:147
 #: UI/reconciliation/report.html:206
@@ -5613,8 +5381,8 @@ msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
-#: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
-#: templates/xedemo/timecard.tex:30
+#: templates/demo_with_images/timecard.tex:30
+#: templates/xedemo/timecard.html:56 templates/xedemo/timecard.tex:30
 msgid "Out"
 msgstr ""
 
@@ -5648,9 +5416,8 @@ msgid "Overpayment Account"
 msgstr ""
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:78
-#, fuzzy
 msgid "Overpayments"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1081 bin/arapprn.pl:480 LedgerSMB/Form.pm:1399
 #: UI/Contact/pricelist.html:101 UI/Reports/aging_report.html:112
@@ -5675,11 +5442,10 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:203 LedgerSMB/Report/Orders.pm:247
 #: UI/orders/order.html:102 UI/Reports/filters/invoice_outstanding.html:155
 #: UI/Reports/filters/invoice_search.html:107
-#: UI/Reports/filters/invoice_search.html:245 UI/Reports/filters/orders.html:48
-#: UI/Reports/filters/orders.html:132
-#, fuzzy
+#: UI/Reports/filters/invoice_search.html:245
+#: UI/Reports/filters/orders.html:48 UI/Reports/filters/orders.html:132
 msgid "PO Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:351
 msgid "POST"
@@ -5690,8 +5456,9 @@ msgid "POST AND PRINT"
 msgstr ""
 
 #: bin/am.pl:1518 bin/io.pl:1413 bin/io.pl:1431 bin/io.pl:1603 bin/is.pl:238
-#: bin/is.pl:993 bin/oe.pl:248 bin/oe.pl:267 templates/demo/packing_list.html:4
-#: templates/demo/packing_list.html:18 templates/demo/packing_list.tex:81
+#: bin/is.pl:993 bin/oe.pl:248 bin/oe.pl:267
+#: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
+#: templates/demo/packing_list.tex:81
 #: templates/demo_with_images/packing_list.html:4
 #: templates/demo_with_images/packing_list.html:18
 #: templates/demo_with_images/packing_list.tex:81
@@ -5702,14 +5469,12 @@ msgid "Packing List"
 msgstr ""
 
 #: bin/io.pl:1702
-#, fuzzy
 msgid "Packing List Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/io.pl:1712
-#, fuzzy
 msgid "Packing List Number missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/aa.pl:1643 LedgerSMB/Report/Contact/Purchase.pm:92
 #: LedgerSMB/Report/Invoices/Outstanding.pm:231
@@ -5717,8 +5482,9 @@ msgstr "Email address missing"
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
 #: LedgerSMB/Scripts/payment.pm:750 templates/demo/invoice.html:184
 #: templates/demo/invoice.tex:165 templates/demo_with_images/invoice.html:184
-#: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
-#: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:323
+#: templates/demo_with_images/invoice.tex:164
+#: templates/xedemo/invoice.html:184 templates/xedemo/invoice.tex:163
+#: UI/payments/payments_detail.html:323
 #: UI/Reports/filters/invoice_outstanding.html:230
 #: UI/Reports/filters/invoice_search.html:320
 msgid "Paid"
@@ -5729,14 +5495,12 @@ msgid "Parent"
 msgstr ""
 
 #: bin/io.pl:866 LedgerSMB/Report/Invoices/COGS.pm:105
-#, fuzzy
 msgid "Part"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/COGS.pm:161
-#, fuzzy
 msgid "Part Description"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:29
 #: UI/Reports/filters/search_goods.html:236
@@ -5755,9 +5519,8 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:246
 #: UI/Reports/filters/search_goods.html:9
 #: UI/Reports/filters/search_goods.html:197
-#, fuzzy
 msgid "Part Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/asset/begin_report.html:45
 msgid "Partial"
@@ -5768,10 +5531,10 @@ msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
-#: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:113
-#: LedgerSMB/Report/Timecards.pm:161 UI/Contact/pricelist.csv:7
-#: UI/Contact/pricelist.html:22 UI/Contact/pricelist.tex:12
-#: UI/inventory/adjustment_entry.html:27
+#: LedgerSMB/Report/Inventory/Activity.pm:130
+#: LedgerSMB/Report/Timecards.pm:113 LedgerSMB/Report/Timecards.pm:161
+#: UI/Contact/pricelist.csv:7 UI/Contact/pricelist.html:22
+#: UI/Contact/pricelist.tex:12 UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/invoice_search.html:117
 #: UI/Reports/filters/timecards.html:10 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:89
@@ -5854,9 +5617,8 @@ msgid "Payment Processing"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:207
-#, fuzzy
 msgid "Payment Results"
-msgstr "Email address missing"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:79
 msgid "Payment Reversal Information"
@@ -5875,9 +5637,8 @@ msgid "Payment Type:"
 msgstr ""
 
 #: bin/aa.pl:1333 bin/ir.pl:1378 bin/is.pl:1352
-#, fuzzy
 msgid "Payment date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: templates/demo/invoice.tex:30 templates/demo_with_images/invoice.tex:30
 #: templates/xedemo/invoice.tex:29
@@ -5890,9 +5651,11 @@ msgid "Payment due by [_1]."
 msgstr ""
 
 #: bin/aa.pl:801 bin/ir.pl:850 bin/is.pl:896
-#: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
-#: templates/demo/ar_transaction.html:178 templates/demo/ar_transaction.tex:126
-#: templates/demo/invoice.html:237 templates/demo/invoice.tex:199
+#: templates/demo/ap_transaction.html:179
+#: templates/demo/ap_transaction.tex:109
+#: templates/demo/ar_transaction.html:178
+#: templates/demo/ar_transaction.tex:126 templates/demo/invoice.html:237
+#: templates/demo/invoice.tex:199
 #: templates/demo_with_images/ap_transaction.html:179
 #: templates/demo_with_images/ap_transaction.tex:109
 #: templates/demo_with_images/ar_transaction.html:178
@@ -6042,8 +5805,8 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:737
 msgid ""
-"Please unmark accounts as summary accounts, or remove dropdown checkmarks (in "
-"the standard SL UI)"
+"Please unmark accounts as summary accounts, or remove dropdown checkmarks "
+"(in the standard SL UI)"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:312
@@ -6066,53 +5829,45 @@ msgid "Post"
 msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:212
-#, fuzzy
 msgid "Post Batch"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Scripts/recon.pm:222 UI/create_batch.html:84
-#, fuzzy
 msgid "Post Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
 msgid "Post Yearend"
 msgstr ""
 
 #: bin/aa.pl:913 bin/ir.pl:559 bin/ir.pl:965 bin/is.pl:1017
-#, fuzzy
 msgid "Post as new"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:81 UI/reconciliation/report.html:144
 #: UI/reconciliation/report.html:203
-#, fuzzy
 msgid "Posted Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payments_detail.html:99
-#, fuzzy
 msgid "Posting Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1392
 msgid "Posting GL Transaction [_1]"
 msgstr ""
 
 #: bin/am.pl:1232
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1254 bin/am.pl:1263
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1242
-#, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 msgid "Postscript"
@@ -6160,9 +5915,8 @@ msgid "Price Group"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:73
-#, fuzzy
 msgid "Price Groups"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:246
 #: UI/Reports/filters/search_goods.html:229
@@ -6175,19 +5929,16 @@ msgid "Pricegroup"
 msgstr ""
 
 #: bin/pe.pl:97
-#, fuzzy
 msgid "Pricegroup deleted!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/pe.pl:76
-#, fuzzy
 msgid "Pricegroup missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/pe.pl:78
-#, fuzzy
 msgid "Pricegroup saved!"
-msgstr "Email address missing"
+msgstr ""
 
 #: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:379
 #: UI/Contact/pricelist.html:16
@@ -6205,8 +5956,8 @@ msgstr ""
 #: bin/aa.pl:909 bin/aa.pl:938 bin/am.pl:867 bin/arap.pl:486 bin/ir.pl:556
 #: bin/is.pl:574 bin/is.pl:1013 bin/oe.pl:635 bin/oe.pl:854 bin/oe.pl:1943
 #: LedgerSMB/Report/Taxform/Details.pm:129
-#: LedgerSMB/Report/Taxform/Summary.pm:127 UI/payments/payments_detail.html:490
-#: UI/timecards/timecard.html:158
+#: LedgerSMB/Report/Taxform/Summary.pm:127
+#: UI/payments/payments_detail.html:490 UI/timecards/timecard.html:158
 msgid "Print"
 msgstr ""
 
@@ -6231,48 +5982,40 @@ msgid "Printer"
 msgstr ""
 
 #: bin/am.pl:1427
-#, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1420
-#, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1421
-#, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1419
-#, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1422
-#, fuzzy
 msgid "Printing Packing List [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1423
 msgid "Printing Pick List [_1]"
 msgstr ""
 
 #: bin/am.pl:1426
-#, fuzzy
 msgid "Printing Purchase Order [_1]"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/am.pl:1424
-#, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1418
-#, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6333,29 +6076,25 @@ msgid "Project Description Translations"
 msgstr ""
 
 #: bin/pe.pl:294 bin/pe.pl:1060 UI/Reports/filters/purchase_history.html:326
-#, fuzzy
 msgid "Project Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:1623
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Timecards.pm:100
-#, fuzzy
 msgid "Project/Department Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/payments/payment2.html:68
 msgid "Projects"
 msgstr ""
 
-#: LedgerSMB/Report/Listings/Asset.pm:89 LedgerSMB/Report/Listings/Asset.pm:121
-#: LedgerSMB/Scripts/asset.pm:398
-#, fuzzy
+#: LedgerSMB/Report/Listings/Asset.pm:89
+#: LedgerSMB/Report/Listings/Asset.pm:121 LedgerSMB/Scripts/asset.pm:398
 msgid "Purchase Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/asset/edit_asset.html:77 UI/asset/search_asset.html:66
 msgid "Purchase Date:"
@@ -6383,9 +6122,8 @@ msgid "Purchase Order"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:110
-#, fuzzy
 msgid "Purchase Order Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: bin/am.pl:875 LedgerSMB/Report/Orders.pm:190 LedgerSMB/Report/Orders.pm:290
 #: UI/Reports/filters/search_goods.html:167 sql/Pg-database.sql:2810
@@ -6393,8 +6131,8 @@ msgstr "Licenced to"
 msgid "Purchase Orders"
 msgstr ""
 
-#: LedgerSMB/Report/Listings/Asset.pm:92 LedgerSMB/Report/Listings/Asset.pm:123
-#: LedgerSMB/Scripts/asset.pm:399
+#: LedgerSMB/Report/Listings/Asset.pm:92
+#: LedgerSMB/Report/Listings/Asset.pm:123 LedgerSMB/Scripts/asset.pm:399
 msgid "Purchase Value"
 msgstr ""
 
@@ -6415,10 +6153,11 @@ msgstr ""
 #: templates/demo/packing_list.tex:116 templates/demo/pick_list.html:113
 #: templates/demo/pick_list.tex:101 templates/demo/product_receipt.html:127
 #: templates/demo/product_receipt.tex:118
-#: templates/demo/purchase_order.html:129 templates/demo/purchase_order.tex:118
+#: templates/demo/purchase_order.html:129
+#: templates/demo/purchase_order.tex:118
 #: templates/demo/request_quotation.html:142
-#: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:131
-#: templates/demo/sales_quotation.html:100
+#: templates/demo/request_quotation.tex:123
+#: templates/demo/sales_order.html:131 templates/demo/sales_quotation.html:100
 #: templates/demo/sales_quotation.tex:88
 #: templates/demo_with_images/bin_list.html:151
 #: templates/demo_with_images/bin_list.tex:108
@@ -6442,7 +6181,8 @@ msgstr ""
 #: templates/xedemo/bin_list.tex:108 templates/xedemo/invoice.html:138
 #: templates/xedemo/invoice.tex:136 templates/xedemo/packing_list.html:123
 #: templates/xedemo/packing_list.tex:116 templates/xedemo/pick_list.html:113
-#: templates/xedemo/pick_list.tex:101 templates/xedemo/product_receipt.html:129
+#: templates/xedemo/pick_list.tex:101
+#: templates/xedemo/product_receipt.html:129
 #: templates/xedemo/product_receipt.tex:118
 #: templates/xedemo/purchase_order.html:129
 #: templates/xedemo/purchase_order.tex:118
@@ -6450,7 +6190,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:123
 #: templates/xedemo/sales_order.html:131
 #: templates/xedemo/sales_quotation.html:100
-#: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
+#: templates/xedemo/sales_quotation.tex:89
+#: templates/xedemo/work_order.html:131
 #: UI/Reports/filters/purchase_history.html:286
 #: UI/timecards/timecard-week.html:98
 msgid "Qty"
@@ -6465,8 +6206,9 @@ msgid "Quantity exceeds available units to stock!"
 msgstr ""
 
 #: bin/aa.pl:1580 bin/pe.pl:843 LedgerSMB/DBObject/Date.pm:90
-#: UI/bp-search.html:47 UI/lib/report_base.html:151 UI/lib/report_base.html:218
-#: UI/rc-reconciliation.html:53 UI/Reports/co/filter_bm.html:63
+#: UI/bp-search.html:47 UI/lib/report_base.html:151
+#: UI/lib/report_base.html:218 UI/rc-reconciliation.html:53
+#: UI/Reports/co/filter_bm.html:63
 #: UI/rp-search-generate_income_statement.html:46
 #: UI/rp-search-generate_tax_report.html:42
 msgid "Quarter"
@@ -6475,7 +6217,8 @@ msgstr ""
 #: bin/io.pl:1391 bin/io.pl:1651 bin/io.pl:1658 bin/oe.pl:225 bin/oe.pl:658
 #: bin/oe.pl:865 bin/oe.pl:1227 LedgerSMB/Report/Inventory/Search.pm:286
 #: LedgerSMB/Report/Orders.pm:251 templates/demo/sales_quotation.html:4
-#: templates/demo/sales_quotation.html:17 templates/demo/sales_quotation.tex:69
+#: templates/demo/sales_quotation.html:17
+#: templates/demo/sales_quotation.tex:69
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
 #: templates/demo_with_images/sales_quotation.tex:69
@@ -6493,29 +6236,24 @@ msgid "Quotation #"
 msgstr ""
 
 #: bin/oe.pl:475
-#, fuzzy
 msgid "Quotation Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/io.pl:1704 bin/oe.pl:1183 bin/oe.pl:1359
-#, fuzzy
 msgid "Quotation Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/oe.pl:452
-#, fuzzy
 msgid "Quotation Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/io.pl:1714 bin/oe.pl:1358
-#, fuzzy
 msgid "Quotation Number missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/oe.pl:1334
-#, fuzzy
 msgid "Quotation deleted!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:193 LedgerSMB/Report/Orders.pm:292
 #: UI/Reports/filters/purchase_history.html:192
@@ -6541,9 +6279,8 @@ msgid "RFQ #"
 msgstr ""
 
 #: bin/oe.pl:463 LedgerSMB/Scripts/configuration.pm:111
-#, fuzzy
 msgid "RFQ Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:196 LedgerSMB/Report/Orders.pm:294
 #: UI/Reports/filters/search_goods.html:174 sql/Pg-database.sql:2823
@@ -6673,15 +6410,15 @@ msgid "Reference"
 msgstr ""
 
 #: bin/io.pl:1715
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Licenced to"
+msgstr ""
 
 #: sql/Pg-database.sql:547
 msgid "Referral"
 msgstr ""
 
-#: templates/demo/ar_transaction.html:224 templates/demo/ar_transaction.tex:143
+#: templates/demo/ar_transaction.html:224
+#: templates/demo/ar_transaction.tex:143
 #: templates/demo_with_images/ar_transaction.html:224
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
@@ -6742,9 +6479,8 @@ msgid "Report Submitted"
 msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:81
-#, fuzzy
 msgid "Report Type"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:630
 msgid "Report [_1] on date [_2]"
@@ -6801,19 +6537,19 @@ msgid "Required By"
 msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:222
-#, fuzzy
 msgid "Required Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Request.pm:59
 msgid "Required attribute not provided: [_1]"
 msgstr ""
 
 #: bin/io.pl:269 bin/oe.pl:391 bin/oe.pl:447
-#: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
+#: templates/demo/purchase_order.html:104
+#: templates/demo/purchase_order.tex:106
 #: templates/demo/request_quotation.html:105
-#: templates/demo/request_quotation.tex:107 templates/demo/sales_order.html:104
-#: templates/demo/sales_order.tex:106
+#: templates/demo/request_quotation.tex:107
+#: templates/demo/sales_order.html:104 templates/demo/sales_order.tex:106
 #: templates/demo_with_images/purchase_order.html:104
 #: templates/demo_with_images/purchase_order.tex:106
 #: templates/demo_with_images/request_quotation.html:105
@@ -6821,7 +6557,8 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:104
 #: templates/demo_with_images/sales_order.tex:106
 #: templates/demo_with_images/work_order.html:104
-#: templates/demo/work_order.html:104 templates/xedemo/product_receipt.html:104
+#: templates/demo/work_order.html:104
+#: templates/xedemo/product_receipt.html:104
 #: templates/xedemo/product_receipt.tex:106
 #: templates/xedemo/purchase_order.html:104
 #: templates/xedemo/purchase_order.tex:106
@@ -6858,9 +6595,8 @@ msgid "Return to the login screen."
 msgstr ""
 
 #: bin/ic.pl:532 UI/accounts/edit.html:390
-#, fuzzy
 msgid "Returns"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/Reports/filters/overpayments.html:42
 msgid "Reversal Information"
@@ -6883,9 +6619,8 @@ msgid "Reverse Payment"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:236
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2936
 msgid "Reverse Receipts"
@@ -6912,9 +6647,8 @@ msgid "SIC"
 msgstr ""
 
 #: bin/am.pl:391
-#, fuzzy
 msgid "SIC deleted!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/am.pl:384
 msgid "SIC saved!"
@@ -6929,7 +6663,6 @@ msgid "SKU"
 msgstr ""
 
 #: UI/payments/payment1.html:46
-#, fuzzy
 msgid "SSN"
 msgstr "SIN"
 
@@ -6968,9 +6701,8 @@ msgid "Sales Order"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:106
-#, fuzzy
 msgid "Sales Order Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: bin/am.pl:874 LedgerSMB/Report/Orders.pm:187 LedgerSMB/Report/Orders.pm:288
 #: UI/Reports/filters/search_goods.html:144 sql/Pg-database.sql:2809
@@ -6979,9 +6711,8 @@ msgid "Sales Orders"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:107
-#, fuzzy
 msgid "Sales Quotation Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Contact/divs/company.html:139
 msgid "Sales Tax ID"
@@ -7023,9 +6754,8 @@ msgid "Salvage Value:"
 msgstr ""
 
 #: LedgerSMB/Report/Timecards.pm:145
-#, fuzzy
 msgid "Sat"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:971 bin/am.pl:67 bin/am.pl:75 bin/am.pl:86 bin/am.pl:173
 #: bin/am.pl:179 bin/gl.pl:289 bin/ic.pl:831 bin/ic.pl:840 bin/ir.pl:576
@@ -7139,7 +6869,8 @@ msgstr ""
 #: UI/business_units/filter.html:45 UI/Reports/filters/budget_search.html:72
 #: UI/Reports/filters/cogs_lines.html:36
 #: UI/Reports/filters/contact_search.html:140
-#: UI/Reports/filters/overpayments.html:61 UI/Reports/filters/payments.html:126
+#: UI/Reports/filters/overpayments.html:61
+#: UI/Reports/filters/payments.html:126
 #: UI/Reports/filters/reconciliation_search.html:103
 #: UI/Reports/filters/search_goods.html:385
 #: UI/Reports/filters/search_partsgroups.html:18
@@ -7228,9 +6959,8 @@ msgid "Search Requests for Quotation"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:58
-#, fuzzy
 msgid "Search Sales Orders"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/unapproved.html:35
 msgid "Search Unapproved Transactions"
@@ -7245,9 +6975,8 @@ msgid "Search for Users"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:498
-#, fuzzy
 msgid "Search reports"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:796
 msgid "Secondary Phone"
@@ -7262,23 +6991,20 @@ msgid "Select All"
 msgstr ""
 
 #: bin/pe.pl:1165
-#, fuzzy
 msgid "Select Customer"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/setup/template_info.html:6
 msgid "Select Templates to Load"
 msgstr ""
 
 #: bin/oe.pl:2522
-#, fuzzy
 msgid "Select Vendor"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/arapprn.pl:518 bin/is.pl:1387 bin/oe.pl:1276
-#, fuzzy
 msgid "Select a Printer!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:62
 msgid "Select by Default:"
@@ -7293,14 +7019,12 @@ msgid "Select invoices"
 msgstr ""
 
 #: bin/io.pl:582
-#, fuzzy
 msgid "Select items"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/arapprn.pl:375
-#, fuzzy
 msgid "Select payment"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/arapprn.pl:71 bin/arapprn.pl:516 bin/is.pl:1385 bin/oe.pl:1274
 msgid "Select postscript or PDF!"
@@ -7311,9 +7035,8 @@ msgid "Select txt, postscript or PDF!"
 msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:121
-#, fuzzy
 msgid "Selected"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payments_filter.html:3
 msgid "Selection"
@@ -7337,19 +7060,16 @@ msgid "Sending Bin List [_1]"
 msgstr ""
 
 #: bin/am.pl:1465
-#, fuzzy
 msgid "Sending Credit Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1466
-#, fuzzy
 msgid "Sending Debit Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1464
-#, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1467
 msgid "Sending Packing List [_1]"
@@ -7360,19 +7080,16 @@ msgid "Sending Pick List [_1]"
 msgstr ""
 
 #: bin/am.pl:1471
-#, fuzzy
 msgid "Sending Purchase Order [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1469
-#, fuzzy
 msgid "Sending Sales Order [_1]"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1463
-#, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/am.pl:1470
 msgid "Sending Work Order [_1]"
@@ -7383,15 +7100,13 @@ msgid "Sep"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:71
-#, fuzzy
 msgid "Separate Duties"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:80 bin/gl.pl:73 bin/io.pl:73 LedgerSMB/App_State.pm:247
 #: LedgerSMB/DBObject/Date.pm:70
-#, fuzzy
 msgid "September"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Configuration/sequence.html:15
 msgid "Sequence"
@@ -7410,9 +7125,8 @@ msgid "Serial #"
 msgstr ""
 
 #: bin/io.pl:261 bin/oe.pl:1852
-#, fuzzy
 msgid "Serial No."
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Contact/History.pm:110
 #: LedgerSMB/Report/Inventory/History.pm:164
@@ -7426,9 +7140,8 @@ msgstr "Labour Code"
 #: UI/Reports/filters/purchase_history.html:335
 #: UI/Reports/filters/search_goods.html:37
 #: UI/Reports/filters/search_goods.html:367
-#, fuzzy
 msgid "Serial Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
@@ -7437,14 +7150,12 @@ msgid "Serialnumber"
 msgstr ""
 
 #: bin/io.pl:868
-#, fuzzy
 msgid "Service"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/pe.pl:1055
-#, fuzzy
 msgid "Service Code"
-msgstr "Service/Labour Code"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:66
 msgid "Session Timeout"
@@ -7455,9 +7166,8 @@ msgid "Sessions"
 msgstr ""
 
 #: UI/Configuration/sequence.html:13
-#, fuzzy
 msgid "Setting"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/users/preferences.html:56
 msgid "Settings"
@@ -7509,7 +7219,8 @@ msgid "Ship To"
 msgstr ""
 
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
-#: templates/demo/product_receipt.html:30 templates/demo/purchase_order.html:30
+#: templates/demo/product_receipt.html:30
+#: templates/demo/purchase_order.html:30
 #: templates/demo/request_quotation.html:30
 #: templates/demo_with_images/packing_list.html:29
 #: templates/demo_with_images/pick_list.html:28
@@ -7524,8 +7235,8 @@ msgid "Ship To:"
 msgstr ""
 
 #: LedgerSMB/Report/Contact/Purchase.pm:117
-#: LedgerSMB/Report/Invoices/Transactions.pm:307 LedgerSMB/Report/Orders.pm:259
-#: templates/demo/product_receipt.html:106
+#: LedgerSMB/Report/Invoices/Transactions.pm:307
+#: LedgerSMB/Report/Orders.pm:259 templates/demo/product_receipt.html:106
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109
 #: templates/demo_with_images/product_receipt.html:106
@@ -7533,23 +7244,23 @@ msgstr ""
 #: templates/demo_with_images/sales_order.html:107
 #: templates/demo_with_images/sales_order.tex:109
 #: templates/demo_with_images/work_order.html:107
-#: templates/demo/work_order.html:107 templates/xedemo/product_receipt.html:107
+#: templates/demo/work_order.html:107
+#: templates/xedemo/product_receipt.html:107
 #: templates/xedemo/purchase_order.html:107
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
 #: UI/Reports/filters/invoice_outstanding.html:65
 #: UI/Reports/filters/invoice_outstanding.html:270
 #: UI/Reports/filters/invoice_search.html:158
-#: UI/Reports/filters/invoice_search.html:360 UI/Reports/filters/orders.html:58
-#: UI/Reports/filters/orders.html:161
+#: UI/Reports/filters/invoice_search.html:360
+#: UI/Reports/filters/orders.html:58 UI/Reports/filters/orders.html:161
 msgid "Ship Via"
 msgstr ""
 
 #: bin/aa.pl:912 bin/io.pl:2043 bin/is.pl:577 bin/is.pl:1016 bin/oe.pl:638
 #: bin/oe.pl:858 bin/oe.pl:1945
-#, fuzzy
 msgid "Ship to"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:1657 bin/aa.pl:1687 bin/is.pl:499 bin/oe.pl:598 bin/oe.pl:1779
 #: templates/demo/bin_list.html:115 templates/demo/invoice.html:112
@@ -7559,7 +7270,8 @@ msgstr "Email Statement to"
 #: templates/demo/purchase_order.tex:108
 #: templates/demo/request_quotation.html:108
 #: templates/demo/request_quotation.tex:109
-#: templates/demo/sales_quotation.html:76 templates/demo/sales_quotation.tex:78
+#: templates/demo/sales_quotation.html:76
+#: templates/demo/sales_quotation.tex:78
 #: templates/demo_with_images/bin_list.html:115
 #: templates/demo_with_images/invoice.html:112
 #: templates/demo_with_images/invoice.tex:122
@@ -7595,34 +7307,33 @@ msgid "Shipping"
 msgstr ""
 
 #: bin/oe.pl:1721
-#, fuzzy
 msgid "Shipping Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/oe.pl:1979
-#, fuzzy
 msgid "Shipping Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/io.pl:1445 bin/is.pl:995
-#, fuzzy
 msgid "Shipping Label"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/aa.pl:1655 bin/is.pl:495 bin/oe.pl:594 bin/oe.pl:1774
 #: LedgerSMB/Report/Contact/Purchase.pm:113
 #: LedgerSMB/Report/Invoices/Outstanding.pm:269
-#: LedgerSMB/Report/Invoices/Transactions.pm:304 LedgerSMB/Report/Orders.pm:255
-#: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
-#: templates/demo/invoice.html:111 templates/demo/invoice.tex:121
-#: templates/demo/packing_list.html:85 templates/demo/packing_list.tex:92
-#: templates/demo/pick_list.html:82 templates/demo/pick_list.tex:83
-#: templates/demo/product_receipt.html:105
+#: LedgerSMB/Report/Invoices/Transactions.pm:304
+#: LedgerSMB/Report/Orders.pm:255 templates/demo/bin_list.html:114
+#: templates/demo/bin_list.tex:84 templates/demo/invoice.html:111
+#: templates/demo/invoice.tex:121 templates/demo/packing_list.html:85
+#: templates/demo/packing_list.tex:92 templates/demo/pick_list.html:82
+#: templates/demo/pick_list.tex:83 templates/demo/product_receipt.html:105
 #: templates/demo/product_receipt.tex:107
-#: templates/demo/purchase_order.html:106 templates/demo/purchase_order.tex:107
+#: templates/demo/purchase_order.html:106
+#: templates/demo/purchase_order.tex:107
 #: templates/demo/request_quotation.html:107
-#: templates/demo/request_quotation.tex:108 templates/demo/sales_order.html:106
-#: templates/demo/sales_order.tex:108 templates/demo/sales_quotation.html:75
+#: templates/demo/request_quotation.tex:108
+#: templates/demo/sales_order.html:106 templates/demo/sales_order.tex:108
+#: templates/demo/sales_quotation.html:75
 #: templates/demo/sales_quotation.tex:77
 #: templates/demo_with_images/bin_list.html:114
 #: templates/demo_with_images/bin_list.tex:84
@@ -7655,8 +7366,9 @@ msgstr "Email Statement to"
 #: templates/xedemo/request_quotation.tex:108
 #: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:108
 #: templates/xedemo/sales_quotation.html:75
-#: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
-#: UI/orders/order.html:62 UI/Reports/filters/invoice_outstanding.html:264
+#: templates/xedemo/sales_quotation.tex:78
+#: templates/xedemo/work_order.html:106 UI/orders/order.html:62
+#: UI/Reports/filters/invoice_outstanding.html:264
 #: UI/Reports/filters/invoice_search.html:354
 msgid "Shipping Point"
 msgstr ""
@@ -7741,9 +7453,8 @@ msgid "Source"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:83
-#, fuzzy
 msgid "Source starting with"
-msgstr "Email Statement to"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:194
 #: templates/demo_with_images/sales_quotation.html:194
@@ -7782,14 +7493,12 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:41 UI/business_units/edit.html:56
 #: UI/Contact/divs/credit.html:30 UI/Contact/divs/employee.html:180
 #: UI/Reports/filters/budget_search.html:38
-#, fuzzy
 msgid "Start Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payments_filter.html:177
 msgid "Start Source Numbering At:"
@@ -7800,31 +7509,26 @@ msgid "Start Using LedgerSMB"
 msgstr ""
 
 #: bin/arap.pl:591 UI/Reports/filters/purchase_history.html:112
-#, fuzzy
 msgid "Startdate"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:77
 #: LedgerSMB/Report/Trial_Balance.pm:170
-#, fuzzy
 msgid "Starting Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Contact/divs/credit.html:110 UI/Contact/divs/credit.html:111
 #: UI/timecards/entry_filter.html:33
-#, fuzzy
 msgid "Starting Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/io.pl:2113
-#, fuzzy
 msgid "State"
-msgstr "Email Statement to"
+msgstr ""
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:87
 #: UI/Contact/divs/address.html:170 UI/Reports/filters/contact_search.html:97
@@ -7843,20 +7547,17 @@ msgstr ""
 #: templates/xedemo/statement.html:4 templates/xedemo/statement.html:19
 #: templates/xedemo/statement.tex:29 sql/Pg-database.sql:2950
 #: sql/Pg-database.sql:2963
-#, fuzzy
 msgid "Statement"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:139 UI/rc-display-form.html:66
 #: UI/reconciliation/upload.html:30
-#, fuzzy
 msgid "Statement Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:135
-#, fuzzy
 msgid "Statement Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/check_job.html:20
 msgid "Status: Complete"
@@ -7993,9 +7694,9 @@ msgid "TOTAL"
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:72
-#: LedgerSMB/Report/Listings/Asset.pm:82 LedgerSMB/Report/Listings/Asset.pm:119
-#: LedgerSMB/Scripts/asset.pm:633 LedgerSMB/Scripts/asset.pm:696
-#: LedgerSMB/Scripts/asset.pm:764
+#: LedgerSMB/Report/Listings/Asset.pm:82
+#: LedgerSMB/Report/Listings/Asset.pm:119 LedgerSMB/Scripts/asset.pm:633
+#: LedgerSMB/Scripts/asset.pm:696 LedgerSMB/Scripts/asset.pm:764
 msgid "Tag"
 msgstr ""
 
@@ -8010,7 +7711,8 @@ msgstr ""
 #: UI/accounts/edit.html:399 UI/accounts/edit.html:429
 #: UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:293
-#: UI/Reports/filters/orders.html:176 UI/rp-search-generate_tax_report.html:167
+#: UI/Reports/filters/orders.html:176
+#: UI/rp-search-generate_tax_report.html:167
 msgid "Tax"
 msgstr ""
 
@@ -8019,79 +7721,65 @@ msgid "Tax Account"
 msgstr ""
 
 #: bin/ir.pl:689 bin/is.pl:748
-#, fuzzy
 msgid "Tax Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:110
 #: LedgerSMB/Report/Taxform/Summary.pm:108 UI/Contact/divs/credit.html:263
 #: UI/Contact/divs/credit.html:264
-#, fuzzy
 msgid "Tax Form"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:664
-#, fuzzy
 msgid "Tax Form Applied"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:119
-#, fuzzy
 msgid "Tax Form Details Report"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:72
-#, fuzzy
 msgid "Tax Form List"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Summary.pm:117
-#, fuzzy
 msgid "Tax Form Report"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/taxforms.html:21
-#, fuzzy
 msgid "Tax Form Reports"
-msgstr "Labour Code"
+msgstr ""
 
 #: sql/Pg-database.sql:2920
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:593 bin/ir.pl:475 bin/is.pl:466 UI/Admin/user_search.html:41
-#, fuzzy
 msgid "Tax ID"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:111
-#, fuzzy
 msgid "Tax ID/SSN"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: bin/ir.pl:677 bin/is.pl:735 bin/oe.pl:764 UI/Contact/divs/credit.html:313
 #: UI/Contact/divs/credit.html:314 UI/orders/order.html:233
-#, fuzzy
 msgid "Tax Included"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Contact/divs/company.html:115
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
-#, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: UI/am-taxes.html:17
 msgid "Tax Rules"
@@ -8107,14 +7795,12 @@ msgstr ""
 #: templates/demo_with_images/purchase_order.html:192
 #: templates/xedemo/product_receipt.html:192
 #: templates/xedemo/purchase_order.html:192
-#, fuzzy
 msgid "Tax included"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/io.pl:247
-#, fuzzy
 msgid "TaxForm"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:65
 msgid "Taxable"
@@ -8141,9 +7827,8 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
@@ -8167,10 +7852,10 @@ msgstr ""
 #: templates/demo/letterhead.html:21 templates/demo/packing_list.html:56
 #: templates/demo/pick_list.html:55 templates/demo/printPayment.html:27
 #: templates/demo/product_receipt.html:54
-#: templates/demo/product_receipt.html:82 templates/demo/product_receipt.tex:52
-#: templates/demo/product_receipt.tex:87 templates/demo/purchase_order.html:54
-#: templates/demo/purchase_order.html:82 templates/demo/purchase_order.tex:52
-#: templates/demo/purchase_order.tex:87
+#: templates/demo/product_receipt.html:82
+#: templates/demo/product_receipt.tex:52 templates/demo/product_receipt.tex:87
+#: templates/demo/purchase_order.html:54 templates/demo/purchase_order.html:82
+#: templates/demo/purchase_order.tex:52 templates/demo/purchase_order.tex:87
 #: templates/demo/request_quotation.html:55
 #: templates/demo/request_quotation.html:83
 #: templates/demo/request_quotation.tex:52
@@ -8236,19 +7921,16 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:58 templates/xedemo/work_order.html:52
 #: templates/xedemo/work_order.html:80 templates/xedemo/work_order.tex:61
 #: templates/xedemo/work_order.tex:96
-#, fuzzy
 msgid "Tel: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
-#, fuzzy
 msgid "Template Listing"
-msgstr "Email address missing"
+msgstr ""
 
 #: LedgerSMB/Scripts/template.pm:85
-#, fuzzy
 msgid "Template Not Found"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/aa.pl:1128 bin/gl.pl:401
 msgid "Template Saved!"
@@ -8327,9 +8009,8 @@ msgid "The amount to be pay of the invoice number"
 msgstr ""
 
 #: LedgerSMB/Scripts/recon.pm:224
-#, fuzzy
 msgid "Their Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:86 UI/reconciliation/report.html:149
 msgid "Their Credits"
@@ -8340,7 +8021,8 @@ msgid "Their Debits"
 msgstr ""
 
 #: UI/reconciliation/report.html:9
-msgid "There are unapproved reconciliations before the end date of this report."
+msgid ""
+"There are unapproved reconciliations before the end date of this report."
 msgstr ""
 
 #: UI/reconciliation/report.html:7
@@ -8415,7 +8097,8 @@ msgstr ""
 
 #: bin/aa.pl:1594 LedgerSMB/Report/GL.pm:137
 #: LedgerSMB/Report/Invoices/Outstanding.pm:257
-#: LedgerSMB/Report/Invoices/Transactions.pm:295 UI/Reports/filters/gl.html:241
+#: LedgerSMB/Report/Invoices/Transactions.pm:295
+#: UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/invoice_outstanding.html:256
 #: UI/Reports/filters/invoice_search.html:346
 msgid "Till"
@@ -8426,9 +8109,8 @@ msgstr ""
 #: templates/demo_with_images/timecard.html:18
 #: templates/demo_with_images/timecard.tex:17 templates/xedemo/timecard.html:4
 #: templates/xedemo/timecard.html:18 templates/xedemo/timecard.tex:17
-#, fuzzy
 msgid "Time Card"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: UI/timecards/entry_filter.html:26
 msgid "Time Frame"
@@ -8476,10 +8158,10 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:27
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
 #: UI/asset/begin_approval.html:32 UI/asset/search_reports.html:35
-#: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:104
-#: UI/lib/report_base.html:174 UI/rc-reconciliation.html:22
-#: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
-#: UI/Reports/filters/aging.html:34
+#: UI/bp-search.html:29 UI/ca-list-selector.html:33
+#: UI/lib/report_base.html:104 UI/lib/report_base.html:174
+#: UI/rc-reconciliation.html:22 UI/Reports/co/filter_bm.html:27
+#: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8510,18 +8192,16 @@ msgid "To Warehouse"
 msgstr ""
 
 #: t/data/04-strings-for-translation.html:7
-#, fuzzy
 msgid "To [_1]"
-msgstr "Email"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:126
 msgid "To be used"
 msgstr ""
 
 #: UI/setup/begin_backup.html:25
-#, fuzzy
 msgid "To email"
-msgstr "Email"
+msgstr ""
 
 #: UI/setup/begin_backup.html:39
 msgid "To my browser"
@@ -8531,7 +8211,8 @@ msgstr ""
 msgid "To pay"
 msgstr ""
 
-#: templates/demo/product_receipt.html:29 templates/demo/purchase_order.html:29
+#: templates/demo/product_receipt.html:29
+#: templates/demo/purchase_order.html:29
 #: templates/demo/request_quotation.html:28
 #: templates/demo_with_images/product_receipt.html:29
 #: templates/demo_with_images/purchase_order.html:29
@@ -8546,9 +8227,8 @@ msgid "To:"
 msgstr ""
 
 #: bin/arap.pl:802 bin/io.pl:1916
-#, fuzzy
 msgid "To: [_1]"
-msgstr "Email"
+msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
@@ -8609,12 +8289,12 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:185
 #: templates/xedemo/sales_order.html:158 templates/xedemo/sales_order.html:186
 #: templates/xedemo/sales_quotation.html:127
-#: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
-#: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
-#: UI/payments/payment1.html:86 UI/payments/payment1.html:95
-#: UI/payments/payment2.html:430 UI/payments/payments_detail.html:322
-#: UI/reconciliation/report.html:130 UI/reconciliation/report.html:189
-#: UI/reconciliation/report.html:237
+#: templates/xedemo/sales_quotation.html:154
+#: templates/xedemo/timecard.html:105 templates/xedemo/timecard.tex:45
+#: UI/orders/order.html:225 UI/payments/payment1.html:86
+#: UI/payments/payment1.html:95 UI/payments/payment2.html:430
+#: UI/payments/payments_detail.html:322 UI/reconciliation/report.html:130
+#: UI/reconciliation/report.html:189 UI/reconciliation/report.html:237
 #: UI/Reports/filters/invoice_outstanding.html:209
 #: UI/Reports/filters/invoice_search.html:299
 #: UI/rp-search-generate_tax_report.html:175
@@ -8644,9 +8324,8 @@ msgid "Trade Discount"
 msgstr ""
 
 #: bin/aa.pl:210 bin/am.pl:1514
-#, fuzzy
 msgid "Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2843
 msgid "Transaction Approval"
@@ -8655,19 +8334,16 @@ msgstr ""
 #: LedgerSMB/Report/PNL/Invoice.pm:88 UI/import_csv/import_csv.html:47
 #: UI/import_csv/import_inventory_csv.html:33
 #: UI/Reports/filters/purchase_history.html:132
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/gl.pl:676
-#, fuzzy
 msgid "Transaction Date missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/pe.pl:853
-#, fuzzy
 msgid "Transaction Dates"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:78 UI/reconciliation/report.html:141
 #: UI/Reports/filters/unapproved.html:39
@@ -8696,28 +8372,24 @@ msgid "Transfer to"
 msgstr ""
 
 #: bin/pe.pl:403 bin/pe.pl:578
-#, fuzzy
 msgid "Translation"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/pe.pl:86
-#, fuzzy
 msgid "Translation deleted!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: sql/Pg-database.sql:2829 sql/Pg-database.sql:2932
 msgid "Translations"
 msgstr ""
 
 #: bin/pe.pl:65
-#, fuzzy
 msgid "Translations saved!"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:140 sql/Pg-database.sql:2857
-#, fuzzy
 msgid "Trial Balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:120
 msgid "Trillion"
@@ -8818,19 +8490,16 @@ msgid "Unexpected file name, expected [_1], got [_2]"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:259
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:159
-#, fuzzy
 msgid "Unique Customernumber"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:178
-#, fuzzy
 msgid "Unique Vendornumber"
-msgstr "Labour Code"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:589
 msgid "Unique nonobsolete partnumbers"
@@ -8840,15 +8509,16 @@ msgstr ""
 #: LedgerSMB/Report/Contact/History.pm:91
 #: LedgerSMB/Report/Inventory/History.pm:130
 #: LedgerSMB/Report/Inventory/Search.pm:206 templates/demo/invoice.tex:138
-#: templates/demo/product_receipt.tex:119 templates/demo/purchase_order.tex:119
-#: templates/demo/sales_order.tex:120
+#: templates/demo/product_receipt.tex:119
+#: templates/demo/purchase_order.tex:119 templates/demo/sales_order.tex:120
 #: templates/demo_with_images/invoice.tex:138
 #: templates/demo_with_images/product_receipt.tex:119
 #: templates/demo_with_images/purchase_order.tex:119
 #: templates/demo_with_images/sales_order.tex:120
 #: templates/xedemo/invoice.tex:137 templates/xedemo/product_receipt.tex:119
-#: templates/xedemo/purchase_order.tex:119 templates/xedemo/sales_order.tex:120
-#: UI/payroll/income.html:74 UI/Reports/filters/purchase_history.html:296
+#: templates/xedemo/purchase_order.tex:119
+#: templates/xedemo/sales_order.tex:120 UI/payroll/income.html:74
+#: UI/Reports/filters/purchase_history.html:296
 #: UI/Reports/filters/search_goods.html:221
 msgid "Unit"
 msgstr ""
@@ -8870,8 +8540,8 @@ msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:674
 msgid ""
-"Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)"
-"Q(uity))"
+"Unknown account category (should be "
+"A(sset)/L(iability)/E(xpense)/I(ncome)/(e)Q(uity))"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:656
@@ -8895,23 +8565,20 @@ msgid "Unpproved"
 msgstr ""
 
 #: UI/Reports/filters/payments.html:23
-#, fuzzy
 msgid "Unsupported Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:382
-#, fuzzy
 msgid "Unsupported account categories"
-msgstr "Licenced to"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:400
 msgid "Unsupported account link combinations"
 msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:459
-#, fuzzy
 msgid "Unsupported account type"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:16
 msgid "Unsupported.  Expect errors"
@@ -9016,8 +8683,8 @@ msgstr ""
 msgid "Valid From"
 msgstr ""
 
-#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:50
-#: UI/Contact/pricelist.tex:50
+#: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37
+#: UI/Contact/pricelist.html:50 UI/Contact/pricelist.tex:50
 msgid "Valid To"
 msgstr ""
 
@@ -9032,9 +8699,8 @@ msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:92
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:99
-#, fuzzy
 msgid "Variance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/reconciliation/report.html:40
 msgid "Variance:"
@@ -9043,11 +8709,12 @@ msgstr ""
 #: bin/aa.pl:516 bin/aa.pl:1597 bin/ic.pl:1026 bin/ir.pl:436 bin/oe.pl:2409
 #: bin/oe.pl:2565 bin/pe.pl:1040 bin/pe.pl:1195 LedgerSMB/Report/Aging.pm:80
 #: LedgerSMB/Report/Invoices/Outstanding.pm:175
-#: LedgerSMB/Report/Invoices/Transactions.pm:247 LedgerSMB/Report/Orders.pm:191
-#: LedgerSMB/Report/Orders.pm:197 UI/Contact/divs/credit.html:11
-#: UI/Contact/divs/credit.html:12 UI/payments/payments_detail.html:8
-#: UI/payments/use_overpayment1.html:27 UI/payments/use_overpayment2.html:23
-#: UI/payments/use_overpayment2.html:151 UI/Reports/filters/aging.html:14
+#: LedgerSMB/Report/Invoices/Transactions.pm:247
+#: LedgerSMB/Report/Orders.pm:191 LedgerSMB/Report/Orders.pm:197
+#: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
+#: UI/payments/payments_detail.html:8 UI/payments/use_overpayment1.html:27
+#: UI/payments/use_overpayment2.html:23 UI/payments/use_overpayment2.html:151
+#: UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:6
 #: UI/Reports/filters/invoice_search.html:6 UI/Reports/filters/orders.html:5
 #: UI/rp-search-generate_tax_report.html:141 sql/Pg-database.sql:542
@@ -9085,9 +8752,8 @@ msgstr ""
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:22
 #: UI/Reports/filters/purchase_history.html:57
 #: UI/Reports/filters/taxforms.html:41
-#, fuzzy
 msgid "Vendor Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:35
 #: UI/Contact/pricelist.tex:29
@@ -9095,23 +8761,20 @@ msgid "Vendor Partnumber"
 msgstr ""
 
 #: bin/ic.pl:1028
-#, fuzzy
 msgid "Vendor Reference Number"
-msgstr "Licenced to"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:10
 msgid "Vendor Search"
 msgstr ""
 
 #: bin/aa.pl:1305 bin/ir.pl:1354 bin/oe.pl:1191
-#, fuzzy
 msgid "Vendor missing!"
-msgstr "Email address missing"
+msgstr ""
 
 #: bin/arap.pl:149 bin/pe.pl:1249
-#, fuzzy
 msgid "Vendor not on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: bin/old-handler.pl:175
 msgid "Version"
@@ -9144,7 +8807,8 @@ msgstr ""
 #: bin/oe.pl:1730 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
 #: templates/demo/packing_list.tex:90 templates/demo/pick_list.html:81
-#: templates/demo/pick_list.tex:82 templates/demo_with_images/bin_list.html:112
+#: templates/demo/pick_list.tex:82
+#: templates/demo_with_images/bin_list.html:112
 #: templates/demo_with_images/bin_list.tex:82
 #: templates/demo_with_images/packing_list.html:83
 #: templates/demo_with_images/packing_list.tex:90
@@ -9178,9 +8842,8 @@ msgid "Week"
 msgstr ""
 
 #: LedgerSMB/Report/Timecards.pm:96
-#, fuzzy
 msgid "Week Starting"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/arap.pl:532
 msgid "Week(s)"
@@ -9240,8 +8903,9 @@ msgid "Yahoo"
 msgstr ""
 
 #: bin/aa.pl:1582 bin/am.pl:822 bin/pe.pl:845 LedgerSMB/DBObject/Date.pm:95
-#: UI/bp-search.html:50 UI/lib/report_base.html:157 UI/lib/report_base.html:224
-#: UI/rc-reconciliation.html:59 UI/rp-search-generate_income_statement.html:52
+#: UI/bp-search.html:50 UI/lib/report_base.html:157
+#: UI/lib/report_base.html:224 UI/rc-reconciliation.html:59
+#: UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
 msgid "Year"
 msgstr ""
@@ -9289,18 +8953,16 @@ msgid "Zero"
 msgstr ""
 
 #: bin/io.pl:2116
-#, fuzzy
 msgid "Zip Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Contact/divs/address.html:88 UI/Contact/divs/address.html:180
 msgid "Zip/Post Code"
 msgstr ""
 
 #: t/data/04-complex_template.html:463
-#, fuzzy
 msgid "Zip/Post Code:"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
@@ -9318,38 +8980,32 @@ msgid "[_1] Cash Transfer Transaction"
 msgstr ""
 
 #: bin/aa.pl:395
-#, fuzzy
 msgid "[_1] Credit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/aa.pl:399
-#, fuzzy
 msgid "[_1] Debit Note"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/gl.pl:204
 msgid "[_1] General Ledger Transaction"
 msgstr ""
 
 #: bin/arap.pl:173
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:388
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/ic.pl:1656
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: bin/ic.pl:1578
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: LedgerSMB/Form.pm:710
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
@@ -9364,18 +9020,16 @@ msgid "as at"
 msgstr ""
 
 #: UI/Reports/co/filter_bm.html:114
-#, fuzzy
 msgid "balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:476
 msgid "cash"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:477
-#, fuzzy
 msgid "check"
-msgstr "Cheque"
+msgstr ""
 
 #: bin/io.pl:2110
 msgid "city"
@@ -9416,9 +9070,8 @@ msgid "ea"
 msgstr ""
 
 #: bin/am.pl:1346 bin/am.pl:1501
-#, fuzzy
 msgid "failed"
-msgstr "Emailed"
+msgstr ""
 
 #: t/data/04-gettext.tex:10
 msgid "fr"
@@ -9485,9 +9138,8 @@ msgid "sent"
 msgstr ""
 
 #: UI/Reports/co/filter_bm.html:92
-#, fuzzy
 msgid "starting_balance"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:375
 msgid "subtotal"
@@ -9513,16 +9165,3 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Accounts can\\"
-#~ msgstr "Labour Code"
-
-#~ msgid "Checks"
-#~ msgstr "Cheques"
-
-#~ msgid "Excempt age <"
-#~ msgstr "Exempt age <"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Send by Email"
