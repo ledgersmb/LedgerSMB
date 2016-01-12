@@ -86,7 +86,9 @@
          # so make sure everything is empty to start with.
          input_defaults = {};
 
-         #element_type = 'input';
+         # we need to set 'element_type' for labels to get a 'for' attribute
+         # on type='password' inputs
+         element_type = 'input';
 	      PROCESS auto_id;
 	      SWITCH element_data.type;  # Merge in type-specific attributes.
 	      CASE 'file';
