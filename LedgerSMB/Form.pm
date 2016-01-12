@@ -174,8 +174,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.23-dev";
-    $self->{dbversion} = "1.4.23-dev";
+    $self->{version}   = "1.4.23";
+    $self->{dbversion} = "1.4.23";
 
     bless $self, $type;
 
