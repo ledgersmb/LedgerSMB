@@ -1,8 +1,8 @@
-<?lsmb 
+<?lsmb
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
-   # Defaults for input attributes 
-  input_keys = ['type', 'name', 'disabled', 'size', 'value', 
-	'data-dojo-type','data-dojo-props', 'required']  
+   # Defaults for input attributes
+  input_keys = ['type', 'name', 'disabled', 'size', 'value',
+	'data-dojo-type','data-dojo-props', 'required']
 
   # ELEMENT DEFAULTS
 
@@ -39,21 +39,21 @@
   currency_defaults = {
     "data-dojo-type" = 'dijit/form/CurrencyTextBox',
     "data-dojo-props" = "currency:'USD'"
-  }    
+  }
 
   # date
   date_defaults = {
     "data-dojo-type" = 'lsmb/lib/DateTextBox',
     'data-dojo-props' = "constraints: {datePattern: '$USER.dateformat'}"
   }
-  
+
   # textarea
   textarea_defaults = {
     rows = '1',
     cols = '60',
     "data-dojo-type" = 'dijit/form/Textarea'
   }
-  
+
   #button
   button_defaults = {
     type = 'submit',
@@ -64,7 +64,7 @@
   select_defaults = {
     "data-dojo-type" = "dijit/form/Select"
   }
-  
+
 ?>
 
 <?lsmb # INPUT ELEMENT ?>
@@ -86,7 +86,9 @@
          # so make sure everything is empty to start with.
          input_defaults = {};
 
-         #element_type = 'input';
+         # we need to set 'element_type' for labels to get a 'for' attribute
+         # on type='password' inputs
+         element_type = 'input';
 	      PROCESS auto_id;
 	      SWITCH element_data.type;  # Merge in type-specific attributes.
 	      CASE 'file';
@@ -117,12 +119,12 @@
 	    END;
 	  ?>
 	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data = element_data 
+	    attribute_data = element_data
 	    attribute_defaults = input_defaults
-	    element_keys = input_type_keys 
+	    element_keys = input_type_keys
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes 
+	    custom_attribute_data=element_data.attributes
 	  ?>
           <?lsmb IF label_pos == -1 ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
@@ -136,7 +138,7 @@
 
 <?lsmb # TEXTAREA ELEMENT ?>
 <?lsmb BLOCK textarea ?>
-  <?lsmb IF element_data;  # Only process element if one exists. 
+  <?lsmb IF element_data;  # Only process element if one exists.
               IF !element_data.title.defined();
                   element_data.title = element_data.label;
               END; ?>
@@ -145,7 +147,7 @@
 	    PROCESS auto_id;
 	  ?>
 	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data=element_data 
+	    attribute_data=element_data
 	    attribute_defaults = textarea_defaults
 
 				# Attributes that apply to textareas.
@@ -154,7 +156,7 @@
 				'data-dojo-type', 'data-dojo-props']
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes 
+	    custom_attribute_data=element_data.attributes
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
@@ -206,7 +208,7 @@
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes 
+	    custom_attribute_data=element_data.attributes
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
@@ -216,7 +218,7 @@
                   option_data = {};
                   FOREACH key IN optionds.keys;
                       option_data.$key = optionds.$key;
-                  END; 
+                  END;
 	        PROCESS option 	parent_id = parent_id, optindex = optindex;
                 optindex=optindex+1;
 
@@ -240,11 +242,11 @@
     END;
   ?>
   <?lsmb PROCESS attributes  # Process regular attributes.
-    attribute_data=option_data 
+    attribute_data=option_data
     element_keys=['tabindex', 'disabled', 'value']  # Attributes that apply to options.
   ?>
   <?lsmb PROCESS custom_attributes  # Process custom attributes.
-    custom_attribute_data=option_data.attributes 
+    custom_attribute_data=option_data.attributes
   ?>
   <option <?lsmb all_attributes ?> <?lsmb all_custom_attributes ?><?lsmb option_data.selected ?>><?lsmb option_data.text ?></option>
 <?lsmb END ?>
@@ -257,13 +259,13 @@
 	    PROCESS auto_id;
 	  ?>
 	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data=element_data 
+	    attribute_data=element_data
 	    attribute_defaults = button_defaults
 	    element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
 		 'tabindex', 'data-dojo-type']  # Attributes that apply to buttons.
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes 
+	    custom_attribute_data=element_data.attributes
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
@@ -277,13 +279,13 @@
 	    element_type = 'label';
 	    PROCESS auto_id;
 	  ?>
-	  <?lsmb PROCESS attributes 
-	    attribute_data=element_data 
+	  <?lsmb PROCESS attributes
+	    attribute_data=element_data
 	    attribute_defaults = {}  # Make sure old defaults are cleared out.
 	    element_keys=['for']  # Attributes that apply to labels.
 	  ?>
-	  <?lsmb PROCESS custom_attributes 
-	    custom_attribute_data=element_data.attributes 
+	  <?lsmb PROCESS custom_attributes
+	    custom_attribute_data=element_data.attributes
 	  ?>
 	  <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
   <?lsmb END ?>
@@ -291,12 +293,12 @@
 
 <?lsmb # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here. ?>
 <?lsmb BLOCK attributes ?>
-  <?lsmb 
+  <?lsmb
     all_attributes = ""
     all_keys = default_keys.merge(element_keys)  # Merge in attributes that apply to this element.
   ?>
   <?lsmb FOREACH element_attribute IN all_keys  # Loop through each allowed attribute. ?>
-    <?lsmb 
+    <?lsmb
       IF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");  # Add the attribute to the element if it's been set.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_data.${element_attribute} _ '"';
       ELSIF attribute_defaults.defined(element_attribute);  # Fall back to default value if one is supplied.
@@ -330,7 +332,7 @@
     ?>
     <?lsmb  # Add the id if it's been generated.  Replace all non alphanumeric characters with dashes -- nicer CSS.
       IF element_id;
-        element_data.id = element_id.replace('[^\p{IsAlnum}]', '-'); 
+        element_data.id = element_id.replace('[^\p{IsAlnum}]', '-');
       END;
     ?>
   <?lsmb END ?>
@@ -364,7 +366,7 @@
    CLASS = 'new';
    IF id and approved;
        CLASS = 'posted';
-   ELSIF id; 
+   ELSIF id;
        CLASS = 'saved';
    END;
 ?><div id="statusdiv" class="<?lsmb CLASS ?>">
