@@ -1132,7 +1132,7 @@ sub update {
     my $current_empties = $form->{rowcount} - $non_empty_rows;
     my $new_empties =
         max(0,
-            $LedgerSMB::Company_Config::settings->{min_empty}
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
             - $current_empties);
 
 
