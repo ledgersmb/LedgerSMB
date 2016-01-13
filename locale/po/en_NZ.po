@@ -1,19 +1,20 @@
 #
 # Translators:
+# paul bolger <pbolger@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2016-01-11 08:46+0000\n"
-"PO-Revision-Date: 2015-12-29 12:32+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Turkish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
-"tr/)\n"
-"Language: tr\n"
+"PO-Revision-Date: 2016-01-02 18:41+0000\n"
+"Last-Translator: paul bolger <pbolger@gmail.com>\n"
+"Language-Team: English (New Zealand) (http://www.transifex.com/ledgersmb/"
+"ledgersmb/language/en_NZ/)\n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
@@ -62,6 +63,9 @@ msgid ""
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
+"A return authorisation must be obtained from [_1] before goods are returned. "
+"Returns must be shipped prepaid and properly insured. [_1] will not be "
+"responsible for damages during transit."
 
 #: sql/Pg-database.sql:798
 msgid "AIM"
@@ -71,11 +75,11 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:104
 #: sql/Pg-database.sql:2845
 msgid "AP"
-msgstr "Borçlar"
+msgstr ""
 
 #: sql/Pg-database.sql:2794
 msgid "AP Aging"
-msgstr "Gecikmiş Borçlar"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:106
 msgid "AP Invoice"
@@ -104,7 +108,7 @@ msgstr ""
 
 #: bin/aa.pl:1494 LedgerSMB/Report/Contact/Purchase.pm:128
 msgid "AP Transactions"
-msgstr "Borç İşlemleri"
+msgstr ""
 
 #: sql/Pg-database.sql:2908
 msgid "AP Voucher"
@@ -118,11 +122,11 @@ msgstr ""
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2844
 msgid "AR"
-msgstr "Alacaklar"
+msgstr ""
 
 #: sql/Pg-database.sql:2791
 msgid "AR Aging"
-msgstr "Gecikmiş Alacaklar"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:102
 msgid "AR Invoice"
@@ -151,7 +155,7 @@ msgstr ""
 
 #: bin/aa.pl:1493 LedgerSMB/Report/Contact/Purchase.pm:130
 msgid "AR Transactions"
-msgstr "Alacak İşlemleri"
+msgstr ""
 
 #: sql/Pg-database.sql:2907
 msgid "AR Voucher"
@@ -205,7 +209,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:28 UI/Reports/filters/orders.html:28
 #: UI/Reports/filters/orders.html:155
 msgid "Account"
-msgstr "Hesap"
+msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:160 UI/payments/use_overpayment2.html:124
 msgid "Account Description"
@@ -242,7 +246,7 @@ msgstr ""
 #: UI/rp-search-generate_balance_sheet.html:88
 #: UI/rp-search-generate_income_statement.html:138
 msgid "Account Number"
-msgstr "Hesap Numarası"
+msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:131
 msgid "Account Number End"
@@ -358,7 +362,7 @@ msgstr ""
 #: bin/am.pl:1546 bin/ic.pl:2120 LedgerSMB/Report/File/Incoming.pm:101
 #: LedgerSMB/Report/File/Internal.pm:89
 msgid "Add"
-msgstr "Ekle"
+msgstr ""
 
 #: bin/aa.pl:378 bin/aa.pl:415
 msgid "Add AP Transaction"
@@ -370,7 +374,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/account.pm:43
 msgid "Add Account"
-msgstr "Hesap Ekle"
+msgstr ""
 
 #: sql/Pg-database.sql:2787
 msgid "Add Accounts"
@@ -378,7 +382,7 @@ msgstr ""
 
 #: bin/ic.pl:65 sql/Pg-database.sql:2862
 msgid "Add Assembly"
-msgstr "Grup Ekle"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:213
 msgid "Add Asset"
@@ -418,7 +422,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:31
 msgid "Add Customer"
-msgstr "Alıcı Ekle"
+msgstr ""
 
 #: bin/is.pl:105
 msgid "Add Customer Return"
@@ -471,7 +475,7 @@ msgstr ""
 
 #: bin/ic.pl:63 sql/Pg-database.sql:2860
 msgid "Add Part"
-msgstr "Parça Ekle"
+msgstr ""
 
 #: bin/pe.pl:195 sql/Pg-database.sql:2930
 msgid "Add Pricegroup"
@@ -479,7 +483,7 @@ msgstr ""
 
 #: bin/io.pl:1198 bin/oe.pl:62
 msgid "Add Purchase Order"
-msgstr "Satınalma Sip. Ekle"
+msgstr ""
 
 #: bin/io.pl:1231 bin/oe.pl:74
 msgid "Add Quotation"
@@ -507,11 +511,11 @@ msgstr ""
 
 #: bin/io.pl:1209 bin/oe.pl:66
 msgid "Add Sales Order"
-msgstr "Satış Siparişi Ekle"
+msgstr ""
 
 #: bin/ic.pl:64 sql/Pg-database.sql:2861
 msgid "Add Service"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: sql/Pg-database.sql:2868
 msgid "Add Tax Form"
@@ -519,7 +523,7 @@ msgstr ""
 
 #: UI/taxform/add_taxform.html:2
 msgid "Add TaxForm"
-msgstr ""
+msgstr "Add Tax Form"
 
 #: sql/Pg-database.sql:2827
 msgid "Add Timecard"
@@ -531,7 +535,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
 msgid "Add Transaction"
-msgstr "İşlem Ekle"
+msgstr ""
 
 #: UI/business_units/list_classes.html:103
 msgid "Add Unit"
@@ -540,11 +544,11 @@ msgstr ""
 #: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:98
 #: UI/setup/confirm_operation.html:52 UI/setup/edit_user.html:93
 msgid "Add User"
-msgstr "Kullanıcı Ekle"
+msgstr ""
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:33
 msgid "Add Vendor"
-msgstr "Satıcı Ekle"
+msgstr ""
 
 #: bin/ir.pl:125 bin/oe.pl:1409
 msgid "Add Vendor Invoice"
@@ -583,7 +587,7 @@ msgstr ""
 #: UI/Contact/divs/address.html:130 UI/Reports/filters/contact_search.html:87
 #: UI/Reports/filters/purchase_history.html:70
 msgid "Address"
-msgstr "Adres"
+msgstr ""
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
@@ -644,7 +648,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:78
 #: UI/Reports/filters/invoice_search.html:171
 msgid "All"
-msgstr "Hepsi"
+msgstr ""
 
 #: bin/aa.pl:1703
 msgid "All Invoices"
@@ -750,11 +754,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:287
 #: UI/Reports/filters/orders.html:168 UI/rp-search-generate_tax_report.html:158
 msgid "Amount"
-msgstr "Miktar"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:82
 msgid "Amount Budgetted"
-msgstr ""
+msgstr "Amount Budgeted"
 
 #: bin/aa.pl:1649 LedgerSMB/Report/Invoices/Outstanding.pm:236
 #: LedgerSMB/Scripts/payment.pm:751 LedgerSMB/Scripts/payment.pm:757
@@ -853,12 +857,12 @@ msgstr ""
 
 #: bin/aa.pl:89 bin/gl.pl:82 bin/io.pl:82 LedgerSMB/App_State.pm:240
 msgid "Apr"
-msgstr "Nis"
+msgstr ""
 
 #: bin/aa.pl:75 bin/gl.pl:68 bin/io.pl:68 LedgerSMB/App_State.pm:240
 #: LedgerSMB/DBObject/Date.pm:65
 msgid "April"
-msgstr "Nisan"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:635 LedgerSMB/Scripts/asset.pm:699
 #: LedgerSMB/Scripts/asset.pm:768
@@ -871,11 +875,11 @@ msgstr ""
 
 #: bin/oe.pl:1293
 msgid "Are you sure you want to delete Order Number"
-msgstr "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: "
+msgstr "Are you sure you want to delete Order Number?"
 
 #: bin/oe.pl:1298
 msgid "Are you sure you want to delete Quotation Number"
-msgstr ""
+msgstr "Are you sure you want to delete Quotation Number?"
 
 #: bin/ic.pl:2240
 msgid "Assemblies restocked!"
@@ -884,7 +888,7 @@ msgstr ""
 #: UI/accounts/edit.html:203 UI/Reports/filters/gl.html:136
 #: sql/Pg-database.sql:3821
 msgid "Asset"
-msgstr "Aktif"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Asset_Class.pm:74 UI/asset/edit_asset.html:159
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:143
@@ -1057,12 +1061,12 @@ msgstr ""
 
 #: bin/aa.pl:93 bin/gl.pl:86 bin/io.pl:86 LedgerSMB/App_State.pm:246
 msgid "Aug"
-msgstr "Ağu"
+msgstr ""
 
 #: bin/aa.pl:79 bin/gl.pl:72 bin/io.pl:72 LedgerSMB/App_State.pm:246
 #: LedgerSMB/DBObject/Date.pm:69
 msgid "August"
-msgstr "Ağustos"
+msgstr ""
 
 #: UI/Contact/divs/notes.html:79
 msgid "Author: [_1]"
@@ -1116,7 +1120,7 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:78
 msgid "Backup"
-msgstr "Yedekleme"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:85
 msgid "Backup DB"
@@ -1141,12 +1145,11 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:26 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:4 sql/Pg-database.sql:2831
 msgid "Balance Sheet"
-msgstr "Bilanço"
+msgstr ""
 
 #: LedgerSMB/Report/Balance_Sheet.pm:285
-#, fuzzy
 msgid "Balance sheet"
-msgstr "Bilanço"
+msgstr ""
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:120
 msgid "Balance y Mayor"
@@ -1344,7 +1347,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:32
 msgid "Business Number"
-msgstr "ŞirketNo"
+msgstr ""
 
 #: LedgerSMB/Report/Contact/Search.pm:78 UI/Contact/divs/credit.html:235
 #: UI/Contact/divs/credit.html:236
@@ -1387,7 +1390,7 @@ msgstr ""
 #: bin/ic.pl:528 bin/ic.pl:697 LedgerSMB/Report/Invoices/COGS.pm:130
 #: UI/accounts/edit.html:381
 msgid "COGS"
-msgstr "SMM"
+msgstr ""
 
 #: UI/Reports/filters/cogs_lines.html:5
 msgid "COGS Lots Report"
@@ -1405,7 +1408,7 @@ msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:114
 msgid "Caja Diaria"
-msgstr ""
+msgstr "Daily Cash Receipts"
 
 #: bin/ir.pl:829 bin/is.pl:406 bin/is.pl:874
 msgid "Calculate Taxes"
@@ -1557,7 +1560,7 @@ msgstr ""
 
 #: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2786
 msgid "Chart of Accounts"
-msgstr "Hesap Planı"
+msgstr ""
 
 #: sql/Pg-database.sql:2964
 msgid "Check"
@@ -1664,7 +1667,7 @@ msgstr ""
 #: UI/Reports/aging_report.html:19 UI/Reports/display_report.html:19
 #: UI/Reports/display_report.tex:24
 msgid "Company"
-msgstr "Şirket"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:29
 msgid "Company Address"
@@ -1703,7 +1706,7 @@ msgstr ""
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
 msgid "Compare to"
-msgstr "...kıyasla"
+msgstr ""
 
 #: UI/payments/check_job.html:25
 msgid "Completed Successfully"
@@ -1719,7 +1722,7 @@ msgstr ""
 
 #: bin/am.pl:513 bin/oe.pl:1312
 msgid "Confirm!"
-msgstr "Onayla!"
+msgstr ""
 
 #: LedgerSMB.pm:609
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
@@ -1747,7 +1750,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:74
 #: UI/Reports/filters/contact_search.html:54 sql/Pg-database.sql:545
 msgid "Contact"
-msgstr "Kontak"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:35
@@ -1802,7 +1805,7 @@ msgstr ""
 #: UI/Reports/filters/trial_balance.html:133 UI/search_results.html:33
 #: UI/timecards/entry_filter.html:41
 msgid "Continue"
-msgstr "Devam"
+msgstr ""
 
 #: bin/ic.pl:868
 msgid "Continue Previous Workflow"
@@ -1953,7 +1956,7 @@ msgstr ""
 #: UI/journal/journal_entry.html:116 UI/Reports/co/filter_bm.html:107
 #: UI/Reports/filters/gl.html:214 UI/Reports/filters/trial_balance.html:6
 msgid "Credit"
-msgstr "Alacak"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:303
 msgid "Credit Account"
@@ -1975,7 +1978,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:145
 #: UI/Contact/divs/credit.html:146 UI/orders/order.html:34
 msgid "Credit Limit"
-msgstr "Kredi Limiti"
+msgstr ""
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
@@ -2025,7 +2028,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:360 UI/rp-aging.csv:6
 #: UI/timecards/timecard.html:118 UI/timecards/timecard-week.html:77
 msgid "Currency"
-msgstr "Para Birimi"
+msgstr ""
 
 #: bin/aa.pl:1576 bin/pe.pl:839 LedgerSMB/DBObject/Date.pm:79
 #: LedgerSMB/Report/Aging.pm:126 templates/demo/statement.html:64
@@ -2058,7 +2061,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:8
 #: UI/rp-search-generate_tax_report.html:139 sql/Pg-database.sql:543
 msgid "Customer"
-msgstr "Alıcı"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:249
 msgid "Customer Account"
@@ -2121,11 +2124,11 @@ msgstr ""
 
 #: UI/setup/credentials.html:46 UI/setup/list_databases.html:11
 msgid "Database"
-msgstr "Veritabanı"
+msgstr ""
 
 #: UI/am-company-logo.html:20
 msgid "Database Host"
-msgstr "Veritabanı Hostu"
+msgstr ""
 
 #: UI/setup/begin_backup.html:6 UI/setup/complete.html:10
 #: UI/setup/complete_migration_revert.html:10 UI/setup/confirm_operation.html:6
@@ -2151,7 +2154,7 @@ msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
-msgstr "Veriseti"
+msgstr ""
 
 #: bin/aa.pl:816 bin/ir.pl:861 bin/is.pl:907 bin/oe.pl:1519 bin/pe.pl:1052
 #: LedgerSMB/Report/Aging.pm:114 LedgerSMB/Report/GL.pm:89
@@ -2223,7 +2226,7 @@ msgstr "Veriseti"
 #: UI/payments/use_overpayment2.html:87 UI/Reports/filters/gl.html:183
 #: UI/Reports/filters/orders.html:125 UI/rp-search-generate_tax_report.html:127
 msgid "Date"
-msgstr "Tarih"
+msgstr ""
 
 #: UI/users/preferences.html:58
 msgid "Date Format"
@@ -2245,7 +2248,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:222
 #: UI/Reports/filters/invoice_search.html:312
 msgid "Date Paid"
-msgstr "Ödendiği Tarih"
+msgstr ""
 
 #: bin/oe.pl:1725
 msgid "Date Received"
@@ -2305,7 +2308,7 @@ msgstr ""
 #: UI/journal/journal_entry.html:115 UI/Reports/filters/gl.html:207
 #: UI/Reports/filters/trial_balance.html:5
 msgid "Debit"
-msgstr "Borç"
+msgstr ""
 
 #: bin/am.pl:1517 sql/Pg-database.sql:2896
 msgid "Debit Invoice"
@@ -2323,12 +2326,12 @@ msgstr ""
 
 #: bin/aa.pl:97 bin/gl.pl:90 bin/io.pl:90 LedgerSMB/App_State.pm:250
 msgid "Dec"
-msgstr "Ara"
+msgstr ""
 
 #: bin/aa.pl:83 bin/gl.pl:76 bin/io.pl:76 LedgerSMB/App_State.pm:250
 #: LedgerSMB/DBObject/Date.pm:73
 msgid "December"
-msgstr "Aralık"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
@@ -2415,7 +2418,7 @@ msgstr ""
 #: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:65
 #: UI/reconciliation/report.html:303
 msgid "Delete"
-msgstr "Sil"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:218
 msgid "Delete Batch"
@@ -2619,7 +2622,7 @@ msgstr ""
 #: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2825
 #: sql/Pg-database.sql:2830
 msgid "Description"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/pe.pl:272
 msgid "Description Translations"
@@ -2678,7 +2681,7 @@ msgstr ""
 #: UI/payments/payments_detail.html:327
 #: UI/Reports/filters/purchase_history.html:306
 msgid "Discount"
-msgstr "İndirim"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Business_Type.pm:54
 msgid "Discount (%)"
@@ -2805,11 +2808,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:237
 #: UI/Reports/filters/invoice_search.html:327
 msgid "Due Date"
-msgstr "Vade Tarihi"
+msgstr ""
 
 #: bin/aa.pl:1309
 msgid "Due Date missing!"
-msgstr "Vade Tarihi yok!"
+msgstr ""
 
 #: UI/Contact/divs/user.html:10 UI/setup/edit_user.html:10
 msgid "Duplicate User Found: Importing User"
@@ -2823,7 +2826,7 @@ msgstr ""
 #: bin/oe.pl:861 bin/oe.pl:1946 UI/io-email.html:16
 #: UI/Reports/filters/contact_search.html:46 UI/rp-email.html:15
 msgid "E-mail"
-msgstr "Posta"
+msgstr ""
 
 #: UI/rp-email.html:8
 msgid "E-mail Statement to [_1]"
@@ -2835,7 +2838,7 @@ msgstr ""
 
 #: bin/am.pl:1485 bin/io.pl:1698
 msgid "E-mail address missing!"
-msgstr "Posta adresi yok!"
+msgstr ""
 
 #: bin/arap.pl:453
 msgid "E-mail message"
@@ -2873,7 +2876,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/account.pm:70
 msgid "Edit Account"
-msgstr "Hesabı Düzenle"
+msgstr ""
 
 #: bin/ic.pl:98 bin/ic.pl:718
 msgid "Edit Assembly"
@@ -2941,7 +2944,7 @@ msgstr ""
 
 #: bin/oe.pl:93
 msgid "Edit Purchase Order"
-msgstr "Alış Siparişini Düzenle"
+msgstr ""
 
 #: bin/oe.pl:107
 msgid "Edit Quotation"
@@ -2965,11 +2968,11 @@ msgstr ""
 
 #: bin/oe.pl:98
 msgid "Edit Sales Order"
-msgstr "Satış Siparişini Düzenle"
+msgstr ""
 
 #: bin/ic.pl:97 bin/ic.pl:717
 msgid "Edit Service"
-msgstr "Hizmeti Düzenle"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:11
 msgid "Edit Tax Form"
@@ -2977,7 +2980,7 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:214
 msgid "Edit User"
-msgstr "Kullanıcı Bilgilerini Düzenle"
+msgstr ""
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:34
 msgid "Edit Vendor"
@@ -3180,7 +3183,7 @@ msgstr ""
 #: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:205 UI/Reports/filters/gl.html:150
 msgid "Equity"
-msgstr "Sermaye"
+msgstr ""
 
 #: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
 msgid "Equity & Liabilities"
@@ -3228,7 +3231,7 @@ msgstr ""
 
 #: bin/aa.pl:818 bin/ir.pl:863 bin/is.pl:909 UI/orders/order.html:251
 msgid "Exch"
-msgstr "D.Kuru"
+msgstr ""
 
 #: bin/aa.pl:435 bin/ir.pl:354 bin/is.pl:312 bin/oe.pl:334 bin/oe.pl:342
 #: bin/oe.pl:1523 LedgerSMB/Report/Contact/History.pm:116
@@ -3237,7 +3240,7 @@ msgstr "D.Kuru"
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 #: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
 msgid "Exchange Rate"
-msgstr "Döviz Kuru"
+msgstr ""
 
 #: bin/aa.pl:1343 bin/ir.pl:1388 bin/is.pl:1362
 msgid "Exchange rate for payment missing!"
@@ -3262,7 +3265,7 @@ msgstr ""
 #: bin/ic.pl:661 UI/accounts/edit.html:208 UI/accounts/edit.html:420
 #: UI/accounts/edit.html:459 UI/Reports/filters/gl.html:164
 msgid "Expense"
-msgstr "Gider"
+msgstr ""
 
 #: UI/asset/edit_asset.html:191
 msgid "Expense Account"
@@ -3270,7 +3273,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:333
 msgid "Expense/Asset"
-msgstr "Gider/Varlıklar"
+msgstr ""
 
 #: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
 #: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
@@ -3300,7 +3303,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:803
 msgid "Fax"
-msgstr "Faks"
+msgstr ""
 
 #: templates/demo/ar_transaction.html:53 templates/demo/ar_transaction.tex:27
 #: templates/demo/letterhead.tex:14
@@ -3389,12 +3392,12 @@ msgstr ""
 
 #: bin/aa.pl:87 bin/gl.pl:80 bin/io.pl:80 LedgerSMB/App_State.pm:238
 msgid "Feb"
-msgstr "Şub"
+msgstr ""
 
 #: bin/aa.pl:73 bin/gl.pl:66 bin/io.pl:66 LedgerSMB/App_State.pm:238
 #: LedgerSMB/DBObject/Date.pm:63
 msgid "February"
-msgstr "Şubat"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:90
 msgid "Fifteen"
@@ -3493,11 +3496,11 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:96
 msgid "Foreign Exchange Gain"
-msgstr "Kur Kazancı"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:99
 msgid "Foreign Exchange Loss"
-msgstr "Kur Kaybı"
+msgstr ""
 
 #: UI/Reports/filters/taxforms.html:28
 msgid "Form"
@@ -3544,7 +3547,7 @@ msgstr ""
 #: UI/rp-search-generate_income_statement.html:59
 #: UI/rp-search-generate_tax_report.html:2
 msgid "From"
-msgstr "Başlangıç"
+msgstr ""
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:180
 msgid "From Amount"
@@ -3743,7 +3746,7 @@ msgstr ""
 #: UI/am-sic-form.html:17 UI/rp-search-generate_balance_sheet.html:76
 #: UI/rp-search-generate_income_statement.html:126
 msgid "Heading"
-msgstr "Başlık"
+msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:36
 #: UI/Reports/filters/income_statement.html:72
@@ -3896,11 +3899,11 @@ msgstr ""
 #: UI/rp-search-generate_income_statement.html:120
 #: UI/rp-search-generate_tax_report.html:104
 msgid "Include in Report"
-msgstr "Raporla"
+msgstr ""
 
 #: UI/accounts/edit.html:281
 msgid "Include in drop-down menus"
-msgstr "Seçmeli Menüye dahil et"
+msgstr ""
 
 #: UI/Reports/filters/inventory_adj.html:20
 msgid "Includes Part"
@@ -3927,7 +3930,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:12 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2858
 msgid "Income Statement"
-msgstr "Gelir Tablosu"
+msgstr ""
 
 #: UI/payroll/income.html:9
 msgid "Income Type"
@@ -3947,7 +3950,7 @@ msgstr ""
 
 #: bin/ic.pl:1284
 msgid "Individual Items"
-msgstr "Farklı Kalemler"
+msgstr ""
 
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
@@ -4000,7 +4003,7 @@ msgstr ""
 
 #: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:87 sql/Pg-database.sql:2939
 msgid "Inventory"
-msgstr "Stok"
+msgstr ""
 
 #: UI/Reports/filters/inventory_activity.html:6 sql/Pg-database.sql:2777
 msgid "Inventory Activity"
@@ -4033,7 +4036,7 @@ msgstr ""
 #: bin/ic.pl:1824
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
-msgstr "Bu grubu çıkarmadan önce stok miktarı sıfır olmalıdır"
+msgstr ""
 
 #: bin/ic.pl:1823
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
@@ -4061,7 +4064,7 @@ msgstr ""
 #: UI/rp-search-generate_tax_report.html:119 sql/Pg-database.sql:1055
 #: sql/Pg-database.sql:2842 sql/Pg-database.sql:2941
 msgid "Invoice"
-msgstr "Fatura"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:69 templates/demo/ap_transaction.tex:59
 #: templates/demo/ar_transaction.html:68 templates/demo/ar_transaction.tex:76
@@ -4112,11 +4115,11 @@ msgstr ""
 #: UI/orders/order.html:90 UI/Reports/filters/invoice_outstanding.html:163
 #: UI/Reports/filters/invoice_search.html:253
 msgid "Invoice Date"
-msgstr "Fatura Tarihi"
+msgstr ""
 
 #: bin/aa.pl:1308 bin/io.pl:1701 bin/ir.pl:1353 bin/is.pl:1327
 msgid "Invoice Date missing!"
-msgstr "Fatura Tarihi yok!"
+msgstr ""
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
@@ -4134,11 +4137,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:87
 #: UI/Reports/filters/invoice_search.html:232
 msgid "Invoice Number"
-msgstr "Fatura No"
+msgstr ""
 
 #: bin/io.pl:1711
 msgid "Invoice Number missing!"
-msgstr "Fatura Numarası yok!"
+msgstr ""
 
 #: LedgerSMB/Report/PNL/Invoice.pm:76
 msgid "Invoice Profit/Loss"
@@ -4224,7 +4227,7 @@ msgstr ""
 
 #: bin/io.pl:852
 msgid "Item not on file!"
-msgstr "Bu kalem dosyada yok!"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:128
 msgid "Items Found In"
@@ -4249,12 +4252,12 @@ msgstr ""
 
 #: bin/aa.pl:86 bin/gl.pl:79 bin/io.pl:79 LedgerSMB/App_State.pm:237
 msgid "Jan"
-msgstr "Oca"
+msgstr ""
 
 #: bin/aa.pl:72 bin/gl.pl:65 bin/io.pl:65 LedgerSMB/App_State.pm:237
 #: LedgerSMB/DBObject/Date.pm:62
 msgid "January"
-msgstr "Ocak"
+msgstr ""
 
 #: UI/payments/check_job.html:27
 msgid "Job Failed"
@@ -4285,21 +4288,21 @@ msgstr ""
 
 #: bin/aa.pl:92 bin/gl.pl:85 bin/io.pl:85 LedgerSMB/App_State.pm:245
 msgid "Jul"
-msgstr "Tem"
+msgstr ""
 
 #: bin/aa.pl:78 bin/gl.pl:71 bin/io.pl:71 LedgerSMB/App_State.pm:245
 #: LedgerSMB/DBObject/Date.pm:68
 msgid "July"
-msgstr "Temmuz"
+msgstr ""
 
 #: bin/aa.pl:91 bin/gl.pl:84 bin/io.pl:84 LedgerSMB/App_State.pm:244
 msgid "Jun"
-msgstr "Haz"
+msgstr ""
 
 #: bin/aa.pl:77 bin/gl.pl:70 bin/io.pl:70 LedgerSMB/App_State.pm:244
 #: LedgerSMB/DBObject/Date.pm:67 t/data/04-strings-for-translation.html:6
 msgid "June"
-msgstr "Haziran"
+msgstr ""
 
 #: UI/Reports/balance_sheet.html:95
 msgid "Key Ratios"
@@ -4339,7 +4342,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:110 UI/users/preferences.html:78
 #: sql/Pg-database.sql:2872
 msgid "Language"
-msgstr "Dil"
+msgstr ""
 
 #: bin/am.pl:547
 msgid "Language deleted!"
@@ -4411,7 +4414,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
-msgstr "Pasif"
+msgstr ""
 
 #: UI/Contact/divs/company.html:149
 msgid "License Number"
@@ -4431,7 +4434,7 @@ msgstr ""
 
 #: bin/ic.pl:764
 msgid "Link Accounts"
-msgstr "Bağlı Hesaplar"
+msgstr ""
 
 #: bin/ic.pl:1272
 msgid "List"
@@ -4460,7 +4463,7 @@ msgstr ""
 #: bin/ic.pl:441 LedgerSMB/Report/Inventory/Search.pm:223
 #: UI/Reports/filters/search_goods.html:243
 msgid "List Price"
-msgstr "Liste Fiyatı"
+msgstr ""
 
 #: sql/Pg-database.sql:2841
 msgid "List SIC"
@@ -4529,7 +4532,7 @@ msgstr ""
 
 #: bin/old-handler.pl:132 UI/login.html:76 UI/setup/credentials.html:55
 msgid "Login"
-msgstr "Giriş"
+msgstr ""
 
 #: sql/Pg-database.sql:2922
 msgid "Logout"
@@ -4559,7 +4562,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:47
 #: UI/Reports/filters/search_goods.html:339
 msgid "Make"
-msgstr "Marka"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:229
 msgid "Make employee numbers unique"
@@ -4606,12 +4609,12 @@ msgstr ""
 
 #: bin/aa.pl:88 bin/gl.pl:81 bin/io.pl:81 LedgerSMB/App_State.pm:239
 msgid "Mar"
-msgstr "Mar"
+msgstr ""
 
 #: bin/aa.pl:74 bin/gl.pl:67 bin/io.pl:67 LedgerSMB/App_State.pm:239
 #: LedgerSMB/DBObject/Date.pm:64
 msgid "March"
-msgstr "Mart"
+msgstr ""
 
 #: bin/ic.pl:464 bin/ic.pl:642 LedgerSMB/Report/Inventory/Search.pm:242
 #: UI/Reports/filters/search_goods.html:281
@@ -4629,11 +4632,11 @@ msgstr ""
 #: bin/aa.pl:90 bin/gl.pl:83 bin/io.pl:83 LedgerSMB/App_State.pm:243
 #: LedgerSMB/DBObject/Date.pm:66
 msgid "May"
-msgstr "May"
+msgstr ""
 
 #: bin/aa.pl:76 bin/gl.pl:69 bin/io.pl:69
 msgid "May "
-msgstr "Mayıs"
+msgstr ""
 
 #: bin/aa.pl:821 bin/ir.pl:690 bin/ir.pl:866 bin/is.pl:749 bin/is.pl:912
 #: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:155
@@ -4715,7 +4718,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:55
 #: UI/Reports/filters/search_goods.html:346
 msgid "Model"
-msgstr "Model"
+msgstr ""
 
 #: LedgerSMB/Report/Timecards.pm:126
 msgid "Mon"
@@ -4782,7 +4785,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:31
 #: UI/Reports/filters/overpayments.html:32 UI/Reports/filters/payments.html:54
 msgid "Name"
-msgstr "İsim"
+msgstr ""
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
@@ -4859,7 +4862,7 @@ msgstr ""
 #: LedgerSMB/Report/Taxform/List.pm:101 UI/am-audit-control.html:15
 #: UI/am-audit-control.html:31 UI/Configuration/settings.html:35
 msgid "No"
-msgstr "Hayır"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:626
 msgid "No AR or AP Account Selected"
@@ -5016,7 +5019,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:340
 #: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:132
 msgid "Notes"
-msgstr "Notlar:"
+msgstr ""
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
@@ -5036,12 +5039,12 @@ msgstr ""
 
 #: bin/aa.pl:96 bin/gl.pl:89 bin/io.pl:89 LedgerSMB/App_State.pm:249
 msgid "Nov"
-msgstr "Kas"
+msgstr ""
 
 #: bin/aa.pl:82 bin/gl.pl:75 bin/io.pl:75 LedgerSMB/App_State.pm:249
 #: LedgerSMB/DBObject/Date.pm:72
 msgid "November"
-msgstr "Kasım"
+msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:514 LedgerSMB/Upgrade_Tests.pm:533
 msgid "Null employee numbers"
@@ -5097,11 +5100,11 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:129
 #: UI/am-taxes.html:14 UI/Contact/divs/credit.html:26 UI/io-email.html:99
 msgid "Number"
-msgstr "Numara"
+msgstr ""
 
 #: UI/users/preferences.html:68
 msgid "Number Format"
-msgstr "Rakam Formatı"
+msgstr ""
 
 #: bin/io.pl:1191
 msgid "Number missing in Row [_1]"
@@ -5123,7 +5126,7 @@ msgstr ""
 #: bin/ic.pl:708 LedgerSMB/Scripts/budgets.pm:126 UI/accounts/edit.html:136
 #: UI/Reports/filters/search_goods.html:113
 msgid "Obsolete"
-msgstr "Eski"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:97
 msgid "Obsolete By"
@@ -5131,12 +5134,12 @@ msgstr ""
 
 #: bin/aa.pl:95 bin/gl.pl:88 bin/io.pl:88 LedgerSMB/App_State.pm:248
 msgid "Oct"
-msgstr "Eki"
+msgstr ""
 
 #: bin/aa.pl:81 bin/gl.pl:74 bin/io.pl:74 LedgerSMB/App_State.pm:248
 #: LedgerSMB/DBObject/Date.pm:71
 msgid "October"
-msgstr "Ekim"
+msgstr ""
 
 #: bin/aa.pl:924 bin/ir.pl:542 bin/is.pl:560 bin/is.pl:832
 msgid "Off Hold"
@@ -5151,7 +5154,7 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/COGS.pm:110 UI/inventory/adjustment_entry.html:30
 #: UI/Reports/filters/search_goods.html:99
 msgid "On Hand"
-msgstr "Stok:"
+msgstr ""
 
 #: bin/aa.pl:926 bin/aa.pl:1705 bin/ir.pl:544 bin/is.pl:562 bin/is.pl:834
 #: UI/Reports/filters/invoice_outstanding.html:94
@@ -5219,7 +5222,7 @@ msgstr ""
 #: bin/oe.pl:2411 LedgerSMB/Report/Inventory/Search.pm:282
 #: LedgerSMB/Report/Invoices/Outstanding.pm:199
 msgid "Order"
-msgstr "Sipariş"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:88 templates/demo/ap_transaction.tex:66
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
@@ -5266,15 +5269,15 @@ msgstr ""
 #: templates/demo/work_order.html:103 templates/xedemo/purchase_order.html:103
 #: templates/xedemo/sales_order.html:103 templates/xedemo/work_order.html:103
 msgid "Order Date"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: bin/io.pl:1703 bin/oe.pl:1180 bin/oe.pl:1353
 msgid "Order Date missing!"
-msgstr "Sipariş Tarihi yok!"
+msgstr ""
 
 #: sql/Pg-database.sql:2913
 msgid "Order Entry"
-msgstr "Sipariş Girişi"
+msgstr ""
 
 #: bin/aa.pl:628 bin/aa.pl:1502 bin/aa.pl:1615 bin/ir.pl:510 bin/is.pl:514
 #: bin/oe.pl:381 bin/oe.pl:1790 LedgerSMB/Report/Contact/Purchase.pm:69
@@ -5283,11 +5286,11 @@ msgstr "Sipariş Girişi"
 #: UI/Reports/filters/invoice_search.html:239 UI/Reports/filters/orders.html:38
 #: UI/Reports/filters/orders.html:119
 msgid "Order Number"
-msgstr "Sipariş No"
+msgstr ""
 
 #: bin/io.pl:1713 bin/oe.pl:1352
 msgid "Order Number missing!"
-msgstr "Sipariş Numarası yok!"
+msgstr ""
 
 #: bin/oe.pl:1330
 msgid "Order deleted!"
@@ -5418,7 +5421,7 @@ msgstr ""
 #: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2944
 #: sql/Pg-database.sql:2957
 msgid "Packing List"
-msgstr "Paketleme Listesi"
+msgstr ""
 
 #: bin/io.pl:1702
 msgid "Packing List Date missing!"
@@ -5439,7 +5442,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:230
 #: UI/Reports/filters/invoice_search.html:320
 msgid "Paid"
-msgstr "Ödendi"
+msgstr ""
 
 #: bin/pe.pl:133 UI/business_units/edit.html:42
 msgid "Parent"
@@ -5447,7 +5450,7 @@ msgstr ""
 
 #: bin/io.pl:866 LedgerSMB/Report/Invoices/COGS.pm:105
 msgid "Part"
-msgstr "Parça"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/COGS.pm:161
 msgid "Part Description"
@@ -5506,7 +5509,7 @@ msgstr ""
 #: UI/setup/edit_user.html:48 UI/setup/new_user.html:29
 #: UI/users/preferences.html:42
 msgid "Password"
-msgstr "Şifre"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:64
 msgid "Password Duration"
@@ -5541,14 +5544,14 @@ msgstr ""
 
 #: UI/accounts/edit.html:327
 msgid "Payables"
-msgstr "Borçlar"
+msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:979 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:342
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
 #: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2797
 msgid "Payment"
-msgstr "Ödeme"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:121
 msgid "Payment Amount"
@@ -5582,7 +5585,7 @@ msgstr ""
 
 #: bin/aa.pl:1333 bin/ir.pl:1378 bin/is.pl:1352
 msgid "Payment date missing!"
-msgstr "Ödeme Tarihi yok"
+msgstr ""
 
 #: templates/demo/invoice.tex:30 templates/demo_with_images/invoice.tex:30
 #: templates/xedemo/invoice.tex:29
@@ -5612,7 +5615,7 @@ msgstr ""
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:10
 #: sql/Pg-database.sql:2801 sql/Pg-database.sql:2864
 msgid "Payments"
-msgstr "Ödemeler"
+msgstr ""
 
 #: bin/is.pl:674
 msgid "Payments associated with voided invoice may need to be reversed."
@@ -5811,7 +5814,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2924
 msgid "Preferences"
-msgstr "Tercihler"
+msgstr ""
 
 #: UI/users/preferences.html:20
 msgid "Preferences Saved"
@@ -5842,7 +5845,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:102
 #: templates/xedemo/sales_quotation.tex:90
 msgid "Price"
-msgstr "Fiyat"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:48
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:63
@@ -6055,7 +6058,7 @@ msgstr ""
 #: sql/Pg-database.sql:1932 sql/Pg-database.sql:2807 sql/Pg-database.sql:2948
 #: sql/Pg-database.sql:2961
 msgid "Purchase Order"
-msgstr "Satınalma Siparişi"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:110
 msgid "Purchase Order Number"
@@ -6065,7 +6068,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:167 sql/Pg-database.sql:2810
 #: sql/Pg-database.sql:2812 sql/Pg-database.sql:2815
 msgid "Purchase Orders"
-msgstr "Satınalma Siparişleri"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Asset.pm:92 LedgerSMB/Report/Listings/Asset.pm:123
 #: LedgerSMB/Scripts/asset.pm:399
@@ -6128,7 +6131,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:286
 #: UI/timecards/timecard-week.html:98
 msgid "Qty"
-msgstr "Adet"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/COGS.pm:115
 msgid "Quantity"
@@ -6228,7 +6231,7 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:44
 #: templates/xedemo/timecard.html:101 templates/xedemo/timecard.tex:44
 msgid "Rate"
-msgstr "Oran"
+msgstr ""
 
 #: UI/am-taxes.html:12
 msgid "Rate (%)"
@@ -6312,7 +6315,7 @@ msgstr ""
 
 #: bin/ir.pl:489 bin/is.pl:483 UI/orders/order.html:42
 msgid "Record in"
-msgstr "Kaydet"
+msgstr ""
 
 #: UI/timecards/entry_filter.html:17
 msgid "Recording time for"
@@ -6436,7 +6439,7 @@ msgstr ""
 #: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
 #: sql/Pg-database.sql:2918 sql/Pg-database.sql:2933 sql/Pg-database.sql:2974
 msgid "Reports"
-msgstr "Raporlar"
+msgstr ""
 
 #: bin/arap.pl:357
 msgid "Reposting Not Allowed"
@@ -6495,7 +6498,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:104 templates/xedemo/sales_order.tex:106
 #: templates/xedemo/work_order.html:104
 msgid "Required by"
-msgstr "Talep tarihi:"
+msgstr ""
 
 #: LedgerSMB.pm:607 LedgerSMB.pm:608
 msgid "Required input not provided"
@@ -6507,7 +6510,7 @@ msgstr ""
 
 #: UI/accounts/yearend.html:37
 msgid "Retained Earnings"
-msgstr "Net Dönem Karı (Zararı)"
+msgstr ""
 
 #: UI/Contact/divs/company.html:174 UI/Contact/divs/person.html:189
 #: UI/templates/edit.html:44
@@ -6605,7 +6608,7 @@ msgstr ""
 #: LedgerSMB/Entity/Location.pm:113 UI/Contact/divs/address.html:42
 #: UI/Contact/divs/employee.html:93 sql/Pg-database.sql:660
 msgid "Sales"
-msgstr "Satışlar"
+msgstr ""
 
 #: bin/is.pl:992 bin/oe.pl:654 bin/oe.pl:863 sql/Pg-database.sql:2898
 msgid "Sales Invoice"
@@ -6626,7 +6629,7 @@ msgstr ""
 #: templates/xedemo/sales_order.tex:99 sql/Pg-database.sql:1931
 #: sql/Pg-database.sql:2806 sql/Pg-database.sql:2946 sql/Pg-database.sql:2959
 msgid "Sales Order"
-msgstr "Satış Siparişi"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:106
 msgid "Sales Order Number"
@@ -6636,7 +6639,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:144 sql/Pg-database.sql:2809
 #: sql/Pg-database.sql:2811 sql/Pg-database.sql:2814 sql/Pg-database.sql:2828
 msgid "Sales Orders"
-msgstr "Satış Siparişleri"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:107
 msgid "Sales Quotation Number"
@@ -6707,7 +6710,7 @@ msgstr ""
 #: UI/timecards/timecard.html:166 UI/timecards/timecard-week.html:128
 #: UI/users/preferences.html:127
 msgid "Save"
-msgstr "Kaydet"
+msgstr ""
 
 #: UI/Contact/divs/contact_info.html:134
 msgid "Save As New"
@@ -6926,9 +6929,8 @@ msgid "Select Templates to Load"
 msgstr ""
 
 #: UI/setup/credentials.html:16
-#, fuzzy
 msgid "Select User"
-msgstr "Kullanıcı Bilgilerini Düzenle"
+msgstr ""
 
 #: bin/oe.pl:2522
 msgid "Select Vendor"
@@ -6985,7 +6987,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:266
 #: UI/Reports/filters/search_goods.html:251
 msgid "Sell Price"
-msgstr "Satış Fiyatı"
+msgstr ""
 
 #: bin/am.pl:1472
 msgid "Sending Bin List [_1]"
@@ -7029,7 +7031,7 @@ msgstr ""
 
 #: bin/aa.pl:94 bin/gl.pl:87 bin/io.pl:87 LedgerSMB/App_State.pm:247
 msgid "Sep"
-msgstr "Eyl"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:71
 msgid "Separate Duties"
@@ -7038,7 +7040,7 @@ msgstr ""
 #: bin/aa.pl:80 bin/gl.pl:73 bin/io.pl:73 LedgerSMB/App_State.pm:247
 #: LedgerSMB/DBObject/Date.pm:70
 msgid "September"
-msgstr "Eylül"
+msgstr ""
 
 #: UI/Configuration/sequence.html:15
 msgid "Sequence"
@@ -7083,7 +7085,7 @@ msgstr ""
 
 #: bin/io.pl:868
 msgid "Service"
-msgstr "servis"
+msgstr ""
 
 #: bin/pe.pl:1055
 msgid "Service Code"
@@ -7298,7 +7300,7 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:106
 msgid "Short"
-msgstr "Kısa"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:121
 msgid "Show Credit Limit"
@@ -7308,7 +7310,7 @@ msgstr ""
 #: templates/demo_with_images/printPayment.html:82
 #: templates/xedemo/printPayment.html:82
 msgid "Signature"
-msgstr "İmza"
+msgstr ""
 
 #: sql/Pg-database.sql:2476
 msgid "Simple"
@@ -7373,7 +7375,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:128
 #: UI/Reports/filters/payments.html:74
 msgid "Source"
-msgstr "Kaynak"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:83
 msgid "Source starting with"
@@ -7496,11 +7498,11 @@ msgstr ""
 
 #: bin/ic.pl:2013 bin/ic.pl:2125 sql/Pg-database.sql:2931
 msgid "Stock Assembly"
-msgstr "Grubu Stokla"
+msgstr ""
 
 #: UI/users/preferences.html:89
 msgid "Stylesheet"
-msgstr "Düzen Sayfası"
+msgstr ""
 
 #: t/data/04-complex_template.html:231
 msgid "Subcontract GIFI:"
@@ -7560,7 +7562,7 @@ msgstr ""
 #: UI/rp-search-generate_income_statement.html:132
 #: UI/rp-search-generate_tax_report.html:186
 msgid "Subtotal"
-msgstr "Aratoplam"
+msgstr ""
 
 #: UI/rc-till-closing.html:69
 msgid "Subtotal:"
@@ -7636,7 +7638,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:293
 #: UI/Reports/filters/orders.html:176 UI/rp-search-generate_tax_report.html:167
 msgid "Tax"
-msgstr "Vergi"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:71
 msgid "Tax Account"
@@ -7687,7 +7689,7 @@ msgstr ""
 #: bin/ir.pl:677 bin/is.pl:735 bin/oe.pl:764 UI/Contact/divs/credit.html:313
 #: UI/Contact/divs/credit.html:314 UI/orders/order.html:233
 msgid "Tax Included"
-msgstr "Vergi Dahil"
+msgstr ""
 
 #: UI/Contact/divs/company.html:115
 msgid "Tax Number/SSN"
@@ -7726,7 +7728,7 @@ msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:65
 msgid "Taxable"
-msgstr "Vergiye tabi"
+msgstr ""
 
 #: bin/am.pl:581 UI/Contact/divs/credit.html:286 sql/Pg-database.sql:2832
 msgid "Taxes"
@@ -7868,7 +7870,7 @@ msgstr ""
 
 #: bin/oe.pl:356
 msgid "Terms"
-msgstr "Şartlar"
+msgstr ""
 
 #: templates/demo/product_receipt.html:182
 #: templates/demo/purchase_order.html:184 templates/demo/sales_order.html:183
@@ -8088,7 +8090,7 @@ msgstr ""
 #: UI/rp-search-generate_income_statement.html:66
 #: UI/rp-search-generate_tax_report.html:10
 msgid "To"
-msgstr "Bitiş"
+msgstr ""
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:182
 msgid "To Amount"
@@ -8218,7 +8220,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:299
 #: UI/rp-search-generate_tax_report.html:175
 msgid "Total"
-msgstr "Toplam"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:643
 msgid "Total Accum. Dep."
@@ -8258,7 +8260,7 @@ msgstr ""
 
 #: bin/gl.pl:676
 msgid "Transaction Date missing!"
-msgstr "İşlem Tarihi yok!"
+msgstr ""
 
 #: bin/pe.pl:853
 msgid "Transaction Dates"
@@ -8308,7 +8310,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2857
 msgid "Trial Balance"
-msgstr "Proforma Bilanço"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:120
 msgid "Trillion"
@@ -8443,7 +8445,7 @@ msgstr ""
 #: UI/payroll/income.html:74 UI/Reports/filters/purchase_history.html:296
 #: UI/Reports/filters/search_goods.html:221
 msgid "Unit"
-msgstr "Birim"
+msgstr ""
 
 #: templates/demo/invoice.html:140 templates/demo/request_quotation.html:145
 #: templates/demo/request_quotation.tex:124
@@ -8571,7 +8573,7 @@ msgstr ""
 #: LedgerSMB/Scripts/contact.pm:178 t/data/04-complex_template.html:36
 #: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
-msgstr "Kullanıcı"
+msgstr ""
 
 #: UI/login.html:41
 msgid "User Name"
@@ -8636,7 +8638,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:6 UI/Reports/filters/orders.html:5
 #: UI/rp-search-generate_tax_report.html:141 sql/Pg-database.sql:542
 msgid "Vendor"
-msgstr "Satıcı"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:246
 msgid "Vendor Account"
@@ -8695,7 +8697,7 @@ msgstr ""
 
 #: bin/old-handler.pl:175
 msgid "Version"
-msgstr "Versiyon"
+msgstr ""
 
 #: UI/am-company-logo.html:6
 msgid "Version [_1]"
@@ -8777,15 +8779,15 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Search.pm:218
 #: UI/Reports/filters/search_goods.html:303
 msgid "Weight"
-msgstr "Ağırlık"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:47
 msgid "Weight Unit"
-msgstr "Ağırlık Birimi"
+msgstr ""
 
 #: bin/io.pl:859
 msgid "What type of item is this?"
-msgstr "Bu ne çeşit bir kalemdir?"
+msgstr ""
 
 #: UI/setup/begin_backup.html:7
 msgid "Where shall we send the backup?"
@@ -8849,7 +8851,7 @@ msgstr ""
 #: UI/am-audit-control.html:14 UI/am-audit-control.html:30
 #: UI/Configuration/settings.html:27 UI/setup/confirm_operation.html:25
 msgid "Yes"
-msgstr "Evet"
+msgstr ""
 
 #: bin/old-handler.pl:131
 msgid "You are logged out!"
@@ -8954,7 +8956,7 @@ msgstr ""
 #: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
-msgstr "gün. "
+msgstr ""
 
 #: UI/Reports/co/filter_bm.html:99
 msgid "debits"
@@ -8982,7 +8984,7 @@ msgstr ""
 
 #: bin/ir.pl:1079 bin/ir.pl:1328 bin/is.pl:1305 bin/oe.pl:1166
 msgid "ea"
-msgstr "ad"
+msgstr ""
 
 #: bin/am.pl:1346 bin/am.pl:1501
 msgid "failed"
@@ -9080,3 +9082,10 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
+
+#~ msgid ""
+#~ "Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and "
+#~ "be listed in dropdowns elsewhere."
+#~ msgstr ""
+#~ "Accounts can't be simultaneously used as summary accounts (AR, AP, IC) and "
+#~ "be listed in dropdowns elsewhere."

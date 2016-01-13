@@ -40,6 +40,7 @@ verify_dependency() {
 }
 
 verify_dependencies() {
+   verify_dependency "find"
    verify_dependency "sftp"
    verify_dependency "gpg"
    verify_dependency "git"
@@ -53,6 +54,9 @@ verify_dependencies() {
    verify_dependency "awk"
    verify_dependency "sha256sum"
    verify_dependency "sftp"
+   verify_dependency "tx"
+   verify_dependency "msgmerge"
+   verify_dependency "msguniq"
 }
 
 verify_release_key() {
@@ -70,6 +74,15 @@ populate_workspace() {
    (cd $our_workspace && \
     $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" ) \
    || fail "Failed to check out branch '$branch' from '$URL'!"
+}
+
+update_translations() {
+   (cd "$our_workspace/$checkout_dir" && \
+    $tx pull -f -a && utils/devel/rebuild_pot.sh && \
+    ($find . -name '~*' -o -name '*.orig' -exec rm {} + ) && \
+    $git add locale && git commit -m "* Automated release language update" \
+    && $git push origin "$branch") \
+   || fail "Failed to update branch ($branch) translations"
 }
 
 detect_current_version() {
@@ -219,6 +232,7 @@ verify_dependencies
 verify_release_key
 setup_workspace
 populate_workspace
+update_translations
 detect_current_version
 detect_versionpatch_files
 patch_version "$current_version" "$release_version"

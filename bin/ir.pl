@@ -39,6 +39,7 @@
 #======================================================================
 
 package lsmb_legacy;
+use List::Util qw(min max);
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
@@ -1212,9 +1213,26 @@ sub update {
     }
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
-    for my $i (1 .. ($form->{rowcount} + $LedgerSMB::Company_Config::settings->{min_empty})){
-        next if $form->{"id_$i"};
+    my $non_empty_rows = 0;
+    for my $i (1 .. $form->{rowcount}) {
+        $non_empty_rows++
+            if $form->{"id_$i"}
+               || ! ( ( $form->{"partnumber_$i"} eq "" )
+                      && ( $form->{"description_$i"} eq "" )
+                      && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+
+    my $current_empties = $form->{rowcount} - $non_empty_rows;
+    my $new_empties =
+        max(0,
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
+            - $current_empties);
+
+
+    $form->{rowcount} += $new_empties;
+    for my $i (1 .. $form->{rowcount}){
         $form->{rowcount} = $i;
+        next if $form->{"id_$i"};
 
         for (qw(partsgroup projectnumber)) {
             $form->{"select$_"} = $form->unescape( $form->{"select$_"} )
@@ -1228,7 +1246,6 @@ sub update {
 
             $form->{creditremaining} +=
               ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
-            &check_form;
 
         }
         else {
@@ -1333,6 +1350,7 @@ sub update {
         }
     }
      $form->generate_selects();
+     $form->{rowcount}--;
     display_form();
 }
 
