@@ -1,6 +1,6 @@
-<div class="lsmbtab" id="wage_div" 
+<div class="lsmbtab" id="wage_div"
      title='<?lsmb text("Wages and Deductions") ?>'>
-<?lsmb 
+<?lsmb
 columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
            { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
 
@@ -29,7 +29,7 @@ PROCESS dynatable
              class = 'number'
               type = 'text'
 } ?></td>
-<?lsmb PROCESS input element_data = { 
+<?lsmb PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id
@@ -56,7 +56,7 @@ PROCESS dynatable
              class = 'number'
               type = 'text'
 } ?></td>
-<?lsmb PROCESS input element_data = { 
+<?lsmb PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id
