@@ -1,65 +1,88 @@
 
-/* Note, this is the first code being executed. If we don't required
-   the parser here, the "onLoad" parse event isn't going to fire. */
-require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/parser',
-	 'dojo/domReady!'],
-function(l){
-    if (location.search.indexOf('&dojo=no') != -1) {
-        dojo.cookie("lsmb-dojo-disable", "yes", {});
-    } else if (location.search.indexOf('&dojo') != -1) {
-        dojo.cookie("lsmb-dojo-disable", "no", {});
-    }
+require(['dojo/parser', 'dojo/query', 'dojo/request/xhr', 'dojo/on',
+         'dojo/domReady!'],
+        function(parser, query, xhr, on) {
+            parser.parse().then(function() {
+                // delay the option of triggering load_link() until
+                // the parser has run: before then, the maindiv widget
+                // doesn't exist!
+                query('a.menu-terminus').forEach(function(node){
+                    if (node.href.search(/pl/)){
+                        on(node, 'click', function(e){
+                            e.preventDefault();
+                            load_link(xhr, node.href);
+                        });
+                    }
+                });
 
-    if (dojo.cookie("lsmb-dojo-disable") != 'yes') {
-        loader = new l;
-        loader.setup();
-    } else {
-        init();
-    }
-});
+                if (window.location.hash) {
+                    load_link(xhr, window.location.hash.substring(1));
+                }
+            });
+        });
 
 
-function SwitchMenu(id) {
-    var obj = id.replace(/^a/, 'menu');
-//    console.log(id);
-    if (document.getElementById) {
-        var element = document.getElementById(obj);
-
-        element = document.getElementById(obj);
-        if (element.className == 'menu_open'){
-            element.className = 'menu_closed';
-        } else {
-            element.className = 'menu_open';
-        }
-        return false;
-    }
+function fade_main_div() {
+    // mention we're processing the request
+    require(['dijit/registry', 'dojo/dom-style'],
+            function(registry, style) {
+                var mainCP = registry.byId('maindiv');
+                style.set(mainCP.domNode, 'opacity', "30%");
+            });
 }
 
+function hide_main_div() {
+    require(['dijit/registry', 'dojo/dom-style'],
+            function(registry, style) {
+                var mainCP = registry.byId('maindiv');
+                style.set(mainCP.domNode, 'visibility', 'hidden');
+            });
+}
+
+function show_main_div() {
+    require(['dijit/registry', 'dojo/dom-style'],
+            function(registry, style) {
+                var mainCP = registry.byId('maindiv');
+                style.set(mainCP.domNode, 'visibility', 'visible');
+            });
+}
+
+
+
 function set_main_div(doc){
-//    console.log('setting body');
     var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
     var newbody = body[1];
-    require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
-	     'dijit/registry', 'dojo/domReady!'],
-            function(query, dom, style, registry){
-		var mainCP = registry.byId('maindiv');
-		style.set(mainCP, 'visibility', 'hidden');
-		mainCP.destroyDescendants();
-		mainCP.set('content', newbody);
-		setup_dojo();
-		style.set(mainCP, 'visibility', 'visible');
-		require(['dojo/domReady!'], function(){
-		});
+    require(['dojo/query', 'dojo/dom', 'dojo/dom-style', 'dijit/registry',
+             'dojo/on', 'dojo/_base/event', 'dojo/request/xhr'],
+            function(query, dom, style, registry, on, event, xhr){
+		          var mainCP = registry.byId('maindiv');
+		          mainCP.destroyDescendants();
+		          mainCP.set('content', newbody).then(
+                    function() {
+                        query('a', dom.byId('maindiv'))
+                              .forEach(function (dnode) {
+					                   if (! dnode.target && dnode.href) {
+                                      on(dnode, 'click', function(e) {
+								                  event.stop(e);
+								                  load_link(xhr, dnode.href);
+                                        });
+                                  }
+					               });
+
+		                  show_main_div();
+                    });
             });
 }
 
 function load_form(xhr, url, options) {
+    fade_main_div();
 	 xhr(url, options).then(
 		  function(doc){
-                                //console.log(doc);
+            hide_main_div();
 				set_main_div(doc);
 		  },
 		  function(err){
+            show_main_div();
 				require(['dijit/registry'],function(registry){
 					 var d = registry.byId('errorDialog');
 					 if (0 == err.response.status) {
@@ -77,6 +100,7 @@ function load_link(xhr, href) {
     if (last_page == href) {
         return;
     }
+    fade_main_div();
     require(['dojo/hash'],
             function (hash) {
                      hash(href);
@@ -85,52 +109,24 @@ function load_link(xhr, href) {
             });
 }
 
-function setup_dojo() {
-    require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/domReady!'],
-    function(l){
-        if (location.search.indexOf('&dojo=no') != -1) {
-            dojo.cookie("lsmb-dojo-disable", "yes", {});
-        } else if (location.search.indexOf('&dojo') != -1) {
-            dojo.cookie("lsmb-dojo-disable", "no", {});
-        }
-
-        if (dojo.cookie("lsmb-dojo-disable") != 'yes') {
-            loader = new l;
-            loader.setup();
-        } else {
-            init();
-        }
-    });
-}
-
 require([
     'dojo/on', 'dojo/query',
-    'dojo/dom-attr', 'dojo/topic',
-    'dojo/request/xhr', 'dojo/ready', 'dojo/domReady!'
-], function (on, query, domattr, topic, xhr, ready) {
-    query('a.t-submenu').forEach(function(node){
-        on(node, 'click', function(e){
-            e.preventDefault();
-            SwitchMenu(node.id.replace(/a/, 'menu'));
-        }
-          );
-    });
-    query('a.menu-terminus').forEach(function(node){
-        if (node.href.search(/pl/)){
-            on(node, 'click', function(e){
-                e.preventDefault();
-                load_link(xhr, domattr.get(node,'href'));
+    'dojo/dom-class', 'dojo/topic',
+    'dojo/request/xhr', 'dojo/domReady!'],
+        function (on, query, domclass, topic, xhr) {
+            query('a.t-submenu').forEach(function(node){
+                on(node, 'click', function(e) {
+                    e.preventDefault();
+                    var parent = node.parentNode;
+                    if (domclass.contains(parent, 'menu_closed')) {
+                        domclass.replace(parent, 'menu_open', 'menu_closed');
+                    }
+                    else {
+                        domclass.replace(parent, 'menu_closed', 'menu_open');
+                    };
+                });
             });
-        }
-    });
-    ready(function() {
-        if (window.location.hash) {
-            load_link(xhr, window.location.hash.substring(1));
-        }
-    });
-    topic.subscribe("/dojo/hashchange", function(hash) {
-//            console.log(hash);
-        load_link(xhr, hash);
-    });
-});
-
+            topic.subscribe("/dojo/hashchange", function(hash) {
+                load_link(xhr, hash);
+            });
+        });
