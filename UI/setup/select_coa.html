@@ -1,11 +1,11 @@
-<?lsmb INCLUDE "ui-header.html" 
+<?lsmb INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb title ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="POST" name="credentials">
+<form data-dojo-type="dijit/form/Form" action="setup.pl" method="POST" name="credentials">
 <?lsmb IF coa_lc;
    INCLUDE input element_data = {
         name = 'coa_lc'
@@ -14,13 +14,13 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
    } ;
 END ?>
 <div class="inputrow">
-<?lsmb IF coa_lc; 
+<?lsmb IF coa_lc;
     INCLUDE select element_data = {
          options = charts
             name = 'chart'
        text_attr = 'name'
       value_attr = 'name'
-    }; 
+    };
 ELSE;
     INCLUDE select element_data = {
          options = coa_lcs
@@ -44,7 +44,7 @@ END ?>
    value = 'select_coa'
     type = 'submit'
    class = 'submit'
-    text = text('Next') 
+    text = text('Next')
 } ?>
 </div>
 <div class="inputrow">
@@ -53,7 +53,7 @@ END ?>
    value = 'skip_coa'
     type = 'submit'
    class = 'submit'
-    text = text('Skip') 
+    text = text('Skip')
 } ?>
 </div>
 </div>
