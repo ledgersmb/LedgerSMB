@@ -9,11 +9,10 @@ define([
     'dojo/on',
     'dojo/promise/all',
     'dojo/request/xhr',
-    'dojo/hash',
     'dojo/query',
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, all, xhr, hash, query) {
+                lang, Promise, on, all, xhr, query) {
            return declare('lsmb/lib/MainContentPane',
                           [ContentPane],
               {
@@ -53,7 +52,6 @@ define([
                       if (this.last_page == href) {
                           return;
                       }
-                      hash(href);
                       this.last_page = href;
                       return this.load_form(href,{"handlesAs": "text"});
                   },

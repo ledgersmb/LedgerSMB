@@ -1,8 +1,8 @@
 
 require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
-         'dojo/_base/event',
-         'dojo/topic', 'dojo/domReady!'],
-        function(parser, query, on, registry, event) {
+         'dojo/_base/event', 'dojo/hash', 'dojo/topic',
+         'dojo/domReady!'],
+        function(parser, query, on, registry, event, hash, topic) {
             parser.parse().then(function() {
                 // delay the option of triggering load_link() until
                 // the parser has run: before then, the maindiv widget
@@ -12,13 +12,13 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                     if (node.href.search(/pl/)){
                         on(node, 'click', function(e){
                             event.stop(e);
-                            mainDiv.load_link(node.href);
+                            hash(node.href);
                         });
                     }
                 });
 
                 if (window.location.hash) {
-                    mainDiv.load_link(window.location.hash.substring(1));
+                    mainDiv.load_link(hash());
                 }
                 topic.subscribe("/dojo/hashchange", function(hash) {
                     mainDiv.load_link(hash);
