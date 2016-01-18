@@ -19,6 +19,8 @@ use Carp;
 use Exporter;
 use Time::HiRes qw(time);
 
+use Selenium::Waiter qw(wait_until);
+
 @ISA = qw(Exporter);
 @EXPORT_OK = qw( find_element_by_label try_wait_for_page prepare_driver );
 
@@ -121,6 +123,9 @@ our $max_wait_secs = 10;
 my $page_generation = 0;
 sub try_wait_for_page {
     my ($driver) = @_;
+
+
+    wait_until { $driver->find_element('body.done-parsing', 'css') };
 
     $page_generation++;
     $driver->execute_script(qq(
