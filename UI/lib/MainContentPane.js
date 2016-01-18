@@ -23,8 +23,8 @@ define([
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
                       var newbody = body[1];
 
-		                this.destroyDescendants();
-		                return this.set('content', newbody)
+                      this.destroyDescendants();
+                      return this.set('content', newbody)
                           .then(function() {
                               self.show_main_div();
                           });
@@ -32,22 +32,22 @@ define([
                   load_form: function(url, options) {
                       var self = this;
                       self.fade_main_div();
-	                   return xhr(url, options).then(
-		                    function(doc){
+                      return xhr(url, options).then(
+                          function(doc){
                               self.hide_main_div();
-				                  self.set_main_div(doc);
-		                    },
-		                    function(err){
+                              self.set_main_div(doc);
+                          },
+                          function(err){
                               self.show_main_div();
-					               var d = registry.byId('errorDialog');
-					               if (0 == err.response.status) {
-						                d.set('content',
+                              var d = registry.byId('errorDialog');
+                              if (0 == err.response.status) {
+                                  d.set('content',
                                         'Could not connect to server');
-					               } else {
-						                d.set('content',err.response.data);
-					               }
-					               d.show();
-		                    });
+                              } else {
+                                  d.set('content',err.response.data);
+                              }
+                              d.show();
+                          });
                   },
                   load_link: function(href) {
                       if (this.last_page == href) {
@@ -55,7 +55,7 @@ define([
                       }
                       hash(href);
                       this.last_page = href;
-	                   return this.load_form(href,{"handlesAs": "text"});
+                      return this.load_form(href,{"handlesAs": "text"});
                   },
                   fade_main_div: function() {
                       // mention we're processing the request
@@ -71,14 +71,14 @@ define([
                       var self = this;
                       query('a', self.domNode)
                           .forEach(function (dnode) {
-					               if (! dnode.target && dnode.href) {
+                              if (! dnode.target && dnode.href) {
                                   self.own(on(dnode, 'click',
                                               function(e) {
-								                          event.stop(e);
-								                          self.load_link(dnode.href);
+                                                  event.stop(e);
+                                                  self.load_link(dnode.href);
                                               }));
                               }
-					           });
+                          });
                   },
                   set: function() {
                       var newContent = null;
