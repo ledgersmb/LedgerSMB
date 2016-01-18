@@ -1,8 +1,8 @@
 
 require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
-         'dojo/_base/event', 'dojo/hash', 'dojo/topic',
+         'dojo/_base/event', 'dojo/hash', 'dojo/topic', 'dojo/dom-class',
          'dojo/domReady!'],
-        function(parser, query, on, registry, event, hash, topic) {
+        function(parser, query, on, registry, event, hash, topic, domClass) {
             parser.parse().then(function() {
                 // delay the option of triggering load_link() until
                 // the parser has run: before then, the maindiv widget
@@ -23,6 +23,15 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                 topic.subscribe("/dojo/hashchange", function(hash) {
                     mainDiv.load_link(hash);
                 });
+
+                query('#console-container')
+                    .forEach(function(node) {
+                        domClass.add(node, 'done-parsing');
+                    });
+                query('body')
+                    .forEach(function(node) {
+                        domClass.add(node, 'done-parsing');
+                    });
             });
         });
 
