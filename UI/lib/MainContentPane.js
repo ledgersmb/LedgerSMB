@@ -9,11 +9,11 @@ define([
     'dojo/on',
     'dojo/promise/all',
     'dojo/request/xhr',
-    'dojo/hash',
     'dojo/query',
+    'dojo/dom-class',
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, all, xhr, hash, query) {
+                lang, Promise, on, all, xhr, query, domClass) {
            return declare('lsmb/lib/MainContentPane',
                           [ContentPane],
               {
@@ -53,16 +53,17 @@ define([
                       if (this.last_page == href) {
                           return;
                       }
-                      hash(href);
                       this.last_page = href;
                       return this.load_form(href,{"handlesAs": "text"});
                   },
                   fade_main_div: function() {
                       // mention we're processing the request
                       style.set(this.domNode, 'opacity', "30%");
+                      domClass.replace(this.domNode, 'parsing', 'done-parsing');
                   },
                   hide_main_div: function() {
                       style.set(this.domNode, 'visibility', 'hidden');
+                      domClass.replace(this.domNode, 'done-parsing', 'parsing');
                   },
                   show_main_div: function() {
                       style.set(this.domNode, 'visibility', 'visible');
