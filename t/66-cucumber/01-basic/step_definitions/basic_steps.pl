@@ -80,7 +80,6 @@ When qr/I select "(.*)" from the drop down "(.*)"/, sub {
     if ($element->get_tag_name ne 'select') {
         # dojo
         my $id = $element->get_attribute('id');
-        print STDERR &get_driver(S)->get_page_source . "\n";
         $element =
             &get_driver(S)->find_element("//*[\@dijitpopupparent='$id']");
     }
