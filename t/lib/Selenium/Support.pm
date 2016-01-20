@@ -22,7 +22,8 @@ use Time::HiRes qw(time);
 use Selenium::Waiter qw(wait_until);
 
 @ISA = qw(Exporter);
-@EXPORT_OK = qw( find_element_by_label try_wait_for_page prepare_driver );
+@EXPORT_OK = qw( find_element_by_label try_wait_for_page prepare_driver
+                 element_has_class );
 
 
 # In order to estimate the number of running ajax requests, we need
@@ -103,6 +104,23 @@ sub find_element_by_label {
     return $element;
 }
 
+
+=item element_has_class($element, $class)
+
+Returns false if the element's 'class' attribute doesn't contain $class.
+
+=cut
+
+sub element_has_class {
+    my ($element, $class) = @_;
+
+    my $class_attr = $element->get_attribute('class');
+    my $rv =
+        grep { $_ eq $class }
+        split /[\s\t\n]+/, $class_attr;
+
+    return $rv;
+}
 
 
 =item try_wait_for_page($driver)
