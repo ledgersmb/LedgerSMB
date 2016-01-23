@@ -44,8 +44,8 @@ Given qr/a user named "(.*)" with a password "(.*)"/, sub {
 };
 
 Given qr/a database super-user/, sub {
-    S->{feature}->{"the super-user name"} = 'postgres';
-    S->{feature}->{"the super-user password"} = 'a';
+    S->{feature}->{"the super-user name"} = $ENV{PGUSER};
+    S->{feature}->{"the super-user password"} = $ENV{PGPASSWORD};
 };
 
 Given qr/a non-existant company name/, sub {
