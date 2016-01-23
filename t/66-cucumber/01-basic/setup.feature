@@ -65,7 +65,7 @@ Scenario: Logging into setup.pl, creating a company *with* CoA
       | First Name         | A                |
       | Last name          | Dmin             |
       | Employee Number    | 00000001         |
-      | Date of Birth      | 2006-09-01       |
+      | Date of Birth      | 09/01/2006       |
       | Tax ID/SSN         | 00000002         |
       | Country            | United States    |
       | Assign Permissions | Full Permissions |
