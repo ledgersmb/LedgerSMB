@@ -14,16 +14,6 @@ my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
     }
 );
 
-# my @directories;
-# find({ no_chdir => 1,
-#        wanted => sub { push @directories, $File::Find::name
-#                            if -d $File::Find::name
-#        },
-#      },
-#     't/66-cucumber/');
-
-# print STDERR @directories;
-
 for my $directory (qw(
       01-basic
 ))
