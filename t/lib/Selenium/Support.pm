@@ -18,12 +18,18 @@ package Selenium::Support;
 use Carp;
 use Exporter;
 use Time::HiRes qw(time);
+use Test::More;
 
 use Selenium::Waiter qw(wait_until);
 
 @ISA = qw(Exporter);
-@EXPORT_OK = qw( find_element_by_label try_wait_for_page prepare_driver
-                 element_has_class );
+@EXPORT_OK = qw(
+    find_element_by_label
+    find_button
+    find_dropdown
+    find_option
+    try_wait_for_page prepare_driver
+    element_has_class element_is_dropdown);
 
 
 # In order to estimate the number of running ajax requests, we need
@@ -121,6 +127,89 @@ sub element_has_class {
 
     return $rv;
 }
+
+
+=item find_button($driver, $text)
+
+
+=cut
+
+sub find_button {
+    my ($driver, $text) = @_;
+
+    my $btn = $driver->find_element(
+        "//span[text()='$text'
+                and contains(concat(' ',normalize-space(\@class),' '),
+                             ' dijitButtonText ')]
+         | //button[text()='$text']
+         | //input[\@value='$text'
+                   and (\@type='submit' or \@type='image' or \@type='reset')]");
+    ok($btn, "found button tag '$button_text'");
+
+    return $btn;
+}
+
+
+=item element_is_dropdown($element)
+
+
+=cut
+
+sub element_is_dropdown {
+    my ($elm) = @_;
+
+    return ($elm->get_tag_name eq 'select'
+            || element_has_class($elm, 'dijitSelect'));
+}
+
+=item find_dropdown($driver, $text)
+
+
+=cut
+
+sub find_dropdown {
+    my ($driver, $label) = @_;
+
+    my $elm = find_element_by_label($driver,$label);
+    ok(element_is_dropdown($elm),
+       "Found drop down element '$label'");
+
+    return $elm;
+}
+
+=item find_option($driver, $text, $dropdown)
+
+
+=cut
+
+
+sub find_option {
+    my ($driver, $text, $dropdown) = @_;
+
+    my $elm = find_dropdown($driver, $dropdown);
+
+    my $dd;
+    if ($elm->get_tag_name ne 'select') {
+        # dojo
+        my $id = $elm->get_attribute('id');
+        $elm->click;
+        $elm->click;
+        $dd = $driver->find_element("//*[\@dijitpopupparent='$id']");
+    }
+    else {
+        $dd = $elm;
+    }
+    my $option =
+        $driver->find_child_element($dd,".//*[text()='$text']");
+    ok($option, "Found option with value '$text' of dropdown '$dropdown'");
+    if (! $option->is_displayed) {
+        $elm->click;
+        $driver->execute_script(qq#arguments[0].scrollIntoView();#, $option);
+    }
+
+    return $option;
+}
+
 
 
 =item try_wait_for_page($driver)
