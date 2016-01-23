@@ -135,10 +135,12 @@ Then qr/I should see a (dropdown|combobox) "(.*)"/, sub {
 Then qr/I should see "(.*)"/, sub {
     my $want_text = $1;
 
-    my $element =
+    my $elements =
         &get_driver(S)->find_elements(
         "//*[contains(.,'$want_text')]
             [not(.//*[contains(.,'$want_text')])]");
+    my $count = scalar(@$elements);
+    ok($count, "Found $count elements containing '$want_text'");
 };
 
 Then qr/I should see a button "(.*)"/, sub {
