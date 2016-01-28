@@ -8,6 +8,12 @@ use Test::More;
 use Test::BDD::Cucumber::Loader;
 use Test::BDD::Cucumber::Harness::TestBuilder;
 
+my @reqenv = qw(PGUSER PGPASSWORD LSMB_BASE_URL);
+my @missing = grep { ! $ENV{$_} } @reqenv;
+
+plan skip_all => join (' and ', @missing) . ' not set'
+    if @missing;
+
 my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
     {
         fail_skip => 1
