@@ -5,32 +5,21 @@ use lib 't/lib';
 use strict;
 use warnings;
 
-
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
+use PageObject::Driver;
 use Selenium::Remote::Driver;
 use Selenium::Support qw( find_element_by_label
  find_button find_dropdown find_option
  try_wait_for_page
  prepare_driver element_has_class element_is_dropdown);
 
-use MIME::Base64;
-
-sub get_driver {
-    my ($stash) = @_;
-
-    return $stash->{feature}->{driver};
-}
-
-
-
 
 Given qr/a LedgerSMB instance/, sub {
-
     return if defined S->{feature}->{driver};
 
-    my $driver = new Selenium::Remote::Driver(
+    my $driver = new PageObject::Driver(
         'port' => 4422,
         ) or die "Can't set up Selenium connection";
     $driver->set_implicit_wait_timeout(3000);
@@ -49,15 +38,15 @@ Given qr/a database super-user/, sub {
 };
 
 Given qr/a non-existant company name/, sub {
-    #TODO: generate a company name and verify that it doesn't exist...
     S->{feature}->{"the company name"} = "non-existant";
+    S->{scenario}->{"non-existent"} = 1;
 };
 
 When qr/I navigate to '(.*)'/, sub {
     my $url = $ENV{LSMB_BASE_URL} . $1;
 
-    &get_driver(S)->get($url);
-    &try_wait_for_page(&get_driver(S));
+    get_driver(S)->get($url);
+    get_driver(S)->try_wait_for_page;;
 };
 
 When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
@@ -68,6 +57,7 @@ When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
     my $element = &find_element_by_label(&get_driver(S), $label);
     ok($element, "found element with label '$label'");
     $value ||= S->{feature}->{$param};
+    $element->click;
     $element->send_keys($value);
 };
 
@@ -79,6 +69,7 @@ When qr/I enter these values:/, sub {
             find_option($driver, $field->{value}, $field->{label})->click;
         }
         else {
+            $elm->click;
             $elm->send_keys($field->{value});
         }
     }
@@ -96,6 +87,7 @@ When qr/I press "(.*)"/, sub {
     my $button_text = $1;
 
     find_button(get_driver(S), $button_text)->click;
+    sleep(3);
     &try_wait_for_page(&get_driver(S));
 };
 
@@ -140,6 +132,9 @@ Then qr/I should see "(.*)"/, sub {
         "//*[contains(.,'$want_text')]
             [not(.//*[contains(.,'$want_text')])]");
     my $count = scalar(@$elements);
+    if (! $count) {
+        print STDERR get_driver(S)->get_page_source;
+    }
     ok($count, "Found $count elements containing '$want_text'");
 };
 
@@ -179,3 +174,5 @@ Then qr/I should see these fields:/, sub {
         find_element_by_label($driver, $field->{label});
     }
 };
+
+1;

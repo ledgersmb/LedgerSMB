@@ -10,57 +10,22 @@ Background:
     And a LedgerSMB instance
 
 
-Scenario: Logging into setup.pl, creating a company *with* CoA
- Given a non-existant company name
-  When I navigate to '/setup.pl'
-   And I enter the super-user password into "Password"
-   And I enter the super-user name into "Super-user login"
-   And I enter the company name into "Database"
-   And I press "Login"
-  Then I should see "Database Management Console"
-   And I should see "Database does not exist"
-   And I should see "Create Database"
-  When I press "Yes"
-  Then I should see a button "Next"
-   And I should see a button "Skip"
-   And I should see a drop down "Country Code"
-  When I select "us" from the drop down "Country Code"
-   And I press "Next"
-  Then I should see a button "Next"
-   And I should see a button "Skip"
-   And I should see a drop down "Chart of accounts" with these items:
-      | text              |
-      | General.sql       |
-      | Manufacturing.sql |
-  When I select "General.sql" from the drop down "Chart of accounts"
-   And I press "Next"
-  Then I should see "Select Templates to Load"
-   And I should see a button "Load Templates"
-   And I should see a drop down "Templates" with these items:
-      | text              |
-      | demo              |
-      | demo_with_images  |
-      | xedemo            |
-  When I select "demo" from the drop down "Templates"
-   And I press "Load Templates"
-  Then I should see these fields:
-      | label              |
-      | Username           |
-      | Password           |
-      | Yes                |
-      | No                 |
-      | Salutation         |
-      | First Name         |
-      | Last name          |
-      | Employee Number    |
-      | Date of Birth      |
-      | Tax ID/SSN         |
-      | Country            |
-      | Assign Permissions |
-  When I enter "the-user" into "Username"
-   And I enter "the-password" into "Password"
-   And I enter these values:
+Scenario: Creating a company *with* CoA
+ Given a non-existent company named 'setup-test'
+   And a non-existent user named 'the-user'
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the company creation page
+  When I confirm database creation with these parameters:
+      | parameter name    | value       |
+      | Country code      | us          |
+      | Chart of accounts | General.sql |
+      | Templates         | demo        |
+  Then I should see the user creation page
+  When I create a user with these values:
       | label              | value            |
+      | Username           | the-user         |
+      | Password           | abcd3fg          |
       | Salutation         | Mr.              |
       | First Name         | A                |
       | Last name          | Dmin             |
@@ -69,5 +34,6 @@ Scenario: Logging into setup.pl, creating a company *with* CoA
       | Tax ID/SSN         | 00000002         |
       | Country            | United States    |
       | Assign Permissions | Full Permissions |
-   And I press "Create User"
-  Then I should see "LedgerSMB may now be used."
+  Then I should see the setup confirmation page
+
+
