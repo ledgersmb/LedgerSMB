@@ -9,6 +9,7 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
+use PageObject::Setup::CreateUser;
 use PageObject::Setup::UsersList;
 
 
@@ -37,6 +38,13 @@ sub list_users {
     return $driver->page(PageObject::Setup::UsersList->new(%$self));
 }
 
+sub add_user {
+    my ($self) = @_;
+    my $driver = $self->driver;
+
+    $driver->find_button("Add User")->click;
+    return $driver->page(PageObject::Setup::CreateUser->new(%$self));
+}
 
 __PACKAGE__->meta->make_immutable;
 

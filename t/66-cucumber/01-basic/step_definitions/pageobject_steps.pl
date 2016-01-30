@@ -94,6 +94,10 @@ When qr/I request the users list/, sub {
     get_driver(S)->page->list_users;
 };
 
+When qr/I request to add a user/, sub {
+    get_driver(S)->page->add_user;
+};
+
 Then qr/I should see the table of available users:/, sub {
     my @data = map { $_->{'Username'} } @{ C->data };
     my $users = get_driver(S)->page->get_users_list;
