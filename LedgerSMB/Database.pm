@@ -175,10 +175,11 @@ sub get_info {
 
     my $creds = LedgerSMB::Auth->get_credentials();
     $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
-    my $dbh = eval { $self->connect() };
+    my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
-           $dbh = $self->new($self->export, (dbname => 'postgres'))->connect;
+           $dbh = $self->new($self->export, (dbname => 'postgres'))
+               ->connect({PrintError=>0});
            return $retval unless $dbh;
            $logger->debug("DBI->connect dbh=$dbh");
        # don't assign to App_State::DBH, since we're a fallback connection,
@@ -428,7 +429,7 @@ sub upgrade_modules {
                 })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->connect;
+    my $dbh = $self->connect({PrintError=>0});
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );
