@@ -255,7 +255,7 @@ Lists all users in the selected database
 sub list_users {
     my ($request) = @_;
     _init_db($request);
-    my $user = LedgerSMB::DBObject::User->new(%$request);
+    my $user = LedgerSMB::DBObject::User->new($request);
     my $users = $user->get_all_users;
     $request->{users} = [];
     for my $u (@$users) {
