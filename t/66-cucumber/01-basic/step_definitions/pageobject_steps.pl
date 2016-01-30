@@ -19,9 +19,9 @@ sub get_driver {
     return $stash->{feature}->{driver};
 }
 
-Given qr/a non-existent company named ['"](.*)['"]/, sub {
-    S->{scenario}->{"the company"} = $1;
-    S->{scenario}->{"non-existent"} = 1;
+Given qr/(a non-existent|an existing) company named ['"](.*)['"]/, sub {
+    S->{scenario}->{"the company"} = $2;
+    S->{scenario}->{"non-existent"} = ($1 eq 'a non-existent');
 };
 
 Given qr/a non-existent user named ['"](.*)['"]/, sub {
@@ -42,6 +42,8 @@ my %pages = (
     "user creation"       => "PageObject::Setup::CreateUser",
     "setup confirmation"  => "PageObject::Setup::OperationConfirmation",
     "application login"   => "PageObject::App::Login",
+    "setup admin"         => "PageObject::Setup::Admin",
+    "setup user list"     => "PageObject::Setup::UsersList",
     );
 
 When qr/I navigate to the (.*) page/, sub {
@@ -88,7 +90,20 @@ When qr/I create a user with these values:/, sub {
     get_driver(S)->page->create_user(%data);
 };
 
+When qr/I request the users list/, sub {
+    get_driver(S)->page->list_users;
+};
 
+When qr/I request to add a user/, sub {
+    get_driver(S)->page->add_user;
+};
+
+Then qr/I should see the table of available users:/, sub {
+    my @data = map { $_->{'Username'} } @{ C->data };
+    my $users = get_driver(S)->page->get_users_list;
+
+    is_deeply($users, \@data, "Users on page correspond with expectation");
+};
 
 
 1;

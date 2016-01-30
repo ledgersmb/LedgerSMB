@@ -10,7 +10,7 @@ Background:
     And a LedgerSMB instance
 
 
-Scenario: Creating a company *with* CoA
+Scenario: Create a company *with* CoA
  Given a non-existent company named 'setup-test'
    And a non-existent user named 'the-user'
   When I navigate to the setup login page
@@ -37,3 +37,45 @@ Scenario: Creating a company *with* CoA
   Then I should see the setup confirmation page
 
 
+Scenario: List users in a company
+ Given an existing company named 'setup-test'
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request the users list
+  Then I should see the setup user list page
+   And I should see the table of available users:
+      | Username |
+      | the-user |
+
+
+Scenario: Add user to a company
+ Given an existing company named 'setup-test'
+   And a non-existent user named 'the-user2'
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request to add a user
+  Then I should see the user creation page
+  When I create a user with these values:
+      | label              | value            |
+      | Username           | the-user2        |
+      | Password           | klm2fly          |
+      | Salutation         | Mr.              |
+      | First Name         | Common           |
+      | Last name          | User             |
+      | Employee Number    | 00000010         |
+      | Date of Birth      | 09/06/2006       |
+      | Tax ID/SSN         | 00000003         |
+      | Country            | United States    |
+      | Assign Permissions | No changes       |
+  Then I should see the setup confirmation page
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request the users list
+  Then I should see the setup user list page
+   And I should see the table of available users:
+      | Username  |
+      | the-user  |
+      | the-user2 |

@@ -22,7 +22,7 @@ Given qr/a LedgerSMB instance/, sub {
     my $driver = new PageObject::Driver(
         'port' => 4422,
         ) or die "Can't set up Selenium connection";
-    $driver->set_implicit_wait_timeout(3000);
+    $driver->set_implicit_wait_timeout(30000);
     &prepare_driver($driver);
     S->{feature}->{driver} = $driver;
 };
