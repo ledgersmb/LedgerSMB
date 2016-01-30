@@ -45,9 +45,11 @@ include_stylesheet=["UI/setup/stylesheet.css"];
             </tr>
             <?lsmb END ?>
             <tr>
-                <td><?lsmb text('Password') ?></td>
+                <td><label for="password"><?lsmb text('Password') ?></label>
+                </td>
                 <td>
-                    <input type="password" name="password" value=""/>
+                    <input type="password"
+                           id="password" name="password" value=""/>
                 </td>
             </tr>
 

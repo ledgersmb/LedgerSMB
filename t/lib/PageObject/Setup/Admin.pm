@@ -46,6 +46,16 @@ sub add_user {
     return $driver->page(PageObject::Setup::CreateUser->new(%$self));
 }
 
+sub copy_company {
+    my ($self, $target) = @_;
+    my $driver = $self->driver;
+
+    $driver->find_element_by_label("Copy to New Name")->send_keys($target);
+    $driver->find_button("Copy")->click;
+
+    return $driver->page(PageObject::Setup::OperationConfirmation->new(%$self));
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
