@@ -118,7 +118,6 @@ Returns a list of salutation records from the db for the dropdowns.
 =cut
 
 sub get_salutations {
-
     my $self = shift;
     return $self->call_dbmethod(funcname => 'person__list_salutations');
 }
@@ -136,7 +135,6 @@ the lsmb_[dbname]__ prefix).
 =cut
 
 sub get_roles {
-
     my $self = shift @_;
     my $company = shift; # optional
     my @s_rows = $self->call_procedure(funcname =>'admin__get_roles');
@@ -147,14 +145,14 @@ sub get_roles {
     $logger->debug("get_roles: self = " . Data::Dumper::Dumper($self));
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
-    my $description = $rolname;
-    $description =~ s/lsmb_//;
-    $description =~ s/${company}__//
-        if defined $company;
-    $description =~ s/_/ /g;
+        my $description = $rolname;
+        $description =~ s/lsmb_//;
+        $description =~ s/${company}__//
+            if defined $company;
+        $description =~ s/_/ /g;
         push @rows, { name => $rolname, description => #"lsmb_$company\_"  #
-              $description
-    };
+                          $description
+        };
     }
     return \@rows;
 }
