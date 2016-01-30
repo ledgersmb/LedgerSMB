@@ -11,8 +11,8 @@ Background:
 
 
 Scenario: Create a company *with* CoA
- Given a non-existent company named 'setup-test'
-   And a non-existent user named 'the-user'
+ Given a non-existent company named "setup-test"
+   And a non-existent user named "the-user"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the company creation page
@@ -38,7 +38,7 @@ Scenario: Create a company *with* CoA
 
 
 Scenario: List users in a company
- Given an existing company named 'setup-test'
+ Given an existing company named "setup-test"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the setup admin page
@@ -50,8 +50,8 @@ Scenario: List users in a company
 
 
 Scenario: Add user to a company
- Given an existing company named 'setup-test'
-   And a non-existent user named 'the-user2'
+ Given an existing company named "setup-test"
+   And a non-existent user named "the-user2"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the setup admin page
@@ -79,3 +79,15 @@ Scenario: Add user to a company
       | Username  |
       | the-user  |
       | the-user2 |
+
+Scenario: Copy a company
+ Given a non-existent company named "setup-test2"
+   And an existing company named "setup-test"
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I copy the company to "setup-test2"
+  Then I should see the setup confirmation page
+  When I navigate to the setup login page
+   And I log into "setup-test2" using the super-user credentials
+  Then I should see the setup admin page

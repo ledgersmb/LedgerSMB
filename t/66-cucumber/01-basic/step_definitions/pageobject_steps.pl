@@ -12,19 +12,18 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
-
 sub get_driver {
     my ($stash) = @_;
 
     return $stash->{feature}->{driver};
 }
 
-Given qr/(a non-existent|an existing) company named ['"](.*)['"]/, sub {
+Given qr/(a non-existent|an existing) company named "(.*)"/, sub {
     S->{scenario}->{"the company"} = $2;
     S->{scenario}->{"non-existent"} = ($1 eq 'a non-existent');
 };
 
-Given qr/a non-existent user named ['"](.*)['"]/, sub {
+Given qr/a non-existent user named "(.*)"/, sub {
     S->{scenario}->{"the user"} = $1;
 };
 
@@ -56,8 +55,8 @@ When qr/I navigate to the (.*) page/, sub {
     get_driver(S)->verify_page;
 };
 
-When qr/I log into ((.*)|"(.*)") using the super-user credentials/, sub {
-    my $company = $3 || S->{scenario}->{$2};
+When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
+    my $company = $2 || S->{scenario}->{$3};
 
     if (S->{scenario}->{"non-existent"}) {
         get_driver(S)->page->login_non_existent(
@@ -74,7 +73,6 @@ Then qr/I should see the (.*) page/, sub {
         unless exists $pages{$page_name};
 
     my $page = get_driver(S)->verify_page;
-
     ok($page, "the browser page is the page named '$page_name'");
     ok($pages{$page_name}, "the named page maps to a class name");
     ok($page->isa($pages{$page_name}),
@@ -103,6 +101,12 @@ Then qr/I should see the table of available users:/, sub {
     my $users = get_driver(S)->page->get_users_list;
 
     is_deeply($users, \@data, "Users on page correspond with expectation");
+};
+
+When qr/I copy the company to "(.*)"/, sub {
+    my $target = $1;
+
+    get_driver(S)->page->copy_company($target);
 };
 
 
