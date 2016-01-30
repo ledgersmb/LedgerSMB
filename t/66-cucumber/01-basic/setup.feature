@@ -49,6 +49,21 @@ Scenario: List users in a company
       | the-user |
 
 
+Scenario: Edit user in a company
+ Given an existing company named "setup-test"
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request the users list
+  Then I should see the setup user list page
+   And I should see the table of available users:
+      | Username |
+      | the-user |
+  When I request the user overview for "the-user"
+  Then I should see the edit user page
+
+
+
 Scenario: Add user to a company
  Given an existing company named "setup-test"
    And a non-existent user named "the-user2"

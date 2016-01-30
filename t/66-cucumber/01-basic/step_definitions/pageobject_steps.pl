@@ -43,6 +43,7 @@ my %pages = (
     "application login"   => "PageObject::App::Login",
     "setup admin"         => "PageObject::Setup::Admin",
     "setup user list"     => "PageObject::Setup::UsersList",
+    "edit user"           => "PageObject::Setup::EditUser",
     );
 
 When qr/I navigate to the (.*) page/, sub {
@@ -107,6 +108,12 @@ When qr/I copy the company to "(.*)"/, sub {
     my $target = $1;
 
     get_driver(S)->page->copy_company($target);
+};
+
+When qr/I request the user overview for "(.*)"/, sub {
+    my $user = $1;
+
+    get_driver(S)->page->edit_user($user);
 };
 
 

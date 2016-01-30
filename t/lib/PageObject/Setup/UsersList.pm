@@ -8,6 +8,7 @@ use Moose;
 use PageObject;
 extends 'PageObject';
 
+use PageObject::Setup::EditUser;
 
 sub verify {
     my ($self) = @_;
@@ -30,6 +31,16 @@ sub get_users_list {
     my @users = map { $_->get_text } @{ $user_links };
 
     return \@users;
+}
+
+sub edit_user {
+    my ($self, $user) = @_;
+    my $driver = $self->driver;
+
+    my $user_link = $driver->find_element("//a[text()='$user']");
+    $user_link->click;
+
+    return $driver->page(PageObject::Setup::EditUser->new(%$self));
 }
 
 
