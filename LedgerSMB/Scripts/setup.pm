@@ -255,7 +255,7 @@ Lists all users in the selected database
 sub list_users {
     my ($request) = @_;
     _init_db($request);
-    my $user = LedgerSMB::DBObject::User->new(%$request);
+    my $user = LedgerSMB::DBObject::User->new($request);
     my $users = $user->get_all_users;
     $request->{users} = [];
     for my $u (@$users) {
@@ -281,7 +281,7 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-           {%$database, (company_name => $request->{new_name})}
+           {%$database, (dbname => $request->{new_name})}
     )->connect;
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
@@ -1140,10 +1140,10 @@ sub edit_user_roles {
     _init_db($request)
         unless $request->{dbh};
 
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    my @all_roles = $admin->get_roles($request->{database});
+    my $admin = LedgerSMB::DBObject::Admin->new($request);
+    my $all_roles = $admin->get_roles($request->{database});
 
-    my $user_obj = LedgerSMB::DBObject::User->new(%$request);
+    my $user_obj = LedgerSMB::DBObject::User->new($request);
     $user_obj->get($request->{id});
 
     # LedgerSMB::DBObject::User doesn't retrieve the username
@@ -1165,7 +1165,7 @@ sub edit_user_roles {
     my $template_data = {
                         request => $request,
                            user => $user_obj,
-                          roles => @all_roles,
+                          roles => $all_roles,
             };
 
     $template->render($template_data);

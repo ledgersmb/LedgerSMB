@@ -9,14 +9,11 @@ Background:
 
 
 Scenario: Viewing setup.pl
-  When I navigate to '/setup.pl'
-  Then I should see a combobox "Super-user login"
-   And I should see a password box "Password"
-   And I should see a textbox "Database"
+  When I navigate to the setup login page
+  Then I should see the setup login page
 
 
 Scenario: Viewing login.pl
-  When I navigate to '/login.pl'
-  Then I should see a textbox "User Name"
-   And I should see a password box "Password"
-   And I should see a textbox "Company"
+  When I navigate to the application login page
+  Then I should see the application login page
+
