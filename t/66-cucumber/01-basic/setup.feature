@@ -61,7 +61,7 @@ Scenario: Edit user in a company
       | the-user |
   When I request the user overview for "the-user"
   Then I should see the edit user page
-
+   And I should see all permission checkboxes checked
 
 
 Scenario: Add user to a company

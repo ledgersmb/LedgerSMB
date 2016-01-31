@@ -117,4 +117,14 @@ When qr/I request the user overview for "(.*)"/, sub {
 };
 
 
+Then qr/I should see all permission checkboxes checked/, sub {
+    my $page = get_driver(S)->page;
+    my $checkboxes = $page->get_perms_checkboxes(filter => 'all');
+    my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
+
+    ok(scalar(@{ $checkboxes }) == scalar(@{ $checked_boxes }),
+       "all perms checkboxes checked");
+};
+
+
 1;

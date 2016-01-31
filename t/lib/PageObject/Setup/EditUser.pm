@@ -9,9 +9,6 @@ use PageObject;
 extends 'PageObject';
 
 
-use PageObject::Setup::OperationConfirmation;
-
-
 sub verify {
     my ($self) = @_;
     my $driver = $self->driver;
@@ -29,6 +26,28 @@ sub verify {
     return $self;
 }
 
+
+my %roles_checkbox_filter = (
+    'all' => '',
+    'checked' => "and \@checked='checked'",
+    'unchecked' => "and \@checked=''"
+    );
+
+sub get_perms_checkboxes {
+    my $self = shift @_;
+    my $driver = $self->driver;
+    my %params = @_;
+
+    $params{filter} ||= 'all';
+    my $filter = $roles_checkbox_filter{$params{filter}};
+
+    my @checkboxes =
+        $driver->find_child_elements(
+            $driver->find_element('//table'),
+            ".//input[\@type='checkbox' $filter]");
+
+    return \@checkboxes;
+}
 
 __PACKAGE__->meta->make_immutable;
 
