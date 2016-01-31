@@ -117,4 +117,39 @@ When qr/I request the user overview for "(.*)"/, sub {
 };
 
 
+Then qr/I should see all permission checkboxes checked/, sub {
+    my $page = get_driver(S)->page;
+    my $checkboxes = $page->get_perms_checkboxes(filter => 'all');
+    my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
+
+    ok(scalar(@{ $checkboxes }) > 0,
+       "there are checkboxes");
+    ok(scalar(@{ $checkboxes }) == scalar(@{ $checked_boxes }),
+       "all perms checkboxes checked");
+};
+
+
+Then qr/I should see no permission checkboxes checked/, sub {
+    my $page = get_driver(S)->page;
+    my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
+
+    ok(0 == scalar(@{ $checked_boxes }),
+       "no perms checkboxes checked");
+};
+
+
+Then qr/I should see only these permission checkboxes checked:/, sub {
+    my $page = get_driver(S)->page;
+    my @data = map { $_->{"perms label"} } @{ C->data };
+    my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
+
+    is(scalar(@{ $checked_boxes }), scalar(@data),
+       "Expected number of perms checkboxes checked");
+    ok($page->is_checked_perms_checkbox($_),
+       "Expect perms checkbox with label '$_' to be checked")
+        for (@data);
+};
+
+
+
 1;

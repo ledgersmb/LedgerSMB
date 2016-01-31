@@ -21,6 +21,8 @@ sub click {
     return $self;
 }
 
+sub get_attribute { return shift->element->get_attribute(@_); }
+
 sub has_css_class {
     my ($self, $class) = @_;
     my $class_attr = $self->element->get_attribute('class');
