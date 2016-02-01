@@ -61,7 +61,7 @@ Scenario: Edit user in a company
       | the-user |
   When I request the user overview for "the-user"
   Then I should see the edit user page
-
+   And I should see all permission checkboxes checked
 
 
 Scenario: Add user to a company
@@ -94,6 +94,45 @@ Scenario: Add user to a company
       | Username  |
       | the-user  |
       | the-user2 |
+
+Scenario: Add a 'manage users' admin to a company
+ Given an existing company named "setup-test"
+   And a non-existent user named "the-admin"
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request to add a user
+  Then I should see the user creation page
+  When I create a user with these values:
+      | label              | value            |
+      | Username           | the-admin        |
+      | Password           | airmiles         |
+      | Salutation         | Mr.              |
+      | First Name         | User             |
+      | Last name          | Admin            |
+      | Employee Number    | 00000011         |
+      | Date of Birth      | 09/07/2006       |
+      | Tax ID/SSN         | 00000004         |
+      | Country            | United States    |
+      | Assign Permissions | Manage Users     |
+  Then I should see the setup confirmation page
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see the setup admin page
+  When I request the users list
+  Then I should see the setup user list page
+   And I should see the table of available users:
+      | Username  |
+      | the-user  |
+      | the-user2 |
+      | the-admin |
+  When I request the user overview for "the-admin"
+  Then I should see the edit user page
+   And I should see only these permission checkboxes checked:
+      | perms label  |
+      | base user    |
+      | users manage |
+
 
 Scenario: Copy a company
  Given a non-existent company named "setup-test2"
