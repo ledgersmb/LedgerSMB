@@ -5,10 +5,11 @@ define([
     'dojo/on',
     'dojo/dom-attr',
     'dojo/dom-form',
-    'dojo/request/xhr',
     'dojo/query',
+    'dijit/registry',
     ],
-       function(Form, declare, event, on, domattr, domform, xhr, query) {
+       function(Form, declare, event, on, domattr, domform,
+                query, registry) {
            return declare('lsmb/lib/Form',
                           [Form],
               {
@@ -47,11 +48,11 @@ define([
 						    var options = { "handleAs": "text" };
 						    if ('get' == method.toLowerCase()){
 							     url = url + '?' + qobj;
-                          load_link(xhr, url);
+                          registry.byId('maindiv').load_link(url);
 						    } else {
 							     options['method'] = method;
 							     options['data'] = qobj;
-						        load_form(xhr, url, options);
+						        registry.byId('maindiv').load_form(url, options);
 						    }
                   },
               });
