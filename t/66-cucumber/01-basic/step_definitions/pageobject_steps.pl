@@ -5,6 +5,8 @@ use lib 't/lib';
 use strict;
 use warnings;
 
+use LedgerSMB::Database;
+
 use Module::Runtime qw(use_module);
 use PageObject::Driver;
 
@@ -19,12 +21,32 @@ sub get_driver {
 }
 
 Given qr/(a non-existent|an existing) company named "(.*)"/, sub {
-    S->{scenario}->{"the company"} = $2;
+    my $company = $2;
+    S->{scenario}->{"the company"} = $company;
     S->{scenario}->{"non-existent"} = ($1 eq 'a non-existent');
+
+    if (S->{scenario}->{'non-existent'}) {
+        my $dbh = LedgerSMB::Database->new(
+            dbname => 'postgres',
+            usermame => $ENV{PGUSER},
+            password => $ENV{PGPASSWORD},
+            host => 'localhost')
+            ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
+        $dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
+    }
 };
 
 Given qr/a non-existent user named "(.*)"/, sub {
-    S->{scenario}->{"the user"} = $1;
+    my $role = $1;
+    S->{scenario}->{"the user"} = $role;
+
+    my $dbh = LedgerSMB::Database->new(
+        dbname => 'postgres',
+        usermame => $ENV{PGUSER},
+        password => $ENV{PGPASSWORD},
+        host => 'localhost')
+        ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
+    $dbh->do(qq(DROP ROLE IF EXISTS "$role"));
 };
 
 When qr/I confirm database creation with these parameters:/, sub {
