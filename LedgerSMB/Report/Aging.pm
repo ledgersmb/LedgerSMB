@@ -235,7 +235,7 @@ Calculate report as on a specific date
 
 =cut
 
-has 'date_ref' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'to_date'=> (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item entity_class
 
