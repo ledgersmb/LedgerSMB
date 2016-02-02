@@ -491,7 +491,7 @@ $$
 		where id = in_report_id;
     RETURN in_report_id;
     END;
-$BODY$
+$$
   LANGUAGE plpgsql;
 
 COMMENT ON function reconciliation__pending_transactions
