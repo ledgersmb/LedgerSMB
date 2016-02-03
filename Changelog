@@ -40,8 +40,12 @@ Released 2014-09-15
 Changelog for 1.4.24
 * Fixed new transactions not being added to recon reports (Erik H, #979)
 * Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+* Updates to the Danish language (Mikkel H)
+* Updates to the Arabic (Egypt) language (Rami A)
 
 Craig W is Craig Webster
+Mikkel H is Mikkel Hoegh
+Rami A is Rami Assi
 Erik H is Erik Huelsmann
 
 
