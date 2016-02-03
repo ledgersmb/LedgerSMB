@@ -37,6 +37,14 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.24
+* Fixed new transactions not being added to recon reports (Erik H, #979)
+* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+
+Craig W is Craig Webster
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.23
 * Fixed running balance column of GL report double-counting (Erik H, #1205)
 * Fixed spelling errors (David G, #1178)
@@ -49,14 +57,6 @@ Changelog for 1.4.23
 * Fixed detailed (AR/AP) aging statements not working (Erik H, #1177)
 
 David G is David Godfrey
-Erik H is Erik Huelsmann
-
-
-Changelog for 1.4.24
-* Fixed new transactions not being added to recon reports (Erik H, #979)
-* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
-
-Craig W is Craig Webster
 Erik H is Erik Huelsmann
 
 
