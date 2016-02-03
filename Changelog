@@ -52,6 +52,14 @@ David G is David Godfrey
 Erik H is Erik Huelsmann
 
 
+Changelog for 1.4.24
+* Fixed new transactions not being added to recon reports (Erik H, #979)
+* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+
+Craig W is Craig Webster
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.22
 * Fixed balance sheet language selection (Erik H)
 * Fixed column headings translated in report language (Erik H)
