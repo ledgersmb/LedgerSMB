@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-01-12 21:52+0000\n"
+"POT-Creation-Date: 2016-02-03 08:33+0000\n"
 "PO-Revision-Date: 2016-01-11 10:05+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -588,11 +588,11 @@ msgstr ""
 msgid "Add line3 "
 msgstr ""
 
-#: UI/Contact/divs/wage.html:65
+#: UI/Contact/divs/wage.html:71
 msgid "Add/Change Deductions"
 msgstr ""
 
-#: UI/Contact/divs/wage.html:38
+#: UI/Contact/divs/wage.html:41
 msgid "Add/Change Wage"
 msgstr ""
 
