@@ -412,15 +412,26 @@ that within each category, one submits in order of amount.  We should therefore
 wrap it in another function which can operate on a set, perhaps in 1.4....$$;
 
 
-create or replace function reconciliation__pending_transactions 
-(in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) 
-RETURNS int as $$
+DROP FUNCTION IF EXISTS
+  reconciliation__pending_transactions(in_end_date date,
+                                       in_chart_id integer,
+                                       in_report_id integer,
+                                       in_their_total numeric);
+CREATE OR REPLACE FUNCTION reconciliation__pending_transactions(
+                      in_report_id integer, in_their_total numeric)
+  RETURNS integer AS
+$$
     
     DECLARE
         gl_row RECORD;
         t_recon_fx BOOL;
+        t_chart_id integer;
+        t_end_date date;
     BEGIN
-                SELECT recon_fx INTO t_recon_fx FROM cr_report WHERE id = in_report_id;
+       SELECT end_date, recon_fx, chart_id
+         INTO t_end_date, t_recon_fx, t_chart_id
+         FROM cr_report
+        WHERE id = in_report_id;
  
 		INSERT INTO cr_report_line (report_id, scn, their_balance, 
 			our_balance, "user", voucher_id, ledger_id, post_date)
@@ -461,8 +472,8 @@ RETURNS int as $$
                 LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
 		WHERE ac.cleared IS FALSE
 			AND ac.approved IS TRUE
-			AND ac.chart_id = in_chart_id
-			AND ac.transdate <= in_end_date
+			AND ac.chart_id = t_chart_id
+			AND ac.transdate <= t_end_date
                         AND ((t_recon_fx is not true 
                                 and ac.fx_transaction is not true) 
                             OR (t_recon_fx is true 
@@ -480,10 +491,11 @@ RETURNS int as $$
 		where id = in_report_id;
     RETURN in_report_id;
     END;
-$$ LANGUAGE plpgsql;
+$$
+  LANGUAGE plpgsql;
 
 COMMENT ON function reconciliation__pending_transactions
-(in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) IS
+  (in_report_id int, in_their_total numeric) IS
 $$Ensures that the list of pending transactions in the report is up to date. $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RETURNS setof cr_report_line as $$
