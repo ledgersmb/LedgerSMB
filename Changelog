@@ -42,10 +42,12 @@ Changelog for 1.4.24
 * Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
 * Updates to the Danish language (Mikkel H)
 * Updates to the Arabic (Egypt) language (Rami A)
+* Updates to the Estonian language (Peeter P)
 
 Craig W is Craig Webster
 Mikkel H is Mikkel Hoegh
 Rami A is Rami Assi
+Peeter P is Peeter Partel
 Erik H is Erik Huelsmann
 
 
