@@ -6,7 +6,7 @@
 -- other forms of inventory valuation as well.  With FIFO valuation, the best 
 -- way I can see this is to suggest that all reversals only affect the AP rows,
 -- but all COGS amounts get posted to AR rows.  This means that AR rows do not
--- save the data here, but the AP transaction cogs calcuation alone does add to
+-- save the data here, but the AP transaction cogs calcuation alone( does) add to
 -- AR rows.
 
 
@@ -17,11 +17,38 @@ BEGIN;
 CREATE OR REPLACE FUNCTION cogs__reverse_ar(in_parts_id int, in_qty numeric)
 RETURNS NUMERIC[] AS
 $$
-DECLARE t_alloc numeric := 0;
+DECLARE t_alloc numeric := 0; -- qty to reverse (negative)
         t_cogs numeric := 0;
         t_inv invoice;
-        t_avail numeric;
+        t_reversed numeric;
+        t_reallocated numeric;
 BEGIN
+
+IF in_qty = 0 THEN
+   RETURN ARRAY[0, 0];
+END IF;
+
+FOR t_inv IN
+    SELECT i.*
+      FROM invoice i
+      JOIN (SELECT id, approved, transdate FROM ar
+            UNION
+            SELECT id, approved, transdate FROM gl) a ON a.id = i.trans_id
+     WHERE allocated + qty > 0 and a.approved and parts_id = in_parts_id
+   ORDER BY a.transdate ASC, a.id ASC, i.id ASC
+LOOP
+   t_reallocated := greatest(in_qty - t_alloc, t_inv.qty + t_inv.allocated);
+   UPDATE invoice
+      SET allocated = allocated - t_reallocated
+    WHERE id = t_inv.id;
+   t_alloc := t_alloc - t_reallocated;
+
+   IF t_alloc < in_qty THEN
+      RAISE EXCEPTION 'TOO MANY ALLOCATED (1)';
+   ELSIF t_alloc = in_qty THEN
+      RETURN ARRAY[t_alloc, 0];
+   END IF;
+END LOOP;
 
 FOR t_inv IN
     SELECT i.*
@@ -32,23 +59,16 @@ FOR t_inv IN
      WHERE allocated > 0 and a.approved and parts_id = in_parts_id
   ORDER BY a.transdate DESC, a.id DESC, i.id DESC
 LOOP
-   t_avail := t_inv.allocated;
+   t_reversed := least((in_qty - t_alloc) * -1, t_inv.allocated);
+   UPDATE invoice SET allocated = allocated - t_reversed
+    WHERE id = t_inv.id;
+   t_cogs := t_cogs - t_reversed * t_inv.sellprice;
+   t_alloc := t_alloc - t_reversed;
+
    IF t_alloc < in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        RETURN ARRAY[t_alloc, t_cogs];
-   ELSIF (in_qty - t_alloc) * -1 <=  t_inv.allocated THEN
-       raise notice 'partial reversal';
-       UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
-        WHERE id = t_inv.id;
-       t_cogs := t_cogs +  (in_qty - t_alloc) * t_inv.sellprice;
-       return ARRAY[t_alloc + (in_qty - t_alloc), t_cogs];
-   ELSE
-       raise notice 'full reversal';
-       UPDATE invoice SET allocated = 0
-        WHERE id = t_inv.id;
-       t_alloc := t_alloc + t_inv.allocated * -1;
-       t_cogs := t_cogs + -1 * (t_inv.allocated) * t_inv.sellprice;
    END IF;
 END LOOP;
 
@@ -181,7 +201,7 @@ BEGIN
 
 
 IF in_qty > 0 THEN
-   return cogs__reverse_ap(in_parts_id, in_qty * -1) * in_lastcost;
+   return (cogs__reverse_ap(in_parts_id, in_qty * -1))[1] * in_lastcost;
 END IF;
 
 SELECT * INTO t_cp FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
