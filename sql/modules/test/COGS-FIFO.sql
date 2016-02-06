@@ -29,7 +29,8 @@ INSERT INTO parts
 VALUES (-1, 'TS1', 'COGS Test Series 1', -1101, -1102, -1104, -1103),
        (-2, 'TS2', 'COGS Test Series 2', -2101, -2102, -2104, -2103),
        (-3, 'TS3', 'COGS Test Series 3', -3101, -3102, -3104, -3103),
-       (-4, 'TS4', 'COGS Test Series 4', -4101, -4102, -4104, -4103);
+       (-4, 'TS4', 'COGS Test Series 4', -4101, -4102, -4104, -4103),
+       (-5, 'TS5', 'COGS Test Series 5', -2101, -2102, -2104, -2103);
   
 INSERT INTO entity (id, name, country_id, entity_class)
 VALUES (-1000, 'Test act', 232, 1);
@@ -331,27 +332,27 @@ SELECT cogs__add_for_ar_line(-2206);
 
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 1 series 2 is 50', allocated = 50
+SELECT 'post-ar-6, allocation invoice 1 series 2 is 50; ', allocated = 50
   FROM invoice WHERE id = -2201;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 2 series 2 is 75', allocated = -75
+SELECT 'post-ar-6, allocation invoice 2 series 2 is -75', allocated = -75
   FROM invoice WHERE id = -2202;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 3 series 2 is 0', allocated = 0
+SELECT 'post-ar-6, allocation invoice 3 series 2 is 0; ', allocated = 0
   FROM invoice WHERE id = -2203;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 4 series 2 is 75', allocated = -75
+SELECT 'post-ar-6, allocation invoice 4 series 2 is -75; ', allocated = -75
   FROM invoice WHERE id = -2204;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 5 series 2 is 50', allocated = -50
+SELECT 'post-ar-6, allocation invoice 5 series 2 is -50; ', allocated = -50
   FROM invoice WHERE id = -2205;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6, allocation invoice 6 series 2 is -150', allocated = 150
+SELECT 'post-ar-6, allocation invoice 6 series 2 is 150; ', allocated = 150
   FROM invoice WHERE id = -2206;
 
 INSERT INTO test_result(test_name, success)
@@ -617,6 +618,100 @@ INSERT INTO test_result(test_name, success)
 SELECT 'multi-call-safe ap cogs, id ' || i.id, cogs__add_for_ap_line(i.id) = 0
   FROM invoice i JOIN ap ON ap.id = i.trans_id
  WHERE i.id < -1000;
+
+
+
+-- Series 5, AR reversal
+
+-- Simple reversal of invoice without allocation
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5201,  true, 'test5001', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5201, -5201, -5, 150, 0, 3);
+
+SELECT cogs__add_for_ar_line(-5201);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-1, allocation invoice 1 series 5 is 0; ', allocated = 0
+  FROM invoice WHERE id = -5201;
+
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5202,  true, 'test5002', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5202, -5202, -5, -150, 0, 3);
+
+SELECT cogs__add_for_ar_line(-5202);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-2, allocation invoice 1 series 5 is -150; ', allocated = -150
+  FROM invoice WHERE id = -5201;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-2, allocation invoice 2 series 5 is 150; ', allocated = 150
+  FROM invoice WHERE id = -5202;
+
+-- Reversal of invoice with allocation, reallocates to invoice without and AP
+
+-- Test outline:
+--  * Set up an ar invoice and an ap invoice, each at 150 units
+--  * Allocate these against each other
+--  * Set up another ar invoice at 75 units
+--  * Allocate the new invoice / no units availeble == no effect
+--  * Reverse the original AR invoice at 150 units
+--  * Allocate the reversal invoice
+--  * The second AR invoice is now allocated
+--  * The AP invoice is 50% de-allocated
+
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5203,  true, 'test5003', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5203, -5203, -5, 150, 0, 3);
+
+INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5104,  true, 'test5004', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5104, -5104, -5, -150, 0, 3);
+
+SELECT cogs__add_for_ap_line(-5104);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-1, allocation invoice 3 series 5 is -150; ', allocated = -150
+  FROM invoice WHERE id = -5203;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-1, allocation invoice 4 series 5 is 150; ', allocated = 150
+  FROM invoice WHERE id = -5104;
+
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5205,  true, 'test5005', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5205, -5205, -5, 75, 0, 3);
+
+SELECT cogs__add_for_ar_line(-5205);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-2, allocation invoice 5 series 5 is 0', allocated = 0
+  FROM invoice WHERE id = -5205;
+
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+VALUES (-5206,  true, 'test5006-rev3', now() - '4 days'::interval, -2000);
+INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+VALUES (-5206, -5206, -5, -150, 0, 3);
+
+SELECT cogs__add_for_ar_line(-5206);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-3, allocation invoice 5 series 5 is -75', allocated = -75
+  FROM invoice WHERE id = -5205;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-3, allocation invoice 6 series 5 is 150', allocated = 150
+  FROM invoice WHERE id = -5206;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated, allocated = -75
+  FROM invoice WHERE id = -5204;
+
 
 SELECT * FROM test_result;
 
