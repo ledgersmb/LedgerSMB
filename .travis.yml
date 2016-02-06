@@ -64,15 +64,16 @@ install:
   - cpan-install --coverage   # installs converage prereqs, if enabled
   - cpan-install Starman # needed for sauce tests
   - cpan-install CGI::Emulate::PSGI # needed for sauce tests
-  - cpan-install Selenium::Remote::Driver;
+  - cpan-install Selenium::Remote::Driver
+  - cpan-install Devel::Cover
 
 before_script:
   - coverage-setup 2>/dev/null
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
 
 script:
-   - starman --daemonize tools/starman.psgi
-   - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
+   - PERL5OPT=-MDevel::Cover starman --daemonize tools/starman.psgi
+   - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PERL5OPT=-MDevel::Cover PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
 
 after_success:
   - coverage-report
