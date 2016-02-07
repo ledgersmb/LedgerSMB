@@ -3,8 +3,10 @@ Released 2014-09-15
 
 Changelog for 1.4.25
 * Added datepicker to invoice Delivery Date field (Nick P)
+* Fixed reversal of sales invoice with parts without inventory (Erik H, #990)
 
 Nick P is Nick Prater
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.24
