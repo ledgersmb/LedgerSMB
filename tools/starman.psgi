@@ -6,7 +6,6 @@ use CGI::Emulate::PSGI;
 use LedgerSMB::PSGI;
 use Plack::Builder;
 use Plack::Middleware::Static;
-use Carp::Always;
 
 
 my $app = LedgerSMB::PSGI::app();
