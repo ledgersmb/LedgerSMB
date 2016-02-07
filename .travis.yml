@@ -13,6 +13,11 @@ env:
     - secure: q9IckmvMBEEQ6EeM4U8K4y96Lx6tEaxs/A5GYUJxNJVhUkx3YqJKeERArZc4fpoV3CtUCFPDs/tktiFJn1LDeh3s9vJitUAGMU2AQxiUNARXK4EkEdPhvbX+CtusIIKDXYwEqXLiymv6mmpcc9/19CvHUzr9CiKZbb/LpS8lWqc=
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
+addons:
+   apt:
+     packages:
+       - nginx
+
 matrix:
   include:
     # change to 5.22 when that is supported
