@@ -36,6 +36,11 @@ Internationalization
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.25
+* Added datepicker to invoice Delivery Date field (Nick P)
+
+Nick P is Nick Prater
+
 
 Changelog for 1.4.24
 * Fixed new transactions not being added to recon reports (Erik H, #979)
