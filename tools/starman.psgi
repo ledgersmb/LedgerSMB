@@ -18,7 +18,7 @@ my $app = LedgerSMB::PSGI::app();
 builder {
    enable "Plack::Middleware::Static",
        path => qr{(^/?(images|doc|UI|css)/|favicon\.ico)}, root => '.';
-   mount '/stop' => sub { exit; }
+   mount '/stop.pl' => sub { exit; }
 	if $ENV{COVERAGE};
    mount '/' => $app;
 };
