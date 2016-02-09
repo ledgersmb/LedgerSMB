@@ -30,6 +30,7 @@ To get by control code:
 
 package LedgerSMB::Entity::Person::Employee;
 use Moose;
+use LedgerSMB::Entity::Person;
 extends 'LedgerSMB::Entity::Person';
 
 use LedgerSMB::App_State;
@@ -110,6 +111,16 @@ Employee number, required, for employee.
 =cut
 
 has employeenumber => (is => 'rw', isa => 'Str', required => 1);
+
+
+=item entity_class
+
+
+
+=cut
+
+has entity_class => (is => 'ro', isa => 'Str', default => 3);
+
 
 =back
 
