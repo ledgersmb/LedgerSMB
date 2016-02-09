@@ -222,7 +222,7 @@ BEGIN
 		AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
 		and ac.approved and a.approved
 		and ac.transdate <= in_transdate
-	GROUP BY cp.amount, ac.chart_id;
+	GROUP BY cp.amount_bc, ac.chart_id;
 
 	RETURN coalesce(balance, 0);
 END;
