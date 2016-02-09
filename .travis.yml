@@ -99,5 +99,5 @@ script:
 
 after_success:
   - curl http://localhost:5000/stop.pl
-  - sleep 5    # wait for server process to flush coverage data to disk
+  - sleep 15    # wait for server process to flush coverage data to disk
   - coverage-report
