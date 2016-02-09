@@ -1,4 +1,4 @@
-<?lsmb INCLUDE "ui-header.html" 
+<?lsmb INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 #include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
@@ -7,7 +7,7 @@ stylesheet="ledgersmb.css"
 <div class="listtop"><?lsmb text('Where shall we send the backup?') ?></div>
 <?lsmb # notice, message, and operation are all localized. ?>
 <div id="notice"><?lsmb notice ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="POST" name="confirm_operation">
+<form data-dojo-type="dijit/form/Form" action="setup.pl" method="POST" name="confirm_operation">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'

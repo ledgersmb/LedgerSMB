@@ -255,7 +255,7 @@ Lists all users in the selected database
 sub list_users {
     my ($request) = @_;
     _init_db($request);
-    my $user = LedgerSMB::DBObject::User->new(%$request);
+    my $user = LedgerSMB::DBObject::User->new($request);
     my $users = $user->get_all_users;
     $request->{users} = [];
     for my $u (@$users) {
@@ -281,7 +281,7 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-           {%$database, (company_name => $request->{new_name})}
+           {%$database, (dbname => $request->{new_name})}
     )->connect;
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
@@ -366,18 +366,22 @@ sub run_backup {
     $backupfile or $request->error($request->{_locale}->text('Error creating backup file'));
 
     if ($request->{backup_type} eq 'email'){
+        # suppress warning of single usage of $LedgerSMB::Sysconfig::...
+        no warnings 'once';
+
         my $csettings = $LedgerSMB::Company_Config::settings;
-    my $mail = new LedgerSMB::Mailer(
-        from          => $LedgerSMB::Sysconfig::backup_email_from,
-        to            => $request->{email},
-        subject       => "Email of Backup",
-        message       => 'The Backup is Attached',
-    );
-    $mail->attach(
+        my $mail = new LedgerSMB::Mailer(
+            from          => $LedgerSMB::Sysconfig::backup_email_from,
+            to            => $request->{email},
+            subject       => "Email of Backup",
+            message       => 'The Backup is Attached',
+            );
+        $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
-    );        $mail->send;
+            );
+        $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
@@ -980,7 +984,7 @@ sub process_and_run_upgrade_script {
     my $rc;
 
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::dbn_amespace (" . $dbh->errstr . ")";
+    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
     $dbh->begin_work;
 
@@ -1013,11 +1017,11 @@ sub process_and_run_upgrade_script {
         output_file => 'upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $database->exec_script(
-        { script =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
-          log => $temp . "_stdout",
-          errlog => $temp . "_stderr"
-        });
+    $database->run_file(
+        file =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
+        log => $temp . "_stdout",
+        errlog => $temp . "_stderr"
+        );
 
 
     my $sth = $dbh->prepare(qq(select value='yes'
@@ -1136,10 +1140,10 @@ sub edit_user_roles {
     _init_db($request)
         unless $request->{dbh};
 
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    my @all_roles = $admin->get_roles($request->{database});
+    my $admin = LedgerSMB::DBObject::Admin->new($request);
+    my $all_roles = $admin->get_roles($request->{database});
 
-    my $user_obj = LedgerSMB::DBObject::User->new(%$request);
+    my $user_obj = LedgerSMB::DBObject::User->new($request);
     $user_obj->get($request->{id});
 
     # LedgerSMB::DBObject::User doesn't retrieve the username
@@ -1161,7 +1165,7 @@ sub edit_user_roles {
     my $template_data = {
                         request => $request,
                            user => $user_obj,
-                          roles => @all_roles,
+                          roles => $all_roles,
             };
 
     $template->render($template_data);

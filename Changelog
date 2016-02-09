@@ -36,6 +36,42 @@ Internationalization
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.25
+* Added datepicker to invoice Delivery Date field (Nick P)
+* Fixed reversal of sales invoice with parts without inventory (Erik H, #990)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.24
+* Fixed new transactions not being added to recon reports (Erik H, #979)
+* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+* Updates to the Danish language (Mikkel H)
+* Updates to the Arabic (Egypt) language (Rami A)
+* Updates to the Estonian language (Peeter P)
+
+Craig W is Craig Webster
+Mikkel H is Mikkel Hoegh
+Rami A is Rami Assi
+Peeter P is Peeter Partel
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.23
+* Fixed running balance column of GL report double-counting (Erik H, #1205)
+* Fixed spelling errors (David G, #1178)
+* Fixed spelling errors (Erik H, #1183, #1170)
+* Fixed handling of recurring transactions (Erik H, #1227)
+* Fixed selected currency in vouchers -> payments isn't default (Erik H, #1186)
+* Fixed CoA screen offering Delete for referenced accounts (Erik H, #972)
+* Fixed vouchers print total instead of due amount (Erik H, #1068)
+* Fixed missing envelope and shipping label templates (Erik H, #874)
+* Fixed detailed (AR/AP) aging statements not working (Erik H, #1177)
+
+David G is David Godfrey
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.22
 * Fixed balance sheet language selection (Erik H)

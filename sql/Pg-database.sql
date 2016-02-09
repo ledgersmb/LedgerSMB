@@ -1593,6 +1593,8 @@ CREATE TABLE invoice (
   serialnumber text,
   vendor_sku text,
   notes text
+  CONSTRAINT invoice_allocation_constraint
+      CHECK (allocated*-1 BETWEEN least(0,qty) AND greatest(qty,0))
 );
 
 COMMENT ON TABLE invoice IS

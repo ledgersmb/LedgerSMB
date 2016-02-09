@@ -1,41 +1,23 @@
-# #-#-#-#-#  hu.po (LedgerSMB 1.2.9)  #-#-#-#-#
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2003
-# Hungarian texts:
-#  Author: Kabai József <kabai@investor.hu>  LedgerSMB <=1.1.1
-#  Author: Pongrácz István <pongracz.istvan@osbusiness.hu> LedgerSMB 1.2.8+
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-# ######################################################################
+#
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.3.29\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 23:45+0000\n"
-"PO-Revision-Date: 2013-08-27 08:52+0200\n"
-"Last-Translator: István <pongracz.istvan@startit.hu>\n"
-"Language-Team: StartIT Kft <info@startit.hu>\n"
+"POT-Creation-Date: 2016-01-11 08:46+0000\n"
+"PO-Revision-Date: 2015-12-29 12:32+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"language/hu/)\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.1.6\n"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
-#, fuzzy
 msgid "# Invoices"
-msgstr "Számlák"
+msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
@@ -75,16 +57,11 @@ msgstr "90"
 #: templates/demo_with_images/invoice.tex:32
 #: templates/demo_with_images/packing_list.tex:22
 #: templates/xedemo/invoice.tex:31 templates/xedemo/packing_list.tex:22
-#, fuzzy
 msgid ""
 "A return authorization must be obtained from [_1] before goods are returned. "
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
-"A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt [_1] hivatalos engedélye szükséges. A "
-"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. [_1] "
-"semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
 #: sql/Pg-database.sql:798
 msgid "AIM"
@@ -105,9 +82,8 @@ msgid "AP Invoice"
 msgstr "Szállító számla"
 
 #: UI/Reports/filters/search_goods.html:160
-#, fuzzy
 msgid "AP Invoices"
-msgstr "Szállító számla"
+msgstr ""
 
 #: bin/aa.pl:1538 LedgerSMB/Report/Invoices/Outstanding.pm:298
 #: UI/Reports/filters/invoice_outstanding.html:5
@@ -135,9 +111,8 @@ msgid "AP Voucher"
 msgstr "Új szállító utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:22
-#, fuzzy
 msgid "AP account"
-msgstr "Számla"
+msgstr ""
 
 #: bin/am.pl:871 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
@@ -154,9 +129,8 @@ msgid "AR Invoice"
 msgstr "Vevőszámla"
 
 #: UI/Reports/filters/search_goods.html:137
-#, fuzzy
 msgid "AR Invoices"
-msgstr "Vevőszámla"
+msgstr ""
 
 #: bin/aa.pl:1537 LedgerSMB/Report/Invoices/Outstanding.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:9
@@ -184,9 +158,8 @@ msgid "AR Voucher"
 msgstr "Új vevő utalvány"
 
 #: UI/import_csv/import_inventory_csv.html:13
-#, fuzzy
 msgid "AR account"
-msgstr "Számla"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:115
 #: LedgerSMB/Report/Unapproved/Drafts.pm:105
@@ -202,9 +175,8 @@ msgstr ""
 msgid "Acc_trans Sum"
 msgstr ""
 
-# 92%
 #: LedgerSMB.pm:603 LedgerSMB.pm:604 LedgerSMB/Scripts/configuration.pm:332
-#: LedgerSMB/Scripts/setup.pm:779
+#: LedgerSMB/Scripts/setup.pm:783
 msgid "Access Denied"
 msgstr "Hozzáférés megtagadva"
 
@@ -224,7 +196,7 @@ msgstr "Hozzáférés megtagadva"
 #: UI/Contact/divs/credit.html:188 UI/journal/journal_entry.html:113
 #: UI/orders/order.html:253 UI/payments/payment2.html:87
 #: UI/payments/payment2.html:215 UI/payments/payment2.html:281
-#: UI/payments/payments_detail.html:212 UI/payments/payments_filter.html:95
+#: UI/payments/payments_detail.html:213 UI/payments/payments_filter.html:95
 #: UI/payroll/deduction.html:50 UI/payroll/income.html:52
 #: UI/rc-reconciliation.html:12 UI/reconciliation/upload.html:25
 #: UI/Reports/filters/aging.html:25 UI/Reports/filters/gl.html:32
@@ -235,7 +207,7 @@ msgstr "Hozzáférés megtagadva"
 msgid "Account"
 msgstr "Számla"
 
-#: LedgerSMB/Report/Trial_Balance.pm:158 UI/payments/use_overpayment2.html:124
+#: LedgerSMB/Report/Trial_Balance.pm:160 UI/payments/use_overpayment2.html:124
 msgid "Account Description"
 msgstr "Számla leírása"
 
@@ -243,7 +215,6 @@ msgstr "Számla leírása"
 msgid "Account Label"
 msgstr "Számla címke"
 
-# 78%
 #: LedgerSMB/Report/GL.pm:152 UI/Reports/co/filter_bm.html:85
 #: UI/Reports/co/filter_cd.html:69 UI/Reports/filters/gl.html:260
 msgid "Account Name"
@@ -254,16 +225,16 @@ msgid "Account No."
 msgstr "Számlaszám"
 
 #: bin/ic.pl:1027 bin/ic.pl:1689 LedgerSMB/Report/Budget/Search.pm:124
-#: LedgerSMB/Report/Budget/Variance.pm:73 LedgerSMB/Report/COA.pm:87
+#: LedgerSMB/Report/Budget/Variance.pm:73 LedgerSMB/Report/COA.pm:88
 #: LedgerSMB/Report/Contact/History.pm:60
 #: LedgerSMB/Report/Contact/History.pm:141
 #: LedgerSMB/Report/Contact/Purchase.pm:143
-#: LedgerSMB/Report/Contact/Search.pm:101 LedgerSMB/Report/GL.pm:209
-#: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:91
+#: LedgerSMB/Report/Contact/Search.pm:101 LedgerSMB/Report/GL.pm:211
+#: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:92
 #: LedgerSMB/Report/Taxform/Details.pm:82
 #: LedgerSMB/Report/Taxform/Details.pm:111
-#: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:152
-#: LedgerSMB/Scripts/payment.pm:149 t/data/04-complex_template.html:558
+#: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
+#: LedgerSMB/Scripts/payment.pm:151 t/data/04-complex_template.html:558
 #: UI/accounts/edit.html:26 UI/accounts/edit.html:122
 #: UI/Contact/divs/bank_act.html:22 UI/payments/use_overpayment2.html:123
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
@@ -273,7 +244,6 @@ msgstr "Számlaszám"
 msgid "Account Number"
 msgstr "Számlaszám"
 
-# 77%
 #: LedgerSMB/Report/co/Caja_Diaria.pm:131
 msgid "Account Number End"
 msgstr "Számlaszám vége"
@@ -282,8 +252,7 @@ msgstr "Számlaszám vége"
 msgid "Account Number Start"
 msgstr "Számlaszám kezdete"
 
-# 76%
-#: LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Scripts/payment.pm:152
 msgid "Account Title"
 msgstr "Számla megnevezése"
 
@@ -293,21 +262,17 @@ msgid "Account Type"
 msgstr "Számlatípus"
 
 #: LedgerSMB/GL.pm:206
-#, fuzzy
 msgid "Account [_1] not found"
-msgstr "[_1] számla nem található"
+msgstr ""
 
 #: bin/gl.pl:634
-#, fuzzy
 msgid "Account [_1] not found."
-msgstr "[_1] számla nem található."
+msgstr ""
 
-# 78%
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
-#, fuzzy
 msgid "Account category"
-msgstr "Számla neve"
+msgstr ""
 
 #: bin/am.pl:132
 msgid "Account does not exist!"
@@ -315,11 +280,9 @@ msgstr "A számla nem létezik!"
 
 #: UI/Reports/filters/balance_sheet.html:28
 #: UI/Reports/filters/income_statement.html:68
-#, fuzzy
 msgid "Account numbers"
-msgstr "Számlaszám"
+msgstr ""
 
-# 87%
 #: UI/payments/payments_detail.html:132 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
 msgid "Account:"
@@ -330,22 +293,14 @@ msgid "Accounts"
 msgstr "Számlák"
 
 #: UI/Reports/co/filter_cd.html:24
-#, fuzzy
 msgid "Accounts From"
-msgstr "Összegtől"
-
-#: UI/Reports/co/filter_cd.html:29
-#, fuzzy
-msgid "Accounts To"
-msgstr "Számlák"
-
-#: LedgerSMB/Upgrade_Tests.pm:733
-msgid ""
-"Accounts can't be simultaneously used as summary accounts (AR,AP,IC) and be "
-"listed in dropdowns elsewhere."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:422
+#: UI/Reports/co/filter_cd.html:29
+msgid "Accounts To"
+msgstr ""
+
+#: LedgerSMB/Upgrade_Tests.pm:427
 msgid "Accounts without heading"
 msgstr ""
 
@@ -357,9 +312,8 @@ msgid "Accrual"
 msgstr "Teljesítés alapján"
 
 #: UI/taxform/add_taxform.html:77
-#, fuzzy
 msgid "Accrual Basis:"
-msgstr "Teljesítés alapján"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:770
 msgid "Accum. Depreciation"
@@ -370,18 +324,16 @@ msgid "Action Not Defined: "
 msgstr "A művelet nincs meghatározva: "
 
 #: LedgerSMB/Form.pm:650 UI/lib/elements.html:371
-#, fuzzy
 msgid "Action: [_1], ID: [_2]"
-msgstr "Művelet: [_1], ID: [_2]"
+msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr "Műveletek"
+msgstr ""
 
-# 87%
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr "Műveletek:"
+msgstr ""
 
 #: UI/am-audit-control.html:28
 msgid "Activate Audit trail"
@@ -396,15 +348,14 @@ msgid "Active"
 msgstr "Aktív"
 
 #: UI/business_units/filter.html:35
-#, fuzzy
 msgid "Active On"
-msgstr "Aktív"
+msgstr ""
 
 #: LedgerSMB/Scripts/admin.pm:146
 msgid "Active Sessions"
 msgstr "Aktív munkamenetek"
 
-#: bin/am.pl:1546 bin/ic.pl:2121 LedgerSMB/Report/File/Incoming.pm:101
+#: bin/am.pl:1546 bin/ic.pl:2120 LedgerSMB/Report/File/Incoming.pm:101
 #: LedgerSMB/Report/File/Internal.pm:89
 msgid "Add"
 msgstr "Új"
@@ -421,7 +372,6 @@ msgstr "Új vevő tranzakció"
 msgid "Add Account"
 msgstr "Új számla"
 
-# 91%
 #: sql/Pg-database.sql:2787
 msgid "Add Accounts"
 msgstr "Új számla"
@@ -455,11 +405,9 @@ msgid "Add Class"
 msgstr "Új osztály"
 
 #: sql/Pg-database.sql:2783
-#, fuzzy
 msgid "Add Contact"
-msgstr "Kapcsolat"
+msgstr ""
 
-# Meg kell majd nézni, mi a kontextus.
 #: bin/is.pl:101
 msgid "Add Credit Invoice"
 msgstr "Új számlakorrekció"
@@ -473,11 +421,9 @@ msgid "Add Customer"
 msgstr "Új vevő"
 
 #: bin/is.pl:105
-#, fuzzy
 msgid "Add Customer Return"
-msgstr "Új vevő"
+msgstr ""
 
-# 76%
 #: bin/ir.pl:116 bin/ir.pl:143
 msgid "Add Debit Invoice"
 msgstr "Új beszerzési számlakorrekció"
@@ -512,14 +458,12 @@ msgid "Add Language"
 msgstr "Új nyelv"
 
 #: LedgerSMB/Report/Taxform/List.pm:80
-#, fuzzy
 msgid "Add New Tax Form"
-msgstr "Új adóűrlap"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:175
-#, fuzzy
 msgid "Add Note"
-msgstr "Új debit note"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Add Overhead"
@@ -542,18 +486,16 @@ msgid "Add Quotation"
 msgstr "Új ajánlat"
 
 #: UI/business_units/edit.html:13
-#, fuzzy
 msgid "Add Reporting Unit"
-msgstr "Jelentés alapja"
+msgstr ""
 
 #: bin/io.pl:1220 bin/oe.pl:70
 msgid "Add Request for Quotation"
 msgstr "Új ajánlatkérés"
 
 #: sql/Pg-database.sql:2972
-#, fuzzy
 msgid "Add Return"
-msgstr "Új felhasználó"
+msgstr ""
 
 #: bin/am.pl:365 sql/Pg-database.sql:2840
 msgid "Add SIC"
@@ -584,18 +526,16 @@ msgid "Add Timecard"
 msgstr "Új munkalap"
 
 #: bin/io.pl:2285
-#, fuzzy
 msgid "Add To List"
-msgstr "Vagy hozzáadás köteghez"
+msgstr ""
 
 #: sql/Pg-database.sql:2790 sql/Pg-database.sql:2793
 msgid "Add Transaction"
 msgstr "Új kéziszámla"
 
 #: UI/business_units/list_classes.html:103
-#, fuzzy
 msgid "Add Unit"
-msgstr "Egység"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:98
 #: UI/setup/confirm_operation.html:52 UI/setup/edit_user.html:93
@@ -611,9 +551,8 @@ msgid "Add Vendor Invoice"
 msgstr "Új beszerzési számla"
 
 #: bin/ir.pl:120
-#, fuzzy
 msgid "Add Vendor Return"
-msgstr "Új szállító"
+msgstr ""
 
 #: bin/am.pl:780 sql/Pg-database.sql:2834
 msgid "Add Warehouse"
@@ -632,14 +571,12 @@ msgid "Add line3 "
 msgstr "Címsor 3 "
 
 #: UI/Contact/divs/wage.html:72
-#, fuzzy
 msgid "Add/Change Deductions"
-msgstr "Levonás hozzáadása"
+msgstr ""
 
 #: UI/Contact/divs/wage.html:43
-#, fuzzy
 msgid "Add/Change Wage"
-msgstr "Új átváltási árfolyam"
+msgstr ""
 
 #: bin/aa.pl:603 bin/arap.pl:175 bin/ic.pl:1692 bin/ir.pl:480 bin/is.pl:471
 #: bin/oe.pl:432 bin/pe.pl:687 UI/Contact/divs/address.html:85
@@ -648,39 +585,33 @@ msgstr "Új átváltási árfolyam"
 msgid "Address"
 msgstr "Cím"
 
-# 87%
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr "Címsor1"
+msgstr ""
 
-# 87%
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr "Cím:"
+msgstr ""
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
-#, fuzzy
 msgid "Address: [_1]"
-msgstr "Cím: [_1]"
+msgstr ""
 
-# 77%
 #: LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr "Címek"
 
 #: bin/ic.pl:1276
-#, fuzzy
 msgid "Adj"
-msgstr "Új"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:772
 msgid "Adjusted Basis"
 msgstr "Korrigált alap"
 
-# WTF
 #: bin/gl.pl:138
 msgid "Adjusting Till: (till) Source: (source)"
 msgstr "Pénztár egyeztetése: (till) Bizonylatszám: (source)"
@@ -698,20 +629,18 @@ msgid "Adjustment Date"
 msgstr "Korrekció dátuma"
 
 #: UI/inventory/adjustment_setup.html:9
-#, fuzzy
 msgid "Adjustment Details"
-msgstr "Korrekció dátuma"
+msgstr ""
 
-# A lejárati listához tartozik.
 #: UI/Reports/filters/aging.html:80
 msgid "Aged"
 msgstr "Lejárt"
 
-#: LedgerSMB/Report/Aging.pm:176 UI/Reports/filters/aging.html:7
+#: LedgerSMB/Report/Aging.pm:177 UI/Reports/filters/aging.html:7
 msgid "Aging Report"
 msgstr "Lejárati lista"
 
-#: UI/payments/payments_detail.html:285 UI/Reports/filters/gl.html:129
+#: UI/payments/payments_detail.html:287 UI/Reports/filters/gl.html:129
 #: UI/Reports/filters/invoice_outstanding.html:78
 #: UI/Reports/filters/invoice_search.html:171
 msgid "All"
@@ -722,9 +651,8 @@ msgid "All Invoices"
 msgstr "Minden számla"
 
 #: UI/Reports/filters/trial_balance.html:38
-#, fuzzy
 msgid "All accounts"
-msgstr "Minden számla"
+msgstr ""
 
 #: UI/Reports/co/filter_cd.html:15
 msgid "All fields are required"
@@ -732,18 +660,16 @@ msgstr ""
 
 #: templates/demo/invoice.html:222 templates/demo_with_images/invoice.html:222
 #: templates/xedemo/invoice.html:222
-#, fuzzy
 msgid "All prices in [_1]"
-msgstr "A megadott árak [_1]ban értendők"
+msgstr ""
 
 #: templates/demo/sales_order.html:211 templates/demo/sales_quotation.html:179
 #: templates/demo_with_images/sales_order.html:211
 #: templates/demo_with_images/sales_quotation.html:179
 #: templates/xedemo/sales_order.html:211
 #: templates/xedemo/sales_quotation.html:179
-#, fuzzy
 msgid "All prices in [_1] Funds"
-msgstr "Minden ár [_1]ban értendő"
+msgstr ""
 
 #: templates/demo/product_receipt.html:201
 #: templates/demo/purchase_order.html:203
@@ -751,9 +677,8 @@ msgstr "Minden ár [_1]ban értendő"
 #: templates/demo_with_images/purchase_order.html:203
 #: templates/xedemo/product_receipt.html:203
 #: templates/xedemo/purchase_order.html:203
-#, fuzzy
 msgid "All prices in [_1] funds"
-msgstr "Minden ár [_1]ban értendő"
+msgstr ""
 
 #: templates/demo/invoice.tex:186 templates/demo/product_receipt.tex:147
 #: templates/demo/purchase_order.tex:153 templates/demo/sales_order.tex:158
@@ -766,9 +691,8 @@ msgstr "Minden ár [_1]ban értendő"
 #: templates/xedemo/invoice.tex:184 templates/xedemo/product_receipt.tex:147
 #: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
-#, fuzzy
 msgid "All prices in [_1]."
-msgstr "A megadott árak [_1]ban értendők"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/COGS.pm:125 UI/timecards/timecard.html:129
 msgid "Allocated"
@@ -833,7 +757,7 @@ msgid "Amount Budgetted"
 msgstr "Költségvetés összege"
 
 #: bin/aa.pl:1649 LedgerSMB/Report/Invoices/Outstanding.pm:236
-#: LedgerSMB/Scripts/payment.pm:754 LedgerSMB/Scripts/payment.pm:760
+#: LedgerSMB/Scripts/payment.pm:751 LedgerSMB/Scripts/payment.pm:757
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -858,18 +782,16 @@ msgid "Amount Less Than"
 msgstr "Az összeg kisebb mint"
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:105
-#, fuzzy
 msgid "Amount To"
-msgstr "Összegtől"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:155
 msgid "Amount to be used"
 msgstr "Felhasználandó összeg"
 
 #: UI/Contact/divs/wage.html:8
-#, fuzzy
 msgid "Amount/Rate"
-msgstr "Összeg"
+msgstr ""
 
 #: sql/Pg-database.sql:3752
 msgid "Annual Straight Line Daily"
@@ -883,15 +805,15 @@ msgstr ""
 msgid "Any"
 msgstr "Bármelyik"
 
-#: LedgerSMB/Scripts/payment.pm:1143
+#: LedgerSMB/Scripts/payment.pm:1140
 msgid "Applied discount"
 msgstr "Alkalmazott árengedmény"
 
-#: LedgerSMB/Scripts/payment.pm:1694 LedgerSMB/Scripts/payment.pm:1772
+#: LedgerSMB/Scripts/payment.pm:1691 LedgerSMB/Scripts/payment.pm:1769
 msgid "Applied discount by an overpayment"
 msgstr "Árengedmény a túlfizetésből"
 
-#: LedgerSMB/Scripts/payment.pm:752
+#: LedgerSMB/Scripts/payment.pm:749
 msgid "Apply Disc"
 msgstr "Engedményadás"
 
@@ -944,9 +866,8 @@ msgid "Aquired Value"
 msgstr "Megszerzett érték"
 
 #: LedgerSMB/Scripts/asset.pm:705
-#, fuzzy
 msgid "Aquired Value Remaining"
-msgstr "Megszerzett érték"
+msgstr ""
 
 #: bin/oe.pl:1293
 msgid "Are you sure you want to delete Order Number"
@@ -956,7 +877,7 @@ msgstr "Biztosan törölni akarja a megrendelést"
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "Biztosan törölni akarja az ajánlatot"
 
-#: bin/ic.pl:2241
+#: bin/ic.pl:2240
 msgid "Assemblies restocked!"
 msgstr "Saját termékek készletre véve."
 
@@ -977,9 +898,8 @@ msgid "Asset Class"
 msgstr "Eszközosztály"
 
 #: LedgerSMB/Report/Listings/Asset_Class.pm:104
-#, fuzzy
 msgid "Asset Class List"
-msgstr "Eszközosztályok"
+msgstr ""
 
 #: UI/asset/edit_asset.html:60 UI/asset/search_asset.html:51
 msgid "Asset Class:"
@@ -998,9 +918,8 @@ msgid "Asset Disposal Report"
 msgstr "Eszköz selejtezés jelentés"
 
 #: LedgerSMB/Report/Listings/Asset.pm:133
-#, fuzzy
 msgid "Asset Listing"
-msgstr "Eszköz címke"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:461
 msgid "Asset Partial Disposal Report"
@@ -1010,7 +929,6 @@ msgstr "Eszköz részleges selejtezés jelentés"
 msgid "Asset Tag"
 msgstr "Eszköz címke"
 
-# 83%
 #: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
 #: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2881
@@ -1018,14 +936,12 @@ msgid "Assets"
 msgstr "Eszközök"
 
 #: UI/Reports/balance_sheet.html:101
-#, fuzzy
 msgid "Assets to Equity"
-msgstr "Eszköz számla"
+msgstr ""
 
 #: UI/Reports/balance_sheet.html:98
-#, fuzzy
 msgid "Assets to Liabilities"
-msgstr "Kötelezettségek"
+msgstr ""
 
 #: bin/aa.pl:1064 bin/ic.pl:927 bin/ir.pl:1033 bin/is.pl:1085 bin/oe.pl:928
 #: LedgerSMB/Report/File/Incoming.pm:107 UI/journal/journal_entry.html:361
@@ -1037,35 +953,28 @@ msgid "Attach File"
 msgstr "Fájl csatolása"
 
 #: UI/Contact/divs/address.html:110 UI/Contact/divs/contact_info.html:84
-#, fuzzy
 msgid "Attach To"
-msgstr "Mellékelt"
+msgstr ""
 
 #: UI/Contact/divs/address.html:116 UI/Contact/divs/contact_info.html:88
-#, fuzzy
 msgid "Attach to"
-msgstr "Hozzáad"
+msgstr ""
 
-# 78%
 #: UI/Contact/divs/files.html:57
-#, fuzzy
 msgid "Attach to Credit Account"
-msgstr "Hitel számla"
+msgstr ""
 
 #: UI/Contact/divs/files.html:53
-#, fuzzy
 msgid "Attach to Entity"
-msgstr "Melléklet típusa"
+msgstr ""
 
 #: UI/Contact/divs/files.html:13
-#, fuzzy
 msgid "Attached At"
-msgstr "Mellékelve"
+msgstr ""
 
 #: UI/Contact/divs/files.html:15
-#, fuzzy
 msgid "Attached By"
-msgstr "Mellékelte"
+msgstr ""
 
 #: bin/aa.pl:1036 bin/ic.pl:899 bin/ir.pl:1007 bin/is.pl:1059 bin/oe.pl:902
 #: UI/journal/journal_entry.html:337
@@ -1139,9 +1048,8 @@ msgstr "Melléklet"
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_order.html:49
 #: templates/xedemo/sales_quotation.html:44 templates/xedemo/work_order.html:49
-#, fuzzy
 msgid "Attn: [_1]"
-msgstr "Címzett: [_1]"
+msgstr ""
 
 #: UI/am-audit-control.html:6
 msgid "Audit Control"
@@ -1157,9 +1065,8 @@ msgid "August"
 msgstr "Augusztus"
 
 #: UI/Contact/divs/notes.html:79
-#, fuzzy
 msgid "Author: [_1]"
-msgstr "Szerző: [_1]"
+msgstr ""
 
 #: bin/ir.pl:648 bin/is.pl:408 bin/is.pl:703
 msgid "Automatic"
@@ -1175,9 +1082,8 @@ msgid "Available Databases"
 msgstr "Rendelkezésre álló adatbázisok"
 
 #: UI/setup/list_users.html:7
-#, fuzzy
 msgid "Available Users"
-msgstr "Rendelkezésre álló adatbázisok"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:121
 msgid "Available overpayments"
@@ -1188,14 +1094,12 @@ msgid "Average Cost"
 msgstr "Átlag költség"
 
 #: LedgerSMB/Report/Inventory/Search.pm:238
-#, fuzzy
 msgid "Avg. Cost"
-msgstr "Átlag költség"
+msgstr ""
 
 #: sql/Pg-database.sql:810
-#, fuzzy
 msgid "BCC"
-msgstr "Bank azonosító kód"
+msgstr ""
 
 #: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:20
 #: UI/Contact/divs/bank_act.html:52
@@ -1204,7 +1108,7 @@ msgstr "SWIFT kód"
 
 #: t/data/04-complex_template.html:592
 msgid "BIC/SWIFT Code:"
-msgstr "SWIFT kód:"
+msgstr ""
 
 #: bin/ic.pl:1275
 msgid "BOM"
@@ -1239,28 +1143,27 @@ msgstr "Esedékes egyenleg"
 msgid "Balance Sheet"
 msgstr "Mérleg"
 
-#: LedgerSMB/Report/co/Balance_y_Mayor.pm:120 UI/Reports/co/filter_bm.html:14
+#: LedgerSMB/Report/Balance_Sheet.pm:285
+#, fuzzy
+msgid "Balance sheet"
+msgstr "Mérleg"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:120
 msgid "Balance y Mayor"
 msgstr "Egyenleg"
 
 #: UI/Reports/filters/trial_balance.html:73
-#, fuzzy
 msgid "Balances as"
-msgstr "Egyenleg"
+msgstr ""
 
-# 84%
-# 92%
 #: UI/Contact/divs/bank_act.html:62
 msgid "Bank Account"
 msgstr "Bankszámla"
 
-# 84%
-# 92%
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
-msgstr "Bankszámla:"
+msgstr ""
 
-# 84%
 #: LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
@@ -1272,9 +1175,8 @@ msgid "Bank Register Mode"
 msgstr "Bank regisztráció módja"
 
 #: bin/ic.pl:986
-#, fuzzy
 msgid "Bar Code"
-msgstr "Művelet kód"
+msgstr ""
 
 #: bin/ir.pl:688 bin/is.pl:747 LedgerSMB/Report/Assets/Net_Book_Value.pm:92
 msgid "Basis"
@@ -1309,9 +1211,8 @@ msgid "Batch ID Missing"
 msgstr "Köteg azonosító hiányzik"
 
 #: UI/import_csv/import_csv.html:18
-#, fuzzy
 msgid "Batch Information"
-msgstr "Kapcsolat információk"
+msgstr ""
 
 #: bin/aa.pl:574
 msgid "Batch Name"
@@ -1342,9 +1243,8 @@ msgid "Bcc"
 msgstr "Titkos másolat"
 
 #: bin/arap.pl:795 bin/io.pl:1897
-#, fuzzy
 msgid "Bcc: [_1]"
-msgstr "Bcc: [_1]"
+msgstr ""
 
 #: UI/reconciliation/report.html:26
 msgid "Beginning Statement Balance:"
@@ -1356,25 +1256,22 @@ msgid "Billing"
 msgstr "Számlázási"
 
 #: sql/Pg-database.sql:813
-#, fuzzy
 msgid "Billing BCC"
-msgstr "Számlázási"
+msgstr ""
 
 #: sql/Pg-database.sql:812
-#, fuzzy
 msgid "Billing CC"
-msgstr "Számlázási"
+msgstr ""
 
 #: sql/Pg-database.sql:811
-#, fuzzy
 msgid "Billing Email"
-msgstr "Számlázási"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:119
 msgid "Billion"
 msgstr "milliárd"
 
-#: bin/ic.pl:491 bin/ic.pl:2114 bin/io.pl:243 bin/oe.pl:1849
+#: bin/ic.pl:491 bin/ic.pl:2113 bin/io.pl:243 bin/oe.pl:1849
 #: LedgerSMB/Report/Inventory/History.pm:134
 #: LedgerSMB/Report/Inventory/Search.pm:214 templates/demo/bin_list.html:154
 #: templates/demo/bin_list.tex:109 templates/demo/pick_list.html:116
@@ -1391,7 +1288,6 @@ msgstr "milliárd"
 msgid "Bin"
 msgstr "VTSZ/TEÁOR"
 
-# A bin-t a ledger után VTSZ/TEÁOR követésére használjuk, nem a raktárhely követésére.
 #: bin/am.pl:1523 bin/io.pl:1422 bin/io.pl:1436 bin/io.pl:1644 bin/oe.pl:260
 #: bin/oe.pl:272 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
 #: templates/demo/bin_list.tex:74 templates/demo_with_images/bin_list.html:4
@@ -1403,23 +1299,20 @@ msgid "Bin List"
 msgstr "VTSZ lista"
 
 #: UI/Contact/divs/person.html:167
-#, fuzzy
 msgid "Birthdate"
-msgstr "Kezdő dátum"
+msgstr ""
 
 #: UI/accounts/yearend.html:66
 msgid "Books closed on"
 msgstr "Könyvelés lezárva"
 
-# Elvileg mikor egy saját terméket összetevőire bontunk.
 #: bin/ic.pl:1130
 msgid "Break"
 msgstr "Szünet"
 
 #: sql/Pg-database.sql:2139
-#, fuzzy
 msgid "Budget"
-msgstr "Költségvetés"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Variance.pm:114
 msgid "Budget Number"
@@ -1458,26 +1351,22 @@ msgstr "Adószám"
 msgid "Business Type"
 msgstr "Partnercsoport"
 
-# 92%
 #: t/data/04-complex_template.html:294
 msgid "Business Type:"
-msgstr "Üzlettípus:"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Business_Unit.pm:86
-#, fuzzy
 msgid "Business Unit List"
-msgstr "Üzletosztály"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:113
-#, fuzzy
 msgid "Business Unit Number"
-msgstr "Adószám"
+msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:170
 #: UI/Reports/filters/invoice_search.html:260
-#, fuzzy
 msgid "Business Units"
-msgstr "Partnercsoport"
+msgstr ""
 
 #: bin/am.pl:303
 msgid "Business deleted!"
@@ -1487,15 +1376,13 @@ msgstr "Partnercsoport törölve!"
 msgid "Business saved!"
 msgstr "Partnercsoport elmentve!"
 
-# 88%
-#: UI/payments/payments_detail.html:168
+#: UI/payments/payments_detail.html:169
 msgid "Business:"
 msgstr "Üzlettípus:"
 
 #: sql/Pg-database.sql:809
-#, fuzzy
 msgid "CC"
-msgstr "C"
+msgstr ""
 
 #: bin/ic.pl:528 bin/ic.pl:697 LedgerSMB/Report/Invoices/COGS.pm:130
 #: UI/accounts/edit.html:381
@@ -1503,9 +1390,8 @@ msgid "COGS"
 msgstr "ELÁBÉ"
 
 #: UI/Reports/filters/cogs_lines.html:5
-#, fuzzy
 msgid "COGS Lots Report"
-msgstr "CSV jelentés"
+msgstr ""
 
 #: UI/Contact/pricelist.html:111 UI/Reports/aging_report.html:117
 #: UI/Reports/balance_sheet.html:117 UI/Reports/display_report.html:70
@@ -1517,7 +1403,7 @@ msgstr "CSV"
 msgid "CSV File:"
 msgstr "CSV fájl:"
 
-#: LedgerSMB/Report/co/Caja_Diaria.pm:114 UI/Reports/co/filter_cd.html:14
+#: LedgerSMB/Report/co/Caja_Diaria.pm:114
 msgid "Caja Diaria"
 msgstr "Napi készpénz"
 
@@ -1530,18 +1416,16 @@ msgid "Can't void a voided invoice!"
 msgstr "Érvénytelenített számlát nem lehet még egyszer érvényteleníteni!"
 
 #: bin/io.pl:2289
-#, fuzzy
 msgid "Cancel"
-msgstr "Megszakítja a műveletet?"
+msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:189
 msgid "Cancel?"
 msgstr "Megszakítja a műveletet?"
 
 #: bin/gl.pl:670
-#, fuzzy
 msgid "Cannot Repost Transaction"
-msgstr "A tranzakciót nem lehet rögzíteni!"
+msgstr ""
 
 #: bin/ic.pl:162
 msgid "Cannot create Labor; COGS account does not exist!"
@@ -1571,7 +1455,7 @@ msgstr "Nem lehet szolgáltatást létrehozni; nem létezik költség számla!"
 msgid "Cannot create Service; Income account does not exist!"
 msgstr "Nem lehet szolgáltatást létrehozni; nem létezik bevétel számla!"
 
-#: bin/ic.pl:2007
+#: bin/ic.pl:2006
 msgid "Cannot delete item!"
 msgstr "A tételt nem lehet törölni!"
 
@@ -1580,9 +1464,8 @@ msgid "Cannot delete order!"
 msgstr "A rendelést nem lehet törölni!"
 
 #: bin/gl.pl:699
-#, fuzzy
 msgid "Cannot delete posted transaction"
-msgstr "A tranzakciót nem lehet törölni!"
+msgstr ""
 
 #: bin/oe.pl:1335
 msgid "Cannot delete quotation!"
@@ -1622,15 +1505,13 @@ msgid "Cannot save taxes!"
 msgstr "Nem lehet elmenteni az adókat!"
 
 #: LedgerSMB/Budget.pm:240
-#, fuzzy
 msgid "Cannot specify both debits and credits for budget line [_1]"
-msgstr "Nem specifikálható a tartozik és követel is a költségvetés [_1] sorához"
+msgstr ""
 
-#: bin/ic.pl:2244
+#: bin/ic.pl:2243
 msgid "Cannot stock assemblies!"
 msgstr "A saját terméket nem lehet készletre venni!"
 
-# 75%
 #: templates/demo/timecard.html:44 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:44
 #: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
@@ -1638,12 +1519,10 @@ msgstr "A saját terméket nem lehet készletre venni!"
 msgid "Card ID"
 msgstr "Kártya ID"
 
-# Készpénz is lehet, majd meg kell nézni a kontextust.
 #: UI/Reports/filters/income_statement.html:31 sql/Pg-database.sql:2846
 msgid "Cash"
 msgstr "Pénzmozgások"
 
-# 75%
 #: UI/payments/payment2.html:282 UI/Reports/filters/payments.html:65
 msgid "Cash Account"
 msgstr "Pénz számla"
@@ -1657,14 +1536,12 @@ msgid "Cc"
 msgstr "Másolat"
 
 #: bin/arap.pl:794 bin/io.pl:1896
-#, fuzzy
 msgid "Cc: [_1]"
-msgstr "Cc: [_1]"
+msgstr ""
 
 #: sql/Pg-database.sql:797
-#, fuzzy
 msgid "Cell Phone"
-msgstr "Otthoni telefon"
+msgstr ""
 
 #: UI/users/preferences.html:32
 msgid "Change Password"
@@ -1678,7 +1555,7 @@ msgstr "Számlázandó"
 msgid "Chart ID"
 msgstr "Táblázat ID"
 
-#: LedgerSMB/Report/COA.pm:141 sql/Pg-database.sql:2786
+#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2786
 msgid "Chart of Accounts"
 msgstr "Számlatükör"
 
@@ -1686,7 +1563,7 @@ msgstr "Számlatükör"
 msgid "Check"
 msgstr "Csekk"
 
-#: bin/ic.pl:2045
+#: bin/ic.pl:2044
 msgid "Check Inventory"
 msgstr "Készlet ellenőrzés"
 
@@ -1699,9 +1576,8 @@ msgid "Checking Job"
 msgstr "Feladat ellenőrzése"
 
 #: UI/payments/check_job.html:15
-#, fuzzy
 msgid "Checking Job [_1]"
-msgstr "Feladat ellenőrzése [_1]"
+msgstr ""
 
 #: UI/payments/payment1_5.html:23
 msgid "Choose a company"
@@ -1718,10 +1594,9 @@ msgstr ""
 msgid "City"
 msgstr "Város"
 
-# 80%
 #: t/data/04-complex_template.html:445
 msgid "City:"
-msgstr "Város:"
+msgstr ""
 
 #: UI/Contact/divs/company.html:75 UI/Contact/divs/credit.html:72
 #: UI/Contact/divs/person.html:67
@@ -1743,7 +1618,6 @@ msgstr "Kitörölve"
 msgid "Cleared Transactions"
 msgstr "Törölt tranzakciók"
 
-# Munkavégzéshez.
 #: UI/timecards/timecard.html:98
 msgid "Clocked"
 msgstr "Blokkolva"
@@ -1769,23 +1643,20 @@ msgid "Code missing!"
 msgstr "A kód hiányzik!"
 
 #: sql/Pg-database.sql:549
-#, fuzzy
 msgid "Cold Lead"
-msgstr "Átfutás"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:111 sql/Pg-database.sql:2859
 msgid "Combine"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:71
-#, fuzzy
 msgid "Combine Purchase Orders"
-msgstr "Szállító rendelések összevonása"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:63
-#, fuzzy
 msgid "Combine Sales Orders"
-msgstr "Vevő rendelések összevonása"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:74
 #: LedgerSMB/Report/Taxform/Summary.pm:71 LedgerSMB/Scripts/contact.pm:175
@@ -1799,20 +1670,17 @@ msgstr "Társaság"
 msgid "Company Address"
 msgstr "Társaság címe"
 
-# 75%
 #: LedgerSMB/Scripts/configuration.pm:31
 msgid "Company Fax"
 msgstr "Társaság faxszáma"
 
 #: LedgerSMB/Scripts/configuration.pm:24
-#, fuzzy
 msgid "Company Information"
-msgstr "Kapcsolat információk"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:44
-#, fuzzy
 msgid "Company License Number"
-msgstr "Alkalmazott azonosítója"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:147
 #: LedgerSMB/Scripts/configuration.pm:26
@@ -1824,16 +1692,13 @@ msgstr "Társaság neve"
 msgid "Company Phone"
 msgstr "Társaság telefonszáma"
 
-# 75%
 #: LedgerSMB/Scripts/configuration.pm:42
-#, fuzzy
 msgid "Company Sales Tax ID"
-msgstr "Társaság faxszáma"
+msgstr ""
 
 #: UI/am-company-logo.html:7
-#, fuzzy
 msgid "Company: [_1]"
-msgstr "Cég: [_1]"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1891,10 +1756,9 @@ msgstr "Kapcsolat"
 msgid "Contact Info"
 msgstr "Kapcsolati infók"
 
-# 92%
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
 msgid "Contact Info:"
-msgstr "Kapcsolati infók:"
+msgstr ""
 
 #: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:6
 msgid "Contact Information"
@@ -1905,30 +1769,28 @@ msgstr "Kapcsolat információk"
 msgid "Contact Search"
 msgstr "Kapcsolat keresése"
 
-#: UI/payments/payments_detail.html:418
+#: UI/payments/payments_detail.html:422
 msgid "Contact Total (if paying \"some\")"
 msgstr "Kapcsolat végösszeg (ha \"fizet valamennyit\")"
 
 #: sql/Pg-database.sql:2847
-#, fuzzy
 msgid "Contacts"
-msgstr "Kapcsolat"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:165 UI/budgetting/budget_entry.html:188
-#, fuzzy
 msgid "Content"
-msgstr "Kapcsolat"
+msgstr ""
 
 #: bin/aa.pl:1752 bin/arap.pl:269 bin/arapprn.pl:423 bin/ic.pl:959
-#: bin/ic.pl:1781 bin/ic.pl:2064 bin/ic.pl:2218 bin/io.pl:682 bin/io.pl:882
+#: bin/ic.pl:1781 bin/ic.pl:2063 bin/ic.pl:2217 bin/io.pl:682 bin/io.pl:882
 #: bin/io.pl:1323 bin/oe.pl:1537 bin/oe.pl:2065 bin/oe.pl:2576 bin/pe.pl:339
-#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:594
-#: LedgerSMB/Scripts/payment.pm:659 LedgerSMB/Scripts/payment.pm:1307
+#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:591
+#: LedgerSMB/Scripts/payment.pm:656 LedgerSMB/Scripts/payment.pm:1304
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
 #: UI/asset/begin_depreciation_all.html:26 UI/asset/begin_report.html:61
 #: UI/Contact/divs/credit.html:401 UI/create_batch.html:52
 #: UI/inventory/adjustment_setup.html:37 UI/oe-save_warn.html:19
-#: UI/payments/payments_filter.html:184 UI/Reports/co/filter_bm.html:140
+#: UI/payments/payments_filter.html:186 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
 #: UI/Reports/filters/gl.html:302 UI/Reports/filters/income_statement.html:142
 #: UI/Reports/filters/inventory_activity.html:32
@@ -1951,7 +1813,7 @@ msgid "Contra"
 msgstr "Ellen"
 
 #: bin/arap.pl:171 LedgerSMB/Report/Contact/Search.pm:65
-#: LedgerSMB/Report/Listings/Business_Unit.pm:56 LedgerSMB/Report/PNL/ECA.pm:93
+#: LedgerSMB/Report/Listings/Business_Unit.pm:56 LedgerSMB/Report/PNL/ECA.pm:94
 #: LedgerSMB/Report/Taxform/Summary.pm:83
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:104
 #: UI/business_units/edit.html:28 UI/business_units/filter.html:19
@@ -2002,9 +1864,8 @@ msgid "Could Not Load Template from DB"
 msgstr ""
 
 #: bin/gl.pl:95
-#, fuzzy
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
-msgstr "Nem nyitható meg a pos.conf.pl fájl innen [_1], [_2] sor: [_3]"
+msgstr ""
 
 #: bin/ir.pl:1344 bin/is.pl:1319 bin/oe.pl:1257
 msgid "Could not save the data.  Please try again"
@@ -2024,15 +1885,12 @@ msgid "Counted"
 msgstr "Számlált"
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:132
-#, fuzzy
 msgid "Counterparty"
-msgstr "Ország"
+msgstr ""
 
-# 75%
 #: LedgerSMB/Report/Listings/Overpayments.pm:101
-#, fuzzy
 msgid "Counterparty Code"
-msgstr "Ország kód"
+msgstr ""
 
 #: bin/io.pl:2119 LedgerSMB/Report/Payroll/Deduction_Types.pm:31
 #: LedgerSMB/Report/Payroll/Income_Types.pm:31
@@ -2045,18 +1903,14 @@ msgstr "Ország kód"
 msgid "Country"
 msgstr "Ország"
 
-# 75%
 #: UI/setup/select_coa.html:30
 msgid "Country Code"
 msgstr "Ország kód"
 
-# 75%
 #: LedgerSMB/Report/Taxform/List.pm:52
-#, fuzzy
 msgid "Country Name"
-msgstr "Ország kód"
+msgstr ""
 
-# 87%
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
 msgstr "Ország:"
@@ -2065,7 +1919,6 @@ msgstr "Ország:"
 msgid "Create Batch"
 msgstr "Köteg készítése"
 
-# 81%
 #: LedgerSMB/Scripts/setup.pm:165
 msgid "Create Database?"
 msgstr "Új cégadatbázis létrehozása?"
@@ -2079,9 +1932,8 @@ msgid "Create New Report"
 msgstr "Új jelentés készítése"
 
 #: UI/taxform/add_taxform.html:13
-#, fuzzy
 msgid "Create New Tax Form"
-msgstr "Új adóűrlap készítése"
+msgstr ""
 
 #: UI/setup/new_user.html:138
 msgid "Create User"
@@ -2103,7 +1955,6 @@ msgstr "Létrehozva"
 msgid "Credit"
 msgstr "Követel"
 
-# 78%
 #: LedgerSMB/Scripts/contact.pm:303
 msgid "Credit Account"
 msgstr "Hitel számla"
@@ -2126,18 +1977,16 @@ msgstr "Új számlakorrekció"
 msgid "Credit Limit"
 msgstr "Hitelkeret"
 
-# 92%
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
-msgstr "Hitelkeret:"
+msgstr ""
 
 #: sql/Pg-database.sql:2899
 msgid "Credit Note"
 msgstr "Új kéziszámla korrekció"
 
-# 85%
-#: LedgerSMB/Report/COA.pm:110 LedgerSMB/Report/GL.pm:116
-#: LedgerSMB/Report/Trial_Balance.pm:182 LedgerSMB/Scripts/payment.pm:155
+#: LedgerSMB/Report/COA.pm:111 LedgerSMB/Report/GL.pm:116
+#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:157
 #: UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr "Követel"
@@ -2194,9 +2043,8 @@ msgstr "Aktuális"
 #: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
 #: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:84
-#, fuzzy
 msgid "Current earnings"
-msgstr "Nyereség"
+msgstr ""
 
 #: bin/aa.pl:513 bin/aa.pl:1588 bin/ic.pl:1127 bin/is.pl:429 bin/pe.pl:1039
 #: bin/pe.pl:1194 LedgerSMB/Report/Aging.pm:83
@@ -2213,15 +2061,13 @@ msgid "Customer"
 msgstr "Vevő"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:249
-#, fuzzy
 msgid "Customer Account"
-msgstr "Vevő/Szállító számlák"
+msgstr ""
 
 #: sql/Pg-database.sql:2784
 msgid "Customer History"
 msgstr "Vevő történet"
 
-# 80%
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:31
 #: UI/Reports/filters/orders.html:9
 msgid "Customer Name"
@@ -2261,12 +2107,11 @@ msgstr "Écs."
 msgid "DOB"
 msgstr "Szül.nap"
 
-# 75%
 #: t/data/04-complex_template.html:106
 msgid "DOB:"
-msgstr "Szül.nap:"
+msgstr ""
 
-#: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:333
+#: bin/aa.pl:1294 LedgerSMB/Scripts/payment.pm:331
 msgid "Data not saved.  Please try again."
 msgstr "Az adat nem került mentésre. Kérem próbálja újra."
 
@@ -2274,7 +2119,7 @@ msgstr "Az adat nem került mentésre. Kérem próbálja újra."
 msgid "Data not saved.  Please update again."
 msgstr "Az adatok nem kerültek mentésre.  Kérem frissítsen még egyszer."
 
-#: UI/setup/credentials.html:43 UI/setup/list_databases.html:11
+#: UI/setup/credentials.html:46 UI/setup/list_databases.html:11
 msgid "Database"
 msgstr "Adatbázis"
 
@@ -2318,7 +2163,7 @@ msgstr "Cégadatbázis"
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:532
-#: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:748
+#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Scripts/payment.pm:745
 #: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
 #: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
 #: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
@@ -2374,7 +2219,7 @@ msgstr "Cégadatbázis"
 #: templates/xedemo/timecard.tex:28 UI/asset/begin_depreciation_all.html:13
 #: UI/asset/begin_report.html:23 UI/inventory/adjustment_setup.html:19
 #: UI/journal/journal_entry.html:40 UI/orders/order.html:246
-#: UI/payments/payment2.html:100 UI/payments/payments_detail.html:317
+#: UI/payments/payment2.html:100 UI/payments/payments_detail.html:320
 #: UI/payments/use_overpayment2.html:87 UI/Reports/filters/gl.html:183
 #: UI/Reports/filters/orders.html:125 UI/rp-search-generate_tax_report.html:127
 msgid "Date"
@@ -2406,26 +2251,21 @@ msgstr "Fizetés napja"
 msgid "Date Received"
 msgstr "Beérkezés dátuma"
 
-# 76%
 #: UI/Reports/filters/payments.html:81 UI/Reports/filters/payments.html:97
 msgid "Date Reversed"
 msgstr "Visszahívás dátuma"
 
-# 75%
 #: bin/ic.pl:954 LedgerSMB/Report/Listings/Overpayments.pm:103
-#, fuzzy
 msgid "Date To"
-msgstr "Meddig:"
+msgstr ""
 
-# 75%
 #: UI/payments/payments_filter.html:114
 msgid "Date To:"
 msgstr "Meddig:"
 
 #: UI/timecards/timecard.html:53
-#, fuzzy
 msgid "Date Worked"
-msgstr "Munkavégzés dátuma"
+msgstr ""
 
 #: UI/payments/payment1.html:62
 msgid "Date from"
@@ -2445,9 +2285,8 @@ msgid "Date to"
 msgstr "Dátumig"
 
 #: bin/arap.pl:801 bin/io.pl:1915
-#, fuzzy
 msgid "Date: [_1]"
-msgstr "Dátum: [_1]"
+msgstr ""
 
 #: bin/am.pl:816 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2476,9 +2315,8 @@ msgstr "Új számlakorrekció"
 msgid "Debit Note"
 msgstr "Új kéziszámla korrekció"
 
-# 83%
-#: LedgerSMB/Report/COA.pm:104 LedgerSMB/Report/GL.pm:110
-#: LedgerSMB/Report/Trial_Balance.pm:176 LedgerSMB/Scripts/payment.pm:154
+#: LedgerSMB/Report/COA.pm:105 LedgerSMB/Report/GL.pm:110
+#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:156
 #: UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr "Tartozik"
@@ -2492,26 +2330,22 @@ msgstr "Dec."
 msgid "December"
 msgstr "December"
 
-# 85%
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
 msgid "Decimal Places"
 msgstr "Tizedesjegyek"
 
-# 85%
 #: LedgerSMB/Scripts/configuration.pm:130
-#, fuzzy
 msgid "Decimal Places for Money"
-msgstr "Tizedesjegyek"
+msgstr ""
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:35 UI/payroll/deduction.html:33
 msgid "Deduction Class"
 msgstr "Levonás osztály"
 
 #: UI/payroll/deduction.html:8
-#, fuzzy
 msgid "Deduction Type"
-msgstr "Levonás típusa"
+msgstr ""
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:56
 msgid "Deduction Types"
@@ -2526,9 +2360,8 @@ msgid "Default AR"
 msgstr "Alapértelmezett vevő"
 
 #: LedgerSMB/Scripts/configuration.pm:80
-#, fuzzy
 msgid "Default Accounts"
-msgstr "Számla törlése"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:49 UI/setup/upgrade_info.html:32
 msgid "Default Country"
@@ -2551,23 +2384,20 @@ msgid "Default Email To"
 msgstr "Alapértelmezett email címzett"
 
 #: LedgerSMB/Scripts/configuration.pm:56
-#, fuzzy
 msgid "Default Format"
-msgstr "Dátumformátum"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:52
-#, fuzzy
 msgid "Default Language"
-msgstr "Nyelv törlése"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:56
 msgid "Default Reportable"
 msgstr "Alapértelmezett jelenthető"
 
 #: UI/payroll/income.html:85
-#, fuzzy
 msgid "Default amount"
-msgstr "Alapértelmezett ország"
+msgstr ""
 
 #: sql/Pg-database.sql:2833
 msgid "Defaults"
@@ -2576,7 +2406,7 @@ msgstr "Alapbeállítások"
 #: bin/aa.pl:914 bin/aa.pl:943 bin/am.pl:69 bin/am.pl:81 bin/am.pl:175
 #: bin/am.pl:184 bin/ic.pl:833 bin/ic.pl:855 bin/ir.pl:968 bin/is.pl:1019
 #: bin/oe.pl:673 bin/oe.pl:862 bin/pe.pl:173 bin/pe.pl:250 bin/pe.pl:622
-#: LedgerSMB/Report/COA.pm:127 LedgerSMB/Report/COA.pm:191
+#: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:248
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:161
@@ -2603,12 +2433,9 @@ msgstr "Ütemezés törlése"
 msgid "Delete Vouchers"
 msgstr "Utalványok törlése"
 
-# 95%
-# 97%
 #: bin/am.pl:532
-#, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "A nyelv törlése törli a [_1] nyelvhez tartozó sablonokat is"
+msgstr ""
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
@@ -2636,19 +2463,16 @@ msgid "Dep. Starts"
 msgstr "Écs. indul"
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:100
-#, fuzzy
 msgid "Dep. Through"
-msgstr "Értékcsökkentés ezen keresztül"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:642
-#, fuzzy
 msgid "Dep. YTD"
-msgstr "Értékcsökkentés ezen keresztül"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:641
-#, fuzzy
 msgid "Dep. this run"
-msgstr "Értékcsökkentés ezen keresztül"
+msgstr ""
 
 #: bin/aa.pl:453 bin/ir.pl:378 bin/is.pl:332 bin/oe.pl:506
 #: UI/asset/edit_asset.html:152 UI/asset/search_asset.html:136
@@ -2700,13 +2524,13 @@ msgid "Depreciation Successful"
 msgstr "Értékcsökkentés sikeres"
 
 #: bin/aa.pl:612 bin/aa.pl:663 bin/aa.pl:1514 bin/am.pl:853 bin/ic.pl:744
-#: bin/ic.pl:1268 bin/ic.pl:2038 bin/ic.pl:2110 bin/io.pl:231 bin/io.pl:566
+#: bin/ic.pl:1268 bin/ic.pl:2037 bin/ic.pl:2109 bin/io.pl:231 bin/io.pl:566
 #: bin/io.pl:2178 bin/ir.pl:495 bin/is.pl:489 bin/oe.pl:1842 bin/oe.pl:2046
 #: bin/oe.pl:2124 bin/oe.pl:2158 bin/oe.pl:2407 bin/pe.pl:320 bin/pe.pl:366
 #: bin/pe.pl:395 bin/pe.pl:1062 LedgerSMB/Report/Aging.pm:109
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:76
 #: LedgerSMB/Report/Budget/Search.pm:85 LedgerSMB/Report/Budget/Variance.pm:69
-#: LedgerSMB/Report/Budget/Variance.pm:116 LedgerSMB/Report/COA.pm:93
+#: LedgerSMB/Report/Budget/Variance.pm:116 LedgerSMB/Report/COA.pm:94
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:72
 #: LedgerSMB/Report/co/Caja_Diaria.pm:73 LedgerSMB/Report/Contact/History.pm:83
 #: LedgerSMB/Report/Contact/Search.pm:74 LedgerSMB/Report/File/Incoming.pm:50
@@ -2721,8 +2545,8 @@ msgstr "Értékcsökkentés sikeres"
 #: LedgerSMB/Report/Listings/Business_Unit.pm:60
 #: LedgerSMB/Report/Listings/GIFI.pm:49
 #: LedgerSMB/Report/Listings/Language.pm:50 LedgerSMB/Report/Listings/SIC.pm:48
-#: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:80
-#: LedgerSMB/Report/Timecards.pm:104 LedgerSMB/Report/Timecards.pm:117
+#: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:83
+#: LedgerSMB/Report/Timecards.pm:105 LedgerSMB/Report/Timecards.pm:118
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:114
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:110
 #: LedgerSMB/Report/Unapproved/Drafts.pm:100 LedgerSMB/Scripts/asset.pm:397
@@ -2805,7 +2629,6 @@ msgstr "Megnevezések fordítása"
 msgid "Description missing!"
 msgstr "Leírás hiányzik!"
 
-# 91%
 #: UI/asset/edit_asset.html:67 UI/asset/search_asset.html:56
 #: UI/business_units/edit.html:73 UI/business_units/filter.html:26
 #: UI/taxform/add_taxform.html:47
@@ -2818,7 +2641,7 @@ msgstr "Szöveges leírás:"
 msgid "Detail"
 msgstr "Részletek"
 
-#: UI/payments/payments_detail.html:217
+#: UI/payments/payments_detail.html:218
 #: UI/Reports/filters/invoice_outstanding.html:122
 msgid "Details"
 msgstr "Részletek"
@@ -2849,34 +2672,29 @@ msgstr "Árk"
 msgid "Disc %"
 msgstr "Kedv.%"
 
-#: LedgerSMB/Scripts/payment.pm:751 UI/accounts/edit.html:320
+#: LedgerSMB/Scripts/payment.pm:748 UI/accounts/edit.html:320
 #: UI/accounts/edit.html:360 UI/am-business-form.html:16
 #: UI/Contact/divs/credit.html:167 UI/Contact/divs/credit.html:168
-#: UI/payments/payments_detail.html:324
+#: UI/payments/payments_detail.html:327
 #: UI/Reports/filters/purchase_history.html:306
 msgid "Discount"
 msgstr "Engedmény"
 
-# 80%
 #: LedgerSMB/Report/Listings/Business_Type.pm:54
-#, fuzzy
 msgid "Discount (%)"
-msgstr "Árengedmény"
+msgstr ""
 
-# 88%
 #: t/data/04-complex_template.html:242
 msgid "Discount:"
-msgstr "Kedvezmény:"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:702
-#, fuzzy
 msgid "Disp. Aquired Value"
-msgstr "Megszerzett érték"
+msgstr ""
 
 #: UI/templates/preview.html:54
-#, fuzzy
 msgid "Display"
-msgstr "Selejtezés"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:577 sql/Pg-database.sql:2889
 #: sql/Pg-database.sql:2892
@@ -2892,29 +2710,26 @@ msgid "Disposal Method"
 msgstr "Selejtezés módja"
 
 #: LedgerSMB/Scripts/asset.pm:761
-#, fuzzy
 msgid "Disposal Report [_1] on date [_2]"
-msgstr "Selejtezés jelentés [_1] időpontra [_2]"
+msgstr ""
 
 #: LedgerSMB.pm:606
 msgid "Division by 0 error"
 msgstr "Nullával osztás probléma"
 
 #: bin/io.pl:2403
-#, fuzzy
 msgid "Do not keep field empty [_1]"
-msgstr "Ne hagyja a mezőt üresen [_1]"
+msgstr ""
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:78
 msgid "Document"
 msgstr "Dokumentum"
 
 #: UI/Reports/co/filter_cd.html:76
-#, fuzzy
 msgid "Document Type"
-msgstr "Dokumentum"
+msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:406
+#: LedgerSMB/Scripts/setup.pm:410
 msgid "Don't know what to do with backup"
 msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 
@@ -2922,15 +2737,13 @@ msgstr "Nem tudom, mit kellene tennem a biztonsági mentéssel"
 msgid "Done"
 msgstr "Elvégezve"
 
-#: LedgerSMB/Upgrade_Tests.pm:457
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:463
 msgid "Double customernumbers"
-msgstr "Egyedi vevő azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:492
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:498
 msgid "Double vendornumbers"
-msgstr "Egyedi szállító azonosító"
+msgstr ""
 
 #: LedgerSMB/Entity/Person.pm:104 sql/Pg-database.sql:723
 msgid "Dr."
@@ -2958,7 +2771,7 @@ msgstr "Vázlatok"
 msgid "Drawing"
 msgstr "Rajz"
 
-#: LedgerSMB/Report/COA.pm:116
+#: LedgerSMB/Report/COA.pm:117
 msgid "Dropdowns"
 msgstr "Legördülők"
 
@@ -3002,10 +2815,9 @@ msgstr "Esedékesség hiányzik!"
 msgid "Duplicate User Found: Importing User"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:226
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:227
 msgid "Duplicate employee numbers"
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
 #: bin/am.pl:866 bin/arap.pl:411 bin/is.pl:579 bin/is.pl:1018 bin/oe.pl:640
 #: bin/oe.pl:861 bin/oe.pl:1946 UI/io-email.html:16
@@ -3013,16 +2825,13 @@ msgstr "Duplikált alkalmazott azonosító"
 msgid "E-mail"
 msgstr "E-mail"
 
-# 79%
 #: UI/rp-email.html:8
-#, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Kimutatás küldése e-mail-ben [_1]"
+msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "Email [_1]"
+msgstr ""
 
 #: bin/am.pl:1485 bin/io.pl:1698
 msgid "E-mail address missing!"
@@ -3036,7 +2845,6 @@ msgstr "E-mail üzenet"
 msgid "E-mailed"
 msgstr "E-mail elküldve"
 
-# 80%
 #: LedgerSMB/Report/PNL/ECA.pm:81
 msgid "ECA Income Statement"
 msgstr "ECA eredménykimutatás"
@@ -3049,7 +2857,7 @@ msgstr ""
 msgid "EDI Interchange ID"
 msgstr ""
 
-#: bin/aa.pl:150 LedgerSMB/Report/COA.pm:121 LedgerSMB/Report/COA.pm:190
+#: bin/aa.pl:150 LedgerSMB/Report/COA.pm:122 LedgerSMB/Report/COA.pm:192
 #: t/data/04-complex_template.html:506 UI/Contact/divs/address.html:51
 #: UI/Contact/divs/contact_info.html:10 UI/templates/preview.html:60
 msgid "Edit"
@@ -3079,30 +2887,25 @@ msgstr "Eszközosztály szerkesztése"
 msgid "Edit Business"
 msgstr "Üzletág szerkesztése"
 
-# Meg kell majd nézni, mi a kontextus.
 #: bin/is.pl:129
-#, fuzzy
 msgid "Edit Credit Invoice"
-msgstr "Új számlakorrekció"
+msgstr ""
 
 #: bin/aa.pl:414
-#, fuzzy
 msgid "Edit Credit Note"
-msgstr "Új kredit note"
+msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:32
 msgid "Edit Customer"
 msgstr "Vevő szerkesztése"
 
 #: bin/is.pl:126
-#, fuzzy
 msgid "Edit Customer Return"
-msgstr "Vevő szerkesztése"
+msgstr ""
 
 #: bin/aa.pl:412
-#, fuzzy
 msgid "Edit Debit Note"
-msgstr "Új debit note"
+msgstr ""
 
 #: bin/pe.pl:524
 msgid "Edit Description Translations"
@@ -3145,9 +2948,8 @@ msgid "Edit Quotation"
 msgstr "Ajánlat módosítás"
 
 #: UI/business_units/edit.html:11
-#, fuzzy
 msgid "Edit Reporting Unit"
-msgstr "Jelentés alapja"
+msgstr ""
 
 #: bin/oe.pl:103
 msgid "Edit Request for Quotation"
@@ -3170,9 +2972,8 @@ msgid "Edit Service"
 msgstr "Szolgáltatás módosítása"
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Tax Form"
-msgstr "Adóűrlap módosítása"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:214
 msgid "Edit User"
@@ -3187,9 +2988,8 @@ msgid "Edit Vendor Invoice"
 msgstr "Beszerzési számla módosítása"
 
 #: bin/ir.pl:140
-#, fuzzy
 msgid "Edit Vendor Return"
-msgstr "Szállító módosítása"
+msgstr ""
 
 #: bin/am.pl:781
 msgid "Edit Warehouse"
@@ -3216,9 +3016,8 @@ msgid "Eleven"
 msgstr "tizenegy"
 
 #: LedgerSMB/Num2text.pm:86
-#, fuzzy
 msgid "Eleven-o"
-msgstr "tizenegy"
+msgstr ""
 
 #: UI/Reports/aging_report.html:70 sql/Pg-database.sql:808
 msgid "Email"
@@ -3252,7 +3051,7 @@ msgstr "Alkalmazott azonosítója"
 msgid "Employee Search"
 msgstr "Alkalmazott keresése"
 
-#: LedgerSMB/Upgrade_Tests.pm:208
+#: LedgerSMB/Upgrade_Tests.pm:209
 msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
@@ -3261,22 +3060,19 @@ msgstr ""
 msgid "Employees"
 msgstr "Alkalmazottak"
 
-#: LedgerSMB/Upgrade_Tests.pm:438
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:443
 msgid "Empty customernumbers"
-msgstr "Egyedi vevő azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:473
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:479
 msgid "Empty vendornumbers"
-msgstr "Egyedi szállító azonosító"
+msgstr ""
 
-# 75%
 #: LedgerSMB/Report/Budget/Search.pm:75 LedgerSMB/Report/Budget/Search.pm:122
 #: LedgerSMB/Report/Budget/Variance.pm:120
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:133
 #: LedgerSMB/Report/co/Caja_Diaria.pm:127
-#: LedgerSMB/Report/Contact/History.pm:146 LedgerSMB/Report/GL.pm:207
+#: LedgerSMB/Report/Contact/History.pm:146 LedgerSMB/Report/GL.pm:209
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:79
 #: LedgerSMB/Report/Invoices/COGS.pm:157
 #: LedgerSMB/Report/Listings/Business_Unit.pm:68
@@ -3289,14 +3085,13 @@ msgstr "Végdátum"
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
 msgid "End Date:"
-msgstr "Végdátum:"
+msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:11
-#, fuzzy
 msgid "Ending"
-msgstr "Küldés"
+msgstr ""
 
-#: LedgerSMB/Report/Trial_Balance.pm:188
+#: LedgerSMB/Report/Trial_Balance.pm:190
 msgid "Ending Balance"
 msgstr "Záró egyenleg"
 
@@ -3325,7 +3120,7 @@ msgstr "Készlet bevitel"
 msgid "Enter User"
 msgstr "Felhasználó bevitel"
 
-#: LedgerSMB/Upgrade_Tests.pm:194
+#: LedgerSMB/Upgrade_Tests.pm:195
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
@@ -3343,27 +3138,24 @@ msgid "Entered By"
 msgstr "Rögzítette"
 
 #: UI/timecards/timecard.html:21
-#, fuzzy
 msgid "Entered For"
-msgstr "Rögzítette"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:535
 msgid "Entered at"
 msgstr "Felrögzítve"
 
 #: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:78
-#, fuzzy
 msgid "Entered at: [_1]"
-msgstr "Bevitel: [_1]"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:301 sql/Pg-database.sql:1054
 msgid "Entity"
 msgstr "Egyed"
 
 #: UI/lib/report_base.html:41
-#, fuzzy
 msgid "Entity Class"
-msgstr "Egység kódja"
+msgstr ""
 
 #: bin/ir.pl:467 bin/is.pl:458 bin/oe.pl:424
 msgid "Entity Code"
@@ -3373,11 +3165,9 @@ msgstr "Egység kódja"
 msgid "Entity Control Code"
 msgstr "Egység ellenőrző kódja"
 
-# 78%
 #: sql/Pg-database.sql:1056
-#, fuzzy
 msgid "Entity Credit Account"
-msgstr "Hitel számla"
+msgstr ""
 
 #: LedgerSMB/Report/GL.pm:105
 msgid "Entry ID"
@@ -3394,18 +3184,16 @@ msgid "Equity"
 msgstr "Tőke"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
-#, fuzzy
 msgid "Equity & Liabilities"
-msgstr "Kötelezettségek"
+msgstr ""
 
 #: UI/accounts/edit.html:206
 msgid "Equity (Temporary)"
 msgstr ""
 
 #: UI/Reports/balance_sheet.html:104
-#, fuzzy
 msgid "Equity to Liabilities"
-msgstr "Kötelezettségek"
+msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:367
 msgid "Error creating backup file"
@@ -3419,7 +3207,7 @@ msgstr "Hiba történt a köteg létrehozásakor. Kérem próbálja újra."
 msgid "Error from Function:"
 msgstr "Hiba a funkcióban:"
 
-#: LedgerSMB/Scripts/setup.pm:452
+#: LedgerSMB/Scripts/setup.pm:456
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3445,10 +3233,10 @@ msgstr "Árf"
 
 #: bin/aa.pl:435 bin/ir.pl:354 bin/is.pl:312 bin/oe.pl:334 bin/oe.pl:342
 #: bin/oe.pl:1523 LedgerSMB/Report/Contact/History.pm:116
-#: LedgerSMB/Scripts/payment.pm:759 UI/orders/order.html:54
+#: LedgerSMB/Scripts/payment.pm:756 UI/orders/order.html:54
 #: UI/payments/payment2.html:134 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
-#: UI/Reports/filters/payments.html:110
+#: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
 msgid "Exchange Rate"
 msgstr "Átváltási árfolyam"
 
@@ -3456,26 +3244,17 @@ msgstr "Átváltási árfolyam"
 msgid "Exchange rate for payment missing!"
 msgstr "A fizetett összeg átváltási árfolyama hiányzik!"
 
-#: LedgerSMB/Scripts/payment.pm:1065
-#, fuzzy
+#: LedgerSMB/Scripts/payment.pm:1062
 msgid "Exchange rate hasn't been defined!"
-msgstr "Az átváltási árfolyam még nincs megadva"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:750
-#, fuzzy
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr ""
-"Átvátlási árfolyam nem egyezik az adatbázisban. [_1]-et találtam, a várt [_2] "
-"helyett"
 
 #: bin/aa.pl:1325 bin/ir.pl:1369 bin/is.pl:1343 bin/oe.pl:1194 bin/oe.pl:1550
 msgid "Exchange rate missing!"
 msgstr "Az átváltási árfolyam hiányzik!"
-
-#: UI/Reports/filters/overpayments.html:51
-#, fuzzy
-msgid "Exhchange Rate"
-msgstr "Átváltási árfolyam"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:96
 msgid "Expected"
@@ -3494,11 +3273,10 @@ msgstr "Költségszámla"
 msgid "Expense/Asset"
 msgstr "Ktg./Eszköz"
 
-# 87%
 #: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
 #: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
 msgid "Expenses"
-msgstr "Költségek"
+msgstr ""
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3510,9 +3288,8 @@ msgid "Extended"
 msgstr "Összeg"
 
 #: UI/timecards/timecard-week.html:105
-#, fuzzy
 msgid "Extra Used"
-msgstr "Felhasználó bevitel"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:64 UI/journal/journal_entry.html:114
 msgid "FX"
@@ -3526,7 +3303,6 @@ msgstr "Nem sikerült a rendelést elmenteni!"
 msgid "Fax"
 msgstr "Fax"
 
-# 75%
 #: templates/demo/ar_transaction.html:53 templates/demo/ar_transaction.tex:27
 #: templates/demo/letterhead.tex:14
 #: templates/demo_with_images/ar_transaction.html:53
@@ -3583,8 +3359,10 @@ msgstr "Fax:"
 #: templates/demo_with_images/work_order.html:55
 #: templates/demo_with_images/work_order.html:83
 #: templates/demo_with_images/work_order.tex:65
+#: templates/demo_with_images/work_order.tex:100
 #: templates/demo/work_order.html:55 templates/demo/work_order.html:83
-#: templates/demo/work_order.tex:65 templates/xedemo/ap_transaction.html:54
+#: templates/demo/work_order.tex:65 templates/demo/work_order.tex:100
+#: templates/xedemo/ap_transaction.html:54
 #: templates/xedemo/ar_transaction.tex:65 templates/xedemo/bin_list.html:59
 #: templates/xedemo/bin_list.html:92 templates/xedemo/invoice.html:53
 #: templates/xedemo/invoice.html:86 templates/xedemo/letterhead.html:22
@@ -3606,16 +3384,9 @@ msgstr "Fax:"
 #: templates/xedemo/sales_quotation.html:52
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
-#, fuzzy
+#: templates/xedemo/work_order.tex:100
 msgid "Fax: [_1]"
-msgstr "Fax: [_1]"
-
-# 75%
-#: templates/demo_with_images/work_order.tex:100
-#: templates/demo/work_order.tex:100 templates/xedemo/work_order.tex:100
-#, fuzzy
-msgid "Fax:[_1]"
-msgstr "Fax:"
+msgstr ""
 
 #: bin/aa.pl:87 bin/gl.pl:80 bin/io.pl:80 LedgerSMB/App_State.pm:238
 msgid "Feb"
@@ -3634,7 +3405,6 @@ msgstr "tizenöt"
 msgid "Fifty"
 msgstr "ötven"
 
-# 75%
 #: UI/file/attachment_screen.html:39
 msgid "File"
 msgstr "Fájl"
@@ -3645,14 +3415,12 @@ msgstr "Importált fájl"
 
 #: LedgerSMB/Report/File/Incoming.pm:47 LedgerSMB/Report/File/Internal.pm:45
 #: LedgerSMB/Report/Listings/Templates.pm:50
-#, fuzzy
 msgid "File Name"
-msgstr "Fájl neve"
+msgstr ""
 
 #: UI/Contact/divs/files.html:11
-#, fuzzy
 msgid "File Type"
-msgstr "Fájl típusa"
+msgstr ""
 
 #: bin/aa.pl:1013 bin/aa.pl:1033 bin/ic.pl:877 bin/ic.pl:896 bin/ir.pl:985
 #: bin/ir.pl:1004 bin/is.pl:1037 bin/is.pl:1056 bin/oe.pl:880 bin/oe.pl:899
@@ -3671,11 +3439,9 @@ msgstr "Fájl típusa"
 msgid "Files"
 msgstr "Fájlok"
 
-# 78%
 #: UI/Contact/divs/files.html:34
-#, fuzzy
 msgid "Files attached to Credit Account"
-msgstr "Hitel számla"
+msgstr ""
 
 #: UI/Contact/divs/files.html:17
 msgid "Files attached to Entity"
@@ -3695,7 +3461,7 @@ msgstr "Bevételek szűrése"
 
 #: t/data/04-complex_template.html:53
 msgid "First"
-msgstr "Első"
+msgstr ""
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
 #: UI/setup/new_user.html:71
@@ -3734,21 +3500,17 @@ msgstr "Árfolyamnyereség"
 msgid "Foreign Exchange Loss"
 msgstr "Árfolyamveszteség"
 
-# 75%
 #: UI/Reports/filters/taxforms.html:28
 msgid "Form"
 msgstr "Űrlap"
 
 #: LedgerSMB/Report/Taxform/List.pm:48
-#, fuzzy
 msgid "Form Name"
-msgstr "Adó űrlap neve"
+msgstr ""
 
-# 75%
 #: LedgerSMB/Report/Listings/Templates.pm:54
-#, fuzzy
 msgid "Format"
-msgstr "Űrlap"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:107
 msgid "Forty"
@@ -3762,10 +3524,9 @@ msgstr "négy"
 msgid "Fourteen"
 msgstr "tizennégy"
 
-#: LedgerSMB/Report/Timecards.pm:141
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:142
 msgid "Fri"
-msgstr "Ismétlés"
+msgstr ""
 
 #: bin/aa.pl:1691 bin/ic.pl:1133 bin/oe.pl:2132 bin/pe.pl:855
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
@@ -3787,15 +3548,14 @@ msgid "From"
 msgstr "Mettől"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:180
-#, fuzzy
 msgid "From Amount"
-msgstr "Összeg"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:132
 #: LedgerSMB/Report/Invoices/Payments.pm:193
 #: LedgerSMB/Report/Reconciliation/Summary.pm:176
 #: LedgerSMB/Report/Taxform/Details.pm:108
-#: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:157
+#: LedgerSMB/Report/Taxform/Summary.pm:106 LedgerSMB/Report/Timecards.pm:159
 msgid "From Date"
 msgstr "Kezdő dátum"
 
@@ -3808,7 +3568,7 @@ msgstr "Kezdő fájl"
 msgid "From Warehouse"
 msgstr "Raktárból"
 
-#: LedgerSMB/Report/Trial_Balance.pm:201
+#: LedgerSMB/Report/Trial_Balance.pm:204
 msgid "From date"
 msgstr "Kezdő dátum"
 
@@ -3818,14 +3578,14 @@ msgstr "Kezdő dátum"
 msgid "Full"
 msgstr "Teljes"
 
-#: LedgerSMB/Scripts/setup.pm:876 LedgerSMB/Scripts/setup.pm:934
-#: LedgerSMB/Scripts/setup.pm:1119
+#: LedgerSMB/Scripts/setup.pm:880 LedgerSMB/Scripts/setup.pm:938
+#: LedgerSMB/Scripts/setup.pm:1123
 msgid "Full Permissions"
 msgstr "Teljes jogosultság"
 
-#: LedgerSMB/Report/COA.pm:99 LedgerSMB/Report/GL.pm:157
+#: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
-#: LedgerSMB/Report/Trial_Balance.pm:164 UI/accounts/edit.html:183
+#: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:183
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:72
 #: UI/Reports/filters/balance_sheet.html:19 UI/Reports/filters/gl.html:254
 #: UI/Reports/filters/income_statement.html:62
@@ -3834,8 +3594,8 @@ msgstr "Teljes jogosultság"
 msgid "GIFI"
 msgstr "Gyűjtőkód"
 
-#: LedgerSMB/Upgrade_Tests.pm:308 LedgerSMB/Upgrade_Tests.pm:323
-#: LedgerSMB/Upgrade_Tests.pm:339
+#: LedgerSMB/Upgrade_Tests.pm:311 LedgerSMB/Upgrade_Tests.pm:327
+#: LedgerSMB/Upgrade_Tests.pm:343
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -3868,7 +3628,6 @@ msgstr "Nyereség"
 msgid "Gain (Loss)"
 msgstr "Nyereség (veszteség)"
 
-# 75%
 #: UI/asset/begin_approval.html:47
 msgid "Gain Account"
 msgstr "Nyereség számla"
@@ -3881,7 +3640,7 @@ msgstr ""
 msgid "General Journal"
 msgstr "Főkönyv"
 
-#: LedgerSMB/Report/GL.pm:194
+#: LedgerSMB/Report/GL.pm:195
 msgid "General Ledger Report"
 msgstr "Főkönyvi jelentés"
 
@@ -3908,45 +3667,38 @@ msgid "Generate Purchase Orders"
 msgstr "Beszerzési rendelés készítése"
 
 #: LedgerSMB/Scripts/order.pm:61
-#, fuzzy
 msgid "Generate Purchase Orders from Sales Orders"
-msgstr "Vevőrendelésből beszerzési rendelés készítése"
+msgstr ""
 
 #: bin/pe.pl:890 bin/pe.pl:1070 bin/pe.pl:1160
 msgid "Generate Sales Orders"
 msgstr "Értékesítési rendelések készítése"
 
 #: LedgerSMB/Scripts/order.pm:74
-#, fuzzy
 msgid "Generate Sales Orders from Purchase Orders"
-msgstr "Beszerzési rendelésből vevőrendelés készítése"
+msgstr ""
 
 #: sql/Pg-database.sql:804
-#, fuzzy
 msgid "Generic Jabber"
-msgstr "Generálás"
+msgstr ""
 
 #: UI/Contact/divs/person.html:92
-#, fuzzy
 msgid "Given Name"
-msgstr "Középső neve"
+msgstr ""
 
 #: t/data/04-strings-for-translation.html:8
 msgid "Goods & Services"
-msgstr "Áruk és szolgáltatások"
+msgstr ""
 
-# 83%
 #: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2917
 msgid "Goods and Services"
 msgstr "Cikkek és szolgáltatások"
 
-# 83%
 #: LedgerSMB/Report/Inventory/History.pm:186
-#, fuzzy
 msgid "Goods and Services History"
-msgstr "Cikkek és szolgáltatások"
+msgstr ""
 
-#: UI/payments/payments_detail.html:439
+#: UI/payments/payments_detail.html:443
 msgid "Grand Total"
 msgstr "Végösszeg"
 
@@ -3996,27 +3748,24 @@ msgstr "Fejléc"
 
 #: UI/Reports/filters/balance_sheet.html:36
 #: UI/Reports/filters/income_statement.html:72
-#, fuzzy
 msgid "Hierarchy type"
-msgstr "Fájl típusa"
+msgstr ""
 
 #: t/data/04-complex_template.html:35
 msgid "History"
-msgstr "Történet"
+msgstr ""
 
 #: sql/Pg-database.sql:805
 msgid "Home Phone"
 msgstr "Otthoni telefon"
 
 #: sql/Pg-database.sql:548
-#, fuzzy
 msgid "Hot Lead"
-msgstr "Átfutás"
+msgstr ""
 
 #: sql/Pg-database.sql:955
-#, fuzzy
 msgid "Hourly"
-msgstr "Óra"
+msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
@@ -4036,7 +3785,7 @@ msgstr "száz"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:191
 #: LedgerSMB/Report/Invoices/Transactions.pm:255
 #: LedgerSMB/Report/Listings/Asset_Class.pm:64 LedgerSMB/Report/Orders.pm:209
-#: LedgerSMB/Report/Timecards.pm:108
+#: LedgerSMB/Report/Timecards.pm:109
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:93
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:94
 #: LedgerSMB/Report/Unapproved/Drafts.pm:84 LedgerSMB/Scripts/asset.pm:531
@@ -4052,9 +3801,8 @@ msgid "ID"
 msgstr "Azonosító"
 
 #: sql/Pg-database.sql:802
-#, fuzzy
 msgid "IRC"
-msgstr "Bank azonosító kód"
+msgstr ""
 
 #: templates/demo/printPayment.html:87
 #: templates/demo_with_images/printPayment.html:87
@@ -4066,13 +3814,10 @@ msgstr "Azonosítás"
 msgid "If you would like to access this report again, please try this URL"
 msgstr ""
 
-#: UI/lib/report_base.html:80 UI/Reports/filters/income_statement.html:36
+#: LedgerSMB/Report/Trial_Balance.pm:208 UI/lib/report_base.html:80
+#: UI/Reports/filters/income_statement.html:36
 #: UI/Reports/filters/trial_balance.html:49 UI/rp-search.html:44
 msgid "Ignore Year-ends"
-msgstr "Évzárás figyelmen kívül hagyása"
-
-#: LedgerSMB/Report/Trial_Balance.pm:205
-msgid "Ignore Yearends"
 msgstr "Évzárás figyelmen kívül hagyása"
 
 #: bin/ic.pl:501 LedgerSMB/Report/Inventory/Search.pm:258
@@ -4091,34 +3836,28 @@ msgid "Import"
 msgstr "Import"
 
 #: sql/Pg-database.sql:2779
-#, fuzzy
 msgid "Import AP Batch"
-msgstr "Köteg rögzítése"
+msgstr ""
 
 #: sql/Pg-database.sql:2778
-#, fuzzy
 msgid "Import AR Batch"
-msgstr "Köteg rögzítése"
+msgstr ""
 
 #: sql/Pg-database.sql:2893 sql/Pg-database.sql:2897
-#, fuzzy
 msgid "Import Batch"
-msgstr "Köteg rögzítése"
+msgstr ""
 
 #: sql/Pg-database.sql:2848
-#, fuzzy
 msgid "Import Chart"
-msgstr "Import szöveg"
+msgstr ""
 
 #: sql/Pg-database.sql:2905
-#, fuzzy
 msgid "Import GIFI"
-msgstr "Import"
+msgstr ""
 
 #: sql/Pg-database.sql:2773
-#, fuzzy
 msgid "Import Inventory"
-msgstr "Készlet"
+msgstr ""
 
 #: bin/ir.pl:800 bin/ir.pl:811
 msgid "Import Text"
@@ -4165,9 +3904,8 @@ msgid "Include in drop-down menus"
 msgstr "Mely tranzakció(k)-nál lehessen kiválasztani?:"
 
 #: UI/Reports/filters/inventory_adj.html:20
-#, fuzzy
 msgid "Includes Part"
-msgstr "Kifizetéssel együtt"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:81
 msgid "Including partnumber"
@@ -4193,18 +3931,16 @@ msgid "Income Statement"
 msgstr "Eredménykimutatás"
 
 #: UI/payroll/income.html:9
-#, fuzzy
 msgid "Income Type"
-msgstr "Jövedelem típusa"
+msgstr ""
 
 #: LedgerSMB/Report/Payroll/Income_Types.pm:56
 msgid "Income Types"
 msgstr "Jövedelem típusa"
 
 #: LedgerSMB/Report/File/Incoming.pm:77
-#, fuzzy
 msgid "Incoming Files"
-msgstr "Jövedelem osztály"
+msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:83
 msgid "Incorrect Password"
@@ -4231,16 +3967,15 @@ msgid "Internal Database Error."
 msgstr "Belső adatbázis hiba."
 
 #: LedgerSMB/Report/File/Internal.pm:75
-#, fuzzy
 msgid "Internal Files"
-msgstr "Belső feljegyzés"
+msgstr ""
 
 #: bin/aa.pl:788 bin/ir.pl:799 bin/ir.pl:808 bin/is.pl:851 bin/is.pl:859
 #: bin/oe.pl:808 UI/orders/order.html:200
 msgid "Internal Notes"
 msgstr "Belső feljegyzés"
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:83
+#: LedgerSMB/Report/PNL/Income_Statement.pm:84
 msgid "Invalid Reporting Basis"
 msgstr "Valótlan jelentés alap"
 
@@ -4253,9 +3988,8 @@ msgid "Invalid date/time entered"
 msgstr "Érvénytelen dátum/idő lett megadva"
 
 #: LedgerSMB/Scripts/import_csv.pm:452
-#, fuzzy
 msgid "Invalid file"
-msgstr "Érvénytelen átirányítás"
+msgstr ""
 
 #: bin/am.pl:1443 bin/am.pl:1491
 msgid "Invalid redirect"
@@ -4274,9 +4008,8 @@ msgid "Inventory Activity"
 msgstr "Készletmozgások"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:145
-#, fuzzy
 msgid "Inventory Activity Report"
-msgstr "Készletmozgások"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:68
 msgid "Inventory Adjustment Details"
@@ -4286,7 +4019,6 @@ msgstr "Készlet korrekció részletei"
 msgid "Inventory Adjustment Entry"
 msgstr "Készlet korrekció bevitel"
 
-# 82%
 #: UI/inventory/adjustment_setup.html:2
 msgid "Inventory Adjustment Setup"
 msgstr "Készlet korrekció beállítása"
@@ -4296,27 +4028,17 @@ msgid "Inventory Adjustments"
 msgstr "Készlet korrekció"
 
 #: sql/Pg-database.sql:2940
-#, fuzzy
 msgid "Inventory and COGS"
-msgstr "Készlet elmentve!"
-
-# 94%
-# 95%
-#: bin/ic.pl:1818
-#, fuzzy
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
 msgstr ""
-"Mielőtt ezt az anyagot/árut ( [_1] ) elavultnak nyilvánítja,a mennyiségnek "
-"nullának kell lennie!"
 
-#: bin/ic.pl:1825
+#: bin/ic.pl:1824
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
 "Mielőtt ezt a saját terméket elévültnek nyilvánítja,a mennyiségnek nullának "
 "kell lennie!"
 
-#: bin/ic.pl:1824
+#: bin/ic.pl:1823
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 "Mielőtt ezt az anyagot/árut elévültnek nyilvánítja,a mennyiségnek nullának "
@@ -4334,7 +4056,7 @@ msgstr "Készlet áthelyezve!"
 #: LedgerSMB/Report/Aging.pm:103 LedgerSMB/Report/Inventory/Search.pm:278
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
-#: LedgerSMB/Scripts/payment.pm:747 templates/demo/invoice.html:12
+#: LedgerSMB/Scripts/payment.pm:744 templates/demo/invoice.html:12
 #: templates/demo/invoice.tex:112 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:12
 #: templates/demo_with_images/invoice.tex:112
@@ -4346,7 +4068,6 @@ msgstr "Készlet áthelyezve!"
 msgid "Invoice"
 msgstr "Számla"
 
-# 77%
 #: templates/demo/ap_transaction.html:69 templates/demo/ap_transaction.tex:59
 #: templates/demo/ar_transaction.html:68 templates/demo/ar_transaction.tex:76
 #: templates/demo/check_base.tex:52 templates/demo/invoice.html:106
@@ -4388,9 +4109,8 @@ msgid "Invoice Created"
 msgstr "Számla kelte"
 
 #: bin/aa.pl:1310
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "A teljesítés dátuma hiányzik!"
+msgstr ""
 
 #: bin/aa.pl:636 bin/aa.pl:1619 bin/ir.pl:519 bin/is.pl:523
 #: LedgerSMB/Report/Invoices/COGS.pm:94 templates/demo/product_receipt.html:103
@@ -4403,19 +4123,17 @@ msgstr "Teljesítés dátuma"
 msgid "Invoice Date missing!"
 msgstr "A teljesítés dátuma hiányzik!"
 
-# 77%
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
-#, fuzzy
 msgid "Invoice No."
-msgstr "Számla #"
+msgstr ""
 
 #: bin/aa.pl:623 bin/aa.pl:1498 bin/aa.pl:1612 bin/ir.pl:505 bin/is.pl:510
 #: LedgerSMB/Report/Contact/History.pm:68
 #: LedgerSMB/Report/Contact/Purchase.pm:65 LedgerSMB/Report/Invoices/COGS.pm:88
-#: LedgerSMB/Report/PNL/Invoice.pm:86 LedgerSMB/Report/Taxform/Details.pm:86
+#: LedgerSMB/Report/PNL/Invoice.pm:87 LedgerSMB/Report/Taxform/Details.pm:86
 #: UI/asset/edit_asset.html:207 UI/asset/search_asset.html:175
-#: UI/orders/order.html:78 UI/payments/payments_detail.html:320
+#: UI/orders/order.html:78 UI/payments/payments_detail.html:323
 #: UI/payments/use_overpayment2.html:150
 #: UI/Reports/filters/invoice_outstanding.html:142
 #: UI/Reports/filters/invoice_search.html:87
@@ -4433,30 +4151,26 @@ msgstr "Számla nyereség/veszteség"
 
 #: UI/Reports/filters/invoice_outstanding.html:76
 #: UI/Reports/filters/invoice_search.html:169
-#, fuzzy
 msgid "Invoice Status"
-msgstr "Számla értéke"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/Details.pm:94
 #: LedgerSMB/Report/Taxform/Summary.pm:91
 msgid "Invoice Sum"
 msgstr "Számla értéke"
 
-#: UI/payments/payments_detail.html:215
+#: UI/payments/payments_detail.html:216
 msgid "Invoice Total"
 msgstr "Számla végösszege"
 
-# 75%
 #: sql/Pg-database.sql:2789 sql/Pg-database.sql:2792
-#, fuzzy
 msgid "Invoice Vouchers"
-msgstr "Fizetés dátuma"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:152
 msgid "Invoice date"
 msgstr "Teljesítés dátuma"
 
-# 75%
 #: UI/payments/use_overpayment2.html:153
 msgid "Invoice due"
 msgstr "Fizetés dátuma"
@@ -4509,7 +4223,7 @@ msgstr "Számlák"
 msgid "Item"
 msgstr "Tétel"
 
-#: bin/ic.pl:2004
+#: bin/ic.pl:2003
 msgid "Item deleted!"
 msgstr "Tétel törölve!"
 
@@ -4524,25 +4238,19 @@ msgstr ""
 #: templates/demo/packing_list.tex:21
 #: templates/demo_with_images/packing_list.tex:21
 #: templates/xedemo/packing_list.tex:21
-#, fuzzy
 msgid "Items returned are subject to a 10% restocking charge."
-msgstr "Speciális rendelések visszamondása esetén 10% díjat számítunk fel."
+msgstr ""
 
 #: templates/demo/invoice.html:286 templates/demo/packing_list.html:176
 #: templates/demo_with_images/invoice.html:286
 #: templates/demo_with_images/packing_list.html:176
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
-#, fuzzy
 msgid ""
 "Items returned are subject to a 10% restocking charge. A return authorization "
 "must be obtained from [_1] before goods are returned. Returns must be shipped "
 "prepaid and properly insured. [_1] will not be responsible for damages during "
 "transit."
 msgstr ""
-"A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt [_1] hivatalos engedélye szükséges. A "
-"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. [_1] "
-"semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
 #: bin/aa.pl:86 bin/gl.pl:79 bin/io.pl:79 LedgerSMB/App_State.pm:237
 msgid "Jan"
@@ -4563,7 +4271,7 @@ msgstr "Feladat megnevezése"
 
 #: t/data/04-complex_template.html:78
 msgid "Job Title:"
-msgstr "Feladat megnevezése:"
+msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
@@ -4614,7 +4322,6 @@ msgstr "LaTeX sablonok"
 msgid "Label"
 msgstr "Címke"
 
-# 83%
 #: UI/asset/edit_class.html:19 UI/asset/search_class.html:14
 msgid "Label:"
 msgstr "Címke:"
@@ -4633,7 +4340,7 @@ msgstr "Művelet/Szolgáltatáskód"
 #: bin/ir.pl:333 bin/pe.pl:399 bin/pe.pl:577 LedgerSMB/Report/Aging.pm:96
 #: LedgerSMB/Report/Listings/Language.pm:68
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:273
-#: UI/Contact/divs/credit.html:274 UI/Reports/filters/balance_sheet.html:75
+#: UI/Contact/divs/credit.html:274 UI/Reports/filters/balance_sheet.html:76
 #: UI/Reports/filters/income_statement.html:110 UI/users/preferences.html:78
 #: sql/Pg-database.sql:2872
 msgid "Language"
@@ -4651,10 +4358,9 @@ msgstr "Nyelv elmentve!"
 msgid "Languages not defined!"
 msgstr "Nincsenek megadva nyelvek!"
 
-# 75%
 #: t/data/04-complex_template.html:67
 msgid "Last"
-msgstr "Utolsó"
+msgstr ""
 
 #: bin/ic.pl:458 bin/ic.pl:636 LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4692,9 +4398,8 @@ msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB adatbázis statisztika"
 
 #: UI/login.html:29 UI/menu/expanding.html:4
-#, fuzzy
 msgid "LedgerSMB [_1]"
-msgstr "LedgerSMB [_1]"
+msgstr ""
 
 #: UI/reconciliation/report.html:48
 msgid "Less Outstanding Checks:"
@@ -4706,18 +4411,16 @@ msgstr "Levélfejléc"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
 #: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
-#, fuzzy
 msgid "Liabilities"
-msgstr "Kötelezettség"
+msgstr ""
 
 #: UI/accounts/edit.html:204 UI/Reports/filters/gl.html:143
 msgid "Liability"
 msgstr "Kötelezettség"
 
 #: UI/Contact/divs/company.html:149
-#, fuzzy
 msgid "License Number"
-msgstr "Számlaszám"
+msgstr ""
 
 #: UI/asset/search_class.html:32
 msgid "Lifetime Measured In"
@@ -4756,9 +4459,8 @@ msgid "List Languages"
 msgstr "Nyelvlista"
 
 #: UI/Reports/filters/overpayments.html:5
-#, fuzzy
 msgid "List Overpayments"
-msgstr "Saját túlfizetés használata"
+msgstr ""
 
 #: bin/ic.pl:441 LedgerSMB/Report/Inventory/Search.pm:223
 #: UI/Reports/filters/search_goods.html:243
@@ -4778,63 +4480,49 @@ msgid "List Transactions"
 msgstr "Tranzakciók"
 
 #: UI/business_units/list_classes.html:111
-#, fuzzy
 msgid "List Units"
-msgstr "Számlalista"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:59
-#, fuzzy
 msgid "List Users"
-msgstr "Felhasználó módosítása"
+msgstr ""
 
-# 93%
 #: sql/Pg-database.sql:2835
 msgid "List Warehouse"
 msgstr "Raktárlista"
 
 #: LedgerSMB/Report/Listings/Business_Type.pm:73
-#, fuzzy
 msgid "List of Business Types"
-msgstr "Partnercsoportok"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:69 UI/setup/template_info.html:25
-#, fuzzy
 msgid "Load Templates"
-msgstr "LaTeX sablonok"
+msgstr ""
 
 #: UI/asset/edit_asset.html:142 UI/asset/search_asset.html:126
 #: UI/payments/payment2.html:39 UI/payments/use_overpayment2.html:34
 msgid "Location"
 msgstr "Hely"
 
-# 88%
 #: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 msgid "Locations"
 msgstr "Címek"
 
 #: LedgerSMB/Scripts/configuration.pm:74
-#, fuzzy
 msgid "Lock Item Description"
-msgstr "Feladat leírása"
+msgstr ""
 
-#: UI/payments/payments_detail.html:404
-#, fuzzy
+#: UI/payments/payments_detail.html:408
 msgid "Locked by [_1]"
-msgstr "Zárolta [_1]"
+msgstr ""
 
-#: UI/setup/confirm_operation.html:9
-msgid "Logged in as"
-msgstr "Bejelentkezve mint"
-
-#: UI/menu/expanding.html:6
-#, fuzzy
+#: UI/menu/expanding.html:6 UI/setup/confirm_operation.html:9
 msgid "Logged in as [_1]"
-msgstr "Bejelentkezve mint"
+msgstr ""
 
 #: UI/menu/expanding.html:5
-#, fuzzy
 msgid "Logged into [_1]"
-msgstr "Bejelentkezve [_1]"
+msgstr ""
 
 #: UI/logout.html:26
 msgid "Logged out due to inactivity"
@@ -4844,7 +4532,7 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: bin/old-handler.pl:132 UI/login.html:76 UI/setup/credentials.html:52
+#: bin/old-handler.pl:132 UI/login.html:76 UI/setup/credentials.html:55
 msgid "Login"
 msgstr "Belépés"
 
@@ -4860,20 +4548,17 @@ msgstr "Sikeres kijelentkezés"
 msgid "Loss"
 msgstr "Veszteség"
 
-# 76%
 #: UI/asset/begin_approval.html:57
 msgid "Loss Account"
 msgstr "Veszteség számla"
 
 #: sql/Pg-database.sql:801
-#, fuzzy
 msgid "MSN"
-msgstr "Adósz."
+msgstr ""
 
 #: sql/Pg-database.sql:663
-#, fuzzy
 msgid "Mailing"
-msgstr "Számlázási"
+msgstr ""
 
 #: bin/ic.pl:984 LedgerSMB/Report/Inventory/Search.pm:250
 #: UI/Reports/filters/search_goods.html:47
@@ -4881,34 +4566,30 @@ msgstr "Számlázási"
 msgid "Make"
 msgstr "Gyártmány"
 
-#: LedgerSMB/Upgrade_Tests.pm:228
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:229
 msgid "Make employee numbers unique"
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:261
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:263
 msgid "Make invoice numbers unique"
-msgstr "Egyedi vevőszámla azonosítók"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:591
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:248 LedgerSMB/Upgrade_Tests.pm:598
 msgid "Make non-obsolete partnumbers unique"
-msgstr "Egyedi élő cikkszám"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:297
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:299
 msgid "Make sure all meta numbers are unique."
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:210
+#: LedgerSMB/Upgrade_Tests.pm:211
 msgid ""
 "Make sure every name consists of alphanumeric characters (and underscores) "
 "only and is at least one character long"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:875 LedgerSMB/Scripts/setup.pm:933
-#: LedgerSMB/Scripts/setup.pm:1118
+#: LedgerSMB/Scripts/setup.pm:879 LedgerSMB/Scripts/setup.pm:937
+#: LedgerSMB/Scripts/setup.pm:1122
 msgid "Manage Users"
 msgstr "Felhasználók kezelése"
 
@@ -4920,10 +4601,9 @@ msgstr "Felhasználók kezelése"
 msgid "Manager"
 msgstr "Menedzser"
 
-# 87%
 #: t/data/04-complex_template.html:98
 msgid "Manager:"
-msgstr "Menedzser:"
+msgstr ""
 
 #: bin/ir.pl:652 bin/is.pl:412 bin/is.pl:707
 msgid "Manual"
@@ -4961,8 +4641,8 @@ msgid "May "
 msgstr "Május"
 
 #: bin/aa.pl:821 bin/ir.pl:690 bin/ir.pl:866 bin/is.pl:749 bin/is.pl:912
-#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:153
-#: LedgerSMB/Scripts/payment.pm:753 templates/demo/ap_transaction.html:195
+#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:155
+#: LedgerSMB/Scripts/payment.pm:750 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
 #: UI/orders/order.html:248 UI/payments/payment2.html:284
@@ -4978,7 +4658,6 @@ msgstr "Megjegyzett tranzakció lista"
 msgid "Message"
 msgstr "Üzenet"
 
-# 77%
 #: bin/arap.pl:806
 msgid "Message: "
 msgstr "Üzenet:"
@@ -5003,7 +4682,7 @@ msgstr "Mikrofilm"
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
-msgstr "Középső"
+msgstr ""
 
 #: UI/Contact/divs/employee.html:54 UI/Contact/divs/person.html:105
 msgid "Middle Name"
@@ -5014,9 +4693,8 @@ msgid "Million"
 msgstr "millió"
 
 #: LedgerSMB/Report/File/Incoming.pm:53 LedgerSMB/Report/File/Internal.pm:51
-#, fuzzy
 msgid "Mime Type"
-msgstr "Jövedelem típusa"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:135
 msgid "Min Empty Lines"
@@ -5027,9 +4705,8 @@ msgid "Min Taxable"
 msgstr "Min. adóköteles"
 
 #: LedgerSMB/Scripts/configuration.pm:118
-#, fuzzy
 msgid "Misc Settings"
-msgstr "Beállítások"
+msgstr ""
 
 #: UI/reconciliation/report.html:137
 msgid "Mismatched Transactions (From Upload)"
@@ -5045,10 +4722,9 @@ msgstr "Kisasszony"
 msgid "Model"
 msgstr "Modell"
 
-#: LedgerSMB/Report/Timecards.pm:125
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:126
 msgid "Mon"
-msgstr "Hónap"
+msgstr ""
 
 #: bin/aa.pl:1578 bin/am.pl:818 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:84
 #: UI/bp-search.html:44 UI/lib/report_base.html:145 UI/lib/report_base.html:212
@@ -5086,6 +4762,12 @@ msgstr "Hölgy"
 msgid "Multiple dates"
 msgstr ""
 
+#: LedgerSMB/Upgrade_Tests.pm:742
+msgid ""
+"Multiple tax rates with the same end date have been detected for a tax "
+"account;"
+msgstr ""
+
 #: LedgerSMB/Report/Invoices/Payments.pm:224
 msgid "Must have cash account in batch"
 msgstr ""
@@ -5099,15 +4781,14 @@ msgstr "Vagy hitel vagy egyed ID szükséges"
 #: LedgerSMB/Report/Contact/Purchase.pm:60
 #: LedgerSMB/Report/Contact/Purchase.pm:141
 #: LedgerSMB/Report/Contact/Search.pm:60 LedgerSMB/Report/Contact/Search.pm:99
-#: LedgerSMB/Report/Orders.pm:230 LedgerSMB/Report/PNL/ECA.pm:89
-#: LedgerSMB/Report/PNL/Invoice.pm:84 UI/Contact/divs/company.html:83
-#: UI/payments/payments_detail.html:214
+#: LedgerSMB/Report/Orders.pm:230 LedgerSMB/Report/PNL/ECA.pm:90
+#: LedgerSMB/Report/PNL/Invoice.pm:85 UI/Contact/divs/company.html:83
+#: UI/payments/payments_detail.html:215
 #: UI/Reports/filters/contact_search.html:31
 #: UI/Reports/filters/overpayments.html:32 UI/Reports/filters/payments.html:54
 msgid "Name"
 msgstr "Név"
 
-# 80%
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:40
 msgid "Name:"
@@ -5117,7 +4798,7 @@ msgstr "Név:"
 msgid "Net Book Value"
 msgstr "Nettó könyv szerinti érték"
 
-#: UI/payments/payments_detail.html:325
+#: UI/payments/payments_detail.html:328
 msgid "Net Due"
 msgstr "Nettó esedékes"
 
@@ -5161,9 +4842,8 @@ msgstr "Következő azonosító"
 
 #: LedgerSMB/Scripts/configuration.pm:101
 #: LedgerSMB/Scripts/configuration.pm:305
-#, fuzzy
 msgid "Next in Sequence"
-msgstr "Sorszám"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:83
 msgid "Nine"
@@ -5191,33 +4871,28 @@ msgid "No AR or AP Account Selected"
 msgstr "Nincs kiválasztva vevő vagy szállító számla"
 
 #: LedgerSMB/DBObject/TransTemplate.pm:27
-#, fuzzy
 msgid "No Account id for [_1]"
-msgstr "Nincs számla azonosító ehhez: [_1]"
+msgstr ""
 
 #: LedgerSMB/Report/File.pm:49
-#, fuzzy
 msgid "No File Class Specified"
-msgstr "Nincs megadva adatbázis"
+msgstr ""
 
 #: LedgerSMB/DBObject/Draft.pm:60 LedgerSMB/DBObject/Draft.pm:78
 msgid "No ID Set"
 msgstr "Nincs beállítva ID"
 
-#: LedgerSMB/Upgrade_Tests.pm:275
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:277
 msgid "No NULL Amounts"
-msgstr "Összeg"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:192
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:193
 msgid "No Null employeenumber"
-msgstr "Alkalmazott azonosítója nem lehet üres"
+msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:1120
-#, fuzzy
+#: LedgerSMB/Scripts/setup.pm:1124
 msgid "No changes"
-msgstr "Változások mentése"
+msgstr ""
 
 #: bin/aa.pl:215 bin/ir.pl:170 bin/is.pl:155
 msgid "No currencies defined.  Please set these up under System/Defaults."
@@ -5225,25 +4900,23 @@ msgstr ""
 "Nincsenek beállítva pénznemek. Kérem állítson be pénznemeket a Rendszer/"
 "Alapbeállítások menüpont alatt."
 
-#: LedgerSMB/Upgrade_Tests.pm:292
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:294
 msgid "No duplicate meta_numbers"
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
 #: LedgerSMB/Scripts/file.pm:114
 msgid "No file uploaded"
 msgstr "Nem töltődött fel fájl"
 
 #: UI/templates/edit.html:5 UI/templates/preview.html:36
-#, fuzzy
 msgid "No language"
-msgstr "Nyelv"
+msgstr ""
 
 #: bin/pe.pl:872
 msgid "No open Projects!"
 msgstr "Nincs nyitott projekt!"
 
-#: LedgerSMB/Scripts/payment.pm:1181
+#: LedgerSMB/Scripts/payment.pm:1178
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Nincs kiválasztva túlfizetés számla.  Létezik ilyen számla egyébként?"
 
@@ -5252,14 +4925,12 @@ msgid "No ref key set and no override provided"
 msgstr ""
 
 #: LedgerSMB/Scripts/reports.pm:96
-#, fuzzy
 msgid "No report specified"
-msgstr "Nincs meghatározva munkafolyamat szkript"
+msgstr ""
 
 #: LedgerSMB/Scripts/taxform.pm:143
-#, fuzzy
 msgid "No tax form selected"
-msgstr "Nincs kiválasztott cégadatbázis!"
+msgstr ""
 
 #: bin/lsmb-request.pl:13
 msgid "No workflow script specified"
@@ -5272,21 +4943,18 @@ msgid "No."
 msgstr "Sz."
 
 #: UI/timecards/timecard.html:110
-#, fuzzy
 msgid "Non-Chargeable"
-msgstr "Nem számlázandó"
+msgstr ""
 
-# 75%
 #: sql/Pg-database.sql:957
-#, fuzzy
 msgid "Non-cash"
-msgstr "bankkivonat"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:641
+#: LedgerSMB/Upgrade_Tests.pm:648
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:752
+#: LedgerSMB/Upgrade_Tests.pm:758
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -5294,15 +4962,13 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr "Nem raktározott tétel"
 
-#: LedgerSMB/Upgrade_Tests.pm:547 LedgerSMB/Upgrade_Tests.pm:569
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:553 LedgerSMB/Upgrade_Tests.pm:575
 msgid "Non-unique invoice numbers"
-msgstr "Egyedi vevőszámla azonosítók"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:66
-#, fuzzy
 msgid "Nontaxable"
-msgstr "Adómentes"
+msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:7
 msgid "Normal"
@@ -5361,7 +5027,7 @@ msgstr "Megjegyzés"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
-msgstr "Feljegyzések:<br />"
+msgstr ""
 
 #: bin/oe.pl:1992
 msgid "Nothing entered!"
@@ -5384,23 +5050,19 @@ msgstr "Nov."
 msgid "November"
 msgstr "November"
 
-#: LedgerSMB/Upgrade_Tests.pm:508 LedgerSMB/Upgrade_Tests.pm:527
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:514 LedgerSMB/Upgrade_Tests.pm:533
 msgid "Null employee numbers"
-msgstr "Alkalmazott azonosítója nem lehet üres"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:622
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:629
 msgid "Null make numbers"
-msgstr "Alkalmazott azonosítója nem lehet üres"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:605
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:612
 msgid "Null model numbers"
-msgstr "Alkalmazott azonosítója nem lehet üres"
+msgstr ""
 
-# Vagy szám.
-#: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2032 bin/ic.pl:2106 bin/io.pl:228
+#: bin/ic.pl:743 bin/ic.pl:1265 bin/ic.pl:2031 bin/ic.pl:2105 bin/io.pl:228
 #: bin/io.pl:562 bin/oe.pl:1839 bin/pe.pl:277 bin/pe.pl:359 bin/pe.pl:391
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:135
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:119
@@ -5448,24 +5110,22 @@ msgstr "Azonosító"
 msgid "Number Format"
 msgstr "Számformátum"
 
-# 80%
 #: bin/io.pl:1191
-#, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "A [_1]. sorból hiányzik a szám"
+msgstr ""
 
 #: UI/Contact/pricelist.html:107 UI/Reports/aging_report.html:125
 #: UI/Reports/display_report.html:74
-#, fuzzy
 msgid "ODS"
-msgstr "ODS"
+msgstr ""
 
 #: bin/io.pl:245
 msgid "OH"
 msgstr "Rk"
 
 #: UI/payments/payment2.html:277
-msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
+#, fuzzy
+msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr "Túlfizetés / Előleg fizetés / Előfizetés"
 
 #: bin/ic.pl:708 LedgerSMB/Scripts/budgets.pm:126 UI/accounts/edit.html:136
@@ -5508,9 +5168,8 @@ msgid "On Hold"
 msgstr "Visszatartva"
 
 #: UI/Reports/filters/search_goods.html:213
-#, fuzzy
 msgid "On hand"
-msgstr "Készleten"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:74
 msgid "One"
@@ -5521,28 +5180,24 @@ msgid "One-o"
 msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:45
-#, fuzzy
 msgid "Onhand amount"
-msgstr "Készleten"
+msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:52
-#, fuzzy
 msgid "Onhand delta"
-msgstr "Készleten"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:68
 msgid "Only Timeout Locks"
 msgstr ""
 
 #: UI/Reports/filters/contact_search.html:67
-#, fuzzy
 msgid "Only Users"
-msgstr "Felhasználók"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:70
-#, fuzzy
 msgid "Only for Employees"
-msgstr "Alkalmazottak"
+msgstr ""
 
 #: bin/aa.pl:1526 bin/oe.pl:310 UI/Reports/filters/invoice_search.html:206
 #: UI/Reports/filters/orders.html:91
@@ -5583,6 +5238,7 @@ msgstr "Sorrend"
 #: templates/demo/packing_list.html:79 templates/demo/pick_list.html:78
 #: templates/demo/purchase_order.html:102 templates/demo/purchase_order.tex:105
 #: templates/demo/sales_order.html:102 templates/demo/sales_order.tex:105
+#: templates/demo/statement.html:61
 #: templates/demo_with_images/ap_transaction.html:88
 #: templates/demo_with_images/ap_transaction.tex:66
 #: templates/demo_with_images/ar_transaction.html:87
@@ -5595,6 +5251,7 @@ msgstr "Sorrend"
 #: templates/demo_with_images/purchase_order.tex:105
 #: templates/demo_with_images/sales_order.html:102
 #: templates/demo_with_images/sales_order.tex:105
+#: templates/demo_with_images/statement.html:61
 #: templates/demo_with_images/work_order.html:102
 #: templates/demo/work_order.html:102 templates/xedemo/ap_transaction.html:88
 #: templates/xedemo/ap_transaction.tex:66
@@ -5604,7 +5261,7 @@ msgstr "Sorrend"
 #: templates/xedemo/pick_list.html:78 templates/xedemo/purchase_order.html:102
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
-#: templates/xedemo/work_order.html:102
+#: templates/xedemo/statement.html:61 templates/xedemo/work_order.html:102
 msgid "Order #"
 msgstr "Rendelés #"
 
@@ -5651,23 +5308,14 @@ msgstr "Rendelés törölve!"
 msgid "Order generation failed!"
 msgstr "Sikertelen rendelés készítés!"
 
-# 83%
-#: templates/demo/statement.html:61
-#: templates/demo_with_images/statement.html:61
-#: templates/xedemo/statement.html:61
-msgid "Order#"
-msgstr "Rendelés#"
-
 #: LedgerSMB/Report/Inventory/History.pm:138
-#, fuzzy
 msgid "Order/Invoice"
-msgstr "Számla"
+msgstr ""
 
 #: UI/am-taxes.html:16 UI/business_units/list_classes.html:15
 msgid "Ordering"
 msgstr "Sorrend"
 
-# 83%
 #: UI/Reports/filters/purchase_history.html:183 UI/setup/complete.html:26
 #: UI/setup/confirm_operation.html:108
 msgid "Orders"
@@ -5732,9 +5380,8 @@ msgid "Overpayment Account"
 msgstr "Túlfizetés számla"
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:78
-#, fuzzy
 msgid "Overpayments"
-msgstr "Túlfizetés"
+msgstr ""
 
 #: bin/am.pl:1081 bin/arapprn.pl:480 LedgerSMB/Form.pm:1399
 #: UI/Contact/pricelist.html:101 UI/Reports/aging_report.html:112
@@ -5764,7 +5411,6 @@ msgstr "BR #"
 msgid "PO Number"
 msgstr "Beszerzési rendelés"
 
-# 75%
 #: UI/payments/use_overpayment2.html:351
 msgid "POST"
 msgstr "RÖGZÍT"
@@ -5797,35 +5443,31 @@ msgstr "Szállítólevél száma hiányzik!"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:231
 #: LedgerSMB/Report/Invoices/Transactions.pm:280
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
-#: LedgerSMB/Scripts/payment.pm:750 templates/demo/invoice.html:184
+#: LedgerSMB/Scripts/payment.pm:747 templates/demo/invoice.html:184
 #: templates/demo/invoice.tex:165 templates/demo_with_images/invoice.html:184
 #: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
-#: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:323
+#: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:326
 #: UI/Reports/filters/invoice_outstanding.html:230
 #: UI/Reports/filters/invoice_search.html:320
 msgid "Paid"
 msgstr "Fizetve"
 
 #: bin/pe.pl:133 UI/business_units/edit.html:42
-#, fuzzy
 msgid "Parent"
-msgstr "Aktuális"
+msgstr ""
 
 #: bin/io.pl:866 LedgerSMB/Report/Invoices/COGS.pm:105
 msgid "Part"
 msgstr "Cikk"
 
 #: LedgerSMB/Report/Invoices/COGS.pm:161
-#, fuzzy
 msgid "Part Description"
-msgstr "Köteg leírása"
+msgstr ""
 
-# 90%
 #: UI/Reports/filters/search_goods.html:29
 #: UI/Reports/filters/search_goods.html:236
-#, fuzzy
 msgid "Part Group"
-msgstr "Cikkcsoport"
+msgstr ""
 
 #: bin/oe.pl:2042 bin/oe.pl:2120 bin/oe.pl:2154 bin/oe.pl:2405 bin/pe.pl:1057
 #: LedgerSMB/Report/Contact/History.pm:79
@@ -5833,7 +5475,7 @@ msgstr "Cikkcsoport"
 #: LedgerSMB/Report/Inventory/History.pm:118
 #: LedgerSMB/Report/Inventory/Search.pm:194
 #: LedgerSMB/Report/Invoices/COGS.pm:99 LedgerSMB/Report/Invoices/COGS.pm:159
-#: LedgerSMB/Report/PNL/Product.pm:78 LedgerSMB/Scripts/configuration.pm:112
+#: LedgerSMB/Report/PNL/Product.pm:81 LedgerSMB/Scripts/configuration.pm:112
 #: UI/Reports/filters/cogs_lines.html:9
 #: UI/Reports/filters/inventory_activity.html:11
 #: UI/Reports/filters/purchase_history.html:246
@@ -5847,13 +5489,12 @@ msgid "Partial"
 msgstr "Részleges"
 
 #: LedgerSMB/Scripts/asset.pm:693
-#, fuzzy
 msgid "Partial Disposal Report [_1] on date [_2]"
-msgstr "Részleges selejtezés jelentés [_1] időpontra [_2]"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:76
-#: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:113
-#: LedgerSMB/Report/Timecards.pm:161 UI/Contact/pricelist.csv:7
+#: LedgerSMB/Report/Inventory/Activity.pm:130 LedgerSMB/Report/Timecards.pm:114
+#: LedgerSMB/Report/Timecards.pm:163 UI/Contact/pricelist.csv:7
 #: UI/Contact/pricelist.html:22 UI/Contact/pricelist.tex:12
 #: UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/invoice_search.html:117
@@ -5862,25 +5503,18 @@ msgstr "Részleges selejtezés jelentés [_1] időpontra [_2]"
 msgid "Partnumber"
 msgstr "Cikkszám"
 
-# 90%
 #: LedgerSMB/Report/Inventory/Partsgroups.pm:63
-#: UI/Reports/filters/search_partsgroups.html:12
-#, fuzzy
-msgid "Parts Group"
-msgstr "Cikkcsoport"
-
-# 90%
-#: LedgerSMB/Report/Inventory/Partsgroups.pm:73
-#, fuzzy
-msgid "Parts Groups"
-msgstr "Cikkcsoport"
-
-# 90%
-#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2826
+#: LedgerSMB/Report/Inventory/Search.pm:274
+#: UI/Reports/filters/search_partsgroups.html:12 sql/Pg-database.sql:2826
 msgid "Partsgroup"
 msgstr "Cikkcsoport"
 
-#: UI/Contact/divs/user.html:48 UI/login.html:53 UI/setup/credentials.html:32
+#: LedgerSMB/Report/Inventory/Partsgroups.pm:73
+#, fuzzy
+msgid "Partsgroups"
+msgstr "Cikkcsoport"
+
+#: UI/Contact/divs/user.html:48 UI/login.html:53 UI/setup/credentials.html:35
 #: UI/setup/edit_user.html:48 UI/setup/new_user.html:29
 #: UI/users/preferences.html:42
 msgid "Password"
@@ -5898,12 +5532,12 @@ msgstr "Jelszó megadása szükséges"
 msgid "Passwords must match."
 msgstr "A jelszavaknak egyezniük kell."
 
-#: UI/payments/payments_detail.html:190 UI/payments/payments_filter.html:138
+#: UI/payments/payments_detail.html:191 UI/payments/payments_filter.html:140
 msgid "Pay From"
 msgstr "Fizetés innen"
 
-#: LedgerSMB/Scripts/payment.pm:148 UI/Contact/divs/credit.html:97
-#: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:139
+#: LedgerSMB/Scripts/payment.pm:150 UI/Contact/divs/credit.html:97
+#: UI/Contact/divs/credit.html:98 UI/payments/payments_filter.html:141
 msgid "Pay To"
 msgstr "Fizetés"
 
@@ -5914,18 +5548,17 @@ msgid "Pay in behalf of"
 msgstr "Fizetés az ő nevében"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:108
-#, fuzzy
 msgid "Payable"
-msgstr "Kötelezettségek"
+msgstr ""
 
 #: UI/accounts/edit.html:327
 msgid "Payables"
 msgstr "Kötelezettségek"
 
-#: LedgerSMB/Scripts/payment.pm:982 t/data/04-complex_template.html:282
+#: LedgerSMB/Scripts/payment.pm:979 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:342
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
-#: UI/payments/payments_detail.html:216 sql/Pg-database.sql:2797
+#: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2797
 msgid "Payment"
 msgstr "Kifizetés"
 
@@ -5936,11 +5569,10 @@ msgstr "Kifizetés értéke"
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
 #: templates/xedemo/printPayment.html:32
-#, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Kifizetés rendelés száma [_1]"
+msgstr ""
 
-#: UI/payments/payments_filter.html:135
+#: UI/payments/payments_filter.html:137
 msgid "Payment Processing"
 msgstr "Kifizetés feldolgozása"
 
@@ -5953,15 +5585,10 @@ msgid "Payment Reversal Information"
 msgstr "Visszirányú kifizetés információ"
 
 #: UI/Contact/divs/credit.html:157 UI/Contact/divs/credit.html:158
-#, fuzzy
 msgid "Payment Terms"
-msgstr "Kifizetés típusa:"
+msgstr ""
 
-#: UI/payments/payments_detail.html:180
-msgid "Payment Type :"
-msgstr "Kifizetés típus:"
-
-#: UI/payments/payments_filter.html:160
+#: UI/payments/payments_detail.html:181 UI/payments/payments_filter.html:162
 msgid "Payment Type:"
 msgstr "Kifizetés típusa:"
 
@@ -5976,9 +5603,8 @@ msgstr ""
 
 #: templates/demo/invoice.html:285 templates/demo_with_images/invoice.html:285
 #: templates/xedemo/invoice.html:285
-#, fuzzy
 msgid "Payment due by [_1]."
-msgstr "Kifizetés lejárt [_1] nappal."
+msgstr ""
 
 #: bin/aa.pl:801 bin/ir.pl:850 bin/is.pl:896
 #: templates/demo/ap_transaction.html:179 templates/demo/ap_transaction.tex:109
@@ -6032,9 +5658,8 @@ msgid "Person"
 msgstr "Személy"
 
 #: UI/Contact/divs/person.html:154
-#, fuzzy
 msgid "Personal ID"
-msgstr "Személy"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:50
 msgid "Phone"
@@ -6056,64 +5681,60 @@ msgstr ""
 msgid "Pick List"
 msgstr "Kitárolási lista"
 
-#: LedgerSMB/Upgrade_Tests.pm:715
+#: LedgerSMB/Upgrade_Tests.pm:722
 msgid ""
 "Please add a header to the CoA which sorts before the listed accounts "
 "(usually \"0000\" works) (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:696
+#: LedgerSMB/Upgrade_Tests.pm:703
 msgid ""
 "Please add at least one header to your CoA which sorts before all other "
 "account numbers (in the standard SL UI)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:661
+#: LedgerSMB/Upgrade_Tests.pm:668
 msgid "Please fix the presented rows to either be \"H\" or \"A\""
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:645 LedgerSMB/Upgrade_Tests.pm:679
+#: LedgerSMB/Upgrade_Tests.pm:652 LedgerSMB/Upgrade_Tests.pm:686
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:553
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:559
 msgid "Please make all AR invoice numbers unique"
-msgstr "Egyedi vevőszámla azonosítók"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:161 LedgerSMB/Upgrade_Tests.pm:461
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:162 LedgerSMB/Upgrade_Tests.pm:467
 msgid "Please make all customer numbers unique"
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:532
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:538
 msgid "Please make all employee numbers unique"
-msgstr "Duplikált alkalmazott azonosító"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:180 LedgerSMB/Upgrade_Tests.pm:496
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:181 LedgerSMB/Upgrade_Tests.pm:502
 msgid "Please make all vendor numbers unique"
-msgstr "Egyedi vevőszámla azonosítók"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:512
+#: LedgerSMB/Upgrade_Tests.pm:518
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:627
+#: LedgerSMB/Upgrade_Tests.pm:634
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:609
+#: LedgerSMB/Upgrade_Tests.pm:616
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:442
+#: LedgerSMB/Upgrade_Tests.pm:447
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:477
+#: LedgerSMB/Upgrade_Tests.pm:483
 msgid "Please make sure there are no empty vendor numbers."
 msgstr ""
 
@@ -6131,29 +5752,22 @@ msgid "Please select a customer with unused overpayments"
 msgstr "Kérem válasszon ki egy vevőt fel nem használt túlfizetéssel"
 
 #: LedgerSMB/Scripts/account.pm:95
-#, fuzzy
 msgid "Please select a valid heading"
-msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
+msgstr ""
 
 #: UI/payments/use_overpayment1.html:16
 msgid "Please select a vendor with unused overpayments"
 msgstr "Kérem válasszon ki egy szállítót fel nem használt túlfizetéssel"
 
-#: LedgerSMB/Upgrade_Tests.pm:737
-msgid ""
-"Please unmark accounts as summary accounts, or remove dropdown checkmarks (in "
-"the standard SL UI)"
-msgstr ""
-
-#: LedgerSMB/Upgrade_Tests.pm:312
+#: LedgerSMB/Upgrade_Tests.pm:315
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:343
+#: LedgerSMB/Upgrade_Tests.pm:347
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:327
+#: LedgerSMB/Upgrade_Tests.pm:331
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -6190,24 +5804,20 @@ msgid "Posting Date:"
 msgstr "Rögzítés dátuma:"
 
 #: bin/am.pl:1392
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "[_1] Vegyes könyvelési tranzakció mentése"
+msgstr ""
 
 #: bin/am.pl:1232
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1254 bin/am.pl:1263
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr ""
 
 #: bin/am.pl:1242
-#, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "[_1] szállító számla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1080 bin/arapprn.pl:479 bin/io.pl:1485 LedgerSMB/Form.pm:1397
 msgid "Postscript"
@@ -6222,9 +5832,8 @@ msgid "Preferences Saved"
 msgstr "Beállítások elmentve"
 
 #: UI/users/preferences.html:18
-#, fuzzy
 msgid "Preferences for [_1]"
-msgstr "[_1] beállításai"
+msgstr ""
 
 #: UI/Configuration/sequence.html:14
 msgid "Prefix"
@@ -6252,20 +5861,17 @@ msgstr "Ár"
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:48
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:63
 #: UI/Reports/filters/search_pricegroups.html:12
-#, fuzzy
 msgid "Price Group"
-msgstr "Árcsoport"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Pricegroups.pm:73
-#, fuzzy
 msgid "Price Groups"
-msgstr "Árcsoportok"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:246
 #: UI/Reports/filters/search_goods.html:229
-#, fuzzy
 msgid "Price Updated"
-msgstr "Frissítve"
+msgstr ""
 
 #: bin/ic.pl:1104 bin/pe.pl:221 UI/Contact/divs/credit.html:246
 #: UI/Contact/divs/credit.html:247
@@ -6290,27 +5896,24 @@ msgid "Pricelist"
 msgstr "Árlista"
 
 #: UI/Contact/pricelist.tex:65
-#, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Árlista"
+msgstr ""
 
 #: sql/Pg-database.sql:795
-#, fuzzy
 msgid "Primary Phone"
-msgstr "Társaság telefonszáma"
+msgstr ""
 
 #: bin/aa.pl:909 bin/aa.pl:938 bin/am.pl:867 bin/arap.pl:486 bin/ir.pl:556
 #: bin/is.pl:574 bin/is.pl:1013 bin/oe.pl:635 bin/oe.pl:854 bin/oe.pl:1943
 #: LedgerSMB/Report/Taxform/Details.pm:129
-#: LedgerSMB/Report/Taxform/Summary.pm:127 UI/payments/payments_detail.html:490
+#: LedgerSMB/Report/Taxform/Summary.pm:127 UI/payments/payments_detail.html:494
 #: UI/timecards/timecard.html:158
 msgid "Print"
 msgstr "Nyomtatás"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:238
-#, fuzzy
 msgid "Print Batch"
-msgstr "Köteg rögzítése"
+msgstr ""
 
 #: bin/oe.pl:644 bin/oe.pl:857
 msgid "Print and Save"
@@ -6329,48 +5932,40 @@ msgid "Printer"
 msgstr "Nyomtató"
 
 #: bin/am.pl:1427
-#, fuzzy
 msgid "Printing Bin List [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr ""
 
 #: bin/am.pl:1420
-#, fuzzy
 msgid "Printing Credit Invoice [_1]"
-msgstr "[_1] szállító számla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1421
-#, fuzzy
 msgid "Printing Debit Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1419
-#, fuzzy
 msgid "Printing Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1422
-#, fuzzy
 msgid "Printing Packing List [_1]"
-msgstr "Szállítólevél"
+msgstr ""
 
 #: bin/am.pl:1423
 msgid "Printing Pick List [_1]"
 msgstr ""
 
 #: bin/am.pl:1426
-#, fuzzy
 msgid "Printing Purchase Order [_1]"
-msgstr "Beszerzési rendelés módosítása"
+msgstr ""
 
 #: bin/am.pl:1424
-#, fuzzy
 msgid "Printing Sales Order [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1418
-#, fuzzy
 msgid "Printing Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr ""
 
 #: bin/am.pl:1425
 msgid "Printing Work Order [_1]"
@@ -6381,9 +5976,8 @@ msgid "Prior Dep."
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:639
-#, fuzzy
 msgid "Prior Through"
-msgstr "Értékcsökkentés ezen keresztül"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:400 LedgerSMB/Scripts/asset.pm:771
 msgid "Proceeds"
@@ -6402,25 +5996,22 @@ msgstr "Tranzakciók végrehajtása"
 #: templates/xedemo/product_receipt.html:4
 #: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2970
 #: sql/Pg-database.sql:2971
-#, fuzzy
 msgid "Product Receipt"
-msgstr "Gyártás"
+msgstr ""
 
 #: UI/am-department-form.html:36
 msgid "Profit Center"
 msgstr "Profitcenter"
 
 #: UI/Contact/divs/credit.html:384
-#, fuzzy
 msgid "Profit and Loss"
-msgstr "Nyomtat és rögzít"
+msgstr ""
 
 #: bin/aa.pl:1008 bin/ic.pl:948 bin/ir.pl:980 bin/is.pl:1032
-#, fuzzy
 msgid "Profit/Loss"
-msgstr "Számla nyereség/veszteség"
+msgstr ""
 
-#: LedgerSMB/Report/PNL/Product.pm:70
+#: LedgerSMB/Report/PNL/Product.pm:71
 msgid "Proft/Loss on Inventory Sales"
 msgstr "Nyereség/veszteség készlet értékesítéskor"
 
@@ -6438,15 +6029,13 @@ msgstr "Projekt megnevezések fordítása"
 msgid "Project Number"
 msgstr "Projekt azonosító"
 
-# 93%
 #: bin/aa.pl:1623
 msgid "Project Numbers"
 msgstr "Projekt azonosítók"
 
-#: LedgerSMB/Report/Timecards.pm:100
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:101
 msgid "Project/Department Number"
-msgstr "Projekt azonosító"
+msgstr ""
 
 #: UI/payments/payment2.html:68
 msgid "Projects"
@@ -6502,11 +6091,10 @@ msgid "Purchase Value:"
 msgstr "Beszerzési érték:"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:98
-#, fuzzy
 msgid "Purchased"
-msgstr "Beszerzési rendelés"
+msgstr ""
 
-#: bin/ic.pl:1260 bin/ic.pl:2117 bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845
+#: bin/ic.pl:1260 bin/ic.pl:2116 bin/io.pl:234 bin/io.pl:572 bin/oe.pl:1845
 #: bin/oe.pl:2137 bin/pe.pl:1065 LedgerSMB/Report/Contact/History.pm:87
 #: LedgerSMB/Report/Inventory/History.pm:155
 #: LedgerSMB/Report/Inventory/Search.pm:294 templates/demo/bin_list.html:151
@@ -6557,11 +6145,10 @@ msgid "Qty"
 msgstr "Menny."
 
 #: LedgerSMB/Report/Invoices/COGS.pm:115
-#, fuzzy
 msgid "Quantity"
-msgstr "Egyed"
+msgstr ""
 
-#: bin/ic.pl:2234
+#: bin/ic.pl:2233
 msgid "Quantity exceeds available units to stock!"
 msgstr "A mennyiség meghaladja a készletet!"
 
@@ -6590,9 +6177,8 @@ msgstr "Ajánlatadás"
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
 #: templates/xedemo/sales_quotation.tex:76
-#, fuzzy
 msgid "Quotation #"
-msgstr "Ajánlat"
+msgstr ""
 
 #: bin/oe.pl:475
 msgid "Quotation Date"
@@ -6628,7 +6214,6 @@ msgstr "Ajánlatok"
 msgid "RFQ"
 msgstr "Ajánlatkérés"
 
-# 80%
 #: templates/demo/request_quotation.html:103
 #: templates/demo/request_quotation.tex:106
 #: templates/demo_with_images/request_quotation.html:103
@@ -6647,7 +6232,7 @@ msgstr "Ajánlatkérési azonosító"
 msgid "RFQs"
 msgstr "Ajánlatkérések"
 
-#: bin/ic.pl:484 bin/ic.pl:2119 LedgerSMB/Report/Inventory/Search.pm:210
+#: bin/ic.pl:484 bin/ic.pl:2118 LedgerSMB/Report/Inventory/Search.pm:210
 #: UI/Reports/filters/search_goods.html:295
 msgid "ROP"
 msgstr "Újrarendelési pont"
@@ -6677,20 +6262,18 @@ msgstr "Könyvelés újranyitása"
 msgid "Recd"
 msgstr "Érkezett"
 
-#: LedgerSMB/Scripts/payment.pm:982 sql/Pg-database.sql:2796
+#: LedgerSMB/Scripts/payment.pm:979 sql/Pg-database.sql:2796
 #: sql/Pg-database.sql:2965
 msgid "Receipt"
 msgstr "Befizetés"
 
 #: templates/demo_with_images/product_receipt.html:103
-#, fuzzy
 msgid "Receipt Date"
-msgstr "Befizetés rögzítve!"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Payments.pm:208
-#, fuzzy
 msgid "Receipt Results"
-msgstr "Eredmények listája"
+msgstr ""
 
 #: UI/payments/payment1.html:19 sql/Pg-database.sql:2800
 #: sql/Pg-database.sql:2878
@@ -6698,9 +6281,8 @@ msgid "Receipts"
 msgstr "Befizetések"
 
 #: LedgerSMB/Report/Inventory/Activity.pm:94
-#, fuzzy
 msgid "Receivable"
-msgstr "Követelések"
+msgstr ""
 
 #: UI/accounts/edit.html:284
 msgid "Receivables"
@@ -6714,7 +6296,7 @@ msgstr "Bevételezés"
 msgid "Receive Merchandise"
 msgstr "Áru érkeztetés"
 
-#: LedgerSMB/Scripts/payment.pm:806
+#: LedgerSMB/Scripts/payment.pm:803
 msgid "Received"
 msgstr "Befolyt"
 
@@ -6730,8 +6312,6 @@ msgstr "Egyeztet mint FX"
 msgid "Reconciliation"
 msgstr "Egyeztetés"
 
-# 76%
-# 80%
 #: UI/reconciliation/report.html:22
 msgid "Reconciliation Date:"
 msgstr "Egyeztetés dátuma:"
@@ -6741,23 +6321,20 @@ msgid "Reconciliation Report"
 msgstr "Egyeztető Lista"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:193
-#, fuzzy
 msgid "Reconciliation Reports"
-msgstr "Egyeztető Lista"
+msgstr ""
 
 #: bin/ir.pl:489 bin/is.pl:483 UI/orders/order.html:42
 msgid "Record in"
 msgstr "Főkönyvi számla"
 
 #: UI/timecards/entry_filter.html:17
-#, fuzzy
 msgid "Recording time for"
-msgstr "Jelentés:"
+msgstr ""
 
 #: bin/arap.pl:566
-#, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Ismétlődő tranzakció [_1]"
+msgstr ""
 
 #: bin/am.pl:829 UI/am-list-recurring.html:8 sql/Pg-database.sql:2919
 msgid "Recurring Transactions"
@@ -6765,7 +6342,7 @@ msgstr "Ismétlődő tranzakciók"
 
 #: bin/am.pl:848 bin/arap.pl:587 LedgerSMB/Report/Budget/Search.pm:80
 #: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:94
-#: LedgerSMB/Report/GL.pm:211 LedgerSMB/Report/Inventory/Search_Adj.pm:99
+#: LedgerSMB/Report/GL.pm:213 LedgerSMB/Report/Inventory/Search_Adj.pm:99
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:108
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
 #: LedgerSMB/Report/Unapproved/Drafts.pm:94
@@ -6778,9 +6355,8 @@ msgid "Reference"
 msgstr "Referencia"
 
 #: bin/io.pl:1715
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Vegyes könyvelés referenciaszám"
+msgstr ""
 
 #: sql/Pg-database.sql:547
 msgid "Referral"
@@ -6796,9 +6372,8 @@ msgstr "Regisztráció"
 
 #: templates/demo/invoice.html:303 templates/demo_with_images/invoice.html:303
 #: templates/xedemo/invoice.html:303
-#, fuzzy
 msgid "Registration [_1]"
-msgstr "Regisztráció [_1]"
+msgstr ""
 
 #: LedgerSMB/Scripts/budgets.pm:117 UI/reconciliation/report.html:295
 msgid "Reject"
@@ -6834,12 +6409,10 @@ msgstr "Ismétlés"
 msgid "Report Approved"
 msgstr "Jelentés jóváhagyva"
 
-# 76%
 #: UI/Reports/aging_report.html:15 UI/Reports/display_report.html:16
 #: UI/Reports/display_report.tex:22
-#, fuzzy
 msgid "Report Name"
-msgstr "Szállító neve"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:525
 msgid "Report Results"
@@ -6849,34 +6422,29 @@ msgstr "Eredmények listája"
 msgid "Report Submitted"
 msgstr "Jelentés elküldve"
 
-# 76%
 #: UI/Reports/filters/trial_balance.html:81
-#, fuzzy
 msgid "Report Type"
-msgstr "Szállító neve"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:630
-#, fuzzy
 msgid "Report [_1] on date [_2]"
-msgstr "[_1] jelentés ekkor: [_2]"
+msgstr ""
 
 #: UI/rp-search-generate_tax_report.html:67
 msgid "Report for"
 msgstr "Jelentés:"
 
 #: UI/timecards/timecard-week.html:66
-#, fuzzy
 msgid "Report in"
-msgstr "Jelentések"
+msgstr ""
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:67
+#: LedgerSMB/Report/PNL/Income_Statement.pm:68
 msgid "Reporting Basis"
 msgstr "Jelentés alapja"
 
 #: sql/Pg-database.sql:2874
-#, fuzzy
 msgid "Reporting Units"
-msgstr "Jelentés alapja"
+msgstr ""
 
 #: sql/Pg-database.sql:2808 sql/Pg-database.sql:2821 sql/Pg-database.sql:2850
 #: sql/Pg-database.sql:2854 sql/Pg-database.sql:2879 sql/Pg-database.sql:2890
@@ -6909,19 +6477,16 @@ msgid "Request read receipt"
 msgstr "Olvasási visszaigazolás kérése"
 
 #: UI/Reports/filters/orders.html:141
-#, fuzzy
 msgid "Required By"
-msgstr "Kért kiszállítás"
+msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:222
-#, fuzzy
 msgid "Required Date"
-msgstr "Kért kiszállítás"
+msgstr ""
 
 #: LedgerSMB/Request.pm:59
-#, fuzzy
 msgid "Required attribute not provided: [_1]"
-msgstr "Nincs megadva elegendő adat"
+msgstr ""
 
 #: bin/io.pl:269 bin/oe.pl:391 bin/oe.pl:447
 #: templates/demo/purchase_order.html:104 templates/demo/purchase_order.tex:106
@@ -6951,9 +6516,8 @@ msgid "Required input not provided"
 msgstr "Nincs megadva elegendő adat"
 
 #: UI/Contact/divs/user.html:90 UI/setup/edit_user.html:85
-#, fuzzy
 msgid "Reset Password"
-msgstr "Jelszó beállítása"
+msgstr ""
 
 #: UI/accounts/yearend.html:37
 msgid "Retained Earnings"
@@ -6973,29 +6537,24 @@ msgid "Return to the login screen."
 msgstr "Vissza a bejelentkező képernyőre."
 
 #: bin/ic.pl:532 UI/accounts/edit.html:390
-#, fuzzy
 msgid "Returns"
-msgstr "Vissza a beállításokhoz"
+msgstr ""
 
 #: UI/Reports/filters/overpayments.html:42
-#, fuzzy
 msgid "Reversal Information"
-msgstr "Visszirányú kifizetés információ"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:159
-#, fuzzy
 msgid "Reverse"
-msgstr "Bevétel"
+msgstr ""
 
 #: sql/Pg-database.sql:2938
-#, fuzzy
 msgid "Reverse AR Overpay"
-msgstr "Vevő túlfizetés használata"
+msgstr ""
 
 #: sql/Pg-database.sql:2937
-#, fuzzy
 msgid "Reverse Overpay"
-msgstr "Saját túlfizetés használata"
+msgstr ""
 
 #: sql/Pg-database.sql:2865
 msgid "Reverse Payment"
@@ -7022,9 +6581,8 @@ msgid "Run Backup"
 msgstr "Biztonsági mentés indítása"
 
 #: UI/Reports/filters/inventory_adj.html:35
-#, fuzzy
 msgid "Run Report"
-msgstr "[_1] jelentés"
+msgstr ""
 
 #: UI/Contact/divs/company.html:125 sql/Pg-database.sql:2871
 msgid "SIC"
@@ -7038,12 +6596,10 @@ msgstr "TEÁOR/SZJ törölve!"
 msgid "SIC saved!"
 msgstr "TEÁOR/SZJ elmentve!"
 
-# 75%
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
-msgstr "Oszt.kód:"
+msgstr ""
 
-# Ezt így hagyom, minden más csak rosszabb lenne.
 #: bin/io.pl:264 bin/io.pl:564 bin/oe.pl:1831 bin/oe.pl:2403
 msgid "SKU"
 msgstr "SKU"
@@ -7101,14 +6657,12 @@ msgid "Sales Quotation Number"
 msgstr "Ajánlat azonosító"
 
 #: UI/Contact/divs/company.html:139
-#, fuzzy
 msgid "Sales Tax ID"
-msgstr "Adószám"
+msgstr ""
 
-# 83%
 #: t/data/04-complex_template.html:85
 msgid "Sales:"
-msgstr "Értékesítés:"
+msgstr ""
 
 #: bin/aa.pl:478 bin/aa.pl:1473 bin/is.pl:360 bin/oe.pl:520
 #: LedgerSMB/Report/Contact/History.pm:120
@@ -7141,10 +6695,9 @@ msgstr "Megszólítás"
 msgid "Salvage Value:"
 msgstr "Maradványérték:"
 
-#: LedgerSMB/Report/Timecards.pm:145
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:146
 msgid "Sat"
-msgstr "Megye"
+msgstr ""
 
 #: bin/aa.pl:971 bin/am.pl:67 bin/am.pl:75 bin/am.pl:86 bin/am.pl:173
 #: bin/am.pl:179 bin/gl.pl:289 bin/ic.pl:831 bin/ic.pl:840 bin/ir.pl:576
@@ -7174,7 +6727,7 @@ msgstr "Mentés"
 msgid "Save As New"
 msgstr "Mentés újként"
 
-#: LedgerSMB/Scripts/payment.pm:221
+#: LedgerSMB/Scripts/payment.pm:219
 msgid "Save Batch"
 msgstr "Köteg mentése"
 
@@ -7187,9 +6740,8 @@ msgid "Save Contact"
 msgstr "Kapcsolat mentése"
 
 #: bin/aa.pl:964 bin/gl.pl:274 bin/gl.pl:320 bin/ir.pl:596 bin/is.pl:618
-#, fuzzy
 msgid "Save Draft"
-msgstr "Mentés másként"
+msgstr ""
 
 #: UI/Contact/divs/user.html:159 UI/setup/edit_user.html:153
 msgid "Save Groups"
@@ -7219,11 +6771,10 @@ msgstr "Ütemezés mentése"
 msgid "Save Template"
 msgstr "Sablon mentése"
 
-#: LedgerSMB/Scripts/setup.pm:698
+#: LedgerSMB/Scripts/setup.pm:702
 msgid "Save and Retry"
 msgstr "Mentés és újra"
 
-# 90%
 #: bin/aa.pl:972
 msgid "Save as New"
 msgstr "Mentés újként"
@@ -7234,9 +6785,8 @@ msgid "Save as new"
 msgstr "Mentés újként"
 
 #: bin/am.pl:1338
-#, fuzzy
 msgid "Saving [_1] [_2]"
-msgstr "Mentés [_1] [_2]"
+msgstr ""
 
 #: UI/oe-save_warn.html:13
 msgid "Saving over an existing document.  Continue?"
@@ -7251,7 +6801,7 @@ msgstr "Beütemez"
 msgid "Scheduled"
 msgstr "Ütemezve"
 
-#: bin/arapprn.pl:466 bin/io.pl:1465 LedgerSMB/Scripts/payment.pm:507
+#: bin/arapprn.pl:466 bin/io.pl:1465 LedgerSMB/Scripts/payment.pm:504
 #: LedgerSMB/Template.pm:309 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Képernyő"
@@ -7274,24 +6824,20 @@ msgid "Search"
 msgstr "Keresés"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:331
-#, fuzzy
 msgid "Search AP"
-msgstr "Keresés"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:5
-#, fuzzy
 msgid "Search AP Invoices"
-msgstr "Szállító számla"
+msgstr ""
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:332
-#, fuzzy
 msgid "Search AR"
-msgstr "Keresés"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:9
-#, fuzzy
 msgid "Search AR Invoices"
-msgstr "Vevőszámla"
+msgstr ""
 
 #: UI/asset/search_class.html:5
 msgid "Search Asset Class"
@@ -7302,84 +6848,70 @@ msgid "Search Assets"
 msgstr "Eszközök"
 
 #: UI/Reports/filters/budget_search.html:7
-#, fuzzy
 msgid "Search Budgets"
-msgstr "Eszközök"
+msgstr ""
 
-# 83%
 #: UI/Reports/filters/search_goods.html:5
-#, fuzzy
 msgid "Search Goods and Services"
-msgstr "Cikkek és szolgáltatások"
+msgstr ""
 
 #: sql/Pg-database.sql:2771
-#, fuzzy
 msgid "Search Groups"
-msgstr "Csoportok mentése"
+msgstr ""
 
 #: UI/Reports/filters/inventory_adj.html:6
-#, fuzzy
 msgid "Search Inventory Entry"
-msgstr "Készlet ellenőrzés"
+msgstr ""
 
 #: UI/Reports/filters/search_partsgroups.html:4
 #, fuzzy
-msgid "Search Parts Groups"
-msgstr "Pénzmozgások keresése"
+msgid "Search Partsgroups"
+msgstr "Cikkcsoport"
 
 #: UI/Reports/filters/payments.html:7 UI/Reports/filters/payments.html:17
 msgid "Search Payments"
 msgstr "Pénzmozgások keresése"
 
 #: UI/Reports/filters/search_pricegroups.html:4
-#, fuzzy
 msgid "Search Price Groups"
-msgstr "Csoportok mentése"
+msgstr ""
 
 #: sql/Pg-database.sql:2772
-#, fuzzy
 msgid "Search Pricegroups"
-msgstr "Árcsoportok"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:69
-#, fuzzy
 msgid "Search Purchase Orders"
-msgstr "Beszerzési rendelések"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:80
-#, fuzzy
 msgid "Search Quotations"
-msgstr "Ajánlatok"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:14
-#, fuzzy
 msgid "Search Receipts"
-msgstr "Keresés eredménye"
+msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:5
 msgid "Search Reconciliation Reports"
 msgstr "Egyeztető jelentések keresése"
 
 #: LedgerSMB/Scripts/order.pm:84
-#, fuzzy
 msgid "Search Requests for Quotation"
-msgstr "Ajánlatkérés"
+msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:58
-#, fuzzy
 msgid "Search Sales Orders"
-msgstr "Vevőrendelések"
+msgstr ""
 
 #: UI/Reports/filters/unapproved.html:35
 msgid "Search Unapproved Transactions"
 msgstr "Jóváhagyásra váró tranzakciók keresése"
 
 #: sql/Pg-database.sql:2902
-#, fuzzy
 msgid "Search and GL"
-msgstr "Pénzmozgások keresése"
+msgstr ""
 
-# 75%
 #: UI/Admin/user_search.html:5
 msgid "Search for Users"
 msgstr "Felhasználók keresése"
@@ -7389,14 +6921,12 @@ msgid "Search reports"
 msgstr "Keresési jelentések"
 
 #: sql/Pg-database.sql:796
-#, fuzzy
 msgid "Secondary Phone"
-msgstr "Társaság telefonszáma"
+msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:58
-#, fuzzy
 msgid "Security Settings"
-msgstr "Beállítások"
+msgstr ""
 
 #: UI/reconciliation/report.html:269 UI/Reports/aging_report.html:58
 msgid "Select All"
@@ -7407,9 +6937,13 @@ msgid "Select Customer"
 msgstr "Vevő választás"
 
 #: UI/setup/template_info.html:6
-#, fuzzy
 msgid "Select Templates to Load"
-msgstr "Sablonok beállítása"
+msgstr ""
+
+#: UI/setup/credentials.html:16
+#, fuzzy
+msgid "Select User"
+msgstr "Vevő választás"
 
 #: bin/oe.pl:2522
 msgid "Select Vendor"
@@ -7448,9 +6982,8 @@ msgid "Select txt, postscript or PDF!"
 msgstr "Válasszon txt, postscript vagy PDF formátumot!"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:121
-#, fuzzy
 msgid "Selected"
-msgstr "Választás"
+msgstr ""
 
 #: UI/payments/payments_filter.html:3
 msgid "Selection"
@@ -7470,55 +7003,44 @@ msgid "Sell Price"
 msgstr "Eladási ár"
 
 #: bin/am.pl:1472
-#, fuzzy
 msgid "Sending Bin List [_1]"
-msgstr "Bejelentkezve mint"
+msgstr ""
 
-# Meg kell majd nézni, mi a kontextus.
 #: bin/am.pl:1465
-#, fuzzy
 msgid "Sending Credit Invoice [_1]"
-msgstr "Új számlakorrekció"
+msgstr ""
 
-# 76%
 #: bin/am.pl:1466
-#, fuzzy
 msgid "Sending Debit Invoice [_1]"
-msgstr "Új beszerzési számlakorrekció"
+msgstr ""
 
 #: bin/am.pl:1464
-#, fuzzy
 msgid "Sending Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgstr ""
 
 #: bin/am.pl:1467
-#, fuzzy
 msgid "Sending Packing List [_1]"
-msgstr "Szállítólevél"
+msgstr ""
 
 #: bin/am.pl:1468
 msgid "Sending Pick List [_1]"
 msgstr ""
 
 #: bin/am.pl:1471
-#, fuzzy
 msgid "Sending Purchase Order [_1]"
-msgstr "Beszerzési rendelés módosítása"
+msgstr ""
 
 #: bin/am.pl:1469
-#, fuzzy
 msgid "Sending Sales Order [_1]"
-msgstr "Vevőrendelés módosítása"
+msgstr ""
 
 #: bin/am.pl:1463
-#, fuzzy
 msgid "Sending Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgstr ""
 
 #: bin/am.pl:1470
-#, fuzzy
 msgid "Sending Work Order [_1]"
-msgstr "Munka rendelés"
+msgstr ""
 
 #: bin/aa.pl:94 bin/gl.pl:87 bin/io.pl:87 LedgerSMB/App_State.pm:247
 msgid "Sep"
@@ -7568,7 +7090,6 @@ msgstr "Sorozatszám"
 msgid "Serial Number"
 msgstr "Sorszám"
 
-# 84%
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
 #: templates/xedemo/bin_list.html:149
@@ -7644,7 +7165,6 @@ msgstr "Áru kiszállítás"
 msgid "Ship To"
 msgstr "Szállítási cím"
 
-# 75%
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
 #: templates/demo/product_receipt.html:30 templates/demo/purchase_order.html:30
 #: templates/demo/request_quotation.html:30
@@ -7660,8 +7180,8 @@ msgstr "Szállítási cím"
 msgid "Ship To:"
 msgstr "Szállítási cím:"
 
-# 87%
 #: LedgerSMB/Report/Contact/Purchase.pm:117
+#: LedgerSMB/Report/Invoices/Outstanding.pm:273
 #: LedgerSMB/Report/Invoices/Transactions.pm:307 LedgerSMB/Report/Orders.pm:259
 #: templates/demo/product_receipt.html:106
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
@@ -7722,12 +7242,6 @@ msgstr "Szállítási cím"
 msgid "Ship via"
 msgstr "Fizetési mód"
 
-# 87%
-#: LedgerSMB/Report/Invoices/Outstanding.pm:273
-#, fuzzy
-msgid "Ship_Via"
-msgstr "Fizetési mód"
-
 #: LedgerSMB/Entity/Location.pm:114 UI/Contact/divs/address.html:44
 #: sql/Pg-database.sql:661 sql/Pg-database.sql:2914
 msgid "Shipping"
@@ -7742,9 +7256,8 @@ msgid "Shipping Date missing!"
 msgstr "A szállítás dátuma hiányzik!"
 
 #: bin/io.pl:1445 bin/is.pl:995
-#, fuzzy
 msgid "Shipping Label"
-msgstr "Szállítás dátuma"
+msgstr ""
 
 #: bin/aa.pl:1655 bin/is.pl:495 bin/oe.pl:594 bin/oe.pl:1774
 #: LedgerSMB/Report/Contact/Purchase.pm:113
@@ -7803,9 +7316,8 @@ msgid "Short"
 msgstr "Hiányzó"
 
 #: LedgerSMB/Scripts/configuration.pm:121
-#, fuzzy
 msgid "Show Credit Limit"
-msgstr "Hitelkeret"
+msgstr ""
 
 #: templates/demo/printPayment.html:82
 #: templates/demo_with_images/printPayment.html:82
@@ -7818,9 +7330,8 @@ msgid "Simple"
 msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:61
-#, fuzzy
 msgid "Single date"
-msgstr "Dátum törlése"
+msgstr ""
 
 #: LedgerSMB/Entity/Person.pm:109 sql/Pg-database.sql:728
 msgid "Sir."
@@ -7846,7 +7357,7 @@ msgstr "Kihagy"
 msgid "Sold"
 msgstr "Eladva"
 
-#: UI/payments/payments_detail.html:272
+#: UI/payments/payments_detail.html:274
 msgid "Some"
 msgstr "Néhány"
 
@@ -7854,11 +7365,10 @@ msgstr "Néhány"
 msgid "Sort by"
 msgstr "Rendezve"
 
-# Vagy bizonylatszám vagy mikortól
 #: bin/aa.pl:820 bin/aa.pl:1510 bin/ir.pl:865 bin/is.pl:911
 #: LedgerSMB/Report/Budget/Search.pm:128 LedgerSMB/Report/GL.pm:122
-#: LedgerSMB/Report/GL.pm:213 LedgerSMB/Report/Inventory/Adj_Details.pm:75
-#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Report/GL.pm:215 LedgerSMB/Report/Inventory/Adj_Details.pm:75
+#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:154
 #: LedgerSMB/Scripts/recon.pm:221 templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:249
 #: templates/demo/printPayment.html:50
@@ -7871,7 +7381,7 @@ msgstr "Rendezve"
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:29
 #: UI/journal/journal_entry.html:117 UI/orders/order.html:247
 #: UI/payments/payment2.html:106 UI/payments/payment2.html:228
-#: UI/payments/payment2.html:283 UI/payments/payments_detail.html:300
+#: UI/payments/payment2.html:283 UI/payments/payments_detail.html:303
 #: UI/reconciliation/report.html:80 UI/reconciliation/report.html:143
 #: UI/reconciliation/report.html:202 UI/Reports/filters/gl.html:66
 #: UI/Reports/filters/gl.html:221 UI/Reports/filters/inventory_adj.html:11
@@ -7899,9 +7409,8 @@ msgstr "Speciális rendelések visszamondása esetén 10% díjat számítunk fel
 #: templates/demo/sales_quotation.tex:23
 #: templates/demo_with_images/sales_quotation.tex:23
 #: templates/xedemo/sales_quotation.tex:23
-#, fuzzy
 msgid "Special order items are subject to a 10\\% cancellation fee."
-msgstr "Speciális rendelések visszamondása esetén 10% díjat számítunk fel."
+msgstr ""
 
 #: UI/lib/report_base.html:64 UI/rp-search.html:30
 msgid "Standard"
@@ -7911,12 +7420,11 @@ msgstr "Standard"
 msgid "Standard Industrial Codes"
 msgstr "TEÁOR/SZJ kód (SIC)"
 
-# 80%
 #: LedgerSMB/Report/Budget/Search.pm:70 LedgerSMB/Report/Budget/Search.pm:120
 #: LedgerSMB/Report/Budget/Variance.pm:118
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:131
 #: LedgerSMB/Report/co/Caja_Diaria.pm:125
-#: LedgerSMB/Report/Contact/History.pm:143 LedgerSMB/Report/GL.pm:205
+#: LedgerSMB/Report/Contact/History.pm:143 LedgerSMB/Report/GL.pm:207
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:77
 #: LedgerSMB/Report/Invoices/COGS.pm:155
 #: LedgerSMB/Report/Listings/Business_Unit.pm:64
@@ -7926,13 +7434,11 @@ msgstr "TEÁOR/SZJ kód (SIC)"
 msgid "Start Date"
 msgstr "Kezdő dátum"
 
-# 80%
-# 90%
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
-msgstr "Kezdő dátum:"
+msgstr ""
 
-#: UI/payments/payments_filter.html:177
+#: UI/payments/payments_filter.html:179
 msgid "Start Source Numbering At:"
 msgstr "Bizonylatszám számozás kezdete:"
 
@@ -7945,7 +7451,7 @@ msgid "Startdate"
 msgstr "Kezdő dátum"
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:77
-#: LedgerSMB/Report/Trial_Balance.pm:170
+#: LedgerSMB/Report/Trial_Balance.pm:172
 msgid "Starting Balance"
 msgstr "Nyitó egyenleg"
 
@@ -7956,7 +7462,7 @@ msgstr "Kezdési dátum"
 
 #: t/data/04-complex_template.html:177
 msgid "Starting Date:"
-msgstr "Kezdő dátum:"
+msgstr ""
 
 #: bin/io.pl:2113
 msgid "State"
@@ -7968,10 +7474,9 @@ msgstr "Megye"
 msgid "State/Province"
 msgstr "Állam/Régió"
 
-# 93%
 #: t/data/04-complex_template.html:454
 msgid "State/Province:"
-msgstr "Állam/Régió:"
+msgstr ""
 
 #: templates/demo/statement.html:4 templates/demo/statement.html:19
 #: templates/demo/statement.tex:29 templates/demo_with_images/statement.html:4
@@ -8004,7 +7509,7 @@ msgstr "Státusz: még fut"
 msgid "Stock"
 msgstr "Készletre vesz"
 
-#: bin/ic.pl:2014 bin/ic.pl:2126 sql/Pg-database.sql:2931
+#: bin/ic.pl:2013 bin/ic.pl:2125 sql/Pg-database.sql:2931
 msgid "Stock Assembly"
 msgstr "Saját termék bevét"
 
@@ -8012,10 +7517,9 @@ msgstr "Saját termék bevét"
 msgid "Stylesheet"
 msgstr "Stíluslap"
 
-# 88%
 #: t/data/04-complex_template.html:231
 msgid "Subcontract GIFI:"
-msgstr "Alvállalkozó gyűtőkód:"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:155 UI/budgetting/budget_entry.html:183
 #: UI/Contact/divs/notes.html:31 UI/io-email.html:22 UI/rp-email.html:21
@@ -8023,9 +7527,8 @@ msgid "Subject"
 msgstr "Tárgy"
 
 #: bin/arap.pl:804 bin/io.pl:1918 UI/Contact/divs/notes.html:77
-#, fuzzy
 msgid "Subject: [_1]"
-msgstr "Tárgy: [_1]"
+msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:86
 msgid "Submission Status"
@@ -8074,7 +7577,6 @@ msgstr "Elküldve"
 msgid "Subtotal"
 msgstr "Részösszeg"
 
-# 88%
 #: UI/rc-till-closing.html:69
 msgid "Subtotal:"
 msgstr "Részösszeg:"
@@ -8095,12 +7597,11 @@ msgstr "Összegzés"
 msgid "Summary account for"
 msgstr "Gyűjtőszámla"
 
-#: LedgerSMB/Report/Timecards.pm:121
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:122
 msgid "Sun"
-msgstr "Jún."
+msgstr ""
 
-#: UI/setup/credentials.html:22
+#: UI/setup/credentials.html:23
 msgid "Super-user login"
 msgstr "Adminisztrátor bejelentkezése"
 
@@ -8109,9 +7610,8 @@ msgid "Superuser Credentials"
 msgstr "Adminisztrátor adatai"
 
 #: UI/Contact/divs/person.html:117
-#, fuzzy
 msgid "Surname"
-msgstr "Felhasználónév"
+msgstr ""
 
 #: UI/ca-list-selector.html:46
 msgid "Swaps debits and credits to match bank statements"
@@ -8138,7 +7638,6 @@ msgstr "Végösszeg"
 msgid "Tag"
 msgstr "Címke"
 
-# 75%
 #: UI/asset/edit_asset.html:48 UI/asset/search_asset.html:39
 msgid "Tag:"
 msgstr "Címke:"
@@ -8165,27 +7664,24 @@ msgstr "Adó kód"
 #: LedgerSMB/Report/Taxform/Details.pm:110
 #: LedgerSMB/Report/Taxform/Summary.pm:108 UI/Contact/divs/credit.html:263
 #: UI/Contact/divs/credit.html:264
-#, fuzzy
 msgid "Tax Form"
-msgstr "Adóűrlapok"
+msgstr ""
 
 #: bin/aa.pl:664
 msgid "Tax Form Applied"
 msgstr "Adóűrlap"
 
 #: LedgerSMB/Report/Taxform/Details.pm:119
-#, fuzzy
 msgid "Tax Form Details Report"
-msgstr "Adóűrlap jelentések"
+msgstr ""
 
 #: LedgerSMB/Report/Taxform/List.pm:72
 msgid "Tax Form List"
 msgstr "Adó űrlapok listája"
 
 #: LedgerSMB/Report/Taxform/Summary.pm:117
-#, fuzzy
 msgid "Tax Form Report"
-msgstr "Adóűrlap jelentések"
+msgstr ""
 
 #: UI/Reports/filters/taxforms.html:21
 msgid "Tax Form Reports"
@@ -8200,40 +7696,35 @@ msgid "Tax ID"
 msgstr "Adószám"
 
 #: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:111
-#, fuzzy
 msgid "Tax ID/SSN"
-msgstr "Adószám"
+msgstr ""
 
 #: bin/ir.pl:677 bin/is.pl:735 bin/oe.pl:764 UI/Contact/divs/credit.html:313
 #: UI/Contact/divs/credit.html:314 UI/orders/order.html:233
 msgid "Tax Included"
 msgstr "Adót tartalmazza"
 
-# 87%
 #: UI/Contact/divs/company.html:115
 msgid "Tax Number/SSN"
 msgstr "Adószám (SSN)"
 
-# 81%
 #: t/data/04-complex_template.html:222
 msgid "Tax Number/SSN:"
-msgstr "Adószám (SSN):"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
-#, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Adószám"
+msgstr ""
 
 #: UI/am-taxes.html:17
 msgid "Tax Rules"
 msgstr "Adó szabályok"
 
 #: UI/Reports/filters/invoice_search.html:61
-#, fuzzy
 msgid "Tax Status"
-msgstr "Jóváhagyás állapota"
+msgstr ""
 
 #: templates/demo/product_receipt.html:190
 #: templates/demo/purchase_order.html:192
@@ -8279,9 +7770,8 @@ msgstr "Adószám:"
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
 #: templates/xedemo/ap_transaction.html:62
-#, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Adószám: [_1]"
+msgstr ""
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8293,7 +7783,6 @@ msgstr "Adószám: [_1]"
 msgid "Tel:"
 msgstr "Telefon:"
 
-# 77%
 #: templates/demo/ap_transaction.html:50 templates/demo/ar_transaction.tex:61
 #: templates/demo/bin_list.html:55 templates/demo/bin_list.html:88
 #: templates/demo/invoice.html:49 templates/demo/invoice.html:82
@@ -8369,24 +7858,20 @@ msgstr "Telefon:"
 #: templates/xedemo/sales_quotation.tex:58 templates/xedemo/work_order.html:52
 #: templates/xedemo/work_order.html:80 templates/xedemo/work_order.tex:61
 #: templates/xedemo/work_order.tex:96
-#, fuzzy
 msgid "Tel: [_1]"
-msgstr "Telefon: [_1]"
+msgstr ""
 
 #: LedgerSMB/Report/Listings/Templates.pm:75
-#, fuzzy
 msgid "Template Listing"
-msgstr "Sablonok"
+msgstr ""
 
 #: LedgerSMB/Scripts/template.pm:85
-#, fuzzy
 msgid "Template Not Found"
-msgstr "A részlet nem található"
+msgstr ""
 
 #: bin/aa.pl:1128 bin/gl.pl:401
-#, fuzzy
 msgid "Template Saved!"
-msgstr "Sablon elmentve!"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:63
 msgid "Templates"
@@ -8411,36 +7896,31 @@ msgstr "Határidő"
 #: templates/xedemo/purchase_order.html:184
 #: templates/xedemo/sales_order.html:183
 #: templates/xedemo/sales_quotation.html:151
-#, fuzzy
 msgid "Terms Net [_1] days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr ""
 
-# 83%
 #: t/data/04-complex_template.html:210
 msgid "Terms:"
-msgstr "Határidő:"
+msgstr ""
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
 #: templates/xedemo/sales_order.tex:161
-#, fuzzy
 msgid "Terms: Net [_1]  days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr ""
 
 #: templates/demo/sales_quotation.tex:126
 #: templates/demo_with_images/sales_quotation.tex:126
 #: templates/xedemo/sales_quotation.tex:128
-#, fuzzy
 msgid "Terms: [_1] days"
-msgstr "Fizetési határidő [_1] nap"
+msgstr ""
 
 #: templates/demo/invoice.tex:214 templates/demo/sales_order.tex:175
 #: templates/demo_with_images/invoice.tex:217
 #: templates/demo_with_images/sales_order.tex:175
 #: templates/xedemo/invoice.tex:213 templates/xedemo/sales_order.tex:175
-#, fuzzy
 msgid "Thank You for your valued business!"
-msgstr "Köszönjük hogy nálunk vásárolt!"
+msgstr ""
 
 #: templates/demo/invoice.html:274 templates/demo_with_images/invoice.html:274
 #: templates/xedemo/invoice.html:274
@@ -8453,16 +7933,15 @@ msgstr "Köszönjük hogy nálunk vásárolt!"
 msgid "The amount of"
 msgstr "Az összeg"
 
-#: LedgerSMB/Scripts/payment.pm:1457 LedgerSMB/Scripts/payment.pm:1463
+#: LedgerSMB/Scripts/payment.pm:1454 LedgerSMB/Scripts/payment.pm:1460
 msgid "The amount of the invoice number"
 msgstr "A számla értéke"
 
-# Nyilván nem marad így.
-#: LedgerSMB/Scripts/payment.pm:1709
+#: LedgerSMB/Scripts/payment.pm:1706
 msgid "The amount to be pay from the accno"
 msgstr "Fizetendő összeg az accno-ból"
 
-#: LedgerSMB/Scripts/payment.pm:1677
+#: LedgerSMB/Scripts/payment.pm:1674
 msgid "The amount to be pay of the invoice number"
 msgstr "A számla fizetendő összege"
 
@@ -8503,15 +7982,12 @@ msgid "Thirty"
 msgstr "harminc"
 
 #: UI/Contact/divs/address.html:83 UI/Contact/divs/contact_info.html:32
-#, fuzzy
 msgid "This Account"
-msgstr "Számlalista"
+msgstr ""
 
 #: UI/setup/complete_migration_revert.html:12
-#, fuzzy
 msgid "This database operation has completed successfully."
 msgstr ""
-"Az adatbázisművelet sikeresen megtörtént. Most már használhatja a LedgerSMB-t."
 
 #: UI/setup/complete.html:12
 msgid ""
@@ -8526,11 +8002,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Ezt a dokumentumot jóváhagyta"
 
-#: LedgerSMB/Scripts/payment.pm:1079
+#: LedgerSMB/Scripts/payment.pm:1076
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Ez a vegyes könyvelési tétel egy pénzmozgásos tranzakció következménye"
 
-#: LedgerSMB/Scripts/payment.pm:1762
+#: LedgerSMB/Scripts/payment.pm:1759
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Ez könyvelési tétel mozgás egy túlfizetéses tranzakció eredménye"
 
@@ -8549,14 +8025,12 @@ msgstr "Küszöb"
 
 #: UI/Reports/filters/balance_sheet.html:9
 #: UI/Reports/filters/balance_sheet.html:89
-#, fuzzy
 msgid "Through date"
-msgstr "Kezdő dátum"
+msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:137
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:138
 msgid "Thu"
-msgstr "Esedékes"
+msgstr ""
 
 #: bin/aa.pl:1594 LedgerSMB/Report/GL.pm:137
 #: LedgerSMB/Report/Invoices/Outstanding.pm:257
@@ -8575,9 +8049,8 @@ msgid "Time Card"
 msgstr "Munkalap"
 
 #: UI/timecards/entry_filter.html:26
-#, fuzzy
 msgid "Time Frame"
-msgstr "Munkalap"
+msgstr ""
 
 #: UI/timecards/timecard.html:65
 msgid "Time In"
@@ -8588,9 +8061,8 @@ msgid "Time Out"
 msgstr "Befejezés ideje"
 
 #: UI/Reports/filters/timecards.html:6
-#, fuzzy
 msgid "Time and Material Cards"
-msgstr "Munkalapok"
+msgstr ""
 
 #: UI/timecards/timecard.html:15
 msgid "Time or Materials Card"
@@ -8601,11 +8073,10 @@ msgid "Timecard"
 msgstr "Munkalap"
 
 #: UI/timecards/entry_filter.html:6 UI/timecards/entry_filter.html:7
-#, fuzzy
 msgid "Timecard Criteria"
-msgstr "Időkártya törölve!"
+msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:170 sql/Pg-database.sql:2934
+#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2934
 msgid "Timecards"
 msgstr "Időkártyák"
 
@@ -8636,21 +8107,19 @@ msgid "To"
 msgstr "Meddig"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:182
-#, fuzzy
 msgid "To Amount"
-msgstr "Összeg"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Activity.pm:133
 #: LedgerSMB/Report/Invoices/Payments.pm:195
 #: LedgerSMB/Report/Reconciliation/Summary.pm:178
 #: LedgerSMB/Report/Taxform/Details.pm:109
-#: LedgerSMB/Report/Taxform/Summary.pm:107 LedgerSMB/Report/Timecards.pm:159
-#: LedgerSMB/Report/Trial_Balance.pm:203 UI/reconciliation/upload.html:36
+#: LedgerSMB/Report/Taxform/Summary.pm:107 LedgerSMB/Report/Timecards.pm:161
+#: LedgerSMB/Report/Trial_Balance.pm:206 UI/reconciliation/upload.html:36
 msgid "To Date"
 msgstr "Végdátum"
 
-# 83%
-#: UI/payments/payments_detail.html:326
+#: UI/payments/payments_detail.html:329
 msgid "To Pay"
 msgstr "Fizetendő"
 
@@ -8660,7 +8129,7 @@ msgstr "Raktárba"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To [_1]"
-msgstr "Meddig: [_1]"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:126
 msgid "To be used"
@@ -8674,7 +8143,7 @@ msgstr "Email küldés"
 msgid "To my browser"
 msgstr "Böngészőbe küldés"
 
-#: LedgerSMB/Scripts/payment.pm:803
+#: LedgerSMB/Scripts/payment.pm:800
 msgid "To pay"
 msgstr "Fizetendő"
 
@@ -8693,15 +8162,13 @@ msgid "To:"
 msgstr "Címzett:"
 
 #: bin/arap.pl:802 bin/io.pl:1916
-#, fuzzy
 msgid "To: [_1]"
-msgstr "Címzett: [_1]"
+msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:246
 msgid "Too many links on summary account!"
 msgstr "Túl sok hivatkozás a gyűjtőszámlán!"
 
-# 77%
 #: sql/Pg-database.sql:2788
 msgid "Top-level"
 msgstr "Legfelső szint"
@@ -8714,7 +8181,7 @@ msgstr "Legfelső szint"
 #: LedgerSMB/Report/Invoices/Transactions.pm:277
 #: LedgerSMB/Report/Taxform/Details.pm:98
 #: LedgerSMB/Report/Taxform/Summary.pm:96 LedgerSMB/Scripts/asset.pm:537
-#: LedgerSMB/Scripts/payment.pm:200 LedgerSMB/Scripts/payment.pm:749
+#: LedgerSMB/Scripts/payment.pm:198 LedgerSMB/Scripts/payment.pm:746
 #: templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
@@ -8760,7 +8227,7 @@ msgstr "Legfelső szint"
 #: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
 #: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
 #: UI/payments/payment1.html:86 UI/payments/payment1.html:95
-#: UI/payments/payment2.html:430 UI/payments/payments_detail.html:322
+#: UI/payments/payment2.html:430 UI/payments/payments_detail.html:325
 #: UI/reconciliation/report.html:130 UI/reconciliation/report.html:189
 #: UI/reconciliation/report.html:237
 #: UI/Reports/filters/invoice_outstanding.html:209
@@ -8780,9 +8247,8 @@ msgid "Total Outstanding"
 msgstr "Összes kintlévőség"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:138
-#, fuzzy
 msgid "Total Paid"
-msgstr "Végösszeg"
+msgstr ""
 
 #: UI/accounts/edit.html:366
 msgid "Tracking Items"
@@ -8800,8 +8266,7 @@ msgstr "Tranzakció"
 msgid "Transaction Approval"
 msgstr "Tranzakció jóváhagyás"
 
-# 94%
-#: LedgerSMB/Report/PNL/Invoice.pm:88 UI/import_csv/import_csv.html:47
+#: LedgerSMB/Report/PNL/Invoice.pm:89 UI/import_csv/import_csv.html:47
 #: UI/import_csv/import_inventory_csv.html:33
 #: UI/Reports/filters/purchase_history.html:132
 msgid "Transaction Date"
@@ -8815,8 +8280,6 @@ msgstr "Tranzakció dátuma hiányzik!"
 msgid "Transaction Dates"
 msgstr "Tranzakció dátumok"
 
-# 94%
-# 81%
 #: UI/reconciliation/report.html:78 UI/reconciliation/report.html:141
 #: UI/Reports/filters/unapproved.html:39
 msgid "Transaction Type"
@@ -8859,7 +8322,7 @@ msgstr "Fordítások"
 msgid "Translations saved!"
 msgstr "A fordítások mentése megtörtént!"
 
-#: LedgerSMB/Report/Trial_Balance.pm:140 sql/Pg-database.sql:2857
+#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2857
 msgid "Trial Balance"
 msgstr "Főkönyvi kivonat"
 
@@ -8867,10 +8330,9 @@ msgstr "Főkönyvi kivonat"
 msgid "Trillion"
 msgstr "billió"
 
-#: LedgerSMB/Report/Timecards.pm:129
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:130
 msgid "Tue"
-msgstr "Esedékes"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:87
 msgid "Twelve"
@@ -8901,9 +8363,8 @@ msgid "Twenty One"
 msgstr "huszonegy"
 
 #: LedgerSMB/Num2text.pm:97
-#, fuzzy
 msgid "Twenty One-o"
-msgstr "huszonegy"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:103
 msgid "Twenty Seven"
@@ -8938,11 +8399,10 @@ msgstr "Típus"
 msgid "Type of Business"
 msgstr "Partnercsoportok"
 
-# 80%
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
 msgid "Type:"
-msgstr "Típus:"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
@@ -8956,6 +8416,11 @@ msgstr "A szkript nem nyitható meg"
 msgid "Unable to save contact information"
 msgstr "Nem lehet elmenteni a kapcsolat információt"
 
+#: UI/Reports/filters/unapproved.html:72
+#, fuzzy
+msgid "Unapproved"
+msgstr "Jóváhagyva"
+
 #: UI/rc-display-form.html:78
 msgid "Under"
 msgstr "Alatta"
@@ -8964,19 +8429,19 @@ msgstr "Alatta"
 msgid "Unexpected file name, expected [_1], got [_2]"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:259
+#: LedgerSMB/Upgrade_Tests.pm:261
 msgid "Unique AR Invoice numbers"
 msgstr "Egyedi vevőszámla azonosítók"
 
-#: LedgerSMB/Upgrade_Tests.pm:159
+#: LedgerSMB/Upgrade_Tests.pm:160
 msgid "Unique Customernumber"
 msgstr "Egyedi vevő azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:178
+#: LedgerSMB/Upgrade_Tests.pm:179
 msgid "Unique Vendornumber"
 msgstr "Egyedi szállító azonosító"
 
-#: LedgerSMB/Upgrade_Tests.pm:244 LedgerSMB/Upgrade_Tests.pm:589
+#: LedgerSMB/Upgrade_Tests.pm:246 LedgerSMB/Upgrade_Tests.pm:596
 msgid "Unique nonobsolete partnumbers"
 msgstr "Egyedi élő cikkszám"
 
@@ -9008,18 +8473,18 @@ msgstr "Egység"
 msgid "Unit Price"
 msgstr "Egységár"
 
-#: LedgerSMB/Upgrade_Tests.pm:692
+#: LedgerSMB/Upgrade_Tests.pm:699
 msgid "Unknown "
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:674
+#: LedgerSMB/Upgrade_Tests.pm:681
 msgid ""
-"Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)"
-"Q(uity))"
+"Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
+"(e)Q(uity))"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:656
-msgid "Unknown charttype; should be H(eader)/A(ccount))"
+#: LedgerSMB/Upgrade_Tests.pm:663
+msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:187
@@ -9027,42 +8492,32 @@ msgid "Unknown database found."
 msgstr "Ismeretlen adatbázist találtam."
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:254
-#, fuzzy
 msgid "Unlock"
-msgstr "Unlock System"
+msgstr ""
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:231
-#, fuzzy
 msgid "Unlock Batch"
-msgstr "Unlock System"
-
-#: UI/Reports/filters/unapproved.html:72
-#, fuzzy
-msgid "Unpproved"
-msgstr "Jóváhagyva"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:23
 msgid "Unsupported Number"
 msgstr "Nem támogatott szám"
 
-#: LedgerSMB/Upgrade_Tests.pm:382
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:386
 msgid "Unsupported account categories"
-msgstr "Nem támogatott számla típus"
+msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:400
-#, fuzzy
+#: LedgerSMB/Upgrade_Tests.pm:405
 msgid "Unsupported account link combinations"
-msgstr "Nem támogatott számla típus"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:459
 msgid "Unsupported account type"
 msgstr "Nem támogatott számla típus"
 
 #: UI/Reports/filters/contact_search.html:16
-#, fuzzy
 msgid "Unsupported.  Expect errors"
-msgstr "Nem támogatott számla típus"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:120
 msgid "Unused"
@@ -9072,7 +8527,7 @@ msgstr ""
 #: bin/ir.pl:550 bin/ir.pl:963 bin/is.pl:568 bin/is.pl:1012 bin/oe.pl:633
 #: bin/oe.pl:853 bin/oe.pl:1942 bin/pe.pl:620 LedgerSMB/Scripts/budgets.pm:96
 #: UI/am-taxes.html:65 UI/payments/payment2.html:440
-#: UI/payments/payments_detail.html:464 UI/payroll/deduction.html:90
+#: UI/payments/payments_detail.html:468 UI/payroll/deduction.html:90
 #: UI/payroll/income.html:96 UI/reconciliation/report.html:263
 msgid "Update"
 msgstr "Frissítés"
@@ -9094,14 +8549,12 @@ msgid "Upload"
 msgstr "Feltöltés"
 
 #: LedgerSMB/Report/File/Incoming.pm:56 LedgerSMB/Report/File/Internal.pm:54
-#, fuzzy
 msgid "Uploaded At"
-msgstr "Feltöltés"
+msgstr ""
 
 #: LedgerSMB/Report/File/Incoming.pm:59 LedgerSMB/Report/File/Internal.pm:57
-#, fuzzy
 msgid "Uploaded By"
-msgstr "Feltöltés"
+msgstr ""
 
 #: UI/file/attachment_screen.html:26
 msgid "Url"
@@ -9121,15 +8574,13 @@ msgid "Use Overpayment"
 msgstr "Saját túlfizetés használata"
 
 #: bin/io.pl:2281
-#, fuzzy
 msgid "Use Shipto"
-msgstr "Szállítási cím"
+msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1584
+#: LedgerSMB/Scripts/payment.pm:1581
 msgid "Use overpayment/prepayment"
 msgstr "Használja a túlfizetést/előutalást"
 
-# 75%
 #: LedgerSMB/Report/Budget/Variance.pm:87
 msgid "Used"
 msgstr "Használt"
@@ -9140,11 +8591,10 @@ msgid "User"
 msgstr "Felhasználó"
 
 #: UI/login.html:41
-#, fuzzy
 msgid "User Name"
-msgstr "Felhasználónév"
+msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:920
+#: LedgerSMB/Scripts/setup.pm:924
 msgid "User already exists. Import?"
 msgstr "A felhasználó már létezik. Beolvassa az adatait?"
 
@@ -9158,7 +8608,6 @@ msgstr "Felhasználónév"
 msgid "Username:"
 msgstr "Felhasználónév:"
 
-# 80%
 #: UI/setup/complete.html:28 UI/setup/confirm_operation.html:46
 #: UI/setup/confirm_operation.html:111
 msgid "Users"
@@ -9188,7 +8637,6 @@ msgstr "Érvényesség"
 msgid "Variance"
 msgstr "Eltérés"
 
-# 88%
 #: UI/reconciliation/report.html:40
 msgid "Variance:"
 msgstr "Eltérés:"
@@ -9208,9 +8656,8 @@ msgid "Vendor"
 msgstr "Szállító"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:246
-#, fuzzy
 msgid "Vendor Account"
-msgstr "Vevő/Szállító számlák"
+msgstr ""
 
 #: sql/Pg-database.sql:2785
 msgid "Vendor History"
@@ -9225,7 +8672,6 @@ msgstr "Új beszerzési számla"
 msgid "Vendor Invoice/AP Transaction Number"
 msgstr "Szállító számla/tranzakció azonosító"
 
-# 76%
 #: UI/payments/payment1.html:37 UI/payments/payment2.html:32
 #: UI/Reports/filters/orders.html:6
 msgid "Vendor Name"
@@ -9269,9 +8715,8 @@ msgid "Version"
 msgstr "Verzió"
 
 #: UI/am-company-logo.html:6
-#, fuzzy
 msgid "Version [_1]"
-msgstr "Verzió [_1]"
+msgstr ""
 
 #: bin/is.pl:587
 msgid "Void"
@@ -9286,14 +8731,12 @@ msgid "Vouchers"
 msgstr "Utalványok"
 
 #: UI/Contact/divs/wage.html:2
-#, fuzzy
 msgid "Wages and Deductions"
-msgstr "Levonás hozzáadása"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:179
-#, fuzzy
 msgid "Wages/Deductions"
-msgstr "Levonások"
+msgstr ""
 
 #: bin/oe.pl:1730 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
@@ -9319,12 +8762,11 @@ msgstr "Raktárak"
 msgid "Warning!"
 msgstr "Figyelmeztetés!"
 
-#: UI/lib/ui-header.html:26
-#, fuzzy
+#: UI/lib/ui-header.html:33
 msgid "Warning:  Your password will expire in [_1]"
-msgstr "Figyelem! A jelszava érvényessége [_1] "
+msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:133
+#: LedgerSMB/Report/Timecards.pm:134
 msgid "Wed"
 msgstr ""
 
@@ -9332,10 +8774,9 @@ msgstr ""
 msgid "Week"
 msgstr "Hét"
 
-#: LedgerSMB/Report/Timecards.pm:96
-#, fuzzy
+#: LedgerSMB/Report/Timecards.pm:97
 msgid "Week Starting"
-msgstr "Kezdési dátum"
+msgstr ""
 
 #: bin/arap.pl:532
 msgid "Week(s)"
@@ -9372,9 +8813,8 @@ msgid "Whole Month Straight Line"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:124
-#, fuzzy
 msgid "Widgit Themes"
-msgstr "Sablon szerkesztése"
+msgstr ""
 
 #: bin/am.pl:1521 bin/io.pl:1405 bin/io.pl:1596 bin/oe.pl:246
 #: templates/demo_with_images/work_order.html:4
@@ -9403,9 +8843,8 @@ msgid "Year"
 msgstr "Év"
 
 #: sql/Pg-database.sql:2856
-#, fuzzy
 msgid "Year End"
-msgstr "Évzárás"
+msgstr ""
 
 #: bin/arap.pl:534
 msgid "Year(s)"
@@ -9434,13 +8873,12 @@ msgid "You are logged out!"
 msgstr "Ön sikeresen kijelentkezett a rendszerből!"
 
 #: UI/users/preferences.html:23
-#, fuzzy
 msgid "Your password will expire in [_1]"
-msgstr "A jelszava érvényessége még [_1]"
+msgstr ""
 
 #: t/data/04-complex_template.html:388
 msgid "ZIP/Post Code"
-msgstr "Irányítószám"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:73
 msgid "Zero"
@@ -9454,10 +8892,9 @@ msgstr "Ir. szám."
 msgid "Zip/Post Code"
 msgstr "Irányítószám"
 
-# 80%
 #: t/data/04-complex_template.html:463
 msgid "Zip/Post Code:"
-msgstr "Irányítószám:"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:102
 #: UI/Reports/filters/purchase_history.html:94
@@ -9465,63 +8902,46 @@ msgid "Zip/Postal Code"
 msgstr "Irányítószám"
 
 #: LedgerSMB/Report/PNL.pm:146
-#, fuzzy
 msgid ""
 "[_1]\n"
 "[_2]"
-msgstr "[_1]-tól [_2]-ig"
+msgstr ""
 
-# 89%
-# 90%
 #: bin/gl.pl:201
-#, fuzzy
 msgid "[_1] Cash Transfer Transaction"
-msgstr "[_1] számlák közötti pénzmozgás"
+msgstr ""
 
 #: bin/aa.pl:395
-#, fuzzy
 msgid "[_1] Credit Note"
-msgstr "Új kéziszámla korrekció"
+msgstr ""
 
 #: bin/aa.pl:399
-#, fuzzy
 msgid "[_1] Debit Note"
-msgstr "Új kéziszámla korrekció"
+msgstr ""
 
-# 90%
 #: bin/gl.pl:204
-#, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "[_1] vegyes könyvelési tranzakció"
+msgstr ""
 
 #: bin/arap.pl:173
-#, fuzzy
 msgid "[_1] Number"
-msgstr "[_1] azonosító"
+msgstr ""
 
 #: bin/aa.pl:388
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Tranzakció"
+msgstr ""
 
-# 84%
-# 88%
 #: bin/ic.pl:1656
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "[_1]: A vevő hiányzik az adatbázisból!"
+msgstr ""
 
-# 82%
-# 88%
 #: bin/ic.pl:1578
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "[_1]: Szállító nincs az adatbázisban!"
+msgstr ""
 
 #: LedgerSMB/Form.pm:710
-#, fuzzy
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
-msgstr "Érvénytelen átirányítás"
+msgstr ""
 
 #: bin/old-handler.pl:184
 msgid "action not defined!"
@@ -9532,21 +8952,17 @@ msgid "as at"
 msgstr "fordulónap"
 
 #: UI/Reports/co/filter_bm.html:114
-#, fuzzy
 msgid "balance"
-msgstr "Egyenleg"
+msgstr ""
 
-# 75%
 #: LedgerSMB/DBObject/Payment.pm:476
 msgid "cash"
 msgstr "bankkivonat"
 
-# 80%
 #: LedgerSMB/DBObject/Payment.pm:477
 msgid "check"
 msgstr "pénztárbizonylat"
 
-# 75%
 #: bin/io.pl:2110
 msgid "city"
 msgstr "város"
@@ -9557,31 +8973,25 @@ msgstr "város"
 msgid "days"
 msgstr "nap"
 
-# 83%
 #: UI/Reports/co/filter_bm.html:99
-#, fuzzy
 msgid "debits"
-msgstr "Tartozik"
+msgstr ""
 
-# 83%
 #: LedgerSMB/Scripts/admin.pm:141
 msgid "delete"
 msgstr "törlés"
 
-# 85%
 #: LedgerSMB/DBObject/Payment.pm:478
 msgid "deposit"
 msgstr "utalvány"
 
 #: sql/Pg-database.sql:3830
-#, fuzzy
 msgid "depreciation"
-msgstr "Értékcsökkenés"
+msgstr ""
 
 #: sql/Pg-database.sql:3831
-#, fuzzy
 msgid "disposal"
-msgstr "Selejtezés"
+msgstr ""
 
 #: bin/am.pl:1272 bin/am.pl:1343 bin/am.pl:1397 bin/am.pl:1448 bin/am.pl:1498
 msgid "done"
@@ -9596,38 +9006,34 @@ msgid "failed"
 msgstr "nem sikerült"
 
 #: t/data/04-gettext.tex:10
-#, fuzzy
 msgid "fr"
-msgstr "for"
+msgstr ""
 
 #: sql/Pg-database.sql:3832
-#, fuzzy
 msgid "import"
-msgstr "Import"
+msgstr ""
 
 #: sql/Pg-database.sql:3757
-#, fuzzy
 msgid "in months"
-msgstr "Hónapok"
+msgstr ""
 
 #: sql/Pg-database.sql:3752 sql/Pg-database.sql:3760
-#, fuzzy
 msgid "in years"
-msgstr "Évek"
+msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1709
+#: LedgerSMB/Scripts/payment.pm:1706
 msgid "is bigger than the amount available"
 msgstr "nagyobb, mint a rendelkezésre álló összeg"
 
-#: LedgerSMB/Scripts/payment.pm:1463
+#: LedgerSMB/Scripts/payment.pm:1460
 msgid "is lesser than 0"
 msgstr "kevesebb mint 0"
 
-#: LedgerSMB/Scripts/payment.pm:1457
+#: LedgerSMB/Scripts/payment.pm:1454
 msgid "is lesser than the amount to be paid"
 msgstr "kevesebb, mint a valós fizetés értéke"
 
-#: LedgerSMB/Scripts/payment.pm:1677
+#: LedgerSMB/Scripts/payment.pm:1674
 msgid "is null"
 msgstr "nulla"
 
@@ -9637,49 +9043,43 @@ msgstr "Címke"
 
 #: t/data/04-gettext.html:3 t/data/04-gettext.html:4
 msgid "nl"
-msgstr "nl"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:479
 msgid "other"
 msgstr "egyéb"
 
 #: sql/Pg-database.sql:3833
-#, fuzzy
 msgid "partial disposal"
-msgstr "Eszköz részleges selejtezés jelentés"
+msgstr ""
 
 #: UI/Reports/aging_report.html:108 UI/Reports/display_report.html:61
 msgid "permalink"
 msgstr ""
 
 #: sql/Pg-database.sql:3722
-#, fuzzy
 msgid "production"
-msgstr "Gyártás"
+msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:226
-#, fuzzy
 msgid "psql not found."
-msgstr "A részlet nem található"
+msgstr ""
 
 #: bin/arap.pl:809 bin/io.pl:1922
 msgid "sent"
 msgstr "elküldve"
 
 #: UI/Reports/co/filter_bm.html:92
-#, fuzzy
 msgid "starting_balance"
-msgstr "Nyitó egyenleg"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:375
-#, fuzzy
 msgid "subtotal"
-msgstr "Részösszeg"
+msgstr ""
 
 #: sql/Pg-database.sql:3721
-#, fuzzy
 msgid "time"
-msgstr "-szor"
+msgstr ""
 
 #: bin/arap.pl:561
 msgid "time(s)"
@@ -9689,8 +9089,8 @@ msgstr "-szor"
 msgid "unexpected error!"
 msgstr "váratlan hiba!"
 
-#: LedgerSMB/Scripts/payment.pm:1717 LedgerSMB/Scripts/payment.pm:1734
-#: LedgerSMB/Scripts/payment.pm:1789 LedgerSMB/Scripts/payment.pm:1806
+#: LedgerSMB/Scripts/payment.pm:1714 LedgerSMB/Scripts/payment.pm:1731
+#: LedgerSMB/Scripts/payment.pm:1786 LedgerSMB/Scripts/payment.pm:1803
 msgid "use of an overpayment"
 msgstr "felhasznál egy túlfizetést"
 
@@ -9698,1644 +9098,14 @@ msgstr "felhasznál egy túlfizetést"
 msgid "zh_CN"
 msgstr ""
 
-#~ msgid " "
-#~ msgstr " "
+#~ msgid "Ignore Yearends"
+#~ msgstr "Évzárás figyelmen kívül hagyása"
 
-# 92%
-#~ msgid " Date missing!"
-#~ msgstr " A dátum hiányzik!"
+#~ msgid "Logged in as"
+#~ msgstr "Bejelentkezve mint"
 
-#~ msgid " missing!"
-#~ msgstr " hiányzik!"
+#~ msgid "Order#"
+#~ msgstr "Rendelés#"
 
-#~ msgid "$contact_type Number"
-#~ msgstr "$contact_type Azonosító"
-
-#~ msgid "$entity_classname Number"
-#~ msgstr "$entity_classname Azonosító"
-
-#~ msgid "$entity_classname Number:"
-#~ msgstr "$entity_classname azonosító:"
-
-#~ msgid "$entity_type Number"
-#~ msgstr "$entity_type Azonosító"
-
-#~ msgid "$entity_type Search"
-#~ msgstr "$entitiy_type keresés"
-
-#~ msgid "$operation $entity_classname"
-#~ msgstr "$operation $entity_classname"
-
-#~ msgid "$operation Employee"
-#~ msgstr "$operation Alkalmazott"
-
-#~ msgid "$operation Person"
-#~ msgstr "$operation Személy"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "- Used"
-#~ msgstr "- Használt"
-
-#~ msgid "= Variance"
-#~ msgstr "= Eltérés"
-
-#~ msgid "A"
-#~ msgstr "Árvált."
-
-#~ msgid "AR/AP"
-#~ msgstr "Vevők/Szállítók"
-
-#~ msgid "About"
-#~ msgstr "Névjegy"
-
-#~ msgid "Above"
-#~ msgstr "Fent"
-
-#~ msgid "Access Control"
-#~ msgstr "Hozzáférési jogok"
-
-#~ msgid "Access Denied!"
-#~ msgstr "Hozzáférés megtagadva!"
-
-# Számla vagy felhasználói fiók?
-#~ msgid "Account Number missing!"
-#~ msgstr "Számlaszám hiányzik!"
-
-# Számla vagy felhasználói fiók?
-#~ msgid "Account Type missing!"
-#~ msgstr "Számlatípus hiányzik!"
-
-#~ msgid "Account deleted!"
-#~ msgstr "Számla törölve!"
-
-#~ msgid "Account saved!"
-#~ msgstr "Számla elmentve!"
-
-#~ msgid "Account: [_1]"
-#~ msgstr "Számla: [_1]"
-
-#~ msgid "Accounting"
-#~ msgstr "Könyvelés"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Menü"
-
-#, fuzzy
-#~ msgid "Accounts can\\"
-#~ msgstr "Számlák"
-
-#~ msgid "Add Cash Transfer Transaction"
-#~ msgstr "Új számlák közötti pénzmozgás"
-
-#~ msgid "Add Department"
-#~ msgstr "Új center"
-
-#~ msgid "Add General Ledger Transaction"
-#~ msgstr "Új főkönyvi könyvelés"
-
-#~ msgid "Add Job"
-#~ msgstr "Új feladat"
-
-#~ msgid "Add POS Invoice"
-#~ msgstr "Új nyugta"
-
-#~ msgid "Add Project"
-#~ msgstr "Új projekt"
-
-#~ msgid "Add Stores Card"
-#~ msgstr "Új tároló kártya"
-
-#~ msgid "Add Time Card"
-#~ msgstr "Új munkalap"
-
-#~ msgid "Adjust Till"
-#~ msgstr "Kassza helyesbítése"
-
-#~ msgid "Admin"
-#~ msgstr "Adminisztrátor"
-
-#~ msgid "Administration"
-#~ msgstr "Rendszerfelügyelet"
-
-#~ msgid "Administrator"
-#~ msgstr "Rendszergazda"
-
-#~ msgid "After Deduction"
-#~ msgstr "Levonás után"
-
-#~ msgid "Aged Overdue"
-#~ msgstr "Lejárati lista"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "Összes ügyféladatbázis frissítve!"
-
-#~ msgid "All Items"
-#~ msgstr "Minden tétel"
-
-#~ msgid "All amounts in [_1] Funds"
-#~ msgstr "A teljes összeg [_1]ban értendő"
-
-#~ msgid "Allowances"
-#~ msgstr "Juttatások"
-
-#~ msgid "Amount missing!"
-#~ msgstr "Összeg hiányzik!"
-
-#~ msgid "Are you sure you want to delete Invoice Number"
-#~ msgstr "Biztos benne, hogy törölni akarja? Számlaszám:"
-
-# 92%
-# 94%
-#~ msgid "Are you sure you want to delete Invoice Number [_1]?"
-#~ msgstr "Biztosan törölni szeretné a [_1] számú számlát?"
-
-#~ msgid "Are you sure you want to delete Timecard for"
-#~ msgstr "Biztos benne, hogy törölni akarja az időkártyát"
-
-#~ msgid "Are you sure you want to delete Transaction"
-#~ msgstr "Biztosan törölni akarja a tranzakciót"
-
-# 93%
-#~ msgid "Are you sure you want to delete Transaction [_1]"
-#~ msgstr "Biztosan törölni akarja a [_1] tranzakciót"
-
-#~ msgid "Are you sure you want to delete time card for"
-#~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
-
-# 83%
-# 85%
-#~ msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-#~ msgstr "Biztosan törölni szeretné a munkalapot [_1] [_2] [_3]"
-
-#~ msgid "Are you sure you want to remove the marked entries from the queue?"
-#~ msgstr "Biztosan el akarja távolítani a kijelölt tételeket a várólistáról?"
-
-#~ msgid "As of"
-#~ msgstr "-óta"
-
-#~ msgid "Assemblies"
-#~ msgstr "Saját termékek"
-
-#~ msgid "Assembly"
-#~ msgstr "Saját termék"
-
-#~ msgid "Assembly stocked!"
-#~ msgstr "Saját termék bevételezése megtörtént."
-
-#~ msgid "Audit trail disabled"
-#~ msgstr "Pénzügyi ellenőrzés nyomkövetése kikapcsolva"
-
-#~ msgid "Audit trail enabled"
-#~ msgstr "Pénzügyi ellenőrzés nyomkövetése bekapcsolva"
-
-#~ msgid "Audit trail removed up to"
-#~ msgstr "Audit követés törlés dátuma"
-
-#~ msgid "Backup sent to"
-#~ msgstr "Biztonsági másolat elküldve:"
-
-# 82%
-#, fuzzy
-#~ msgid "Backup sent to [_1]"
-#~ msgstr "Biztonsági másolat elküldve:"
-
-#~ msgid "Based on"
-#~ msgstr "Alapján"
-
-#~ msgid "Batch Printing"
-#~ msgstr "Kötegelt nyomtatás"
-
-#~ msgid "Before Deduction"
-#~ msgstr "Levonás előtt"
-
-#~ msgid "Beginning Balance"
-#~ msgstr "Nyitóegyenleg"
-
-#~ msgid "Below"
-#~ msgstr "Alatt"
-
-#~ msgid "Billing Address"
-#~ msgstr "Számlázási cím"
-
-#~ msgid "Bin Lists"
-#~ msgstr "Polclista"
-
-# Nyilván számlát nem, leginkább ügyféladatbázis, rendelések/ajánlatok stb. Vagy nem.
-#~ msgid "Books are open"
-#~ msgstr "A könyvelés nyitott"
-
-#~ msgid "COGS account does not exist!"
-#~ msgstr "Nincs ELÁBÉ számla!"
-
-#~ msgid "Calc. Precision"
-#~ msgstr "Számítás pontossága"
-
-#~ msgid "Calculate"
-#~ msgstr "Kiszámol"
-
-#~ msgid "Cannot add stores card for a completed job!"
-#~ msgstr "Befejezett feladathoz nem adható tároló kártya!"
-
-#~ msgid "Cannot add time card for a completed job!"
-#~ msgstr "Befejezett feladathoz nem adható munkalap!"
-
-#~ msgid "Cannot add timecard for a completed job!"
-#~ msgstr "Befejezett munkához nem adható időkártya!"
-
-#~ msgid "Cannot change stores card for a completed job!"
-#~ msgstr "Befejezett feladatnál nem módosítható tároló kártya!"
-
-#~ msgid "Cannot change time card for a completed job!"
-#~ msgstr "Befejezett feladathoz nem módosítható munkalap!"
-
-#~ msgid "Cannot change timecard for a completed job!"
-#~ msgstr "Befejezett munkánál nem változtatható az időkártya!"
-
-#~ msgid "Cannot create Assembly"
-#~ msgstr "Nem hozható létre alkatrész"
-
-#~ msgid "Cannot create Assembly; Income account does not exist!"
-#~ msgstr "Nem lehet saját terméket létrehozni; nem létezik bevétel számla!"
-
-#~ msgid "Cannot create Labor"
-#~ msgstr "Nem hozható létre Labor"
-
-#~ msgid "Cannot create Lock!"
-#~ msgstr "Nem hozható létre Lock!"
-
-#~ msgid "Cannot create Part"
-#~ msgstr "Nem hozható létre cikk!"
-
-#~ msgid "Cannot create Service"
-#~ msgstr "Nem hozható létre szolgáltatás!"
-
-#~ msgid "Cannot delete Timecard!"
-#~ msgstr "Az időkártyát nem lehet törölni!"
-
-#~ msgid "Cannot delete account!"
-#~ msgstr "A számlát nem lehet törölni!"
-
-#~ msgid "Cannot delete customer!"
-#~ msgstr "A vevőt nem lehet törölni!"
-
-#~ msgid "Cannot delete default account!"
-#~ msgstr "Az alapbeállítású számlát nem lehet törölni!"
-
-#~ msgid "Cannot delete invoice!"
-#~ msgstr "A vevőszámlát nem lehet törölni!"
-
-#~ msgid "Cannot delete time card!"
-#~ msgstr "A munkalapot nem lehet törölni!"
-
-#~ msgid "Cannot delete vendor!"
-#~ msgstr "A szállítót nem lehet törölni!"
-
-#~ msgid "Cannot find Contrib script [_1] in [_2]."
-#~ msgstr "Nem található a [_1] Contrib szkript ezen az útvonalon: [_2]."
-
-#~ msgid "Cannot post Payment!"
-#~ msgstr "A kifizetést nem tudom rögzíteni!"
-
-#~ msgid "Cannot post Receipt!"
-#~ msgstr "A befizetést nem tudom rögzíteni!"
-
-#~ msgid "Cannot post invoice!"
-#~ msgstr "Nem lehet vevőszámlát rögzíteni!"
-
-#~ msgid "Cannot remove files!"
-#~ msgstr "Nem lehet a fájlokat törölni!"
-
-#~ msgid "Cannot save account!"
-#~ msgstr "A számlát nem lehet elmenteni!"
-
-#~ msgid "Cannot save defaults!"
-#~ msgstr "Az alapértelmezett beállításokat nem lehet elmenteni!"
-
-#~ msgid "Cannot save preferences!"
-#~ msgstr "A beállításokat nem lehet elmenteni!"
-
-#~ msgid "Cannot save stores card for a closed period!"
-#~ msgstr "Lezárt időszakhoz nem adható tároló kártya!"
-
-#~ msgid "Cannot save stores card!"
-#~ msgstr "Nem lehet elmenteni a tároló kártyát!"
-
-#~ msgid "Cannot save time card for a closed period!"
-#~ msgstr "Lezárt időszakhoz nem adható munkalap!"
-
-#~ msgid "Cannot save time card!"
-#~ msgstr "Nem lehet elmenteni a munkalapot!"
-
-#~ msgid "Cannot save timecard for a closed period!"
-#~ msgstr "Lezárt periódushoz nem adható időkártya!"
-
-#~ msgid "Cannot save timecard!"
-#~ msgstr "Nem lehet elmenteni az időkártyát!"
-
-#~ msgid "Cannot set account for more than one of AR, AP or IC"
-#~ msgstr ""
-#~ "Gyűjtőszámla csak egyféle lehet ezek közül: Vevők, Szállítók vagy Készlet"
-
-#~ msgid "Cannot set multiple options for"
-#~ msgstr "Nem lehet beállítani a töbszörös opciót"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Nem lehet beállítani a töbszörös opciót a tételre"
-
-#~ msgid "Cannot set multiple options for [_1]"
-#~ msgstr "Nem lehet több opciót beállítani ehhez: [_1]"
-
-#~ msgid "Cannot stock Assembly!"
-#~ msgstr "Nem lehet a saját terméket bevételezni!"
-
-#~ msgid "Caps not allowed in usernames."
-#~ msgstr "Nagybetű nem engedélyezett felhasználónévben."
-
-#~ msgid "Cash Breakdown:"
-#~ msgstr "Készpénz bontása:"
-
-#~ msgid "Change"
-#~ msgstr "Visszajáró"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Rendszergazda jelszavának megváltoztatása"
-
-#~ msgid "Changes not saved.  Please try again."
-#~ msgstr "A változások nem kerültek mentésre. Kérem próbálja újra."
-
-#~ msgid "Charge"
-#~ msgstr "Díj"
-
-# hourly - rezsióradíj, ilyesmik.
-#~ msgid "Chargeout Rate"
-#~ msgstr "Átalánydíj"
-
-#~ msgid "Check ID"
-#~ msgstr "Csekk ID"
-
-#~ msgid "Checks"
-#~ msgstr "Csekkek"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Módosításhoz klikkeljen a felhasználó nevére!"
-
-#~ msgid "Close Till"
-#~ msgstr "Kassza zárása"
-
-#~ msgid "Closing Till For [_1]"
-#~ msgstr "Kassza lezárása eddig [_1]"
-
-#~ msgid "Completed"
-#~ msgstr "Befejezve"
-
-#~ msgid "Components"
-#~ msgstr "Komponensek"
-
-#~ msgid "Conflict with Existing Data"
-#~ msgstr "Meglévő adatokkal való ütközés"
-
-#~ msgid "Congratulations!  Your till is exactly balanced."
-#~ msgstr "Gratulálok! A kassza egyenlege rendben van!"
-
-#~ msgid "Connect to"
-#~ msgstr "Csatlakozva ehhez:"
-
-#~ msgid "Consolidate"
-#~ msgstr "Összevonás"
-
-#~ msgid "Consolidate Orders"
-#~ msgstr "Rendelések összevonása"
-
-#~ msgid "Could not save pricelist!"
-#~ msgstr "Nem lehet elmenteni az árlistát!"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Számlatükör készítése"
-
-#~ msgid "Create Dataset"
-#~ msgstr "Új cégadatbázis"
-
-#~ msgid "Created"
-#~ msgstr "Létrehozva"
-
-# Ez vajon mi?
-#~ msgid "Credit Card Track"
-#~ msgstr "Hitelkártya sáv"
-
-#~ msgid "Cumulative Error: [_1]"
-#~ msgstr "Összesített hiba: [_1]"
-
-#~ msgid "Customer Invoice"
-#~ msgstr "Vevő számla"
-
-#~ msgid "Customer deleted!"
-#~ msgstr "Vevő törölve!"
-
-#~ msgid "Customer saved!"
-#~ msgstr "Vevő elmentve!"
-
-#~ msgid "Customer: [_1]"
-#~ msgstr "Vevő: [_1]"
-
-#~ msgid "Customers"
-#~ msgstr "Vevők"
-
-#~ msgid "DBA"
-#~ msgstr "DBA"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "DBI program nincs installálva!"
-
-#~ msgid "Database Administration"
-#~ msgstr "Adatbázis felügyelet"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Nincs kijelölve az adatbázismotor típusa!"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Adatbázis felhasználója hiányzik!"
-
-#~ msgid "Dataset is newer than version!"
-#~ msgstr "A Cégadatbázis verziója újabb, mint a programé!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Cégadatbázis hiányzik!"
-
-#~ msgid "Dataset updated!"
-#~ msgstr "Cégadatbázis frissítve!"
-
-#~ msgid "Date missing!"
-#~ msgstr "A dátum hiányzik!"
-
-#~ msgid "Decimalplaces"
-#~ msgstr "Tizedeshelyek"
-
-#~ msgid "Decrease"
-#~ msgstr "Csökkenés"
-
-#~ msgid "Deduct after"
-#~ msgstr "Levonás ezután"
-
-#~ msgid "Deduction deleted!"
-#~ msgstr "Levonás törölve"
-
-#~ msgid "Deduction saved!"
-#~ msgstr "Levonás elmentve"
-
-# 87%
-#~ msgid "Default"
-#~ msgstr "Alapbeállítások"
-
-#~ msgid "Default Template"
-#~ msgstr "Alapértelmezett sablon"
-
-#~ msgid "Defaults saved!"
-#~ msgstr "Alapértelmezett beállítások elmentve!"
-
-#~ msgid "Delete Dataset"
-#~ msgstr "Cégadatbázis törlése"
-
-#~ msgid "Delete Timecard"
-#~ msgstr "Munkalap törlése"
-
-#~ msgid "Deleting a language will also delete the templates for the language"
-#~ msgstr "A nyelv törlése törli a nyelvhez tartozó sablonokat is"
-
-#~ msgid "Department deleted!"
-#~ msgstr "Költséghely/profitcenter törölve!"
-
-#~ msgid "Department saved!"
-#~ msgstr "Költséghely/profitcenter elmentve!"
-
-# 90%
-#~ msgid "Department:"
-#~ msgstr "Költséghely/profitcenter:"
-
-#~ msgid "Department: [_1]"
-#~ msgstr "Költséghely/profitcenter: [_1]"
-
-#~ msgid "Deposit"
-#~ msgstr "Jóváírás"
-
-#~ msgid "Description: [_1]"
-#~ msgstr "Leírás: [_1]"
-
-#~ msgid "Development version found.  Please upgrade first"
-#~ msgstr "Fejlesztői verziót találtam.  Kérem előbb frissítsen"
-
-#~ msgid "Directory"
-#~ msgstr "Könyvtár"
-
-#~ msgid "Disc."
-#~ msgstr "Árk."
-
-#~ msgid "Discover"
-#~ msgstr "Discover"
-
-#~ msgid "Display Precision"
-#~ msgstr "Megjelenítés pontossága"
-
-#~ msgid "Driver"
-#~ msgstr "Meghajtó"
-
-#~ msgid "Drop from All"
-#~ msgstr "Mindenhonnan töröl"
-
-#~ msgid "Dropdown Limit"
-#~ msgstr "Lenyíló ablak limit"
-
-#~ msgid "E-mail Statement to"
-#~ msgstr "Kimutatás küldése e-mail-ben:"
-
-#~ msgid "Edit Cash Transfer Transaction"
-#~ msgstr "Számlák közötti pénzmozgás szerkesztése"
-
-#~ msgid "Edit Deduction"
-#~ msgstr "Levonások szerkesztése"
-
-#~ msgid "Edit Department"
-#~ msgstr "Osztály szerkesztése"
-
-#~ msgid "Edit General Ledger Transaction"
-#~ msgstr "Vegyes könyvelési tétel módosítása"
-
-#~ msgid "Edit Job"
-#~ msgstr "Feladat módosítása"
-
-#~ msgid "Edit POS Invoice"
-#~ msgstr "Nyugta módosítása"
-
-#~ msgid "Edit Preferences for"
-#~ msgstr "Felhasználói paraméterek módosítása:"
-
-#~ msgid "Edit Preferences for [_1]"
-#~ msgstr "[_1] felhasználó beállításainak módosítása"
-
-#~ msgid "Edit Project"
-#~ msgstr "Projekt módosítása"
-
-#~ msgid "Edit Time Card"
-#~ msgstr "Munkalap módosítása"
-
-#~ msgid "Edit Timecard"
-#~ msgstr "Időkártya szerkesztése"
-
-#~ msgid "Email CSV Report"
-#~ msgstr "CSV jelentés emailben küldése"
-
-#~ msgid "Employee Name"
-#~ msgstr "Alkalmazott neve"
-
-# 76%
-#~ msgid "Employee No."
-#~ msgstr "Alkalmazott ID"
-
-#~ msgid "Employee deleted!"
-#~ msgstr "Alkalmazott törölve "
-
-#~ msgid "Employee pays"
-#~ msgstr "Alkalmazott fizet"
-
-#~ msgid "Employee saved!"
-#~ msgstr "Alkalmazott elmentve!"
-
-#~ msgid "Employer"
-#~ msgstr "Munkaadó"
-
-#~ msgid "Employer pays"
-#~ msgstr "Munkaadó fizet"
-
-#~ msgid "Empty"
-#~ msgstr "Üres"
-
-#~ msgid "End Balance"
-#~ msgstr "Záró egyenleg"
-
-#~ msgid "Enddate"
-#~ msgstr "Befejező dátum"
-
-#~ msgid ""
-#~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
-#~ "native and foreign currencies"
-#~ msgstr ""
-#~ "A saját és külföldi devizákat jelölje 3 betűvel kettősponttal elválasztva! "
-#~ "(pl. HUF:EUR:USD)"
-
-#~ msgid "Entered by"
-#~ msgstr "Rögzítette"
-
-#~ msgid "Error from Function"
-#~ msgstr "Hiba a funkcióban"
-
-#~ msgid "Excempt age <"
-#~ msgstr "Mentességi kor"
-
-#, fuzzy
-#~ msgid "Exchange rate hasn\\"
-#~ msgstr "Az átváltási árfolyam hiányzik!"
-
-#~ msgid "Exempt age <"
-#~ msgstr "Mentességi kor"
-
-#~ msgid "Existing Datasets"
-#~ msgstr "Létező cégadatbázisok"
-
-#~ msgid "Expense account does not exist!"
-#~ msgstr "Nincs Költségszámla!"
-
-#~ msgid "Field \\\"Name\\\" Not Defined"
-#~ msgstr "A \\\"Name\\\" mező nincs definiálva"
-
-#~ msgid "Filtering $t"
-#~ msgstr "Szűrés $t"
-
-#~ msgid "Friday"
-#~ msgstr "Péntek"
-
-#~ msgid "From [_1]"
-#~ msgstr "Mettől: [_1]"
-
-#~ msgid "GL Transaction"
-#~ msgstr "Főkönyvi tranzakció"
-
-#~ msgid "GL report sent to [_1]"
-#~ msgstr "Főkönyvi jelentés elküldve [_1]"
-
-#~ msgid "General Ledger"
-#~ msgstr "Főkönyvi könyvelés"
-
-#~ msgid "General Ledger: [_1] [_2]"
-#~ msgstr "Főkönyv: [_1] [_2]"
-
-#~ msgid "Generate Sales Order"
-#~ msgstr "Vevőrendelés készítése"
-
-#~ msgid "Gift Cert"
-#~ msgstr "Gift Cert"
-
-#~ msgid "Group Items"
-#~ msgstr "Tételek rendezése csoport alapján"
-
-#~ msgid "Groups"
-#~ msgstr "Csoportok"
-
-#~ msgid "Host"
-#~ msgstr "Adatbázis helye:"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Adatbázis helye hiányzik!"
-
-#~ msgid "IBAN"
-#~ msgstr "Bankszámlaszám"
-
-#~ msgid "Importing User"
-#~ msgstr "Felhasználó importálása"
-
-#~ msgid "Inactive"
-#~ msgstr "Inaktív"
-
-#~ msgid "Include In Report"
-#~ msgstr "Szerepeljen a jelentésben"
-
-#~ msgid "Income / (Loss)"
-#~ msgstr "Bevétel / (Veszteség)"
-
-#~ msgid "Income account does not exist!"
-#~ msgstr "Nincs bevétel számla!"
-
-#~ msgid "Incorrect Dataset version!"
-#~ msgstr "Érvénytelen adatbázisverzió!"
-
-#~ msgid "Increase"
-#~ msgstr "Növekedés"
-
-#~ msgid "Invalid Project Data:"
-#~ msgstr "Valótlan projekt adat:"
-
-#~ msgid "Invalid Year-end filter request!"
-#~ msgstr "Érvénytelen évzárás szűrő kérés!"
-
-#~ msgid "Inventory account does not exist!"
-#~ msgstr "Nincs készlet számla!"
-
-# 77%
-# 85%
-#~ msgid "Invoice Number: [_1]"
-#~ msgstr "Számlaszám: [_1]"
-
-#~ msgid "Invoice deleted!"
-#~ msgstr "A számla törölve!"
-
-#~ msgid "Is this a summary account to record"
-#~ msgstr "Gyűjtőszámlaként szerepeljen ezeknél a tranzakcióknál:"
-
-#~ msgid "Item already on pricelist!"
-#~ msgstr "A cikk már szerepel az árlistában!"
-
-#~ msgid "Items"
-#~ msgstr "Tételek"
-
-#~ msgid "Job"
-#~ msgstr "Feladat"
-
-#~ msgid "Job Name"
-#~ msgstr "Feladat neve"
-
-#~ msgid "Job Number"
-#~ msgstr "Feladat azonosító"
-
-#~ msgid "Job Number missing!"
-#~ msgstr "A feladat azonosítója hiányzik!"
-
-#~ msgid "Job deleted!"
-#~ msgstr "A feladat törlése megtörtént!"
-
-#~ msgid "Job saved!"
-#~ msgstr "A feladat mentése megtörtént!"
-
-#~ msgid "Job/Project Number"
-#~ msgstr "Feladat/Projekt azonosító"
-
-#~ msgid "Jobs"
-#~ msgstr "Feladatok"
-
-#~ msgid "Labor"
-#~ msgstr "Művelet"
-
-#~ msgid "Labor Code missing!"
-#~ msgstr "A művelet kódja hiányzik!"
-
-#~ msgid "Languages"
-#~ msgstr "Nyelvek"
-
-#~ msgid "Last Numbers & Default Accounts"
-#~ msgstr "Legutolsó számok és alapértelmezett számlák"
-
-#~ msgid "Last Only"
-#~ msgstr "Csak az utolsó"
-
-#~ msgid "Last Used"
-#~ msgstr "Legutóbbi aktivitás"
-
-#~ msgid ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-#~ msgstr ""
-#~ "Hagyja üresen a Hely és a Port mezőket, hacsak nem akar távoli kapcsolatot "
-#~ "létesíteni"
-
-#~ msgid "LedgerSMB 1.2 db found"
-#~ msgstr "LedgerSMB 1.2 adatbázist találtam"
-
-#~ msgid "LedgerSMB 1.3 found"
-#~ msgstr "LedgerSMB 1.3 adatbázist találtam"
-
-#~ msgid "LedgerSMB Accounting Menu"
-#~ msgstr "LedgerSMB számvitel menü"
-
-#~ msgid "Legacy version found.  Please upgrade first"
-#~ msgstr "Régi verziót találtam.  Kérem előbb frissítsen"
-
-#~ msgid "Less Cash in Till At Start: [_1]"
-#~ msgstr "Kevés készpénz a kasszában ekkortól: [_1]"
-
-#~ msgid "Licensed to"
-#~ msgstr "Cég:"
-
-#~ msgid "Link"
-#~ msgstr "Kapcsolat"
-
-#~ msgid "List Departments"
-#~ msgstr "Listák"
-
-#~ msgid "List Projects"
-#~ msgstr "Projektlista"
-
-#~ msgid "List Warehouses"
-#~ msgstr "Raktárak"
-
-#~ msgid "Lock System"
-#~ msgstr "Rendszer zárolása"
-
-#~ msgid "Lockfile created!"
-#~ msgstr "Zárolás létrehozva!"
-
-#~ msgid "Lockfile removed!"
-#~ msgstr "Zárolás feloldva!"
-
-#~ msgid "Login name missing!"
-#~ msgstr "Belépési azonosító hiányzik!"
-
-#~ msgid "Manager First Name"
-#~ msgstr "Menedzser keresztneve"
-
-#~ msgid "Manager ID"
-#~ msgstr "Menedzser ID"
-
-#~ msgid "Manager Last Name"
-#~ msgstr "Menedzser vezetékneve"
-
-#~ msgid "Margin Report for Customer"
-#~ msgstr "Árrés jelentés vevőre"
-
-#~ msgid "Margin Report for Invoice"
-#~ msgstr "Számla árrés riport "
-
-#~ msgid "Marked entries printed!"
-#~ msgstr "A kijelölt tételek nyomtatva!"
-
-#~ msgid "Maximum"
-#~ msgstr "Maximum"
-
-#~ msgid "Maximum Value"
-#~ msgstr "Maximum érték"
-
-#~ msgid "Memo: [_1]"
-#~ msgstr "Megjegyzés: [_1]"
-
-#~ msgid "Menu Width"
-#~ msgstr "Menü szélesség"
-
-#~ msgid "Minimum Value"
-#~ msgstr "Minimum érték"
-
-#~ msgid "Monday"
-#~ msgstr "Hétfő"
-
-#~ msgid "Multibyte Encoding"
-#~ msgstr "Multibyte kódolás"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "Name missing!"
-#~ msgstr "Név hiányzik"
-
-#~ msgid "New Templates"
-#~ msgstr "Új sablonok"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "Nincs elérhető adatbázismeghajtó!"
-
-#~ msgid "No Employees on file!"
-#~ msgstr "Nincs alkalmazott a fájlban!"
-
-#~ msgid "No History!"
-#~ msgstr "Nincs hozzá napló bejegyzés!"
-
-# Nem biztos, hogy valójában fájlról van szó.
-#~ msgid "No Labor codes on file!"
-#~ msgstr "Nincs műveletkód a fájlban!"
-
-#~ msgid "No Parts on file!"
-#~ msgstr "Nincs árucikk a fájlban!"
-
-#~ msgid "No Permissions Assigned"
-#~ msgstr "Nincsenek jogosultságok hozzárendelve"
-
-#~ msgid "No Services on file!"
-#~ msgstr "Nincs szolgáltatás a fájlban!"
-
-#~ msgid "No company or credit id in LedgerSMB::DBObject::delete_contact"
-#~ msgstr ""
-#~ "Nincs társaság vagy hitel azonosító ebben: LedgerSMB::DBObject::"
-#~ "delete_contact"
-
-#~ msgid "No company or credit id in LedgerSMB::DBObject::delete_location"
-#~ msgstr ""
-#~ "Nincs társaság vagy hitel azonosító ebben: LedgerSMB::DBObject::"
-#~ "delete_location"
-
-#~ msgid "No email address for"
-#~ msgstr "Nincs e-mail címe:"
-
-# 86%
-#, fuzzy
-#~ msgid "No email address for [_1]"
-#~ msgstr "Nincs e-mail címe:"
-
-#~ msgid "No open Jobs!"
-#~ msgstr "Nincs nyitott feladat!"
-
-# 90%
-#~ msgid "Non-Taxable"
-#~ msgstr "Nem adóköteles"
-
-#~ msgid "Non-taxable Purchases"
-#~ msgstr "Adómentes beszerzések"
-
-#~ msgid "Non-taxable Sales"
-#~ msgstr "Adómentes eladások"
-
-# 75%
-#~ msgid "None"
-#~ msgstr "Semmi"
-
-#~ msgid "Nothing open!"
-#~ msgstr "Nincs nyitva"
-
-#~ msgid "Nothing to delete!"
-#~ msgstr "Nincs mit törölni!"
-
-#~ msgid "Nothing to print!"
-#~ msgstr "Nincs mit kinyomtatni!"
-
-#~ msgid "Number missing in Row"
-#~ msgstr "Ebből a sorból hiányzik a szám:"
-
-#~ msgid "O"
-#~ msgstr "Ny."
-
-#~ msgid "Open Till"
-#~ msgstr "Kassza nyitása"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Oracle adatbázis felügyelet"
-
-# 75%
-# 83%
-#~ msgid "Order Number: [_1]"
-#~ msgstr "Rendelés azonosító: [_1]"
-
-#~ msgid "Order saved!"
-#~ msgstr "Rendelés elmentve!"
-
-#~ msgid "Orphaned"
-#~ msgstr "Tranzakció nélküli"
-
-#~ msgid "Out of balance!"
-#~ msgstr "Az egyenleg nem stimmel!"
-
-#~ msgid "PO"
-#~ msgstr "BR"
-
-#~ msgid "POS"
-#~ msgstr "Nyugta"
-
-#~ msgid "POS Invoice"
-#~ msgstr "Egyszerűsített számla"
-
-#~ msgid "Packing Lists"
-#~ msgstr "Szállítólevelek"
-
-#~ msgid "Parts"
-#~ msgstr "Cikkek"
-
-#~ msgid "Parts Requirements"
-#~ msgstr "Anyagszükséglet"
-
-#~ msgid "Password changed!"
-#~ msgstr "Jelszó megváltozott!"
-
-#~ msgid "Password does not match!"
-#~ msgstr "A jelszó nem egyezik!"
-
-#~ msgid "Password duration must be an integer"
-#~ msgstr "A jelszó érvényességi ideje csak egész szám lehet"
-
-#~ msgid "Passwords do not match!"
-#~ msgstr "Jelszó nem talált!"
-
-#~ msgid "Pay From:"
-#~ msgstr "Fizetés innen:"
-
-#~ msgid "Payment posted!"
-#~ msgstr "Kifizetés rögzítve"
-
-#~ msgid "Payments posted!"
-#~ msgstr "Kifizetések rögzítve!"
-
-#~ msgid "Payroll Deduction"
-#~ msgstr "Fizetési levonás"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Postgresql adatbázis felügyelet"
-
-#~ msgid "PgPP Database Administration"
-#~ msgstr "PgPP Adatbázis adminisztráció"
-
-#~ msgid "Pick Lists"
-#~ msgstr "Kiszedési listák"
-
-#~ msgid "Please make check payable to [_1]."
-#~ msgstr "Kérem állítson ki fizethető csekket [_1] számára."
-
-#~ msgid ""
-#~ "Please point your contrib_dir directive in your ledgersmb.conf to the "
-#~ "appropriate location"
-#~ msgstr ""
-#~ "Kérem állítsa be a contrib_dir változó értékét a ledgersmb.conf fájlban a "
-#~ "megfelelő útvonalra"
-
-#~ msgid "Point of Sale"
-#~ msgstr "Értékesítési pont"
-
-#~ msgid "Port"
-#~ msgstr "Port száma"
-
-#~ msgid "Port missing!"
-#~ msgstr "Port száma  hiányzik!"
-
-#~ msgid "Pos"
-#~ msgstr "Poz."
-
-#~ msgid "Position"
-#~ msgstr "Pozíció"
-
-#~ msgid "Post as Saved"
-#~ msgstr "Rögzítés mentéskor"
-
-#~ msgid "Post as Shown"
-#~ msgstr "Rögzítés megjelenítés szerint"
-
-#~ msgid "Posted!"
-#~ msgstr "Rögzítve!"
-
-#~ msgid "Posting"
-#~ msgstr "Rőgzítve"
-
-#~ msgid "Posting failed!"
-#~ msgstr "A rögzítés nem sikerült!"
-
-#~ msgid "Preferences saved!"
-#~ msgstr "Beállítások elmentve!"
-
-#~ msgid "Prepayment"
-#~ msgstr "Előre fizetés"
-
-#~ msgid "Print [_1]"
-#~ msgstr "[_1] nyomtatása"
-
-#~ msgid "Print and Post as new"
-#~ msgstr "Újként nyomtat és rögzít"
-
-#~ msgid "Print and Save Transaction"
-#~ msgstr "Tranzakció nyomtatása és mentése"
-
-#~ msgid "Print and post as new"
-#~ msgstr "Újként nyomtat és rögzít"
-
-#~ msgid "Print and save as new"
-#~ msgstr "Újként nyomtat és ment"
-
-#~ msgid "Printing"
-#~ msgstr "Nyomtatás"
-
-#~ msgid "Printing ... "
-#~ msgstr "Nyomtatás ..."
-
-#~ msgid "Project Name"
-#~ msgstr "Projekt neve"
-
-#~ msgid "Project Number missing!"
-#~ msgstr "A projektszám hiányzik!"
-
-#~ msgid "Project Number: [_1]"
-#~ msgstr "Projekt azonosító: [_1]"
-
-#~ msgid "Project Transactions"
-#~ msgstr "Projekt tranzakciók"
-
-#~ msgid "Project deleted!"
-#~ msgstr "A projekt törlése megtörtént!"
-
-#~ msgid "Project not on file!"
-#~ msgstr "Projekt nem található az adatbázisban!"
-
-#~ msgid "Project saved!"
-#~ msgstr "A projekt mentése megtörtént!"
-
-#~ msgid "Project/Job Name"
-#~ msgstr "Projekt/Feladat neve"
-
-#~ msgid "Project/Job Number"
-#~ msgstr "Projekt/Feladat azonosító"
-
-#~ msgid "Queue"
-#~ msgstr "Várólista"
-
-#~ msgid "Queued"
-#~ msgstr "Várólistába küldve"
-
-# 80%
-# 86%
-#~ msgid "Quotation Number: [_1]"
-#~ msgstr "Ajánlat azonosítója: [_1]"
-
-#~ msgid "R"
-#~ msgstr "E"
-
-#~ msgid "RFQ "
-#~ msgstr "Ajánlatkérés"
-
-#~ msgid "Rate missing!"
-#~ msgstr "Árfolyam hiányzik"
-
-#~ msgid "Rebuild/Upgrade?"
-#~ msgstr "Adatbázis újraépítés (régi verziók) / adatbázis frissítés?"
-
-# 76%
-#~ msgid "Reconciliation Sets"
-#~ msgstr "Egyeztető lista"
-
-#~ msgid "Recurring Transaction"
-#~ msgstr "Ismétlődő Tranzakció"
-
-#~ msgid "Reference/Invoice Number"
-#~ msgstr "Referencia/Számlaszám"
-
-#~ msgid "Remove"
-#~ msgstr "Eltávolítás"
-
-#~ msgid "Remove Audit trail up to"
-#~ msgstr "Töröld az audit követést eddig:"
-
-#~ msgid "Removed spoolfiles!"
-#~ msgstr "A segédfájlok (spool) törölve!"
-
-#~ msgid "Removing marked entries from queue ..."
-#~ msgstr "Kijelölt tételek eltávolítása a várólistáról ..."
-
-#~ msgid "Request for Quotations"
-#~ msgstr "Ajánlatkérések"
-
-#~ msgid "Requirements"
-#~ msgstr "Anyagszükséglet"
-
-#~ msgid "Reset Till By [_1]"
-#~ msgstr "Kassza alaphelyzetbe [_1]"
-
-#~ msgid "Role"
-#~ msgstr "Szerep"
-
-#~ msgid "SO"
-#~ msgstr "VR"
-
-#~ msgid "SQL-Ledger database detected."
-#~ msgstr "SQL-Ledger adatbázist találtam."
-
-#~ msgid "Sales Invoice "
-#~ msgstr "Vevőszámla "
-
-#~ msgid "Sales Invoice."
-#~ msgstr "Vevőszámla."
-
-#~ msgid "Sales Invoices"
-#~ msgstr "Vevő számla"
-
-#~ msgid "Saturday"
-#~ msgstr "Szombat"
-
-#~ msgid "Save Pricelist"
-#~ msgstr "Árlista mentése"
-
-# 75%
-#~ msgid "Save Transaction"
-#~ msgstr "Tranzakció mentése"
-
-#~ msgid "Save User"
-#~ msgstr "Felhasználó mentése"
-
-#~ msgid "Save to File"
-#~ msgstr "Másolat File-ba"
-
-#~ msgid "Saving"
-#~ msgstr "Mentés"
-
-#~ msgid "Search Employees"
-#~ msgstr "Alkalmazott keresése"
-
-#~ msgid "Search Users"
-#~ msgstr "Felhasználók"
-
-#~ msgid "Select a printer!"
-#~ msgstr "Válasszon nyomtatót!"
-
-#~ msgid "Select all"
-#~ msgstr "Mindent kijelöl"
-
-#~ msgid "Select from one of the items below"
-#~ msgstr "Válasszon ki egyet az alábbi tételek közül"
-
-#~ msgid "Select from one of the projects below"
-#~ msgstr "Válasszon az alábbi projektek közül"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Másolat E-mail-ben"
-
-#~ msgid "Service Code missing!"
-#~ msgstr "A szolgáltatás kódja hiányzik!"
-
-#~ msgid "Service/Labor Code"
-#~ msgstr "Szolgáltatás/Művelet kód"
-
-#~ msgid "Services"
-#~ msgstr "Szolgáltatások"
-
-#~ msgid "Session expired!"
-#~ msgstr "A munkamenet lejárt!"
-
-#~ msgid "Shareholder's Equity"
-#~ msgstr "Saját tőke"
-
-#~ msgid "Shipping Address"
-#~ msgstr "Szállítási cím"
-
-# Vagy kezdés
-#~ msgid "Source: [_1]"
-#~ msgstr "Bizonylatszám: [_1]"
-
-#~ msgid "Spoolfile"
-#~ msgstr "Segédfájlok"
-
-#~ msgid "Start Balance"
-#~ msgstr "Nyitó egyenleg"
-
-#~ msgid "Statement - [_1]"
-#~ msgstr "Kimutatás - [_1]"
-
-#~ msgid "Statement sent to"
-#~ msgstr "Kimutatás elküldve:"
-
-#~ msgid "Statement sent to [_1]"
-#~ msgstr "Kimutatás elküldve [_1]"
-
-#~ msgid "Statements sent to printer!"
-#~ msgstr "A kimutatás elküldésre került a nyomtatóra!"
-
-#~ msgid "Stock Finished Goods"
-#~ msgstr "Befejezett saját termék bevételezése"
-
-#~ msgid "Stocking Date"
-#~ msgstr "Bevételezés ideje"
-
-#~ msgid "Stores Card"
-#~ msgstr "Tároló kártya"
-
-#~ msgid "Stores Card saved!"
-#~ msgstr "Tároló kártya elmentve!"
-
-#~ msgid "Stores Cards"
-#~ msgstr "Tároló kartonok"
-
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "Sub-contract GIFI"
-
-#~ msgid "Sunday"
-#~ msgstr "Vasárnap"
-
-#~ msgid "Supervisor"
-#~ msgstr "Felügyelő"
-
-#~ msgid "Tax Accounts"
-#~ msgstr "Adószámlák"
-
-# 92%
-#~ msgid "Tax Included?"
-#~ msgstr "Adót tartalmazza?"
-
-#~ msgid "Tax Number / SSN"
-#~ msgstr "Tax Number / SSN"
-
-#~ msgid "Tax collected"
-#~ msgstr "Fizetendő ÁFA"
-
-#~ msgid "Tax paid"
-#~ msgstr "Levonható ÁFA"
-
-#~ msgid "Taxable Sales"
-#~ msgstr "Adóköteles"
-
-#~ msgid "Taxforms"
-#~ msgstr "Adóűrlapok"
-
-#~ msgid "Tel: [_1],"
-#~ msgstr "Telefon: [_1],"
-
-#~ msgid "Templates directory"
-#~ msgstr "Sablonkönyvtár"
-
-#~ msgid "Text"
-#~ msgstr "Szöveg"
-
-#~ msgid "Text Templates"
-#~ msgstr "Szöveges minta"
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "Az alábbi cégadatbázisok üresek, és törölhetők"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "Az alábbi cégadatbázisokat frissíteni kell"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "A meglévő adatbázisok előzetes ellenőrzése. A program itt még nem töröl és "
-#~ "nem hoz létre semmit!"
-
-#~ msgid "Thursday"
-#~ msgstr "Csütörtök"
-
-#~ msgid "Time"
-#~ msgstr "Idő"
-
-#~ msgid "Time Card deleted!"
-#~ msgstr "Munkalap törölve!"
-
-#~ msgid "Time Card saved!"
-#~ msgstr "Munkalap elmentve!"
-
-#~ msgid "Timecard saved!"
-#~ msgstr "Időkártya elmentve!"
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "Új felhasználót úgy hozhat létre egy meglévő cégadatbázishoz, hogy egy "
-#~ "létező felhasználóra kattint, és a belépési nevet és a jelszót "
-#~ "megváltoztatja és elmenti. Az új felhasználó örökli a beállításokat."
-
-#~ msgid "Top Level"
-#~ msgstr "Legfelső szint"
-
-#~ msgid "Total Assets"
-#~ msgstr "Mérlegfőösszeg"
-
-#~ msgid "Total Cash in Drawer: [_1]"
-#~ msgstr "Összes készpénz a kasszában: [_1]"
-
-#~ msgid "Total Equity"
-#~ msgstr "Összes tőke"
-
-#~ msgid "Total Expenses"
-#~ msgstr "Összes költség"
-
-#~ msgid "Total Income"
-#~ msgstr "Összes bevétel"
-
-#~ msgid "Total Liabilities"
-#~ msgstr "Összes kötelezettség"
-
-#~ msgid "Total Liabilities & Equity"
-#~ msgstr "Összes kötelezettség és saját tőke"
-
-#~ msgid "Transaction deleted!"
-#~ msgstr "Tranzakció törölve!"
-
-#~ msgid "Transaction posted!"
-#~ msgstr "Tranzakció rögzítve!"
-
-#~ msgid "Transaction reversal enforced for all dates"
-#~ msgstr ""
-#~ "Tranzakciót csak ellentétes előjelű tranzakcióval lehet stornózni "
-#~ "bármilyen dátum esetén"
-
-#~ msgid "Transaction reversal enforced up to"
-#~ msgstr "E dátumig csak ellentétes előjelű tranzakcióval lehet stornózni:"
-
-#~ msgid "Transaction reversal enforced up to [_1]"
-#~ msgstr "[_1] dátumig csak ellentétes előjelű tranzakcióval lehet stornózni"
-
-#~ msgid "Transactions Locked"
-#~ msgstr "Zárolt tranzakciók"
-
-#~ msgid "Translation not on file!"
-#~ msgstr "A fordítás nincs meg!"
-
-#~ msgid "Trial Balance List"
-#~ msgstr "Mérleg lista"
-
-#~ msgid "Tuesday"
-#~ msgstr "Kedd"
-
-#~ msgid "Unable to save [_1] object"
-#~ msgstr "A(z) [_1] objektum nem menthető el."
-
-#~ msgid "Unit of measure"
-#~ msgstr "Mértékegység"
-
-#~ msgid "Unknown version found."
-#~ msgstr "Ismeretlen verziót találtam."
-
-#~ msgid "Unsupport account type"
-#~ msgstr "Nem támogatott számla típus"
-
-#~ msgid "Unsupported version.  Cancel?"
-#~ msgstr "Nem támogatott verzió.  Megszakítja a műveletet?"
-
-#~ msgid "Update Dataset"
-#~ msgstr "Cégadatbázis frissítése"
-
-#~ msgid "Upgrading to Version"
-#~ msgstr "Verzió karbantartás"
-
-#~ msgid "Use Templates"
-#~ msgstr "Sablon használata"
-
-#~ msgid "User deleted!"
-#~ msgstr "Felhasználó törölve!"
-
-#~ msgid "User saved!"
-#~ msgstr "Felhasználó elmentve!"
-
-#~ msgid "Vendor Invoice "
-#~ msgstr "Szállító számla"
-
-#~ msgid "Vendor Invoice."
-#~ msgstr "Vevő számla"
-
-#~ msgid "Vendor Invoices"
-#~ msgstr "Szállító számlák"
-
-#~ msgid "Vendor audit information not found."
-#~ msgstr "Szállító audit információ nem található."
-
-#~ msgid "Vendor deleted!"
-#~ msgstr "Szállító törölve!"
-
-#~ msgid "Vendor saved!"
-#~ msgstr "Szállító elmentve!"
-
-#~ msgid "Vendor: [_1]"
-#~ msgstr "Szállító: [_1]"
-
-#~ msgid "Vendors"
-#~ msgstr "Szállítók"
-
-#~ msgid "View"
-#~ msgstr "Megtekint"
-
-#~ msgid "Visa/MC"
-#~ msgstr "Visa/MC"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Raktár törölve!"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Raktár elmentve!"
-
-#~ msgid "Wednesday"
-#~ msgstr "Szerda"
-
-#~ msgid "Whole Monetary Amounts Only"
-#~ msgstr "Csak teljes pénzügyi időszak összegei"
-
-#~ msgid "Work Orders"
-#~ msgstr "Gyártási Rendelés"
-
-#~ msgid "Work Phone"
-#~ msgstr "Munkahelyi telefon"
-
-#~ msgid "Would you like to migrate the database?"
-#~ msgstr "Szeretné migrálni az adatbázist?"
-
-#~ msgid "Would you like to upgrade the database?"
-#~ msgstr "Szeretné frissíteni az adatbázist?"
-
-#~ msgid "Yearend date missing!"
-#~ msgstr "Az évzárás dátuma hiányzik!"
-
-#~ msgid "Yearend posted!"
-#~ msgstr "Az évzárás rögzítése megtörtént!"
-
-#~ msgid "Yearend posting failed!"
-#~ msgstr "Az évzárás rögzítése nem sikerült!"
-
-#~ msgid "You are logged out"
-#~ msgstr "Ön kilépett"
-
-#~ msgid "You are over by [_1]"
-#~ msgstr "Többlete van ennyivel: [_1]"
-
-#~ msgid "You are posting an existing transaction!"
-#~ msgstr "Ön egy már létező tranzakciót rögzít!"
-
-#~ msgid "You are printing and posting an existing transaction!"
-#~ msgstr "Ön egy már létező tranzakciót rögzít és nyomtat!"
-
-#~ msgid "You are printing and saving an existing order"
-#~ msgstr "Ön egy már létező rendelést nyomtat és ment"
-
-#~ msgid "You are printing and saving an existing quotation"
-#~ msgstr "Ön egy már létező ajánlatot nyomtat és ment!"
-
-#~ msgid "You are printing and saving an existing transaction!"
-#~ msgstr "Ön egy már létező tranzakciót nyomtat és ment!"
-
-#~ msgid "You are saving an existing order"
-#~ msgstr "Ön egy már létező rendelést ment"
-
-#~ msgid "You are saving an existing quotation"
-#~ msgstr "Ön egy már létező ajánlatot ment"
-
-#~ msgid "You are saving an existing transaction!"
-#~ msgstr "Ön egy már létező tranzakciót ment!"
-
-#~ msgid "You are under by [_1]"
-#~ msgstr "Hiánya van ennyivel: [_1]"
-
-#~ msgid "You did not enter a name!"
-#~ msgstr "Nem írt be nevet!"
-
-#~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr ""
-#~ "A helyi és távoli kapcsolat eléréséhez írjon be helyet, és portszámot!"
-
-#~ msgid "[_1] Business"
-#~ msgstr "[_1] partnercsoport"
-
-#~ msgid "[_1] Department"
-#~ msgstr "[_1] költséghely/profitcenter"
-
-#~ msgid "[_1] GIFI"
-#~ msgstr "[_1] gyűjtőkód"
-
-#~ msgid "[_1] Language"
-#~ msgstr "[_1] nyelv"
-
-#~ msgid "[_1] SIC"
-#~ msgstr "[_1] TEÁOR/SZJ"
-
-#~ msgid "[_1] Warehouse"
-#~ msgstr "[_1] raktár"
-
-#~ msgid "account cannot be set to any other type of account"
-#~ msgstr "a számla nem állítható be bármilyen más számla típusra"
-
-#~ msgid "ap"
-#~ msgstr "szállító"
-
-#~ msgid "ar"
-#~ msgstr "vevő"
-
-#~ msgid "as at [_1]"
-#~ msgstr "fordulónap [_1]"
-
-#~ msgid "default_language"
-#~ msgstr "Alapértelmezett nyelv"
-
-#~ msgid "does not exist"
-#~ msgstr "nem létezik"
-
-# 75%
-#~ msgid "edit"
-#~ msgstr "szerkeszt"
-
-#~ msgid "for Period"
-#~ msgstr "Időszak"
-
-#~ msgid "for Period To [_1]"
-#~ msgstr "időszakhoz [_1]"
-
-#~ msgid "gl"
-#~ msgstr "vegyeskönyvelés"
-
-#~ msgid "is already a member!"
-#~ msgstr "már tag!"
-
-#~ msgid "localhost"
-#~ msgstr "localhost"
-
-#~ msgid "locked!"
-#~ msgstr "lezárva"
-
-# 80%
-#~ msgid "notes"
-#~ msgstr "feljegyzések"
-
-#~ msgid "partsgroup"
-#~ msgstr "cikkcsoport"
-
-# 85%
-#~ msgid "payment"
-#~ msgstr "kifizetés"
-
-#~ msgid "payment_reversal"
-#~ msgstr "fordított_kifizetés"
-
-#~ msgid "posted!"
-#~ msgstr "rögzítve!"
-
-# 85%
-#~ msgid "receipt"
-#~ msgstr "nyugta"
-
-#~ msgid "receipt_reversal"
-#~ msgstr "fordított_nyugta"
-
-#~ msgid "successfully created!"
-#~ msgstr "sikeresen létrehozva!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "sikeresen törölve!"
-
-#~ msgid "website"
-#~ msgstr "honlap"
-
-#~ msgid "x"
-#~ msgstr "x"
+#~ msgid "Payment Type :"
+#~ msgstr "Kifizetés típus:"

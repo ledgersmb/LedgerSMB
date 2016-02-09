@@ -1,4 +1,9 @@
-Test file number allocation:
+
+
+Test file number allocation
+===========================
+
+````plain
 00 - 09: General base checks
 10 - 39: Module checks, no LSMB database required
      40: Set up test LSMB database
@@ -8,72 +13,89 @@ Test file number allocation:
 60 - 88: Interface checks
      89: Clean up test LSMB database
 90 - 99: Packaging checks
-
-Environment variables can be used as flags to disable/enable tests >= 40
-
-LSMB_TEST_DB must be set to a defined value if databases are going to be tested.
-
-if LSMB_NEW_DB is set, test 40 will create a database with the name from this 
-environment variable, and subsequent database tests will run against that 
-database.  If this is not set, and PGDATABASE is set, tests will run on that 
-database. If neither are set, the tests will bail out.
+````
 
 Special notes on specific test cases:
 
-42-dbobject.t:  Some tests will run even if LSMB_TEST_DB is not enabled.  These 
-tests do not require a database connection.
-
-43-dbtest.t:  This runs defined test cases from sql/modules/test/.  If new
+43-dbtest.t
+-----------
+This runs defined test cases from sql/modules/test/.  If new
 scripts are added, they must be listed in this script as well.
 
-62-api.t uses request hashes defined in t/data/62-request-data.  This
-script employs a database commit filter to prevent commits to the db.  It is
-safe to run on existing databases.
+62-api.t
+--------
+Runs on the database non-destructively, by rolling back commits.
+Uses request hashes defined in t/data/62-request-data.
 
-63-lwp.t will re-use the request hashes defined in test/data/62-request-data.
-It does NOT employ a commit filter, so is NOT safe to run against production
-data.  It will only run if the environment variable LSMB_TEST_LWN is set to true.
+63-lwp.t
+--------
+Runs on the database **destructively**, so it is **not** safe to run against
+a production database.
 
-ENVIRONMENT VARIABLES USED:
+Re-uses the request hashes defined in test/data/62-request-data.
 
-Environment Variables which control which tests are run (set to true to enable):
- LSMB_TEST_DB runs database tests
-LSMB_TEST_LWP runs LWP tests
 
-Variables to set credentials:
-PGUSER and PGPASSWORD for db tests
-LSMB_USER and LSMB_PASS for LWP tests
+ENVIRONMENT VARIABLES USED
+==========================
 
-Variables to configure test suites:
-   PGDATABASE directs to the database (or company element in LWP tests)
-LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested. 
+Environment variables are used to provide inputs for tests >= 40.
 
-If you wish to make a new db for tests, you must set the following environment 
-variable:
+For database tests (40 - 89)
+----------------------------
 
-   LSMB_NEW_DB is the name of the new db.  If this database cannot be created, 
-               the tests will bail out.
+````plain
+LSMB_TEST_DB        enables this set of tests
+PGUSER              username for logging in in PostgreSQL
+PGPASSWORD          password for above username
+LSMB_NEW_DB         database to test against (will be created in test 40)
+PGDATABASE          database to test against, if LSMB_NEW_DB not provided
+````
 
-Additionally, if LSMB_INSTALL_DB is set, the database will NOT be removed after
-test cases are run.  This can be a useful way of installing the for production
-use, though currently an admin user is not created in this process and would
-need to be created manually.
+### Admin user creation
 
-When a database is created, these environment variables are used to control 
-flow.  If these are not set, relevant portions are skipped.
+For the interface checks (60-88), at least an admin user is required to log
+into the application.
 
-Admin user creation:
-----------------------
+````plain
 LSMB_ADMIN_USERNAME username for admin user
 LSMB_ADMIN_PASSWORD password for admin user
-   LSMB_ADMIN_FNAME Admin's first name
-   LSMB_ADMIN_LNAME Admin's last name
-  LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
+LSMB_ADMIN_FNAME    Admin's first name
+LSMB_ADMIN_LNAME    Admin's last name
+LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
                     accounts
+````
 
-Chart of accounts loading
--------------------------
-    LSMB_LOAD_COA name of the Chart of Accounts file, not including extension
-   LSMB_LOAD_GIFI name of the GIFI file, not including extension
-LSMB_COUNTRY_CODE Country code for administrator and for loading chart of 
-                  accounts
+### Chart of accounts loading
+
+When a new company is being created,
+
+````plain
+LSMB_LOAD_COA       name of the Chart of Accounts file, not including extension
+LSMB_LOAD_GIFI      name of the GIFI file, not including extension
+LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
+                    accounts
+````
+
+
+For lwp tests (63)
+------------------
+
+lwp stands for `libwww-perl`, a Perl library for programming for the World Wide Web (HTTP).
+It is used to send requests to the LedgerSMB instance at `LSMB_BASE_URL` and validates
+the responses.
+
+````plain
+LSMB_TEST_LWP     enable LWP tests
+LSMB_USER         name of LedgerSMB application user to run tests
+LSMB_PASS         password above user
+LSMB_BASE_URL     URL of LedgerSMB instance testing against
+````
+
+
+For database cleanup test (89)
+------------------------------
+
+If the variable LSMB_INSTALL_DB is set, the database will NOT be removed after
+test cases are run.  Should be used with the `admin user creation` and
+`chart of accounts loading` variables.
+

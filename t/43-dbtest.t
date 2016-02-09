@@ -5,7 +5,7 @@ if (!defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping all.  Told not to test db.';
 }
 else {
-	plan tests => 456;
+	plan tests => 469;
 	if (defined $ENV{LSMB_NEW_DB}){
 		$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 	}
@@ -14,8 +14,8 @@ else {
         }
 }
 
-my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment 
-			Session Voucher System Taxform COGS-FIFO PNL Roles);
+my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment
+			Session Voucher System Taxform COGS-FIFO PNL Report Roles);
 
 
 chdir 'sql/modules/test/';

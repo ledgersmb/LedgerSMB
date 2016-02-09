@@ -315,6 +315,9 @@ sub load_base_schema {
     my $success;
     my $log = loader_log_filename();
 
+    $self->{source_dir} = './'
+        unless $self->{source_dir};
+
     $self->run_file(
 
         file       => "$self->{source_dir}sql/Pg-database.sql",
@@ -322,13 +325,15 @@ sub load_base_schema {
         log_stderr => ($args->{errlog} || "${log}_stderr")
     );
 
-    opendir(LOADDIR, 'sql/on_load');
-    while (my $fname = readdir(LOADDIR)){
-        $self->run_file(
-            file       => "$self->{source_dir}sql/on_load/$fname",
-        log_stdout => ($args->{log} || "${log}_stdout"),
-        log_stderr => ($args->{errlog} || "${log}_stderr")
-        ) if -f "sql/on_load/$fname";
+    if (opendir(LOADDIR, 'sql/on_load')) {
+        while (my $fname = readdir(LOADDIR)) {
+            $self->run_file(
+                file       => "$self->{source_dir}sql/on_load/$fname",
+                log_stdout => ($args->{log} || "${log}_stdout"),
+                log_stderr => ($args->{errlog} || "${log}_stderr")
+                ) if -f "sql/on_load/$fname";
+        }
+        closedir(LOADDIR);
     }
     return 1;
 
@@ -379,7 +384,7 @@ sub load_coa {
             log   => $log
     );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
-        $self->exec_script(
+        $self->run_file(
              file => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
              log  => $log );
     }

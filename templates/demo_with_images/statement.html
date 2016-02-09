@@ -11,24 +11,24 @@
 <table width="100%">
 
   <?lsmb LETTERHEAD ?>
-  
+
   <tr>
     <td width=10>&nbsp;</td>
-    
+
     <th colspan=3><h4 style="text-transform:uppercase">
          <?lsmb text('Statement') ?></h4></th>
-    
+
   </tr>
 
   <tr>
     <td>&nbsp;</td>
-    
+
     <td colspan=3 align=right><?lsmb statementdate ?></td>
   </tr>
-  
+
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width="100%">
 	<tr valign=top>
@@ -48,17 +48,17 @@
       </table>
     </td>
   </tr>
-  
+
   <tr height=10></tr>
-  
+
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width="100%">
         <tr>
 	  <th align=left><?lsmb text('Invoice #') ?></th>
-          <th align=left><?lsmb text('Order#') ?></th>
+          <th align=left><?lsmb text('Order #') ?></th>
 	  <th width="10%"><?lsmb text('Date') ?></th>
 	  <th width="10%"><?lsmb text('Due') ?></th>
 	  <th width="10%"><?lsmb text('Current') ?></th>
@@ -79,43 +79,43 @@
 	  <td align=right><?lsmb invoice.c90 ?></td>
 	</tr>
         <?lsmb END -?>
-	
+
         <tr>
 	  <td colspan=8><hr size=1></td>
 	</tr>
-	
+
 	<tr>
 	  <td>&nbsp;</td>
 	  <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-	  <th align=right><?lsmb statement.c0total ?></td>
-	  <th align=right><?lsmb statement.c30total ?></td>
-	  <th align=right><?lsmb statement.c60total ?></td>
-	  <th align=right><?lsmb statement.c90total ?></td>
+	  <th align=right><?lsmb statement.aging.c0total ?></td>
+	  <th align=right><?lsmb statement.aging.c30total ?></td>
+	  <th align=right><?lsmb statement.aging.c60total ?></td>
+	  <th align=right><?lsmb statement.aging.c90total ?></td>
 	</tr>
       </table>
     </td>
   </tr>
-  
+
   <tr height=10></tr>
-  
+
   <tr>
     <td>&nbsp;</td>
-    
+
     <td align=right>
       <table width="50%">
         <tr>
 	  <th><?lsmb text('Total Outstanding') ?></th>
-          <th align=right><?lsmb total ?></th>
+          <th align=right><?lsmb statement.aging.total ?></th>
 	</tr>
       </table>
     </td>
   </tr>
-  
+
   <tr>
     <td>&nbsp;</td>
-    
+
     <td><hr noshade></td>
   </tr>
 

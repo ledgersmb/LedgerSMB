@@ -14,7 +14,7 @@ SELECT 'Create Recon Report',
 	reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, false) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11111'), currval('cr_report_id_seq')::int, 110) > 0;
+SELECT 'Pending Transactions Ran', reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
 
 INSERT INTO test_result(test_name, success)
 select 'Correct number of transactions 1', count(*) = 10
@@ -46,14 +46,14 @@ SELECT '1 Create Recon Report',
 	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11112'), currval('cr_report_id_seq')::int, 110) > 0;
+SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
 
 INSERT INTO test_result(test_name, success)
 select 'Correct number of transactions 2', count(*) = 10
 from cr_report_line where report_id = currval('cr_report_id_seq')::int;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11112'), currval('cr_report_id_seq')::int, 110) > 0;
+SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
 
 INSERT INTO test_result(test_name, success)
 select 'Correct number of transactions 3', count(*) = 10
@@ -90,7 +90,7 @@ SELECT '1 Create Recon Report',
 	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false) > 0;
 
 INSERT INTO test_result(test_name, success)
-SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11112'), currval('cr_report_id_seq')::int, 110) > 0;
+SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
 
 INSERT INTO test_result(test_name, success)
 select 'Correct number of transactions 4', count(*) = 10

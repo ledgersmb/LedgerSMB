@@ -29,3 +29,7 @@ ledgersmb.conf
 /doc/manual/*.toc
 /doc/manual/*.log
 /doc/manual/*.out
+
+# Custom extensions to Tests and Validations
+*_Tests_Custom.pm
+*_Validations_Custom.pm

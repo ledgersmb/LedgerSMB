@@ -1,13 +1,13 @@
-<?lsmb INCLUDE 'ui-header.html' 
+<?lsmb INCLUDE 'ui-header.html'
 	titlebar = 'Payments'
 	include_script = ['UI/payments/payments_detail.js']
 ?>
-<?lsmb BLOCK format_money ?><?lsmb number 
+<?lsmb BLOCK format_money ?><?lsmb number
 ?><?lsmb END # block ?>
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
-<?lsmb contact_type = (payment.account_class == 1) ? text('Vendor') : text('Customer') 
+<?lsmb contact_type = (payment.account_class == 1) ? text('Vendor') : text('Customer')
 ?>
-<?lsmb payment_type = (payment.account_class == 1) ? text('Payments') : text('Receipts') 
+<?lsmb payment_type = (payment.account_class == 1) ? text('Payments') : text('Receipts')
 ?>
 <body id="payment_2_body" onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
 <!-- CT:  This template produces invalid XHTML due to the use of nested tables.
@@ -70,7 +70,7 @@
 	type = "hidden"
 	name = "ar_ap_accno"
 	value = payment.ar_ap_accno
- } ?>	
+ } ?>
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"
 	name = "date_from"
@@ -103,7 +103,7 @@
 		<?lsmb END ?>
 		<?lsmb INCLUDE input element_data= {
 			value = payment.datepaid
-			name  = "datepaid" 
+			name  = "datepaid"
 			size  = 20
 			class = (payment.batch_id) ? "hidden" : "date"
 			type  = (payment.batch_id) ? "hidden" : "text"
@@ -129,7 +129,7 @@
 
 	<div class="info" id="account_row">
 		<label for="account_info">
-			<?lsmb text('Account:'); ?> 
+			<?lsmb text('Account:'); ?>
 		</label>
 		<span id="account_info">
 			<?lsmb FOREACH a = payment.debt_accounts ?>
@@ -150,12 +150,13 @@
 					type  = 'hidden'
 				};
 			ELSE;
-                 
+
 				PROCESS input element_data= {
 					label = text('Exchange Rate') #'
 					type  = 'text'
 					class = "numeric"
 					name  = 'exchangerate'
+               id = 'exchangerate'
 					value = payment.exchangerate
 					size  = 20
 				};
@@ -176,8 +177,8 @@
 		</div>
 	<?lsmb END # if business ?>
 
-	<div class="payment_type" id="payment_type_label_div">        
-		<label for="filter_type_label"><?lsmb text('Payment Type :') ?></label>
+	<div class="payment_type" id="payment_type_label_div">
+		<label for="filter_type_label"><?lsmb text('Payment Type:') ?></label>
 		<span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
 	</div>
 
@@ -239,26 +240,27 @@
 					<?lsmb # END # IF action ... -?>
 					<?lsmb INCLUDE input element_data = {
 						type    = "checkbox"
+						id      = "id_" _ r.contact_id
 						name    = "id_" _ r.contact_id
 						value   = r.contact_id
-						checked = (r.selected) ? "checked" : undef 
+						checked = (r.selected) ? "checked" : undef
                   class   = 'contactcb'
                       "data-dojo-type" = "lsmb/lib/SubscribeCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
 					} ?>
-					<?lsmb r.econtrol_code ?> -- 
+					<?lsmb r.econtrol_code ?> --
 					<?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
 				</td>
 				<td class="entity_name">
 					<span class="<?lsmb
-						IF r.has_vouchers; 'name_has_vouchers' ; 
-						ELSE ; 'name_has_no_vouchers' ; 
+						IF r.has_vouchers; 'name_has_vouchers' ;
+						ELSE ; 'name_has_no_vouchers' ;
 						END
 						?>">
 						<?lsmb r.contact_name ?>
 					</span>
 				</td>
-				<td class="invoice"><?lsmb r.to_pay ?> 
+				<td class="invoice"><?lsmb r.to_pay ?>
 					<?lsmb payment.currency ?>
 				</td>
 			        <td>
@@ -294,9 +296,10 @@
 				<td rowspan = 2>
 					<?lsmb INCLUDE input element_data = {
 						name  = "source_$r.contact_id"
-						value = (payment.${"source_$r.contact_id"}) ? ${"source_$r.contact_id"} : r.source 
+                  id    = "source_$r.contact_id"
+						value = (payment.${"source_$r.contact_id"}) ? ${"source_$r.contact_id"} : r.source
 						type  = "text"
-						size  = "20" 
+						size  = "20"
 						label = text('Source')
 					} ?>
 				</td>
@@ -365,7 +368,8 @@
 									<td class="to_pay_list">
 										<?lsmb PROCESS input element_data = {
 											name = "payment_$i.0"
-											value = ${"payment_$i.0"}
+                                 id   = "payment_$i.0"
+											value = i.6
 											size = 20
 											type = "text"
 											class = "monetary" } ?>
@@ -453,7 +457,7 @@
 	<?lsmb INCLUDE input element_data = {
 		type  = "hidden"
 		name  = "contact_count"
-		value = payment.count
+		value = payment.contact_invoices.size
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		name  = "multiple"
@@ -478,7 +482,7 @@
 			name    = "media"
 			class   = "select"
 			options = payment.media_options
-			value   = payment.media 
+			value   = payment.media
 		} ?>
 		<?lsmb INCLUDE select element_data = {
 			name    = "format"
@@ -495,7 +499,7 @@
 	<?lsmb END # IF can_print ?>
 
 </div>
- 
+
 
   </form>
   </div>
