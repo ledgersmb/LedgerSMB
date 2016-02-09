@@ -64,9 +64,9 @@ use_ok('LedgerSMB::Entity::Payroll::Deduction');
 use_ok('LedgerSMB::Entity::Payroll::Wage');
 SKIP: {
     eval{ require Template::Plugin::Latex} ||
-    skip 'Template::Plugin::Latex not installed';
+    skip 'Template::Plugin::Latex not installed', 1;
     eval{ require Template::Latex} ||
-    skip 'Template::Latex not installed';
+    skip 'Template::Latex not installed', 1;
 
     use_ok('LedgerSMB::Template::LaTeX');
 }
