@@ -208,13 +208,13 @@ RETURNS numeric AS
 $$
 DECLARE balance numeric;
 BEGIN
-	SELECT coalesce(sum(ac.amount) + cp.amount, sum(ac.amount))
+	SELECT coalesce(sum(ac.amount_bc) + cp.amount_bc, sum(ac.amount_bc))
 	INTO balance
 	FROM acc_trans ac
 	JOIN (select id, approved from ar union
 		select id, approved from ap union
 		select id, approved from gl) a ON (a.id = ac.trans_id)
-	LEFT JOIN (select account_id, end_date, amount from account_checkpoint
+	LEFT JOIN (select account_id, end_date, amount_bc from account_checkpoint
 		WHERE account_id = in_account_id AND end_date < in_transdate
 		ORDER BY end_date desc limit 1
 	) cp ON (cp.account_id = ac.chart_id)
