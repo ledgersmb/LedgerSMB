@@ -13,7 +13,7 @@ with 'LedgerSMB::PGObject';
 =head1 SYNOPSYS
 
 Resetting a password (expires in 24 hrs):
-  my $user = LedgerSMB::Entity::User->get($entity_id);
+  my $user = LedgerSMB::Entity::User->get($entcity_id);
   my $user->reset_password('temporary_password');
 
 Creating a new user:
@@ -62,22 +62,14 @@ pre-existing PostgreSQL user into a LedgerSMB user.
 
 has pls_import => (is => 'rw', isa => 'Bool');
 
-=item password
-
-This is only used for new users. It sets a temporary password (good for 24 hrs)
-
-=cut
-
-has password => (is => 'rw', isa => 'Str', required => 0,
-                 clearer => 'clear_password');
-
 =item role_list
 
 A list of role names granted to the user.
 
 =cut
 
-has role_list => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
+has role_list => (is => 'rw', isa => 'ArrayRef[Str]', required => 0,
+                  default => sub { [] });
 
 
 =back
@@ -112,11 +104,11 @@ Resets a user's password to a temporary password good for 24 hours.
 
 =cut
 
-sub reset_password{
+sub reset_password {
     my ($self, $password) = @_;
-    $self->password($password);
-    my ($ref) = $self->call_dbmethod(funcname => 'admin__save_user');
-    $self->clear_password();
+    my ($ref) = $self->call_dbmethod(
+        funcname => 'admin__save_user',
+        args => { password => $password });
 }
 
 =item create
@@ -125,10 +117,17 @@ Creates the new user.
 
 =cut
 
-sub create{
-    my ($self) = @_;
-    my ($ref) = $self->call_dbmethod(funcname => 'admin__save_user');
-    $self->clear_password();
+sub create {
+    my ($self, $password) = @_;
+    my ($ref) = $self->call_dbmethod(
+        funcname => 'admin__save_user',
+        args => { password => $password });
+
+    for my $role (@{$self->role_list}) {
+        $self->call_procedure(
+            funcname => 'admin__add_user_to_role',
+            args => [ $self->username, $role ]);
+    }
 }
 
 =item save_roles($role_list)
@@ -137,9 +136,9 @@ Saves (grants) roles requested.
 
 =cut
 
-sub save_roles{
+sub save_roles {
     my ($self, $role_list) = @_;
-     my @all_roles = map { $_->{rolname} } $self->list_roles;
+     my @all_roles = map { $_->{rolname} } @{$self->list_roles};
      my (%have_role, %want_role);
      $have_role{$_} = 1
           for @{$self->role_list};
@@ -164,15 +163,15 @@ Lists roles for database.
 
 =cut
 
-sub list_roles{
+sub list_roles {
     my ($self) = @_;
-    my @roles =  __PACKAGE__->call_procedure(funcname => 'admin__get_roles');
+    my @roles =  $self->call_procedure(funcname => 'admin__get_roles');
     for my $role (@roles){
         $role->{description} = $role->{rolname};
         $role->{description} =~ s/.*__//;
         $role->{description} =~ s/_/ /g;
     }
-    return @roles;
+    return \@roles;
 }
 
 =back
