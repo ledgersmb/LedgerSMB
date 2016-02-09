@@ -117,7 +117,7 @@ Note that expected is optional and if not defined gets calculated based on the
 date of the report.   This happens during the save process.
 
 This then appends the lines onto the current report's @rows in order to ensure
-that many differnet sources could be combined together in this way.
+that many different sources could be combined together in this way.
 
 =cut
 

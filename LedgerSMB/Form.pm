@@ -174,8 +174,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.23-dev";
-    $self->{dbversion} = "1.4.23-dev";
+    $self->{version}   = "1.4.25-dev";
+    $self->{dbversion} = "1.4.25-dev";
 
     bless $self, $type;
 
@@ -2764,7 +2764,10 @@ sub get_recurring {
 
     my $dbh = $self->{dbh};
     my $query = qq/
-		SELECT s.*, se.formname || ':' || se.format AS emaila,
+		SELECT extract(days from recurring_interval) as days,
+             extract(months from recurring_interval) as months,
+             extract(years from recurring_interval) as years,
+             s.*, se.formname || ':' || se.format AS emaila,
 			se.message, sp.formname || ':' || 
 				sp.format || ':' || sp.printer AS printa
 		FROM recurring s
@@ -2788,7 +2791,25 @@ sub get_recurring {
     chop $self->{recurringemail};
     chop $self->{recurringprint};
 
+    if ( $self->{recurringyears} ) {
+        $self->{recurringunit} = 'years';
+        $self->{recurringrepeat} = $self->{recurringyears};
+    }
+    elsif ( $self->{recurringmonths} ) {
+        $self->{recurringunit} = 'months';
+        $self->{recurringrepeat} = $self->{recurringmonths};
+    }
+    elsif ( $self->{recurringdays} && ( $self->{recurringdays} % 7 == 0 ) ) {
+        $self->{recurringunit} = 'weeks';
+        $self->{recurringrepeat} = $self->{recurringdays} / 7;
+    }
+    elsif ( $self->{recurringdays} ) {
+        $self->{recurringunit} = 'days';
+        $self->{recurringrepeat} = $self->{recurringdays};
+    }
+
     if ( $self->{recurringstartdate} ) {
+
         $self->{recurringreference} =
           $self->escape( $self->{recurringreference}, 1 );
         $self->{recurringmessage} =
@@ -2878,19 +2899,19 @@ sub save_recurring {
 
     my $query;
 
-    $query = qq|DELETE FROM recurring
+    $query = qq|DELETE FROM recurringemail
 				 WHERE id = ?|;
 
     my $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
-    $query = qq|DELETE FROM recurringemail
+    $query = qq|DELETE FROM recurringprint
 				 WHERE id = ?|;
 
     $sth = $dbh->prepare($query) || $self->dberror($query);
     $sth->execute( $self->{id} ) || $self->dberror($query);
 
-    $query = qq|DELETE FROM recurringprint
+    $query = qq|DELETE FROM recurring
 				 WHERE id = ?|;
 
     $sth = $dbh->prepare($query) || $self->dberror($query);
@@ -2947,7 +2968,7 @@ sub save_recurring {
 
                 $query = qq|SELECT (?::date + interval '$advance $s{unit}')|;
 
-                ($nextdate) = $dbh->selectrow_array($query, undef, $s{startdate});
+                ($nextdate) = $dbh->selectrow_array($query, undef, $s{startdate}) || $self->dberror($query);
             }
 
         }
@@ -2971,15 +2992,15 @@ sub save_recurring {
         $query = qq|
 			INSERT INTO recurring 
 				(id, reference, startdate, enddate, nextdate, 
-				repeat, unit, howmany, payment)
-			VALUES (?, null, ?, ?, ?, ?, ?, ?, ?)|;
+				recurring_interval, howmany, payment)
+			VALUES (?, null, ?, ?, ?, ?::interval, ?, ?)|;
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute(
             $self->{id}, $s{startdate},
-            $enddate,    $nextdate,     $s{repeat},
-            $s{unit},    $s{howmany},   $s{payment}
-        );
+            $enddate,    $nextdate,     "$s{repeat} $s{unit}",
+            $s{howmany},   $s{payment}
+        ) || $self->dberror($query);
 
         my @p;
         my $p;
@@ -2998,7 +3019,8 @@ sub save_recurring {
             $sth = $dbh->prepare($query) || $self->dberror($query);
 
             for ( $i = 0 ; $i <= $#p ; $i += 2 ) {
-                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $s{message} );
+                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $s{message} )
+                    || $self->dberror($query);
             }
 
             $sth->finish;
@@ -3017,7 +3039,8 @@ sub save_recurring {
 
             for ( $i = 0 ; $i <= $#p ; $i += 3 ) {
                 $p = ( $p[ $i + 2 ] ) ? $p[ $i + 2 ] : "";
-                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $p );
+                $sth->execute( $self->{id}, $p[$i], $p[ $i + 1 ], $p )
+                    || $self->dberror($query);
             }
 
             $sth->finish;
