@@ -6,7 +6,7 @@ COPY gl(id, transdate, approved) FROM stdin DELIMITER '|';
 -1001|1900-01-03|TRUE
 \.
 
-COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin DELIMITER '|';
+COPY acc_trans(trans_id,chart_id,amount_bc,transdate,approved,entry_id) FROM stdin DELIMITER '|';
 -1000|-1000|100.00|1900-01-01|TRUE|-1000
 -1001|-1000|100.00|1900-01-03|TRUE|-1001
 \.
