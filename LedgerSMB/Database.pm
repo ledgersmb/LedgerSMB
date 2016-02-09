@@ -380,13 +380,16 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-            file  => "sql/coa/$args->{country}/chart/$args->{chart}",
-            log   => $log
-    );
+        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        log_stdout   => $log,
+        log_stderr   => $log,
+        );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-             file => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
-             log  => $log );
+            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            log_stdout  => $log,
+            log_stderr  => $log,
+            );
     }
 }
 
