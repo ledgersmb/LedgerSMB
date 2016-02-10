@@ -915,7 +915,7 @@ sub save_user {
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
     my $duplicate = 0;
-    try { $user->create }
+    try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
            $duplicate = 1;
