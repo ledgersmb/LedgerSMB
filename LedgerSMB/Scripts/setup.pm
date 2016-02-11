@@ -191,7 +191,7 @@ sub login {
     } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->connect();
+            my $dbh = $database->connect({PrintError=>0, AutoCommit=>0});
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -282,8 +282,13 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
+<<<<<<< Updated upstream
            {%$database, (company_name => $request->{new_name})}
     )->connect;
+=======
+           {%$database, (dbname => $request->{new_name})}
+    )->connect({ PrintError => 0, AutoCommit => 0 });
+>>>>>>> Stashed changes
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
@@ -419,8 +424,7 @@ sub run_backup {
 sub revert_migration {
     my ($request) = @_;
     my $database = _get_database($request);
-    my $dbh = $database->connect();
-    $dbh->{AutoCommit} = 0;
+    my $dbh = $database->connect({PrintError => 0, AutoCommit => 0});
     my $sth = $dbh->prepare(qq(
          SELECT value
            FROM defaults
@@ -979,8 +983,7 @@ sub save_user {
 
 sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
-    my $dbh = $database->connect;
-    $dbh->{AutoCommit} = 0;
+    my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $database->loader_log_filename();
     my $rc;
 

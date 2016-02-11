@@ -51,7 +51,8 @@ sub connect {
     }
     return undef unless $username;
     my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
-           { AutoCommit => 0, pg_enable_utf8 => 1, pg_server_prepare => 0 });
+           { PrintError => 0, AutoCommit => 0,
+             pg_enable_utf8 => 1, pg_server_prepare => 0 });
     my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
     $dbh->do("set client_min_messages = 'warning'");
     if($dbi_trace)
