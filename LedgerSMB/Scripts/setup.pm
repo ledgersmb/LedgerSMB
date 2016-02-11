@@ -282,13 +282,8 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-<<<<<<< Updated upstream
            {%$database, (company_name => $request->{new_name})}
-    )->connect;
-=======
-           {%$database, (dbname => $request->{new_name})}
     )->connect({ PrintError => 0, AutoCommit => 0 });
->>>>>>> Stashed changes
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
