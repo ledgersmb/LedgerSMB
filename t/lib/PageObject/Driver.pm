@@ -177,6 +177,14 @@ sub verify_page {
     return $self->page->verify;
 }
 
+sub verify_screen {
+    my ($self) = @_;
+
+    $self->try_wait_for_page;
+    $self->page->verify;
+    return $self->page->maindiv->content;
+}
+
 __PACKAGE__->meta->make_immutable();
 
 
