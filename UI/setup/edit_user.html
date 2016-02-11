@@ -21,7 +21,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
     <form data-dojo-type="dijit/form/Form" method="POST">
 	     <input type="hidden" name="id" value="<?lsmb request.id ?>" />
         <input type="hidden" name="database" value="<?lsmb request.database ?>" />
-        <table>
+        <table id="user-data">
 
             <?lsmb IF user.user_id and not request.pls_import ?>
             <tr>
@@ -45,9 +45,11 @@ include_stylesheet=["UI/setup/stylesheet.css"];
             </tr>
             <?lsmb END ?>
             <tr>
-                <td><?lsmb text('Password') ?></td>
+                <td><label for="password"><?lsmb text('Password') ?></label>
+                </td>
                 <td>
-                    <input type="password" name="password" value=""/>
+                    <input type="password"
+                           id="password" name="password" value=""/>
                 </td>
             </tr>
 
@@ -121,7 +123,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
            <div>
-            <table>
+            <table id="user-roles">
                 <!-- Groups section -->
                 <tr>
                 <?lsmb FOREACH role IN roles ?>

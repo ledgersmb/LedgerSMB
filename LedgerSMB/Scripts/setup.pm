@@ -256,7 +256,7 @@ Lists all users in the selected database
 sub list_users {
     my ($request) = @_;
     _init_db($request);
-    my $user = LedgerSMB::DBObject::User->new(%$request);
+    my $user = LedgerSMB::DBObject::User->new($request);
     my $users = $user->get_all_users;
     $request->{users} = [];
     for my $u (@$users) {
@@ -915,7 +915,7 @@ sub save_user {
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
     my $duplicate = 0;
-    try { $user->create }
+    try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
            $duplicate = 1;
@@ -1139,10 +1139,10 @@ sub edit_user_roles {
     _init_db($request)
         unless $request->{dbh};
 
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    my @all_roles = $admin->get_roles($request->{database});
+    my $admin = LedgerSMB::DBObject::Admin->new($request);
+    my $all_roles = $admin->get_roles($request->{database});
 
-    my $user_obj = LedgerSMB::DBObject::User->new(%$request);
+    my $user_obj = LedgerSMB::DBObject::User->new($request);
     $user_obj->get($request->{id});
 
     # LedgerSMB::DBObject::User doesn't retrieve the username
@@ -1164,7 +1164,7 @@ sub edit_user_roles {
     my $template_data = {
                         request => $request,
                            user => $user_obj,
-                          roles => @all_roles,
+                          roles => $all_roles,
             };
 
     $template->render($template_data);

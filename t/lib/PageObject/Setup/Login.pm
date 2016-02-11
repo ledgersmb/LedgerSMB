@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use PageObject;
 
-use PageObject::Setup::Main;
+use PageObject::Setup::Admin;
 use PageObject::Setup::CreateConfirm;
 
 
@@ -43,7 +43,7 @@ sub login {
            { label => "Database",
              value => $company });
     $self->driver->find_button("Login")->click;
-    return $self->driver->page(PageObject::Setup::Main->new(%$self));
+    return $self->driver->page(PageObject::Setup::Admin->new(%$self));
 }
 
 sub login_non_existent {

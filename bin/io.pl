@@ -364,14 +364,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_di
             }
         }
 
-
-
-
-
         $delivery = qq|
           <td colspan=2 nowrap>
-      <b>${$delvar}</b>
-      <input data-dojo-type="dijit/form/TextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
+             <b>${$delvar}</b>
+             <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
+          </td>
 |;
 
 
