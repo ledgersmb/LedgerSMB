@@ -4,6 +4,8 @@ use strict;
 use warnings;
 
 $ENV{TMPDIR} = 't/var';
+$ENV{REQUEST_METHOD} = 'GET';
+     # Suppress warnings from LedgerSMB::_process_cookies
 
 #use Test::More 'no_plan';
 use Test::More tests => 374;
@@ -43,8 +45,8 @@ is($trap->exit, undef,
 cmp_ok($trap->die, , '=~', $no_format_message,
 	'lsmb: No numberformat set, invalid amount message (NaN check)');
 my $expected;
-foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9', 
-		'10.01', '4', '5', '5.1', '5.4', '5.5', '5.6', '6', '0', 
+foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
+		'10.01', '4', '5', '5.1', '5.4', '5.5', '5.6', '6', '0',
 		'0.000', '10.155', '55', '0.001', '14.5', '15.5', '4.5') {
 	foreach my $places ('3', '2', '1', '0') {
 		Math::BigFloat->round_mode('+inf');
@@ -73,8 +75,8 @@ foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9',
 }
 
 # TODO Number formatting still needs work for l10n
-my @formats = (#['1,000.00', ',', '.'], ["1'000.00", "'", '.'], 
-		['1.000,00', '.', ','], ['1000,00', '', ','],); 
+my @formats = (#['1,000.00', ',', '.'], ["1'000.00", "'", '.'],
+		['1.000,00', '.', ','], ['1000,00', '', ','],);
 		#['1000.00', '', '.'], ['1 000.00', ' ', '.']);
 my %myfooconfig = (numberformat => '1000.00');
 my $test_args = {format => 0,
@@ -87,7 +89,7 @@ foreach my $format (0 .. $#formats) {
         $test_args->{format} = $formats[$format][0];
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue (#'10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue (#'10t000d00', '9t999d99', '333d33',
 			'7t777t777d77', '-12d34', '0d00') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -97,8 +99,8 @@ foreach my $format (0 .. $#formats) {
 		$value =~ s/d/\./gx;
 		$value = LedgerSMB::PGNumber->from_db($value);
                 is(LedgerSMB::PGNumber->from_input($value, $test_args
-                    )->to_output($test_args), 
-                    $expected, 
+                    )->to_output($test_args),
+                    $expected,
                     "Pgnumber: $value formatted as $test_args->{format} : $expected");
 		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
 			"form: $value formatted as $formats[$format][0] : $expected");
@@ -110,7 +112,7 @@ foreach my $format (0 .. $#formats) {
         $LedgerSMB::App_State::User = \%myconfig;
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
 			'7t777t777d77', '-12d34', '0d00') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -151,9 +153,9 @@ is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'paren'), '(
 	"form: -1.00 with dash '-'");
 is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'paren'), '1.00',
 	"form: 1.00 with dash '-'");
-is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'DRCR'), 
+is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'DRCR'),
 	'1.00 DR', "form: -1.00 with dash DRCR");
-is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'DRCR'), 
+is($form->format_amount({'numberformat' => '1000.00'} , '1.00', 2, 'DRCR'),
 	'1.00 CR', "form: 1.00 with dash DRCR");
 is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2), '-1.00',
 	"form: -1.00 with dash undefined");
@@ -182,7 +184,7 @@ foreach my $format (0 .. $#formats) {
         $LedgerSMB::App_State::User = \%myconfig;
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
 			'7t777t777d77', '-12d34') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -192,9 +194,9 @@ foreach my $format (0 .. $#formats) {
 		$value =~ s/d/\./gx;
 		#my $ovalue = $value;
 		$value = $form->parse_amount(\%myfooconfig,$value);
-		is($form->format_amount(\%myconfig, 
-			$form->format_amount(\%myconfig, $value, 2, 'def'), 
-			2, 'def'), $expected, 
+		is($form->format_amount(\%myconfig,
+			$form->format_amount(\%myconfig, $value, 2, 'def'),
+			2, 'def'), $expected,
 			"form: Double formatting of $value as $formats[$format][0] - $expected");
 	}
 }
@@ -204,7 +206,7 @@ foreach my $format (0 .. $#formats) {
         $LedgerSMB::App_State::User = \%myconfig;
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
 			'7t777t777d77', '-12d34', '(76t543d21)') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -228,7 +230,7 @@ foreach my $format (0 .. $#formats) {
 	$value = Math::BigFloat->new('-21');
 	cmp_ok($form->parse_amount(\%myconfig, $expected), '==',  $value,
 		"form: $expected parsed as $formats[$format][0] - $value");
-	
+
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
 		"form: Empty string returns 0");
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
@@ -239,7 +241,7 @@ foreach my $format (0 .. $#formats) {
         $LedgerSMB::App_State::User = \%myconfig;
 	my $thou = $formats[$format][1];
 	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
+	foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
 			'7t777t777d77', '-12d34', '(76t543d21)') {
 		$expected = $rawValue;
 		$expected =~ s/t/$thou/gx;
@@ -252,20 +254,20 @@ foreach my $format (0 .. $#formats) {
 		} else {
 			$value = Math::BigFloat->new($value);
 		}
-		cmp_ok($form->parse_amount(\%myconfig, 
+		cmp_ok($form->parse_amount(\%myconfig,
 			$form->parse_amount(\%myconfig, $expected)),
 			'==',  $value,
 			"form: $expected parsed as $formats[$format][0] - $value");
 	}
 	$expected = '12 CR';
 	my $value = Math::BigFloat->new('12');
-	cmp_ok($form->parse_amount(\%myconfig, 
+	cmp_ok($form->parse_amount(\%myconfig,
 		$form->parse_amount(\%myconfig, $expected)),
 		'==',  $value,
 		"form: $expected parsed as $formats[$format][0] - $value");
 	$expected = '21 DR';
 	$value = Math::BigFloat->new('-21');
-	cmp_ok($form->parse_amount(\%myconfig, 
+	cmp_ok($form->parse_amount(\%myconfig,
 		$form->parse_amount(\%myconfig, $expected)),
 		'==',  $value,
 		"form: $expected parsed as $formats[$format][0] - $value");
