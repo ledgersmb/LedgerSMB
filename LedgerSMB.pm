@@ -208,14 +208,14 @@ sub new {
     $self->{_request} = $query;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
-    $self->_process_cookies();
-
-    #HV set _locale already to default here,
-    # so routines lower in stack can use it;e.g. login.pl
     $self->_set_default_locale();
     $self->_set_action();
     $self->_set_path();
     $self->_set_script_name();
+    $self->_process_cookies();
+
+    #HV set _locale already to default here,
+    # so routines lower in stack can use it;e.g. login.pl
 
 
     $logger->debug("End");
@@ -406,6 +406,15 @@ sub _process_argstr {
 sub _process_cookies {
     my ($self) = @_;
     my %cookie;
+
+
+    # Explicitly don't use the cookie content when we have a simple request
+    # for login.pl without an 'action' query parameter: this is a request
+    # for the login page, not for the 'post-login' menu/content page
+    return
+        if ($ENV{REQUEST_METHOD} eq 'GET'
+            && $self->{script} eq 'login.pl'
+            && (! defined $self->{action} || $self->{action} eq ''));
 
     if ($self->is_run_mode('cgi', 'mod_perl') and $ENV{HTTP_COOKIE}) {
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
