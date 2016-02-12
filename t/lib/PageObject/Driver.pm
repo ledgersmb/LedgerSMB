@@ -60,6 +60,7 @@ sub BUILD {
     my ($self) = @_;
     &_monkeypatch_xml_http_prototype($self);
     $self->set_implicit_wait_timeout(30000); # 30s
+    $self->set_window_size(1200,600);
 }
 
 sub find_element_by_label {
