@@ -138,24 +138,13 @@ Given qr/a non-existent user named "(.*)"/, sub {
     $dbh->do(qq(DROP ROLE IF EXISTS "$role"));
 };
 
-my $c = 0;
 
 Given qr/a logged in admin/, sub {
     PageObject::App::Login->open(driver => get_driver(S));
-    sleep(3);
-    $c++;
-    open FH, ">", "screenshot-$c.png";
-    print FH MIME::Base64::decode(get_driver(S)->screenshot);
-    close FH;
     get_driver(S)->verify_page;
     get_driver(S)->page->login(S->{scenario}->{"the admin"},
                                S->{scenario}->{"the admin password"},
                                S->{scenario}->{"the company"});
-    sleep(3);
-    $c++;
-    open FH, ">", "screenshot-$c.png";
-    print FH MIME::Base64::decode(get_driver(S)->screenshot);
-    close FH;
 };
 
 When qr/I confirm database creation with these parameters:/, sub {
