@@ -20,12 +20,15 @@ my %menu_path_pageobject_map = (
     "AP > Search" => 'PageObject::App::Search::AP',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
     "HR > Employees > Search" => 'PageObject::App::Search::Employee',
-    "Order Entry > Reports > Sales Orders" => '',
-    "Order Entry > Reports > Purchase Orders" => '',
-    "Order Entry > Generate > Sales Orders" => '',
-    "Order Entry > Generate > Purchase Orders" => '',
-    "Order Entry > Combine > Sales Orders" => '',
-    "Order Entry > Combine > Purchase Orders" => '',
+    "Order Entry > Reports > Sales Orders" => 'PageObject::App::Search::SalesOrder',
+    "Order Entry > Reports > Purchase Orders" => 'PageObject::App::Search::PurchaseOrder',
+    "Order Entry > Generate > Sales Orders" => 'PageObject::App::Search::GenerateSalesOrder',
+    "Order Entry > Generate > Purchase Orders" => 'PageObject::App::Search::GeneratePurchaseOrder',
+    "Order Entry > Combine > Sales Orders" => 'PageObject::App::Search::CombineSalesOrder',
+    "Order Entry > Combine > Purchase Orders" => 'PageObject::App::Search::CombinePurchaseOrder',
+    "Quotations > Reports > Quotations" => 'PageObject::App::Search::Quotation',
+    "Quotations > Reports > RFQs" => 'PageObject::App::Search::RFQ',
+    "General Journal > Search and GL" => 'PageObject::App::Search::GL',
     );
 
 

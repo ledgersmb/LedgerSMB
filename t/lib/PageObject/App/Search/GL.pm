@@ -1,4 +1,4 @@
-package PageObject::App::Search::PurchaseOrders;
+package PageObject::App::Search::GL;
 
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
-my $page_heading = 'Search Purchase Orders';
+my $page_heading = 'General Ledger Reports';
 
 sub verify {
     my ($self) = @_;

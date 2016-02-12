@@ -206,8 +206,15 @@ my %screens = (
     'AP search' => 'PageObject::App::Search::AP',
     'Budget search' => 'PageObject::App::Search::Budget',
     'Employee search' => 'PageObject::App::Search::Employee',
-#    'Budget Search' => 'PageObject::App::Search::Budget',
-
+    'Sales order search' => 'PageObject::App::Search::SalesOrder',
+    'Purchase order search' => 'PageObject::App::Search::PurchaseOrder',
+    'generate sales order' => 'PageObject::App::Search::GenerateSalesOrder',
+    'generate purchase order' => 'PageObject::App::Search::GeneratePurchaseOrder',
+    'combine sales order' => 'PageObject::App::Search::CombineSalesOrder',
+    'combine purchase order' => 'PageObject::App::Search::CombinePurchaseOrder',
+    'Quotation search' => 'PageObject::App::Search::Quotation',
+    'RFQ search' => 'PageObject::App::Search::RFQ',
+    'GL search' => 'PageObject::App::Search::GL',
     );
 
 Then qr/I should see the (.*) screen/, sub {
