@@ -17,6 +17,9 @@ use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
+$ENV{REQUEST_METHOD} = 'GET';
+     # Suppress warnings from LedgerSMB::_process_cookies
+
 
 my $form = new Form;
 my $locale_en = LedgerSMB::Locale->get_handle('en_CA');
@@ -29,18 +32,18 @@ ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 $form->{dbh} = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
-my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'], 
+my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'],
 		['mm/dd/yy', '/', 2, '02/29/00', '03/01/00'],
-		['dd-mm-yy', '-', 2, '29-02-00', '01-03-00'], 
+		['dd-mm-yy', '-', 2, '29-02-00', '01-03-00'],
 		['dd/mm/yy', '/', 2, '29/02/00', '01/03/00'],
-		['dd.mm.yy', '.', 2, '29.02.00', '01.03.00'], 
+		['dd.mm.yy', '.', 2, '29.02.00', '01.03.00'],
 #		['yyyymmdd', '', 4, '20000229', '20000301'],
 		['yyyy-mm-dd', '-', 4, '2000-02-29', '2000-03-01']);
 
-my @months = ('January', 'February', 'March', 'April', 'May ', 'June', 
+my @months = ('January', 'February', 'March', 'April', 'May ', 'June',
 	'July', 'August', 'September', 'October', 'November', 'December');
 
-my @mon = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+my @mon = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 	'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
 my %month_num = ('01' => '31', '02' => '28', '03' => '31', '04' => '30',
@@ -71,7 +74,7 @@ foreach my $format (0 .. $#formats) {
 	my $yearcount = $formats[$format][2];
 	my $result = $formats[$format][3];
 	$result =~ s/^(.*)(20)?00(.*)$/${1}2000${3}/ if $yearcount == 2;
-	cmp_ok($locale_en->date(\%myconfig), 'eq', 
+	cmp_ok($locale_en->date(\%myconfig), 'eq',
 		'', "date, $fmt: empty string");
 	cmp_ok($locale_en->date(\%myconfig, $formats[$format][3]), 'eq',
 		$result, "date, $fmt: short");
@@ -108,7 +111,7 @@ foreach my $format (0 .. $#formats) {
 		'20000229', "form: datetonum, $fmt");
 }
 cmp_ok($form->datetonum(\%myconfig), 'eq', '', "form: datetonum, empty string");
-cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234', 
+cmp_ok($form->datetonum(\%myconfig, '1234'), 'eq', '1234',
 	"form: datetonum, 1234");
 
 # $form->split_date checks
@@ -141,14 +144,14 @@ foreach my $format (0 .. $#formats) {
 	$tv =~ s/(yy)?yy/$today_parts{'yy'}/;
 	$tv =~ s/mm/$today_parts{'mm'}/;
 	$tv =~ s/dd/$today_parts{'dd'}/;
-	cmp_ok($output[1], 'eq', $today_parts{'yy'}, 
+	cmp_ok($output[1], 'eq', $today_parts{'yy'},
 		"split_date unspecified, year");
-	cmp_ok($output[2], 'eq', $today_parts{'mm'}, 
+	cmp_ok($output[2], 'eq', $today_parts{'mm'},
 		"split_date unspecified, month");
-	cmp_ok($output[3], 'eq', $today_parts{'dd'}, 
+	cmp_ok($output[3], 'eq', $today_parts{'dd'},
 		"split_date unspecified, day");
 	@output = $form->split_date($fmt, '12345');
-	cmp_ok($output[0], 'eq', '12345', 
+	cmp_ok($output[0], 'eq', '12345',
 		'split_date, 12345');
 }
 
@@ -177,7 +180,7 @@ foreach my $format (0 .. $#formats) {
 # Note that $form->from_to outputs the last day of the chosen month if month given
 # Note that $form->from_to $interval of 0 is current day
 # Note that $form->from_to $interval is an integral quantity of months
-# Note that $form->from_to will fail if ($interval + $month) > 22 
+# Note that $form->from_to will fail if ($interval + $month) > 22
 # (2 + 23), 25 - 12, 13 - 1, 12
 foreach my $format (0 .. $#formats) {
 	$form->{db_dateformat} = $formats[$format][0];
@@ -266,7 +269,7 @@ foreach my $format (0 .. $#formats) {
 }
 
 # $form->add_date checks
-# returns undef if no date passed 
+# returns undef if no date passed
 # valid units: days, weeks, months, years
 # all uses in LSMB use days unit
 # has no error handling capabilities

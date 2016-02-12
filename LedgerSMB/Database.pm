@@ -351,6 +351,7 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
+    $self->{source_dir} ||= '';
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
     for my $mod (<LOADORDER>) {
         chomp($mod);
@@ -385,7 +386,8 @@ sub load_coa {
         log_stdout   => $log,
         log_stderr   => $log,
         );
-    if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+    if (defined $args->{coa_lc}
+        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
             file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
             log_stdout  => $log,

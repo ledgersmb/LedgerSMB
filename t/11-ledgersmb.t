@@ -5,6 +5,8 @@ use warnings;
 
 $ENV{TMPDIR} = 't/var';
 $ENV{LANG} = 'LANG=en_US.UTF8';
+$ENV{REQUEST_METHOD} = 'GET';
+     # Suppress warnings from LedgerSMB::_process_cookies
 
 use Test::More;
 use Test::Exception;
@@ -117,24 +119,24 @@ SKIP: {
 	skip 'Skipping call_procedure tests, no db specified', 5
 		if !defined $ENV{PGDATABASE};
 	$lsmb = LedgerSMB->new();
-	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
+	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
 		undef, undef, {AutoCommit => 0 });
         LedgerSMB::App_State::set_DBH($lsmb->{dbh});
-	@r = $lsmb->call_procedure('procname' => 'character_length', 
+	@r = $lsmb->call_procedure('procname' => 'character_length',
 		'args' => ['month'], 'schema'=>"pg_catalog");
 	is($#r, 0, 'call_procedure: correct return length (one row)');
-	is($r[0]->{'character_length'}, 5, 
+	is($r[0]->{'character_length'}, 5,
 		'call_procedure: single arg, non-numeric return');
 
 	@r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0], 'schema' => 'pg_catalog');
-	is($r[0]->{'trunc'}, Math::BigFloat->new('57'), 
+	is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
 		'call_procedure: two args, numeric return');
 
 	@r = $lsmb->call_procedure('procname' => 'pi', 'args' => [], 'schema'=>'pg_catalog');
-	like($r[0]->{'pi'}, qr/^3.14/, 
+	like($r[0]->{'pi'}, qr/^3.14/,
 		'call_procedure: empty arg list, non-numeric return');
 	@r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
-	like($r[0]->{'pi'}, qr/^3.14/, 
+	like($r[0]->{'pi'}, qr/^3.14/,
 		'call_procedure: no args, non-numeric return');
     $lsmb->{dbh}->rollback();
     $lsmb->{dbh}->disconnect;
@@ -166,16 +168,16 @@ like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key')
 $lsmb = LedgerSMB->new();
 $lsmb->{_role_prefix} = '1_';
 $lsmb->{_roles} = ['1_apple', '1_pear'];
-is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1, 
+is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1,
 	'is_allowed_role: allowed role');
 
 $lsmb->{_roles} = ['apple', 'pear'];
-is($lsmb->is_allowed_role({allowed_roles => ['peach']}), 0, 
+is($lsmb->is_allowed_role({allowed_roles => ['peach']}), 0,
 	'is_allowed_role: disallowed role');
-is($lsmb->is_allowed_role({'allowed_roles' => []}), 0, 
+is($lsmb->is_allowed_role({'allowed_roles' => []}), 0,
 	'is_allowed_role: no allowable roles');
 delete $lsmb->{_roles};
-is($lsmb->is_allowed_role({'allowed_roles' => ['apple']}), 0, 
+is($lsmb->is_allowed_role({'allowed_roles' => ['apple']}), 0,
 		'is_allowed_role: no roles for user');
 
 # $lsmb->is_allowed_role checks, prefix
@@ -183,5 +185,5 @@ $lsmb = LedgerSMB->new();
 $lsmb->{_role_prefix} = 'test__';
 
 $lsmb->{_roles} = ['test__apple', 'test__pear'];
-is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1, 
+is($lsmb->is_allowed_role({allowed_roles => ['pear']}), 1,
 	'is_allowed_role: allowed role with prefix');
