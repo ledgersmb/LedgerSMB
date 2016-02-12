@@ -39,6 +39,7 @@ requires 'PGObject::Simple::Role';
 requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime';
 requires 'PGObject::Util::DBMethod';
+requires 'PGObject::Util::DBAdmin' => '0.08';
 requires 'TeX::Encode';
 requires 'Template' => '2.14';
 requires 'namespace::autoclean';

@@ -90,6 +90,7 @@ has sorted_row_ids => (is => 'rw');
 
 =item columns
 
+Implement inherited protocol.
 Returns an empty arrayref since this is not applicable.
 
 =cut
@@ -100,6 +101,7 @@ sub columns {
 
 =item header_lines
 
+Implement inherited protocol.
 Returns an empty arrayref since this is not applicable.
 
 =cut

@@ -175,10 +175,11 @@ sub get_info {
 
     my $creds = LedgerSMB::Auth->get_credentials();
     $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
-    my $dbh = eval { $self->connect() };
+    my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
-           $dbh = $self->new($self->export, (dbname => 'postgres'))->connect;
+           $dbh = $self->new($self->export, (dbname => 'postgres'))
+               ->connect({PrintError=>0});
            return $retval unless $dbh;
            $logger->debug("DBI->connect dbh=$dbh");
        # don't assign to App_State::DBH, since we're a fallback connection,
@@ -350,6 +351,7 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
+    $self->{source_dir} ||= '';
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
     for my $mod (<LOADORDER>) {
         chomp($mod);
@@ -380,13 +382,17 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-            file  => "sql/coa/$args->{country}/chart/$args->{chart}",
-            log   => $log
-    );
-    if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        file         => "sql/coa/$args->{country}/chart/$args->{chart}",
+        log_stdout   => $log,
+        log_stderr   => $log,
+        );
+    if (defined $args->{coa_lc}
+        && -f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->run_file(
-             file => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
-             log  => $log );
+            file        => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+            log_stdout  => $log,
+            log_stderr  => $log,
+            );
     }
 }
 
@@ -428,7 +434,7 @@ sub upgrade_modules {
                 })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->connect;
+    my $dbh = $self->connect({PrintError=>0});
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );

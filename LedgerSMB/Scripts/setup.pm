@@ -76,8 +76,9 @@ sub _init_db {
     my ($request) = @_;
     my $database = _get_database($request);
     local $@;
-    $request->{dbh} = eval { $database->connect() }
-        if ! defined $request->{dbh};
+    $request->{dbh} = eval {
+        $database->connect({PrintError => 0, AutoCommit => 0 })
+    } if ! defined $request->{dbh};
     $LedgerSMB::App_State::DBH = $request->{dbh};
 
     return $database;
@@ -190,7 +191,7 @@ sub login {
     } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->connect();
+            my $dbh = $database->connect({PrintError=>0, AutoCommit=>0});
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -281,8 +282,8 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-           {%$database, (dbname => $request->{new_name})}
-    )->connect;
+           {%$database, (company_name => $request->{new_name})}
+    )->connect({ PrintError => 0, AutoCommit => 0 });
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
@@ -418,8 +419,7 @@ sub run_backup {
 sub revert_migration {
     my ($request) = @_;
     my $database = _get_database($request);
-    my $dbh = $database->connect();
-    $dbh->{AutoCommit} = 0;
+    my $dbh = $database->connect({PrintError => 0, AutoCommit => 0});
     my $sth = $dbh->prepare(qq(
          SELECT value
            FROM defaults
@@ -915,7 +915,7 @@ sub save_user {
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
     my $duplicate = 0;
-    try { $user->create }
+    try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
            $duplicate = 1;
@@ -978,8 +978,7 @@ sub save_user {
 
 sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
-    my $dbh = $database->connect;
-    $dbh->{AutoCommit} = 0;
+    my $dbh = $database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $database->loader_log_filename();
     my $rc;
 

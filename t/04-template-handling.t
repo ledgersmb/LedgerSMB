@@ -393,7 +393,7 @@ sub get_output_line_array {
                 die 'Unable to open rendered file';
         my @lines = <$FH>;
         close $FH;
-        delete $template->{rendered};
+        unlink $template->{rendered};
         return @lines;
 }
 
