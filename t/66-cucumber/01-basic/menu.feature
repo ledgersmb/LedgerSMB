@@ -24,9 +24,12 @@ Scenario Outline: Navigate to menu and open screen
     | AP > Search                               | AP search                |
     | Budgets > Search                          | Budget search            |
     | HR > Employees > Search                   | Employee search          |
-#    | Order Entry > Reports > Sales Orders      | sales order search       |
-#    | Order Entry > Reports > Purchase Orders   | purchase order search    |
-#    | Order Entry > Generate > Sales Orders     | generate sales orders    |
-#    | Order Entry > Generate > Purchase Orders  | generate purchase orders |
-#    | Order Entry > Combine > Sales Orders      | combine sales orders     |
-#    | Order Entry > Combine > Purchase Orders   | combine purchase orders  |
+    | Order Entry > Reports > Sales Orders      | Sales order search       |
+    | Order Entry > Reports > Purchase Orders   | Purchase order search    |
+    | Order Entry > Generate > Sales Orders     | generate sales order     |
+    | Order Entry > Generate > Purchase Orders  | generate purchase order  |
+    | Order Entry > Combine > Sales Orders      | combine sales order      |
+    | Order Entry > Combine > Purchase Orders   | combine purchase order   |
+    | Quotations > Reports > Quotations         | Quotation search         |
+    | Quotations > Reports > RFQs               | RFQ search               |
+    | General Journal > Search and GL           | GL search                |

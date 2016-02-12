@@ -1,4 +1,4 @@
-package PageObject::App::Search::SalesOrders;
+package PageObject::App::Search::CombinePurchaseOrder;
 
 use strict;
 use warnings;
@@ -9,7 +9,7 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
-my $page_heading = 'Search Sales Orders';
+my $page_heading = 'Combine Purchase Orders';
 
 sub verify {
     my ($self) = @_;
