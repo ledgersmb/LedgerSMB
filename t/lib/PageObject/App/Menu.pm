@@ -54,7 +54,9 @@ sub click_menu {
 
     do {
         $item = $driver->find_child_element($item,".$ul/li[./a[text()='$_']]");
-        $driver->find_child_element($item,"./a")->click
+        my $link = $driver->find_child_element($item,"./a");
+        $driver->execute_script("arguments[0].scrollIntoView()", $link);
+        $link->click
             unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
 
         $ul = '/ul';
