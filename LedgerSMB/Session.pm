@@ -35,7 +35,6 @@ Handles failure by creating a new session, since credentials are now separate.
 
 sub check {
     my ( $cookie, $form ) = @_;
-    return 0 unless $cookie;
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;

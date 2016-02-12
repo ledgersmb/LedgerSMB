@@ -411,10 +411,13 @@ sub _process_cookies {
     # Explicitly don't use the cookie content when we have a simple request
     # for login.pl without an 'action' query parameter: this is a request
     # for the login page, not for the 'post-login' menu/content page
-    return
-        if ($ENV{REQUEST_METHOD} eq 'GET'
-            && $self->{script} eq 'login.pl'
-            && (! defined $self->{action} || $self->{action} eq ''));
+    if ($ENV{REQUEST_METHOD} eq 'GET'
+        && $self->{script} eq 'login.pl'
+        && (! defined $self->{action} || $self->{action} eq ''
+            || $self->{action} eq 'authenticate')) {
+        $self->{cookie} = ''; # reset cookie -- prevents later use
+        return;
+    }
 
     if ($self->is_run_mode('cgi', 'mod_perl') and $ENV{HTTP_COOKIE}) {
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
