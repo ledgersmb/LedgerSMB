@@ -60,6 +60,7 @@ sub BUILD {
     my ($self) = @_;
     &_monkeypatch_xml_http_prototype($self);
     $self->set_implicit_wait_timeout(30000); # 30s
+    $self->set_window_size(1200,600);
 }
 
 sub find_element_by_label {
@@ -175,6 +176,14 @@ sub verify_page {
 
     $self->try_wait_for_page;
     return $self->page->verify;
+}
+
+sub verify_screen {
+    my ($self) = @_;
+
+    $self->try_wait_for_page;
+    $self->page->verify;
+    return $self->page->maindiv->content;
 }
 
 __PACKAGE__->meta->make_immutable();

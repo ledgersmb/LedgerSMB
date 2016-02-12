@@ -10,9 +10,8 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
+use PageObject::App;
 
-
-has driver => (is => 'ro', required => 1);
 
 sub url { return '/login.pl'; }
 
@@ -28,27 +27,20 @@ sub verify {
 
 sub login {
     my ($self, $user, $password, $company) = @_;
-    $self->driver->find_element_by_label("Super-user login")->click;
     do {
         my $element = $self->driver->find_element_by_label($_->{label});
         $element->click;
         $element->send_keys($_->{value});
-    } for ({ label => "Super-user login",
+    } for ({ label => "User Name",
              value => $user },
            { label => "Password",
              value => $password },
-           { label => "Database",
+           { label => "Company",
              value => $company });
     $self->driver->find_button("Login")->click;
-    return $self->driver->page(PageObject::Setup::Main->new(%$self));
+    return $self->driver->page(PageObject::App->new(%$self));
 }
 
-sub login_non_existent {
-    my $self = shift @_;
-
-    $self->login(@_);
-    return $self->driver->page(PageObject::Setup::CreateConfirm->new(%$self));
-}
 
 
 __PACKAGE__->meta->make_immutable;
