@@ -16,7 +16,17 @@ extends 'PageObject';
 my %menu_path_pageobject_map = (
     "Contacts > Add Contact" => '',
     "Contacts > Search" => 'PageObject::App::Search::Contact',
+    "AR > Add Transaction" => 'PageObject::App::AR::Transaction',
+    "AR > Import Batch" => 'PageObject::App::BatchImport',
+    "AR > Sales Invoice" => 'PageObject::App::AR::Invoice',
+    "AR > Credit Note" => 'PageObject::App::AR::Note',
+    "AR > Credit Invoice" => 'PageObject::App::AR::CreditInvoice',
+    "AR > Add Return" => 'PageObject::App::AR::Return',
     "AR > Search" => 'PageObject::App::Search::AR',
+    "AR > Reports > Outstanding" => '',
+    "AR > Reports > AR Aging" => '',
+    "AR > Reports > Customer History" => '',
+
     "AP > Search" => 'PageObject::App::Search::AP',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
     "HR > Employees > Search" => 'PageObject::App::Search::Employee',

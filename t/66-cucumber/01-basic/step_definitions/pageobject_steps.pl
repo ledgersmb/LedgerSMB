@@ -202,8 +202,14 @@ Then qr/I should see the (.*) page/, sub {
 
 my %screens = (
     'Contact search' => 'PageObject::App::Search::Contact',
+    'AR transaction entry' => 'PageObject::App::AR::Transaction',
+    'AR invoice entry' => 'PageObject::App::AR::Invoice',
+    'AR note entry' => 'PageObject::App::AR::Note',
+    'AR credit invoice entry' => 'PageObject::App::AR::CreditInvoice',
+    'AR returns' => 'PageObject::App::AR::Return',
     'AR search' => 'PageObject::App::Search::AR',
     'AP search' => 'PageObject::App::Search::AP',
+    'Batch import' => 'PageObject::App::BatchImport',
     'Budget search' => 'PageObject::App::Search::Budget',
     'Employee search' => 'PageObject::App::Search::Employee',
     'Sales order search' => 'PageObject::App::Search::SalesOrder',
