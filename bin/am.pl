@@ -199,12 +199,6 @@ sub gifi_footer {
             };
     }
 
-##SC: Temporary commenting
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-
 }
 
 sub save_gifi {
@@ -624,12 +618,6 @@ sub display_taxes {
         $hiddens{$taxmodule};
     }
 
-##SC: Temporary removal
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-
     my $template = LedgerSMB::Template->new_UI(
         user => \%myconfig,
         locale => $locale,
@@ -983,12 +971,6 @@ sub recurring_transactions {
             push @{$transactions[$#transactions]{transactions}}, \%column_data;
         }
     }
-
-##SC: Temporary removal
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
 
     $hiddens{path} = $form->{path};
     $hiddens{login} = $form->{login};

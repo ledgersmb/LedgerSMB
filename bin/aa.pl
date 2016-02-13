@@ -1062,10 +1062,6 @@ sub form_footer {
 <a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 </form>
@@ -1756,11 +1752,6 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     print qq|
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 
