@@ -1051,11 +1051,6 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|

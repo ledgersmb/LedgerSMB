@@ -30,7 +30,6 @@ isa_ok($form, 'Form');
 my $lsmb = new LedgerSMB;
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
-$form->{dbh} = ${LedgerSMB::Sysconfig::GLOBALDBH};
 
 my @formats = ( ['mm-dd-yy', '-', 2, '02-29-00', '03-01-00'],
 		['mm/dd/yy', '/', 2, '02/29/00', '03/01/00'],

@@ -1,4 +1,4 @@
-@wip
+@wip @one-db
 Feature: correct operation of the menu and immediate linked pages
   As a an end-user, I want to be able to navigate the menu and
   open the screens from the available links. If my authorizations
@@ -20,10 +20,22 @@ Scenario Outline: Navigate to menu and open screen
     | path                                      | screen                   |
 #    | Contacts > Add Contact                    | contact creation         |
     | Contacts > Search                         | Contact search           |
+    | AR > Add Transaction                      | AR transaction entry     |
+    | AR > Import Batch                         | Batch import             |
+    | AR > Sales Invoice                        | AR invoice entry         |
+    | AR > Credit Note                          | AR note entry            |
+    | AR > Add Return                           | AR returns               |
     | AR > Search                               | AR search                |
+    | AP > Add Transaction                      | AP transaction entry     |
+    | AP > Import Batch                         | Batch import             |
+    | AP > Vendor Invoice                       | AP invoice entry         |
+    | AP > Debit Note                           | AP note entry            |
+    | AP > Search                               | AP search                |
     | AP > Search                               | AP search                |
     | Budgets > Search                          | Budget search            |
     | HR > Employees > Search                   | Employee search          |
+    | Order Entry > Sales Order                 | Sales order entry        |
+    | Order Entry > Purchase Order              | Purchase order entry     |
     | Order Entry > Reports > Sales Orders      | Sales order search       |
     | Order Entry > Reports > Purchase Orders   | Purchase order search    |
     | Order Entry > Generate > Sales Orders     | generate sales order     |

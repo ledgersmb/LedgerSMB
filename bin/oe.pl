@@ -935,11 +935,6 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|

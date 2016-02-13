@@ -926,11 +926,6 @@ sub form_footer {
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     &assembly_row( ++$form->{assembly_rows} ) if $form->{item} eq 'assembly';
 
     $form->hide_form(
@@ -2063,11 +2058,6 @@ sub stock_assembly {
       . qq|</button>
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 

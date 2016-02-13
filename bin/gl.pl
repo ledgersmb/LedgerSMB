@@ -363,11 +363,6 @@ sub display_form
             displayrows => \@displayrows
                    });
 
-  if ( $form->{lynx} ) {
-      require "bin/menu.pl";
-      &menubar;
-  }
-
 }
 
 
