@@ -17,36 +17,36 @@ use Selenium::Support qw( find_element_by_label
 
 
 Given qr/a LedgerSMB instance/, sub {
-    return if defined S->{feature}->{driver};
+    return if defined C->stash->{feature}->{driver};
 
     my $driver = new PageObject::Driver(
         'port' => 4422,
         ) or die "Can't set up Selenium connection";
     $driver->set_implicit_wait_timeout(30000);
     &prepare_driver($driver);
-    S->{feature}->{driver} = $driver;
+    C->stash->{feature}->{driver} = $driver;
 };
 
 Given qr/a user named "(.*)" with a password "(.*)"/, sub {
-    S->{feature}->{user} = $1;
-    S->{feature}->{passwd} = $2;
+    C->stash->{feature}->{user} = $1;
+    C->stash->{feature}->{passwd} = $2;
 };
 
 Given qr/a database super-user/, sub {
-    S->{feature}->{"the super-user name"} = $ENV{PGUSER};
-    S->{feature}->{"the super-user password"} = $ENV{PGPASSWORD};
+    C->stash->{feature}->{"the super-user name"} = $ENV{PGUSER};
+    C->stash->{feature}->{"the super-user password"} = $ENV{PGPASSWORD};
 };
 
 Given qr/a non-existant company name/, sub {
-    S->{feature}->{"the company name"} = "non-existant";
+    C->stash->{feature}->{"the company name"} = "non-existant";
     S->{scenario}->{"non-existent"} = 1;
 };
 
 When qr/I navigate to '(.*)'/, sub {
     my $url = $ENV{LSMB_BASE_URL} . $1;
 
-    get_driver(S)->get($url);
-    get_driver(S)->try_wait_for_page;;
+    get_driver(C)->get($url);
+    get_driver(C)->try_wait_for_page;;
 };
 
 When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
@@ -54,15 +54,15 @@ When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
     my $value = $3;
     my $label = $4;
 
-    my $element = &find_element_by_label(&get_driver(S), $label);
+    my $element = &find_element_by_label(&get_driver(C), $label);
     ok($element, "found element with label '$label'");
-    $value ||= S->{feature}->{$param};
+    $value ||= C->stash->{feature}->{$param};
     $element->click;
     $element->send_keys($value);
 };
 
 When qr/I enter these values:/, sub {
-    my $driver = get_driver(S);
+    my $driver = get_driver(C);
     foreach my $field (@{ C->data }) {
         my $elm = find_element_by_label($driver, $field->{label});
         if (element_is_dropdown($elm)) {
@@ -79,23 +79,23 @@ When qr/I select "(.*)" from the drop down "(.*)"/, sub {
     my $value = $1;
     my $label = $2;
 
-    find_option(get_driver(S), $value, $label)->click;
+    find_option(get_driver(C), $value, $label)->click;
 };
 
 
 When qr/I press "(.*)"/, sub {
     my $button_text = $1;
 
-    find_button(get_driver(S), $button_text)->click;
+    find_button(get_driver(C), $button_text)->click;
     sleep(3);
-    &try_wait_for_page(&get_driver(S));
+    &try_wait_for_page(&get_driver(C));
 };
 
 
 Then qr/I should see a (radio button|textbox|password box) "(.*)"/, sub {
     my $want_type = $1;
     my $label = $2;
-    my $element = &find_element_by_label(&get_driver(S), $label);
+    my $element = &find_element_by_label(&get_driver(C), $label);
 
     my %element_type = (
         'radio button' => 'radio',
@@ -112,7 +112,7 @@ Then qr/I should see a (radio button|textbox|password box) "(.*)"/, sub {
 Then qr/I should see a (dropdown|combobox) "(.*)"/, sub {
     my $want_type = $1;
     my $label = $2;
-    my $element = &find_element_by_label(&get_driver(S), $label);
+    my $element = &find_element_by_label(&get_driver(C), $label);
 
     my %expect_tag_name = (
         'dropdown'    => 'select',
@@ -128,12 +128,12 @@ Then qr/I should see "(.*)"/, sub {
     my $want_text = $1;
 
     my $elements =
-        &get_driver(S)->find_elements(
+        &get_driver(C)->find_elements(
         "//*[contains(.,'$want_text')]
             [not(.//*[contains(.,'$want_text')])]");
     my $count = scalar(@$elements);
     if (! $count) {
-        print STDERR get_driver(S)->get_page_source;
+        print STDERR get_driver(C)->get_page_source;
     }
     ok($count, "Found $count elements containing '$want_text'");
 };
@@ -141,7 +141,7 @@ Then qr/I should see "(.*)"/, sub {
 Then qr/I should see a button "(.*)"/, sub {
     my $button_text = $1;
 
-    my $btn = &get_driver(S)->find_element(
+    my $btn = &get_driver(C)->find_element(
         "//span[text()='$button_text'
                 and contains(concat(' ',normalize-space(\@class),' '),
                              ' dijitButtonText ')]
@@ -157,19 +157,19 @@ Then qr/I should see a drop down "(.*)"( with these items:)?/, sub {
     my $want_values = $2;
 
     if ($want_values) {
-        my $driver = get_driver(S);
+        my $driver = get_driver(C);
         foreach my $option (@{ C->data }) {
             find_option($driver, $option->{text}, $label_text);
         }
     }
     else {
-        find_dropdown(get_driver(S), $label_text);
+        find_dropdown(get_driver(C), $label_text);
     }
 };
 
 
 Then qr/I should see these fields:/, sub {
-    my $driver = get_driver(S);
+    my $driver = get_driver(C);
     foreach my $field (@{ C->data }) {
         find_element_by_label($driver, $field->{label});
     }

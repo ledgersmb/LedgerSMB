@@ -20,18 +20,20 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
-sub get_driver {
-    my ($stash) = @_;
+use Data::Dumper;
 
-    return $stash->{feature}->{driver};
+sub get_driver {
+    my ($context) = @_;
+
+    return $context->stash->{feature}->{driver};
 }
 
 my $company_seq = 0;
 
 Given qr/a standard test company/, sub {
-    my $driver = get_driver(S);
+    my $driver = get_driver(C);
     my $company = "standard-" . $company_seq++;
-    S->{feature}->{"the company"} = $company;
+    C->stash->{feature}->{"the company"} = $company;
 
     my $pgh = LedgerSMB::Database->new(
         dbname => 'postgres',
@@ -39,7 +41,8 @@ Given qr/a standard test company/, sub {
         password => $ENV{PGPASSWORD},
         host => 'localhost')
         ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
-    unless (S->{feature}->{"the template"}) {
+
+    unless (C->stash->{feature}->{"the template"}) {
         my $template = "standard-template";
         my $admin = 'test-user-admin';
         $pgh->do(qq(DROP DATABASE IF EXISTS "$template"));
@@ -87,34 +90,34 @@ Given qr/a standard test company/, sub {
                      VALUES ('role_prefix', 'lsmb_${template}__')");
         $dbh->commit;
         $dbh->disconnect;
-        S->{feature}->{"the template"} = $template;
-        S->{feature}->{"the admin"} = 'test-user-admin';
-        S->{feature}->{"the admin password"} = 'password';
+        C->stash->{feature}->{"the template"} = $template;
+        C->stash->{feature}->{"the admin"} = 'test-user-admin';
+        C->stash->{feature}->{"the admin password"} = 'password';
     }
-    my $template = S->{feature}->{"the template"};
+    my $template = C->stash->{feature}->{"the template"};
     $pgh->do(qq(DROP DATABASE IF EXISTS "$company"));
     $pgh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
     $pgh->disconnect;
-    S->{scenario}->{"the company"} = $company;
-    S->{scenario}->{"the admin"} = S->{feature}->{"the admin"};
-    S->{scenario}->{"the admin password"} =
-        S->{feature}->{"the admin password"};
+    S->{"the company"} = $company;
+    S->{"the admin"} = C->stash->{feature}->{"the admin"};
+    S->{"the admin password"} =
+        C->stash->{feature}->{"the admin password"};
 };
 
 
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
 
-    get_driver(S)->page->menu->click_menu(\@path);
+    get_driver(C)->page->menu->click_menu(\@path);
 };
 
 
 Given qr/(a non-existent|an existing) company named "(.*)"/, sub {
     my $company = $2;
-    S->{scenario}->{"the company"} = $company;
-    S->{scenario}->{"non-existent"} = ($1 eq 'a non-existent');
+    S->{"the company"} = $company;
+    S->{"non-existent"} = ($1 eq 'a non-existent');
 
-    if (S->{scenario}->{'non-existent'}) {
+    if (S->{'non-existent'}) {
         my $dbh = LedgerSMB::Database->new(
             dbname => 'postgres',
             usermame => $ENV{PGUSER},
@@ -127,7 +130,7 @@ Given qr/(a non-existent|an existing) company named "(.*)"/, sub {
 
 Given qr/a non-existent user named "(.*)"/, sub {
     my $role = $1;
-    S->{scenario}->{"the user"} = $role;
+    S->{"the user"} = $role;
 
     my $dbh = LedgerSMB::Database->new(
         dbname => 'postgres',
@@ -139,12 +142,14 @@ Given qr/a non-existent user named "(.*)"/, sub {
 };
 
 
+my $c = 0;
+
 Given qr/a logged in admin/, sub {
-    PageObject::App::Login->open(driver => get_driver(S));
-    get_driver(S)->verify_page;
-    get_driver(S)->page->login(S->{scenario}->{"the admin"},
-                               S->{scenario}->{"the admin password"},
-                               S->{scenario}->{"the company"});
+    PageObject::App::Login->open(driver => get_driver(C));
+    get_driver(C)->verify_page;
+    get_driver(C)->page->login(S->{"the admin"},
+                               S->{"the admin password"},
+                               S->{"the company"});
 };
 
 When qr/I confirm database creation with these parameters:/, sub {
@@ -152,7 +157,7 @@ When qr/I confirm database creation with these parameters:/, sub {
     my %data;
 
     $data{$_->{'parameter name'}} = $_->{value} for @$data;
-    get_driver(S)->page->create_database(%data);
+    get_driver(C)->page->create_database(%data);
 };
 
 my %pages = (
@@ -172,19 +177,19 @@ When qr/I navigate to the (.*) page/, sub {
         unless exists $pages{$page};
 
     use_module($pages{$page});
-    $pages{$page}->open(driver => get_driver(S));
-    get_driver(S)->verify_page;
+    $pages{$page}->open(driver => get_driver(C));
+    get_driver(C)->verify_page;
 };
 
 When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
-    my $company = $2 || S->{scenario}->{$3};
+    my $company = $2 || S->{$3};
 
-    if (S->{scenario}->{"non-existent"}) {
-        get_driver(S)->page->login_non_existent(
+    if (S->{"non-existent"}) {
+        get_driver(C)->page->login_non_existent(
             $ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
     }
     else {
-        get_driver(S)->page->login($ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
+        get_driver(C)->page->login($ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
     }
 };
 
@@ -193,7 +198,7 @@ Then qr/I should see the (.*) page/, sub {
     die "Unknown page '$page_name'"
         unless exists $pages{$page_name};
 
-    my $page = get_driver(S)->verify_page;
+    my $page = get_driver(C)->verify_page;
     ok($page, "the browser page is the page named '$page_name'");
     ok($pages{$page_name}, "the named page maps to a class name");
     ok($page->isa($pages{$page_name}),
@@ -234,7 +239,7 @@ Then qr/I should see the (.*) screen/, sub {
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
 
-    my $page = get_driver(S)->verify_screen;
+    my $page = get_driver(C)->verify_screen;
     ok($page, "the browser screen is the screen named '$page_name'");
     ok($screens{$page_name}, "the named screen maps to a class name");
     ok($page->isa($screens{$page_name}),
@@ -246,20 +251,20 @@ When qr/I create a user with these values:/, sub {
     my %data;
 
     $data{$_->{'label'}} = $_->{value} for @$data;
-    get_driver(S)->page->create_user(%data);
+    get_driver(C)->page->create_user(%data);
 };
 
 When qr/I request the users list/, sub {
-    get_driver(S)->page->list_users;
+    get_driver(C)->page->list_users;
 };
 
 When qr/I request to add a user/, sub {
-    get_driver(S)->page->add_user;
+    get_driver(C)->page->add_user;
 };
 
 Then qr/I should see the table of available users:/, sub {
     my @data = map { $_->{'Username'} } @{ C->data };
-    my $users = get_driver(S)->page->get_users_list;
+    my $users = get_driver(C)->page->get_users_list;
 
     is_deeply($users, \@data, "Users on page correspond with expectation");
 };
@@ -267,18 +272,18 @@ Then qr/I should see the table of available users:/, sub {
 When qr/I copy the company to "(.*)"/, sub {
     my $target = $1;
 
-    get_driver(S)->page->copy_company($target);
+    get_driver(C)->page->copy_company($target);
 };
 
 When qr/I request the user overview for "(.*)"/, sub {
     my $user = $1;
 
-    get_driver(S)->page->edit_user($user);
+    get_driver(C)->page->edit_user($user);
 };
 
 
 Then qr/I should see all permission checkboxes checked/, sub {
-    my $page = get_driver(S)->page;
+    my $page = get_driver(C)->page;
     my $checkboxes = $page->get_perms_checkboxes(filter => 'all');
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
@@ -290,7 +295,7 @@ Then qr/I should see all permission checkboxes checked/, sub {
 
 
 Then qr/I should see no permission checkboxes checked/, sub {
-    my $page = get_driver(S)->page;
+    my $page = get_driver(C)->page;
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
     ok(0 == scalar(@{ $checked_boxes }),
@@ -299,7 +304,7 @@ Then qr/I should see no permission checkboxes checked/, sub {
 
 
 Then qr/I should see only these permission checkboxes checked:/, sub {
-    my $page = get_driver(S)->page;
+    my $page = get_driver(C)->page;
     my @data = map { $_->{"perms label"} } @{ C->data };
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
