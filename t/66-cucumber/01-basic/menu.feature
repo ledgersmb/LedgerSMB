@@ -26,6 +26,11 @@ Scenario Outline: Navigate to menu and open screen
     | AR > Credit Note                          | AR note entry            |
     | AR > Add Return                           | AR returns               |
     | AR > Search                               | AR search                |
+    | AP > Add Transaction                      | AP transaction entry     |
+    | AP > Import Batch                         | Batch import             |
+    | AP > Vendor Invoice                       | AP invoice entry         |
+    | AP > Debit Note                           | AP note entry            |
+    | AP > Search                               | AP search                |
     | AP > Search                               | AP search                |
     | Budgets > Search                          | Budget search            |
     | HR > Employees > Search                   | Employee search          |

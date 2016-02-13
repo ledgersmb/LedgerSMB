@@ -9,15 +9,15 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Purchase Invoice';
+my $page_heading = 'Add Vendor Invoice';
 
 sub verify {
     my ($self) = @_;
 
     $self->driver
         ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
+                           [.//*[\@class='listtop']
+                                [.//*[text()='$page_heading']]]");
 
     return $self;
 }

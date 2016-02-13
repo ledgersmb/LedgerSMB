@@ -29,10 +29,9 @@ my %menu_path_pageobject_map = (
 
     "AP > Add Transaction" => 'PageObject::App::AP::Transaction',
     "AP > Import Batch" => 'PageObject::App::BatchImport',
-    "AP > Sales Invoice" => 'PageObject::App::AP::Invoice',
+    "AP > Vendor Invoice" => 'PageObject::App::AP::Invoice',
     "AP > Debit Note" => 'PageObject::App::AP::Note',
     "AP > Debit Invoice" => 'PageObject::App::AP::DebitInvoice',
-    "AP > Add Return" => 'PageObject::App::AP::Return',
     "AP > Search" => 'PageObject::App::Search::AP',
     "AP > Reports > Outstanding" => '',
     "AP > Reports > AP Aging" => '',
