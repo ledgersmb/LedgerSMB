@@ -30,10 +30,9 @@ sub get_driver {
 
 my $company_seq = 0;
 
-Given qr/a standard test company/, sub {
+Given qr/a (fresh )?standard test company/, sub {
+    my $fresh_required = $1;
     my $driver = get_driver(C);
-    my $company = "standard-" . $company_seq++;
-    C->stash->{feature}->{"the company"} = $company;
 
     my $pgh = LedgerSMB::Database->new(
         dbname => 'postgres',
@@ -94,14 +93,17 @@ Given qr/a standard test company/, sub {
         C->stash->{feature}->{"the admin"} = 'test-user-admin';
         C->stash->{feature}->{"the admin password"} = 'password';
     }
-    my $template = C->stash->{feature}->{"the template"};
-    $pgh->do(qq(DROP DATABASE IF EXISTS "$company"));
-    $pgh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
+    if (! C->stash->{feature}->{"the company"} || $fresh_required) {
+        my $company = "standard-" . $company_seq++;
+        C->stash->{feature}->{"the company"} = $company;
+
+        my $template = C->stash->{feature}->{"the template"};
+        $pgh->do(qq(DROP DATABASE IF EXISTS "$company"));
+        $pgh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
+    }
     $pgh->disconnect;
-    S->{"the company"} = $company;
-    S->{"the admin"} = C->stash->{feature}->{"the admin"};
-    S->{"the admin password"} =
-        C->stash->{feature}->{"the admin password"};
+    S->{$_} = C->stash->{feature}->{$_}
+        for ("the company", "the admin", "the admin password");
 };
 
 
