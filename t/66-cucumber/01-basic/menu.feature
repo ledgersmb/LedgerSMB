@@ -34,6 +34,8 @@ Scenario Outline: Navigate to menu and open screen
     | AP > Search                               | AP search                |
     | Budgets > Search                          | Budget search            |
     | HR > Employees > Search                   | Employee search          |
+    | Order Entry > Sales Order                 | Sales order entry        |
+    | Order Entry > Purchase Order              | Purchase order entry     |
     | Order Entry > Reports > Sales Orders      | Sales order search       |
     | Order Entry > Reports > Purchase Orders   | Purchase order search    |
     | Order Entry > Generate > Sales Orders     | generate sales order     |
