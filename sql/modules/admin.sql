@@ -170,7 +170,7 @@ CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns u
 
         select * from users where entity_id = in_entity_id;
 
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION admin__get_user_by_entity(in_entity_id INT) IS
 $$ Returns a set of (only one) user specified by the entity_id.$$;
@@ -689,7 +689,7 @@ CREATE TYPE user_result AS (
 	first_name text,
 	last_name text,
 	ssn text,
-	dob text
+	dob date
 );
 
 
