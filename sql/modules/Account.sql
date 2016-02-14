@@ -79,15 +79,8 @@ company, for a project, or for a department.$$;
 CREATE OR REPLACE FUNCTION chart_list_all()
 RETURNS SETOF chart AS
 $$
-DECLARE out_row chart%ROWTYPE;
-BEGIN
-	FOR out_row IN
-		SELECT * FROM chart ORDER BY accno
-	LOOP
-		RETURN next out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+SELECT * FROM chart ORDER BY accno;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION chart_list_all() IS
 $$ Generates a list of chart view entries.$$;
@@ -122,9 +115,6 @@ in_account_class is 2, then a list of AR accounts.$$;
 CREATE OR REPLACE FUNCTION chart_list_search(in_search text, in_link_desc text)
 RETURNS SETOF account AS
 $$
-DECLARE out_row account%ROWTYPE;
-BEGIN
-	FOR out_row IN
 		SELECT * FROM account
                  WHERE (accno ~* ('^'||in_search)
                        OR description ~* ('^'||in_search))
@@ -134,11 +124,8 @@ BEGIN
                             where description = in_link_desc))
                        AND not obsolete
               ORDER BY accno
-	LOOP
-		RETURN next out_row;
-	END LOOP;
 END;$$
-LANGUAGE 'plpgsql';
+LANGUAGE 'sql';
 
 COMMENT ON FUNCTION chart_list_search(in_search text, in_link_desc text) IS
 $$ This returns a list of account entries where the description or account
@@ -332,20 +319,14 @@ $$Deletes the translation for the account+language combination.$$;
 
 CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
 $$
-DECLARE
-	account chart%ROWTYPE;
-BEGIN
 SELECT ah.id, ah.accno, ah.description,
        'H' as charttype, NULL as category, NULL as link,
        ah.parent_id as account_heading,
        null as gifi_accno, false as contra,
        false as tax
-       INTO account
    from account_heading ah
   WHERE id = in_id;
-  RETURN account;
-END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_heading_get(in_id int) IS
 $$Returns an entry from the chart view which matches the id requested, and which
@@ -840,7 +821,7 @@ CREATE OR REPLACE FUNCTION account_heading__check_tree()
 RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 BEGIN
 
-PERFORM* from (
+PERFORM * from (
   WITH RECURSIVE account_headings AS (
       SELECT id, accno, 1 as level, accno as path
         FROM account_heading
