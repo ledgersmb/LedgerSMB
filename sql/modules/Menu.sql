@@ -8,7 +8,7 @@ CREATE TYPE menu_item AS (
    label varchar,
    path varchar,
    parent int,
-   args varchar[]
+   args text[]
 );
 
 
