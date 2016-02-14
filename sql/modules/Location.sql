@@ -28,7 +28,6 @@ $$ Lists location classes, by default in order entered.$$;
 CREATE OR REPLACE FUNCTION location_list_country()
 RETURNS SETOF country AS
 $$
-DECLARE out_row RECORD;
 		SELECT * FROM country ORDER BY name;
 $$ language sql;
 
