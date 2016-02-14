@@ -63,14 +63,11 @@ CREATE OR REPLACE FUNCTION invoice__get_by_vendor_number
 RETURNS ap AS
 $$
 DECLARE retval ap;
-BEGIN
-	SELECT * INTO retval FROM ap WHERE entity_credit_id = 
+	SELECT * FROM ap WHERE entity_credit_id = 
 		(select id from entity_credit_account where entity_class = 1
 		AND meta_number = in_meta_number)
 		AND invnumber = in_invoice_number;
-	RETURN retval;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 DROP TYPE if exists tree_record CASCADE;
 CREATE TYPE tree_record AS (t int[]);

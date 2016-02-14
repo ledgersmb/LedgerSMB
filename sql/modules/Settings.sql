@@ -15,7 +15,6 @@ $$
            SELECT substr(value,1,3)
            FROM defaults
            WHERE setting_key = 'curr';
-           RETURN defaultcurrency;
 $$ language sql;
 
 COMMENT ON FUNCTION defaults_get_defaultcurrency() IS
