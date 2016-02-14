@@ -2,7 +2,7 @@ BEGIN;
 
 CREATE OR REPLACE FUNCTION business_type__list() RETURNS SETOF business AS
 $$
-	SELECT * FROM business ORDER BY description LOOP
+	SELECT * FROM business ORDER BY description;
 $$ LANGUAGE SQL;
 
 COMMENT ON function business_type__list() IS
