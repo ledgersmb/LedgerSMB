@@ -8,6 +8,7 @@ Settings.sql
 Util.sql
 App_Module.sql
 Menu.sql
+Entity.sql
 Drafts.sql
 Account.sql
 Session.sql
@@ -18,7 +19,6 @@ Company.sql
 Customer.sql
 Date.sql
 Employee.sql
-Entity.sql
 Payment.sql
 Person.sql
 PNL.sql

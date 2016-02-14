@@ -178,10 +178,6 @@ CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)
 RETURNS SETOF employees as
 $$
-DECLARE
-	emp employees%ROWTYPE;
-BEGIN
-	FOR emp IN
 		SELECT
 		    e.salutation,
 		    e.first_name,
@@ -192,11 +188,7 @@ BEGIN
 		WHERE ee.sales = 't'::bool AND ee.role='manager'
 			AND ee.entity_id <> coalesce(in_id, -1)
 		ORDER BY name
-	LOOP
-		RETURN NEXT emp;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION employee__list_managers
 (in_id integer) IS
@@ -217,10 +209,6 @@ CREATE OR REPLACE FUNCTION employee_search
 	in_enddateto date, in_enddatefrom date, in_sales boolean)
 RETURNS SETOF employee_search AS
 $$
-DECLARE
-	emp employee_search%ROWTYPE;
-BEGIN
-	FOR emp IN
 		SELECT * FROM employee_search
 		WHERE coalesce(startdate, 'infinity'::timestamp)
 			>= coalesce(in_startdateto, '-infinity'::timestamp)
@@ -234,12 +222,7 @@ BEGIN
 			AND (name % in_name
 			    OR note % in_notes)
 			AND (sales = 't' OR coalesce(in_sales, 'f') = 'f')
-	LOOP
-		RETURN NEXT emp;
-	END LOOP;
-	return;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION employee__all_salespeople()
 RETURNS setof employee_result LANGUAGE SQL AS
