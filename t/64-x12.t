@@ -1,3 +1,5 @@
+#!perl
+
 # X12 tests for LedgerSMB 1.4
 #
 # This provides a few very basic tests for parsing X12 docs
@@ -11,10 +13,11 @@ require LedgerSMB::X12;
 require LedgerSMB::X12::EDI850;
 require LedgerSMB::X12::EDI894;
 };
-#use Carp::Always;
+plan skip_all => 'X12::Parser not installed' if $@;
+
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
-plan skip_all => 'X12_TESTING not set' unless $ENV{X12_TESTING};
+
 plan tests => 5;
 
 
