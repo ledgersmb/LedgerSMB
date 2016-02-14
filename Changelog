@@ -36,6 +36,13 @@ Internationalization
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.26
+* Removed broken and largely useless lwp tests (Chris T)
+* Moved X12 support from features downgraded to experimental (Chris T)
+* Fixed stylesheet class for creddentials page on setup (Chris T, #1204)
+* Added Copy to New for GL transactions (Chris T, #1046)
+* Fixed amount range not respected on gl search (Chris T, #1287)
+
 Changelog for 1.4.25
 * Added datepicker to invoice Delivery Date field (Nick P)
 * Fixed reversal of sales invoice with parts without inventory (Erik H, #990)

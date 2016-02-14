@@ -1,5 +1,6 @@
+#!perl
+
 use Test::More;
-our $lwp_tests = {};
 
 # Added to support the entity ID test.
 our %GLOBAL;
@@ -39,15 +40,6 @@ our $test_request_data = [
 	    "created_as_class" => 1,
 	    "db"            => "vendor",
 	    "_script_handle" => "LedgerSMB::Scripts::vendor",
-	    "_lwp_tests"    => sub {
-	        # Catch the entity ID, and pass it forwards.
-	        # Res is the full LWP response object.
-	        # ~A
-			my $res = shift @_;
-			($GLOBAL{"entity_id"}) = \
-	            ($res->content =~ m/\<input id="entity-id" type="hidden" name="entity_id" value="(\d+)" \/\>/);
-	        return 1;
-	    },
 	},
 	
 	{
@@ -66,11 +58,6 @@ our $test_request_data = [
 	    "db"            => "vendor",
 	    "name"          => "TestObj",
 	    "_script_handle" => "LedgerSMB::Scripts::vendor",
-	    "_lwp_tests"        => sub {	        
-			my $res = shift @_;
-			($GLOBAL{"vendor_id"}) = \
-	            ($res->content =~ m/\<input id="meta-number" type="text" name="meta_number" size="20" value="(\d+)" maxlength="255" \/\>/);
-	    },
 	},
 	{
 	    "_test_id"          => "AP Add Transaction",
@@ -345,18 +332,6 @@ our $test_request_data = [
 		"module"		=> "vouchers.pl",
 		"batch_type"	=> "ap",
 		"company"		=> "test",
-		"_lwp_tests" 	=> sub {
-			my $res = shift;
-			delete $GLOBAL{form_id};
-			delete $GLOBAL{batch_no};
-			# save form_id and batch number for additional requests
-			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input type=hidden name="form_id" value="(\d+)"/);
-            $GLOBAL{"form_id"} = "" unless defined $GLOBAL{"form_id"};
-			ok($GLOBAL{form_id}, "Received form ID: ".$GLOBAL{form_id});
-			$GLOBAL{batch_no} = $1 if ($res->content =~ m/input name="batch_number" type="text" value="([A-Z]-\d+)"/);
-
-			return 1;
-		}
 	},
 	{
 		# create an empty batch
@@ -370,11 +345,6 @@ our $test_request_data = [
 		"batch_number"	=> '_$GLOBAL$:batch_no',
 		"description"	=> "foo",
 		"form_id"	=> '_$GLOBAL$:form_id',
-		"_lwp_tests"	=> sub {
-			my $res = shift;
-			like($res->content, qr/\<title\>Add AP Transaction.*\<\/title\>/, 'Empty batch added');
-			return 1;
-		}	
 	},
 	{
 		# get the list of batches and save the first row of the list in GLOBAL
@@ -386,22 +356,6 @@ our $test_request_data = [
 		"class_id"		=> 1,
 		"created_by_eid"	=> 0,
 		"module"		=> "vouchers.pl",
-		"_lwp_tests"	=> sub {
-			my $res = shift;
-			my $batch_no = $GLOBAL{batch_no};
-			my $batch_id = "";
-            $batch_no = "" unless defined $GLOBAL{batch_no};
-
-			delete @GLOBAL{ qw( form_id row_1 )};
-			$GLOBAL{"form_id"} = $1 if ($res->content =~ m/input id="form-id" type="hidden" name="form_id" value="(\d+)"\s+\/\>/);
-			$batch_id = $1 if ($res->content =~ m/\<a href="vouchers.pl\?action=get_batch&amp;batch_id=(\d+)"\>$batch_no\<\/a\>/);			
-			$GLOBAL{"row_1"} = $batch_id if ($res->content =~ m/<input id="batch-${batch_id}" type="checkbox" name="batch_${batch_id}" value="\d"\s+\/\>/);
-            $GLOBAL{"row_1"} = "" unless defined $GLOBAL{"row_1"};
-			$GLOBAL{batch_id} = "batch_".$batch_id;
-
-			ok(exists $GLOBAL{"row_1"}, 'Received correct batch ID '.$GLOBAL{row_1});
-			return 1;
-		},
 	},
 	{
 		# remove first row of the list of empty batches (obtained from GLOBAL)
@@ -416,23 +370,12 @@ our $test_request_data = [
 		"row_1"			=> '_$GLOBAL$:row_1',
 		"action"		=> "list_batches_batch_delete",
 		'_$GLOBAL$:batch_id' => 1,
-		"_lwp_tests"	=> sub {
-			my $res = shift;
-			# check that we are at the 'batch selection' page,
-			like($res->content, qr/\<title\>Batch Selection\<\/title\>/, "Empty batch removed");
-			return 1;
-		}
 	},
 ];
 
 our $api_test_cases = {
 	'AP Transaction Voucher Screen' => sub {
 	},
-};
-
-opendir (D62, 't/data/62.d');
-for my $testfile (readdir(D62)){
-	do "t/data/62.d/$testfile";
 };
 
 # Overridden methods in classes for tests.

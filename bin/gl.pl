@@ -156,6 +156,12 @@ sub new {
      add();
 }
 
+sub copy_to_new {
+     delete $form->{reference};
+     delete $form->{id};
+     update();
+}
+
 sub add {
 
     $form->{title} = "Add";
@@ -279,9 +285,11 @@ sub display_form
             { ndx => 6, key => 'N', value => $locale->text('Save as new') },
           'schedule' =>
             { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-                  'new' =>
-                    { ndx => 9, key => 'N', value => $locale->text('New') },
-          );
+          'new' =>
+            { ndx => 9, key => 'N', value => $locale->text('New') },
+          'copy_to_new' =>
+            { ndx => 10, key => 'C', value => $locale->text('Copy to New') },
+	 );
 
           if ($form->{separate_duties}){
           $hiddens{separate_duties}=$form->{separate_duties};
@@ -291,17 +299,16 @@ sub display_form
               $a{'save_temp'} = 1;
 
           if ( $form->{id}) {
-                  $a{'new'} = 1;
+              $a{'new'} = 1;
 
-          for ( 'save_as_new', 'schedule' ) { $a{$_} = 1 }
+              for ( 'save_as_new', 'schedule', 'copy to new' ) { $a{$_} = 1 }
 
-          for ( 'post', 'delete' ) { $a{$_} = 1 }
-          }
-          elsif (!$form->{id}){
-                 $a{'update'} = 1;
-          if ( $transdate > $closedto ) {
-              for ( "post", "schedule" ) { $a{$_} = 1 }
-          }
+              for ( 'post', 'delete' ) { $a{$_} = 1 }
+          } else {
+              $a{'update'} = 1;
+              if ( $transdate > $closedto ) {
+                  for ( "post", "schedule" ) { $a{$_} = 1 }
+              }
           }
 
           if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
@@ -361,11 +368,6 @@ sub display_form
             hiddens => \%hiddens,
             displayrows => \@displayrows
                    });
-
-  if ( $form->{lynx} ) {
-      require "bin/menu.pl";
-      &menubar;
-  }
 
 }
 

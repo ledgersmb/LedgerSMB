@@ -1,0 +1,109 @@
+[main]
+auth = DB
+logging  = 0
+# Be aware of tempdir setting. If client_browser and server_apache on same 
+# machine, sharing tmp-dir , problems 'Permission denied' if server tries to 
+# write temp-file which already exists as client-owned
+tempdir = /tmp/ledgersmb
+
+# This is the logical CSS directory.  I.e. it is what comes before the 
+# ledgersmb.css in the url.  Example might be /my_css_dir/ or 
+# http://localhost/other_css_dir/
+cssdir = css/
+
+# THis is the location on the file system where the css files are, for editing 
+# and selection.  An example might be /var/www/ledgersmb_css/
+fs_cssdir = css/
+
+# If set to a true value this caches templates.  Typically it will be set to 0 
+# to disable or 1 to enable.
+
+cache_templates = 1
+
+# Set language for login and admin pages
+language = 
+
+log_level = ERROR
+#DBI_TRACE = 1=/tmp/dbi.trace
+DBI_TRACE = 0
+# For Windows, uncomment the pathsep line=
+# pathsep = ;
+
+# Maximum POST size to prevent DoS (4MB default)
+max_post_size = 4194304
+
+# Spelling of cookie name for this instance of LedgerSMB.
+# Used to keep multiple instances and/or different versions
+# logged in at the same time
+cookie_name = LedgerSMB-1.5
+
+# This is the string we look for in the failed connection error to determine
+# if the database was not found.  For English-language locales, this can be
+# left in place.  If the database server is running a different locale, it may
+# need to be changed.  Any partial match on the connection error assumes that
+# the failure to connect was caused by an invalid database request.
+
+no_db_str = database
+
+[environment]
+# If the server can't find applications, append to the path
+PATH=/bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
+
+# If on Mac OS X using Fink's Perl libs, append to the path
+#PERL5LIB = /sw/lib/perl5
+
+[paths]
+# spool directory for batch printing
+spool      = spool
+# path to user configuration files
+userspath  = users
+# templates base directory
+templates  = templates
+# images base directory
+images  = images
+# member file
+memberfile = users/members
+localepath = locale/po
+
+[programs]
+# program to use for file compression
+gzip       = gzip -S .gz
+
+# For latex and pdflatex, specify  full path.  These will be used to configure
+# Template::Latex so it can find them.  This can be used to specify programs
+# other than vanilla latex and pdflatex, such as the xe varieties of either one,
+# if unicode is required.
+#
+# If these are not set, the package defaults (set when you installed 
+# Template::Latex) will be used
+#
+# pdflatex = /usr/bin/pdflatex
+# latex    = /usr/bin/latex
+# dvips    = /usr/bin/dvips
+#
+
+[mail]
+### How to send mail.  The sendmail command is used unless smtphost is set.
+sendmail   = /usr/bin/sendmail
+# smtphost = 127.0.0.1
+# smtptimeout = 60
+# backup_email_from = backups@lsmb_hosting.com
+
+[printers]
+# Available printers
+Laser      = lpr -Plaser
+Epson      = lpr -PEpson
+
+[database]
+# Sets database connection parameters.  Note that default_db can be left blank
+# if you want to force people to enter a company name at login.
+port = 5432
+default_db = lsmb13
+host = localhost
+db_namespace = public
+# sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
+sslmode = prefer
+
+[log4perl_config_modules_loglevel]
+LedgerSMB = INFO
+LedgerSMB.DBObject = INFO

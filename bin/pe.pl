@@ -174,11 +174,6 @@ sub partsgroup_footer {
         }
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 </form>
 
@@ -249,11 +244,6 @@ sub pricegroup_footer {
               . $locale->text('Delete')
               . qq|</button>|;
         }
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
     }
 
     print qq|
@@ -478,11 +468,6 @@ sub list_translations {
 
     $form->hide_form(qw(path login sessionid));
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
   </form>
 
@@ -627,11 +612,6 @@ sub translation_footer {
 
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         $form->print_button( \%button, $_ );
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
     }
 
     print qq|
@@ -940,11 +920,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 </form>
 |;
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 
 </body>
@@ -1164,11 +1139,6 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
           . $locale->text('Select Customer')
           . qq|</button>|;
 
-    }
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
     }
 
     print qq|

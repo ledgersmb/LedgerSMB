@@ -30,6 +30,7 @@ sub login {
     do {
         my $element = $self->driver->find_element_by_label($_->{label});
         $element->click;
+        $element->clear;
         $element->send_keys($_->{value});
     } for ({ label => "User Name",
              value => $user },
