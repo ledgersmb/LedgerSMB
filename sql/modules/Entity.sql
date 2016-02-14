@@ -87,7 +87,10 @@ CREATE OR REPLACE FUNCTION eca__get_entity (
     in_credit_id int
 ) RETURNS setof entity AS $$
 
-    SELECT entity.* INTO v_row FROM entity_credit_account JOIN entity ON entity_credit_account.entity_id = entity.id WHERE entity_credit_account.id = in_credit_id;
+    SELECT entity.* 
+      FROM entity_credit_account 
+      JOIN entity ON entity_credit_account.entity_id = entity.id 
+     WHERE entity_credit_account.id = in_credit_id;
 
 $$ language sql;
 

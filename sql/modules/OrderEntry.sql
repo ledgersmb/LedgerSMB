@@ -35,13 +35,8 @@ CREATE OR REPLACE FUNCTION order__search
  in_description text, in_date_from date, in_date_to date, in_shippable bool,
  in_buisness_units int[])
 RETURNS SETOF order_search_line
-LANGUAGE PLPGSQL AS $$
+LANGUAGE SQL AS $$
 
-DECLARE retval order_search_line;
-
-BEGIN
-
-FOR retval IN
        SELECT o.id,
               CASE WHEN oe_class_id IN (1, 2) THEN o.ordnumber
                    WHEN oe_class_id IN (3, 4) THEN o.quonumber
@@ -87,12 +82,8 @@ FOR retval IN
                                          p.inventory_accno_id IS NOT NULL))
                  )
              AND (in_date_from IS NULL OR o.transdate >= in_date_from)
-             AND (in_date_to IS NULL OR o.transdate <= in_date_to)
+             AND (in_date_to IS NULL OR o.transdate <= in_date_to);
 
-LOOP
-   RETURN NEXT retval;
-END LOOP;
-END;
 $$;
 
 
