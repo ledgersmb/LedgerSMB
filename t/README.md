@@ -27,13 +27,6 @@ scripts are added, they must be listed in this script as well.
 Runs on the database non-destructively, by rolling back commits.
 Uses request hashes defined in t/data/62-request-data.
 
-63-lwp.t
---------
-Runs on the database **destructively**, so it is **not** safe to run against
-a production database.
-
-Re-uses the request hashes defined in test/data/62-request-data.
-
 
 ENVIRONMENT VARIABLES USED
 ==========================
@@ -74,21 +67,6 @@ LSMB_LOAD_COA       name of the Chart of Accounts file, not including extension
 LSMB_LOAD_GIFI      name of the GIFI file, not including extension
 LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
                     accounts
-````
-
-
-For lwp tests (63)
-------------------
-
-lwp stands for `libwww-perl`, a Perl library for programming for the World Wide Web (HTTP).
-It is used to send requests to the LedgerSMB instance at `LSMB_BASE_URL` and validates
-the responses.
-
-````plain
-LSMB_TEST_LWP     enable LWP tests
-LSMB_USER         name of LedgerSMB application user to run tests
-LSMB_PASS         password above user
-LSMB_BASE_URL     URL of LedgerSMB instance testing against
 ````
 
 

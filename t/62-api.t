@@ -1,3 +1,5 @@
+#!perl
+
 BEGIN { 
 	use LedgerSMB;
 	use Test::More;
