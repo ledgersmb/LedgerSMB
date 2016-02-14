@@ -49,6 +49,10 @@ my %menu_path_pageobject_map = (
     "Quotations > Reports > Quotations" => 'PageObject::App::Search::Quotation',
     "Quotations > Reports > RFQs" => 'PageObject::App::Search::RFQ',
     "General Journal > Search and GL" => 'PageObject::App::Search::GL',
+    "Goods and Services > Add Part" => 'PageObject::App::Parts::Part',
+    "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
+    "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
+    "Goods and Services > Add Overhead" => 'PageObject::App::Parts::Overhead',
     );
 
 
