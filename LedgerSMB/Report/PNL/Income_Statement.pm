@@ -55,15 +55,16 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub name { return LedgerSMB::Report::text('Income Statement') }
+sub name { my ($self) = @_; return $self->Text('Income Statement') }
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'basis',
-            text => LedgerSMB::Report::text('Reporting Basis') }];
+            text => $self->Text('Reporting Basis') }];
 }
 
 =back
@@ -79,7 +80,7 @@ sub header_lines {
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    die LedgerSMB::Report::text('Invalid Reporting Basis') 
+    die $self->Text('Invalid Reporting Basis')
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->exec_method({funcname => $procname});

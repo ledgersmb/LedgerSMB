@@ -1,11 +1,70 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.25
+* Added datepicker to invoice Delivery Date field (Nick P)
+* Fixed reversal of sales invoice with parts without inventory (Erik H, #990)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.24
+* Fixed new transactions not being added to recon reports (Erik H, #979)
+* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+* Updates to the Danish language (Mikkel H)
+* Updates to the Arabic (Egypt) language (Rami A)
+* Updates to the Estonian language (Peeter P)
+
+Craig W is Craig Webster
+Mikkel H is Mikkel Hoegh
+Rami A is Rami Assi
+Peeter P is Peeter Partel
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.23
+* Fixed running balance column of GL report double-counting (Erik H, #1205)
+* Fixed spelling errors (David G, #1178)
+* Fixed spelling errors (Erik H, #1183, #1170)
+* Fixed handling of recurring transactions (Erik H, #1227)
+* Fixed selected currency in vouchers -> payments isn't default (Erik H, #1186)
+* Fixed CoA screen offering Delete for referenced accounts (Erik H, #972)
+* Fixed vouchers print total instead of due amount (Erik H, #1068)
+* Fixed missing envelope and shipping label templates (Erik H, #874)
+* Fixed detailed (AR/AP) aging statements not working (Erik H, #1177)
+
+David G is David Godfrey
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.22
+* Fixed balance sheet language selection (Erik H)
+* Fixed column headings translated in report language (Erik H)
+* Fixed add report styling for financial reports PDF (Erik H, GH1080)
+* Enhanced all accounts can be selected in trial balance (Erik H, GH1107)
+* Fixed syntax errors in ms_MY.po and de.po (Erik H)
+* Fixed translatable string detection (Erik H)
+* Updated translation (source) files (Erik H)
+* Integrated Transifex (transifex.com) translation process (Erik H)
+  Note: To start helping to translate LedgerSMB, check out
+     http://ledgersmb.org/community-guide/community-guide/translating
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
 * Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
 * Fixed order of PNL Account Category is Off (Erik H, GH1069)
 * Fixed statements not printing from db templates (Chris T)
+* FEATURE: Added (back) user-selectable report language (Erik H GH1106)
+* Fixed missing report styling on financial reports (Erik H GH1080)
+* Fixed reports show totals above sections (Erik H GH1083)
+* Fixed 'Defaults' screen saves NULL 'earn_id' breaks PNL (Erik H GH1117)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
@@ -44,6 +103,7 @@ Changelog for 1.4.19
 
 Chris T is Chris Travers
 
+
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
 * Fixed Net Book Value reporting '0' before depreciation (GH 879, ChrisT)
@@ -65,6 +125,7 @@ Changelog for 1.4.18
 ChrisT is Chris Travers
 NickP is Nick Prater
 Rami H is Rami Hovi
+
 
 
 Changelog for 1.4.17

@@ -77,19 +77,20 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub name { return LedgerSMB::Report::text('ECA Income Statement') }
+sub name { my ($self) = @_; return $self->Text('ECA Income Statement') }
 
 =item header_lines
 
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'name',
-            text => LedgerSMB::Report::text('Name') },
+            text => $self->Text('Name') },
             {name => 'meta_number',
-            text => LedgerSMB::Report::text('Account Number')},
+            text => $self->Text('Account Number')},
             {name => 'control_code',
-            text => LedgerSMB::Report::text('Control Code')}
+            text => $self->Text('Control Code')}
           ];
 }
 

@@ -82,6 +82,8 @@ sub payments {
     if (!defined $payment->{batch_date}){
         $payment->error("No Batch Date!");
     }
+    my @curr = LedgerSMB::Setting->new()->get_currencies;
+    $payment->{default_currency} = @curr[0];
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -467,7 +469,6 @@ sub display_payments {
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3],
                                                     money  => 1);
-            $contact_to_pay += $invoice->[3];
             $invoice->[4] = $payment->format_amount(amount => $invoice->[4],
                                                     money  => 1);
             $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
@@ -477,6 +478,7 @@ sub display_payments {
                     - $payment->parse_amount(amount => $invoice->[4])
                     - $payment->parse_amount(amount => $invoice->[5])),
                                                     money  => 1);
+            $contact_to_pay += $invoice->[6];
             my $fld = "payment_" . $invoice->[0];
 
             if ('display_payments' eq $request->{action} ){
@@ -1051,7 +1053,7 @@ sub payment2 {
 
     # LETS BUILD THE SELECTION FOR THE UI
     # Notice that the first data inside this selection is the firs_load, this
-    # will help payment2.html to know wether it is beeing called for the first time
+    # will help payment2.html to know wether it is being called for the first time
     my $select = {
         first_load => $request->{first_load},
         stylesheet => $request->{_user}->{stylesheet},

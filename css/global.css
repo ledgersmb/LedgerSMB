@@ -1,3 +1,80 @@
 div.input {
     float: left;
 }
+
+.flat-hierarchy .balancesheet .report-head th {
+    text-align: right;
+    font-weight: bold;
+}
+
+.flat-hierarchy .balancesheet .section1.QL,
+.flat-hierarchy .income_statement .section1 {
+    display: none;
+    border: none;
+}
+
+
+.flat-hierarchy .balancesheet .section1,
+.flat-hierarchy .balancesheet .section2,
+.flat-hierarchy .income_statement .section2 {
+    font-size: large;
+    border-bottom: 3px double black;
+}
+
+.financial-statement.flat-hierarchy .heading1,
+.financial-statement.flat-hierarchy .balancesheet .heading2 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.financial-statement.flat-hierarchy .income_statement .heading2 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-style: italic;
+    font-size: bigger;
+}
+
+.financial-statement.flat-hierarchy table {
+    min-width: 60ex;
+    margin-top: 3em;
+}
+
+.financial-statement.flat-hierarchy table td,
+.financial-statement.flat-hierarchy table th {
+    padding-bottom: 3px; /* add space for the dashed line underlining hovered amounts */
+}
+
+
+.financial-statement .company-name {
+   margin-top: 2em;
+   font-family: monospace;
+   text-align: center;
+}
+
+.financial-statement .company-address {
+   font-family: monospace;
+   text-align: center;
+   font-size: smaller;
+}
+
+@media print {
+  .export-links {
+     display: none;
+  }
+}
+
+@media not print {
+  .export-links {
+      margin-top: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+  }
+
+  .export-link {
+      display: inline;
+  }
+}

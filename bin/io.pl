@@ -46,7 +46,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
-use List::Util 'reduce';
+use List::Util qw(max reduce);
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -93,13 +93,13 @@ sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
     my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
     for $i (1 .. $form->{rowcount}){
-        my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
-        		       			   * ($form->{"discount_$i"} / 100), 
+        my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
+        		       			   * ($form->{"discount_$i"} / 100),
 		  	       			   $decimalplaces);
         my $linetotal = $form->round_amount( $form->{"sellprice_$i"}
                          		     - $discount_amount,
                          		     $decimalplaces);
-        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
+        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"},
                                           $moneyplaces);
         @taxaccounts = Tax::init_taxes(
             $form, $form->{"taxaccounts_$i"},
@@ -120,7 +120,7 @@ sub _calc_taxes {
             $fxtax +=
               Tax::calculate_taxes( \@taxaccounts, $form, $fxlinetotal, 0 )
               if $fxlinetotal;
-        }        
+        }
         for (@taxaccounts) {
             $form->{tax_obj}{$_->account} = $_;
             $form->{taxes}{$_->account} = 0 if ! $form->{taxes}{$_->account};
@@ -156,8 +156,8 @@ sub display_row {
     } elsif ($form->{vc} eq 'vendor'){
        $lsmb_module = 'AP';
     }
-    $form->all_business_units($form->{transdate}, 
-                              $form->{"$form->{vc}_id"}, 
+    $form->all_business_units($form->{transdate},
+                              $form->{"$form->{vc}_id"},
                               $lsmb_module);
     @column_index = qw(runningnumber partnumber description qty);
 
@@ -208,12 +208,12 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     for my $cls(@{$form->{bu_class}}){
         if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
              push @column_index, "b_unit_$cls->{id}";
-             $column_data{"b_unit_$cls->{id}"} = 
+             $column_data{"b_unit_$cls->{id}"} =
                qq|<th class=listheading nowrap>| . $cls->{label} . qq|</th>|;
         }
     }
 
-    push @column_index, "taxformcheck";#increase the number of elements by pushing into column_index.(Ex: NEw added element 
+    push @column_index, "taxformcheck";#increase the number of elements by pushing into column_index.(Ex: NEw added element
 				       # taxformcheck & check the screen AR->Sales Invoice) do everything before colspan ;
 
     my $colspan = $#column_index + 1;
@@ -273,7 +273,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $exchangerate = ($exchangerate) ? $exchangerate : 1;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
-    for $i ( 1 .. $numrows  + $min_lines) {
+    for $i ( 1 .. max($numrows, $min_lines)) {
         $desc_disabled = '' if $i == $numrows;
         if ( $spc eq '.' ) {
             ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
@@ -305,8 +305,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                         ($dec) = ( $p =~ /\.(\d+)/ );
                         $dec = length $dec;
                         $dec ||= $moneyplaces;
-                        $decimalplaces = ( $dec > $moneyplaces ) 
-                                        ? $dec 
+                        $decimalplaces = ( $dec > $moneyplaces )
+                                        ? $dec
                                         : $moneyplaces;
                         $form->{"sellprice_$i"} =
                           $form->round_amount( $p / $exchangerate,
@@ -316,13 +316,13 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
-	my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
-			   			   * ($form->{"discount_$i"} / 100), 
+	my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
+			   			   * ($form->{"discount_$i"} / 100),
 						   $decimalplaces);
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
                                           - $discount_amount,
                                           $decimalplaces);
-        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
+        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"},
                                          $moneyplaces);
 
         $form->{"description_$i"} = $form->quote( $form->{"description_$i"} );
@@ -371,10 +371,10 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
         $delivery = qq|
           <td colspan=2 nowrap>
 	  <b>${$delvar}</b>
-	  <input name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
+	  <input class="date" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
 |;
 
-        
+
         $taxchecked="";
 	if($form->{"taxformcheck_$i"} or ($i == $form->{rowcount} and $form->{default_reportable}))
 	{
@@ -383,7 +383,7 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
 	}
         for my $cls(@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-                $column_data{"b_unit_$cls->{id}"} = 
+                $column_data{"b_unit_$cls->{id}"} =
                    qq|<td><select name="b_unit_$cls->{id}_$i">
                            <option></option>|;
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
@@ -398,7 +398,7 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
                 }
                 $column_data{"b_unit_$cls->{id}"} .= qq|
                      </select></td>|;
-                   
+
             }
         }
 
@@ -406,8 +406,8 @@ $column_data{runningnumber} =
           qq|<td class="runningnumber"><input name="runningnumber_$i" size=3 value=$i></td>|;
         if ($form->{"partnumber_$i"}){
            $column_data{partnumber} =
-           qq|<td> $form->{"partnumber_$i"} 
-                 <button type="submit" class="submit" value="$i" 
+           qq|<td> $form->{"partnumber_$i"}
+                 <button type="submit" class="submit" value="$i"
                          name="delete_line">X</button>
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
@@ -641,9 +641,9 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
 |;
 
         for (
-            qw(partnumber sku description partsgroup partsgroup_id bin weight 
-               sellprice listprice lastcost onhand unit assembly 
-               taxaccounts inventory_accno_id income_accno_id expense_accno_id 
+            qw(partnumber sku description partsgroup partsgroup_id bin weight
+               sellprice listprice lastcost onhand unit assembly
+               taxaccounts inventory_accno_id income_accno_id expense_accno_id
                pricematrix id image notes)
           )
         {
@@ -710,7 +710,7 @@ sub item_selected {
 
             for (
                 qw(id partnumber sku description listprice lastcost sellprice
-                  bin unit weight assembly taxaccounts pricematrix onhand notes 
+                  bin unit weight assembly taxaccounts pricematrix onhand notes
                   inventory_accno_id image income_accno_id expense_accno_id)
               )
             {
@@ -800,7 +800,7 @@ sub item_selected {
     # delete all the new_ variables
     for $i ( 1 .. $form->{lastndx} ) {
         for (
-            qw(id partnumber sku description sellprice listprice lastcost 
+            qw(id partnumber sku description sellprice listprice lastcost
                bin unit weight assembly taxaccounts pricematrix onhand
                notes inventory_accno_id income_accno_id expense_accno_id image)
           )
@@ -904,14 +904,14 @@ sub display_form {
 
     # if we have a display_form
     if ( $form->{display_form} ) {
-	
+
 	&{"$form->{display_form}"};
         $form->finalize_request();
     }
-    
+
 
     &form_header;
-    
+
     $numrows    = ++$form->{rowcount};
     $subroutine = "display_row";
 
@@ -965,10 +965,10 @@ sub check_form {
     my $i;
     my $j;
     my @flds =
-      qw(id runningnumber partnumber description partsgroup qty ship unit 
-         sellprice discount oldqty orderitems_id bin weight listprice 
-         lastcost taxaccounts pricematrix sku onhand assembly 
-         inventory_accno_id income_accno_id expense_accno_id notes reqdate 
+      qw(id runningnumber partnumber description partsgroup qty ship unit
+         sellprice discount oldqty orderitems_id bin weight listprice
+         lastcost taxaccounts pricematrix sku onhand assembly
+         inventory_accno_id income_accno_id expense_accno_id notes reqdate
          deliverydate serialnumber projectnumber image);
 
     # remove any makes or model rows
@@ -1317,7 +1317,7 @@ sub e_mail {
     delete $hiddens{cc};
     delete $hiddens{bcc};
     delete $hiddens{message};
-    
+
     $hiddens{nextsub} = 'send_email';
 
     my @buttons = ({
@@ -1381,7 +1381,7 @@ sub print_options {
         default_values => $form->{formname},
         options => [],
         };
-    
+
     # SC: Option values extracted from other bin/ scripts
     if ($form->{type} eq 'invoice') {
 	push @{$options{formname}{options}}, {
@@ -1662,7 +1662,7 @@ sub print_form {
         $numberfld     = "rfqnumber";
         $order         = 1;
     }
-    if (($form->{formname} eq 'envelope') 
+    if (($form->{formname} eq 'envelope')
         or ($form->{formname} eq 'shipping_label')){
 
        $inv = undef;
@@ -1729,7 +1729,7 @@ sub print_form {
             "partnumber_$i",    "description_$i",
             "projectnumber_$i", "partsgroup_$i",
             "serialnumber_$i",  "bin_$i",
-            "unit_$i",          "notes_$i", 
+            "unit_$i",          "notes_$i",
             "image_$i",         "id_$i"
           );
           push @{$form->{parts_id}}, $form->{"id_$i"};
@@ -1779,7 +1779,7 @@ sub print_form {
             1 .. $form->{rowcount};
         @{$form->{discount}} = map { $form->{"discount_$_"} }
             1 .. $form->{rowcount};
-        @{$form->{linetotal}} = map { 
+        @{$form->{linetotal}} = map {
             $form->{"qty_$_"} * $form->{"sellprice_$_"}
          }
             1 .. $form->{rowcount} - 1;
@@ -1988,7 +1988,7 @@ sub print_form {
     $form->{fileid} =~ s/(\s|\W)+//g;
 
     my $template = LedgerSMB::Template->new(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => $form->{'formname'},
         language => $form->{language_code},
@@ -2050,7 +2050,7 @@ sub ship_to {
           $form->parse_amount( \%myconfig, $form->{"paid_$_"} );
     }
 
-    
+
    &{"$form->{vc}_details"};
 
    &list_locations_contacts();
@@ -2063,7 +2063,7 @@ sub ship_to {
     $nextsub =
       ( $form->{display_form} ) ? $form->{display_form} : "display_form";
 
-    
+
 
     $form->header;
 
@@ -2096,7 +2096,7 @@ sub ship_to {
 
 	  					   <tr class=listheading> |
 		   				              . qq|<th class=listheading width=1% >
-								  |		
+								  |
 					      		      .    $locale->text(' ')
 					       		      . qq|</th>
 								   <th class=listheading width=5%>|
@@ -2106,8 +2106,8 @@ sub ship_to {
 							      .    $locale->text('Add line2')
 							      . qq|</th>
 								   <th class=listheading width=1% >
-								  |		
-							      .     $locale->text('Add line3 ')	
+								  |
+							      .     $locale->text('Add line3 ')
 					      		      . qq|</th>
 								   <th class=listheading width=5%>|
 							      .     $locale->text('city')
@@ -2134,7 +2134,7 @@ sub ship_to {
 
 				  	   	   print qq|
 						   <tr>
-						  
+
 							  <td><input type=radio name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
 							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
 							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
@@ -2143,13 +2143,13 @@ sub ship_to {
 							  <td><input name=shiptocity_$i size=8 maxlength=32 id="ci_$i" value="$form->{"shiptocity_$i"}" readonly></td>
 							  <td><input name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
 							  <td><input name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
-							  <td><input name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>	  
+							  <td><input name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>
 
 				 		    <tr>
-					  
+
 						  	  |;
 
-						     }	
+						     }
 						    my $deletelocations=$i;
 
 
@@ -2157,10 +2157,10 @@ sub ship_to {
 
 				 		    # delete shipto
 				  		    for (qw(action nextsub)) { delete $form->{$_} }
-		   
+
 			          		    $form->{title} = $title;
 
-					    
+
 			        	            print qq|
 
 					</table>
@@ -2168,7 +2168,7 @@ sub ship_to {
 				</td>
 				<td>&nbsp;</td>
 				<td valign="top" >
-				      <table width=30%>	
+				      <table width=30%>
 					         <tr class=listheading>
 								 <th>&nbsp</th>
 								 <th class=listheading width="20%">|
@@ -2180,7 +2180,7 @@ sub ship_to {
 							 	 <th class="listheading" width="35%">|
 							    . $locale->text('Description')
 							    . qq|</th>
-				 	   	</tr>	
+				 	   	</tr>
 					   	<tr></tr>
 	   				   	|;
 
@@ -2193,11 +2193,11 @@ sub ship_to {
 							      <td><input name=shiptocontact_$i size=11 maxlength=100 value="$form->{"shiptocontact_$i"}" readonly></td>
 							      <td><input name=shiptodescription_$i size=12 maxlength=100 value="$form->{"shiptodescription_$i"}" readonly></td>
 				  	  	 </tr>	|;
-					    
+
 					    	  }
 				           	  my $deletecontacts=$i;
-  
-				    		 print qq|   
+
+				    		 print qq|
 				      </table>
 				 </td>
 			   </tr>
@@ -2206,7 +2206,7 @@ sub ship_to {
 		        |;
 
  		        my $country=&construct_countrys_types("country");
-  
+
  			my $contacttype=&construct_countrys_types("type");
 
 
@@ -2217,7 +2217,7 @@ sub ship_to {
 				delete $form->{"shipto$_"};
 			    }
 
-		       }	
+		       }
 
   		       delete $form->{shiptoradiocontact};
 		       delete $form->{shiptoradio};
@@ -2237,7 +2237,7 @@ sub ship_to {
 				    }
 
 		      }
-		      
+
 		      $form->hide_form;
 		      print qq|
 
@@ -2247,7 +2247,7 @@ sub ship_to {
 			    <tr>
 					 Others
 		  	    </tr>
-			    </tr>	
+			    </tr>
 					  <td><input type=radio name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
 					  <td><input name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
 					  <td><input name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
@@ -2277,7 +2277,7 @@ sub ship_to {
 |;
 
 
- 
+
 print qq|
 
 <button class="submit" type="submit" name="action" value="continuenew">|
@@ -2303,13 +2303,13 @@ $locale->text('Cancel')
 
 
 
-=pod 
+=pod
 
 Author...Sadashiva
 
 The list of functions would create the new location / uses existing locations , and sets the $form->{locationid}.
 
-list_locations_contacts() would extracts all locations and sets into form parameter... 
+list_locations_contacts() would extracts all locations and sets into form parameter...
 
 $form->{id} used to extract all locations and contacts(eca_to_location and eca_to_contact) and location
 
@@ -2330,7 +2330,7 @@ sub list_locations_contacts
 
 
         IS->list_locations_contacts( \%myconfig, \%$form );
-  
+
 
 }
 
@@ -2343,13 +2343,13 @@ sub construct_countrys_types
 
 	if($_[0] eq "country")
 	{
-	
+
         	$retvalue=IS->construct_countrys(\%$form);
 
  	}
 	elsif($_[0] eq "type")
 	{
-		
+
         	$retvalue=IS->construct_types(\%$form);
 
 	}
@@ -2374,14 +2374,14 @@ sub createlocations
 
 	if($form->{shiptoradio} eq "new")
 	{
-			
+
 	     # required to create the new locations
 
 	     &validatelocation;
 
 	     $form->{location_id} = IS->createlocation($form);
-					
-			
+
+
 	}
 
 	if($form->{shiptoradiocontact}==1)
@@ -2392,8 +2392,8 @@ sub createlocations
 
 	&ship_to unless $continue;
 
-	     
-	     
+
+
 }
 
 
@@ -2435,14 +2435,14 @@ sub setlocation_id
        {
                 createlocations(1);
        }
-	
+
 
 
        my $loc_id_index=$form->{"shiptoradio"};
- 
+
        my $index="locationid_".$loc_id_index;
 
        $form->{"locationid"}=$form->{$index};
-   
-     
+
+
 }

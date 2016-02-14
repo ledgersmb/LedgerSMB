@@ -224,7 +224,7 @@ BEGIN
 		and ac.transdate <= in_transdate
 	GROUP BY cp.amount, ac.chart_id;
 
-	RETURN balance;
+	RETURN coalesce(balance, 0);
 END;
 $$ LANGUAGE PLPGSQL;
 

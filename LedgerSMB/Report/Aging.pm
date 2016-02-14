@@ -76,10 +76,10 @@ sub columns {
     my $credit_label;
     my $base_href;
     if ($self->entity_class == 1) {
-        $credit_label = LedgerSMB::Report::text('Vendor');
+        $credit_label = $self->Text('Vendor');
         $base_href = 'ap.pl?action=edit&id='; # for details
     } elsif ($self->entity_class == 2){
-        $credit_label = LedgerSMB::Report::text('Customer');
+        $credit_label = $self->Text('Customer');
         $base_href = 'ar.pl?action=edit&id='; # for details
     }
     push @COLUMNS,
@@ -92,61 +92,61 @@ sub columns {
        pwidth => 1, },
 
       {col_id => 'language',
-         name => LedgerSMB::Report::text('Language'),
+         name => $self->Text('Language'),
          type => 'select',
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
      push @COLUMNS,
           {col_id => 'invnumber',
-             name => LedgerSMB::Report::text('Invoice'),
+             name => $self->Text('Invoice'),
              type => 'href',
         href_base => $base_href,
            pwidth => '3', },
 
           {col_id => 'ordnumber',
-             name => LedgerSMB::Report::text('Description'),
+             name => $self->Text('Description'),
              type => 'text',
            pwidth => '6', },
 
           {col_id => 'transdate',
-             name => LedgerSMB::Report::text('Date'),
+             name => $self->Text('Date'),
              type => 'text',
            pwidth => '1', },
 
           {col_id => 'duedate',
-             name => LedgerSMB::Report::text('Due Date'),
+             name => $self->Text('Due Date'),
              type => 'text',
            pwidth => '2', };
     }
 
     push @COLUMNS,
     {col_id => 'c0',
-       name => LedgerSMB::Report::text('Current'),
+       name => $self->Text('Current'),
        type => 'text',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'c30',
-       name => LedgerSMB::Report::text('30'),
+       name => $self->Text('30'),
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'c60',
-       name => LedgerSMB::Report::text('60'),
+       name => $self->Text('60'),
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'c90',
-       name => LedgerSMB::Report::text('90'),
+       name => $self->Text('90'),
        type => 'text',
       money => 1,
      pwidth => '3', },
 
     {col_id => 'total',
-       name => LedgerSMB::Report::text('Total'),
+       name => $self->Text('Total'),
        type => 'text',
       money => 1,
      pwidth => '1', };
@@ -172,7 +172,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Aging Report');
+    my ($self) = @_;
+    return $self->Text('Aging Report');
 }
 
 =item template
@@ -234,7 +235,7 @@ Calculate report as on a specific date
 
 =cut
 
-has 'date_ref' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'to_date'=> (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item entity_class
 
@@ -252,6 +253,12 @@ Customer/Vendor entity id
 
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 has name_part => (is => 'ro', isa => 'Maybe[Str]');
+
+has c0total => (is => 'rw', init_arg => undef);
+has c30total => (is => 'rw', init_arg => undef);
+has c60total => (is => 'rw', init_arg => undef);
+has c90total => (is => 'rw', init_arg => undef);
+has total => (is => 'rw', init_arg => undef);
 
 =back
 
@@ -275,7 +282,12 @@ sub run_report{
         } else {
             $row->{row_id} = "$row->{account_number}:$row->{entity_id}";
         }
+        $self->c0total($self->c0total + $row->{c0});
+        $self->c30total($self->c30total + $row->{c30});
+        $self->c60total($self->c60total + $row->{c60});
+        $self->c90total($self->c90total + $row->{c90});
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
+        $self->total($self->total + $row->{total});
     }
     $self->rows(\@rows);
 }

@@ -1,9 +1,9 @@
-<?lsmb 
-INCLUDE 'ui-header.html' 
+<?lsmb
+INCLUDE 'ui-header.html'
     include_stylesheet =  ['UI/accounts/edit.css']
     include_script = ['UI/accounts/edit.js']
-?> 
-<?lsmb PROCESS elements.html ?> 
+?>
+<?lsmb PROCESS elements.html ?>
 <body class="<?lsmb dojo_theme ?>">
 <script type="text/javascript" language="Javascript">
     var activeDiv = "<?lsmb form.charttype ?>";
@@ -24,7 +24,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
-    <?lsmb 
+    <?lsmb
     INCLUDE input element_data = {
       name = 'accno'
        id  = 'accno-h'
@@ -38,7 +38,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="desc-line">
    <label class="line"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     INCLUDE input element_data = {
         id = 'desc-h'
       name = 'description'
@@ -52,7 +52,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="heading-line">
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
@@ -72,7 +72,7 @@ INCLUDE 'ui-header.html'
    </div>
 </div>
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 <hr />
 <table>
 <caption>Translations for this heading</caption>
@@ -116,7 +116,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
-    <?lsmb 
+    <?lsmb
     INCLUDE input element_data = {
       name = 'accno'
       size = '20'
@@ -130,22 +130,22 @@ INCLUDE 'ui-header.html'
 <div  class="inputline" id="obsolete-line">
 <label class="line" for='obsolete'><?lsmb text('Obsolete') ?></label>
 <?lsmb
-        IF form.obsolete; 
+        IF form.obsolete;
            obsolete = 'CHECKED';
-        END; 
+        END;
         INCLUDE input element_data={
                name = 'obsolete'
                type = 'checkbox',
             checked = obsolete
               value = '1'
         } ?>
-   
+
 </div>
 <?lsmb END #  IF ID ?>
 <div class="inputline" id="desc-line">
    <label class="line"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     INCLUDE input element_data = {
       name = 'description'
       size = '40'
@@ -158,7 +158,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="heading-line">
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
@@ -201,7 +201,7 @@ INCLUDE 'ui-header.html'
               { value = 'Qt', text = text('Equity (Temporary)') } #'
               { value = 'I', text = text('Income') }
               { value = 'E', text = text('Expense') }
-        ];  
+        ];
     INCLUDE select element_data = {
                   name = 'category'
                options = a_types
@@ -212,7 +212,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="acc-options-line">
    <label class="line"><?lsmb text('Options') ?></label>
    <div class="inputgroup">
-       <?lsmb 
+       <?lsmb
        IF form.contra;
           contra = 'CHECKED';
        END;
@@ -225,10 +225,10 @@ INCLUDE 'ui-header.html'
        } ?>
    </div>
    <div class="inputgroup">
-     <?lsmb 
-        IF form.recon; 
+     <?lsmb
+        IF form.recon;
            recon = 'CHECKED';
-        END; 
+        END;
         INCLUDE input element_data={
                name = 'recon'
                type = 'checkbox',
@@ -238,7 +238,7 @@ INCLUDE 'ui-header.html'
         } ?>
    </div>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
         IF form.tax; tax = 'CHECKED'; END;
         INCLUDE input element_data={
                name = 'tax',
@@ -257,7 +257,7 @@ INCLUDE 'ui-header.html'
       IF form.AR; summary = 'AR'; END;
       IF form.AP; summary = 'AP'; END;
       IF form.IC; summary = 'IC'; END;
-      s_accts = [ 
+      s_accts = [
         {}
         {text = 'AR',        value = 'AR'}
         {text = 'AP',        value = 'AP'}
@@ -267,7 +267,7 @@ INCLUDE 'ui-header.html'
                name = "summary"
             options = s_accts
      default_values = [summary]
-      }; ?>    
+      }; ?>
    </div>
 </div>
 </div> <!-- account details div -->
@@ -305,7 +305,7 @@ INCLUDE 'ui-header.html'
              label = text('Overpayment'),
            checked = AR_overpayment,
              value = 'AR_overpayment'
-       } ?>    
+       } ?>
    </div>
    <div class="inputgroup">
        <?lsmb IF form.AR_discount; AR_discount = 'CHECKED'; END;
@@ -354,7 +354,7 @@ INCLUDE 'ui-header.html'
               type = 'checkbox',
              label = text('Discount'),
            checked = AP_discount,
-             value = 'AP_discount'} ?>       
+             value = 'AP_discount'} ?>
    </div>
 </div>
 <div class="inputline" id="goods-line">
@@ -442,7 +442,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'Asset_Dep',
               type = 'checkbox',
-             label = text('Depreciation'), 
+             label = text('Depreciation'),
            checked = asset_dep,
              value = 'Asset_Dep'} ?>
    </div>
@@ -451,7 +451,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_expense',
               type = 'checkbox',
-             label = text('Expense'), 
+             label = text('Expense'),
            checked = asset_expense,
              value = 'asset_expense'} ?>
    </div>
@@ -460,7 +460,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_gain',
               type = 'checkbox',
-             label = text('Gain'), 
+             label = text('Gain'),
            checked = asset_gain,
              value = 'asset_gain'} ?>
    </div>
@@ -469,7 +469,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_loss',
               type = 'checkbox',
-             label = text('Loss'), 
+             label = text('Loss'),
            checked = asset_loss,
              value = 'asset_loss'} ?>
    </div>
@@ -483,7 +483,7 @@ INCLUDE 'ui-header.html'
 		}; END ?>
 
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; button.id = button.name _ '-A'; INCLUDE button element_data=button; END ?>
+<?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; PROCESS button element_data=button; END ?>
 <hr />
 <table>
 <caption>Translations for this account</caption>

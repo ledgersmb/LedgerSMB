@@ -1,0 +1,131 @@
+#!/usr/bin/perl
+
+=comment
+
+This script contains a relatively simple state machine to scan various
+Perl files for translatable strings.
+
+The scanner consists of 2 main state processes (block comment (POD) and
+text() call parsing).
+
+Single line comments are intentionally *not* stripped, because single line
+comments sometimes intentionally contain translatable strings.
+
+This script exists because xgettext and xgettext.pl don't allow us to
+extract a sub-set of strings from our SQL files.
+
+=cut
+
+
+use strict;
+use warnings;
+
+
+use constant {
+    NUL => 1,
+    POD => 10,
+    TXT => 20,
+    TXT_FIN => 21,
+};
+
+
+my %dict;
+
+sub add_entry {
+    my ($string, $file, $line) = @_;
+
+    return if $string =~ m/^[\s\t\n]*$/g; # return on empty/space-only strings
+
+    $dict{$string} = []
+        if ! exists $dict{$string};
+
+    push @{$dict{$string}}, "#: $file:$line\n";
+}
+
+
+while (<>) {
+    chomp;
+    open SOURCE, "<:encoding(UTF-8)", $_
+        or die "Can't open '$_'; error: $!";
+
+    my $state = NUL;
+    my $line_no = 1;
+    my $file = $_;
+    while (<SOURCE>) {
+
+        ++$line_no;
+
+      PARSER: {
+          $_ = substr($_,pos($_)) if pos($_);
+          # print "S:$state:$_";
+
+          $state==NUL &&
+              m/^=[a-zA-Z]\S*\s*/g
+              && do { $state = POD; next; };
+
+          $state==POD &&
+              m/^=cut/g
+              && do { $state = NUL; next; };
+
+          $state==NUL &&
+              # the reports use a workaround with a function called Text()
+              m/(?<![\w\d_])[tT]ext[\s\t\n]*\(/g
+              && do { $state = TXT; redo; };
+
+          $state==TXT &&
+              m/^[\s\t\n]*'(([^'\\]|''|\\.)*)'/g
+              && do { $state = TXT_FIN;
+                      my $string = $1;
+                      $string =~ s/\\'/'/g;
+                      $string =~ s/\\/\\\\/g;
+                      $string =~ s/"/\\"/g;
+                      $string =~ s/\$/\\\$/g;
+                      add_entry($string, $file, $line_no);
+                      redo;
+          };
+
+          $state==TXT &&
+              m/^[\s\t\n]*"(([^"\\]|\\.)*)"/g
+              && do { $state = TXT_FIN;
+                      my $string = $1;
+                      if ($string =~ m/(?<!\\)\$/g) {
+                          warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax!";
+                          $state = NUL;
+                      }
+                      else {
+                          add_entry($1, $file, $line_no);
+                      }
+                      redo; };
+
+          $state==TXT &&
+              ! m/^[\s\t]*$/g
+              && do { warn "$file:$line_no: text() called with non string first argument; resetting scan (consider using maketext() directly!\n";
+                      $state = NUL;
+          };
+
+          $state==TXT_FIN &&
+              m/^[\s\t\n]*,/g
+              && do { $state = NUL; redo; };
+
+          $state==TXT_FIN &&
+              m/^[\s\t\n]*\)/g
+              && do { $state = NUL; redo; };
+
+          $state==TXT_FIN &&
+              ! m/^[\s\t\n]*$/g
+              && do { warn "$file:$line_no: junk '$_' after first text() argument; resetting scan!\n";
+                      $state = NUL;
+          };
+        };
+    };
+    close SOURCE;
+};
+
+
+foreach my $string (keys %dict) {
+    foreach my $location (@{$dict{$string}}) {
+        print $location;
+    }
+    print "msgid \"$string\"\n";
+    print "msgstr \"\"\n\n";
+}

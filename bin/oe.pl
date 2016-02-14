@@ -40,12 +40,15 @@
 #======================================================================
 
 package lsmb_legacy;
+
+use List::Util qw(max);
 use LedgerSMB::OE;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
+
 
 require "bin/arap.pl";
 require "bin/io.pl";
@@ -299,7 +302,7 @@ sub prepare_order {
 
         $form->{selectformname} =
           qq|<option value="sales_order">|
-          . $locale->text('Sales Order') . qq| 
+          . $locale->text('Sales Order') . qq|
     <option value="work_order">| . $locale->text('Work Order') . qq|
     <option value="pick_list">| . $locale->text('Pick List') . qq|
     <option value="packing_list">| . $locale->text('Packing List');
@@ -313,14 +316,14 @@ sub prepare_order {
 
         $form->{selectformname} =
           qq|<option value="purchase_order">|
-          . $locale->text('Purchase Order') . qq| 
+          . $locale->text('Purchase Order') . qq|
     <option value="bin_list">| . $locale->text('Bin List');
     }
 
     if ( $form->{type} eq 'ship_order' ) {
         $form->{selectformname} =
           qq|<option value="pick_list">|
-          . $locale->text('Pick List') . qq| 
+          . $locale->text('Pick List') . qq|
     <option value="packing_list">| . $locale->text('Packing List');
     }
 
@@ -356,7 +359,7 @@ sub form_header {
     $form->{nextsub} = 'update';
 
     $sequences = $form->sequence_dropdown($numberfld) unless $form->{id};
-   
+
     $checkedopen   = ( $form->{closed} ) ? ""        : "checked";
     $checkedclosed = ( $form->{closed} ) ? "checked" : "";
 
@@ -492,10 +495,10 @@ sub form_header {
          if ($form->{entity_control_code}){
 			$creditremaining .= qq|
 	        <tr class="control-code-field">
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Entity Code') . qq|</th>
 		<td colspan="2">$form->{entity_control_code}</td>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
@@ -570,7 +573,7 @@ sub form_header {
             $eclass = 2
         }
         $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>
-             <a id="new-contact" target="new" 
+             <a id="new-contact" target="new"
                  href="contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
@@ -622,7 +625,7 @@ sub form_header {
     print qq|
 <body class="$form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
-<script> 
+<script>
 function on_return_submit(event){
   var kc;
   if (window.event){
@@ -676,7 +679,7 @@ function on_return_submit(event){
 	      </tr>
 	      <tr class="shipvia-row">
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
-		<td colspan=3><textarea name="shipvia" cols="35" 
+		<td colspan=3><textarea name="shipvia" cols="35"
                                 rows="3">$form->{shipvia}</textarea></td>
 	      </tr>
 	    </table>
@@ -967,10 +970,10 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
-            >$file->{file_name}</a></td> 
-<td>$file->{mime_type}</td> 
-<td>|.$file->{uploaded_at}->to_output.qq|</td> 
-<td>$file->{uploaded_by_name}</td> 
+            >$file->{file_name}</a></td>
+<td>$file->{mime_type}</td>
+<td>|.$file->{uploaded_at}->to_output.qq|</td>
+<td>$file->{uploaded_by_name}</td>
 </tr>
               |;
         }
@@ -993,12 +996,12 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
             }
             print qq|
 <tr>
-<td> $file->{file_name} </td> 
-<td> $file->{mime_type} </td> 
-<td> $aclass </td> 
-<td> $file->{reference} </td> 
-<td> $file->{attached_at} </td> 
-<td> $file->{attached_by} </td> 
+<td> $file->{file_name} </td>
+<td> $file->{mime_type} </td>
+<td> $aclass </td>
+<td> $file->{reference} </td>
+<td> $file->{attached_at} </td>
+<td> $file->{attached_by} </td>
 </tr>|;
        }
        print qq|
@@ -1016,7 +1019,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     $form->hide_form(qw(rowcount callback path login sessionid));
 
-    print qq| 
+    print qq|
 </form>
 | . $form->close_status_div . qq|
 </body>
@@ -1063,7 +1066,7 @@ sub update {
         if($newname>1){return;}#tshvr4 may be dropped if finalize_request() does not return here
     }
 
-    # I think this is safe because the shipping or receiving is tied to the 
+    # I think this is safe because the shipping or receiving is tied to the
     # order which is tied to the customer or vendor.  -CT
     $newname = 1 if $form->{type} =~ /(ship|receive)/;
 
@@ -1117,8 +1120,25 @@ sub update {
           if $form->{"select$_"};
     }
 
-    for my $i (1 .. $form->{rowcount}
-                   + $LedgerSMB::Company_Config::settings->{min_empty}){
+    my $non_empty_rows = 0;
+    for my $i (1 .. $form->{rowcount}) {
+        $non_empty_rows++
+            if $form->{"id_$i"}
+               || ! ( ( $form->{"partnumber_$i"} eq "" )
+                      && ( $form->{"description_$i"} eq "" )
+                      && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+
+    my $current_empties = $form->{rowcount} - $non_empty_rows;
+    my $new_empties =
+        max(0,
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
+            - $current_empties);
+
+
+    $form->{rowcount} += $new_empties;
+    for my $i (1 .. $form->{rowcount}){
+        $form->{rowcount} = $i;
         next if $form->{"id_$i"};
 
         if (   ( $form->{"partnumber_$i"} eq "" )
@@ -1131,8 +1151,6 @@ sub update {
 
         }
         else {
-            warn $i;
-            $form->{rowcount} = $i;
 
             $retrieve_item = "";
             if (   $form->{type} eq 'purchase_order'
@@ -1169,7 +1187,7 @@ sub update {
             if ($rows) {
 
                 if ( $rows > 1 ) {
-    
+
                     &select_item;
                     $form->finalize_request();
 
@@ -1182,7 +1200,7 @@ sub update {
                       if $form->{type} ne 'sales_quotation';
                     $sellprice =
                       $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
-    
+
                     for (qw(partnumber description unit)) {
                         $form->{item_list}[$i]{$_} =
                           $form->quote( $form->{item_list}[$i]{$_} );
@@ -1195,7 +1213,7 @@ sub update {
                     }
                     if ($sellprice) {
                         $form->{"sellprice_$i"} = $sellprice;
-    
+
                         ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
                         $dec = length $dec;
                         $decimalplaces1 = ( $dec > 2 ) ? $dec : 2;
@@ -1204,7 +1222,7 @@ sub update {
                         ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
                         $dec = length $dec;
                         $decimalplaces1 = ( $dec > 2 ) ? $dec : 2;
-    
+
                         $form->{"sellprice_$i"} /= $exchangerate;
                     }
 
@@ -1242,7 +1260,7 @@ sub update {
                         $form->{"{_}_$i"} =
                           $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
                     }
-    
+
                 }
 
             }
@@ -1267,13 +1285,14 @@ sub update {
             }
         }
     }
+    $form->{rowcount}--;
     display_form();
 }
 
 sub save {
     delete $form->{display_form};
 
-     
+
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Order Date missing!');
     }
@@ -1295,7 +1314,7 @@ sub save {
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
     check_form(1);
-    ++$form->{rowcount};
+    #++$form->{rowcount};
 
 
     # if the name changed get new values
@@ -1359,9 +1378,9 @@ sub save {
        &update;
        $form->finalize_request();
     }
- 
+
     if ( OE->save( \%myconfig, \%$form ) ) {
-       edit(); 
+       edit();
     }
     else {
         $form->error($err);
@@ -1829,7 +1848,7 @@ sub display_ship_receive {
     $vclabel = ucfirst $form->{vc};
     $vclabel = $locale->text($vclabel);
 
-    $form->{rowcount}++;
+    # $form->{rowcount}++;
 
     if ( $form->{vc} eq 'customer' ) {
         $form->{title} = $locale->text('Ship Merchandise');
@@ -2087,7 +2106,7 @@ qq|<td><input name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}">
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|
-  
+
 </form>
 
 </body>
@@ -2373,7 +2392,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
       </table>
     </td>
   </tr>
-  
+
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
@@ -2638,7 +2657,7 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value="1"></td>|;
       </table>
     </td>
   </tr>
-  
+
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
