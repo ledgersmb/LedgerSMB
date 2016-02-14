@@ -124,7 +124,7 @@ $$
                             where description = in_link_desc))
                        AND not obsolete
               ORDER BY accno
-END;$$
+$$
 LANGUAGE 'sql';
 
 COMMENT ON FUNCTION chart_list_search(in_search text, in_link_desc text) IS
@@ -320,9 +320,9 @@ $$Deletes the translation for the account+language combination.$$;
 CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
 $$
 SELECT ah.id, ah.accno, ah.description,
-       'H' as charttype, NULL as category, NULL as link,
+       'H'::text as charttype, NULL::char as category, null::text as link,
        ah.parent_id as account_heading,
-       null as gifi_accno, false as contra,
+       null::text as gifi_accno, false as contra,
        false as tax
    from account_heading ah
   WHERE id = in_id;
