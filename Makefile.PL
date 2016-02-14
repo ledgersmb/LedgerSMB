@@ -11,7 +11,7 @@ name 'LedgerSMB';
 version_from 'LedgerSMB.pm';
 license 'GPL';
 
-perl_version '5.8.1';
+perl_version '5.10.1';
 
 requires 'App::LedgerSMB::Admin' => 0.04;
 requires 'CGI::Simple';
