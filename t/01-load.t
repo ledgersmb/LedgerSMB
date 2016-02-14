@@ -215,10 +215,14 @@ SKIP: {
          'LedgerSMB::RESTXML::Document::Part_Search',
          'LedgerSMB::RESTXML::Document::SalesOrder',
          'LedgerSMB::RESTXML::Document::Session',
-         'LedgerSMB::Template::ODS'
         ) {
         use_ok($_);
     }
+
+    eval { require OpenOffice::OODoc };
+    skip 'OpenOffice::OODoc not installed', 1 if $@;
+
+    use_ok('LedgerSMB::Template::ODS');
 }
 
 SKIP: {
