@@ -114,7 +114,7 @@ only loosly coupled with entities, etc.$$;
 CREATE OR REPLACE FUNCTION location__get (in_id integer) returns location AS
 $$
 	SELECT * FROM location WHERE id = in_id;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION location__get (in_id integer) IS
 $$ Returns the location specified by in_id.$$;
