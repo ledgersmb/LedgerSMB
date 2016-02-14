@@ -97,6 +97,10 @@ script:
   - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
 
 after_success:
-  - curl http://localhost:5000/stop.pl
-  - sleep 15    # wait for server process to flush coverage data to disk
+  - >
+    if [ "$COVERAGE" != "0" ] ; then
+       curl http://localhost:5001/stop.pl ;
+       while [ -n "$(jobs -r | grep starman.psgi)" ] ; do sleep 1; echo -n "." ; done ;
+       echo "" ;
+    fi
   - coverage-report
