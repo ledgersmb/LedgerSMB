@@ -45,3 +45,8 @@ Scenario Outline: Navigate to menu and open screen
     | Quotations > Reports > Quotations         | Quotation search         |
     | Quotations > Reports > RFQs               | RFQ search               |
     | General Journal > Search and GL           | GL search                |
+    | Goods and Services > Add Part             | part entry               |
+    | Goods and Services > Add Service          | service entry            |
+    | Goods and Services > Add Assembly         | assembly entry           |
+    | Goods and Services > Add Overhead         | overhead entry           |
+
