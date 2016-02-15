@@ -1862,18 +1862,6 @@ sub print_form {
 
         $old_form->{printed} = $form->{printed} if %$old_form;
 
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'printed',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail )
-          if %$old_form;
-
     } elsif ( $form->{media} eq 'email' ) {
         $form->{subject} = qq|$form->{label} $form->{"${inv}number"}|
           unless $form->{subject};
@@ -1926,17 +1914,6 @@ sub print_form {
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }
 
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'emailed',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail )
-          if %$old_form;
     } elsif ( $form->{media} eq 'queue' ) {
         %queued = split / /, $form->{queued};
 
@@ -1961,18 +1938,6 @@ sub print_form {
         $form->update_status( \%myconfig, 1);
 
         $old_form->{queued} = $form->{queued};
-
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'queued',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail );
-
     }
 
     $form->format_string( "email", "cc", "bcc" );

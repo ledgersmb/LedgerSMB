@@ -3845,18 +3845,6 @@ sub from_to {
     return ( $fromdate, "$t[5]-$t[4]-$t[3]" );
 }
 
-=item $form->audittrail($dbh, $myconfig, $audittrail);
-
-Audit trail has been replaced by triggers which work on a very similar manner.
-
-=cut
-
-sub audittrail {
-    return;
-}
-
-
-
 
 # New block of code to get control code from batch table
 
