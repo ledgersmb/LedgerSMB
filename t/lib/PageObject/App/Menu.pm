@@ -53,6 +53,8 @@ my %menu_path_pageobject_map = (
     "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
     "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
     "Goods and Services > Add Overhead" => 'PageObject::App::Parts::Overhead',
+    "System > Defaults" => 'PageObject::App::System::Defaults',
+    "System > Taxes" => 'PageObject::App::System::Taxes',
     );
 
 
