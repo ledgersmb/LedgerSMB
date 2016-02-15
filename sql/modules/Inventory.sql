@@ -67,7 +67,7 @@ CREATE AGGREGATE product(
 CREATE OR REPLACE FUNCTION inventory_create_report(in_transdate date) RETURNS int
 AS
 $$
-	INSERT INTO inventory_report(entry_date) values (in_transdate)
+	INSERT INTO inventory_report(transdate) values (in_transdate)
         RETURNING id;
 $$ language sql;
 
@@ -75,9 +75,9 @@ CREATE OR REPLACE FUNCTION inventory_report__add_line
 (in_report_id int, in_parts_id int, in_onhand int, in_counted int)
 RETURNS int AS
 $$
-	INSERT INTO inventory_report_line(report_id, parts_id, onhand, counted)
+	INSERT INTO inventory_report_line(adjust_id, parts_id, expected, counted)
 	VALUES (in_report_id, in_parts_id, in_onhand, in_counted)
-        RETURNING id;
+        RETURNING adjust_id;
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION inventory__get_item_by_partnumber(in_partnumber text)

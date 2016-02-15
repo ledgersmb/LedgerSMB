@@ -119,29 +119,6 @@ $$ language sql;
 COMMENT ON FUNCTION location__get (in_id integer) IS
 $$ Returns the location specified by in_id.$$;
 
-CREATE OR REPLACE FUNCTION location_search
-(in_address1 varchar, in_address2 varchar,
-	in_city varchar, in_state varchar, in_zipcode varchar,
-	in_country varchar)
-RETURNS SETOF location
-AS
-$$
-		SELECT * FROM location
-		WHERE address1 ilike '%' || in_address1 || '%'
-			AND address2 ilike '%' || in_address2 || '%'
-			AND in_city ilike '%' || in_city || '%'
-			AND in_state ilike '%' || in_state || '%'
-			AND in_zipcode ilike '%' || in_zipcode || '%'
-			AND in_country ilike '%' || in_country || '%';
-$$ LANGUAGE SQL;
-
-COMMENT ON FUNCTION location_search
-(in_address1 varchar, in_address2 varchar,
-        in_city varchar, in_state varchar, in_zipcode varchar,
-        in_country varchar) IS
-$$ Returns matching locations.  All matches may be partial.$$;
-
-
 CREATE OR REPLACE FUNCTION location_delete (in_id integer) RETURNS VOID AS
 $$
 	DELETE FROM location WHERE id = in_id;

@@ -78,15 +78,23 @@ COMMENT ON FUNCTION payment_get_entity_account_payment_info
 IS $$ Returns payment information on the entity credit account as
   required to for discount calculations and payment processing. $$;
 
+DROP TYPE IF EXISTS payment_open_account CASCADE;
+CREATE TYPE payment_open_account AS (
+  id int,
+  name text,
+  entity_class int
+);
+
 
 DROP FUNCTION IF EXISTS payment_get_open_accounts(int);
+DROP FUNCTION IF EXISTS payment_get_open_accounts(int, date, date);
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts
 (in_account_class int, in_datefrom date, in_dateto date)
-returns SETOF entity AS
+returns SETOF payment_open_account AS
 $$
-                SELECT ec.id, e.name as name, e.entity_class, e.created
+                SELECT ec.id, e.name, ec.entity_class
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
                         WHERE ec.entity_class = in_account_class
@@ -120,23 +128,20 @@ COMMENT ON FUNCTION payment_get_open_accounts(int, date, date) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as
 always) and returns all entities with open accounts of the appropriate type. $$;
 
+DROP FUNCTION if exists payment_get_all_accounts(int);
+
 CREATE OR REPLACE FUNCTION payment_get_all_accounts(in_account_class int)
-RETURNS SETOF entity AS
+RETURNS SETOF payment_open_account AS
 $$
-DECLARE out_entity entity%ROWTYPE;
-BEGIN
 		SELECT  ec.id,
-			e.name, e.entity_class, e.created
+			e.name, ec.entity_class
 		FROM entity e
 		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 				WHERE e.entity_class = in_account_class
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION payment_get_all_accounts(int) IS
-$$ This function takes a single argument (1 for vendor, 2 for customer as
-	LOOP
-		RETURN NEXT out_entity;
-	END LOOP;
+$$ This function takes a single argument (1 for vendor, 2 for customer)
 $$;
 
 COMMENT ON FUNCTION payment_get_all_accounts(int) IS
@@ -295,7 +300,8 @@ CREATE TYPE payment_contact_invoice AS (
 	account_number text,
 	total_due numeric,
 	invoices text[],
-        has_vouchers int
+        has_vouchers bigint,
+        got_lock bool
 );
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
@@ -992,7 +998,7 @@ $$
                 JOIN entity cp ON (ctl.entity_id = cp.id)
                 JOIN location_class lc ON (ctl.location_class = lc.id)
                 JOIN country c ON (c.id = l.country_id)
-                JOIN entity_credit_account ec ON (ec.entity_id = cp.entity_id)
+                JOIN entity_credit_account ec ON (ec.entity_id = cp.id)
                 WHERE ec.id = in_entity_credit_id AND
                       lc.id = in_location_class_id
                 ORDER BY lc.id, l.id, c.name
@@ -1249,7 +1255,7 @@ to a certain rate for a specific date.$$;
 DROP TYPE IF EXISTS payment_header_item CASCADE;
 CREATE TYPE payment_header_item AS (
 payment_id int,
-payment_reference int,
+payment_reference text,
 payment_date date,
 legal_name text,
 amount numeric,
@@ -1304,7 +1310,6 @@ CREATE TYPE payment_line_item AS (
   source text,
   cleared bool,
   fx_transaction bool,
-  project_id int,
   memo text,
   invoice_id int,
   approved bool,
@@ -1317,7 +1322,7 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
  $$
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description, ch.link as chart_link,
-     ac.amount,  ac.transdate as trans_date, ac.source, ac.cleared_on, ac.fx_transaction, ac.project_id,
+     ac.amount,  ac.transdate as trans_date, ac.source, ac.cleared, ac.fx_transaction,
      ac.memo, ac.invoice_id, ac.approved, ac.cleared_on, ac.reconciled_on
      FROM acc_trans ac
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
@@ -1360,7 +1365,7 @@ GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
  returns SETOF payment_vc_info AS
  $$
-    		SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, discount, o.meta_number
+    		SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, null::int, o.meta_number
     		FROM overpayments o
     		JOIN entity e ON (e.id=o.entity_id)
     		WHERE available <> 0 AND in_account_class = payment_class;

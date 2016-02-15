@@ -58,12 +58,13 @@ $$
 SELECT * FROM warehouse order by description;
 $$ language sql;
 
+DROP FUNCTION IF EXISTS invoice__get_by_vendor_number(text, text);
+
 CREATE OR REPLACE FUNCTION invoice__get_by_vendor_number
-(in_meta_nunber text, in_invoice_number text)
+(in_meta_number text, in_invoice_number text)
 RETURNS ap AS
 $$
-DECLARE retval ap;
-	SELECT * FROM ap WHERE entity_credit_id = 
+	SELECT * FROM ap WHERE entity_credit_account = 
 		(select id from entity_credit_account where entity_class = 1
 		AND meta_number = in_meta_number)
 		AND invnumber = in_invoice_number;
@@ -118,6 +119,33 @@ CREATE OR REPLACE FUNCTION array_endswith(elem anyelement, arr anyarray)
 AS $$
    SELECT $2[array_upper($2,1)]=$1;
 $$ IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION full_ilike_match(seek text, source text)
+   RETURNS BOOL
+   LANGUAGE SQL
+AS $$
+select seek ilike '%' || source || '%';
+$$;
+
+DO $$
+
+BEGIN
+
+PERFORM * FROM pg_operator where oprname = '~*~';
+
+IF NOT FOUND THEN
+
+CREATE OPERATOR ~*~ ( 
+    procedure = full_ilike_match, 
+    leftarg = 'text',
+    rightarg = 'text'
+);
+
+END IF;
+
+END;
+
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION lsmb__min_date() RETURNS date
 LANGUAGE SQL AS

@@ -234,7 +234,7 @@ CREATE OR REPLACE FUNCTION person__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
 SELECT * from entity_bank_account where entity_id = in_entity_id
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__list_bank_account(in_entity_id int) IS
 $$ Lists bank accounts for a person$$;
@@ -262,7 +262,7 @@ DELETE FROM entity_to_location
        AND location_class = in_location_class
 RETURNING TRUE;
 
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION person__delete_location
 (in_person_id int, in_location_id int, in_location_class int) IS

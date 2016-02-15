@@ -179,12 +179,14 @@ CREATE OR REPLACE FUNCTION employee__list_managers
 RETURNS SETOF employees as
 $$
 		SELECT
-		    e.salutation,
-		    e.first_name,
-		    e.last_name,
+		    s.salutation,
+		    p.first_name,
+		    p.last_name,
 		    ee.*
 		FROM entity_employee ee
 		JOIN entity e on e.id = ee.entity_id
+                JOIN person p ON p.entity_id = e.id
+                JOIN salutation s ON s.id = p.salutation_id
 		WHERE ee.sales = 't'::bool AND ee.role='manager'
 			AND ee.entity_id <> coalesce(in_id, -1)
 		ORDER BY name
@@ -219,8 +221,8 @@ $$
 				coalesce(in_enddateto, 'infinity'::timestamp)
 			AND coalesce(enddate, 'infinity'::timestamp) >=
 				coalesce(in_enddatefrom, '-infinity'::timestamp)
-			AND (name % in_name
-			    OR note % in_notes)
+			AND (name ~*~ in_name
+			    OR note ~*~ in_notes)
 			AND (sales = 't' OR coalesce(in_sales, 'f') = 'f')
 $$ language sql;
 

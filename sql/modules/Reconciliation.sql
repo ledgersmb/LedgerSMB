@@ -42,7 +42,7 @@ RETURNS bool language sql as $$
      UPDATE cr_report set submitted = false
       WHERE id = in_report_id
             AND approved is not true
-     RETURING true;
+     RETURNING true;
 $$ SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
@@ -103,8 +103,8 @@ $$
            AND report_id IN (SELECT id FROM cr_report
                               WHERE approved IS NOT TRUE);
     DELETE FROM cr_report
-     WHERE id = in_report_id AND approved IS NOT TRUE;
-    RETURNING FOUND;
+     WHERE id = in_report_id AND approved IS NOT TRUE
+    RETURNING TRUE;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
 -- This function is a bit more dangerous and so it is not granted public

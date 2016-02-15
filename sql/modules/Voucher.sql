@@ -268,7 +268,7 @@ batch_search_mini
 RETURNS SETOF batch_list_item AS
 $$
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, b.default_date, NULL
+			b.created_on, b.default_date, NULL::NUMERIC, NULL::numeric, false
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
@@ -304,7 +304,7 @@ batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
 RETURNS SETOF batch_list_item AS
 $$
                SELECT b.id, c.class, b.control_code, b.description, u.username,
-                        b.created_on, b.default_date, 0, 0
+                        b.created_on, b.default_date, 0::numeric, 0::numeric, false
                 FROM batch b
                 JOIN batch_class c ON (b.batch_class_id = c.id)
                 JOIN users u ON (u.entity_id = b.created_by)

@@ -61,7 +61,7 @@ CREATE TYPE report_aging_item AS (
 	c90 numeric,
 	duedate date,
 	id int,
-	curr varchar(3),
+	curr char(3),
 	exchangerate numeric,
 	line_items text[][],
         age int
@@ -424,7 +424,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.invnumber, a.amount, a.netamount, a.netamount - a.amount as tax,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
-       '{}' as business_units -- TODO
+       '{}'::text[] as business_units -- TODO
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
@@ -514,7 +514,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.amount - a.netamount as tax, a.amount - p.due, p.due, p.last_payment,
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
-       a.shipvia, '{}'
+       a.shipvia, '{}'::text[]
 
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,

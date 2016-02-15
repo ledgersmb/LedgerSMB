@@ -207,7 +207,6 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 RETURNS numeric AS
 $$
 	SELECT coalesce(coalesce(sum(ac.amount) + cp.amount, sum(ac.amount)), 0)
-	INTO balance
 	FROM acc_trans ac
 	JOIN (select id, approved from ar union
 		select id, approved from ap union

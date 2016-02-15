@@ -264,7 +264,6 @@ CREATE OR REPLACE FUNCTION asset_class__search
 in_method int, in_label text)
 RETURNS SETOF asset_class_result AS
 $$
-	FOR out_var IN
 		SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
 			ac.dep_account_id, ad.accno, ad.description,
                         m.method, ac.method,
