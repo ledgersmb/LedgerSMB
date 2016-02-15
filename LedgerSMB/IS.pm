@@ -1515,17 +1515,6 @@ sub post_invoice {
     if (!$form->{separate_duties}){
         $self->add_cogs($form);
     }
-
-    my %audittrail = (
-        tablename => 'ar',
-        reference => $form->{invnumber},
-        formname  => $form->{type},
-        action    => 'posted',
-        id        => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-
 }
 
 sub retrieve_invoice {
