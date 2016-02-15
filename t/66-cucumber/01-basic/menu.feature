@@ -49,4 +49,6 @@ Scenario Outline: Navigate to menu and open screen
     | Goods and Services > Add Service          | service entry            |
     | Goods and Services > Add Assembly         | assembly entry           |
     | Goods and Services > Add Overhead         | overhead entry           |
-
+    | System > Defaults                         | system defaults          |
+    | System > Taxes                            | system taxes             |
+    
