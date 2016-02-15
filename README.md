@@ -26,7 +26,7 @@ System requirements
 LedgerSMB depends on the following software:
 
  * a web server (Starman, Apache v2.x, MS IIS, etc)
- * PostgreSQL 9.1+
+ * PostgreSQL 9.2+
  * Perl 5.10+
 
 LedgerSMB can't be used with these browsers:
