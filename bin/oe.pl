@@ -556,7 +556,7 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method=post action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
 
 |;
 
@@ -1314,7 +1314,7 @@ sub delete {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 |;
 
     $form->{action} = "yes";
@@ -1502,7 +1502,7 @@ sub backorder_exchangerate {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 |;
 
     # delete action variable
@@ -1754,7 +1754,7 @@ sub display_ship_receive {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <input type=hidden name=display_form value=display_ship_receive>
 |;
@@ -2032,7 +2032,7 @@ sub search_transfer {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -2184,7 +2184,7 @@ sub list_transfer {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <input type=hidden name=warehouse_id value=$warehouse_id>
 
@@ -2438,7 +2438,7 @@ sub po_orderitems {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -2572,7 +2572,7 @@ sub select_vendor {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].vendor.focus()" />
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" name=vendor size=40>
 

@@ -410,7 +410,7 @@ $column_data{runningnumber} =
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $column_data{partnumber} =
-qq|<td class="partnumber" colspan="2"><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+qq|<td class="partnumber" colspan="2"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
             $column_data{description} = '';
         }
         $column_data{qty} =
@@ -580,7 +580,7 @@ sub select_item {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -854,7 +854,7 @@ sub new_item {
         print qq|
 <h4>| . $locale->text('What type of item is this?') . qq|</h4>
 
-<form method=post action=ic.pl>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=ic.pl>
 
 <p>
 
@@ -2029,7 +2029,7 @@ sub ship_to {
     print qq|
                <body class="lsmb $form->{dojo_theme}">
 
-<form name="form" method=post action=$form->{script}>
+<form name="form" method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100% cellspacing="0" cellpadding="0" border="0">
     <tr>

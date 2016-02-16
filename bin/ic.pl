@@ -722,7 +722,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
 <body class="lsmb $form->{dojo_theme}">
 | . $form->open_status_div . qq|
 
-<form method="post" action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -934,7 +934,7 @@ sub form_footer {
     print qq|
 </form> |;
     if ($form->{id}){
-        print qq|<form action="pnl.pl" method="GET">
+        print qq|<form data-dojo-type="lsmb/lib/Form" action="pnl.pl" method="GET">
         <input type="hidden" name="id" value="$form->{id}">
         <input type="hidden" name="pnl_type" value="product">
         <table width="100%">
@@ -1694,7 +1694,7 @@ sub select_name {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}">
 
 <input type=hidden name=vr value=$vr>
 
@@ -2011,7 +2011,7 @@ sub stock_assembly {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width="100%">
   <tr>
@@ -2118,7 +2118,7 @@ sub list_assemblies {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
