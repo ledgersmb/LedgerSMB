@@ -124,10 +124,7 @@ CREATE OR REPLACE FUNCTION goods__search
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date)
 RETURNS SETOF goods_search_result
-LANGUAGE PLPGSQL STABLE AS $$
-BEGIN
-
-RETURN QUERY
+LANGUAGE SQL STABLE AS $$
        SELECT p.partnumber,
               p.id, p.description, p.onhand, p.unit::text, p.priceupdate,
               pg.partsgroup,
@@ -163,7 +160,6 @@ RETURN QUERY
                                        UNION
                                       SELECT 1 FROM orderitems
                                        WHERE parts_id = p.id)));
-END;
 $$;
 
 DROP FUNCTION IF EXISTS partsgroups__list_all();
@@ -451,10 +447,8 @@ CREATE OR REPLACE FUNCTION goods__history(
   in_partnumber text, in_description text, in_serial_number text,
   in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
   in_inc_is bool, in_inc_ir bool
-) RETURNS SETOF parts_history_result LANGUAGE PLPGSQL AS
+) RETURNS SETOF parts_history_result LANGUAGE SQL AS
 $$
-BEGIN
-RETURN QUERY
   SELECT p.id, p.partnumber, o.transdate, p.description, p.bin,
          o.id as ord_id, o.ordnumber, o.oe_class, eca.meta_number::text, e.name,
          i.sellprice, i.qty, i.discount, i.serialnumber
@@ -493,7 +487,6 @@ RETURN QUERY
          AND (in_inc_ir is not true or o.oe_class = 'ir')
          AND (in_inc_is is not true or o.oe_class = 'is')
 ORDER BY o.transdate desc, o.id desc;
-END;
 $$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';

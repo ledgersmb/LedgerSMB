@@ -159,19 +159,12 @@ $$ Returns a list of locations specified attached to the person.$$;
 CREATE OR REPLACE FUNCTION person__list_contacts(in_entity_id int)
 RETURNS SETOF contact_list AS
 $$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN
 		SELECT cc.class, cc.id, c.description, c.contact
 		FROM entity_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
 		JOIN person p ON (c.entity_id = p.entity_id)
 		WHERE p.entity_id = in_entity_id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE sql;
 
 COMMENT ON FUNCTION person__list_contacts(in_entity_id int) IS
 $$ Returns a list of contacts attached to the function.$$;
@@ -180,17 +173,12 @@ $$ Returns a list of contacts attached to the function.$$;
 CREATE OR REPLACE FUNCTION person__delete_contact
 (in_person_id int, in_contact_class_id int, in_contact text)
 returns bool as $$
-BEGIN
-
 DELETE FROM entity_to_contact
  WHERE entity_id = (SELECT entity_id FROM person WHERE id = in_person_id)
        and contact_class_id = in_contact_class_id
-       and contact= in_contact;
-RETURN FOUND;
-
-END;
-
-$$ language plpgsql;
+       and contact= in_contact
+RETURNING TRUE;
+$$ language sql;
 
 COMMENT ON FUNCTION person__delete_contact
 (in_person_id int, in_contact_class_id int, in_contact text) IS
@@ -245,15 +233,8 @@ updated. $$;
 CREATE OR REPLACE FUNCTION person__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
-DECLARE out_row entity_bank_account%ROWTYPE;
-BEGIN
-	FOR out_row IN
-		SELECT * from entity_bank_account where entity_id = in_entity_id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+SELECT * from entity_bank_account where entity_id = in_entity_id
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__list_bank_account(in_entity_id int) IS
 $$ Lists bank accounts for a person$$;
@@ -261,18 +242,11 @@ $$ Lists bank accounts for a person$$;
 CREATE OR REPLACE FUNCTION person__list_notes(in_entity_id int)
 RETURNS SETOF entity_note AS
 $$
-DECLARE out_row record;
-BEGIN
-	FOR out_row IN
 		SELECT *
 		FROM entity_note
 		WHERE ref_key = in_entity_id
 		ORDER BY created
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__list_notes(in_entity_id int) IS
 $$ Returns a list of notes attached to a person.$$;
@@ -281,17 +255,14 @@ CREATE OR REPLACE FUNCTION person__delete_location
 (in_person_id int, in_location_id int, in_location_class int)
 RETURNS BOOL AS
 $$
-BEGIN
 
 DELETE FROM entity_to_location
  WHERE entity_id = (select entity_id from person where id = in_person_id)
        AND location_id = in_location_id
-       AND location_class = in_location_class;
+       AND location_class = in_location_class
+RETURNING TRUE;
 
-RETURN FOUND;
-
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION person__delete_location
 (in_person_id int, in_location_id int, in_location_class int) IS

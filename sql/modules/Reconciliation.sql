@@ -38,13 +38,11 @@ SELECT * FROM unapproved_cr;
 $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
-RETURNS bool language plpgsql as $$
-BEGIN
+RETURNS bool language sql as $$
      UPDATE cr_report set submitted = false
       WHERE id = in_report_id
-            AND approved is not true;
-     RETURN found;
-END;
+            AND approved is not true
+     RETURNING true;
 $$ SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
@@ -58,15 +56,13 @@ report.$$;
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
 	in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
-BEGIN
 	UPDATE cr_report_line SET cleared = false
 	WHERE report_id = in_report_id;
 
 	UPDATE cr_report_line SET cleared = true
-	WHERE report_id = in_report_id AND id = ANY(in_line_ids);
-	RETURN found;
-END;
-$$ LANGUAGE PLPGSQL;
+	WHERE report_id = in_report_id AND id = ANY(in_line_ids)
+        RETURNING TRUE;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) IS
@@ -75,7 +71,6 @@ $$Sets which lines of the report are cleared.$$;
 CREATE OR REPLACE FUNCTION reconciliation__delete_my_report(in_report_id int)
 RETURNS BOOL AS
 $$
-BEGIN
     DELETE FROM cr_report_line
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
@@ -84,10 +79,9 @@ BEGIN
                                     and approved IS NOT TRUE);
     DELETE FROM cr_report
      WHERE id = in_report_id AND entered_username = SESSION_USER
-           AND submitted IS NOT TRUE AND approved IS NOT TRUE;
-    RETURN FOUND;
-END;
-$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+           AND submitted IS NOT TRUE AND approved IS NOT TRUE
+    RETURNING TRUE;
+$$ LANGUAGE SQL SECURITY DEFINER;
 
 -- Granting execute permission to public because everyone has an ability to
 -- delete their own reconciliation reports provided they have not been
@@ -104,16 +98,14 @@ $$;
 CREATE OR REPLACE FUNCTION reconciliation__delete_unapproved(in_report_id int)
 RETURNS BOOL AS
 $$
-BEGIN
     DELETE FROM cr_report_line
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
                               WHERE approved IS NOT TRUE);
     DELETE FROM cr_report
-     WHERE id = in_report_id AND approved IS NOT TRUE;
-    RETURN FOUND;
-END;
-$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+     WHERE id = in_report_id AND approved IS NOT TRUE
+    RETURNING TRUE;
+$$ LANGUAGE SQL SECURITY DEFINER;
 
 -- This function is a bit more dangerous and so it is not granted public
 -- permission.  Only those who have the permission to those with an ability to
@@ -500,36 +492,16 @@ $$Ensures that the list of pending transactions in the report is up to date. $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RETURNS setof cr_report_line as $$
 
-    DECLARE
-        row cr_report_line;
-    BEGIN
-        FOR row IN
 		select * from cr_report_line where report_id = in_report_id
 		order by scn, post_date
-	LOOP
-
-            RETURN NEXT row;
-
-        END LOOP;
-    END;
-
-$$ language 'plpgsql';
+$$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__report_details (in_report_id INT) IS
 $$ Returns the details of the report. $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_summary (in_report_id INT) RETURNS cr_report as $$
-
-    DECLARE
-        row cr_report;
-    BEGIN
-        select * into row from cr_report where id = in_report_id;
-
-        RETURN row;
-
-    END;
-
-$$ language 'plpgsql';
+        select * from cr_report where id = in_report_id;
+$$ language 'sql';
 
 CREATE OR REPLACE FUNCTION reconciliation__search
 (in_date_from date, in_date_to date,
@@ -537,9 +509,6 @@ CREATE OR REPLACE FUNCTION reconciliation__search
 	in_account_id int, in_submitted bool, in_approved bool)
 returns setof cr_report AS
 $$
-DECLARE report cr_report;
-BEGIN
-	FOR report IN
 		SELECT r.* FROM cr_report r
 		JOIN account c ON (r.chart_id = c.id)
 		WHERE
@@ -554,11 +523,7 @@ BEGIN
 			(in_approved IS NULL OR in_approved = approved) AND
 			(r.deleted IS FALSE)
 		ORDER BY c.accno, end_date, their_total
-	LOOP
-		RETURN NEXT report;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION reconciliation__search
 (in_date_from date, in_date_to date,
@@ -594,8 +559,6 @@ account number and description from the account table.$$;
 CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
 $$
-DECLARE outval NUMERIC;
-BEGIN
 	SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
 			IN ('A', 'E') THEN sum(a.amount) * -1
 		ELSE sum(a.amount) END
@@ -614,9 +577,7 @@ BEGIN
 		AND a.chart_id = in_account_id
 		AND a.transdate <= in_date;
 
-	RETURN outval;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) IS
@@ -644,17 +605,9 @@ UNION
 
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$
-   DECLARE
-        row recon_payee;
-    BEGIN
-        FOR row IN
         	select * from recon_payee where report_id = in_report_id
         	order by scn, post_date
-        LOOP
-          RETURN NEXT row;
-        END LOOP;
-    END;
-$$ language 'plpgsql';
+$$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
 $$ Pulls the payee information for the reconciliation report.$$;

@@ -67,23 +67,18 @@ CREATE AGGREGATE product(
 CREATE OR REPLACE FUNCTION inventory_create_report(in_transdate date) RETURNS int
 AS
 $$
-BEGIN
-	INSERT INTO inventory_report(entry_date) values (in_transdate);
-	RETURN currval('inventory_report_id_seq');
-END;
-$$ language plpgsql;
+	INSERT INTO inventory_report(transdate) values (in_transdate)
+        RETURNING id;
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION inventory_report__add_line
 (in_report_id int, in_parts_id int, in_onhand int, in_counted int)
 RETURNS int AS
 $$
-BEGIN
-	INSERT INTO inventory_report_line(report_id, parts_id, onhand, counted)
-	VALUES (in_report_id, in_parts_id, in_onhand, in_counted);
-
-	RETURN currval('inventory_report_line_id_seq');
-end;
-$$ LANGUAGE plpgsql;
+	INSERT INTO inventory_report_line(adjust_id, parts_id, expected, counted)
+	VALUES (in_report_id, in_parts_id, in_onhand, in_counted)
+        RETURNING adjust_id;
+$$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION inventory__get_item_by_partnumber(in_partnumber text)
 RETURNS parts LANGUAGE SQL AS

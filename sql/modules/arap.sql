@@ -32,8 +32,6 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search
  in_entity_class int)
 RETURNS SETOF purchase_info AS
 $$
-BEGIN
-RETURN QUERY
    SELECT gl.id, gl.invoice,
           gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           e.name, eca.meta_number::text, e.id, gl.amount,
@@ -100,8 +98,8 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           gl.netamount, gl.curr, gl.datepaid, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
    HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
+
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
  in_ordnumber text, in_ponumber text, in_source text, in_description text,
@@ -110,8 +108,6 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
  in_entity_class int)
 RETURNS SETOF purchase_info AS
 $$
-BEGIN
-   RETURN QUERY
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount),
               sum(amount_paid), sum(tax), currency, null::date, null::date,
@@ -123,8 +119,7 @@ BEGIN
               in_on_hold, in_inc_open, in_inc_closed, in_as_of,
               in_entity_class)
      GROUP BY entity_name, meta_number, entity_id, currency;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 --tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function begin
 --this is still trial and error

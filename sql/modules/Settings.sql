@@ -12,14 +12,10 @@ DROP FUNCTION IF EXISTS defaults_get_defaultcurrency();
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
 RETURNS char(3) AS
 $$
-DECLARE defaultcurrency defaults.value%TYPE;
-      BEGIN
-           SELECT INTO defaultcurrency substr(value,1,3)
+           SELECT substr(value,1,3)
            FROM defaults
            WHERE setting_key = 'curr';
-           RETURN defaultcurrency;
-      END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION defaults_get_defaultcurrency() IS
 $$ This function return the default currency asigned by the program. $$;
@@ -52,18 +48,10 @@ $$ Returns the value of the setting in the defaults table.$$;
 CREATE OR REPLACE FUNCTION setting_get_default_accounts ()
 RETURNS SETOF defaults AS
 $$
-DECLARE
-	account defaults%ROWTYPE;
-BEGIN
-	FOR account IN
 		SELECT * FROM defaults
 		WHERE setting_key like '%accno_id'
                 ORDER BY setting_key
-	LOOP
-		RETURN NEXT account;
-	END LOOP;
-END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE sql;
 
 COMMENT ON FUNCTION setting_get_default_accounts () IS
 $$ Returns a set of settings for default accounts.$$;
@@ -98,20 +86,11 @@ $$;
 CREATE OR REPLACE FUNCTION setting_increment (in_key varchar) returns varchar
 AS
 $$
-DECLARE
-	raw_value VARCHAR;
-	new_value VARCHAR;
-BEGIN
-	SELECT value INTO raw_value FROM defaults
-	WHERE setting_key = in_key
-	FOR UPDATE;
+	UPDATE defaults SET value = setting__increment_base(value) 
+        WHERE setting_key = in_key
+        RETURNING value;
 
-        new_value := setting__increment_base(raw_value);
-	UPDATE defaults SET value = new_value WHERE setting_key = in_key;
-
-	return new_value;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION setting_increment (in_key varchar) IS
 $$This function takes a value for a sequence in the defaults table and increments

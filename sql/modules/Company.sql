@@ -269,15 +269,6 @@ CREATE OR REPLACE FUNCTION contact__search
 	in_business_id int, in_name_part text, in_control_code text,
         in_notes text, in_users bool)
 RETURNS SETOF contact_search_result AS $$
-DECLARE
-	out_row contact_search_result;
-	loop_count int;
-	t_contact_info text[];
-BEGIN
-	t_contact_info = in_contact_info;
-
-
-	FOR out_row IN
 		SELECT e.id, e.control_code, ec.id, ec.meta_number,
 			ec.description, ec.entity_class,
 			c.legal_name, c.sic_code, b.description , ec.curr::text
@@ -316,9 +307,9 @@ BEGIN
                        (select entity_id
                           FROM entity_credit_account leca
                           JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
-                         WHERE contact ILIKE ANY(t_contact_info))
-                      OR '' ILIKE ALL(t_contact_info)
-                      OR t_contact_info IS NULL)
+                         WHERE contact ~*~ ANY(in_contact_info))
+                      OR '' ILIKE ALL(in_contact_info)
+                      OR in_contact_info IS NULL)
 
 			AND ((in_address IS NULL AND in_city IS NULL
 					AND in_state IS NULL
@@ -374,12 +365,8 @@ BEGIN
                                            WHERE description
                                                  @@ plainto_tsquery(in_contact))
                        )
-               ORDER BY legal_name
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ language plpgsql;
+               ORDER BY legal_name;
+$$ language sql;
 
 
 
@@ -415,16 +402,12 @@ $$;
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
 RETURNS INT AS
 $$
-DECLARE out_id int;
-BEGIN
 	-- TODO, change this to create vector too
 	INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector, subject)
-	VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject);
+	VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject)
+        RETURNING id;
 
-	SELECT currval('note_id_seq') INTO out_id;
-	RETURN out_id;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__save_notes
 (in_entity_id int, in_note text, in_subject text) IS
@@ -434,16 +417,12 @@ attached to that entity.  Returns the id of the note.  $$;
 CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
 RETURNS INT AS
 $$
-DECLARE out_id int;
-BEGIN
 	-- TODO, change this to create vector too
 	INSERT INTO eca_note (ref_key, note_class, note, vector, subject)
-	VALUES (in_credit_id, 3, in_note, '', in_subject);
+	VALUES (in_credit_id, 3, in_note, '', in_subject)
+        RETURNING id;
 
-	SELECT currval('note_id_seq') INTO out_id;
-	RETURN out_id;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca__save_notes
 (in_entity_id int, in_note text, in_subject text) IS
@@ -455,16 +434,12 @@ CREATE OR REPLACE FUNCTION entity_credit_get_id_by_meta_number
 (in_meta_number text, in_account_class int)
 returns int AS
 $$
-DECLARE out_credit_id int;
-BEGIN
-	SELECT id INTO out_credit_id
+	SELECT id
 	FROM entity_credit_account
 	WHERE meta_number = in_meta_number
 		AND entity_class = in_account_class;
 
-	RETURN out_credit_id;
-END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE sql;
 
 COMMENT ON FUNCTION entity_credit_get_id_by_meta_number
 (in_meta_number text, in_account_class int) is
@@ -482,15 +457,8 @@ $$ Returns the entity credit account info.$$;
 CREATE OR REPLACE FUNCTION contact_class__list()
 RETURNS SETOF contact_class AS
 $$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN
-		SELECT * FROM contact_class ORDER BY id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ language plpgsql;
+		SELECT * FROM contact_class ORDER BY id;
+$$ language sql;
 
 COMMENT ON FUNCTION contact_class__list() IS
 $$ Returns a list of contact classes ordered by ID.$$;
@@ -555,16 +523,12 @@ $$ This may change in 1.4 and should not be relied upon too much $$;
 CREATE OR REPLACE FUNCTION entity_credit_get_id
 (in_entity_id int, in_entity_class int, in_meta_number text)
 RETURNS int AS $$
-DECLARE out_var int;
-BEGIN
-	SELECT id INTO out_var FROM entity_credit_account
+	SELECT id FROM entity_credit_account
 	WHERE entity_id = in_entity_id
 		AND in_entity_class = entity_class
 		AND in_meta_number = meta_number;
 
-	RETURN out_var;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION entity_credit_get_id
 (in_entity_id int, in_entity_class int, in_meta_number text) IS
@@ -576,16 +540,12 @@ CREATE OR REPLACE FUNCTION entity__list_credit
 (in_entity_id int, in_entity_class int)
 RETURNS SETOF entity_credit_retrieve AS
 $$
-DECLARE out_row entity_credit_retrieve;
-BEGIN
-
-	FOR out_row IN
 		SELECT  ec.id, e.id, ec.entity_class, ec.discount,
                         ec.discount_terms,
 			ec.taxincluded, ec.creditlimit, ec.terms,
 			ec.meta_number, ec.description, ec.business_id,
 			ec.language_code,
-			ec.pricegroup_id, ec.curr, ec.startdate,
+			ec.pricegroup_id, ec.curr::text, ec.startdate,
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
                         ec.discount_account_id,
 			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
@@ -593,12 +553,7 @@ BEGIN
 		FROM entity e
 		JOIN entity_credit_account ec ON (e.id = ec.entity_id)
 		WHERE e.id = in_entity_id
-	LOOP
-
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
 IS $$ Returns a list of entity credit account entries for the entity and of the
@@ -634,13 +589,11 @@ create or replace function save_taxform
 (in_country_code int, in_taxform_name text)
 RETURNS bool AS
 $$
-BEGIN
 	INSERT INTO country_tax_form(country_id, form_name)
 	values (in_country_code, in_taxform_name);
 
-	RETURN true;
-END;
-$$ LANGUAGE PLPGSQL;
+	SELECT true;
+$$ LANGUAGE SQL;
 
 COMMENT ON function save_taxform (in_country_code int, in_taxform_name text) IS
 $$ Saves tax form information. Returns true or raises exception.$$;
@@ -685,14 +638,10 @@ country text
 CREATE OR REPLACE FUNCTION company_get_billing_info (in_id int)
 returns company_billing_info as
 $$
-DECLARE out_var company_billing_info;
-	t_id INT;
-BEGIN
 	select coalesce(eca.pay_to_name, c.legal_name), eca.meta_number,
 		e.control_code, eca.cash_account_id, c.tax_id,
                 a.line_one, a.line_two, a.line_three,
 		a.city, a.state, a.mail_code, cc.name
-	into out_var
 	FROM (select legal_name, tax_id, entity_id
                 FROM company
                UNION ALL
@@ -705,9 +654,7 @@ BEGIN
 	LEFT JOIN country cc ON (cc.id = a.country_id)
 	WHERE eca.id = in_id AND (location_class = 1 or location_class is null);
 
-	RETURN out_var;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION company_get_billing_info (in_id int) IS
 $$ Returns billing information (billing name and address) for a given credit
@@ -952,9 +899,6 @@ $$ Saves an entity credit account.  Returns the id of the record saved.  $$;
 CREATE OR REPLACE FUNCTION entity__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
@@ -962,12 +906,8 @@ BEGIN
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
 		WHERE ctl.entity_id = in_entity_id
-		ORDER BY lc.id, l.id, c.name
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+		ORDER BY lc.id, l.id, c.name;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_locations(in_entity_id int) IS
 $$ Lists all locations for an entity.$$;
@@ -983,18 +923,11 @@ CREATE TYPE contact_list AS (
 
 CREATE OR REPLACE FUNCTION entity__list_contacts(in_entity_id int)
 RETURNS SETOF contact_list AS $$
-DECLARE out_row contact_list;
-BEGIN
-	FOR out_row IN
 		SELECT cl.class, cl.id, c.description, c.contact
 		FROM entity_to_contact c
 		JOIN contact_class cl ON (c.contact_class_id = cl.id)
 		WHERE c.entity_id = in_entity_id
-	LOOP
-		return next out_row;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION entity__list_contacts(in_entity_id int) IS
 $$ Lists all contact info for the entity.$$;
@@ -1002,15 +935,8 @@ $$ Lists all contact info for the entity.$$;
 CREATE OR REPLACE FUNCTION entity__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
-DECLARE out_row entity_bank_account%ROWTYPE;
-BEGIN
-	FOR out_row IN
-		SELECT * from entity_bank_account where entity_id = in_entity_id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+SELECT * from entity_bank_account where entity_id = in_entity_id;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_bank_account(in_entity_id int) IS
 $$ Lists all bank accounts for the entity.$$;
@@ -1127,18 +1053,11 @@ CREATE TYPE entity_note_list AS (
 CREATE OR REPLACE FUNCTION entity__list_notes(in_entity_id int)
 RETURNS SETOF entity_note AS
 $$
-DECLARE out_row record;
-BEGIN
-	FOR out_row IN
 		SELECT *
 		FROM entity_note
 		WHERE ref_key = in_entity_id
 		ORDER BY created
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__list_notes(in_entity_id int) IS
 $$ Returns a set of notes (including content) attached to the entity.$$;
@@ -1349,9 +1268,6 @@ found.$$;
 CREATE OR REPLACE FUNCTION eca__list_locations(in_credit_id int)
 RETURNS SETOF location_result AS
 $$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
@@ -1360,11 +1276,7 @@ BEGIN
 		JOIN country c ON (c.id = l.country_id)
 		WHERE ctl.credit_id = in_credit_id
 		ORDER BY lc.id, l.id, c.name
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca__list_locations(in_credit_id int) IS
 $$ Returns a list of locations attached to the credit account.$$;
