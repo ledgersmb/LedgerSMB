@@ -494,7 +494,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
  print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
 $form->open_status_div . qq|
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -1656,7 +1656,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr><th class=listtop>$form->{title}</th></tr>
