@@ -48,7 +48,7 @@ sub scripts {
     my $loadorder;
     open $loadorder, '<', $self->{_path};
     $reload_subsequent = 0;
-    my @scripts = 
+    my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
        map { my $string = $_; $string =~ s/#.*$//; $string }
@@ -89,7 +89,7 @@ The LOADORDER.idx remains empty.
 sub makeindex {
     my ($self) = @_;
     die 'LockError' if -f $self->path('LOADORDER.idx');
-    open TEMP, '>', $self->path('LOADORDER.idx'); 
+    open TEMP, '>', $self->path('LOADORDER.idx');
     $self->{_locked} = 1;
     for my $script ($self->scripts){
         $script->load_contents;

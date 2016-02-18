@@ -14,7 +14,7 @@ our $reloading = 0;
 
 =head1 SYNOPSIS
 
-my $dbchange = LedgerSMB::Database::Change->new(path => $path, 
+my $dbchange = LedgerSMB::Database::Change->new(path => $path,
                                       properties => $properties);
 
 my $content = $dbchange->content()
@@ -106,7 +106,7 @@ sub sha {
     my ($self) = @_;
     return $self->{_sha} if $self->{_sha};
     my $content = $self->content(1); # raw
-    my $normalized = join "\n", 
+    my $normalized = join "\n",
                      grep { /\S/ }
                      map { my $string = $_; $string =~ s/--.*//; $string }
                      split("\n", $content);
@@ -224,7 +224,7 @@ sub init {
        sha text NOT NULL,
        success bool NOT NULL,
        error text,
-       CHECK ((success and error is null) 
+       CHECK ((success and error is null)
               or (error is not null and not success))
     );
     CREATE TABLE db_patches (

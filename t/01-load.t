@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 205;
+use Test::More tests => 207;
 use File::Find;
 
 my @on_disk;
@@ -174,6 +174,7 @@ my @modules =
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
+          'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
     );
 
 my %modules;
