@@ -1276,7 +1276,7 @@ sub update {
                 for ( keys %{ $form->{item_list}[0] } ) {
                     # copy, but don't overwrite e.g. description
                     $form->{"${_}_$i"} = $form->{item_list}[0]{$_}
-                         unless $form->{"${_}_$i"};                    
+                         unless $form->{"${_}_$i"};
                 }
                 if (! defined $form->{"discount_$i"}){
                     $form->{"discount_$i"} = $form->{discount} * 100;
@@ -1472,8 +1472,3 @@ sub save_info {
         }
 
 }
-
-
-
-
-
