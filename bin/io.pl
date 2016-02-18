@@ -331,17 +331,13 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
              . qq|<input type="hidden" name="description_$i"
                         value="$form->{"description_$i"}" /></td>|
         } else {
-            if (
-                ( $rows = $form->numtextrows( $form->{"description_$i"}, 46, 6 ) ) >
-                1 )
-            {
-                    $column_data{description} =
-qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
-            }
-            else {
-                 $column_data{description} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
-            }
+            $column_data{description} =
+                qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
+                            id="description_$i" name="description_$i"
+                            $desc_disabled size=48
+                            data-dojo-props="linenum: $i"
+                            style="width:100%;"
+                            >$form->{"description_$i"}</div></td>|;
         }
 
         for (qw(partnumber sku unit)) {
@@ -410,8 +406,7 @@ $column_data{runningnumber} =
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $column_data{partnumber} =
-qq|<td class="partnumber" colspan="2"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
-            $column_data{description} = '';
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false, linenum: $i" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|

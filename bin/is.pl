@@ -1240,8 +1240,14 @@ sub update {
                     $form->{item_list}[$i]{$_} =
                       $form->quote( $form->{item_list}[$i]{$_} );
                 }
+
+                ###EH 20160218
+                ### Why do we move {item_list}[0] into the $form hash,
+                ### while above we quoted {item_list}[$i] ????
                 for ( keys %{ $form->{item_list}[0] } ) {
-                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
+                    # copy, but don't overwrite e.g. description
+                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_}
+                         unless $form->{"${_}_$i"};
                 }
                 if (! defined $form->{"discount_$i"}){
                     $form->{"discount_$i"} = $form->{discount} * 100;
