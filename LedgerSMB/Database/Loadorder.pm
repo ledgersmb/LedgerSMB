@@ -113,6 +113,31 @@ sub path {
     return $path;
 }
 
+=head2 run_all($dbh)
+
+Runs all files in the loadorder without applying tracking info.
+
+=cut
+
+sub run_all {
+    my ($self, $dbh) = @_;
+    $_->run($dbh) for $self->scripts;
+}
+
+=head2 apply_all
+
+Applies all files in the loadorder, with tracking info
+
+=cut
+
+sub apply_all {
+    my ($self, $dbh) = @_;
+    my $reloading = 0;
+    for ($self->scripts){
+        $_->apply if $reloading or not $_->is_applied;
+    }
+}
+
 =head1 COPYRIGHT
 
 Copyright (C) 2016 The LedgerSMB Core Team
