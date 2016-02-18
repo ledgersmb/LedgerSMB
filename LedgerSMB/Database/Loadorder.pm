@@ -44,33 +44,35 @@ Returns a list of LedgerSMB::Database::Change objects
 my $reload_subsequent;
 sub scripts {
     my ($self) = @_;
-    return $self->{_scripts} if $self->{_scripts};
+    return @{$self->{_scripts}} if $self->{_scripts};
+    my $loadorder;
     open $loadorder, '<', $self->{_path};
     $reload_subsequent = 0;
     my @scripts = 
        map { $self->_process_script($_)}
-       grep { $_ ~= /\S/ }
-       map { $string = $_; $string =~ s/#.*$//; $string }
+       grep { $_ =~ /\S/ }
+       map { my $string = $_; $string =~ s/#.*$//; $string }
        <$loadorder>;
     $self->{_scripts} = \@scripts;
     $reload_subsequent = 0;
-    return \@scripts;
+    return @scripts;
 }
 
 sub _process_script {
     my ($self, $line) = @_;
+    my $sigil = '';
     if ($line =~ /^([!^]+)/){
-        my $sigil = $1;
-        $line =~ s/^$sigil//;
+        $sigil = $1 if $1;
+        $line =~ s/^\Q$sigil\E//;
     }
-    $reload_subsequent ||= ( $sigil =~ /\^/ );
-    my $no_transactions = ( $sigil =~ /\!/ );
+    $reload_subsequent ||= ( $sigil =~ /\Q^\E/ );
+    my $no_transactions = ( $sigil =~ /\Q!\E/ );
     return LedgerSMB::Database::Change->new(
-        properties => {
+        $self->path($line),
+        {
             reload_subsequent => $reload_subsequent,
-            no_transactions => $no_transactons
+            no_transactions => $no_transactions
         },
-        path => $self->path($line)
     );
 }
 
@@ -109,7 +111,7 @@ Gives a full path relative to the loadorder
 sub path {
     my ($self, $furtherpart) = @_;
     my $path = $self->{_path};
-    $path ~= s/LOADORDER$/$furtherpart/;
+    $path =~ s/LOADORDER$/$furtherpart/;
     return $path;
 }
 

@@ -25,7 +25,7 @@ my $content_wrapped = $dbchange->content_wrap($before, $after);
 
 =head2 constructor
 
-LedgerSMB::Database::Change->new(path => $path, properties => $properties);
+LedgerSMB::Database::Change->new($path, $properties);
 
 $properties is optional and a hashref with any of the following keys set:
 
