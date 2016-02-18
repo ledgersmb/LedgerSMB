@@ -46,8 +46,9 @@ If this one has changed, then reload further modules
 sub new {
     my ($package, $path, $init_properties) = @_;
     my $self = bless { _path => $path }, $package;
-    @prop_names = qw(no_transactions reload_subsequent);
-    my $self->{properties} = map { $_ => $init_properties->{$_} } @prop_names;
+    my @prop_names = qw(no_transactions reload_subsequent);
+    $self->{properties} = { map { $_ => $init_properties->{$_} } @prop_names };
+    return $self;
 }
 
 =head2 path
@@ -72,17 +73,18 @@ If $raw is set to a true value, we do not wrap in a transaction.
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
+        my $file;
         open $file, '<', $self->path;
         binmode $file, ':utf8';
         $self->{_content} = join '', <$file>;
         close $file;
     }
     my $content = $self->{_content};
-    return $self->_wrap_transaction($content);
+    return $self->_wrap_transaction($content, $raw);
 }
 
 sub _wrap_transaction {
-    my ($self, $content) = @_;
+    my ($self, $content, $raw) = @_;
     $content = _wrap($content, 'BEGIN;', 'COMMIT;')
        unless $self->{properties}->{no_transactions} or $raw;
     return $content;
@@ -106,9 +108,8 @@ sub sha {
     my $content = $self->content(1); # raw
     my $normalized = join "\n", 
                      grep { /\S/ }
-                     map { my $string = $_; $string =~ s/#.*//; $string }
+                     map { my $string = $_; $string =~ s/--.*//; $string }
                      split("\n", $content);
-    
     $self->{_sha} = Digest::SHA::sha512_base64($normalized);
     return $self->{_sha};
 }
@@ -135,7 +136,7 @@ sub content_wrapped {
     my ($self, $before, $after) = $_;
     my $content = $self->content(1); # raw
     return $self->_wrap_transaction(
-        _wrap($content, $before, $after);
+        _wrap($content, $before, $after)
     );
 }
 
@@ -196,8 +197,8 @@ sub apply {
        INSERT INTO db_patch_log (when_applied, path, sha, success)
        values (now(), $path, $sha, true);
     ";
-    my $success = $dbh->do($self->content_wrapped($before, $after);
-    unless $success {
+    my $success = $dbh->do($self->content_wrapped($before, $after));
+    unless ($success) {
         $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, success, error)
             VALUES(now(), $path, $sha, false, ?)
@@ -214,6 +215,7 @@ Initializes the tracking system
 =cut
 
 sub init {
+    my ($dbh) = @_;
     return 0 unless needs_init($dbh);
     $dbh->do("
     CREATE TABLE db_patch_log (
