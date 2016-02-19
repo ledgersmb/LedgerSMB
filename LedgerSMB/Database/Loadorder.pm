@@ -47,14 +47,15 @@ sub scripts {
     return @{$self->{_scripts}} if $self->{_scripts};
     my $loadorder;
     local $!;
-    open LOAD, '<', $self->{_path};
-    die 'FileError: ' . $! if tell(LOAD) == -1;
+    local $@;
+    open(LOAD, '<', $self->{_path}) or
+        die 'FileError on ' $self->{_path} . ": $!";
     $reload_subsequent = 0;
     my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
        map { my $string = $_; $string =~ s/#.*$//; $string }
-       <$loadorder>;
+       <LOAD>;
     close LOAD;
     $self->{_scripts} = \@scripts;
     $reload_subsequent = 0;

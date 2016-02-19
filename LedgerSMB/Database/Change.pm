@@ -75,10 +75,10 @@ sub content {
     unless ($self->{_content}) {
         my $file;
         local $!;
-        open FILE, '<', $self->path;
-        die 'FileError: ' . $! if tell(FILE) == -1;
+        open(FILE, '<', $self->path) or
+            die 'FileError: ' . $self->path . ": $!";
         binmode $file, ':utf8';
-        $self->{_content} = join '', <$file>;
+        $self->{_content} = join '', <FILE>;
         close FILE;
     }
     my $content = $self->{_content};
