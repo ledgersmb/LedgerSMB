@@ -74,7 +74,9 @@ sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
         my $file;
+        local $!;
         open $file, '<', $self->path;
+        die 'FileError: ' . $! unless $file;
         binmode $file, ':utf8';
         $self->{_content} = join '', <$file>;
         close $file;
