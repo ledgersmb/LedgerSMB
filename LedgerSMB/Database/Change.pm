@@ -75,11 +75,11 @@ sub content {
     unless ($self->{_content}) {
         my $file;
         local $!;
-        open $file, '<', $self->path;
-        die 'FileError: ' . $! if tell($file) == -1;
+        open FILE, '<', $self->path;
+        die 'FileError: ' . $! if tell(FILE) == -1;
         binmode $file, ':utf8';
         $self->{_content} = join '', <$file>;
-        close $file;
+        close FILE;
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
