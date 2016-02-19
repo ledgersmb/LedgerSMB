@@ -9,7 +9,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Database::Change;
-use Fcntl;
+use Cwd;
 
 =head1 SYNOPSIS
 
@@ -49,7 +49,7 @@ sub scripts {
     local $!;
     local $@;
     open(LOAD, '<', $self->{_path}) or
-        die 'FileError on ' . $self->{_path} . ": $!";
+        die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
     $reload_subsequent = 0;
     my @scripts =
        map { $self->_process_script($_)}

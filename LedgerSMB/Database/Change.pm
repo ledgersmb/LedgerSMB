@@ -9,6 +9,7 @@ package LedgerSMB::Database::Change;
 use strict;
 use warnings;
 use Digest::SHA;
+use Cwd;
 
 our $reloading = 0;
 
@@ -76,8 +77,8 @@ sub content {
         my $file;
         local $!;
         open(FILE, '<', $self->path) or
-            die 'FileError: ' . $self->path . ": $!";
-        binmode $file, ':utf8';
+            die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
+        binmode FILE, ':utf8';
         $self->{_content} = join '', <FILE>;
         close FILE;
     }
