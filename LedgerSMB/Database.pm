@@ -36,6 +36,7 @@ use DBI;
 use base qw(App::LedgerSMB::Admin::Database);
 
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Database::Loadorder;
 use base('LedgerSMB');
 use DateTime;
 use Log::Log4perl;
