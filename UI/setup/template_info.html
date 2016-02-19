@@ -1,6 +1,7 @@
 <?lsmb INCLUDE "ui-header.html";
     PROCESS "elements.html"
 ?><body class="<?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="post">
 <div class="listtop"><?lsmb text('Select Templates to Load') ?></div>
@@ -24,5 +25,6 @@ PROCESS select element_data = {
      value = "load_templates"
       text = text('Load Templates') #'
 } ?>
+</div>
 </body>
 </html>

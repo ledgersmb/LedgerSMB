@@ -293,19 +293,19 @@ all.
 
 has 'approved' => (is => 'rw', isa => 'Maybe[Bool]');
 
-=item amount_from
+=item from_amount
 
-The lowest value that can match, amount-wise.
+The lowest value that can match, amount-wise for the line item.
 
-=item amount_to
+=item to_amount
 
-The highest value that can match, amount-wise.
+The highest value that can match, amount-wise for the line item.
 
 =cut
 
-has 'amount_from' => (is => 'rw', coerce => 1, 
+has 'from_amount' => (is => 'rw', coerce => 1, 
                      isa => 'LedgerSMB::Moose::Number');
-has 'amount_to' => (is => 'rw', coerce => 1, 
+has 'to_amount' => (is => 'rw', coerce => 1, 
                    isa => 'LedgerSMB::Moose::Number');
 
 =item business_units
