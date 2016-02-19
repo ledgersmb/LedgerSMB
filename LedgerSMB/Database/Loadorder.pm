@@ -48,7 +48,7 @@ sub scripts {
     my $loadorder;
     local $!;
     open $loadorder, '<', $self->{_path};
-    die 'FileError: ' . $! unless $loadorder;
+    die 'FileError: ' . $! if tell($loadorder) == -1;
     $reload_subsequent = 0;
     my @scripts =
        map { $self->_process_script($_)}

@@ -76,7 +76,7 @@ sub content {
         my $file;
         local $!;
         open $file, '<', $self->path;
-        die 'FileError: ' . $! unless $file;
+        die 'FileError: ' . $! if tell($file) == -1;
         binmode $file, ':utf8';
         $self->{_content} = join '', <$file>;
         close $file;
