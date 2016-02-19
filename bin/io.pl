@@ -247,7 +247,9 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     print qq|
   <tr>
     <td>
-      <table width=100%>
+      <table width=100% id="invoice-lines"
+                        data-dojo-type="lsmb/InvoiceLines"
+                        data-dojo-attach-point="lines">
     <tr class=listheading>|;
 
     for (@column_index) { print "\n$column_data{$_}" }
@@ -337,6 +339,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                             $desc_disabled size=48
                             data-dojo-props="linenum: $i"
                             style="width:100%;"
+                            rows="1"
                             >$form->{"description_$i"}</div></td>|;
         }
 
@@ -400,8 +403,11 @@ $column_data{runningnumber} =
         if ($form->{"partnumber_$i"}){
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"}
-                 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" value="$i"
-                         name="delete_line">X</button>
+                 <button data-dojo-type="dijit/form/Button"><span>X</span>
+<script type="dojo/on" data-dojo-event="click">
+require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
+</script>
+</button>
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
@@ -435,6 +441,8 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
         $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
         $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
+<tbody data-dojo-type="lsmb/InvoiceLine"
+ id="line-$i">
         <tr valign=top>|;
 
         for (@column_index) {
@@ -505,6 +513,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value=
     <tr>
       <td colspan=$colspan><hr size=1 noshade></td>
     </tr>
+</tbody>
 |;
 
         $skunumber = "";

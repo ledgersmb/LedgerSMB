@@ -385,7 +385,10 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post"
+      id="invoice"
+      data-dojo-type="lsmb/Invoice"
+      action="$form->{script}" >
 |;
 
     $form->hide_form(
