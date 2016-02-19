@@ -435,7 +435,7 @@ sub upgrade_modules {
                 })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->connect({PrintError=>0}); 
+    my $dbh = $self->connect({PrintError=>0});
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );

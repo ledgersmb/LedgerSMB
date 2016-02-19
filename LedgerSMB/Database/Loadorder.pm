@@ -112,7 +112,6 @@ sub init_if_needed {
     my ($self, $dbh) = @_;
     return LedgerSMB::Database::Change::init($dbh);
 }
-    
 
 sub DESTROY {
     my ($self) = @_;
