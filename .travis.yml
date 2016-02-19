@@ -15,8 +15,7 @@ env:
 
 matrix:
   include:
-    # change to 5.22 when that is supported
-    - perl: '5.20'
+    - perl: '5.22'
       addons:
         postgresql: '9.4'
         sauce_connect: true
