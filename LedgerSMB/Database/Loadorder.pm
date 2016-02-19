@@ -64,6 +64,7 @@ sub scripts {
 
 sub _process_script {
     my ($self, $line) = @_;
+    chomp($line);
     my $sigil = '';
     if ($line =~ /^([!^]+)/){
         $sigil = $1 if $1;
@@ -156,7 +157,7 @@ sub apply_all {
     my ($self, $dbh) = @_;
     my $reloading = 0;
     for ($self->scripts){
-        $_->apply if $reloading or not $_->is_applied;
+        $_->apply($dbh) if $reloading or not $_->is_applied($dbh);
     }
 }
 
