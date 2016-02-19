@@ -414,6 +414,7 @@ sub create_and_load(){
     log     => $args->{log},
     errlog  => $args->{errlog},
             });
+    $self->apply_changes();
 }
 
 
@@ -434,7 +435,7 @@ sub upgrade_modules {
                 })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->connect({PrintError=>0});
+    my $dbh = $self->connect({PrintError=>0}); 
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );
@@ -442,6 +443,20 @@ sub upgrade_modules {
         or die "Version not updated.";
 
     return 1;
+}
+
+=head2 apply_changes
+
+Runs fixes if they have not been applied.
+
+=cut
+
+sub apply_changes {
+    my ($self) = @_;
+    my $dbh = $self->connect({PrintError=>0});  # no autocommit!
+    my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+    $loadorder->init_if_needed($dbh);
+    $loadorder->apply_all($dbh);
 }
 
 1;

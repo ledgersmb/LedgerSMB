@@ -97,6 +97,23 @@ sub makeindex {
     close TEMP;
 }
 
+=head2 init_if_needed($dbh)
+
+Initializes the change tracking system if not doe so already.
+
+Initially we only install the schema.  In future versions we may have our own
+changesets to apply.
+
+Returns 1 if applied.  Returns 0 if not.
+
+=cut
+
+sub init_if_needed {
+    my ($self, $dbh) = @_;
+    return LedgerSMB::Database::Change::init($dbh);
+}
+    
+
 sub DESTROY {
     my ($self) = @_;
     unlink $self->path('LOADORDER.idx') if $self->{_locked};
