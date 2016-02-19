@@ -157,7 +157,7 @@ sub apply_all {
     my ($self, $dbh) = @_;
     my $reloading = 0;
     for ($self->scripts){
-        $_->apply($dbh) if $reloading or not $_->is_applied($dbh);
+        $_->apply($dbh) if ($reloading or not $_->is_applied($dbh));
     }
 }
 

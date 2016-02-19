@@ -137,6 +137,8 @@ Useful for db updates so you can update version numbers or the like.
 
 sub content_wrapped {
     my ($self, $before, $after) = $_;
+    $before //= "";
+    $after //= "";
     my $content = $self->content(1); # raw
     return $self->_wrap_transaction(
         _wrap($content, $before, $after)
@@ -184,7 +186,7 @@ sub apply {
     my $after;
     my $sha = $dbh->quote($self->sha);
     my $path = $dbh->quote($self->path);
-    if ($self->is_applied){
+    if ($self->is_applied($dbh)){
         $after = "
               UPDATE db_patches
                      SET last_updated = now()
@@ -200,6 +202,7 @@ sub apply {
        INSERT INTO db_patch_log (when_applied, path, sha, success)
        values (now(), $path, $sha, true);
     ";
+    warn $self->content_wrapped($before, $after);
     my $success = $dbh->do($self->content_wrapped($before, $after));
     unless ($success) {
         $dbh->prepare("
@@ -231,7 +234,7 @@ sub init {
               or (error is not null and not success))
     );
     CREATE TABLE db_patches (
-       sha primary key,
+       sha text primary key,
        path text not null,
        last_updated timestamp not null
     );
@@ -250,8 +253,8 @@ sub needs_init {
     my $rows = $dbh->prepare(
        "select 1 from db_patches"
     )->execute();
-    return 1 if $rows;
-    return 0;
+    return 0 if $rows;
+    return 1;
 }
 
 =head1 TODO
