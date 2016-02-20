@@ -912,28 +912,8 @@ sub assembly_item {
     my $where = "p.obsolete = '0'";
 
     if ( $form->{"partnumber_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"partnumber_$i"} ) );
-        $where .= " AND lower(p.partnumber) LIKE $var";
-    }
-    if ( $form->{"description_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"description_$i"} ) );
-        $where .= " AND lower(p.description) LIKE $var";
-    }
-    if ( $form->{"partsgroup_$i"} ne "" ) {
-        ( $null, $var ) = split /--/, $form->{"partsgroup_$i"};
-        $var = $dbh->quote($var);
-        $where .= qq| AND p.partsgroup_id = $var|;
-    }
-
-    if ( $form->{id} ) {
-        $where .= " AND p.id != " . $dbh->quote( $form->{id} );
-    }
-
-    if ( $form->{"description_$i"} ne "" ) {
-        $where .= " ORDER BY p.description";
-    }
-    else {
-        $where .= " ORDER BY p.partnumber";
+        $var = $dbh->quote( $form->{"partnumber_$i"} );
+        $where .= " AND p.partnumber = $var";
     }
 
     my $query = qq|

@@ -1328,9 +1328,9 @@ sub assembly_row {
             $column_data{qty} =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="linenum: $i"></td>|;
             $column_data{description} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=30 value="$form->{"description_$i"}"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 value="$form->{"description_$i"}" data-dojo-props="linenum: $i"></td>|;
             $column_data{partsgroup} =
 qq|<td><select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 
@@ -1467,33 +1467,24 @@ sub update {
             if ($rows) {
                 $form->{"adj_$i"} = 1;
 
-                if ( $rows > 1 ) {
-                    $form->{makemodel_rows}--;
-                    $form->{customer_rows}--;
-                    &select_item;
-                    $form->finalize_request();
+                $form->{"qty_$i"} = 1;
+                $form->{"adj_$i"} = 1;
+                for (qw(partnumber description unit)) {
+                    $form->{item_list}[$i]{$_} =
+                        $form->quote( $form->{item_list}[$i]{$_} );
                 }
-                else {
-                    $form->{"qty_$i"} = 1;
-                    $form->{"adj_$i"} = 1;
-                    for (qw(partnumber description unit)) {
-                        $form->{item_list}[$i]{$_} =
-                          $form->quote( $form->{item_list}[$i]{$_} );
-                    }
-                    for ( keys %{ $form->{item_list}[0] } ) {
-                        $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
-                    }
-                    if ( $form->{item_list}[0]{partsgroup_id} ) {
-                        $form->{"partsgroup_$i"} =
-qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;
-                    }
-
-                    $form->{"runningnumber_$i"} = $form->{assembly_rows};
-                    $form->{assembly_rows}++;
-
-                    &check_form;
-
+                for ( keys %{ $form->{item_list}[0] } ) {
+                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
                 }
+                if ( $form->{item_list}[0]{partsgroup_id} ) {
+                    $form->{"partsgroup_$i"} =
+                        qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;
+                }
+
+                $form->{"runningnumber_$i"} = $form->{assembly_rows};
+                $form->{assembly_rows}++;
+
+                &check_form;
 
             }
             else {
