@@ -136,12 +136,11 @@ Useful for db updates so you can update version numbers or the like.
 =cut
 
 sub content_wrapped {
-    my ($self, $before, $after) = $_;
+    my ($self, $before, $after) = @_;
     $before //= "";
     $after //= "";
-    my $content = $self->content(1); # raw
     return $self->_wrap_transaction(
-        _wrap($content, $before, $after)
+        _wrap($self->content(1), $before, $after)
     );
 }
 
@@ -202,8 +201,8 @@ sub apply {
        INSERT INTO db_patch_log (when_applied, path, sha, success)
        values (now(), $path, $sha, true);
     ";
-    warn $self->content_wrapped($before, $after);
     my $success = $dbh->do($self->content_wrapped($before, $after));
+    warn "$DBI::state: $DBI::errstr";
     unless ($success) {
         $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, success, error)
