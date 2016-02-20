@@ -454,7 +454,7 @@ Runs fixes if they have not been applied.
 
 sub apply_changes {
     my ($self) = @_;
-    my $dbh = $self->connect({PrintError=>0, AutoCommit => 1}); 
+    my $dbh = $self->connect({PrintError=>0, AutoCommit => 0}); 
     my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);

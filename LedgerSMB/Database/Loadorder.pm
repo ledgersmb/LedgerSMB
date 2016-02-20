@@ -158,6 +158,7 @@ sub apply_all {
     my $reloading = 0;
     for ($self->scripts){
         $_->apply($dbh) if ($reloading or not $_->is_applied($dbh));
+        $reloading ||= $_->{properties}->{reload_subsequent};
     }
 }
 

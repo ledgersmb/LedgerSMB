@@ -181,6 +181,7 @@ Applies the current file to the db in the current dbh.
 
 sub apply {
     my ($self, $dbh) = @_;
+    my $need_commit = _need_commit($dbh);
     my $before = "";
     my $after;
     my $sha = $dbh->quote($self->sha);
@@ -197,20 +198,25 @@ sub apply {
            VALUES ($sha, $path, now());
         ";
     }
-    $after .= "
-       INSERT INTO db_patch_log (when_applied, path, sha, success)
-       values (now(), $path, $sha, true);
-    ";
-    my $success = $dbh->do($self->content_wrapped($before, $after));
-    warn "$DBI::state: $DBI::errstr";
-    unless ($success) {
-        $dbh->prepare("
-            INSERT INTO db_patch_log(when_applied, path, sha, success, error)
-            VALUES(now(), $path, $sha, false, ?)
-        ")->execute($dbh->errstr);
-    };
+    if ($self->{no_transactions}){
+        $dbh->do($after);
+        $after = "";
+        $dbh->commit if $need_commit;
+    }
+    $dbh->do($self->content_wrapped($before, $after));
+    $dbh->commit if $need_commit;
+    warn "$dbh->state: $dbh->errstr";
+    $dbh->prepare("
+            INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
+            VALUES(now(), $path, $sha, ?, ?)
+    ")->execute($dbh->state, $dbh->errstr);
+    $dbh->commit if $need_commit;
 }
 
+sub _need_commit{
+    my ($dbh) = @_;
+    1; # todo, detect existing transactions and autocommit status
+}
 =head1 Package Functions
 
 =head2 init($dbh)
@@ -227,10 +233,8 @@ sub init {
        when_applied timestamp primary key,
        path text NOT NULL,
        sha text NOT NULL,
-       success bool NOT NULL,
-       error text,
-       CHECK ((success and error is null)
-              or (error is not null and not success))
+       sqlstate text not null,
+       error text
     );
     CREATE TABLE db_patches (
        sha text primary key,
