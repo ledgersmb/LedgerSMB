@@ -20,6 +20,6 @@ require(
                                 'changed', function() {
                                     self._update();
                                 }));
-                }, // startup
+                } // startup
             });
     });

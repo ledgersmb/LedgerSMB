@@ -406,7 +406,7 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
 |;
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
@@ -513,15 +513,15 @@ function on_return_submit(event){
           </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
               </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -911,7 +911,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id
         $column_data{"AP_paid_$i"} =
 qq|<td align=center><select data-dojo-type="dijit/form/Select" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
         $column_data{"source_$i"} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{"memo_$i"} =
