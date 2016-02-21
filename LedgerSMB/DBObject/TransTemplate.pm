@@ -11,7 +11,7 @@ sub save {
    $self->{is_template} = '1';
    $self->{approved} = 0;
    $self->{reference} = $self->{invnumber} if $self->{invnumber};
-   my ($ref) = $self->exec_method(funcname => 'journal__add');
+   my ($ref) = $self->call_dbmethod(funcname => 'journal__add');
    $self->merge($ref);
    $self->{journal_id} = $self->{id};
    for my $line (@{$self->{journal_lines}}){
