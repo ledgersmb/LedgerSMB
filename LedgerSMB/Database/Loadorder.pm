@@ -140,7 +140,6 @@ completes.
 
 sub apply_all {
     my ($self, $dbh) = @_;
-    LedgerSMB::Database::Change::init($dbh);
     _lock($dbh);
     for ($self->scripts){
         $_->apply($dbh) unless $_->is_applied($dbh);
