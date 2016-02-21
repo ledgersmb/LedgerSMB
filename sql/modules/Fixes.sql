@@ -349,3 +349,10 @@ group by c.id, c.accno, coalesce(at.description, c.description), c.category,
          c.heading, c.gifi_accno, c.contra, c.tax;
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE journal_entry ALTER COLUMN effective_start set null;
+ALTER TABLE journal_entry ALTER COLUMN effective_end set null;
+ALTER TABLE journal_entry ALTER COLUMN reference set null;
+ALTER TABLE journal_entry ADD CONSTRAINT CHECK(is_template or reference is not null);
+COMMIT;
