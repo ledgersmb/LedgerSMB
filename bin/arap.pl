@@ -185,7 +185,7 @@ sub select_name {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -569,7 +569,7 @@ sub schedule {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
 
 <table width=100%>
   <tr class=listtop>

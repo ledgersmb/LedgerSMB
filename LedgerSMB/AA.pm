@@ -742,18 +742,6 @@ sub post_transaction {
 
     # save printed and queued
     $form->save_status($dbh);
-
-    my %audittrail = (
-        tablename => $table,
-        reference => $form->{invnumber},
-        formname  => 'transaction',
-        action    => 'posted',
-        id        => $form->{id}
-    );
-
-    #$form->audittrail( $dbh, "", \%audittrail );
-
-
 }
 
 =item get_files

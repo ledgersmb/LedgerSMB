@@ -847,35 +847,6 @@ sub sort_order {
     $sortorder;
 }
 
-=item $form->convert_date($date, $myconfig)
-
-This takes a date in YYYY-MM-DD format and returns it in the format of the user.
-
-=cut
-
-sub convert_date {
-    my $self = shift @_;
-    my ($date, $myconfig) = @_;
-    my $newdate;
-    my $format = $myconfig->{dateformat};
-    my ($YYYY, $MM, $DD) = split /-/, $date;
-    $format =~ /(\w+)(\W)(\w+)\W(\w+)/;
-    my $first  = $1;
-    my $sep    = $2;
-    my $second = $3;
-    my $third  = $4;
-
-    my @elems;
-    for my $pos ($first, $second, $third){
-        push @elems, $YYYY if uc($pos) eq 'YYYY';
-        push @elems, $MM if uc($pos) eq 'MM';
-        push @elems, $DD if uc($pos) eq 'DD';
-    }
-    $newdate = "$elems[0]$sep$elems[1]$sep$elems[2]";
-
-    return $newdate;
-}
-
 =item $form->format_amount($myconfig, $amount, $places, $dash);
 
 Returns $amount as formatted in the form specified by $form->{numberformat}.
@@ -1004,33 +975,6 @@ sub db_parse_numeric {
 
     }
     return ($hashref || $arrayref);
-}
-
-=item $form->get_my_emp_num($myconfig);
-
-Function to get the employee number of the user $form->{login}.  $myconfig is
-only used to create %myconfig.  $form->{emp_num} is set to the retrieved value.
-
-This function is currently (2007-08-02) only used by pos.conf.pl.
-
-=cut
-
-sub get_my_emp_num {
-    my ( $self, $myconfig) = @_;
-    my %myconfig = %{$myconfig};
-    my $dbh = $self->{dbh};
-
-    # we got a connection, check the version
-    my $query = qq|
-        SELECT employeenumber FROM entity_employee
-         WHERE entity_id =
-            (SELECT entity_id FROM users WHERE username = ?)|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $self->{login} ) || $self->dberror($query);
-
-    my ($id) = $sth->fetchrow_array;
-    $sth->finish;
-    $self->{'emp_num'} = $id;
 }
 
 =item $form->format_string(@fields);
@@ -3901,36 +3845,6 @@ sub from_to {
     return ( $fromdate, "$t[5]-$t[4]-$t[3]" );
 }
 
-=item $form->audittrail($dbh, $myconfig, $audittrail);
-
-Audit trail has been replaced by triggers which work on a very similar manner.
-
-=cut
-
-sub audittrail {
-    return;
-}
-
-
-
-
-#dummy function used to see all the keys of form
-
-sub testdisplayform
-{
-
-    my $self=shift;
-
-    foreach(keys(%$self))
-    {
-
-     print STDERR "testdisplay $_  => $self->{$_}\n" if ($_ eq "customer_id");
-
-    }
-
-
-
-}
 
 # New block of code to get control code from batch table
 

@@ -58,43 +58,6 @@ sub add_cogs {
     $sth->execute($form->{id}) || $form->dberror($query);
 }
 
-sub getposlines {
-    my ( $self, $myconfig, $form ) = @_;
-    %pos_config  = %{ $form->{pos_config} };
-    %pos_sources = %{ $form->{pos_sources} };
-    my $sources = '';
-    foreach $key ( keys %pos_sources ) {
-        $sources .= ", '$key'";
-    }
-    $sources =~ s/^,\s*//;
-    my $dbh = $form->{dbh};
-
-    my $query = qq|
-          SELECT sum(amount) AS amount, memo FROM acc_trans
-           WHERE chart_id = (SELECT id FROM account
-                            WHERE accno = ?)
-                 AND transdate = date 'NOW' AND cleared IS NOT TRUE
-        GROUP BY memo|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-        push @{ $form->{TB} }, $ref;
-    }
-    $sth->finish;
-    $query = qq|
-        SELECT sum(amount) AS sum FROM acc_trans
-         WHERE chart_id =  (SELECT id FROM account WHERE accno = ?)
-      AND transdate = date 'NOW'
-          AND cleared IS NOT TRUE|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-    $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-    $form->{sum} = $ref->{sum};
-    $sth->finish;
-}
-
 =over
 
 =item get_files
@@ -115,27 +78,6 @@ sub get_files {
                   {ref_key => $form->{id}, file_class => 1}
      );
 
-}
-
-sub clear_till {
-    my ( $self, $myconfig, $form ) = @_;
-    %pos_config  = %{ $form->{pos_config} };
-    %pos_sources = %{ $form->{pos_sources} };
-    my $sources = '';
-    foreach $key ( keys %pos_sources ) {
-        $sources .= ", '$key'";
-    }
-    $sources =~ s/^,\s//;
-    my $dbh   = $form->{dbh};
-    my $query = qq|
-        UPDATE acc_trans
-        SET cleared = TRUE
-        WHERE chart_id =
-            (SELECT id FROM account WHERE accno = ?)
-          AND transdate = date 'NOW'|;
-
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
 }
 
 sub invoice_details {
@@ -1515,17 +1457,6 @@ sub post_invoice {
     if (!$form->{separate_duties}){
         $self->add_cogs($form);
     }
-
-    my %audittrail = (
-        tablename => 'ar',
-        reference => $form->{invnumber},
-        formname  => $form->{type},
-        action    => 'posted',
-        id        => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-
 }
 
 sub retrieve_invoice {

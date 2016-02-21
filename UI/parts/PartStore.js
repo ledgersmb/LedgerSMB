@@ -21,7 +21,8 @@ define([
     }).then(
         function (results) {
           array.forEach(results, function(item){
-            item.text = item.partnumber + '--' + item.description;
+              item.text = item.partnumber;
+              item.label = item.partnumber + '--' + item.description;
             store.put(item);
           });
          store.emitter.emit("accountstore_loadcomplete",{bubbles: true,cancelable: false});

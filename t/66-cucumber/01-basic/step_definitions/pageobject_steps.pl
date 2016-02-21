@@ -234,6 +234,12 @@ my %screens = (
     'Quotation search' => 'PageObject::App::Search::Quotation',
     'RFQ search' => 'PageObject::App::Search::RFQ',
     'GL search' => 'PageObject::App::Search::GL',
+    'part entry' => 'PageObject::App::Parts::Part',
+    'service entry' => 'PageObject::App::Parts::Service',
+    'assembly entry' => 'PageObject::App::Parts::Assembly',
+    'overhead entry' => 'PageObject::App::Parts::Overhead',
+    'system defaults' => 'PageObject::App::System::Defaults',
+    'system taxes' => 'PageObject::App::System::Taxes',
     );
 
 Then qr/I should see the (.*) screen/, sub {
