@@ -6,6 +6,9 @@ sub save {
    my $self = shift @_;
    $self->{is_template} = '1';
    $self->{approved} = 0;
+   $self->{journal} = 1; # default gl
+   $self->{journal} = 2 if $self->{arap} eq 'ar';
+   $self->{journal} = 3 if $self->{arap} eq 'ap';
    if (not defined $self->{curr}){
       my ($curr) = $self->exec_method(funcname => 'defaults_get_defaultcurrency');
       ($self->{curr}) = values(%$curr); 
