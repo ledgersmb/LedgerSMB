@@ -4,7 +4,7 @@ define(['dojo/_base/declare',
         'dojo/on',
         'dijit/_WidgetBase'],
        function(declare, dom, style, on, _WidgetBase) {
-           return declare('MaximizeMinimize', [_WidgetBase], {
+           return declare('lsmb/MaximizeMinimize', [_WidgetBase], {
                state: 'min',
                stateData: {
                    "max": {
@@ -39,6 +39,6 @@ define(['dojo/_base/declare',
                        on(domNode, 'click', function(){self.toggle();})
                    );
                    this.setState(this.state);
-               },
+               }
            });
        });

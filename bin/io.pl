@@ -366,7 +366,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $delivery = qq|
           <td colspan=2 nowrap>
              <b>${$delvar}</b>
-             <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
+             <input class="date" data-dojo-type="lsmb/DateTextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
           </td>
 |;
 
@@ -587,7 +587,7 @@ sub new_item {
         print qq|
 <h4>| . $locale->text('What type of item is this?') . qq|</h4>
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action=ic.pl>
+<form method="post" data-dojo-type="lsmb/Form" action=ic.pl>
 
 <p>
 
@@ -1762,7 +1762,7 @@ sub ship_to {
     print qq|
                <body class="lsmb $form->{dojo_theme}">
 
-<form name="form" method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
+<form name="form" method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100% cellspacing="0" cellpadding="0" border="0">
     <tr>

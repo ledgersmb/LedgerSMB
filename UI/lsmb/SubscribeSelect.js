@@ -1,12 +1,16 @@
 define(['dojo/_base/declare',
         'dojo/on',
         'dojo/topic',
-        'dijit/form/CheckBox'],
-       function(declare, on, topic, CheckBox) {
-           return declare('SubscribeCheckBox', [CheckBox], {
+        'dijit/form/Select'],
+       function(declare, on, topic, Select) {
+           return declare('lsmb/SubscribeSelect', [Select], {
                topic: "",
+               topicMap: {},
                update: function(targetValue) {
-                   this.set('checked', targetValue);
+                   var newValue = this.topicMap[targetValue];
+                   if (newValue) {
+                       this.set('value', newValue);
+                   }
                },
                postCreate: function() {
                    var self = this;
@@ -17,6 +21,6 @@ define(['dojo/_base/declare',
                            self.update(targetValue);
                        })
                    );
-               },
+               }
            });
        });

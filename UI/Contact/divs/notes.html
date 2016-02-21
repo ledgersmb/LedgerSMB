@@ -4,7 +4,7 @@
      <?lsmb IF request.target_div == 'notes_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
 <div class="listtop"><?lsmb text('Notes') ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "target_div"
@@ -25,7 +25,7 @@
 		name="credit_id" 
 		value=credit_act.id
 	} ?>
-<div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
+<div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 <div class="input">
    <?lsmb PROCESS input element_data = {
       title = text('Subject'),

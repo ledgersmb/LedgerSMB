@@ -3,7 +3,7 @@ define([
     'dojo/_base/declare'
     ],
     function(DateTextBox, declare) {
-      return declare('lsmb/lib/DateTextBox',
+      return declare('lsmb/DateTextBox',
         [DateTextBox],
         {
           postMixInProperties: function() {

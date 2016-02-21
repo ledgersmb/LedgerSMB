@@ -6,11 +6,11 @@ define([
     'dojo/dom-attr',
     'dojo/dom-form',
     'dojo/query',
-    'dijit/registry',
+    'dijit/registry'
     ],
        function(Form, declare, event, on, domattr, domform,
                 query, registry) {
-           return declare('lsmb/lib/Form',
+           return declare('lsmb/Form',
                           [Form],
               {
                   clickedAction: null,

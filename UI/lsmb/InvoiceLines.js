@@ -13,6 +13,6 @@ require(
                     
                     this.emit('changed',
                               { action: "removed" });
-                }, // removeLine
+                } // removeLine
             });
     });

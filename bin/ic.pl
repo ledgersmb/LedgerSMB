@@ -722,7 +722,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
 <body class="lsmb $form->{dojo_theme}">
 | . $form->open_status_div . qq|
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -778,7 +778,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         <table width="100%">
           <tr>
         <th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-        <td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/lib/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>
+        <td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>
           </tr>
           $sellprice
           $lastcost
@@ -934,7 +934,7 @@ sub form_footer {
     print qq|
 </form> |;
     if ($form->{id}){
-        print qq|<form data-dojo-type="lsmb/lib/Form" action="pnl.pl" method="GET">
+        print qq|<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET">
         <input type="hidden" name="id" value="$form->{id}">
         <input type="hidden" name="pnl_type" value="product">
         <table width="100%">
@@ -1190,8 +1190,8 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
           . qq|></td>
       $currency
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
     </tr>
 |;
     }
@@ -1685,7 +1685,7 @@ sub select_name {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=vr value=$vr>
 
@@ -2002,7 +2002,7 @@ sub stock_assembly {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width="100%">
   <tr>
@@ -2109,7 +2109,7 @@ sub list_assemblies {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>

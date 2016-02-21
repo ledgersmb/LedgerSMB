@@ -5,7 +5,7 @@ define(['dojo/_base/declare',
         'dojo/topic',
         'dijit/_WidgetBase'],
        function(declare, dom, style, on, topic, _WidgetBase) {
-           return declare('SubscribeShowHide', [_WidgetBase], {
+           return declare('lsmb/SubscribeShowHide', [_WidgetBase], {
                topic: "",
                showValues: null,
                hideValues: null,
@@ -38,6 +38,6 @@ define(['dojo/_base/declare',
                            self.update(targetValue);
                        })
                    );
-               },
+               }
            });
        });

@@ -11,7 +11,7 @@
 <body class="login, <?lsmb dojo_theme ?>" id="login-body">
 	<br /><br />
 	<center>
-		<form data-dojo-type="lsmb/lib/Form" method="post" action="login.pl" name="login"
+		<form data-dojo-type="lsmb/Form" method="post" action="login.pl" name="login"
 			onsubmit="return submit_form()">
 		<?lsmb INCLUDE input element_data = {
 			type = "hidden",
@@ -28,7 +28,7 @@
 				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
 				<h1 class="login" align="center"><?lsmb text("LedgerSMB [_1]", VERSION) ?></h1>
 				<div align="center">
-					<div id="company_div" data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
+					<div id="company_div" data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
                                                <div class="noshow">
                                                  <div>
                                                   <?lsmb PROCESS input

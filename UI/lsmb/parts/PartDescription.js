@@ -1,5 +1,5 @@
 define([
-    'dijit/form/Textarea',
+    'dojo/dijit/form/Textarea',
     'dojo/_base/declare',
     'dojo/topic',
     ], function(
@@ -18,6 +18,6 @@ define([
                         function(selected) {
                             self.set('value',selected.description);
                         }));
-            }, // startup
+            } // startup
         });
     });

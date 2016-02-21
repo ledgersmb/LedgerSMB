@@ -3,7 +3,7 @@ define(['dojo/_base/declare',
         'dojo/topic',
         'dijit/form/CheckBox'],
        function(declare, on, topic, CheckBox) {
-           return declare('PublishCheckbox', [CheckBox], {
+           return declare('lsmb/PublishCheckbox', [CheckBox], {
                topic: "",
                publish: function(targetValue) {
                    topic.publish(this.topic, targetValue);
@@ -16,6 +16,6 @@ define(['dojo/_base/declare',
                               self.publish(targetValue);
                           })
                    );
-               },
+               }
            });
        });

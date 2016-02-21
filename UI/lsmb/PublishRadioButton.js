@@ -3,7 +3,7 @@ define(['dojo/_base/declare',
         'dojo/topic',
         'dijit/form/RadioButton'],
        function(declare, on, topic, RadioButton) {
-           return declare('PublishRadioButton', [RadioButton], {
+           return declare('lsmb/PublishRadioButton', [RadioButton], {
                topic: "",
                publish: function() {
                    topic.publish(this.topic, this.value);
@@ -16,6 +16,6 @@ define(['dojo/_base/declare',
                               self.publish();
                           })
                    );
-               },
+               }
            });
        });
