@@ -27,21 +27,17 @@ CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric,
 in_cleared bool, in_memo text, in_business_units int[]
 ) RETURNS journal_line AS $$
-DECLARE retval journal_line;
-BEGIN
-	INSERT INTO journal_line(account_id, journal_id, amount, cleared, memo)
+	INSERT INTO journal_line(account_id, journal_id, amount, cleared)
 	VALUES (in_account_id, in_journal_id, in_amount,
-		coalesce(in_cleared, false), in_memo);
+		coalesce(in_cleared, false));
 
         INSERT INTO business_unit_jl(entry_id, bu_class, bu_id)
-        SELECT currval('journal_line_line_id_seq'), business_unit_class, bu
+        SELECT currval('journal_line_id_seq'), class_id, id
           FROM business_unit
          WHERE id = any(in_business_units);
 
-	SELECT * INTO retval FROM journal_line where line_id = currval('journal_line_line_id_seq');
-	return retval;
-END;
-$$ LANGUAGE PLPGSQL;
+	SELECT * FROM journal_line where id = currval('journal_line_id_seq');
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION journal__validate_entry(in_id int) RETURNS bool AS
 $$

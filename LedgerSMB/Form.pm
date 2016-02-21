@@ -731,8 +731,8 @@ sub _redirect {
     }
 
     require "bin/$script";
-
-    &{ $form->{action} };
+    no strict 'refs';
+    &{ "lsmb_legacy::$form->{action}" };
 
 }
 
