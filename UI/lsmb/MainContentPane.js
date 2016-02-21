@@ -1,5 +1,5 @@
 define([
-    'dijit/layout/ContentPane',
+    '../lib/dojo/dijit/layout/ContentPane',
     'dojo/_base/declare',
     'dojo/_base/event',
     'dijit/registry',

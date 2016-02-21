@@ -1,5 +1,5 @@
 define([
-    'dijit/form/DateTextBox',
+    '../lib/dojo/dijit/form/DateTextBox',
     'dojo/_base/declare'
     ],
     function(DateTextBox, declare) {

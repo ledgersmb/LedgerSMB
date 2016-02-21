@@ -1,16 +1,12 @@
-define(['dojo/_base/declare',
+define(['../lib/dojo/dojo/_base/declare',
         'dojo/on',
         'dojo/topic',
-        'dijit/form/Select'],
-       function(declare, on, topic, Select) {
-           return declare('SubscribeSelect', [Select], {
+        'dijit/form/CheckBox'],
+       function(declare, on, topic, CheckBox) {
+           return declare('SubscribeCheckBox', [CheckBox], {
                topic: "",
-               topicMap: {},
                update: function(targetValue) {
-                   var newValue = this.topicMap[targetValue];
-                   if (newValue) {
-                       this.set('value', newValue);
-                   }
+                   this.set('checked', targetValue);
                },
                postCreate: function() {
                    var self = this;

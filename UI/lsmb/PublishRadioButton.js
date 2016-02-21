@@ -1,4 +1,4 @@
-define(['dojo/_base/declare',
+define(['../lib/dojo/dojo/_base/declare',
         'dojo/on',
         'dojo/topic',
         'dijit/form/RadioButton'],

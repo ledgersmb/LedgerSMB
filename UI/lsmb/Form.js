@@ -1,5 +1,5 @@
 define([
-    'dijit/form/Form',
+    '../lib/dojo/dijit/form/Form',
     'dojo/_base/declare',
     'dojo/_base/event',
     'dojo/on',
