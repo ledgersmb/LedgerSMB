@@ -41,7 +41,6 @@ Returns a list of LedgerSMB::Database::Change objects
 
 =cut
 
-my $reload_subsequent;
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
@@ -50,7 +49,6 @@ sub scripts {
     local $@;
     open(LOAD, '<', $self->{_path}) or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
-    $reload_subsequent = 0;
     my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
@@ -58,7 +56,6 @@ sub scripts {
        <LOAD>;
     close LOAD;
     $self->{_scripts} = \@scripts;
-    $reload_subsequent = 0;
     return @scripts;
 }
 
@@ -66,16 +63,14 @@ sub _process_script {
     my ($self, $line) = @_;
     chomp($line);
     my $sigil = '';
-    if ($line =~ /^([!^]+)/){
+    if ($line =~ /^(!+)/){
         $sigil = $1 if $1;
         $line =~ s/^\Q$sigil\E//;
     }
-    $reload_subsequent ||= ( $sigil =~ /\Q^\E/ );
     my $no_transactions = ( $sigil =~ /\Q!\E/ );
     return LedgerSMB::Database::Change->new(
         $self->path($line),
         {
-            reload_subsequent => $reload_subsequent,
             no_transactions => $no_transactions
         },
     );
@@ -155,10 +150,8 @@ Applies all files in the loadorder, with tracking info
 
 sub apply_all {
     my ($self, $dbh) = @_;
-    my $reloading = 0;
     for ($self->scripts){
-        $_->apply($dbh) if ($reloading or not $_->is_applied($dbh));
-        $reloading ||= $_->{properties}->{reload_subsequent};
+        $_->apply($dbh) unless $_->is_applied($dbh);
     }
 }
 

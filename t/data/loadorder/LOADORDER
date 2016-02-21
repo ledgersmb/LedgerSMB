@@ -5,9 +5,9 @@
 
 test1.sql
 !test2.sql
-^test1.sql
+test1.sql
 
-!^test2.sql
+!test2.sql
     
-^!test1.sql
+!test1.sql
 test2.sql # trailing comment
