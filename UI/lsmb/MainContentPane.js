@@ -1,5 +1,5 @@
 define([
-    '../lib/dojo/dijit/layout/ContentPane',
+    'dijit/layout/ContentPane',
     'dojo/_base/declare',
     'dojo/_base/event',
     'dijit/registry',
@@ -10,11 +10,11 @@ define([
     'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/query',
-    'dojo/dom-class',
+    'dojo/dom-class'
     ],
        function(ContentPane, declare, event, registry, style,
                 lang, Promise, on, all, xhr, query, domClass) {
-           return declare('lsmb/lib/MainContentPane',
+           return declare('lsmb/MainContentPane',
                           [ContentPane],
               {
                   last_page: null,

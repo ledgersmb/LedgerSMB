@@ -1,5 +1,5 @@
 
-require(['../lib/dojo/dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
+require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
          'dojo/_base/event', 'dojo/hash', 'dojo/topic', 'dojo/dom-class',
          'dojo/domReady!'],
         function(parser, query, on, registry, event, hash, topic, domClass) {
@@ -37,7 +37,7 @@ require(['../lib/dojo/dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
 
 
 require([
-    '../lib/dojo/dojo/on', 'dojo/query', 'dojo/dom-class', 'dojo/_base/event',
+    'dojo/on', 'dojo/query', 'dojo/dom-class', 'dojo/_base/event',
     'dojo/domReady!'],
         function (on, query, domclass, event) {
             query('a.t-submenu').forEach(function(node){

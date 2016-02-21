@@ -1,9 +1,9 @@
 define([
-    '../lib/dojo/dijit/form/DateTextBox',
+    'dijit/form/DateTextBox',
     'dojo/_base/declare'
     ],
     function(DateTextBox, declare) {
-      return declare('lsmb/lib/DateTextBox',
+      return declare('lsmb/DateTextBox',
         [DateTextBox],
         {
           postMixInProperties: function() {

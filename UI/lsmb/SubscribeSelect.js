@@ -1,9 +1,9 @@
-define(['../lib/dojo/dojo/_base/declare',
+define(['dojo/_base/declare',
         'dojo/on',
         'dojo/topic',
         'dijit/form/Select'],
        function(declare, on, topic, Select) {
-           return declare('SubscribeSelect', [Select], {
+           return declare('lsmb/SubscribeSelect', [Select], {
                topic: "",
                topicMap: {},
                update: function(targetValue) {
@@ -21,6 +21,6 @@ define(['../lib/dojo/dojo/_base/declare',
                            self.update(targetValue);
                        })
                    );
-               },
+               }
            });
        });

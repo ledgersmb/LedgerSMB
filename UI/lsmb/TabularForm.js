@@ -1,4 +1,4 @@
-/* lsmb/lib/TabularForm
+/* lsmb/TabularForm
  * A tabular-form widget for LedgerSMB with some additional features
  * (loosely) inspired by Twitter Bootstrap(TM).
  *
@@ -60,7 +60,7 @@
  */
 
 define([
-    '../lib/dojo/dojox/layout/TableContainer',
+    'dojox/layout/TableContainer',
     'dojo/dom',
     'dojo/dom-class',
     'dijit/registry',
@@ -73,7 +73,7 @@ define([
     function(TableContainer, dom, cls, registry, cp, query, win, 
              declare, testbox) 
     {
-      return declare('lsmb/lib/TabularForm',
+      return declare('lsmb/TabularForm',
         [TableContainer],
         {
         vertsize: 'mobile',

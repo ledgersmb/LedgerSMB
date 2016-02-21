@@ -2,7 +2,7 @@ require(
     ['dojo/_base/declare',
      'dijit/registry',
      'dojo/on',
-     'lsmb/lib/Form',
+     'lsmb/Form',
      'dijit/_Container',
     ],
     function (declare, registry, on, Form, _Container) {
