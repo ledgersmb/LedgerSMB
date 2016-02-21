@@ -95,31 +95,30 @@ in_recurring bool
 ) RETURNS SETOF journal_search_result AS $$
 DECLARE retval journal_search_result;
 BEGIN
-	FOR retval IN 
-		SELECT j.id, j.source, j.description, j.entry_type, 
-			j.transaction_date, j.approved, 
-			j.is_template, eca.meta_number, 
-			e.name, ec.class, 
+	FOR retval IN
+		SELECT j.id, j.reference , j.description, jn.name,
+			j.post_date , j.approved,
+			j.is_template, eca.meta_number,
+			e.name, ec.class,
                         coalesce(
                           r.startdate + 0, -- r.recurring_interval,
-                          j.transaction_date)
+                          j.post_date )
 		FROM journal_entry j
+                JOIN journal_type jn ON j.journal = j.id
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
-		WHERE (in_reference IS NULL OR in_reference = j.source) AND
+		WHERE (in_reference IS NULL OR in_reference = j.reference) AND
 			(in_description IS NULL 
 				or in_description = j.description) AND
-			(in_entry_type is null or in_entry_type = j.entry_type)
-			and (in_transaction_date is null 
-				or in_transaction_date = j.transaction_date) and
+			(in_entry_type is null or in_entry_type = j.journal)
+			and (in_transaction_date is null
+				or in_transaction_date = j.post_date) and
 			j.approved = coalesce(in_approved, true) and
 			j.is_template = coalesce(in_is_template, false) and
-			(in_department_id is null 
-				or j.department_id = in_department_id) and
-			(in_meta_number is null 
+			(in_meta_number is null
 				or eca.meta_number = in_meta_number) and
 			(in_entity_class is null
 				or eca.entity_class = in_entity_class) AND
