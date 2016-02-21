@@ -12,7 +12,7 @@ sub save {
    $self->{approved} = 0;
    if (not defined $self->{curr}){
       my ($curr) = $self->call_dbmethod(funcname => 'defaults_get_defaultcurrency');
-      ($self->{curr}) = values(%$curr); 
+      ($self->{curr}) = values(%$curr);
    }
    $self->{currency} //= $self->{curr};
    $self->{reference} = $self->{invnumber} if $self->{invnumber};
