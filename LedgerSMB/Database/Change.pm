@@ -262,7 +262,7 @@ sub needs_init {
     my $rows = eval { $dbh->prepare(
        "select 1 from db_patches"
     )->execute(); };
-    $dbh->rollback if $@;
+    $dbh->rollback;
     return 0 if $rows;
     return 1;
 }

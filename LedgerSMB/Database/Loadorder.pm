@@ -149,12 +149,12 @@ sub apply_all {
 
 sub _lock {
     my ($dbh) = @_;
-    $dbh->do("select advisory_lock('db_patches'::regclass::oid, 1)");
+    $dbh->do("select pg_advisory_lock('db_patches'::regclass::oid, 1)");
 }
 
 sub _unlock {
     my ($dbh) = @_;
-    $dbh->do("select advisory_unlock('db_patches'::regclass::oid, 1)");
+    $dbh->do("select pg_advisory_unlock('db_patches'::regclass::oid, 1)");
 }
 
 =head1 COPYRIGHT
