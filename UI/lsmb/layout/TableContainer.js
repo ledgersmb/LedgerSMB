@@ -1,6 +1,6 @@
 // This file is copied from dojox/layout/TableContainer.
 
-define("dojox/layout/TableContainer", ["dojo/_base/kernel", "dojo/_base/lang", "dojo/_base/declare", "dojo/dom-class", "dojo/dom-construct",
+define("lsmb/layout/TableContainer", ["dojo/_base/kernel", "dojo/_base/lang", "dojo/_base/declare", "dojo/dom-class", "dojo/dom-construct",
 		"dojo/_base/array", "dojo/dom-prop", "dojo/dom-style", "dijit/_WidgetBase", "dijit/layout/_LayoutWidget"],
 function(kernel, lang, declare, domClass, domConstruct, arrayUtil, domProp, domStyle, _WidgetBase, _LayoutWidget){
 
