@@ -125,7 +125,7 @@ sub process {
     }
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
     $cleanvars->{dojo_theme} ||= $dojo_theme;
-    $cleanvars->{dojo_built} ||= 1;
+    $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
         $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
 
     if ($parent->{outputfile}) {

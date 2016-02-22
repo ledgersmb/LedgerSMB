@@ -42,8 +42,16 @@ cookie_name = LedgerSMB-1.5
 # left in place.  If the database server is running a different locale, it may
 # need to be changed.  Any partial match on the connection error assumes that
 # the failure to connect was caused by an invalid database request.
-
 no_db_str = database
+
+# This is the Dojo theme to be used by default -- e.g. when no other theme
+# has been selected.
+#dojo_theme = claro
+
+# This is the boolean indicating if dojo's compacted output ("built output")
+# should be used or the development version [1 = 'true' ==> 'built version']
+#dojo_built = 1
+
 
 [environment]
 # If the server can't find applications, append to the path

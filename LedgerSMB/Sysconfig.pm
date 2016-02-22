@@ -107,7 +107,8 @@ my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::Ini
 for my $var (
     qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth
     db_autoupdate force_username_case max_post_size cookie_name
-    return_accno no_db_str tempdir cache_templates fs_cssdir dojo_theme)
+    return_accno no_db_str tempdir cache_templates fs_cssdir dojo_theme
+    dojo_built)
   )
 {
     no strict 'refs';
