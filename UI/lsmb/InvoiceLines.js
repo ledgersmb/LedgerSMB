@@ -2,7 +2,7 @@ require(
     ['dojo/_base/declare',
      'dijit/registry',
      'dijit/_WidgetBase',
-     'dijit/_Container',
+     'dijit/_Container'
     ],
     function (declare, registry, _WidgetBase, _Container) {
         return declare(

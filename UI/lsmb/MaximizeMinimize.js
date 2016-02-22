@@ -10,13 +10,13 @@ define(['dojo/_base/declare',
                    "max": {
                        nextState: 'min',
                        imgURL: 'UI/payments/img/up.gif',
-                       display: 'block',
+                       display: 'block'
                    },
                    "min": {
                        nextState: 'max',
                        imgURL: 'UI/payments/img/down.gif',
-                       display: 'none',
-                   },
+                       display: 'none'
+                   }
                },
                mmNodeId: null,
                setState: function (state) {

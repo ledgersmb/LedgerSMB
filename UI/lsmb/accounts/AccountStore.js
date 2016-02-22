@@ -1,5 +1,5 @@
 define([
-    'dojo/dojo/store/Memory',
+    'dojo/store/Memory',
     'dojo/store/Observable',
     'dojo/request',
     'dojo/_base/array',

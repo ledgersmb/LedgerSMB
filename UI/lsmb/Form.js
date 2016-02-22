@@ -54,7 +54,7 @@ define([
 							     options['data'] = qobj;
 						        registry.byId('maindiv').load_form(url, options);
 						    }
-                  },
+                  }
               });
        }
     );

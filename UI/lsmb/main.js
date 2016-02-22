@@ -49,7 +49,7 @@ require([
                     }
                     else {
                         domclass.replace(parent, 'menu_closed', 'menu_open');
-                    };
+                    }
                 });
             });
         });

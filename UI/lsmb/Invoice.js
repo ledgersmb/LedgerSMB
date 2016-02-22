@@ -3,7 +3,7 @@ require(
      'dijit/registry',
      'dojo/on',
      'lsmb/Form',
-     'dijit/_Container',
+     'dijit/_Container'
     ],
     function (declare, registry, on, Form, _Container) {
         return declare(

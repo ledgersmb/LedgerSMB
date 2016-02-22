@@ -39,7 +39,7 @@ define([
                     topic.publish('/invoice/part-select/'+self.linenum,
                                   self.store.get(newValue));
                 });
-            },
+            }
         });
 
         aspect.around(mySelect, '_announceOption', function(orig) {
