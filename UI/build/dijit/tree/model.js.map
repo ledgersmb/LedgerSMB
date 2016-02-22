@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"model.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,2CAAmD,QAAA,CAASC,CAAT,QAE3CA,EAAA,kCAUGC,QAAAA,IAVH,SAoBGC,QAAAA,CAASC,CAATD,GApBH,iBA4BWE,QAAAA,CAASC,CAATD,GA5BX,aAuCOE,QAAAA,CAASC,CAATD,CAAqBE,CAArBF,GAvCP,QAoDEG,QAAAA,CAASC,CAATD,GApDF,aA6DOE,QAAAA,CAASN,CAATM,GA7DP,UAoEIC,QAAAA,CAASP,CAATO,GApEJ,SA8EGC,QAAAA,CAASC,CAATD,CAAeE,CAAfF,CAAuBG,CAAvBH,CAAoCI,CAApCJ,GA9EH,WA2FKK,QAAAA,CAASC,CAATD,CAAoBE,CAApBF,CAAmCG,CAAnCH,CAAkDI,CAAlDJ,CAAyDF,CAAzDE,CAAsED,CAAtEC,GA3FL,UAgHIK,QAAAA,CAASlB,CAATkB,GAhHJ,kBA2HYC,QAAAA,CAAST,CAATS,CAAiBC,CAAjBD,GA3HZ,EAF2C,CAAnD;",
+"sources":["model.js.uncompressed.js"],
+"names":["define","declare","destroy","getRoot","onItem","mayHaveChildren","item","getChildren","parentItem","onComplete","isItem","something","getIdentity","getLabel","newItem","args","parent","insertIndex","before","pasteItem","childItem","oldParentItem","newParentItem","bCopy","onChange","onChildrenChange","newChildrenList"]
+}

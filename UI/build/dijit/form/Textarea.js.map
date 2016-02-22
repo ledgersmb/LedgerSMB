@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"Textarea.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,8GAKG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA4BC,CAA5B,CAAqDC,CAArD,QAKKH,EAAA,wBAAgCG,CAAhC,CAAgDD,CAAhD,wFAmBUE,QAAAA,GACfC,cAAA,CAAeC,SAAf,CAGAL,EAAAM,IAAA,CAAaC,YAAb,8IAJeJ,CAnBV,EALL,CALH;",
+"sources":["Textarea.js.uncompressed.js"],
+"names":["define","declare","domStyle","_ExpandingTextAreaMixin","SimpleTextarea","buildRendering","inherited","arguments","set","textbox"]
+}

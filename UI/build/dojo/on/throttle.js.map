@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"throttle.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,4CAAqD,QAAA,CAASC,CAAT,CAAmBC,CAAnB,QAM7C,SAAA,CAASC,CAAT,CAAmBC,CAAnB,QAQC,SAAA,CAASC,CAAT,CAAeC,CAAf,QACCJ,EAAA,CAAGG,CAAH,CAASF,CAAT,CAAmBF,CAAA,CAASK,CAAT,CAAsBF,CAAtB,CAAnB,CADD,CARD,CAN6C,CAArD;",
+"sources":["throttle.js.uncompressed.js"],
+"names":["define","throttle","on","selector","delay","node","listenerFnc"]
+}

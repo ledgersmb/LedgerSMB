@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"default.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,uDAIG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA2BC,CAA3B,MACEC,EAAQD,CAAA,0BAaRC,EAdF,GAeDA,CAfC,SAkBFH,EAAAI,qBAlBE,CAkB6BC,QAAAA,iBAI/BL,EAAAM,KAtBE,CAsBaC,QAAAA,CAASC,CAATD,CAAaE,CAAbF,CAA4BG,CAA5BH,CAAoCI,CAApCJ,EACdN,CAAA,cAASO,CAAT,SAAyCL,CAAzC,EAAiD,QAAA,CAASS,CAAT,EAChDF,CAAA,CAAOE,CAAP,CADgD,CAAjD,CADcL,CAtBb,CAJH;",
+"sources":["default.js.uncompressed.js"],
+"names":["define","exports","require","has","defId","getPlatformDefaultId","exports.getPlatformDefaultId","load","exports.load","id","parentRequire","loaded","config","provider"]
+}

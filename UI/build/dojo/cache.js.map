@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"cache.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,0CAAmD,QAAA,CAASC,CAAT,QAK3CA,EAAAC,MAL2C,CAAnD;",
+"sources":["cache.js.uncompressed.js"],
+"names":["define","dojo","cache"]
+}
