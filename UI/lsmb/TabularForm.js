@@ -60,7 +60,7 @@
  */
 
 define([
-    'dojox/layout/TableContainer',
+    'lsmb/layout/TableContainer',
     'dojo/dom',
     'dojo/dom-class',
     'dijit/registry',
