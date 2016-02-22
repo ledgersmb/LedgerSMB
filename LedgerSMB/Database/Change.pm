@@ -246,7 +246,7 @@ sub init {
     );
     ")->execute();
     die "$DBI::state: $DBI::errstr" unless $success;
-    
+
     return 1;
 }
 
