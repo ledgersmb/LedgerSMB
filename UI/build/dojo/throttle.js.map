@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"throttle.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,oBAA4B,QAAA,SAMpB,SAAA,CAASC,CAAT,CAAaC,CAAb,MAYFC,IAZE,OAaC,SAAA,GACFA,CADE,GAINA,CAJM,IAKNF,CAAAG,MAAA,MAAeC,SAAf,CALM,CAMNC,UAAA,CAAW,QAAA,GACVH,CADU,IAAX,CAEGD,CAFH,CANM,EAbD,CANoB,CAA5B;",
+"sources":["throttle.js.uncompressed.js"],
+"names":["define","cb","wait","canrun","apply","arguments","setTimeout"]
+}

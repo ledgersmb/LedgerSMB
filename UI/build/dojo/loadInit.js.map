@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"loadInit.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,oCAA4C,QAAA,CAASC,CAAT,6BAGhCC,QAAAA,CAASC,CAATD,QAAoBC,EAApBD,CAHgC,MAIrCD,CAAAG,SAJqC,EAA5C;",
+"sources":["loadInit.js.uncompressed.js"],
+"names":["define","loader","normalize","id","loadInit"]
+}

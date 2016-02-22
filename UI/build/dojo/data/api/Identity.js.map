@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"Identity.js",
+"lineCount":3,
+"mappings":"A;AAAAA,MAAA,2DAAoE,QAAA,CAASC,CAAT,CAAkBC,CAAlB,QAK7DD,EAAA,0BAAkCC,CAAlC,cAMOC,QAAAA,UAIV,oBAJUA,IAKV,wBALUA,KANP,aAeOC,QAAAA,CAAkCC,CAAlCD,OAaFE,MAAJ,yDAbMF,EAfP,uBA+BiBG,QAAAA,CAAkCF,CAAlCE,OAiBZD,MAAJ,mEAjBgBC,EA/BjB,qBAoDeC,QAAAA,CAAsBC,CAAtBD,MA6ChBE,iBAAA,CAAkBD,CAAAJ,KAAlB,CA7CgBG,MA8CTF,MAAJ,iEA9CaE;CApDf,EAL6D,CAApE;",
+"sources":["Identity.js.uncompressed.js"],
+"names":["define","declare","Read","getFeatures","getIdentity","item","Error","getIdentityAttributes","fetchItemByIdentity","keywordArgs","isItemLoaded"]
+}

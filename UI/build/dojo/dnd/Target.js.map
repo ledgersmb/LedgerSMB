@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"Target.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,kEAA8E,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA4BC,CAA5B,QACtEF,EAAA,mBAA2BE,CAA3B,cAIOC,QAAAA,GAGZC,aAHYD,GAIZF,EAAAI,OAAA,CAAgBC,SAAhB,iBAJYH,CAJP,EADsE,CAA9E;",
+"sources":["Target.js.uncompressed.js"],
+"names":["define","declare","domClass","Source","constructor","isSource","remove","node"]
+}

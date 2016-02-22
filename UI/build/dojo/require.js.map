@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"require.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,mCAA2C,QAAA,CAASC,CAAT,6BAG/BC,QAAAA,CAASC,CAATD,QAAoBC,EAApBD,CAH+B,MAIpCD,CAAAG,QAJoC,EAA3C;",
+"sources":["require.js.uncompressed.js"],
+"names":["define","loader","normalize","id","require"]
+}

@@ -60,7 +60,7 @@
  */
 
 define([
-    'dojox/layout/TableContainer',
+    'lsmb/layout/TableContainer',
     'dojo/dom',
     'dojo/dom-class',
     'dijit/registry',
@@ -68,7 +68,7 @@ define([
     'dojo/query',
     'dojo/window',
     'dojo/_base/declare',
-    'dijit/form/TextBox',
+    'dijit/form/TextBox'
     ],
     function(TableContainer, dom, cls, registry, cp, query, win, 
              declare, testbox) 

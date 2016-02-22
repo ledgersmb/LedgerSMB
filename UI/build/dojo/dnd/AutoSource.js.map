@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"AutoSource.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,uDAAgE,QAAA,CAASC,CAAT,CAAkBC,CAAlB,QACxDD,EAAA,uBAA+BC,CAA/B,cAIOC,QAAAA,GAGZC,aAHYD,IAJP,EADwD,CAAhE;",
+"sources":["AutoSource.js.uncompressed.js"],
+"names":["define","declare","Source","constructor","autoSync"]
+}

@@ -1,7 +1,7 @@
 define([
-    'dojo/dijit/form/Textarea',
+    'dijit/form/Textarea',
     'dojo/_base/declare',
-    'dojo/topic',
+    'dojo/topic'
     ], function(
       Textarea,
         declare,
