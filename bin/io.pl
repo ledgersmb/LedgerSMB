@@ -159,7 +159,7 @@ sub display_row {
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
                               $lsmb_module);
-    @column_index = qw(runningnumber partnumber description qty);
+    @column_index = qw(deleteline runningnumber partnumber description qty);
 
     if ( $form->{type} eq "sales_order" ) {
         push @column_index, "ship";
@@ -221,6 +221,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $form->{invsubtotal} = 0;
     for ( split / /, $form->{taxaccounts} ) { $form->{"${_}_base"} = 0 }
 
+    $column_data{deleteline} = qq|<th class="listheading"></td>|;
     $column_data{runningnumber} =
       qq|<th class="listheading runningnumber" nowrap>| . $locale->text('Item') . qq|</th>|;
     $column_data{partnumber} =
@@ -398,19 +399,23 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
-$column_data{runningnumber} =
+        $column_data{runningnumber} =
           qq|<td class="runningnumber"><input data-dojo-type="dijit/form/TextBox" name="runningnumber_$i" size=3 value=$i></td>|;
         if ($form->{"partnumber_$i"}){
-           $column_data{partnumber} =
-           qq|<td> $form->{"partnumber_$i"}
-                 <button data-dojo-type="dijit/form/Button"><span>X</span>
+            $column_data{deleteline} = qq|
+<td rowspan="2" valign="middle">
+<button data-dojo-type="dijit/form/Button"><span>X</span>
 <script type="dojo/on" data-dojo-event="click">
 require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
 </script>
 </button>
+</td>|;
+           $column_data{partnumber} =
+           qq|<td> $form->{"partnumber_$i"}
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
+            $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
 qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false, linenum: $i" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
