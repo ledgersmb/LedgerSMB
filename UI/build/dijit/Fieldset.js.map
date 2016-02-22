@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"Fieldset.js",
+"lineCount":3,
+"mappings":"A;AAAAA,OAAA,SACA,mCADA,opCAEAC;MAAA,iIAMG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAyBC,CAAzB,CAAoCC,CAApC,QAGKH,EAAA,kBAA0BE,CAA1B,4DAiBUC,CAjBV,YAmBMC,QAAAA,OACPC,UADOD,MAENE,EAAUL,CAAA,UAAgBM,kBAAhB,CACXD,EAAAE,OAHOJ,GAITK,QAAA,SAAkBH,CAAA,GAAAI,UAAlB,CAJSN,CAKTE,CAAA,GAAAK,WAAAC,YAAA,CAAkCN,CAAA,GAAlC,CALSF,EASXS,cAAA,CAAeC,SAAf,CATWV,CAnBN,EAHL,CANH;",
+"sources":["Fieldset.js.uncompressed.js"],
+"names":["require","define","declare","query","TitlePane","template","postCreate","title","legends","containerNode","length","set","innerHTML","parentNode","removeChild","inherited","arguments"]
+}

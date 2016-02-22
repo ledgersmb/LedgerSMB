@@ -16,8 +16,14 @@
       # *persistent*
       # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
       ?>
-	<link rel="stylesheet" href="UI/lib/dojo/dojo/resources/dojo.css" type="text/css" />
-	<link rel="stylesheet" href="UI/lib/dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+    <?lsmb IF dojo_built ?>
+    <link rel="stylesheet" href="UI/build/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="UI/build/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+    <?lsmb ELSE ?>
+	<link rel="stylesheet" href="UI/dojo/dojo/resources/dojo.css" type="text/css" />
+	<link rel="stylesheet" href="UI/dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+    <?lsmb END ?>
+
 	<link rel="stylesheet" href="css/global.css" type="text/css" />
 	<?lsmb IF form.stylesheet ?>
 	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
@@ -33,17 +39,31 @@
 	window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
 	</script>
 	<?lsmb END ?>
+    <?lsmb IF dojo_built ?>
+    <script type="text/javascript" language="JavaScript">
+        var dojoConfig = {
+            async: 1,
+            locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
+            packages: [{"name":"lsmb","location":"../lsmb"}]
+        };
+        var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
+    </script>
+    <script type="text/javascript" language="JavaScript" src="UI/build/dojo/dojo.js"></script>
+    <script type="text/javascript" language="JavaScript"
+            src="UI/build/lsmb/main.js"></script>
+    <?lsmb ELSE ?>
 	<script type="text/javascript" language="JavaScript">
 	  var dojoConfig = {
 	       async: 1,
 	       locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
-	       packages: [{"name":"lsmb","location":"../../.."}]
+	       packages: [{"name":"lsmb","location":"../../lsmb"}]
 	   };
            var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
         </script>
-       <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
+       <script type="text/javascript" language="JavaScript" src="UI/dojo/dojo/dojo.js"></script>
         <script type="text/javascript" language="JavaScript"
-           src="UI/lib/main.js"></script>
+           src="UI/lsmb/main.js"></script>
+    <?lsmb END ?>
 	<?lsmb FOREACH s = include_script ?>
 	<script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
 	<?lsmb END ?>

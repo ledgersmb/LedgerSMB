@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"indian.js",
+"lineCount":3,
+"mappings":"A;AAAAA,MAAA,+BAGC,oBAHD,CAGuB,gGAAA,MAAA,KAHvB,CAiBC,oBAjBD,CAiBuB,gGAAA,MAAA,KAjBvB,kBAkCC,sBAlCD,CAkCyB,4BAAA,MAAA,KAlCzB,CAgDC,wBAhDD,CAgD2B,gGAAA,MAAA,KAhD3B;AA8DC,wBA9DD,CA8D2B,gGAAA,MAAA,KA9D3B,CA4EC,iBA5ED,SA6EC,0BA7ED,CA6E6B,4BAAA,MAAA,KA7E7B;",
+"sources":["indian.js.uncompressed.js"],
+"names":["define"]
+}

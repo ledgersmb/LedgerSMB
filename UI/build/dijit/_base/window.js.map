@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"window.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,gDAGG,QAAA,CAASC,CAAT,CAAsBC,CAAtB,EAWFA,CAAAC,kBAXE,CAWwBC,QAAAA,CAASC,CAATD,QAClBH,EAAAK,IAAA,CAAgBD,CAAhB,CADkBD,CAXxB,CAHH;",
+"sources":["window.js.uncompressed.js"],
+"names":["define","windowUtils","dijit","getDocumentWindow","dijit.getDocumentWindow","doc","get"]
+}

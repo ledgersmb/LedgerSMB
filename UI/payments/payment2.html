@@ -3,7 +3,7 @@
 <body id="payment_2_body" class="lsmb <?lsmb dojo_theme ?>"
 onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
   <div id="payments">
-  <form data-dojo-type="lsmb/lib/Form" name="pay_single_dues" method="post" action="payment.pl">
+  <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="payment.pl">
 
     <?lsmb PROCESS elements.html  # Include form elements helper. ?>
     <?lsmb accountclass.type = 'hidden';
@@ -205,7 +205,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                                       value = format_amount(row.topay_fx.value)
                                   } ?>
           <img src="UI/payments/img/up.gif"
-               data-dojo-type="lsmb/lib/MaximizeMinimize"
+               data-dojo-type="lsmb/MaximizeMinimize"
                data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
                class="details-toggler">
           <div id="div_topay_<?lsmb row.invoice.id ?>" class="<?lsmb alterning_style ?> details-popup" >

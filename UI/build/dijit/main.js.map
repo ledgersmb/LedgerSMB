@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"main.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,oCAEG,QAAA,CAASC,CAAT,QAYKA,EAAAC,MAZL,CAFH;",
+"sources":["main.js.uncompressed.js"],
+"names":["define","dojo","dijit"]
+}

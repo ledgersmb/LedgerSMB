@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"SubscribeCheckBox.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,8FAIO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAsBC,CAAtB,CAA6BC,CAA7B,QACWH,EAAA,2BAAmCG,CAAnC,mBAEKC,QAAAA,CAASC,CAATD,EACJE,QAAA,WAAoBD,CAApB,CADID,CAFL,YAKSG,QAAAA,OACJC,MACJC,eAAA,CAAeC,SAAf,CAEAC,SAAA,CACIT,CAAAU,UAAA,CAAgBJ,CAAAN,MAAhB,CAA2B,QAAA,CAASG,CAAT,EACvBG,CAAAJ,OAAA,CAAYC,CAAZ,CADuB,CAA3B,CADJ,CAJQE,CALT,EADX,CAJP;",
+"sources":["SubscribeCheckBox.js.uncompressed.js"],
+"names":["define","declare","on","topic","CheckBox","update","targetValue","set","postCreate","self","inherited","arguments","own","subscribe"]
+}
