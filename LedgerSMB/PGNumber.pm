@@ -137,7 +137,8 @@ The input is formatted.
 =cut
 
 sub from_input {
-    my ($self, $string) = @_;
+    my $self = shift;
+    my $string = shift;
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
         return $string if eval { $string->isa(__PACKAGE__) };
