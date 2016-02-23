@@ -1,0 +1,7 @@
+default:
+   includes:
+      - t/lib
+   extensions:
+      Pherkin::Extension::LedgerSMB:
+         db_name: postgres
+      Pherkin::Extension::Browser:
