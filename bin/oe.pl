@@ -399,7 +399,6 @@ sub form_header {
 |;
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
-<<<<<<< local
 
         if (LedgerSMB::Setting->get('show_creditlimit')){
         $creditremaining = qq|
