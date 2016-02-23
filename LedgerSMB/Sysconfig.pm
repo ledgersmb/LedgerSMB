@@ -112,9 +112,8 @@ for my $var (
   )
 {
     no strict 'refs';
-    ${$var} = $cfg->val('main', $var) if $cfg->val('main', $var);
+    ${$var} = $cfg->val('main', $var, ${$var});
 }
-
 
 if ($cssdir !~ m|/$|){
     $cssdir = "$cssdir/";
