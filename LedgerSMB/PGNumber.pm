@@ -130,8 +130,7 @@ The input is formatted.
 =cut
 
 sub from_input {
-    my $self   = shift @_;
-    my $string = shift @_;
+    my ($self, $string) = @_;
     return $string if eval { $string->isa(__PACKAGE__) };
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
     if(!defined $string || $string eq ''){
