@@ -554,6 +554,7 @@ my $date = LedgerSMB::DBObject::Date->new({base => $request});
    $date->build_filter_by_period($request->{_locale});
 # Lets set the data in a hash for the template system. :)
 my $select = {
+  script => 'payment.pl',
   stylesheet => $request->{_user}->{stylesheet},
   login    => { name  => 'login',
                 value => $request->{_user}->{login}   },
@@ -631,7 +632,8 @@ if ($#array_options == -1) {
    }
    my $select = {
     companies => \@company_options,
-    stylesheet => $request->{_user}->{stylesheet},
+    script       => 'payment.pl',
+    stylesheet   => $request->{_user}->{stylesheet},
     login        => {  name     => 'login',
                        value    => $request->{_user}->{login}},
     department   => {  name     => 'department',
@@ -973,6 +975,7 @@ if (${LedgerSMB::Sysconfig::latex}) {
 # Notice that the first data inside this selection is the firs_load, this
 # will help payment2.html to know wether it is being called for the first time
 my $select = {
+  script     => 'payment.pl',
   first_load => $request->{first_load},
   stylesheet => $request->{_user}->{stylesheet},
   header  =>  { text => $request->{type} eq 'receipt' ? $locale->text('Receipt') : $locale->text('Payment') },
@@ -1279,7 +1282,9 @@ my @arrayOptions;
 my @entities;
 
 #We will use $ui to handle all the data needed by the User Interface
-my $ui = { stylesheet => $request->{_user}->{stylesheet}};
+my $ui = {
+    script => 'payment.pl',
+    stylesheet => $request->{_user}->{stylesheet} };
 $ui->{account_class} = {name => 'account_class', value => $request->{account_class}};
 
 #We want to get all the customer/vendor with unused overpayment
@@ -1558,7 +1563,9 @@ for my $ref (0 .. $#overpayments) {
 
 # We start with our data selection called ui
 
-my $ui = { exrate        => $ui_exchangerate,
+my $ui = {
+ script        => 'payment.pl',
+ exrate        => $ui_exchangerate,
        datepaid        => {name           => 'datepaid',
                                     value    => $Payment->{"datepaid"}? $Payment->{"datepaid"} : $Payment->{"current_date"},
                                     size    => '10'},
