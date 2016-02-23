@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"main.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,aAAoB,oMAAA,MAAA,KAApB,CAiBG,QAAA,CAASC,CAAT,CAAiBC,CAAjB,CAAsBC,CAAtB,CAA+BC,CAA/B,CAAsCC,CAAtC,CAA4CC,CAA5C,CAAmDC,CAAnD,CAA2DC,CAA3D,EAWCD,CAAAE,QAXD,EAYDN,CAAA,wBAZC,OAiCKF,EAjCL,CAjBH;",
+"sources":["main.js.uncompressed.js"],
+"names":["define","kernel","has","require","sniff","lang","array","config","ready","isDebug"]
+}

@@ -22,6 +22,7 @@ our $images = getcwd() . '/images';
 our $cssdir = 'css/';
 our $fs_cssdir = 'css/';
 our $dojo_theme = 'claro';
+our $dojo_built = 1;
 
 our $force_username_case = undef; # don't force case
 

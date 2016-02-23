@@ -10,6 +10,7 @@ use warnings;
 
 use LedgerSMB::Database::Change;
 use Cwd;
+use Fcntl ':flock';
 
 =head1 SYNOPSIS
 
@@ -41,7 +42,6 @@ Returns a list of LedgerSMB::Database::Change objects
 
 =cut
 
-my $reload_subsequent;
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
@@ -50,7 +50,6 @@ sub scripts {
     local $@;
     open(LOAD, '<', $self->{_path}) or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
-    $reload_subsequent = 0;
     my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
@@ -58,7 +57,6 @@ sub scripts {
        <LOAD>;
     close LOAD;
     $self->{_scripts} = \@scripts;
-    $reload_subsequent = 0;
     return @scripts;
 }
 
@@ -66,40 +64,31 @@ sub _process_script {
     my ($self, $line) = @_;
     chomp($line);
     my $sigil = '';
-    if ($line =~ /^([!^]+)/){
+    if ($line =~ /^(!+)/){
         $sigil = $1 if $1;
         $line =~ s/^\Q$sigil\E//;
     }
-    $reload_subsequent ||= ( $sigil =~ /\Q^\E/ );
     my $no_transactions = ( $sigil =~ /\Q!\E/ );
     return LedgerSMB::Database::Change->new(
         $self->path($line),
         {
-            reload_subsequent => $reload_subsequent,
             no_transactions => $no_transactions
         },
     );
 }
 
-=head2 makeindex
+=head2 loadall
 
-Creates an index of the files at $path/LOADORDER.idx and locks the file.
-
-If the file is already locks throws an error "LockError"
-
-The LOADORDER.idx remains empty.
+Loads the content of all scripts and calculates their hashes.
 
 =cut
 
-sub makeindex {
+sub loadall {
     my ($self) = @_;
-    die 'LockError' if -f $self->path('LOADORDER.idx');
-    open TEMP, '>', $self->path('LOADORDER.idx');
     $self->{_locked} = 1;
     for my $script ($self->scripts){
         $script->load_contents;
     }
-    close TEMP;
 }
 
 =head2 init_if_needed($dbh)
@@ -116,11 +105,6 @@ Returns 1 if applied.  Returns 0 if not.
 sub init_if_needed {
     my ($self, $dbh) = @_;
     return LedgerSMB::Database::Change::init($dbh);
-}
-
-sub DESTROY {
-    my ($self) = @_;
-    unlink $self->path('LOADORDER.idx') if $self->{_locked};
 }
 
 =head2 path
@@ -149,17 +133,28 @@ sub run_all {
 
 =head2 apply_all
 
-Applies all files in the loadorder, with tracking info
+Applies all files in the loadorder, with tracking info, locking until it 
+completes.
 
 =cut
 
 sub apply_all {
     my ($self, $dbh) = @_;
-    my $reloading = 0;
+    _lock($dbh);
     for ($self->scripts){
-        $_->apply($dbh) if ($reloading or not $_->is_applied($dbh));
-        $reloading ||= $_->{properties}->{reload_subsequent};
+        $_->apply($dbh) unless $_->is_applied($dbh);
     }
+    _unlock($dbh);
+}
+
+sub _lock {
+    my ($dbh) = @_;
+    $dbh->do("select pg_advisory_lock('db_patches'::regclass::oid, 1)");
+}
+
+sub _unlock {
+    my ($dbh) = @_;
+    $dbh->do("select pg_advisory_unlock('db_patches'::regclass::oid, 1)");
 }
 
 =head1 COPYRIGHT

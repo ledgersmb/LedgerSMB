@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"popup.js",
+"lineCount":3,
+"mappings":"A;AAAAA,MAAA,6FAKG,QAAA,CAASC,CAAT,CAAmBC,CAAnB,CAAwBC,CAAxB,MAcCC,EAAoBD,CAAAE,eACxBF,EAAAE,eAfG,CAeoBC,QAAAA,CAASC,CAATD,EAClBC,CAAAC,cADkBF,GAGrBC,CAHqBD,gBAIJC,CAAAE,WAJIH,EAIiBL,CAAAS,SAAA,CAAkBH,CAAAE,WAAlB,cAJjBH,CAKnBC,CAAAE,WALmBH,cAMXC,CANWD,SAOXK,QAAAA,IAPWL,eAQLC,CAAAK,cARKN,mBASDJ,CAAAW,KAAA,CAASN,CAAAK,cAAT,CATCN,SAYfF,EAAAU,KAAA,MAA6BP,CAA7B,CAZeD,CAfpB,KA+BCS,EAAWZ,CAAAa,KACfb,EAAAa,KAhCG,CAgCUC,QAAAA,CAAwBC,CAAxBD,KAQTC,CAAAC,OARSF,kBAQaC,EAAAC,OARbF,cAQsDC,EAAAC,OARtDF,OASPG;EATOH,CAUHI,CAVGJ,KAUHI,CAVGJ,GAUIC,EAAAC,OAVJF,CAWVG,CAAAE,KAAA,eAAwBD,CAAxB,QAAqCH,CAAAC,OAAA,CAAYE,CAAZ,CAArC,EAEDH,EAAAC,OAbWF,CAaGG,CAbHH,OAgBLF,EAAAD,KAAA,MAAoBI,CAApB,CAhBKD,CAhCV,OAmDId,EAnDJ,CALH;",
+"sources":["popup.js.uncompressed.js"],
+"names":["define","domClass","win","popup","origCreateWrapper","_createWrapper","popup._createWrapper","widget","declaredClass","parentNode","contains","destroy","ownerDocument","body","call","origOpen","open","popup.open","args","orient","ary","key","push"]
+}

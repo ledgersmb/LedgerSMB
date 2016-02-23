@@ -494,7 +494,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
  print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
 $form->open_status_div . qq|
-<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -629,15 +629,15 @@ $form->open_status_div . qq|
           </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
               </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -871,7 +871,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id
 qq|<td align=center><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{datepaid} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
         $column_data{source} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
@@ -1656,7 +1656,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method="post" data-dojo-type="lsmb/lib/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr><th class=listtop>$form->{title}</th></tr>
@@ -1684,9 +1684,9 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     </tr>
     <tr>
       <th align=right nowrap>| . $locale->text('From') . qq|</th>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
       <th align=right>| . $locale->text('Date to') . qq|</th>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
     </tr>
     $selectfrom
       </table>

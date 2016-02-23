@@ -1,0 +1,3 @@
+//>>built
+define("dojo/on/asyncEventListener",["../on","../_base/window","../dom-construct","../domReady!"],function(f,a,c){function g(d){var a={},b;for(b in d)a[b]=d[b];return a}a=c.create("div",null,a.body());var e,b;f.once(a,"click",function(a){e=a});a.click();try{b=void 0===e.clientX}catch(h){b=!0}finally{c.destroy(a)}return function(a){return b?function(b){a.call(this,g(b))}:a}});
+//# sourceMappingURL=asyncEventListener.js.map

@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"gregorian.js",
+"lineCount":3,
+"mappings":"A;AAAAA,MAAA,kCAGC,mBAHD,WAIC,oBAJD,WAKC,sBALD,WAMC,oBAND,WAOC,qBAPD,SAQC,qBARD,cASC,uBATD,WAUC,uBAVD,aAWC,iBAXD,iBAYC,sBAZD,WAaC,mBAbD,SAcC,wBAdD,gBAeC,kBAfD,MAgBC,2BAhBD,MAiBC,sBAjBD;AAkBC,qBAlBD,WAmBC,2BAnBD,MAoBC,mBApBD,YAqBC,iBArBD,YAsBC,iBAtBD,SAuBC,kBAvBD,WAwBC,uBAxBD,cAyBC,sBAzBD,WA0BC,sBA1BD,UA2BC,qBA3BD,WA4BC,mBA5BD,QA6BC,kBA7BD,SA8BC,iBA9BD,cA+BC,iBA/BD,kBAgCC,qBAhCD,SAiCC,mBAjCD;",
+"sources":["gregorian.js.uncompressed.js"],
+"names":["define"]
+}

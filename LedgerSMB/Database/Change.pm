@@ -203,7 +203,10 @@ sub apply {
         $after = "";
         $dbh->commit if $need_commit;
     }
-    $dbh->do($self->content_wrapped($before, $after));
+    my $success = eval {
+         $dbh->prepare($self->content_wrapped($before, $after))->execute();
+    };
+    die "$DBI::state: $DBI::errstr" unless $success or $self->{no_transactions};
     $dbh->commit if $need_commit;
     warn "$dbh->state: $dbh->errstr";
     $dbh->prepare("
@@ -228,7 +231,7 @@ Initializes the tracking system
 sub init {
     my ($dbh) = @_;
     return 0 unless needs_init($dbh);
-    $dbh->do("
+    my $success = $dbh->prepare("
     CREATE TABLE db_patch_log (
        when_applied timestamp primary key,
        path text NOT NULL,
@@ -241,7 +244,9 @@ sub init {
        path text not null,
        last_updated timestamp not null
     );
-    ");
+    ")->execute();
+    die "$DBI::state: $DBI::errstr" unless $success;
+
     return 1;
 }
 
@@ -253,9 +258,11 @@ Returns true if the tracking system needs to be initialized
 
 sub needs_init {
     my ($dbh) = @_;
-    my $rows = $dbh->prepare(
+    local $@;
+    my $rows = eval { $dbh->prepare(
        "select 1 from db_patches"
-    )->execute();
+    )->execute(); };
+    $dbh->rollback;
     return 0 if $rows;
     return 1;
 }
