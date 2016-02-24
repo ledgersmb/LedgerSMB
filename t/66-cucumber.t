@@ -22,6 +22,7 @@ my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
 
 for my $directory (qw(
       01-basic
+      11-ar
 ))
 {
     my ( $executor, @features ) =
