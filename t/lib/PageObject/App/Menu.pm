@@ -90,7 +90,7 @@ sub click_menu {
 
         $ul = '/ul';
     } for @$path;
-
+    
     my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
     use_module($tgt_class);
     return $driver->page->maindiv->content($tgt_class->new(%$self));
