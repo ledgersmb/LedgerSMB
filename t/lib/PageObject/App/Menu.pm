@@ -90,7 +90,6 @@ sub click_menu {
 
         $ul = '/ul';
     } for @$path;
-    $driver->try_wait_for_page;
     
     my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
     use_module($tgt_class);

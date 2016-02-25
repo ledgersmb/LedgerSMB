@@ -6,6 +6,7 @@ use warnings;
 use Carp;
 use PageObject;
 
+use Selenium::Waiter qw(wait_until);
 
 use PageObject::App::Menu;
 use PageObject::App::Initial;
@@ -27,6 +28,7 @@ sub verify {
     my $driver = $self->driver;
 
     $self->menu->verify;
+    wait_until { my $elem = $driver->find_element('#maindiv','css'); return ($elem && $elem->is_displayed); };
     $self->content->verify;
 
     return $self;
