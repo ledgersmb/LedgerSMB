@@ -7,8 +7,6 @@ use warnings;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Credit_Account;
 
-use Carp::Always;
-
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
