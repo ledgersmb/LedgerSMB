@@ -328,8 +328,9 @@ sub _main_screen {
                       funcname => 'entity__list_classes'
     );
 
-    { # pre-5.14 compatibility block
-    local ($@); # pre-5.14, do not die() in this block
+    my @roles;
+    @roles = $user->list_roles if $user;
+
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
@@ -340,7 +341,7 @@ sub _main_screen {
                    person => $person,
                  employee => $person,
                      user => $user,
-                    roles => eval { $user->list_roles },
+                    roles => \@roles,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
@@ -373,7 +374,6 @@ sub _main_screen {
           default_country => $default_country,
          default_language => $default_language
     });
-    }
 }
 
 =item save_employee
