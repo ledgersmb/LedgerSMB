@@ -1112,7 +1112,7 @@ sub update {
     on_update(); # Used for overrides for POS invoices --CT
 
     &invoice_links;
-    
+
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
@@ -1489,5 +1489,3 @@ sub save_info {
         }
 
 }
-
-
