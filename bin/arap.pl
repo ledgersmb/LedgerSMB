@@ -59,7 +59,7 @@ sub check_name {
     my $rv = 0;
 
     # if we use a selection
-    if ( $form->{"select$name"} ) {
+    if ( $form->{$name} =~ /--/ ) {
         if ( $form->{"old$name"} ne $form->{$name} ) {
 
             # this is needed for is, ir and oe
