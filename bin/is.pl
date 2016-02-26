@@ -177,6 +177,13 @@ sub invoice_links {
 
     foreach $key ( keys %{ $form->{AR_links} } ) {
 
+        $form->{"select$key"} = '';
+        foreach $ref ( @{ $form->{AR_links}{$key} } ) {
+            $value = "$ref->{accno}--$ref->{description}";
+            $selected = ($value eq $form->{$key}) ? " selected" : "";
+            $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
+        }
+
         if ( $key eq "AR_paid" ) {
             for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AR_paid_$i"} =
@@ -320,10 +327,10 @@ sub form_header {
 |;
 
     if ( $form->{selectcustomer} ) {
-        $customer = qq|<select data-dojo-type="dijit/form/Select" name="customer">$form->{selectcustomer}</select>|;
+        $customer = qq|<select data-dojo-type="dijit/form/Select" id="customer" name="customer">$form->{selectcustomer}</select>|;
     }
     else {
-        $customer = qq|<input data-dojo-type="dijit/form/TextBox" name="customer" value="$form->{customer}" size="35">
+        $customer = qq|<input data-dojo-type="dijit/form/TextBox" id="customer" name="customer" value="$form->{customer}" size="35">
      <a target="new" id="new-contact"
         href="contact.pl?action=add&entity_class=2">[| .
         $locale->text('New') . qq|]</a> |;
@@ -431,7 +438,7 @@ function on_return_submit(event){
       <td>
         <table>
           <tr>
-        <th align=right nowrap>| . $locale->text('Customer') . qq|</th>
+        <th align=right nowrap><label for="customer">| . $locale->text('Customer') . qq|</label></th>
         <td colspan=3>$customer</td>
         <input type=hidden name="customer_id" value="$form->{customer_id}">
         <input type=hidden name="oldcustomer" value="$form->{oldcustomer}">
@@ -486,7 +493,7 @@ function on_return_submit(event){
 
           <tr>
         <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
-        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR">$form->{selectAR}</select></td>
+        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR">$form->{selectAR}</select></td>
           </tr>
           $department
           $exchangerate
@@ -1103,6 +1110,9 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
+
+    &invoice_links;
+    
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
