@@ -177,6 +177,13 @@ sub invoice_links {
 
     foreach $key ( keys %{ $form->{AR_links} } ) {
 
+        $form->{"select$key"} = '';
+        foreach $ref ( @{ $form->{AR_links}{$key} } ) {
+            $value = "$ref->{accno}--$ref->{description}";
+            $selected = ($value eq $form->{$key}) ? " selected" : "";
+            $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
+        }
+
         if ( $key eq "AR_paid" ) {
             for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AR_paid_$i"} =
@@ -486,7 +493,7 @@ function on_return_submit(event){
 
           <tr>
         <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
-        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR">$form->{selectAR}</select></td>
+        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR">$form->{selectAR}</select></td>
           </tr>
           $department
           $exchangerate
@@ -1103,6 +1110,9 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
+
+    &invoice_links;
+
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
@@ -1479,5 +1489,3 @@ sub save_info {
         }
 
 }
-
-
