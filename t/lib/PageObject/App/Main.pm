@@ -28,7 +28,7 @@ sub verify {
     my $driver = $self->driver;
 
     $self->menu->verify;
-    wait_until { my $elem = $driver->find_element('#maindiv','css'); return ($elem && $elem->is_displayed); };
+    wait_until { my $elem = $driver->find_element('#maindiv.done-parsing','css'); return ($elem && $elem->is_displayed); };
     $self->content->verify;
 
     return $self;
