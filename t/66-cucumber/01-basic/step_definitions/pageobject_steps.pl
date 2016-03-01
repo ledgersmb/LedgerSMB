@@ -5,12 +5,6 @@ use lib 't/lib';
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
-use LedgerSMB::Database;
-use LedgerSMB::Entity::Person::Employee;
-use LedgerSMB::Entity::User;
-use LedgerSMB::PGDate;
-
 
 use Module::Runtime qw(use_module);
 use PageObject::Driver;
@@ -20,131 +14,17 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
-use Data::Dumper;
-
 sub get_driver {
     my ($context) = @_;
 
     return $context->stash->{feature}->{driver};
 }
 
-my $company_seq = 0;
-
-Given qr/a (fresh )?standard test company/, sub {
-    my $fresh_required = $1;
-    my $driver = get_driver(C);
-
-    my $pgh = LedgerSMB::Database->new(
-        dbname => 'postgres',
-        usermame => $ENV{PGUSER},
-        password => $ENV{PGPASSWORD},
-        host => 'localhost')
-        ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
-
-    unless (C->stash->{feature}->{"the template"}) {
-        my $template = "standard-template";
-        my $admin = 'test-user-admin';
-        $pgh->do(qq(DROP DATABASE IF EXISTS "$template"));
-        $pgh->do(qq(DROP ROLE IF EXISTS "$admin"));
-
-
-        my $db = LedgerSMB::Database->new(
-            dbname => $template,
-            usermame => $ENV{PGUSER},
-            password => $ENV{PGPASSWORD},
-            host => 'localhost');
-        $db->create_and_load;
-        $db->load_coa({ country => 'us',
-                          chart => 'General.sql' });
-
-        my $dbh = $db->connect({ PrintError => 0, RaiseError => 1,
-                                 AutoCommit => 0 });
-
-        my $emp = LedgerSMB::Entity::Person::Employee->new(
-            employeenumber => 'E-001',
-            control_code => 'E-001',
-            dob => LedgerSMB::PGDate->from_input('2006-09-01'),
-            username => $admin,
-            salutation_id => 1,
-            first_name => 'First',
-            last_name => 'Last',
-            name => 'First Last',
-            ssn => '0000010',
-            country_id => 232, # United States
-            _DBH => $dbh,
-            );
-        $emp->save;
-
-        my $user = LedgerSMB::Entity::User->new(
-            entity_id => $emp->entity_id,
-            username => $admin,
-            _DBH => $dbh,
-            );
-        $user->create('password');
-        my $roles;
-        @$roles = map { $_->{rolname} } @{$user->list_roles};
-        $user->save_roles($roles);
-
-        $dbh->do("INSERT INTO defaults
-                     VALUES ('role_prefix', 'lsmb_${template}__')");
-        $dbh->commit;
-        $dbh->disconnect;
-        C->stash->{feature}->{"the template"} = $template;
-        C->stash->{feature}->{"the admin"} = 'test-user-admin';
-        C->stash->{feature}->{"the admin password"} = 'password';
-    }
-    if (! C->stash->{feature}->{"the company"} || $fresh_required) {
-        my $company = "standard-" . $company_seq++;
-        C->stash->{feature}->{"the company"} = $company;
-
-        my $template = C->stash->{feature}->{"the template"};
-        $pgh->do(qq(DROP DATABASE IF EXISTS "$company"));
-        $pgh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
-    }
-    $pgh->disconnect;
-    S->{$_} = C->stash->{feature}->{$_}
-        for ("the company", "the admin", "the admin password");
-};
-
-
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
 
     get_driver(C)->page->menu->click_menu(\@path);
 };
-
-
-Given qr/(a non-existent|an existing) company named "(.*)"/, sub {
-    my $company = $2;
-    S->{"the company"} = $company;
-    S->{"non-existent"} = ($1 eq 'a non-existent');
-
-    if (S->{'non-existent'}) {
-        my $dbh = LedgerSMB::Database->new(
-            dbname => 'postgres',
-            usermame => $ENV{PGUSER},
-            password => $ENV{PGPASSWORD},
-            host => 'localhost')
-            ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
-        $dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
-    }
-};
-
-Given qr/a non-existent user named "(.*)"/, sub {
-    my $role = $1;
-    S->{"the user"} = $role;
-
-    my $dbh = LedgerSMB::Database->new(
-        dbname => 'postgres',
-        usermame => $ENV{PGUSER},
-        password => $ENV{PGPASSWORD},
-        host => 'localhost')
-        ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 1 });
-    $dbh->do(qq(DROP ROLE IF EXISTS "$role"));
-};
-
-
-my $c = 0;
 
 Given qr/a logged in admin/, sub {
     PageObject::App::Login->open(driver => get_driver(C));
