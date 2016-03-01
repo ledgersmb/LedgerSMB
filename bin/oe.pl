@@ -392,11 +392,11 @@ sub form_header {
           </tr>
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
           </tr>
           <tr class="reqdate-row">
         <th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
           </tr>
           <tr class="ponunber-row">
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -406,6 +406,7 @@ sub form_header {
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
+        if (LedgerSMB::Setting->get('show_creditlimit')){
         $creditremaining = qq|
           <tr>
         <td></td>
@@ -422,8 +423,9 @@ sub form_header {
           . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
           . qq|</td>
     |;
-         $creditremaining = qq|<tr><td colspan="2"><table><tr>|
-             unless LedgerSMB::Setting->get('show_creditlimit');
+    } else {
+         $creditremaining = qq|<tr><td colspan="2"><table><tr>|;
+    }
          if ($form->{entity_control_code}){
             $creditremaining .= qq|
             <tr class="control-code-field">
@@ -480,11 +482,11 @@ sub form_header {
         $ordnumber .= qq|
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Quotation Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
           </tr>
           <tr>
         <th align=right nowrap=true>$reqlabel</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
           </tr>
 |;
 
@@ -562,7 +564,7 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method=post action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
 
 |;
 
@@ -1302,7 +1304,7 @@ sub delete {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
 
     $form->{action} = "yes";
@@ -1480,7 +1482,7 @@ sub backorder_exchangerate {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
 
     # delete action variable
@@ -1719,7 +1721,7 @@ sub display_ship_receive {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input type=hidden name=display_form value=display_ship_receive>
 |;
@@ -1780,7 +1782,7 @@ sub display_ship_receive {
           </tr>
           <tr>
         <th align=right nowrap>$shipped</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
           </tr>
         </table>
       </td>
@@ -1997,7 +1999,7 @@ sub search_transfer {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -2149,7 +2151,7 @@ sub list_transfer {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input type=hidden name=warehouse_id value=$warehouse_id>
 
@@ -2403,7 +2405,7 @@ sub po_orderitems {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -2537,7 +2539,7 @@ sub select_vendor {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].vendor.focus()" />
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" name=vendor size=40>
 

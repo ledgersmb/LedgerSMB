@@ -36,6 +36,7 @@ use DBI;
 use base qw(App::LedgerSMB::Admin::Database);
 
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Database::Loadorder;
 use base('LedgerSMB');
 use DateTime;
 use Log::Log4perl;
@@ -414,6 +415,7 @@ sub create_and_load(){
     log     => $args->{log},
     errlog  => $args->{errlog},
             });
+    $self->apply_changes();
 }
 
 
@@ -442,6 +444,20 @@ sub upgrade_modules {
         or die "Version not updated.";
 
     return 1;
+}
+
+=head2 apply_changes
+
+Runs fixes if they have not been applied.
+
+=cut
+
+sub apply_changes {
+    my ($self) = @_;
+    my $dbh = $self->connect({PrintError=>0, AutoCommit => 0});
+    my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+    $loadorder->init_if_needed($dbh);
+    $loadorder->apply_all($dbh);
 }
 
 1;

@@ -206,10 +206,8 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
 $$
-DECLARE balance numeric;
-BEGIN
-	SELECT coalesce(sum(ac.amount_bc) + cp.amount_bc, sum(ac.amount_bc))
-	INTO balance
+	SELECT coalesce(coalesce(sum(ac.amount_bc) + cp.amount_bc,
+                   sum(ac.amount_bc)), 0)
 	FROM acc_trans ac
 	JOIN (select id, approved from ar union
 		select id, approved from ap union
@@ -224,9 +222,7 @@ BEGIN
 		and ac.transdate <= in_transdate
 	GROUP BY cp.amount_bc, ac.chart_id;
 
-	RETURN coalesce(balance, 0);
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int) is

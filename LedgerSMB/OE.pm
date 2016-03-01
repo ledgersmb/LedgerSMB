@@ -547,24 +547,10 @@ sub delete {
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
 
-    my %audittrail = (
-        tablename => 'oe',
-        reference => ( $form->{type} =~ /_order$/ )
-        ? $form->{ordnumber}
-        : $form->{quonumber},
-        formname => $form->{type},
-        action   => 'deleted',
-        id       => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-
-
     foreach $spoolfile (@spoolfiles) {
         unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
     return 1;
-
 }
 
 sub retrieve {

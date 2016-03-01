@@ -178,6 +178,7 @@ my @modules =
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
+          'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
     );
 
 my %modules;
@@ -222,6 +223,11 @@ SKIP: {
         ) {
         use_ok($_);
     }
+
+    eval { require OpenOffice::OODoc };
+    skip 'OpenOffice::OODoc not installed', 1 if $@;
+
+    use_ok('LedgerSMB::Template::ODS');
 }
 
  SKIP: {

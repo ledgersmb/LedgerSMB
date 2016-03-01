@@ -39,10 +39,6 @@ CREATE TYPE tax_form_report_detail_item AS (
 
 CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date) 
 RETURNS SETOF tax_form_report_item AS $BODY$
-DECLARE
-	out_row tax_form_report_item;
-BEGIN
-	FOR out_row IN 
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
@@ -112,11 +108,7 @@ BEGIN
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
              GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
-    LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$BODY$ LANGUAGE PLPGSQL;
+$BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report
 (in_tax_form_id int, in_begin date, in_end date) IS
@@ -125,10 +117,6 @@ are cash-basis documents and show amounts paid.$$;
 
 CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) 
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
-DECLARE
-	out_row tax_form_report_detail_item;
-BEGIN
-	FOR out_row IN 
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
@@ -197,11 +185,7 @@ BEGIN
                      ) pmt ON  (pmt.trans_id = gl.id)
 		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
 		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$BODY$ LANGUAGE PLPGSQL;
+$BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report
 (in_tax_form_id int, in_begin date, in_end date, in_meta_number text) IS
@@ -212,10 +196,6 @@ before printing them.$$;
 CREATE OR REPLACE FUNCTION tax_form_summary_report_accrual
 (in_tax_form_id int, in_begin date, in_end date) 
 RETURNS SETOF tax_form_report_item AS $BODY$
-DECLARE
-	out_row tax_form_report_item;
-BEGIN
-	FOR out_row IN 
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
@@ -273,11 +253,7 @@ BEGIN
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
              GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
-    LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$BODY$ LANGUAGE PLPGSQL;
+$BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report_accrual
 (in_tax_form_id int, in_begin date, in_end date) IS
@@ -287,10 +263,6 @@ are cash-basis documents and show amounts paid.$$;
 CREATE OR REPLACE FUNCTION tax_form_details_report_accrual
 (in_tax_form_id int, in_begin date, in_end date, in_meta_number text) 
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
-DECLARE
-	out_row tax_form_report_detail_item;
-BEGIN
-	FOR out_row IN 
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id, 
                      entity_credit_account.entity_class, entity.control_code, 
@@ -348,11 +320,7 @@ BEGIN
 		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
 		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
 		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
-END;
-$BODY$ LANGUAGE PLPGSQL;
+$BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report_accrual
 (in_tax_form_id int, in_begin date, in_end date, in_meta_number text) IS

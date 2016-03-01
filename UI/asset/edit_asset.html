@@ -6,7 +6,7 @@
 <body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
 <div class="listtop"><?lsmb asset.title ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
 	type = "hidden"
@@ -58,7 +58,7 @@ window.default_unit_label = {
 	text_attr = "label"
 	value_attr = "id"
 	label = text("Asset Class:") #'
-       "data-dojo-type" = "lsmb/lib/PublishSelect"
+       "data-dojo-type" = "lsmb/PublishSelect"
        "data-dojo-props" = "topic:'ui/assets/class'"
 } ?>
 </div>
@@ -162,7 +162,7 @@ window.default_unit_label = {
 	default_values = [asset.asset_account_id]
 	value_attr = 'id'
 	text_attr = 'text'
-       "data-dojo-type" = "lsmb/lib/SubscribeSelect"
+       "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_asset_account"
 } ?>
 </span>
@@ -174,7 +174,7 @@ window.default_unit_label = {
 	default_values = [asset.dep_account_id]
 	value_attr = 'id'
 	text_attr = 'text'
-       "data-dojo-type" = "lsmb/lib/SubscribeSelect"
+       "data-dojo-type" = "lsmb/SubscribeSelect"
        "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_depreciation_account"
 } ?>
 </span>

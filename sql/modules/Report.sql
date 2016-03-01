@@ -61,7 +61,7 @@ CREATE TYPE report_aging_item AS (
 	c90 numeric,
 	duedate date,
 	id int,
-	curr varchar(3),
+	curr char(3),
 	exchangerate numeric,
 	line_items text[][],
         age int
@@ -77,10 +77,6 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 RETURNS SETOF report_aging_item
 AS
 $$
-DECLARE
-	item report_aging_item;
-BEGIN
-	FOR item IN
                   WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
                   FROM business_unit
@@ -178,11 +174,7 @@ BEGIN
                                          ',')::int[]))
                        AND sum(ac.amount_bc::numeric(20,2)) <> 0
 	      ORDER BY entity_id, curr, transdate, invnumber
-	LOOP
-		return next item;
-        END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 DROP FUNCTION IF EXISTS report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
@@ -303,8 +295,10 @@ FOR retval IN
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
               AND (in_approved is false OR (g.approved AND ac.approved))
-              AND (in_from_amount IS NULL OR ac.amount_bc >= in_from_amount)
-              AND (in_to_amount IS NULL OR ac.amount_bc <= in_to_amount)
+              AND (in_from_amount IS NULL
+                   OR abs(ac.amount_bc) >= in_from_amount)
+              AND (in_to_amount IS NULL
+                   OR abs(ac.amount_bc) <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
@@ -426,18 +420,14 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
  in_from_date date, in_to_date date, in_partnumber text, in_parts_id int)
-RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
-DECLARE retval aa_transactions_line;
+RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
-BEGIN
-
-FOR retval IN
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount_bc as amount, a.netamount_bc as netamount,
-       a.netamount_bc - a.amount_bc as tax, 
+       a.invnumber, a.amount_bc, a.netamount_bc,
+       a.netamount_bc - a.amount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
-       a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
-       '{}' as business_units -- TODO
+       a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
+       '{}'::text[] as business_units -- TODO
   FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
                notes, till, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
@@ -492,10 +482,6 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
           OR EXISTS (select 1 FROM invoice
                       WHERE parts_id = in_parts_id AND trans_id = a.id))
 
-LOOP
-   RETURN NEXT retval;
-END LOOP;
-END;
 $$;
 
 CREATE OR REPLACE FUNCTION report__aa_outstanding
@@ -526,13 +512,7 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_ponumber text, in_source text, in_description text, in_notes text,
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
  in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool)
-RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
-
-DECLARE retval aa_transactions_line;
-
-BEGIN
-
-FOR retval IN
+RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.transdate, a.invnumber, a.amount_bc as amount, a.netamount_bc
@@ -541,9 +521,10 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        p.due, p.last_payment, 
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
-       a.shipvia, '{}'
+       a.shipvia, '{}'::text[]
+
   FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
-               notes, 
+               notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
@@ -619,13 +600,6 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                  abs(p.due) > 0.005) IS NOT TRUE)
             )
 
-LOOP
-
-  RETURN NEXT retval;
-
-END LOOP;
-
-END;
 $$;
 
 DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date);

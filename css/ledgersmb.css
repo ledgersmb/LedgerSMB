@@ -173,15 +173,15 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
 .listtotal, table.dynatable tr.listtotal { font-size: 10pt; background-color: #004d99; color: white; font-weight: bold}
 
 textarea {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  border: 1px solid #888888;
-  font-size: 11px;
-  background-color: #eeeeee;
-  font-weight: bold;
+    font-family: inherit;
+/*   border: 1px solid #888888; */
+/*   font-size: 11px; */
+/*   background-color: #eeeeee; */
+/*   font-weight: bold; */
 }
 
 input {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
+/*  font-family: Verdana, Arial, Helvetica, sans-serif; */
   border: 1px solid #888888;
   font-size: 11px;
   background-color: #eeeeee;

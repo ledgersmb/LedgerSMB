@@ -116,9 +116,10 @@ sub from_input{
         return $input if eval {$input->isa(__PACKAGE__)};
     }
     my $has_time = 0;
-    $has_time = 1 if $input =~ /\:/;
+    $has_time = 1 if $input && $input =~ /\:/;
     my $dt = $self->from_db($input);
     bless $dt, __PACKAGE__;
+    return $dt if ! $input;
     $dt->is_date(1);
     $dt->is_time($has_time);
     return $dt;
@@ -135,7 +136,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 sub to_output {
     my ($self) = @_;
     #return undef if !defined $self;
-	 return undef if !defined $self->{_pgobject_is_date};
+	 return '' if !defined $self->{_pgobject_is_date};
     my $fmt;
     if ($self->{_pgobject_is_date}){
         if (defined $LedgerSMB::App_State::User->{dateformat}){

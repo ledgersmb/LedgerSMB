@@ -606,19 +606,9 @@ sub post_invoice {
     $form->{name} =~ s/--$form->{vendor_id}//;
     $form->add_shipto( $dbh, $form->{id} );
 
-    my %audittrail = (
-        tablename => 'ap',
-        reference => $form->{invnumber},
-        formname  => $form->{type},
-        action    => 'posted',
-        id        => $form->{id}
-    );
-
     if (!$form->{separate_duties}){
         $self->add_cogs($form);
     }
-
-    $form->audittrail( $dbh, "", \%audittrail );
 
     foreach $item ( keys %updparts ) {
         $item  = $dbh->quote($item);

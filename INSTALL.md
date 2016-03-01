@@ -27,7 +27,7 @@ System requirements
 LedgerSMB depends on the following software:
 
  * a web server (Starman, Apache v2.x, MS IIS, etc)
- * PostgreSQL 9.1+
+ * PostgreSQL 9.2+
  * Perl 5.10+
 
 
@@ -542,9 +542,7 @@ From LedgerSMB 1.2.x
      (the database created for your company)
    * Click continue when asked to upgrade
    * When asking for upgrade info:
-       * contrib_dir is the directory where either tablefunc.control or
-         tablefunc.sql is, depending on your PostgreSQL version (9.1 and higher
-         would use tablefunc.control)
+       * contrib_dir is the directory where either tablefunc.control is
        * Default country is the country to map contacts which have no country
          information to.  This is the short, two letter ISO code for the
          country, such as AU for Austria, or US for United States.  It is

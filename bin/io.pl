@@ -159,7 +159,7 @@ sub display_row {
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
                               $lsmb_module);
-    @column_index = qw(runningnumber partnumber description qty);
+    @column_index = qw(deleteline runningnumber partnumber description qty);
 
     if ( $form->{type} eq "sales_order" ) {
         push @column_index, "ship";
@@ -221,6 +221,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $form->{invsubtotal} = 0;
     for ( split / /, $form->{taxaccounts} ) { $form->{"${_}_base"} = 0 }
 
+    $column_data{deleteline} = qq|<th class="listheading"></td>|;
     $column_data{runningnumber} =
       qq|<th class="listheading runningnumber" nowrap>| . $locale->text('Item') . qq|</th>|;
     $column_data{partnumber} =
@@ -247,7 +248,9 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     print qq|
   <tr>
     <td>
-      <table width=100%>
+      <table width=100% id="invoice-lines"
+                        data-dojo-type="lsmb/InvoiceLines"
+                        data-dojo-attach-point="lines">
     <tr class=listheading>|;
 
     for (@column_index) { print "\n$column_data{$_}" }
@@ -331,17 +334,14 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
              . qq|<input type="hidden" name="description_$i"
                         value="$form->{"description_$i"}" /></td>|
         } else {
-            if (
-                ( $rows = $form->numtextrows( $form->{"description_$i"}, 46, 6 ) ) >
-                1 )
-            {
-                    $column_data{description} =
-qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
-            }
-            else {
-                 $column_data{description} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
-            }
+            $column_data{description} =
+                qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
+                            id="description_$i" name="description_$i"
+                            $desc_disabled size=48
+                            data-dojo-props="linenum: $i"
+                            style="width:100%;"
+                            rows="1"
+                            >$form->{"description_$i"}</div></td>|;
         }
 
         for (qw(partnumber sku unit)) {
@@ -366,8 +366,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_di
 
         $delivery = qq|
           <td colspan=2 nowrap>
-      <b>${$delvar}</b>
-             <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
+             <b>${$delvar}</b>
+             <input class="date" data-dojo-type="lsmb/DateTextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
           </td>
 |;
 
@@ -399,19 +399,25 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_di
             }
         }
 
-$column_data{runningnumber} =
+        $column_data{runningnumber} =
           qq|<td class="runningnumber"><input data-dojo-type="dijit/form/TextBox" name="runningnumber_$i" size=3 value=$i></td>|;
         if ($form->{"partnumber_$i"}){
+            $column_data{deleteline} = qq|
+<td rowspan="2" valign="middle">
+<button data-dojo-type="dijit/form/Button"><span>X</span>
+<script type="dojo/on" data-dojo-event="click">
+require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
+</script>
+</button>
+</td>|;
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"}
-                 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" value="$i"
-                         name="delete_line">X</button>
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
+            $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
-qq|<td class="partnumber" colspan="2"><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
-            $column_data{description} = '';
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false, linenum: $i" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
@@ -440,6 +446,8 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
         $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
         $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
+<tbody data-dojo-type="lsmb/InvoiceLine"
+ id="line-$i">
         <tr valign=top>|;
 
         for (@column_index) {
@@ -510,6 +518,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value=
     <tr>
       <td colspan=$colspan><hr size=1 noshade></td>
     </tr>
+</tbody>
 |;
 
         $skunumber = "";
@@ -539,277 +548,6 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value=
       . $form->escape( $form->{selectprojectnumber}, 1 ) . qq|">
 
 |;
-
-}
-
-sub select_item {
-
-    if ( $form->{vc} eq "vendor" ) {
-        @column_index =
-          qw(ndx partnumber sku description partsgroup onhand sellprice);
-    }
-    else {
-        @column_index =
-          qw(ndx partnumber description partsgroup onhand sellprice);
-    }
-
-    $column_data{ndx} = qq|<th class="listheading runningnumber">&nbsp;</th>|;
-    $column_data{partnumber} =
-      qq|<th class="listheading partnumber">| . $locale->text('Number') . qq|</th>|;
-    $column_data{sku} =
-      qq|<th class="listheading sku">| . $locale->text('SKU') . qq|</th>|;
-    $column_data{description} =
-      qq|<th class="listheading description">| . $locale->text('Description') . qq|</th>|;
-    $column_data{partsgroup} =
-      qq|<th class="listheading partsgroup">| . $locale->text('Group') . qq|</th>|;
-    $column_data{sellprice} =
-      qq|<th class="listheading sellprice">| . $locale->text('Price') . qq|</th>|;
-    $column_data{onhand} =
-      qq|<th class="listheading onhand">| . $locale->text('Qty') . qq|</th>|;
-
-    $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
-
-    $form->{exchangerate} =
-        $form->format_amount( \%myconfig, $form->{exchangerate} );
-
-    # list items with radio button on a form
-    $form->header;
-
-    $title = $locale->text('Select items');
-
-    print qq|
-<body class="lsmb $form->{dojo_theme}">
-
-<form method=post action="$form->{script}">
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$title</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>$option</td>
-  </tr>
-  <tr>
-    <td>
-      <table width=100%>
-        <tr class=listheading>|;
-
-    for (@column_index) { print "\n$column_data{$_}" }
-
-    print qq|
-        </tr>
-|;
-
-    my $i = 0;
-    foreach $ref ( @{ $form->{item_list} } ) {
-        $i++;
-
-        for (qw(sku partnumber description unit notes partsgroup)) {
-            $ref->{$_} = $form->quote( $ref->{$_} );
-        }
-
-        $column_data{ndx} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=$i></td>|;
-
-        for (qw(partnumber sku description partsgroup)) {
-            $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
-        }
-
-        $column_data{sellprice} = qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{sellprice} / $exchangerate,
-            2, "&nbsp;" )
-          . qq|</td>|;
-        $column_data{onhand} =
-            qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{onhand}, '', "&nbsp;" )
-          . qq|</td>|;
-
-        $j++;
-        $j %= 2;
-        print qq|
-        <tr class=listrow$j>|;
-
-        for (@column_index) {
-            print "\n$column_data{$_}";
-        }
-
-        print qq|
-        </tr>
-|;
-
-        for (
-            qw(partnumber sku description partsgroup partsgroup_id bin weight
-               sellprice listprice lastcost onhand unit assembly
-               taxaccounts inventory_accno_id income_accno_id expense_accno_id
-               pricematrix id image notes)
-          )
-        {
-            print
-              qq|<input type=hidden name="new_${_}_$i" value="$ref->{$_}">\n|;
-        }
-    }
-
-    print qq|
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size=3 noshade></td>
-  </tr>
-</table>
-
-<input name=lastndx type=hidden value=$i>
-
-|;
-
-    # delete variables
-    for (qw(nextsub item_list)) { delete $form->{$_} }
-
-    $form->{action} = "item_selected";
-
-    $form->hide_form;
-
-    print qq|
-<input type="hidden" name="nextsub" value="item_selected">
-
-<br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
-}
-
-sub item_selected {
-
-    $i = $form->{rowcount} - 1;
-    $i = $form->{assembly_rows} - 1 if ( $form->{item} eq 'assembly' );
-    $qty =
-      ( $form->{"qty_$form->{rowcount}"} )
-      ? $form->{"qty_$form->{rowcount}"}
-      : 1;
-
-    for $j ( 1 .. $form->{lastndx} ) {
-
-        if ( $form->{"ndx_$j"} ) {
-
-            $i++;
-
-            $form->{"qty_$i"}      = $qty;
-            # We should unset this since it is pulling from the customer/vendor
-            # $form->{"discount_$i"} = $form->{discount};
-            $form->{"reqdate_$i"}  = $form->{reqdate}
-              if $form->{type} !~ /_quotation/;
-
-            for (
-                qw(id partnumber sku description listprice lastcost sellprice
-                  bin unit weight assembly taxaccounts pricematrix onhand notes
-                  inventory_accno_id image income_accno_id expense_accno_id)
-              )
-            {
-                $form->{"${_}_$i"} = $form->{"new_${_}_$j"};
-            }
-            $form->{"sellprice_$i"} = $form->{"new_sellprice_$j"}
-              if not $form->{"sellprice_$i"};
-
-            $form->{"partsgroup_$i"} =
-              qq|$form->{"new_partsgroup_$j"}--$form->{"new_partsgroup_id_$j"}|;
-
-            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
-            ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
-            $dec = length $dec;
-            $dec ||=$moneyplaces;
-            $decimalplaces1 = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
-
-            ($dec) = ( $form->{"lastcost_$i"} =~ /\.(\d+)/ );
-            $dec = length $dec;
-            $dec ||=$moneyplaces;
-            $decimalplaces2 = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
-
-            # if there is an exchange rate adjust sellprice
-            if ( ( $form->{exchangerate} * 1 ) ) {
-                for (qw(sellprice listprice lastcost)) {
-                    $form->{"${_}_$i"} /= $form->{exchangerate};
-                }
-
-                # don't format list and cost
-                $form->{"sellprice_$i"} =
-                  $form->round_amount( $form->{"sellprice_$i"},
-                    $decimalplaces1 );
-            }
-
-            # this is for the assembly
-            if ( $form->{item} eq 'assembly' ) {
-                $form->{"adj_$i"} = 1;
-
-                for (qw(sellprice listprice weight)) {
-                    $form->{$_} =
-                      $form->parse_amount( \%myconfig, $form->{$_} );
-                }
-
-                $form->{sellprice} +=
-                  ( $form->{"sellprice_$i"} * $form->{"qty_$i"} );
-                $form->{weight} += ( $form->{"weight_$i"} * $form->{"qty_$i"} );
-            }
-
-            $amount =
-              $form->{"sellprice_$i"} * ( 1 - $form->{"discount_$i"} / 100 ) *
-              $form->{"qty_$i"};
-            for ( split / /, $form->{"taxaccounts_$i"} ) {
-                $form->{"${_}_base"} += $amount;
-            }
-            if ( !$form->{taxincluded} ) {
-                my @taxlist = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
-                    $form->{taxaccounts} );
-                $amount += Tax::calculate_taxes( \@taxlist, $form, $amount, 0 );
-            }
-
-            $form->{creditremaining} -= $amount;
-
-            $form->{"runningnumber_$i"} = $i;
-
-            # format amounts
-            if ( $form->{item} ne 'assembly' ) {
-                for (qw(sellprice listprice)) {
-                    $form->{"${_}_$i"} =
-                      $form->format_amount( \%myconfig, $form->{"${_}_$i"},
-                        $decimalplaces1 );
-                }
-                $form->{"lastcost_$i"} =
-                  $form->format_amount( \%myconfig, $form->{"lastcost_$i"},
-                    $decimalplaces2 );
-            }
-            $form->{"discount_$i"} =
-              $form->format_amount( \%myconfig, $form->{"discount_$i"} );
-
-        }
-    }
-
-    $form->{rowcount} = $i;
-    $form->{assembly_rows} = $i if ( $form->{item} eq 'assembly' );
-
-    $form->{focus} = "description_$i";
-
-    # delete all the new_ variables
-    for $i ( 1 .. $form->{lastndx} ) {
-        for (
-            qw(id partnumber sku description sellprice listprice lastcost
-               bin unit weight assembly taxaccounts pricematrix onhand
-               notes inventory_accno_id income_accno_id expense_accno_id image)
-          )
-        {
-            delete $form->{"new_${_}_$i"};
-        }
-    }
-
-    for (qw(ndx lastndx nextsub)) { delete $form->{$_} }
-
-    &display_form;
 
 }
 
@@ -854,7 +592,7 @@ sub new_item {
         print qq|
 <h4>| . $locale->text('What type of item is this?') . qq|</h4>
 
-<form method=post action=ic.pl>
+<form method="post" data-dojo-type="lsmb/Form" action=ic.pl>
 
 <p>
 
@@ -1851,18 +1589,6 @@ sub print_form {
 
         $old_form->{printed} = $form->{printed} if %$old_form;
 
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'printed',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail )
-          if %$old_form;
-
     } elsif ( $form->{media} eq 'email' ) {
         $form->{subject} = qq|$form->{label} $form->{"${inv}number"}|
           unless $form->{subject};
@@ -1915,17 +1641,6 @@ sub print_form {
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }
 
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'emailed',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail )
-          if %$old_form;
     } elsif ( $form->{media} eq 'queue' ) {
         %queued = split / /, $form->{queued};
 
@@ -1950,18 +1665,6 @@ sub print_form {
         $form->update_status( \%myconfig, 1);
 
         $old_form->{queued} = $form->{queued};
-
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'queued',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail );
-
     }
 
     $form->format_string( "email", "cc", "bcc" );
@@ -2053,7 +1756,7 @@ sub ship_to {
     print qq|
                <body class="lsmb $form->{dojo_theme}">
 
-<form name="form" method=post action=$form->{script}>
+<form name="form" method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100% cellspacing="0" cellpadding="0" border="0">
     <tr>

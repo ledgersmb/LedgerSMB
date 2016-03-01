@@ -1,0 +1,13 @@
+# this is a test comment
+   # offset comment, line should not be parsed
+    
+
+
+test1.sql
+!test2.sql
+test1.sql
+
+!test2.sql
+    
+!test1.sql
+test2.sql # trailing comment

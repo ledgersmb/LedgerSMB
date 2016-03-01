@@ -7,7 +7,7 @@
 <body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post" enctype="multipart/form-data">
+<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post" enctype="multipart/form-data">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
     class = "hidden"
@@ -17,7 +17,7 @@
 <?lsmb IF multi ?>
 <div class="listtop"><?lsmb text('Batch Information') ?></div>
 <?lsmb END ?>
-<div data-dojo-type="lsmb/lib/TabularForm"
+<div data-dojo-type="lsmb/TabularForm"
      data-dojo-props="cols:1">
 <div class="inputrow" id = "referencerow">
 <?lsmb PROCESS input element_data = {

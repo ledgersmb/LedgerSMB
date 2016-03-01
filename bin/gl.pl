@@ -88,15 +88,6 @@ $form->{login} = 'test';
 # $locale->text('Nov')
 # $locale->text('Dec')
 
-sub pos_adjust {
-    $form->{rowcount} = 3;
-    eval {require "pos.conf.pl"} || $form->error($locale->text(
-      "Could not open pos.conf.pl in [_1] line [_2]: [_3]",
-       __FILE__, __LINE__, $!));
-    $form->{accno_1} = $pos_config{'close_cash_accno'};
-    $form->{accno_2} = $pos_config{'coa_prefix'};
-    $form->{accno_3} = $pos_config{'coa_prefix'};
-}
 
 sub edit_and_save {
     use LedgerSMB::DBObject::Draft;
@@ -131,17 +122,6 @@ sub approve {
     }
 }
 
-sub add_pos_adjust {
-    $form->{pos_adjust} = 1;
-    $form->{reference} =
-      $locale->text("Adjusting Till: (till) Source: (source)");
-    $form->{description} =
-      $locale->text("Adjusting till due to data entry error.");
-    $form->{callback} =
-"$form->{script}?action=add_pos_adjust&transfer=$form->{transfer}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
-      unless $form->{callback};
-    &add;
-}
 
 sub new {
      for my $row (0 .. $form->{rowcount}){
@@ -156,6 +136,12 @@ sub new {
      add();
 }
 
+sub copy_to_new {
+     delete $form->{reference};
+     delete $form->{id};
+     update();
+}
+
 sub add {
 
     $form->{title} = "Add";
@@ -166,9 +152,6 @@ sub add {
 
     if (!$form->{rowcount}){
         $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
-    }
-    if ( $form->{pos_adjust} ) {
-        &pos_adjust;
     }
     $form->{oldtransdate} = $form->{transdate};
     $form->{focus}        = "reference";
@@ -280,9 +263,11 @@ sub display_form
             { ndx => 6, key => 'N', value => $locale->text('Save as new') },
           'schedule' =>
             { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-                  'new' =>
-                    { ndx => 9, key => 'N', value => $locale->text('New') },
-          );
+          'new' =>
+            { ndx => 9, key => 'N', value => $locale->text('New') },
+          'copy_to_new' =>
+            { ndx => 10, key => 'C', value => $locale->text('Copy to New') },
+	 );
 
           if ($form->{separate_duties}){
           $hiddens{separate_duties}=$form->{separate_duties};
@@ -292,17 +277,16 @@ sub display_form
               $a{'save_temp'} = 1;
 
           if ( $form->{id}) {
-                  $a{'new'} = 1;
+              $a{'new'} = 1;
 
-          for ( 'save_as_new', 'schedule' ) { $a{$_} = 1 }
+              for ( 'save_as_new', 'schedule', 'copy to new' ) { $a{$_} = 1 }
 
-          for ( 'post', 'delete' ) { $a{$_} = 1 }
-          }
-          elsif (!$form->{id}){
-                 $a{'update'} = 1;
-          if ( $transdate > $closedto ) {
-              for ( "post", "schedule" ) { $a{$_} = 1 }
-          }
+              for ( 'post', 'delete' ) { $a{$_} = 1 }
+          } else {
+              $a{'update'} = 1;
+              if ( $transdate > $closedto ) {
+                  for ( "post", "schedule" ) { $a{$_} = 1 }
+              }
           }
 
           if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
@@ -472,8 +456,6 @@ sub display_row
  }
 
 $hiddens{rowcount}=$form->{rowcount};
-$hiddens{pos_adjust}=$form->{pos_adjust};
-
 }
 
 sub edit {

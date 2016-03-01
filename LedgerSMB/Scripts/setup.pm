@@ -1231,7 +1231,7 @@ sub rebuild_modules {
 
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die "Upgrade failed.";
-
+    $database->apply_changes;
     complete($request);
 }
 

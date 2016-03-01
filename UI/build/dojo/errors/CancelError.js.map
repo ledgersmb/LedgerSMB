@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"CancelError.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,wCAAgD,QAAA,CAASC,CAAT,QAWxCA,EAAA,6CAXwC,CAAhD;",
+"sources":["CancelError.js.uncompressed.js"],
+"names":["define","create"]
+}

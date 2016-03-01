@@ -722,7 +722,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
 <body class="lsmb $form->{dojo_theme}">
 | . $form->open_status_div . qq|
 
-<form method="post" action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
     $form->hide_form(
@@ -778,7 +778,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         <table width="100%">
           <tr>
         <th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-        <td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/lib/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>
+        <td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>
           </tr>
           $sellprice
           $lastcost
@@ -934,7 +934,7 @@ sub form_footer {
     print qq|
 </form> |;
     if ($form->{id}){
-        print qq|<form action="pnl.pl" method="GET">
+        print qq|<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET">
         <input type="hidden" name="id" value="$form->{id}">
         <input type="hidden" name="pnl_type" value="product">
         <table width="100%">
@@ -1190,8 +1190,8 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
           . qq|></td>
       $currency
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
     </tr>
 |;
     }
@@ -1328,9 +1328,9 @@ sub assembly_row {
             $column_data{qty} =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="linenum: $i"></td>|;
             $column_data{description} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=30 value="$form->{"description_$i"}"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 value="$form->{"description_$i"}" data-dojo-props="linenum: $i"></td>|;
             $column_data{partsgroup} =
 qq|<td><select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 
@@ -1467,33 +1467,24 @@ sub update {
             if ($rows) {
                 $form->{"adj_$i"} = 1;
 
-                if ( $rows > 1 ) {
-                    $form->{makemodel_rows}--;
-                    $form->{customer_rows}--;
-                    &select_item;
-                    $form->finalize_request();
+                $form->{"qty_$i"} = 1;
+                $form->{"adj_$i"} = 1;
+                for (qw(partnumber description unit)) {
+                    $form->{item_list}[$i]{$_} =
+                        $form->quote( $form->{item_list}[$i]{$_} );
                 }
-                else {
-                    $form->{"qty_$i"} = 1;
-                    $form->{"adj_$i"} = 1;
-                    for (qw(partnumber description unit)) {
-                        $form->{item_list}[$i]{$_} =
-                          $form->quote( $form->{item_list}[$i]{$_} );
-                    }
-                    for ( keys %{ $form->{item_list}[0] } ) {
-                        $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
-                    }
-                    if ( $form->{item_list}[0]{partsgroup_id} ) {
-                        $form->{"partsgroup_$i"} =
-qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;
-                    }
-
-                    $form->{"runningnumber_$i"} = $form->{assembly_rows};
-                    $form->{assembly_rows}++;
-
-                    &check_form;
-
+                for ( keys %{ $form->{item_list}[0] } ) {
+                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
                 }
+                if ( $form->{item_list}[0]{partsgroup_id} ) {
+                    $form->{"partsgroup_$i"} =
+                        qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;
+                }
+
+                $form->{"runningnumber_$i"} = $form->{assembly_rows};
+                $form->{assembly_rows}++;
+
+                &check_form;
 
             }
             else {
@@ -1694,7 +1685,7 @@ sub select_name {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action="$form->{script}">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=vr value=$vr>
 
@@ -2011,7 +2002,7 @@ sub stock_assembly {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width="100%">
   <tr>
@@ -2118,7 +2109,7 @@ sub list_assemblies {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>

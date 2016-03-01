@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"regexp.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,iDAA0D,QAAA,CAASC,CAAT,CAAeC,CAAf,MAKtDC,IAIJD,EAAAE,UAAA,eAA8BD,CAA9B,CAEAA,EAAAE,aAX0D,CAWpCC,QAAAA,CAAmBC,CAAnBD,CAAmCE,CAAnCF,QAMdC,EAAAE,QAAA,kCAA8C,QAAA,CAASC,CAAT,QACjDF,EADiD,MACvCA,CAAAG,QAAA,CAAeD,CAAf,CADuC,CAE5CA,CAF4C,MAItCA,CAJsC,CAA9C,CANcJ,CActBH,EAAAS,aAzB0D,CAyBpCC,QAAAA,CAAyBC,CAAzBD,CAA0CE,CAA1CF,CAA0DG,CAA1DH,OAmBhBC,CAnBgBD,WAmBDI,MAnBCJ,QAoBbE,EAAA,CAAGD,CAAH,CApBaD,SAwBjBK,IAxBiBL,CAyBbM,GAzBaN,CAyBNM,CAzBMN,CAyBFC,CAAAM,OAzBEP,CAyBUM,CAzBVN,GA2BpBK,CAAAG,KAAA,CAAON,CAAA,CAAGD,CAAA,CAAIK,CAAJ,CAAH,CAAP,CA3BoBN,OA+BdV,EAAAmB,MAAA,CAAaJ,CAAAK,KAAA,KAAb,CAA0BP,CAA1B,CA/BcH,CAkCtBV,EAAAmB,MA3D0D,CA2D3CE,QAAAA,CAAmBC,CAAnBD,CAA2CR,CAA3CQ,aAMAR,CANAQ,UAMwBC,CANxBD,KA3D2C,OAoEnDrB,EApEmD,CAA1D;",
+"sources":["regexp.js.uncompressed.js"],
+"names":["define","dojo","lang","regexp","setObject","escapeString","regexp.escapeString","str","except","replace","ch","indexOf","buildGroupRE","regexp.buildGroupRE","arr","re","nonCapture","Array","b","i","length","push","group","join","regexp.group","expression"]
+}

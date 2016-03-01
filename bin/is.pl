@@ -188,6 +188,13 @@ sub invoice_links {
 
     foreach $key ( keys %{ $form->{AR_links} } ) {
 
+        $form->{"select$key"} = '';
+        foreach $ref ( @{ $form->{AR_links}{$key} } ) {
+            $value = "$ref->{accno}--$ref->{description}";
+            $selected = ($value eq $form->{$key}) ? " selected" : "";
+            $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
+        }
+
         if ( $key eq "AR_paid" ) {
             for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AR_paid_$i"} =
@@ -331,10 +338,10 @@ sub form_header {
 |;
 
     if ( $form->{selectcustomer} ) {
-        $customer = qq|<select data-dojo-type="dijit/form/Select" name="customer">$form->{selectcustomer}</select>|;
+        $customer = qq|<select data-dojo-type="dijit/form/Select" id="customer" name="customer">$form->{selectcustomer}</select>|;
     }
     else {
-        $customer = qq|<input data-dojo-type="dijit/form/TextBox" name="customer" value="$form->{customer}" size="35">
+        $customer = qq|<input data-dojo-type="dijit/form/TextBox" id="customer" name="customer" value="$form->{customer}" size="35">
      <a target="new" id="new-contact"
         href="contact.pl?action=add&entity_class=2">[| .
         $locale->text('New') . qq|]</a> |;
@@ -396,7 +403,10 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method=post action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post"
+      id="invoice"
+      data-dojo-type="lsmb/Invoice"
+      action="$form->{script}" >
 |;
 
     $form->hide_form(
@@ -439,7 +449,7 @@ function on_return_submit(event){
       <td>
         <table>
           <tr>
-        <th align=right nowrap>| . $locale->text('Customer') . qq|</th>
+        <th align=right nowrap><label for="customer">| . $locale->text('Customer') . qq|</label></th>
         <td colspan=3>$customer</td>
         <input type=hidden name="customer_id" value="$form->{customer_id}">
         <input type=hidden name="oldcustomer" value="$form->{oldcustomer}">
@@ -494,7 +504,7 @@ function on_return_submit(event){
 
           <tr>
         <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
-        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR">$form->{selectAR}</select></td>
+        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR">$form->{selectAR}</select></td>
           </tr>
           $department
           $exchangerate
@@ -530,15 +540,15 @@ function on_return_submit(event){
           </tr>
           <tr class="crdate-row">
         <th align=right>| . $locale->text('Invoice Created') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
           </tr>
           <tr class="transdate-row">
         <th align=right>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
           </tr>
           <tr>
         <th align=right>| . $locale->text('Due Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -989,7 +999,7 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" 
         $column_data{AR_paid} =
 qq|<td align="center"><select data-dojo-type="dijit/form/Select" name="AR_paid_$i" id="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
-qq|<td align="center"><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
+qq|<td align="center"><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
         $column_data{source} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size="11" value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
@@ -1126,6 +1136,9 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
+
+    &invoice_links;
+
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
@@ -1239,8 +1252,14 @@ sub update {
                     $form->{item_list}[$i]{$_} =
                       $form->quote( $form->{item_list}[$i]{$_} );
                 }
+
+                ###EH 20160218
+                ### Why do we move {item_list}[0] into the $form hash,
+                ### while above we quoted {item_list}[$i] ????
                 for ( keys %{ $form->{item_list}[0] } ) {
-                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
+                    # copy, but don't overwrite e.g. description
+                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_}
+                         unless $form->{"${_}_$i"};
                 }
                 if (! defined $form->{"discount_$i"}){
                     $form->{"discount_$i"} = $form->{discount} * 100;

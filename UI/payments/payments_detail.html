@@ -17,7 +17,7 @@
     this -->
 <div id="payments">
 <div class="listtop"><?lsmb payment.payment_type ?></div>
- <form data-dojo-type="lsmb/lib/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
+ <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
  <!-- Moving all hidden variables to the top.  -CT -->
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"
@@ -206,7 +206,7 @@
 						class = 'selectall'
 						value = 0
 						type  = 'checkbox'
-                      "data-dojo-type" = "lsmb/lib/PublishCheckBox"
+                      "data-dojo-type" = "lsmb/PublishCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
 					} ?>
 				</div>
@@ -245,7 +245,7 @@
 						value   = r.contact_id
 						checked = (r.selected) ? "checked" : undef
                   class   = 'contactcb'
-                      "data-dojo-type" = "lsmb/lib/SubscribeCheckBox"
+                      "data-dojo-type" = "lsmb/SubscribeCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
 					} ?>
 					<?lsmb r.econtrol_code ?> --
@@ -274,7 +274,7 @@
 								label   = text('Some')
 								checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 								type    = "radio"
-                        "data-dojo-type" = "lsmb/lib/PublishRadioButton"
+                        "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
 							 }	?>
 						</div>
@@ -287,7 +287,7 @@
 								label   = text('All')
 								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 								type    = "radio"
-                        "data-dojo-type" = "lsmb/lib/PublishRadioButton"
+                        "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
 						 }	?>
 						</div>
@@ -310,7 +310,7 @@
 
 					<table id = "invoice-data-table-<?lsmb r.contact_id ?>"
                       width="100%"
-                      data-dojo-type="lsmb/lib/SubscribeShowHide"
+                      data-dojo-type="lsmb/SubscribeShowHide"
                       data-dojo-props="topic:'ui/pay/bulk/invoice-data-table-<?lsmb r.contact_id ?>',showValues:['some']"
                       <?lsmb IF 'some' != ${"paid_$r.contact_id"} ; -?>
                       style="display:none"

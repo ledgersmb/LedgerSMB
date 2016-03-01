@@ -244,18 +244,7 @@ UPDATE gl
         }
     }
 
-    my %audittrail = (
-        tablename => 'gl',
-        reference => $form->{reference},
-        formname  => 'transaction',
-        action    => 'posted',
-        id        => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-
     $form->save_recurring( $dbh, $myconfig );
-
 }
 
 sub transaction {

@@ -30,8 +30,7 @@ CREATE OR REPLACE FUNCTION business_unit__list_by_class
 in_strict_credit bool)
 RETURNS SETOF business_unit AS
 $$
-BEGIN
-RETURN QUERY SELECT * FROM business_unit
+SELECT * FROM business_unit
               WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on)
                                       AND coalesce(end_date, in_active_on)
                       OR in_active_on IS NULL)
@@ -40,8 +39,7 @@ RETURN QUERY SELECT * FROM business_unit
                         OR (in_credit_id IS NULL))
                     AND class_id = in_business_unit_class_id
            ORDER BY control_code;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION business_unit__list_by_class
 (in_business_unit_class_id int, in_active_on date, in_credit_id int,

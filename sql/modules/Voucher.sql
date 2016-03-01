@@ -47,9 +47,6 @@ CREATE TYPE voucher_list AS (
 CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
 $$
-declare voucher_item record;
-BEGIN
-    	FOR voucher_item IN
 		SELECT v.id, a.invoice, a.invnumber, e.name,
 			v.batch_id, v.trans_id,
 			a.amount_bc, a.transdate, 'Payable', v.batch_class
@@ -134,11 +131,7 @@ BEGIN
 		GROUP BY v.id, g.reference, g.description, v.batch_id,
 			v.trans_id, g.transdate
 		ORDER BY 7, 1
-	LOOP
-		RETURN NEXT voucher_item;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION voucher__list (in_batch_id integer) IS
 $$ Retrieves a list of vouchers and amounts attached to the batch.$$;
@@ -158,32 +151,25 @@ CREATE TYPE batch_list_item AS (
 );
 
 CREATE OR REPLACE FUNCTION batch__lock(in_batch_id int)
-RETURNS BOOL LANGUAGE PLPGSQL SECURITY DEFINER AS
+RETURNS BOOL LANGUAGE SQL SECURITY DEFINER AS
 $$
-BEGIN
 UPDATE batch SET locked_by = (select max(session_id)
                                 FROM "session" where users_id = (
                                         select id from users
                                          WHERE username = SESSION_USER))
- WHERE locked_by IS NULL;
-RETURN FOUND;
-END;
+ WHERE locked_by IS NULL
+RETURNING true;
 $$;
 
 CREATE OR REPLACE FUNCTION batch__unlock(in_batch_id int)
-RETURNS BOOL LANGUAGE plpgsql SECURITY DEFINER AS
+RETURNS BOOL LANGUAGE sql SECURITY DEFINER AS
 $$
-BEGIN
-
 UPDATE batch SET locked_by = NULL
  WHERE id = $1 AND locked_by IN (select session_id
                                    from "session" s
                                    join users u on (u.id = s.users_id)
-                                  where username = SESSION_USER);
-
-RETURN FOUND;
-
-END;
+                                  where username = SESSION_USER)
+RETURNING true;
 $$;
 
 CREATE OR REPLACE FUNCTION
@@ -193,9 +179,6 @@ batch__search(in_class_id int, in_description text, in_created_by_eid int,
 	in_amount_lt numeric, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
-DECLARE out_value batch_list_item;
-BEGIN
-	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
 			b.created_on, b.default_date,
 			sum(
@@ -256,11 +239,7 @@ BEGIN
 			<= in_amount_lt)
 		ORDER BY b.control_code, b.description
 
-	LOOP
-		RETURN NEXT out_value;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION
 batch__search(in_class_id int, in_description text, in_created_by_eid int,
@@ -288,11 +267,8 @@ batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
-DECLARE out_value batch_list_item;
-BEGIN
-	FOR out_value IN
 		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, b.default_date, NULL
+			b.created_on, b.default_date, NULL::NUMERIC, NULL::numeric, false
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)
@@ -308,11 +284,7 @@ BEGIN
 			)
 		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
 			b.control_code, b.default_date
-	LOOP
-		RETURN NEXT out_value;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
@@ -331,11 +303,8 @@ batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
 	in_amount_lt numeric, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
-DECLARE out_value batch_list_item;
-BEGIN
-	FOR out_value IN
                SELECT b.id, c.class, b.control_code, b.description, u.username,
-                        b.created_on, b.default_date, 0, 0
+                        b.created_on, b.default_date, 0::numeric, 0::numeric, false
                 FROM batch b
                 JOIN batch_class c ON (b.batch_class_id = c.id)
                 JOIN users u ON (u.entity_id = b.created_by)
@@ -351,11 +320,7 @@ BEGIN
             ORDER BY b.control_code, b.description
 
 
-	LOOP
-		RETURN NEXT out_value;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION
 batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
@@ -373,7 +338,6 @@ $$;
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
 returns date AS
 $$
-BEGIN
 	UPDATE ar SET approved = true
 	WHERE id IN (select trans_id FROM voucher
 		WHERE batch_id = in_batch_id
@@ -400,9 +364,8 @@ BEGIN
 			WHERE username = SESSION_USER)
 	WHERE id = in_batch_id;
 
-	RETURN now()::date;
-END;
-$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+	SELECT now()::date;
+$$ LANGUAGE SQL SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION batch_post(in_batch_id INTEGER) FROM public;
 
@@ -427,15 +390,8 @@ IS $$ Returns a list of all batch classes.$$;
 -- Move to the admin module and call it from there.
 CREATE OR REPLACE FUNCTION batch_get_users() RETURNS SETOF users AS
 $$
-DECLARE out_record users%ROWTYPE;
-BEGIN
-	FOR out_record IN
 		SELECT * from users WHERE entity_id IN (select created_by from batch)
-	LOOP
-		RETURN NEXT out_record;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION batch_get_users() IS
 $$ Returns a sim[ple set of user objects.  This should be renamed so that
@@ -446,17 +402,15 @@ in_batch_number text, in_description text, in_batch_class text,
 in_batch_date date)
 RETURNS int AS
 $$
-BEGIN
 	INSERT INTO
 		batch (batch_class_id, default_date, description, control_code,
 			created_by)
 	VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
 		in_batch_date, in_description, in_batch_number,
-			(select entity_id FROM users WHERE username = session_user));
+			(select entity_id FROM users WHERE username = session_user))
+        RETURNING id;
 
-	return currval('batch_id_seq');
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION batch_create(
 in_batch_number text, in_description text, in_batch_class text,

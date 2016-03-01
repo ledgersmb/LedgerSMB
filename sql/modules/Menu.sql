@@ -8,18 +8,13 @@ CREATE TYPE menu_item AS (
    label varchar,
    path varchar,
    parent int,
-   args varchar[]
+   args text[]
 );
 
 
 
 CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS
 $$
-DECLARE
-	item menu_item;
-	arg menu_attribute%ROWTYPE;
-BEGIN
-	FOR item IN
                WITH RECURSIVE tree (path, id, parent, level, positions)
                                AS (select id::text as path, id, parent,
                                            0 as level, position::text
@@ -82,11 +77,7 @@ BEGIN
             GROUP BY n.position, n.id, c.level, n.label, c.path, c.positions,
                      n.parent
             ORDER BY string_to_array(c.positions, ',')::int[]
-	LOOP
-		RETURN NEXT item;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION menu_generate() IS
 $$
