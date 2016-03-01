@@ -41,7 +41,7 @@ LANGUAGE SQL AS $$
                    WHEN oe_class_id IN (3, 4) THEN o.quonumber
                    ELSE NULL
                END as ordnumber, o.transdate, o.reqdate,
-              o.amount_bc, c.name, o.netamount_bc,
+              o.amount_tc, c.name, o.netamount_tc,
               o.entity_credit_account, o.closed, o.quonumber, o.shippingpoint,
               o.shipvia, pe.first_name || ' ' || pe.last_name
               AS employee, pm.first_name || ' ' || pm.last_name AS manager,
@@ -118,7 +118,7 @@ FOR loop_info IN
 LOOP
 
 INSERT INTO oe
-       (ordnumber, transdate,   amount_bc,     netamount_bc,
+       (ordnumber, transdate,   amount_tc,     netamount_tc,
         reqdate,   taxincluded, shippingpoint, notes,
         curr,      person_id,   closed,        quotation,
         quonumber, intnotes,    shipvia,       language_code,
@@ -126,7 +126,7 @@ INSERT INTO oe
 SELECT CASE WHEN oe_class_id IN (1, 2)
             THEN setting_increment(settings[oe_class_id])
             ELSE NULL
-        END,          now()::date,        sum(amount_bc),  sum(netamount_bc),
+        END,          now()::date,        sum(amount_tc),  sum(netamount_tc),
         min(reqdate), taxincluded,        min(shippingpoint), '',
         curr,         my_person_id, false, false,
         CASE WHEN oe_class_id IN (3, 4)
