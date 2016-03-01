@@ -19,7 +19,6 @@ CREATE TYPE order_search_line AS (
     closed bool,
     quonumber text,
     shippingpoint text,
-    exchangerate numeric,
     shipvia text,
     employee text,
     manager text,
@@ -44,8 +43,7 @@ LANGUAGE SQL AS $$
                END as ordnumber, o.transdate, o.reqdate,
               o.amount, c.name, o.netamount,
               o.entity_credit_account, o.closed, o.quonumber, o.shippingpoint,
-              CASE WHEN ct.entity_class = 2 THEN ex.buy ELSE ex.sell END
-              AS exchangerate, o.shipvia, pe.first_name || ' ' || pe.last_name
+              o.shipvia, pe.first_name || ' ' || pe.last_name
               AS employee, pm.first_name || ' ' || pm.last_name AS manager,
               o.curr, o.ponumber, ct.meta_number, c.id
          FROM oe o
@@ -55,8 +53,6 @@ LANGUAGE SQL AS $$
     LEFT JOIN entity_employee e ON (pe.entity_id = e.entity_id)
     LEFT JOIN person pm ON (e.manager_id = pm.id)
     LEFT JOIN entity_employee m ON (pm.entity_id = m.entity_id)
-    LEFT JOIN exchangerate ex
-              ON (ex.curr = o.curr AND ex.transdate = o.transdate)
         WHERE o.oe_class_id = in_oe_class_id
              AND (in_meta_number IS NULL
                    or ct.meta_number ILIKE in_meta_number || '%')
