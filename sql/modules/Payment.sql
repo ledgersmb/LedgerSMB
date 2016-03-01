@@ -240,7 +240,7 @@ $$
 		        AND due <> 0
 		        AND a.approved = true
 		        GROUP BY a.invnumber, a.transdate, a.amount_bc, amount_tc,
-              discount, discount_tc, ac.due, a.id, c.discount_terms,
+              discount, discount_tc, ac.due, ac.due_fx, a.id, c.discount_terms,
               a.curr, a.invoice;
 $$ LANGUAGE SQL;
 
