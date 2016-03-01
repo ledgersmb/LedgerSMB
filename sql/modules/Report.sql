@@ -77,7 +77,7 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 RETURNS SETOF report_aging_item
 AS
 $$
-                  WITH RECURSIVE bu_tree (id, path) AS (
+     WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
                   FROM business_unit
                  WHERE id = any(in_business_units)
@@ -118,7 +118,7 @@ $$
 				JOIN invoice i ON (i.parts_id = p.id)
 				WHERE i.trans_id = a.id) AS line_items,
                    (coalesce(in_to_date, now())::date - a.transdate) as age
-		  FROM (select id, invnumber, till, ordnumber, amount, duedate,
+		  FROM (select id, invnumber, till, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                -1 AS sign, transdate, force_closed,
                                CASE WHEN in_use_duedate
@@ -130,7 +130,7 @@ $$
                           FROM ar
                          WHERE in_entity_class = 2
                          UNION
-                        SELECT id, invnumber, null, ordnumber, amount, duedate,
+                        SELECT id, invnumber, null, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                1 as sign, transdate, force_closed,
                                CASE WHEN in_use_duedate
@@ -167,7 +167,7 @@ $$
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
-                       a.ponumber, a.notes, a.amount, a.sign,
+                       a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
                 HAVING (in_business_units is null or in_business_units
                        <@ compound_array(string_to_array(bu_tree.path,
