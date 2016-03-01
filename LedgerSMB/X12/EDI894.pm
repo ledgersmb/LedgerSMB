@@ -49,20 +49,17 @@ sub _order {
     my $i = 0;
 
     while (my $loop = $self->parser->get_next_loop){
-        given ($loop) {
-            when ('ISA'){
+          if ('ISA' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $sender_idx = $elements[5];
                 $sender_id = $elements[6];
-            }
-            when ('G82') { 
+          } elsif ('G82' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{transdate} = $elements[10];
                 $form->{ordnumber} = $elements[9];
-            }
-            when ('G83') {
+          } elsif ('G83' eq $loop) {
                 ++$i;
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
@@ -70,8 +67,7 @@ sub _order {
                 $form->{"unit_$i"} = $elements[3];
                 $form->{"partnumber_$i"} = $elements[5];
                 $form->{"sellprice_$i"} = $elements[9];
-            }
-       }
+         }
     }
     return $form;
 }

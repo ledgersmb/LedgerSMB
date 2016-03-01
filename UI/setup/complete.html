@@ -7,6 +7,7 @@ include_script = ['UI/setup/login.js', 'UI/util.js', 'UI/logout/epiphany.js',
                   'UI/setup/safari.js' ] ?>
 <?lsmb PROCESS elements.html ?>
 <body class="<?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Database Operation Complete') ?></div>
 <p><?lsmb text('This database operation has completed successfully.  LedgerSMB may now be used.'); ?></p>
@@ -30,5 +31,6 @@ include_script = ['UI/setup/login.js', 'UI/util.js', 'UI/logout/epiphany.js',
   </tbody>
 </table>
 <?lsmb END ?>
+</div>
 </body>
 </html>

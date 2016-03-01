@@ -1,12 +1,22 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.26
+* Removed broken and largely useless lwp tests (Chris T)
+* Moved X12 support from features downgraded to experimental (Chris T)
+* Fixed stylesheet class for setup console (Chris T, #1204)
+* Added Copy to New for GL transactions (Chris T, #1046)
+* Fixed amount range not respected on gl search (Chris T, #1287)
+* Fixed invalid number crash when not displaying credit (Chris T, #1263)
+
 Changelog for 1.4.25
 * Added datepicker to invoice Delivery Date field (Nick P)
 * Fixed reversal of sales invoice with parts without inventory (Erik H, #990)
+* Updates to the Estonian language (Peeter P)
 
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
+Peeter P is Peeter Partel
 
 
 Changelog for 1.4.24
@@ -57,6 +67,7 @@ Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
 * Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
 * Fixed order of PNL Account Category is Off (Erik H, GH1069)
+* Fixed statements not printing from db templates (Chris T)
 * FEATURE: Added (back) user-selectable report language (Erik H GH1106)
 * Fixed missing report styling on financial reports (Erik H GH1080)
 * Fixed reports show totals above sections (Erik H GH1083)
@@ -64,7 +75,6 @@ Changelog for 1.4.21
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-
 
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)

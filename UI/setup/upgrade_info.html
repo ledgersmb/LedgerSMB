@@ -3,6 +3,7 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body class="<?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Upgrade Info') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="POST" name="upgrade_info">
@@ -80,5 +81,6 @@ your database is in an inconsistent state and needs to be fixed first.
 } ?>
 </div>
 </form>
+</div>
 </body>
 </html>

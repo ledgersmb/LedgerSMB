@@ -3,6 +3,7 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body class="<?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Enter User') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="POST" name="new_user">
@@ -139,5 +140,6 @@ INCLUDE select element_data = {
 } ?>
 </div>
 </form>
+</div>
 </body>
 </html>

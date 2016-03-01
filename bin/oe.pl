@@ -471,8 +471,9 @@ sub form_header {
 |;
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
+        if (LedgerSMB::Setting->get('show_creditlimit')){
 
-        $creditremaining = qq|
+          $creditremaining = qq|
 	      <tr>
 		<td></td>
 		<td>
@@ -480,16 +481,17 @@ sub form_header {
 		    <tr>
 		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|
-          . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
-          . qq|</td>
+            . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
+            . qq|</td>
 		      <td width=10></td>
 		      <th align=right nowrap>| . $locale->text('Remaining') . qq|</th>
 		      <td class="plus$n" nowrap>|
-          . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
-          . qq|</td>
-	|;
-         $creditremaining = qq|<tr><td colspan="2"><table><tr>|
-             unless LedgerSMB::Setting->get('show_creditlimit');
+            . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
+            . qq|</td>
+	  |;
+         } else {
+            $creditremaining = qq|<tr><td colspan="2"><table><tr>|;
+         }
          if ($form->{entity_control_code}){
 			$creditremaining .= qq|
 	        <tr class="control-code-field">

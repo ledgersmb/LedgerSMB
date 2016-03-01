@@ -50,8 +50,7 @@ sub _order {
     my $i = 0;
 
     while (my $loop = $self->parser->get_next_loop){
-        given ($loop) {
-            when ('ISA'){
+        if ('ISA' eq $loop){
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $sender_idx = $elements[5];
@@ -77,46 +76,39 @@ sub _order {
                    $elements[16],
                 );
                 $form->{edi_isa_return} = join $sep, @new_elements;
-            }
-            when ('ST'){
+        } elsif ('ST' eq $loop){
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{edi_st_id} = $elements[2];
                 $form->{edi_spec} = '850';
-            }
-            when ('GS'){
+        } elsif ('GS' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{edi_gs} = \@elements;
                 $form->{edi_f_id} = $elements[1];
                 $form->{edi_g_cc} = $elements[6];
-            }
-            when ('GE'){
+        } elsif ('GE' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{edi_ge} = \@elements;
-            }
-            when ('BEG'){
+        } elsif ('BEG' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{ordnumber} = $elements[3];
                 $form->{transdate} = $elements[5];
                 $form->{transdate} =~ s/(\d{4})(\d{2})(\d{2})/$1-$2-$3/;
-            }
-            when ('PO1'){
+        } elsif ('PO1' eq $loop) {
                 ++$i;
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{"qty_$i"} = $elements[2];
                 $form->{"sellprice_$i"} = $elements[4];
                 $form->{"partnumber_$i"} = $elements[7];
-            }
-            when ('PID'){
+        } elsif ('PID' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{"description_$i"}  = $elements[5];
-            }
-            when ('CTT'){
+        } elsif ('CTT' eq $loop) {
                 # Perform checks and error if does not work. 
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
@@ -124,7 +116,6 @@ sub _order {
                 $invtotal += ($form->{"qty_$_"} * $form->{"sellprice_$_"})
                      for (1 .. $i);
                 #die 'Incorrect total: got ' . $elements[2] . " expected $invtotal" if $elements[2] and $elements[2] != $invtotal;
-            }
         }
     }
     return $form;

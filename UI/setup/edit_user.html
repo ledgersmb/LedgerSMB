@@ -4,6 +4,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; ?>
 <body class="<?lsmb dojo_theme ?>">
+ <div class="setupconsole">
 	<div class="listtop">
             <?lsmb 
                IF request.pls_import;
@@ -159,6 +160,6 @@ include_stylesheet=["UI/setup/stylesheet.css"];
             </table></div>
         </form>   
 <?lsmb END ?>
-
+</div>
 </body>
 </html>

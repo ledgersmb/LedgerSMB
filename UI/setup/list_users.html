@@ -4,6 +4,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; ?>
 <body class="<?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <div class="listtop"><?lsmb text('Available Users') ?></div>
 <?lsmb 
     INCLUDE dynatable
@@ -14,4 +15,5 @@ include_stylesheet=["UI/setup/stylesheet.css"];
             tbody = {rows = users}
               id = 'user_list' ?>
 </body>
+</div>
 </html>
