@@ -42,8 +42,8 @@ SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber,
  ORDER BY p.partnumber, a.invnumber;
 $$;
 
-DROP TYPE IF EXISTS report_aging_item CASCADE;
 
+DROP TYPE IF EXISTS report_aging_item CASCADE;
 CREATE TYPE report_aging_item AS (
 	entity_id int,
 	account_number varchar(24),
@@ -108,10 +108,7 @@ $$
                             ELSE 0 END
 		            as c90,
 		       a.duedate, a.id, a.curr,
-		       COALESCE((SELECT sell FROM exchangerate ex
-		         WHERE a.curr = ex.curr
-		              AND ex.transdate = a.transdate), 1)
-		       AS exchangerate,
+		       null::numeric AS exchangerate,
 			(SELECT compound_array(ARRAY[[p.partnumber,
 					i.description, i.qty::text]])
 				FROM parts p
