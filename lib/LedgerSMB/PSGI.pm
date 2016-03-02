@@ -42,12 +42,18 @@ sub app {
 
        my $nscript = $script;
        $nscript =~ s/l$/m/;
+       $nscript =~ s/\.pm//;
        if ($uri =~ m|/rest/|){
          do 'bin/rest-handler.pl';
-       } elsif (-f "LedgerSMB/Scripts/$nscript"){
-         _run_new($script);
-       } else {
-          _run_old($script);
+       }
+       else {
+           local $@;
+           eval "require LedgerSMB::Scripts::$nscript";
+           if (! $@){
+               _run_new($script);
+           } else {
+               _run_old($script);
+           }
        }
     }
   );
