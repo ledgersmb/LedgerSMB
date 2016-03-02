@@ -25,7 +25,7 @@ use feature 'switch';
 extends 'LedgerSMB::X12';
 
 sub _config {
-    my $pkg_dir = file($ENV{module_notional_filename(__PACKAGE__)})->dir;
+    my $pkg_dir = file($INC{module_notional_filename(__PACKAGE__)})->dir;
     return $pkg_dir->file('cf', '850.cf')->stringify;
 }
 
