@@ -61,7 +61,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '8700'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('HUF', 'HUF'),
+      ('EUR', 'EUR'),
+      ('USD', 'USD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF');
+
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 commit;
