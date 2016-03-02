@@ -10,13 +10,21 @@ LedgerSMB::X12::EDI894 - X12 894 support for LedgerSMB
 =cut
 
 package LedgerSMB::X12::EDI894;
-use Moose;
+
+use strict;
+use warnings;
+
+use Path::Class qw(dir file);
+use Module::Runtime qw(module_notional_filename);
 use LedgerSMB::Form;
 use feature 'switch';
+
+use Moose;
 extends 'LedgerSMB::X12';
 
 sub _config {
-    return 'LedgerSMB/X12/cf/894.cf';
+    my $pkg_dir = file($ENV{module_notional_filename(__PACKAGE__)})->dir;
+    return $pkg_dir->file('cf', '894.cf');
 }
 
 =head1 DESCRIPTION

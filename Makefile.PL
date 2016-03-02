@@ -71,7 +71,9 @@ feature 'Size detection for images for embedding in LaTeX templates',
 
 feature 'X12 EDI support',
     -default => 0,
-    'X12::Parser' => 0;
+    'X12::Parser' => 0,
+    'Path::Class' => 0,
+    'Module::Runtime' => 0;
 
 # Rendering options
 feature 'PDF and Postscript output',

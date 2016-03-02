@@ -11,13 +11,22 @@ structures
 =cut
 
 package LedgerSMB::X12::EDI850;
-use Moose;
+
+use strict;
+use warnings;
+
+use Path::Class qw(dir file);
+use Module::Runtime qw(module_notional_filename);
 use LedgerSMB::Form;
+
+
+use Moose;
 use feature 'switch';
 extends 'LedgerSMB::X12';
 
 sub _config {
-    return 'LedgerSMB/X12/cf/850.cf';
+    my $pkg_dir = file($ENV{module_notional_filename(__PACKAGE__)})->dir;
+    return $pkg_dir->file('cf', '850.cf');
 }
 
 =head1 DESCRIPTION
