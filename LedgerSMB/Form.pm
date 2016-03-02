@@ -1188,15 +1188,17 @@ qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name=
 
 sub generate_selects {
      my ($form, $myconfig) = @_;
-
+     my $locale = $form->{_locale};
 
     # currencies
-     if (!$form->{currencies}) {
-          $form->{currencies} = $form->get_setting('curr');
+     if (!$form->{currencies}){
+         $form->error($locale->text(
+            'No currencies defined.  Please set these up under System/Defaults.'
+                      ));
      }
      if ($form->{currencies}) {
           my %curr;
-          my @curr = split( /:/, $form->{currencies} );
+          my @curr = @{$form->{currencies}};
           $form->{defaultcurrency} = $curr[0];
           foreach (@curr) {
                 $curr{$_} = 1;

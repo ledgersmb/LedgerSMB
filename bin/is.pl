@@ -159,7 +159,7 @@ sub invoice_links {
     }
     @curr = @{$form->{currencies}};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+    for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
 
     ###TODO 20151108: came with merge from 1.4-mc; incorrectly?
     if ( @{ $form->{all_customer} } ) {

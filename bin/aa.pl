@@ -216,8 +216,8 @@ sub create_links {
     }
     @curr = @{$form->{currencies}};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"
-                     unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
+    for (@curr) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n"
     }
 
     my $vc = $form->{vc};
@@ -362,6 +362,7 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
+    delete $form->{selectcurrency};
 }
 
 sub form_header {
@@ -430,10 +431,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-      <input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
