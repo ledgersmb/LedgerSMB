@@ -181,7 +181,7 @@ sub get_currencies {
     my $self = shift;
     @{$self->{currencies}} =
         map { $_->{curr} }
-        $self->exec_method(funcname => 'currency__list');
+        $self->call_procedure(funcname => 'currency__list');
     return @{$self->{currencies}};
 }
 
