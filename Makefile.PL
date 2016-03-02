@@ -8,7 +8,7 @@ use File::Copy;
 copy ('conf/ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
 
 name 'LedgerSMB';
-version_from 'LedgerSMB.pm';
+version_from 'lib/LedgerSMB.pm';
 license 'GPL';
 
 perl_version '5.10.1';

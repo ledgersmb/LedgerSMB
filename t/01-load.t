@@ -10,11 +10,12 @@ sub collect {
     return if $File::Find::name !~ m/\.pm$/;
 
     my $module = $File::Find::name;
+    $module =~ s#lib/##g;
     $module =~ s#/#::#g;
     $module =~ s#\.pm$##g;
     push @on_disk, $module
 }
-find(\&collect, 'LedgerSMB/');
+find(\&collect, 'lib/LedgerSMB/');
 
 
 my @exception_modules =
