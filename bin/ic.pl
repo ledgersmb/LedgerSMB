@@ -117,8 +117,8 @@ sub link_part {
 
     # currencies
     $form->{selectcurrency} = "";
-    for ( @{$form->{currencies}} )
-        $form->{selectcurrency} .= "<option>$_\n";
+    for ( @{$form->{currencies}} ) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n";
     }
 
     # readonly
