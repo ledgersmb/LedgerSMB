@@ -68,7 +68,6 @@ sub post_transaction {
     my $batch_class;
     my %paid;
     my $paidamount;
-    my @queries;
     if ($form->{separate_duties}){
         $form->{approved} = '0';
     }
@@ -446,7 +445,6 @@ sub post_transaction {
     $form->{reverse},        $form->{id}
     );
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
-    @queries = $form->run_custom_queries( $table, 'INSERT' );
 
     # update exchangerate
     my $buy  = $form->{exchangerate};
