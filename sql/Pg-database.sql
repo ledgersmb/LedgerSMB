@@ -2455,6 +2455,7 @@ FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
 FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
 
+-- deprecated; removed from Perl code
 CREATE TABLE custom_table_catalog (
 table_id SERIAL PRIMARY KEY,
 extends TEXT,
@@ -2462,8 +2463,10 @@ table_name TEXT
 );
 
 COMMENT ON TABLE custom_table_catalog IS
-$$ Deprecated, use only with old code.$$;
+$$ Deprecated, all use removed from old code.$$;
 
+
+-- deprecated; removed from Perl code
 CREATE TABLE custom_field_catalog (
 field_id SERIAL PRIMARY KEY,
 table_id INT REFERENCES custom_table_catalog,
@@ -2471,7 +2474,7 @@ field_name TEXT
 );
 
 COMMENT ON TABLE custom_field_catalog IS
-$$ Deprecated, use only with old code.$$;
+$$ Deprecated, all use removed from old code.$$;
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
