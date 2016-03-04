@@ -410,7 +410,10 @@ This function processes a ref for a hashref key of business_units, which holds
 an array of arrays of (class_id, bu_id) and adds keys in the form of
 bc_$class_id holding the $bu_id fields.
 
+=back
+
 =cut
+
 sub process_bclasses {
     my ($self, $ref) = @_;
     for my $bu (@{$ref->{business_units}}){
