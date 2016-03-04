@@ -404,31 +404,16 @@ Valid for the month selected and the two proceeding ones.
 
 Valid for a year starting with the month selected.
 
-=back
-
-=cut
-
-sub prepare_input {
-    my ($self, $request) = @_;
-    # Removing date handling since this is done by
-    # LedgerSMB::Report::Dates
-    # Question:  Should we move from_amount and to_amount to a role like this
-    # instead? --CT
-    $request->{from_amount} = LedgerSMB::PGNumber->from_input(
-                               $request->{from_amount}
-    );
-    $request->{to_amount} = LedgerSMB::PGNumber->from_input(
-                               $request->{to_amount}
-    );
-}
-
 =item process_bclasses($ref)
 
 This function processes a ref for a hashref key of business_units, which holds
 an array of arrays of (class_id, bu_id) and adds keys in the form of
 bc_$class_id holding the $bu_id fields.
 
+=back
+
 =cut
+
 sub process_bclasses {
     my ($self, $ref) = @_;
     for my $bu (@{$ref->{business_units}}){
