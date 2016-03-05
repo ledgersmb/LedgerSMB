@@ -71,11 +71,21 @@ matrix:
           packages:
             - nginx
 
+cache:
+  directories:
+    - $HOME/locallib
+
+
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
+  - export PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
+  - export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+  - export PATH="$HOME/locallib/bin:$PATH"
+  - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
+  - export PERL_MB_OPT="--install_base=$HOME/locallib"
   - build-dist 2>/dev/null
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 

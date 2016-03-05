@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 207;
+use Test::More tests => 208;
 use File::Find;
 
 my @on_disk;
@@ -80,6 +80,7 @@ my @modules =
           'LedgerSMB::DBObject::Admin', 'LedgerSMB::DBObject::Asset',
           'LedgerSMB::DBObject::Asset_Report', 'LedgerSMB::DBObject::Date',
           'LedgerSMB::DBObject::Reconciliation',
+          'LedgerSMB::Report::Listings::TemplateTrans',
           'LedgerSMB::DBObject::Payment', 'LedgerSMB::Entity::Contact',
           'LedgerSMB::Entity::Location', 'LedgerSMB::Entity::Note',
           'LedgerSMB::Entity::Bank', 'LedgerSMB::Entity::Company',
