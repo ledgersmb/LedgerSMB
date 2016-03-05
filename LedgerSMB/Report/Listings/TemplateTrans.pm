@@ -32,12 +32,16 @@ has is_template => (is => 'ro', isa => 'Bool', default => 1);
 
 sub columns {
     my ($self) = @_;
-    $href_base="templatetrans.pl?action=view&"
+    my $href_base="transtemplate.pl?action=view&";
     return [{
       col_id => 'id',
         type => 'href',
         name => LedgerSMB::Report::text('ID'),
    href_base => $href_base,
+    }, {
+      col_id => 'journal_type',
+        type => 'text',
+        name => 'Type'
     }, {
       col_id => 'description',
         type => 'href',
@@ -50,13 +54,13 @@ sub columns {
     }];
 }
 
-=head2 row_headings
+=head2 header_lines
 
 none
 
 =cut
 
-sub row_headings { [] }
+sub header_lines { [] }
 
 =head2 name
 
@@ -83,7 +87,8 @@ sub run_report {
        3 => 'ap',
     );
     for my $ref(@rows){
-       $ref->{row_id} = "entry_type=$jtype{$ref->{entry_type}}&id=$ref->{id}";
+       $ref->{journal_type} = $jtype{$ref->{entry_type}};
+       $ref->{row_id} = "entry_type=$ref->{journal_type}&id=$ref->{id}";
     }
     $self->rows(\@rows);
 }

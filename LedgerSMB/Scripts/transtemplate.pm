@@ -29,12 +29,14 @@ sub view {
     use LedgerSMB::Form;
     our $template_dispatch = 
     {
-        ap         => {script => 'bin/ap.pl', function => sub {update()}},
-        ar         => {script => 'bin/ar.pl', function => sub {update()}},
-        gl         => {script => 'bin/gl.pl', function => sub {update()}},
+        ap         => {script => 'bin/ap.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
+        ar         => {script => 'bin/ar.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
+        gl         => {script => 'bin/gl.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
     };
   
     our $form = new Form;
+    $lsmb_legacy::form = $form;
+    $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
     $form->{dbh} = $request->{dbh};
     our $locale = $request->{_locale};
     our %myconfig = ();
