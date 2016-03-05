@@ -411,6 +411,7 @@ sub create_and_load(){
     log_stdout     => $args->{log},
     errlog  => $args->{errlog},
           });
+    eval { $self->apply_changes() };
     $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
@@ -430,6 +431,7 @@ sub upgrade_modules {
 
     my $temp = $self->loader_log_filename();
 
+    $self->apply_changes();
     $self->load_modules($loadorder, {
     log     => $temp . "_stdout",
     errlog  => $temp . "_stderr"
