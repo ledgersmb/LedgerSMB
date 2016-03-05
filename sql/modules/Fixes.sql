@@ -355,6 +355,9 @@ ALTER TABLE journal_entry ALTER COLUMN effective_start drop not null;
 ALTER TABLE journal_entry ALTER COLUMN effective_end drop not null;
 ALTER TABLE journal_entry ALTER COLUMN reference drop not null;
 ALTER TABLE journal_entry ADD CHECK(is_template or reference is not null);
+COMMIT;
+
+BEGIN;
 UPDATE menu_node SET position = position * -1 where parent = 0 and position > 16;
 UPDATE menu_node SET position = 1 + (position * -1) 
  where parent = 0 and position < 0;
