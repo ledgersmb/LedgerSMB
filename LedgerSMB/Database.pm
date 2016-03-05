@@ -411,7 +411,7 @@ sub create_and_load(){
     log_stdout     => $args->{log},
     errlog  => $args->{errlog},
           });
-    eval { $self->apply_changes() };
+    $self->apply_changes();
     $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
@@ -456,7 +456,7 @@ Runs fixes if they have not been applied.
 
 sub apply_changes {
     my ($self) = @_;
-    my $dbh = $self->connect({PrintError=>0, AutoCommit => 0});
+    my $dbh = $self->connect({PrintError=>1, AutoCommit => 0});
     my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
