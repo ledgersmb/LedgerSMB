@@ -9,7 +9,7 @@
 !1.4/location-fixes.sql
 !1.4/batch-fixes.sql
 1.4/eca-update.sql
-1.4/menu-update1.sql
+!1.4/menu-update1.sql
 !1.4/person-fixes.sql
 !1.4/ar-constraint1.sql
 !1.4/ap-constraint1.sql
