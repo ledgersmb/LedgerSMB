@@ -198,8 +198,9 @@ sub apply {
            VALUES ($sha, $path, now());
         ";
     }
+    use Data::Dumper;
+    warn Dumper($self);
     if ($self->{no_transactions}){
-        warn "running " . $self->path . " without transactions";
         $dbh->do($after);
         $after = "";
         $dbh->commit if $need_commit;
