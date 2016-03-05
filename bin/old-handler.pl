@@ -189,7 +189,7 @@ try {
   # -- CT
     $form->{_error} = 1;
     $LedgerSMB::App_State::DBH = undef;
-    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/;
+    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
 };
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
