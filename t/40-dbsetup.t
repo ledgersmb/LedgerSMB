@@ -27,7 +27,7 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
 }
 
 if ($run_tests){
-	plan tests => 11;
+	plan tests => 12;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -45,6 +45,7 @@ my $db = LedgerSMB::Database->new({
 ok($db->create, 'Database Created') 
   || BAIL_OUT('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
+ok($db->apply_changes, 'applied changes');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
 if (!$ENV{LSMB_INSTALL_DB}){
