@@ -209,7 +209,6 @@ sub apply {
     };
     die "$DBI::state: $DBI::errstr" unless $success or $no_transactions;
     $dbh->commit if $need_commit;
-    warn "$dbh->state: $dbh->errstr";
     $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
             VALUES(now(), $path, $sha, ?, ?)
