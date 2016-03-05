@@ -923,6 +923,7 @@ SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
 \echo RECURRING TRANSACTIONS
 SELECT lsmb__create_role('recurring');
 SELECT lsmb__grant_menu('recurring', 115, 'allow');
+SELECT lsmb__grant_menu('recurring', 28, 'allow');
 
 \echo TAX FORMS
 SELECT lsmb__create_role('tax_form_save');
