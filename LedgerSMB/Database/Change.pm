@@ -186,6 +186,7 @@ sub apply {
     my $after;
     my $sha = $dbh->quote($self->sha);
     my $path = $dbh->quote($self->path);
+    my $no_transactions = $self->{properties}->{no_transactions};
     if ($self->is_applied($dbh)){
         $after = "
               UPDATE db_patches
@@ -198,9 +199,7 @@ sub apply {
            VALUES ($sha, $path, now());
         ";
     }
-    use Data::Dumper;
-    warn Dumper($self);
-    if ($self->{no_transactions}){
+    if ($no_transactions){
         $dbh->do($after);
         $after = "";
         $dbh->commit if $need_commit;
@@ -208,7 +207,7 @@ sub apply {
     my $success = eval {
          $dbh->prepare($self->content_wrapped($before, $after))->execute();
     };
-    die "$DBI::state: $DBI::errstr" unless $success or $self->{no_transactions};
+    die "$DBI::state: $DBI::errstr" unless $success or $no_transactions;
     $dbh->commit if $need_commit;
     warn "$dbh->state: $dbh->errstr";
     $dbh->prepare("
