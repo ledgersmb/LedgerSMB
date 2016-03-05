@@ -68,7 +68,6 @@ sub _process_script {
         $line =~ s/^\Q$sigil\E//;
     }
     my $no_transactions = ( $sigil =~ /\Q!\E/ );
-    warn "$line, $no_transactions";
     return LedgerSMB::Database::Change->new(
         $self->path($line),
         {

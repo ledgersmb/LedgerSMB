@@ -199,6 +199,7 @@ sub apply {
         ";
     }
     if ($self->{no_transactions}){
+        warn "running " . $self->path . " without transactions";
         $dbh->do($after);
         $after = "";
         $dbh->commit if $need_commit;
