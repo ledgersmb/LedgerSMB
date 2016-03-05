@@ -222,9 +222,6 @@ sub save {
         $sth = $dbh->prepare($query);
         $sth->execute(@queryargs) || $form->dberror($query);
         $sth->finish;
-
-        @queries = $form->run_custom_queries( 'oe', 'INSERT' );
-
     }
 
     my $amount;
@@ -450,12 +447,6 @@ sub save {
         );
     }
     $sth = $dbh->prepare($query);
-
-
-    if ( !$did_insert ) {
-        @queries = $form->run_custom_queries( 'oe', 'UPDATE' );
-    }
-
 
     $form->{ordtotal} = $amount;
     $sth->execute(@queryargs) || $form->error($query);
@@ -763,8 +754,6 @@ sub retrieve {
 
         # get recurring transaction
         $form->get_recurring;
-
-        @queries = $form->run_custom_queries( 'oe', 'SELECT' );
     }
     else {
 

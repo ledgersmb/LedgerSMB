@@ -821,7 +821,6 @@ sub post_invoice {
         ( $form->{id} ) = $sth->fetchrow_array;
         $sth->finish;
 
-        @queries = $form->run_custom_queries( 'ar', 'INSERT' );
     }
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -1634,8 +1633,6 @@ sub retrieve_invoice {
         $sth->finish;
 
     }
-
-    @queries = $form->run_custom_queries( 'ar', 'SELECT' );
 
 }
 
