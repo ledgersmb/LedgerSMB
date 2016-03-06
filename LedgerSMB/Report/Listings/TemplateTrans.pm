@@ -70,7 +70,7 @@ Template Transactions
 
 sub name {
     my $self = shift;
-    return $self->text('Template Transactions');
+    return LedgerSMB::Report::text('Template Transactions');
 }
 
 =head2 run_report
