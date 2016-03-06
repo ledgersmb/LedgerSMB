@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-14 09:37+0000\n"
-"PO-Revision-Date: 2016-01-11 10:05+0000\n"
+"POT-Creation-Date: 2016-02-18 10:37+0000\n"
+"PO-Revision-Date: 2016-02-27 16:58+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Danish (http://www.transifex.com/ledgersmb/ledgersmb/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -129,7 +129,7 @@ msgstr "Leverandørfakturaer"
 
 #: sql/Pg-database.sql:2914
 msgid "AP Voucher"
-msgstr ""
+msgstr "Kreditorbilag"
 
 #: UI/import_csv/import_inventory_csv.html:22
 msgid "AP account"
@@ -147,11 +147,11 @@ msgstr "Debitor opfølgning"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:101
 msgid "AR Invoice"
-msgstr ""
+msgstr "Debitorfaktura"
 
 #: UI/Reports/filters/search_goods.html:132
 msgid "AR Invoices"
-msgstr ""
+msgstr "Debitorfakturaer"
 
 #: bin/aa.pl:1615 LedgerSMB/Report/Invoices/Outstanding.pm:302
 #: UI/Reports/filters/invoice_outstanding.html:9
@@ -176,16 +176,16 @@ msgstr "Debitorposteringer"
 
 #: sql/Pg-database.sql:2913
 msgid "AR Voucher"
-msgstr ""
+msgstr "Debitorbilag"
 
 #: UI/import_csv/import_inventory_csv.html:13
 msgid "AR account"
-msgstr ""
+msgstr "Debitorkonto"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
 #: LedgerSMB/Report/Unapproved/Drafts.pm:105
 msgid "AR/AP/GL Amount"
-msgstr ""
+msgstr "Debitor/Kreditor/Finans beløb"
 
 #: sql/Pg-database.sql:3789
 msgid "Abandonment"
@@ -229,16 +229,16 @@ msgstr "Konto"
 
 #: LedgerSMB/Report/Trial_Balance.pm:160 UI/payments/use_overpayment2.html:117
 msgid "Account Description"
-msgstr ""
+msgstr "Kontobeskrivelse"
 
 #: LedgerSMB/Report/Budget/Variance.pm:76
 msgid "Account Label"
-msgstr ""
+msgstr "Kontoetiket"
 
 #: LedgerSMB/Report/GL.pm:152 UI/Reports/co/filter_bm.html:85
 #: UI/Reports/co/filter_cd.html:69 UI/Reports/filters/gl.html:247
 msgid "Account Name"
-msgstr ""
+msgstr "Kontonavn"
 
 #: LedgerSMB/Report/GL.pm:147
 msgid "Account No."
@@ -274,25 +274,25 @@ msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:148
 msgid "Account Title"
-msgstr ""
+msgstr "Kontotitel"
 
 #: LedgerSMB/Report/Taxform/Detail.pm:78
 #: LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:194
 msgid "Account Type"
-msgstr ""
+msgstr "Kontotype"
 
 #: LedgerSMB/GL.pm:206
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "Konto [_1] ikke fundet"
 
 #: bin/gl.pl:636
 msgid "Account [_1] not found."
-msgstr ""
+msgstr "Konto [_1] ikke fundet."
 
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
 msgid "Account category"
-msgstr ""
+msgstr "Kontokategori"
 
 #: bin/am.pl:132
 msgid "Account does not exist!"
@@ -301,12 +301,12 @@ msgstr "Konto eksisterer ikke!"
 #: UI/Reports/filters/balance_sheet.html:28
 #: UI/Reports/filters/income_statement.html:68
 msgid "Account numbers"
-msgstr ""
+msgstr "Kontonummre"
 
 #: UI/payments/payments_detail.html:135 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
 msgid "Account:"
-msgstr ""
+msgstr "Konto:"
 
 #: UI/lib/report_base.html:57 UI/rp-search.html:24
 msgid "Accounts"
@@ -314,11 +314,11 @@ msgstr "Konti"
 
 #: UI/Reports/co/filter_cd.html:24
 msgid "Accounts From"
-msgstr ""
+msgstr "Konti fra"
 
 #: UI/Reports/co/filter_cd.html:29
 msgid "Accounts To"
-msgstr ""
+msgstr "Konti til"
 
 #: LedgerSMB/Upgrade_Tests.pm:411 LedgerSMB/Upgrade_Tests.pm:468
 msgid "Accounts without heading"
@@ -394,7 +394,7 @@ msgstr "Ny konto"
 
 #: sql/Pg-database.sql:2793
 msgid "Add Accounts"
-msgstr ""
+msgstr "Tilføj konti"
 
 #: bin/ic.pl:65 sql/Pg-database.sql:2868
 msgid "Add Assembly"
@@ -430,11 +430,11 @@ msgstr ""
 
 #: bin/is.pl:104
 msgid "Add Credit Invoice"
-msgstr ""
+msgstr "Tilføj Kreditorfaktura"
 
 #: bin/aa.pl:447
 msgid "Add Credit Note"
-msgstr ""
+msgstr "Tilføj Kreditnota"
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:36
 msgid "Add Customer"
@@ -1124,11 +1124,11 @@ msgstr ""
 #: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:16
 #: UI/Contact/divs/bank_act.html:47
 msgid "BIC/SWIFT Code"
-msgstr ""
+msgstr "BIC/SWIFT Kode"
 
 #: t/data/04-complex_template.html:592
 msgid "BIC/SWIFT Code:"
-msgstr ""
+msgstr "BIC/SWIFT Kode:"
 
 #: bin/ic.pl:1283
 msgid "BOM"
@@ -1177,17 +1177,17 @@ msgstr ""
 
 #: UI/Contact/divs/bank_act.html:56
 msgid "Bank Account"
-msgstr ""
+msgstr "Bankkonto"
 
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
-msgstr ""
+msgstr "Bankkonto:"
 
 #: LedgerSMB/Scripts/contact.pm:172 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:1
 #: UI/Contact/divs/bank_act.html:2
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Bankkonti"
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1195,7 +1195,7 @@ msgstr ""
 
 #: bin/ic.pl:994
 msgid "Bar Code"
-msgstr ""
+msgstr "Stregkode"
 
 #: bin/ir.pl:752 bin/is.pl:852 LedgerSMB/Report/Assets/Net_Book_Value.pm:92
 msgid "Basis"
@@ -1272,23 +1272,23 @@ msgstr ""
 #: LedgerSMB/Entity/Location.pm:111 UI/Contact/divs/address.html:36
 #: sql/Pg-database.sql:674
 msgid "Billing"
-msgstr ""
+msgstr "Fakturering"
 
 #: sql/Pg-database.sql:828
 msgid "Billing BCC"
-msgstr ""
+msgstr "Fakturerings-BCC"
 
 #: sql/Pg-database.sql:827
 msgid "Billing CC"
-msgstr ""
+msgstr "Fakturerings-CC"
 
 #: sql/Pg-database.sql:826
 msgid "Billing Email"
-msgstr ""
+msgstr "Fakturerings-e-mail"
 
 #: LedgerSMB/Num2text.pm:106
 msgid "Billion"
-msgstr ""
+msgstr "Milliard"
 
 #: bin/ic.pl:491 bin/ic.pl:2122 bin/io.pl:243 bin/oe.pl:1993
 #: LedgerSMB/Report/Inventory/History.pm:134
@@ -1320,11 +1320,11 @@ msgstr "Sendings-list"
 
 #: UI/Contact/divs/person.html:155
 msgid "Birthdate"
-msgstr ""
+msgstr "Fødselsdato"
 
 #: UI/accounts/yearend.html:66
 msgid "Books closed on"
-msgstr ""
+msgstr "Bogføring lukket"
 
 #: bin/ic.pl:1138
 msgid "Break"
@@ -1332,11 +1332,11 @@ msgstr "Bryd"
 
 #: sql/Pg-database.sql:2146
 msgid "Budget"
-msgstr ""
+msgstr "Budget"
 
 #: LedgerSMB/Report/Budget/Variance.pm:113
 msgid "Budget Number"
-msgstr ""
+msgstr "Budgetnummer"
 
 #: LedgerSMB/Report/Budget/Search.pm:108
 msgid "Budget Search Results"
@@ -1348,7 +1348,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2917
 msgid "Budgets"
-msgstr ""
+msgstr "Budgetter"
 
 #: LedgerSMB/Scripts/account.pm:66
 msgid "Bug: No such account"
@@ -1416,11 +1416,11 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:117 UI/Reports/display_report.html:71
 #: UI/Reports/PNL.html:98
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: UI/reconciliation/report.html:58 UI/reconciliation/upload.html:17
 msgid "CSV File:"
-msgstr ""
+msgstr "CSV-fil:"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:113 UI/Reports/co/filter_cd.html:14
 msgid "Caja Diaria"
@@ -1436,11 +1436,11 @@ msgstr ""
 
 #: bin/io.pl:2293
 msgid "Cancel"
-msgstr ""
+msgstr "Annulér"
 
 #: LedgerSMB/Scripts/setup.pm:172
 msgid "Cancel?"
-msgstr ""
+msgstr "Annulér?"
 
 #: bin/gl.pl:672
 msgid "Cannot Repost Transaction"
@@ -1548,7 +1548,7 @@ msgstr ""
 
 #: UI/timecards/timecard.html:17
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: UI/io-email.html:18 UI/rp-email.html:17
 msgid "Cc"
@@ -1600,7 +1600,7 @@ msgstr ""
 
 #: UI/payments/payment1_5.html:23
 msgid "Choose a company"
-msgstr ""
+msgstr "Vælg firma"
 
 #: sql/Pg-database.sql:971
 msgid "Chord"
@@ -1615,12 +1615,12 @@ msgstr "By"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
-msgstr ""
+msgstr "By:"
 
 #: UI/Contact/divs/company.html:65 UI/Contact/divs/credit.html:66
 #: UI/Contact/divs/person.html:62
 msgid "Class"
-msgstr ""
+msgstr "Klasse"
 
 #: LedgerSMB/Scripts/recon.pm:220 UI/reconciliation/report.html:76
 #: UI/reconciliation/report.html:139
@@ -1928,7 +1928,7 @@ msgstr "Land"
 
 #: UI/setup/select_coa.html:30
 msgid "Country Code"
-msgstr ""
+msgstr "Landekode"
 
 #: LedgerSMB/Report/Taxform/List.pm:52
 msgid "Country Name"
@@ -1980,15 +1980,15 @@ msgstr "Kredit"
 
 #: LedgerSMB/Scripts/contact.pm:292
 msgid "Credit Account"
-msgstr ""
+msgstr "Kreditkonto"
 
 #: LedgerSMB/Report/Contact/Search.pm:69
 msgid "Credit Account Number"
-msgstr ""
+msgstr "Kreditkontonummer"
 
 #: LedgerSMB/Scripts/contact.pm:169 UI/Contact/divs/credit.html:1
 msgid "Credit Accounts"
-msgstr ""
+msgstr "Kreditkonti"
 
 #: LedgerSMB/Report/Trial_Balance.pm:202
 msgid "Credit Balance"
@@ -2006,17 +2006,17 @@ msgstr "Kreditgrænse"
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
-msgstr ""
+msgstr "Kreditgrænse"
 
 #: sql/Pg-database.sql:2905
 msgid "Credit Note"
-msgstr ""
+msgstr "Kreditnota"
 
 #: LedgerSMB/Report/COA.pm:111 LedgerSMB/Report/GL.pm:116
 #: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:153
 #: UI/Reports/co/filter_cd.html:91
 msgid "Credits"
-msgstr ""
+msgstr "Kredit"
 
 #: UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
@@ -2342,13 +2342,13 @@ msgstr "Debitor faktura"
 
 #: sql/Pg-database.sql:2901
 msgid "Debit Note"
-msgstr ""
+msgstr "Debitnota"
 
 #: LedgerSMB/Report/COA.pm:105 LedgerSMB/Report/GL.pm:110
 #: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:152
 #: UI/Reports/co/filter_cd.html:83
 msgid "Debits"
-msgstr ""
+msgstr "Debit"
 
 #: bin/aa.pl:94 bin/gl.pl:90 bin/io.pl:90 LedgerSMB/App_State.pm:250
 msgid "Dec"
@@ -2926,11 +2926,11 @@ msgstr "Redigér forretning"
 
 #: bin/is.pl:132
 msgid "Edit Credit Invoice"
-msgstr ""
+msgstr "Redigér Kreditorfaktura"
 
 #: bin/aa.pl:448
 msgid "Edit Credit Note"
-msgstr ""
+msgstr "Redigér Kreditnota"
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:37
 msgid "Edit Customer"
@@ -2942,7 +2942,7 @@ msgstr ""
 
 #: bin/aa.pl:446
 msgid "Edit Debit Note"
-msgstr ""
+msgstr "Redigér debitnota"
 
 #: bin/pe.pl:524
 msgid "Edit Description Translations"
@@ -3115,11 +3115,11 @@ msgstr "Medarbejdere"
 #: UI/Contact/divs/credit.html:25 UI/Contact/divs/credit.html:112
 #: UI/Contact/divs/employee.html:173 UI/Reports/filters/budget_search.html:48
 msgid "End Date"
-msgstr ""
+msgstr "Slutdato"
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
 msgid "End Date:"
-msgstr ""
+msgstr "Slutdato:"
 
 #: UI/Reports/filters/trial_balance.html:11
 msgid "Ending"
@@ -5396,12 +5396,12 @@ msgstr ""
 #: UI/reconciliation/report.html:81 UI/reconciliation/report.html:144
 #: UI/reconciliation/report.html:203
 msgid "Our Credits"
-msgstr ""
+msgstr "Vores kredit"
 
 #: UI/reconciliation/report.html:80 UI/reconciliation/report.html:143
 #: UI/reconciliation/report.html:202
 msgid "Our Debits"
-msgstr ""
+msgstr "Vores debit"
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
@@ -6429,7 +6429,7 @@ msgstr ""
 #: UI/Reports/aging_report.html:15 UI/Reports/display_report.html:16
 #: UI/Reports/display_report.tex:22
 msgid "Report Name"
-msgstr ""
+msgstr "Rapportnavn"
 
 #: LedgerSMB/Scripts/asset.pm:519
 msgid "Report Results"
@@ -7313,7 +7313,7 @@ msgstr "Kort"
 
 #: LedgerSMB/Scripts/configuration.pm:118
 msgid "Show Credit Limit"
-msgstr ""
+msgstr "Vis kreditgrænse"
 
 #: templates/demo/printPayment.html:82
 #: templates/demo_with_images/printPayment.html:82
@@ -7428,11 +7428,11 @@ msgstr "Standard industrikoder (SIC)"
 #: UI/Contact/divs/credit.html:24 UI/Contact/divs/employee.html:163
 #: UI/Reports/filters/budget_search.html:38
 msgid "Start Date"
-msgstr ""
+msgstr "Startdato"
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
-msgstr ""
+msgstr "Startdato"
 
 #: UI/payments/payments_filter.html:178
 msgid "Start Source Numbering At:"
@@ -7453,11 +7453,11 @@ msgstr ""
 
 #: UI/Contact/divs/credit.html:101 UI/timecards/entry_filter.html:33
 msgid "Starting Date"
-msgstr ""
+msgstr "Startdato"
 
 #: t/data/04-complex_template.html:177
 msgid "Starting Date:"
-msgstr ""
+msgstr "Startdato"
 
 #: bin/io.pl:2117
 msgid "State"
@@ -7610,7 +7610,7 @@ msgstr ""
 
 #: UI/ca-list-selector.html:45
 msgid "Swaps debits and credits to match bank statements"
-msgstr ""
+msgstr "Byt om på debit og kredit for at matche bankkontoudtog"
 
 #: sql/Pg-database.sql:2931
 msgid "System"
@@ -7950,11 +7950,11 @@ msgstr ""
 
 #: UI/reconciliation/report.html:83 UI/reconciliation/report.html:146
 msgid "Their Credits"
-msgstr ""
+msgstr "Deres kredit"
 
 #: UI/reconciliation/report.html:82 UI/reconciliation/report.html:145
 msgid "Their Debits"
-msgstr ""
+msgstr "Deres debit"
 
 #: UI/reconciliation/report.html:9
 msgid ""
@@ -8908,7 +8908,7 @@ msgstr ""
 
 #: bin/aa.pl:430
 msgid "[_1] Credit Note"
-msgstr ""
+msgstr "[_1] Kreditnota"
 
 #: bin/aa.pl:433
 msgid "[_1] Debit Note"
@@ -8966,7 +8966,7 @@ msgstr "dage"
 
 #: UI/Reports/co/filter_bm.html:99
 msgid "debits"
-msgstr ""
+msgstr "debit"
 
 #: LedgerSMB/Scripts/admin.pm:140
 msgid "delete"

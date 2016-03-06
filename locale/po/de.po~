@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-02-14 09:37+0000\n"
-"PO-Revision-Date: 2016-01-11 10:05+0000\n"
+"POT-Creation-Date: 2016-02-18 10:37+0000\n"
+"PO-Revision-Date: 2016-02-27 16:57+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/ledgersmb/ledgersmb/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "Ausgehende Rechnung"
 
 #: UI/Reports/filters/search_goods.html:155
 msgid "AP Invoices"
-msgstr ""
+msgstr "Ausgehende Rechnungen"
 
 #: bin/aa.pl:1616 LedgerSMB/Report/Invoices/Outstanding.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:5
@@ -132,7 +132,7 @@ msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:22
 msgid "AP account"
-msgstr ""
+msgstr "Verbindlichkeitskonto"
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
@@ -179,7 +179,7 @@ msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:13
 msgid "AR account"
-msgstr ""
+msgstr "Forderungskonto"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
 #: LedgerSMB/Report/Unapproved/Drafts.pm:105
@@ -278,7 +278,7 @@ msgstr "Kontenbezeichnung"
 #: LedgerSMB/Report/Taxform/Detail.pm:78
 #: LedgerSMB/Report/Taxform/Summary.pm:75 UI/accounts/edit.html:194
 msgid "Account Type"
-msgstr ""
+msgstr "Kontotyp"
 
 #: LedgerSMB/GL.pm:206
 msgid "Account [_1] not found"
@@ -291,7 +291,7 @@ msgstr "Konto [_1] nicht gefunden."
 #: UI/Reports/filters/balance_sheet.html:59
 #: UI/Reports/filters/income_statement.html:95
 msgid "Account category"
-msgstr ""
+msgstr "Kontokategorie"
 
 #: bin/am.pl:132
 msgid "Account does not exist!"
@@ -300,12 +300,12 @@ msgstr "Konto existiert nicht!"
 #: UI/Reports/filters/balance_sheet.html:28
 #: UI/Reports/filters/income_statement.html:68
 msgid "Account numbers"
-msgstr ""
+msgstr "Kontennummer"
 
 #: UI/payments/payments_detail.html:135 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
 msgid "Account:"
-msgstr ""
+msgstr "Konto:"
 
 #: UI/lib/report_base.html:57 UI/rp-search.html:24
 msgid "Accounts"
@@ -313,11 +313,11 @@ msgstr "Konten"
 
 #: UI/Reports/co/filter_cd.html:24
 msgid "Accounts From"
-msgstr ""
+msgstr "Konten von"
 
 #: UI/Reports/co/filter_cd.html:29
 msgid "Accounts To"
-msgstr ""
+msgstr "Konten bis"
 
 #: LedgerSMB/Upgrade_Tests.pm:411 LedgerSMB/Upgrade_Tests.pm:468
 msgid "Accounts without heading"
@@ -951,7 +951,7 @@ msgstr "Anlagenkennzeichnung"
 #: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2887
 msgid "Assets"
-msgstr ""
+msgstr "Aktiven"
 
 #: UI/Reports/balance_sheet.html:101
 msgid "Assets to Equity"
@@ -2072,7 +2072,7 @@ msgstr "Aktuell"
 #: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:81
 msgid "Current earnings"
-msgstr ""
+msgstr "Aktuelles Gewinn"
 
 #: bin/aa.pl:564 bin/aa.pl:1666 bin/ic.pl:1135 bin/is.pl:533 bin/pe.pl:1039
 #: bin/pe.pl:1194 LedgerSMB/Report/Aging.pm:83
@@ -3312,7 +3312,7 @@ msgstr "Aufwand/Anlagen"
 #: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
 #: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
 msgid "Expenses"
-msgstr ""
+msgstr "Aufwände"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -4467,7 +4467,7 @@ msgstr ""
 #: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
 #: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
 msgid "Liabilities"
-msgstr ""
+msgstr "Passiven"
 
 #: UI/accounts/edit.html:199 UI/Reports/filters/gl.html:133
 msgid "Liability"
