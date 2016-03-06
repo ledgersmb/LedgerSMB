@@ -79,7 +79,7 @@ populate_workspace() {
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
-    ($find . -name '~*' -o -name '*.orig' -exec rm {} + ) && \
+    ($find . -name '*~' -o -name '*.orig' -exec rm {} + ) && \
     $git add locale && git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
