@@ -1153,7 +1153,7 @@ sub update {
 
         }
         else {
-
+            next if $form->{"id_$i"};
             $retrieve_item = "";
             if (   $form->{type} eq 'purchase_order'
                 || $form->{type} eq 'request_quotation' )
