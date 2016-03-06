@@ -7,8 +7,8 @@ sub save {
    $self->{is_template} = '1';
    $self->{approved} = 0;
    $self->{journal} = 1; # default gl
-   $self->{journal} = 2 if $self->{arap} eq 'ar';
-   $self->{journal} = 3 if $self->{arap} eq 'ap';
+   $self->{journal} = 2 if $self->{entity_class} == 2;
+   $self->{journal} = 3 if $self->{entity_class} == 1;
    if (not defined $self->{curr}){
       my ($curr) = $self->exec_method(funcname => 'defaults_get_defaultcurrency');
       ($self->{curr}) = values(%$curr); 
