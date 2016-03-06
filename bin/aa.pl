@@ -1179,9 +1179,10 @@ sub save_temp {
     }
     $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
-        if ($form->{"AP_amount_$iter"} and
+        if ($form->{"$form->{ARAP}_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
-             my ($acc_id, $acc_name) = split /--/, $form->{"AP_amount_$iter"};
+             my ($acc_id, $acc_name) =
+                 split /--/, $form->{"$form->{ARAP}_amount_$iter"};
              my $amount = $form->{"amount_$iter"};
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,

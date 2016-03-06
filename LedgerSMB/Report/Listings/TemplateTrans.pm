@@ -70,7 +70,7 @@ Template Transactions
 
 sub name {
     my $self = shift;
-    return $self->text('Template Transactions');
+    return LedgerSMB::Report::text('Template Transactions');
 }
 
 =head2 run_report
@@ -80,7 +80,7 @@ sub name {
 sub run_report {
     my ($self) = @_;
     $self->manual_totals(1); #don't display totals
-    my @rows = $self->call_dbmethod(funcname => 'journal__search');
+    my @rows = $self->exec_method(funcname => 'journal__search');
     my %jtype = (
        1 => 'gl',
        2 => 'ar',
