@@ -22,9 +22,9 @@ sub save {
    $self->merge($ref);
    $self->{journal_id} = $self->{id};
    for my $line (@{$self->{journal_lines}}){
-       my $l = bless $line, 'LedgerSMB::PGOld';
+       my $l = bless $line, 'LedgerSMB::DBObject';
        $l->{_locale} = $self->{_locale};
-       $l->set_dbh(LedgerSMB::App_State::DBH());
+       $l->{dbh} = LedgerSMB::App_State::DBH();
        $l->{journal_id} = $self->{id};
        my ($ref) = $l->exec_method(funcname => 'account__get_from_accno');
        $l->{account_id} = $ref->{id};
