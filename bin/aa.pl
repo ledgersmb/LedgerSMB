@@ -1172,7 +1172,7 @@ sub save_temp {
     }
     $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
     $lsmb->{department_id} = $department_id;
-    if ($form->{arap} eq 'ar'){
+    if ($form->{ARAP} eq 'AR'){
         $lsmb->{entity_class} = 2;
     } else {
         $lsmb->{entity_class} = 1;

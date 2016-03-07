@@ -24,6 +24,16 @@ Always true
 
 has is_template => (is => 'ro', isa => 'Bool', default => 1);
 
+=head2 approved
+
+Always false
+
+=cut
+
+has approved => (is => 'ro', isa => 'Bool', default => 0);
+
+
+
 =head1 METHODS
 
 =head2 columns
