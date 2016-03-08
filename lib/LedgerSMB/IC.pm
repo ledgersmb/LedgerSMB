@@ -243,9 +243,6 @@ sub get_part {
         }
         $sth->finish;
     }
-
-    $form->run_custom_queries( 'parts', 'SELECT' );
-
 }
 
 sub save {
@@ -616,9 +613,6 @@ sub save {
             ) || $form->dberror($query);
         }
     }
-
-
-    $form->run_custom_queries( 'parts', 'UPDATE' );
     $rc;
 
 }

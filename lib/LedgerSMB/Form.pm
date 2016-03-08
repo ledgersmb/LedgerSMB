@@ -691,7 +691,7 @@ sub _redirect {
     my ( $script, $argv ) = split( /\?/, $form->{callback} );
 
     my @common_attrs = qw(
-      dbh login favicon stylesheet titlebar password custom_db_fields vc header
+      dbh login favicon stylesheet titlebar password vc header
     );
 
     if ( !$script ) {    # http redirect to login.pl if called w/no args
@@ -731,8 +731,8 @@ sub _redirect {
     }
 
     require "bin/$script";
-
-    &{ $form->{action} };
+    no strict 'refs';
+    &{ "lsmb_legacy::$form->{action}" };
 
 }
 
@@ -1382,9 +1382,8 @@ sub test_should_get_images {
 =item $form->db_init($myconfig);
 
 Connect to the database that $myconfig is set to use and initialise the base
-parameters.  The connection handle becomes $form->{dbh} and
-$form->{custom_db_fields} is populated.  The connection initiated has
-autocommit disabled.
+parameters.  The connection handle becomes $form->{dbh}
+is populated.  The connection initiated has autocommit disabled.
 
 =cut
 
@@ -1414,27 +1413,15 @@ sub db_init {
 
     LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
 
-    my $query = "SELECT t.extends,
-            coalesce (t.table_name, 'custom_' || extends)
-            || ':' || f.field_name as field_def
-        FROM custom_table_catalog t
-        JOIN custom_field_catalog f USING (table_id)";
-    my $sth = $self->{dbh}->prepare($query);
-    $sth->execute;
-    my $ref;
-    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{custom_db_fields}{ $ref->{extends} } },
-          $ref->{field_def};
-    }
     # Roles tracking
     $self->{_roles} = [];
-    $query = "select rolname from pg_roles
+    my $query = "select rolname from pg_roles
                where pg_has_role(rolname, 'USAGE')
                      and rolname like
                           coalesce((select value from defaults
                                      where setting_key = 'role_prefix'),
                                    'lsmb_' || current_database() || '__') || '%'";
-    $sth = $dbh->prepare($query);
+    my $sth = $dbh->prepare($query);
     $sth->execute();
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
@@ -1473,116 +1460,6 @@ sub db_init {
     $logger->trace("end");
 }
 
-=item $form->run_custom_queries($tablename, $query_type[, $linenum]);
-
-Runs queries against custom fields for the specified $query_type against
-$tablename.
-
-Valid values for $query_type are any casing of 'SELECT', 'INSERT', and 'UPDATE'.
-
-=cut
-
-sub run_custom_queries {
-    my ( $self, $tablename, $query_type, $linenum ) = @_;
-    return unless exists $self->{custom_db_fields}
-           and ref $self->{custom_db_fields}
-           and exists $self->{custom_db_fields}->{$tablename};
-    my $dbh = $self->{dbh};
-    if ( $query_type !~ /^(select|insert|update)$/i ) {
-        $self->error(
-                "Passed incorrect query type to run_custom_queries."
-        );
-    }
-    my @rc;
-    my %temphash;
-    my @templist;
-    my @elements;
-    my $query;
-    my $did_insert;
-    my $ins_values;
-    my $sth;
-    if ($linenum) {
-        $linenum = "_$linenum";
-    }
-
-    $query_type = uc($query_type);
-    for ( @{ $self->{custom_db_fields}->{$tablename} } ) {
-        @elements = split( /:/, $_ );
-        push @{ $temphash{ $elements[0] } }, $elements[1];
-    }
-    for ( keys %temphash ) {
-        my @data;
-        my $ins_values;
-        $query = "$query_type ";
-        if ( $query_type eq 'UPDATE' ) {
-            $query = "DELETE FROM $_ WHERE row_id = ?";
-            my $sth = $dbh->prepare($query);
-            $sth->execute( $self->{ "id" . "$linenum" } )
-              || $self->dberror($query);
-        }
-        elsif ( $query_type eq 'INSERT' ) {
-            $query .= " INTO $_ (";
-        }
-        my $first = 1;
-        for ( @{ $temphash{$_} } ) {
-            $query .= "$_";
-            if ( $query_type eq 'UPDATE' ) {
-                $query .= '= ?';
-            }
-            $ins_values .= "?, ";
-            $query      .= ", ";
-            $first = 0;
-            if ( $query_type eq 'UPDATE' or $query_type eq 'INSERT' ) {
-                push @data, $self->{"$_$linenum"};
-            }
-        }
-        if ( $query_type ne 'INSERT' ) {
-            $query =~ s/, $//;
-        }
-        if ( $query_type eq 'SELECT' ) {
-            $query .= " FROM $_";
-        }
-        if ( $query_type eq 'SELECT' or $query_type eq 'UPDATE' ) {
-            $query .= " WHERE row_id = ?";
-        }
-        if ( $query_type eq 'INSERT' ) {
-            $query .= " row_id) VALUES ($ins_values ?)";
-        }
-        if ( $query_type eq 'SELECT' ) {
-            push @rc, [$query];
-        }
-        else {
-            unshift( @data, $query );
-            push @rc, [@data];
-        }
-    }
-    if ( $query_type eq 'INSERT' ) {
-        for (@rc) {
-            $query = shift( @{$_} );
-            $sth   = $dbh->prepare($query)
-              || $self->db_error($query);
-            $sth->execute( @{$_}, $self->{id} )
-              || $self->dberror($query);
-            $sth->finish;
-            $did_insert = 1;
-        }
-    }
-    elsif ( $query_type eq 'UPDATE' ) {
-        @rc = $self->run_custom_queries( $tablename, 'INSERT', $linenum );
-    }
-    elsif ( $query_type eq 'SELECT' ) {
-        for (@rc) {
-            my $query = shift @{$_};
-            my $sth   = $self->{dbh}->prepare($query);
-            $sth->execute( $self->{id} );
-            my $ref = $sth->fetchrow_hashref('NAME_lc');
-            for ( keys %{$ref} ) {
-                $self->{$_} = $ref->{$_};
-            }
-        }
-    }
-    @rc;
-}
 
 =item $form->dbquote($var);
 

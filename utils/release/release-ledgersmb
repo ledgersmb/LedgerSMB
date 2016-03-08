@@ -79,7 +79,7 @@ populate_workspace() {
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
-    ($find . -name '~*' -o -name '*.orig' -exec rm {} + ) && \
+    ($find . -name '*~' -o -name '*.orig' -exec rm {} + ) && \
     $git add locale && git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
@@ -232,18 +232,25 @@ verify_dependencies
 verify_release_key
 setup_workspace
 populate_workspace
-update_translations
-detect_current_version
-detect_versionpatch_files
-patch_version "$current_version" "$release_version"
 
-show_release_parameters
-commit_versionupdate
-commit_versiontag
+if [[ -z "$(cd "$our_workspace/$checkout_dir"; $git tag | grep -E "^$release_version$")" ]]
+then
+  update_translations
+  detect_current_version
+  detect_versionpatch_files
+  patch_version "$current_version" "$release_version"
+
+  show_release_parameters
+  commit_versionupdate
+  commit_versiontag
+  patch_version "$release_version" "$new_dev_version"
+  commit_versionupdate
+else
+  tag_release="N"
+fi
+
 create_versiontarball
 sign_versiontarball
-patch_version "$release_version" "$new_dev_version"
-commit_versionupdate
 
 typeset -u yn
 echo -n "Ready to publish now. Proceed? [y/N] "

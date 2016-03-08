@@ -8,7 +8,7 @@ use File::Copy;
 copy ('conf/ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
 
 name 'LedgerSMB';
-version_from 'LedgerSMB.pm';
+version_from 'lib/LedgerSMB.pm';
 license 'GPL';
 
 perl_version '5.10.1';
@@ -52,7 +52,7 @@ recommends 'Math::BigInt::GMP';
 test_requires 'Test::More';
 test_requires 'Test::Trap';
 test_requires 'Test::Exception';
-test_requires 'Test::BDD::Cucumber';
+test_requires 'Test::BDD::Cucumber' => '0.49';
 test_requires 'Perl::Critic';
 
 feature 'RESTful Web Services XML support',
@@ -73,7 +73,9 @@ feature 'Size detection for images for embedding in LaTeX templates',
 
 feature 'X12 EDI support',
     -default => 0,
-    'X12::Parser' => 0;
+    'X12::Parser' => 0,
+    'Path::Class' => 0,
+    'Module::Runtime' => 0;
 
 # Rendering options
 feature 'PDF and Postscript output',

@@ -40,13 +40,13 @@ use warnings;
 use Try::Tiny;
 
 #Plugins
-opendir(my $dh, 'LedgerSMB/Entity/Plugins')
+opendir(my $dh, 'lib/LedgerSMB/Entity/Plugins')
     || die "can't opendir plugins directory: $!";
 my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($dh);
 closedir $dh;
 
 for (@pluginmods){
-  do "LedgerSMB/Entity/Plugins/$_";
+  do "lib/LedgerSMB/Entity/Plugins/$_";
 }
 
 my $locale = $LedgerSMB::App_State::Locale;

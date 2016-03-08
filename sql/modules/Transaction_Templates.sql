@@ -28,22 +28,18 @@ in_account_id int, in_journal_id int, in_amount numeric,
 in_amount_fx numeric, in_curr text,
 in_cleared bool, in_memo text, in_business_units int[]
 ) RETURNS journal_line AS $$
-DECLARE retval journal_line;
-BEGIN
 	INSERT INTO journal_line(account_id, journal_id, amount,
           amount_tc, curr, cleared, memo)
 	VALUES (in_account_id, in_journal_id, in_amount, in_amount_fx,
            in_curr, coalesce(in_cleared, false), in_memo);
 
         INSERT INTO business_unit_jl(entry_id, bu_class, bu_id)
-        SELECT currval('journal_line_line_id_seq'), business_unit_class, bu
+        SELECT currval('journal_line_id_seq'), class_id, id
           FROM business_unit
          WHERE id = any(in_business_units);
 
-	SELECT * INTO retval FROM journal_line where line_id = currval('journal_line_line_id_seq');
-	return retval;
-END;
-$$ LANGUAGE PLPGSQL;
+	SELECT * FROM journal_line where id = currval('journal_line_id_seq');
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION journal__validate_entry(in_id int) RETURNS bool AS
 $$
@@ -98,25 +94,25 @@ in_recurring bool
 DECLARE retval journal_search_result;
 BEGIN
 	FOR retval IN 
-		SELECT j.id, j.source, j.description, j.entry_type, 
-			j.transaction_date, j.approved, 
+		SELECT j.id, j.reference, j.description, j.journal, 
+			j.post_date, j.approved, 
 			j.is_template, eca.meta_number, 
 			e.name, ec.class, 
                         coalesce(
                           r.startdate + 0, -- r.recurring_interval,
-                          j.transaction_date)
+                          j.post_date )
 		FROM journal_entry j
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
-		WHERE (in_reference IS NULL OR in_reference = j.source) AND
+		WHERE (in_reference IS NULL OR in_reference = j.reference) AND
 			(in_description IS NULL 
 				or in_description = j.description) AND
-			(in_entry_type is null or in_entry_type = j.entry_type)
+			(in_entry_type is null or in_entry_type = j.journal)
 			and (in_transaction_date is null 
-				or in_transaction_date = j.transaction_date) and
+				or in_transaction_date = j.post_date) and
 			j.approved = coalesce(in_approved, true) and
 			j.is_template = coalesce(in_is_template, false) and
 			(in_department_id is null 

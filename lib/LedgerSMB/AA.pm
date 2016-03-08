@@ -70,7 +70,6 @@ sub post_transaction {
     my $batch_class;
     my %paid;
     my $paidamount;
-    my @queries;
     if ($form->{separate_duties}){
         $form->{approved} = '0';
     }
@@ -374,7 +373,7 @@ sub post_transaction {
    $sth = $dbh->prepare($query) or $form->dberror($query);
    $sth->execute(@queryargs) or $form->dberror($query);
    ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
-   @queries = $form->run_custom_queries( $table, 'INSERT' );
+   my @queries = $form->run_custom_queries( $table, 'INSERT' );
 
 
     if (defined $form->{approved}) {
