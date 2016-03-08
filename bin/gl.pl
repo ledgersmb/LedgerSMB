@@ -309,7 +309,7 @@ sub display_form
 	      }
 	      else {
                  $a{'update'} = 1;
-		  if ( $transdate > $closedto ) {
+		  if ( ($transdate > $closedto) or !$closedto ) {
 		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }
 	      }
