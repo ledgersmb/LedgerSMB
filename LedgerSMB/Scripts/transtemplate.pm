@@ -110,6 +110,7 @@ sub convert_to_form{
             $form->{"amount_$form->{rowcount}"} = $row->{amount};
         }
     }
+    delete $form->{id};
 }
 
 =item list
