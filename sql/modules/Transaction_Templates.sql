@@ -29,9 +29,9 @@ in_amount_fx numeric, in_curr text,
 in_cleared bool, in_memo text, in_business_units int[]
 ) RETURNS journal_line AS $$
 	INSERT INTO journal_line(account_id, journal_id, amount,
-          amount_tc, curr, cleared, memo)
+          amount_tc, curr, cleared)
 	VALUES (in_account_id, in_journal_id, in_amount, in_amount_fx,
-           in_curr, coalesce(in_cleared, false), in_memo);
+           in_curr, coalesce(in_cleared, false));
 
         INSERT INTO business_unit_jl(entry_id, bu_class, bu_id)
         SELECT currval('journal_line_id_seq'), class_id, id
