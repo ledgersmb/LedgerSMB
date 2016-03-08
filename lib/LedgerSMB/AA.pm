@@ -740,6 +740,7 @@ sub post_transaction {
 
     # save printed and queued
     $form->save_status($dbh);
+    return 1 unless $DBI::errstr;
 }
 
 =item get_files

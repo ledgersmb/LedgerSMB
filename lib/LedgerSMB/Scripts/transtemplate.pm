@@ -102,6 +102,7 @@ sub convert_to_form{
         }
     } else { #ar or ap
         my $meta_number = $trans->{credit_data}->{meta_number};
+        $form->{reverse} = 0;
         if ($type eq 'ar'){
             $form->{customer} = $meta_number;
         } else {
