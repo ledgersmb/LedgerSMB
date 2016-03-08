@@ -751,8 +751,7 @@ sub post_transaction {
         id        => $form->{id}
     );
 
-    #$form->audittrail( $dbh, "", \%audittrail );
-
+    return 1 unless $DBI::errstr;
 
 }
 

@@ -35,6 +35,7 @@ sub view {
     };
   
     our $form = new Form;
+    $form->open_form();
     $lsmb_legacy::form = $form;
     $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
     $form->{dbh} = $request->{dbh};
@@ -96,6 +97,7 @@ sub convert_to_form{
         }
     } else { #ar or ap
         my $meta_number = $trans->{credit_data}->{meta_number};
+        $form->{reverse} = 0;
         if ($type eq 'ar'){
             $form->{customer} = $meta_number;
         } else {

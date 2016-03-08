@@ -1234,6 +1234,7 @@ sub approve {
 
 sub update {
     my $display = shift;
+    $form->open_form() unless $form->check_form();
     $is_update = 1;
     if ( !$display ) {
 
