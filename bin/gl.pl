@@ -1,4 +1,4 @@
-#=====================================================================
+=====================================================================
 # LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
@@ -572,6 +572,7 @@ sub gl_subtotal {
 
 sub update {
      my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     $form->open_form unless $form->check_form;
 
      $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
