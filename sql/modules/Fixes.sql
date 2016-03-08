@@ -365,4 +365,6 @@ UPDATE menu_node SET position = 1 + (position * -1)
 INSERT INTO menu_node(id, parent, position, label) values (28, 0, 17, 'Transaction Templates');
 INSERT INTO menu_attribute(id, node_id, attribute, value)
 values (254, 28, 'module', 'transtemplate.pl'), (255, 28, 'action', 'list');
+DROP INDEX "je_unique_source";
+CREATE UNIQUE INDEX "je_unique_source" ON journal_entry(journal, reference) where journal in (1, 2) and not is_template;
 COMMIT;

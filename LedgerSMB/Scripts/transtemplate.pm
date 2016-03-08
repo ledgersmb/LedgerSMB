@@ -35,6 +35,7 @@ sub view {
     };
   
     our $form = new Form;
+    $form->open_form();
     $lsmb_legacy::form = $form;
     $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
     $form->{dbh} = $request->{dbh};
