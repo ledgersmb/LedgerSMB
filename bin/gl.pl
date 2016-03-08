@@ -1,4 +1,4 @@
-=====================================================================
+#=====================================================================
 # LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
@@ -283,11 +283,10 @@ sub display_form
               for ( 'post', 'delete' ) { $a{$_} = 1 }
           } else {
               $a{'update'} = 1;
-              if ( $transdate > $closedto ) {
+              if ( ! $closedto or ($transdate > $closedto ) ) {
                   for ( "post", "schedule" ) { $a{$_} = 1 }
               }
           }
-
           if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
         $button{approve} = {
             ndx   => 3,
