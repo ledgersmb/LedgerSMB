@@ -427,7 +427,7 @@ sub post_transaction {
             intnotes = ?,
             ponumber = ?,
             crdate = ?,
-                        reverse = ?
+            reverse = ?
         WHERE id = ?
     |;
 
@@ -442,7 +442,7 @@ sub post_transaction {
         $form->{currency},      $form->{notes},
         $form->{intnotes},
         $form->{ponumber},      $form->{crdate},
-    $form->{reverse},        $form->{id}
+        $form->{reverse},        $form->{id}
     );
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
 
