@@ -1,4 +1,4 @@
-#=====================================================================
+=====================================================================
 # LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
@@ -310,7 +310,7 @@ sub display_form
 	      }
 	      else {
                  $a{'update'} = 1;
-		  if ( $transdate > $closedto ) {
+		  if ( ($transdate > $closedto) or !$closedto ) {
 		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }
 	      }
@@ -603,6 +603,7 @@ sub gl_subtotal {
 sub update {
     &create_links;
      my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     $form->open_form unless $form->check_form;
 
      $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {

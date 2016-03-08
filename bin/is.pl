@@ -1320,6 +1320,7 @@ sub update {
 
         }
         else {
+            next if $form->{"id_$i"};
             IS->retrieve_item( \%myconfig, \%$form );
 
             $rows = scalar @{ $form->{item_list} };

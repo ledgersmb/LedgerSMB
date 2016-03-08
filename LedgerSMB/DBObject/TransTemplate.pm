@@ -6,14 +6,25 @@ sub save {
    my $self = shift @_;
    $self->{is_template} = '1';
    $self->{approved} = 0;
+   $self->{journal} = 1; # default gl
+   $self->{journal} = 2 if $self->{entity_class} == 2;
+   $self->{journal} = 3 if $self->{entity_class} == 1;
+   if (not defined $self->{curr}){
+      my ($curr) = $self->exec_method(funcname => 'defaults_get_defaultcurrency');
+      ($self->{curr}) = values(%$curr); 
+   }
+   $self->{currency} //= $self->{curr};
    $self->{reference} = $self->{invnumber} if $self->{invnumber};
+   for (qw(effective_start effective_end post_date reference)){
+      delete $self->{$_} unless $self->{$_};
+   }
    my ($ref) = $self->exec_method(funcname => 'journal__add');
    $self->merge($ref);
    $self->{journal_id} = $self->{id};
    for my $line (@{$self->{journal_lines}}){
        my $l = bless $line, 'LedgerSMB::DBObject';
        $l->{_locale} = $self->{_locale};
-       $l->{dbh} = $self->{dbh};
+       $l->{dbh} = LedgerSMB::App_State::DBH();
        $l->{journal_id} = $self->{id};
        my ($ref) = $l->exec_method(funcname => 'account__get_from_accno');
        $l->{account_id} = $ref->{id};

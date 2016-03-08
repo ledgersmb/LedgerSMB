@@ -1297,6 +1297,7 @@ sub update {
 
         }
         else {
+            next if $form->{"id_$i"};
             IR->retrieve_item( \%myconfig, \%$form );
 
             my $rows = scalar @{ $form->{item_list} };
