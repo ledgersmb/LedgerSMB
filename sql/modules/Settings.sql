@@ -7,6 +7,8 @@
 
 BEGIN;
 
+DROP FUNCTION IF EXISTS defaults_get_defaultcurrency();
+
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency() 
 RETURNS SETOF char(3) AS
 $$

@@ -251,6 +251,8 @@ $$ language plpgsql;
 COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
 $$ Returns a set of (only one) user specified by the id.$$;
 
+DROP FUNCTION IF EXISTS admin__get_user_by_entity(in_entity_id INT);
+
 CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns setof users as $$
     
     DECLARE
@@ -770,6 +772,7 @@ COMMENT ON function user__save_preferences(
 $$ Saves user preferences.  Returns true if successful, false if no preferences
 were found to update.$$;
 
+DROP FUNCTION IF EXISTS user__get_preferences (in_user_id int);
 create or replace function user__get_preferences (in_user_id int) returns setof user_preference as $$
     
 declare
