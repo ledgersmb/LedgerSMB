@@ -42,11 +42,12 @@ Changelog for 1.4.26
 * Fixed stylesheet class for setup console (Chris T, #1204)
 * Added Copy to New for GL transactions (Chris T, #1046)
 * Fixed amount range not respected on gl search (Chris T, #1287)
-* Fixed invalid number crash in order entry (Chris T, #1263)
-* Fixed template transactions (Chris T, #1071)
+* Fixed invalid number crash when not displaying credit (Chris T, #1263)
+* Fixed template transactions (Chris T and Erik H, #1071)
 * Fixed part description editing on invoices/orders(Chris T, #1373)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.25
 * Added datepicker to invoice Delivery Date field (Nick P)
