@@ -10,8 +10,10 @@ Changelog for 1.4.26
 * Fixed invalid number crash when not displaying credit (Chris T, #1263)
 * Fixed template transactions (Chris T and Erik H, #1071)
 * Fixed part description editing on invoices/orders(Chris T, #1373)
+* Updated Danish translation (Mikkel H)
 
 Chris T is Chris Travers
+Mikkel H is Mikkel Hoegh
 Erik H is Erik Huelsmann
 
 Changelog for 1.4.25
