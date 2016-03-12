@@ -117,8 +117,6 @@ sub sha {
     return $self->{_sha};
 }
 
-
-
 =head2 content_wrapped($before, $after)
 
 Wrap a file with more statements in the same transaction.
