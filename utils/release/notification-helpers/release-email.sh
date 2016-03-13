@@ -60,15 +60,15 @@ sendEmail() {
     fi
 
     if createEmail "${cfgValue[mail_AnnounceList]}"; then
-        $MTA $defaultRecipient < /tmp/msg.txt
+        $MTA "$defaultRecipient" < /tmp/msg.txt
     fi
 
     if createEmail "${cfgValue[mail_UsersList]}"; then
-        $MTA $defaultRecipient < /tmp/msg.txt
+        $MTA "$defaultRecipient" < /tmp/msg.txt
     fi
 
     if createEmail "${cfgValue[mail_DevelList]}"; then
-        $MTA $defaultRecipient < /tmp/msg.txt
+        $MTA "$defaultRecipient" < /tmp/msg.txt
     fi
 }
 
