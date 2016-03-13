@@ -244,6 +244,7 @@ sub check_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
+    return 0 unless $self->{form_id};
     my $sth = $self->{dbh}->prepare('select form_check(?, ?)');
     $sth->execute($self->{session_id}, $self->{form_id});
     my @results = $sth->fetchrow_array();

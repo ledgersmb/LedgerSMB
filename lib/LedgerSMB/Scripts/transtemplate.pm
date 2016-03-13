@@ -51,6 +51,7 @@ sub view {
     my $transtemplate = LedgerSMB::DBObject::TransTemplate->new({base => $request});
     $transtemplate->get;
     my $script = $template_dispatch->{$request->{entry_type}}->{script};
+    die "No dispatch entry for type $request->{entry_type}" unless $script;
     $form->{script} = $script;
     $form->{script} =~ s/(bin|scripts)\///;
     delete $form->{id};
@@ -82,6 +83,7 @@ object for old code.
 sub convert_to_form{
     my ($trans, $form, $type) = @_;
     my %myconfig;
+    $form->{session_id} = $trans->{session_id};
     if ($type eq 'gl'){
         $form->{reference} = $trans->{reference};
         $form->{description} = $trans->{description};
@@ -102,6 +104,7 @@ sub convert_to_form{
         }
     } else { #ar or ap
         my $meta_number = $trans->{credit_data}->{meta_number};
+        $form->{reverse} = 0;
         if ($type eq 'ar'){
             $form->{customer} = $meta_number;
         } else {
@@ -112,6 +115,7 @@ sub convert_to_form{
             $form->{"amount_$form->{rowcount}"} = $row->{amount};
         }
     }
+    delete $form->{id};
 }
 
 =item list

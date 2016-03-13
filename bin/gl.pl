@@ -284,11 +284,10 @@ sub display_form
               for ( 'post', 'delete' ) { $a{$_} = 1 }
           } else {
               $a{'update'} = 1;
-              if ( $transdate > $closedto ) {
+              if ( ! $closedto or ($transdate > $closedto ) ) {
                   for ( "post", "schedule" ) { $a{$_} = 1 }
               }
           }
-
           if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
         $button{approve} = {
             ndx   => 3,
@@ -569,6 +568,7 @@ sub gl_subtotal {
 sub update {
     &create_links;
      my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     $form->open_form unless $form->check_form;
 
      $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
