@@ -79,6 +79,9 @@ $$
 SELECT * FROM warehouse order by description;
 $$ language sql;
 
+DROP FUNCTION IF EXISTS  invoice__get_by_vendor_number
+(in_meta_nunber text, in_invoice_number text);
+
 CREATE OR REPLACE FUNCTION invoice__get_by_vendor_number
 (in_meta_nunber text, in_invoice_number text)
 RETURNS ap AS
