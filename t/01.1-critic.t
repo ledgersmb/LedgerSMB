@@ -70,6 +70,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'ProhibitHardTabs',
                               'Modules',
                               'TestingAndDebugging',
+                              'ProhibitPuncutationVars',
                 ]),
             \@on_disk);
 
@@ -94,6 +95,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                 ],
                 -include => [ 'ProhibitTrailingWhitespace',
                               'ProhibitHardTabs',
+                              'ProhibitPuncutationVars',
                 ]),
             \@on_disk_oldcode);
 
