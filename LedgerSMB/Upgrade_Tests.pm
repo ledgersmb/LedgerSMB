@@ -316,7 +316,7 @@ push @tests, __PACKAGE__->new(
  instructions => $LedgerSMB::App_State::Locale->text("Please use the SQL-Ledger UI to add the GIFI accounts"),
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '2.8'
+  max_version => '3.0'
 );
 
 
@@ -345,7 +345,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
  push @tests, __PACKAGE__->new(
@@ -355,7 +355,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 */
 
@@ -377,27 +377,27 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
-push @tests,__PACKAGE__->new(
-    test_query => "select *
-                    from chart
-                   where charttype = 'A'
-                     and regexp_match(link,':?(AR|AP|IC)(:|$)",
-    display_name => $LedgerSMB::App_State::Locale->text('Unsupported account link combinations'),
-    name => 'unsupported_account_links',
-    display_cols => ['accno', 'description', 'link'],
- instructions => $LedgerSMB::App_State::Locale->text(
-                   'An account can either be a summary account (which have a
-link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
-number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-    column => 'category',
-    table => 'chart',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '2.8'
-    );
+# push @tests,__PACKAGE__->new(
+#     test_query => "select *
+#                     from chart
+#                    where charttype = 'A'
+#                      and link ~ ':?(AR|AP|IC)(:|$)'",
+#     display_name => $LedgerSMB::App_State::Locale->text('Unsupported account link combinations'),
+#     name => 'unsupported_account_links',
+#     display_cols => ['accno', 'description', 'link'],
+#  instructions => $LedgerSMB::App_State::Locale->text(
+#                    'An account can either be a summary account (which have a
+# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
+# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
+#     column => 'category',
+#     table => 'chart',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '3.0'
+#     );
 
 push @tests,__PACKAGE__->new(
     test_query => "select *
@@ -416,7 +416,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -434,27 +434,27 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
-push @tests,__PACKAGE__->new(
-    test_query => "select *
-                    from chart
-                   where charttype = 'A'
-                     and regexp_match(link,':?(AR|AP|IC)(:|$)",
-    display_name => $LedgerSMB::App_State::Locale->text('Unsupported account link combinations'),
-    name => 'unsupported_account_links',
-    display_cols => ['accno', 'description', 'link'],
- instructions => $LedgerSMB::App_State::Locale->text(
-                   'An account can either be a summary account (which have a
-link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
-number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-    column => 'category',
-    table => 'chart',
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '2.8'
-    );
+# push @tests,__PACKAGE__->new(
+#     test_query => "select *
+#                     from chart
+#                    where charttype = 'A'
+#                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
+#     display_name => $LedgerSMB::App_State::Locale->text('Unsupported account link combinations'),
+#     name => 'unsupported_account_links',
+#     display_cols => ['accno', 'description', 'link'],
+#  instructions => $LedgerSMB::App_State::Locale->text(
+#                    'An account can either be a summary account (which have a
+# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
+# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
+#     column => 'category',
+#     table => 'chart',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '3.0'
+#     );
 
 push @tests,__PACKAGE__->new(
     test_query => "select *
@@ -473,7 +473,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -492,7 +492,7 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -511,7 +511,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -527,7 +527,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -546,7 +546,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -567,7 +567,7 @@ push @tests, __PACKAGE__->new(
     table => 'ar',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 #  There's no AP uniqueness requirement? 
@@ -589,7 +589,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'ap',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
 
@@ -606,7 +606,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -623,7 +623,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -641,7 +641,7 @@ push @tests, __PACKAGE__->new(
     table => 'partscustomer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 #  ### On the vendor side, SL doesn't use pricegroups
@@ -659,7 +659,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
 
