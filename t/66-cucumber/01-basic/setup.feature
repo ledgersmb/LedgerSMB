@@ -146,6 +146,7 @@ Scenario: Copy a company
    And I log into "setup-test2" using the super-user credentials
   Then I should see the setup admin page
 
+"""
 Scenario: Upgrade a comapny from 1.4
  Given a 1.4 company named "upgrade-test"
   When I navigate to the setup login page
@@ -153,3 +154,4 @@ Scenario: Upgrade a comapny from 1.4
   Then I should see the setup admin page
   When I upgrade the database
   Then I should see the setup confirmation page
+"""

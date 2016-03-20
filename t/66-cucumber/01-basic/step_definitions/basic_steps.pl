@@ -15,7 +15,6 @@ use Selenium::Support qw( find_element_by_label
  try_wait_for_page
  prepare_driver element_has_class element_is_dropdown);
 
-
 Given qr/a LedgerSMB instance/, sub {
     return if defined C->stash->{feature}->{driver};
 
@@ -81,7 +80,6 @@ When qr/I select "(.*)" from the drop down "(.*)"/, sub {
 
     find_option(get_driver(C), $value, $label)->click;
 };
-
 
 When qr/I press "(.*)"/, sub {
     my $button_text = $1;
