@@ -1575,7 +1575,7 @@ sub print_form {
     $form->{IN}        = "$form->{formname}.$form->{format}";
 
     if ( $form->{format} =~ /(postscript|pdf)/ ) {
-        $form->{IN} =~ s/$&$/tex/;
+        $form->{IN} =~ s/$1$/tex/;
     }
 
     $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
