@@ -70,17 +70,34 @@ including new customers, vendors, leads and so forth.
 #      And click save
 #     Then I see the new address in the table list
 #
-# the below scenarios are still todo, but don't need to be finished by 1.5.0
-# Scenario: Add new Vendor ECA to Customer
+# Scenario: Add new note to company
+#    Given a comapny with a vendor ECA
+#     When I click on the notes tab
+#      And enter a new note
+#      And select credit account
+#      And click save
+#     Then I see the new note in the note list
 #
-# Scenario: Add new Customer ECA to Vendor
+#
+# Scenario: Add new bank account to person
+#    Given a person with a customer ECA
+#     When I click on the Bank Accounts
+#      And enter a new account
+#      And click save
+#     Then I see the new bank acount in the table list
 #
 # Scenario: Add New Phone number to Person
+#    Given a person with a customer ECA
+#     When I click on the Contact
+#      And enter a new phone number
+#      And click save
+#     Then I see the new phone number in the contact table list
 #
-# Scenario: Add new note to company
-#
-# Scenario: Add nw bank account to person
-#
+# TODO
 # Scenario: Look up person customer with all info filled out
 #
 # Scenario: Look up company vendor wit all info flled out
+# 
+# Scenario: Add new Vendor ECA to Customer
+#
+# Scenario: Add new Customer ECA to Vendor
