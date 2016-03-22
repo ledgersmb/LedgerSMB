@@ -319,9 +319,11 @@ select name, name, entity_id FROM sl30.employee;
 INSERT 
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
-SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
+SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+       employeenumber, dob,
        (select entity_id from sl30.employee where id = em.managerid)
-  FROM sl30.employee em;
+  FROM sl30.employee em
+LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
 
 
 
