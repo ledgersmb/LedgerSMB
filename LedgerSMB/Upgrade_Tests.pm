@@ -308,7 +308,9 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno not is null
+                         and gifi_accno not = ''",
  display_name => $LedgerSMB::App_State::Locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
