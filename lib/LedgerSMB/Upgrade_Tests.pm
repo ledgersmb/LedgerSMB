@@ -322,7 +322,8 @@ push @tests, __PACKAGE__->new(
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
-                         and gifi_accno !~ '^\\s*\$'",
+                         and gifi_accno not is null
+                         and gifi_accno not = ''",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],

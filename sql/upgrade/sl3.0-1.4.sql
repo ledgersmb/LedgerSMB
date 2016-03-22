@@ -26,7 +26,9 @@ INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM sl30.chart WHERE charttype = 'H';
 
-SELECT account__save(id, accno, description, category, gifi_accno, NULL::int,
+SELECT account__save(id, accno, description, category,
+                     case when gifi_accno ~ '[\s\t]*' then NULL
+                          else gifi_accno end, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
                     string_to_array(link,':'), 'f', 'f')
