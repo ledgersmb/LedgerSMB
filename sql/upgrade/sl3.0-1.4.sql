@@ -632,10 +632,10 @@ INSERT INTO recurringemail SELECT * FROM sl30.recurringemail;
 
 INSERT INTO recurringprint SELECT * FROM sl30.recurringprint;
 
-INSERT INTO jcitems(id, parts_id, description, qty, allocated,
+INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             person_id, notes, business_unit_id)
-     SELECT j.id,  parts_id, description, qty, allocated,
+     SELECT j.id,  parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             p.id, j.notes, j.project_id+1000
        FROM sl30.jcitems j
