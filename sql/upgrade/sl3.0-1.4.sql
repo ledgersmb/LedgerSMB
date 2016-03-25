@@ -316,12 +316,21 @@ select name, name, entity_id FROM sl30.employee;
 --     SELECT entity_id, login FROM sl30.employee em
 --      WHERE login IS NOT NULL;
 
+-- No manager information in SL30
+--INSERT 
+--  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
+--       employeenumber, dob, manager_id)
+--SELECT entity_id, startdate, enddate, r.description, ssn, sales,
+--       employeenumber, dob,
+--       (select entity_id from sl30.employee where id = em.managerid)
+--  FROM sl30.employee em
+--LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
+
 INSERT 
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob,
-       (select entity_id from sl30.employee where id = em.managerid)
+       employeenumber, dob, 0
   FROM sl30.employee em
 LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
 
@@ -410,8 +419,7 @@ insert into ar
 	on_hold, approved, reverse, terms, description)
 SELECT 
 	customer.credit_id,
-	(select entity_id from sl30.employee 
-		WHERE id = ar.employee_id),
+	(select entity_id from sl30.employee WHERE id = ar.employee_id),
 	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
 	intnotes,
@@ -464,7 +472,9 @@ SELECT lsmb_entry_id, trans_id, (select id
                                     amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	memo, approved, cleared, vr_id
-	FROM sl30.acc_trans ;
+	FROM sl30.acc_trans
+	WHERE chart_id IS NOT NULL AND trans_id IN (
+	    SELECT id FROM transactions);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
@@ -477,7 +487,7 @@ SELECT ac.entry_id, 1, gl.department_id
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 2, slac.project_id+1000
   FROM acc_trans ac 
-  JOIN sl30.acc_trans slac ON slac.entry_id = ac.entry_id 
+  JOIN sl30.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id 
  WHERE project_id > 0;
 
 
@@ -589,7 +599,8 @@ INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
        FROM sl30.inventory i
        JOIN sl30.employee e ON i.employee_id = e.id;
 
-INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl30.yearend;
+INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl30.yearend
+WHERE sl30.yearend.trans_id IN (SELECT id FROM gl);
 
 INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
             curr)
@@ -603,7 +614,8 @@ INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
      SELECT parts_id, credit_id, pv.pricegroup_id, pricebreak,
             sellprice, validfrom, validto, pv.curr
        FROM sl30.partscustomer pv
-       JOIN sl30.customer v ON v.id = pv.customer_id;
+       JOIN sl30.customer v ON v.id = pv.customer_id
+      WHERE pv.pricegroup_id <> 0;
 
 INSERT INTO language
 SELECT * FROM sl30.language sllang
@@ -634,13 +646,19 @@ INSERT INTO recurringprint SELECT * FROM sl30.recurringprint;
 
 INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes, business_unit_id)
-     SELECT j.id,  parts_id, description, qty, total, allocated,
+            person_id, notes, business_unit_id, jctype, curr)
+     SELECT j.id,  j.parts_id, j.description, qty, qty*sellprice, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes, j.project_id+1000
+            p.id, j.notes, j.project_id+1000, 1,
+            CASE WHEN curr IS NOT NULL
+				 THEN curr
+				 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
+			END
        FROM sl30.jcitems j
        JOIN sl30.employee e ON j.employee_id = e.id
-       JOIN person p ON e.entity_id = p.entity_id;
+       JOIN person p ON e.entity_id = p.entity_id
+	   LEFT JOIN sl30.project pr on (pr.id = j.project_id)
+	   LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
 
 INSERT INTO parts_translation SELECT * FROM sl30.translation where trans_id in (select id from parts);
 
