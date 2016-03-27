@@ -134,7 +134,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Batch Search');
+    return LedgerSMB::Report::text('Batch Search') . ' ' . LedgerSMB::Report::text('(Locked)');
 }
 
 =item header_lines
