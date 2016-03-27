@@ -382,6 +382,52 @@ UPDATE defaults
  WHERE setting_key IN (select fldvalue FROM sl30.defaults
                         where );
 */
+/* May have to move this downward*/
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'company') WHERE setting_key = 'company_name';
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'address') WHERE setting_key = 'company_address';
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'fax') WHERE setting_key = 'company_fax';
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'tel') WHERE setting_key = 'company_phone';
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'businessnumber') WHERE setting_key = 'businessnumber';
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'weightunit') WHERE setting_key = 'weightunit';
+UPDATE defaults SET value = (SELECT curr FROM sl30.curr WHERE rn=1) WHERE setting_key = 'curr';
+update defaults
+set value = (
+	select id from account
+	where account.accno in (
+	select accno from sl30.chart
+	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'inventory_accno_id' ))
+) WHERE setting_key = 'inventory_accno_id';
+update defaults
+set value = (
+	select id from account
+	where account.accno in (
+	select accno from sl30.chart
+	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'income_accno_id' ))
+) WHERE setting_key = 'income_accno_id';
+update defaults
+set value = (
+	select id from account
+	where account.accno in (
+	select accno from sl30.chart
+	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'expense_accno_id' ))
+) WHERE setting_key = 'expense_accno_id';
+update defaults
+set value = (
+	select id from account
+	where account.accno in (
+	select accno from sl30.chart
+	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxgain_accno_id' ))
+) WHERE setting_key = 'fxgain_accno_id';
+update defaults
+set value = (
+	select id from account
+	where account.accno in (
+	select accno from sl30.chart
+	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxloss_accno_id' ))
+) WHERE setting_key = 'fxloss_accno_id';
+-- = "sl30.cashovershort_accno_id" ?
+-- "earn_id" = ?
+
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
 SELECT id, parts_id, qty, bom, adj  FROM sl30.assembly;
@@ -618,9 +664,9 @@ INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
       WHERE pv.pricegroup_id <> 0;
 
 INSERT INTO language
-SELECT * FROM sl30.language sllang
+SELECT OVERLAY(code PLACING LOWER(SUBSTRING(code FROM '^..')) FROM 1 FOR 2 ) AS code,description FROM sl30.language sllang
  WHERE NOT EXISTS (SELECT 1
-                     FROM language l WHERE l.code = sllang.code);
+                     FROM language l WHERE l.code = OVERLAY(sllang.code PLACING LOWER(SUBSTRING(sllang.code FROM '^..')) FROM 1 FOR 2 ));
 
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id)
