@@ -8,6 +8,7 @@ use warnings;
 
 use LedgerSMB::App_State;
 use Try::Tiny;
+use base qw(LedgerSMB::PGOld);
 
 try {
 no warnings;
