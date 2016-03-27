@@ -1800,7 +1800,6 @@ sub get_name {
            $entity_class = 1;
        }
     }
-
     my @queryargs;
     my $where;
     if ($transdate) {
@@ -1847,14 +1846,14 @@ sub get_name {
                           WHERE etl.location_class = 1) el
                         ON (c.entity_id = el.entity_id)
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
-         WHERE (lower(e.name) LIKE ?
-               OR c.meta_number ILIKE ?
+         WHERE (e.name ILIKE ? || '%'
+               OR c.meta_number ILIKE ? || '%'
                        or e.name @@ plainto_tsquery(?))
                        AND coalesce(?, c.entity_class) = c.entity_class
         $where
         ORDER BY e.name/;
 
-    unshift( @queryargs, $name, $self->{"${table}number"} ,
+    unshift( @queryargs, $self->{$table}, $self->{"${table}number"} ,
                          $self->{$table}, $entity_class);
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute(@queryargs) || $self->dberror($query);
