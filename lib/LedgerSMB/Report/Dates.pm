@@ -97,7 +97,7 @@ sub _get_to_date {
 
     }
     my $dateobj = $self->from_date;
-    my $date = $dateobj->from_db($dateobj->to_db); # copy, round trip
+    my $date = LedgerSMB::PGDate->from_db($dateobj->to_db); # copy, round trip
     if ($self->interval eq 'month'){
        $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
