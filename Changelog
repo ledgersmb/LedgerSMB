@@ -1,6 +1,11 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.27
+* Added note to batch list that all are locked (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.26
 * Removed broken and largely useless lwp tests (Chris T)
 * Moved X12 support from features downgraded to experimental (Chris T)
