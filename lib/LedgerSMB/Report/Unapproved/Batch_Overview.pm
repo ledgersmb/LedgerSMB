@@ -154,7 +154,9 @@ sub header_lines {
             {name => 'amount_gt',
              text => $self->_locale->text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => $self->_locale->text('Amount Less Than')}, ]
+             text => $self->_locale->text('Amount Less Than')},
+            {name => 'locked',
+             text => $self->_locale->text('(Locked)')}, ]
 }
 
 =item subtotal_cols
