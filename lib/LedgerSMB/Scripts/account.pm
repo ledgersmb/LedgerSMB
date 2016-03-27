@@ -96,6 +96,19 @@ sub save {
            and $request->{heading} =~ /\D/);
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
+    $account->save;
+    edit($account);
+}
+
+=item save_translations
+
+Saves selected translations
+
+=cut
+
+sub save_translations {
+    my ($request) = @_;
+    my $account = LedgerSMB::DBObject::Account->new({base => $request});
     if ($request->{languagecount} > 0) {
         $account->{translations} = {};
         for my $index (1..$request->{languagecount}) {
@@ -104,7 +117,7 @@ sub save {
         }
     }
 
-    $account->save;
+    $account->save_translations;
     edit($account);
 }
 

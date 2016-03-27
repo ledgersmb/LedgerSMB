@@ -96,7 +96,7 @@ html, body {
 
 
 /******** For account editing page */
-#account-tabs div
+#account-tabs .dijitTabContainerTopChildWrapper div
 {
    overflow: auto;
 }
