@@ -90,12 +90,28 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my ($request) = @_;
-    $request->{parent} = undef if $request->{parent} == -1;
+    {
+      no warnings 'uninitialized';
+      $request->{parent} = undef if $request->{parent} == -1;
+    }
     die $request->{_locale}->text('Please select a valid heading')
        if (defined $request->{heading}
            and $request->{heading} =~ /\D/);
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
+    $account->save;
+    edit($account);
+}
+
+=item update_translations
+
+Saves selected translations
+
+=cut
+
+sub update_translations {
+    my ($request) = @_;
+    my $account = LedgerSMB::DBObject::Account->new({base => $request});
     if ($request->{languagecount} > 0) {
         $account->{translations} = {};
         for my $index (1..$request->{languagecount}) {
@@ -104,7 +120,7 @@ sub save {
         }
     }
 
-    $account->save;
+    $account->save_translations;
     edit($account);
 }
 
