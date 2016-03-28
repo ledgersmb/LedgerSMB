@@ -100,13 +100,13 @@ sub save {
     edit($account);
 }
 
-=item save_translations
+=item update_translations
 
 Saves selected translations
 
 =cut
 
-sub save_translations {
+sub update_translations {
     my ($request) = @_;
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     if ($request->{languagecount} > 0) {
