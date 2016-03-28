@@ -200,6 +200,7 @@ sub name {
 
 sub run_report {
     my ($self) = @_;
+    $self->manual_totals(1);
     my @rows = $self->call_dbmethod(funcname => 'reconciliation__search');
     my @accounts = $self->call_dbmethod(
             funcname => 'reconciliation__account_list'
