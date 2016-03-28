@@ -39,6 +39,7 @@ Released 2014-09-15
 Changelog for 1.4.27
 * Added note to batch list that all are locked (Chris T)
 * Allow multiple logins per user, all with own locks (Chris T, #1418)
+* Fixes meaningless subtotals on recon search results (Chris T, #995)
 
 Chris T is Chris Travers
 
