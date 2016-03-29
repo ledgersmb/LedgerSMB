@@ -48,7 +48,7 @@ END ;
 <tbody>
     <tr class="sectionhead">
         <th colspan="<?lsmb max_path_depth ?>"></th>
-<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+<?lsmb FOREACH col IN report.sorted_col_ids -?>
         <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
     </tr>
@@ -81,7 +81,7 @@ END ;
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
 <?lsmb report.rheads.ids.$row.props.account_number -?> - <?lsmb
 END; -?><?lsmb report.rheads.ids.$row.props.account_description ?></th>
-<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+<?lsmb FOREACH col IN report.sorted_col_ids -?>
   <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
            _ '&amp;from_date=' _ report.cheads.ids.$col.props.from_date
@@ -101,4 +101,3 @@ END; -?><?lsmb report.rheads.ids.$row.props.account_description ?></th>
 <?lsmb END ?>
 </body>
 </html>
-

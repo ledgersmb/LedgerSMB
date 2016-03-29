@@ -256,6 +256,7 @@ html, body {
 
 #PNL th {
 	vertical-align: bottom;
+	padding-left: 5px;
 }
 
 #PNL table {
