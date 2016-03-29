@@ -67,8 +67,6 @@ sub generate_income_statement {
             $rpt->add_comparison($comparison);
         }
     }
-    #use Data::Dumper;
-    #die '<pre>' . Dumper($rpt);
     $rpt->render($request);
 }
 

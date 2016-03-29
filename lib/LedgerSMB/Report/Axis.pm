@@ -139,11 +139,11 @@ sub sort {
 sub _sort_aux {
     my ($subtree) = @_;
 
-    my @sorted;
     my $cmpv = sub {
         return ((defined $subtree->{$_[0]}->{props}
                  && $subtree->{$_[0]}->{props}->{order}) || $_[0]);
     };
+    my @sorted = ();
     for (sort { &$cmpv($a) cmp &$cmpv($b) } keys %$subtree) {
         push @sorted, $subtree->{$_}->{section}->{id}
             if scalar(keys %{$subtree->{$_}->{children}}) > 0;
