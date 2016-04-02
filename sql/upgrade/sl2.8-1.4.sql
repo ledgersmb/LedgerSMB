@@ -20,6 +20,9 @@ ALTER TABLE sl28.customer ADD COLUMN credit_id int;
 
 --Accounts
 
+INSERT INTO gifi
+SELECT * FROM sl28.gifi;
+
 insert into account_link_description values ('CT_tax', false, false);
 
 INSERT INTO account_heading(id, accno, description)
@@ -27,7 +30,7 @@ SELECT id, accno, description
   FROM sl28.chart WHERE charttype = 'H';
 
 SELECT account__save(id, accno, description, category,
-                    CASE WHEN gifi_accno ~ '^\s*$' THEN NULL
+                    CASE WHEN gifi_accno ~ '^[\s\t]*$' THEN NULL
                     ELSE gifi_accno END, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
@@ -354,9 +357,6 @@ drawing, microfiche, partsgroup_id, avgcost FROM sl28.parts;
 INSERT INTO makemodel (parts_id, make, model)
 SELECT parts_id, make, model FROM sl28.makemodel;
 
-INSERT INTO gifi
-SELECT * FROM sl28.gifi;
-
 /* TODO -- can't be solved this easily: a freshly created defaults
 table contains 30 keys, one after having saved the System->Defaults
 screen contains 58. Also, there are account IDs here, which should
@@ -462,7 +462,9 @@ SELECT lsmb_entry_id, trans_id, (select id
                                     amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	memo, approved, cleared, vr_id
-	FROM sl28.acc_trans ;
+   FROM sl28.acc_trans
+  WHERE chart_id IS NOT NULL
+        AND trans_id IN (SELECT id FROM transactions);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
@@ -475,7 +477,7 @@ SELECT ac.entry_id, 1, gl.department_id
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 2, slac.project_id+1000
   FROM acc_trans ac
-  JOIN sl28.acc_trans slac ON slac.entry_id = ac.entry_id
+  JOIN sl28.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id
  WHERE project_id > 0;
 
 
@@ -587,7 +589,9 @@ INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
        FROM sl28.inventory i
        JOIN sl28.employee e ON i.employee_id = e.id;
 
-INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl28.yearend;
+INSERT INTO yearend (trans_id, transdate)
+  SELECT * FROM sl28.yearend
+    WHERE sl30.yearend.trans_id IN (SELECT id FROM gl);
 
 INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
             curr)
@@ -630,15 +634,17 @@ INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
 
 INSERT INTO recurringprint SELECT * FROM sl28.recurringprint;
 
-INSERT INTO jcitems(id, parts_id, description, qty, allocated,
+INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes, business_unit_id)
-     SELECT j.id,  parts_id, description, qty, allocated,
+            person_id, notes, business_unit_id, jctype)
+     SELECT j.id,  parts_id, description, qty, qty*sellprice, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes, j.project_id+1000
+            p.id, j.notes, j.project_id+1000, 1, curr
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
-       JOIN person p ON e.entity_id = p.entity_id;
+       JOIN person p ON e.entity_id = p.entity_id
+    LEFT JOIN sl28.project pr on (pr.id = j.project_id)
+    LEFT JOIN sl28.customer c on (c.id = pr.customer_id);
 
 INSERT INTO parts_translation SELECT * FROM sl28.translation where trans_id in (select id from parts);
 
