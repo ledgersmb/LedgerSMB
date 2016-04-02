@@ -458,10 +458,10 @@ push @tests,__PACKAGE__->new(
                     from chart
                    where charttype = 'A'
                      and category not in ('A', 'L', 'Q', 'I', 'E')",
-    display_name => $LedgerSMB::App_State::Locale->text('Unsupported account categories'),
+    display_name => $locale->text('Unsupported account categories'),
     name => 'unsupported_account_types',
     display_cols => ['category', 'accno', 'description'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make sure all accounts have a category of
 (A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
     column => 'category',
@@ -476,10 +476,10 @@ push @tests,__PACKAGE__->new(
 #                     from chart
 #                    where charttype = 'A'
 #                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
-#     display_name => $LedgerSMB::App_State::Locale->text('Unsupported account link combinations'),
+#     display_name => $locale->text('Unsupported account link combinations'),
 #     name => 'unsupported_account_links',
 #     display_cols => ['accno', 'description', 'link'],
-#  instructions => $LedgerSMB::App_State::Locale->text(
+#  instructions => $locale->text(
 #                    'An account can either be a summary account (which have a
 # link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 # number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
@@ -498,10 +498,10 @@ push @tests,__PACKAGE__->new(
                             from chart cn
                            where cn.charttype = 'H'
                              and cn.accno < c.accno)",
-    display_name => $LedgerSMB::App_State::Locale->text('Accounts without heading'),
+    display_name => $locale->text('Accounts without heading'),
     name => 'no_header_accounts',
     display_cols => ['accno', 'description', 'link'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please go into the SQL-Ledger UI and create/rename a
 heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
