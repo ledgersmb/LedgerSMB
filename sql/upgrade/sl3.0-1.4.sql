@@ -30,7 +30,7 @@ SELECT id, accno, description
   FROM sl30.chart WHERE charttype = 'H';
 
 SELECT account__save(id, accno, description, category,
-                     case when gifi_accno ~ '[\s\t]*' then NULL
+                     case when gifi_accno ~ '^[\s\t]*$' then NULL
                           else gifi_accno end, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
