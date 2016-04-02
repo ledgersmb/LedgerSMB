@@ -368,3 +368,16 @@ values (254, 28, 'module', 'transtemplate.pl'), (255, 28, 'action', 'list');
 DROP INDEX "je_unique_source";
 CREATE UNIQUE INDEX "je_unique_source" ON journal_entry(journal, reference) where journal in (1, 2) and not is_template;
 COMMIT;
+
+
+BEGIN;
+
+ALTER TABLE recurring ADD COLUMN recurring_interval interval;
+
+UPDATE recurring SET recurring_interval = (repeat || ' ' || unit)::interval;
+
+ALTER TABLE recurring DROP COLUMN repeat;
+ALTER TABLE recurring DROP COLUMN unit;
+
+END;
+
