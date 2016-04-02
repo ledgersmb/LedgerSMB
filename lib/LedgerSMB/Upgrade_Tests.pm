@@ -703,7 +703,7 @@ push @tests, __PACKAGE__->new(
                     where not exists (select 1
                                         from pricegroup
                                        where id = pricegroup_id)
-					and pricegroup_id <> 0",
+                                        and pricegroup_id <> 0",
     display_name => $locale->text('Non-existing customer pricegroups in partscustomer'),
     name => 'partscustomer_pricegroups_exist',
     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
