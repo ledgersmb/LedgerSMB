@@ -103,10 +103,10 @@ my @login_actions_dispatch_table =
         operation => "Would you like to migrate the database?",
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
-	version => '3.0',
-	message => "SQL-Ledger 3.0 database detected.",
-	operation => "Would you like to migrate the database?",
-	next_action => 'upgrade' },
+        version => '3.0',
+        message => "SQL-Ledger 3.0 database detected.",
+        operation => "Would you like to migrate the database?",
+        next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => undef,
         message => "Unsupported SQL-Ledger version detected.",
@@ -544,11 +544,11 @@ sub _get_linked_accounts {
 
 my %info_applicable_for_upgrade = (
     'default_ar' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_ap' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
+                      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-			   'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
+                           'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -1120,7 +1120,7 @@ sub run_sl30_migration {
     # process_and_run_upgrade_script commits the transaction
 
     process_and_run_upgrade_script($request, $database, "sl30",
-				   'sl3.0-1.4');
+                                   'sl3.0-1.4');
 
     create_initial_user($request);
 }
