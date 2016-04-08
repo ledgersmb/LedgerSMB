@@ -598,7 +598,6 @@ sub upgrade {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-	my @selectable_values = ();
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
@@ -607,21 +606,11 @@ sub upgrade {
         next if ($check->min_version gt $dbinfo->{version}) 
 	    || ($check->max_version lt $dbinfo->{version})
 	    || ($check->appname ne $dbinfo->{appname});
-		if ( $check->selectable_values ) {
-			my $sth = $request->{dbh}->prepare($check->selectable_values);
-			$sth->execute()
-			or die "Failed to execute pre-migration check " . $check->name;
-			while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-				push @selectable_values, { value => $row->{value},
-											text => $row->{id}
-				};
-			}
-		}
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
 	    or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             _failed_check($request, $check, $sth, @selectable_values);
+             _failed_check($request, $check, $sth);
              return;
         }
 	$sth->finish();
@@ -646,7 +635,7 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth, @selectable_values) = @_;
+    my ($request, $check, $sth) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
@@ -663,6 +652,18 @@ sub _failed_check {
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
+	my @selectable_values = ();
+	if ( $check->selectable_values ) {
+		my $sth = $request->{dbh}->prepare($check->selectable_values);
+		$sth->execute()
+		or die "Failed to execute pre-migration check " . $check->name;
+		while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+			push @selectable_values, { value => $row->{value},
+										text => $row->{id}
+			};
+		}
+		$hiddens->{selectable_values} = \@selectable_values;
+	}
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
 		  $row->{$check->column} = ( $check->column && $check->selectable_values )
 								 ? { select => {
