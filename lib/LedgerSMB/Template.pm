@@ -204,12 +204,7 @@ sub new {
              $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
         }
 
-    # SC: Muxing pre-format_args LaTeX format specifications.  Now with
-    #     DVI support.
-    if (lc $self->{format} eq 'dvi') {
-        $self->{format} = 'LaTeX';
-        $self->{format_args}{filetype} = 'dvi';
-    } elsif (lc $self->{format} eq 'pdf') {
+    if (lc $self->{format} eq 'pdf') {
         $self->{format} = 'LaTeX';
         $self->{format_args}{filetype} = 'pdf';
     } elsif (lc $self->{format} eq 'ps' or lc $self->{format} eq 'postscript') {
