@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-03-12 18:26+0000\n"
+"POT-Creation-Date: 2016-04-06 07:57+0000\n"
 "PO-Revision-Date: 2016-03-06 21:06+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/ledgersmb/"
@@ -43,6 +43,11 @@ msgstr "(-) Depre. Acumulada"
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:108
 msgid "(=) NBV"
 msgstr "(=) Valor Neto"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
+#, fuzzy
+msgid "(Locked)"
+msgstr "Fichado"
 
 #: LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -196,7 +201,7 @@ msgid "Acc_trans Sum"
 msgstr ""
 
 #: LedgerSMB.pm:752 LedgerSMB.pm:753 LedgerSMB/Scripts/configuration.pm:324
-#: LedgerSMB/Scripts/setup.pm:751
+#: LedgerSMB/Scripts/setup.pm:757
 msgid "Access Denied"
 msgstr "Acceso Denegado"
 
@@ -318,7 +323,7 @@ msgstr ""
 msgid "Accounts To"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:411 LedgerSMB/Upgrade_Tests.pm:468
+#: LedgerSMB/Upgrade_Tests.pm:413 LedgerSMB/Upgrade_Tests.pm:470
 msgid "Accounts without heading"
 msgstr ""
 
@@ -1432,7 +1437,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:172
+#: LedgerSMB/Scripts/setup.pm:177
 msgid "Cancel?"
 msgstr "Cancelar?"
 
@@ -1938,7 +1943,7 @@ msgstr ""
 msgid "Create Batch"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:148
+#: LedgerSMB/Scripts/setup.pm:153
 msgid "Create Database?"
 msgstr "Crear Base de Datos?"
 
@@ -2162,7 +2167,7 @@ msgstr ""
 msgid "Database Operation Complete"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:147
+#: LedgerSMB/Scripts/setup.pm:152
 msgid "Database does not exist."
 msgstr "La base de datos no existe."
 
@@ -2750,7 +2755,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:379
+#: LedgerSMB/Scripts/setup.pm:384
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -2758,11 +2763,11 @@ msgstr ""
 msgid "Done"
 msgstr "Hecho"
 
-#: LedgerSMB/Upgrade_Tests.pm:487
+#: LedgerSMB/Upgrade_Tests.pm:489
 msgid "Double customernumbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:506
+#: LedgerSMB/Upgrade_Tests.pm:508
 msgid "Double vendornumbers"
 msgstr ""
 
@@ -3212,7 +3217,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:340
+#: LedgerSMB/Scripts/setup.pm:345
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3224,7 +3229,7 @@ msgstr "Error creando lote recurrente. Por favor intente nuevamente."
 msgid "Error from Function:"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:425
+#: LedgerSMB/Scripts/setup.pm:430
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3601,8 +3606,8 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:848 LedgerSMB/Scripts/setup.pm:906
-#: LedgerSMB/Scripts/setup.pm:1091
+#: LedgerSMB/Scripts/setup.pm:854 LedgerSMB/Scripts/setup.pm:912
+#: LedgerSMB/Scripts/setup.pm:1117
 msgid "Full Permissions"
 msgstr "Todos los Permisos"
 
@@ -3617,8 +3622,8 @@ msgstr "Todos los Permisos"
 msgid "GIFI"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:298 LedgerSMB/Upgrade_Tests.pm:313
-#: LedgerSMB/Upgrade_Tests.pm:329
+#: LedgerSMB/Upgrade_Tests.pm:298 LedgerSMB/Upgrade_Tests.pm:315
+#: LedgerSMB/Upgrade_Tests.pm:331
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -4011,7 +4016,7 @@ msgstr "Notas Internas"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:337
+#: LedgerSMB/Scripts/setup.pm:342
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4629,8 +4634,8 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:847 LedgerSMB/Scripts/setup.pm:905
-#: LedgerSMB/Scripts/setup.pm:1090
+#: LedgerSMB/Scripts/setup.pm:853 LedgerSMB/Scripts/setup.pm:911
+#: LedgerSMB/Scripts/setup.pm:1116
 msgid "Manage Users"
 msgstr "Administrar Usuarios"
 
@@ -4923,7 +4928,7 @@ msgstr ""
 msgid "No Null employeenumber"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:1092
+#: LedgerSMB/Scripts/setup.pm:1118
 msgid "No changes"
 msgstr ""
 
@@ -4981,11 +4986,11 @@ msgstr ""
 msgid "Non-cash"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:637
+#: LedgerSMB/Upgrade_Tests.pm:640
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:655
+#: LedgerSMB/Upgrade_Tests.pm:658
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -4993,7 +4998,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:561 LedgerSMB/Upgrade_Tests.pm:583
+#: LedgerSMB/Upgrade_Tests.pm:563 LedgerSMB/Upgrade_Tests.pm:585
 msgid "Non-unique invoice numbers"
 msgstr ""
 
@@ -5081,15 +5086,15 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:522 LedgerSMB/Upgrade_Tests.pm:541
+#: LedgerSMB/Upgrade_Tests.pm:524 LedgerSMB/Upgrade_Tests.pm:543
 msgid "Null employee numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:618
+#: LedgerSMB/Upgrade_Tests.pm:620
 msgid "Null make numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:601
+#: LedgerSMB/Upgrade_Tests.pm:603
 msgid "Null model numbers"
 msgstr ""
 
@@ -5721,36 +5726,36 @@ msgstr ""
 msgid "Pick List"
 msgstr "Lista de Retiros"
 
-#: LedgerSMB/Upgrade_Tests.pm:641
+#: LedgerSMB/Upgrade_Tests.pm:644
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:567
+#: LedgerSMB/Upgrade_Tests.pm:569
 msgid "Please make all AR invoice numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:153 LedgerSMB/Upgrade_Tests.pm:491
+#: LedgerSMB/Upgrade_Tests.pm:153 LedgerSMB/Upgrade_Tests.pm:493
 msgid "Please make all customer numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:546
+#: LedgerSMB/Upgrade_Tests.pm:548
 msgid "Please make all employee numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:172 LedgerSMB/Upgrade_Tests.pm:510
+#: LedgerSMB/Upgrade_Tests.pm:172 LedgerSMB/Upgrade_Tests.pm:512
 msgid "Please make all vendor numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:526
+#: LedgerSMB/Upgrade_Tests.pm:528
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:623
+#: LedgerSMB/Upgrade_Tests.pm:625
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:605
+#: LedgerSMB/Upgrade_Tests.pm:607
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
@@ -5779,11 +5784,11 @@ msgstr ""
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:333
+#: LedgerSMB/Upgrade_Tests.pm:335
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:317
+#: LedgerSMB/Upgrade_Tests.pm:319
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -6752,7 +6757,7 @@ msgstr "Guardar Plantilla"
 msgid "Save User"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:670
+#: LedgerSMB/Scripts/setup.pm:676
 msgid "Save and Retry"
 msgstr "Salvar e Intentar"
 
@@ -8428,7 +8433,7 @@ msgstr "Unidad"
 msgid "Unit Price"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:170
+#: LedgerSMB/Scripts/setup.pm:175
 msgid "Unknown database found."
 msgstr "Se encontro una base de datos desconocida."
 
@@ -8448,11 +8453,11 @@ msgstr ""
 msgid "Unsupported Number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:371 LedgerSMB/Upgrade_Tests.pm:428
+#: LedgerSMB/Upgrade_Tests.pm:373 LedgerSMB/Upgrade_Tests.pm:430
 msgid "Unsupported account categories"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:389 LedgerSMB/Upgrade_Tests.pm:446
+#: LedgerSMB/Upgrade_Tests.pm:391 LedgerSMB/Upgrade_Tests.pm:448
 msgid "Unsupported account link combinations"
 msgstr ""
 
@@ -8539,7 +8544,7 @@ msgstr ""
 msgid "User Name"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:892
+#: LedgerSMB/Scripts/setup.pm:898
 msgid "User already exists. Import?"
 msgstr "Usuario existe. Importar?"
 
@@ -9005,7 +9010,7 @@ msgstr ""
 msgid "production"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:209
+#: LedgerSMB/Scripts/setup.pm:214
 msgid "psql not found."
 msgstr ""
 

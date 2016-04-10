@@ -1,5 +1,53 @@
+                                                        -*- fundamental -*-
+Changelog for 1.5 Series
+Forthcoming
+
+UI changes:
+* LedgerSMB now frameless (ChrisT)
+* Full use of Dojo widgets (ErikH)
+* LSMB reports and screens can now be bookmarked (Chris T)
+
+Code Cleanup:
+* LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
+* Removed LedgerSMB's custom dojo page loader (ErikH)
+* Removed dependency on Class::Struct (ChrisT)
+* Removed all inserts into chart view (ChrisT, GH 931)
+* Removed long-broken French chart of accounts (ChrisT)
+* Removed unused saved trial balance components (ChrisT, GH 775)
+
+API Enhancements:
+* Moved a great deal of code into PGObject framework on CPAN (ChrisT)
+* Session handling committed before main action (Chris T, GH 943)
+
+Quality assurance:
+* Verification of pre-defined Chart of Accounts files (ChrisT)
+* Assurance of completeness of 'use'-tested source files (ErikH)
+* Extended 'use'-tests to cover full set of source files (ErikH)
+* New tests validating source code requirements, such as (ErikH)
+  - Reject code using certain modules (Data::Dumper, Carp::Always, ...)
+  - Reject code which isn't formatted correctly
+  - Reject code which uses certain constructs
+* Basic verification of PO (translation) files (ErikH)
+* Basic automated in-browser testing through SauceLabs.com (ErikH/ChrisT)
+
+Internationalization
+* Expansion of webbased translation support through Transifex (ErikH)
+
+
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.27
+* Added note to batch list that all are locked (Chris T)
+* Allow multiple logins per user, all with own locks (Chris T, #1418)
+* Fixes meaningless subtotals on recon search results (Chris T, #995)
+* SQL Ledger 3.0 migration support (Yves L/Erik H)
+* Fix random column ordering in PNL & B/S comparison (Yves L)
+
+Chris T is Chris Travers
+Yves L is Yves Lavoie
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.26
 * Removed broken and largely useless lwp tests (Chris T)
@@ -1962,7 +2010,7 @@ Changelog for LedgerSMB 1.1.0
 
 Database
 * Added add_custom_field and drop_custom_field functions.
-	-- will be more integrated into API next version
+        -- will be more integrated into API next version
 * Added utility to partially recover from SQL-Ledger data corruption issues.
 * Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
@@ -2007,3 +2055,5 @@ Changelog for LedgerSMB v 1.0.0
 * Added an open content manual to the main distribution.
 * New logo. 
 * Began whitespace reformatting of main application.
+
+

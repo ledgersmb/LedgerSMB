@@ -78,12 +78,17 @@ take.
 my @login_actions_dispatch_table =
     ( { appname => 'sql-ledger',
 	version => '2.7',
-	message => "SQL-Ledger database detected.",
+	message => "SQL-Ledger 2.7 database detected.",
 	operation => "Would you like to migrate the database?",
 	next_action => 'upgrade' },
       { appname => 'sql-ledger',
 	version => '2.8',
-	message => "SQL-Ledger database detected.",
+	message => "SQL-Ledger 2.8 database detected.",
+	operation => "Would you like to migrate the database?",
+	next_action => 'upgrade' },
+      { appname => 'sql-ledger',
+	version => '3.0',
+	message => "SQL-Ledger 3.0 database detected.",
 	operation => "Would you like to migrate the database?",
 	next_action => 'upgrade' },
       { appname => 'sql-ledger',
@@ -507,11 +512,11 @@ sub _get_linked_accounts {
 
 my %info_applicable_for_upgrade = (
     'default_ar' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_ap' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-			   'sql-ledger/2.7', 'sql-ledger/2.8']
+			   'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -581,8 +586,9 @@ sub upgrade_info {
 =cut
 
 my %upgrade_run_step = (
-    'sql-ledger/2.7' => 'run_sl_migration',
-    'sql-ledger/2.8' => 'run_sl_migration',
+    'sql-ledger/2.7' => 'run_sl28_migration',
+    'sql-ledger/2.8' => 'run_sl28_migration',
+    'sql-ledger/3.0' => 'run_sl30_migration',
     'ledgersmb/1.2' => 'run_upgrade',
     'ledgersmb/1.3' => 'run_upgrade'
     );
@@ -1048,12 +1054,12 @@ sub run_upgrade {
     }
 }
 
-=item run_sl_migration
+=item run_sl28_migration
 
 
 =cut
 
-sub run_sl_migration {
+sub run_sl28_migration {
     my ($request) = @_;
     my $database = _init_db($request);
     my $rc = 0;
@@ -1064,6 +1070,26 @@ sub run_sl_migration {
 
     process_and_run_upgrade_script($request, $database, "sl28",
 				   'sl2.8-1.4');
+
+    create_initial_user($request);
+}
+
+=item run_sl30_migration
+
+
+=cut
+
+sub run_sl30_migration {
+    my ($request) = @_;
+    my $database = _init_db($request);
+    my $rc = 0;
+
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO sl30');
+    # process_and_run_upgrade_script commits the transaction
+
+    process_and_run_upgrade_script($request, $database, "sl30",
+				   'sl3.0-1.4');
 
     create_initial_user($request);
 }
