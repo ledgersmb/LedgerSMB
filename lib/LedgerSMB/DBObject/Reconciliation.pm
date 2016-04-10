@@ -51,6 +51,7 @@ use warnings;
 
 use base qw(LedgerSMB::PGOld);
 use LedgerSMB::Reconciliation::CSV;
+use LedgerSMB::PGNumber;
 
 
 # don't need new
@@ -357,14 +358,14 @@ sub get {
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
-    $self->{cleared_total} = $self->parse_amount(amount => 0);
-    $self->{outstanding_total} = $self->parse_amount(amount => 0);
-    $self->{mismatch_our_total} = $self->parse_amount(amount => 0);
-    $self->{mismatch_our_credits} = $self->parse_amount(amount => 0);
-    $self->{mismatch_our_debits} = $self->parse_amount(amount => 0);
-    $self->{mismatch_their_total} = $self->parse_amount(amount => 0);
-    $self->{mismatch_their_credits} = $self->parse_amount(amount => 0);
-    $self->{mismatch_their_debits} = $self->parse_amount(amount => 0);
+    $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
+    $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_our_total} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_our_credits} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_our_debits} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_their_total} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
+    $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
 
 
     for my $line (@{$self->{report_lines}}){

@@ -1,3 +1,4 @@
+                                                        -*- fundamental -*-
 Changelog for 1.5 Series
 Forthcoming
 
@@ -35,6 +36,18 @@ Internationalization
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.27
+* Added note to batch list that all are locked (Chris T)
+* Allow multiple logins per user, all with own locks (Chris T, #1418)
+* Fixes meaningless subtotals on recon search results (Chris T, #995)
+* SQL Ledger 3.0 migration support (Yves L/Erik H)
+* Fix random column ordering in PNL & B/S comparison (Yves L)
+
+Chris T is Chris Travers
+Yves L is Yves Lavoie
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.26
 * Removed broken and largely useless lwp tests (Chris T)
@@ -1995,7 +2008,7 @@ Changelog for LedgerSMB 1.1.0
 
 Database
 * Added add_custom_field and drop_custom_field functions.
-	-- will be more integrated into API next version
+        -- will be more integrated into API next version
 * Added utility to partially recover from SQL-Ledger data corruption issues.
 * Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
@@ -2040,3 +2053,5 @@ Changelog for LedgerSMB v 1.0.0
 * Added an open content manual to the main distribution.
 * New logo.
 * Began whitespace reformatting of main application.
+
+

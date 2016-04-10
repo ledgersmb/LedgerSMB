@@ -322,7 +322,8 @@ push @tests, __PACKAGE__->new(
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
-                         and gifi_accno !~ '^\\s*\$'",
+                         and gifi_accno is not null
+                         and gifi_accno <> ''",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -330,7 +331,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text("Please use the SQL-Ledger UI to add the GIFI accounts"),
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '2.8'
+  max_version => '3.0'
 );
 
 
@@ -360,7 +361,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
  push @tests, __PACKAGE__->new(
@@ -370,7 +371,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 */
 
@@ -392,7 +393,7 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -412,7 +413,7 @@ number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -432,7 +433,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -448,7 +449,65 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
+    );
+
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from chart
+                   where charttype = 'A'
+                     and category not in ('A', 'L', 'Q', 'I', 'E')",
+    display_name => $locale->text('Unsupported account categories'),
+    name => 'unsupported_account_types',
+    display_cols => ['category', 'accno', 'description'],
+ instructions => $locale->text(
+                   'Please make sure all accounts have a category of
+(A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
+    column => 'category',
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
+
+# push @tests,__PACKAGE__->new(
+#     test_query => "select *
+#                     from chart
+#                    where charttype = 'A'
+#                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
+#     display_name => $locale->text('Unsupported account link combinations'),
+#     name => 'unsupported_account_links',
+#     display_cols => ['accno', 'description', 'link'],
+#  instructions => $locale->text(
+#                    'An account can either be a summary account (which have a
+# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
+# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
+#     column => 'category',
+#     table => 'chart',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '3.0'
+#     );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from chart c
+                   where charttype = 'A'
+                     and 0 = (select count(*)
+                            from chart cn
+                           where cn.charttype = 'H'
+                             and cn.accno < c.accno)",
+    display_name => $locale->text('Accounts without heading'),
+    name => 'no_header_accounts',
+    display_cols => ['accno', 'description', 'link'],
+ instructions => $locale->text(
+                   'Please go into the SQL-Ledger UI and create/rename a
+heading which sorts alphanumerically before the first account by accno'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -468,7 +527,7 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -503,7 +562,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -519,7 +578,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -538,7 +597,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -559,7 +618,7 @@ push @tests, __PACKAGE__->new(
     table => 'ar',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 #  There's no AP uniqueness requirement?
@@ -581,7 +640,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'ap',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
 push @tests, __PACKAGE__->new(
@@ -617,7 +676,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -634,7 +693,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -643,7 +702,8 @@ push @tests, __PACKAGE__->new(
                      from partscustomer
                     where not exists (select 1
                                         from pricegroup
-                                       where id = pricegroup_id)",
+                                       where id = pricegroup_id)
+                                        and pricegroup_id <> 0",
     display_name => $locale->text('Non-existing customer pricegroups in partscustomer'),
     name => 'partscustomer_pricegroups_exist',
     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
@@ -652,7 +712,7 @@ push @tests, __PACKAGE__->new(
     table => 'partscustomer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -762,7 +822,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
     return @tests;

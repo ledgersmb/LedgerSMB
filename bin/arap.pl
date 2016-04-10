@@ -147,7 +147,7 @@ sub check_name {
                 # $locale->text('Customer not on file!')
                 # $locale->text('Vendor not on file!')
 
-                $msg = ucfirst $name . "not on file!";
+                $msg = ucfirst $name . " not on file!";
                 $form->error( $locale->maketext($msg) );
             }
         }

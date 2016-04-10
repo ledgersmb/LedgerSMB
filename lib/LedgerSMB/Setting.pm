@@ -107,7 +107,7 @@ sub _increment_process{
         while ($value =~ /<\?lsmb /) {
 
             $value =~ s/(<\?lsmb .*? \?>)//;
-            last unless $&;
+            last unless $1;
             $param = $1;
             $str   = "";
 
@@ -126,8 +126,7 @@ sub _increment_process{
                )
             {
 
-                my $fld = lc $&;
-                $fld =~ s/<\?lsmb //;
+                my $fld = lc $1;
 
                 if ( $fld =~ /name/ ) {
                     if ( $self->{type} ) {

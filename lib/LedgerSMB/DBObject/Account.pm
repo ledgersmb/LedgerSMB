@@ -79,12 +79,8 @@ sub save {
     }
     $self->generate_links;
     my $func = 'account__save';
-    my $trans_save_func = 'account__save_translation';
-    my $trans_del_func = 'account__delete_translation';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
-        $trans_save_func = 'account_heading__save_translation';
-        $trans_del_func = 'account_heading__delete_translation';
     }
     my ($id_ref) = try { $self->call_dbmethod(funcname => $func) }
                    catch {
@@ -102,6 +98,21 @@ sub save {
         $self->call_procedure(funcname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
 
+    $self->_get_translations;
+}
+
+=item save_translations
+
+=cut
+
+sub save_translations {
+    my $self = shift @_;
+    my $trans_save_func = 'account__save_translation';
+    my $trans_del_func = 'account__delete_translation';
+    if ($self->{charttype} and $self->{charttype} eq 'H') {
+        $trans_save_func = 'account_heading__save_translation';
+        $trans_del_func = 'account_heading__delete_translation';
+    }
     for my $lang_code (keys %{$self->{translations}}) {
         if ($self->{translations}->{$lang_code} eq '') {
             $self->call_procedure(funcname => $trans_del_func,
@@ -114,7 +125,6 @@ sub save {
                           $self->{translations}->{$lang_code}]);
         }
     }
-    $self->_get_translations;
 }
 
 =item get()

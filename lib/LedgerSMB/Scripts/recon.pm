@@ -39,7 +39,7 @@ report_id.
 sub display_report {
     my ($request) = @_;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
-    _display_report($recon);
+    _display_report($recon, $request);
 }
 
 =item search($self, $request, $user)
@@ -80,7 +80,7 @@ sub update_recon_set {
     }
     $recon->save() if !$recon->{submitted};
     $recon->update();
-    _display_report($recon);
+    _display_report($recon, $request);
 }
 
 =item select_all_recons
@@ -147,7 +147,7 @@ sub save_recon_set {
         return search($request);
     } else {
         $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
-        return _display_report($recon);
+        return _display_report($recon, $request);
     }
 }
 
@@ -196,17 +196,17 @@ it has been created.
 =cut
 
 sub _display_report {
-        my $recon = shift;
+        my ($recon, $request) = @_;
         $recon->get();
         my $setting_handle = LedgerSMB::Setting->new({base => $recon});
         $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
         delete $recon->{reverse} unless $recon->{account_info}->{category}
                                         eq 'A';
-        $recon->close_form;
-        $recon->open_form;
+        $request->close_form;
+        $request->open_form;
         $recon->unapproved_checks;
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
-        $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+        $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
         my $template = LedgerSMB::Template->new(
             user=> $recon->{_user},
@@ -301,6 +301,9 @@ sub _display_report {
                 $recon->{total_uncleared_credits}->to_output(money => 1);
     $recon->{their_total} = $recon->{their_total} * $neg_factor;
         $recon->{their_total} = $recon->{their_total}->to_output(money => 1);
+    $recon->{our_total} ||= LedgerSMB::PGNumber->from_db(0);
+    $recon->{beginning_balance} ||= LedgerSMB::PGNumber->from_db(0);
+    $recon->{out_of_balance} ||= LedgerSMB::PGNumber->from_db(0);
     $recon->{our_total} = $recon->{our_total}->to_output(money => 1);
     $recon->{beginning_balance} =
         $recon->{beginning_balance}->to_output(money => 1);
@@ -355,7 +358,7 @@ sub new_report {
             );
             return $template->render($recon);
         }
-        _display_report($recon);
+        _display_report($recon, $request);
     }
     else {
 
@@ -458,7 +461,7 @@ sub approve {
         }
     }
     else {
-        return _display_report($request);
+        return _display_report($request, $request);
     }
 }
 
