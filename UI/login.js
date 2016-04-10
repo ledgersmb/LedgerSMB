@@ -19,8 +19,9 @@ function send_form() {
 	 var company = document.login.company.value;
 	 var action = document.login.action.value;
 
-	 require(['dojo/request/xhr','dojo/dom', 'dojo/dom-style'],
-				function(xhr,dom,style){
+	 require(['dojo/request/xhr','dojo/dom', 'dojo/dom-style',
+             'dijit/Dialog'],
+				function(xhr,dom,style,Dialog){
 		  xhr('login.pl?action=authenticate&company='+company,
 				{
 					 user: username,
@@ -31,13 +32,25 @@ function send_form() {
 				}, function(err) {
 					 var status = err.response.status;
 					 if (status == '454'){
-						  alert('Company does not exist.');
+                    (new Dialog({ title: 'Error',
+                                  content: 'Company does not exist.',
+                                  style: 'width: 300px',
+                                })).show();
 					 } else if (status == '401') {
-						  alert('Access denied: Bad username/password');
+                    (new Dialog({ title: 'Error',
+                                  content: 'Access denied: Bad username/password',
+                                  style: 'width: 300px',
+                                })).show();
 					 } else if (status == '521') {
-                    alert('Database version mismatch');
+                    (new Dialog({ title: 'Error',
+                                  content: 'Database version mismatch',
+                                  style: 'width: 300px',
+                                })).show();
                 } else {
-                    alert('Unknown error preventing login');
+                    (new Dialog({ title: 'Error',
+                                  content: 'Unknown error preventing login',
+                                  style: 'width: 300px',
+                                })).show();
                 }
 					 style.set(dom.byId('login-indicator'),'visibility','hidden');
 				});

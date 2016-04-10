@@ -1,3 +1,4 @@
+                                                        -*- fundamental -*-
 Changelog for 1.5 Series
 Forthcoming
 
@@ -35,6 +36,71 @@ Internationalization
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.27
+* Added note to batch list that all are locked (Chris T)
+* Allow multiple logins per user, all with own locks (Chris T, #1418)
+* Fixes meaningless subtotals on recon search results (Chris T, #995)
+* SQL Ledger 3.0 migration support (Yves L/Erik H)
+* Fix random column ordering in PNL & B/S comparison (Yves L)
+
+Chris T is Chris Travers
+Yves L is Yves Lavoie
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.26
+* Removed broken and largely useless lwp tests (Chris T)
+* Moved X12 support from features downgraded to experimental (Chris T)
+* Fixed stylesheet class for setup console (Chris T, #1204)
+* Added Copy to New for GL transactions (Chris T, #1046)
+* Fixed amount range not respected on gl search (Chris T, #1287)
+* Fixed invalid number crash when not displaying credit (Chris T, #1263)
+* Fixed template transactions (Chris T and Erik H, #1071)
+* Fixed part description editing on invoices/orders(Chris T, #1373)
+* Updated Danish translation (Mikkel H)
+
+Chris T is Chris Travers
+Mikkel H is Mikkel Hoegh
+Erik H is Erik Huelsmann
+
+Changelog for 1.4.25
+* Added datepicker to invoice Delivery Date field (Nick P)
+* Fixed reversal of sales invoice with parts without inventory (Erik H, #990)
+* Updates to the Estonian language (Peeter P)
+
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
+Peeter P is Peeter Partel
+
+
+Changelog for 1.4.24
+* Fixed new transactions not being added to recon reports (Erik H, #979)
+* Fixed AR/AP Aging report not taking date into account (Craig W, #1286)
+* Updates to the Danish language (Mikkel H)
+* Updates to the Arabic (Egypt) language (Rami A)
+* Updates to the Estonian language (Peeter P)
+
+Craig W is Craig Webster
+Mikkel H is Mikkel Hoegh
+Rami A is Rami Assi
+Peeter P is Peeter Partel
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.23
+* Fixed running balance column of GL report double-counting (Erik H, #1205)
+* Fixed spelling errors (David G, #1178)
+* Fixed spelling errors (Erik H, #1183, #1170)
+* Fixed handling of recurring transactions (Erik H, #1227)
+* Fixed selected currency in vouchers -> payments isn't default (Erik H, #1186)
+* Fixed CoA screen offering Delete for referenced accounts (Erik H, #972)
+* Fixed vouchers print total instead of due amount (Erik H, #1068)
+* Fixed missing envelope and shipping label templates (Erik H, #874)
+* Fixed detailed (AR/AP) aging statements not working (Erik H, #1177)
+
+David G is David Godfrey
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.22
@@ -1942,7 +2008,7 @@ Changelog for LedgerSMB 1.1.0
 
 Database
 * Added add_custom_field and drop_custom_field functions.
-	-- will be more integrated into API next version
+        -- will be more integrated into API next version
 * Added utility to partially recover from SQL-Ledger data corruption issues.
 * Primary Key added to acc_trans table
 * DB Updates now use one transaction per update file.
@@ -1987,3 +2053,5 @@ Changelog for LedgerSMB v 1.0.0
 * Added an open content manual to the main distribution.
 * New logo.
 * Began whitespace reformatting of main application.
+
+

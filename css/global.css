@@ -55,7 +55,7 @@ html, body {
 
 #maindiv {
     overflow-y: auto;
-]
+}
 .financial-statement.flat-hierarchy table {
     min-width: 60ex;
 }
@@ -96,45 +96,44 @@ html, body {
 
 
 /******** For account editing page */
-#account-tabs #H div.inputline,
-#account-tabs #A div.inputline
+#account-tabs .dijitTabContainerTopChildWrapper div
 {
    overflow: auto;
 }
 
-#account-tabs #H label,
-#account-tabs #A label
+#account-tabs label,
+#account-tabs label
  {
    display: block;
    float: left;
    text-align: right;
    margin-right: 0.5ex;
 }
-#account-tabs #H div.inputgroup,
-#account-tabs #A div.inputgroup
+#account-tabs div.inputgroup,
+#account-tabs div.inputgroup
  {
    float: left;
    display: block;
 }
 
-#account-tabs #H label.line,
-#account-tabs #A label.line
+#account-tabs label.line,
+#account-tabs label.line
  {
    font-weight: bold;
    width: 12em;
    margin-right: 0.5em;
-   vertical-align: center;
-   height: 100%
+   //vertical-align: center;
+   height: 100%,
 }
 
-#account-tabs #H div.inputgroup label,
-#account-tabs #A div.inputgroup label
+#account-tabs div.inputgroup label,
+#account-tabs div.inputgroup label
  {
    width: 8em;
 }
 
-#account-tabs #H div.subsectionhead,
-#account-tabs #A div.subsectionhead
+#account-tabs div.subsectionhead,
+#account-tabs div.subsectionhead
  {
    font-weight: bold;
    margin: 1em;
@@ -257,6 +256,7 @@ html, body {
 
 #PNL th {
 	vertical-align: bottom;
+	padding-left: 5px;
 }
 
 #PNL table {

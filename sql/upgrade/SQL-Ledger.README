@@ -1,0 +1,59 @@
+---------------------------------------
+Miagrating from SQL Ledger to LedgerSMB
+---------------------------------------
+DATE: 2016-03-20
+---------------------------------------
+There is an out of date document at
+http://ledgersmb.org/topic/migration/how-do-i-migrate-sql-ledger
+that describes how this process worked back in 2012 for early versions of LedgerSMB 1.3
+
+Currently this is done by first using SQL Ledger to move your database over to Postgres, if it isn't already.
+
+Then you can import that database using http://localhost/setup.pl.
+
+We currently Support import of SQL Ledger 2.8 to LedgerSMB 1.4 (current)
+
+SQL Ledger 2.9 introduced Payroll and a different way of managing Year End
+    If you don't use payroll then the process to Migrate should be fairly easy but the Year End differences will require some assitance from our developers
+SQL Ledger 3.0 should be the same proceedure as 2.9
+
+SQL Ledger 3.2 introduced a new non-stocked part type called kits.
+We currently don't have an equivalent in LedgerSMB so a little extra work may be required here,
+but otherwise the migration should be not a lot different.
+NOTE: Kits are similar to Assemblies which we do support, but have some differences as well.
+
+There is Work In Progress that will hopefully solve the issues for migration of SQL Ledger 2.9 and 3.0 by the end of April 2016
+
+
+In most cases the migration will require manual fixes to be applied to the data.
+Many of these can be done directly during the migration using various screens that are presented during the pre-migration tests and the actual migration it's self.
+
+At the moment the automatically displayed screens don't always work, because the checks sometimes detect missing data; there's no option to enter additional data in that screen yet.
+but we are looking to add that functionality.
+
+---------------------------------------
+SUPPORT
+---------------------------------------
+It is likely that you will reach a point during the migration where you won't know what to do to proceed.
+At this time there are a number of choices for help.
+
+The first choice is probably to contact the development team on IRC at
+#ledgersmb on chat.freenode.net
+The IRC channel is also available via the matrix.og network at the following webclient
+https://vector.im/#/room/#ledgersmb:matrix.org
+(a big advantage of using the matrix client is you don't have to stay connected, next time you log in you can see anything you missed)
+
+There are a number of other methods of getting support, they are detailed at
+http://ledgersmb.org/support
+
+
+For those that want to know how it is done in the code these are the files that are directly used
+
+The actual database migration is done by
+sql/upgrade/sl2.8-1.4.sql
+
+the pre-migration checks are in
+lib/LedgerSMB/Upgrade_Tests.pm
+
+the upgrade is driven from
+lib/LedgerSMB/Scripts/setup.pm

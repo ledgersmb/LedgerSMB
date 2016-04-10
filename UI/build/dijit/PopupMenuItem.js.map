@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"PopupMenuItem.js",
+"lineCount":4,
+"mappings":"A;AAAAA,MAAA,uBAA8B,oGAAA,MAAA,KAA9B,CASG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA4BC,CAA5B,CAAkCC,CAAlC,CAAyCC,CAAzC,CAA6CC,CAA7C,CAAuDC,CAAvD,QAKKN,EAAA,uBAA+BM,CAA/B,4DAMQC,QAAAA,MAeVC,eAfUD,MAgBRE,EAAQN,CAAA,KAAWK,eAAX,CACZE,eAAA,CAAeC,SAAf,EAA2BF,CAAA,GAA3B,EAGAG,uBApBYL,CAoBaC,eApBbD,EANR,YA8BMM,QAAAA,CAAoBC,CAApBD,CAAwCE,CAAxCF,MAMPG,EAAQA,UAEZZ,EAAAa,KAAA,CAAQf,CAAAgB,SAAA,CAAcJ,CAAd,QACAE,UADA,QAECG,YAFD,EAAR,CAKGJ,EAbQF,EAaCG,CAAAD,MAbDF;AAcVG,CAAAD,MAAA,EAdUF,CA9BN,aAgDOO,QAAAA,GACZhB,CAAAiB,MAAA,CAASL,UAAT,CACAA,WAAAM,WAFYF,MAhDP,SAqDGG,QAAAA,OACLC,aADKD,EAERb,cAAA,CAAeC,SAAf,CAFQY,KAMJP,UANIO,MAOHE,EAAOtB,CAAA,cAAoBS,sBAApB,CAAA,GACXI,WAROO,CAQMlB,CAAAqB,OAAA,CAAgBD,CAAhB,CARNF,CAURI,sBAAAC,YAAA,CAAmCZ,UAAAG,QAAnC,CACAH,WAAAG,QAAAU,aAAA,mBAAmDC,kBAAAC,GAAnD,CACAf,WAAAO,QAAA,EAEAP,WAAAG,QAAAa,MAAAC,QAdQV,OAeLW,kBAfKX,EAgBPtB,CAAAkC,IAAA,CAAaD,iBAAb,iBAEDE,eAAAP,aAAA;OAlBQN,EArDH,oBA0Ecc,QAAAA,CAAqBC,CAArBD,EAChBrB,UADgBqB,GAIdrB,UAAAuB,WAJcF,EAKjBrB,UAAAwB,iBAAA,CAA4BF,CAA5B,CALiBD,QAOXrB,UAPWqB,CASnB3B,eAAA,CAAeC,SAAf,CATmB0B,CA1Ed,EALL,CATH;",
+"sources":["PopupMenuItem.js.uncompressed.js"],
+"names":["define","declare","domStyle","lang","query","pm","registry","MenuItem","_fillContent","srcNodeRef","nodes","inherited","arguments","dropDownContainer","_openPopup","params","focus","popup","open","delegate","domNode","_closePopup","close","parentMenu","startup","_started","node","byNode","ownerDocumentBody","appendChild","setAttribute","containerNode","id","style","display","arrowWrapper","set","focusNode","destroyDescendants","preserveDom","_destroyed","destroyRecursive"]
+}

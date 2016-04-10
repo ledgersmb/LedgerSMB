@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"RequestError.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,yCAAiD,QAAA,CAASC,CAAT,QAWzCA,EAAA,gBAAuB,QAAA,CAASC,CAAT,CAAkBC,CAAlB,EAC7BA,aAD6B,CACbA,CADa,CAAvB,CAXyC,CAAjD;",
+"sources":["RequestError.js.uncompressed.js"],
+"names":["define","create","message","response"]
+}

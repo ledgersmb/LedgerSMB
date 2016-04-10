@@ -29,7 +29,7 @@ END;
 
  ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/lib/Form"
+<form data-dojo-type="lsmb/Form"
       action="<?lsmb script ?>"
       method="get">
 <div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
@@ -44,7 +44,7 @@ END;
 		default_values = [class_id]
 	} ?>
 </div>
-<!-- 
+<!--
 Commenting this section out.  Does not seem to be used by API. -CT
 
 <div class="input" id="entered_by_div">
@@ -69,7 +69,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
           name="approved"
           id="approved-0"
           value="0"
-          label= text("Unpproved")
+          label= text("Unapproved")
           type="radio"
           checked="CHECKED"
    }; ?>

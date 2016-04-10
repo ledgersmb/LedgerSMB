@@ -206,15 +206,13 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
 $$
-DECLARE balance numeric;
-BEGIN
-	SELECT coalesce(sum(ac.amount) + cp.amount, sum(ac.amount))
-	INTO balance
+	SELECT coalesce(coalesce(sum(ac.amount_bc) + cp.amount_bc,
+                   sum(ac.amount_bc)), 0)
 	FROM acc_trans ac
 	JOIN (select id, approved from ar union
 		select id, approved from ap union
 		select id, approved from gl) a ON (a.id = ac.trans_id)
-	LEFT JOIN (select account_id, end_date, amount from account_checkpoint
+	LEFT JOIN (select account_id, end_date, amount_bc from account_checkpoint
 		WHERE account_id = in_account_id AND end_date < in_transdate
 		ORDER BY end_date desc limit 1
 	) cp ON (cp.account_id = ac.chart_id)
@@ -222,11 +220,9 @@ BEGIN
 		AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
 		and ac.approved and a.approved
 		and ac.transdate <= in_transdate
-	GROUP BY cp.amount, ac.chart_id;
+	GROUP BY cp.amount_bc, ac.chart_id;
 
-	RETURN balance;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int) is

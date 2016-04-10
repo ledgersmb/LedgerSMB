@@ -30,17 +30,17 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'LedgerSMB.pm', 'LedgerSMB/', 'bin/');
+find(\&collect, 'lib/LedgerSMB.pm', 'lib/LedgerSMB/', 'bin/');
 
 my @on_disk_oldcode =
-    grep { m#^bin/# || m#^LedgerSMB/..\.pm#
-               || m#^LedgerSMB/Form\.pm# } @on_disk;
+    grep { m#^bin/# || m#^lib/LedgerSMB/..\.pm#
+               || m#^lib/LedgerSMB/Form\.pm# } @on_disk;
 
 @on_disk =
     grep { ! m#^bin/# }
-    grep { ! m#^LedgerSMB/..\.pm# }
-    grep { ! m#^LedgerSMB/Form\.pm# }
-    grep { ! m#^LedgerSMB/Auth/# }
+    grep { ! m#^lib/LedgerSMB/..\.pm# }
+    grep { ! m#^lib/LedgerSMB/Form\.pm# }
+    grep { ! m#^lib/LedgerSMB/Auth/# }
     @on_disk;
 
 
@@ -70,6 +70,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'ProhibitHardTabs',
                               'Modules',
                               'TestingAndDebugging',
+                              'ProhibitPuncutationVars',
                 ]),
             \@on_disk);
 
@@ -94,6 +95,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                 ],
                 -include => [ 'ProhibitTrailingWhitespace',
                               'ProhibitHardTabs',
+                              'ProhibitPuncutationVars',
                 ]),
             \@on_disk_oldcode);
 

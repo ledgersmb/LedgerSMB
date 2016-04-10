@@ -3,7 +3,7 @@
       PROCESS 'report_base.html'; ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('List Overpayments') ?></div>
-<form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
+<form data-dojo-type="lsmb/Form" action="reports.pl" method="get">
 <table>
  <?lsmb PROCESS date_row ?>
  <tr>
@@ -48,7 +48,7 @@
    default_values = [currency]
             class = 'currency'
      }; ?></td>
-     <th><?lsmb text('Exhchange Rate'); ?></th>
+     <th><?lsmb text('Exchange Rate'); ?></th>
      <td><?lsmb PROCESS input element_data = {
      }; ?></td>
  </tr>
@@ -64,19 +64,19 @@
       name = "post_date"
      value = post_date
       type = 'hidden'
-      
+
 };
  PROCESS input element_data = {
       name = "account_class"
      value = account_class
       type = 'hidden'
-      
+
 };
  PROCESS input element_data = {
       name = "batch_id"
      value = batch_id
       type = 'hidden'
-      
+
 } ?>
 </form>
 </div>

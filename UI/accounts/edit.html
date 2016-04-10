@@ -1,17 +1,18 @@
-<?lsmb 
-INCLUDE 'ui-header.html' 
+<?lsmb
+INCLUDE 'ui-header.html'
     include_stylesheet =  ['UI/accounts/edit.css']
-?> 
-<?lsmb PROCESS elements.html ?> 
+?>
+<?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
+<?lsmb IF ! form.id OR form.charttype == 'H'; ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF form.charttype == 'H'; ?>
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Heading') ?>" id="H">
-<form data-dojo-type="lsmb/lib/Form" method="post" action="account.pl">
+<form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'H'
         name = 'charttype'
@@ -25,7 +26,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
-    <?lsmb 
+    <?lsmb
     INCLUDE input element_data = {
       name = 'accno'
        id  = 'accno-h'
@@ -39,7 +40,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="desc-line">
    <label class="line"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     INCLUDE input element_data = {
         id = 'desc-h'
       name = 'description'
@@ -53,7 +54,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="heading-line">
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
@@ -75,44 +76,16 @@ INCLUDE 'ui-header.html'
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
 <hr />
-<table>
-<caption>Translations for this heading</caption>
-<tbody>
-<?lsmb
-   PROCESS input element_data = {
-       type="hidden"
-       name="languagecount"
-       value=form.languages.size
-   };
-   lang_index = 0;
-   FOREACH language IN form.languages;
-     lang_index = lang_index + 1; ?>
-  <tr>
-    <td><?lsmb language.description ?>
-      <?lsmb PROCESS input element_data = {
-             type="hidden"
-             name = 'languagecode_' _ lang_index
-             value = language.code } ?>
-    </td>
-    <td><?lsmb PROCESS input element_data = {
-               name = 'languagetranslation_' _ lang_index
-               id = 'heading-languagetranslation-' _ lang_index
-               class = 'translation'
-               value = form.translations.${language.code}.description
-       } ?>
-      </td>
-    </tr>
-  <?lsmb END ?>
-</tbody>
-</table>
 </form>
 </div>
+<?lsmb END ?>
+<? IF !form.id OR form.charttype == 'A' ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF form.charttype == 'A'; ?>
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Account') ?>" id="A">
-<form data-dojo-type="lsmb/lib/Form" method="post" action="account.pl">
+<form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'A'
         name = 'charttype'
@@ -121,7 +94,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
-    <?lsmb 
+    <?lsmb
     INCLUDE input element_data = {
       name = 'accno'
       size = '20'
@@ -135,22 +108,22 @@ INCLUDE 'ui-header.html'
 <div  class="inputline" id="obsolete-line">
 <label class="line" for='obsolete'><?lsmb text('Obsolete') ?></label>
 <?lsmb
-        IF form.obsolete; 
+        IF form.obsolete;
            obsolete = 'CHECKED';
-        END; 
+        END;
         INCLUDE input element_data={
                name = 'obsolete'
                type = 'checkbox',
             checked = obsolete
               value = '1'
         } ?>
-   
+
 </div>
 <?lsmb END #  IF ID ?>
 <div class="inputline" id="desc-line">
    <label class="line"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     INCLUDE input element_data = {
       name = 'description'
       size = '40'
@@ -163,7 +136,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="heading-line">
    <label class="line"><?lsmb text('Heading') ?></label>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
@@ -206,7 +179,7 @@ INCLUDE 'ui-header.html'
               { value = 'Qt', text = text('Equity (Temporary)') } #'
               { value = 'I', text = text('Income') }
               { value = 'E', text = text('Expense') }
-        ];  
+        ];
     INCLUDE select element_data = {
                   name = 'category'
                options = a_types
@@ -217,7 +190,7 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="acc-options-line">
    <label class="line"><?lsmb text('Options') ?></label>
    <div class="inputgroup">
-       <?lsmb 
+       <?lsmb
        IF form.contra;
           contra = 'CHECKED';
        END;
@@ -230,10 +203,10 @@ INCLUDE 'ui-header.html'
        } ?>
    </div>
    <div class="inputgroup">
-     <?lsmb 
-        IF form.recon; 
+     <?lsmb
+        IF form.recon;
            recon = 'CHECKED';
-        END; 
+        END;
         INCLUDE input element_data={
                name = 'recon'
                type = 'checkbox',
@@ -243,7 +216,7 @@ INCLUDE 'ui-header.html'
         } ?>
    </div>
    <div class="inputgroup">
-      <?lsmb 
+      <?lsmb
         IF form.tax; tax = 'CHECKED'; END;
         INCLUDE input element_data={
                name = 'tax',
@@ -262,7 +235,7 @@ INCLUDE 'ui-header.html'
       IF form.AR; summary = 'AR'; END;
       IF form.AP; summary = 'AP'; END;
       IF form.IC; summary = 'IC'; END;
-      s_accts = [ 
+      s_accts = [
         {}
         {text = 'AR',        value = 'AR'}
         {text = 'AP',        value = 'AP'}
@@ -272,7 +245,7 @@ INCLUDE 'ui-header.html'
                name = "summary"
             options = s_accts
      default_values = [summary]
-      }; ?>    
+      }; ?>
    </div>
 </div>
 </div> <!-- account details div -->
@@ -310,7 +283,7 @@ INCLUDE 'ui-header.html'
              label = text('Overpayment'),
            checked = AR_overpayment,
              value = 'AR_overpayment'
-       } ?>    
+       } ?>
    </div>
    <div class="inputgroup">
        <?lsmb IF form.AR_discount; AR_discount = 'CHECKED'; END;
@@ -359,7 +332,7 @@ INCLUDE 'ui-header.html'
               type = 'checkbox',
              label = text('Discount'),
            checked = AP_discount,
-             value = 'AP_discount'} ?>       
+             value = 'AP_discount'} ?>
    </div>
 </div>
 <div class="inputline" id="goods-line">
@@ -447,7 +420,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'Asset_Dep',
               type = 'checkbox',
-             label = text('Depreciation'), 
+             label = text('Depreciation'),
            checked = asset_dep,
              value = 'Asset_Dep'} ?>
    </div>
@@ -456,7 +429,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_expense',
               type = 'checkbox',
-             label = text('Expense'), 
+             label = text('Expense'),
            checked = asset_expense,
              value = 'asset_expense'} ?>
    </div>
@@ -465,7 +438,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_gain',
               type = 'checkbox',
-             label = text('Gain'), 
+             label = text('Gain'),
            checked = asset_gain,
              value = 'asset_gain'} ?>
    </div>
@@ -474,7 +447,7 @@ INCLUDE 'ui-header.html'
          INCLUDE input element_data={
               name = 'asset_loss',
               type = 'checkbox',
-             label = text('Loss'), 
+             label = text('Loss'),
            checked = asset_loss,
              value = 'asset_loss'} ?>
    </div>
@@ -488,10 +461,17 @@ INCLUDE 'ui-header.html'
 		}; END ?>
 
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; button.id = button.name _ '-A'; INCLUDE button element_data=button; END ?>
+<?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; INCLUDE button element_data=button; END ?>
 <hr />
+</form>
+</div>
+<?lsmb #END ?>
+<?lsmb IF form.id ?>
+<div data-dojo-type="dijit/layout/ContentPane"
+     title="<?lsmb text('Translations') ?>" id="TranslationPane">
+<form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <table>
-<caption>Translations for this account</caption>
+<caption>Translations</caption>
 <tbody>
 <?lsmb
    PROCESS input element_data = {
@@ -511,7 +491,7 @@ INCLUDE 'ui-header.html'
     </td>
     <td><?lsmb PROCESS input element_data = {
                name = 'languagetranslation_' _ lang_index
-               id = 'account-languagetranslation-' _ lang_index
+               id = 'heading-languagetranslation-' _ lang_index
                class = 'translation'
                value = form.translations.${language.code}.description
        } ?>
@@ -520,7 +500,25 @@ INCLUDE 'ui-header.html'
   <?lsmb END ?>
 </tbody>
 </table>
+<?lsmb PROCESS input element_data = {
+    name = 'charttype'
+    type = 'hidden'
+   value = form.charttype
+}; ?>
+<?lsmb PROCESS input element_data = {
+    name = 'id'
+    type = 'hidden'
+   value = form.id
+}; ?>
+<?lsmb PROCESS button element_data = {
+    name = 'action',
+    value = 'update_translations',
+    type = 'submit',
+    class = 'submit',
+    text = text('Save'),
+} ?>
 </form>
 </div>
+<?lsmb END ?>
 </body>
 </html>

@@ -4,7 +4,7 @@ use Test::More;
 
 chdir 't/data';
 
-require '../../LedgerSMB/Sysconfig.pm';
+require '../../lib/LedgerSMB/Sysconfig.pm';
 
 
 plan tests => (11+scalar(@LedgerSMB::Sysconfig::scripts)
@@ -32,6 +32,6 @@ for my $script (@LedgerSMB::Sysconfig::scripts) {
 
 for my $script (@LedgerSMB::Sysconfig::newscripts) {
     $script =~ s/\.pl$/.pm/;
-    ok(-f '../../LedgerSMB/Scripts/' . $script,
+    ok(-f '../../lib/LedgerSMB/Scripts/' . $script,
        "Whitelisted script $script exists");
 }

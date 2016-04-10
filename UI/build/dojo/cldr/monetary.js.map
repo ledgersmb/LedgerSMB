@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"monetary.js",
+"lineCount":3,
+"mappings":"A;AAAAA,MAAA,0DAAmE,QAAA,CAASC,CAAT,CAAeC,CAAf,MAK/DC,IAIJD,EAAAE,UAAA,sBAAqCD,CAArC,CAEAA,EAAAE,QAXmE,CAWhDC,QAAAA,CAAoBC,CAApBD,MAoBdE,EAAS;OAAWD,CAAX,CAAkBE,EApBbH,CAoBqB,GAAaC,CAAb,CApBrBD,oBAqBRE,EArBQF,GAqBgBE,CArBhBF,uBAsBRG,EAtBQH,GAsBeG,CAtBfH,kBAwBFE,CAxBEF,OAwBaG,CAxBbH,EAXgD,OAsC5DH,EAtC4D,CAAnE;",
+"sources":["monetary.js.uncompressed.js"],
+"names":["define","dojo","lang","monetary","setObject","getData","monetary.getData","code","places","round"]
+}

@@ -270,17 +270,6 @@ sub print_transaction {
         $form->update_status( \%myconfig, 1);
 
         $old_form->{queued} = $form->{queued};
-
-        %audittrail = (
-            tablename => ($order) ? 'oe' : lc $ARAP,
-            reference => $form->{"${inv}number"},
-            formname  => $form->{formname},
-            action    => 'queued',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail );
     }
 
     if ( lc($form->{media}) eq 'zip'){
@@ -299,19 +288,6 @@ sub print_transaction {
         }
 
         $old_form->{printed} = $form->{printed} if %$old_form;
-
-        %audittrail = (
-            tablename => lc $form->{ARAP},
-            reference => $form->{"invnumber"},
-            formname  => $form->{formname},
-            action    => 'printed',
-            id        => $form->{id}
-        );
-
-        $old_form->{audittrail} .=
-          $form->audittrail( "", \%myconfig, \%audittrail )
-          if %$old_form;
-
     }
 
     $form->{fileid} = $form->{invnumber};

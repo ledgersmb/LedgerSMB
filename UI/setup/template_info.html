@@ -1,10 +1,11 @@
 <?lsmb INCLUDE "ui-header.html";
     PROCESS "elements.html"
 ?><body class="lsmb <?lsmb dojo_theme ?>">
+<div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
-<form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="post">
+<form data-dojo-type="dijit/form/Form" action="setup.pl" method="post">
 <div class="listtop"><?lsmb text('Select Templates to Load') ?></div>
-<?lsmb 
+<?lsmb
 PROCESS input element_data = {
     type = "hidden"
     name = "database"
@@ -18,11 +19,13 @@ PROCESS input element_data = {
 PROCESS select element_data = {
        name = "template_dir"
     options = template_dirs
+      label = text('Templates')
 } ?><br />
 <?lsmb PROCESS button element_data = {
       name = "action"
      value = "load_templates"
       text = text('Load Templates') #'
 } ?>
+</div>
 </body>
 </html>

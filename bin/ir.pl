@@ -39,6 +39,7 @@
 #======================================================================
 
 package lsmb_legacy;
+use List::Util qw(min max);
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
@@ -407,7 +408,7 @@ function on_return_submit(event){
   }
 }
 </script>
-<form method=post action="$form->{script}" onkeypress="on_return_submit(event)">
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}" onkeypress="on_return_submit(event)">
 |;
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
@@ -514,15 +515,15 @@ function on_return_submit(event){
           </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
               </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -805,7 +806,6 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     if (!$form->{manual_tax}){
         print qq|
         <th align=left>| . $locale->text('Internal Notes') . qq|</th>
-                <th align=left>| . $locale->text('Import Text') . qq|</th>
           </tr>
           <tr valign=top>|;
      }
@@ -816,18 +816,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                  <tr><th align=left>| . $locale->text('Internal Notes').qq|</th>
                  </tr>
                  <tr><td>$intnotes</td></tr>
-                 <tr><th align=left>| . $locale->text('Import Text') . qq|</th>
-                 </tr>
-                 <tr>
-                <td><textarea data-dojo-type="dijit/form/Textarea" name=import_text rows=$rows cols=25></textarea>|;
+                 </tr>|;
      } else {
          print qq|
         <td>$notes</td>
-        <td>$intnotes</td>
-                <td><textarea data-dojo-type="dijit/form/Textarea" name=import_text rows=$rows cols=25></textarea>|;
+        <td>$intnotes</td>|;
     }
     print qq|
-          </tr>
         </table>
       </td>
       <td align=right valign="top">
@@ -934,7 +929,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id
         $column_data{"AP_paid_$i"} =
 qq|<td align=center><select data-dojo-type="dijit/form/Select" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
         $column_data{"source_$i"} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{"memo_$i"} =
@@ -1050,11 +1045,6 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|
@@ -1066,88 +1056,8 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 
 }
 
-sub import_text {
-    my @o_list;
-    my @i_lines = split( /(\n|\r|\r\n)/, $form->{import_text} );
-    foreach $i (@i_lines) {
-        chomp($i);
-        if ( $i ne "" ) {    # Strip out blank lines
-            push @o_list, $i;
-        }
-    }
-    my $c          = 1;
-    my $linenumber = 0;
-    foreach $l (@o_list) {
-        if ( $c % 2 ) {
-            $linenumber += 1;
-            $form->{"partnumber_$linenumber"} = $l;
-        }
-        else {
-            $form->{"qty_$linenumber"} = $l;
-        }
-        $c += 1;
-        $form->{rowcount} = $linenumber;
-        IR->retrieve_item( \%myconfig, \%$form );
-        $rows = scalar @{ $form->{item_list} };
-        $rows = 0 unless $rows;
-        $i    = $form->{rowcount};
-        if ( $rows = 0 ) {
-            $form->{"id_$i"}   = 0;
-            $form->{"unit_$i"} = $locale->text('ea');
-
-            &new_item;
-        }
-        elsif ( $rows > 1 ) {
-            &select_item;
-            $form->finalize_request();
-        }
-        else {
-            map {
-                $form->{item_list}[$i]{$_} =
-                  $form->quote( $form->{item_list}[$i]{$_} )
-            } qw(partnumber description unit);
-
-            map { $form->{"${_}_$i"} = $form->{item_list}[0]{$_} }
-              keys %{ $form->{item_list}[0] };
-
-            $s = ($sellprice) ? $sellprice : $form->{"sellprice_$i"};
-
-            ($dec) = ( $s =~ /\.(\d+)/ );
-            $dec = length $dec;
-            $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-
-            $amount =
-              $form->{"sellprice_$i"} * $form->{"qty_$i"} *
-              ( 1 - $form->{"discount_$i"} / 100 );
-            map { $form->{"${_}_base"} = 0 }
-              ( split / /, $form->{taxaccounts} );
-            map { $form->{"${_}_base"} += $amount }
-              ( split / /, $form->{"taxaccounts_$i"} );
-            if ( !$form->{taxincluded} ) {
-                my @taxes = Tax::init_taxes( $form, $form->{taxaccounts} );
-                $amount +=
-                  ( Tax::calculate_taxes( \@taxes, $form, $amount, 0 ) );
-            }
-
-            $form->{creditremaining} -= $amount;
-
-            $form->{"sellprice_$i"} =
-              $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
-                $decimalplaces );
-            $form->{"qty_$i"} =
-              $form->format_amount( \%myconfig, $form->{"qty_$i"} );
-
-        }
-        $form->{item_list} = [];
-    }
-    ++$form->{rowcount};
-}
-
 sub update {
      $form->{ARAP} = 'AP';
-    if ( $form->{import_text} ) {
-        &import_text;
-    }
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
@@ -1203,9 +1113,26 @@ sub update {
     }
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
-    for my $i (1 .. ($form->{rowcount} + $LedgerSMB::Company_Config::settings->{min_empty})){
-        next if $form->{"id_$i"};
+    my $non_empty_rows = 0;
+    for my $i (1 .. $form->{rowcount}) {
+        $non_empty_rows++
+            if $form->{"id_$i"}
+               || ! ( ( $form->{"partnumber_$i"} eq "" )
+                      && ( $form->{"description_$i"} eq "" )
+                      && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+
+    my $current_empties = $form->{rowcount} - $non_empty_rows;
+    my $new_empties =
+        max(0,
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
+            - $current_empties);
+
+
+    $form->{rowcount} += $new_empties;
+    for my $i (1 .. $form->{rowcount}){
         $form->{rowcount} = $i;
+        next if $form->{"id_$i"};
 
         for (qw(partsgroup projectnumber)) {
             $form->{"select$_"} = $form->unescape( $form->{"select$_"} )
@@ -1219,7 +1146,6 @@ sub update {
 
             $form->{creditremaining} +=
               ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
-            &check_form;
 
         }
         else {
@@ -1249,8 +1175,13 @@ sub update {
                       $form->quote( $form->{item_list}[$i]{$_} );
                 }
 
+                ###EH 20160218
+                ### Why do we move {item_list}[0] into the $form hash,
+                ### while above we quoted {item_list}[$i] ????
                 for ( keys %{ $form->{item_list}[0] } ) {
-                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
+                    # copy, but don't overwrite e.g. description
+                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_}
+                         unless $form->{"${_}_$i"};
                 }
                 if (! defined $form->{"discount_$i"}){
                     $form->{"discount_$i"} = $form->{discount} * 100;
@@ -1324,6 +1255,7 @@ sub update {
         }
     }
      $form->generate_selects();
+     $form->{rowcount}--;
     display_form();
 }
 

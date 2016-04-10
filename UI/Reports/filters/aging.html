@@ -2,7 +2,7 @@
        PROCESS elements.html;
        PROCESS report_base.html ?> 
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/lib/Form" method="get" action="report_aging.pl">
+<form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Aging Report') ?></th></tr>
   <tr><td> </td></tr>
@@ -34,7 +34,7 @@
         <th align="right"><?lsmb text('To') ?></th>
         <td><?lsmb PROCESS input element_data={
         class = 'date',
-        name = 'todate',
+        name = 'to_date',
         size = '11',
         } ?></td>
       </tr>

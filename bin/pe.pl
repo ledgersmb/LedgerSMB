@@ -115,7 +115,7 @@ sub partsgroup_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input type=hidden name=id value=$form->{id}>
 <input type=hidden name=type value=$form->{type}>
@@ -174,11 +174,6 @@ sub partsgroup_footer {
         }
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 </form>
 
@@ -203,7 +198,7 @@ sub pricegroup_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input type=hidden name=id value=$form->{id}>
 <input type=hidden name=type value=$form->{type}>
@@ -251,11 +246,6 @@ sub pricegroup_footer {
         }
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 </form>
 
@@ -301,7 +291,7 @@ sub translation {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 |;
 
     $form->hide_form(qw(translation title number));
@@ -471,17 +461,12 @@ sub list_translations {
 
 <br>
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input name=callback type=hidden value="$form->{callback}">
 |;
 
     $form->hide_form(qw(path login sessionid));
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
   </form>
@@ -547,7 +532,7 @@ sub translation_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <input type=hidden name=$form->{number} value="|
       . $form->quote( $form->{"$form->{number}"} ) . qq|">
@@ -629,11 +614,6 @@ sub translation_footer {
         $form->print_button( \%button, $_ );
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 
   </form>
@@ -691,7 +671,7 @@ sub select_name {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -852,10 +832,10 @@ sub project_sales_order {
       <th align=right nowrap>| . $locale->text('Transaction Dates') . qq|</th>
       <td>|
       . $locale->text('From')
-      . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}">
+      . qq| <input class="date" data-dojo-type="lsmb/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}">
       |
       . $locale->text('To')
-      . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
+      . qq| <input class="date" data-dojo-type="lsmb/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
     </tr>
     $selectfrom
 |;
@@ -895,7 +875,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -939,11 +919,6 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 
@@ -1074,7 +1049,7 @@ sub jcitems {
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr>
@@ -1166,11 +1141,6 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
 
     }
 
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 </form>
 
@@ -1198,7 +1168,7 @@ sub select_customer {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].$form->{vc}.focus()" />
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <b>$label</b> <input data-dojo-type="dijit/form/TextBox" name=$form->{vc} size=40>
 

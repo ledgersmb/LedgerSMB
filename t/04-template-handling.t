@@ -7,6 +7,10 @@ use warnings;
 $ENV{TMPDIR} = "$ENV{PWD}/t/var";
 $ENV{LANG} = 'LANG=en_US.UTF8';
 
+$ENV{REQUEST_METHOD} = 'GET';
+     # Suppress warnings from LedgerSMB::_process_cookies
+
+
 use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
@@ -393,7 +397,7 @@ sub get_output_line_array {
                 die 'Unable to open rendered file';
         my @lines = <$FH>;
         close $FH;
-        delete $template->{rendered};
+        unlink $template->{rendered};
         return @lines;
 }
 

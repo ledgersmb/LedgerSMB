@@ -157,15 +157,9 @@ FROM public;
 DROP FUNCTION IF EXISTS  admin__get_user(in_entity_id INT);
 CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns users as $$
 
-    DECLARE
-        a_user users;
-    BEGIN
+        select * from users where id = in_id;
 
-        select * into a_user from users where id = in_id;
-        return a_user;
-
-    END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
 $$ Returns a set of (only one) user specified by the id.$$;
@@ -174,15 +168,9 @@ DROP FUNCTION IF EXISTS admin__get_user_by_entity(in_entity_id INT);
 
 CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns users as $$
 
-    DECLARE
-        a_user users;
-    BEGIN
+        select * from users where entity_id = in_entity_id;
 
-        select * into a_user from users where entity_id = in_entity_id;
-        return a_user;
-
-    END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION admin__get_user_by_entity(in_entity_id INT) IS
 $$ Returns a set of (only one) user specified by the entity_id.$$;
@@ -635,10 +623,6 @@ create or replace function user__get_all_users () returns setof user_listable as
 $$ language sql;
 
 create or replace function admin__get_roles () returns setof pg_roles as $$
-DECLARE
-    v_rol record;
-BEGIN
-    FOR v_rol in
         SELECT *
         FROM
             pg_roles
@@ -646,11 +630,7 @@ BEGIN
             rolname ~ ('^' || lsmb__role_prefix())
             AND NOT rolcanlogin
         ORDER BY rolname ASC
-    LOOP
-        RETURN NEXT v_rol;
-    END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 create or replace function user__save_preferences(
 	in_dateformat text,
@@ -709,15 +689,12 @@ CREATE TYPE user_result AS (
 	first_name text,
 	last_name text,
 	ssn text,
-	dob text
+	dob date
 );
 
 
 CREATE OR REPLACE FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) RETURNS SETOF user_result AS
 $$
-DECLARE t_return_row user_result;
-BEGIN
-	FOR t_return_row IN
 		SELECT u.id, u.username, p.first_name, p.last_name, e.ssn, e.dob
 		FROM users u
 		JOIN person p ON (u.entity_id = p.entity_id)
@@ -727,11 +704,7 @@ BEGIN
 			AND (p.last_name = in_last_name or in_last_name is null)
 			AND (in_ssn is NULL or in_ssn = e.ssn)
 			AND (e.dob = in_dob::date or in_dob is NULL)
-	LOOP
-		RETURN NEXT t_return_row;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) IS
 $$ Returns a list of users matching search criteria.  Nulls match all values.

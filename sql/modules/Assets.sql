@@ -231,12 +231,8 @@ $$;
 
 CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS
 $$
-DECLARE ret_val asset_class;
-BEGIN
-	SELECT * INTO ret_val FROM asset_class WHERE id = in_id;
-	RETURN ret_val;
-END;
-$$ language plpgsql;
+	SELECT * FROM asset_class WHERE id = in_id;
+$$ language sql;
 
 COMMENT ON FUNCTION asset_class__get (in_id int) IS
 $$ returns the row from asset_class identified by in_id.$$;
@@ -268,9 +264,6 @@ CREATE OR REPLACE FUNCTION asset_class__search
 in_method int, in_label text)
 RETURNS SETOF asset_class_result AS
 $$
-DECLARE out_var asset_class_result;
-BEGIN
-	FOR out_var IN
 		SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
 			ac.dep_account_id, ad.accno, ad.description,
                         m.method, ac.method,
@@ -288,11 +281,7 @@ BEGIN
 			AND (in_label IS NULL OR ac.label LIKE
 				'%' || in_label || '%')
                ORDER BY label
-	LOOP
-		RETURN NEXT out_var;
-	END LOOP;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION asset_class__search
 (in_asset_account_id int, in_dep_account_id int,
@@ -349,13 +338,9 @@ in the table, inserts a new row.  Returns the row saved.$$;
 CREATE OR REPLACE FUNCTION asset__get (in_id int, in_tag text)
 RETURNS asset_item AS
 $$
-DECLARE ret_val asset_item;
-BEGIN
-	SELECT * into ret_val from asset_item WHERE id = in_id OR in_tag = tag
+	SELECT * from asset_item WHERE id = in_id OR in_tag = tag
         ORDER BY id desc limit 1;
-	return ret_val;
-END;
-$$ language plpgsql;
+$$ language sql;
 
 COMMENT ON FUNCTION asset__get (in_id int, in_tag text) IS
 $$ Retrieves a given asset either by id or tag.  Both are complete matches.
@@ -367,9 +352,6 @@ CREATE OR REPLACE FUNCTION asset__search
 in_purchase_date date, in_purchase_value numeric,
 in_usable_life numeric, in_salvage_value numeric)
 RETURNS SETOF asset_item AS $$
-DECLARE out_val asset_item;
-BEGIN
-	FOR out_val IN
 		SELECT * FROM asset_item
 		WHERE (in_asset_class is null
 			or asset_class_id = in_asset_class)
@@ -383,12 +365,8 @@ BEGIN
 			AND (in_usable_life is null
 				or in_usable_life = usable_life)
 			AND (in_salvage_value is null
-				OR in_salvage_value = salvage_value)
-	LOOP
-		RETURN NEXT out_val;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+				OR in_salvage_value = salvage_value);
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION asset__search
 (in_asset_class int, in_description text, in_tag text,
@@ -495,9 +473,6 @@ in_department_id int, in_invoice_id int,
 in_asset_account_id int, in_dep_account_id int)
 returns setof asset_item as
 $$
-DECLARE retval asset_item;
-BEGIN
-    FOR retval IN
          SELECT * FROM asset_item
           WHERE (id = in_id or in_id is null)
                 and (asset_class_id = in_asset_class or in_asset_class is null)
@@ -517,12 +492,8 @@ BEGIN
                 and (asset_account_id = in_asset_account_id
                     or in_asset_account_id is null)
                 and (dep_account_id = in_dep_account_id
-                    or in_dep_account_id is null)
-   LOOP
-       return next retval;
-   end loop;
-END;
-$$ language plpgsql;
+                    or in_dep_account_id is null);
+$$ language sql;
 
 COMMENT ON FUNCTION asset_item__search
 (in_id int, in_asset_class int, in_description text, in_tag text,

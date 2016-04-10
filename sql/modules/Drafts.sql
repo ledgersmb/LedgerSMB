@@ -16,9 +16,6 @@ CREATE OR REPLACE FUNCTION draft__search(in_type text, in_with_accno text,
 in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)
 returns setof draft_search_result AS
 $$
-DECLARE out_row RECORD;
-BEGIN
-	FOR out_row IN
 	SELECT id, transdate, invoice, reference, description,
 	       type, amount FROM (
 	    SELECT id, transdate, reference, 
@@ -65,12 +62,8 @@ BEGIN
                                  OR line.transdate >= in_from_date)
 		            AND (in_to_date IS NULL
 			    	 OR line.transdate <= in_to_date)))
-	ORDER BY trans.reference
-	LOOP
-	    RETURN NEXT out_row;
-	END LOOP;
-END;
-$$ language plpgsql;
+	ORDER BY trans.reference;
+$$ language sql;
 
 COMMENT ON FUNCTION draft__search(in_type text, in_with_accno text,
 in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)

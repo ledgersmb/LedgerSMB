@@ -216,8 +216,8 @@ sub create_links {
     }
     @curr = @{$form->{currencies}};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"
-                     unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
+    for (@curr) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n"
     }
 
     my $vc = $form->{vc};
@@ -229,7 +229,7 @@ sub create_links {
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    if ($form->{"old$form->{vc}"} =~ /--/){
+    if ($form->{"$form->{vc}"} !~ /--/){
         $form->{"old$form->{vc}"} = $form->{$form->{vc}} . '--' . $form->{"$form->{vc}_id"};
     } else {
         $form->{"old$form->{vc}"} = $form->{$form->{vc}};
@@ -362,6 +362,7 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
+    delete $form->{selectcurrency};
 }
 
 sub form_header {
@@ -430,10 +431,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-      <input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
@@ -501,7 +498,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
  print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
 $form->open_status_div . qq|
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -636,15 +633,15 @@ $form->open_status_div . qq|
           </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
               </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -884,7 +881,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id
 qq|<td align=center><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{datepaid} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
         $column_data{source} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
@@ -1075,10 +1072,6 @@ sub form_footer {
 <a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 </form>
@@ -1117,7 +1110,7 @@ sub save_temp {
     }
     $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
     $lsmb->{department_id} = $department_id;
-    if ($form->{arap} eq 'ar'){
+    if ($form->{ARAP} eq 'AR'){
         $lsmb->{entity_class} = 2;
     } else {
         $lsmb->{entity_class} = 1;
@@ -1178,6 +1171,7 @@ sub approve {
 
 sub update {
     my $display = shift;
+    $form->open_form() unless $form->check_form();
     $is_update = 1;
     if ( !$display ) {
 
@@ -1653,7 +1647,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     print qq|
 <body class="lsmb $form->{dojo_theme}">
 
-<form method=post action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 
 <table width=100%>
   <tr><th class=listtop>$form->{title}</th></tr>
@@ -1681,9 +1675,9 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     </tr>
     <tr>
       <th align=right nowrap>| . $locale->text('From') . qq|</th>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
       <th align=right>| . $locale->text('Date to') . qq|</th>
-      <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
+      <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
     </tr>
     $selectfrom
       </table>
@@ -1749,11 +1743,6 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
     print qq|
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 

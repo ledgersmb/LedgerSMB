@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"PublishSelect.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,wFAIO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAsBC,CAAtB,CAA6BC,CAA7B,QACWH,EAAA,uBAA+BG,CAA/B,oBAEMC,QAAAA,CAASC,CAATD,EACLF,CAAAE,QAAA,CAAcF,UAAd,CAA0BG,CAA1B,CADKD,CAFN,YAKSE,QAAAA,OACJC,MACJC,eAAA,CAAeC,SAAf,CACAC,SAAA,CACIT,CAAA,eACG,QAAA,CAASI,CAAT,EACIE,CAAAH,QAAA,CAAaC,CAAb,CADJ,CADH,CADJ,CAHQC,CALT,EADX,CAJP;",
+"sources":["PublishSelect.js.uncompressed.js"],
+"names":["define","declare","on","topic","Select","publish","targetValue","postCreate","self","inherited","arguments","own"]
+}

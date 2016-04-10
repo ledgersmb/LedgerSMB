@@ -15,63 +15,103 @@ env:
 
 matrix:
   include:
-    # change to 5.22 when that is supported
-    - perl: '5.20'
+    - perl: '5.22'
       addons:
         postgresql: '9.4'
         sauce_connect: true
+        apt:
+          packages:
+            - nginx
       env:
         - TEST_SAUCE=1
     - perl: '5.20'
       addons:
         postgresql: "9.4"
+        apt:
+          packages:
+            - nginx
       env:
         - COVERAGE=1
     - perl: '5.18'
       addons:
         postgresql: "9.4"
+        apt:
+          packages:
+            - nginx
       env:
         - COA_TESTING=1
     - perl: '5.16'
       addons:
         postgresql: "9.3"
+        apt:
+          packages:
+            - nginx
       env:
         - DB_TESTING=1
     - perl: '5.14'
       addons:
         postgresql: "9.2"
+        apt:
+          packages:
+            - nginx
       env:
         - DB_TESTING=1
     - perl: '5.12'
       addons:
-        postgresql: "9.1"
+        postgresql: "9.2"
+        apt:
+          packages:
+            - nginx
       env:
         - DB_TESTING=1
     - perl: '5.10'
       addons:
         postgresql: "9.3"
+        apt:
+          packages:
+            - nginx
+
+cache:
+  directories:
+    - $HOME/locallib
+
 
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
   - perl -V
+  - export PERL_LOCAL_LIB_ROOT="$HOME/locallib${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
+  - export PERL5LIB="$HOME/locallib/lib/perl5${PERL5LIB+:}$PERL5LIB"
+  - export PATH="$HOME/locallib/bin:$PATH"
+  - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
+  - export PERL_MB_OPT="--install_base=$HOME/locallib"
   - build-dist 2>/dev/null
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
   - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
-  - cpan-install Starman # needed for sauce tests
-  - cpan-install CGI::Emulate::PSGI # needed for sauce tests
-  - cpan-install Selenium::Remote::Driver;
+  - cpan-install Plack CGI::Emulate::PSGI Selenium::Remote::Driver
+  - cpan-install X12::Parser
 
 before_script:
   - coverage-setup 2>/dev/null
+  - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
+  - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
+  - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
+  - cp conf/ledgersmb.conf.travis-ci ledgersmb.conf
+  - nginx -c /tmp/nginx.conf
 
 script:
-   - starman --daemonize tools/starman.psgi
-   - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
+  - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
 
 after_success:
+  - >
+    if [ "$COVERAGE" != "0" ] ; then
+       curl http://localhost:5001/stop.pl ;
+       while [ -n "$(jobs -r | grep starman.psgi)" ] ; do sleep 1; echo -n "." ; done ;
+       echo "" ;
+    fi
   - coverage-report

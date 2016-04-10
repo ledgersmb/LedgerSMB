@@ -111,11 +111,6 @@ BEGIN
 	IF FOUND THEN
 		SELECT * INTO out_row FROM session WHERE session_id = in_session_id;
 	ELSE
-		DELETE FROM SESSION
-		WHERE users_id IN (select id from users
-                        where username = SESSION_USER);
-		-- the above query also releases all discretionary locks by the
-                -- session
 
                PERFORM *
                   FROM defaults

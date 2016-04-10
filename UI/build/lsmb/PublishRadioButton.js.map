@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"PublishRadioButton.js",
+"lineCount":2,
+"mappings":"A;AAAAA,MAAA,kGAIO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAsBC,CAAtB,CAA6BC,CAA7B,QACWH,EAAA,4BAAoCG,CAApC,oBAEMC,QAAAA,GACLF,CAAAE,QAAA,CAAcF,UAAd,CAA0BG,UAA1B,CADKD,CAFN,YAKSE,QAAAA,OACJC,MACJC,SAAA,CACIP,CAAA,CAAGQ,YAAH,UACG,QAAA,GACIF,CAAAH,QAAA,EADJ,CADH,CADJ,CAFQE,CALT,EADX,CAJP;",
+"sources":["PublishRadioButton.js.uncompressed.js"],
+"names":["define","declare","on","topic","RadioButton","publish","value","postCreate","self","own","domNode"]
+}

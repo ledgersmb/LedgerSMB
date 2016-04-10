@@ -10,11 +10,12 @@ sub collect {
     return if $File::Find::name !~ m/\.pm$/;
 
     my $module = $File::Find::name;
+    $module =~ s#lib/##g;
     $module =~ s#/#::#g;
     $module =~ s#\.pm$##g;
     push @on_disk, $module
 }
-find(\&collect, 'LedgerSMB/');
+find(\&collect, 'lib/LedgerSMB/');
 
 
 my @exception_modules =
@@ -82,6 +83,7 @@ my @modules =
           'LedgerSMB::DBObject::Admin', 'LedgerSMB::DBObject::Asset',
           'LedgerSMB::DBObject::Asset_Report', 'LedgerSMB::DBObject::Date',
           'LedgerSMB::DBObject::Reconciliation',
+          'LedgerSMB::Report::Listings::TemplateTrans',
           'LedgerSMB::DBObject::Payment', 'LedgerSMB::Entity::Contact',
           'LedgerSMB::Entity::Location', 'LedgerSMB::Entity::Note',
           'LedgerSMB::Entity::Bank', 'LedgerSMB::Entity::Company',
@@ -178,6 +180,7 @@ my @modules =
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
+          'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
     );
 
 my %modules;
@@ -222,6 +225,11 @@ SKIP: {
         ) {
         use_ok($_);
     }
+
+    eval { require OpenOffice::OODoc };
+    skip 'OpenOffice::OODoc not installed', 1 if $@;
+
+    use_ok('LedgerSMB::Template::ODS');
 }
 
  SKIP: {

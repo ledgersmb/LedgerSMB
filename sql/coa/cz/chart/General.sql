@@ -338,7 +338,12 @@ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id 
 
 INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '99999'));
 
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('CZK', 'CZK');
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'CZK');
+
 
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
