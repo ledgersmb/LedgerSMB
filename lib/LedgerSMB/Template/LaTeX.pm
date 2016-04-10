@@ -10,7 +10,7 @@ Muxed LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
 =head1 DETAILS
 
 The final output format is determined by the format_option of filetype.  The
-valid filetype specifiers are 'pdf', 'ps', and 'dvi'.
+valid filetype specifiers are 'pdf' and 'ps'.
 
 =head1 METHODS
 
@@ -154,9 +154,7 @@ sub process {
     }
     $Template::Latex::DEBUG = 1 if $parent->{debug};
     my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'dvi') {
-        $format = 'dvi';
-    } elsif ($parent->{format_args}{filetype} eq 'pdf') {
+    if ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
     $template = Template::Latex->new({
@@ -178,9 +176,7 @@ sub process {
         $out, {binmode => 1})) {
         die $template->error();
     }
-    if (lc $format eq 'dvi') {
-        $parent->{mimetype} = 'application/x-dvi';
-    } elsif (lc $format eq 'pdf') {
+    if (lc $format eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
