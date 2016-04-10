@@ -159,18 +159,23 @@ sub process {
     } elsif ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
-    $template = Template::Latex->new({
-        LATEX_FORMAT => $format,
-        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
-        START_TAG => quotemeta('<?lsmb'),
-        END_TAG => quotemeta('?>'),
-        DELIMITER => ';',
-                ENCODING => 'utf8',
-        DEBUG => ($parent->{debug})? 'dirs': undef,
-        DEBUG_FORMAT => '',
-        }) || die Template::Latex->error();
-        my $out = "$parent->{outputfile}.$format" unless ref $parent->{outputfile};
-        $out ||= $parent->{outputfile};
+    $template = Template::Latex->new(
+	{
+	    LATEX_FORMAT => $format,
+	    INCLUDE_PATH => [$parent->{include_path_lang},
+			     $parent->{include_path},
+			     'templates/demo',
+			     'UI/lib'],
+	    START_TAG => quotemeta('<?lsmb'),
+	    END_TAG => quotemeta('?>'),
+	    DELIMITER => ';',
+	    ENCODING => 'utf8',
+	    DEBUG => ($parent->{debug})? 'dirs': undef,
+	    DEBUG_FORMAT => '',
+	}) || die Template::Latex->error();
+    my $out = "$parent->{outputfile}.$format"
+	unless ref $parent->{outputfile};
+    $out ||= $parent->{outputfile};
     if (not $template->process(
         $source,
         {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
