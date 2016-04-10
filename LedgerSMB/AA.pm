@@ -524,8 +524,7 @@ sub post_transaction {
         id        => $form->{id}
     );
 
-    #$form->audittrail( $dbh, "", \%audittrail );
-
+    return 1 unless $DBI::errstr;
 
 }
 
@@ -732,6 +731,8 @@ sub get_name {
     my $ARAP = uc $arap;
 
     if (LedgerSMB::Setting->get('show_creditlimit')){
+        $form->{creditlimit} = LedgerSMB::PGNumber->from_input('0') unless
+          $form->{creditlimit} > 0;
         $form->{creditremaining} = $form->{creditlimit};
         # acc_trans.approved is only false in the case of batch payments which 
         # have not yet been approved.  Unapproved transactions set approved on 

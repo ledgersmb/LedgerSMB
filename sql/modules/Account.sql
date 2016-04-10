@@ -25,12 +25,12 @@ BEGIN
 				              AND c.category IN ('I', 'L', 'Q')
 				    THEN ac.amount_bc
 				    ELSE ac.amount_bc * -1
-				    END), 
-			        SUM(CASE WHEN ac.transdate >= in_date_from 
-				              AND ac.amount_bc > 0 
+				    END),
+			        SUM(CASE WHEN ac.transdate >= in_date_from
+				              AND ac.amount_bc > 0
 			            THEN ac.amount_bc
 			            ELSE 0 END),
-			        SUM(CASE WHEN ac.transdate >= in_date_from 
+			        SUM(CASE WHEN ac.transdate >= in_date_from
 				              AND ac.amount_bc < 0
 			            THEN ac.amount_bc
 			            ELSE 0 END) * -1,
@@ -263,6 +263,7 @@ $$ language sql;
 COMMENT ON FUNCTION account__get_taxes() IS
 $$ Returns set of accounts where the tax attribute is true.$$;
 
+DROP FUNCTION IF EXISTS account_get(int);
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
 select c.id, c.accno, c.description,
@@ -697,7 +698,7 @@ $$
 
 WITH ac (chart_id, amount_bc) AS (
      SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount_bc
-                           ELSE 0 
+                           ELSE 0
                        END
        FROM acc_trans
        JOIN (select id, approved from ar union all
@@ -710,18 +711,32 @@ l(account_id, link) AS (
    GROUP BY account_id
 ),
 hh(parent_id) AS (
-     SELECT parent_id
+     SELECT DISTINCT parent_id
        FROM account_heading
 ),
 ha(heading) AS (
      SELECT heading
        FROM account
+),
+eca(account_id) AS (
+    SELECT DISTINCT discount_account_id
+      FROM entity_credit_account
+    UNION ALL
+    SELECT DISTINCT ar_ap_account_id
+      FROM entity_credit_account
+    UNION ALL
+    SELECT DISTINCT cash_account_id
+      FROM entity_credit_account
+),
+ta(account_id) AS (
+    SELECT chart_id
+      FROM eca_tax
 )
-SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
+SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
        CASE WHEN sum(ac.amount_bc) < 0 THEN sum(amount_bc) * -1 ELSE null::numeric
         END,
        CASE WHEN sum(ac.amount_bc) > 0 THEN sum(amount_bc) ELSE null::numeric END,
-       count(ac.*)+count(hh.*)+count(ha.*), l.link
+       count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(ta.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
          UNION
@@ -732,6 +747,8 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
  LEFT JOIN l ON l.account_id = a.id AND NOT a.is_heading
  LEFT JOIN hh ON hh.parent_id = a.id AND a.is_heading
  LEFT JOIN ha ON ha.heading = a.id AND a.is_heading
+ LEFT JOIN eca ON eca.account_id = a.id AND NOT a.is_heading
+ LEFT JOIN ta ON ta.account_id = a.id AND NOT a.is_heading
   GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
   ORDER BY a.accno;
 

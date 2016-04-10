@@ -124,7 +124,12 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT 
 
  INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '5810'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('curr', 'AUD');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('AUD', 'AUD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'AUD');
+
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --

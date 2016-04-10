@@ -90,7 +90,7 @@ sub check_name {
         # check name, combine name and id
         #HV $form->{$name} , form->vendor or form->customer , should be at least ' ' for comparison 'ne' to work.('' ne undef) returns undef.(' ' ne undef) returns 1
         if(! $form->{$name}){$form->{$name}=' ';}
-        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}| 
+        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}|
              or !$form->{"${name}_id"}
         )
         {
@@ -164,7 +164,7 @@ sub select_name {
 
     $label = ucfirst $table;
     %column_data = (ndx => qq|<th>&nbsp;</th>|,
-                   name => qq|<th class=listheading>| . 
+                   name => qq|<th class=listheading>| .
                                $locale->text('Name') . qq|</th>|,
            control_code => qq|<th class=listheading>| .
                                $locale->text('Control Code') . qq|</th>|,
@@ -175,7 +175,7 @@ sub select_name {
             city => qq|<th class=listheading>| .
 	                       $locale->text('City') . '</th>',
     );
-    
+
 
     # list items with radio button on a form
     $form->header;
@@ -378,7 +378,7 @@ sub schedule {
         $postpayment = qq|
  	<tr>
 	  <th align=right nowrap>| . $locale->text('Include Payment') . qq|</th>
-	  <td><input name=recurringpayment type=checkbox class=checkbox value=1 $recurringpayment></td>
+	  <td><input id="recurringpayment" name=recurringpayment type=checkbox class=checkbox value=1 $recurringpayment></td>
 	</tr>
 |;
     }
@@ -387,7 +387,7 @@ sub schedule {
         $nextdate = qq|
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Next Date') . qq|</th>
-		<td><input class="date" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
+		<td><input class="date" id="recurringnextdate" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
 	      </tr>
 |;
     }
@@ -409,7 +409,7 @@ sub schedule {
 	  <tr>
 	    <th colspan=2 class=listheading>| . $locale->text('E-mail') . qq|</th>
 	  </tr>
-	  
+
 	  <tr>
 	    <td>
 	      <table>
@@ -432,9 +432,9 @@ sub schedule {
 
             $email .= qq|
 		<tr>
-		  <td><input name="email$item" type=checkbox class=checkbox value=1 $checked></td>
+		  <td><input id="email$item" name="email$item" type=checkbox class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
-		  <td><select name="emailformat$item">$selectformat</select></td>
+		  <td><select id="emailformat$item" name="emailformat$item">$selectformat</select></td>
 		</tr>
 |;
         }
@@ -453,7 +453,7 @@ sub schedule {
 	  </tr>
 
 	  <tr>
-	    <td><textarea name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
+	    <td><textarea id="recurringmessage" name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
 	  </tr>
 	</table>
 |;
@@ -506,10 +506,10 @@ sub schedule {
 
             $print .= qq|
 		<tr>
-		  <td><input name="print$item" type=checkbox class=checkbox value=1 $checked></td>
+		  <td><input id="print$item" name="print$item" type=checkbox class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
-		  <td><select name="printprinter$item">$selectprinter</select></td>
-		  <td><select name="printformat$item">$selectformat</select></td>
+		  <td><select id="printprinter$item" name="printprinter$item">$selectprinter</select></td>
+		  <td><select id="printformat$item" name="printformat$item">$selectformat</select></td>
 		</tr>
 |;
         }
@@ -584,11 +584,11 @@ sub schedule {
 	    <table>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Reference') . qq|</th>
-		<td><input name=recurringreference size=20 value="$form->{recurringreference}"></td>
+		<td><input id="recurringreference" name=recurringreference size=20 value="$form->{recurringreference}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-		<td><input class="date" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
+		<td><input class="date" id="recurringstartdate" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
 	      </tr>
 	      $nextdate
 	    </table>
@@ -605,7 +605,7 @@ sub schedule {
       </table>
     </td>
   </tr>
-	
+
   <tr>
     <td>
       <table>
@@ -613,7 +613,7 @@ sub schedule {
 	  <td>$repeat</td>
 	  <td>$print</td>
 	</tr>
-	<tr valign=top>  
+	<tr valign=top>
 	  <td>$email</td>
 	  <td>$message</td>
 	</tr>

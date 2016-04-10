@@ -225,7 +225,7 @@ sub create_links {
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    if ($form->{"old$form->{vc}"} =~ /--/){
+    if ($form->{"$form->{vc}"} !~ /--/){
         $form->{"old$form->{vc}"} = $form->{$form->{vc}} . '--' . $form->{"$form->{vc}_id"};
     } else {
         $form->{"old$form->{vc}"} = $form->{$form->{vc}};
@@ -1174,16 +1174,17 @@ sub save_temp {
     }
     $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
     $lsmb->{department_id} = $department_id;
-    if ($form->{arap} eq 'ar'){
+    if ($form->{ARAP} eq 'AR'){
         $lsmb->{entity_class} = 2;
     } else {
         $lsmb->{entity_class} = 1;
     }
     $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
-        if ($form->{"AP_amount_$iter"} and
+        if ($form->{"$form->{ARAP}_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
-             my ($acc_id, $acc_name) = split /--/, $form->{"AP_amount_$iter"};
+             my ($acc_id, $acc_name) =
+                 split /--/, $form->{"$form->{ARAP}_amount_$iter"};
              my $amount = $form->{"amount_$iter"};
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
@@ -1235,6 +1236,7 @@ sub approve {
 
 sub update {
     my $display = shift;
+    $form->open_form() unless $form->check_form();
     $is_update = 1;
     if ( !$display ) {
 

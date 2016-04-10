@@ -40,12 +40,15 @@
 #======================================================================
 
 package lsmb_legacy;
+
+use List::Util qw(max);
 use LedgerSMB::OE;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
+
 
 require "bin/arap.pl";
 require "bin/io.pl";
@@ -468,8 +471,9 @@ sub form_header {
 |;
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
+        if (LedgerSMB::Setting->get('show_creditlimit')){
 
-        $creditremaining = qq|
+          $creditremaining = qq|
 	      <tr>
 		<td></td>
 		<td>
@@ -477,16 +481,17 @@ sub form_header {
 		    <tr>
 		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|
-          . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
-          . qq|</td>
+            . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
+            . qq|</td>
 		      <td width=10></td>
 		      <th align=right nowrap>| . $locale->text('Remaining') . qq|</th>
 		      <td class="plus$n" nowrap>|
-          . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
-          . qq|</td>
-	|;
-         $creditremaining = qq|<tr><td colspan="2"><table><tr>|
-             unless LedgerSMB::Setting->get('show_creditlimit');
+            . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
+            . qq|</td>
+	  |;
+         } else {
+            $creditremaining = qq|<tr><td colspan="2"><table><tr>|;
+         }
          if ($form->{entity_control_code}){
 			$creditremaining .= qq|
 	        <tr class="control-code-field">
@@ -1097,8 +1102,25 @@ sub update {
           if $form->{"select$_"};
     }
 
-    for my $i (1 .. $form->{rowcount}
-                   + $LedgerSMB::Company_Config::settings->{min_empty}){
+    my $non_empty_rows = 0;
+    for my $i (1 .. $form->{rowcount}) {
+        $non_empty_rows++
+            if $form->{"id_$i"}
+               || ! ( ( $form->{"partnumber_$i"} eq "" )
+                      && ( $form->{"description_$i"} eq "" )
+                      && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+
+    my $current_empties = $form->{rowcount} - $non_empty_rows;
+    my $new_empties =
+        max(0,
+            max($LedgerSMB::Company_Config::settings->{min_empty}, 1)
+            - $current_empties);
+
+
+    $form->{rowcount} += $new_empties;
+    for my $i (1 .. $form->{rowcount}){
+        $form->{rowcount} = $i;
         next if $form->{"id_$i"};
 
         if (   ( $form->{"partnumber_$i"} eq "" )
@@ -1111,9 +1133,7 @@ sub update {
 
         }
         else {
-            warn $i;
-            $form->{rowcount} = $i;
-
+            next if $form->{"id_$i"};
             $retrieve_item = "";
             if (   $form->{type} eq 'purchase_order'
                 || $form->{type} eq 'request_quotation' )
@@ -1247,6 +1267,7 @@ sub update {
             }
         }
     }
+    $form->{rowcount}--;
     display_form();
 }
 
@@ -1275,7 +1296,7 @@ sub save {
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
     check_form(1);
-    ++$form->{rowcount};
+    #++$form->{rowcount};
 
 
     # if the name changed get new values
@@ -1786,7 +1807,7 @@ sub display_ship_receive {
     $vclabel = ucfirst $form->{vc};
     $vclabel = $locale->text($vclabel);
 
-    $form->{rowcount}++;
+    # $form->{rowcount}++;
 
     if ( $form->{vc} eq 'customer' ) {
         $form->{title} = $locale->text('Ship Merchandise');
