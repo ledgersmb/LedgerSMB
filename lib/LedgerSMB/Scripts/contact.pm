@@ -48,7 +48,6 @@ for (@pluginmods){
   do "lib/LedgerSMB/Entity/Plugins/$_";
 }
 
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 COPYRIGHT
 
@@ -169,7 +168,7 @@ sub _main_screen {
     );
 
 
-
+    my $locale = $LedgerSMB::App_State::Locale;
     my %DIV_LABEL = (
              company => $locale->text('Company'),
               person => $locale->text('Person'),
@@ -484,7 +483,7 @@ sub dispatch_legacy {
     our %myconfig = ();
     %myconfig = %{$request->{_user}};
     $form->{stylesheet} = $myconfig{stylesheet};
-    our $locale = $request->{_locale};
+    my $locale = $request->{_locale};
 
     for (keys %{$dispatch->{$request->{action}}->{data}}){
         $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
