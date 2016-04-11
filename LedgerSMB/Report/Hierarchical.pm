@@ -120,6 +120,24 @@ sub header_lines {
 }
 
 
+=head2 _init_comparison($request, $c_per)
+
+TODO!!
+
+=cut
+
+sub _init_comparison{
+	#Todo: This works but $request do NOT need $rpt so misplaced init_routine
+    my ($self, $request, $c_per) = @_;
+	if ( $request->{comparison_type} eq 'by_periods' ) {
+		my $date = _date_interval($request->{from_date},$request->{interval},-$c_per);
+		$request->{"from_date_$c_per"} = $date->to_output;
+		$date = _date_interval(_date_interval($date,$request->{interval}),'day',-1);
+		$request->{"to_date_$c_per"} = $date->to_output;
+		$request->{"interval_$c_per"} = $request->{interval};
+	}
+}
+
 =back
 
 =head1 SEMI-PUBLIC METHODS
@@ -161,7 +179,47 @@ sub accum_cell_value {
                              + $increment);
 }
 
+sub _date_interval {
+	my ($date,$interval,$n) = @_;
 
+    my %delta_names = (
+        day => 'days',
+        month => 'months',
+        quarter => 'months',
+        year => 'years',
+    );
+    my $delta_name = $delta_names{$interval};
+    die "Bad interval: $interval" if not defined $delta_name;
+
+	$n //= 1;	# Default to 1
+	$n *= 3 if $interval eq 'quarter'; # A quarter is 3 months
+
+	$date = LedgerSMB::PGDate->from_input($date);
+    $date->date->add($delta_name => $n, end_of_month => 'preserve');
+
+	return $date;
+}
+
+
+
+=head2 init_comparisons($request)
+
+TODO!!
+
+=cut
+
+sub init_comparisons{
+    my ($self, $request) = @_;
+	if ( $request->{comparison_type} eq 'by_periods' ) {
+		# to_date = from_date + 1 period - 1 day
+		my $date = _date_interval(_date_interval($request->{from_date},$request->{interval}),'day',-1);
+		$request->{"to_date"} = $date->to_output;
+		my $counts = $request->{comparison_periods} || 0;
+		for my $c_per (1 .. $counts) {	# Comparison are backward
+			$self->_init_comparison($request, $c_per);
+		}
+	}
+}
 
 =head2 add_comparison($compared, col_path_prefix => [],
     row_path_prefix => [])

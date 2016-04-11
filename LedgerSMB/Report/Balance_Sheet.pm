@@ -42,6 +42,23 @@ Boolean, true if the regular hierarchies need to be ignored,
 
 has legacy_hierarchy => (is => 'rw', isa => 'Bool');
 
+=item comparison_periods
+
+This is the number of periods to compare to
+
+=cut
+
+has comparison_periods => (is => 'ro', isa =>'Int', 
+							required =>1, default => 1);
+
+=item comparison_type
+
+This is either by number of periods or by dates
+
+=cut
+
+has comparison_type => (is => 'ro', isa =>'Str', required =>0);
+
 =item column_path_prefix
 
 
