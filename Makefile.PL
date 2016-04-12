@@ -78,6 +78,7 @@ feature 'X12 EDI support',
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
+    'LaTeX::Driver' => '0.300.2',
     'Template::Plugin::Latex' => 0,
     'TeX::Encode' => 0;
 
