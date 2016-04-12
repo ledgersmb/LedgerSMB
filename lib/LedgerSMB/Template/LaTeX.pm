@@ -174,11 +174,14 @@ sub process {
     my $out = "$parent->{outputfile}.$format"
 	unless ref $parent->{outputfile};
     $out ||= $parent->{outputfile};
-    if (not $template->process(
-        $source,
-        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-            'escape' => \&preprocess},
-        $out, {binmode => 1})) {
+    if (! $template->process(
+	      $source,
+	      { %$cleanvars,
+		%$LedgerSMB::Template::TTI18N::ttfuncs,
+		escape => \&preprocess,
+		FORMAT => $format,
+	      },
+	      $out, {binmode => 1})) {
         die $template->error();
     }
     if (lc $format eq 'pdf') {
