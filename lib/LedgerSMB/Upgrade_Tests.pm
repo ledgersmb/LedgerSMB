@@ -306,6 +306,7 @@ push @tests, __PACKAGE__->new(
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
+                         and gifi_accno is not null
                          and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
@@ -323,7 +324,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno <> ''",
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -339,7 +340,9 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from account
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = account.gifi_accno)",
+                                      where gifi.accno = account.gifi_accno)
+                         and gifi_accno is not null
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
