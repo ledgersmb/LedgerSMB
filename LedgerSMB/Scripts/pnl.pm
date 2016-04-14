@@ -45,18 +45,18 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-		if ( $request->{comparison_type} eq 'by_periods' ) {
+		if ( $request->{comparison_type} eq 'by_periods' && $request->{interval} ne 'none') {
 			# to_date = from_date + 1 period - 1 day
 			my $date = LedgerSMB::Report::Hierarchical::_date_interval(LedgerSMB::Report::Hierarchical::_date_interval($request->{from_date},$request->{interval}),'day',-1);
 			$request->{"to_date"} = $date->to_output;
 		}
-		my $counts = $request->{comparison_periods} || 0;
-		warn $counts;
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             column_path_prefix => [ 0 ]);
         $rpt->run_report;
 		$rpt->init_comparisons($request);
+		my $counts = $request->{comparison_periods} || 0;
+		warn $counts;
         for my $c_per (1 .. $counts) {
             my $found = 0;
 			for (qw(from_month from_year from_date to_date interval)){

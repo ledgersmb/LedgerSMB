@@ -37,7 +37,7 @@ This is the number of periods to compare to
 
 =cut
 
-has comparison_periods => (is => 'ro', isa =>'Int', required =>0);
+has comparison_periods => (is => 'ro', isa =>'Int', required =>0, default => 0);
 
 =item comparison_type
 
@@ -98,6 +98,8 @@ sub report_base {
     my ($self, $from_date, $to_date) = @_;
     die $self->Text('Invalid Reporting Basis')
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
+	die $self->Text('Required period type')
+		   if $self->comparison_periods and $self->interval eq 'none';
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->exec_method({funcname => $procname});
 }

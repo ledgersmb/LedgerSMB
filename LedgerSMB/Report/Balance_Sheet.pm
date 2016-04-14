@@ -48,8 +48,7 @@ This is the number of periods to compare to
 
 =cut
 
-has comparison_periods => (is => 'ro', isa =>'Int', 
-							required =>1, default => 1);
+has comparison_periods => (is => 'ro', isa =>'Int', required => 0, default => 0);
 
 =item comparison_type
 

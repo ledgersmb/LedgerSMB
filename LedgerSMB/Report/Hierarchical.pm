@@ -127,10 +127,10 @@ TODO!!
 =cut
 
 sub _init_comparison{
-	#Todo: This works but $request do NOT need $rpt so misplaced init_routine
+	#Todo: This works but should evolve toward a role.
     my ($self, $request, $c_per) = @_;
 	if ( $request->{comparison_type} eq 'by_periods' ) {
-		my $date = _date_interval($request->{from_date},$request->{interval},-$c_per);
+		my $date = _date_interval($request->{from_date},$request->{interval},-$c_per);	# Comparison are backward
 		$request->{"from_date_$c_per"} = $date->to_output;
 		$date = _date_interval(_date_interval($date,$request->{interval}),'day',-1);
 		$request->{"to_date_$c_per"} = $date->to_output;
@@ -211,11 +211,19 @@ TODO!!
 sub init_comparisons{
     my ($self, $request) = @_;
 	if ( $request->{comparison_type} eq 'by_periods' ) {
-		# to_date = from_date + 1 period - 1 day
-		my $date = _date_interval(_date_interval($request->{from_date},$request->{interval}),'day',-1);
-		$request->{"to_date"} = $date->to_output;
-		my $counts = $request->{comparison_periods} || 0;
-		for my $c_per (1 .. $counts) {	# Comparison are backward
+		if ( $request->{from_date} && $request->{interval} && $request->{interval} ne 'none') {
+			# to_date = from_date + 1 period - 1 day
+			my $date = _date_interval(_date_interval($request->{from_date},$request->{interval}),'day',-1);
+			$request->{to_date} = $date->to_output;
+		} elsif ( $request->{to_date} && $request->{interval} && $request->{interval} ne 'none' ) {
+			# from_date = to_date - 1 period + 1 day
+			my $date = _date_interval(_date_interval($request->{to_date},'day'),$request->{interval},-1);
+			$request->{from_date} = $date->to_output;
+		} else {
+			return;
+		}
+		my $counts = $request->{comparison_periods};
+		for my $c_per (1 .. $counts) {
 			$self->_init_comparison($request, $c_per);
 		}
 	}
