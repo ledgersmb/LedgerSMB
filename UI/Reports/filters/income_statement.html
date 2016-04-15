@@ -170,7 +170,7 @@ PROCESS input element_data = {
 <?lsmb IF comparison_type == 'by_dates' ?>
 	   <table id="comparison_dates">
        <tr>
-       <th colspan="7"><?lsmb text('Enter up to ') _ comparison_periods _ text(' date ranges for comparison') ?></th>
+       <th colspan="7"><?lsmb text('Enter up to ')?> <a id="comparison_periods_text"><?lsmb comparison_periods ?></a><?lsmb text(' date ranges for comparison') ?></th>
        </tr><tr><td>
        <?lsmb FOREACH c IN [1 .. 9]; ?>
 			  <table id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">

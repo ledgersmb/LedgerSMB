@@ -28,6 +28,10 @@ function show_hide_details(type_id){
 		e.style = type_id == "comparison_by_dates" ? "" : "display:none";
 	} else {
 		var c = p.value;
+		var cpt = "comparison_periods_text";
+		var cpt_id = document.getElementById(cpt);
+		cpt_id.innerHTML = c;
+
 		for ( i = 1 ; i <= 9 ; i++ ) {
 			var ei_id = e_id + "_" + i;
 			var p_ei_id = document.getElementById(ei_id);
