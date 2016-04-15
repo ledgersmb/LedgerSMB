@@ -37,7 +37,15 @@ This is the number of periods to compare to
 
 =cut
 
-has comparison_periods => (is => 'ro', isa =>'Int', required =>0, default => 0);
+sub _comparison_selection_radio {
+	my ( $self, $new, $old ) = @_;
+
+	die $new;
+}
+
+has comparison_periods => (is => 'ro', isa =>'Int', 
+				required =>0, default => 0,
+				trigger => \&_comparison_selection_radio);
 
 =item comparison_type
 
