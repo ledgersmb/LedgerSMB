@@ -22,15 +22,12 @@ function init() {
 function show_hide_details(type_id){
 	var e_id = "comparison_dates";
 	var e = document.getElementById(e_id);
-	var p_id = 'comparison-periods';
-	var p = document.getElementById(p_id);
+
 	if (type_id != "comparison-periods") {
 		e.style = type_id == "comparison_by_dates" ? "" : "display:none";
 	} else {
-		var c = p.value;
-		var cpt = "comparison_periods_text";
-		var cpt_id = document.getElementById(cpt);
-		cpt_id.innerHTML = c;
+		var c = document.getElementById('comparison-periods').value;
+		document.getElementById('comparison_periods_text').innerHTML = c;
 
 		for ( i = 1 ; i <= 9 ; i++ ) {
 			var ei_id = e_id + "_" + i;
