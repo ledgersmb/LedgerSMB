@@ -1,14 +1,17 @@
 
 function init() {
 	var radios = ['comparison_by_dates', 'comparison_by_periods'];
+	var current;
 	while (radios.length) {
-		var radio = document.getElementById(radios.shift());
+		var radio_id = radios.shift();
+		var radio = document.getElementById(radio_id);
 		radio.addEventListener('click', 
 			function(e){
 				var my_id = this.getAttribute('id');
 				show_hide_details(my_id);
 				return true;
 			}, false);
+		if (radio.checked) current = radio_id;
 	}
 	var periods = document.getElementById('comparison-periods');
 	periods.addEventListener('input', 
@@ -17,6 +20,7 @@ function init() {
 			show_hide_details(my_id);
 			return true;
 		}, false);
+	show_hide_details(current);
 }
 
 function show_hide_details(type_id){

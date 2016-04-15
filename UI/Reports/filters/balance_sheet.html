@@ -1,5 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html'
-	   include_script = ['UI/Reports/filters/dynamic_report_fields.js.js'];
+	   include_script = ['UI/Reports/filters/dynamic_report_fields.js'];
        PROCESS 'elements.html'; ?>
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
@@ -127,8 +127,7 @@ default_values = 0
 ?></div>
 </div>
 <div class="subsection">
-<?lsmb IF comparison_type == 'by_dates' ?>
-	   <div id="comparison_dates">
+	   <div id="comparison_dates" style="display:none">
        <h3><?lsmb text('Enter up to ')?> <a id="comparison_periods_text"><?lsmb comparison_periods ?></a><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="inputrow">
        <?lsmb FOREACH c IN [1 .. 9]; ?>
@@ -146,7 +145,6 @@ default_values = 0
 		<?lsmb END ?>
        </div>
 	</div>
-<?lsmb END ?>
 </div>
 <?lsmb
 PROCESS button element_data = {

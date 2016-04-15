@@ -1,5 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html'
-		include_script = ['UI/Reports/filters/dynamic_report_fields.js.js']
+		include_script = ['UI/Reports/filters/dynamic_report_fields.js']
 ?>
 <?lsmb PROCESS elements.html;
        PROCESS 'report_base.html'; ?>
@@ -167,8 +167,7 @@ PROCESS input element_data = {
       <table>
        <?lsmb PROCESS business_classes;
        PROCESS date_row; # TODO add comparisons ?>
-<?lsmb IF comparison_type == 'by_dates' ?>
-	   <table id="comparison_dates">
+	   <table id="comparison_dates" style="display:none">
        <tr>
        <th colspan="7"><?lsmb text('Enter up to ')?> <a id="comparison_periods_text"><?lsmb comparison_periods ?></a><?lsmb text(' date ranges for comparison') ?></th>
        </tr><tr><td>
@@ -178,7 +177,6 @@ PROCESS input element_data = {
 			  </table>
 		<?lsmb END ?>
        </td></tr></table>
-<?lsmb END ?>
     </table>
   </td>
 </tr>
