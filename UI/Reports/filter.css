@@ -1,0 +1,18 @@
+.label { display: block;
+	float: left;
+	width: 170px;	
+}
+
+span.inputgroup { display: block;
+	float: left;
+	width: 40%;
+}
+
+div.inputrow {
+	overflow: auto;
+	width: 100%;
+}
+
+.invisible {
+       display: none;
+}
