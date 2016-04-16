@@ -91,9 +91,7 @@ END # BLOCK -?>
 	</tr>
 <?lsmb END # BLOCK -?>
 
-<?lsmb BLOCK date_row ?>
-	<tr>
-
+<?lsmb BLOCK date_from_date ?>
 	  <th align="right"><?lsmb text('From') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                class="date" 
@@ -101,6 +99,8 @@ END # BLOCK -?>
                id="from_date" _ SUFFIX 
                size="11" 
                title=datestyle } ?></td>
+<?lsmb END # BLOCK -?>
+<?lsmb BLOCK date_to_date ?>
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                  class="date" 
@@ -108,9 +108,8 @@ END # BLOCK -?>
                  id="to_date" _ SUFFIX 
                  size="11" 
                  title=datestyle } ?></td>
-	</tr>
-	
-        <tr>
+<?lsmb END # BLOCK -?>
+<?lsmb BLOCK date_period ?>
 	<th align="right"><?lsmb text('Period') ?></th>
 
 	<td colspan="5">
@@ -153,27 +152,42 @@ END # BLOCK -?>
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
               
 	</td>
-      </tr>
+<?lsmb END # BLOCK -?>
+
+<?lsmb BLOCK date_row ?>
+	<tr>
+	  <?lsmb PROCESS date_from_date ?>
+	  <?lsmb PROCESS date_to_date ?>
+	</tr>
+	
+        <tr>
+	  <?lsmb PROCESS date_period ?>
+        </tr>
 <?lsmb END #BLOCK ?>
-<?lsmb BLOCK date_row_div ?>
-	<div class="input_row">
-          <div class="input_group">
-	  <?lsmb PROCESS input element_data = {
-               label=text('From')
-               class="date" 
-               name="from_date" 
-               id="from_date" 
-               size="11" 
-               title=datestyle } ?></div>
-          <div class="input_group">
-	  <?lsmb PROCESS input element_data = {
-               label=text('To')
-                 class="date" 
-                 name="to_date" 
-                 id="to_date" 
-                 size="11" 
-                 title=datestyle } ?></div>
-        <div class="input_row">
+
+<?lsmb BLOCK date_from_date_div ?>
+  <div class="input_group">
+  <?lsmb PROCESS input element_data = {
+       label=text('From')
+       class="date" 
+       name="from_date" 
+       id="from_date" 
+       size="11" 
+       title=datestyle } ?></div>
+<?lsmb END #BLOCK ?>
+
+<?lsmb BLOCK date_to_date_div ?>
+  <div class="input_group">
+  <?lsmb PROCESS input element_data = {
+       label=text('To')
+	 class="date" 
+	 name="to_date" 
+	 id="to_date" 
+	 size="11" 
+	 title=datestyle } ?></div>
+<?lsmb END #BLOCK ?>
+
+<?lsmb BLOCK date_period_div ?>
           <div class="input_group">
 	<label align="right"><?lsmb text('Period') ?></label>
 
@@ -220,7 +234,16 @@ END # BLOCK -?>
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
               
 	</div>
-      </div>
+<?lsmb END #BLOCK ?>
+
+<?lsmb BLOCK date_row_div ?>
+	<div class="input_row">
+	  <?lsmb PROCESS date_from_date_div ?>
+	  <?lsmb PROCESS date_to_date_div ?>
+          <div class="input_row">
+	    <?lsmb PROCESS date_period_div ?>
+          </div>
+        </div>
 <?lsmb END #BLOCK ?>
 
 <?lsmb 

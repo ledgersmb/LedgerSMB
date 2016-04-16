@@ -1,5 +1,25 @@
 
-function init() {
+function init_income_statement() {
+	_init(show_hide_details_income_statement);
+}
+
+function init_balance_sheet() {
+	_init(show_hide_details_balance_sheet);
+}
+
+function show_hide_details_income_statement(type_id) {
+	_show_hide_details(type_id);
+	var e = document.getElementById("date_to_date_id");
+	e.style = type_id == "comparison_by_dates" ? "" : "display:none";
+	var e = document.getElementById("date_period_id");
+	e.style = type_id == "comparison_by_dates" ? "display:none" : "";
+}
+
+function show_hide_details_balance_sheet(type_id) {
+	_show_hide_details(type_id);
+}
+
+function _init(f) {
 	var radios = ['comparison_by_dates', 'comparison_by_periods'];
 	var current;
 	while (radios.length) {
@@ -8,7 +28,7 @@ function init() {
 		radio.addEventListener('click', 
 			function(e){
 				var my_id = this.getAttribute('id');
-				show_hide_details(my_id);
+				f(my_id);
 				return true;
 			}, false);
 		if (radio.checked) current = radio_id;
@@ -17,13 +37,13 @@ function init() {
 	periods.addEventListener('input', 
 		function(e){
 			var my_id = this.getAttribute('id');
-			show_hide_details(my_id);
+			f(my_id);
 			return true;
 		}, false);
-	show_hide_details(current);
+	f(current);
 }
 
-function show_hide_details(type_id){
+function _show_hide_details(type_id){
 	var e_id = "comparison_dates";
 	var e = document.getElementById(e_id);
 

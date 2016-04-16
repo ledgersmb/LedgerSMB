@@ -1,7 +1,8 @@
 <?lsmb INCLUDE 'ui-header.html'
 	   include_script = ['UI/Reports/filters/dynamic_report_fields.js'];
-       PROCESS 'elements.html'; ?>
-<body onLoad="init()" class="<?lsmb dojo_theme ?>">
+       PROCESS 'elements.html';
+       PROCESS 'report_base.html'; ?>
+<body onLoad="init_balance_sheet()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
 <div class="inputrow">
@@ -17,7 +18,7 @@ PROCESS input element_data = {
 <div class="inputrow">
 <?lsmb
 PROCESS input element_data = {
-   label = text('GIFI')    #'
+   label = text('GIFI')
     name = 'gifi'
       id = 'gifi'
     type = 'checkbox'
@@ -124,35 +125,36 @@ PROCESS input element_data = {
           size = '3'
 default_values = 0
 };
+PROCESS date_period_div;
 ?></div>
 </div>
 <div class="subsection">
-	   <div id="comparison_dates" style="display:none">
-       <h3><?lsmb text('Enter up to ')?> <a id="comparison_periods_text"><?lsmb comparison_periods ?></a><?lsmb text(' date ranges for comparison') ?></h3>
+   <div id="comparison_dates" style="display:none">
+       <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="inputrow">
        <?lsmb FOREACH c IN [1 .. 9]; ?>
-			  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
-				<?lsmb
-				PROCESS input element_data = {
-						   label = text('Through date') #'
-							name = 'to_date_' _ c
-						   value = to_date
-						   class = 'date'
-							size = 12
-				};
-				?>
-			  </div>
-		<?lsmb END ?>
+	  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+	     <?lsmb
+		PROCESS input element_data = {
+			   label = text('Through date') #'
+			    name = 'to_date_' _ c
+			   value = to_date
+			   class = 'date'
+			    size = 12
+		};
+	     ?>
+	  </div>
+	<?lsmb END ?>
        </div>
-	</div>
+   </div>
 </div>
 <?lsmb
 PROCESS button element_data = {
-            text = text('Generate')
-            name = 'action'
-           value = 'balance_sheet'
-            type = 'submit'
-           class = 'submit'
+    text = text('Generate')
+    name = 'action'
+   value = 'balance_sheet'
+    type = 'submit'
+   class = 'submit'
 } ?>
 </form>
 </body>
