@@ -3,16 +3,16 @@
 	width: 170px;	
 }
 
-span.inputgroup { display: block;
+.input_group { display: block;
 	float: left;
 	width: 40%;
 }
 
-div.inputrow {
+div.input_row {
 	overflow: auto;
 	width: 100%;
 }
 
-.invisible {
-       display: none;
+.subsection {
+	margin-top: 20px;
 }

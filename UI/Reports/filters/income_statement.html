@@ -1,4 +1,4 @@
-<?lsmb INCLUDE 'ui-header.html'
+<?lsmb INCLUDE 'ui-header.html' titlebar = text("Income Statement")
 		include_script = ['UI/Reports/filters/dynamic_report_fields.js']
 		include_stylesheet = [ "UI/Reports/filter.css" ];
        PROCESS 'elements.html';
@@ -6,7 +6,7 @@
 <body onLoad="init_income_statement()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Income Statement') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="pnl.pl" method="get">
-<div class="inputrow">
+<div class="input_row">
 <?lsmb
 PROCESS input element_data = {
      name = 'pnl_type',
@@ -15,12 +15,12 @@ PROCESS input element_data = {
 };
 ?></div>
   
-<div class="labelledinput">
+<div class="input_row">
   <div class="label">
     <?lsmb text('Method') ?>
   </div>
 
-  <div class="inputgroup">
+  <div class="input_group">
 <?lsmb
 PROCESS input element_data={
   name = 'basis',
@@ -37,12 +37,12 @@ PROCESS input element_data={
   };
 ?></div>
 </div>
-<div class="labelledinput">
+<div class="input_row">
   <div class="label">
     <?lsmb text('Ignore Year-ends') ?>
   </div>
 
-  <div class="inputgroup">
+  <div class="input_group">
 <?lsmb
 PROCESS select element_data = {
      options = [
@@ -66,7 +66,7 @@ PROCESS select element_data = {
      }
 ?></div>
 </div>
-<div class="inputrow">
+<div class="input_row">
 <?lsmb
 PROCESS input element_data = {
    label = text('GIFI')
@@ -75,7 +75,7 @@ PROCESS input element_data = {
     type = 'checkbox'
 };
 ?></div>
-<div class="inputrow">
+<div class="input_row">
 <?lsmb
 PROCESS input element_data = {
    label = text('Account numbers')    #'
@@ -85,7 +85,7 @@ PROCESS input element_data = {
  checked = 'checked' # checked by default
 };
 ?></div>
-<div class="inputrow">
+<div class="input_row">
 <?lsmb text('Hierarchy type') ?>
 <?lsmb
 HIERARCHY_SETUP = earn_id;
@@ -142,9 +142,9 @@ default_values = [USER.language]
 	<div class="label">
 		<?lsmb text('Comparison selection by') ?>
 	</div>
-	<div class="inputgroup">
+	<div class="input_group">
 		<?lsmb
-		IF comparison_type == 'by_periods';
+		IF comparison_type != 'by_dates';
 		  YES="CHECKED";
 		  NO=undef;
 		ELSE;
@@ -171,7 +171,7 @@ default_values = [USER.language]
 	</div>
 </div>
 
-<div class="inputrow"><?lsmb
+<div class="input_row"><?lsmb
 PROCESS input element_data = {
          label = text('Comparison Periods')
           name = 'comparison_periods'
@@ -182,10 +182,13 @@ PROCESS input element_data = {
 default_values = 0
 };
 PROCESS business_classes;
+?>
+<div class="input_row"><?lsmb
 PROCESS date_from_date_div;
 ?>
 <div id="date_to_date_id">
    <?lsmb PROCESS date_to_date_div; ?>
+</div>
 </div>
 <div id="date_period_id">
    <?lsmb PROCESS date_period_div; ?>
@@ -194,16 +197,19 @@ PROCESS date_from_date_div;
 <div class="subsection">
    <div id="comparison_dates" style="display:none">
        <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
-       <div class="inputrow">
-       <?lsmb FOREACH c IN [1 .. 9]; ?>
-	  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
-              <?lsmb PROCESS date_from_date SUFFIX='_' _ c; ?>
-              <?lsmb PROCESS date_to_date SUFFIX='_' _ c; ?>
-	  </div>
-	<?lsmb END ?>
+       <div class="input_row">
+		   <?lsmb FOREACH c IN [1 .. 9]; ?>
+			  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+					  <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
+					  <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
+			  </div>
+		   <?lsmb END ?>
        </div>
    </div>
 </div>
+</div>
+
+<div class="subsection">
 <?lsmb
 PROCESS button element_data = {
     text = text('Continue')
@@ -212,6 +218,8 @@ PROCESS button element_data = {
     type = 'submit'
    class = 'submit'
 } ?>
+</div>
+</div>
 </form>
 </body>
 </html>
