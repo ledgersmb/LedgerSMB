@@ -545,7 +545,7 @@ update user_preference set dateformat = dateformat || 'yy' where length(dateform
 INSERT INTO recurring (id, reference, startdate, nextdate,
                        enddate, howmany, payment, recurring_interval)
  SELECT id, reference, startdate, nextdate, enddate, howmany, payment,
-        repeat || ' ' || unit as recurring_interval
+        (repeat || ' ' || unit)::interval as recurring_interval
    FROM lsmb13.recurring;
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
 INSERT INTO recurringemail SELECT * FROM lsmb13.recurringemail;
