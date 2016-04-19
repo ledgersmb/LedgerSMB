@@ -7,6 +7,8 @@ use LedgerSMB::PSGI;
 use Plack::Builder;
 use Plack::Middleware::Static;
 
+die 'Cannot verify version of libraries' unless $LedgerSMB::PSGI::VERSION == '1.5';
+
 
 my $app = LedgerSMB::PSGI::app();
 
