@@ -2,13 +2,13 @@ BEGIN;
 
 DROP TYPE IF EXISTS trial_balance_line CASCADE;
 CREATE TYPE trial_balance_line AS (
-	chart_id int,
-	accno text,
-	description text,
-	beginning_balance numeric,
-	credits numeric,
-	debits numeric,
-	ending_balance numeric
+        chart_id int,
+        accno text,
+        description text,
+        beginning_balance numeric,
+        credits numeric,
+        debits numeric,
+        ending_balance numeric
 );
 
 CREATE OR REPLACE FUNCTION report_trial_balance
@@ -18,55 +18,55 @@ RETURNS setof trial_balance_line
 AS $$
 DECLARE out_row trial_balance_line;
 BEGIN
-	IF in_department_id IS NULL THEN
-		FOR out_row IN
-			SELECT c.id, c.accno, c.description,
-				SUM(CASE WHEN ac.transdate < in_datefrom
-				              AND c.category IN ('I', 'L', 'Q')
-				    THEN ac.amount
-				    ELSE ac.amount * -1
-				    END),
-			        SUM(CASE WHEN ac.transdate >= in_date_from
-				              AND ac.amount > 0
-			            THEN ac.amount
-			            ELSE 0 END),
-			        SUM(CASE WHEN ac.transdate >= in_date_from
-				              AND ac.amount < 0
-			            THEN ac.amount
-			            ELSE 0 END) * -1,
-				SUM(CASE WHEN ac.transdate >= in_date_from
-					AND c.charttype IN ('I')
-				    THEN ac.amount
-				    WHEN ac.transdate >= in_date_from
-				              AND c.category IN ('I', 'L', 'Q')
-				    THEN ac.amount
-				    ELSE ac.amount * -1
-				    END)
-				FROM acc_trans ac
-				JOIN (select id, approved FROM ap
-					UNION ALL
-					select id, approved FROM gl
-					UNION ALL
-					select id, approved FROM ar) g
-					ON (g.id = ac.trans_id)
-				JOIN chart c ON (c.id = ac.chart_id)
-				WHERE ac.transdate <= in_date_to
-					AND ac.approved AND g.approved
-					AND (in_project_id IS NULL
-						OR in_project_id = ac.project_id)
-				GROUP BY c.id, c.accno, c.description
-				ORDER BY c.accno
+        IF in_department_id IS NULL THEN
+                FOR out_row IN
+                        SELECT c.id, c.accno, c.description,
+                                SUM(CASE WHEN ac.transdate < in_datefrom
+                                              AND c.category IN ('I', 'L', 'Q')
+                                    THEN ac.amount
+                                    ELSE ac.amount * -1
+                                    END),
+                                SUM(CASE WHEN ac.transdate >= in_date_from
+                                              AND ac.amount > 0
+                                    THEN ac.amount
+                                    ELSE 0 END),
+                                SUM(CASE WHEN ac.transdate >= in_date_from
+                                              AND ac.amount < 0
+                                    THEN ac.amount
+                                    ELSE 0 END) * -1,
+                                SUM(CASE WHEN ac.transdate >= in_date_from
+                                        AND c.charttype IN ('I')
+                                    THEN ac.amount
+                                    WHEN ac.transdate >= in_date_from
+                                              AND c.category IN ('I', 'L', 'Q')
+                                    THEN ac.amount
+                                    ELSE ac.amount * -1
+                                    END)
+                                FROM acc_trans ac
+                                JOIN (select id, approved FROM ap
+                                        UNION ALL
+                                        select id, approved FROM gl
+                                        UNION ALL
+                                        select id, approved FROM ar) g
+                                        ON (g.id = ac.trans_id)
+                                JOIN chart c ON (c.id = ac.chart_id)
+                                WHERE ac.transdate <= in_date_to
+                                        AND ac.approved AND g.approved
+                                        AND (in_project_id IS NULL
+                                                OR in_project_id = ac.project_id)
+                                GROUP BY c.id, c.accno, c.description
+                                ORDER BY c.accno
 
-		LOOP
-			RETURN NEXT out_row;
-		END LOOP;
-	ELSE
-		FOR out_row IN
-			SELECT 1
-		LOOP
-			RETURN NEXT out_row;
-		END LOOP;
-	END IF;
+                LOOP
+                        RETURN NEXT out_row;
+                END LOOP;
+        ELSE
+                FOR out_row IN
+                        SELECT 1
+                LOOP
+                        RETURN NEXT out_row;
+                END LOOP;
+        END IF;
 END;
 $$ language plpgsql;
 
@@ -90,9 +90,9 @@ RETURNS SETOF chart AS
 $$
 DECLARE out_row chart%ROWTYPE;
 BEGIN
-	IF in_account_class NOT IN (1, 2) THEN
-		RAISE EXCEPTION 'Bad Account Type';
-	END IF;
+        IF in_account_class NOT IN (1, 2) THEN
+                RAISE EXCEPTION 'Bad Account Type';
+        END IF;
        FOR out_row IN
                SELECT * FROM chart
                WHERE link = CASE WHEN in_account_class = 1 THEN 'AP'
@@ -115,7 +115,7 @@ in_account_class is 2, then a list of AR accounts.$$;
 CREATE OR REPLACE FUNCTION chart_list_search(in_search text, in_link_desc text)
 RETURNS SETOF account AS
 $$
-		SELECT * FROM account
+                SELECT * FROM account
                  WHERE (accno ~* ('^'||in_search)
                        OR description ~* ('^'||in_search))
                        AND (in_link_desc IS NULL
@@ -381,12 +381,12 @@ $$Deletes the translation for the account+language combination.$$;
 CREATE OR REPLACE FUNCTION account_has_transactions (in_id int) RETURNS bool AS
 $$
 BEGIN
-	PERFORM trans_id FROM acc_trans WHERE chart_id = in_id LIMIT 1;
-	IF FOUND THEN
-		RETURN true;
-	ELSE
-		RETURN false;
-	END IF;
+        PERFORM trans_id FROM acc_trans WHERE chart_id = in_id LIMIT 1;
+        IF FOUND THEN
+                RETURN true;
+        ELSE
+                RETURN false;
+        END IF;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -400,74 +400,74 @@ in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
 in_link text[], in_obsolete bool, in_is_temp bool)
 RETURNS int AS $$
 DECLARE
-	t_heading_id int;
-	t_link record;
-	t_id int;
+        t_heading_id int;
+        t_link record;
+        t_id int;
         t_tax bool;
 BEGIN
 
     SELECT count(*) > 0 INTO t_tax FROM tax WHERE in_id = chart_id;
     t_tax := t_tax OR in_tax;
-	-- check to ensure summary accounts are exclusive
+        -- check to ensure summary accounts are exclusive
         -- necessary for proper handling by legacy code
     FOR t_link IN SELECT description FROM account_link_description
     WHERE summary='t'
-	LOOP
-		IF t_link.description = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
-			RAISE EXCEPTION 'Invalid link settings:  Summary';
-		END IF;
-	END LOOP;
-	-- heading settings
-	IF in_heading IS NULL THEN
-		SELECT id INTO t_heading_id FROM account_heading
-		WHERE accno < in_accno order by accno desc limit 1;
-	ELSE
-		t_heading_id := in_heading;
-	END IF;
+        LOOP
+                IF t_link.description = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
+                        RAISE EXCEPTION 'Invalid link settings:  Summary';
+                END IF;
+        END LOOP;
+        -- heading settings
+        IF in_heading IS NULL THEN
+                SELECT id INTO t_heading_id FROM account_heading
+                WHERE accno < in_accno order by accno desc limit 1;
+        ELSE
+                t_heading_id := in_heading;
+        END IF;
 
     -- don't remove custom links.
-	DELETE FROM account_link
-	WHERE account_id = in_id
+        DELETE FROM account_link
+        WHERE account_id = in_id
               and description in ( select description
                                     from  account_link_description
                                     where custom = 'f');
 
-	UPDATE account
-	SET accno = in_accno,
-		description = in_description,
-		category = in_category,
-		gifi_accno = in_gifi_accno,
-		heading = t_heading_id,
-		contra = in_contra,
+        UPDATE account
+        SET accno = in_accno,
+                description = in_description,
+                category = in_category,
+                gifi_accno = in_gifi_accno,
+                heading = t_heading_id,
+                contra = in_contra,
                 obsolete = coalesce(in_obsolete,'f'),
                 tax = t_tax,
                 is_temp = coalesce(in_is_temp,'f')
-	WHERE id = in_id;
+        WHERE id = in_id;
 
-	IF FOUND THEN
-		t_id := in_id;
-	ELSE
+        IF FOUND THEN
+                t_id := in_id;
+        ELSE
                 -- can't obsolete on insert, but this can be changed if users
                 -- request it --CT
-		INSERT INTO account (accno, description, category, gifi_accno,
-			heading, contra, tax, is_temp)
-		VALUES (in_accno, in_description, in_category, in_gifi_accno,
-			t_heading_id, in_contra, in_tax, coalesce(in_is_temp, 'f'));
+                INSERT INTO account (accno, description, category, gifi_accno,
+                        heading, contra, tax, is_temp)
+                VALUES (in_accno, in_description, in_category, in_gifi_accno,
+                        t_heading_id, in_contra, in_tax, coalesce(in_is_temp, 'f'));
 
-		t_id := currval('account_id_seq');
-	END IF;
+                t_id := currval('account_id_seq');
+        END IF;
 
-	FOR t_link IN
-		select in_link[generate_series] AS val
-		FROM generate_series(array_lower(in_link, 1),
-			array_upper(in_link, 1))
-	LOOP
-		INSERT INTO account_link (account_id, description)
-		VALUES (t_id, t_link.val);
-	END LOOP;
+        FOR t_link IN
+                select in_link[generate_series] AS val
+                FROM generate_series(array_lower(in_link, 1),
+                        array_upper(in_link, 1))
+        LOOP
+                INSERT INTO account_link (account_id, description)
+                VALUES (t_id, t_link.val);
+        END LOOP;
 
 
-	RETURN t_id;
+        RETURN t_id;
 END;
 $$ language plpgsql;
 
@@ -521,19 +521,19 @@ CREATE OR REPLACE FUNCTION account_heading_save
 RETURNS int AS
 $$
 BEGIN
-	UPDATE account_heading
-	SET accno = in_accno,
-		description = in_description,
-		parent_id = in_parent
-	WHERE id = in_id;
+        UPDATE account_heading
+        SET accno = in_accno,
+                description = in_description,
+                parent_id = in_parent
+        WHERE id = in_id;
 
-	IF FOUND THEN
-		RETURN in_id;
-	END IF;
-	INSERT INTO account_heading (accno, description, parent_id)
-	VALUES (in_accno, in_description, in_parent);
+        IF FOUND THEN
+                RETURN in_id;
+        END IF;
+        INSERT INTO account_heading (accno, description, parent_id)
+        VALUES (in_accno, in_description, in_parent);
 
-	RETURN currval('account_heading_id_seq');
+        RETURN currval('account_heading_id_seq');
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -632,7 +632,7 @@ in_pass int, in_taxmodule_id int, in_old_validto date)
 returns bool as
 $$
 BEGIN
-	UPDATE tax SET validto = in_validto,
+        UPDATE tax SET validto = in_validto,
                rate = in_rate,
                minvalue = in_minvalue,
                maxvalue = in_maxvalue,
@@ -679,13 +679,13 @@ CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
 
 WITH ac (chart_id, amount) AS (
-     SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount
-                           ELSE 0
-                       END
+     SELECT chart_id, sum(amount)
        FROM acc_trans
        JOIN (select id, approved from ar union all
              select id, approved from ap union all
              select id, approved from gl) gl ON gl.id = acc_trans.trans_id
+      WHERE acc_trans.approved and gl.approved
+      GROUP BY chart_id
 ),
 l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')
@@ -715,9 +715,10 @@ ta(account_id) AS (
       FROM eca_tax
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
-       CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
-        END,
-       CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
+       CASE WHEN sum(ac.amount) < 0 THEN sum(ac.amount) * -1
+            ELSE null::numeric END,
+       CASE WHEN sum(ac.amount) > 0 THEN sum(ac.amount)
+            ELSE null::numeric END,
        count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(ta.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
@@ -735,6 +736,7 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
   ORDER BY a.accno;
 
 $$ LANGUAGE SQL;
+
 
 CREATE OR REPLACE FUNCTION account__all_headings() RETURNS SETOF account_heading
 LANGUAGE SQL AS
@@ -769,7 +771,7 @@ WITH RECURSIVE account_headings AS (
       FROM account_heading
     UNION ALL
     SELECT at.id, at.level+1 as level,
-    	   ah.id as descendant_id, at.accno, ah.accno as descendant_accno
+           ah.id as descendant_id, at.accno, ah.accno as descendant_accno
     FROM account_heading ah
     JOIN account_headings at ON ah.parent_id = at.descendant_id
 )
