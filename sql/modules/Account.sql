@@ -697,13 +697,13 @@ CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
 
 WITH ac (chart_id, amount) AS (
-     SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount
-                           ELSE 0
-                       END
+     SELECT chart_id, sum(amount)
        FROM acc_trans
        JOIN (select id, approved from ar union all
              select id, approved from ap union all
              select id, approved from gl) gl ON gl.id = acc_trans.trans_id
+      WHERE acc_trans.approved and gl.approved
+      GROUP BY chart_id
 ),
 l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')
@@ -733,9 +733,10 @@ ta(account_id) AS (
       FROM eca_tax
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
-       CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
-        END,
-       CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
+       CASE WHEN sum(ac.amount) < 0 THEN sum(ac.amount) * -1
+            ELSE null::numeric END,
+       CASE WHEN sum(ac.amount) > 0 THEN sum(ac.amount)
+            ELSE null::numeric END,
        count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(ta.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
@@ -753,6 +754,7 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
   ORDER BY a.accno;
 
 $$ LANGUAGE SQL;
+
 
 CREATE OR REPLACE FUNCTION account__all_headings() RETURNS SETOF account_heading
 LANGUAGE SQL AS
