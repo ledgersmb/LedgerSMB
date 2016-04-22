@@ -56,6 +56,7 @@ Changelog for 1.4.27
 * SQL Ledger 2.8 migration improvements from SL 3.0 support (Erik H)
 * Fix random column ordering in PNL & B/S comparison (Yves L)
 * Complete Norwegian Bokmal translation (Stig B)
+* Fix performance issue in General Joural > Chart of Accounts screen (Erik H)
 
 Chris T is Chris Travers
 Yves L is Yves Lavoie
