@@ -2,10 +2,16 @@
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb script ?>">
-<table width="100%">
-  <tr><th class="listtop"><?lsmb text('Post Yearend') ?></th></tr>
-  <tr><td> </td></tr>
-  <tr>
+    <div id="closing-tabs"
+         data-dojo-type="dijit/layout/TabContainer"
+         style="height: 100%" >
+      <div id="closing-year"
+           title="<?lsmb text('Post Yearend') ?>"
+           data-dojo-type="dijit/layout/ContentPane" >
+        <table width="100%">
+          <tr><th class="listtop"><?lsmb text('Post Yearend') ?></th></tr>
+          <tr><td> </td></tr>
+          <tr>
     <td>
       <table width="100%">
         <tr>
@@ -37,31 +43,81 @@
           <th align="right"><?lsmb text('Retained Earnings') ?></th>
           <?lsmb FOREACH opt = earnings_accounts; 
                      opt.text = opt.accno _ '--' _ opt.description;
-		END -?>
+                END -?>
           <td><?lsmb PROCESS select element_data={
                      name = "retention_acc_id"
                      options = earnings_accounts
                      value_attr = "id"
                 } -?></td>
         </tr>
-<tr><td colspan="2">
-<hr size="3" noshade="noshade" />
-<?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type = 'hidden',
-		name = hidden,
-		value = hiddens.item(hidden)
-		}; END ?></td>
-</tr>
-<tr>
-<td align="right">
-<?lsmb PROCESS button element_data = {
-	name = "action"
-	type = "submit"
-	class = "submit"
-	value = "post_yearend"
-	text = text('Post Yearend') #'
-} ?></td></tr>
+        <tr><td colspan="2">
+            <hr size="3" noshade="noshade" />
+            <?lsmb FOREACH hidden IN hiddens.keys;
+                   PROCESS input element_data={
+                            type = 'hidden',
+                            name = hidden,
+                            value = hiddens.item(hidden)
+                   }; END ?></td>
+        </tr>
+        <tr>
+          <td align="left">
+            <?lsmb PROCESS button element_data = {
+                        name = "action"
+                        type = "submit"
+                        class = "submit"
+                        value = "post_yearend"
+                        text = text('Post Yearend') #'
+                   } ?></td></tr>
+      </table>
+    </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div id="closing-period"
+           title="<?lsmb text('Close Period') ?>"
+           data-dojo-type="dijit/layout/ContentPane" >
+      
+        <table width="100%">
+          <tr><td>
+              <table width="100%">
+                <tr><th colspan="2"
+                        class="listtop"><?lsmb text('Close books') ?></th></tr>
+                <tr><th align="right"><?lsmb text('Books closed up to') ?></th>
+                  <td><?lsmb closed_date ?></td>
+                <tr>
+                  <th align="right"><?lsmb text('Close As-Of') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            class = 'date',
+            name = 'period_close_date',
+            size = 11,
+            title = user.dateformat,
+            } -?></td></tr>
+                <tr><td colspan="2">
+                    <hr size="3" noshade="noshade" /></td></tr>
+                <td align="left">
+                  <?lsmb PROCESS button element_data = {
+                         name = "action"
+                         type = "submit"
+                         class = "submit"
+                         value = "close_period"
+                         text = text('Close Period') #'
+                         } ?></td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+ 
+
+    <div id="reopen"
+           title="<?lsmb text('Re-open Books') ?>"
+           data-dojo-type="dijit/layout/ContentPane" >
+      
+        <table width="100%">
+          <tr><td>
+              <table width="100%">
 <tr><th colspan="2" class="listtop"><?lsmb text('Re-open Books') ?></th></tr>
 <tr><th align="right"><?lsmb text('Books closed on') ?></th>
     <td><?lsmb closed_date ?></td>
@@ -76,18 +132,21 @@
 <tr>
 <tr><td colspan="2">
 <hr size="3" noshade="noshade" /></td></tr>
-<td align="right">
+<td align="left">
 <?lsmb PROCESS button element_data = {
-	name = "action"
-	type = "submit"
-	class = "submit"
-	value = "reopen_books"
-	text = text('Reopen Books') #'
+        name = "action"
+        type = "submit"
+        class = "submit"
+        value = "reopen_books"
+        text = text('Re-open Books') #'
 } ?></td></tr>
       </table>
     </td>
   </tr>
 </table>
-</form>
+      </div>
+    </div>
+  </form>
+  
 </body>
 </html>
