@@ -328,12 +328,14 @@ ok(!defined $form->add_date(\%myconfig),
 
 use LedgerSMB::PGDate;
 
-# there are 3 requirements to PGDate that we can verify here:
+# there are 4 requirements to PGDate that we can verify here:
 is(LedgerSMB::PGDate->from_input('')->to_output, '',
    'round-tripping empty string returns empty string');
 is(LedgerSMB::PGDate->from_input(undef)->to_output, '',
    'round-tripping "undef" returns an empty string (for easy concatenation)');
 is(LedgerSMB::PGDate->from_input('2016-01-01')->to_output, '2016-01-01',
+   'round-tripping valid ISO-8601 date returns that date');
+is(LedgerSMB::PGDate->from_input('2015-12-01T00:00:00')->to_output, '2015-12-01 00:00:00',
    'round-tripping valid ISO-8601 date returns that date');
 
 

@@ -159,7 +159,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
 use LedgerSMB::Request::Error;
-use Carp;
+use HTTP::Exception;
 use utf8;
 
 
@@ -313,7 +313,6 @@ sub _get_password {
     } else {
         LedgerSMB::Auth::credential_prompt();
     }
-    die;
 }
 
 
@@ -489,6 +488,7 @@ sub finalize_request {
 }
 
 # To be replaced with a generic interface to an Error class
+use Carp;
 sub error {
     my ($self, $msg) = @_;
     Carp::croak $msg;
@@ -498,8 +498,9 @@ sub _error {
 
     my ( $self, $msg, $status ) = @_;
     my $error;
+    $msg = "? _error" if !defined $msg;
     $status = 500 if ! defined $status;
-    local ($@); # pre-5.14, do not die() in this block
+    #local ($@); # pre-5.14, do not die() in this block
     if (eval { $msg->isa('LedgerSMB::Request::Error') }){
         $error = $msg;
     } else {
@@ -516,10 +517,18 @@ sub _error {
     else {
 
         if ( $ENV{error_function} ) {
+
             &{ $ENV{error_function} }($msg);
+
+        } else {
+
+            my $e = HTTP::Exception->new($status);
+            $e->message($msg);
+            $e->throw;
+
         }
     }
-    die;
+    #die;
 }
 
 # Database routines used throughout

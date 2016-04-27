@@ -97,6 +97,36 @@ different formats and handle construction differently.
 
 =over
 
+=item add_interval(string $interval, optional integer $n)
+
+This adds $n * $interval to the date, defaulting to 1 if $n is not supplied.
+
+=cut
+
+sub add_interval {
+    my ($self,$interval,$n) = @_;
+
+    my %delta_names = (
+        day => 'days',
+        week => 'weeks',
+        month => 'months',
+        quarter => 'months',
+        year => 'years',
+    );
+    my $delta_name = $delta_names{$interval};
+    #Validate asked interval
+    die "Bad interval: $interval" if not defined $delta_name;
+
+    $n //= 1;    # Default to 1
+    $n *= 3 if $interval eq 'quarter'; # A quarter is 3 months
+
+    my $has_time = $self->is_time();
+    $self->add($delta_name => $n, end_of_month => 'preserve');
+    $self->is_time($has_time);  # Make sure that is_time sticks
+
+    return $self;
+}
+
 =item from_input($string date, optional $has_time)
 
 Parses this from an input string according to the user's dateformat
@@ -114,15 +144,13 @@ sub from_input{
     my ($self, $input) = @_;
     {
         local $@;
-        return $input if eval {$input->isa(__PACKAGE__)};
+        return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
     }
-    my $has_time = 0;
-    $has_time = 1 if $input && $input =~ /\:/;
     my $dt = $self->from_db($input);
+    die "Bad date" if $input && not $dt->is_date;
+    die "Bad time" if $input && $input =~ /\:/ and not $dt->is_time();
     bless $dt, __PACKAGE__;
-    return $dt if ! $input;
-    $dt->is_date(1);
-    $dt->is_time($has_time);
+    $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Redefine time. Why?
     return $dt;
 }
 
@@ -136,10 +164,8 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    #return undef if !defined $self;
-         return '' if ! $self->is_date();
+    return '' if not $self->is_date();
     my $fmt;
-
     if (defined $LedgerSMB::App_State::User->{dateformat}){
         $fmt = $LedgerSMB::App_State::User->{dateformat};
     } else {
@@ -147,7 +173,7 @@ sub to_output {
     }
     $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
 
-    $fmt .= ' %T' if ($self->is_time);
+    $fmt .= ' %T' if $self->is_time();
     $fmt =~ s/^\s+//;
 
     my $formatter = new DateTime::Format::Strptime(
@@ -155,7 +181,9 @@ sub to_output {
               locale => 'en_US',
             on_error => 'croak',
     );
-    return $formatter->format_datetime($self);
+    my $date = $formatter->format_datetime($self);
+    if ($date =~ /\:/ and not $self->is_time()) { die "to_output"; }
+    return $date;
 }
 
 =item $self->to_sort()
@@ -168,8 +196,6 @@ sub to_sort {
     my $self = shift;
     return $self->epoch;
 }
-
-#sub is_time { 0 };
 
 #__PACKAGE__->meta->make_immutable;
 

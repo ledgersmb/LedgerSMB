@@ -14,6 +14,7 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'Digest::MD5';
 requires 'File::MimeInfo';
+requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon', '0.62';
@@ -33,6 +34,8 @@ requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.08';
 requires 'Plack::App::File';
 requires 'Plack::Builder';
+requires 'Plack::Middleware::ConditionalGET'; # YLA
+requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Template', '2.14';
 requires 'namespace::autoclean';
 
