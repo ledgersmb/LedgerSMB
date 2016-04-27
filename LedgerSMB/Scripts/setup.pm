@@ -78,12 +78,17 @@ take.
 my @login_actions_dispatch_table =
     ( { appname => 'sql-ledger',
 	version => '2.7',
-	message => "SQL-Ledger database detected.",
+	message => "SQL-Ledger 2.7 database detected.",
 	operation => "Would you like to migrate the database?",
 	next_action => 'upgrade' },
       { appname => 'sql-ledger',
 	version => '2.8',
-	message => "SQL-Ledger database detected.",
+	message => "SQL-Ledger 2.8 database detected.",
+	operation => "Would you like to migrate the database?",
+	next_action => 'upgrade' },
+      { appname => 'sql-ledger',
+	version => '3.0',
+	message => "SQL-Ledger 3.0 database detected.",
 	operation => "Would you like to migrate the database?",
 	next_action => 'upgrade' },
       { appname => 'sql-ledger',
@@ -507,11 +512,11 @@ sub _get_linked_accounts {
 
 my %info_applicable_for_upgrade = (
     'default_ar' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_ap' => [ 'ledgersmb/1.2',
-		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+		      'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ],
     'default_country' => [ 'ledgersmb/1.2',
-			   'sql-ledger/2.7', 'sql-ledger/2.8']
+			   'sql-ledger/2.7', 'sql-ledger/2.8', 'sql-ledger/3.0' ]
     );
 
 =item applicable_for_upgrade
@@ -581,8 +586,9 @@ sub upgrade_info {
 =cut
 
 my %upgrade_run_step = (
-    'sql-ledger/2.7' => 'run_sl_migration',
-    'sql-ledger/2.8' => 'run_sl_migration',
+    'sql-ledger/2.7' => 'run_sl28_migration',
+    'sql-ledger/2.8' => 'run_sl28_migration',
+    'sql-ledger/3.0' => 'run_sl30_migration',
     'ledgersmb/1.2' => 'run_upgrade',
     'ledgersmb/1.3' => 'run_upgrade'
     );
@@ -639,29 +645,48 @@ sub _failed_check {
     my $count = 1;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
+			   id_column => $check->{id_column},
+			    id_where => $check->{id_where},
                 database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
+	my @selectable_values = ();
+	if ( $check->selectable_values ) {
+		my $sth = $request->{dbh}->prepare($check->selectable_values);
+		$sth->execute()
+		or die "Failed to execute pre-migration check " . $check->name;
+		while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+			push @selectable_values, { value => $row->{value},
+										text => $row->{id}
+			};
+		}
+		$hiddens->{selectable_values} = \@selectable_values;
+	}
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
-          warn $check;
-          $row->{$check->column} = 
-                    { input => {
-                                name => $check->column . "_$row->{id}",
-                                value => $row->{$check->column},
-                                type => 'text',
-                                size => 15,
-                    },
-          };
+		  $row->{$check->column} = ( $check->column && $check->selectable_values )
+								 ? { select => {
+												name => $check->column . "_$row->{trans_id}",
+												id => $row->{trans_id},
+												options => \@selectable_values,
+												default_blank => 1,
+								   }}
+								 : { input => {
+												name => $check->column . "_$row->{id}",
+												value => $row->{$check->column},
+												type => 'text',
+												size => 15,
+								   }};
           push @$rows, $row;
-          $hiddens->{"id_$count"} = $row->{id},
+          $hiddens->{"id_$count"} = $row->{$check->id_column},
           ++$count;
-    }
+   }
     $sth->finish();
 
     $hiddens->{count} = $count;
-    $hiddens->{edit} = $check->column;
+#    $hiddens->{edit} = $check->column;	# Why again. Set in module beginning
+
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -696,19 +721,20 @@ sub fix_tests{
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $edit = $request->{dbh}->quote_identifier($request->{edit});
+	my $where = $request->{id_where};
     my $sth = $request->{dbh}->prepare(
-            "UPDATE $table SET $edit = ? where id = ?"
+            "UPDATE $table SET $edit = ? where $where = ?"
     );
     
     for my $count (1 .. $request->{count}){
         warn $count;
         my $id = $request->{"id_$count"};
-        $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
+		$sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
     }
     $sth->finish();
     $request->{dbh}->commit;
-    $request->{dbh}->begin_work;
+#    $request->{dbh}->begin_work;
     upgrade($request);
 }
 
@@ -1048,12 +1074,12 @@ sub run_upgrade {
     }
 }
 
-=item run_sl_migration
+=item run_sl28_migration
 
 
 =cut
 
-sub run_sl_migration {
+sub run_sl28_migration {
     my ($request) = @_;
     my $database = _init_db($request);
     my $rc = 0;
@@ -1064,6 +1090,26 @@ sub run_sl_migration {
 
     process_and_run_upgrade_script($request, $database, "sl28",
 				   'sl2.8-1.4');
+
+    create_initial_user($request);
+}
+
+=item run_sl30_migration
+
+
+=cut
+
+sub run_sl30_migration {
+    my ($request) = @_;
+    my $database = _init_db($request);
+    my $rc = 0;
+
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO sl30');
+    # process_and_run_upgrade_script commits the transaction
+
+    process_and_run_upgrade_script($request, $database, "sl30",
+				   'sl3.0-1.4');
 
     create_initial_user($request);
 }

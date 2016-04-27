@@ -684,11 +684,9 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
 INSERT INTO recurring (id, reference, startdate, nextdate,
                        enddate, howmany, payment, recurring_interval)
  SELECT id, reference, startdate, nextdate, enddate, howmany, payment,
-        repeat || ' ' || unit as recurring_interval
+        (repeat || ' ' || unit)::interval as recurring_interval
    FROM lsmb12.recurring;
-
 INSERT INTO recurringemail SELECT * FROM lsmb12.recurringemail;
-
 INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
 
 INSERT INTO jcitems(id, business_unit_id, parts_id, description, qty, allocated,

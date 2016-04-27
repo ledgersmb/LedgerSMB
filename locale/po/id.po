@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-03-12 18:26+0000\n"
-"PO-Revision-Date: 2016-03-06 21:06+0000\n"
+"POT-Creation-Date: 2016-04-27 14:14+0000\n"
+"PO-Revision-Date: 2016-04-06 10:09+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/id/)\n"
@@ -44,6 +44,10 @@ msgstr ""
 msgid "(=) NBV"
 msgstr ""
 
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
+msgid "(Locked)"
+msgstr ""
+
 #: LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
 #: templates/xedemo/statement.html:65
@@ -66,7 +70,7 @@ msgstr ""
 msgid "90"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:271
+#: LedgerSMB/Upgrade_Tests.pm:295
 msgid "?????"
 msgstr ""
 
@@ -196,7 +200,7 @@ msgid "Acc_trans Sum"
 msgstr ""
 
 #: LedgerSMB.pm:752 LedgerSMB.pm:753 LedgerSMB/Scripts/configuration.pm:324
-#: LedgerSMB/Scripts/setup.pm:751
+#: LedgerSMB/Scripts/setup.pm:777
 msgid "Access Denied"
 msgstr ""
 
@@ -318,7 +322,7 @@ msgstr ""
 msgid "Accounts To"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:411 LedgerSMB/Upgrade_Tests.pm:468
+#: LedgerSMB/Upgrade_Tests.pm:486 LedgerSMB/Upgrade_Tests.pm:543
 msgid "Accounts without heading"
 msgstr ""
 
@@ -1316,8 +1320,12 @@ msgstr ""
 msgid "Birthdate"
 msgstr ""
 
-#: UI/accounts/yearend.html:66
+#: UI/accounts/yearend.html:122
 msgid "Books closed on"
+msgstr ""
+
+#: UI/accounts/yearend.html:87
+msgid "Books closed up to"
 msgstr ""
 
 #: bin/ic.pl:1138
@@ -1432,7 +1440,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:172
+#: LedgerSMB/Scripts/setup.pm:177
 msgid "Cancel?"
 msgstr ""
 
@@ -1635,8 +1643,21 @@ msgstr ""
 msgid "Clocked"
 msgstr ""
 
+#: UI/accounts/yearend.html:90
+msgid "Close As-Of"
+msgstr ""
+
 #: UI/am-audit-control.html:19
 msgid "Close Books up to"
+msgstr ""
+
+#: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
+#, fuzzy
+msgid "Close Period"
+msgstr "Perioda"
+
+#: UI/accounts/yearend.html:86
+msgid "Close books"
 msgstr ""
 
 #: bin/aa.pl:1609 bin/oe.pl:374 LedgerSMB/Report/Orders.pm:243
@@ -1934,7 +1955,7 @@ msgstr ""
 msgid "Create Batch"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:148
+#: LedgerSMB/Scripts/setup.pm:153
 msgid "Create Database?"
 msgstr ""
 
@@ -2158,7 +2179,7 @@ msgstr ""
 msgid "Database Operation Complete"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:147
+#: LedgerSMB/Scripts/setup.pm:152
 msgid "Database does not exist."
 msgstr ""
 
@@ -2614,7 +2635,7 @@ msgstr ""
 #: templates/xedemo/timecard.html:93 templates/xedemo/timecard.tex:38
 #: templates/xedemo/timecard.tex:40 templates/xedemo/work_order.html:130
 #: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:39
-#: UI/accounts/edit.html:146 UI/accounts/yearend.html:29
+#: UI/accounts/edit.html:146 UI/accounts/yearend.html:35
 #: UI/am-department-form.html:12 UI/am-gifi-form.html:16
 #: UI/am-language-form.html:16 UI/am-sic-form.html:20
 #: UI/am-warehouse-form.html:12 UI/budgetting/budget_entry.html:29
@@ -2746,7 +2767,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:379
+#: LedgerSMB/Scripts/setup.pm:384
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -2754,11 +2775,11 @@ msgstr ""
 msgid "Done"
 msgstr "Selesai"
 
-#: LedgerSMB/Upgrade_Tests.pm:487
+#: LedgerSMB/Upgrade_Tests.pm:562
 msgid "Double customernumbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:506
+#: LedgerSMB/Upgrade_Tests.pm:581
 msgid "Double vendornumbers"
 msgstr ""
 
@@ -2832,7 +2853,7 @@ msgstr "Tanggal Jatuh Tempo harap diisi!"
 msgid "Duplicate User Found: Importing User"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:218
+#: LedgerSMB/Upgrade_Tests.pm:242
 msgid "Duplicate employee numbers"
 msgstr ""
 
@@ -3074,7 +3095,7 @@ msgstr "Nomor Karyawan"
 msgid "Employee Search"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:200
+#: LedgerSMB/Upgrade_Tests.pm:224
 msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
@@ -3133,7 +3154,7 @@ msgstr ""
 msgid "Enter User"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:186
+#: LedgerSMB/Upgrade_Tests.pm:210
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
@@ -3208,7 +3229,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:340
+#: LedgerSMB/Scripts/setup.pm:345
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3220,7 +3241,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:425
+#: LedgerSMB/Scripts/setup.pm:430
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3597,8 +3618,8 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:848 LedgerSMB/Scripts/setup.pm:906
-#: LedgerSMB/Scripts/setup.pm:1091
+#: LedgerSMB/Scripts/setup.pm:874 LedgerSMB/Scripts/setup.pm:932
+#: LedgerSMB/Scripts/setup.pm:1137
 msgid "Full Permissions"
 msgstr ""
 
@@ -3613,8 +3634,8 @@ msgstr ""
 msgid "GIFI"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:298 LedgerSMB/Upgrade_Tests.pm:313
-#: LedgerSMB/Upgrade_Tests.pm:329
+#: LedgerSMB/Upgrade_Tests.pm:369 LedgerSMB/Upgrade_Tests.pm:386
+#: LedgerSMB/Upgrade_Tests.pm:404
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
@@ -4007,7 +4028,7 @@ msgstr ""
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:337
+#: LedgerSMB/Scripts/setup.pm:342
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4603,30 +4624,30 @@ msgstr ""
 msgid "Make"
 msgstr "Pembuatan"
 
-#: LedgerSMB/Upgrade_Tests.pm:220
+#: LedgerSMB/Upgrade_Tests.pm:244
 msgid "Make employee numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:253
+#: LedgerSMB/Upgrade_Tests.pm:277
 msgid "Make invoice numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:238
+#: LedgerSMB/Upgrade_Tests.pm:262
 msgid "Make non-obsolete partnumbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:287
+#: LedgerSMB/Upgrade_Tests.pm:356
 msgid "Make sure all meta numbers are unique."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:202
+#: LedgerSMB/Upgrade_Tests.pm:226
 msgid ""
 "Make sure every name consists of alphanumeric characters (and underscores) "
 "only and is at least one character long"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:847 LedgerSMB/Scripts/setup.pm:905
-#: LedgerSMB/Scripts/setup.pm:1090
+#: LedgerSMB/Scripts/setup.pm:873 LedgerSMB/Scripts/setup.pm:931
+#: LedgerSMB/Scripts/setup.pm:1136
 msgid "Manage Users"
 msgstr ""
 
@@ -4911,15 +4932,15 @@ msgstr ""
 msgid "No ID Set"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:267
+#: LedgerSMB/Upgrade_Tests.pm:291
 msgid "No NULL Amounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:184
+#: LedgerSMB/Upgrade_Tests.pm:208
 msgid "No Null employeenumber"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:1092
+#: LedgerSMB/Scripts/setup.pm:1138
 msgid "No changes"
 msgstr ""
 
@@ -4927,7 +4948,7 @@ msgstr ""
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:282
+#: LedgerSMB/Upgrade_Tests.pm:351
 msgid "No duplicate meta_numbers"
 msgstr ""
 
@@ -4959,6 +4980,10 @@ msgstr ""
 msgid "No tax form selected"
 msgstr ""
 
+#: LedgerSMB/Upgrade_Tests.pm:328
+msgid "No unassigned amounts in Transactions"
+msgstr ""
+
 #: lsmb-request.pl:82
 msgid "No workflow script specified"
 msgstr ""
@@ -4977,11 +5002,11 @@ msgstr ""
 msgid "Non-cash"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:637
+#: LedgerSMB/Upgrade_Tests.pm:713
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:655
+#: LedgerSMB/Upgrade_Tests.pm:731
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -4989,7 +5014,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:561 LedgerSMB/Upgrade_Tests.pm:583
+#: LedgerSMB/Upgrade_Tests.pm:636 LedgerSMB/Upgrade_Tests.pm:658
 msgid "Non-unique invoice numbers"
 msgstr ""
 
@@ -5077,15 +5102,15 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:522 LedgerSMB/Upgrade_Tests.pm:541
+#: LedgerSMB/Upgrade_Tests.pm:597 LedgerSMB/Upgrade_Tests.pm:616
 msgid "Null employee numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:618
+#: LedgerSMB/Upgrade_Tests.pm:693
 msgid "Null make numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:601
+#: LedgerSMB/Upgrade_Tests.pm:676
 msgid "Null model numbers"
 msgstr ""
 
@@ -5717,36 +5742,36 @@ msgstr ""
 msgid "Pick List"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:641
+#: LedgerSMB/Upgrade_Tests.pm:717
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:567
+#: LedgerSMB/Upgrade_Tests.pm:642
 msgid "Please make all AR invoice numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:153 LedgerSMB/Upgrade_Tests.pm:491
+#: LedgerSMB/Upgrade_Tests.pm:177 LedgerSMB/Upgrade_Tests.pm:566
 msgid "Please make all customer numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:546
+#: LedgerSMB/Upgrade_Tests.pm:621
 msgid "Please make all employee numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:172 LedgerSMB/Upgrade_Tests.pm:510
+#: LedgerSMB/Upgrade_Tests.pm:196 LedgerSMB/Upgrade_Tests.pm:585
 msgid "Please make all vendor numbers unique"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:526
+#: LedgerSMB/Upgrade_Tests.pm:601
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:623
+#: LedgerSMB/Upgrade_Tests.pm:698
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:605
+#: LedgerSMB/Upgrade_Tests.pm:680
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
@@ -5771,15 +5796,15 @@ msgstr ""
 msgid "Please select a vendor with unused overpayments"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:302
+#: LedgerSMB/Upgrade_Tests.pm:373
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:333
+#: LedgerSMB/Upgrade_Tests.pm:408
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:317
+#: LedgerSMB/Upgrade_Tests.pm:390
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 
@@ -5798,7 +5823,8 @@ msgstr ""
 msgid "Post Date"
 msgstr ""
 
-#: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
+#: UI/accounts/yearend.html:9 UI/accounts/yearend.html:12
+#: UI/accounts/yearend.html:69
 msgid "Post Yearend"
 msgstr ""
 
@@ -6224,11 +6250,12 @@ msgstr ""
 msgid "Rate (%)"
 msgstr ""
 
-#: UI/accounts/yearend.html:69
+#: UI/accounts/yearend.html:125
 msgid "Re-Open As Of"
 msgstr ""
 
-#: UI/accounts/yearend.html:65
+#: UI/accounts/yearend.html:115 UI/accounts/yearend.html:121
+#: UI/accounts/yearend.html:141
 msgid "Re-open Books"
 msgstr ""
 
@@ -6322,7 +6349,7 @@ msgstr ""
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:107
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:151
 #: LedgerSMB/Report/Unapproved/Drafts.pm:94
-#: LedgerSMB/Report/Unapproved/Drafts.pm:134 UI/accounts/yearend.html:21
+#: LedgerSMB/Report/Unapproved/Drafts.pm:134 UI/accounts/yearend.html:27
 #: UI/budgetting/budget_entry.html:19 UI/import_csv/import_csv.html:25
 #: UI/journal/journal_entry.html:19 UI/Reports/filters/budget_search.html:16
 #: UI/Reports/filters/gl.html:24 UI/Reports/filters/gl.html:177
@@ -6371,10 +6398,6 @@ msgstr ""
 
 #: t/data/04-complex_template.html:610
 msgid "Remark:"
-msgstr ""
-
-#: UI/accounts/yearend.html:85
-msgid "Reopen Books"
 msgstr ""
 
 #: bin/arap.pl:550
@@ -6495,7 +6518,7 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
-#: UI/accounts/yearend.html:37
+#: UI/accounts/yearend.html:43
 msgid "Retained Earnings"
 msgstr "Pendapatan Ditahan"
 
@@ -6748,7 +6771,7 @@ msgstr ""
 msgid "Save User"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:670
+#: LedgerSMB/Scripts/setup.pm:695
 msgid "Save and Retry"
 msgstr ""
 
@@ -7897,6 +7920,10 @@ msgstr ""
 msgid "The amount to be pay of the invoice number"
 msgstr ""
 
+#: LedgerSMB/Upgrade_Tests.pm:332
+msgid "The following transactions have unassigned amounts"
+msgstr ""
+
 #: LedgerSMB/Scripts/recon.pm:224
 msgid "Their Balance"
 msgstr ""
@@ -8377,19 +8404,19 @@ msgstr ""
 msgid "Unexpected file name, expected [_1], got [_2]"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:251
+#: LedgerSMB/Upgrade_Tests.pm:275
 msgid "Unique AR Invoice numbers"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:151
+#: LedgerSMB/Upgrade_Tests.pm:175
 msgid "Unique Customernumber"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:170
+#: LedgerSMB/Upgrade_Tests.pm:194
 msgid "Unique Vendornumber"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:236
+#: LedgerSMB/Upgrade_Tests.pm:260
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
@@ -8421,7 +8448,7 @@ msgstr "Satuan"
 msgid "Unit Price"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:170
+#: LedgerSMB/Scripts/setup.pm:175
 msgid "Unknown database found."
 msgstr ""
 
@@ -8441,11 +8468,11 @@ msgstr ""
 msgid "Unsupported Number"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:371 LedgerSMB/Upgrade_Tests.pm:428
+#: LedgerSMB/Upgrade_Tests.pm:446 LedgerSMB/Upgrade_Tests.pm:503
 msgid "Unsupported account categories"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:389 LedgerSMB/Upgrade_Tests.pm:446
+#: LedgerSMB/Upgrade_Tests.pm:464 LedgerSMB/Upgrade_Tests.pm:521
 msgid "Unsupported account link combinations"
 msgstr ""
 
@@ -8532,7 +8559,7 @@ msgstr ""
 msgid "User Name"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:892
+#: LedgerSMB/Scripts/setup.pm:918
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -8790,7 +8817,7 @@ msgstr ""
 msgid "Year(s)"
 msgstr ""
 
-#: UI/accounts/yearend.html:12 UI/accounts/yearend.html:25
+#: UI/accounts/yearend.html:18 UI/accounts/yearend.html:31
 msgid "Yearend"
 msgstr ""
 
@@ -8998,7 +9025,7 @@ msgstr ""
 msgid "production"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:209
+#: LedgerSMB/Scripts/setup.pm:214
 msgid "psql not found."
 msgstr ""
 

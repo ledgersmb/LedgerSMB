@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-03-12 18:26+0000\n"
-"PO-Revision-Date: 2016-03-06 21:06+0000\n"
+"POT-Creation-Date: 2016-04-27 14:14+0000\n"
+"PO-Revision-Date: 2016-04-06 10:09+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "nl/)\n"
@@ -46,6 +46,10 @@ msgstr "Cumulatie afschrijvingen"
 msgid "(=) NBV"
 msgstr "(=) NBW"
 
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
+msgid "(Locked)"
+msgstr ""
+
 #: LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
 #: templates/xedemo/statement.html:65
@@ -68,7 +72,7 @@ msgstr ""
 msgid "90"
 msgstr "90"
 
-#: LedgerSMB/Upgrade_Tests.pm:271
+#: LedgerSMB/Upgrade_Tests.pm:295
 msgid "?????"
 msgstr ""
 
@@ -198,7 +202,7 @@ msgid "Acc_trans Sum"
 msgstr ""
 
 #: LedgerSMB.pm:752 LedgerSMB.pm:753 LedgerSMB/Scripts/configuration.pm:324
-#: LedgerSMB/Scripts/setup.pm:751
+#: LedgerSMB/Scripts/setup.pm:777
 msgid "Access Denied"
 msgstr "Geen toegang"
 
@@ -320,7 +324,7 @@ msgstr "Rekeningen vanaf"
 msgid "Accounts To"
 msgstr "Rekeningen tot"
 
-#: LedgerSMB/Upgrade_Tests.pm:411 LedgerSMB/Upgrade_Tests.pm:468
+#: LedgerSMB/Upgrade_Tests.pm:486 LedgerSMB/Upgrade_Tests.pm:543
 msgid "Accounts without heading"
 msgstr "Rekeningen zonder groep"
 
@@ -1318,8 +1322,13 @@ msgstr "Vergaarlijst"
 msgid "Birthdate"
 msgstr "Geboortedatum"
 
-#: UI/accounts/yearend.html:66
+#: UI/accounts/yearend.html:122
 msgid "Books closed on"
+msgstr "Boeken gesloten op"
+
+#: UI/accounts/yearend.html:87
+#, fuzzy
+msgid "Books closed up to"
 msgstr "Boeken gesloten op"
 
 #: bin/ic.pl:1138
@@ -1434,7 +1443,7 @@ msgstr "Teruggedraaide factuur niet terugdraaibaar!"
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: LedgerSMB/Scripts/setup.pm:172
+#: LedgerSMB/Scripts/setup.pm:177
 msgid "Cancel?"
 msgstr "Annuleren?"
 
@@ -1639,8 +1648,22 @@ msgstr "Afgehandelde transacties"
 msgid "Clocked"
 msgstr "Geklokt"
 
+#: UI/accounts/yearend.html:90
+msgid "Close As-Of"
+msgstr ""
+
 #: UI/am-audit-control.html:19
 msgid "Close Books up to"
+msgstr "Boeken Afsluiten tot"
+
+#: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
+#, fuzzy
+msgid "Close Period"
+msgstr "Periode"
+
+#: UI/accounts/yearend.html:86
+#, fuzzy
+msgid "Close books"
 msgstr "Boeken Afsluiten tot"
 
 #: bin/aa.pl:1609 bin/oe.pl:374 LedgerSMB/Report/Orders.pm:243
@@ -1938,7 +1961,7 @@ msgstr "Land:"
 msgid "Create Batch"
 msgstr "Groep maken"
 
-#: LedgerSMB/Scripts/setup.pm:148
+#: LedgerSMB/Scripts/setup.pm:153
 msgid "Create Database?"
 msgstr "Database maken?"
 
@@ -2162,7 +2185,7 @@ msgstr "Databasebeheerscherm"
 msgid "Database Operation Complete"
 msgstr "Databasetaak afgerond"
 
-#: LedgerSMB/Scripts/setup.pm:147
+#: LedgerSMB/Scripts/setup.pm:152
 msgid "Database does not exist."
 msgstr "Database bestaat niet."
 
@@ -2619,7 +2642,7 @@ msgstr "Afschrijvingen met succes geboekt"
 #: templates/xedemo/timecard.html:93 templates/xedemo/timecard.tex:38
 #: templates/xedemo/timecard.tex:40 templates/xedemo/work_order.html:130
 #: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:39
-#: UI/accounts/edit.html:146 UI/accounts/yearend.html:29
+#: UI/accounts/edit.html:146 UI/accounts/yearend.html:35
 #: UI/am-department-form.html:12 UI/am-gifi-form.html:16
 #: UI/am-language-form.html:16 UI/am-sic-form.html:20
 #: UI/am-warehouse-form.html:12 UI/budgetting/budget_entry.html:29
@@ -2751,7 +2774,7 @@ msgstr "Document"
 msgid "Document Type"
 msgstr "Document Type"
 
-#: LedgerSMB/Scripts/setup.pm:379
+#: LedgerSMB/Scripts/setup.pm:384
 msgid "Don't know what to do with backup"
 msgstr "Onbekend welke aktie met backup"
 
@@ -2759,11 +2782,11 @@ msgstr "Onbekend welke aktie met backup"
 msgid "Done"
 msgstr "Klaar"
 
-#: LedgerSMB/Upgrade_Tests.pm:487
+#: LedgerSMB/Upgrade_Tests.pm:562
 msgid "Double customernumbers"
 msgstr "Dubbele klantnummers"
 
-#: LedgerSMB/Upgrade_Tests.pm:506
+#: LedgerSMB/Upgrade_Tests.pm:581
 msgid "Double vendornumbers"
 msgstr "Dubbele leveranciersnummers"
 
@@ -2837,7 +2860,7 @@ msgstr "Vervaldatum ontbreekt!"
 msgid "Duplicate User Found: Importing User"
 msgstr "Dubbele gebruiker gevonden: gebruiker geïmporteerd"
 
-#: LedgerSMB/Upgrade_Tests.pm:218
+#: LedgerSMB/Upgrade_Tests.pm:242
 msgid "Duplicate employee numbers"
 msgstr "Werknemer Nummer"
 
@@ -3079,7 +3102,7 @@ msgstr "Werknemer Nummer"
 msgid "Employee Search"
 msgstr "Medewerker Zoeken"
 
-#: LedgerSMB/Upgrade_Tests.pm:200
+#: LedgerSMB/Upgrade_Tests.pm:224
 msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
@@ -3140,7 +3163,7 @@ msgstr "Voer voorraad in"
 msgid "Enter User"
 msgstr "Voer gebruiker in"
 
-#: LedgerSMB/Upgrade_Tests.pm:186
+#: LedgerSMB/Upgrade_Tests.pm:210
 msgid "Enter employee numbers where they are missing"
 msgstr "Voer personeelsnummers in waar deze missen"
 
@@ -3215,7 +3238,7 @@ msgstr "Eigenvermogen (Tijdelijk)"
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:340
+#: LedgerSMB/Scripts/setup.pm:345
 msgid "Error creating backup file"
 msgstr "Fout in aanmaken backup bestand"
 
@@ -3227,7 +3250,7 @@ msgstr "Fout in aanmaken groep. Probeer opniew."
 msgid "Error from Function:"
 msgstr "Functionele fout"
 
-#: LedgerSMB/Scripts/setup.pm:425
+#: LedgerSMB/Scripts/setup.pm:430
 msgid "Error while opening directory: [_1]"
 msgstr "Fout bij het openen van de directory [_1]"
 
@@ -3604,8 +3627,8 @@ msgstr "Vanaf datum"
 msgid "Full"
 msgstr "Volledig"
 
-#: LedgerSMB/Scripts/setup.pm:848 LedgerSMB/Scripts/setup.pm:906
-#: LedgerSMB/Scripts/setup.pm:1091
+#: LedgerSMB/Scripts/setup.pm:874 LedgerSMB/Scripts/setup.pm:932
+#: LedgerSMB/Scripts/setup.pm:1137
 msgid "Full Permissions"
 msgstr "Systeem administrateur"
 
@@ -3620,8 +3643,8 @@ msgstr "Systeem administrateur"
 msgid "GIFI"
 msgstr "GIFI"
 
-#: LedgerSMB/Upgrade_Tests.pm:298 LedgerSMB/Upgrade_Tests.pm:313
-#: LedgerSMB/Upgrade_Tests.pm:329
+#: LedgerSMB/Upgrade_Tests.pm:369 LedgerSMB/Upgrade_Tests.pm:386
+#: LedgerSMB/Upgrade_Tests.pm:404
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr "GIFI rekeningen niet in de \"gifi\" tabel"
 
@@ -4014,7 +4037,7 @@ msgstr "Interne Opmerkingen"
 msgid "Invalid Reporting Basis"
 msgstr "Geen geldige rapportage basis"
 
-#: LedgerSMB/Scripts/setup.pm:337
+#: LedgerSMB/Scripts/setup.pm:342
 msgid "Invalid backup request"
 msgstr "Ongeldige backup verzoek"
 
@@ -4616,23 +4639,23 @@ msgstr "Mailing"
 msgid "Make"
 msgstr "Fabrikant"
 
-#: LedgerSMB/Upgrade_Tests.pm:220
+#: LedgerSMB/Upgrade_Tests.pm:244
 msgid "Make employee numbers unique"
 msgstr "Maak personeelsnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:253
+#: LedgerSMB/Upgrade_Tests.pm:277
 msgid "Make invoice numbers unique"
 msgstr "Maak factuurnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:238
+#: LedgerSMB/Upgrade_Tests.pm:262
 msgid "Make non-obsolete partnumbers unique"
 msgstr "Maak courante artikelnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:287
+#: LedgerSMB/Upgrade_Tests.pm:356
 msgid "Make sure all meta numbers are unique."
 msgstr "Maak alle metanummers uniek."
 
-#: LedgerSMB/Upgrade_Tests.pm:202
+#: LedgerSMB/Upgrade_Tests.pm:226
 msgid ""
 "Make sure every name consists of alphanumeric characters (and underscores) "
 "only and is at least one character long"
@@ -4640,8 +4663,8 @@ msgstr ""
 "Controleer dat iedere naam alleen bestaat uit alfanumerieke karakters (en "
 "lage streep) en minimaal een karakter lang is"
 
-#: LedgerSMB/Scripts/setup.pm:847 LedgerSMB/Scripts/setup.pm:905
-#: LedgerSMB/Scripts/setup.pm:1090
+#: LedgerSMB/Scripts/setup.pm:873 LedgerSMB/Scripts/setup.pm:931
+#: LedgerSMB/Scripts/setup.pm:1136
 msgid "Manage Users"
 msgstr "Toekennen bevoegdheden aan gebruikers"
 
@@ -4926,15 +4949,15 @@ msgstr "Geen bestandssoort aangegeven"
 msgid "No ID Set"
 msgstr "Geen ID ingegeven"
 
-#: LedgerSMB/Upgrade_Tests.pm:267
+#: LedgerSMB/Upgrade_Tests.pm:291
 msgid "No NULL Amounts"
 msgstr "Bedragen moeten groter zijn dan 0"
 
-#: LedgerSMB/Upgrade_Tests.pm:184
+#: LedgerSMB/Upgrade_Tests.pm:208
 msgid "No Null employeenumber"
 msgstr "Werknemer NUMMER (moet ingevuld worden!)"
 
-#: LedgerSMB/Scripts/setup.pm:1092
+#: LedgerSMB/Scripts/setup.pm:1138
 msgid "No changes"
 msgstr "Geen veranderingen"
 
@@ -4944,7 +4967,7 @@ msgstr ""
 "Geen valuta gedefinieerd   Ga naar Systeem Standaar en maak daar tenminste "
 "een valuta aan"
 
-#: LedgerSMB/Upgrade_Tests.pm:282
+#: LedgerSMB/Upgrade_Tests.pm:351
 msgid "No duplicate meta_numbers"
 msgstr "Geen dubbele meta nummers"
 
@@ -4976,6 +4999,11 @@ msgstr "Geen specificatie rapport aangegeven"
 msgid "No tax form selected"
 msgstr "Geen belastingformulier geselecteerd"
 
+#: LedgerSMB/Upgrade_Tests.pm:328
+#, fuzzy
+msgid "No unassigned amounts in Transactions"
+msgstr "Open transacties"
+
 #: lsmb-request.pl:82
 msgid "No workflow script specified"
 msgstr "Geen proces voortgang script gespecificeerd"
@@ -4994,11 +5022,11 @@ msgstr "Niet belastbaar"
 msgid "Non-cash"
 msgstr "Niet-kas"
 
-#: LedgerSMB/Upgrade_Tests.pm:637
+#: LedgerSMB/Upgrade_Tests.pm:713
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr "Niet-bestaande verkoopprijsgroep in tabel partscustomer"
 
-#: LedgerSMB/Upgrade_Tests.pm:655
+#: LedgerSMB/Upgrade_Tests.pm:731
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr "Niet-bestaande inkoopprijsgroep in tabel partsvendor"
 
@@ -5006,7 +5034,7 @@ msgstr "Niet-bestaande inkoopprijsgroep in tabel partsvendor"
 msgid "Non-tracking Items"
 msgstr "Inventarisgoederen"
 
-#: LedgerSMB/Upgrade_Tests.pm:561 LedgerSMB/Upgrade_Tests.pm:583
+#: LedgerSMB/Upgrade_Tests.pm:636 LedgerSMB/Upgrade_Tests.pm:658
 msgid "Non-unique invoice numbers"
 msgstr "Niet-unieke factuurnummers"
 
@@ -5096,15 +5124,15 @@ msgstr "nov"
 msgid "November"
 msgstr "november"
 
-#: LedgerSMB/Upgrade_Tests.pm:522 LedgerSMB/Upgrade_Tests.pm:541
+#: LedgerSMB/Upgrade_Tests.pm:597 LedgerSMB/Upgrade_Tests.pm:616
 msgid "Null employee numbers"
 msgstr "NULL personeelsnummers"
 
-#: LedgerSMB/Upgrade_Tests.pm:618
+#: LedgerSMB/Upgrade_Tests.pm:693
 msgid "Null make numbers"
 msgstr "NULL typenummers"
 
-#: LedgerSMB/Upgrade_Tests.pm:601
+#: LedgerSMB/Upgrade_Tests.pm:676
 msgid "Null model numbers"
 msgstr "NULL modelnummers"
 
@@ -5737,36 +5765,36 @@ msgstr "Fysiek"
 msgid "Pick List"
 msgstr "Uitsorteerbon"
 
-#: LedgerSMB/Upgrade_Tests.pm:641
+#: LedgerSMB/Upgrade_Tests.pm:717
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: LedgerSMB/Upgrade_Tests.pm:567
+#: LedgerSMB/Upgrade_Tests.pm:642
 msgid "Please make all AR invoice numbers unique"
 msgstr "Maak alle verkoopfactuurnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:153 LedgerSMB/Upgrade_Tests.pm:491
+#: LedgerSMB/Upgrade_Tests.pm:177 LedgerSMB/Upgrade_Tests.pm:566
 msgid "Please make all customer numbers unique"
 msgstr "Maak alle klantnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:546
+#: LedgerSMB/Upgrade_Tests.pm:621
 msgid "Please make all employee numbers unique"
 msgstr "Maak alle personeelsnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:172 LedgerSMB/Upgrade_Tests.pm:510
+#: LedgerSMB/Upgrade_Tests.pm:196 LedgerSMB/Upgrade_Tests.pm:585
 msgid "Please make all vendor numbers unique"
 msgstr "Maak alle leveranciersnummers uniek"
 
-#: LedgerSMB/Upgrade_Tests.pm:526
+#: LedgerSMB/Upgrade_Tests.pm:601
 msgid "Please make sure all employees have an employee number"
 msgstr "Geef alle medewerkers een personeelsnummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:623
+#: LedgerSMB/Upgrade_Tests.pm:698
 msgid "Please make sure all make numbers are non-empty"
 msgstr "Geef alle artikelen een type-nummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:605
+#: LedgerSMB/Upgrade_Tests.pm:680
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr "Geef alle artikelen een modelnummer"
 
@@ -5791,19 +5819,19 @@ msgstr "Kies een geldig groepshoofd"
 msgid "Please select a vendor with unused overpayments"
 msgstr "Kies een leverancier met beschikbare vooruitbetaalde bedragen"
 
-#: LedgerSMB/Upgrade_Tests.pm:302
+#: LedgerSMB/Upgrade_Tests.pm:373
 msgid "Please use the 1.2 UI to add the GIFI accounts"
 msgstr ""
 "Maakt u gebruik van het 1.2 gebruikersinterface om de volgende GIFI accounts "
 "toe te voegen"
 
-#: LedgerSMB/Upgrade_Tests.pm:333
+#: LedgerSMB/Upgrade_Tests.pm:408
 msgid "Please use the 1.3/1.4 UI to add the GIFI accounts"
 msgstr ""
 "Maakt u gebruik van het 1.3/1.4 gebruikersinterface om de volgende GIFI "
 "accounts toe te voegen"
 
-#: LedgerSMB/Upgrade_Tests.pm:317
+#: LedgerSMB/Upgrade_Tests.pm:390
 msgid "Please use the SQL-Ledger UI to add the GIFI accounts"
 msgstr ""
 "Maakt u gebruik van het SQL-Ledger gebruikersinterface om de volgende GIFI "
@@ -5824,7 +5852,8 @@ msgstr "Boek transactiegroep"
 msgid "Post Date"
 msgstr "Boekdatum"
 
-#: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
+#: UI/accounts/yearend.html:9 UI/accounts/yearend.html:12
+#: UI/accounts/yearend.html:69
 msgid "Post Yearend"
 msgstr "Boek jaarafsluiting"
 
@@ -6250,11 +6279,12 @@ msgstr "Tarief"
 msgid "Rate (%)"
 msgstr "Tarief (%)"
 
-#: UI/accounts/yearend.html:69
+#: UI/accounts/yearend.html:125
 msgid "Re-Open As Of"
 msgstr "Heropenen per"
 
-#: UI/accounts/yearend.html:65
+#: UI/accounts/yearend.html:115 UI/accounts/yearend.html:121
+#: UI/accounts/yearend.html:141
 msgid "Re-open Books"
 msgstr "Heropen boeken"
 
@@ -6348,7 +6378,7 @@ msgstr "Geplande Transacties"
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:107
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:151
 #: LedgerSMB/Report/Unapproved/Drafts.pm:94
-#: LedgerSMB/Report/Unapproved/Drafts.pm:134 UI/accounts/yearend.html:21
+#: LedgerSMB/Report/Unapproved/Drafts.pm:134 UI/accounts/yearend.html:27
 #: UI/budgetting/budget_entry.html:19 UI/import_csv/import_csv.html:25
 #: UI/journal/journal_entry.html:19 UI/Reports/filters/budget_search.html:16
 #: UI/Reports/filters/gl.html:24 UI/Reports/filters/gl.html:177
@@ -6398,10 +6428,6 @@ msgstr "Opmerking"
 #: t/data/04-complex_template.html:610
 msgid "Remark:"
 msgstr "Remark:"
-
-#: UI/accounts/yearend.html:85
-msgid "Reopen Books"
-msgstr "Heropen boeken"
 
 #: bin/arap.pl:550
 msgid "Repeat"
@@ -6521,7 +6547,7 @@ msgstr "Niet voorzien van de benodigde input"
 msgid "Reset Password"
 msgstr "Wachtwoord aanpassen"
 
-#: UI/accounts/yearend.html:37
+#: UI/accounts/yearend.html:43
 msgid "Retained Earnings"
 msgstr "Winstreserve"
 
@@ -6774,7 +6800,7 @@ msgstr "Opslaan sjabloon"
 msgid "Save User"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:670
+#: LedgerSMB/Scripts/setup.pm:695
 msgid "Save and Retry"
 msgstr "Opslaan en herhalen"
 
@@ -7923,6 +7949,10 @@ msgstr ""
 msgid "The amount to be pay of the invoice number"
 msgstr "Het bedrag dat moet worden betaald voor Factuurnummer"
 
+#: LedgerSMB/Upgrade_Tests.pm:332
+msgid "The following transactions have unassigned amounts"
+msgstr ""
+
 #: LedgerSMB/Scripts/recon.pm:224
 msgid "Their Balance"
 msgstr "Banksaldo"
@@ -8408,19 +8438,19 @@ msgstr "Tekort"
 msgid "Unexpected file name, expected [_1], got [_2]"
 msgstr "Onverwachte bestandsnaam; verwachtte [_1], vond [_2]"
 
-#: LedgerSMB/Upgrade_Tests.pm:251
+#: LedgerSMB/Upgrade_Tests.pm:275
 msgid "Unique AR Invoice numbers"
 msgstr "Factuurnummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:151
+#: LedgerSMB/Upgrade_Tests.pm:175
 msgid "Unique Customernumber"
 msgstr "Uniek klantnummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:170
+#: LedgerSMB/Upgrade_Tests.pm:194
 msgid "Unique Vendornumber"
 msgstr "Leverancier Nummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:236
+#: LedgerSMB/Upgrade_Tests.pm:260
 msgid "Unique nonobsolete partnumbers"
 msgstr "Unieke geldige artikelnummers"
 
@@ -8452,7 +8482,7 @@ msgstr "Eenheid"
 msgid "Unit Price"
 msgstr "Eenheidsprijs"
 
-#: LedgerSMB/Scripts/setup.pm:170
+#: LedgerSMB/Scripts/setup.pm:175
 msgid "Unknown database found."
 msgstr "Onbekende database aangetroffen"
 
@@ -8472,11 +8502,11 @@ msgstr "Niet-goedgekeurd"
 msgid "Unsupported Number"
 msgstr "Niet-ondersteund nummer"
 
-#: LedgerSMB/Upgrade_Tests.pm:371 LedgerSMB/Upgrade_Tests.pm:428
+#: LedgerSMB/Upgrade_Tests.pm:446 LedgerSMB/Upgrade_Tests.pm:503
 msgid "Unsupported account categories"
 msgstr "Niet-ondersteunde rekeningcategorie"
 
-#: LedgerSMB/Upgrade_Tests.pm:389 LedgerSMB/Upgrade_Tests.pm:446
+#: LedgerSMB/Upgrade_Tests.pm:464 LedgerSMB/Upgrade_Tests.pm:521
 msgid "Unsupported account link combinations"
 msgstr ""
 
@@ -8563,7 +8593,7 @@ msgstr "Gebruiker"
 msgid "User Name"
 msgstr "Gebruikersnaam"
 
-#: LedgerSMB/Scripts/setup.pm:892
+#: LedgerSMB/Scripts/setup.pm:918
 msgid "User already exists. Import?"
 msgstr "Gebruiker bestaat al    Importeer?"
 
@@ -8821,7 +8851,7 @@ msgstr "Jaarafsluiting"
 msgid "Year(s)"
 msgstr "Jaar/Jaren"
 
-#: UI/accounts/yearend.html:12 UI/accounts/yearend.html:25
+#: UI/accounts/yearend.html:18 UI/accounts/yearend.html:31
 msgid "Yearend"
 msgstr "Jaarafsluting"
 
@@ -9029,7 +9059,7 @@ msgstr "permanente URL"
 msgid "production"
 msgstr "productie"
 
-#: LedgerSMB/Scripts/setup.pm:209
+#: LedgerSMB/Scripts/setup.pm:214
 msgid "psql not found."
 msgstr "psql niet gevonden."
 
@@ -9065,3 +9095,6 @@ msgstr "Gebruik van een vooruitbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
+
+#~ msgid "Reopen Books"
+#~ msgstr "Heropen boeken"
