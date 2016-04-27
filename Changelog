@@ -42,6 +42,8 @@ Changelog for 1.4.28
 * Support for fixing up data in migrations using drop-downs (Yves L)
 * Fix Upgrade_Tests validation complaint on valid GIFI data (Erik H, #1443)
 * Fix number formatting on locale with comma as decimal separator (Erik H)
+* Fix performance issue in General Joural > Chart of Accounts screen (Erik H)
+* Fix being able to close periods - regression from 1.3 (Erik H)
 
 David G is David Godfrey
 Yves L is Yves Lavoie
@@ -56,7 +58,6 @@ Changelog for 1.4.27
 * SQL Ledger 2.8 migration improvements from SL 3.0 support (Erik H)
 * Fix random column ordering in PNL & B/S comparison (Yves L)
 * Complete Norwegian Bokmal translation (Stig B)
-* Fix performance issue in General Joural > Chart of Accounts screen (Erik H)
 
 Chris T is Chris Travers
 Yves L is Yves Lavoie
