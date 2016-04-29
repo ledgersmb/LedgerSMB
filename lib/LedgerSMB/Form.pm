@@ -1178,8 +1178,9 @@ for the button.
 sub print_button {
     my ( $self, $button, $name ) = @_;
 
+    my $type = $button->{$name}{type} // 'dijit/form/Button';
     print
-qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
 
 
@@ -2543,7 +2544,7 @@ sub create_links {
                  WHERE setting_key = '$_'|;
         }
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute || $self->dberror($query);
 
         ($val) = $sth->fetchrow_array();
@@ -2570,9 +2571,10 @@ Looks up the value in the defaults table and returns it.
 
 sub get_setting {
     my ($self, $setting) = @_;
-    my $sth = $self->{dbh}->prepare('select * from setting_get(?)');
-    $sth->execute($setting);
-    my $ref = $sth->fetchrow_hashref('NAME_lc');
+    my $query = 'select * from setting_get(?)';
+    my $sth = $self->{dbh}->prepare($query) or $self->dberror($query);
+    $sth->execute($setting) or $self->dberror($query);
+    my $ref = $sth->fetchrow_hashref('NAME_lc') or $self->dberror($query);
     return $ref->{value};
 }
 
