@@ -54,7 +54,7 @@ my $ADMIN_PASSWORD='admin';
 # Defaults for command line
 
 my $company=undef;
-my $owner='ledgersmb';
+my $owner='lsmb_dbadmin';
 my $pass='LEDGERSMBINITIAL';
 my $host='localhost';
 my $port=5432;
@@ -90,21 +90,21 @@ Country:     'US'
 This default user will be assigned all privileges within the application.
 
 Available options:
- --srcdir	The path where the sources for LedgerSMB are located
+ --srcdir       The path where the sources for LedgerSMB are located
                 [$srcdir]
- --dstdir	The path where the sources will be located when invoked
-		from the webserver [$dstdir]
- --host		The PostgreSQL host to connect to (see 'man psql') [$host]
- --port		The PostgreSQL port to connect to (see 'man psql') [$port]
- --company	The name of the database to be created for the company [*]
- --owner	The name of the superuser which is to become owner of the
-		company's database [$owner]
- --password	The password to be used to create the 'ledgersmb' user
-		on the specified PostgreSQL server [$pass]
+ --dstdir       The path where the sources will be located when invoked
+                from the webserver [$dstdir]
+ --host         The PostgreSQL host to connect to (see 'man psql') [$host]
+ --port         The PostgreSQL port to connect to (see 'man psql') [$port]
+ --company      The name of the database to be created for the company [*]
+ --owner        The name of the superuser which is to become owner of the
+                company's database [$owner]
+ --password     The password to be used to create the 'ledgersmb' user
+                on the specified PostgreSQL server [$pass]
  --cc           The two letter country code to use [$cc]
- --coa		The chart of accounts file to load [$coa]
- --gifi		The GIFI file to load if any [$gifi]
- --help		Shows this help screen
+ --coa          The chart of accounts file to load [$coa]
+ --gifi         The GIFI file to load if any [$gifi]
+ --help         Shows this help screen
 
  * These arguments don't have a default, but are required
 |;
