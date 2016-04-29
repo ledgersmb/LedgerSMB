@@ -781,6 +781,24 @@ sub create_db {
     my $rc=0;
 
     my $database = _get_database($request);
+    my $version_info = $database->get_info;
+    $request->{login_name} = $version_info->{username};
+    if ($version_info->{status} ne 'does not exist') {
+        $request->{message} = $request->{_locale}->text(
+            'Database exists.');
+        $request->{operation} =
+            $request->{_locale}->text('Login?');
+        $request->{next_action} = 'login';
+
+        my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'confirm_operation',
+            format => 'HTML',
+        );
+        $template->render($request);
+
+        return;
+    }
     $rc=$database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
