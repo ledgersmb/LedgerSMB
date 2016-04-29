@@ -171,6 +171,9 @@ sub invoice_links {
                             ));
     }
 
+    @curr = split /:/, $form->{currencies};
+    $form->{defaultcurrency} = $curr[0];
+    chomp $form->{defaultcurrency};
 
     if ( @{ $form->{all_vendor} } ) {
         unless ( $form->{vendor_id} ) {
@@ -619,7 +622,7 @@ function on_return_submit(event){
 
     }
 
-#    $form->hide_form(qw(selectcurrency defaultcurrency taxaccounts));
+    $form->hide_form(qw(defaultcurrency)); # taxaccounts));
 
     for ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${_}_rate", "${_}_description" );
