@@ -58,6 +58,21 @@ if ( -f "bin/custom/$form->{login}_arapprn.pl" ) {
 
 sub print {
 
+    &create_links;
+    $form->{title} = $locale->text("Edit");
+    if ($form->{reverse}){
+        if ($form->{ARAP} eq 'AR'){
+            $form->{subtype} = 'credit_note';
+            $form->{type} = 'transaction';
+        } elsif ($form->{ARAP} eq 'AP'){
+            $form->{subtype} = 'debit_note';
+            $form->{type} = 'transaction';
+        } else {
+            $form->error("Unknown AR/AP selection value: $form->{ARAP}");
+        }
+
+    }
+
     my $csettings = $LedgerSMB::Company_Config::settings;
     $form->{company} = $csettings->{company_name};
     $form->{businessnumber} = $csettings->{businessnumber};
