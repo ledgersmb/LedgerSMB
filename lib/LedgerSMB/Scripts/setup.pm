@@ -630,19 +630,30 @@ sub upgrade {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
+    my @selectable_values = ();
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
         next if ($check->min_version gt $dbinfo->{version})
-        || ($check->max_version lt $dbinfo->{version})
-        || ($check->appname ne $dbinfo->{appname});
+            || ($check->max_version lt $dbinfo->{version})
+            || ($check->appname ne $dbinfo->{appname});
+        if ( $check->selectable_values ) {
+            my $sth = $request->{dbh}->prepare($check->selectable_values);
+            $sth->execute()
+                or die "Failed to execute pre-migration check " . $check->name;
+            while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+                push @selectable_values, { value => $row->{value},
+                                           text => $row->{id}
+                };
+            }
+        }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
         or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             _failed_check($request, $check, $sth);
+             _failed_check($request, $check, $sth, @selectable_values);
              return;
         }
     $sth->finish();
@@ -667,7 +678,7 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth) = @_;
+    my ($request, $check, $sth, @selectable_values) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
@@ -677,29 +688,37 @@ sub _failed_check {
     my $count = 1;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
+                           id_column => $check->{id_column},
+                            id_where => $check->{id_where},
                 database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
-    while (my $row = $sth->fetchrow_hashref('NAME_lc')){
-          warn $check;
-          $row->{$check->column} =
-                    { input => {
-                                name => $check->column . "_$row->{id}",
-                                value => $row->{$check->column},
-                                type => 'text',
-                                size => 15,
-                    },
-          };
-          push @$rows, $row;
-          $hiddens->{"id_$count"} = $row->{id},
-          ++$count;
-    }
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $row->{$check->column} =
+           ( $check->column && $check->selectable_values )
+           ? { select => {
+                   name => $check->column . "_$row->{trans_id}",
+                   id => $row->{trans_id},
+                   options => \@selectable_values,
+                   default_blank => 1,
+           } }
+           : { input => {
+                   name => $check->column . "_$row->{id}",
+                   value => $row->{$check->column},
+                   type => 'text',
+                   size => 15,
+           }};
+        push @$rows, $row;
+        $hiddens->{"id_$count"} = $row->{$check->id_column},
+        ++$count;
+   }
     $sth->finish();
 
     $hiddens->{count} = $count;
-    $hiddens->{edit} = $check->column;
+#    $hiddens->{edit} = $check->column; # Why again. Set in module beginning
+
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -734,19 +753,20 @@ sub fix_tests{
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $edit = $request->{dbh}->quote_identifier($request->{edit});
+        my $where = $request->{id_where};
     my $sth = $request->{dbh}->prepare(
-            "UPDATE $table SET $edit = ? where id = ?"
+            "UPDATE $table SET $edit = ? where $where = ?"
     );
 
     for my $count (1 .. $request->{count}){
         warn $count;
         my $id = $request->{"id_$count"};
-        $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
+                $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
     }
     $sth->finish();
     $request->{dbh}->commit;
-    $request->{dbh}->begin_work;
+#    $request->{dbh}->begin_work;
     upgrade($request);
 }
 

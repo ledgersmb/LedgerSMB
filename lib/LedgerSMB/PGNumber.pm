@@ -224,23 +224,13 @@ sub to_output {
     $places = 0 unless defined $places and ($places > 0);
     my $zfill = ($places > 0) ? 1 : 0;
     $dplaces = 5 unless defined $dplaces;
-    my $formatter;
-    if ($format eq '1000.00'){ # Default decimal sep, no thousands sep
-        $formatter =  new Number::Format(
-                  -decimal_fill => $zfill,
-                  -neg_format => 'x'
+    my $formatter = new Number::Format(
+	-thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+	-decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+	-decimal_fill => $zfill,
+	-neg_format => 'x'
         );
-        $str = $formatter->format_number($str, $dplaces);
-        $str =~ s/,//g;
-    } else {
-        $formatter = new Number::Format(
-                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
-                     -decimal_fill => $zfill,
-                       -neg_format => 'x'
-        );
-        $str = $formatter->format_number($str, $dplaces);
-    }
+    $str = $formatter->format_number($str, $dplaces);
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
     $neg_format = 'def' unless $lsmb_neg_formats->{$neg_format};

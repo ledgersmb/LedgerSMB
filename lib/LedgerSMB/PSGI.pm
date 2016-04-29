@@ -13,6 +13,7 @@ PSGI wrapper functionality for LedgerSMB
 
 use strict;
 use warnings;
+our $VERSION = '1.5';
 
 # Preloads
 use LedgerSMB;
