@@ -151,13 +151,8 @@ $database->create_and_load();
 
 # CREATING THE USER
 #
-# This is a little tricky because we have to actually manually create a database
-# connection.  In the future we may want to have such a database connection 
-# returned by LedgerSMB::Database, but that is not done yet.
-
 my $lsmb = LedgerSMB->new() || die 'could not create new LedgerSMB object';
-$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
-                                       undef, undef, { AutoCommit => 0 });
+$lsmb->{dbh} = $database->connect({ AutoCommit => 0 });
 
 # We also have to retrieve the country ID which requires a database query
 
