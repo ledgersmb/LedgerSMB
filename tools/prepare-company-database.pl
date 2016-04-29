@@ -138,11 +138,11 @@ $ENV{PGHOST} = $host if $host;
 $ENV{PGPORT} = $port if $port;
 
 my $database = LedgerSMB::Database->new(
-        {dbname => $company, 
-    countrycode => $cc, 
-     chart_name => $coa, 
-   company_name => $company, 
-       username => $owner, 
+        {dbname => $company,
+    countrycode => $cc,
+     chart_name => $coa,
+   company_name => $company,
+       username => $owner,
        password => $pass}
 );
 
@@ -157,7 +157,9 @@ $database->create_and_load();
 
 my $lsmb = LedgerSMB->new() || die 'could not create new LedgerSMB object';
 $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
-                                       undef, undef, { AutoCommit => 0 });
+                            $database->{username},
+                            $database->{password},
+                            { AutoCommit => 0 });
 
 # We also have to retrieve the country ID which requires a database query
 
