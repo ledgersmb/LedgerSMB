@@ -168,7 +168,7 @@ sub _main_screen {
     );
 
 
-    my $locale = $LedgerSMB::App_State::Locale;
+    my $locale = $request->{_locale};
     my %DIV_LABEL = (
              company => $locale->text('Company'),
               person => $locale->text('Person'),
@@ -479,11 +479,12 @@ sub dispatch_legacy {
 
     };
 
+    # set up environment for call to legacy code
     our $form = new Form;
     our %myconfig = ();
+    our $locale = $request->{_locale};
     %myconfig = %{$request->{_user}};
     $form->{stylesheet} = $myconfig{stylesheet};
-    my $locale = $request->{_locale};
 
     for (keys %{$dispatch->{$request->{action}}->{data}}){
         $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
@@ -498,7 +499,7 @@ sub dispatch_legacy {
     { no warnings;
       # Suppress 'only referenced once' warnings
       $lsmb_legacy::form = $form;
-      $lsmb_legacy::locale = LedgerSMB::App_State::Locale(); }
+      $lsmb_legacy::locale = $locale; }
     "lsmb_legacy"->can($form->{action})->();
 }
 
