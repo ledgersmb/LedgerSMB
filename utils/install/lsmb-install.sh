@@ -277,8 +277,8 @@ Clone_LSMB_Master() {
     if TestKey "y"; then
         mkdir -p ~/"$tgtDIR"
         pushd ~/"$tgtDIR" >/dev/null
-#        git clone https://github.com/ledgersmb/LedgerSMB.git
-        git clone https://github.com/sbts/LedgerSMB.git
+        git clone https://github.com/ledgersmb/LedgerSMB.git
+#        echo "WARNING: Cloning from sbts/LedgerSMB instead of ledgersmb/LedgerSMB"; read -p 'Press Enter to continue'; git clone https://github.com/sbts/LedgerSMB.git
         popd >/dev/null
     fi
 }
@@ -286,7 +286,7 @@ Clone_LSMB_Master() {
 Pull_LSMB_Master() {
     GetKey Y "\n${Div} Pull LSMB Master\n${Div}Target Dir = '~/$tgtDIR'\n${Div}Pull LSMB Master?"
     if TestKey "y"; then
-        pushd ~/"$tgtDIR" >/dev/null
+        pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
         git pull
         popd >/dev/null
     fi
@@ -347,6 +347,12 @@ SelectVersion() {
     
     echo "Release='$Release'"
     git checkout -f $TAG
+    cat <<-EOF
+	You have checked out version '$TAG'
+	It's current git status is
+EOF
+    git status
+    read -p 'Press enter to continue'
     popd >/dev/null
 }
 
@@ -749,14 +755,16 @@ dumpSSMTP
 }
 
 Install_Docker() {
-cat <<EOF
-${Div}Install Docker on this system?
-${Div}before continuing see
-    https://docs.docker.com/engine/installation/debian/
-and the source for this script.
-Test that the apt repository for docker is correctly installed with.
-    apt-cache policy docker-engine
-    
+    cat <<-EOF
+	${Div%\\n}
+	Install Docker on this system?"
+	${Div%\\n}
+	before continuing see"
+	    https://docs.docker.com/engine/installation/debian/
+	and the source for this script.
+	Test that the apt repository for docker is correctly installed with.
+	    apt-cache policy docker-engine
+
 EOF
     if TestPackagesInstalled debDocker; then DefKeys=yN; else DefKeys=$debDocker_DefKeys; fi
     GetKey $DefKeys "\n${Div}Install Docker?"
@@ -814,28 +822,30 @@ CPAN_InstallPackages() {
     GetKey $DefKeys "\n${Div} LedgerSMB Perl Depencencies\n${Div}This will install any perl depenancies from cpan INCLUDING most development and testing dependencies at the moment.\nIF you don't want the dev and testing dependencies you may need to install by hand from the list of packages found in Makefile.PL\n${Div}Install Missing Perl Dependencies using cpanm?"
     if TestKey "y"; then
         cc --version > /dev/null || cat <<-EOF
-		${Div}
-		${Div}
+		${Div%\\n}
+		${Div%\\n}
 		    WARNING
-		${Div}
+		${Div%\\n}
 		    Installing Dependencies via CPAN may fail as you don't have a C compiler installed.
-		${Div}
-		${Div}
+		${Div%\\n}
+		${Div%\\n}
 	EOF
 
+        pushd "$HOME/$tgtDIR/LedgerSMB"
         cpanm --installdeps .
+        popd
         cat <<-EOF
-		${Div}
-		${Div}
+		${Div%\\n}
+		${Div%\\n}
 		    WARNING
-		${Div}
+		${Div%\\n}
 		    Check the results from 'cpanm' carefully if any failure is indicated then not all dependencies were installed.
 		    In that case you will need to manually run the following from your LedgerSMB install dir
 		    cpanm --installdeps .
 		    (NOTE: Don't forget the . at the end of the command!)
 		    which will show what the actual failed package was and a logfile you can look at for the cause
-		${Div}
-		${Div}
+		${Div%\\n}
+		${Div%\\n}
 	EOF
         read -p 'Press Enter to continue'
         echo
@@ -866,7 +876,9 @@ CheckCPAN_Config_Exists() {
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
+        pushd ~/
         cpan local::lib
+        popd
 
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
