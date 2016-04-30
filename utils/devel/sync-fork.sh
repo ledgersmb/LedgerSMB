@@ -26,7 +26,7 @@ EOF
     exit 1
 }
 
-if ! [[ -r LedgerSMB.pm ]]; then
+if ! [[ -r LedgerSMB.pm ]] && ! [[ -r lib/LedgerSMB.pm ]] ; then
     Error "Not a LedgerSMB repository"
 fi
 
@@ -59,6 +59,10 @@ cat <<EOF
       To update your fork on GitHub, you must push your changes.
       using
         git push
+
+    If you are working on a branch that is not master then you will also need to do something like
+        git checkout 1.4
+        git merge upstream/1.4
 
 EOF
 
