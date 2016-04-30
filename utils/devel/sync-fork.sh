@@ -2,7 +2,9 @@
 
 Upstream='https://github.com/ledgersmb/LedgerSMB.git'
 
-if ! [[ -d $1 ]]; then
+Dir=`git rev-parse --show-toplevel`
+
+if ! [[ -d "$Dir" ]]; then
     cat <<-EOF
 	usage: $0 directory
 	
@@ -12,7 +14,7 @@ EOF
     exit 1;
 fi
 
-cd `readlink -f ${1}`
+cd `readlink -f "${Dir}"`
 
 
 Error() {
@@ -42,14 +44,15 @@ if ! [[ $AvailableRemotes =~ $Upstream ]]; then
     git remote add upstream "$Upstream"
 fi
 
-git fetch upstream || Error "Fetching Upstream."
-
+CurrentBranch=`git rev-parse --abbrev-ref HEAD`
 
 git checkout master || Error "Checking out Master."
 
+git fetch upstream || Error "Fetching Upstream."
 
 git merge upstream/master || Error "Merging upstream/master with local /master"
 
+git checkout "$CurrentBranch" || Error "Checking out $CurrentBranch."
 
 
 cat <<EOF
@@ -60,8 +63,9 @@ cat <<EOF
       using
         git push
 
-    If you are working on a branch that is not master then you will also need to do something like
-        git checkout 1.4
+    If you are working on a branch then you will also need to do something like
+        git merge upstream/master
+      or
         git merge upstream/1.4
 
 EOF
