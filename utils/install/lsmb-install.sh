@@ -9,10 +9,18 @@
 ## bug reports and patches welcome
 ##
 ## ############################
+## # todo
+##    remove array debXenRemoveThese
+##    handle missing git binary in pit push and git clone and remove git from debBaseUtils array
+##    ask about installing ssh as a separate step instead of bundling it in with debBaseUtils
+##    if config option smtphost allows sending email via an ISP's mailserver (and can use common auth methods)
+##        then document the fact in Sysconfig.pm and remove ssmtp setup
+##      else
+##        drop ssmtp from the debBaseUtils package and only install it if the user askes to configure ssmtp
 
-Script_VERSION='0.01a'
+Script_VERSION='0.01b'
 
-
+tgtDIR='src/git'
 ###  http://ledgersmb.org/faq#n299 # info on installing 1.4.10.1 on wheezy
 cat <<EOF
 	    
@@ -114,14 +122,17 @@ debXenRemoveThese+=("libfuse2");
 
 declare -a debBaseUtils
 debBaseUtils_DefKeys=Yn
-debBaseUtils+=("make");
 debBaseUtils+=("mc");
 debBaseUtils+=("htop");
 debBaseUtils+=("ssh");
-debBaseUtils+=("git");
 debBaseUtils+=("ssmtp"); # basic smtp mail forwarder
 debBaseUtils+=("avahi-utils"); # we want this so the system is discoverable by hostname using something like lsmb15.local
 debBaseUtils+=("apt-transport-https");
+
+declare -a debEssentialUtils
+debEssentialUtils_DefKeys=Y
+debEssentialUtils+=("make");
+debEssentialUtils+=("git");
 
 declare -a debPostgres
 debPostgres_DefKeys=Yn
@@ -241,21 +252,31 @@ dec2char() {
 #RUN DEBIAN_FRONTENT=noninteractive;
 Install_BaseUtils() {
     if TestPackagesInstalled debBaseUtils; then DefKeys=yN; else DefKeys=$debBaseUtils_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Base Utilities\n${Div}${debBaseUtils[*]}\n${Div}Install Base Utilities?"
+    GetKey $DefKeys "\n${Div} Base Utilities\n${Div}${debBaseUtils[*]}\n\nThese utilities are optional\nand are mainly to make life easier when maintaining the system.\n${Div}Install Base Utilities?"
     if TestKey "y"; then
         sudo apt-get -y install "${debBaseUtils[@]}";
     fi
 }
 
+Install_EssentialUtils() {
+    if TestPackagesInstalled debEssentialUtils; then DefKeys=yN; else DefKeys=$debEssentialUtils_DefKeys; fi
+    GetKey $DefKeys "\n${Div} Essential Utilities\n${Div}${debBaseUtils[*]}\n\nThese utilities are REQUIRED\nand this script will FAIL without installing them.\n${Div}Install Essential Utilities?"
+    if TestKey "y"; then
+        sudo apt-get -y install "${debEssentialUtils[@]}";
+    fi
+}
+
 Clone_LSMB_Master() {
-    [[ -d ~/"src/LedgerSMB/git/LedgerSMB" ]] && { 
-        printf "\n${Div}You already have a copy of LSMB at '~/src/LedgerSMB/git/LedgerSMB'\n${Div}";
+    if ! [[ -x `which git` ]]; then apt-get -y install git; fi
+
+    [[ -d ~/"$tgtDIR/LedgerSMB" ]] && { 
+        printf "\n${Div}You already have a copy of LSMB at '~/$tgtDIR/LedgerSMB'\n${Div}";
         return;
     }
-    GetKey Yn "\n${Div} Clone LSMB Master\n${Div}Target Dir = '~/src/LedgerSMB/git'\n${Div}Clone LSMB Master?"
+    GetKey Y "\n${Div} Clone LSMB Master\n${Div}Target Dir = '~/$tgtDIR'\n${Div}Clone LSMB Master?"
     if TestKey "y"; then
-        mkdir -p ~/"src/LedgerSMB/git"
-        pushd ~/"src/LedgerSMB/git" >/dev/null
+        mkdir -p ~/"$tgtDIR"
+        pushd ~/"$tgtDIR" >/dev/null
 #        git clone https://github.com/ledgersmb/LedgerSMB.git
         git clone https://github.com/sbts/LedgerSMB.git
         popd >/dev/null
@@ -263,9 +284,9 @@ Clone_LSMB_Master() {
 }
 
 Pull_LSMB_Master() {
-    GetKey Yn "\n${Div} Pull LSMB Master\n${Div}Target Dir = '~/src/LedgerSMB/git'\n${Div}Pull LSMB Master?"
+    GetKey Y "\n${Div} Pull LSMB Master\n${Div}Target Dir = '~/$tgtDIR'\n${Div}Pull LSMB Master?"
     if TestKey "y"; then
-        pushd ~/"src/LedgerSMB/git/LedgerSMB" >/dev/null
+        pushd ~/"$tgtDIR" >/dev/null
         git pull
         popd >/dev/null
     fi
@@ -279,7 +300,7 @@ SelectVersion() {
     local Keys2
     local tmp
 
-    pushd ~/"src/LedgerSMB/git/LedgerSMB" >/dev/null
+    pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
     echo -en "\n${Div:0:-2}${Div} Available Versions\n${Div:0:-2}${Div}"
     echo -e "\tKey: Version";
     printf "\t%2s:    %s\n" ${MenuKeys_1[0]} "${Versions[0]} [default]";
@@ -357,7 +378,7 @@ createPostgresSuperUser() {
        END
        \$\$
        ;
-       EOT
+	EOT
 }
 
 SetupPostgres() {
@@ -587,13 +608,13 @@ EOF
 debInstallPackages() {
 
     if TestPackagesInstalled debPerl; then DefKeys=yN; else DefKeys=$debPerl_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Perl Packages\n${Div}${debPerl[*]}\n${Div}Install Perl?"
+    GetKey $DefKeys "\n${Div} Perl Packages\n${Div}${debPerl[*]}\n${Div}Install Perl Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debPerl[@]}";
     fi
 
     if TestPackagesInstalled debPostgres; then DefKeys=yN; else DefKeys=$debPostgres_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Postgres Packages\n${Div}${debPostgres[*]}\n${Div}Install Postgres?"
+    GetKey $DefKeys "\n${Div} Postgres Packages\n${Div}${debPostgres[*]}\nThis will install the system default version of postgres as selected by the postgresql package\n${Div}Install Postgres Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debPostgres[@]}";
         SetupPostgres;
@@ -610,28 +631,29 @@ debInstallPackages() {
     fi
 
     if TestPackagesInstalled debLaTeX; then DefKeys=yN; else DefKeys=$debLaTeX_DefKeys; fi
-    GetKey $DefKeys "\n${Div} LaTeX Packages\n${Div}${debLaTeX[*]}\n${Div}Install LaTeX?"
+    GetKey $DefKeys "\n${Div} LaTeX Packages\n${Div}${debLaTeX[*]}\n${Div}Install LaTeX Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debLaTeX[@]}";
     fi
 
     if TestPackagesInstalled debOOO; then DefKeys=yN; elseDefKeys=$debOOO_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Open Office Output Packages\n${Div}${debOOO[*]}\n${Div}Install Open Office Output?"
+    GetKey $DefKeys "\n${Div} Open Office Output Packages\n${Div}${debOOO[*]}\n${Div}Install Open Office Output Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debOOO[@]}";
     fi
 
     if TestPackagesInstalled debStarman; then DefKeys=yN; else DefKeys=$debStarman_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Starman Webserver Packages\n${Div}${debStarman[*]}\n${Div}Install Starman?"
+    GetKey $DefKeys "\n${Div} Starman Webserver Packages\n${Div}${debStarman[*]}\n${Div}Install Starman Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debStarman[@]}";
     fi
 
-    if TestPackagesInstalled debTrustCommerce; then DefKeys=yN; else DefKeys=$debTrustCommerce_DefKeys; fi
-    GetKey $DefKeys "\n${Div} TrustCommerce Packages\n${Div}${debTrustCommerce[*]}\n${Div}Install TrustCommerce?"
-    if TestKey "y"; then
-        sudo apt-get -y install "${debTrustCommerce[@]}";
-    fi
+# don't install these, ehuelsmann says they likely don't work anyway
+#    if TestPackagesInstalled debTrustCommerce; then DefKeys=yN; else DefKeys=$debTrustCommerce_DefKeys; fi
+#    GetKey $DefKeys "\n${Div} TrustCommerce Packages\n${Div}${debTrustCommerce[*]}\n${Div}Install TrustCommerce Packages?"
+#    if TestKey "y"; then
+#        sudo apt-get -y install "${debTrustCommerce[@]}";
+#    fi
 
 cat <<EOF
 ${Div%\\n}
@@ -824,25 +846,41 @@ CPAN_InstallPackages() {
 CheckCPAN_Config_Exists() {
     if [[ -z $(find . -path *cpan/prefs) ]]; then
         sudo apt-get install -y cpanminus
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        echo "%% Please run cpan and set it up for use with local lib %%"
-        echo "%%   this should be as easy as selecting all defaults   %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then re-run this script.                             %%"
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Please run cpan and set it up for use with local::lib %%"
+        echo "%%   this should be as easy as selecting all defaults    %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then re-run this script.                              %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+        cpan
+
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
 
         exit 0
     fi
@@ -877,20 +915,22 @@ EOF
 }
 
 ManualSteps() {
+    starmanIncludes='';
+    #if [[ "$Version" =~ 1\.5 ]]; then starmanIncludes='-I lib'
+    pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
+        if [[ -r lib/LedgerSMB.pm ]]; then starmanIncludes='-I lib'; fi
+    popd >/dev/null
+
 cat <<EOF
 ${Div%\\n}
 ${Div%\\n}
 
-WARNING
-    as of 6th Jan 2016 there was a bug in master that causes the main ledgersmb page to show as a blank page.
-    revert the offending commit with
-    git revert 283406c62d5da1b6415f869f12ebdf97836112c3
-    this is due to be resolved by middle of jan 2016
-/WARNING
-
-
 Now start your server with
-echo -e "\n\n\n\n\n\n\n\n\n\n\n";clear;starman -l :8080 --preload-app tools/starman.psgi
+  echo -e "\n\n\n\n\n\n\n\n\n\n\n";
+  clear;
+  pushd ~/"$tgtDIR/LedgerSMB"
+  starman -l :8080 $starmanIncludes --preload-app tools/starman.psgi
+  popd
 
 NOTE: the following links assume that you created a db / company called dev15
       you will need to edit the link to suit your chosen company name
@@ -909,10 +949,12 @@ EOF
 CheckCPAN_Config_Exists
 
 
-GetKey yN "\n${Div} Update Available Package List\n${Div}Run\napt-get update\n${Div}Update Package List?"
+GetKey yN "\n${Div} Update Available system Package List\n${Div}Run\napt-get update\nThis should be done for at least the first time this script is run\n${Div}Update Package List?"
 if TestKey "y"; then
     sudo apt-get update
 fi
+
+Install_EssentialUtils
 
 Install_BaseUtils
 
