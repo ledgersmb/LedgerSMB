@@ -173,6 +173,9 @@ sub invoice_links {
     @curr = @{$form->{currencies}};
     for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
 
+    @curr = split /:/, $form->{currencies};
+    $form->{defaultcurrency} = $curr[0];
+    chomp $form->{defaultcurrency};
 
     if ( @{ $form->{all_vendor} } ) {
         unless ( $form->{vendor_id} ) {
@@ -555,7 +558,8 @@ function on_return_submit(event){
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
+              { ndx => 2, key => 'P', value => $locale->text('Print'),
+                type => 'lsmb/PrintButton' },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'post_as_new' =>
               { ndx => 5, key => 'N', value => $locale->text('Post as new') },
@@ -621,7 +625,7 @@ function on_return_submit(event){
 
     }
 
-#    $form->hide_form(qw(selectcurrency defaultcurrency taxaccounts));
+    $form->hide_form(qw(defaultcurrency)); # taxaccounts));
 
     for ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${_}_rate", "${_}_description" );

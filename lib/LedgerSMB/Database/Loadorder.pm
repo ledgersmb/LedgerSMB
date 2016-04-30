@@ -76,20 +76,6 @@ sub _process_script {
     );
 }
 
-=head2 loadall
-
-Loads the content of all scripts and calculates their hashes.
-
-=cut
-
-sub loadall {
-    my ($self) = @_;
-    $self->{_locked} = 1;
-    for my $script ($self->scripts){
-        $script->load_contents;
-    }
-}
-
 =head2 init_if_needed($dbh)
 
 Initializes the change tracking system if not doe so already.
