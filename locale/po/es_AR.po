@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-04-27 14:29+0000\n"
-"PO-Revision-Date: 2016-04-06 10:09+0000\n"
+"POT-Creation-Date: 2016-04-30 18:00+0000\n"
+"PO-Revision-Date: 2016-04-28 08:13+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/ledgersmb/"
 "ledgersmb/language/es_AR/)\n"
@@ -1656,9 +1656,8 @@ msgid "Close Books up to"
 msgstr ""
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Periodo"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
 msgid "Close books"

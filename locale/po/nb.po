@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-04-27 14:29+0000\n"
-"PO-Revision-Date: 2016-04-06 10:09+0000\n"
+"POT-Creation-Date: 2016-04-30 18:00+0000\n"
+"PO-Revision-Date: 2016-04-28 08:13+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/nb/)\n"
@@ -1330,9 +1330,8 @@ msgid "Books closed on"
 msgstr "Bokføringen er lukket på"
 
 #: UI/accounts/yearend.html:87
-#, fuzzy
 msgid "Books closed up to"
-msgstr "Bokføringen er lukket på"
+msgstr ""
 
 #: bin/ic.pl:1138
 msgid "Break"
@@ -1658,14 +1657,12 @@ msgid "Close Books up to"
 msgstr "Avslutt bokføring opp til"
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Periode"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
-#, fuzzy
 msgid "Close books"
-msgstr "Avslutt bokføring opp til"
+msgstr ""
 
 #: bin/aa.pl:1609 bin/oe.pl:374 LedgerSMB/Report/Orders.pm:243
 #: UI/Reports/filters/invoice_search.html:209 UI/Reports/filters/orders.html:97
@@ -4994,9 +4991,8 @@ msgid "No tax form selected"
 msgstr "Ingen MVA fra valgte"
 
 #: LedgerSMB/Upgrade_Tests.pm:328
-#, fuzzy
 msgid "No unassigned amounts in Transactions"
-msgstr "Utestående Posteringer"
+msgstr ""
 
 #: lsmb-request.pl:82
 msgid "No workflow script specified"
@@ -9080,6 +9076,3 @@ msgstr "bruk en overbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr "zh_CN"
-
-#~ msgid "Reopen Books"
-#~ msgstr "Reåpne bokføring"
