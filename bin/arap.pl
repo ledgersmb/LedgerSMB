@@ -41,8 +41,6 @@
 package lsmb_legacy;
 use LedgerSMB::AA;
 
-require 'bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
-
 # any custom scripts for this one
 if ( -f "bin/custom/arap.pl" ) {
     eval { require "bin/custom/arap.pl"; };

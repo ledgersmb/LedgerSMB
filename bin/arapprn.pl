@@ -44,6 +44,8 @@ use Try::Tiny;
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;
 
+require 'bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
+
 # any custom scripts for this one
 if ( -f "bin/custom/arapprn.pl" ) {
     eval { require "bin/custom/arapprn.pl"; };
