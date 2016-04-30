@@ -11964,13 +11964,14 @@ define([
     'dojo/_base/lang',
     'dojo/promise/Promise',
     'dojo/on',
+    'dojo/hash',
     'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/query',
     'dojo/dom-class'
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, all, xhr, query, domClass) {
+                lang, Promise, on, hash, all, xhr, query, domClass) {
            return declare('lsmb/MainContentPane',
                           [ContentPane],
               {
@@ -12033,7 +12034,7 @@ define([
                                   self.own(on(dnode, 'click',
                                               function(e) {
                                                   event.stop(e);
-                                                  self.load_link(dnode.href);
+                                                  hash(dnode.href);
                                               }));
                               }
                           });
@@ -26182,7 +26183,7 @@ define([
                    onClick: function(evt) {
                        var f; // our form node
                        f = this.valueNode.form;
-                       
+
                        if (f.media.value == 'screen') {
                            var url = domattr.get(f, 'action')
                                + '?action=' + this.valueNode.value
@@ -26191,7 +26192,7 @@ define([
                                + '&formname=' + f.formname.value
                                + '&media=screen'
                                + '&format=' + f.format.value;
-                           
+
                            window.location.href = url;
                            event.stop(evt);
                            return;

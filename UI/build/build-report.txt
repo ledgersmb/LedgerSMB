@@ -1,4 +1,4 @@
-Build started: Fri Apr 29 2016 20:49:48 GMT+0200 (CEST)
+Build started: Sat Apr 30 2016 12:08:27 GMT+0200 (CEST)
 Build application version: 1.10.4 (37e1249)
 Messages:
 info(102) Optimizing module
@@ -1616,4 +1616,4 @@ lsmb/main:
 Process finished normally
 	errors: 0
 	warnings: 36
-	build time: 20.181 seconds
+	build time: 20.554 seconds

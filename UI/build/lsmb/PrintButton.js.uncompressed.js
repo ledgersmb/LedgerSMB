@@ -11,7 +11,7 @@ define("lsmb/PrintButton", [
                    onClick: function(evt) {
                        var f; // our form node
                        f = this.valueNode.form;
-                       
+
                        if (f.media.value == 'screen') {
                            var url = domattr.get(f, 'action')
                                + '?action=' + this.valueNode.value
@@ -20,7 +20,7 @@ define("lsmb/PrintButton", [
                                + '&formname=' + f.formname.value
                                + '&media=screen'
                                + '&format=' + f.format.value;
-                           
+
                            window.location.href = url;
                            event.stop(evt);
                            return;
