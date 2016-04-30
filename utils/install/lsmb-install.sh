@@ -465,7 +465,7 @@ SetupPostgres() {
         if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
             echo -e "\tmodifying pg_hba.conf"
             sudo sed -i.bak2 -r "
-                /host[[:space:]]*all[[:space:]]*all[[:space:]]*${Net%/*}/ d
+                /host[[:space:]]*all[[:space:]]*lsmb_dbadmin[[:space:]]*${Net%/*}/ d
                 /host[[:space:]]*all[[:space:]]*all[[:space:]]*127/ ihost\tall\t\tlsmb_dbadmin\t$Net\t\tmd5
               " `find /etc/postgresql -name pg_hba.conf`
         else
