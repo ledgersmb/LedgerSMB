@@ -1,4 +1,4 @@
-Build started: Fri Apr 29 2016 23:17:51 GMT+0200 (CEST)
+Build started: Sat Apr 30 2016 12:08:27 GMT+0200 (CEST)
 Build application version: 1.10.4 (37e1249)
 Messages:
 info(102) Optimizing module
@@ -47,6 +47,7 @@ info(102) Optimizing module
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
 	module: lsmb/layout/TableContainer
+	module: lsmb/PrintButton
 	module: lsmb/InvoiceLines
 	module: lsmb/SubscribeShowHide
 	module: lsmb/SubscribeCheckBox
@@ -1268,6 +1269,7 @@ warn(205) Module not tagged as pure AMD yet it contains AMD API applications.
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
 	module: lsmb/layout/TableContainer
+	module: lsmb/PrintButton
 	module: lsmb/InvoiceLines
 	module: lsmb/SubscribeShowHide
 	module: lsmb/SubscribeCheckBox
@@ -1415,6 +1417,7 @@ dojo/dojo:
 	dijit/_FocusMixin
 	dijit/_WidgetsInTemplateMixin
 	dojo/Deferred
+	lsmb/PrintButton
 	dojo/_base/connect
 	dojo/request/watch
 	dojo/data/util/sorter
@@ -1568,6 +1571,7 @@ lsmb/main:
 	dijit/_FocusMixin
 	dijit/_WidgetsInTemplateMixin
 	dojo/Deferred
+	lsmb/PrintButton
 	dojo/_base/connect
 	dojo/request/watch
 	dojo/data/util/sorter
@@ -1611,5 +1615,5 @@ lsmb/main:
 
 Process finished normally
 	errors: 0
-	warnings: 35
-	build time: 21.296 seconds
+	warnings: 36
+	build time: 20.554 seconds

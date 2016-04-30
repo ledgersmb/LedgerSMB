@@ -16263,13 +16263,13 @@ define([
                       var self = this;
                       this.inherited(arguments);
 
-				          // <button> tags get rewritten to <input type="submit" tags...
-				          query('input[type="submit"]', this.domNode)
+                      // <button> tags get rewritten to <input type="submit" tags...
+                      query('input[type="submit"]', this.domNode)
                           .forEach(function(b) {
-					               on(b, 'click', function(){
+                              on(b, 'click', function(){
                                   self.clickedAction = domattr.get(b, 'value');
-					               });
-				              });
+                              });
+                          });
 
                   },
                   onSubmit: function(evt) {
@@ -16280,25 +16280,25 @@ define([
                       if (! this.validate())
                           return;
 
-						    var method = this.method;
-						    var qobj = domform.toQuery(this.domNode);
-						    qobj = 'action='
-							     + this.clickedAction
-							     + '&' + qobj;
-						    if (undefined == method){
-							     method = 'GET';
-						    }
-						    var url = this.action;
+                      var method = this.method;
+                      var qobj = domform.toQuery(this.domNode);
+                      qobj = 'action='
+                          + this.clickedAction
+                          + '&' + qobj;
+                      if (undefined == method){
+                          method = 'GET';
+                      }
+                      var url = this.action;
 
-						    var options = { "handleAs": "text" };
-						    if ('get' == method.toLowerCase()){
-							     url = url + '?' + qobj;
+                      var options = { "handleAs": "text" };
+                      if ('get' == method.toLowerCase()){
+                          url = url + '?' + qobj;
                           registry.byId('maindiv').load_link(url);
-						    } else {
-							     options['method'] = method;
-							     options['data'] = qobj;
-						        registry.byId('maindiv').load_form(url, options);
-						    }
+                      } else {
+                          options['method'] = method;
+                          options['data'] = qobj;
+                          registry.byId('maindiv').load_form(url, options);
+                      }
                   }
               });
        }
@@ -26167,6 +26167,41 @@ define([
 
 	return Deferred;
 });
+
+},
+'lsmb/PrintButton':function(){
+define([
+    'dojo/_base/declare',
+    'dojo/_base/event',
+    'dojo/dom-attr',
+    'dijit/form/Button'
+],
+       function(declare, event, domattr, Button) {
+           return declare('lsmb/PrintButton',
+                          [Button],
+               {
+                   onClick: function(evt) {
+                       var f; // our form node
+                       f = this.valueNode.form;
+
+                       if (f.media.value == 'screen') {
+                           var url = domattr.get(f, 'action')
+                               + '?action=' + this.valueNode.value
+                               + '&id=' + f.id.value
+                               + '&vc=' + f.vc.value
+                               + '&formname=' + f.formname.value
+                               + '&media=screen'
+                               + '&format=' + f.format.value;
+
+                           window.location.href = url;
+                           event.stop(evt);
+                           return;
+                       }
+
+                       return this.inherited(arguments);
+                   }
+               });
+       });
 
 },
 'dojo/_base/connect':function(){
