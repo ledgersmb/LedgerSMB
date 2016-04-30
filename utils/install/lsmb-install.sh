@@ -329,33 +329,238 @@ SelectVersion() {
     popd >/dev/null
 }
 
+createPostgresSuperUser() {
+    echo
+    echo "do not use this function [ createPostgresSuperUser() ]"
+    echo
+    exit 999;
+    # First parameter is the user name
+    LSMBDBUSER=$1
+    # Second parameter is the password
+    LSMBDBPW=$2
+
+    su - postgres -c psql <<-EOT
+       DO
+       \$\$
+       DECLARE num_users integer;
+       BEGIN
+           SELECT count(*)
+               into num_users
+           FROM pg_user
+           WHERE usename = '$LSMBDBUSER';
+
+           IF num_users = 0 THEN
+               CREATE ROLE $LSMBDBUSER WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$LSMBDBPW';
+           ELSE
+               ALTER ROLE $LSMBDBUSER WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$LSMBDBPW';
+           END IF;
+       END
+       \$\$
+       ;
+       EOT
+}
+
 SetupPostgres() {
 
-#    echo "${Div}${Div}"
-#    echo "Configuring Postgres accessibility."
-#    echo "${Div}"
-#    echo " this is only needed if you want to directly connect to the database with management tools on other computers"
-#    GetKey yN "\n${Div} Enable Connections from other machines?\n${Div}this is only needed if you want to directly connect to the database with management tools on other computer\n${Div}Postgres: Allow remote access?"
-#    fixme: need to set Listen_Addresses in postges.conf
-    
-    echo "${Div}${Div}"
+    echo -e "${Div}${Div}"
+    echo "Configuring Postgres access for user lsmb_dbadmin."
+    echo -e "${Div}"
+    if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+        echo -e "\tmodifying pg_hba.conf"
+        sudo sed -i.bak1 -r '
+            /local[[:space:]]*all[[:space:]]*lsmb_dbadmin*/ d
+            /local[[:space:]]*all[[:space:]]*all*/ ilocal\tall\t\tlsmb_dbadmin\t\t\t\tmd5
+          ' `find /etc/postgresql -name pg_hba.conf`
+    else
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+        echo '%% there is either no pg_hba.conf file or   %%';
+        echo '%% or                                       %%';
+        echo '%% there is more than one pg_hba.conf file  %%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo;
+        echo 'Please add the following line to pg_hba.conf';
+        echo -e "local\tall\t\tlsmb_dbadmin\t\t\t\tmd5";
+        echo 'it MUST be added immediately above the line';
+        echo -e "local\tall\t\tall\t\t\t\tpeer";
+        read -p 'Press ENTER to continue';
+    fi
+    echo -e "${Div}${Div}"
+    echo "Configuring Postgres accessibility."
+    #echo -e "${Div}"
+    GetKey yN "\n${Div} Enable Postgres Client Connections from other machines?\n${Div}this is only needed if you want to directly connect to the database with management tools on other computer\n${Div}Postgres: Allow remote access?"
+    if TestKey "y"; then
+        echo -e "${Div}"
+        echo -e "\tmodifying postgresql.conf"
+        echo -e "${Div}"
+        if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+            sudo sed -i.bak "/listen_addresses/ s/'.*'/'*'/" `find /etc/postgresql -name postgresql.conf`;
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%     ERROR ERROR ERROR  ERROR ERROR ERROR     %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit postgresql.conf     %%';
+            echo '%% there is either no postgresql.conf file or   %%';
+            echo '%% or                                           %%';
+            echo '%% there is more than one postgresql.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please edit the following line to postgresql.conf';
+            echo -e "listen_addresses 'localhost'";
+            echo 'to look like';
+            echo -e "listen_addresses '*'";
+            read -p 'Press ENTER to continue';
+        fi
+        export Net='';
+        while read IP R; do
+            if [[ $IP =~ ^default ]]; then
+                Dev=${R##*dev };
+            else
+                if [[ $R =~ $Dev.*proto ]]; then
+                    Net=$IP;
+                fi;
+            fi;
+        done < <( ip route show; )
+        if [[ -z $Net ]]; then
+            Net='192.168.1.0/24';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t identify your local network        %%';
+            echo '%% using a default network address of       %%';
+            echo '%% 192.168.1.0/24                           %%';
+            echo '%% please edit pg_hba.conf to correct this  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            read -p 'Press ENTER to continue';
+        fi
+        if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+            echo -e "\tmodifying pg_hba.conf"
+            sudo sed -i.bak2 -r "
+                /host[[:space:]]*all[[:space:]]*all[[:space:]]*${Net%/*}/ d
+                /host[[:space:]]*all[[:space:]]*all[[:space:]]*127/ ihost\tall\t\tlsmb_dbadmin\t$Net\t\tmd5
+              " `find /etc/postgresql -name pg_hba.conf`
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+            echo '%% there is either no pg_hba.conf file or   %%';
+            echo '%% or                                       %%';
+            echo '%% there is more than one pg_hba.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please add the following line to pg_hba.conf';
+            echo -e "host\tall\t\tlsmb_dbadmin\t$Net\t\tmd5";
+            echo 'it MUST be added immediately above the line';
+            echo -e "host\tall\t\tall\t127.0.0.1/32\t\tmd5";
+            read -p 'Press ENTER to continue';
+        fi
+    else
+        echo -e "${Div}"
+        echo -e "\tmodifying postgresql.conf to disable remote connections"
+        echo -e "${Div}"
+        if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+            sudo sed -i.bak "/listen_addresses/ s/'.*'/'localhost'/" `find /etc/postgresql -name postgresql.conf`;
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%     ERROR ERROR ERROR  ERROR ERROR ERROR     %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit postgresql.conf     %%';
+            echo '%% there is either no postgresql.conf file or   %%';
+            echo '%% or                                           %%';
+            echo '%% there is more than one postgresql.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please edit the following line to postgresql.conf';
+            echo -e "listen_addresses '*'";
+            echo 'to look like';
+            echo -e "listen_addresses 'localhost'";
+            read -p 'Press ENTER to continue';
+        fi
+        export Net='';
+        while read IP R; do
+            if [[ $IP =~ ^default ]]; then
+                Dev=${R##*dev };
+            else
+                if [[ $R =~ $Dev.*proto ]]; then
+                    Net=$IP;
+                fi;
+            fi;
+        done < <( ip route show; )
+        if [[ -z $Net ]]; then
+            Net='192.168.1.0/24';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t identify your local network        %%';
+            echo '%% using a default network address of       %%';
+            echo '%% 192.168.1.0/24                           %%';
+            echo '%% please edit pg_hba.conf to correct this  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            read -p 'Press ENTER to continue';
+        fi
+        if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+            echo -e "\tmodifying pg_hba.conf to disable remote connections"
+            sudo sed -i.bak2 -r "/host[[:space:]]*all[[:space:]]*lsmb_dbadmin[[:space:]]*${Net%/*}/ d" `find /etc/postgresql -name pg_hba.conf`
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+            echo '%% there is either no pg_hba.conf file or   %%';
+            echo '%% or                                       %%';
+            echo '%% there is more than one pg_hba.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please add the following line to pg_hba.conf';
+            echo -e "host\tall\t\tlsmb_dbadmin\t$Net\t\tmd5";
+            echo 'it MUST be added immediately above the line';
+            echo -e "host\tall\t\tall\t127.0.0.1/32\t\tmd5";
+            read -p 'Press ENTER to continue';
+        fi
+    fi
+    if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+        echo -e "${Div}${Div}Your pg_hba.conf file contains these entries"
+        echo -e "Please check that they are correct\n${Div}"
+        sudo egrep -v '^[[:space:]]*#|^$' `find /etc/postgresql -name pg_hba.conf`
+        echo -e "${Div}\n"
+    fi
+    echo -e "${Div}${Div}"
     echo "adding posgres database admin user 'lsmb_dbadmin'"
-    echo "${Div}"
-#    sudo -u postgres -c "createuser --password --createdb --login --createrole lsmb_dbadmin" postgres
-    sudo -u postgres "createuser --password --createdb --login --createrole lsmb_dbadmin" postgres
-    #sudo su -c "createuser --createdb --login --createrole lsmb_dbadmin" postgres
-#    echo "${Div}"
-#    echo "\tmodifying pg_hbs.conf"
-#    echo "${Div}"
-#    sudo grep -q lsmb_dbadmin /etc/postgresql/9.4/main/pg_hba.conf || {
-#        echo 'local   all             lsmb_dbadmin                            md5' | \
-#            sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf; sudo service postgresql reload;
-#        }
+    echo -e "${Div}"
+    #echo "Please enter new password for user 'lsmb_dbadmin'"
+    if [[ `sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='lsmb_dbadmin'"` == 1 ]]; then
+        echo "Database Admin User 'lsmb_dbadmin' already exists...."
+        GetKey yN "Do you want to replace it?"
+        if TestKey "y"; then
+            sudo -u postgres dropuser lsmb_dbadmin 
+        fi
+    fi
+    if ! [[ `sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='lsmb_dbadmin'"` == 1 ]]; then
+        sudo -u postgres createuser --pwprompt --createdb --login --createrole --superuser lsmb_dbadmin
+    fi
+
         ## test that you can login OK with
-    echo "${Div}"
-    echo "\tTesting that you can now log in to the database."
-    echo "${Div}"
-        sudo -u postgres "psql -l --password -U lsmb_dbadmin -d postgres -h localhost"
+    echo -e "\n${Div}"
+    echo -e "\tTesting that you can now log in to the database."
+    echo -e "${Div}"
+        psql -l --password -U lsmb_dbadmin -d postgres -h localhost
         #sudo su -c "psql -l --password -U lsmb_dbadmin -d postgres -h localhost" postgres
     cat <<-"EOF"
     it should have returned something like
@@ -369,8 +574,12 @@ SetupPostgres() {
            |          |          |             |             | postgres=CTc/postgres
 (3 rows)
 EOF
-    echo "${Div}"
-    echo "${Div}"
+    echo -e "${Div}"
+    echo -e "${Div}"
+    read -sn1 -p 'Press any key to Continue'; echo
+
+    echo "retrieving roles information for user lsmb_dbadmin"
+    psql -U lsmb_dbadmin -d postgres -h localhost -c '\du lsmb_dbadmin;'
     read -sn1 -p 'Press any key to Continue'; echo
 
 }
@@ -530,24 +739,24 @@ EOF
     if TestPackagesInstalled debDocker; then DefKeys=yN; else DefKeys=$debDocker_DefKeys; fi
     GetKey $DefKeys "\n${Div}Install Docker?"
     if TestKey "y"; then
-        echo "${Div}Docker: Installing Repository Key${Div}"
+        echo -e "${Div}Docker: Installing Repository Key${Div}"
         $debDockerRepoAdd
-        echo "${Div}Docker: Installing Repository${Div}"
+        echo -e "${Div}Docker: Installing Repository${Div}"
         cat <<-EOF | sudo tee $debDockerSourcesName >/dev/null
 		# Repository for Docker Containers Engine
 		
 		$debDockerSourcesContent
 		
 EOF
-        echo "${Div}Docker: Retrieving Package Lists\n${Div}"
+        echo -e "${Div}Docker: Retrieving Package Lists\n${Div}"
         sudo apt-get update
-        echo "${Div}Docker: Installing Packages\n${Div}${debDocker[@]}\n${Div}"
+        echo -e "${Div}Docker: Installing Packages\n${Div}${debDocker[@]}\n${Div}"
         sudo apt-get install -y "${debDocker[@]}";
-        echo "${Div}Starting Docker Service\n${Div}"
+        echo -e "${Div}Starting Docker Service\n${Div}"
         sudo service docker start
-        echo "${Div}Running Hello World test container\n${Div}"
+        echo -e "${Div}Running Hello World test container\n${Div}"
         sudo docker run hello-world
-        echo "${Div}$Div"
+        echo -e "${Div}$Div"
     fi
 }
 
@@ -577,13 +786,62 @@ TestPackagesInstalled() {
 #exit
 
 
+CPAN_InstallPackages() {
+#    if TestPackagesInstalled debBaseUtils; then DefKeys=yN; else DefKeys=$debBaseUtils_DefKeys; fi
+    DefKeys=yN;
+    GetKey $DefKeys "\n${Div} LedgerSMB Perl Depencencies\n${Div}This will install any perl depenancies from cpan INCLUDING most development and testing dependencies at the moment.\nIF you don't want the dev and testing dependencies you may need to install by hand from the list of packages found in Makefile.PL\n${Div}Install Missing Perl Dependencies using cpanm?"
+    if TestKey "y"; then
+        cc --version > /dev/null || cat <<-EOF
+		${Div}
+		${Div}
+		    WARNING
+		${Div}
+		    Installing Dependencies via CPAN may fail as you don't have a C compiler installed.
+		${Div}
+		${Div}
+	EOF
+
+        cpanm --installdeps .
+        cat <<-EOF
+		${Div}
+		${Div}
+		    WARNING
+		${Div}
+		    Check the results from 'cpanm' carefully if any failure is indicated then not all dependencies were installed.
+		    In that case you will need to manually run the following from your LedgerSMB install dir
+		    cpanm --installdeps .
+		    (NOTE: Don't forget the . at the end of the command!)
+		    which will show what the actual failed package was and a logfile you can look at for the cause
+		${Div}
+		${Div}
+	EOF
+        read -p 'Press Enter to continue'
+        echo
+        echo
+    fi
+}
+
 CheckCPAN_Config_Exists() {
     if [[ -z $(find . -path *cpan/prefs) ]]; then
+        sudo apt-get install -y cpanminus
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%% Please run cpan and set it up for use with local lib %%"
         echo "%%   this should be as easy as selecting all defaults   %%"
         echo "%% Then log out and back in again                       %%"
         echo "%% Then re-run this script.                             %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%% Then log out and back in again                       %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
         exit 0
@@ -667,6 +925,8 @@ SelectVersion
 debInstallPackages
 
 #WriteHostsEntries
+
+CPAN_InstallPackages
 
 ManualSteps
 
