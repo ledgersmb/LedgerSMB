@@ -103,6 +103,30 @@ Repair query table to run once per result.
 has table => (is => 'ro', isa => 'Str', required => 0);
 
 
+=item selectable_values
+
+Repair query column to get the values from
+
+=cut
+
+has selectable_values => (is => 'ro', isa => 'Str', required => 0);
+
+=item id_where
+
+Repair query key to set the values if we can repair
+
+=cut
+
+has id_where => (is => 'ro', isa => 'Str', required => 0, default => 'id');
+
+=item id_column
+
+Repair column to use as id
+
+=cut
+
+has id_column => (is => 'ro', isa => 'Str', required => 0, default => 'id');
+
 =item column
 
 Repair query column to run once per result
@@ -274,6 +298,51 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
+   test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
+					WITH ac1 AS (
+					SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
+						FROM acc_trans
+						WHERE trans_id IN (
+							SELECT trans_id FROM (
+								SELECT trans_id, SUM(amount) as amount from acc_trans
+								WHERE chart_id IS NULL
+								GROUP BY trans_id) as a
+							WHERE a.amount <> 0)
+						AND chart_id IS NULL
+						GROUP BY trans_id, chart_id
+						ORDER BY trans_id, transdate
+				),
+				-- Hint the user about the type of the remaining entries
+				ac2 AS (
+					SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
+					FROM acc_trans ac
+					JOIN chart c ON chart_id = c.id
+					WHERE trans_id IN ( SELECT trans_id FROM ac1)
+					AND c.link ~ 'amount'
+				)
+				-- Present data
+				SELECT * from ac1
+				LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
+				ORDER BY ac1.trans_id",
+ display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
+         name => 'no_unbalanced_ac_transactions',
+ display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'The following transactions have unassigned amounts'),
+		table => 'acc_trans',
+selectable_values => "SELECT concat(accno,' -- ',description) AS id, id as value
+					  FROM chart
+					  WHERE charttype = 'A'
+					  ORDER BY id",
+	   column => 'chart_id',
+	id_column => 'trans_id',
+	 id_where => 'chart_id IS NULL AND trans_id',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+);
+
+push @tests, __PACKAGE__->new(
    test_query => "select * from entity_credit_account
                    where meta_number in
                        (select meta_number from entity_credit_account
@@ -293,7 +362,9 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = chart.gifi_accno)",
+                                      where gifi.accno = chart.gifi_accno)
+                         and gifi_accno is not null
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $LedgerSMB::App_State::Locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -310,7 +381,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno <> ''",
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $LedgerSMB::App_State::Locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -326,7 +397,9 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from account
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = account.gifi_accno)",
+                                      where gifi.accno = account.gifi_accno)
+                         and gifi_accno is not null
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $LedgerSMB::App_State::Locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -620,7 +693,7 @@ push @tests, __PACKAGE__->new(
     name => 'no_null_makenumbers',
     display_cols => ['parts_id', 'make', 'model'],
     column => 'make',
- instructions => $LedgerSMB::App_State::Locale->text(
+    instructions => $LedgerSMB::App_State::Locale->text(
                    'Please make sure all make numbers are non-empty'),
     table => 'makemodel',
     appname => 'sql-ledger',
