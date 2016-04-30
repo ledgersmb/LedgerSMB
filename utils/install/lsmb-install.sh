@@ -844,7 +844,7 @@ CPAN_InstallPackages() {
 }
 
 CheckCPAN_Config_Exists() {
-    if [[ -z $(find . -path *cpan/prefs) ]]; then
+    if [[ -z $(find ~/ -path *cpan/prefs) ]]; then
         sudo apt-get install -y cpanminus
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%% Please run cpan and set it up for use with local::lib %%"
@@ -866,7 +866,7 @@ CheckCPAN_Config_Exists() {
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
 
-        cpan
+        cpan local::lib
 
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
