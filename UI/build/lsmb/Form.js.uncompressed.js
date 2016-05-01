@@ -3,12 +3,13 @@ define("lsmb/Form", [
     'dojo/_base/declare',
     'dojo/_base/event',
     'dojo/on',
+    'dojo/hash',
     'dojo/dom-attr',
     'dojo/dom-form',
     'dojo/query',
     'dijit/registry'
     ],
-       function(Form, declare, event, on, domattr, domform,
+       function(Form, declare, event, on, hash, domattr, domform,
                 query, registry) {
            return declare('lsmb/Form',
                           [Form],
@@ -48,7 +49,7 @@ define("lsmb/Form", [
                       var options = { "handleAs": "text" };
                       if ('get' == method.toLowerCase()){
                           url = url + '?' + qobj;
-                          registry.byId('maindiv').load_link(url);
+                          hash(url); // add GET forms to the back button history
                       } else {
                           options['method'] = method;
                           options['data'] = qobj;
