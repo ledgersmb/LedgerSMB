@@ -1276,10 +1276,19 @@ sub print_select { # Needed to print new printoptions output from non-template
     }
     print "</select>";
 }
+
+
 sub print {
 
-  #  $logger->trace("setting fax from LedgerSMB::Company_Config::settings \$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax}");
+    $lang = $form->{language_code};
 
+    if ($form->{vc} eq 'vendor') {
+        IR->retrieve_invoice(\%myconfig, $form);
+    }
+    else {
+        IS->retrieve_invoice(\%myconfig, $form);
+    }
+    $form->{language_code} = $lang;
 
     # if this goes to the printer pass through
     my $old_form = undef;

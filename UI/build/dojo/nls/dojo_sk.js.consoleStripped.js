@@ -4,4 +4,6 @@ define('dojo/nls/dojo_sk',{
 'dijit/form/nls/validate':{"invalidMessage":"Zadaná hodnota nie je platná.","missingMessage":"Táto hodnota je povinná.","rangeMessage":"Táto hodnota je mimo rozsah.","_localized":{}}
 ,
 'dijit/nls/loading':{"loadingState":"Zavádza sa...","errorState":"Ľutujeme, ale vyskytla sa chyba","_localized":{}}
+,
+'dojo/cldr/nls/number':{"scientificFormat":"#E0","currencySpacing-afterCurrency-currencyMatch":"[:^S:]","infinity":"∞","superscriptingExponent":"×","list":";","percentSign":"%","minusSign":"-","currencySpacing-beforeCurrency-surroundingMatch":"[:digit:]","decimalFormat-short":"000 bil'.'","currencySpacing-afterCurrency-insertBetween":" ","nan":"NaN","plusSign":"+","currencySpacing-afterCurrency-surroundingMatch":"[:digit:]","currencySpacing-beforeCurrency-currencyMatch":"[:^S:]","currencyFormat":"#,##0.00 ¤;(#,##0.00 ¤)","perMille":"‰","group":" ","percentFormat":"#,##0 %","decimalFormat-long":"000 biliónov","decimalFormat":"#,##0.###","decimal":",","currencySpacing-beforeCurrency-insertBetween":" ","exponential":"E","_localized":{}}
 });

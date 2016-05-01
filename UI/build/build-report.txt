@@ -1,4 +1,4 @@
-Build started: Fri Apr 29 2016 23:31:01 GMT+0200 (CEST)
+Build started: Sun May 01 2016 22:02:53 GMT+0200 (CEST)
 Build application version: 1.10.4 (37e1249)
 Messages:
 info(102) Optimizing module
@@ -7,6 +7,7 @@ info(102) Optimizing module
 	module: lsmb/parts/PartDescription
 	module: lsmb/TabularForm
 	module: lsmb/PublishSelect
+	module: lsmb/SubscribeRadioButton
 	module: lsmb/Form
 	module: lsmb/parts/PartSelector
 	module: lsmb/nls/main_ar
@@ -47,6 +48,7 @@ info(102) Optimizing module
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
 	module: lsmb/layout/TableContainer
+	module: lsmb/PrintButton
 	module: lsmb/InvoiceLines
 	module: lsmb/SubscribeShowHide
 	module: lsmb/SubscribeCheckBox
@@ -1258,6 +1260,7 @@ warn(205) Module not tagged as pure AMD yet it contains AMD API applications.
 	module: lsmb/parts/PartDescription
 	module: lsmb/TabularForm
 	module: lsmb/PublishSelect
+	module: lsmb/SubscribeRadioButton
 	module: lsmb/Form
 	module: lsmb/parts/PartSelector
 	module: lsmb/main
@@ -1268,6 +1271,7 @@ warn(205) Module not tagged as pure AMD yet it contains AMD API applications.
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
 	module: lsmb/layout/TableContainer
+	module: lsmb/PrintButton
 	module: lsmb/InvoiceLines
 	module: lsmb/SubscribeShowHide
 	module: lsmb/SubscribeCheckBox
@@ -1415,6 +1419,7 @@ dojo/dojo:
 	dijit/_FocusMixin
 	dijit/_WidgetsInTemplateMixin
 	dojo/Deferred
+	lsmb/PrintButton
 	dojo/_base/connect
 	dojo/request/watch
 	dojo/data/util/sorter
@@ -1568,6 +1573,7 @@ lsmb/main:
 	dijit/_FocusMixin
 	dijit/_WidgetsInTemplateMixin
 	dojo/Deferred
+	lsmb/PrintButton
 	dojo/_base/connect
 	dojo/request/watch
 	dojo/data/util/sorter
@@ -1611,5 +1617,5 @@ lsmb/main:
 
 Process finished normally
 	errors: 0
-	warnings: 35
-	build time: 20.01 seconds
+	warnings: 37
+	build time: 20.313 seconds
