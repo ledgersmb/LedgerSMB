@@ -3385,9 +3385,9 @@ sub update_defaults {
 
         while (/<\?lsmb /) {
 
-            s/<\?lsmb .*? \?>//;
-            last unless $&;
-            $param = $&;
+            s/(<\?lsmb .*? \?>)//;
+            last unless $1;
+            $param = $1;
             $str   = "";
 
             if ( $param =~ /<\?lsmb date \?>/i ) {
@@ -3406,8 +3406,7 @@ sub update_defaults {
             {
             #SC: XXX hairy, undoc, possibly broken
 
-                my $fld = lc $&;
-                $fld =~ s/<\?lsmb //;
+                my $fld = lc $1;
 
                 if ( $fld =~ /name/ ) {
                     if ( $self->{type} ) {
