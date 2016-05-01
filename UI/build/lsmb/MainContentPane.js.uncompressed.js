@@ -7,13 +7,14 @@ define("lsmb/MainContentPane", [
     'dojo/_base/lang',
     'dojo/promise/Promise',
     'dojo/on',
+    'dojo/hash',
     'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/query',
     'dojo/dom-class'
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, all, xhr, query, domClass) {
+                lang, Promise, on, hash, all, xhr, query, domClass) {
            return declare('lsmb/MainContentPane',
                           [ContentPane],
               {
@@ -76,7 +77,7 @@ define("lsmb/MainContentPane", [
                                   self.own(on(dnode, 'click',
                                               function(e) {
                                                   event.stop(e);
-                                                  self.load_link(dnode.href);
+                                                  hash(dnode.href);
                                               }));
                               }
                           });

@@ -10,7 +10,7 @@ Muxed LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
 =head1 DETAILS
 
 The final output format is determined by the format_option of filetype.  The
-valid filetype specifiers are 'pdf', 'ps', and 'dvi'.
+valid filetype specifiers are 'pdf' and 'ps'.
 
 =head1 METHODS
 
@@ -154,33 +154,37 @@ sub process {
     }
     $Template::Latex::DEBUG = 1 if $parent->{debug};
     my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'dvi') {
-        $format = 'dvi';
-    } elsif ($parent->{format_args}{filetype} eq 'pdf') {
+    if ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
-    $template = Template::Latex->new({
-        LATEX_FORMAT => $format,
-        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
-        START_TAG => quotemeta('<?lsmb'),
-        END_TAG => quotemeta('?>'),
-        DELIMITER => ';',
-                ENCODING => 'utf8',
-        DEBUG => ($parent->{debug})? 'dirs': undef,
-        DEBUG_FORMAT => '',
+    $template = Template::Latex->new(
+        {
+            LATEX_FORMAT => $format,
+            INCLUDE_PATH => [$parent->{include_path_lang},
+                             $parent->{include_path},
+                             'templates/demo',
+                             'UI/lib'],
+            START_TAG => quotemeta('<?lsmb'),
+            END_TAG => quotemeta('?>'),
+            DELIMITER => ';',
+            ENCODING => 'utf8',
+            DEBUG => ($parent->{debug})? 'dirs': undef,
+            DEBUG_FORMAT => '',
         }) || die Template::Latex->error();
-        my $out = "$parent->{outputfile}.$format" unless ref $parent->{outputfile};
-        $out ||= $parent->{outputfile};
-    if (not $template->process(
-        $source,
-        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-            'escape' => \&preprocess},
-        $out, {binmode => 1})) {
+    my $out = "$parent->{outputfile}.$format"
+        unless ref $parent->{outputfile};
+    $out ||= $parent->{outputfile};
+    if (! $template->process(
+              $source,
+              { %$cleanvars,
+                %$LedgerSMB::Template::TTI18N::ttfuncs,
+                escape => \&preprocess,
+                FORMAT => $format,
+              },
+              $out, {binmode => 1})) {
         die $template->error();
     }
-    if (lc $format eq 'dvi') {
-        $parent->{mimetype} = 'application/x-dvi';
-    } elsif (lc $format eq 'pdf') {
+    if (lc $format eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
