@@ -1,4 +1,4 @@
-Build started: Sun May 01 2016 22:02:53 GMT+0200 (CEST)
+Build started: Mon May 02 2016 23:05:33 GMT+0200 (CEST)
 Build application version: 1.10.4 (37e1249)
 Messages:
 info(102) Optimizing module
@@ -44,6 +44,7 @@ info(102) Optimizing module
 	module: lsmb/accounts/AccountStore
 	module: lsmb/InvoiceLine
 	module: lsmb/DateTextBox
+	module: lsmb/SetupLoginButton
 	module: lsmb/parts/PartStore
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
@@ -1267,6 +1268,7 @@ warn(205) Module not tagged as pure AMD yet it contains AMD API applications.
 	module: lsmb/accounts/AccountStore
 	module: lsmb/InvoiceLine
 	module: lsmb/DateTextBox
+	module: lsmb/SetupLoginButton
 	module: lsmb/parts/PartStore
 	module: lsmb/SubscribeSelect
 	module: lsmb/MaximizeMinimize
@@ -1304,6 +1306,7 @@ dojo/dojo:
 	dijit/_CssStateMixin
 	lsmb/PublishCheckBox
 	dojo/selector/_loader
+	lsmb/SetupLoginButton
 	lsmb/PublishSelect
 	dijit/place
 	dijit/_HasDropDown
@@ -1469,6 +1472,7 @@ lsmb/main:
 	dijit/_TemplatedMixin
 	dijit/_CssStateMixin
 	lsmb/PublishCheckBox
+	lsmb/SetupLoginButton
 	lsmb/PublishSelect
 	dijit/place
 	dijit/_HasDropDown
@@ -1617,5 +1621,5 @@ lsmb/main:
 
 Process finished normally
 	errors: 0
-	warnings: 37
-	build time: 20.313 seconds
+	warnings: 38
+	build time: 20.698 seconds

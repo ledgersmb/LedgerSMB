@@ -88,6 +88,7 @@ var profile = (function(){
                     "lsmb/PublishCheckBox",
                     "lsmb/PublishRadioButton",
                     "lsmb/PublishSelect",
+                    "lsmb/SetupLoginButton",
                     "lsmb/SubscribeCheckBox",
                     "lsmb/SubscribeSelect",
                     "lsmb/SubscribeShowHide",
