@@ -196,7 +196,7 @@ sub login {
     } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->connect({PrintError=>0, AutoCommit=>0});
+        my $dbh = $request->{dbh};
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
