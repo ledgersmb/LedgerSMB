@@ -170,33 +170,33 @@ sub login {
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
     } else {
-    my $dispatch_entry;
+        my $dispatch_entry;
 
-    foreach $dispatch_entry (@login_actions_dispatch_table) {
-        if ($version_info->{appname} eq $dispatch_entry->{appname}
-           && ($version_info->{version} eq $dispatch_entry->{version}
-               || ! defined $dispatch_entry->{version})) {
-        my $field;
+        foreach $dispatch_entry (@login_actions_dispatch_table) {
+            if ($version_info->{appname} eq $dispatch_entry->{appname}
+                && ($version_info->{version} eq $dispatch_entry->{version}
+                    || ! defined $dispatch_entry->{version})) {
+                my $field;
 
-        foreach $field (qw|operation message next_action|) {
-            $request->{$field} =
-               $request->{_locale}->maketext($dispatch_entry->{$field});
+                foreach $field (qw|operation message next_action|) {
+                    $request->{$field} =
+                        $request->{_locale}->maketext($dispatch_entry->{$field});
+                }
+                last;
+            }
         }
-        last;
-        }
-    }
 
 
-    if (! defined $request->{next_action}) {
-        $request->{message} = $request->{_locale}->text(
-        'Unknown database found.'
-        );
-        $request->{operation} = $request->{_locale}->text('Cancel?');
-        $request->{next_action} = 'cancel';
-    } elsif ($request->{next_action} eq 'rebuild_modules') {
+        if (! defined $request->{next_action}) {
+            $request->{message} = $request->{_locale}->text(
+                'Unknown database found.'
+                );
+            $request->{operation} = $request->{_locale}->text('Cancel?');
+            $request->{next_action} = 'cancel';
+        } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-        my $dbh = $request->{dbh};
+            my $dbh = $request->{dbh};
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -212,12 +212,11 @@ sub login {
         }
     }
     my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'confirm_operation',
+        path => 'UI/setup',
+        template => 'confirm_operation',
         format => 'HTML',
     );
     $template->render($request);
-
 }
 
 =item sanity_checks
