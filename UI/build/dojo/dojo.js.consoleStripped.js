@@ -31510,6 +31510,996 @@ define(["./_base/kernel", "./query", "./_base/array", "./_base/lang", "./dom-cla
 });
 
 },
+'lsmb/PublishNumberTextBox':function(){
+define(['dojo/_base/declare',
+        'dojo/on',
+        'dojo/topic',
+        'dijit/form/NumberTextBox'],
+       function(declare, on, topic, NumberTextBox) {
+           return declare('lsmb/PublishNumberTextBox', NumberTextBox, {
+               topic: "",
+               publish: function(targetValue) {
+                   topic.publish(this.topic, targetValue);
+               },
+               postCreate: function() {
+                   var self = this;
+                   this.own(
+                       on(this, 'change',
+                          function(targetValue) {
+                              self.publish(targetValue);
+                          })
+                   );
+               }
+           });
+       });
+
+},
+'dijit/form/NumberTextBox':function(){
+define([
+	"dojo/_base/declare", // declare
+	"dojo/_base/lang", // lang.hitch lang.mixin
+	"dojo/i18n", // i18n.normalizeLocale, i18n.getLocalization
+	"dojo/string", // string.rep
+	"dojo/number", // number._realNumberRegexp number.format number.parse number.regexp
+	"./RangeBoundTextBox"
+], function(declare, lang, i18n, string, number, RangeBoundTextBox){
+
+	// module:
+	//		dijit/form/NumberTextBox
+
+	// A private helper function to determine decimal information
+	// Returns an object with "sep" and "places" properties
+	var getDecimalInfo = function(constraints){
+		var constraints = constraints || {},
+			bundle = i18n.getLocalization("dojo.cldr", "number", i18n.normalizeLocale(constraints.locale)),
+			pattern = constraints.pattern ? constraints.pattern : bundle[(constraints.type || "decimal")+"Format"];
+
+		// The number of places in the constraint can be specified in several ways,
+		// the resolution order is:
+		//
+		// 1. If constraints.places is a number, use that
+		// 2. If constraints.places is a string, which specifies a range, use the range max (e.g. 0,4)
+		// 3. If a pattern is specified, use the implicit number of places in the pattern.
+		// 4. If neither constraints.pattern or constraints.places is specified, use the locale default pattern
+		var places;
+		if(typeof constraints.places == "number"){
+			places = constraints.places;
+		}else if(typeof constraints.places === "string" && constraints.places.length > 0){
+			places = constraints.places.replace(/.*,/, "");
+		}else{
+			places = (pattern.indexOf(".") != -1 ? pattern.split(".")[1].replace(/[^#0]/g, "").length : 0);
+		}
+
+		return { sep: bundle.decimal, places: places };
+	};
+
+	var NumberTextBoxMixin = declare("dijit.form.NumberTextBoxMixin", null, {
+		// summary:
+		//		A mixin for all number textboxes
+		// tags:
+		//		protected
+
+		// Override ValidationTextBox.pattern.... we use a reg-ex generating function rather
+		// than a straight regexp to deal with locale (plus formatting options too?)
+		pattern: function(constraints){
+			// if focused, accept either currency data or NumberTextBox format
+			return '(' + (this.focused && this.editOptions ? this._regExpGenerator(lang.delegate(constraints, this.editOptions)) + '|' : '')
+				+ this._regExpGenerator(constraints) + ')';
+		},
+
+		/*=====
+		// constraints: NumberTextBox.__Constraints
+		//		Despite the name, this parameter specifies both constraints on the input
+		//		(including minimum/maximum allowed values) as well as
+		//		formatting options like places (the number of digits to display after
+		//		the decimal point).
+		constraints: {},
+		======*/
+
+		// value: Number
+		//		The value of this NumberTextBox as a Javascript Number (i.e., not a String).
+		//		If the displayed value is blank, the value is NaN, and if the user types in
+		//		an gibberish value (like "hello world"), the value is undefined
+		//		(i.e. get('value') returns undefined).
+		//
+		//		Symmetrically, set('value', NaN) will clear the displayed value,
+		//		whereas set('value', undefined) will have no effect.
+		value: NaN,
+
+		// editOptions: [protected] Object
+		//		Properties to mix into constraints when the value is being edited.
+		//		This is here because we edit the number in the format "12345", which is
+		//		different than the display value (ex: "12,345")
+		editOptions: { pattern: '#.######' },
+
+		/*=====
+		_formatter: function(value, options){
+			// summary:
+			//		_formatter() is called by format().  It's the base routine for formatting a number,
+			//		as a string, for example converting 12345 into "12,345".
+			// value: Number
+			//		The number to be converted into a string.
+			// options: number.__FormatOptions?
+			//		Formatting options
+			// tags:
+			//		protected extension
+
+			return "12345";		// String
+		},
+		 =====*/
+		_formatter: number.format,
+
+		/*=====
+		_regExpGenerator: function(constraints){
+			// summary:
+			//		Generate a localized regular expression as a string, according to constraints.
+			// constraints: number.__ParseOptions
+			//		Formatting options
+			// tags:
+			//		protected
+
+			return "(\d*).(\d*)";	// string
+		},
+		=====*/
+		_regExpGenerator: number.regexp,
+
+		// _decimalInfo: Object
+		// summary:
+		//		An object containing decimal related properties relevant to this TextBox.
+		// tags:
+		//		private
+		_decimalInfo: getDecimalInfo(),
+
+		postMixInProperties: function(){
+			this.inherited(arguments);
+			this._set("type", "text"); // in case type="number" was specified which messes up parse/format
+		},
+
+		_setConstraintsAttr: function(/*Object*/ constraints){
+			var places = typeof constraints.places == "number"? constraints.places : 0;
+			if(places){ places++; } // decimal rounding errors take away another digit of precision
+			if(typeof constraints.max != "number"){
+				constraints.max = 9 * Math.pow(10, 15-places);
+			}
+			if(typeof constraints.min != "number"){
+				constraints.min = -9 * Math.pow(10, 15-places);
+			}
+			this.inherited(arguments, [ constraints ]);
+			if(this.focusNode && this.focusNode.value && !isNaN(this.value)){
+				this.set('value', this.value);
+			}
+			// Capture decimal information based on the constraint locale and pattern.
+			this._decimalInfo = getDecimalInfo(constraints);
+		},
+
+		_onFocus: function(){
+			if(this.disabled || this.readOnly){ return; }
+			var val = this.get('value');
+			if(typeof val == "number" && !isNaN(val)){
+				var formattedValue = this.format(val, this.constraints);
+				if(formattedValue !== undefined){
+					this.textbox.value = formattedValue;
+				}
+			}
+			this.inherited(arguments);
+		},
+
+		format: function(/*Number*/ value, /*number.__FormatOptions*/ constraints){
+			// summary:
+			//		Formats the value as a Number, according to constraints.
+			// tags:
+			//		protected
+
+			var formattedValue = String(value);
+			if(typeof value != "number"){ return formattedValue; }
+			if(isNaN(value)){ return ""; }
+			// check for exponential notation that dojo/number.format() chokes on
+			if(!("rangeCheck" in this && this.rangeCheck(value, constraints)) && constraints.exponent !== false && /\de[-+]?\d/i.test(formattedValue)){
+				return formattedValue;
+			}
+			if(this.editOptions && this.focused){
+				constraints = lang.mixin({}, constraints, this.editOptions);
+			}
+			return this._formatter(value, constraints);
+		},
+
+		/*=====
+		_parser: function(value, constraints){
+			// summary:
+			//		Parses the string value as a Number, according to constraints.
+			// value: String
+			//		String representing a number
+			// constraints: number.__ParseOptions
+			//		Formatting options
+			// tags:
+			//		protected
+
+			return 123.45;		// Number
+		},
+		=====*/
+		_parser: number.parse,
+
+		parse: function(/*String*/ value, /*number.__FormatOptions*/ constraints){
+			// summary:
+			//		Replaceable function to convert a formatted string to a number value
+			// tags:
+			//		protected extension
+
+			var v = this._parser(value, lang.mixin({}, constraints, (this.editOptions && this.focused) ? this.editOptions : {}));
+			if(this.editOptions && this.focused && isNaN(v)){
+				v = this._parser(value, constraints); // parse w/o editOptions: not technically needed but is nice for the user
+			}
+			return v;
+		},
+
+		_getDisplayedValueAttr: function(){
+			var v = this.inherited(arguments);
+			return isNaN(v) ? this.textbox.value : v;
+		},
+
+		filter: function(/*Number*/ value){
+			// summary:
+			//		This is called with both the display value (string), and the actual value (a number).
+			//		When called with the actual value it does corrections so that '' etc. are represented as NaN.
+			//		Otherwise it dispatches to the superclass's filter() method.
+			//
+			//		See `dijit/form/TextBox.filter()` for more details.
+			if(value == null  /* or undefined */ || typeof value == "string" && value ==''){
+				return NaN;
+			}else if(typeof value == "number" && !isNaN(value) && value != 0){
+				value = number.round(value, this._decimalInfo.places);
+			}
+			return this.inherited(arguments, [value]);
+		},
+
+		serialize: function(/*Number*/ value, /*Object?*/ options){
+			// summary:
+			//		Convert value (a Number) into a canonical string (ie, how the number literal is written in javascript/java/C/etc.)
+			// tags:
+			//		protected
+			return (typeof value != "number" || isNaN(value)) ? '' : this.inherited(arguments);
+		},
+
+		_setBlurValue: function(){
+			var val = lang.hitch(lang.delegate(this, { focused: true }), "get")('value'); // parse with editOptions
+			this._setValueAttr(val, true);
+		},
+
+		_setValueAttr: function(/*Number*/ value, /*Boolean?*/ priorityChange, /*String?*/ formattedValue){
+			// summary:
+			//		Hook so set('value', ...) works.
+			if(value !== undefined && formattedValue === undefined){
+				formattedValue = String(value);
+				if(typeof value == "number"){
+					if(isNaN(value)){ formattedValue = '' }
+					// check for exponential notation that number.format chokes on
+					else if(("rangeCheck" in this && this.rangeCheck(value, this.constraints)) || this.constraints.exponent === false || !/\de[-+]?\d/i.test(formattedValue)){
+						formattedValue = undefined; // lets format compute a real string value
+					}
+				}else if(!value){ // 0 processed in if branch above, ''|null|undefined flows through here
+					formattedValue = '';
+					value = NaN;
+				}else{ // non-numeric values
+					value = undefined;
+				}
+			}
+			this.inherited(arguments, [value, priorityChange, formattedValue]);
+		},
+
+		_getValueAttr: function(){
+			// summary:
+			//		Hook so get('value') works.
+			//		Returns Number, NaN for '', or undefined for unparseable text
+			var v = this.inherited(arguments); // returns Number for all values accepted by parse() or NaN for all other displayed values
+
+			// If the displayed value of the textbox is gibberish (ex: "hello world"), this.inherited() above
+			// returns NaN; this if() branch converts the return value to undefined.
+			// Returning undefined prevents user text from being overwritten when doing _setValueAttr(_getValueAttr()).
+			// A blank displayed value is still returned as NaN.
+			if(isNaN(v) && this.textbox.value !== ''){
+				if(this.constraints.exponent !== false && /\de[-+]?\d/i.test(this.textbox.value) && (new RegExp("^"+number._realNumberRegexp(lang.delegate(this.constraints))+"$").test(this.textbox.value))){	// check for exponential notation that parse() rejected (erroneously?)
+					var n = Number(this.textbox.value);
+					return isNaN(n) ? undefined : n; // return exponential Number or undefined for random text (may not be possible to do with the above RegExp check)
+				}else{
+					return undefined; // gibberish
+				}
+			}else{
+				return v; // Number or NaN for ''
+			}
+		},
+
+		isValid: function(/*Boolean*/ isFocused){
+			// Overrides dijit/form/RangeBoundTextBox.isValid() to check that the editing-mode value is valid since
+			// it may not be formatted according to the regExp validation rules
+			if(!this.focused || this._isEmpty(this.textbox.value)){
+				return this.inherited(arguments);
+			}else{
+				var v = this.get('value');
+				if(!isNaN(v) && this.rangeCheck(v, this.constraints)){
+					if(this.constraints.exponent !== false && /\de[-+]?\d/i.test(this.textbox.value)){ // exponential, parse doesn't like it
+						return true; // valid exponential number in range
+					}else{
+						return this.inherited(arguments);
+					}
+				}else{
+					return false;
+				}
+			}
+		},
+
+		_isValidSubset: function(){
+			// Overrides dijit/form/ValidationTextBox._isValidSubset()
+			//
+			// The inherited method only checks that the computed regex pattern is valid, which doesn't
+			// take into account that numbers are a special case. Specifically:
+			//
+			//  (1) An arbitrary amount of leading or trailing zero's can be ignored.
+			//  (2) Since numeric input always occurs in the order of most significant to least significant
+			//      digits, the maximum and minimum possible values for partially inputted numbers can easily
+			//      be determined by using the number of remaining digit spaces available.
+			//
+			// For example, if an input has a maxLength of 5, and a min value of greater than 100, then the subset
+			// is invalid if there are 3 leading 0s. It remains valid for the first two.
+			//
+			// Another example is if the min value is 1.1. Once a value of 1.0 is entered, no additional trailing digits
+			// could possibly satisify the min requirement.
+			//
+			// See ticket #17923
+			var hasMinConstraint = (typeof this.constraints.min == "number"),
+				hasMaxConstraint = (typeof this.constraints.max == "number"),
+				curVal = this.get('value');
+
+			// If there is no parsable number, or there are no min or max bounds, then we can safely
+			// skip all remaining checks
+			if(isNaN(curVal) || (!hasMinConstraint && !hasMaxConstraint)){
+				return this.inherited(arguments);
+			}
+
+			// This block picks apart the values in the text box to be used later to compute the min and max possible
+			// values based on the current value and the remaining available digits.
+			//
+			// Warning: The use of a "num|0" expression, can be confusing. See the link below
+			// for an explanation.
+			//
+			// http://stackoverflow.com/questions/12125421/why-does-a-shift-by-0-truncate-the-decimal
+			var integerDigits = curVal|0,
+				valNegative = curVal < 0,
+				// Check if the current number has a decimal based on its locale
+				hasDecimal = this.textbox.value.indexOf(this._decimalInfo.sep) != -1,
+				// Determine the max digits based on the textbox length. If no length is
+				// specified, chose a huge number to account for crazy formatting.
+				maxDigits = this.maxLength || 20,
+				// Determine the remaining digits, based on the max digits
+				remainingDigitsCount = maxDigits - this.textbox.value.length,
+				// avoid approximation issues by capturing the decimal portion of the value as the user-entered string
+				fractionalDigitStr = hasDecimal ? this.textbox.value.split(this._decimalInfo.sep)[1].replace(/[^0-9]/g, "") : "";
+
+			// Create a normalized value string in the form of #.###
+			var normalizedValueStr = hasDecimal ? integerDigits+"."+fractionalDigitStr : integerDigits+"";
+
+			// The min and max values for the field can be determined using the following
+			// logic:
+			//
+			//  If the number is positive:
+			//      min value = the current value
+			//      max value = the current value with 9s appended for all remaining possible digits
+			//  else
+			//      min value = the current value with 9s appended for all remaining possible digits
+			//      max value = the current value
+			//
+			var ninePaddingStr = string.rep("9", remainingDigitsCount),
+			    minPossibleValue = curVal,
+			    maxPossibleValue = curVal;
+			if (valNegative){
+				minPossibleValue = Number(normalizedValueStr+ninePaddingStr);
+			} else{
+				maxPossibleValue = Number(normalizedValueStr+ninePaddingStr);
+			}
+
+			return !((hasMinConstraint && maxPossibleValue < this.constraints.min)
+					|| (hasMaxConstraint && minPossibleValue > this.constraints.max));
+		}
+	});
+
+	var NumberTextBox = declare("dijit.form.NumberTextBox", [RangeBoundTextBox, NumberTextBoxMixin], {
+		// summary:
+		//		A TextBox for entering numbers, with formatting and range checking
+		// description:
+		//		NumberTextBox is a textbox for entering and displaying numbers, supporting
+		//		the following main features:
+		//
+		//		1. Enforce minimum/maximum allowed values (as well as enforcing that the user types
+		//			a number rather than a random string)
+		//		2. NLS support (altering roles of comma and dot as "thousands-separator" and "decimal-point"
+		//			depending on locale).
+		//		3. Separate modes for editing the value and displaying it, specifically that
+		//			the thousands separator character (typically comma) disappears when editing
+		//			but reappears after the field is blurred.
+		//		4. Formatting and constraints regarding the number of places (digits after the decimal point)
+		//			allowed on input, and number of places displayed when blurred (see `constraints` parameter).
+
+		baseClass: "dijitTextBox dijitNumberTextBox"
+	});
+
+	NumberTextBox.Mixin = NumberTextBoxMixin;	// for monkey patching
+
+	/*=====
+	 NumberTextBox.__Constraints = declare([RangeBoundTextBox.__Constraints, number.__FormatOptions, number.__ParseOptions], {
+		 // summary:
+		 //		Specifies both the rules on valid/invalid values (minimum, maximum,
+		 //		number of required decimal places), and also formatting options for
+		 //		displaying the value when the field is not focused.
+		 // example:
+		 //		Minimum/maximum:
+		 //		To specify a field between 0 and 120:
+		 //	|		{min:0,max:120}
+		 //		To specify a field that must be an integer:
+		 //	|		{fractional:false}
+		 //		To specify a field where 0 to 3 decimal places are allowed on input:
+		 //	|		{places:'0,3'}
+	 });
+	 =====*/
+
+	return NumberTextBox;
+});
+
+},
+'dojo/number':function(){
+define([/*===== "./_base/declare", =====*/ "./_base/lang", "./i18n", "./i18n!./cldr/nls/number", "./string", "./regexp"],
+	function(/*===== declare, =====*/ lang, i18n, nlsNumber, dstring, dregexp){
+
+// module:
+//		dojo/number
+
+var number = {
+	// summary:
+	//		localized formatting and parsing routines for Number
+};
+lang.setObject("dojo.number", number);
+
+/*=====
+number.__FormatOptions = declare(null, {
+	// pattern: String?
+	//		override [formatting pattern](http://www.unicode.org/reports/tr35/#Number_Format_Patterns)
+	//		with this string.  Default value is based on locale.  Overriding this property will defeat
+	//		localization.  Literal characters in patterns are not supported.
+	// type: String?
+	//		choose a format type based on the locale from the following:
+	//		decimal, scientific (not yet supported), percent, currency. decimal by default.
+	// places: Number?
+	//		fixed number of decimal places to show.  This overrides any
+	//		information in the provided pattern.
+	// round: Number?
+	//		5 rounds to nearest .5; 0 rounds to nearest whole (default). -1
+	//		means do not round.
+	// locale: String?
+	//		override the locale used to determine formatting rules
+	// fractional: Boolean?
+	//		If false, show no decimal places, overriding places and pattern settings.
+});
+=====*/
+
+number.format = function(/*Number*/ value, /*number.__FormatOptions?*/ options){
+	// summary:
+	//		Format a Number as a String, using locale-specific settings
+	// description:
+	//		Create a string from a Number using a known localized pattern.
+	//		Formatting patterns appropriate to the locale are chosen from the
+	//		[Common Locale Data Repository](http://unicode.org/cldr) as well as the appropriate symbols and
+	//		delimiters.
+	//		If value is Infinity, -Infinity, or is not a valid JavaScript number, return null.
+	// value:
+	//		the number to be formatted
+
+	options = lang.mixin({}, options || {});
+	var locale = i18n.normalizeLocale(options.locale),
+		bundle = i18n.getLocalization("dojo.cldr", "number", locale);
+	options.customs = bundle;
+	var pattern = options.pattern || bundle[(options.type || "decimal") + "Format"];
+	if(isNaN(value) || Math.abs(value) == Infinity){ return null; } // null
+	return number._applyPattern(value, pattern, options); // String
+};
+
+//number._numberPatternRE = /(?:[#0]*,?)*[#0](?:\.0*#*)?/; // not precise, but good enough
+number._numberPatternRE = /[#0,]*[#0](?:\.0*#*)?/; // not precise, but good enough
+
+number._applyPattern = function(/*Number*/ value, /*String*/ pattern, /*number.__FormatOptions?*/ options){
+	// summary:
+	//		Apply pattern to format value as a string using options. Gives no
+	//		consideration to local customs.
+	// value:
+	//		the number to be formatted.
+	// pattern:
+	//		a pattern string as described by
+	//		[unicode.org TR35](http://www.unicode.org/reports/tr35/#Number_Format_Patterns)
+	// options: number.__FormatOptions?
+	//		_applyPattern is usually called via `dojo/number.format()` which
+	//		populates an extra property in the options parameter, "customs".
+	//		The customs object specifies group and decimal parameters if set.
+
+	//TODO: support escapes
+	options = options || {};
+	var group = options.customs.group,
+		decimal = options.customs.decimal,
+		patternList = pattern.split(';'),
+		positivePattern = patternList[0];
+	pattern = patternList[(value < 0) ? 1 : 0] || ("-" + positivePattern);
+
+	//TODO: only test against unescaped
+	if(pattern.indexOf('%') != -1){
+		value *= 100;
+	}else if(pattern.indexOf('\u2030') != -1){
+		value *= 1000; // per mille
+	}else if(pattern.indexOf('\u00a4') != -1){
+		group = options.customs.currencyGroup || group;//mixins instead?
+		decimal = options.customs.currencyDecimal || decimal;// Should these be mixins instead?
+		pattern = pattern.replace(/\u00a4{1,3}/, function(match){
+			var prop = ["symbol", "currency", "displayName"][match.length-1];
+			return options[prop] || options.currency || "";
+		});
+	}else if(pattern.indexOf('E') != -1){
+		throw new Error("exponential notation not supported");
+	}
+
+	//TODO: support @ sig figs?
+	var numberPatternRE = number._numberPatternRE;
+	var numberPattern = positivePattern.match(numberPatternRE);
+	if(!numberPattern){
+		throw new Error("unable to find a number expression in pattern: "+pattern);
+	}
+	if(options.fractional === false){ options.places = 0; }
+	return pattern.replace(numberPatternRE,
+		number._formatAbsolute(value, numberPattern[0], {decimal: decimal, group: group, places: options.places, round: options.round}));
+};
+
+number.round = function(/*Number*/ value, /*Number?*/ places, /*Number?*/ increment){
+	// summary:
+	//		Rounds to the nearest value with the given number of decimal places, away from zero
+	// description:
+	//		Rounds to the nearest value with the given number of decimal places, away from zero if equal.
+	//		Similar to Number.toFixed(), but compensates for browser quirks. Rounding can be done by
+	//		fractional increments also, such as the nearest quarter.
+	//		NOTE: Subject to floating point errors.  See dojox/math/round for experimental workaround.
+	// value:
+	//		The number to round
+	// places:
+	//		The number of decimal places where rounding takes place.  Defaults to 0 for whole rounding.
+	//		Must be non-negative.
+	// increment:
+	//		Rounds next place to nearest value of increment/10.  10 by default.
+	// example:
+	// |	>>> number.round(-0.5)
+	// |	-1
+	// |	>>> number.round(162.295, 2)
+	// |	162.29  // note floating point error.  Should be 162.3
+	// |	>>> number.round(10.71, 0, 2.5)
+	// |	10.75
+	var factor = 10 / (increment || 10);
+	return (factor * +value).toFixed(places) / factor; // Number
+};
+
+if((0.9).toFixed() == 0){
+	// (isIE) toFixed() bug workaround: Rounding fails on IE when most significant digit
+	// is just after the rounding place and is >=5
+	var round = number.round;
+	number.round = function(v, p, m){
+		var d = Math.pow(10, -p || 0), a = Math.abs(v);
+		if(!v || a >= d){
+			d = 0;
+		}else{
+			a /= d;
+			if(a < 0.5 || a >= 0.95){
+				d = 0;
+			}
+		}
+		return round(v, p, m) + (v > 0 ? d : -d);
+	};
+
+	// Use "doc hint" so the doc parser ignores this new definition of round(), and uses the one above.
+	/*===== number.round = round; =====*/
+}
+
+/*=====
+number.__FormatAbsoluteOptions = declare(null, {
+	// decimal: String?
+	//		the decimal separator
+	// group: String?
+	//		the group separator
+	// places: Number|String?
+	//		number of decimal places.  the range "n,m" will format to m places.
+	// round: Number?
+	//		5 rounds to nearest .5; 0 rounds to nearest whole (default). -1
+	//		means don't round.
+});
+=====*/
+
+number._formatAbsolute = function(/*Number*/ value, /*String*/ pattern, /*number.__FormatAbsoluteOptions?*/ options){
+	// summary:
+	//		Apply numeric pattern to absolute value using options. Gives no
+	//		consideration to local customs.
+	// value:
+	//		the number to be formatted, ignores sign
+	// pattern:
+	//		the number portion of a pattern (e.g. `#,##0.00`)
+	options = options || {};
+	if(options.places === true){options.places=0;}
+	if(options.places === Infinity){options.places=6;} // avoid a loop; pick a limit
+
+	var patternParts = pattern.split("."),
+		comma = typeof options.places == "string" && options.places.indexOf(","),
+		maxPlaces = options.places;
+	if(comma){
+		maxPlaces = options.places.substring(comma + 1);
+	}else if(!(maxPlaces >= 0)){
+		maxPlaces = (patternParts[1] || []).length;
+	}
+	if(!(options.round < 0)){
+		value = number.round(value, maxPlaces, options.round);
+	}
+
+	var valueParts = String(Math.abs(value)).split("."),
+		fractional = valueParts[1] || "";
+	if(patternParts[1] || options.places){
+		if(comma){
+			options.places = options.places.substring(0, comma);
+		}
+		// Pad fractional with trailing zeros
+		var pad = options.places !== undefined ? options.places : (patternParts[1] && patternParts[1].lastIndexOf("0") + 1);
+		if(pad > fractional.length){
+			valueParts[1] = dstring.pad(fractional, pad, '0', true);
+		}
+
+		// Truncate fractional
+		if(maxPlaces < fractional.length){
+			valueParts[1] = fractional.substr(0, maxPlaces);
+		}
+	}else{
+		if(valueParts[1]){ valueParts.pop(); }
+	}
+
+	// Pad whole with leading zeros
+	var patternDigits = patternParts[0].replace(',', '');
+	pad = patternDigits.indexOf("0");
+	if(pad != -1){
+		pad = patternDigits.length - pad;
+		if(pad > valueParts[0].length){
+			valueParts[0] = dstring.pad(valueParts[0], pad);
+		}
+
+		// Truncate whole
+		if(patternDigits.indexOf("#") == -1){
+			valueParts[0] = valueParts[0].substr(valueParts[0].length - pad);
+		}
+	}
+
+	// Add group separators
+	var index = patternParts[0].lastIndexOf(','),
+		groupSize, groupSize2;
+	if(index != -1){
+		groupSize = patternParts[0].length - index - 1;
+		var remainder = patternParts[0].substr(0, index);
+		index = remainder.lastIndexOf(',');
+		if(index != -1){
+			groupSize2 = remainder.length - index - 1;
+		}
+	}
+	var pieces = [];
+	for(var whole = valueParts[0]; whole;){
+		var off = whole.length - groupSize;
+		pieces.push((off > 0) ? whole.substr(off) : whole);
+		whole = (off > 0) ? whole.slice(0, off) : "";
+		if(groupSize2){
+			groupSize = groupSize2;
+			delete groupSize2;
+		}
+	}
+	valueParts[0] = pieces.reverse().join(options.group || ",");
+
+	return valueParts.join(options.decimal || ".");
+};
+
+/*=====
+number.__RegexpOptions = declare(null, {
+	// pattern: String?
+	//		override [formatting pattern](http://www.unicode.org/reports/tr35/#Number_Format_Patterns)
+	//		with this string.  Default value is based on locale.  Overriding this property will defeat
+	//		localization.
+	// type: String?
+	//		choose a format type based on the locale from the following:
+	//		decimal, scientific (not yet supported), percent, currency. decimal by default.
+	// locale: String?
+	//		override the locale used to determine formatting rules
+	// strict: Boolean?
+	//		strict parsing, false by default.  Strict parsing requires input as produced by the format() method.
+	//		Non-strict is more permissive, e.g. flexible on white space, omitting thousands separators
+	// places: Number|String?
+	//		number of decimal places to accept: Infinity, a positive number, or
+	//		a range "n,m".  Defined by pattern or Infinity if pattern not provided.
+});
+=====*/
+number.regexp = function(/*number.__RegexpOptions?*/ options){
+	// summary:
+	//		Builds the regular needed to parse a number
+	// description:
+	//		Returns regular expression with positive and negative match, group
+	//		and decimal separators
+	return number._parseInfo(options).regexp; // String
+};
+
+number._parseInfo = function(/*Object?*/ options){
+	options = options || {};
+	var locale = i18n.normalizeLocale(options.locale),
+		bundle = i18n.getLocalization("dojo.cldr", "number", locale),
+		pattern = options.pattern || bundle[(options.type || "decimal") + "Format"],
+//TODO: memoize?
+		group = bundle.group,
+		decimal = bundle.decimal,
+		factor = 1;
+
+	if(pattern.indexOf('%') != -1){
+		factor /= 100;
+	}else if(pattern.indexOf('\u2030') != -1){
+		factor /= 1000; // per mille
+	}else{
+		var isCurrency = pattern.indexOf('\u00a4') != -1;
+		if(isCurrency){
+			group = bundle.currencyGroup || group;
+			decimal = bundle.currencyDecimal || decimal;
+		}
+	}
+
+	//TODO: handle quoted escapes
+	var patternList = pattern.split(';');
+	if(patternList.length == 1){
+		patternList.push("-" + patternList[0]);
+	}
+
+	var re = dregexp.buildGroupRE(patternList, function(pattern){
+		pattern = "(?:"+dregexp.escapeString(pattern, '.')+")";
+		return pattern.replace(number._numberPatternRE, function(format){
+			var flags = {
+				signed: false,
+				separator: options.strict ? group : [group,""],
+				fractional: options.fractional,
+				decimal: decimal,
+				exponent: false
+				},
+
+				parts = format.split('.'),
+				places = options.places;
+
+			// special condition for percent (factor != 1)
+			// allow decimal places even if not specified in pattern
+			if(parts.length == 1 && factor != 1){
+			    parts[1] = "###";
+			}
+			if(parts.length == 1 || places === 0){
+				flags.fractional = false;
+			}else{
+				if(places === undefined){ places = options.pattern ? parts[1].lastIndexOf('0') + 1 : Infinity; }
+				if(places && options.fractional == undefined){flags.fractional = true;} // required fractional, unless otherwise specified
+				if(!options.places && (places < parts[1].length)){ places += "," + parts[1].length; }
+				flags.places = places;
+			}
+			var groups = parts[0].split(',');
+			if(groups.length > 1){
+				flags.groupSize = groups.pop().length;
+				if(groups.length > 1){
+					flags.groupSize2 = groups.pop().length;
+				}
+			}
+			return "("+number._realNumberRegexp(flags)+")";
+		});
+	}, true);
+
+	if(isCurrency){
+		// substitute the currency symbol for the placeholder in the pattern
+		re = re.replace(/([\s\xa0]*)(\u00a4{1,3})([\s\xa0]*)/g, function(match, before, target, after){
+			var prop = ["symbol", "currency", "displayName"][target.length-1],
+				symbol = dregexp.escapeString(options[prop] || options.currency || "");
+			before = before ? "[\\s\\xa0]" : "";
+			after = after ? "[\\s\\xa0]" : "";
+			if(!options.strict){
+				if(before){before += "*";}
+				if(after){after += "*";}
+				return "(?:"+before+symbol+after+")?";
+			}
+			return before+symbol+after;
+		});
+	}
+
+//TODO: substitute localized sign/percent/permille/etc.?
+
+	// normalize whitespace and return
+	return {regexp: re.replace(/[\xa0 ]/g, "[\\s\\xa0]"), group: group, decimal: decimal, factor: factor}; // Object
+};
+
+/*=====
+number.__ParseOptions = declare(null, {
+	// pattern: String?
+	//		override [formatting pattern](http://www.unicode.org/reports/tr35/#Number_Format_Patterns)
+	//		with this string.  Default value is based on locale.  Overriding this property will defeat
+	//		localization.  Literal characters in patterns are not supported.
+	// type: String?
+	//		choose a format type based on the locale from the following:
+	//		decimal, scientific (not yet supported), percent, currency. decimal by default.
+	// locale: String?
+	//		override the locale used to determine formatting rules
+	// strict: Boolean?
+	//		strict parsing, false by default.  Strict parsing requires input as produced by the format() method.
+	//		Non-strict is more permissive, e.g. flexible on white space, omitting thousands separators
+	// fractional: Boolean|Array?
+	//		Whether to include the fractional portion, where the number of decimal places are implied by pattern
+	//		or explicit 'places' parameter.  The value [true,false] makes the fractional portion optional.
+});
+=====*/
+number.parse = function(/*String*/ expression, /*number.__ParseOptions?*/ options){
+	// summary:
+	//		Convert a properly formatted string to a primitive Number, using
+	//		locale-specific settings.
+	// description:
+	//		Create a Number from a string using a known localized pattern.
+	//		Formatting patterns are chosen appropriate to the locale
+	//		and follow the syntax described by
+	//		[unicode.org TR35](http://www.unicode.org/reports/tr35/#Number_Format_Patterns)
+    	//		Note that literal characters in patterns are not supported.
+	// expression:
+	//		A string representation of a Number
+	var info = number._parseInfo(options),
+		results = (new RegExp("^"+info.regexp+"$")).exec(expression);
+	if(!results){
+		return NaN; //NaN
+	}
+	var absoluteMatch = results[1]; // match for the positive expression
+	if(!results[1]){
+		if(!results[2]){
+			return NaN; //NaN
+		}
+		// matched the negative pattern
+		absoluteMatch =results[2];
+		info.factor *= -1;
+	}
+
+	// Transform it to something Javascript can parse as a number.  Normalize
+	// decimal point and strip out group separators or alternate forms of whitespace
+	absoluteMatch = absoluteMatch.
+		replace(new RegExp("["+info.group + "\\s\\xa0"+"]", "g"), "").
+		replace(info.decimal, ".");
+	// Adjust for negative sign, percent, etc. as necessary
+	return absoluteMatch * info.factor; //Number
+};
+
+/*=====
+number.__RealNumberRegexpFlags = declare(null, {
+	// places: Number?
+	//		The integer number of decimal places or a range given as "n,m".  If
+	//		not given, the decimal part is optional and the number of places is
+	//		unlimited.
+	// decimal: String?
+	//		A string for the character used as the decimal point.  Default
+	//		is ".".
+	// fractional: Boolean|Array?
+	//		Whether decimal places are used.  Can be true, false, or [true,
+	//		false].  Default is [true, false] which means optional.
+	// exponent: Boolean|Array?
+	//		Express in exponential notation.  Can be true, false, or [true,
+	//		false]. Default is [true, false], (i.e. will match if the
+	//		exponential part is present are not).
+	// eSigned: Boolean|Array?
+	//		The leading plus-or-minus sign on the exponent.  Can be true,
+	//		false, or [true, false].  Default is [true, false], (i.e. will
+	//		match if it is signed or unsigned).  flags in regexp.integer can be
+	//		applied.
+});
+=====*/
+
+number._realNumberRegexp = function(/*__RealNumberRegexpFlags?*/ flags){
+	// summary:
+	//		Builds a regular expression to match a real number in exponential
+	//		notation
+
+	// assign default values to missing parameters
+	flags = flags || {};
+	//TODO: use mixin instead?
+	if(!("places" in flags)){ flags.places = Infinity; }
+	if(typeof flags.decimal != "string"){ flags.decimal = "."; }
+	if(!("fractional" in flags) || /^0/.test(flags.places)){ flags.fractional = [true, false]; }
+	if(!("exponent" in flags)){ flags.exponent = [true, false]; }
+	if(!("eSigned" in flags)){ flags.eSigned = [true, false]; }
+
+	var integerRE = number._integerRegexp(flags),
+		decimalRE = dregexp.buildGroupRE(flags.fractional,
+		function(q){
+			var re = "";
+			if(q && (flags.places!==0)){
+				re = "\\" + flags.decimal;
+				if(flags.places == Infinity){
+					re = "(?:" + re + "\\d+)?";
+				}else{
+					re += "\\d{" + flags.places + "}";
+				}
+			}
+			return re;
+		},
+		true
+	);
+
+	var exponentRE = dregexp.buildGroupRE(flags.exponent,
+		function(q){
+			if(q){ return "([eE]" + number._integerRegexp({ signed: flags.eSigned}) + ")"; }
+			return "";
+		}
+	);
+
+	var realRE = integerRE + decimalRE;
+	// allow for decimals without integers, e.g. .25
+	if(decimalRE){realRE = "(?:(?:"+ realRE + ")|(?:" + decimalRE + "))";}
+	return realRE + exponentRE; // String
+};
+
+/*=====
+number.__IntegerRegexpFlags = declare(null, {
+	// signed: Boolean?
+	//		The leading plus-or-minus sign. Can be true, false, or `[true,false]`.
+	//		Default is `[true, false]`, (i.e. will match if it is signed
+	//		or unsigned).
+	// separator: String?
+	//		The character used as the thousands separator. Default is no
+	//		separator. For more than one symbol use an array, e.g. `[",", ""]`,
+	//		makes ',' optional.
+	// groupSize: Number?
+	//		group size between separators
+	// groupSize2: Number?
+	//		second grouping, where separators 2..n have a different interval than the first separator (for India)
+});
+=====*/
+
+number._integerRegexp = function(/*number.__IntegerRegexpFlags?*/ flags){
+	// summary:
+	//		Builds a regular expression that matches an integer
+
+	// assign default values to missing parameters
+	flags = flags || {};
+	if(!("signed" in flags)){ flags.signed = [true, false]; }
+	if(!("separator" in flags)){
+		flags.separator = "";
+	}else if(!("groupSize" in flags)){
+		flags.groupSize = 3;
+	}
+
+	var signRE = dregexp.buildGroupRE(flags.signed,
+		function(q){ return q ? "[-+]" : ""; },
+		true
+	);
+
+	var numberRE = dregexp.buildGroupRE(flags.separator,
+		function(sep){
+			if(!sep){
+				return "(?:\\d+)";
+			}
+
+			sep = dregexp.escapeString(sep);
+			if(sep == " "){ sep = "\\s"; }
+			else if(sep == "\xa0"){ sep = "\\s\\xa0"; }
+
+			var grp = flags.groupSize, grp2 = flags.groupSize2;
+			//TODO: should we continue to enforce that numbers with separators begin with 1-9?  See #6933
+			if(grp2){
+				var grp2RE = "(?:0|[1-9]\\d{0," + (grp2-1) + "}(?:[" + sep + "]\\d{" + grp2 + "})*[" + sep + "]\\d{" + grp + "})";
+				return ((grp-grp2) > 0) ? "(?:" + grp2RE + "|(?:0|[1-9]\\d{0," + (grp-1) + "}))" : grp2RE;
+			}
+			return "(?:0|[1-9]\\d{0," + (grp-1) + "}(?:[" + sep + "]\\d{" + grp + "})*)";
+		},
+		true
+	);
+
+	return signRE + numberRE; // String
+};
+
+return number;
+});
+
+},
 'lsmb/PublishRadioButton':function(){
 define(['dojo/_base/declare',
         'dojo/on',
@@ -34477,6 +35467,31 @@ define(['dojo/_base/declare',
                topic: "",
                update: function(targetValue) {
                    this.set('checked', targetValue);
+               },
+               postCreate: function() {
+                   var self = this;
+                   this.inherited(arguments);
+
+                   this.own(
+                       topic.subscribe(self.topic,function(targetValue) {
+                           self.update(targetValue);
+                       })
+                   );
+               }
+           });
+       });
+
+},
+'lsmb/SubscribeNumberTextBox':function(){
+define(['dojo/_base/declare',
+        'dojo/on',
+        'dojo/topic',
+        'dijit/form/NumberTextBox'],
+       function(declare, on, topic, NumberTextBox) {
+           return declare('lsmb/SubscribeNumberTextBox', NumberTextBox, {
+               topic: "",
+               update: function(targetValue) {
+//                   this.set('checked', targetValue);
                },
                postCreate: function() {
                    var self = this;

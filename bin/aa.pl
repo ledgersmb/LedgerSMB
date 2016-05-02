@@ -739,10 +739,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
-	if($form->{"calctax_$item"} && $is_update){
+        if($form->{"calctax_$item"} && $is_update){
             $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
             $form->{invtotal} += $form->{"tax_$item"};
-	}
+        }
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -934,7 +934,8 @@ sub form_footer {
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
+              { ndx => 2, key => 'P', value => $locale->text('Print'),
+                type => 'lsmb/PrintButton' },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'schedule' =>
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },

@@ -84,6 +84,7 @@ var profile = (function(){
                     "lsmb/InvoiceLines",
                     "lsmb/MainContentPane",
                     "lsmb/MaximizeMinimize",
+                    "lsmb/PrintButton",
                     "lsmb/PublishCheckBox",
                     "lsmb/PublishRadioButton",
                     "lsmb/PublishSelect",
