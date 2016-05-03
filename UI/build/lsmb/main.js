@@ -607,6 +607,19 @@ require({cache:{"dojo/request/xhr":function() {
       }))
     }})
   })
+}, "lsmb/SetupLoginButton":function() {
+  define("dojo/_base/declare dojo/_base/event dojo/request/xhr dojo/dom dojo/dom-style dijit/form/Button".split(" "), function(e, l, h, m, c, d) {
+    return e("lsmb/SetupLoginButton", [d], {action:null, onClick:function(c) {
+      var d = this, b = m.byId("s-user").value, a = m.byId("s-password").value, k = m.byId("database").value;
+      l.stop(c);
+      h("login.pl?action\x3dauthenticate\x26company\x3dpostgres\x26dbonly\x3d1", {user:b, password:a}).then(function(a) {
+        window.location.href = "setup.pl?action\x3d" + d.action + "\x26database\x3d" + k
+      }, function(a) {
+        a = a.response.status;
+        "454" == a ? alert("Company does not exist") : alert("Access denied (" + a + "): Bad username/password")
+      })
+    }})
+  })
 }, "lsmb/PublishSelect":function() {
   define(["dojo/_base/declare", "dojo/on", "dojo/topic", "dijit/form/Select"], function(e, l, h, m) {
     return e("lsmb/PublishSelect", [m], {topic:"", publish:function(c) {
@@ -1450,13 +1463,13 @@ require({cache:{"dojo/request/xhr":function() {
                   }else {
                     n = f._localized, v[l.toAbsMid(q + m + "/" + e)] = f
                   }
-                  e !== c && function(a, b, f, q) {
-                    var e = [], m = [];
+                  e !== c && function(a, b, f, e) {
+                    var q = [], m = [];
                     g(c, function(c) {
-                      q[c] && (e.push(l.toAbsMid(a + c + "/" + b)), m.push(l.toAbsMid(a + b + "/" + c)))
+                      e[c] && (q.push(l.toAbsMid(a + c + "/" + b)), m.push(l.toAbsMid(a + b + "/" + c)))
                     });
-                    e.length ? (u++, k(e, function() {
-                      for(var k = 0;k < e.length;k++) {
+                    q.length ? (u++, k(q, function() {
+                      for(var k = 0;k < q.length;k++) {
                         f = d.mixin(d.clone(f), arguments[k]), v[m[k]] = f
                       }
                       v[l.toAbsMid(a + b + "/" + c)] = d.clone(f);
@@ -1573,15 +1586,15 @@ require({cache:{"dojo/request/xhr":function() {
     }, instantiate:function(a, b, c) {
       b = b || {};
       c = c || {};
-      var k = (c.scope || l._scopeName) + "Type", d = "data-" + (c.scope || l._scopeName) + "-", f = d + "type", g = d + "mixins", e = [];
+      var k = (c.scope || l._scopeName) + "Type", d = "data-" + (c.scope || l._scopeName) + "-", f = d + "type", g = d + "mixins", q = [];
       m.forEach(a, function(a) {
         var c = k in b ? b[k] : a.getAttribute(f) || a.getAttribute(k);
         if(c) {
           var d = a.getAttribute(g), c = d ? [c].concat(d.split(/\s*,\s*/)) : [c];
-          e.push({node:a, types:c})
+          q.push({node:a, types:c})
         }
       });
-      return this._instantiate(e, b, c)
+      return this._instantiate(q, b, c)
     }, _instantiate:function(b, c, k, d) {
       function f(a) {
         !c._started && !k.noStart && m.forEach(a, function(a) {
@@ -1826,17 +1839,17 @@ require({cache:{"dojo/request/xhr":function() {
       !b && a && a.rootNode ? (b = a, c = b.rootNode) : a && h.isObject(a) && !("nodeType" in a) ? b = a : c = a;
       c = c ? d.byId(c) : f.body();
       b = b || {};
-      var k = b.template ? {template:!0} : {}, g = [], e = this, q = this._scanAmd(c, b).then(function() {
-        return e.scan(c, b)
+      var k = b.template ? {template:!0} : {}, g = [], q = this, e = this._scanAmd(c, b).then(function() {
+        return q.scan(c, b)
       }).then(function(a) {
-        return e._instantiate(a, k, b, !0)
+        return q._instantiate(a, k, b, !0)
       }).then(function(a) {
         return g = g.concat(a)
       }).otherwise(function(a) {
         console.error("dojo/parser::parse() error", a);
         throw a;
       });
-      h.mixin(g, q);
+      h.mixin(g, e);
       return g
     }};
     l.parser = x;
@@ -4178,9 +4191,9 @@ require({cache:{"dojo/request/xhr":function() {
         throw Error("no id");
       }
       if(g("config-bgIframe")) {
-        var e = this.iframe = b.pop();
-        a.appendChild(e);
-        7 > g("ie") || g("quirks") ? (this.resize(a), this._conn = f(a, "resize", d.hitch(this, "resize", a))) : c.set(e, {width:"100%", height:"100%"})
+        var k = this.iframe = b.pop();
+        a.appendChild(k);
+        7 > g("ie") || g("quirks") ? (this.resize(a), this._conn = f(a, "resize", d.hitch(this, "resize", a))) : c.set(k, {width:"100%", height:"100%"})
       }
     };
     d.extend(l.BackgroundIframe, {resize:function(a) {
