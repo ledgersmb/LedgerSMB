@@ -1,3 +1,7 @@
+body {
+    overflow-y: auto;
+}
+
 div.setupconsole {
     background-color: white;
     margin-right: auto;
@@ -6,6 +10,8 @@ div.setupconsole {
     padding: 2em;
     padding-bottom: 2em;
     border-style: outset;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 div {
