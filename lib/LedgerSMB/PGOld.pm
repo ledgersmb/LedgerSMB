@@ -26,7 +26,6 @@ use warnings;
 
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
-use Carp::Always;
 
 sub new {
     my $pkg = shift;
