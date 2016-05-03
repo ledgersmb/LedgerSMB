@@ -433,7 +433,6 @@ sub revert_migration {
     $sth->execute();
     my ($src_schema) = $sth->fetchrow_array();
     $dbh->rollback();
-    $dbh->begin_work();
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
@@ -670,7 +669,6 @@ sub upgrade {
         $template->render($request);
     } else {
         $request->{dbh}->rollback();
-        $request->{dbh}->begin_work();
 
         __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
     }
@@ -766,7 +764,6 @@ sub fix_tests{
     }
     $sth->finish();
     $request->{dbh}->commit;
-#    $request->{dbh}->begin_work;
     upgrade($request);
 }
 
@@ -1010,7 +1007,6 @@ sub save_user {
         );
    }
    $request->{dbh}->commit;
-   $request->{dbh}->begin_work;
 
    rebuild_modules($request);
 }
@@ -1029,7 +1025,6 @@ sub process_and_run_upgrade_script {
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
-    $dbh->begin_work;
 
     $database->load_base_schema({
     log     => $temp . "_stdout",
@@ -1049,7 +1044,6 @@ sub process_and_run_upgrade_script {
                      VALUES ('migration_src_schema', '$src_schema')
      ));
     $dbh->commit;
-    $dbh->begin_work;
 
     my $dbtemplate = LedgerSMB::Template->new(
         user => {},
@@ -1088,7 +1082,6 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->begin_work;
 }
 
 
