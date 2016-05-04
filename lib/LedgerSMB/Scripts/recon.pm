@@ -159,7 +159,7 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Reconciliation::Summary->new($request);
+    my $report = LedgerSMB::Report::Reconciliation::Summary->new({base => $request});
     $report->render($request);
 }
 
