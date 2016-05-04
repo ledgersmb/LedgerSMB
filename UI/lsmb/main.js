@@ -28,16 +28,17 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                         hash(dnode.href + '#s' + c.toString(16));
                     });
                 };
-                mainDiv.interceptClick = interceptClick;
-                query('a.menu-terminus').forEach(interceptClick);
-
-                if (window.location.hash) {
-                    mainDiv.load_link(hash());
+                if (mainDiv != null) {
+                    mainDiv.interceptClick = interceptClick;
+                    if (window.location.hash) {
+                        mainDiv.load_link(hash());
+                    }
+                    topic.subscribe("/dojo/hashchange", function(hash) {
+                        mainDiv.load_link(hash);
+                    });
                 }
-                topic.subscribe("/dojo/hashchange", function(hash) {
-                    mainDiv.load_link(hash);
-                });
 
+                query('a.menu-terminus').forEach(interceptClick);
                 query('#console-container')
                     .forEach(function(node) {
                         domClass.add(node, 'done-parsing');

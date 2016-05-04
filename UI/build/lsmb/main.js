@@ -8629,12 +8629,10 @@ require("dojo/parser dojo/query dojo/on dijit/registry dojo/_base/event dojo/has
         d(b.href + "#s" + a.toString(16))
       })
     };
-    b.interceptClick = e;
-    l("a.menu-terminus").forEach(e);
-    window.location.hash && b.load_link(d());
-    f.subscribe("/dojo/hashchange", function(a) {
+    null != b && (b.interceptClick = e, window.location.hash && b.load_link(d()), f.subscribe("/dojo/hashchange", function(a) {
       b.load_link(a)
-    });
+    }));
+    l("a.menu-terminus").forEach(e);
     l("#console-container").forEach(function(a) {
       g.add(a, "done-parsing")
     });

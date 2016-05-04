@@ -29426,7 +29426,14 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                 // doesn't exist!
                 var mainDiv = registry.byId('maindiv');
 
-                // 
+                // we need a centralized interceptClick function so
+                // the hash part we generate to make it unique, really *is*
+                // Without the hash part, clicking on a link twice won't
+                // reload it. That's not too bad, except if a POST was sent
+                // in the mean time; which causes the page content *not* to
+                // correspond (directly) to the link in the browser location,
+                // yet clicking on the link won't return the user to the -e.g.-
+                // search page (that is -- without the hash part below)
                 var c = 0;
                 var interceptClick = function (dnode) {
                     if (dnode.target || ! dnode.href)
@@ -29438,16 +29445,17 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                         hash(dnode.href + '#s' + c.toString(16));
                     });
                 };
-                mainDiv.interceptClick = interceptClick;
-                query('a.menu-terminus').forEach(interceptClick);
-
-                if (window.location.hash) {
-                    mainDiv.load_link(hash());
+                if (mainDiv != null) {
+                    mainDiv.interceptClick = interceptClick;
+                    if (window.location.hash) {
+                        mainDiv.load_link(hash());
+                    }
+                    topic.subscribe("/dojo/hashchange", function(hash) {
+                        mainDiv.load_link(hash);
+                    });
                 }
-                topic.subscribe("/dojo/hashchange", function(hash) {
-                    mainDiv.load_link(hash);
-                });
 
+                query('a.menu-terminus').forEach(interceptClick);
                 query('#console-container')
                     .forEach(function(node) {
                         domClass.add(node, 'done-parsing');
