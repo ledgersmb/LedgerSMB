@@ -152,13 +152,20 @@ callback.
 
 sub generate {
     my ($request) = @_;
-    my $form = new Form;
-    for my $k (keys %$request){
-        $form->{$k} = $request->{$k};
+
+    if (my $cpid = fork()) {
+        wait;
     }
-    { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
-    my $locale = $LedgerSMB::App_State::Locale;
-    lsmb_legacy::generate_purchase_orders($form, $locale);
+    else {
+        my $form = new Form;
+        for my $k (keys %$request){
+            $form->{$k} = $request->{$k};
+        }
+        { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
+        my $locale = $LedgerSMB::App_State::Locale;
+        lsmb_legacy::generate_purchase_orders($form, $locale);
+        exit;
+    }
 }
 
 =back
