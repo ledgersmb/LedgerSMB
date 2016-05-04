@@ -8901,6 +8901,7 @@ define([
                           [ContentPane],
               {
                   last_page: null,
+                  interceptClick: null,
                   set_main_div: function(doc){
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
@@ -8951,19 +8952,6 @@ define([
                   show_main_div: function() {
                       style.set(this.domNode, 'visibility', 'visible');
                   },
-                  _patchAtags: function() {
-                      var self = this;
-                      query('a', self.domNode)
-                          .forEach(function (dnode) {
-                              if (! dnode.target && dnode.href) {
-                                  self.own(on(dnode, 'click',
-                                              function(e) {
-                                                  event.stop(e);
-                                                  hash(dnode.href);
-                                              }));
-                              }
-                          });
-                  },
                   set: function() {
                       var newContent = null;
                       var contentOnly = 0;
@@ -8990,7 +8978,8 @@ define([
                               this.inherited('set',arguments,
                                              ['content',newContent])
                               .then(function() {
-                                  self._patchAtags();
+                                  query('a', self.domNode)
+                                      .forEach(self.interceptClick);
                                   self.show_main_div();
                               });
                       }
@@ -29436,14 +29425,21 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                 // the parser has run: before then, the maindiv widget
                 // doesn't exist!
                 var mainDiv = registry.byId('maindiv');
-                query('a.menu-terminus').forEach(function(node){
-                    if (node.href.search(/pl/)){
-                        on(node, 'click', function(e){
-                            event.stop(e);
-                            hash(node.href);
-                        });
-                    }
-                });
+
+                // 
+                var c = 0;
+                var interceptClick = function (dnode) {
+                    if (dnode.target || ! dnode.href)
+                        return;
+
+                    on(dnode, 'click', function(e) {
+                        event.stop(e);
+                        c++;
+                        hash(dnode.href + '#s' + c.toString(16));
+                    });
+                };
+                mainDiv.interceptClick = interceptClick;
+                query('a.menu-terminus').forEach(interceptClick);
 
                 if (window.location.hash) {
                     mainDiv.load_link(hash());
