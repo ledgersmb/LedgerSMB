@@ -199,7 +199,7 @@ sub add_vouchers {
             lsmb_legacy::locale($locale);
             lsmb_legacy::form($form);
             $vouchers_dispatch->{$request->{batch_type}}{function}($request);
-            
+
             exit;
         }
     }
