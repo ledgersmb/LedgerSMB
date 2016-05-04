@@ -1,4 +1,4 @@
-Build started: Mon May 02 2016 23:05:33 GMT+0200 (CEST)
+Build started: Thu May 05 2016 00:19:04 GMT+0200 (CEST)
 Build application version: 1.10.4 (37e1249)
 Messages:
 info(102) Optimizing module
@@ -669,36 +669,6 @@ info(102) Optimizing module
 	module: dojo/cldr/nls/ja/generic
 	module: dojo/nls/bg/colors
 	module: dojo/cldr/nls/en/islamic
-	module: dojo/nls/dojo_ar
-	module: dojo/nls/dojo_ca
-	module: dojo/nls/dojo_cs
-	module: dojo/nls/dojo_da
-	module: dojo/nls/dojo_de
-	module: dojo/nls/dojo_el
-	module: dojo/nls/dojo_en-gb
-	module: dojo/nls/dojo_en-us
-	module: dojo/nls/dojo_es-es
-	module: dojo/nls/dojo_fi-fi
-	module: dojo/nls/dojo_fr-fr
-	module: dojo/nls/dojo_he-il
-	module: dojo/nls/dojo_hu
-	module: dojo/nls/dojo_it-it
-	module: dojo/nls/dojo_ja-jp
-	module: dojo/nls/dojo_ko-kr
-	module: dojo/nls/dojo_nl-nl
-	module: dojo/nls/dojo_nb
-	module: dojo/nls/dojo_pl
-	module: dojo/nls/dojo_pt-br
-	module: dojo/nls/dojo_pt-pt
-	module: dojo/nls/dojo_ru
-	module: dojo/nls/dojo_sk
-	module: dojo/nls/dojo_sl
-	module: dojo/nls/dojo_sv
-	module: dojo/nls/dojo_th
-	module: dojo/nls/dojo_tr
-	module: dojo/nls/dojo_zh-tw
-	module: dojo/nls/dojo_zh-cn
-	module: dojo/nls/dojo_ROOT
 	module: dojo/dojo
 	module: dojo/cldr/nls/da/number
 	module: dojo/cldr/nls/he/currency
@@ -1253,8 +1223,6 @@ info(107) Package Version:
 	package: lsmb; version: 1.5.0
 	package: dijit; version: 1.10.4
 	package: dojo; version: 1.10.4
-warn(201) Cycle detected in layer dependencies.
-	module: lsmb/main
 warn(205) Module not tagged as pure AMD yet it contains AMD API applications.
 	module: lsmb/accounts/AccountSelector
 	module: lsmb/PublishRadioButton
@@ -1297,172 +1265,20 @@ warn(224) A plugin dependency was encountered but there was no build-time plugin
 	module: dojo/request/registry; plugin: dojo/request/default
 Layer Contents:
 dojo/dojo:
-	dojo/request/xhr
-	dijit/form/nls/validate
 	dojo/sniff
-	dijit/form/TextBox
-	dojo/dom-geometry
-	dijit/_TemplatedMixin
-	dijit/_CssStateMixin
-	lsmb/PublishCheckBox
-	dojo/selector/_loader
-	lsmb/SetupLoginButton
-	lsmb/PublishSelect
-	dijit/place
-	dijit/_HasDropDown
-	lsmb/SubscribeCheckBox
-	dijit/_MenuBase
-	dojo/dom-prop
-	dojo/errors/CancelError
-	dojo/_base/xhr
-	dijit/focus
-	dojo/i18n
-	dijit/hccss
-	dojo/_base/lang
-	dojo/parser
-	dijit/form/templates/DropDownButton.html
-	lsmb/DateTextBox
-	dijit/form/ToggleButton
-	dojo/date/stamp
-	dojo/mouse
-	dojo/Stateful
-	dijit/form/DateTextBox
-	dijit/templates/Calendar.html
-	lsmb/main
-	dijit/form/MappedTextBox
-	dijit/form/_TextBoxMixin
-	dojo/Evented
-	dojo/hccss
-	dijit/form/RadioButton
-	lsmb/PublishRadioButton
-	dojo/aspect
-	dojo/_base/window
-	dijit/main
-	dojo/NodeList-dom
-	dojo/_base/event
-	dojo/errors/create
-	dijit/_OnDijitClickMixin
-	dijit/form/_RadioButtonMixin
-	dojo/dom-class
-	dojo/_base/sniff
-	dojo/has
-	lsmb/MainContentPane
-	dojo/cache
-	dijit/form/templates/DropDownBox.html
-	lsmb/layout/TableContainer
-	dojo/request/util
-	dojo/promise/all
-	dijit/form/templates/Button.html
-	dojo/_base/url
-	dijit/templates/MenuItem.html
-	dojo/domReady
-	dojo/text
-	dijit/form/templates/CheckBox.html
-	dojo/dom
-	dojo/cldr/nls/gregorian
-	dojo/keys
-	dojo/uacss
-	dijit/Tooltip
-	dojo/string
-	dijit/templates/MenuSeparator.html
-	dijit/form/DropDownButton
-	dijit/form/_FormValueMixin
-	dijit/form/_FormWidgetMixin
-	dijit/a11yclick
-	dojo/request/handlers
-	dojo/date
-	dijit/Destroyable
-	dijit/layout/_ContentPaneResizeMixin
-	dijit/form/RangeBoundTextBox
-	dijit/nls/loading
-	dojo/ready
-	dojo/_base/Deferred
-	lsmb/Form
-	dijit/MenuItem
-	dojo/cldr/supplemental
-	dojo/hash
-	dijit/layout/_LayoutWidget
-	dojo/selector/lite
-	dijit/popup
-	dijit/_base/manager
-	dojo/request/default
-	dijit/BackgroundIframe
-	dijit/templates/Menu.html
-	dijit/form/Button
-	dijit/_WidgetBase
-	dijit/form/Form
-	dojo/_base/array
-	dojo/promise/Promise
-	dojo/errors/RequestTimeoutError
-	lsmb/Invoice
-	dijit/templates/Tooltip.html
-	dojo/_base/config
-	dojo/_base/kernel
-	dojo/regexp
-	dijit/DropDownMenu
-	dijit/_AttachMixin
-	dijit/form/_FormMixin
 	dojo/on
-	dijit/form/_CheckBoxMixin
-	dijit/layout/ContentPane
-	dojo/_base/fx
-	dijit/form/templates/ValidationTextBox.html
-	dijit/form/templates/TextBox.html
-	dijit/_KeyNavContainer
-	dijit/layout/utils
-	dijit/_Contained
-	dijit/form/CheckBox
-	dojo/dom-style
-	dojo/dom-construct
-	dijit/_Container
-	dojo/when
-	dojo/html
-	dijit/form/ValidationTextBox
-	dojo/window
-	dijit/_FocusMixin
-	dijit/_WidgetsInTemplateMixin
-	dojo/Deferred
-	lsmb/PrintButton
-	dojo/_base/connect
-	dojo/request/watch
-	dojo/data/util/sorter
-	dijit/form/_ButtonMixin
-	dojo/dom-attr
-	dijit/registry
-	dojo/io-query
-	dojo/date/locale
-	dijit/form/_FormSelectWidget
-	dojo/dojo
-	dijit/form/Select
-	dojo/_base/json
-	lsmb/SubscribeShowHide
-	dijit/_KeyNavMixin
-	dojo/store/util/QueryResults
-	lsmb/MaximizeMinimize
-	dijit/form/_FormWidget
-	dojo/_base/Color
-	dojo/errors/RequestError
-	dijit/CalendarLite
-	lsmb/InvoiceLines
-	dijit/Viewport
-	lsmb/InvoiceLine
-	dojo/topic
-	dijit/MenuSeparator
-	dojo/_base/declare
-	dijit/form/_DateTimeTextBox
+	dojo/has
+	dojo/selector/_loader
+	dojo/selector/lite
 	dojo/query
-	dijit/a11y
-	dijit/Calendar
-	dijit/form/_ToggleButtonMixin
-	dijit/_Widget
-	dojo/json
-	dojo/touch
-	dijit/form/templates/Select.html
-	lsmb/SubscribeSelect
-	dojo/dom-form
-	dojo/request
-	lsmb/TabularForm
-	dijit/form/_FormValueWidget
+	dojo/_base/window
+	dojo/dom
+	dojo/dojo
+	dojo/_base/kernel
+	dojo/_base/lang
+	dojo/_base/array
+	dojo/domReady
+	dojo/_base/config
 
 lsmb/main:
 	dojo/request/xhr
@@ -1493,6 +1309,7 @@ lsmb/main:
 	dojo/Stateful
 	dijit/form/DateTextBox
 	dijit/templates/Calendar.html
+	lsmb/main
 	dijit/form/MappedTextBox
 	dijit/form/_TextBoxMixin
 	dojo/Evented
@@ -1621,5 +1438,5 @@ lsmb/main:
 
 Process finished normally
 	errors: 0
-	warnings: 38
-	build time: 20.698 seconds
+	warnings: 37
+	build time: 18.302 seconds

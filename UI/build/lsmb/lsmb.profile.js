@@ -71,8 +71,8 @@ var profile = (function(){
 
         layers: {
             "dojo/dojo": {
-                include: [ "dojo/dojo", "dojo/query", "dojo/domReady", "dojo/on",
-                    "lsmb/main" ],
+                include: [ "dojo/dojo", "dojo/query",
+                           "dojo/domReady", "dojo/on" ],
                 customBase: true,
                 boot: true
             },

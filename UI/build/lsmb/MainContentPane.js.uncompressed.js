@@ -19,6 +19,7 @@ define("lsmb/MainContentPane", [
                           [ContentPane],
               {
                   last_page: null,
+                  interceptClick: null,
                   set_main_div: function(doc){
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
@@ -69,19 +70,6 @@ define("lsmb/MainContentPane", [
                   show_main_div: function() {
                       style.set(this.domNode, 'visibility', 'visible');
                   },
-                  _patchAtags: function() {
-                      var self = this;
-                      query('a', self.domNode)
-                          .forEach(function (dnode) {
-                              if (! dnode.target && dnode.href) {
-                                  self.own(on(dnode, 'click',
-                                              function(e) {
-                                                  event.stop(e);
-                                                  hash(dnode.href);
-                                              }));
-                              }
-                          });
-                  },
                   set: function() {
                       var newContent = null;
                       var contentOnly = 0;
@@ -108,7 +96,8 @@ define("lsmb/MainContentPane", [
                               this.inherited('set',arguments,
                                              ['content',newContent])
                               .then(function() {
-                                  self._patchAtags();
+                                  query('a', self.domNode)
+                                      .forEach(self.interceptClick);
                                   self.show_main_div();
                               });
                       }
