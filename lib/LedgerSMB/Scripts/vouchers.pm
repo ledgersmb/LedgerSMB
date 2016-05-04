@@ -186,14 +186,22 @@ sub add_vouchers {
     $form->{script} =~ s|.*/||;
     delete $form->{id};
     delete $request->{id};
-    if ($script =~ /^bin/){
+    if ($script =~ /^bin/) {
+        if (my $cpid = fork()) {
+            wait;
+        }
+        else {
+            # Note that the line below is generally considered
+            # incredibly bad form.
+            # However, the code we are including is going to require it for now.
+            # -- CT
+            { no strict; no warnings 'redefine'; do $script; }
+            lsmb_legacy::locale($locale);
+            lsmb_legacy::form($form);
+            $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 
-        # Note that the line below is generally considered incredibly bad form.
-        # However, the code we are including is going to require it for now.
-        # -- CT
-        { no strict; no warnings 'redefine'; do $script; }
-        lsmb_legacy::locale($locale);
-        lsmb_legacy::form($form);
+            exit;
+        }
     }
 
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);

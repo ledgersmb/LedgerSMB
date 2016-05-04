@@ -34,9 +34,15 @@ sub view {
     use LedgerSMB::Form;
     our $template_dispatch =
     {
-        ap         => {script => 'bin/ap.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
-        ar         => {script => 'bin/ar.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
-        gl         => {script => 'bin/gl.pl', function => sub {$lsmb_legacy::form->{title} = 'Add'; lsmb_legacy::update()}},
+        ap         => {script => 'bin/ap.pl',
+                       function => sub {$lsmb_legacy::form->{title} = 'Add';
+                                        lsmb_legacy::update()}},
+        ar         => {script => 'bin/ar.pl',
+                       function => sub {$lsmb_legacy::form->{title} = 'Add';
+                                        lsmb_legacy::update()}},
+        gl         => {script => 'bin/gl.pl',
+                       function => sub {$lsmb_legacy::form->{title} = 'Add';
+                                        lsmb_legacy::update()}},
     };
 
     our $form = new Form;
@@ -56,14 +62,20 @@ sub view {
     $form->{script} =~ s/(bin|scripts)\///;
     delete $form->{id};
     if ($script =~ /^bin/){
-    # I hate this old code!
-        {
-             no strict;
-             no warnings 'redefine';
-             convert_to_form($transtemplate, $form, $request->{entry_type});
-             do $script;
+        if (my $cpid = fork()) {
+            wait;
         }
+        else {
+            # I hate this old code!
+            {
+                no strict;
+                no warnings 'redefine';
+                convert_to_form($transtemplate, $form, $request->{entry_type});
+                do $script;
+            }
 
+            exit;
+        }
     } elsif ($script =~ /scripts/) {
          { do $script }
 
