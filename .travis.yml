@@ -92,8 +92,7 @@ before_install:
 install:
   - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
-  - cpan-install Plack CGI::Emulate::PSGI Selenium::Remote::Driver
-  - cpan-install X12::Parser
+  - cpan-install Selenium::Remote::Driver X12::Parser
 
 before_script:
   - coverage-setup 2>/dev/null
