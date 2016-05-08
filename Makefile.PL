@@ -16,7 +16,6 @@ perl_version '5.10.1';
 requires 'App::LedgerSMB::Admin' => 0.04;
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
-requires 'Carp::Always';
 requires 'Config::IniFiles';
 requires 'DBD::Pg';
 requires 'DBI' => '1.00';
