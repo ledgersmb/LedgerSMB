@@ -8,6 +8,12 @@ After=network.target
 
 [Service]
 WorkingDirectory=WORKING_DIR
+
+# In case you installed dependencies into a 'local::lib'
+# make sure you set the PERL5LIB environment variable
+# to the correct location by uncommenting the line below
+#Environment=PERL5LIB=/path/to/local-lib/lib/perl5
+
 # Be sure to set a user and group below
 # which don't have write access to the directories
 # holding the LedgerSMB sources
