@@ -1,24 +1,21 @@
-# Place this in /etc/systemd/system/plackup_ledgersmb.service; enable & start
+# Place this in /etc/systemd/system/starman-ledgersmb.service
+# systemctl enable starman-ledgersmb
+# service start starman-ledgersmb
+
 [Unit]
 Description=Starman LedgerSMB
-After=syslog.target
+After=network.target
 
 [Service]
-Type=forking
 WorkingDirectory=WORKING_DIR
-Environment=LOG=/var/log/plack/starman_ledgersmb.log
-#
+# Be sure to set a user and group below
+# which don't have write access to the directories
+# holding the LedgerSMB sources
+User=ledgersmb
+Group=ledgersmb
 ExecStart=/usr/bin/starman                     \
-    --listen *:5000                            \
-    --daemonize                                \
-    --workers 5                                \
-    --max-requests 1000                        \
-    --pid /var/run/starman_ledgersmb.pid       \
-    --error-log $LOG                           \
-    --user www-data                            \
-    --group www-data                           \
+    --listen localhost:5055                    \
     -I lib                                     \
-    -E development                             \
     tools/starman.psgi
 Restart=always
 
