@@ -1,0 +1,26 @@
+# Place this in /etc/systemd/system/plackup_ledgersmb.service; enable & start
+[Unit]
+Description=Starman LedgerSMB
+After=syslog.target
+
+[Service]
+Type=forking
+WorkingDirectory=WORKING_DIR
+Environment=LOG=/var/log/plack/starman_ledgersmb.log
+#
+ExecStart=/usr/bin/starman                     \
+    --listen *:5000                            \
+    --daemonize                                \
+    --workers 5                                \
+    --max-requests 1000                        \
+    --pid /var/run/starman_ledgersmb.pid       \
+    --error-log $LOG                           \
+    --user www-data                            \
+    --group www-data                           \
+    -I lib                                     \
+    -E development                             \
+    tools/starman.psgi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
