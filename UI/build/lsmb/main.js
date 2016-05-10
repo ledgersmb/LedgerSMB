@@ -7348,7 +7348,7 @@ require({cache:{"dojo/request/xhr":function() {
   })
 }, "lsmb/MaximizeMinimize":function() {
   define(["dojo/_base/declare", "dojo/dom", "dojo/dom-style", "dojo/on", "dijit/_WidgetBase"], function(e, l, h, m, c) {
-    return e("lsmb/MaximizeMinimize", [c], {state:"min", stateData:{max:{nextState:"min", imgURL:"UI/payments/img/up.gif", display:"block"}, min:{nextState:"max", imgURL:"UI/payments/img/down.gif", display:"none"}}, mmNodeId:null, setState:function(c) {
+    return e("lsmb/MaximizeMinimize", [c], {state:"min", stateData:{max:{nextState:"min", imgURL:"payments/img/up.gif", display:"block"}, min:{nextState:"max", imgURL:"payments/img/down.gif", display:"none"}}, mmNodeId:null, setState:function(c) {
       var e = this.stateData[c];
       this.domNode.src = e.imgURL;
       this.state = c;
