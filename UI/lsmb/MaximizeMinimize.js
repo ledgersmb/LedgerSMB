@@ -9,12 +9,12 @@ define(['dojo/_base/declare',
                stateData: {
                    "max": {
                        nextState: 'min',
-                       imgURL: 'UI/payments/img/up.gif',
+                       imgURL: 'payments/img/up.gif',
                        display: 'block'
                    },
                    "min": {
                        nextState: 'max',
-                       imgURL: 'UI/payments/img/down.gif',
+                       imgURL: 'payments/img/down.gif',
                        display: 'none'
                    }
                },

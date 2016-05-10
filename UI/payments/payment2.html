@@ -1,7 +1,7 @@
 <?lsmb INCLUDE "ui-header.html"
-    include_script = [ 'UI/payments/javascript/maximize_minimize.js' ] ?>
+    include_script = [ 'payments/javascript/maximize_minimize.js' ] ?>
 <body id="payment_2_body" class="lsmb <?lsmb dojo_theme ?>"
-onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
+onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.gif','payments/img/up.gif') ">
   <div id="payments">
   <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="payment.pl">
 
@@ -15,7 +15,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
     <table width="100%">
       <tr id="top_bar" class="listtop">
         <th id="top_bar_header" class="listtop">
-    	    <?lsmb header.text ?>
+            <?lsmb header.text ?>
           <?lsmb type.type = 'hidden' ; PROCESS input element_data=type ?>
         </th>
 
@@ -32,7 +32,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                 <?lsmb ELSE; text('Vendor Name') -?>
                 <?lsmb END -?></th>
               <td id="cv_column">
-       		    <?lsmb vc.name ?><?lsmb vendorcustomer.type = 'hidden'; PROCESS input element_data=vendorcustomer?>
+                    <?lsmb vc.name ?><?lsmb vendorcustomer.type = 'hidden'; PROCESS input element_data=vendorcustomer?>
               </td>
             </tr>
             <tr id="cv_address_row">
@@ -44,19 +44,19 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                   <tr>
                     <td><?lsmb address.text ?></td>
                   </tr>
-	               <?lsmb END ?>
+                       <?lsmb END ?>
                 </table>
               </td>
             </tr>
             <tr align="right" id="notes_row">
               <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
               <td><?lsmb PROCESS textarea element_data = {
-					          id="notes"
-					          name="notes"
-					          cols="35"
-					          rows="3"
-					          text=notes } ?>
-		        </td>
+                                                  id="notes"
+                                                  name="notes"
+                                                  cols="35"
+                                                  rows="3"
+                                                  text=notes } ?>
+                        </td>
             </tr>
           </table>
         </td>
@@ -68,7 +68,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
               <th align="right" nowrap id="project_label_column"><?lsmb text('Projects') ?>:</th>
               <td colspan="2" id="project_column">
                 <?lsmb project.text ?>
-	             <?lsmb  project.type="hidden"; PROCESS input element_data=project ?>
+                     <?lsmb  project.type="hidden"; PROCESS input element_data=project ?>
               </td>
             </tr>
             <?lsmb END ?>
@@ -96,7 +96,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                    } ?>
               </td>
             </tr>
-            <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method	  ?>
+            <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   ?>
               <th align="right" nowrap id="date_label_column"><?lsmb text('Date') ?></th>
               <?lsmb- datepaid.class = 'date' ?>
               <td colspan="2" id="date_column"> <?lsmb PROCESS input element_data=datepaid ?><?lsmb datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid ?> </td>
@@ -110,10 +110,10 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                        options.push( { text = item, value = item } );
                        END;
                        PROCESS select element_data = {
-					        id="source"
-					        name="source"
-					        options=options
-					        default_values=[selected_source] }; ?>
+                                                id="source"
+                                                name="source"
+                                                options=options
+                                                default_values=[selected_source] }; ?>
               </td>
               <td id="source_text_column">
                 <?lsmb PROCESS input element_data={ name  => 'source_value'
@@ -125,7 +125,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
               <?lsmb #  here goes the selected currency in step 1 ?>
               <th align="right" id="currency_label_column"><?lsmb text('Currency') -?>:</th>
               <td id="currency_column">
-      		    <?lsmb curr.value -?><?lsmb curr.type='hidden'; PROCESS input element_data=curr -?>
+                    <?lsmb curr.value -?><?lsmb curr.type='hidden'; PROCESS input element_data=curr -?>
               </td>
             </tr>
             <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
@@ -161,8 +161,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
       <tr class="<?lsmb alterning_style ?>">
         <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
           <?lsmb PROCESS input elment_data = {
-	              type="hidden"
-	              value=row.invoice.id } ?>
+                      type="hidden"
+                      value=row.invoice.id } ?>
         </td>
         <?lsmb # we can use an href to link this invoice number to the invoice ?>
         <td>
@@ -176,16 +176,16 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
         <td><?lsmb row.paid ?></td>
         <td><?lsmb row.discount ?></td>
         <td align="center"><?lsmb IF row.optional_discount OR first_load ;
-			                         CHECKED='checked';
-			                         ELSE;
-			                         CHECKED='';
-			                         END; ?>
+                                                 CHECKED='checked';
+                                                 ELSE;
+                                                 CHECKED='';
+                                                 END; ?>
           <?lsmb PROCESS input element_data = {
-	              name="optional_discount_" _ row.invoice.id
-	              id="optional_discount_" _ row.invoice.id
-	              type="checkbox"
-	              class="checkbox"
-	              checked=CHECKED } ?>
+                      name="optional_discount_" _ row.invoice.id
+                      id="optional_discount_" _ row.invoice.id
+                      type="checkbox"
+                      class="checkbox"
+                      checked=CHECKED } ?>
         </td>
         <td align="center"><?lsmb row.memo.id=row.memo.name ; PROCESS input element_data=row.memo; -?></td>
         <?lsmb IF defaultcurrency.text != curr.value ?>
@@ -204,7 +204,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                                       name = row.topay_fx.name
                                       value = format_amount(row.topay_fx.value)
                                   } ?>
-          <img src="UI/payments/img/up.gif"
+          <img src="payments/img/up.gif"
                data-dojo-type="lsmb/MaximizeMinimize"
                data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
                class="details-toggler">
@@ -215,12 +215,12 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                 <th align="right" nowrap id="<?lsmb "account_label_column$i" ?>"><?lsmb text('Account') ?></th>
                 <td colspan="2" id="<?lsmb "account_column$i" ?>">
                   <?lsmb PROCESS select element_data = {
-					          id="account_"  _ row.invoice.id
-					          name="account_" _ row.invoice.id
-					          options=account
-					          value_attr='id'
-					          text_attr='description'
-					          default_values=[row.selected_account] } ?>
+                                                  id="account_"  _ row.invoice.id
+                                                  name="account_" _ row.invoice.id
+                                                  options=account
+                                                  value_attr='id'
+                                                  text_attr='description'
+                                                  default_values=[row.selected_account] } ?>
                 </td>
               </tr>
               <tr id="<?lsmb "source_row$i" ?>">
@@ -229,12 +229,12 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                 <td width="28%" id="<?lsmb "source_column$i" ?>">
                   <?lsmb options = [];
                          FOREACH item IN source ;
-					          options.push( { text = value, value = value } );
+                                                  options.push( { text = value, value = value } );
                          END;
-					          PROCESS select element_data = {
-					          id="source_" _ row.invoice.id
-					          name="source_" _ row.invoice.id
-					          options=options
+                                                  PROCESS select element_data = {
+                                                  id="source_" _ row.invoice.id
+                                                  name="source_" _ row.invoice.id
+                                                  options=options
                          default_values=[row.selected_source] } ?>
                 </td>
                 <td><?lsmb PROCESS input element_data={
@@ -243,26 +243,26 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                                               value => row.source_text
                   } -?></td>
                 <td nowrap align="left">
-	               <?lsmb IF row.optional ;
-		                   CHECKED='checked' ;
-		                   ELSE ;
-		                   CHECKED='';
-		                   END ; ?>
-	               <?lsmb PROCESS input element_data = {
-		                   name="optional_pay_" _ row.invoice.id
-		                   id="optional_pay_" _ row.invoice.id
-		                   type="checkbox"
-		                   class="checkbox"
-		                   checked=CHECKED } ?>
-	             </td>
+                       <?lsmb IF row.optional ;
+                                   CHECKED='checked' ;
+                                   ELSE ;
+                                   CHECKED='';
+                                   END ; ?>
+                       <?lsmb PROCESS input element_data = {
+                                   name="optional_pay_" _ row.invoice.id
+                                   id="optional_pay_" _ row.invoice.id
+                                   type="checkbox"
+                                   class="checkbox"
+                                   checked=CHECKED } ?>
+                     </td>
               </tr>
             </table>
           </div>
         </td>
         <td valign="MIDDLE"><?lsmb PROCESS input element_data = {
-				                       type="checkbox"
-				                       class="remove"
-				                       name="checkbox_" _ row.invoice.id } ?>
+                                                       type="checkbox"
+                                                       class="remove"
+                                                       name="checkbox_" _ row.invoice.id } ?>
         </td>
       </tr>
       <?lsmb END ?>
@@ -295,55 +295,55 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
         <td align="center">
           <?lsmb item.account.accno -?>--<?lsmb item.account.description -?>
           <?lsmb PROCESS input element_data = {
-				     type="hidden"
-				     id="overpayment_account_" _ overpayment_item
-				     name="overpayment_account_" _ overpayment_item
-				     value=item.account.id _ '--' _ item.account.accno _ '--' _ item.account.description } ?>
+                                     type="hidden"
+                                     id="overpayment_account_" _ overpayment_item
+                                     name="overpayment_account_" _ overpayment_item
+                                     value=item.account.id _ '--' _ item.account.accno _ '--' _ item.account.description } ?>
         </td>
         <td align="center">
           <?lsmb item.cashaccount.accno -?>--<?lsmb item.cashaccount.description -?>
           <?lsmb PROCESS input element_data = {
-				     type="hidden"
-				     id="overpayment_cash_account_" _ overpayment_item
-				     name="overpayment_cash_account_" _ overpayment_item
-				     value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ '--' _ item.cashaccount.description } ?>
+                                     type="hidden"
+                                     id="overpayment_cash_account_" _ overpayment_item
+                                     name="overpayment_cash_account_" _ overpayment_item
+                                     value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ '--' _ item.cashaccount.description } ?>
         </td>
         <td align="center">
-     	    <?lsmb item.source1 -?>	<?lsmb item.source2 -?>
-     	    <?lsmb PROCESS input element_data = {
-				     type="hidden"
-				     id="overpayment_source1_" _ overpayment_item
-				     name="overpayment_source1_" _ overpayment_item
-				     value=item.source1 } ?>
-     	    <?lsmb PROCESS input element_data = {
-				     type="hidden"
-				     id="overpayment_source2_" _ overpayment_item
-				     name="overpayment_source2_" _ overpayment_item
-				     value=item.source2 } ?>
+            <?lsmb item.source1 -?>     <?lsmb item.source2 -?>
+            <?lsmb PROCESS input element_data = {
+                                     type="hidden"
+                                     id="overpayment_source1_" _ overpayment_item
+                                     name="overpayment_source1_" _ overpayment_item
+                                     value=item.source1 } ?>
+            <?lsmb PROCESS input element_data = {
+                                     type="hidden"
+                                     id="overpayment_source2_" _ overpayment_item
+                                     name="overpayment_source2_" _ overpayment_item
+                                     value=item.source2 } ?>
         </td>
         <td align="center">
           <?lsmb item.memo -?>
           <?lsmb PROCESS input element_data = {
-					  type="hidden"
-					  id="overpayment_memo_" _ overpayment_item
-					  name="overpayment_memo_" _ overpayment_item
-					  value=item.memo } ?>
+                                          type="hidden"
+                                          id="overpayment_memo_" _ overpayment_item
+                                          name="overpayment_memo_" _ overpayment_item
+                                          value=item.memo } ?>
         </td>
         <td align="center">
-     	    <?lsmb item.amount -?>
-     	    <?lsmb PROCESS input element_data = {
-				     type="hidden"
-				     id="overpayment_topay_" _ overpayment_item
-				     name="overpayment_topay_" _ overpayment_item
-				     value=item.amount } ?>
-     	    <?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
+            <?lsmb item.amount -?>
+            <?lsmb PROCESS input element_data = {
+                                     type="hidden"
+                                     id="overpayment_topay_" _ overpayment_item
+                                     name="overpayment_topay_" _ overpayment_item
+                                     value=item.amount } ?>
+            <?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
         </td>
         <td align="center"><?lsmb PROCESS input element_data = {
-										 type="checkbox"
-										 class="remove"
-										 name="overpayment_checkbox_" _ overpayment_item
-										 } ?>
-	  </td>
+                                                                                 type="checkbox"
+                                                                                 class="remove"
+                                                                                 name="overpayment_checkbox_" _ overpayment_item
+                                                                                 } ?>
+          </td>
    </tr>
    <?lsmb END -?>
    <?lsmb #Now we insert an empty field to process a new overpayment -?>
@@ -354,72 +354,72 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
      <td align="center"><?lsmb  overpayment_item -?></td>
      <td align="center">
           <?lsmb
-				 options=[];
-				 FOREACH item IN overpayment_account;
-				   options.push( {
-				     text = item.description
-				     value = item.id _ '--' _ item.accno _ '--' _ item.description
-				 });
-				 END;
-				 PROCESS select element_data = {
-					  id="overpayment_account_" _ overpayment_item
-					  name="overpayment_account_" _ overpayment_item
-				     options=options } ?>
+                                 options=[];
+                                 FOREACH item IN overpayment_account;
+                                   options.push( {
+                                     text = item.description
+                                     value = item.id _ '--' _ item.accno _ '--' _ item.description
+                                 });
+                                 END;
+                                 PROCESS select element_data = {
+                                          id="overpayment_account_" _ overpayment_item
+                                          name="overpayment_account_" _ overpayment_item
+                                     options=options } ?>
      </td>
      <td align="center">
        <?lsmb
-			 options=[];
-			 FOREACH item IN overpayment_account;
-			     options.push( {
-				     text = item.description
-				     value = item.id _ '--' _ item.accno _ '--' _ item.description
-			     });
-			 END;
-			 PROCESS select element_data = {
-					id="overpayment_cash_account_" _ overpayment_item
-					name="overpayment_cash_account_" _ overpayment_item
-			      options=options } ?>
+                         options=[];
+                         FOREACH item IN overpayment_account;
+                             options.push( {
+                                     text = item.description
+                                     value = item.id _ '--' _ item.accno _ '--' _ item.description
+                             });
+                         END;
+                         PROCESS select element_data = {
+                                        id="overpayment_cash_account_" _ overpayment_item
+                                        name="overpayment_cash_account_" _ overpayment_item
+                              options=options } ?>
     </td>
      <td align="center">
-		  <?lsmb
-			  options=[];
-			  FOREACH item IN source;
-			     options.push( { text = item, value = item } );
-			  END;
+                  <?lsmb
+                          options=[];
+                          FOREACH item IN source;
+                             options.push( { text = item, value = item } );
+                          END;
            PROCESS select element_data = {
                id="overpayment_source1_" _ overpayment_item
-			      name="overpayment_source1_" _ overpayment_item
-		         options=options } ?>
+                              name="overpayment_source1_" _ overpayment_item
+                         options=options } ?>
          <?lsmb PROCESS input element_data = {
-					 name="overpayment_source2_" _ overpayment_item
-					 id="overpayment_source2_" _ overpayment_item
-					 } ?>
+                                         name="overpayment_source2_" _ overpayment_item
+                                         id="overpayment_source2_" _ overpayment_item
+                                         } ?>
          <?lsmb PROCESS input element_data = {
-					 type="hidden"
-					 name="overpayment_qty"
-					 id="overpayment_qty"
-					 value=overpayment_item } ?>
+                                         type="hidden"
+                                         name="overpayment_qty"
+                                         id="overpayment_qty"
+                                         value=overpayment_item } ?>
      </td>
      <td align="center">
-		 <?lsmb PROCESS input element_data = {
-				  name="overpayment_memo_" _ overpayment_item
-				  id="overpayment_memo_" _ overpayment_item } ?>
-	  </td>
+                 <?lsmb PROCESS input element_data = {
+                                  name="overpayment_memo_" _ overpayment_item
+                                  id="overpayment_memo_" _ overpayment_item } ?>
+          </td>
      <td align="center">
       <!-- CT:  Changing this to always show 0 because nowhere else to enter an
            amount to overpay. -->
       <?lsmb PROCESS input element_data = {
-      		 name="overpayment_topay_" _ overpayment_item
-      		 id="overpayment_topay_" _ overpayment_item
-				 value="0" }
+                 name="overpayment_topay_" _ overpayment_item
+                 id="overpayment_topay_" _ overpayment_item
+                                 value="0" }
       ?>
      </td>
      <td align="center">
-		 <?lsmb PROCESS input element_data = {
-				 type="checkbox"
-				 class="remove"
-				 name="overpayment_checkbox_" _  overpayment_item } ?>
-	  </td>
+                 <?lsmb PROCESS input element_data = {
+                                 type="checkbox"
+                                 class="remove"
+                                 name="overpayment_checkbox_" _  overpayment_item } ?>
+          </td>
    </tr>
    <tr class="listsubtotal">
    <th colspan="5" align="right"><?lsmb text('Subtotal') -?></th>
@@ -436,14 +436,14 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
   <?lsmb update.accesskey   = "U";
          update.title       = "UPDATE ALT+U";
          update.name        = "action";
-         update.value	    = "payment2";
+         update.value       = "payment2";
          update.text        = text("Update");
          PROCESS button element_data=update -?>
   <?lsmb post.accesskey   = "P";
-         post.title	  = "POST ALT+P";
-         post.name	  = "action";
-         post.value	  = "post_payment";
-         post.text	  = text("Post");
+         post.title       = "POST ALT+P";
+         post.name        = "action";
+         post.value       = "post_payment";
+         post.text        = text("Post");
          PROCESS button element_data=post -?>
   <?lsmb post_and_print.accesskey = "R";
          post_and_print.title     = "POST AND PRINT ALT+R";
@@ -456,7 +456,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
   <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
     <?lsmb # We should use a cipher here, to avoid XSS
            element_data.type  ='hidden';
-    	   element_data.value ='checked';
+           element_data.value ='checked';
            PROCESS input element_data?>
   <?lsmb END ?>
   <div id=div_topay_state>
