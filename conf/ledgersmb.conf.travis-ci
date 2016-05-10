@@ -13,7 +13,7 @@ cssdir = css/
 
 # THis is the location on the file system where the css files are, for editing 
 # and selection.  An example might be /var/www/ledgersmb_css/
-fs_cssdir = css/
+fs_cssdir = UI/css/
 
 # If set to a true value this caches templates.  Typically it will be set to 0 
 # to disable or 1 to enable.
@@ -53,16 +53,10 @@ PATH=/bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
 #PERL5LIB = /sw/lib/perl5
 
 [paths]
-# spool directory for batch printing
-spool      = spool
-# path to user configuration files
-userspath  = users
 # templates base directory
 templates  = templates
 # images base directory
-images  = images
-# member file
-memberfile = users/members
+images  = UI/images
 localepath = locale/po
 
 [programs]

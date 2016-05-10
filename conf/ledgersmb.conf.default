@@ -9,7 +9,7 @@ tempdir = /tmp/ledgersmb
 # This is the logical CSS directory.  I.e. it is what comes before the 
 # ledgersmb.css in the url.  Example might be /my_css_dir/ or 
 # http://localhost/other_css_dir/
-cssdir = css/
+cssdir = UI/css/
 
 # THis is the location on the file system where the css files are, for editing 
 # and selection.  An example might be /var/www/ledgersmb_css/
@@ -61,16 +61,11 @@ PATH=/bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
 #PERL5LIB = /sw/lib/perl5
 
 [paths]
-# spool directory for batch printing
-spool      = spool
-# path to user configuration files
-userspath  = users
 # templates base directory
 templates  = templates
 # images base directory
-images  = images
-# member file
-memberfile = users/members
+images  = UI/images
+
 localepath = locale/po
 
 [programs]
