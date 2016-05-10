@@ -118,7 +118,7 @@ sub get_option_data {
     }
 
     $self->{cssfiles} = [];
-    opendir CSS, "css/.";
+    opendir CSS, "UI/css/.";
     for my $opt (grep /.*\.css$/, readdir CSS){
          push @{$self->{cssfiles}}, {file => $opt};
     }
