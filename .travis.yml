@@ -86,11 +86,9 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
-  - build-dist 2>/dev/null
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
-  - cpanm --notest --with-feature=edi --installdeps .
+  - cpanm --quiet --notest --with-feature=edi --installdeps .
   - cpan-install --coverage
 
 before_script:
@@ -103,7 +101,7 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" prove -l
+  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" prove
 
 after_success:
   - >
