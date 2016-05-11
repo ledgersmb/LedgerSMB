@@ -9,10 +9,18 @@
 ## bug reports and patches welcome
 ##
 ## ############################
+## # todo
+##    remove array debXenRemoveThese
+##    handle missing git binary in pit push and git clone and remove git from debBaseUtils array
+##    ask about installing ssh as a separate step instead of bundling it in with debBaseUtils
+##    if config option smtphost allows sending email via an ISP's mailserver (and can use common auth methods)
+##        then document the fact in Sysconfig.pm and remove ssmtp setup
+##      else
+##        drop ssmtp from the debBaseUtils package and only install it if the user askes to configure ssmtp
 
-Script_VERSION='0.01a'
+Script_VERSION='0.01b'
 
-
+tgtDIR='src/git'
 ###  http://ledgersmb.org/faq#n299 # info on installing 1.4.10.1 on wheezy
 cat <<EOF
 	    
@@ -114,14 +122,17 @@ debXenRemoveThese+=("libfuse2");
 
 declare -a debBaseUtils
 debBaseUtils_DefKeys=Yn
-debBaseUtils+=("make");
 debBaseUtils+=("mc");
 debBaseUtils+=("htop");
 debBaseUtils+=("ssh");
-debBaseUtils+=("git");
 debBaseUtils+=("ssmtp"); # basic smtp mail forwarder
 debBaseUtils+=("avahi-utils"); # we want this so the system is discoverable by hostname using something like lsmb15.local
 debBaseUtils+=("apt-transport-https");
+
+declare -a debEssentialUtils
+debEssentialUtils_DefKeys=Y
+debEssentialUtils+=("make");
+debEssentialUtils+=("git");
 
 declare -a debPostgres
 debPostgres_DefKeys=Yn
@@ -241,31 +252,41 @@ dec2char() {
 #RUN DEBIAN_FRONTENT=noninteractive;
 Install_BaseUtils() {
     if TestPackagesInstalled debBaseUtils; then DefKeys=yN; else DefKeys=$debBaseUtils_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Base Utilities\n${Div}${debBaseUtils[*]}\n${Div}Install Base Utilities?"
+    GetKey $DefKeys "\n${Div} Base Utilities\n${Div}${debBaseUtils[*]}\n\nThese utilities are optional\nand are mainly to make life easier when maintaining the system.\n${Div}Install Base Utilities?"
     if TestKey "y"; then
         sudo apt-get -y install "${debBaseUtils[@]}";
     fi
 }
 
+Install_EssentialUtils() {
+    if TestPackagesInstalled debEssentialUtils; then DefKeys=yN; else DefKeys=$debEssentialUtils_DefKeys; fi
+    GetKey $DefKeys "\n${Div} Essential Utilities\n${Div}${debBaseUtils[*]}\n\nThese utilities are REQUIRED\nand this script will FAIL without installing them.\n${Div}Install Essential Utilities?"
+    if TestKey "y"; then
+        sudo apt-get -y install "${debEssentialUtils[@]}";
+    fi
+}
+
 Clone_LSMB_Master() {
-    [[ -d ~/"src/LedgerSMB/git/LedgerSMB" ]] && { 
-        printf "\n${Div}You already have a copy of LSMB at '~/src/LedgerSMB/git/LedgerSMB'\n${Div}";
+    if ! [[ -x `which git` ]]; then apt-get -y install git; fi
+
+    [[ -d ~/"$tgtDIR/LedgerSMB" ]] && { 
+        printf "\n${Div}You already have a copy of LSMB at '~/$tgtDIR/LedgerSMB'\n${Div}";
         return;
     }
-    GetKey Yn "\n${Div} Clone LSMB Master\n${Div}Target Dir = '~/src/LedgerSMB/git'\n${Div}Clone LSMB Master?"
+    GetKey Y "\n${Div} Clone LSMB Master\n${Div}Target Dir = '~/$tgtDIR'\n${Div}Clone LSMB Master?"
     if TestKey "y"; then
-        mkdir -p ~/"src/LedgerSMB/git"
-        pushd ~/"src/LedgerSMB/git" >/dev/null
-#        git clone https://github.com/ledgersmb/LedgerSMB.git
-        git clone https://github.com/sbts/LedgerSMB.git
+        mkdir -p ~/"$tgtDIR"
+        pushd ~/"$tgtDIR" >/dev/null
+        git clone https://github.com/ledgersmb/LedgerSMB.git
+#        echo "WARNING: Cloning from sbts/LedgerSMB instead of ledgersmb/LedgerSMB"; read -p 'Press Enter to continue'; git clone https://github.com/sbts/LedgerSMB.git
         popd >/dev/null
     fi
 }
 
 Pull_LSMB_Master() {
-    GetKey Yn "\n${Div} Pull LSMB Master\n${Div}Target Dir = '~/src/LedgerSMB/git'\n${Div}Pull LSMB Master?"
+    GetKey Y "\n${Div} Pull LSMB Master\n${Div}Target Dir = '~/$tgtDIR'\n${Div}Pull LSMB Master?"
     if TestKey "y"; then
-        pushd ~/"src/LedgerSMB/git/LedgerSMB" >/dev/null
+        pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
         git pull
         popd >/dev/null
     fi
@@ -279,7 +300,7 @@ SelectVersion() {
     local Keys2
     local tmp
 
-    pushd ~/"src/LedgerSMB/git/LedgerSMB" >/dev/null
+    pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
     echo -en "\n${Div:0:-2}${Div} Available Versions\n${Div:0:-2}${Div}"
     echo -e "\tKey: Version";
     printf "\t%2s:    %s\n" ${MenuKeys_1[0]} "${Versions[0]} [default]";
@@ -326,36 +347,247 @@ SelectVersion() {
     
     echo "Release='$Release'"
     git checkout -f $TAG
+    cat <<-EOF
+	You have checked out version '$TAG'
+	It's current git status is
+EOF
+    git status
+    read -p 'Press enter to continue'
     popd >/dev/null
+}
+
+createPostgresSuperUser() {
+    echo
+    echo "do not use this function [ createPostgresSuperUser() ]"
+    echo
+    exit 999;
+    # First parameter is the user name
+    LSMBDBUSER=$1
+    # Second parameter is the password
+    LSMBDBPW=$2
+
+    su - postgres -c psql <<-EOT
+       DO
+       \$\$
+       DECLARE num_users integer;
+       BEGIN
+           SELECT count(*)
+               into num_users
+           FROM pg_user
+           WHERE usename = '$LSMBDBUSER';
+
+           IF num_users = 0 THEN
+               CREATE ROLE $LSMBDBUSER WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$LSMBDBPW';
+           ELSE
+               ALTER ROLE $LSMBDBUSER WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$LSMBDBPW';
+           END IF;
+       END
+       \$\$
+       ;
+	EOT
 }
 
 SetupPostgres() {
 
-#    echo "${Div}${Div}"
-#    echo "Configuring Postgres accessibility."
-#    echo "${Div}"
-#    echo " this is only needed if you want to directly connect to the database with management tools on other computers"
-#    GetKey yN "\n${Div} Enable Connections from other machines?\n${Div}this is only needed if you want to directly connect to the database with management tools on other computer\n${Div}Postgres: Allow remote access?"
-#    fixme: need to set Listen_Addresses in postges.conf
-    
-    echo "${Div}${Div}"
+    echo -e "${Div}${Div}"
+    echo "Configuring Postgres access for user lsmb_dbadmin."
+    echo -e "${Div}"
+    if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+        echo -e "\tmodifying pg_hba.conf"
+        sudo sed -i.bak1 -r '
+            /local[[:space:]]*all[[:space:]]*lsmb_dbadmin*/ d
+            /local[[:space:]]*all[[:space:]]*all*/ ilocal\tall\t\tlsmb_dbadmin\t\t\t\tmd5
+          ' `find /etc/postgresql -name pg_hba.conf`
+    else
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+        echo '%% there is either no pg_hba.conf file or   %%';
+        echo '%% or                                       %%';
+        echo '%% there is more than one pg_hba.conf file  %%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+        echo;
+        echo 'Please add the following line to pg_hba.conf';
+        echo -e "local\tall\t\tlsmb_dbadmin\t\t\t\tmd5";
+        echo 'it MUST be added immediately above the line';
+        echo -e "local\tall\t\tall\t\t\t\tpeer";
+        read -p 'Press ENTER to continue';
+    fi
+    echo -e "${Div}${Div}"
+    echo "Configuring Postgres accessibility."
+    #echo -e "${Div}"
+    GetKey yN "\n${Div} Enable Postgres Client Connections from other machines?\n${Div}this is only needed if you want to directly connect to the database with management tools on other computer\n${Div}Postgres: Allow remote access?"
+    if TestKey "y"; then
+        echo -e "${Div}"
+        echo -e "\tmodifying postgresql.conf"
+        echo -e "${Div}"
+        if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+            sudo sed -i.bak "/listen_addresses/ s/'.*'/'*'/" `find /etc/postgresql -name postgresql.conf`;
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%     ERROR ERROR ERROR  ERROR ERROR ERROR     %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit postgresql.conf     %%';
+            echo '%% there is either no postgresql.conf file or   %%';
+            echo '%% or                                           %%';
+            echo '%% there is more than one postgresql.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please edit the following line to postgresql.conf';
+            echo -e "listen_addresses 'localhost'";
+            echo 'to look like';
+            echo -e "listen_addresses '*'";
+            read -p 'Press ENTER to continue';
+        fi
+        export Net='';
+        while read IP R; do
+            if [[ $IP =~ ^default ]]; then
+                Dev=${R##*dev };
+            else
+                if [[ $R =~ $Dev.*proto ]]; then
+                    Net=$IP;
+                fi;
+            fi;
+        done < <( ip route show; )
+        if [[ -z $Net ]]; then
+            Net='192.168.1.0/24';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t identify your local network        %%';
+            echo '%% using a default network address of       %%';
+            echo '%% 192.168.1.0/24                           %%';
+            echo '%% please edit pg_hba.conf to correct this  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            read -p 'Press ENTER to continue';
+        fi
+        if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+            echo -e "\tmodifying pg_hba.conf"
+            sudo sed -i.bak2 -r "
+                /host[[:space:]]*all[[:space:]]*lsmb_dbadmin[[:space:]]*${Net%/*}/ d
+                /host[[:space:]]*all[[:space:]]*all[[:space:]]*127/ ihost\tall\t\tlsmb_dbadmin\t$Net\t\tmd5
+              " `find /etc/postgresql -name pg_hba.conf`
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+            echo '%% there is either no pg_hba.conf file or   %%';
+            echo '%% or                                       %%';
+            echo '%% there is more than one pg_hba.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please add the following line to pg_hba.conf';
+            echo -e "host\tall\t\tlsmb_dbadmin\t$Net\t\tmd5";
+            echo 'it MUST be added immediately above the line';
+            echo -e "host\tall\t\tall\t127.0.0.1/32\t\tmd5";
+            read -p 'Press ENTER to continue';
+        fi
+    else
+        echo -e "${Div}"
+        echo -e "\tmodifying postgresql.conf to disable remote connections"
+        echo -e "${Div}"
+        if (( `find /etc/postgresql -name postgresql.conf | grep -c '$'` == 1 )); then
+            sudo sed -i.bak "/listen_addresses/ s/'.*'/'localhost'/" `find /etc/postgresql -name postgresql.conf`;
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%     ERROR ERROR ERROR  ERROR ERROR ERROR     %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit postgresql.conf     %%';
+            echo '%% there is either no postgresql.conf file or   %%';
+            echo '%% or                                           %%';
+            echo '%% there is more than one postgresql.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please edit the following line to postgresql.conf';
+            echo -e "listen_addresses '*'";
+            echo 'to look like';
+            echo -e "listen_addresses 'localhost'";
+            read -p 'Press ENTER to continue';
+        fi
+        export Net='';
+        while read IP R; do
+            if [[ $IP =~ ^default ]]; then
+                Dev=${R##*dev };
+            else
+                if [[ $R =~ $Dev.*proto ]]; then
+                    Net=$IP;
+                fi;
+            fi;
+        done < <( ip route show; )
+        if [[ -z $Net ]]; then
+            Net='192.168.1.0/24';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t identify your local network        %%';
+            echo '%% using a default network address of       %%';
+            echo '%% 192.168.1.0/24                           %%';
+            echo '%% please edit pg_hba.conf to correct this  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            read -p 'Press ENTER to continue';
+        fi
+        if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+            echo -e "\tmodifying pg_hba.conf to disable remote connections"
+            sudo sed -i.bak2 -r "/host[[:space:]]*all[[:space:]]*lsmb_dbadmin[[:space:]]*${Net%/*}/ d" `find /etc/postgresql -name pg_hba.conf`
+        else
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%   ERROR ERROR ERROR  ERROR ERROR ERROR   %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%% can'"'"'t automatically edit pg_hba.conf     %%';
+            echo '%% there is either no pg_hba.conf file or   %%';
+            echo '%% or                                       %%';
+            echo '%% there is more than one pg_hba.conf file  %%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%';
+            echo;
+            echo 'Please add the following line to pg_hba.conf';
+            echo -e "host\tall\t\tlsmb_dbadmin\t$Net\t\tmd5";
+            echo 'it MUST be added immediately above the line';
+            echo -e "host\tall\t\tall\t127.0.0.1/32\t\tmd5";
+            read -p 'Press ENTER to continue';
+        fi
+    fi
+    if (( `find /etc/postgresql -name pg_hba.conf | grep -c '$'` == 1 )); then
+        echo -e "${Div}${Div}Your pg_hba.conf file contains these entries"
+        echo -e "Please check that they are correct\n${Div}"
+        sudo egrep -v '^[[:space:]]*#|^$' `find /etc/postgresql -name pg_hba.conf`
+        echo -e "${Div}\n"
+    fi
+    echo -e "${Div}${Div}"
     echo "adding posgres database admin user 'lsmb_dbadmin'"
-    echo "${Div}"
-#    sudo -u postgres -c "createuser --password --createdb --login --createrole lsmb_dbadmin" postgres
-    sudo -u postgres "createuser --password --createdb --login --createrole lsmb_dbadmin" postgres
-    #sudo su -c "createuser --createdb --login --createrole lsmb_dbadmin" postgres
-#    echo "${Div}"
-#    echo "\tmodifying pg_hbs.conf"
-#    echo "${Div}"
-#    sudo grep -q lsmb_dbadmin /etc/postgresql/9.4/main/pg_hba.conf || {
-#        echo 'local   all             lsmb_dbadmin                            md5' | \
-#            sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf; sudo service postgresql reload;
-#        }
+    echo -e "${Div}"
+    #echo "Please enter new password for user 'lsmb_dbadmin'"
+    if [[ `sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='lsmb_dbadmin'"` == 1 ]]; then
+        echo "Database Admin User 'lsmb_dbadmin' already exists...."
+        GetKey yN "Do you want to replace it?"
+        if TestKey "y"; then
+            sudo -u postgres dropuser lsmb_dbadmin 
+        fi
+    fi
+    if ! [[ `sudo -u postgres psql postgres -tAc "SELECT 1 FROM pg_roles WHERE rolname='lsmb_dbadmin'"` == 1 ]]; then
+        sudo -u postgres createuser --pwprompt --createdb --login --createrole --superuser lsmb_dbadmin
+    fi
+
         ## test that you can login OK with
-    echo "${Div}"
-    echo "\tTesting that you can now log in to the database."
-    echo "${Div}"
-        sudo -u postgres "psql -l --password -U lsmb_dbadmin -d postgres -h localhost"
+    echo -e "\n${Div}"
+    echo -e "\tTesting that you can now log in to the database."
+    echo -e "${Div}"
+        psql -l --password -U lsmb_dbadmin -d postgres -h localhost
         #sudo su -c "psql -l --password -U lsmb_dbadmin -d postgres -h localhost" postgres
     cat <<-"EOF"
     it should have returned something like
@@ -369,8 +601,12 @@ SetupPostgres() {
            |          |          |             |             | postgres=CTc/postgres
 (3 rows)
 EOF
-    echo "${Div}"
-    echo "${Div}"
+    echo -e "${Div}"
+    echo -e "${Div}"
+    read -sn1 -p 'Press any key to Continue'; echo
+
+    echo "retrieving roles information for user lsmb_dbadmin"
+    psql -U lsmb_dbadmin -d postgres -h localhost -c '\du lsmb_dbadmin;'
     read -sn1 -p 'Press any key to Continue'; echo
 
 }
@@ -378,13 +614,13 @@ EOF
 debInstallPackages() {
 
     if TestPackagesInstalled debPerl; then DefKeys=yN; else DefKeys=$debPerl_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Perl Packages\n${Div}${debPerl[*]}\n${Div}Install Perl?"
+    GetKey $DefKeys "\n${Div} Perl Packages\n${Div}${debPerl[*]}\n${Div}Install Perl Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debPerl[@]}";
     fi
 
     if TestPackagesInstalled debPostgres; then DefKeys=yN; else DefKeys=$debPostgres_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Postgres Packages\n${Div}${debPostgres[*]}\n${Div}Install Postgres?"
+    GetKey $DefKeys "\n${Div} Postgres Packages\n${Div}${debPostgres[*]}\nThis will install the system default version of postgres as selected by the postgresql package\n${Div}Install Postgres Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debPostgres[@]}";
         SetupPostgres;
@@ -401,28 +637,29 @@ debInstallPackages() {
     fi
 
     if TestPackagesInstalled debLaTeX; then DefKeys=yN; else DefKeys=$debLaTeX_DefKeys; fi
-    GetKey $DefKeys "\n${Div} LaTeX Packages\n${Div}${debLaTeX[*]}\n${Div}Install LaTeX?"
+    GetKey $DefKeys "\n${Div} LaTeX Packages\n${Div}${debLaTeX[*]}\n${Div}Install LaTeX Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debLaTeX[@]}";
     fi
 
     if TestPackagesInstalled debOOO; then DefKeys=yN; elseDefKeys=$debOOO_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Open Office Output Packages\n${Div}${debOOO[*]}\n${Div}Install Open Office Output?"
+    GetKey $DefKeys "\n${Div} Open Office Output Packages\n${Div}${debOOO[*]}\n${Div}Install Open Office Output Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debOOO[@]}";
     fi
 
     if TestPackagesInstalled debStarman; then DefKeys=yN; else DefKeys=$debStarman_DefKeys; fi
-    GetKey $DefKeys "\n${Div} Starman Webserver Packages\n${Div}${debStarman[*]}\n${Div}Install Starman?"
+    GetKey $DefKeys "\n${Div} Starman Webserver Packages\n${Div}${debStarman[*]}\n${Div}Install Starman Packages?"
     if TestKey "y"; then
         sudo apt-get -y install "${debStarman[@]}";
     fi
 
-    if TestPackagesInstalled debTrustCommerce; then DefKeys=yN; else DefKeys=$debTrustCommerce_DefKeys; fi
-    GetKey $DefKeys "\n${Div} TrustCommerce Packages\n${Div}${debTrustCommerce[*]}\n${Div}Install TrustCommerce?"
-    if TestKey "y"; then
-        sudo apt-get -y install "${debTrustCommerce[@]}";
-    fi
+# don't install these, ehuelsmann says they likely don't work anyway
+#    if TestPackagesInstalled debTrustCommerce; then DefKeys=yN; else DefKeys=$debTrustCommerce_DefKeys; fi
+#    GetKey $DefKeys "\n${Div} TrustCommerce Packages\n${Div}${debTrustCommerce[*]}\n${Div}Install TrustCommerce Packages?"
+#    if TestKey "y"; then
+#        sudo apt-get -y install "${debTrustCommerce[@]}";
+#    fi
 
 cat <<EOF
 ${Div%\\n}
@@ -518,36 +755,38 @@ dumpSSMTP
 }
 
 Install_Docker() {
-cat <<EOF
-${Div}Install Docker on this system?
-${Div}before continuing see
-    https://docs.docker.com/engine/installation/debian/
-and the source for this script.
-Test that the apt repository for docker is correctly installed with.
-    apt-cache policy docker-engine
-    
+    cat <<-EOF
+	${Div%\\n}
+	Install Docker on this system?"
+	${Div%\\n}
+	before continuing see"
+	    https://docs.docker.com/engine/installation/debian/
+	and the source for this script.
+	Test that the apt repository for docker is correctly installed with.
+	    apt-cache policy docker-engine
+
 EOF
     if TestPackagesInstalled debDocker; then DefKeys=yN; else DefKeys=$debDocker_DefKeys; fi
     GetKey $DefKeys "\n${Div}Install Docker?"
     if TestKey "y"; then
-        echo "${Div}Docker: Installing Repository Key${Div}"
+        echo -e "${Div}Docker: Installing Repository Key${Div}"
         $debDockerRepoAdd
-        echo "${Div}Docker: Installing Repository${Div}"
+        echo -e "${Div}Docker: Installing Repository${Div}"
         cat <<-EOF | sudo tee $debDockerSourcesName >/dev/null
 		# Repository for Docker Containers Engine
 		
 		$debDockerSourcesContent
 		
 EOF
-        echo "${Div}Docker: Retrieving Package Lists\n${Div}"
+        echo -e "${Div}Docker: Retrieving Package Lists\n${Div}"
         sudo apt-get update
-        echo "${Div}Docker: Installing Packages\n${Div}${debDocker[@]}\n${Div}"
+        echo -e "${Div}Docker: Installing Packages\n${Div}${debDocker[@]}\n${Div}"
         sudo apt-get install -y "${debDocker[@]}";
-        echo "${Div}Starting Docker Service\n${Div}"
+        echo -e "${Div}Starting Docker Service\n${Div}"
         sudo service docker start
-        echo "${Div}Running Hello World test container\n${Div}"
+        echo -e "${Div}Running Hello World test container\n${Div}"
         sudo docker run hello-world
-        echo "${Div}$Div"
+        echo -e "${Div}$Div"
     fi
 }
 
@@ -577,14 +816,83 @@ TestPackagesInstalled() {
 #exit
 
 
+CPAN_InstallPackages() {
+#    if TestPackagesInstalled debBaseUtils; then DefKeys=yN; else DefKeys=$debBaseUtils_DefKeys; fi
+    DefKeys=yN;
+    GetKey $DefKeys "\n${Div} LedgerSMB Perl Depencencies\n${Div}This will install any perl depenancies from cpan INCLUDING most development and testing dependencies at the moment.\nIF you don't want the dev and testing dependencies you may need to install by hand from the list of packages found in Makefile.PL\n${Div}Install Missing Perl Dependencies using cpanm?"
+    if TestKey "y"; then
+        cc --version > /dev/null || cat <<-EOF
+		${Div%\\n}
+		${Div%\\n}
+		    WARNING
+		${Div%\\n}
+		    Installing Dependencies via CPAN may fail as you don't have a C compiler installed.
+		${Div%\\n}
+		${Div%\\n}
+	EOF
+
+        pushd "$HOME/$tgtDIR/LedgerSMB"
+        cpanm --installdeps .
+        popd
+        cat <<-EOF
+		${Div%\\n}
+		${Div%\\n}
+		    WARNING
+		${Div%\\n}
+		    Check the results from 'cpanm' carefully if any failure is indicated then not all dependencies were installed.
+		    In that case you will need to manually run the following from your LedgerSMB install dir
+		    cpanm --installdeps .
+		    (NOTE: Don't forget the . at the end of the command!)
+		    which will show what the actual failed package was and a logfile you can look at for the cause
+		${Div%\\n}
+		${Div%\\n}
+	EOF
+        read -p 'Press Enter to continue'
+        echo
+        echo
+    fi
+}
+
 CheckCPAN_Config_Exists() {
-    if [[ -z $(find . -path *cpan/prefs) ]]; then
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-        echo "%% Please run cpan and set it up for use with local lib %%"
-        echo "%%   this should be as easy as selecting all defaults   %%"
-        echo "%% Then log out and back in again                       %%"
-        echo "%% Then re-run this script.                             %%"
-        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    if [[ -z $(find ~/ -path *cpan/prefs) ]]; then
+        sudo apt-get install -y cpanminus
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Please run cpan and set it up for use with local::lib %%"
+        echo "%%   this should be as easy as selecting all defaults    %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then re-run this script.                              %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%% Then log out and back in again                        %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
+        pushd ~/
+        cpan local::lib
+        popd
+
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%% Now Please log out and back in again                        %%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+
 
         exit 0
     fi
@@ -619,20 +927,22 @@ EOF
 }
 
 ManualSteps() {
+    starmanIncludes='';
+    #if [[ "$Version" =~ 1\.5 ]]; then starmanIncludes='-I lib'
+    pushd ~/"$tgtDIR/LedgerSMB" >/dev/null
+        if [[ -r lib/LedgerSMB.pm ]]; then starmanIncludes='-I lib'; fi
+    popd >/dev/null
+
 cat <<EOF
 ${Div%\\n}
 ${Div%\\n}
 
-WARNING
-    as of 6th Jan 2016 there was a bug in master that causes the main ledgersmb page to show as a blank page.
-    revert the offending commit with
-    git revert 283406c62d5da1b6415f869f12ebdf97836112c3
-    this is due to be resolved by middle of jan 2016
-/WARNING
-
-
 Now start your server with
-echo -e "\n\n\n\n\n\n\n\n\n\n\n";clear;starman -l :8080 --preload-app tools/starman.psgi
+  echo -e "\n\n\n\n\n\n\n\n\n\n\n";
+  clear;
+  pushd ~/"$tgtDIR/LedgerSMB"
+  starman -l :8080 $starmanIncludes --preload-app tools/starman.psgi
+  popd
 
 NOTE: the following links assume that you created a db / company called dev15
       you will need to edit the link to suit your chosen company name
@@ -651,10 +961,12 @@ EOF
 CheckCPAN_Config_Exists
 
 
-GetKey yN "\n${Div} Update Available Package List\n${Div}Run\napt-get update\n${Div}Update Package List?"
+GetKey yN "\n${Div} Update Available system Package List\n${Div}Run\napt-get update\nThis should be done for at least the first time this script is run\n${Div}Update Package List?"
 if TestKey "y"; then
     sudo apt-get update
 fi
+
+Install_EssentialUtils
 
 Install_BaseUtils
 
@@ -667,6 +979,8 @@ SelectVersion
 debInstallPackages
 
 #WriteHostsEntries
+
+CPAN_InstallPackages
 
 ManualSteps
 
