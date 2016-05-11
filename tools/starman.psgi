@@ -2,6 +2,7 @@
 
 package LedgerSMB::FCGI;
 
+use lib 'lib';
 use CGI::Emulate::PSGI;
 use LedgerSMB::PSGI;
 use Plack::Builder;
