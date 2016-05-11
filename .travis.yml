@@ -90,9 +90,8 @@ before_install:
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
-  - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
-  - cpan-install --coverage   # installs converage prereqs, if enabled
-  - cpan-install Selenium::Remote::Driver X12::Parser
+  - cpanm --notest --with-feature=edi --installdeps .
+  - cpan-install --coverage
 
 before_script:
   - coverage-setup 2>/dev/null
@@ -104,7 +103,7 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
+  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" prove -l
 
 after_success:
   - >
