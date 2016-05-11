@@ -5,15 +5,18 @@ Forthcoming
 UI changes:
 * LedgerSMB now frameless (ChrisT)
 * Full use of Dojo widgets (ErikH)
-* LSMB reports and screens can now be bookmarked (Chris T)
+* Compressed/compiled Dojo for better performance (JohnL)
+* Reports and screens can now be bookmarked (Chris T)
 
 Code Cleanup:
-* LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
+* Relying on Plack for webserver integration; stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
+* Removed dead code (coveralls.io used for identification) (ErikH)
 * Removed dependency on Class::Struct (ChrisT)
 * Removed all inserts into chart view (ChrisT, GH 931)
 * Removed long-broken French chart of accounts (ChrisT)
 * Removed unused saved trial balance components (ChrisT, GH 775)
+* Source tree restructuring: libraries in lib/, docroot in UI/ (ErikH)
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (ChrisT)
@@ -29,9 +32,15 @@ Quality assurance:
   - Reject code which uses certain constructs
 * Basic verification of PO (translation) files (ErikH)
 * Basic automated in-browser testing through SauceLabs.com (ErikH/ChrisT)
+* Basic automated in-browser testing with PhantomJS (ErikH)
 
 Internationalization
 * Expansion of webbased translation support through Transifex (ErikH)
+
+
+ChrisT is Chris Travers
+ErikH is Erik Huelsmann
+JohnL is John Locke
 
 
 Changelog for 1.4 Series
