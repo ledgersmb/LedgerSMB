@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-11 09:32+0000\n"
-"PO-Revision-Date: 2016-03-29 08:23+0000\n"
+"POT-Creation-Date: 2016-05-11 09:37+0000\n"
+"PO-Revision-Date: 2016-05-11 09:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Arabic (Egypt) (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/ar_EG/)\n"
@@ -1309,9 +1309,8 @@ msgid "Books closed on"
 msgstr ""
 
 #: UI/accounts/yearend.html:87
-#, fuzzy
 msgid "Books closed up to"
-msgstr "اقفال الدفاتر حتى"
+msgstr ""
 
 #: bin/ic.pl:1125
 msgid "Break"
@@ -1642,14 +1641,12 @@ msgid "Close Books up to"
 msgstr "اقفال الدفاتر حتى"
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "مغلق"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
-#, fuzzy
 msgid "Close books"
-msgstr "اقفال الدفاتر حتى"
+msgstr ""
 
 #: bin/aa.pl:1527 bin/oe.pl:315 lib/LedgerSMB/Report/Orders.pm:243
 #: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
@@ -1941,9 +1938,8 @@ msgid "Country:"
 msgstr "الدولة:"
 
 #: UI/setup/credentials.html:60
-#, fuzzy
 msgid "Create"
-msgstr "إنشاء مستخدم"
+msgstr ""
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2176,9 +2172,8 @@ msgid "Database does not exist."
 msgstr "قاعدة البيانات غير موجودة"
 
 #: lib/LedgerSMB/Scripts/setup.pm:785
-#, fuzzy
 msgid "Database exists."
-msgstr "مضيف قواعد البيانات"
+msgstr ""
 
 #: lib/LedgerSMB/DBH.pm:113
 msgid ""
@@ -4593,9 +4588,8 @@ msgid "Login"
 msgstr "دخول"
 
 #: lib/LedgerSMB/Scripts/setup.pm:787
-#, fuzzy
 msgid "Login?"
-msgstr "دخول"
+msgstr ""
 
 #: sql/Pg-database.sql:2927
 msgid "Logout"

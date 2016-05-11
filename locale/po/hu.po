@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-11 09:32+0000\n"
-"PO-Revision-Date: 2016-03-29 08:23+0000\n"
+"POT-Creation-Date: 2016-05-11 09:37+0000\n"
+"PO-Revision-Date: 2016-05-11 09:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/hu/)\n"
@@ -1308,9 +1308,8 @@ msgid "Books closed on"
 msgstr "Könyvelés lezárva"
 
 #: UI/accounts/yearend.html:87
-#, fuzzy
 msgid "Books closed up to"
-msgstr "Könyvelés lezárva"
+msgstr ""
 
 #: bin/ic.pl:1125
 msgid "Break"
@@ -1641,14 +1640,12 @@ msgid "Close Books up to"
 msgstr "Könyvelés lezárása eddig az időpontig:"
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Időszak"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
-#, fuzzy
 msgid "Close books"
-msgstr "Könyvelés lezárása eddig az időpontig:"
+msgstr ""
 
 #: bin/aa.pl:1527 bin/oe.pl:315 lib/LedgerSMB/Report/Orders.pm:243
 #: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
@@ -1940,9 +1937,8 @@ msgid "Country:"
 msgstr "Ország:"
 
 #: UI/setup/credentials.html:60
-#, fuzzy
 msgid "Create"
-msgstr "Létrehozta"
+msgstr ""
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2175,9 +2171,8 @@ msgid "Database does not exist."
 msgstr "Az adatbázis nem létezik."
 
 #: lib/LedgerSMB/Scripts/setup.pm:785
-#, fuzzy
 msgid "Database exists."
-msgstr "Adatbázis helye"
+msgstr ""
 
 #: lib/LedgerSMB/DBH.pm:113
 msgid ""
@@ -4597,9 +4592,8 @@ msgid "Login"
 msgstr "Belépés"
 
 #: lib/LedgerSMB/Scripts/setup.pm:787
-#, fuzzy
 msgid "Login?"
-msgstr "Belépés"
+msgstr ""
 
 #: sql/Pg-database.sql:2927
 msgid "Logout"
@@ -4996,9 +4990,8 @@ msgid "No tax form selected"
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:340
-#, fuzzy
 msgid "No unassigned amounts in Transactions"
-msgstr "Kifizetetlen tranzakciók"
+msgstr ""
 
 #: bin/lsmb-request.pl:13
 msgid "No workflow script specified"
@@ -9185,6 +9178,3 @@ msgstr "felhasznál egy túlfizetést"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Reopen Books"
-#~ msgstr "Könyvek újranyitása"

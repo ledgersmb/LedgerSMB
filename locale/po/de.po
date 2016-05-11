@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-11 09:32+0000\n"
-"PO-Revision-Date: 2016-03-29 08:23+0000\n"
+"POT-Creation-Date: 2016-05-11 09:37+0000\n"
+"PO-Revision-Date: 2016-05-11 09:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "de/)\n"
@@ -1309,9 +1309,8 @@ msgid "Books closed on"
 msgstr ""
 
 #: UI/accounts/yearend.html:87
-#, fuzzy
 msgid "Books closed up to"
-msgstr "Die Bücher abschließn bis zum"
+msgstr ""
 
 #: bin/ic.pl:1125
 msgid "Break"
@@ -1649,14 +1648,12 @@ msgid "Close Books up to"
 msgstr "Die Bücher abschließn bis zum"
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Zeitraum"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
-#, fuzzy
 msgid "Close books"
-msgstr "Die Bücher abschließn bis zum"
+msgstr ""
 
 #: bin/aa.pl:1527 bin/oe.pl:315 lib/LedgerSMB/Report/Orders.pm:243
 #: UI/Reports/filters/invoice_search.html:212 UI/Reports/filters/orders.html:97
@@ -2184,9 +2181,8 @@ msgid "Database does not exist."
 msgstr "Datenbank existiert nicht."
 
 #: lib/LedgerSMB/Scripts/setup.pm:785
-#, fuzzy
 msgid "Database exists."
-msgstr "Datenbank existiert nicht."
+msgstr ""
 
 #: lib/LedgerSMB/DBH.pm:113
 msgid ""
@@ -4606,9 +4602,8 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: lib/LedgerSMB/Scripts/setup.pm:787
-#, fuzzy
 msgid "Login?"
-msgstr "Anmelden"
+msgstr ""
 
 #: sql/Pg-database.sql:2927
 msgid "Logout"

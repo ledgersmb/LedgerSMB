@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-11 09:32+0000\n"
-"PO-Revision-Date: 2016-03-29 08:23+0000\n"
+"POT-Creation-Date: 2016-05-11 09:37+0000\n"
+"PO-Revision-Date: 2016-05-11 09:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Malay (Malaysia) (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/ms_MY/)\n"
@@ -1642,9 +1642,8 @@ msgid "Close Books up to"
 msgstr ""
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Tempoh"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
 msgid "Close books"
@@ -2174,9 +2173,8 @@ msgid "Database does not exist."
 msgstr "Pengkalan data tidak wujud"
 
 #: lib/LedgerSMB/Scripts/setup.pm:785
-#, fuzzy
 msgid "Database exists."
-msgstr "Pengkalan data tidak wujud"
+msgstr ""
 
 #: lib/LedgerSMB/DBH.pm:113
 msgid ""
@@ -4591,9 +4589,8 @@ msgid "Login"
 msgstr "Daftar masuk"
 
 #: lib/LedgerSMB/Scripts/setup.pm:787
-#, fuzzy
 msgid "Login?"
-msgstr "Daftar masuk"
+msgstr ""
 
 #: sql/Pg-database.sql:2927
 msgid "Logout"

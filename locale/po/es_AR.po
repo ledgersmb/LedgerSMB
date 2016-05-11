@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-11 09:32+0000\n"
-"PO-Revision-Date: 2016-03-29 08:23+0000\n"
+"POT-Creation-Date: 2016-05-11 09:37+0000\n"
+"PO-Revision-Date: 2016-05-11 09:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Spanish (Argentina) (http://www.transifex.com/ledgersmb/"
 "ledgersmb/language/es_AR/)\n"
@@ -1644,9 +1644,8 @@ msgid "Close Books up to"
 msgstr ""
 
 #: UI/accounts/yearend.html:79 UI/accounts/yearend.html:105
-#, fuzzy
 msgid "Close Period"
-msgstr "Periodo"
+msgstr ""
 
 #: UI/accounts/yearend.html:86
 msgid "Close books"
@@ -2176,9 +2175,8 @@ msgid "Database does not exist."
 msgstr "La base de datos no existe."
 
 #: lib/LedgerSMB/Scripts/setup.pm:785
-#, fuzzy
 msgid "Database exists."
-msgstr "La base de datos no existe."
+msgstr ""
 
 #: lib/LedgerSMB/DBH.pm:113
 msgid ""
