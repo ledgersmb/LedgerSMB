@@ -151,7 +151,10 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ```
 ## Next steps
 
-The system is installed and ready for [preparation for first
+The system is installed and should be available for evaluation through
+http://localhost:5000/setup.pl and http://localhost:5000/login.pl.
+
+The system is ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
 
 # Project information
