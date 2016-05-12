@@ -54,7 +54,8 @@ page on CPAN.
  * PostgreSQL client libraries
  * Either:
    * PostgreSQL development package (so cpanm can compile DBD::Pg)
-   * DBD::Pg (so cpanm recognises that it won't need to compile it)
+     (RedHat: postgresql-devel, Debian: libpq-dev)
+   * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
 
 Then, some of the features listed below have system requirements as well:
 
@@ -73,7 +74,7 @@ To install the Perl module dependencies, run:
 
 ```bash
 
- $ cpanm --notest --with-feature=starman [other features] --installdeps .
+ $ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 
 ```
 The following features may be selected by

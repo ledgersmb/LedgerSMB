@@ -73,8 +73,9 @@ feature 'openoffice', "OpenOffice.org output" =>
         requires "OpenOffice::OODoc";
 };
 
-# Use 'cpan --notest' to suppress these dependencies
-on 'test' => sub {
+# Even with cpanm --notest, 'test' target of --installdeps
+# will be included, so put our testing requirements in develop...
+on 'develop' => sub {
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';
