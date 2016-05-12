@@ -157,12 +157,16 @@ use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
 # Project information
 
 Web site: [http://ledgersmb.org/](http://ledgersmb.org)
+
 Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
+
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
+
 Mailing lists:
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce](https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce)
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-users](https://lists.sourceforge.net/lists/listinfo/ledger-smb-users)
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel](https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel)
+ 
 Repository: https://github.com/ledgersmb/LedgerSMB
 
 ## Project contributors
@@ -176,8 +180,10 @@ as well as in the Transifex project Timeline.
 
 # Copyright
 
+```plain
 Copyright (c) 2006 - 2016 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
+```
 
 # License
 
