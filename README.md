@@ -114,13 +114,16 @@ local   all                            postgres                         peer
 local   all                            all                              peer
 host    all                            postgres        127.0.0.1/32     reject
 host    all                            postgres        ::1/128          reject
+host    postgres,template0             lsmb_admin      127.0.0.1/32     md5
+host    postgres,template0             lsmb_admin      ::1/128          md5
 host    postgres,template0,template1   all             127.0.0.1/32     reject
 host    postgres,template0,template1   all             ::1/128          reject
 host    all                            all             127.0.0.1/32     md5
 host    all                            all             ::1/128          md5
 ```
 
-After editing the ```pg_hba.conf``` file, reload the PostgreSQL server:
+After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
+(or without 'sudo' by running the commands as root user):
 
 ```bash
  $ sudo service postgresql reload
@@ -132,8 +135,8 @@ While it's possible to use LedgerSMB with the standard ```postgres``` user,
 it's good practice to create a separate 'LedgerSMB database administrator':
 
 ```plain
-$ sudo createuser --no-superuser --createdb --login \
-          --createrole --pwprompt lsmb_dbadmin
+$ sudo su - postgres -c 'createuser --no-superuser --createdb --login
+          --createrole --pwprompt lsmb_dbadmin'
 Enter password for new role: ****
 Enter it again: ****
 ```

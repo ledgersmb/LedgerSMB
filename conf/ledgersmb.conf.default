@@ -9,7 +9,7 @@ tempdir = /tmp/ledgersmb
 # This is the logical CSS directory.  I.e. it is what comes before the 
 # ledgersmb.css in the url.  Example might be /my_css_dir/ or 
 # http://localhost/other_css_dir/
-cssdir = UI/css/
+cssdir = css/
 
 # THis is the location on the file system where the css files are, for editing 
 # and selection.  An example might be /var/www/ledgersmb_css/
