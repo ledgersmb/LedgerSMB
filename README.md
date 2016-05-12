@@ -120,12 +120,12 @@ host    all                            all             127.0.0.1/32     md5
 host    all                            all             ::1/128          md5
 ```
 
-After editing the ```pg_hba.conf``` file, restart the PostgreSQL server:
+After editing the ```pg_hba.conf``` file, reload the PostgreSQL server:
 
 ```bash
- $ sudo service postgresql restart
+ $ sudo service postgresql reload
  # -or-
- $ sudo /etc/init.d/postgresql restart
+ $ sudo /etc/init.d/postgresql reload
 ```
 
 While it's possible to use LedgerSMB with the standard ```postgres``` user,
