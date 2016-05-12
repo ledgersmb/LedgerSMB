@@ -47,7 +47,8 @@ feature 'starman', "Standalone Server w/Starman" =>
         requires "Starman";
 };
 
-feature 'pdf-images', "Size detection for images for embedding in LaTeX templates" =>
+feature 'latex-pdf-images',
+    "Size detection for images for embedding in LaTeX templates" =>
     sub {
         requires "Image::Size";
 };
@@ -59,7 +60,7 @@ feature 'edi', "X12 EDI support" =>
         requires 'Module::Runtime';
 };
 
-feature 'pdf-ps', "PDF and PostScript output" =>
+feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
         requires 'Template::Plugin::Latex';
