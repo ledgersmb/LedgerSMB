@@ -119,6 +119,7 @@ Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IP
 Binding to TCP port 5000 on host :: with IPv6
 Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ```
+## Next steps
 
 The system is installed and ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
