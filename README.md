@@ -138,6 +138,14 @@ Enter password for new role: ****
 Enter it again: ****
 ```
 
+## Configure LedgerSMB
+
+For most systems, all that's required in this step is:
+
+```bash
+ $ cp conf/ledgersmb.conf.default ledgersmb.conf
+```
+
 ## Running Starman
 
 With the above completed, the system is ready to run the web server:
