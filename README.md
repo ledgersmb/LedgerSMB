@@ -173,6 +173,10 @@ use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
 
 Web site: [http://ledgersmb.org/](http://ledgersmb.org)
 
+Live chat:
+ * IRC: [irc://irc.freenode.net/#ledgersmb](irc://irc.freenode.net/#ledgersmb)
+ * Matrix: [https://vector.im/#/room/#ledgersmb:matrix.org](https://vector.im/#/room/#ledgersmb:matrix.org) (bridged IRC channel)
+
 Forums: [http://forums.ledgersmb.org/](http://forums.ledgersmb.org/)
 
 Mailing list archives: [http://archive.ledgersmb.org](http://archive.ledgersmb.org)
@@ -181,7 +185,7 @@ Mailing lists:
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce](https://lists.sourceforge.net/lists/listinfo/ledger-smb-announce)
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-users](https://lists.sourceforge.net/lists/listinfo/ledger-smb-users)
  * [https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel](https://lists.sourceforge.net/lists/listinfo/ledger-smb-devel)
- 
+
 Repository: https://github.com/ledgersmb/LedgerSMB
 
 ## Project contributors
