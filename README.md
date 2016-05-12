@@ -107,6 +107,16 @@ For the pdf-images target, ImageMagick is  required.
 
 ## PostgreSQL configuration
 
+While it's possible to use LedgerSMB with the standard ```postgres``` user,
+it's good practice to create a separate 'LedgerSMB database administrator':
+
+```plain
+$ sudo su - postgres -c 'createuser --no-superuser --createdb --login
+          --createrole --pwprompt lsmb_dbadmin'
+Enter password for new role: ****
+Enter it again: ****
+```
+
 The ```pg_hba.conf``` file should have at least these lines in it:
 
 ```plain
@@ -129,16 +139,6 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
  $ sudo service postgresql reload
  # -or-
  $ sudo /etc/init.d/postgresql reload
-```
-
-While it's possible to use LedgerSMB with the standard ```postgres``` user,
-it's good practice to create a separate 'LedgerSMB database administrator':
-
-```plain
-$ sudo su - postgres -c 'createuser --no-superuser --createdb --login
-          --createrole --pwprompt lsmb_dbadmin'
-Enter password for new role: ****
-Enter it again: ****
 ```
 
 ## Configure LedgerSMB
