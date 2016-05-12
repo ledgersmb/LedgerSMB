@@ -33,7 +33,7 @@ use warnings;
 
 use LedgerSMB::Auth;
 use DBI;
-use base qw(App::LedgerSMB::Admin::Database);
+use base qw(PGObject::Util::DBAdmin);
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
