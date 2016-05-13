@@ -30,8 +30,8 @@ requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.08';
+requires 'Plack::App::File';
 requires 'Plack::Builder';
-requires 'Plack::Middleware::Static';
 requires 'Template', '2.14';
 requires 'namespace::autoclean';
 
