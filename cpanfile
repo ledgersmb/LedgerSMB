@@ -47,7 +47,8 @@ feature 'starman', "Standalone Server w/Starman" =>
         requires "Starman";
 };
 
-feature 'pdf-images', "Size detection for images for embedding in LaTeX templates" =>
+feature 'latex-pdf-images',
+    "Size detection for images for embedding in LaTeX templates" =>
     sub {
         requires "Image::Size";
 };
@@ -59,7 +60,7 @@ feature 'edi', "X12 EDI support" =>
         requires 'Module::Runtime';
 };
 
-feature 'pdf-ps', "PDF and PostScript output" =>
+feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
         requires 'Template::Plugin::Latex';
@@ -72,8 +73,9 @@ feature 'openoffice', "OpenOffice.org output" =>
         requires "OpenOffice::OODoc";
 };
 
-# Use 'cpan --notest' to suppress these dependencies
-on 'test' => sub {
+# Even with cpanm --notest, 'test' target of --installdeps
+# will be included, so put our testing requirements in develop...
+on 'develop' => sub {
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';
