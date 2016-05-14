@@ -724,13 +724,14 @@ sub _failed_check {
             class => 'submit' },
     ];
     $template->render({
-           form     => $request,
-           heading  => $header,
-           headers  => [$check->display_name, $check->instructions],
-           columns  => $check->display_cols,
-           rows     => $rows,
-           hiddens  => $hiddens,
-           buttons  => $buttons
+           form               => $request,
+           heading            => $header,
+           headers            => [$check->display_name, $check->instructions],
+           columns            => $check->display_cols,
+           rows               => $rows,
+           hiddens            => $hiddens,
+           buttons            => $buttons,
+           include_stylesheet => 'setup/stylesheet.css',
     });
 }
 
