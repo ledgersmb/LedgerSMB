@@ -123,7 +123,7 @@ sub columns {
          pwidth => '2', },
         );
 
-    return @COLUMNS;
+    return \@COLUMNS;
 }
 
     # TODO:  business_units int[]
