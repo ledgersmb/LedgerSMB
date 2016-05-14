@@ -1133,7 +1133,7 @@ sub run_sl28_migration {
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
-    # process_and_run_upgrade_script commits the transaction
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl28",
                    'sl2.8-1.4');
@@ -1153,7 +1153,7 @@ sub run_sl30_migration {
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
-    # process_and_run_upgrade_script commits the transaction
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl30",
                                    'sl3.0-1.4');
