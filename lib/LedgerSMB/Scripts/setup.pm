@@ -1082,6 +1082,7 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
+    $dbh->disconnect;
 }
 
 
