@@ -1104,6 +1104,7 @@ sub run_upgrade {
                 RENAME TO lsmb$v")
         or die "Can't rename schema '$LedgerSMB::Sysconfig::db_namespace': "
         . $dbh->errstr();
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
                    "$dbinfo->{version}-1.4");
