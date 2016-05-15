@@ -148,6 +148,9 @@ sub order_links {
 
     $form->{employee} = "$form->{employee}--$form->{employee_id}";
 
+    @curr = split /:/, $form->{currencies};
+    $form->{defaultcurrency} = $curr[0];
+    chomp $form->{defaultcurrency};
     # forex
     $form->{forex} = $form->{exchangerate};
 
@@ -735,7 +738,7 @@ function on_return_submit(event){
         $form->print_button( \%button, $_ );
     }
     print "</td></tr>";
-
+    $form->hide_form(qw(defaultcurrency));
 }
 
 sub form_footer {
