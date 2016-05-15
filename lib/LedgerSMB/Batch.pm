@@ -153,7 +153,12 @@ Returns the appropriate search as detected by get_search_method.
 sub get_search_results {
     my ($self, $args) = @_;
     my $search_proc = $self->get_search_method($args);
-    @{$self->{search_results}} = $self->call_dbmethod(funcname => $search_proc);
+    @{$self->{search_results}} =
+        $self->call_dbmethod(
+            funcname => $search_proc,
+            # add the orderby argument *only* if there's one specified
+            $self->{order_by} ? (orderby => [ $self->{order_by} ] ) : (),
+        );
     return @{$self->{search_results}};
 }
 

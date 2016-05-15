@@ -58,13 +58,6 @@ sub create_batch {
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
 
-    if ($batch->{order_by}) {
-        $batch->set_ordering({
-                method => $batch->get_search_method({mini => 1}),
-                column => $batch->{order_by}
-        });
-    }
-
     $batch->get_search_results({mini => 1});
 
     my $template = LedgerSMB::Template->new(
