@@ -103,6 +103,7 @@ before_script:
   - pushd UI/lsmb
   - test -e ../build && rm -rf ../build
   - ../dojo/util/buildscripts/build.sh --profile lsmb.profile.js
+  - rm -rf ../dojo/    # make sure we run 'production like'; no dev references
   - popd
 
 script:
