@@ -41,6 +41,7 @@ before_install:
 install:
   - cpanm --notest --quiet --with-develop --installdeps .
   - cpan-install --coverage   # installs converage prereqs, if enabled
+  - cp ledgersmb.conf.default ledgersmb.conf
 
 before_script:
   - coverage-setup
