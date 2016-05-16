@@ -1,5 +1,6 @@
-# run on container-based build:
-sudo: false
+# run on GCE build as per suggested:
+# https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
+sudo: required
 language: perl
 env:
   global:
