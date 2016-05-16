@@ -5,11 +5,13 @@ create type tb_row AS (
    account_id int,
    account_number text,
    account_desc text,
-   gifi_accno	text,
+   gifi_accno   text,
    starting_balance numeric,
    debits numeric,
    credits numeric,
-   ending_balance numeric
+   ending_balance numeric,
+   ending_balance_debit numeric,
+   ending_balance_credit numeric
 );
 
 DROP FUNCTION IF EXISTS trial_balance__generate
@@ -28,7 +30,7 @@ CREATE OR REPLACE FUNCTION trial_balance__generate
 returns setof tb_row AS
 $$
 DECLARE
-	out_row         tb_row;
+        out_row         tb_row;
         t_roll_forward  date;
         t_cp            account_checkpoint;
         ignore_trans    int[];

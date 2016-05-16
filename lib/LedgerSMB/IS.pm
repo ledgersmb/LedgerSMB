@@ -1496,7 +1496,7 @@ sub retrieve_invoice {
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
                       a.person_id, e.name AS employee, a.till,
-                      a.reverse,
+                      a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence
                  FROM ar a

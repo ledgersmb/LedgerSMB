@@ -158,6 +158,10 @@ sub invoice_links {
         ));
     }
 
+    @curr = split /:/, $form->{currencies};
+    $form->{defaultcurrency} = $curr[0];
+    chomp $form->{defaultcurrency};
+
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
     IS->retrieve_invoice( \%myconfig, \%$form );
@@ -664,6 +668,8 @@ function on_return_submit(event){
         {
             $form->print_button( \%button, $_ );
         }
+
+        $form->hide_form(qw(defaultcurrency));
 
         print "</td></tr>";
     }
