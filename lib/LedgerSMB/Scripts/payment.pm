@@ -86,6 +86,7 @@ sub payments {
     }
     my @curr = LedgerSMB::Setting->new()->get_currencies;
     $payment->{default_currency} = $curr[0];
+    @{$payment->{curr}} = map { { value => $_, text => $_ } } @curr;
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
