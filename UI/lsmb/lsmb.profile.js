@@ -14,6 +14,12 @@ var profile = (function(){
         mini: true,
         stripConsole: "warn",
         selectorEngine: "lite",
+        resourceTags: {
+            // tag all .js files as modules
+            amd: function(filename, mid) {
+                return /\.js$/.test(filename);
+            }
+        },
 
         defaultConfig: {
             hasCache:{

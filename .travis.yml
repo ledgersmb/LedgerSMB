@@ -1,5 +1,6 @@
-# run on container-based build:
-sudo: false
+# run on GCE build as per suggested:
+# https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
+sudo: required
 language: perl
 env:
   global:
@@ -99,6 +100,11 @@ before_script:
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - cp conf/ledgersmb.conf.travis-ci ledgersmb.conf
   - nginx -c /tmp/nginx.conf
+  - pushd UI/lsmb
+  - test -e ../build && rm -rf ../build
+  - ../dojo/util/buildscripts/build.sh --profile lsmb.profile.js
+  - rm -rf ../dojo/    # make sure we run 'production like'; no dev references
+  - popd
 
 script:
   - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove
