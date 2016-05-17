@@ -93,8 +93,8 @@ install:
   - cpan-install --coverage
 
 before_script:
-  - make dist DIST_VER=travis DIST_DIR=$(HOME)/built-dist/tar-output
-  - cd $(HOME)/built-dist
+  - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
+  - cd ${HOME}/built-dist
   - tar xvf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
   - cp conf/ledgersmb.conf.default ledgersmb.conf
