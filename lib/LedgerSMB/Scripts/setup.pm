@@ -36,6 +36,7 @@ use LedgerSMB::Setting;
 use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
+my $MINOR_VERSION = '1.5';
 
 =item no_db
 
@@ -135,7 +136,8 @@ my @login_actions_dispatch_table =
       { appname => 'ledgersmb',
         version => '1.4',
         message => "LedgerSMB 1.4 db found.",
-        operation => 'Rebuild/Upgrade?',
+        operation => "Would you like to upgrade the database?",
+        # rebuild_modules will upgrade 1.4->1.5 by applying (relevant) changes
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.5',
@@ -1107,7 +1109,7 @@ sub run_upgrade {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-1.4");
+                   "$dbinfo->{version}-$MINOR_VERSION");
 
     if ($v ne '1.2'){
     $request->{only_templates} = 1;
@@ -1136,7 +1138,7 @@ sub run_sl28_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl28",
-                   'sl2.8-1.4');
+                   "sl2.8-$MINOR_VERSION");
 
     create_initial_user($request);
 }
@@ -1156,7 +1158,7 @@ sub run_sl30_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl30",
-                                   'sl3.0-1.4');
+                                   "sl3.0-$MINOR_VERSION");
 
     create_initial_user($request);
 }
