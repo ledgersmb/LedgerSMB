@@ -215,7 +215,7 @@ Retrives a file.  ID and file_class properties must be set.
 sub get{
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'file__get');
-    $self->merge($ref);
+    $self->{$_} = $ref->{$_} for keys %$ref;
 }
 
 =item get_for_template({ref_key => int, file_class => int})
