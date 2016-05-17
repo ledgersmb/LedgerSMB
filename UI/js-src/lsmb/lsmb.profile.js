@@ -5,7 +5,8 @@
 var profile = (function(){
     return {
         basePath: ".",
-        releaseDir: "../js",
+        // releaseDir = <root>/UI/jsJ
+        releaseDir: "../../js",
         releaseName: "",
         action: "release",
         layerOptimize: "closure.keeplines",
@@ -66,10 +67,10 @@ var profile = (function(){
 
         packages:[{
             name: "dojo",
-            location: "../dojo/dojo"
+            location: "../dojo"
         },{
             name: "dijit",
-            location: "../dojo/dijit"
+            location: "../dijit"
         },{
             name: "lsmb",
             location: "."
