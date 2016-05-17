@@ -1,9 +1,9 @@
-[submodule "UI/dojo/dojo"]
-	path = UI/dojo/dojo
+[submodule "UI/js-src/dojo"]
+	path = UI/js-src/dojo
 	url = https://github.com/dojo/dojo.git
-[submodule "UI/dojo/dijit"]
-	path = UI/dojo/dijit
+[submodule "UI/js-src/dijit"]
+	path = UI/js-src/dijit
 	url = https://github.com/dojo/dijit.git
-[submodule "UI/dojo/util"]
-	path = UI/dojo/util
+[submodule "UI/js-src/util"]
+	path = UI/js-src/dojo-util
 	url = https://github.com/dojo/util.git
