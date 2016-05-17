@@ -57,31 +57,31 @@ UPDATE lsmb12.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHER
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-	cash_account_id, startdate, enddate, threshold, entity_class,
+        cash_account_id, startdate, enddate, threshold, entity_class,
         taxincluded)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id from account where accno = :ap),
-	NULL, startdate, enddate, 0, 1, taxincluded
+        NULL, startdate, enddate, 0, 1, taxincluded
 FROM lsmb12.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.vendor SET credit_id =
-	(SELECT id FROM entity_credit_account e
-	WHERE e.meta_number = vendornumber and entity_class = 1
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-	cash_account_id, startdate, enddate, threshold, entity_class,
+        cash_account_id, startdate, enddate, threshold, entity_class,
         taxincluded)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id from account where accno = :ar),
-	NULL, startdate, enddate, 0, 2, taxincluded
+        NULL, startdate, enddate, 0, 2, taxincluded
 FROM lsmb12.customer WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.customer SET credit_id =
-	(SELECT id FROM entity_credit_account e
-	WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
 
 UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
  WHERE curr IS NULL;
@@ -388,7 +388,7 @@ SELECT admin__save_user(null, max(entity_id), login, random()::text, true)
  WHERE login IN (select rolname FROM pg_roles)
  GROUP BY login;
 
-SELECT 	admin__save_user(null, max(entity_id), login, random()::text, false)
+SELECT  admin__save_user(null, max(entity_id), login, random()::text, false)
   FROM lsmb12.employee
  WHERE login NOT IN (select rolname FROM pg_roles)
  GROUP BY login;
@@ -648,7 +648,7 @@ INSERT INTO sic SELECT * FROM lsmb12.sic;
 
 INSERT INTO warehouse SELECT * FROM lsmb12.warehouse;
 
-INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
+INSERT INTO warehouse_inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate, entry_id)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate, i.entry_id
@@ -718,7 +718,8 @@ SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
+ SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id))
+        FROM warehouse_inventory;
  SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
  SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
  SELECT setval('account_id_seq', max(id)) FROM account;

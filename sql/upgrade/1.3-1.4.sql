@@ -1,8 +1,6 @@
 BEGIN;
 
-ALTER TABLE entity_credit_account DISABLE TRIGGER ALL;
 DELETE FROM entity_credit_account;
-ALTER TABLE entity_credit_account ENABLE TRIGGER ALL;
 DELETE FROM person;
 DELETE FROM company;
 DELETE FROM entity;
@@ -91,7 +89,6 @@ SELECT id, name, entity_class, control_code, created, country_id
   FROM lsmb13.entity;
 
 INSERT INTO users SELECT * FROM lsmb13.users;
-INSERT INTO lsmb_roles SELECT * FROM lsmb13.lsmb_roles;
 INSERT INTO location SELECT * FROM lsmb13.location;
 INSERT INTO company SELECT * FROM lsmb13.company;
 
@@ -143,7 +140,20 @@ INSERT INTO makemodel(parts_id, make, model)
 SELECT parts_id, coalesce(make, ''), coalesce(model, '')
 FROM lsmb13.makemodel;
 
-ALTER TABLE gl DISABLE TRIGGER ALL;
+INSERT INTO transactions (id, table_name, locked_by)
+SELECT id, table_name, locked_by FROM lsmb13.transactions;
+
+INSERT INTO transactions (id, table_name)
+SELECT id, 'ar' FROM ar WHERE id not in (select id from transactions);
+INSERT INTO transactions (id, table_name)
+SELECT id, 'ap' FROM ap WHERE id not in (select id from transactions);
+INSERT INTO transactions (id, table_name)
+SELECT id, 'gl' FROM gl WHERE id not in (select id from transactions);
+
+
+ALTER TABLE gl DISABLE TRIGGER gl_track_global_sequence;
+ALTER TABLE gl DISABLE TRIGGER gl_prevent_closed;
+ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 INSERT INTO gl (
  id, reference, description, transdate, person_id, notes, approved
 )
@@ -152,14 +162,19 @@ SELECT id, reference, description, transdate,
                             where id = (select min(entity_id) from users))),
        notes, approved
   FROM lsmb13.gl;
-ALTER TABLE gl ENABLE TRIGGER ALL;
+ALTER TABLE gl ENABLE TRIGGER gl_track_global_sequence;
+ALTER TABLE gl ENABLE TRIGGER gl_prevent_closed;
+ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
+
 
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
 SELECT setting__set(setting_key, value) FROM lsmb13.defaults
  where not setting_key = 'version';
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
-ALTER TABLE ar DISABLE TRIGGER ALL;
+ALTER TABLE ar DISABLE TRIGGER ar_track_global_sequence;
+ALTER TABLE ar DISABLE TRIGGER ar_prevent_closed;
+ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 INSERT INTO ar (
  id,
  invnumber,
@@ -222,9 +237,13 @@ SELECT
  force_closed,
  description
   FROM lsmb13.ar;
-ALTER TABLE ar ENABLE TRIGGER ALL;
+ALTER TABLE ar ENABLE TRIGGER ar_track_global_sequence;
+ALTER TABLE ar ENABLE TRIGGER ar_prevent_closed;
+ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
-ALTER TABLE ap DISABLE TRIGGER ALL;
+ALTER TABLE ap DISABLE TRIGGER ap_track_global_sequence;
+ALTER TABLE ap DISABLE TRIGGER ap_prevent_closed;
+ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 INSERT INTO ap (
  id,
  invnumber,
@@ -287,22 +306,13 @@ SELECT
  force_closed,
  entity_credit_account
   FROM lsmb13.ap;
-ALTER TABLE ap ENABLE TRIGGER ALL;
-
-INSERT INTO transactions (id, table_name, locked_by)
-SELECT id, table_name, locked_by FROM lsmb13.transactions;
-
-INSERT INTO transactions (id, table_name)
-SELECT id, 'ar' FROM ar WHERE id not in (select id from transactions);
-INSERT INTO transactions (id, table_name)
-SELECT id, 'ap' FROM ap WHERE id not in (select id from transactions);
-INSERT INTO transactions (id, table_name)
-SELECT id, 'gl' FROM gl WHERE id not in (select id from transactions);
+ALTER TABLE ap ENABLE TRIGGER ap_track_global_sequence;
+ALTER TABLE ap ENABLE TRIGGER ap_prevent_closed;
+ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 INSERT INTO voucher SELECT * FROM lsmb13.voucher;
 
-ALTER TABLE acc_trans DISABLE TRIGGER ALL;
-
+ALTER TABLE acc_trans DISABLE TRIGGER acc_trans_prevent_closed;
 INSERT INTO acc_trans (
  trans_id,
  chart_id,
@@ -334,8 +344,8 @@ INSERT INTO acc_trans (
  voucher_id,
  entry_id
    FROM lsmb13.acc_trans;
+ALTER TABLE acc_trans ENABLE TRIGGER acc_trans_prevent_closed;
 
-ALTER TABLE acc_trans enable TRIGGER ALL;
 
 INSERT INTO invoice (
  id,
@@ -529,7 +539,7 @@ INSERT INTO status SELECT * FROM lsmb13.status;
 INSERT INTO business SELECT * FROM lsmb13.business;
 INSERT INTO sic SELECT * FROM lsmb13.sic;
 INSERT INTO warehouse SELECT * FROM lsmb13.warehouse;
-INSERT INTO inventory SELECT * FROM lsmb13.inventory;
+INSERT INTO warehouse_inventory SELECT * FROM lsmb13.inventory;
 INSERT INTO yearend SELECT * FROM lsmb13.yearend;
 INSERT INTO partsvendor SELECT * FROM lsmb13.partsvendor;
 INSERT INTO partscustomer SELECT * FROM lsmb13.partscustomer;
@@ -645,7 +655,8 @@ SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
+ SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id))
+        FROM warehouse_inventory;
  SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
  SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
  SELECT setval('account_id_seq', max(id)) FROM account;
