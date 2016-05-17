@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"AccountSelector.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,kHAIO,QAAA,CACDC,CADC,CAEDC,CAFC,CAGDC,CAHC,QAKgBC,KAAIF,CAAJE,kCAA6CH,CAA7CG,SACLD,CADKC,oJASDC,QAAAA,GACXC,cAAA,CAAeC,SAAf,CAEAC,kBAHWH,CAGOE,SAAA,GAAAE,MAHPJ,CATCD,YAcFM,QAAAA,OACNC,MACJL,eAAA,CAAeC,SAAf,CACAJ,EAAAS,QAAAC,GAAA;AAA6C,QAAA,GAE5CF,CAAAG,IAAA,SAAmBH,CAAAH,aAAnB,CAF4C,CAA7C,CAHUE,CAdEN,EALhB,CAJP;",
-"sources":["AccountSelector.js.uncompressed.js"],
-"names":["define","Select","declare","store","mySelect","constructor","inherited","arguments","initialValue","value","postCreate","mySelf","emitter","on","set"]
-}

@@ -5,7 +5,7 @@
 var profile = (function(){
     return {
         basePath: ".",
-        releaseDir: "../build",
+        releaseDir: "../js",
         releaseName: "",
         action: "release",
         layerOptimize: "closure.keeplines",

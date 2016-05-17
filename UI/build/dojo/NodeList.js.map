@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"NodeList.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,6BAAqC,QAAA,CAASC,CAAT,QAG7BA,EAAAC,SAH6B,CAArC;",
-"sources":["NodeList.js.uncompressed.js"],
-"names":["define","query","NodeList"]
-}

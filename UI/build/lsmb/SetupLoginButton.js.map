@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"SetupLoginButton.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,yBAAgC,gGAAA,MAAA,KAAhC,CAQO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAyBC,CAAzB,CAA8BC,CAA9B,CAAmCC,CAAnC,CAA0CC,CAA1C,QAIWL,EAAA,0BACSK,CADT,uBAIUC,QAAAA,CAASC,CAATD,MACDE,MADCF,CAEDG,EAAWN,CAAAO,KAAA,UAAAC,MAFVL,CAGDM,EAAWT,CAAAO,KAAA,cAAAC,MAHVL,CAIDO,EAAUV,CAAAO,KAAA,YAAAC,MAEdV,EAAAa,KAAA,CAAWP,CAAX,CACAL,EAAA,+EACUO,CADV,UAEcG,CAFd,EAAAG,KAAA,CAGQ,QAAA,CAASC,CAAT,EACJC,MAAAC,SAAAC,KADI,uBACoCX,CAAAY,OADpC;AAEcP,CAFd,CAHR,CAMG,QAAA,CAASQ,CAAT,EACKC,CADL,CACcD,CAAAE,SAAAD,OADd,QAEKA,CAFL,CAGKE,KAAA,0BAHL,CAMKA,KAAA,mBAA0BF,CAA1B,4BANL,CANH,CAPKhB,CAJV,EAJX,CARP;",
-"sources":["SetupLoginButton.js.uncompressed.js"],
-"names":["define","declare","event","xhr","dom","style","Button","onClick","evt","self","username","byId","value","password","company","stop","then","data","window","location","href","action","err","status","response","alert"]
-}

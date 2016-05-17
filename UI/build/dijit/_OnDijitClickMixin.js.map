@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"_OnDijitClickMixin.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,4BAAmC,4EAAA,MAAA,KAAnC,CAOG,QAAA,CAASC,CAAT,CAAaC,CAAb,CAAoBC,CAApB,CAA0BC,CAA1B,CAAmCC,CAAnC,CAAwCC,CAAxC,EAKEC,CALF,CAKQH,CAAA,0CASAI,QAAAA,CAASC,CAATD,CAAcE,CAAdF,CAAqBG,CAArBH,QAEDI,eAAA,CAAeC,SAAf,EAA2BJ,CAA3B,iBAAgCC,CAAhC,CAA0DJ,CAA1D,CAAsEI,CAAtE,CAA6EC,CAA7E,EAFCH,CATA,EAeVD,EAAAD,UApBE,CAoBcA,CApBd,OAsBKC,EAtBL,CAPH;",
-"sources":["_OnDijitClickMixin.js.uncompressed.js"],
-"names":["define","on","array","keys","declare","has","a11yclick","ret","connect","obj","event","method","inherited","arguments"]
-}

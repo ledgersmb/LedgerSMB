@@ -1,4 +1,0 @@
-//>>built
-define("lsmb/SetupLoginButton","dojo/_base/declare dojo/_base/event dojo/request/xhr dojo/dom dojo/dom-style dijit/form/Button".split(" "),function(b,e,f,c,l,d){return b("lsmb/SetupLoginButton",[d],{action:null,onClick:function(b){var d=this,g=c.byId("s-user").value,h=c.byId("s-password").value,k=c.byId("database").value;e.stop(b);f("login.pl?action\x3dauthenticate\x26company\x3dpostgres\x26dbonly\x3d1",{user:g,password:h}).then(function(a){window.location.href="setup.pl?action\x3d"+d.action+"\x26database\x3d"+
-k},function(a){a=a.response.status;"454"==a?alert("Company does not exist"):alert("Access denied ("+a+"): Bad username/password")})}})});
-//# sourceMappingURL=SetupLoginButton.js.map

@@ -100,11 +100,8 @@ before_script:
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - cp conf/ledgersmb.conf.travis-ci ledgersmb.conf
   - nginx -c /tmp/nginx.conf
-  - pushd UI/lsmb
-  - test -e ../build && rm -rf ../build
-  - ../dojo/util/buildscripts/build.sh --profile lsmb.profile.js
-  - rm -rf ../dojo/    # make sure we run 'production like'; no dev references
-  - popd
+  - make dojo          # build production/release dojo widgets
+  - rm -rf UI/dojo/    # make sure we run 'production like' -- no dev references
 
 script:
   - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove

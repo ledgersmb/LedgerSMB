@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"AccountStore.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,6HAMO,QAAA,CACDC,CADC,CAEDC,CAFC,CAGDC,CAHC,CAIDC,CAJC,CAKDC,CALC,MAOCC,EAAQ,IAAIJ,CAAJ,CAAe,IAAID,CAAJ,4BAEjB,IAAII,CAFa,EAAf,CAKZF,EAAAI,IAAA,qDAAAC,KAAA,CAGI,QAAA,CAAUC,CAAV,EACEL,CAAAM,QAAA,CAAcD,CAAd,CAAuB,QAAA,CAASE,CAAT,EACrBA,CAAAC,KADqB,CACTD,CAAAE,MADS,MACWF,CAAAG,YAChCR,EAAAS,IAAA,CAAUJ,CAAV,CAFqB,CAAvB,CAKDL,EAAAU,QAAAC,KAAA,wDAND,CAHJ,CAWI,QAAA,CAASC,CAAT,GAXJ,CAZG,OA2BIZ,EA3BJ,CANP;",
-"sources":["AccountStore.js.uncompressed.js"],
-"names":["define","Memory","Observable","request","array","Evented","store","get","then","results","forEach","item","text","accno","description","put","emitter","emit","error"]
-}

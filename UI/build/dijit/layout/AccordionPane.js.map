@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"AccordionPane.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,yFAIG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA0BC,CAA1B,QAKKF,EAAA,8BAAsCE,CAAtC,cAMOC,QAAAA,GACZF,CAAAG,WAAA,2EADYD,CANP,YAUME,QAAAA,IAVN,EALL,CAJH;",
-"sources":["AccordionPane.js.uncompressed.js"],
-"names":["define","declare","kernel","ContentPane","constructor","deprecated","onSelected"]
-}

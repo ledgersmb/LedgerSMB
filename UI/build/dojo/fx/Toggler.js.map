@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Toggler.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,kFACE,QAAA,CAASC,CAAT,CAAeC,CAAf,CAAwBC,CAAxB,CAAgCC,CAAhC,QAIKF,EAAA,4CA2BIC,CAAAE,OA3BJ,UA+BIF,CAAAG,QA/BJ,+CA2DOC,QAAAA,CAASC,CAATD,EAGZN,CAAAQ,MAAA,MAAeD,CAAf,CACAE,UAJYH,CAIFC,CAAAE,KACVC,eALYJ,CAKGN,CAAAQ,MAAA,IAAeD,CAAf,CACfG,eAAAD,KANYH,CAMQG,SACpBC,eAAAC,SAPYL,CAOYM,iBACxBC,cARYP,CAQEQ,aAAA,CAAYJ,cAAZ,CAEdK,eAVYT,CAUGN,CAAAQ,MAAA,IAAeD,CAAf,CACfQ,eAAAN,KAXYH,CAWQG,SACpBM,eAAAJ,SAZYL;AAYYU,iBACxBC,cAbYX,CAaEY,aAAA,CAAYH,cAAZ,CAEdZ,EAAAgB,MAAA,CAAaN,aAAb,eAAyCb,CAAAoB,MAAA,CAAWH,aAAX,WAAzC,IACAd,EAAAgB,MAAA,CAAaF,aAAb,eAAyCjB,CAAAoB,MAAA,CAAWP,aAAX,WAAzC,IAhBYP,CA3DP,MA8EAe,QAAAA,CAASC,CAATD,QAKER,cAAAU,KAAA,CAAmBD,CAAnB,IALFD,CA9EA,MAsFAG,QAAAA,CAASF,CAATE,QAKEP,cAAAM,KAAA,CAAmBD,CAAnB,IALFE,CAtFA,EAJL,CADF;",
-"sources":["Toggler.js.uncompressed.js"],
-"names":["define","lang","declare","baseFx","aspect","fadeIn","fadeOut","constructor","args","mixin","node","_showArgs","duration","showDuration","showAnim","showFunc","_hideArgs","hideDuration","hideAnim","hideFunc","after","hitch","show","delay","play","hide"]
-}

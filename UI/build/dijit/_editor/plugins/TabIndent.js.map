@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"TabIndent.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,qHAKG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA0BC,CAA1B,CAAmCC,CAAnC,EAKFF,CAAAG,aAAA,mCALE,KAQEC,EAAYL,CAAA,mCAA2CE,CAA3C,mCAUFC,CAVE,iCAcFG,QAAAA,GAEZC,cAAA,CAAeC,SAAf,CAFYF,KAIRG,EAAIC,WACRC,SAAA,CAASC,WAAAC,GAAA,UAAyB,QAAA,CAASC,CAAT,EACjCL,CAAAM,IAAA,eAAqBD,CAArB,CADiC,CAAzB,CAAT,CAKAE,iBAAA,EAVYV,CAdE,aA2BFU,QAAAA,OAGRC,EAAWC,QAAA,YACfN,YAAAG,IAAA;AAA4BE,CAA5B,CACGA,EALSD,EAQZJ,WAAAG,IAAA,WAA2BL,WAAAS,YAA3B,IARYH,CA3BE,EAwChBd,EAAAkB,SAAA,UAhDE,CAgD8B,QAAA,SACxB,KAAIf,CAAJ,uBADwB,CAhD9B,OAqDKA,EArDL,CALH;",
-"sources":["TabIndent.js.uncompressed.js"],
-"names":["define","declare","kernel","_Plugin","ToggleButton","experimental","TabIndent","_initButton","inherited","arguments","e","editor","own","button","on","val","set","updateState","disabled","get","isTabIndent","registry"]
-}
