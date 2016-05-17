@@ -105,14 +105,14 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
               <?lsmb # here goes all the posible sources which we can use -?>
               <th align="right" nowrap id="source_label_column"><?lsmb text('Source')?></th>
               <td width="28%" id="source_column">
-                <?lsmb options = [];
+                <?lsmb sources = [];
                        FOREACH item IN source ;
-                       options.push( { text = item, value = item } );
+                       sources.push( { text = item, value = item } );
                        END;
                        PROCESS select element_data = {
                                                 id="source"
                                                 name="source"
-                                                options=options
+                                                options=sources
                                                 default_values=[selected_source] }; ?>
               </td>
               <td id="source_text_column">
@@ -224,15 +224,11 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                 <?lsmb # here goes all the posible sources which we can used ?>
                 <th align="right" nowrap id="<?lsmb "source_label_column$i" ?>"><?lsmb text('Source') ?></th>
                 <td width="28%" id="<?lsmb "source_column$i" ?>">
-                  <?lsmb options = [];
-                         FOREACH item IN source ;
-                                                  options.push( { text = value, value = value } );
-                         END;
-                                                  PROCESS select element_data = {
-                                                  id="source_" _ row.invoice.id
-                                                  name="source_" _ row.invoice.id
-                                                  options=options
-                         default_values=[row.selected_source] } ?>
+                  <?lsmb PROCESS select element_data = {
+                            id="source_" _ row.invoice.id
+                            name="source_" _ row.invoice.id
+                            options=sources
+                            default_values=[row.selected_source] } ?>
                 </td>
                 <td><?lsmb PROCESS input element_data={
                            name  => "source_text_$row.invoice.id",
