@@ -4,6 +4,6 @@
 [submodule "UI/js-src/dijit"]
 	path = UI/js-src/dijit
 	url = https://github.com/dojo/dijit.git
-[submodule "UI/js-src/dojo-util"]
-	path = UI/js-src/dojo-util
+[submodule "UI/js-src/util"]
+	path = UI/js-src/util
 	url = https://github.com/dojo/util.git
