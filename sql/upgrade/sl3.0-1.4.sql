@@ -64,42 +64,42 @@ UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl30.chart
                                   where id = arap_accno_id) ,:ap)),   
-	(select id
-	   from account
-	   where accno = (select accno from sl30.chart
-	                   where id = payment_accno_id)),
-	 startdate, enddate, threshold, 1
+        (select id
+           from account
+           where accno = (select accno from sl30.chart
+                           where id = payment_accno_id)),
+         startdate, enddate, threshold, 1
 FROM sl30.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE sl30.vendor SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = vendornumber and entity_class = 1
+        (SELECT id FROM entity_credit_account e 
+        WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl30.chart
                                   where id = arap_accno_id) ,:ar)), 
-	(select id
-	   from account
-	   where accno = (select accno from sl30.chart
-	                   where id = payment_accno_id)),
+        (select id
+           from account
+           where accno = (select accno from sl30.chart
+                           where id = payment_accno_id)),
         startdate, enddate, threshold, 2
 FROM sl30.customer WHERE entity_id IS NOT NULL;
 
 UPDATE sl30.customer SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = customernumber and entity_class = 2
+        (SELECT id FROM entity_credit_account e 
+        WHERE e.meta_number = customernumber and entity_class = 2
         and e.entity_id = customer.entity_id);
 
 --Company
@@ -413,19 +413,19 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
 insert into ar 
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-	shipvia, language_code, ponumber, shippingpoint, 
-	on_hold, approved, reverse, terms, description)
+        id, invnumber, transdate, taxincluded, amount, netamount, paid, 
+        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        shipvia, language_code, ponumber, shippingpoint, 
+        on_hold, approved, reverse, terms, description)
 SELECT 
-	customer.credit_id,
-	(select entity_id from sl30.employee WHERE id = ar.employee_id),
-	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
-	intnotes,
-	shipvia, ar.language_code, ponumber, shippingpoint, 
-	onhold, approved, case when amount < 0 then true else false end,
-	ar.terms, description
+        customer.credit_id,
+        (select entity_id from sl30.employee WHERE id = ar.employee_id),
+        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
+        datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
+        intnotes,
+        shipvia, ar.language_code, ponumber, shippingpoint, 
+        onhold, approved, case when amount < 0 then true else false end,
+        ar.terms, description
 FROM sl30.ar JOIN sl30.customer ON (ar.customer_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
@@ -434,20 +434,20 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap 
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        id, invnumber, transdate, taxincluded, amount, netamount, paid, 
+        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint, 
-	on_hold, approved, reverse, terms, description)
+        on_hold, approved, reverse, terms, description)
 SELECT 
-	vendor.credit_id,
-	(select entity_id from sl30.employee 
-		WHERE id = ap.employee_id),
-	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
-	intnotes,
-	shipvia, ap.language_code, ponumber, shippingpoint, 
-	onhold, approved, case when amount < 0 then true else false end,
-	ap.terms, description
+        vendor.credit_id,
+        (select entity_id from sl30.employee 
+                WHERE id = ap.employee_id),
+        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
+        datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
+        intnotes,
+        shipvia, ap.language_code, ponumber, shippingpoint, 
+        onhold, approved, case when amount < 0 then true else false end,
+        ap.terms, description
 FROM sl30.ap JOIN sl30.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
@@ -463,18 +463,18 @@ update sl30.acc_trans
 
 INSERT INTO acc_trans
 (entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
-	memo, approved, cleared_on, voucher_id)
+        memo, approved, cleared_on, voucher_id)
 SELECT lsmb_entry_id, trans_id, (select id
                     from account
                    where accno = (select accno
                                     from sl30.chart
                                    where chart.id = acc_trans.chart_id)),
                                     amount, transdate, source,
-	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
-	memo, approved, cleared, vr_id
-	FROM sl30.acc_trans
-	WHERE chart_id IS NOT NULL AND trans_id IN (
-	    SELECT id FROM transactions);
+        CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
+        memo, approved, cleared, vr_id
+        FROM sl30.acc_trans
+        WHERE chart_id IS NOT NULL AND trans_id IN (
+            SELECT id FROM transactions);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
@@ -651,14 +651,14 @@ INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             p.id, j.notes, j.project_id+1000, 1,
             CASE WHEN curr IS NOT NULL
-				 THEN curr
-				 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
-			END
+                                 THEN curr
+                                 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
+                        END
        FROM sl30.jcitems j
        JOIN sl30.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id
-	   LEFT JOIN sl30.project pr on (pr.id = j.project_id)
-	   LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
+           LEFT JOIN sl30.project pr on (pr.id = j.project_id)
+           LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
 
 INSERT INTO parts_translation SELECT * FROM sl30.translation where trans_id in (select id from parts);
 
