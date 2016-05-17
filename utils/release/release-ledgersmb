@@ -72,7 +72,8 @@ setup_workspace() {
 
 populate_workspace() {
    (cd $our_workspace && \
-    $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" ) \
+    $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" && \
+    $git submodule update --init ) \
    || fail "Failed to check out branch '$branch' from '$URL'!"
 }
 
@@ -155,8 +156,7 @@ commit_versiontag() {
 
 create_versiontarball() {
    (cd "$our_workspace/$checkout_dir" && \
-    $git archive --format=tar --prefix=ledgersmb/ "$release_version" \
-    | gzip >../ledgersmb-$release_version.tar.gz ) \
+    make dist DIST_VER="$release_version" DIST_DIR=../ ) \
    || fail "Failed to create release archive!"
 }
 
