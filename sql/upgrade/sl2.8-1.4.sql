@@ -582,7 +582,7 @@ INSERT INTO sic SELECT * FROM sl28.sic;
 
 INSERT INTO warehouse SELECT * FROM sl28.warehouse;
 
-INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
+INSERT INTO warehouse_inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate
@@ -659,7 +659,8 @@ SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
+ SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id))
+        FROM warehouse_inventory;
  SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
  SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
  SELECT setval('account_id_seq', max(id)) FROM account;
