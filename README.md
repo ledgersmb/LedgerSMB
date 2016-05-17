@@ -44,6 +44,26 @@ The instructions below are for getting started quickly; the [project's
 site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 for production installs.
 
+## Check out the sources from GitHub
+
+Note: The preferred way of installation is from release tarballs. When using
+ tarballs, this step should be skipped. To get the latest development version:
+
+```sh
+ $ git clone https://github.com/ledgersmb/LedgerSMB.git
+ $ cd LedgerSMB
+ $ git submodule update --init --recursive
+```
+
+To get the released version 1.4.22, the commands look like:
+
+```
+ $ git clone -b 1.4.22 https://github.com/ledgersmb/LedgerSMB.git
+ $ cd LedgerSMB
+ $ git submodule update --init --recursive
+```
+
+
 ## System (library) dependencies
 
 The following non-Perl (system) dependencies need to be in place for the
@@ -72,7 +92,7 @@ Then, some of the features listed below have system requirements as well:
 
 To install the Perl module dependencies, run:
 
-```bash
+```sh
 
  $ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 
@@ -135,7 +155,7 @@ host    all                            all             ::1/128          md5
 After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 (or without 'sudo' by running the commands as root user):
 
-```bash
+```sh
  $ sudo service postgresql reload
  # -or-
  $ sudo /etc/init.d/postgresql reload
@@ -148,6 +168,23 @@ For most systems, all that's required in this step is:
 ```bash
  $ cp conf/ledgersmb.conf.default ledgersmb.conf
 ```
+
+## Build optimized JavaScript widgets (aka "build Dojo")
+
+Note: The preferred way of installation is from release tarballs. When using
+ tarballs, this step should be skipped as it has been executed during the
+ release process.
+
+This step requires either ```node``` (NodeJS) or ```java``` to be installed
+and in all cases ```make```.
+
+```sh
+ $ make dojo
+```
+
+Builds the required content for the ```UI/js/``` directory from the content
+in the ```UI/js-src/``` directory.  Note that this step fails when submodules
+haven't been correctly initialised.
 
 ## Running Starman
 
