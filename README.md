@@ -47,7 +47,7 @@ for production installs.
 ## Check out the sources from GitHub
 
 Note: The preferred way of installation is from release tarballs. When using
- tarballs, this step should be skipped. To get the latest development version:
+ tarballs, **this step should be skipped**. To get the latest development version:
 
 ```sh
  $ git clone https://github.com/ledgersmb/LedgerSMB.git
