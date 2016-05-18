@@ -19,16 +19,16 @@ RETURNS BOOL AS
 $$
 DECLARE form_test bool;
 BEGIN
-	form_test := form_check(in_session_id, in_form_id);
+        form_test := form_check(in_session_id, in_form_id);
 
-	IF form_test is true THEN
-		DELETE FROM open_forms
-		WHERE session_id = in_session_id AND id = in_form_id;
+        IF form_test is true THEN
+                DELETE FROM open_forms
+                WHERE session_id = in_session_id AND id = in_form_id;
 
-		RETURN TRUE;
+                RETURN TRUE;
 
-	ELSE RETURN FALSE;
-	END IF;
+        ELSE RETURN FALSE;
+        END IF;
 END;
 $$ language plpgsql SECURITY DEFINER;
 
@@ -41,26 +41,26 @@ $$;
 CREATE OR REPLACE FUNCTION check_expiration() RETURNS bool AS
 $$
 DECLARE test_result BOOL;
-	expires_in interval;
-	notify_again interval;
+        expires_in interval;
+        notify_again interval;
 BEGIN
-	expires_in := user__check_my_expiration();
+        expires_in := user__check_my_expiration();
 
-	SELECT expires_in < notify_password INTO test_result
-	FROM users WHERE username = SESSION_USER;
+        SELECT expires_in < notify_password INTO test_result
+        FROM users WHERE username = SESSION_USER;
 
-	IF test_result THEN
-		IF expires_in < '1 week' THEN
-			notify_again := '1 hour';
-		ELSE
-			notify_again := '1 day';
-		END IF;
+        IF test_result THEN
+                IF expires_in < '1 week' THEN
+                        notify_again := '1 hour';
+                ELSE
+                        notify_again := '1 day';
+                END IF;
 
-		UPDATE users
-		SET notify_password = expires_in - notify_again
-		WHERE username = SESSION_USER;
-	END IF;
-	RETURN test_result;
+                UPDATE users
+                SET notify_password = expires_in - notify_again
+                WHERE username = SESSION_USER;
+        END IF;
+        RETURN test_result;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER; -- run by public, but no input from user.
 
@@ -85,8 +85,8 @@ BEGIN
             RAISE EXCEPTION 'Invalid session';
         END IF;
 
-	INSERT INTO open_forms (session_id) VALUES (in_session_id);
-	RETURN currval('open_forms_id_seq');
+        INSERT INTO open_forms (session_id) VALUES (in_session_id);
+        RETURN currval('open_forms_id_seq');
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
@@ -98,19 +98,19 @@ RETURNS session AS
 $$
 DECLARE out_row session%ROWTYPE;
 BEGIN
-	DELETE FROM session
-	 WHERE last_used < now() - coalesce((SELECT value FROM defaults
+        DELETE FROM session
+         WHERE last_used < now() - coalesce((SELECT value FROM defaults
                                     WHERE setting_key = 'session_timeout')::interval,
-	                            '90 minutes'::interval);
+                                    '90 minutes'::interval);
         UPDATE session
            SET last_used = now()
          WHERE session_id = in_session_id
                AND token = in_token
-	       AND users_id = (select id from users
-			where username = SESSION_USER);
-	IF FOUND THEN
-		SELECT * INTO out_row FROM session WHERE session_id = in_session_id;
-	ELSE
+               AND users_id = (select id from users
+                        where username = SESSION_USER);
+        IF FOUND THEN
+                SELECT * INTO out_row FROM session WHERE session_id = in_session_id;
+        ELSE
 
                PERFORM *
                   FROM defaults
@@ -130,8 +130,8 @@ BEGIN
                                              where username = SESSION_USER);
                     RETURN out_row;
                END IF;
-	END IF;
-	RETURN out_row;
+        END IF;
+        RETURN out_row;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -160,7 +160,7 @@ CREATE OR REPLACE FUNCTION unlock(in_id int) RETURNS BOOL AS $$
 BEGIN
     UPDATE transactions SET locked_by = NULL WHERE id = in_id
            AND locked_by IN (SELECT session_id FROM session WHERE users_id =
-		(SELECT id FROM users WHERE username = SESSION_USER));
+                (SELECT id FROM users WHERE username = SESSION_USER));
     RETURN FOUND;
 END;
 $$ LANGUAGE PLPGSQL;
