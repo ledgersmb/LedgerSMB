@@ -551,12 +551,12 @@ sub schedule {
 
           <tr>
         <th align=right nowrap>| . $locale->text('Every') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=recurringrepeat>$selectrepeat</td>
-        <td><select data-dojo-type="dijit/form/Select" name=recurringunit>$selectunit</td>
+        <td><select data-dojo-type="dijit/form/Select" id=recurringrepeat name=recurringrepeat>$selectrepeat</td>
+        <td><select data-dojo-type="dijit/form/Select" id=recurringunit name=recurringunit>$selectunit</td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('For') . qq|</th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=recurringhowmany size=3 value=$form->{recurringhowmany}></td>
+        <td><input data-dojo-type="dijit/form/TextBox" id=recurringhowmany name=recurringhowmany size=3 value=$form->{recurringhowmany}></td>
         <th align=left nowrap>| . $locale->text('time(s)') . qq|</th>
           </tr>
         </table>

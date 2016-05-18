@@ -130,7 +130,8 @@ sub partsgroup_header {
       <table width=100%>
     <tr>
           <th align="right">| . $locale->text('Parent') . qq|</th>
-          <td><select data-dojo-type="dijit/form/Select" name='parent'>
+          <td><select data-dojo-type="dijit/form/Select"
+                      id='parent' name='parent'>
               <option></option>|;
               for my $pg (@{$form->{item_list}}){
                   my $selected = '';
@@ -578,7 +579,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="translation_$i" size=40 valu
 
         print qq|
     <tr valign=top>
-      <td><select data-dojo-type="dijit/form/Select" name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="language-code-$i" name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
       <td>$translation</td>
     </tr>
 |;
@@ -812,8 +813,8 @@ sub project_sales_order {
         <tr>
       <th align=right>| . $locale->text('Period') . qq|</th>
       <td colspan=3>
-      <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
-      <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
+      <select data-dojo-type="dijit/form/Select" id=month name=month>$form->{selectaccountingmonth}</select>
+      <select data-dojo-type="dijit/form/Select" id=year name=year>$form->{selectaccountingyear}</select>
       <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
       <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
@@ -861,7 +862,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         $employee = qq|
               <tr>
             <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee>$form->{selectemployee}</select></td>
           </tr>
 |;
     }
@@ -887,7 +888,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
       <table>
         <tr>
       <th align=right>| . $locale->text('Project') . qq|</th>
-      <td colspan=3><select data-dojo-type="dijit/form/Select" name=projectnumber>$form->{selectprojectnumber}</select></td>
+      <td colspan=3><select data-dojo-type="dijit/form/Select" id=projectnumber name=projectnumber>$form->{selectprojectnumber}</select></td>
     </tr>
     $employee
     $fromto
