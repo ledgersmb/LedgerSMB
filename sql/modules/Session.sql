@@ -98,10 +98,15 @@ RETURNS session AS
 $$
 DECLARE out_row session%ROWTYPE;
 BEGIN
-        DELETE FROM session
-         WHERE last_used < now() - coalesce((SELECT value FROM defaults
-                                    WHERE setting_key = 'session_timeout')::interval,
-                                    '90 minutes'::interval);
+        PERFORM * FROM defaults
+            WHERE setting_key='never_logout' and value = '1';
+        IF NOT FOUND THEN
+                DELETE FROM session
+                WHERE last_used < now() - coalesce((SELECT value FROM defaults
+                                                        WHERE setting_key = 'session_timeout')::interval,
+                                                   '90 minutes'::interval);
+        END IF;
+
         UPDATE session
            SET last_used = now()
          WHERE session_id = in_session_id
@@ -109,26 +114,15 @@ BEGIN
                AND users_id = (select id from users
                         where username = SESSION_USER);
         IF FOUND THEN
-                SELECT * INTO out_row FROM session WHERE session_id = in_session_id;
+               SELECT * INTO out_row
+                 FROM session
+                WHERE session_id = in_session_id;
         ELSE
-               PERFORM *
-                  FROM defaults
-                 WHERE setting_key = 'never_logout' and value = '0';
-
-                IF NOT FOUND THEN
-                    RAISE NOTICE 'auto logout';
-                    RETURN NULL;
-                ELSE
-                    INSERT INTO session (users_id, token)
-                    SELECT id, md5(random()::text)
-                      FROM users
-                     WHERE username = SESSION_USER;
-
-                    SELECT * INTO out_row FROM SESSION
-                     WHERE users_id = (select id from users
-                                             where username = SESSION_USER);
-                    RETURN out_row;
-               END IF;
+               INSERT INTO session (users_id, token)
+               SELECT id, md5(random()::text)
+                 FROM users
+                WHERE username = SESSION_USER
+               RETURNING * INTO out_row;
         END IF;
         RETURN out_row;
 END;
