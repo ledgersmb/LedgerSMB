@@ -320,10 +320,11 @@ Approves all selected batches.
 
 sub batch_approve {
     my ($request) = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if (!$batch->close_form){
+    if (!$request->close_form){
         list_batches($request);
     }
+    
+    my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
@@ -365,10 +366,11 @@ Deletes selected batches
 
 sub batch_delete {
     my ($request)  = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if (!$batch->close_form){
+    if (!$request->close_form){
         return list_batches($request);
     }
+
+    my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
