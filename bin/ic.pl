@@ -277,7 +277,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         delete $form->{all_vendor};
     }
 
-    # vendor matrix
+    # vendor matrix (on update, we don't have a price matrix)
     $i = 1;
     foreach $ref ( @{ $form->{vendormatrix} } ) {
         $form->{"vendor_$i"} = qq|$ref->{name}--$ref->{id}|;
@@ -289,7 +289,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         }
         $i++;
     }
-    $form->{vendor_rows} = $i - 1;
+    $form->{vendor_rows} //= $i - 1;
     delete $form->{vendormatrix};
 
     # setup customers and groups
@@ -311,9 +311,9 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         delete $form->{all_pricegroup};
     }
 
-    $i = 1;
 
-    # customer matrix
+    # customer matrix (on update, we don't have a price matrix)
+    $i = 1;
     foreach $ref ( @{ $form->{customermatrix} } ) {
 
         $form->{"customer_$i"} = "$ref->{name}--$ref->{cid}" if $ref->{cid};
@@ -328,7 +328,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         $i++;
 
     }
-    $form->{customer_rows} = $i - 1;
+    $form->{customer_rows} //= $i - 1;
     delete $form->{customermatrix};
 
 }
@@ -1443,7 +1443,6 @@ qq|$form->{script}?action=edit&id=$form->{"id_$i"}&path=$form->{path}&login=$for
 }
 
 sub update {
-
     if ( $form->{item} eq "assembly" ) {
 
         $i = $form->{assembly_rows};
