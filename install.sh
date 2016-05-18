@@ -12,14 +12,6 @@ then
 fi
 
 
-echo "Installing Perl Modules"
-
-cpan Module::Install
-
-perl Makefile.PL
-
-make
-
 echo "Configuring Apache"
 
 #sed "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf.template > ledgersmb-httpd.conf
