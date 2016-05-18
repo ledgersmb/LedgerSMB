@@ -1,31 +1,9 @@
 --Setup
 
 -- When moved to an interface, these will all be specified and preprocessed.
-\set lsmbdir `pwd`
-\set contribdir '/usr/share/pgsql/contrib'
-\set default_country '''us'''
-\set ar '''1200'''
-\set ap '''2100'''
-
--- This will be moved out of this part.
-ALTER SCHEMA public RENAME TO lsmb12;
-CREATE SCHEMA public;
-
-\cd :contribdir
-\i pg_trgm.sql
-\i tsearch2.sql
-\i tablefunc.sql
-
-\cd :lsmbdir
-
--- Full module load should be part of upgrade wizard, at this stage.
-\i sql/Pg-database.sql
-\i sql/modules/Setting.sql
-\i sql/modules/Location.sql
-\i sql/modules/Account.sql
-\i sql/modules/Payment.sql
-\i sql/modules/Person.sql
-\i sql/modules/Reconciliation.sql
+\set default_country '''<?lsmb default_country ?>'''
+\set ar '''<?lsmb default_ar ?>'''
+\set ap '''<?lsmb default_ap ?>'''
 
 BEGIN;
 
@@ -39,15 +17,20 @@ ALTER TABLE lsmb12.customer ADD COLUMN entity_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN company_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
 
+-- Buisness Reporting Units
+
+INSERT INTO business_unit (class_id, id, control_code, description)
+     SELECT 1, id, role || id::text, description FROM lsmb12.department;
+
 
 --Accounts
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
 
-SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra,
-                    CASE WHEN link like '%tax%' THEN true ELSE false END,
-                    string_to_array(link,':'))
+SELECT account__save(id, accno, description, category, gifi_accno, NULL, contra,
+                    (CASE WHEN link like '%tax%' THEN true ELSE false END),
+                    string_to_array(link,':'), false, false)
   FROM lsmb12.chart
  WHERE charttype = 'A';
 --Entity
@@ -55,14 +38,14 @@ SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra,
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'V-' || vendornumber, 1,
        (select id from country
-         where lower(short_name)  = :default_country)
+         where lower(short_name)  = lower(:default_country))
 FROM lsmb12.vendor
 GROUP BY name, vendornumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT name, 'C-' || customernumber, 2,
        (select id from country
-         where lower(short_name)  =  :default_country)
+         where lower(short_name)  =  lower(:default_country))
 FROM lsmb12.customer
 GROUP BY name, customernumber;
 
@@ -74,30 +57,34 @@ UPDATE lsmb12.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHER
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-	cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class,
+        taxincluded)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id from account where accno = :ap),
-	NULL, startdate, enddate, 0, 1
+        NULL, startdate, enddate, 0, 1, taxincluded
 FROM lsmb12.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.vendor SET credit_id =
-	(SELECT id FROM entity_credit_account e
-	WHERE e.meta_number = vendornumber and entity_class = 1
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
-	cash_account_id, startdate, enddate, threshold, entity_class)
+        cash_account_id, startdate, enddate, threshold, entity_class,
+        taxincluded)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id from account where accno = :ar),
-	NULL, startdate, enddate, 0, 2
+        NULL, startdate, enddate, 0, 2, taxincluded
 FROM lsmb12.customer WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.customer SET credit_id =
-	(SELECT id FROM entity_credit_account e
-	WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
 
+UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
+ WHERE curr IS NULL;
 --Company
 
 INSERT INTO company (entity_id, legal_name, tax_id)
@@ -183,15 +170,13 @@ group by v.credit_id, v.fax;
 
 INSERT INTO public.country (id, name, short_name) VALUES (-1, 'Invalid Country', 'XX');
 
---tshvr address1 constraint "location_line_one_check"
 INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
     min(location_save(NULL,
 
     case
+        when oa.address1 = '' then 'Null'
         when oa.address1 is null then 'Null'
-        when trim(oa.address1) = '' then 'Null'
-        when oa.address1 !~ '[[:alnum:]_]' then 'Invalid'
         else oa.address1
     end,
     oa.address2,
@@ -229,9 +214,8 @@ SELECT eca.id, 1,
     min(location_save(NULL,
 
     case
+        when oa.address1 = '' then 'Null'
         when oa.address1 is null then 'Null'
-        when trim(oa.address1) = '' then 'Null'
-        when oa.address1 !~ '[[:alnum:]_]' then 'Invalid'
         else oa.address1
     end,
     oa.address2,
@@ -377,7 +361,7 @@ ALTER TABLE lsmb12.employee ADD entity_id int;
 
 INSERT INTO entity(control_code, entity_class, name, country_id)
 select 'E-' || employeenumber, 3, name,
-        (select id from country where lower(short_name) = :default_country)
+        (select id from country where lower(short_name) = lower(:default_country))
 FROM lsmb12.employee;
 
 UPDATE lsmb12.employee set entity_id =
@@ -386,21 +370,38 @@ UPDATE lsmb12.employee set entity_id =
 INSERT INTO person (first_name, last_name, entity_id)
 select name, name, entity_id FROM lsmb12.employee;
 
-INSERT INTO users (entity_id, username)
-     SELECT entity_id, login FROM lsmb12.employee em;
-
 INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
        (select entity_id from lsmb12.employee where id = em.managerid)
-  FROM lsmb12.employee em;
+  FROM lsmb12.employee em
+ WHERE id IN (select min(id) from lsmb12.employee group by entity_id);
+
+
+-- I would prefer stronger passwords here but the exposure is very short, since
+-- the passwords time out after 24 hours anyway.  These are not assumed to be
+-- usable passwords. --CT
+
+SELECT admin__save_user(null, max(entity_id), login, random()::text, true)
+  FROM lsmb12.employee
+ WHERE login IN (select rolname FROM pg_roles)
+ GROUP BY login;
+
+SELECT  admin__save_user(null, max(entity_id), login, random()::text, false)
+  FROM lsmb12.employee
+ WHERE login NOT IN (select rolname FROM pg_roles)
+ GROUP BY login;
 
 
 
 -- must rebuild this table due to changes since 1.2
 
-INSERT INTO makemodel
+-- needed to handle null values
+UPDATE lsmb12.makemodel set model = '' where model is null;
+
+--barcode will throw off SELECT * FROM makemodel
+INSERT INTO makemodel (parts_id, make, model)
 SELECT * FROM lsmb12.makemodel;
 
 INSERT INTO gifi
@@ -412,16 +413,75 @@ UPDATE defaults
  WHERE setting_key IN (select setting_key FROM lsmb12.defaults);
 
 
-INSERT INTO parts SELECT * FROM lsmb12.parts;
+INSERT INTO parts (
+  id,
+  partnumber,
+  description,
+  unit,
+  listprice,
+  sellprice,
+  lastcost,
+  priceupdate,
+  weight,
+  onhand,
+  notes,
+  makemodel,
+  assembly,
+  alternate,
+  rop,
+  inventory_accno_id,
+  income_accno_id ,
+  expense_accno_id,
+  bin,
+  obsolete,
+  bom,
+  image,
+  drawing,
+  microfiche,
+  partsgroup_id,
+  avgcost
+)
+SELECT
+  p.id,
+  partnumber,
+  p.description,
+  unit,
+  listprice,
+  sellprice,
+  lastcost,
+  priceupdate,
+  weight,
+  onhand,
+  notes,
+  makemodel,
+  assembly,
+  alternate,
+  rop,
+  inventory_accno.id,
+  income_accno.id ,
+  expense_accno.id,
+  bin,
+  p.obsolete,
+  bom,
+  image,
+  drawing,
+  microfiche,
+  partsgroup_id,
+  avgcost
+ FROM lsmb12.parts p
+ LEFT JOIN lsmb12.chart invc ON p.inventory_accno_id = invc.id
+ LEFT JOIN lsmb12.chart incc ON p.income_accno_id = incc.id
+ LEFT JOIN lsmb12.chart expc ON p.expense_accno_id = expc.id
+ LEFT JOIN account inventory_accno ON invc.accno = inventory_accno.accno
+ LEFT JOIN account income_accno ON incc.accno = income_accno.accno
+ LEFT JOIN account expense_accno ON expc.accno = expense_accno.accno;
 
 INSERT INTO assembly SELECT * FROM lsmb12.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
-INSERT INTO gl(id, reference, description, transdate, person_id, notes,
-               department_id)
-    SELECT gl.id, reference, description, transdate, p.id, gl.notes,
-           department_id
+INSERT INTO gl(id, reference, description, transdate, person_id, notes)
+    SELECT gl.id, reference, description, transdate, p.id, gl.notes
       FROM lsmb12.gl
  LEFT JOIN lsmb12.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
@@ -433,12 +493,12 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 INSERT INTO ar(id, invnumber, transdate, taxincluded, amount,
             netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
             notes, curr, ordnumber, person_id, till, quonumber, intnotes,
-            department_id, shipvia, language_code, ponumber,
+            shipvia, language_code, ponumber,
             entity_credit_account)
      SELECT ar.id, invnumber, transdate, ar.taxincluded, amount, netamount,
             paid, datepaid, duedate, invoice, shippingpoint, ar.terms, ar.notes,
             ar.curr, ordnumber, em.entity_id, till, quonumber, intnotes,
-            department_id, shipvia, ar.language_code, ponumber, credit_id
+            shipvia, ar.language_code, ponumber, credit_id
        FROM lsmb12.ar
        JOIN lsmb12.customer c ON c.id = ar.customer_id
   LEFT JOIN lsmb12.employee em ON em.id = ar.employee_id;
@@ -450,31 +510,52 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 INSERT INTO ap(id, invnumber, transdate, taxincluded, amount,
             netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
             notes, curr, ordnumber, person_id, till, quonumber, intnotes,
-            department_id, shipvia, language_code, ponumber,
+            shipvia, language_code, ponumber,
             entity_credit_account)
      SELECT ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
             paid, datepaid, duedate, invoice, shippingpoint, ap.terms, ap.notes,
             ap.curr, ordnumber, em.entity_id, till, quonumber, intnotes,
-            department_id, shipvia, ap.language_code, ponumber, credit_id
+            shipvia, ap.language_code, ponumber, credit_id
        FROM lsmb12.ap
        JOIN lsmb12.vendor c ON c.id = ap.vendor_id
   LEFT JOIN lsmb12.employee em ON em.id = ap.employee_id;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
+INSERT INTO business_unit (id,control_code, description, start_date, end_date,
+            credit_id, class_id)
+     SELECT p.id + 1000, projectnumber, description, p.startdate, p.enddate,
+            c.credit_id, 2
+       FROM lsmb12.project p
+  LEFT JOIN lsmb12.customer c ON p.customer_id = c.id;
+
 INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
-            fx_transaction, project_id, memo, invoice_id, entry_id)
+            fx_transaction, memo, invoice_id, entry_id)
      SELECT trans_id, a.id, amount, transdate, source, cleared,
-            fx_transaction, project_id, memo, invoice_id, entry_id
+            fx_transaction, memo, invoice_id, entry_id
        FROM lsmb12.acc_trans
        JOIN lsmb12.chart ON acc_trans.chart_id = chart.id
        JOIN account a ON chart.accno = a.accno;
 
+INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+     SELECT ac.entry_id, 1, gl.department_id
+       FROM acc_trans ac
+       JOIN (select id, department_id from lsmb12.gl
+              UNION
+             SELECT id, department_id FROM lsmb12.ar
+              UNION
+             SELECT id, department_id FROM lsmb12.ap) gl ON ac.trans_id = gl.id
+      WHERE gl.department_id is not null and gl.department_id <> 0
+      UNION
+     SELECT ac.entry_id, 2, ac.project_id + 1000
+       FROM lsmb12.acc_trans ac
+      WHERE ac.project_id IS NOT NULL;
+
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber, notes)
     SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber, notes
        FROM lsmb12.invoice;
 
@@ -484,6 +565,20 @@ INSERT INTO partstax (parts_id, chart_id)
        JOIN lsmb12.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
 
+INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
+     SELECT inv.id, 1, gl.department_id
+       FROM invoice inv
+       JOIN (select id, department_id from lsmb12.gl
+              UNION
+             SELECT id, department_id FROM lsmb12.ar
+              UNION
+             SELECT id, department_id FROM lsmb12.ap) gl ON inv.trans_id = gl.id
+      WHERE gl.department_id is not null and gl.department_id <> 0
+      UNION
+     SELECT inv.id, 2, inv.project_id + 1000
+       FROM lsmb12.invoice inv
+      WHERE inv.project_id IS NOT NULL;
+
 INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
      SELECT a.id, t.rate, t.taxnumber,
             coalesce(t.validto::timestamp, 'infinity'), pass, taxmodule_id
@@ -491,14 +586,13 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
        JOIN lsmb12.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
-INSERT INTO customertax (customer_id, chart_id)
+INSERT INTO eca_tax (eca_id, chart_id)
      SELECT c.credit_id,  a.id
        FROM lsmb12.customertax pt
        JOIN lsmb12.customer c ON (pt.customer_id = c.id)
        JOIN lsmb12.chart ON chart.id = pt.chart_id
-       JOIN account a ON chart.accno = a.accno;
-
-INSERT INTO vendortax (vendor_id, chart_id)
+       JOIN account a ON chart.accno = a.accno
+      UNION
      SELECT c.credit_id,  a.id
        FROM lsmb12.vendortax pt
        JOIN lsmb12.vendor c ON (pt.vendor_id = c.id)
@@ -508,11 +602,11 @@ INSERT INTO vendortax (vendor_id, chart_id)
 INSERT
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
-       intnotes, department_id, shipvia, language_code, ponumber, terms,
+       intnotes, shipvia, language_code, ponumber, terms,
        entity_credit_account, oe_class_id)
 SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
        shippingpoint, oe.notes, oe.curr, p.id, closed, quotation, quonumber,
-       intnotes, department_id, shipvia, oe.language_code, ponumber, oe.terms,
+       intnotes, shipvia, oe.language_code, ponumber, oe.terms,
        coalesce(c.credit_id, v.credit_id),
        case
            when c.id is not null and quotation is not true THEN 1
@@ -527,25 +621,26 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
   LEFT JOIN person p ON e.entity_id = p.id;
 
 INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
-            discount, unit, project_id, reqdate, ship, serialnumber, notes)
+            discount, unit, reqdate, ship, serialnumber, notes)
      SELECT id, trans_id, parts_id, description, qty, sellprice,
-            discount, unit, project_id, reqdate, ship, serialnumber, notes
+            discount, unit, reqdate, ship, serialnumber, notes
        FROM lsmb12.orderitems;
 
-INSERT INTO exchangerate select * from lsmb12.exchangerate;
+INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
+     SELECT oi.id, 1, gl.department_id
+       FROM orderitems oi
+       JOIN lsmb12.oe gl ON oi.trans_id = gl.id
+      WHERE gl.department_id is not null and gl.department_id <> 0
+      UNION
+     SELECT oi.id, 2, oi.project_id + 1000
+       FROM lsmb12.orderitems oi
+      WHERE oi.project_id IS NOT NULL;
 
-INSERT INTO project (id, projectnumber, description, startdate, enddate,
-            parts_id, production, completed, credit_id)
-     SELECT p.id, projectnumber, description, p.startdate, p.enddate,
-            parts_id, production, completed, c.credit_id
-       FROM lsmb12.project p
-       JOIN lsmb12.customer c ON p.customer_id = c.id;
+INSERT INTO exchangerate select * from lsmb12.exchangerate;
 
 INSERT INTO partsgroup SELECT * FROM lsmb12.partsgroup;
 
 INSERT INTO status SELECT * FROM lsmb12.status;
-
-INSERT INTO department SELECT * FROM lsmb12.department;
 
 INSERT INTO business SELECT * FROM lsmb12.business;
 
@@ -553,7 +648,7 @@ INSERT INTO sic SELECT * FROM lsmb12.sic;
 
 INSERT INTO warehouse SELECT * FROM lsmb12.warehouse;
 
-INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
+INSERT INTO warehouse_inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate, entry_id)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate, i.entry_id
@@ -586,21 +681,22 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
        JOIN lsmb12.employee e ON a.employee_id = e.id
        JOIN person p on e.entity_id = p.entity_id;
 
-INSERT INTO user_preference(id)
-     SELECT id from users;
-
-INSERT INTO recurring SELECT * FROM lsmb12.recurring;
-
+INSERT INTO recurring (id, reference, startdate, nextdate,
+                       enddate, howmany, payment, recurring_interval)
+ SELECT id, reference, startdate, nextdate, enddate, howmany, payment,
+        (repeat || ' ' || unit)::interval as recurring_interval
+   FROM lsmb12.recurring;
 INSERT INTO recurringemail SELECT * FROM lsmb12.recurringemail;
-
 INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
 
-INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
+INSERT INTO jcitems(id, business_unit_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes)
-     SELECT j.id,  project_id, parts_id, description, qty, allocated,
+            person_id, notes, total, jctype, curr)
+     SELECT j.id,  project_id + 1000, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes
+            p.id, j.notes, coalesce(qty, 0), 1,
+            (SELECT (string_to_array(value, ':'))[1]
+               FROM lsmb12.defaults WHERE setting_key = 'curr')
        FROM lsmb12.jcitems j
        JOIN lsmb12.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
@@ -614,14 +710,16 @@ INSERT INTO parts_translation SELECT * FROM lsmb12.translation where trans_id in
 INSERT INTO partsgroup_translation SELECT * FROM lsmb12.translation where trans_id in
  (select id from partsgroup);
 
-INSERT INTO project_translation SELECT * FROM lsmb12.translation where trans_id in
- (select id from project);
+INSERT INTO business_unit_translation (trans_id, description, language_code)
+SELECT trans_id + 1000, description, language_code
+FROM lsmb12.translation where trans_id in (select id from lsmb12.project);
 
 SELECT setval('id', max(id)) FROM transactions;
 
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
+ SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id))
+        FROM warehouse_inventory;
  SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
  SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
  SELECT setval('account_id_seq', max(id)) FROM account;
@@ -661,8 +759,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('business_id_seq', max(id)) FROM business;
  SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
  SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
- SELECT setval('project_id_seq', max(id)) FROM project;
- SELECT setval('department_id_seq', max(id)) FROM department;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
  SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
@@ -670,14 +766,12 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
  SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
 
-UPDATE defaults SET value = '1.3.0' WHERE setting_key = 'version';
-
+update defaults set value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
 --TODO:  Translation migratiion.  Partsgroups?
