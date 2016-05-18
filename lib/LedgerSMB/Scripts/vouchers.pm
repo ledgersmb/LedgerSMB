@@ -323,7 +323,7 @@ sub batch_approve {
     if (!$request->close_form){
         list_batches($request);
     }
-    
+
     my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
