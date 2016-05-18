@@ -57,6 +57,7 @@ verify_dependencies() {
    verify_dependency "tx"
    verify_dependency "msgmerge"
    verify_dependency "msguniq"
+   verify_dependency "make"
 }
 
 verify_release_key() {
@@ -72,15 +73,25 @@ setup_workspace() {
 
 populate_workspace() {
    (cd $our_workspace && \
-    $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" ) \
-   || fail "Failed to check out branch '$branch' from '$URL'!"
+    $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" && \
+    cd "$checkout_dir" && $git submodule update --init --recursive ) \
+    || fail "Failed to check out branch '$branch' from '$URL'!"
+   if test -e "$our_workspace/$checkout_dir/LedgerSMB.pm"
+   then
+       LedgerSMBpm_path="LedgerSMB.pm"
+   else
+       LedgerSMBpm_path="lib/LedgerSMB.pm"
+   fi
+   echo "LedgerSMB.pm found at $LedgerSMBpm_path"
 }
 
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
-    ($find . -name '*~' -o -name '*.orig' -exec rm {} + ) && \
-    $git add locale && git commit -m "* Automated release language update" \
+    $find . -name '*~' -exec rm \{} + && \
+    $find . -name '*.orig' -exec rm \{} + && \
+    $git add --all locale && \
+    git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
 }
@@ -91,7 +102,7 @@ detect_current_version() {
      $sed -ne "/^our \$VERSION/ {
   s/^our \$VERSION = '\\(.*\\)';\$/\\1/
   p
-}" LedgerSMB.pm)
+}" "$LedgerSMBpm_path")
    if [[ -z "$current_version" ]] ; then
      fail "Failed to detect current version!"
    fi
@@ -155,8 +166,7 @@ commit_versiontag() {
 
 create_versiontarball() {
    (cd "$our_workspace/$checkout_dir" && \
-    $git archive --format=tar --prefix=ledgersmb/ "$release_version" \
-    | gzip >../ledgersmb-$release_version.tar.gz ) \
+    $make dist DIST_VER="$release_version" DIST_DIR=../ ) \
    || fail "Failed to create release archive!"
 }
 

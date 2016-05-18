@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"PartDescription.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,wFAIO,QAAA,CACDC,CADC,CAECC,CAFD,CAGCC,CAHD,QAKQD,EAAA,gCAAuCD,CAAvC,oCAGMG,QAAAA,OACDC,MACJC,SAAA,CACIH,CAAAI,UAAA,yBAC8BC,YAD9B,CAEI,QAAA,CAASC,CAAT,EACIJ,CAAAK,IAAA,SAAiBD,CAAAE,YAAjB,CADJ,CAFJ,CADJ,CAFKP,CAHN,EALR,CAJP;",
-"sources":["PartDescription.js.uncompressed.js"],
-"names":["define","Textarea","declare","topic","startup","self","own","subscribe","linenum","selected","set","description"]
-}

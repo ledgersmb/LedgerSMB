@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"VerticalSlider.js",
-"lineCount":3,
-"mappings":"A;AAAAA,OAAA,SACA,8CADA,q9GAEAC;MAAA,qHAIG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAoCC,CAApC,QAKKF,EAAA,6BAAqCC,CAArC,iBAIUC,CAJV,kJAgBOC,QAAAA,SAILC,iBAJKD,CAhBP,EALL,CAJH;",
-"sources":["VerticalSlider.js.uncompressed.js"],
-"names":["require","define","declare","HorizontalSlider","template","_isReversed","_descending"]
-}

@@ -17,8 +17,8 @@
       # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
       ?>
     <?lsmb IF dojo_built ?>
-    <link rel="stylesheet" href="build/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="build/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
+    <link rel="stylesheet" href="js/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
     <?lsmb ELSE ?>
         <link rel="stylesheet" href="dojo/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
@@ -48,9 +48,9 @@
         };
         var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
     </script>
-    <script type="text/javascript" language="JavaScript" src="build/dojo/dojo.js"></script>
+    <script type="text/javascript" language="JavaScript" src="js/dojo/dojo.js"></script>
     <script type="text/javascript" language="JavaScript"
-            src="build/lsmb/main.js"></script>
+            src="js/lsmb/main.js"></script>
     <?lsmb ELSE ?>
         <script type="text/javascript" language="JavaScript">
           var dojoConfig = {

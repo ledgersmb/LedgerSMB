@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"topic.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,4BAAoC,QAAA,CAASC,CAAT,MAK/BC,EAAM,IAAID,CALqB,gBAezBE,QAAAA,CAASC,CAATD,CAAgBE,CAAhBF,QASDD,EAAAI,KAAAC,MAAA,CAAeL,CAAf,CAAoBM,SAApB,CATCL,CAfyB,WA2BvBM,QAAAA,CAASL,CAATK,CAAgBC,CAAhBD,QAOHP,EAAAS,GAAAJ,MAAA,CAAaL,CAAb,CAAkBM,SAAlB,CAPGC,CA3BuB,EAApC;",
-"sources":["topic.js.uncompressed.js"],
-"names":["define","Evented","hub","publish","topic","event","emit","apply","arguments","subscribe","listener","on"]
-}

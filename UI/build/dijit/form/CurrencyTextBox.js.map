@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"CurrencyTextBox.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,yGAKG,QAAA,CAASC,CAAT,CAAmBC,CAAnB,CAA4BC,CAA5B,CAAkCC,CAAlC,QAqBKF,EAAA,8BAAsCE,CAAtC,uEA2BMH,CAAAI,OA3BN,SA6BGJ,CAAAK,MA7BH,kBA+BYL,CAAAM,OA/BZ,OAiCCD,QAAAA,CAAoBE,CAApBF,CAAsCG,CAAtCH,MAKFI,EAAIC,cAAA,CAAeC,SAAf,CACLC,MAAA,CAAMH,CAAN,CANGJ,EAMSQ,UAAA,CAAWN,CAAX,CANTF,GAOLI,CAPKJ,CAODH,CAAAY,MAAA,CAAWZ,CAAAa,SAAA,eAA+BZ,CAAAa,UAAAC,QAA/B,EAAX,aAAA,CAA2FN,SAA3F,CAPCN,QASCI,EATDJ,CAjCD,qBA6Cea,QAAAA,CAAoBV,CAApBU,GAChBV,CAAAR,SADgBkB;AACQlB,aADRkB,GAEnBV,CAAAR,SAFmBkB,CAEIlB,aAFJkB,CAIpBR,eAAA,CAAeC,SAAf,EAA4BX,CAAAmB,eAAA,CAAwBjB,CAAAkB,MAAA,CAAWZ,CAAX,eAAxB,CAA5B,EAJoBU,CA7Cf,EArBL,CALH;",
-"sources":["CurrencyTextBox.js.uncompressed.js"],
-"names":["define","currency","declare","lang","NumberTextBox","format","parse","regexp","value","constraints","v","inherited","arguments","isNaN","test","hitch","delegate","prototype","_parser","_setConstraintsAttr","_mixInDefaults","mixin"]
-}

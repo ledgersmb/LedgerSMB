@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"json.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,0CAAmD,QAAA,CAASC,CAAT,CAAeC,CAAf,EAYnDD,CAAAE,SAZmD,CAYnCC,QAAAA,CAAoBC,CAApBD,QAaRE,KAAA,KAAWD,CAAX,KAbQD,CAwBhBH,EAAAM,cApCmD,CAoC9BL,CAAAM,UAErBP,EAAAQ,gBAtCmD,KAuCnDR,EAAAS,OAvCmD,CAuCrCC,QAAAA,CAAoBC,CAApBD,CAAqCE,CAArCF,QAuCNT,EAAAM,UAAA,CAAeI,CAAf,CAAmB,QAAA,CAASE,CAAT,CAAcC,CAAd,KACtBA,CADsB,MAEpBC,EAAKD,CAAAE,SAALD,EAAqBD,CAAAb,KAFD,sBAGdc,EAHc,OAIhBA,EAAAE,KAAA,CAAQH,CAAR,CAJgB,OAOlBA,EAPkB,CAAnB,CAQJF,CARI,EAQWZ,CAAAQ,gBARX,CAvCME,CAvCqC,OAyF5CV,EAzF4C,CAAnD;",
-"sources":["json.js.uncompressed.js"],
-"names":["define","dojo","json","fromJson","dojo.fromJson","js","eval","_escapeString","stringify","toJsonIndentStr","toJson","dojo.toJson","it","prettyPrint","key","value","tf","__json__","call"]
-}

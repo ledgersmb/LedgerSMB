@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Notification.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,+DAAwE,QAAA,CAASC,CAAT,CAAkBC,CAAlB,QAKjED,EAAA,8BAAsCC,CAAtC,cAsBOC,QAAAA,UAIX,oBAJWA,IAKX,4BALWA,KAtBP,OA+BCC,QAAAA,CAAkCC,CAAlCD,CACyBE,CADzBF,CAEgBG,CAFhBH,CAGgBI,CAHhBJ,OAyBIK,MAAJ,uDAzBAL,EA/BD,OA2DCM,QAAAA,CAAkCC,CAAlCD,CAAuDE,CAAvDF,OA2BID,MAAJ,uDA3BAC,EA3DD,UAyFIG,QAAAA,CAAkCC,CAAlCD,OAWCJ,MAAJ,0DAXGI,EAzFJ,EALiE,CAAxE;",
-"sources":["Notification.js.uncompressed.js"],
-"names":["define","declare","Read","getFeatures","onSet","item","attribute","oldValue","newValue","Error","onNew","newItem","parentInfo","onDelete","deletedItem"]
-}

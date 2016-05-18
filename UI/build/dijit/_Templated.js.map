@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"_Templated.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,oBAA2B,iIAAA,MAAA,KAA3B,CAQG,QAAA,CAASC,CAAT,CAAsBC,CAAtB,CAAuCC,CAAvC,CAAgEC,CAAhE,CAAuEC,CAAvE,CAAgFC,CAAhF,CAAsFC,CAAtF,EASFD,CAAAE,OAAA,CAAYP,CAAZ,0BATE,OAcKI,EAAA,qBAA6BH,CAA7B,CAA8CC,CAA9C,oCAUOM,QAAAA,GACZF,CAAAG,WAAA,CAAkBC,kBAAlB,oHADYF,CAVP,cAcQG,QAAAA,CAASC,CAATD,CAAmBE,CAAnBF,MACTG,EAAMC,cAAA,CAAeC,SAAf,CADGL;AAITM,EAAOJ,CAAA,CAAYD,CAAZ,WACRK,EALUN,EAMZC,CAAAM,aAAA,QAA8BD,CAA9B,CANYN,EAQTQ,CARSR,CAQAE,CAAA,CAAYD,CAAZ,YARAD,GAUZR,CAAAiB,QAAA,CAAcD,CAAAE,MAAA,WAAd,CAAuC,QAAA,CAASC,CAAT,MACnCA,CAAAC,QAAA,KADmC,GAEjCC,CAFiC,CAE1BF,CAAAD,MAAA,KAF0B,CAGrCT,CAAAM,aAAA,SAA8BM,CAAA,GAA9B,CAAuCA,CAAA,GAAvC,CAHqC,EAAvC,CAVYb,OAkBNG,EAlBMH,CAdR,EAdL,CARH;",
-"sources":["_Templated.js.uncompressed.js"],
-"names":["define","_WidgetBase","_TemplatedMixin","_WidgetsInTemplateMixin","array","declare","lang","kernel","extend","constructor","deprecated","declaredClass","_processNode","baseNode","getAttrFunc","ret","inherited","arguments","role","setAttribute","values","forEach","split","stateValue","indexOf","pair"]
-}

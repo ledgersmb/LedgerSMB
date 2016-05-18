@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"_CheckBoxMixin.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,oEAGG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,QAKKD,EAAA,qHA8BYE,QAAAA,CAAqBC,CAArBD,EACjBE,SAAA,YAAsBD,CAAtB,CACAF,EAAAI,IAAA,CAAYC,cAAZ,YAAwCH,CAAxC,CAFiBD,CA9BZ,sCAuCWK,QAAAA,CAAoBJ,CAApBI,eACRJ,CADQI,OACSJ,CADTI,MACgCJ,CADhCI,CAvCX,eA2CSC,QAAAA,CAASC,CAATD,EACdC,CADcD,CACHD,oBAAA,CAAqBE,CAArB,CACXL,UAAA,SAAmBK,CAAnB,CACAR,EAAAI,IAAA,CAAYC,cAAZ,SAAqCG,CAArC,CAHcD,CA3CT,OAiDCE,QAAAA,GACNC,cAAA,CAAeC,SAAf,CAEAR;SAAA,SAAmBG,oBAAA,CAAqBM,WAAAV,MAArB,CAAnB,CACAF,EAAAI,IAAA,CAAYC,cAAZ,SAAqCH,UAArC,CAJMO,CAjDD,UAwDII,QAAAA,CAAmBC,CAAnBD,QAINE,cAJMF,EAKRC,CAAAE,gBAAA,EALQH,CAMRC,CAAAG,eAAA,EANQJ,KASFH,cAAA,CAAeC,SAAf,CATEE,CAxDJ,EALL,CAHH;",
-"sources":["_CheckBoxMixin.js.uncompressed.js"],
-"names":["define","declare","domAttr","_setReadOnlyAttr","value","_set","set","focusNode","_getSubmitValue","_setValueAttr","newValue","reset","inherited","arguments","params","_onClick","e","readOnly","stopPropagation","preventDefault"]
-}
