@@ -46,6 +46,14 @@ fi
 
 CurrentBranch=`git rev-parse --abbrev-ref HEAD`
 
+# using stash create may cause issues if we fail during the other git operations, 
+# as when we re-run this script we won't know what the stashID is 
+# so won't be able to revert to the original state of the repo
+# at least if we use "stash save --all" a manual pop would be enough to restore state
+#stash=`git stash create`
+unset stash
+git stash save --all "automatic stash while running 'sync-fork.sh'"
+
 git checkout master || Error "Checking out Master."
 
 git fetch upstream || Error "Fetching Upstream."
@@ -54,6 +62,7 @@ git merge upstream/master || Error "Merging upstream/master with local /master"
 
 git checkout "$CurrentBranch" || Error "Checking out $CurrentBranch."
 
+git stash pop $stash
 
 cat <<EOF
 
