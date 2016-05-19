@@ -7,7 +7,7 @@ values ('timeout set',
 (select count(*) from defaults where setting_key = 'timeout') = 1);
 
 INSERT INTO session (users_id, last_used, token)
-SELECT 	currval('users_id_seq'), 
+SELECT  currval('users_id_seq'), 
 now() - coalesce((select value from defaults where setting_key = 'timeout')::interval, 
          '90 minutes'::interval) - '1 minute'::interval, 
 md5('test2');
@@ -45,12 +45,16 @@ FROM transactions WHERE locked_by IS NULL;
 INSERT INTO test_result (test_name, success)
 SELECT 'unlock all records', unlock_all();
 
+INSERT INTO session (session_id, token, users_id)
+  values (nextval('session_session_id_seq')::int,
+          md5('test1'),
+          (select id from users where username = SESSION_USER));
 INSERT INTO test_result (test_name, success)
-values ('session1 retrieved', 
-(select t.token = md5('test1') 
+values ('session1 retrieved',
+(select t.token is not null -- we're getting a NEW token now
 FROM session_check(
-	currval('session_session_id_seq')::int, 
-	md5('test1')
+        currval('session_session_id_seq')::int,
+        md5('test1')
 ) t )
 );
 
