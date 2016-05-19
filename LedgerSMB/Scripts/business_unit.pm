@@ -1,6 +1,6 @@
 =head1 NAME 
 
-LedgerSMB::Scripts::business_unit
+LedgerSMB::Scripts::business_unit - web entry points for reporting class admin
 
 =cut
 

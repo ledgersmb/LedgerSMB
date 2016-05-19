@@ -2,7 +2,7 @@ package LedgerSMB::PSGI;
 
 =head1 NAME
 
-PSGI wrapper functionality for LedgerSMB
+LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
 =head1 SYNOPSIS
 

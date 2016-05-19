@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Budget
+LedgerSMB::Budget - Managing budgets stored in the database
 
 =cut
 
