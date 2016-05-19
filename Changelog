@@ -42,6 +42,7 @@ Changelog for 1.4.29
 * Fix 'Post and Print' button on payment screen (Erik H, #1489)
 * Simpler installation: move off Makefile.PL to cpanfile (Erik H)
 * Follow-up fix to allow multiple logins per user (Erik H)
+* Fix documentation typos, policy (Erik H, #1206, #1498)
 
 Erik H is Erik Huelsmann
 
