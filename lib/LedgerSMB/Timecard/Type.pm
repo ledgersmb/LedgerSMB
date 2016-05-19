@@ -8,7 +8,7 @@ To retrieve a specific timecard type:
 
  my $type = LedgerSMB::Timecard::Type->get($id);
 
-To list all types, orderd by label:
+To list all types, ordered by label:
 
  my @types = LedgerSMB::Timecard::Type->list();
 
