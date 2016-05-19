@@ -1033,7 +1033,7 @@ sub vendor_row {
             $form->{selectcurrency} =~
 s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
             $currency = qq|
-      <td><select data-dojo-type="dijit/form/Select" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
+      <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
         }
 
         if ( $i == $numrows ) {

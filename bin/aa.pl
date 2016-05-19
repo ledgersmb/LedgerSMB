@@ -424,7 +424,7 @@ sub form_header {
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
+        <td><select data-dojo-type="dijit/form/Select" id=currency name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
 
     if (   $form->{defaultcurrency}
@@ -450,7 +450,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $department = qq|
           <tr>
         <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-        <td colspan=3><select data-dojo-type="dijit/form/Select" name=department>$form->{selectdepartment}</select>
+        <td colspan=3><select data-dojo-type="dijit/form/Select" id=department name=department>$form->{selectdepartment}</select>
         <input type=hidden name=selectdepartment value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
         </td>
@@ -461,7 +461,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
     $name =
       ( $form->{"select$form->{vc}"} )
-      ? qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
+      ? qq|<select data-dojo-type="dijit/form/Select" id="$form->{vc}" name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
       : qq|<input data-dojo-type="dijit/form/TextBox" name="$form->{vc}" value="$form->{$form->{vc}}" size=35>
                  <a href="contact.pl?action=add&entity_class=$eclass"
                     target="new" id="new-contact">[|
@@ -480,7 +480,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $employee = qq|
           <tr>
         <th align=right nowrap>$label</th>
-        <td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee>$form->{selectemployee}</select></td>
         <input type=hidden name=selectemployee value="|
           . $form->escape( $form->{selectemployee}, 1 ) . qq|">
           </tr>
@@ -680,7 +680,7 @@ $form->open_status_div . qq|
           $form->format_amount( \%myconfig,$form->{"amount_$i"}, 2 );
 
         $project = qq|
-      <td align=right><select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$form->{"selectprojectnumber_$i"}</select></td>
+      <td align=right><select data-dojo-type="dijit/form/Select" id="projectnumber_$i" name="projectnumber_$i">$form->{"selectprojectnumber_$i"}</select></td>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"description_$i"}, 40 ) ) >
@@ -706,14 +706,14 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     <tr valign=top>
       <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
       <td></td>
-      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
       $description
           $taxformcheck
       $project|;
 
         for my $cls (@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-                print qq|<td><select data-dojo-type="dijit/form/Select" name="b_unit_$cls->{id}_$i">
+                print qq|<td><select data-dojo-type="dijit/form/Select" id="b_unit_$cls->{id}_$i" name="b_unit_$cls->{id}_$i">
                                     <option></option>|;
                       for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                          my $selected = '';
@@ -1451,7 +1451,7 @@ sub search {
               qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
         $selectname =
-          qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}"><option>$selectname</select>|;
+          qq|<select data-dojo-type="dijit/form/Select" id="$form->{vc}" name="$form->{vc}"><option>$selectname</select>|;
     }
     else {
         $selectname = qq|<input data-dojo-type="dijit/form/TextBox" name=$form->{vc} size=35>|;
@@ -1473,7 +1473,7 @@ sub search {
         $employee = qq|
         <tr>
       <th align=right nowrap>$employeelabel</th>
-      <td colspan=3><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
+      <td colspan=3><select data-dojo-type="dijit/form/Select" id=employee name=employee>$form->{selectemployee}</select></td>
     </tr>
 |;
 
@@ -1567,8 +1567,8 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
         <tr>
     <th align=right>| . $locale->text('Period') . qq|</th>
     <td colspan=3>
-    <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
-    <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
+    <select data-dojo-type="dijit/form/Select" id=month name=month>$form->{selectaccountingmonth}</select>
+    <select data-dojo-type="dijit/form/Select" id=year name=year>$form->{selectaccountingyear}</select>
     <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
     <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
@@ -1668,7 +1668,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
       <table>
         <tr>
       <th align=right>| . $locale->text('Account') . qq|</th>
-      <td colspan=3><select data-dojo-type="dijit/form/Select" name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+      <td colspan=3><select data-dojo-type="dijit/form/Select" id=$from->{ARAP} name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
     </tr>
     <tr>
       <th align=right>$name</th>

@@ -381,7 +381,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         for my $cls(@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
                 $column_data{"b_unit_$cls->{id}"} =
-                   qq|<td><select data-dojo-type="dijit/form/Select" name="b_unit_$cls->{id}_$i">
+                   qq|<td><select data-dojo-type="dijit/form/Select" id="b_unit_$cls->{id}_$i" name="b_unit_$cls->{id}_$i">
                            <option></option>|;
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                    my $selected = "";
@@ -472,7 +472,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
 
         $project = qq|
                 <b>$projectnumber</b>
-        <select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$form->{selectprojectnumber}</select>
+        <select data-dojo-type="dijit/form/Select" id="projectnumber-$i" name="projectnumber_$i">$form->{selectprojectnumber}</select>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 36, 6 ) ) > 1 )
@@ -496,7 +496,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value=
             if ( $form->{selectpartsgroup} ) {
                 $partsgroup = qq|
             <b>$group</b>
-        <select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectpartsgroup}</select>
+        <select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i">$form->{selectpartsgroup}</select>
 |;
             }
 
@@ -1960,11 +1960,11 @@ sub ship_to {
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
-                      <td><select data-dojo-type="dijit/form/Select" name="shiptocountry_new">$country</select></td>
+                      <td><select data-dojo-type="dijit/form/Select" id="shiptocountry-new" name="shiptocountry_new">$country</select></td>
 
                       <td>&nbsp;</td>
                       <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
-                      <td><select data-dojo-type="dijit/form/Select" name="shiptotype_new">$contacttype</select></td>
+                      <td><select data-dojo-type="dijit/form/Select" id="shiptotype-new" name="shiptotype_new">$contacttype</select></td>
                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
                        <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
 
