@@ -98,7 +98,8 @@ html, body {
 /******** For account editing page */
 #account-tabs .dijitTabContainerTopChildWrapper div
 {
-   overflow: auto;
+   /* we used to have 'overflow: auto', but that broke account checkboxes */
+   overflow-y: auto;
 }
 
 #account-tabs label,
@@ -156,21 +157,21 @@ html, body {
 
 #assets label
 { display: block;
-	float: left;
-	width: 170px;
-	text-align: right;
+        float: left;
+        width: 170px;
+        text-align: right;
 }
 
 #assets span.inputgroup
 { display: block;
-	float: left;
-	width: 40%;
+        float: left;
+        width: 40%;
 }
 
 #assets div.inputrow
 {
    display: block;
-	width: 100%;
+        width: 100%;
    clear: both;
 }
 
@@ -211,28 +212,28 @@ html, body {
 /***** PNL Report ******/
 
 #PNL a {
-	color: inherit;
-	background-color: inherit;
-	text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-decoration: none;
 }
 #PNL a:link {
-	color: inherit;
-	background-color: inherit;
-	text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-decoration: none;
 }
 #PNL a:visited {
-	color: inherit;
-	background-color: inherit;
-	text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-decoration: none;
 }
 #PNL a:hover {
-	color: inherit;
-	background-color: inherit;
-	text-decoration: none;
-	border-bottom: thin dashed;
+        color: inherit;
+        background-color: inherit;
+        text-decoration: none;
+        border-bottom: thin dashed;
 }
 #PNL td.amount {
-	text-align: right;
+        text-align: right;
 }
 #PNL tr.separator {
         min-height: 1em;
@@ -243,20 +244,20 @@ html, body {
         padding-top: 2em;
         margin-top: 4em;
         font-weight: bold;
-	white-space: pre;
-	text-align: right;
+        white-space: pre;
+        text-align: right;
 }
 
 #PNL td.total {
         border: 0px;
-	border-top: 1px;
+        border-top: 1px;
         border-color: black;
         border-style: solid;
 }
 
 #PNL th {
-	vertical-align: bottom;
-	padding-left: 5px;
+        vertical-align: bottom;
+        padding-left: 5px;
 }
 
 #PNL table {
@@ -271,37 +272,37 @@ html, body {
 
 
 #reconciliation #cleared-table {
-	width: 800px;
+        width: 800px;
 }
 
 #reconciliation #outstanding-table {
-	width: 800px;
+        width: 800px;
 }
 
 #reconciliation #error-table {
-	width: 800px;
+        width: 800px;
 }
 
 #reconciliation span.heading {
-	font-weight: bold;
+        font-weight: bold;
 }
 
 #reconciliation table.info tr th {
-	text-align: left;
+        text-align: left;
 }
 
 #reconciliation tr.spacer {
-	margin-bottom: 100px;
+        margin-bottom: 100px;
 }
 
 #reconciliation span.data {
 }
 #reconciliation th {
-	font-weight: bold;
+        font-weight: bold;
 }
 
 #reconciliation table {
-	border: 0;
+        border: 0;
 }
 
 
@@ -309,10 +310,10 @@ html, body {
 
 /*
 #payments table.detail_table_visible {
-	display: block;
+        display: block;
 }
 #payments table.detail_table_hidden{
-	display: none;
+        display: none;
 }
 
 #payments div.selectall {
@@ -320,24 +321,24 @@ html, body {
 }
 
 #payments div {
-	overflow: auto;
+        overflow: auto;
 }
 
 #payments label {
-	text-align: right;
+        text-align: right;
         float: left;
-	width: 8em;
-	margin-right: 1em;
+        width: 8em;
+        margin-right: 1em;
 }
 
 
 #payments input {
-	float: left;
+        float: left;
 }
 
 #payments input[type="checkbox"],
 #payments input[type="radio"]{
-	float: none;
+        float: none;
 }
 */
 
@@ -345,7 +346,7 @@ html, body {
         float: left;
 }
 #payments select {
-	float: left;
+        float: left;
 }
 #payments span.input {
      display: block;
