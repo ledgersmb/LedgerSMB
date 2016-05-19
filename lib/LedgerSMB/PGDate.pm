@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::PgDate
+
+LedgerSMB::PgDate - Date handling and serialization to database
 
 =cut
 
@@ -136,7 +137,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 sub to_output {
     my ($self) = @_;
     #return undef if !defined $self;
-	 return '' if !defined $self->{_pgobject_is_date};
+         return '' if !defined $self->{_pgobject_is_date};
     my $fmt;
     if ($self->{_pgobject_is_date}){
         if (defined $LedgerSMB::App_State::User->{dateformat}){

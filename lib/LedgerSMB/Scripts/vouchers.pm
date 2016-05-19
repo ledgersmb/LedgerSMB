@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::Scripts::vouchers
+
+LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
 =head1 SYNPOSIS
 

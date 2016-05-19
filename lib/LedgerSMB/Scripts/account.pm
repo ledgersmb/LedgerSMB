@@ -11,7 +11,7 @@ use warnings;
 
 =head1 NAME
 
-LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts
+LedgerSMB:Scripts::accounts - web entry points for managing GL accounts
 
 =head1 SYNOPSIS
 
