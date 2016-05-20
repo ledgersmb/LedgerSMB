@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Session
+LedgerSMB::Session - Web app user session management
 
 =head1 SYNOPSIS
 

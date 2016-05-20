@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Business_Unit_Class
+LedgerSMB::Business_Unit_Class - Classes for additional accounting dimensions
 
 =head1 SYNOPSYS
 
