@@ -151,12 +151,6 @@ sub create {
             WHERE username = ?;"
     );
 
-    # TODO Change this to use %myconfig
-    my $deleteExisting = $dbh->prepare(
-        "DELETE
-           FROM session
-          WHERE session.users_id = (select id from users where username = ?)"
-    );
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
     my $fetchSequence =
@@ -187,14 +181,6 @@ sub create {
 
     my $auth = $ENV{HTTP_AUTHORIZATION};
     $auth =~ s/^Basic //i;
-
-    #delete any existing stale sessions with this login if they exist
-    if ( !$lsmb->{timeout} ) {
-        $lsmb->{timeout} = 86400;
-    }
-    $deleteExisting->execute( $login)
-      || $lsmb->dberror(
-        __FILE__ . ':' . __LINE__ . ': Delete from session: ' . $DBI::errstr);
 
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed,
@@ -256,10 +242,10 @@ sub destroy {
 
     my $deleteExisting = $dbh->prepare( "
         DELETE FROM session
-               WHERE users_id = (select id from users where username = ?)
+               WHERE session_id = ?
     " );
 
-    $deleteExisting->execute($login)
+    $deleteExisting->execute($form->{session_id})
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
