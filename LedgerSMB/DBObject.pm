@@ -36,7 +36,7 @@ the operation will not raise an exception in the event of a database error, and
 it will be up to the application to handle any exceptions.
 
 =item __validate__ is called on every new() invocation.  It is blank in this 
-module but can be overridden in decendant modules.
+module but can be overridden in descendant modules.
 
 =item _db_array_scalars(@elements) creates a db array from scalars.
 

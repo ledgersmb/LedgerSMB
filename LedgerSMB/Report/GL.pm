@@ -253,7 +253,7 @@ has 'accno'  => (is => 'rw', isa => 'Maybe[Str]');
 
 Is one of A (Asset), L (Liability), Q (Equity), I (Income), or E (Expense).
 
-When set only matches lines attached to transactions of specfied type.
+When set only matches lines attached to transactions of specified type.
 
 =cut
 
