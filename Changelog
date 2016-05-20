@@ -52,6 +52,8 @@ Changelog for 1.4.29
 * Simpler installation: move off Makefile.PL to cpanfile (Erik H)
 * Follow-up fix to allow multiple logins per user (Erik H)
 * Fix documentation typos, policy (Erik H, #1206, #1498)
+* Fix error after mailing order (Erik H, #1408)
+* Fix saving over existing sales order drops a line (Erik H, #1431)
 
 Erik H is Erik Huelsmann
 
