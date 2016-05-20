@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts
+LedgerSMB:Scripts::login - web entry points for session creation/termination
 
 =head1 SYNOPSIS
 

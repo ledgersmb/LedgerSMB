@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::PGNumeric
+LedgerSMB::PGNumber - Number handling and serialization to database
 
 =cut
 
@@ -218,10 +218,10 @@ sub to_output {
     my $zfill = ($places > 0) ? 1 : 0;
     $dplaces = 5 unless defined $dplaces;
     my $formatter = new Number::Format(
-	-thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-	-decimal_point => $lsmb_formats->{$format}->{decimal_sep},
-	-decimal_fill => $zfill,
-	-neg_format => 'x'
+        -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+        -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+        -decimal_fill => $zfill,
+        -neg_format => 'x'
         );
     $str = $formatter->format_number($str, $dplaces);
 
