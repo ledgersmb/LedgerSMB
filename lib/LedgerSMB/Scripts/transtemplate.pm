@@ -59,27 +59,26 @@ sub view {
         }
         else {
             # I hate this old code!
+            $lsmb_legacy::form = new Form;
+            $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+            $lsmb_legacy::form->{dbh} = $request->{dbh};
+            $lsmb_legacy::locale = $request->{_locale};
+            %lsmb_legacy::myconfig = ();
+            %lsmb_legacy::myconfig = %{$request->{_user}};
+            $lsmb_legacy::form->{stylesheet} =
+                $lsmb_legacy::myconfig{stylesheet};
+            $lsmb_legacy::form->{script} = $script;
+            $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
+            delete $lsmb_legacy::form->{id};
+
+            convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
             {
                 no strict;
                 no warnings 'redefine';
 
-                $lsmb_legacy::form = new Form;
-                $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
-                $lsmb_legacy::form->{dbh} = $request->{dbh};
-                $lsmb_legacy::locale = $request->{_locale};
-                %lsmb_legacy::myconfig = ();
-                %lsmb_legacy::myconfig = %{$request->{_user}};
-                $lsmb_legacy::form->{stylesheet} =
-                    $lsmb_legacy::myconfig{stylesheet};
-                $lsmb_legacy::form->{script} = $script;
-                $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
-                delete $lsmb_legacy::form->{id};
-
-                convert_to_form($transtemplate, $lsmb_legacy::form,
-                                $journal_type);
                 do $script;
-                $template_dispatch->{$journal_type}->{function}($lsmb_legacy::form);
             }
+            $template_dispatch->{$journal_type}->{function}($lsmb_legacy::form);
 
             exit;
         }
