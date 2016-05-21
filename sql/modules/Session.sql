@@ -112,18 +112,12 @@ BEGIN
          WHERE session_id = in_session_id
                AND token = in_token
                AND users_id = (select id from users
-                        where username = SESSION_USER);
-        IF FOUND THEN
-               SELECT * INTO out_row
-                 FROM session
-                WHERE session_id = in_session_id;
-        ELSE
-               INSERT INTO session (users_id, token)
-               SELECT id, md5(random()::text)
-                 FROM users
-                WHERE username = SESSION_USER
-               RETURNING * INTO out_row;
-        END IF;
+                        where username = SESSION_USER)
+        RETURNING * INTO out_row;
+
+        -- if there is no matching row, return NULL values
+        -- note: there is also a failing match when the token doesn't
+        -- match; which might mean a replay attack!
         RETURN out_row;
 END;
 $$ LANGUAGE PLPGSQL;
