@@ -45,43 +45,47 @@ sub view {
                                         lsmb_legacy::update()}},
     };
 
-    our $form = new Form;
-    $lsmb_legacy::form = $form;
-    $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
-    $form->{dbh} = $request->{dbh};
-    our $locale = $request->{_locale};
-    our %myconfig = ();
-    %myconfig = %{$request->{_user}};
-    $form->{stylesheet} = $myconfig{stylesheet};
-    $locale = $request->{_locale};
-    my $transtemplate = LedgerSMB::DBObject::TransTemplate->new({base => $request});
+    my $transtemplate =
+        LedgerSMB::DBObject::TransTemplate->new({base => $request});
     $transtemplate->get;
     my $script = $template_dispatch->{$request->{entry_type}}->{script};
     die "No dispatch entry for type $request->{entry_type}" unless $script;
-    $form->{script} = $script;
-    $form->{script} =~ s/(bin|scripts)\///;
-    delete $form->{id};
     if ($script =~ /^bin/){
         if (my $cpid = fork()) {
             wait;
+            return;
         }
         else {
             # I hate this old code!
             {
                 no strict;
                 no warnings 'redefine';
-                convert_to_form($transtemplate, $form, $request->{entry_type});
+
+                $lsmb_legacy::form = new Form;
+                $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+                $lsmb_legacy::form->{dbh} = $request->{dbh};
+                $lsmb_legacy::locale = $request->{_locale};
+                %lsmb_legacy::myconfig = ();
+                %lsmb_legacy::myconfig = %{$request->{_user}};
+                $lsmb_legacy::form->{stylesheet} =
+                    $lsmb_legacy::myconfig{stylesheet};
+                $lsmb_legacy::locale = $request->{_locale};
+                $lsmb_legacy::form->{script} = $script;
+                $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
+                delete $lsmb_legacy::form->{id};
+
+                convert_to_form($transtemplate, $lsmb_legacy::form,
+                                $request->{entry_type});
                 do $script;
+                $template_dispatch->{$request->{entry_type}}->{function}($form);
             }
 
             exit;
         }
     } elsif ($script =~ /scripts/) {
-         { do $script }
-
+        die "No provision for dispatching to scripts in /scripts";
     }
 
-    $template_dispatch->{$request->{entry_type}}->{function}($form);
 
 }
 
