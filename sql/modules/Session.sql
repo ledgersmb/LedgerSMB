@@ -108,8 +108,7 @@ BEGIN
         END IF;
 
         UPDATE session
-           SET last_used = now(),
-               token = md5(random()::text)
+           SET last_used = now()
          WHERE session_id = in_session_id
                AND token = in_token
                AND users_id = (select id from users
