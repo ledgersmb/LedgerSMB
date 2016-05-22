@@ -158,6 +158,12 @@ sub to_output {
     return $formatter->format_datetime($self);
 }
 
+=item $self->to_sort()
+
+Returns sortable key for the Date/Time value (epoch)
+
+=cut
+
 sub to_sort {
     my $self = shift;
     return $self->epoch;

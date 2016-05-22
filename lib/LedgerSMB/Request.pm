@@ -69,7 +69,7 @@ sub requires {
            };
 }
 
-=head2 requries_series($start, $stop, @attnames)
+=head2 requires_series($start, $stop, @attnames)
 
 Generates and checks a series of attributes in the form of ${attname}_$count
 from $start to $stop, for each in @attnames
