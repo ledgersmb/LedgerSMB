@@ -3,6 +3,16 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::RESTXML::Document::Base);
 
+=head1 METHODS
+
+=over
+
+=item $self->handle_get( $args )
+
+Handle GET requests for customer searches
+
+=cut
+
 sub handle_get {
     my ( $self, $args ) = @_;
     my $user    = $args->{user};
@@ -57,4 +67,10 @@ sub handle_get {
         )
     );
 }
+
+
+=back
+
+=cut
+
 1;

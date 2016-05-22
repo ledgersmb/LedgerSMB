@@ -10,22 +10,51 @@ use warnings;
 use XML::Twig;
 use Carp;
 
+
+=head1 METHODS
+
+=over
+
+=item $self->handle_post($args)
+
+Abstract super-method.
+
+=cut
+
 sub handle_post {
     my ( $self, $args ) = @_;
 
     return $args->{handler}->unsupported('the POST method is not implemented.');
 }
 
+=item $self->handle_put($args)
+
+Abstract super-method.
+
+=cut
+
 sub handle_put {
     my ( $self, $args ) = @_;
     return $self->{handler}->unsupported('the PUT method is not implemented.');
 }
+
+=item $self->handle_delete($args)
+
+Abstract super-method.
+
+=cut
 
 sub handle_delete {
     my ( $self, $args ) = @_;
     return $self->{handler}
       ->unsupported('the DELETE method is not implemented.');
 }
+
+=item $self->handle_get($args)
+
+Abstract super-method.
+
+=cut
 
 sub handle_get {
     my ( $self, $args ) = @_;
