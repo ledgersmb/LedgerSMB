@@ -77,13 +77,13 @@ sub list {
                                      args => [$entity_id]);
 }
 
-=item classes($country_id)
+=item types($country_id)
 
 Returns a list of deduction classes
 
 =cut
 
-sub types{
+sub types {
     my ($self, $country_id) = @_;
     return __PACKAGE__->call_procedure(funcname => 'deduction__list_types',
                                      args => [$country_id]);
