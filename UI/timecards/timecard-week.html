@@ -48,7 +48,7 @@ FOREACH bu IN b_units;
 END;
 ?>
 <div class="listtop"><?lsmb text('Weekly Time and Materials Entry') ?></div>
-<table width="100%" cols=7 data-dojo-type="dijit/layout/TableContainer"
+<table width="100%" cols=7
  id="timecard-weekly">
 <tr class="listtop">
  <th><?lsmb transdates.0 ?></th>
@@ -99,14 +99,12 @@ END;
     <div><?lsmb PROCESS input element_data = {
        name = "qty_$suffix"
       value = ${"qty_$suffix"}
-       type = text
       class = 'qty'
        size = 5 } ?></div>
   <div><?lsmb text('Extra Used') ?></div>
     <div><?lsmb PROCESS input element_data = {
        name = "non_billable_$suffix"
       value = ${"non_billable_$suffix"}
-       type = text
       class = 'qty'
        size = 5 } ?></div>
   <div><?lsmb text('Description') ?></div>
