@@ -1220,7 +1220,6 @@ sub generate_selects {
      # partsgroups
     if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option></option>\n";
-          $form->{selectpartsgroup} = "";
         foreach my $ref ( @{ $form->{all_partsgroup} } ) {
                 my $value = "$ref->{partsgroup}--$ref->{id}";
                 my $selected = ($form->{partsgroup} eq $value) ?
