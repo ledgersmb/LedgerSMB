@@ -58,8 +58,10 @@ Changelog for 1.4.29
 * Credit account with missing currency fails to load from db (Erik H, #1116)
 * Fix manual tax shows base amount 0.00 on printed invoice (Erik H, #948)
 * Fix 'X' button on invoice doesn't fully remove part (Erik H, #1564)
+* Add selection of multiple consecutive periods for B/S and PNL (Yves L)
 
 Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
 
 
 Changelog for 1.4.28
