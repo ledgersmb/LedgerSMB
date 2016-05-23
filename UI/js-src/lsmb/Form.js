@@ -37,10 +37,6 @@ define([
                           return;
 
                       var method = this.method;
-                      var qobj = domform.toQuery(this.domNode);
-                      qobj = 'action='
-                          + this.clickedAction
-                          + '&' + qobj;
                       if (undefined == method){
                           method = 'GET';
                       }
@@ -48,11 +44,13 @@ define([
 
                       var options = { "handleAs": "text" };
                       if ('get' == method.toLowerCase()){
+                          var qobj = domform.toQuery(this.domNode);
+                          qobj = 'action=' + this.clickedAction + '&' + qobj;
                           url = url + '?' + qobj;
                           hash(url); // add GET forms to the back button history
                       } else {
                           options['method'] = method;
-                          options['data'] = qobj;
+                          options['data'] = new FormData(this.domNode);
                           registry.byId('maindiv').load_form(url, options);
                       }
                   }
