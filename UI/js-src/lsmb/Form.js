@@ -50,7 +50,15 @@ define([
                           hash(url); // add GET forms to the back button history
                       } else {
                           options['method'] = method;
-                          options['data'] = new FormData(this.domNode);
+                          if ('multipart/form-data' == this.domNode.enctype) {
+                              options['data'] = new FormData(this.domNode);
+                              options['data'].append('action',
+                                                     this.clickedAction);
+                          } else {
+                              // old code (Form.pm) wants x-www-urlencoded
+                              options['data'] = 'action='+this.clickedAction
+                                  + '&' + domform.toQuery(this.domNode);
+                          }
                           registry.byId('maindiv').load_form(url, options);
                       }
                   }
