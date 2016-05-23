@@ -182,9 +182,16 @@ has 'pricegroup_id' => (is => 'rw', isa => 'Int', required => 0);
 The currency to use for billing this customer or for bills received from this
 vendor.
 
+Note: we *want* to make this field required (in the database too), but due to
+the existence of the 'Inventory Entity', which is created before any currencies
+have been configured, it's impossible to set a currency on the inventory
+entity, which then makes it impossible to set a database constraint.
+So, we don't want one here: 'be strict in what you send, be liberal in what
+you accept'...
+
 =cut
 
-has 'curr' => (is => 'ro', isa => 'Str', required => 1);
+has 'curr' => (is => 'ro', isa => 'Str');
 
 =item startdate
 
