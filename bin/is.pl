@@ -146,10 +146,10 @@ sub invoice_links {
 
     # create links
     $form->create_links( module => "AR",
-			 myconfig => \%myconfig,
-			 vc => "customer",
-			 billing => 1,
-			 job => 1 );
+                         myconfig => \%myconfig,
+                         vc => "customer",
+                         billing => 1,
+                         job => 1 );
 
     # currencies
     if (!$form->{currencies}){
@@ -356,10 +356,10 @@ sub prepare_invoice {
               $form->format_amount( \%myconfig, $form->{"qty_$i"} );
             $form->{"oldqty_$i"} = $form->{"qty_$i"};
 
-	    $form->{"taxformcheck_$i"}=1 if(IS->get_taxcheck($form,$form->{"invoice_id_$i"},$form->{dbh}));
+            $form->{"taxformcheck_$i"}=1 if(IS->get_taxcheck($form,$form->{"invoice_id_$i"},$form->{dbh}));
 
 
-	    for (qw(partnumber sku description unit)) {
+            for (qw(partnumber sku description unit)) {
                 $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
             }
             $form->{rowcount} = $i;
@@ -393,12 +393,12 @@ sub form_header {
 
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
-		<th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name="currency">$form->{selectcurrency}</select></td>
+                <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
+                <td><select name="currency">$form->{selectcurrency}</select></td>
 | if $form->{defaultcurrency};
     $exchangerate .= qq|
-		<input type=hidden name="selectcurrency" value="$form->{selectcurrency}">
-		<input type=hidden name="defaultcurrency"value="$form->{defaultcurrency}">
+                <input type=hidden name="selectcurrency" value="$form->{selectcurrency}">
+                <input type=hidden name="defaultcurrency"value="$form->{defaultcurrency}">
 |;
 
     if (   $form->{defaultcurrency}
@@ -428,27 +428,27 @@ sub form_header {
 
     $department = qq|
               <tr>
-	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan="3"><select name="department">$form->{selectdepartment}</select>
-		<input type="hidden" name="selectdepartment" value="|
+                <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
+                <td colspan="3"><select name="department">$form->{selectdepartment}</select>
+                <input type="hidden" name="selectdepartment" value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
-		</td>
-	      </tr>
+                </td>
+              </tr>
 | if $form->{selectdepartment};
 
     $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
     if ( $form->{business} ) {
         $business = qq|
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Business') . qq|</th>
-		<td>$form->{business}</td>
-		<td width=10></td>
-		<th align=right nowrap>| . $locale->text('Trade Discount') . qq|</th>
-		<td>|
+              <tr>
+                <th align=right nowrap>| . $locale->text('Business') . qq|</th>
+                <td>$form->{business}</td>
+                <td width=10></td>
+                <th align=right nowrap>| . $locale->text('Trade Discount') . qq|</th>
+                <td>|
           . $form->format_amount( \%myconfig, $form->{tradediscount} * 100 )
           . qq| %</td>
-	      </tr>
+              </tr>
 |;
     }
 
@@ -457,12 +457,12 @@ sub form_header {
 |;
 
     $employee = qq|
-	      <tr>
-	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-		<td><select name="employee">$form->{selectemployee}</select></td>
-		<input type=hidden name="selectemployee" value="|
+              <tr>
+                <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
+                <td><select name="employee">$form->{selectemployee}</select></td>
+                <input type=hidden name="selectemployee" value="|
       . $form->escape( $form->{selectemployee}, 1 ) . qq|">
-	      </tr>
+              </tr>
 | if $form->{selectemployee};
 
     $i     = $form->{rowcount} + 1;
@@ -525,45 +525,45 @@ function on_return_submit(event){
   <tr>
     <td>
       <table width=100%>
-	<tr valign=top>
-	  <td>
-	    <table>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Customer') . qq|</th>
-		<td colspan=3>$customer</td>
-		<input type=hidden name="customer_id" value="$form->{customer_id}">
-		<input type=hidden name="oldcustomer" value="$form->{oldcustomer}">
-	      </tr>
-	      <tr>
-		<td></td>
-		<td colspan=3>
-		  <table>
-		    <tr> |;
+        <tr valign=top>
+          <td>
+            <table>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Customer') . qq|</th>
+                <td colspan=3>$customer</td>
+                <input type=hidden name="customer_id" value="$form->{customer_id}">
+                <input type=hidden name="oldcustomer" value="$form->{oldcustomer}">
+              </tr>
+              <tr>
+                <td></td>
+                <td colspan=3>
+                  <table>
+                    <tr> |;
       if (LedgerSMB::Setting->get('show_creditlimit')){
           print qq|
-		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
-		      <td>|
+                      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
+                      <td>|
       . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
       . qq|</td>
-		      <td width=10></td>
-		      <th align=right nowrap>| . $locale->text('Remaining') . qq|</th>
-		      <td class="plus$n" nowrap>|
+                      <td width=10></td>
+                      <th align=right nowrap>| . $locale->text('Remaining') . qq|</th>
+                      <td class="plus$n" nowrap>|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
       . qq|</td> |;
      } else { print "<td>&nbsp;</td>"; }
         print qq|
-		    </tr>|;
-		if ($form->{entity_control_code}){
+                    </tr>|;
+                if ($form->{entity_control_code}){
                     $form->hide_form(qw(entity_control_code meta_number));
-			print qq|
-	        <tr>
-		<th align="right" nowrap>| .
-			$locale->text('Entity Code') . qq|</th>
-		<td colspan="2" nowrap>$form->{entity_control_code}</td>
-		<th align="right" nowrap>| .
-			$locale->text('Account') . qq|</th>
-		<td colspan=3>$form->{meta_number}</td>
-	      </tr>
+                        print qq|
+                <tr>
+                <th align="right" nowrap>| .
+                        $locale->text('Entity Code') . qq|</th>
+                <td colspan="2" nowrap>$form->{entity_control_code}</td>
+                <th align="right" nowrap>| .
+                        $locale->text('Account') . qq|</th>
+                <td colspan=3>$form->{meta_number}</td>
+              </tr>
               <tr>
                 <th align="right" nowrap>| .
                         $locale->text('Tax ID'). qq|</th>
@@ -574,70 +574,70 @@ function on_return_submit(event){
                         $locale->text('Address'). qq|</th>
                 <td colspan=3>$form->{address}, $form->{city}</td>
               </tr>
-		|;
-	       }
-	print qq|
-		    $business
-		  </table>
-		</td>
-	      </tr>
+                |;
+               }
+        print qq|
+                    $business
+                  </table>
+                </td>
+              </tr>
 
-	      <tr>
-		<th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
-		<td colspan="3"><select name="AR">$form->{selectAR}</select></td>
-		<input type="hidden" name="selectAR" value="$form->{selectAR}">
-	      </tr>
-	      $department
-	      $exchangerate
+              <tr>
+                <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
+                <td colspan="3"><select name="AR">$form->{selectAR}</select></td>
+                <input type="hidden" name="selectAR" value="$form->{selectAR}">
+              </tr>
+              $department
+              $exchangerate
             <tr>
                <th align="right" nowrap>| . $locale->text('Description') . qq|
                </th>
                <td><input type="text" name="description" size="40"
                    value="| . $form->{description} . qq|" /></td>
             </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
-		<td colspan=3><input name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
-		<td colspan=3>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
+                <td colspan=3><input name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
+              </tr>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
+                <td colspan=3>
                    <textarea name="shipvia" cols="35" rows="3"
                        >$form->{shipvia}</textarea></td>
-	      </tr>
-	    </table>
-	  </td>
-	  <td align=right>
-	    <table>
-	      $employee
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-		<td><input name="invnumber" id="invnumber" size="20" value="$form->{invnumber}">| .  $form->sequence_dropdown('sinumber') . qq|</td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-		<td><input name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}"></td>
+              </tr>
+            </table>
+          </td>
+          <td align=right>
+            <table>
+              $employee
+              <tr>
+                <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
+                <td><input name="invnumber" id="invnumber" size="20" value="$form->{invnumber}">| .  $form->sequence_dropdown('sinumber') . qq|</td>
+              </tr>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
+                <td><input name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}"></td>
 <input type=hidden name="quonumber" value="$form->{quonumber}">
-	      </tr>
-	      <tr class="crdate-row">
-		<th align=right>| . $locale->text('Invoice Created') . qq|</th>
-		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
-	      </tr>
-	      <tr class="transdate-row">
-		<th align=right>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input class="date" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
-	      </tr>
-	      <tr>
-		<th align=right>| . $locale->text('Due Date') . qq|</th>
-		<td><input class="date" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
-	      </tr>
-	      <tr>
-		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
-		<td><input name="ponumber" id="ponumber" size="20" value="$form->{ponumber}"></td>
-	      </tr>
-	    </table>
-	  </td>
-	</tr>
+              </tr>
+              <tr class="crdate-row">
+                <th align=right>| . $locale->text('Invoice Created') . qq|</th>
+                <td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
+              </tr>
+              <tr class="transdate-row">
+                <th align=right>| . $locale->text('Invoice Date') . qq|</th>
+                <td><input class="date" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+              </tr>
+              <tr>
+                <th align=right>| . $locale->text('Due Date') . qq|</th>
+                <td><input class="date" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
+              </tr>
+              <tr>
+                <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+                <td><input name="ponumber" id="ponumber" size="20" value="$form->{ponumber}"></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -834,11 +834,11 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
         $taxincluded = qq|
               <tr height="5"></tr>
               <tr>
-	        <td align=right>
-	        <input name="taxincluded" class="checkbox" type="checkbox" value="1" $form->{taxincluded}></td><th align=left>|
+                <td align=right>
+                <input name="taxincluded" class="checkbox" type="checkbox" value="1" $form->{taxincluded}></td><th align=left>|
           . $locale->text('Tax Included')
           . qq|</th>
-	     </tr>
+             </tr>
 |;
     }
 
@@ -900,15 +900,15 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                         .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
                </tr>|;
             }  else {
-	       $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
+               $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
                 $form->{"${taccno}_total"} =
                       $form->format_amount( \%myconfig,
                            $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
                 <tr>
-              	<th align=right>$form->{"${taccno}_description"}</th>
-              	<td align=right>$form->{"${taccno}_total"}</td>
+                <th align=right>$form->{"${taccno}_description"}</th>
+                <td align=right>$form->{"${taccno}_total"}</td>
                 </tr>|;
             }
         }
@@ -916,10 +916,10 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
           $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
 
         $subtotal = qq|
-	      <tr>
-		<th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>
-	      </tr>
+              <tr>
+                <th align=right>| . $locale->text('Subtotal') . qq|</th>
+                <td align=right>$form->{invsubtotal}</td>
+              </tr>
 |;
 
     }
@@ -942,21 +942,21 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
   <tr>
     <td>
       <table width=100%>
-	<tr valign=bottom>
-	    | . $hold . qq|
-	  <td>
-	    <table>
-	      <tr>
-		<th align=left>| . $locale->text('Notes') . qq|</th>|;
+        <tr valign=bottom>
+            | . $hold . qq|
+          <td>
+            <table>
+              <tr>
+                <th align=left>| . $locale->text('Notes') . qq|</th>|;
      # Redesigning layout as per notes above.  When this is redesigned
      # we really should use floats and CSS instead. --CT
      if (!$form->{manual_tax}){
            print qq|
-		<th align=left>| . $locale->text('Internal Notes') . qq|</th>|;
+                <th align=left>| . $locale->text('Internal Notes') . qq|</th>|;
      }
      print qq|
-	      </tr>
-	      <tr valign=top>|;
+              </tr>
+              <tr valign=top>|;
      if ($form->{manual_tax}){
          print qq|<td>$notes</td>
               </tr><tr>
@@ -965,40 +965,40 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
               <td>$intnotes</td>|;
      } else {
          print qq|
-		<td>$notes</td>
-		<td>$intnotes</td>|;
+                <td>$notes</td>
+                <td>$intnotes</td>|;
     }
     print qq|
-	      </tr>
-	    </table>
-	  </td>
-	  <td align=right>
-	    <table>
+              </tr>
+            </table>
+          </td>
+          <td align=right>
+            <table>
               <tr><th align="center"
                       colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
               </tr>
               <tr>
                    <td colspan="3">$manual_tax</td>
                </tr>
-	      $subtotal
-	      $tax
-	      <tr>
-		<th align=right>| . $locale->text('Total') . qq|</th>
-		<td align=right>$form->{invtotal}</td>
-	      </tr>
-	      $taxincluded
-	    </table>
-	  </td>
-	</tr>
+              $subtotal
+              $tax
+              <tr>
+                <th align=right>| . $locale->text('Total') . qq|</th>
+                <td align=right>$form->{invtotal}</td>
+              </tr>
+              $taxincluded
+            </table>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
   <tr>
     <td>
       <table width=100% id="invoice-payments-table">
-	<tr class=listheading>
-	  <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
-	</tr>
+        <tr class=listheading>
+          <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
+        </tr>
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -1016,7 +1016,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
     $column_data{memo}         = "<th>" . $locale->text('Memo') . "</th>";
 
     print "
-	<tr>
+        <tr>
 ";
     for (@column_index) { print "$column_data{$_}\n" }
     print "
@@ -1206,7 +1206,11 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
-    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
+    if ($form->{delete_line}) {
+        for (qw(partnumber description partsgroup id qty onhand sellprice)) {
+            delete $form->{"${_}_$form->{delete_line}"};
+        }
+    }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
 
@@ -1225,7 +1229,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-	&rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
+        &rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1562,44 +1566,44 @@ sub on_hold {
 
 sub save_info {
 
-	    my $taxformfound=0;
+            my $taxformfound=0;
 
-	    $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
+            $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
 
         #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
             $form->{arap} = 'ar';
             AA->save_intnotes($form);
 
-	    foreach my $i(1..($form->{rowcount}))
-	    {
+            foreach my $i(1..($form->{rowcount}))
+            {
             #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 
-		if($form->{"taxformcheck_$i"} and $taxformfound)
-		{
+                if($form->{"taxformcheck_$i"} and $taxformfound)
+                {
 
-		  IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
+                  IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
 
-		}
-		else
-		{
+                }
+                else
+                {
 
-		    IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
+                    IS->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
 
-		}
+                }
 
-	    }
+            }
 
-	    if ($form->{callback}){
-		print "Location: $form->{callback}\n";
-		print "Status: 302 Found\n\n";
-		print qq|<html><body class="$form->{dojo_theme}">|;
-		my $url = $form->{callback};
-		print qq|If you are not redirected automatically, click <a href="$url">|
-			. qq|here</a>.</body></html>|;
+            if ($form->{callback}){
+                print "Location: $form->{callback}\n";
+                print "Status: 302 Found\n\n";
+                print qq|<html><body class="$form->{dojo_theme}">|;
+                my $url = $form->{callback};
+                print qq|If you are not redirected automatically, click <a href="$url">|
+                        . qq|here</a>.</body></html>|;
 
-	    } else {
+            } else {
                 edit();
-	    }
+            }
 
 }
 
