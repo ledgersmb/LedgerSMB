@@ -122,6 +122,24 @@ sub header_lines {
 
 =back
 
+=head2 _init_comparison($request, $c_per)
+
+TODO!!
+
+=cut
+
+sub _init_comparison{
+        #Todo: This works but should evolve toward a role.
+    my ($self, $request, $c_per) = @_;
+        if ( $request->{comparison_type} eq 'by_periods' ) {
+                my $date = _date_interval($request->{from_date},$request->{interval},-$c_per);  # Comparison are backward
+                $request->{"from_date_$c_per"} = $date->to_output;
+                $date = _date_interval(_date_interval($date,$request->{interval}),'day',-1);
+                $request->{"to_date_$c_per"} = $date->to_output;
+                $request->{"interval_$c_per"} = $request->{interval};
+        }
+}
+
 =head1 SEMI-PUBLIC METHODS
 
 =head2 cell_value($row_id, $col_id, [$value])
@@ -161,7 +179,55 @@ sub accum_cell_value {
                              + $increment);
 }
 
+sub _date_interval {
+        my ($date,$interval,$n) = @_;
 
+    my %delta_names = (
+        day => 'days',
+        month => 'months',
+        quarter => 'months',
+        year => 'years',
+    );
+    my $delta_name = $delta_names{$interval};
+    die "Bad interval: $interval" if not defined $delta_name;
+
+        $n //= 1;       # Default to 1
+        $n *= 3 if $interval eq 'quarter'; # A quarter is 3 months
+
+        $date = LedgerSMB::PGDate->from_input($date);
+    $date->date->add($delta_name => $n, end_of_month => 'preserve');
+
+        return $date;
+}
+
+
+
+=head2 init_comparisons($request)
+
+TODO!!
+
+=cut
+
+sub init_comparisons{
+    my ($self, $request) = @_;
+        if ( $request->{comparison_type} eq 'by_periods' ) {
+                if ( $request->{from_date} && $request->{interval} && $request->{interval} ne 'none') {
+                        # to_date = from_date + 1 period - 1 day
+                        my $date = _date_interval(_date_interval($request->{from_date},$request->{interval}),'day',-1);
+                        $request->{to_date} = $date->to_output;
+                } elsif ( $request->{to_date} && $request->{interval} && $request->{interval} ne 'none' ) {
+                        # from_date = to_date - 1 period + 1 day
+                        my $date = _date_interval(_date_interval($request->{to_date},'day'),$request->{interval},-1);
+                        $request->{from_date} = $date->to_output;
+                } else {
+                        return;
+                }
+                my $counts = $request->{comparison_periods};
+                for my $c_per (1 .. $counts) {
+                        $self->_init_comparison($request, $c_per);
+                }
+        }
+}
 
 =head2 add_comparison($compared, col_path_prefix => [],
     row_path_prefix => [])
