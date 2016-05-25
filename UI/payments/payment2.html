@@ -362,7 +362,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
      <td align="center">
        <?lsmb
                          options=[];
-                         FOREACH item IN overpayment_account;
+                         FOREACH item IN account;
                              options.push( {
                                      text = item.description
                                      value = item.id _ '--' _ item.accno _ '--' _ item.description
