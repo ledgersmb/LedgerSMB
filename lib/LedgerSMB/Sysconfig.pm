@@ -24,10 +24,15 @@ our %docs;
 keys in %args can be:
 
 =over
+
 =item section
+
 =item key
+
 =item default
+
 =item envvar
+
 =back
 
 =cut
