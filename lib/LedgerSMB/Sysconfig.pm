@@ -19,11 +19,25 @@ my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::Ini
 our %config;
 our %docs;
 
+=head2 def $name, %args;
+
+keys in %args can be:
+
+=over
+=item section
+=item key
+=item default
+=item envvar
+=back
+
+=cut
+
 sub def {
     my ($name, %args) = @_;
     my $sec = $args{section};
     my $key = $args{key} // $name;
     my $default = $args{default};
+    my $envvar = $args{envvar};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
@@ -31,8 +45,9 @@ sub def {
     $docs{$sec}->{$key} = $args{doc};
     {
         no strict 'refs';
-        # $name = "LedgerSMB::Sysconfig::" . $name;
         ${$name} = $cfg->val($sec, $key, $default);
+        $ENV{$envvar} = $cfg->val($sec, $key, $default)
+            if $envvar && defined $cfg->val($sec, $key, $default);
 
         # create a functional interface
         *{$name} = sub {
@@ -140,7 +155,15 @@ def 'fs_cssdir',
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => sub { $ENV{TEMP} || '/tmp' },
+    envvar => 'HOME',
     doc => qq||;
+
+# Path to the translation files
+def 'localepath',
+    section => 'paths',
+    default => 'locale/po',
+    doc => '';
+
 
 # spool directory for batch printing
 def 'spool',
@@ -154,31 +177,81 @@ def 'templates',
     default => 'templates',
     doc => qq||;
 
+our $cache_template_dir =
+    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
+# Backup path
+our $backuppath = LedgerSMB::Sysconfig::tempdir();
 
 
+### SECTION  ---   mail
 
-### WHAT DOES THIS DO???
-our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
-
-# location of sendmail
-our $sendmail = "/usr/sbin/sendmail -t";
-
-# SMTP settings
-our $smtphost   = '';
-our $smtptimeout = 60;
-our $smtpuser   = '';
-our $smtppass   = '';
-our $smtpauthmethod = '';
-our $zip = 'zip -r %dir %dir';
+def 'sendmail',
+    section => 'mail',
+    default => '/usr/sbin/sendmail -t',
+    doc => qq|location of sendmail|;
 
 
-# program to use for file compression
-our $gzip = "gzip -S .gz";
+def 'smtphost',
+    section => 'mail',
+    default => '',
+    doc => '';
 
-# Path to the translation files
-our $localepath = 'locale/po';
+def 'smtptimeout',
+    section => 'mail',
+    default => 60,
+    doc => '';
+
+def 'smtpuser',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'smtppass',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'smtpauthmethod',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'backup_email_from',
+    section => 'mail',
+    default => '',
+    doc => '';
 
 
+### SECTION  ---   database
+
+def 'db_host',
+    section => 'database',
+    envvar => 'PGHOST',
+    doc => '';
+
+def 'db_port',
+    section => 'database',
+    envvar => 'PGPORT',
+    doc => '';
+
+def 'default_db',
+    section => 'database',
+    default => undef,
+    doc => '';
+
+def 'db_namespace',
+    section => 'database',
+    default => 'public',
+    doc => '';
+
+def 'db_sslmode',
+    section => 'database',
+    default => undef,
+    envvar => 'PGSSLMODE',
+    doc => '';
+
+
+### SECTION  ---   debug
 
 def 'dojo_built',
     section => 'debug',
@@ -186,13 +259,34 @@ def 'dojo_built',
     doc => qq||;
 
 
+
+
+### WHAT DOES THIS DO???
+our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
+
+
+
+
+
+# if you have latex installed set to 1
+###TODO-LOCALIZE-DOLLAR-AT
+our $latex = eval {require Template::Plugin::Latex};
+
+
 # available printers
 our %printer;
+for ($cfg->Parameters('printers')){
+     $printer{$_} = $cfg->val('printers', $_);
+}
+
+
+# Programs
+our $zip = $cfg->val('progarms', 'zip', 'zip -r %dir %dir');
+our $gzip = $cfg->val('programs', 'gzip', "gzip -S .gz");
 
 
 
-
-# Whitelist for redirect destination
+# Whitelist for redirect destination / this isn't really configuration.
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
@@ -210,39 +304,12 @@ our @scripts = (
     'is.pl', 'oe.pl',    'pe.pl',
 );
 
-# if you have latex installed set to 1
-###TODO-LOCALIZE-DOLLAR-AT
-our $latex = eval {require Template::Plugin::Latex};
-
-
-for ($cfg->Parameters('printers')){
-     $printer{$_} = $cfg->val('printers', $_);
-}
-
 # ENV Paths
 for my $var (qw(PATH PERL5LIB)) {
      $ENV{$var} .= $Config{path_sep} . ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
 }
 
-# Application-specific paths
-for my $var (qw(localepath spool templates)) {
-    no strict 'refs';
-    ${$var} = $cfg->val('paths', $var) if $cfg->val('paths', $var);
-}
 
-# Programs
-for my $var (qw(gzip zip)) {
-    no  strict 'refs';
-    ${$var} = $cfg->val('programs', $var) if $cfg->val('programs', $var);
-}
-
-# mail configuration
-for my $var (qw(sendmail smtphost smtptimeout smtpuser
-             smtppass smtpauthmethod backup_email_from))
-{
-    no strict 'refs';
-    ${$var} = $cfg->val('mail', $var) if $cfg->val('mail', $var);
-}
 
 my $modules_loglevel_overrides='';
 
@@ -291,22 +358,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
-our $db_host = $cfg->val('database', 'host');
-our $db_port = $cfg->val('database', 'port');
-
-$ENV{PGHOST} = $db_host;
-$ENV{PGPORT} = $db_port;
-our $default_db = $cfg->val('database', 'default_db');
-our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
-$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode')
-    if $cfg->val('database', 'sslmode');
-
-$ENV{HOME} = LedgerSMB::Sysconfig::tempdir();
-
-our $cache_template_dir =
-    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
-# Backup path
-our $backuppath = LedgerSMB::Sysconfig::tempdir();
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
