@@ -23,7 +23,8 @@ getChangelogEntry() {
 
 updateWikipedia() { # $1 = New Version     $2 = New Date
     # wikipedia-update.pl [boilerplate|Wikipage] [stable|preview] [NewVersion] [NewDate] [UserName Password]
-    ./release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" "$release_type" "$1" "$2" "${cfgValue[wiki_User]}" "${cfgValue[wiki_Password]}"
+    ./notification-helpers/release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" \
+              "$release_type" "$1" "$2" "${cfgValue[wiki_User]}" "${cfgValue[wiki_Password]}"
 }
 
 updateIRC() {
@@ -113,35 +114,35 @@ ValidateEnvironment() {
 main() {
     clear;
         cat <<-EOF
-	     ___________________________________________________________
-	    /__________________________________________________________/|
-	    |                                                         | |
-	    |  Ready to send some updates out to the world            | |
-	    |                                                         | |
-	    |   *  Update Version on Wikipedia (en)                   | |
-	    |   *  Update IRC Title                                   | |
-	    |   *  Update Sourceforge Download Link                   | |
-	    |   *  Send Release Emails to                             | |
-	    |           *  $(printf "%-43s" "${cfgValue[mail_AnnounceList]}";)| |
-	    |           *  $(printf "%-43s" "${cfgValue[mail_UsersList]}";)| |
-	    |           *  $(printf "%-43s" "${cfgValue[mail_DevelList]}";)| |
-	    |                                                         | |
-	    |   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    | |
-	    |      The following are not yet complete                 | |
-	    |                                                         | |
-	    |   *  Post to $(printf "%-43s" "${cfgValue[drupal_URL]}";)| |
-	    |      Don't forget to use the 'release'                  | |
-	    |      content type, and set the correct branch           | |
-	    |      to $( printf "%-46s" "${release_branch:-*** Need to add this info ***}";)  | |
-	    |        http://ledgersmb.org/node/add/release            | |
-	    |                                                         | |
-	    |   * Publish a release on GitHub                         | |
-	    |         by converting the tag                           | |
-	    |                                                         | |
-	    |_________________________________________________________|/
+             ___________________________________________________________
+            /__________________________________________________________/|
+            |                                                         | |
+            |  Ready to send some updates out to the world            | |
+            |                                                         | |
+            |   *  Update Version on Wikipedia (en)                   | |
+            |   *  Update IRC Title                                   | |
+            |   *  Update Sourceforge Download Link                   | |
+            |   *  Send Release Emails to                             | |
+            |           *  $(printf "%-43s" "${cfgValue[mail_AnnounceList]}";)| |
+            |           *  $(printf "%-43s" "${cfgValue[mail_UsersList]}";)| |
+            |           *  $(printf "%-43s" "${cfgValue[mail_DevelList]}";)| |
+            |                                                         | |
+            |   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    | |
+            |      The following are not yet complete                 | |
+            |                                                         | |
+            |   *  Post to $(printf "%-43s" "${cfgValue[drupal_URL]}";)| |
+            |      Don't forget to use the 'release'                  | |
+            |      content type, and set the correct branch           | |
+            |      to $( printf "%-46s" "${release_branch:-*** Need to add this info ***}";)  | |
+            |        http://ledgersmb.org/node/add/release            | |
+            |                                                         | |
+            |   * Publish a release on GitHub                         | |
+            |         by converting the tag                           | |
+            |                                                         | |
+            |_________________________________________________________|/
 
 
-	EOF
+        EOF
 
     ValidateEnvironment;
 
