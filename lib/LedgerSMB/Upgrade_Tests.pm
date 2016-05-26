@@ -105,6 +105,30 @@ Repair query table to run once per result.
 has table => (is => 'ro', isa => 'Str', required => 0);
 
 
+=item selectable_values
+
+Repair query column to get the values from
+
+=cut
+
+has selectable_values => (is => 'ro', isa => 'Str', required => 0);
+
+=item id_where
+
+Repair query key to set the values if we can repair
+
+=cut
+
+has id_where => (is => 'ro', isa => 'Str', required => 0, default => 'id');
+
+=item id_column
+
+Repair column to use as id
+
+=cut
+
+has id_column => (is => 'ro', isa => 'Str', required => 0, default => 'id');
+
 =item column
 
 Repair query column to run once per result
@@ -286,13 +310,61 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from entity_credit_account
+   test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
+                                        WITH ac1 AS (
+                                        SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
+                                                FROM acc_trans
+                                                WHERE trans_id IN (
+                                                        SELECT trans_id FROM (
+                                                                SELECT trans_id, SUM(amount) as amount from acc_trans
+                                                                WHERE chart_id IS NULL
+                                                                GROUP BY trans_id) as a
+                                                        WHERE a.amount <> 0)
+                                                AND chart_id IS NULL
+                                                GROUP BY trans_id, chart_id
+                                                ORDER BY trans_id, transdate
+                                ),
+                                -- Hint the user about the type of the remaining entries
+                                ac2 AS (
+                                        SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
+                                        FROM acc_trans ac
+                                        JOIN chart c ON chart_id = c.id
+                                        WHERE trans_id IN ( SELECT trans_id FROM ac1)
+                                        AND c.link ~ 'amount'
+                                )
+                                -- Present data
+                                SELECT * from ac1
+                                LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
+                                ORDER BY ac1.trans_id",
+ display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
+         name => 'no_unbalanced_ac_transactions',
+ display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'The following transactions have unassigned amounts'),
+                table => 'acc_trans',
+selectable_values => "SELECT concat(accno,' -- ',description) AS id, id as value
+                                          FROM chart
+                                          WHERE charttype = 'A'
+                                          ORDER BY id",
+           column => 'chart_id',
+        id_column => 'trans_id',
+         id_where => 'chart_id IS NULL AND trans_id',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+);
+
+push @tests, __PACKAGE__->new(
+   test_query => "select *, eca.id as id  from entity_credit_account eca
+                     join entity_class ec on eca.entity_class = ec.id
+                     join entity e on eca.entity_id = e.id
                    where meta_number in
                        (select meta_number from entity_credit_account
-                        group by meta_number having count(*) > 1)",
+                        group by meta_number having count(*) > 1)
+                   order by meta_number",
  display_name => $locale->text('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
- display_cols => [ 'meta_number', 'description' ],
+ display_cols => [ 'meta_number', 'class', 'description', 'name' ],
        column => 'meta_number',
         table => 'entity_credit_account',
  instructions => $locale->text("Make sure all meta numbers are unique."),
@@ -306,6 +378,7 @@ push @tests, __PACKAGE__->new(
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
+                         and gifi_accno is not null
                          and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
@@ -322,6 +395,7 @@ push @tests, __PACKAGE__->new(
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
+                         and gifi_accno is not null
                          and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
@@ -330,7 +404,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text("Please use the SQL-Ledger UI to add the GIFI accounts"),
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '2.8'
+  max_version => '3.0'
 );
 
 
@@ -338,7 +412,9 @@ push @tests, __PACKAGE__->new(
    test_query => "select distinct gifi_accno from account
                    where not exists (select 1
                                        from gifi
-                                      where gifi.accno = account.gifi_accno)",
+                                      where gifi.accno = account.gifi_accno)
+                         and gifi_accno is not null
+                         and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -360,7 +436,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
  push @tests, __PACKAGE__->new(
@@ -370,7 +446,7 @@ push @tests, __PACKAGE__->new(
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 */
 
@@ -392,7 +468,7 @@ push @tests,__PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -412,7 +488,7 @@ number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -432,7 +508,7 @@ heading which sorts alphanumerically before the first account by accno'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -448,7 +524,65 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
+    );
+
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from chart
+                   where charttype = 'A'
+                     and category not in ('A', 'L', 'Q', 'I', 'E')",
+    display_name => $locale->text('Unsupported account categories'),
+    name => 'unsupported_account_types',
+    display_cols => ['category', 'accno', 'description'],
+ instructions => $locale->text(
+                   'Please make sure all accounts have a category of
+(A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
+    column => 'category',
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
+
+# push @tests,__PACKAGE__->new(
+#     test_query => "select *
+#                     from chart
+#                    where charttype = 'A'
+#                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
+#     display_name => $locale->text('Unsupported account link combinations'),
+#     name => 'unsupported_account_links',
+#     display_cols => ['accno', 'description', 'link'],
+#  instructions => $locale->text(
+#                    'An account can either be a summary account (which have a
+# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
+# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
+#     column => 'category',
+#     table => 'chart',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '3.0'
+#     );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from chart c
+                   where charttype = 'A'
+                     and 0 = (select count(*)
+                            from chart cn
+                           where cn.charttype = 'H'
+                             and cn.accno < c.accno)",
+    display_name => $locale->text('Accounts without heading'),
+    name => 'no_header_accounts',
+    display_cols => ['accno', 'description', 'link'],
+ instructions => $locale->text(
+                   'Please go into the SQL-Ledger UI and create/rename a
+heading which sorts alphanumerically before the first account by accno'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -468,7 +602,7 @@ push @tests,__PACKAGE__->new(
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -503,7 +637,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -519,7 +653,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -538,7 +672,7 @@ push @tests, __PACKAGE__->new(
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -559,7 +693,7 @@ push @tests, __PACKAGE__->new(
     table => 'ar',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 #  There's no AP uniqueness requirement?
@@ -581,7 +715,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'ap',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
 push @tests, __PACKAGE__->new(
@@ -617,7 +751,7 @@ push @tests, __PACKAGE__->new(
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -629,12 +763,12 @@ push @tests, __PACKAGE__->new(
     name => 'no_null_makenumbers',
     display_cols => ['parts_id', 'make', 'model'],
     column => 'make',
- instructions => $locale->text(
+    instructions => $locale->text(
                    'Please make sure all make numbers are non-empty'),
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -643,7 +777,8 @@ push @tests, __PACKAGE__->new(
                      from partscustomer
                     where not exists (select 1
                                         from pricegroup
-                                       where id = pricegroup_id)",
+                                       where id = pricegroup_id)
+                                        and pricegroup_id <> 0",
     display_name => $locale->text('Non-existing customer pricegroups in partscustomer'),
     name => 'partscustomer_pricegroups_exist',
     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
@@ -652,7 +787,7 @@ push @tests, __PACKAGE__->new(
     table => 'partscustomer',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(
@@ -762,7 +897,7 @@ push @tests, __PACKAGE__->new(
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
-#     max_version => '2.8'
+#     max_version => '3.0'
 #     );
 
     return @tests;

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"_ButtonMixin.js",
-"lineCount":4,
-"mappings":"A;AAAAA,MAAA,sFAKG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAuBC,CAAvB,CAA4BC,CAA5B,MAKEC,EAAcJ,CAAA,4BAAqCE,CAAA,aAArC,sDAyBNG,QAAAA,CAAmBC,CAAnBD,EAKVC,CAAAC,gBAAA,EACAD,EAAAE,eAAA,EACIC,cAPMJ,EASTK,cAAAC,MAAA,CAAqBL,CAArB,CATSD,UAzBM,UAuCPO,QAAAA,CAAmBN,CAAnBM,KAGNH,aAHMG,OAIRN,EAAAC,gBAAA,EAJQK,CAKRN,CAAAE,eAAA,EALQI,SAQNC,YAAA,CAAaP,CAAb,CARMM,EASRN,CAAAE,eAAA,EATQI,KAWLE,EAAYR,CAAAS,iBAXPH,KAeLE,CAfKF,YAeQI,SAfRJ,GAemCK,CAAAP,cAAAO;AAAkBC,cAAlBD,MAfnCL,SAgBAO,EAAOC,YAhBPR,CAgBqBO,CAAAE,WAhBrBT,CAgBsCO,CAhBtCP,CAgB6CO,CAAAE,WAhB7CT,MAiBHU,EAASnB,CAAAoB,OAAA,CAAgBJ,CAAhB,CAjBNP,IAkBJU,CAlBIV,oBAkBaU,EAAAE,UAlBbZ,EAmBNU,CAAAE,UAAA,CAAiBlB,CAAjB,CACAA,EAAAE,eAAA,EACAM,EArBMF,kBA2BDE,CA3BCF,CAvCO,YAqELa,QAAAA,GACXC,cAAA,CAAeC,SAAf,CACA1B,EAAA2B,cAAA,CAAkBV,cAAlB,IAFWO,CArEK,SA0ERZ,QAAAA,YA1EQ,eAmFFgB,QAAAA,CAAoBC,CAApBD,EAKdE,SAAA,SAAmBD,CAAnB,CAEAE,EADgBC,kBAChBD,EADsCd,cACtCc,WAPcH,CAOQC,CAPRD,CAnFE,EA8Ff3B,EAAA,aAnGD,GAoGDE,CApGC,CAoGaJ,CAAA,2BAAmCI,CAAnC,gBACEyB,QAAAA,GACdH,cAAA,CAAeC,SAAf,CAEAO,kBAAA,CADgBD,kBAChB;AADsCf,cACtC,CAHcW,CADF,EApGb,QA6GKzB,EA7GL,CALH;",
-"sources":["_ButtonMixin.js.uncompressed.js"],
-"names":["define","declare","dom","has","registry","ButtonMixin","__onClick","e","stopPropagation","preventDefault","disabled","valueNode","click","_onClick","onClick","cancelled","defaultPrevented","type","form","focusNode","node","domNode","parentNode","widget","byNode","_onSubmit","postCreate","inherited","arguments","setSelectable","_setLabelAttr","content","_set","innerHTML","containerNode","applyTextDir"]
-}

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Promise.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,0CAEG,QAAA,CAASC,CAAT,EAMFC,QAASA,EAATA,QACO,KAAIC,SAAJ,YADPD,EANE,MAUKD,EAAAG,OAAA,CAAYC,QAAAA,IAAZ,OAOAC,QAAAA,CAASC,CAATD,CAAmBE,CAAnBF,CAA4BG,CAA5BH,EAmBLJ,CAAA,EAnBKI,CAPA,QA6BEI,QAAAA,CAASC,CAATD,CAAiBE,CAAjBF,EAkBPR,CAAA,EAlBOQ,CA7BF,YAkDMG,QAAAA,GAKXX,CAAA,EALWW,CAlDN,YA0DMC,QAAAA,GAKXZ,CAAA,EALWY,CA1DN,aAkEOC,QAAAA,GAKZb,CAAA,EALYa,CAlEP,YA0EMC,QAAAA,GAKXd,CAAA,EALWc,CA1EN,QAkFEC,QAAAA,CAASC,CAATD,QASAX,UAAA,CAAUY,CAAV,CAA6BA,CAA7B,CATAD,CAlFF,WA8FKE,QAAAA,CAASX,CAATW,QAQHb,UAAA,MAAgBE,CAAhB,CARGW,CA9FL,OAyGCC,QAAAA,eAzGD,eA6GSC,QAAAA,eA7GT,UAiHIC,QAAAA,4BAjHJ,EAVL,CAFH;",
-"sources":["Promise.js.uncompressed.js"],
-"names":["define","lang","throwAbstract","TypeError","extend","Promise","then","callback","errback","progback","cancel","reason","strict","isResolved","isRejected","isFulfilled","isCanceled","always","callbackOrErrback","otherwise","trace","traceRejected","toString"]
-}

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"DataList.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,uBAA8B,sFAAA,MAAA,KAA9B,CAOG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAuBC,CAAvB,CAA6BC,CAA7B,CAAoCC,CAApC,CAAiDC,CAAjD,EAKFC,QAASA,EAATA,CAA4BC,CAA5BD,YAIMC,CAAAC,MAJNF,OAKSC,CAAAC,MALTF,MAMQJ,CAAAO,KAAA,CAAUF,CAAAG,UAAV,EAA8BH,CAAAI,YAA9B,KANRL,EALE,MAeKN,EAAA,uBAA+BI,CAA/B,cAWOQ,QAAAA,CAASC,CAATD,CAAiBE,CAAjBF,EAWZG,YAXYH,CAWGX,CAAAe,KAAA,CAASF,CAAT,CAEfZ,EAAAe,MAAA,MAAiBJ,CAAjB,CACGK,QAdSN,EAeXP,CAAAc,IAAA,MAEDJ,aAAAK,MAAAC,QAjBYT,OAmBZU,eAAA,CAAeC,SAAf,QACOpB,CAAA,UAAgBY,YAAhB,CAAAS,IAAA,CAAkClB,CAAlC,CADP,GAnBYM,CAXP,SAmCGa,QAAAA,GACRpB,CAAAqB,OAAA,CAAgBR,OAAhB,CADQO,CAnCH,mBAuCaE,QAAAA,OAIdpB;AAASJ,CAAA,yBAA4BY,YAA5B,CAAA,GAATR,EAAyDJ,CAAA,eAAkBY,YAAlB,CAAA,GAJ3CY,OAKXpB,EALWoB,EAKDrB,CAAA,CAAOC,CAAP,CALCoB,CAvCb,EAfL,CAPH;",
-"sources":["DataList.js.uncompressed.js"],
-"names":["define","declare","dom","lang","query","MemoryStore","registry","toItem","option","value","trim","innerText","textContent","constructor","params","srcNodeRef","domNode","byId","mixin","id","add","style","display","inherited","arguments","map","destroy","remove","fetchSelectedItem"]
-}

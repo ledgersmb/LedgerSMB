@@ -26,21 +26,21 @@ sub _monkeypatch_xml_http_prototype {
     # my thanks go to
     # http://stackoverflow.com/questions/9267451/how-to-check-if-http-requests-are-open-in-browser
 
-    $self->execute_script(qq(
-(function() {
-    var oldOpen = XMLHttpRequest.prototype.open;
-    window.__SELENIUM_538268 = 0;
-    XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
-      window.__SELENIUM_538268++;
-      this.addEventListener("readystatechange", function() {
-          if(this.readyState == 4) {
-            window.__SELENIUM_538268--;
-          }
-        }, false);
-      oldOpen.call(this, method, url, async, user, pass);
-    }
-  })();
-));
+#     $self->execute_script(qq(
+# (function() {
+#     var oldOpen = XMLHttpRequest.prototype.open;
+#     window.__SELENIUM_538268 = 0;
+#     XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+#       window.__SELENIUM_538268++;
+#       this.addEventListener("readystatechange", function() {
+#           if(this.readyState == 4) {
+#             window.__SELENIUM_538268--;
+#           }
+#         }, false);
+#       oldOpen.call(this, method, url, async, user, pass);
+#     }
+#   })();
+# ));
 
 }
 
@@ -137,27 +137,27 @@ sub try_wait_for_page {
 
     wait_until { $self->find_element('body.done-parsing', 'css') };
 
-    $page_generation++;
-    $self->execute_script(qq(
-if (dojo && require) {
-  require(["dojo/ready"], function(ready) {
-     ready(9999, function() { window.__SELENIUM_5382645 = $page_generation; })
-  });
-}
-else {
-   // detection failed
-   window.__SELENIUM_5382645 = $page_generation;
-}
-));
+#     $page_generation++;
+#     $self->execute_script(qq(
+# if (dojo && require) {
+#   require(["dojo/ready"], function(ready) {
+#      ready(9999, function() { window.__SELENIUM_5382645 = $page_generation; })
+#   });
+# }
+# else {
+#    // detection failed
+#    window.__SELENIUM_5382645 = $page_generation;
+# }
+# ));
 
-    my $start_time = time();
-    while (((time() - $start_time) < $max_wait_secs)
-           && $self->execute_script(qq(
- return ((window.__SELENIUM_5382645 < $page_generation)
-         || (window.__SELENIUM_538268 > 0))
-       ))){
-        sleep(0.05);
-    };
+#     my $start_time = time();
+#     while (((time() - $start_time) < $max_wait_secs)
+#            && $self->execute_script(qq(
+#  return ((window.__SELENIUM_5382645 < $page_generation)
+#          || (window.__SELENIUM_538268 > 0))
+#        ))){
+#         sleep(0.05);
+#     };
 }
 
 

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Invoice.js",
-"lineCount":2,
-"mappings":"A;AAAAA,OAAA,kFAOI,QAAA,CAAUC,CAAV,CAAmBC,CAAnB,CAA6BC,CAA7B,CAAiCC,CAAjC,CAAuCC,CAAvC,QACWJ,EAAA,iBAEFG,CAFE,CAEIC,CAFJ,WAGUC,QAAAA,GACLC,kBADKD,SAELE,YAAA,EAFKF,CAHV,SAOUG,QAAAA,OACDC,MACJC,eAAA,CAAeC,SAAf,CACAC,SAAA,CAASV,CAAA,CAAGD,CAAAY,KAAA,iBAAH,WACc,QAAA,GACPJ,CAAAJ,QAAA,EADO,CADd,CAAT,CAHKG,CAPV,EADX,CAPJ;",
-"sources":["Invoice.js.uncompressed.js"],
-"names":["require","declare","registry","on","Form","_Container","_update","clickedAction","submit","startup","self","inherited","arguments","own","byId"]
-}

@@ -158,6 +158,10 @@ sub invoice_links {
         ));
     }
 
+    @curr = split /:/, $form->{currencies};
+    $form->{defaultcurrency} = $curr[0];
+    chomp $form->{defaultcurrency};
+
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
     IS->retrieve_invoice( \%myconfig, \%$form );
@@ -310,7 +314,7 @@ sub form_header {
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
         <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name="currency">$form->{selectcurrency}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="currency" name="currency">$form->{selectcurrency}</select></td>
 | if $form->{defaultcurrency};
 
     if (   $form->{defaultcurrency}
@@ -339,7 +343,7 @@ sub form_header {
     $department = qq|
               <tr>
             <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-        <td colspan="3"><select data-dojo-type="dijit/form/Select" name="department">$form->{selectdepartment}</select>
+        <td colspan="3"><select data-dojo-type="dijit/form/Select" id="department" name="department">$form->{selectdepartment}</select>
         </td>
           </tr>
 | if $form->{selectdepartment};
@@ -367,7 +371,7 @@ sub form_header {
     $employee = qq|
           <tr>
             <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name="employee">$form->{selectemployee}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="employee" name="employee">$form->{selectemployee}</select></td>
           </tr>
 | if $form->{selectemployee};
 
@@ -583,7 +587,8 @@ function on_return_submit(event){
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
+              { ndx => 2, key => 'P', value => $locale->text('Print'),
+                type => 'lsmb/PrintButton' },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'ship_to' =>
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
@@ -663,6 +668,8 @@ function on_return_submit(event){
         {
             $form->print_button( \%button, $_ );
         }
+
+        $form->hide_form(qw(defaultcurrency));
 
         print "</td></tr>";
     }

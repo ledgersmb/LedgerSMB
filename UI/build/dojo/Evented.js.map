@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Evented.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,oCAA6C,QAAA,CAASC,CAAT,CAAiBC,CAAjB,EAM5CC,QAASA,EAATA,IAN4C,IAKvCC,EAAQH,CAAAG,MAiBbD,EAAAE,UAtB4C,KAuBvCH,QAAAA,CAASI,CAATJ,CAAeK,CAAfL,QACIA,EAAAM,MAAA,MAAeF,CAAf,CAAqBC,CAArB,CAA+B,QAAA,CAASE,CAAT,CAAiBH,CAAjB,QAC9BF,EAAA,CAAMK,CAAN,MAAqBH,CAArB,CAA2BC,CAA3B,IAD8B,CAA/B,CADJL,CAvBuC,MA4BrCQ,QAAAA,CAASJ,CAATI,CAAeC,CAAfD,MACDE,QACJA,EAAAC,KAAAC,MAAA,CAAgBF,CAAhB,CAAsBG,SAAtB,CAFKL,OAGER,EAAAQ,KAAAI,MAAA,CAAcZ,CAAd,CAAkBU,CAAlB,CAHFF,CA5BqC,QAkCrCP,EAlCqC,CAA7C;",
-"sources":["Evented.js.uncompressed.js"],
-"names":["define","aspect","on","Evented","after","prototype","type","listener","parse","target","emit","event","args","push","apply","arguments"]
-}

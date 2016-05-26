@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::file
+LedgerSMB::Scripts::file - web entry points for file storage and retrieval
 
 =head1 SYNOPSIS
 
-This supplies file retrival and attachment workflows
+This supplies file retrieval and attachment workflows
 
 =head1 METHODS
 

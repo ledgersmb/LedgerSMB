@@ -11,7 +11,7 @@ use warnings;
 
 =head1 NAME
 
-LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts
+LedgerSMB:Scripts::accounts - web entry points for managing GL accounts
 
 =head1 SYNOPSIS
 
@@ -251,6 +251,25 @@ sub post_yearend {
     $template->render($eoy);
 
 }
+
+=item close_period
+
+Closes the books without posting a year-end.
+
+Request variables expected:
+period_close_date: Date up to (inclusive) which to close the books
+
+=cut
+
+sub close_period {
+    my ($request) = @_;
+    $request->{end_date} = $request->{period_close_date};
+    my $eoy = LedgerSMB::DBObject::EOY->new({base => $request});
+    $eoy->checkpoint_only;
+    delete $request->{period_close_date};
+    yearend_info($request);
+}
+
 
 =item reopen_books
 

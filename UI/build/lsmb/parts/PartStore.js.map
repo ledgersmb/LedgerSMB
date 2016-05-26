@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"PartStore.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,uHAMO,QAAA,CACDC,CADC,CAEDC,CAFC,CAGDC,CAHC,CAIDC,CAJC,CAKDC,CALC,MAOCC,EAAQ,IAAIJ,CAAJ,CAAe,IAAID,CAAJ,4BAEjB,IAAII,CAFa,EAAf,CAKZF,EAAAI,IAAA,uDAAAC,KAAA,CAGI,QAAA,CAAUC,CAAV,EACEL,CAAAM,QAAA,CAAcD,CAAd,CAAuB,QAAA,CAASE,CAAT,EACnBA,CAAAC,KADmB,CACPD,CAAAE,WACZF,EAAAG,MAFmB,CAENH,CAAAE,WAFM,MAEmBF,CAAAI,YACxCT,EAAAU,IAAA,CAAUL,CAAV,CAHqB,CAAvB,CAKDL,EAAAW,QAAAC,KAAA,wDAND,CAHJ,CAWI,QAAA,CAASC,CAAT,GAXJ,CAZG,OA2BIb,EA3BJ,CANP;",
-"sources":["PartStore.js.uncompressed.js"],
-"names":["define","Memory","Observable","request","array","Evented","store","get","then","results","forEach","item","text","partnumber","label","description","put","emitter","emit","error"]
-}

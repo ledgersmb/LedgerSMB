@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts
+LedgerSMB:Scripts::login - web entry points for session creation/termination
 
 =head1 SYNOPSIS
 
@@ -59,7 +59,11 @@ sub __default {
     }
 
     my $secure = '';
+
+    # copy of code in LedgerSMB::Session
     my $path = $ENV{SCRIPT_NAME};
+    $path =~ s|[^/]*$||;
+
     my $cookie_name = $LedgerSMB::Sysconfig::cookie_name;
     if ($ENV{SERVER_PORT} == 443){
         $secure = ' Secure;';

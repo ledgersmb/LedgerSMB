@@ -83,6 +83,17 @@ retrieved values.
 has sorted_row_ids => (is => 'rw');
 
 
+=head2 sorted_col_ids
+
+Don't use! This field is here as a workaround for the fact that TT2
+doesn't allow us to call methods on objects referenced through
+retrieved values.
+
+=cut
+
+has sorted_col_ids => (is => 'rw');
+
+
 
 =head1 STATIC METHODS
 
@@ -202,6 +213,7 @@ before 'render' => sub {
     my ($self) = @_;
 
     $self->sorted_row_ids($self->rheads->sort);
+    $self->sorted_col_ids($self->cheads->sort);
 };
 
 =head1 COPYRIGHT

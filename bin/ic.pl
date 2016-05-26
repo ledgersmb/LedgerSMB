@@ -118,7 +118,7 @@ sub link_part {
     # currencies
     $form->{selectcurrency} = "";
     for ( split /:/, $form->{currencies} ) {
-        $form->{selectcurrency} .= "<option>$_\n";
+        $form->{selectcurrency} .= "<option>$_</option>\n";
     }
 
     # readonly
@@ -194,7 +194,7 @@ sub link_part {
             else {
 
                 $form->{"select$key"} .=
-                  qq|<option value="$ref->{accno}">$ref->{accno}--$ref->{description}</option>\n|;
+                  qq|<option id="$key-$ref->{accno}" value="$ref->{accno}--$ref->{description}">$ref->{accno}--$ref->{description}</option>\n|;
 
             }
         }
@@ -206,15 +206,13 @@ sub link_part {
         $form->{selectIC_income}    = $form->{selectIC_sale};
         $form->{selectIC_expense}   = $form->{selectIC_cogs};
         $form->{selectIC_returns}   = $form->{selectIC_returns};
-        $form->{IC_income}          = $form->{IC_sale};
-        $form->{IC_expense}         = $form->{IC_cogs};
     }
 
     # set option
     for (qw(IC_inventory IC_income IC_expense IC_returns)) {
         $form->{$_} =
           "$form->{amount}{$_}{accno}--$form->{amount}{$_}{description}"
-          if $form->{amount}{$_}{accno};
+          if (! $form->{$_}) && $form->{amount}{$_}{accno};
     }
 
     delete $form->{IC_links};
@@ -227,13 +225,13 @@ sub link_part {
     }
 
     if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = qq|<option>\n|;
+        $form->{selectpartsgroup} = qq|<option></option>\n|;
 
         for ( @{ $form->{all_partsgroup} } ) {
             $form->{selectpartsgroup} .=
                 qq|<option value="|
               . $form->quote( $_->{partsgroup} )
-              . qq|--$_->{id}">$_->{partsgroup}\n|;
+              . qq|--$_->{id}">$_->{partsgroup}</option>\n|;
         }
         delete $form->{all_partsgroup};
     }
@@ -250,11 +248,11 @@ sub link_part {
         $form->get_partsgroup( \%myconfig );
 
         if ( @{ $form->{all_partsgroup} } ) {
-            $form->{selectassemblypartsgroup} = qq|<option>\n|;
+            $form->{selectassemblypartsgroup} = qq|<option></option>\n|;
 
             for ( @{ $form->{all_partsgroup} } ) {
                 $form->{selectassemblypartsgroup} .=
-qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
+qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
             }
             delete $form->{all_partsgroup};
         }
@@ -271,15 +269,15 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
 
     # setup vendors
     if ( @{ $form->{all_vendor} } ) {
-        $form->{selectvendor} = "<option>\n";
+        $form->{selectvendor} = "<option></option>\n";
         for ( @{ $form->{all_vendor} } ) {
             $form->{selectvendor} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
         delete $form->{all_vendor};
     }
 
-    # vendor matrix
+    # vendor matrix (on update, we don't have a price matrix)
     $i = 1;
     foreach $ref ( @{ $form->{vendormatrix} } ) {
         $form->{"vendor_$i"} = qq|$ref->{name}--$ref->{id}|;
@@ -291,15 +289,15 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
         }
         $i++;
     }
-    $form->{vendor_rows} = $i - 1;
+    $form->{vendor_rows} //= $i - 1;
     delete $form->{vendormatrix};
 
     # setup customers and groups
     if ( @{ $form->{all_customer} } ) {
-        $form->{selectcustomer} = "<option>\n";
+        $form->{selectcustomer} = "<option></option>\n";
         for ( @{ $form->{all_customer} } ) {
             $form->{selectcustomer} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
         delete $form->{all_customer};
     }
@@ -308,14 +306,14 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
         $form->{selectpricegroup} = "<option>\n";
         for ( @{ $form->{all_pricegroup} } ) {
             $form->{selectpricegroup} .=
-              qq|<option value="$_->{pricegroup}--$_->{id}">$_->{pricegroup}\n|;
+              qq|<option value="$_->{pricegroup}--$_->{id}">$_->{pricegroup}</option>\n|;
         }
         delete $form->{all_pricegroup};
     }
 
-    $i = 1;
 
-    # customer matrix
+    # customer matrix (on update, we don't have a price matrix)
+    $i = 1;
     foreach $ref ( @{ $form->{customermatrix} } ) {
 
         $form->{"customer_$i"} = "$ref->{name}--$ref->{cid}" if $ref->{cid};
@@ -330,13 +328,15 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
         $i++;
 
     }
-    $form->{customer_rows} = $i - 1;
+    $form->{customer_rows} //= $i - 1;
     delete $form->{customermatrix};
 
 }
 
 sub form_header {
     link_part();
+
+
     if ( $form->{lastcost} > 0 ) {
         $markup =
           $form->round_amount(
@@ -398,10 +398,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
             if ( $form->{orphaned} ) {
                 $form->{"select$_"} =~ s/ selected//;
                 $form->{"select$_"} =~
-                  s/option>\Q$form->{$_}\E/option selected="SELECTED">$form->{$_}/;
+                  s/option([^>]*)>\Q$form->{$_}\E/option $1 selected="selected">$form->{$_}/;
             }
             else {
-                $form->{"select$_"} = qq|<option selected="SELECTED">$form->{$_}|;
+                $form->{"select$_"} = qq|<option value="$form->{$_}" selected="selected">$form->{$_}</option>|;
             }
         }
     }
@@ -419,7 +419,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
           s/(<option value="\Q$form->{partsgroup}\E")/$1 selected="SELECTED"/;
 
         $partsgroup .=
-          qq|\n<select data-dojo-type="dijit/form/Select" name="partsgroup">$form->{selectpartsgroup}</select>|;
+          qq|\n<select data-dojo-type="dijit/form/Select" id="partsgroup" name="partsgroup">$form->{selectpartsgroup}</select>|;
         $group = $locale->text('Group');
     }
 
@@ -654,11 +654,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $linkaccounts = qq|
           <tr>
         <th align=right>| . $locale->text('Income') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_income>$form->{selectIC_income}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="IC-income" name=IC_income>$form->{selectIC_income}</select></td>
           </tr>
           <tr>
         <th align=right>| . $locale->text('Expense') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_expense>$form->{selectIC_expense}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="IC-expense" name=IC_expense>$form->{selectIC_expense}</select></td>
           </tr>
 |;
 
@@ -689,12 +689,12 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $linkaccounts = qq|
           <tr>
         <th align=right>| . $locale->text('Labor/Overhead') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name="IC_inventory">$form->{selectIC_inventory}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="IC-inventory" name="IC_inventory">$form->{selectIC_inventory}</select></td>
           </tr>
 
           <tr>
         <th align=right>| . $locale->text('COGS') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name="IC_expense">$form->{selectIC_expense}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="IC-expense" name="IC_expense">$form->{selectIC_expense}</select></td>
           </tr>
 |;
 
@@ -1033,7 +1033,7 @@ sub vendor_row {
             $form->{selectcurrency} =~
 s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
             $currency = qq|
-      <td><select data-dojo-type="dijit/form/Select" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
+      <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
         }
 
         if ( $i == $numrows ) {
@@ -1045,7 +1045,7 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
 
             if ( $form->{selectvendor} ) {
                 $vendor = qq|
-      <td width=99%><select data-dojo-type="dijit/form/Select" name="vendor_$i">$form->{selectvendor}</select></td>
+      <td width=99%><select data-dojo-type="dijit/form/Select" id="vendor-$i" name="vendor_$i">$form->{selectvendor}</select></td>
 |;
             }
 
@@ -1136,7 +1136,7 @@ sub customer_row {
             $form->{selectcurrency} =~
 s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
             $currency = qq|
-      <td><select data-dojo-type="dijit/form/Select" name="customercurr_$i">$form->{selectcurrency}</select></td>|;
+      <td><select data-dojo-type="dijit/form/Select" id="customercurr-$i" name="customercurr_$i">$form->{selectcurrency}</select></td>|;
         }
 
         if ( $i == $numrows ) {
@@ -1149,13 +1149,13 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
 
             if ( $form->{selectcustomer} ) {
                 $customer = qq|
-      <td><select data-dojo-type="dijit/form/Select" name="customer_$i">$form->{selectcustomer}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="customer-$i" name="customer_$i">$form->{selectcustomer}</select></td>
 |;
             }
 
             if ( $form->{selectpricegroup} ) {
                 $pricegroup = qq|
-      <td><select data-dojo-type="dijit/form/Select" name="pricegroup_$i">$form->{selectpricegroup}</select></td>
+      <td><select data-dojo-type="dijit/form/Select" id="pricegroup-$i" name="pricegroup_$i">$form->{selectpricegroup}</select></td>
 |;
             }
 
@@ -1332,7 +1332,7 @@ qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size
             $column_data{description} =
 qq|<td><input data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 value="$form->{"description_$i"}" data-dojo-props="linenum: $i"></td>|;
             $column_data{partsgroup} =
-qq|<td><select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
+qq|<td><select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 
         }
         else {
@@ -1443,7 +1443,6 @@ qq|$form->{script}?action=edit&id=$form->{"id_$i"}&path=$form->{path}&login=$for
 }
 
 sub update {
-
     if ( $form->{item} eq "assembly" ) {
 
         $i = $form->{assembly_rows};

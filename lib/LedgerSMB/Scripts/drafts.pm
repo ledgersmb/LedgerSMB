@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB:Scripts::drafts, LedgerSMB workflow scripts for managing drafts
+LedgerSMB:Scripts::drafts - web entry points for managing to-be posted docs
 
 =head1 SYNOPSIS
 

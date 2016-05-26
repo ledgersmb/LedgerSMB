@@ -44,6 +44,8 @@ use Try::Tiny;
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;
 
+require 'bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
+
 # any custom scripts for this one
 if ( -f "bin/custom/arapprn.pl" ) {
     eval { require "bin/custom/arapprn.pl"; };
@@ -57,6 +59,21 @@ if ( -f "bin/custom/$form->{login}_arapprn.pl" ) {
 # end of main
 
 sub print {
+
+    &create_links;
+    $form->{title} = $locale->text("Edit");
+    if ($form->{reverse}){
+        if ($form->{ARAP} eq 'AR'){
+            $form->{subtype} = 'credit_note';
+            $form->{type} = 'transaction';
+        } elsif ($form->{ARAP} eq 'AP'){
+            $form->{subtype} = 'debit_note';
+            $form->{type} = 'transaction';
+        } else {
+            $form->error("Unknown AR/AP selection value: $form->{ARAP}");
+        }
+
+    }
 
     my $csettings = $LedgerSMB::Company_Config::settings;
     $form->{company} = $csettings->{company_name};
@@ -430,14 +447,14 @@ sub print_options {
         $form->{"selectlanguage"} =~ s/ selected//;
         $form->{"selectlanguage"} =~
           s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-        $lang = qq|<select data-dojo-type="dijit/form/Select" name=language_code>$form->{selectlanguage}</select>|;
+        $lang = qq|<select data-dojo-type="dijit/form/Select" id="language-code" name=language_code>$form->{selectlanguage}</select>|;
     }
 
-    $type = qq|<select data-dojo-type="dijit/form/Select" name=formname>$form->{selectformname}</select>
+    $type = qq|<select data-dojo-type="dijit/form/Select" id=formname name=formname>$form->{selectformname}</select>
   <input type=hidden name=selectformname value="|
       . $form->escape( $form->{selectformname}, 1 ) . qq|">|;
 
-    $media = qq|<select data-dojo-type="dijit/form/Select" name=media>
+    $media = qq|<select data-dojo-type="dijit/form/Select" id=media name=media>
           <option value="screen">| . $locale->text('Screen');
 
     $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
@@ -455,7 +472,7 @@ sub print_options {
         <option value="pdf">| . $locale->text('PDF');
     }
 
-    $format = qq|<select data-dojo-type="dijit/form/Select" name=format>$form->{selectformat}</select>|;
+    $format = qq|<select data-dojo-type="dijit/form/Select" id=format name=format>$form->{selectformat}</select>|;
     $format =~ s/(<option value="\Q$form->{format}\E")/$1 selected/;
     $media .= qq|</select>|;
     $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;

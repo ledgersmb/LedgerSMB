@@ -566,7 +566,7 @@ sub header {
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
     $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
     if ( $ENV{GATEWAY_INTERFACE} ) {
-        if ( $self->{stylesheet} && ( -f "css/$self->{stylesheet}" ) ) {
+        if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
             $stylesheet =
 qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| .
 qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
@@ -604,18 +604,18 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
-        <link rel="stylesheet" href="UI/lib/dojo/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-        <link rel="stylesheet" href="UI/lib/dojo/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
+        <link rel="stylesheet" href="lib/dojo/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
+        <link rel="stylesheet" href="lib/dojo/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
         <script type="text/javascript" language="JavaScript">
           var dojoConfig = {
                async: 1,
                parseOnLoad: 0,
-               packages: [{"name":"lsmb","location":"../../.."}]
+               packages: [{"name":"lsmb","location":"../.."}]
            }
            var lsmbConfig = {dateformat: '$dformat'};
         </script>
-       <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="UI/lib/main.js"></script>
+       <script type="text/javascript" language="JavaScript" src="lib/dojo/dojo/dojo.js"></script>
+        <script type="text/javascript" language="JavaScript" src="lib/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
         $headeradd
 </head>
@@ -1178,8 +1178,9 @@ for the button.
 sub print_button {
     my ( $self, $button, $name ) = @_;
 
+    my $type = $button->{$name}{type} // 'dijit/form/Button';
     print
-qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
 
 
@@ -1219,7 +1220,6 @@ sub generate_selects {
      # partsgroups
     if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option></option>\n";
-          $form->{selectpartsgroup} = "";
         foreach my $ref ( @{ $form->{all_partsgroup} } ) {
                 my $value = "$ref->{partsgroup}--$ref->{id}";
                 my $selected = ($form->{partsgroup} eq $value) ?
@@ -2543,7 +2543,7 @@ sub create_links {
                  WHERE setting_key = '$_'|;
         }
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute || $self->dberror($query);
 
         ($val) = $sth->fetchrow_array();
@@ -2570,9 +2570,10 @@ Looks up the value in the defaults table and returns it.
 
 sub get_setting {
     my ($self, $setting) = @_;
-    my $sth = $self->{dbh}->prepare('select * from setting_get(?)');
-    $sth->execute($setting);
-    my $ref = $sth->fetchrow_hashref('NAME_lc');
+    my $query = 'select * from setting_get(?)';
+    my $sth = $self->{dbh}->prepare($query) or $self->dberror($query);
+    $sth->execute($setting) or $self->dberror($query);
+    my $ref = $sth->fetchrow_hashref('NAME_lc') or $self->dberror($query);
     return $ref->{value};
 }
 

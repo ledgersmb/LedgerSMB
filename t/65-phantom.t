@@ -12,7 +12,8 @@ use Test::More;
     my $driver = new Selenium::Remote::Driver(
                           'port' => 4422,
                           )
-        || die "Unable to connect to PhantomJS";
+    || die "Unable to connect to PhantomJS";
+    $driver->set_implicit_wait_timeout(30000); # 30s
     $driver->get('http://localhost:5000/login.pl');
 
     ok($driver->find_element_by_name('password'), 'got a password');

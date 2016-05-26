@@ -48,7 +48,6 @@ for (@pluginmods){
   do "lib/LedgerSMB/Entity/Plugins/$_";
 }
 
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 COPYRIGHT
 
@@ -169,7 +168,7 @@ sub _main_screen {
     );
 
 
-
+    my $locale = $request->{_locale};
     my %DIV_LABEL = (
              company => $locale->text('Company'),
               person => $locale->text('Person'),
@@ -480,27 +479,34 @@ sub dispatch_legacy {
 
     };
 
+    # set up environment for call to legacy code
     our $form = new Form;
     our %myconfig = ();
+    our $locale = $request->{_locale};
     %myconfig = %{$request->{_user}};
     $form->{stylesheet} = $myconfig{stylesheet};
-    our $locale = $request->{_locale};
 
     for (keys %{$dispatch->{$request->{action}}->{data}}){
         $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
     }
 
-    my $script = $dispatch->{$request->{action}}{script};
-    $form->{script} = $script;
-    $form->{action} = 'add';
-    $form->{dbh} = $request->{dbh};
-    $form->{script} =~ s|.*/||;
-    { no strict; no warnings 'redefine'; do $script; }
-    { no warnings;
-      # Suppress 'only referenced once' warnings
-      $lsmb_legacy::form = $form;
-      $lsmb_legacy::locale = LedgerSMB::App_State::Locale(); }
-    "lsmb_legacy"->can($form->{action})->();
+    if (my $cpid = fork()) {
+        wait;
+    }
+    else {
+        my $script = $dispatch->{$request->{action}}{script};
+        $form->{script} = $script;
+        $form->{action} = 'add';
+        $form->{dbh} = $request->{dbh};
+        $form->{script} =~ s|.*/||;
+        { no strict; no warnings 'redefine'; do $script; }
+        { no warnings;
+          # Suppress 'only referenced once' warnings
+          $lsmb_legacy::form = $form;
+          $lsmb_legacy::locale = $locale; }
+        "lsmb_legacy"->can($form->{action})->();
+        exit;
+    }
 }
 
 =item add_transaction

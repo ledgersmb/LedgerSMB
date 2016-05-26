@@ -88,4 +88,11 @@ sub get_account_info {
     return $ref;
 }
 
+sub delete {
+    my ($self, $id) = @_;
+
+    $self->call_procedure(funcname => 'journal__delete',
+                          args => [ $id ]);
+}
+
 1;

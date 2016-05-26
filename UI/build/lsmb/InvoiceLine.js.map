@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"InvoiceLine.js",
-"lineCount":2,
-"mappings":"A;AAAAA,OAAA,uHAMQ,QAAA,CAAUC,CAAV,CAAmBC,CAAnB,CAAgCC,CAAhC,CACUC,CADV,CACmCC,CADnC,QAEWJ,EAAA,qBACSC,CADT,CACsBG,CADtB,KAFX,CANR;",
-"sources":["InvoiceLine.js.uncompressed.js"],
-"names":["require","declare","_WidgetBase","_TemplatedMixin","_WidgetsInTemplateMixin","_Container"]
-}

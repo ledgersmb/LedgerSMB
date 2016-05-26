@@ -426,7 +426,10 @@ sub invoice_details {
             foreach my $item (@taxaccounts) {
                 push @taxrates, 100 * $item->rate;
                 if (defined $form->{"mt_amount_" . $item->account}){
-                    $taxaccounts{ $item->account } += $form->{"mt_amount_" . $item->account};
+                    $taxaccounts{ $item->account } +=
+                        $form->{"mt_amount_" . $item->account};
+                    $taxbase{ $item->account } +=
+                        $form->{"mt_basis_" . $item->account};
                     next;
                 }
                 $taxaccounts{ $item->account } += $item->value;
@@ -1496,7 +1499,7 @@ sub retrieve_invoice {
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
                       a.person_id, e.name AS employee, a.till,
-                      a.reverse,
+                      a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence
                  FROM ar a
@@ -1650,7 +1653,7 @@ sub retrieve_item {
 
     if ( $form->{"partnumber_$i"} ne "" ) {
         $var = $dbh->quote( $form->{"partnumber_$i"} );
-        $where .= " AND (lower(p.partnumber) = $var or mm.barcode is not null)";
+        $where .= " AND (p.partnumber = $var or mm.barcode is not null)";
     }
 
     if ( $form->{"partsgroup_$i"} ne "" ) {

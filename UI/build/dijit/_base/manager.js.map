@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"manager.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,0GAMG,QAAA,CAASC,CAAT,CAAgBC,CAAhB,CAAwBC,CAAxB,CAA8BC,CAA9B,CAAwCC,CAAxC,MAKEC,IAMJL,EAAAM,QAAA,CAAc,oEAAA,MAAA,KAAd,CAAqG,QAAA,CAASC,CAAT,EACpGF,CAAA,CAAQE,CAAR,CADoG,CACpFJ,CAAA,CAASI,CAAT,CADoF,CAArG,CAICL,EAAAM,MAAA,CAAWH,CAAX,kBAMkBJ,CAAA,gBANlB,OASDC,EAAAM,MAAA,CAAWJ,CAAX,CAAkBC,CAAlB,CAxBE,OA2BKD,EA3BL,CANH;",
-"sources":["manager.js.uncompressed.js"],
-"names":["define","array","config","lang","registry","dijit","exports","forEach","name","mixin"]
-}
