@@ -382,6 +382,47 @@ UPDATE defaults
  WHERE setting_key IN (select fldvalue FROM sl30.defaults
                         where );
 */
+/* May have to move this downward*/
+UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'businessnumber') WHERE setting_key = 'businessnumber';
+INSERT INTO defaults(setting_key,value) SELECT 'company_name',fldvalue FROM sl30.defaults WHERE fldname = 'company';
+INSERT INTO defaults(setting_key,value) SELECT 'company_address',fldvalue FROM sl30.defaults WHERE fldname = 'address';
+INSERT INTO defaults(setting_key,value) SELECT 'company_fax',fldvalue FROM sl30.defaults WHERE fldname = 'fax';
+INSERT INTO defaults(setting_key,value) SELECT 'company_phone',fldvalue FROM sl30.defaults WHERE fldname = 'tel';
+INSERT INTO defaults(setting_key,value) SELECT 'weightunit',fldvalue FROM sl30.defaults WHERE fldname = 'weightunit';
+INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM sl30.curr WHERE rn=1;
+INSERT INTO defaults(setting_key,value)
+SELECT 'inventory_accno_id',id from account
+        where account.accno in (
+        select accno from sl30.chart
+        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'inventory_accno_id' )
+);
+INSERT INTO defaults(setting_key,value)
+SELECT 'income_accno_id',id from account
+        where account.accno in (
+        select accno from sl30.chart
+        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'income_accno_id' )
+);
+INSERT INTO defaults(setting_key,value)
+SELECT 'expense_accno_id',id from account
+        where account.accno in (
+        select accno from sl30.chart
+        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'expense_accno_id' )
+);
+INSERT INTO defaults(setting_key,value)
+SELECT 'fxgain_accno_id',id from account
+        where account.accno in (
+        select accno from sl30.chart
+        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxgain_accno_id' )
+);
+INSERT INTO defaults(setting_key,value)
+SELECT 'fxloss_accno_id',id from account
+        where account.accno in (
+        select accno from sl30.chart
+        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxloss_accno_id' )
+);
+-- = "sl30.cashovershort_accno_id" ?
+-- "earn_id" = ?
+
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
 SELECT id, parts_id, qty, bom, adj  FROM sl30.assembly;
@@ -491,7 +532,7 @@ SELECT ac.entry_id, 2, slac.project_id+1000
  WHERE project_id > 0;
 
 
- INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber)
     SELECT  id, trans_id, parts_id, description, qty, allocated,
@@ -510,9 +551,6 @@ SELECT inv.id, 1, gl.department_id
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT id, 2, project_id + 1000 FROM sl30.invoice
  WHERE project_id > 0 and  project_id in (select id from sl30.project);
-
-
-
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id
@@ -541,8 +579,6 @@ INSERT INTO eca_tax (eca_id, chart_id)
    FROM sl30.vendortax vt
    JOIN sl30.vendor v
      ON vt.vendor_id = v.id;
-
-
 
 INSERT
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
@@ -580,9 +616,7 @@ INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT id, 2, project_id + 1000 FROM sl30.orderitems
  WHERE project_id > 0  and  project_id in (select id from sl30.project);
 
-
 INSERT INTO exchangerate select * from sl30.exchangerate;
-
 
 INSERT INTO status SELECT * FROM sl30.status; -- may need to comment this one out sometimes
 
@@ -618,9 +652,9 @@ INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
       WHERE pv.pricegroup_id <> 0;
 
 INSERT INTO language
-SELECT * FROM sl30.language sllang
+SELECT OVERLAY(code PLACING LOWER(SUBSTRING(code FROM '^..')) FROM 1 FOR 2 ) AS code,description FROM sl30.language sllang
  WHERE NOT EXISTS (SELECT 1
-                     FROM language l WHERE l.code = sllang.code);
+                     FROM language l WHERE l.code = OVERLAY(sllang.code PLACING LOWER(SUBSTRING(sllang.code FROM '^..')) FROM 1 FOR 2 ));
 
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id)
@@ -671,62 +705,117 @@ INSERT INTO partsgroup_translation SELECT * FROM sl30.translation where trans_id
 
 SELECT setval('id', max(id)) FROM transactions;
 
- SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
- SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id))
-        FROM warehouse_inventory;
- SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
- SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
- SELECT setval('account_id_seq', max(id)) FROM account;
- SELECT setval('account_heading_id_seq', max(id)) FROM account_heading;
- SELECT setval('account_checkpoint_id_seq', max(id)) FROM account_checkpoint;
- SELECT setval('pricegroup_id_seq', max(id)) FROM pricegroup;
- SELECT setval('country_id_seq', max(id)) FROM country;
- SELECT setval('country_tax_form_id_seq', max(id)) FROM country_tax_form;
- SELECT setval('asset_dep_method_id_seq', max(id)) FROM asset_dep_method;
- SELECT setval('asset_class_id_seq', max(id)) FROM asset_class;
- SELECT setval('entity_class_id_seq', max(id)) FROM entity_class;
- SELECT setval('asset_item_id_seq', max(id)) FROM asset_item;
- SELECT setval('asset_disposal_method_id_seq', max(id)) FROM asset_disposal_method;
- SELECT setval('users_id_seq', max(id)) FROM users;
- SELECT setval('entity_id_seq', max(id)) FROM entity;
- SELECT setval('company_id_seq', max(id)) FROM company;
- SELECT setval('location_id_seq', max(id)) FROM location;
- SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
- SELECT setval('location_class_id_seq', max(id)) FROM location_class;
- SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
- SELECT setval('salutation_id_seq', max(id)) FROM salutation;
- SELECT setval('person_id_seq', max(id)) FROM person;
- SELECT setval('contact_class_id_seq', max(id)) FROM contact_class;
- SELECT setval('entity_credit_account_id_seq', max(id)) FROM entity_credit_account;
- SELECT setval('entity_bank_account_id_seq', max(id)) FROM entity_bank_account;
- SELECT setval('note_class_id_seq', max(id)) FROM note_class;
- SELECT setval('note_id_seq', max(id)) FROM note;
- SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
- SELECT setval('batch_id_seq', max(id)) FROM batch;
- SELECT setval('invoice_id_seq', max(id)) FROM invoice;
- SELECT setval('voucher_id_seq', max(id)) FROM voucher;
- SELECT setval('parts_id_seq', max(id)) FROM parts;
- SELECT setval('taxmodule_taxmodule_id_seq', max(taxmodule_id)) FROM taxmodule;
- SELECT setval('taxcategory_taxcategory_id_seq', max(taxcategory_id)) FROM taxcategory;
- SELECT setval('oe_id_seq', max(id)) FROM oe;
- SELECT setval('orderitems_id_seq', max(id)) FROM orderitems;
- SELECT setval('business_id_seq', max(id)) FROM business;
- SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
- SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
- SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
- SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
- SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
- SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
- SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
- SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
- SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
+SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
+SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
+SELECT setval('warehouse_inventory_entry_id_seq', max(entry_id)) FROM warehouse_inventory;
+SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
+SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
+SELECT setval('account_id_seq', max(id)) FROM account;
+SELECT setval('account_heading_id_seq', max(id)) FROM account_heading;
+SELECT setval('account_checkpoint_id_seq', max(id)) FROM account_checkpoint;
+SELECT setval('pricegroup_id_seq', max(id)) FROM pricegroup;
+SELECT setval('country_id_seq', max(id)) FROM country;
+SELECT setval('country_tax_form_id_seq', max(id)) FROM country_tax_form;
+SELECT setval('asset_dep_method_id_seq', max(id)) FROM asset_dep_method;
+SELECT setval('asset_class_id_seq', max(id)) FROM asset_class;
+SELECT setval('entity_class_id_seq', max(id)) FROM entity_class;
+SELECT setval('asset_item_id_seq', max(id)) FROM asset_item;
+SELECT setval('asset_disposal_method_id_seq', max(id)) FROM asset_disposal_method;
+SELECT setval('users_id_seq', max(id)) FROM users;
+SELECT setval('entity_id_seq', max(id)) FROM entity;
+SELECT setval('company_id_seq', max(id)) FROM company;
+SELECT setval('location_id_seq', max(id)) FROM location;
+SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
+SELECT setval('location_class_id_seq', max(id)) FROM location_class;
+SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
+SELECT setval('salutation_id_seq', max(id)) FROM salutation;
+SELECT setval('person_id_seq', max(id)) FROM person;
+SELECT setval('contact_class_id_seq', max(id)) FROM contact_class;
+SELECT setval('entity_credit_account_id_seq', max(id)) FROM entity_credit_account;
+SELECT setval('entity_bank_account_id_seq', max(id)) FROM entity_bank_account;
+SELECT setval('note_class_id_seq', max(id)) FROM note_class;
+SELECT setval('note_id_seq', max(id)) FROM note;
+SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
+SELECT setval('batch_id_seq', max(id)) FROM batch;
+SELECT setval('invoice_id_seq', max(id)) FROM invoice;
+SELECT setval('voucher_id_seq', max(id)) FROM voucher;
+SELECT setval('parts_id_seq', max(id)) FROM parts;
+SELECT setval('taxmodule_taxmodule_id_seq', max(taxmodule_id)) FROM taxmodule;
+SELECT setval('taxcategory_taxcategory_id_seq', max(taxcategory_id)) FROM taxcategory;
+SELECT setval('oe_id_seq', max(id)) FROM oe;
+SELECT setval('orderitems_id_seq', max(id)) FROM orderitems;
+SELECT setval('business_id_seq', max(id)) FROM business;
+SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
+SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
+SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
+SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
+SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
+SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
+SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
+SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
+SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
 -- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
- SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
- SELECT setval('payment_id_seq', max(id)) FROM payment;
- SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
- SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
- SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
+SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
+SELECT setval('payment_id_seq', max(id)) FROM payment;
+SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
+SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
+SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(reference AS NUMERIC))+1 FROM SL30.gl WHERE reference ~ '^[0-9]+$'
+) WHERE setting_key = 'glnumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(customernumber AS NUMERIC))+1 FROM SL30.customer WHERE customernumber ~ '^[0-9]+$'
+) WHERE setting_key = 'customernumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(employeenumber AS NUMERIC))+1 FROM SL30.employee WHERE employeenumber ~ '^[0-9]+$'
+) WHERE setting_key = 'employeenumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(partnumber AS NUMERIC))+1 FROM SL30.parts WHERE partnumber ~ '^[0-9]+$'
+) WHERE setting_key = 'partnumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(ordnumber AS NUMERIC))+1 FROM SL30.oe WHERE ordnumber ~ '^[0-9]+$'
+) WHERE setting_key = 'ponumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(projectnumber AS NUMERIC))+1 FROM SL30.project WHERE projectnumber ~ '^[0-9]+$'
+) WHERE setting_key = 'projectnumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(vendornumber AS NUMERIC))+1 FROM SL30.vendor WHERE vendornumber ~ '^[0-9]+$'
+) WHERE setting_key = 'vendornumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(invnumber AS NUMERIC))+1 FROM SL30.ar WHERE invnumber ~ '^[0-9]+$'
+) WHERE setting_key = 'sinumber';
+
+UPDATE defaults SET value = (
+    SELECT MAX(CAST(invnumber AS NUMERIC))+1 FROM SL30.ap WHERE invnumber ~ '^[0-9]+$'
+) WHERE setting_key = 'vinumber';
+
+--UPDATE defaults SET value = (
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--) WHERE setting_key = 'sonumber';
+
+--UPDATE defaults SET value = (
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--) WHERE setting_key = 'sqnumber';
+
+--UPDATE defaults SET value = (
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--) WHERE setting_key = 'rcptnumber';
+
+--UPDATE defaults SET value = (
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--) WHERE setting_key = 'rfqnumber';
+
+--UPDATE defaults SET value = (
+--    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
+--) WHERE setting_key = 'paynumber';
 
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
