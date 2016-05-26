@@ -1,23 +1,7 @@
-#=====================================================================
-#
-# Tax support module for LedgerSMB
-# LedgerSMB::Tax
-#  Default simple tax application
-#
-# LedgerSMB
-# Small Medium Business Accounting software
-# http://www.ledgersmb.org/
-#
-#
-# Copyright (C) 2006
-# This work contains copyrighted information from a number of sources all used
-# with permission.  It is released under the GNU General Public License
-# Version 2 or, at your option, any later version.  See COPYRIGHT file for
-# details.
-#
+=head1 NAME
+LedgerSMB::Tax - Basic tax infrastructure for LedgerSMB
 #
 #======================================================================
-# This package contains tax related functions:
 #
 # apply_taxes - applies taxes to the given subtotal
 # extract_taxes - extracts taxes from the given total
@@ -25,6 +9,13 @@
 # calculate_taxes - calculates taxes
 #
 #====================================================================
+
+=head2 SYNOPSIS
+
+  @taxes = LedgerSMB::Tax->init_taxes($request, $taxlist1, $taxlist2)
+
+=cut
+
 package Tax;
 
 use LedgerSMB::PGNumber;
@@ -35,6 +26,18 @@ use warnings;
 
 
 my $logger = Log::Log4perl->get_logger('Tax');
+
+=head1 FUNCTIONS
+
+=head2 init_taxes($request, $taxlist1, $taxlist2)
+
+Retrieves and returns a series of tax objects for the tax numbers in
+$taxlist1.  If $taxlist2 is provided, only those which appear in both are
+used.
+
+Taxlists 1 and 2 are space-separated lists of tax account numbers.
+
+=cut
 
 sub init_taxes {
     my ( $form, $taxaccounts, $taxaccounts2 ) = @_;
@@ -102,6 +105,13 @@ sub init_taxes {
     return @taxes;
 }
 
+=head2 calculate_taxes($taxes, $request, $subtotal, $included)
+
+Returns the total tax amount taxed. Taxes are responsible for passing back
+their own total info to the invoices.
+
+=cut
+
 sub calculate_taxes {
     my ( $taxes, $form, $subtotal, $extract ) = @_;
     my $total = LedgerSMB::PGNumber->bzero();
@@ -129,6 +139,17 @@ sub calculate_taxes {
     return $total;
 }
 
+=head2 apply_taxes
+
+A shortcut for calculating taxes without extracting (i.e. when taxes not 
+included)
+
+=head2 extract_taxes
+
+A shortcut for calculating taxes with extracting (i.e. when taxes are included)
+
+=cut
+
 sub apply_taxes {
     my ( $taxes, $form, $subtotal ) = @_;
     return $subtotal + calculate_taxes( $taxes, $form, $subtotal, 0 );
@@ -140,3 +161,19 @@ sub extract_taxes {
 }
 
 1;
+
+=head1 COPYRIGHT
+
+The original copyright notice follows:
+
+# Copyright (C) 2006-2016
+# This work contains copyrighted information from a number of sources all used
+# with permission.  It is released under the GNU General Public License
+# Version 2 or, at your option, any later version.  See COPYRIGHT file for
+# details.
+#
+# LedgerSMB
+# Small Medium Business Accounting software
+# http://www.ledgersmb.org/
+#
+#
