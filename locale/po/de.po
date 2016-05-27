@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-24 07:53+0000\n"
-"PO-Revision-Date: 2016-04-28 08:13+0000\n"
+"POT-Creation-Date: 2016-05-27 12:18+0000\n"
+"PO-Revision-Date: 2016-05-24 09:23+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "de/)\n"
@@ -2207,9 +2207,8 @@ msgid "Database does not exist."
 msgstr "Datenbank existiert nicht."
 
 #: LedgerSMB/Scripts/setup.pm:757
-#, fuzzy
 msgid "Database exists."
-msgstr "Datenbank existiert nicht."
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2352,9 +2351,8 @@ msgstr "Datum: [_1]"
 
 #: UI/Reports/filters/balance_sheet.html:113
 #: UI/Reports/filters/income_statement.html:167
-#, fuzzy
 msgid "Dates"
-msgstr "Datum"
+msgstr ""
 
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -3196,9 +3194,8 @@ msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:133
 #: UI/Reports/filters/income_statement.html:199
-#, fuzzy
 msgid "Enter up to "
-msgstr "Eingegeben am"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:88
 #: LedgerSMB/Report/Reconciliation/Summary.pm:152
@@ -4634,9 +4631,8 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: LedgerSMB/Scripts/setup.pm:759
-#, fuzzy
 msgid "Login?"
-msgstr "Anmelden"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Logout"
@@ -5764,9 +5760,8 @@ msgstr "Zeitraum"
 
 #: UI/Reports/filters/balance_sheet.html:105
 #: UI/Reports/filters/income_statement.html:159
-#, fuzzy
 msgid "Periods"
-msgstr "Zeitraum"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:165 UI/Contact/divs/person.html:1
 msgid "Person"
@@ -6570,9 +6565,8 @@ msgstr "BenÃ¶tigte Eingabe nicht erbracht"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:92
 #: LedgerSMB/Report/PNL/Income_Statement.pm:103
-#, fuzzy
 msgid "Required period type"
-msgstr "Bedarfstermin"
+msgstr ""
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
 msgid "Reset Password"

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-24 07:53+0000\n"
-"PO-Revision-Date: 2016-04-28 08:13+0000\n"
+"POT-Creation-Date: 2016-05-27 12:18+0000\n"
+"PO-Revision-Date: 2016-05-24 09:23+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/et/)\n"
@@ -1964,9 +1964,8 @@ msgid "Country:"
 msgstr "Riik:"
 
 #: UI/setup/credentials.html:61
-#, fuzzy
 msgid "Create"
-msgstr "Lisa kasutaja"
+msgstr ""
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2201,9 +2200,8 @@ msgid "Database does not exist."
 msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:757
-#, fuzzy
 msgid "Database exists."
-msgstr "Andmebaasiserver"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2346,9 +2344,8 @@ msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:113
 #: UI/Reports/filters/income_statement.html:167
-#, fuzzy
 msgid "Dates"
-msgstr "Kuupäev"
+msgstr ""
 
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -4623,9 +4620,8 @@ msgid "Login"
 msgstr "Logi sisse"
 
 #: LedgerSMB/Scripts/setup.pm:759
-#, fuzzy
 msgid "Login?"
-msgstr "Logi sisse"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Logout"
@@ -5749,9 +5745,8 @@ msgstr "Periood"
 
 #: UI/Reports/filters/balance_sheet.html:105
 #: UI/Reports/filters/income_statement.html:159
-#, fuzzy
 msgid "Periods"
-msgstr "Periood"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:165 UI/Contact/divs/person.html:1
 msgid "Person"
@@ -6555,9 +6550,8 @@ msgstr ""
 
 #: LedgerSMB/Report/Balance_Sheet.pm:92
 #: LedgerSMB/Report/PNL/Income_Statement.pm:103
-#, fuzzy
 msgid "Required period type"
-msgstr "Tarneaeg"
+msgstr ""
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
 msgid "Reset Password"

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-24 07:53+0000\n"
-"PO-Revision-Date: 2016-04-30 10:13+0000\n"
-"Last-Translator: Jos <j.verdoold@gmail.com>\n"
+"POT-Creation-Date: 2016-05-27 12:18+0000\n"
+"PO-Revision-Date: 2016-05-24 09:24+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "nl/)\n"
 "Language: nl\n"
@@ -1750,9 +1750,8 @@ msgstr "Vergelijk met"
 
 #: UI/Reports/filters/balance_sheet.html:120
 #: UI/Reports/filters/income_statement.html:176
-#, fuzzy
 msgid "Comparison Periods"
-msgstr "Afsluitingsperiode"
+msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:88
 #: UI/Reports/filters/income_statement.html:143
@@ -1972,9 +1971,8 @@ msgid "Country:"
 msgstr "Land:"
 
 #: UI/setup/credentials.html:61
-#, fuzzy
 msgid "Create"
-msgstr "Gemaakt door"
+msgstr ""
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2209,9 +2207,8 @@ msgid "Database does not exist."
 msgstr "Database bestaat niet."
 
 #: LedgerSMB/Scripts/setup.pm:757
-#, fuzzy
 msgid "Database exists."
-msgstr "Databasecomputer"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2354,9 +2351,8 @@ msgstr "Datum: [_1]"
 
 #: UI/Reports/filters/balance_sheet.html:113
 #: UI/Reports/filters/income_statement.html:167
-#, fuzzy
 msgid "Dates"
-msgstr "Datum"
+msgstr ""
 
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -3200,9 +3196,8 @@ msgstr "Voer personeelsnummers in waar deze missen"
 
 #: UI/Reports/filters/balance_sheet.html:133
 #: UI/Reports/filters/income_statement.html:199
-#, fuzzy
 msgid "Enter up to "
-msgstr "Ingeboekt op"
+msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:88
 #: LedgerSMB/Report/Reconciliation/Summary.pm:152
@@ -4617,7 +4612,7 @@ msgstr "Locaties"
 
 #: LedgerSMB/Scripts/configuration.pm:71
 msgid "Lock Item Description"
-msgstr ""
+msgstr "Vergrendel item omschrijving"
 
 #: UI/payments/payments_detail.html:399
 msgid "Locked by [_1]"
@@ -4648,9 +4643,8 @@ msgid "Login"
 msgstr "Aanmelden"
 
 #: LedgerSMB/Scripts/setup.pm:759
-#, fuzzy
 msgid "Login?"
-msgstr "Aanmelden"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Logout"
@@ -5781,9 +5775,8 @@ msgstr "Periode"
 
 #: UI/Reports/filters/balance_sheet.html:105
 #: UI/Reports/filters/income_statement.html:159
-#, fuzzy
 msgid "Periods"
-msgstr "Periode"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:165 UI/Contact/divs/person.html:1
 msgid "Person"
@@ -6055,7 +6048,7 @@ msgstr "Eerdere afschr."
 
 #: LedgerSMB/Scripts/asset.pm:634
 msgid "Prior Through"
-msgstr ""
+msgstr "Voorafgaand aan"
 
 #: LedgerSMB/Scripts/asset.pm:393 LedgerSMB/Scripts/asset.pm:770
 msgid "Proceeds"
@@ -6593,9 +6586,8 @@ msgstr "Niet voorzien van de benodigde input"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:92
 #: LedgerSMB/Report/PNL/Income_Statement.pm:103
-#, fuzzy
 msgid "Required period type"
-msgstr "Uiterlijke leverdatum"
+msgstr ""
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
 msgid "Reset Password"
@@ -9150,9 +9142,3 @@ msgstr "Gebruik van een vooruitbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Enter up to 3 comparison dates"
-#~ msgstr "Voer maximaal 3 vergelijkingsdatums in"
-
-#~ msgid "Enter up to 3 date ranges for comparison"
-#~ msgstr "Voer maximaal 3 intervallen in voor vergelijking"
