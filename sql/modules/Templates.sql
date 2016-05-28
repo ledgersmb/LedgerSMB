@@ -31,7 +31,8 @@ RETURNS template LANGUAGE PLPGSQL AS
 $$
 DECLARE retval template;
 BEGIN
-   UPDATE template SET template = in_template
+   UPDATE template SET template = in_template,
+                       last_modified = now()
     WHERE template_name = in_template_name AND format = in_format AND
           language_code IS NOT DISTINCT FROM in_language_code;
 
