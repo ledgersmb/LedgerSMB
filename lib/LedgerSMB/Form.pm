@@ -168,7 +168,7 @@ sub new {
             my ( $name, $value ) = split /=/, $_, 2;
             $cookie{$name} = $value;
         }
-        $self->{cookie} = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+        $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
         $self->{cookie} =~ m/.*:([^:]*)$/;
         $self->{company} = $1
             if ! $self->{company};
