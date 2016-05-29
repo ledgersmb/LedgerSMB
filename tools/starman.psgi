@@ -12,6 +12,7 @@ use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
+use Plack::Middleware::Pod;
 
 # Optimization
 use Plack::Middleware::ConditionalGET;
@@ -26,6 +27,11 @@ my $new_app = LedgerSMB::PSGI::new_app();
 builder {
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
+
+    enable "Plack::Middleware::Pod",
+        path => qr{^/pod/},
+        root => './',
+        pod_view => 'Pod::POM::View::HTMl'; # the default
 
     mount '/rest/' => LedgerSMB::PSGI::rest_app();
 
