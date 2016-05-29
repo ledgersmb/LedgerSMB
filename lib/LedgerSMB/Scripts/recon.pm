@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::recon
+LedgerSMB::Scripts::recon - web entry points for reconciliation workflow
 
 =head1 SYOPSIS
 
@@ -72,12 +72,6 @@ sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total};
-    if ($recon->{line_order}){
-       $recon->set_ordering(
-        {method => 'reconciliation__report_details_payee',
-        column  => $recon->{line_order}}
-       );
-    }
     $recon->save() if !$recon->{submitted};
     $recon->update();
     _display_report($recon, $request);
@@ -142,7 +136,7 @@ Saves the reconciliation set for later use.
 sub save_recon_set {
     my ($request) = @_;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
-    if ($recon->close_form){
+    if ($request->close_form){
         $recon->save();
         return search($request);
     } else {
@@ -159,7 +153,7 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Reconciliation::Summary->new($request);
+    my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
     $report->render($request);
 }
 

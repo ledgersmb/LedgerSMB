@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"CheckBox.js",
-"lineCount":4,
-"mappings":"A;AAAAA,OAAA,SACA,wCADA,+WAEAC;MAAA,uBAA8B,4KAAA,MAAA,KAA9B,CAYG,QAAA,CAASD,CAAT,CAAkBE,CAAlB,CAA2BC,CAA3B,CAAoCC,CAApC,CAAyCC,CAAzC,CAAgDC,CAAhD,CAAuDC,CAAvD,CAAqEC,CAArE,CAAqFC,CAArF,EAMCL,CAAA,yBAND,EAODE,CAAA,GAAS,QAAA,GAERN,CAAA,4BAFQ,CAAT,CAPC,OAaKE,EAAA,wBAAgCK,CAAhC,CAA8CC,CAA9C,kBAmBUC,CAnBV,yCAuBSC,QAAAA,CAA4BC,CAA5BD,CAAkDE,CAAlDF,kBAkBJC,EAlBID,GAmBbG,cAAA,CAAeC,SAAf,CAnBaJ,CAoBbC,CApBaD,IAsBXK,cAtBWL,EAuBbM,QAAA;AAAoBL,CAApB,CAA8BC,CAA9B,CAvBaF,CAvBT,eAiDSO,QAAAA,SAMPC,aANOD,EAMSE,SAAA,SANTF,CAjDT,qEA8DeG,QAAAA,GACpBP,cAAA,CAAeC,SAAf,CAMAO,wBAPoBD,IA9Df,cAwESE,QAAAA,IAxET,UA6EIC,QAAAA,GACNC,OADMD,EAERlB,CAAA,kBAAoBmB,OAApB,MAAAC,SAAA,qBAEDZ,eAAA,CAAeC,SAAf,CAJSS,CA7EJ,SAoFGG,QAAAA,GACLF,OADKE,EAEPrB,CAAA,kBAAoBmB,OAApB,MAAAG,YAAA,qBAEDd,eAAA,CAAeC,SAAf,CAJQY,CApFH,EAbL,CAZH;",
-"sources":["CheckBox.js.uncompressed.js"],
-"names":["require","define","declare","domAttr","has","query","ready","ToggleButton","_CheckBoxMixin","template","_setValueAttr","newValue","priorityChange","inherited","arguments","_created","set","_getValueAttr","checked","_get","postMixInProperties","checkedAttrSetting","_fillContent","_onFocus","id","addClass","_onBlur","removeClass"]
-}

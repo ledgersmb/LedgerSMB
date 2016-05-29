@@ -51,10 +51,14 @@ sub http_response {
     $additional_html ||= '';
     $additional_html =~ s#\n#<br />\n#g;
     my $user = LedgerSMB::App_State::User;
-    my $stylesheet = $user->{stylesheet} || '';
+    my $stylesheet = '';
+
+    $stylesheet =
+        qq|<link rel='stylesheet' href="css/$user->{stylesheet}" type='text/css'>|
+        if $user && $user->{stylesheet};
 
     return qq|Status: $status ISE\nContent-Type: text/html; charset=utf-8\n\n|
-           . "<head><link rel='stylesheet' href='css/$stylesheet' type='text/css'></head>"
+           . "<head>$stylesheet</head>"
            . qq|<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
          $additional_html
          </body>|;

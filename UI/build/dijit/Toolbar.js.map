@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"Toolbar.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,iBAAwB,yGAAA,MAAA,KAAxB,CASG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA2BC,CAA3B,CAAgCC,CAAhC,CAAsCC,CAAtC,CAA6CC,CAA7C,CAAsDC,CAAtD,CAAwEC,CAAxE,EAOCL,CAAA,yBAPD,EAQDE,CAAA,GAAS,QAAA,GAERJ,CAAA,4BAFQ,CAAT,CARC,OAcKC,EAAA,kBAA0BI,CAA1B,CAAmCE,CAAnC,CAAoDD,CAApD,yLAUQE,QAAAA,GACbC,cAAA,EADaD,CAVR,eAcSE,QAAAA,GACdC,cAAA,EADcD,CAdT,EAdL,CATH;",
-"sources":["Toolbar.js.uncompressed.js"],
-"names":["define","require","declare","has","keys","ready","_Widget","_KeyNavContainer","_TemplatedMixin","_onLeftArrow","focusPrev","_onRightArrow","focusNext"]
-}

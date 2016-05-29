@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"TabContainer.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,yIAMG,QAAA,CAASC,CAAT,CAAeC,CAAf,CAAwBC,CAAxB,CAA2CC,CAA3C,CAA0DC,CAA1D,QAMKH,EAAA,6BAAqCC,CAArC,8DAyBWG,QAAAA,CAAqBC,CAArBD,MAQZE,EAAMC,cAAND,UAAkCE,aAAlCF,wBARYF,OAYT,sBAHiBK,sBAGjB,CAHqDV,CAAAW,UAAA,CAAeD,qBAAf,CAGrD,CAFJA,qBAEI,MACFE,OADE,0BAESC,kBAFT;IAGDC,QAHC,MAIAd,SAJA,SAKGe,YALH,aAMOC,gBANP,UAOIP,aAPJ,aAQOG,OARP,CASN,OATM,CASGL,CATH,QAUEU,WAVF,SAWGC,YAXH,WAYKC,cAZL,eAaSC,aAbT,CAayBZ,cAbzB,EAa2CY,aAb3C,wBAcJd,CAdI,CAZSD,CAzBX,qBAsDegB,QAAAA,GACpBC,cAAA,CAAeC,SAAf,CAGIb,sBAJgBW,GAKnBX,qBALmBW,SAKML,gBALNK,YAKmCL,gBALnCK,IAKqEJ,WALrEI,CAMhBjB,CANgBiB,CAMSlB,CANTkB,EAtDf,EANL,CANH;",
-"sources":["TabContainer.js.uncompressed.js"],
-"names":["define","lang","declare","_TabContainerBase","TabController","ScrollingTabController","_makeController","srcNode","cls","baseClass","doLayout","controllerWidget","getObject","id","ownerDocument","dir","textDir","tabPosition","nested","useMenu","useSlider","tabStrip","postMixInProperties","inherited","arguments"]
-}

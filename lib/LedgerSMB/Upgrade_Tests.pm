@@ -355,13 +355,16 @@ selectable_values => "SELECT concat(accno,' -- ',description) AS id, id as value
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from entity_credit_account
+   test_query => "select *, eca.id as id  from entity_credit_account eca
+                     join entity_class ec on eca.entity_class = ec.id
+                     join entity e on eca.entity_id = e.id
                    where meta_number in
                        (select meta_number from entity_credit_account
-                        group by meta_number having count(*) > 1)",
+                        group by meta_number having count(*) > 1)
+                   order by meta_number",
  display_name => $locale->text('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
- display_cols => [ 'meta_number', 'description' ],
+ display_cols => [ 'meta_number', 'class', 'description', 'name' ],
        column => 'meta_number',
         table => 'entity_credit_account',
  instructions => $locale->text("Make sure all meta numbers are unique."),

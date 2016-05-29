@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Scripts::setup
+LedgerSMB::Scripts::setup - web entry points for database administration
 
 =head1 SYNOPSIS
 
@@ -36,6 +36,7 @@ use LedgerSMB::Setting;
 use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
+my $MINOR_VERSION = '1.5';
 
 =item no_db
 
@@ -135,7 +136,8 @@ my @login_actions_dispatch_table =
       { appname => 'ledgersmb',
         version => '1.4',
         message => "LedgerSMB 1.4 db found.",
-        operation => 'Rebuild/Upgrade?',
+        operation => "Would you like to upgrade the database?",
+        # rebuild_modules will upgrade 1.4->1.5 by applying (relevant) changes
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.5',
@@ -170,33 +172,33 @@ sub login {
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
     } else {
-    my $dispatch_entry;
+        my $dispatch_entry;
 
-    foreach $dispatch_entry (@login_actions_dispatch_table) {
-        if ($version_info->{appname} eq $dispatch_entry->{appname}
-           && ($version_info->{version} eq $dispatch_entry->{version}
-               || ! defined $dispatch_entry->{version})) {
-        my $field;
+        foreach $dispatch_entry (@login_actions_dispatch_table) {
+            if ($version_info->{appname} eq $dispatch_entry->{appname}
+                && ($version_info->{version} eq $dispatch_entry->{version}
+                    || ! defined $dispatch_entry->{version})) {
+                my $field;
 
-        foreach $field (qw|operation message next_action|) {
-            $request->{$field} =
-               $request->{_locale}->maketext($dispatch_entry->{$field});
+                foreach $field (qw|operation message next_action|) {
+                    $request->{$field} =
+                        $request->{_locale}->maketext($dispatch_entry->{$field});
+                }
+                last;
+            }
         }
-        last;
-        }
-    }
 
 
-    if (! defined $request->{next_action}) {
-        $request->{message} = $request->{_locale}->text(
-        'Unknown database found.'
-        );
-        $request->{operation} = $request->{_locale}->text('Cancel?');
-        $request->{next_action} = 'cancel';
-    } elsif ($request->{next_action} eq 'rebuild_modules') {
+        if (! defined $request->{next_action}) {
+            $request->{message} = $request->{_locale}->text(
+                'Unknown database found.'
+                );
+            $request->{operation} = $request->{_locale}->text('Cancel?');
+            $request->{next_action} = 'cancel';
+        } elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->connect({PrintError=>0, AutoCommit=>0});
+            my $dbh = $request->{dbh};
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -212,12 +214,11 @@ sub login {
         }
     }
     my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'confirm_operation',
+        path => 'UI/setup',
+        template => 'confirm_operation',
         format => 'HTML',
     );
     $template->render($request);
-
 }
 
 =item sanity_checks
@@ -433,7 +434,6 @@ sub revert_migration {
     $sth->execute();
     my ($src_schema) = $sth->fetchrow_array();
     $dbh->rollback();
-    $dbh->begin_work();
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
@@ -670,7 +670,6 @@ sub upgrade {
         $template->render($request);
     } else {
         $request->{dbh}->rollback();
-        $request->{dbh}->begin_work();
 
         __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
     }
@@ -727,13 +726,14 @@ sub _failed_check {
             class => 'submit' },
     ];
     $template->render({
-           form     => $request,
-           heading  => $header,
-           headers  => [$check->display_name, $check->instructions],
-           columns  => $check->display_cols,
-           rows     => $rows,
-           hiddens  => $hiddens,
-           buttons  => $buttons
+           form               => $request,
+           heading            => $header,
+           headers            => [$check->display_name, $check->instructions],
+           columns            => $check->display_cols,
+           rows               => $rows,
+           hiddens            => $hiddens,
+           buttons            => $buttons,
+           include_stylesheet => 'setup/stylesheet.css',
     });
 }
 
@@ -766,7 +766,6 @@ sub fix_tests{
     }
     $sth->finish();
     $request->{dbh}->commit;
-#    $request->{dbh}->begin_work;
     upgrade($request);
 }
 
@@ -1010,7 +1009,6 @@ sub save_user {
         );
    }
    $request->{dbh}->commit;
-   $request->{dbh}->begin_work;
 
    rebuild_modules($request);
 }
@@ -1029,7 +1027,6 @@ sub process_and_run_upgrade_script {
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
-    $dbh->begin_work;
 
     $database->load_base_schema({
     log     => $temp . "_stdout",
@@ -1049,7 +1046,6 @@ sub process_and_run_upgrade_script {
                      VALUES ('migration_src_schema', '$src_schema')
      ));
     $dbh->commit;
-    $dbh->begin_work;
 
     my $dbtemplate = LedgerSMB::Template->new(
         user => {},
@@ -1088,7 +1084,7 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->begin_work;
+    $dbh->disconnect;
 }
 
 
@@ -1106,10 +1102,14 @@ sub run_upgrade {
     my $dbinfo = $database->get_info();
     my $v = $dbinfo->{version};
     $v =~ s/\.//;
-    $dbh->do("ALTER SCHEMA $LedgerSMB::Sysconfig::db_namespace RENAME TO lsmb$v");
+    $dbh->do("ALTER SCHEMA $LedgerSMB::Sysconfig::db_namespace
+                RENAME TO lsmb$v")
+        or die "Can't rename schema '$LedgerSMB::Sysconfig::db_namespace': "
+        . $dbh->errstr();
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-1.4");
+                   "$dbinfo->{version}-$MINOR_VERSION");
 
     if ($v ne '1.2'){
     $request->{only_templates} = 1;
@@ -1135,10 +1135,10 @@ sub run_sl28_migration {
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
-    # process_and_run_upgrade_script commits the transaction
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl28",
-                   'sl2.8-1.4');
+                   "sl2.8-$MINOR_VERSION");
 
     create_initial_user($request);
 }
@@ -1155,10 +1155,10 @@ sub run_sl30_migration {
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
-    # process_and_run_upgrade_script commits the transaction
+    $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl30",
-                                   'sl3.0-1.4');
+                                   "sl3.0-$MINOR_VERSION");
 
     create_initial_user($request);
 }

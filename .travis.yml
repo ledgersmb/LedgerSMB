@@ -1,5 +1,6 @@
-# run on container-based build:
-sudo: false
+# run on GCE build as per suggested:
+# https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
+sudo: required
 language: perl
 env:
   global:
@@ -86,26 +87,26 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
-  - build-dist 2>/dev/null
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
-  - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
-  - cpan-install --coverage   # installs converage prereqs, if enabled
-  - cpan-install Plack CGI::Emulate::PSGI Selenium::Remote::Driver
-  - cpan-install X12::Parser
+  - cpanm --quiet --notest --with-develop --with-feature=edi --installdeps .
+  - cpan-install --coverage
 
 before_script:
+  - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
+  - cd ${HOME}/built-dist
+  - tar xzf tar-output/ledgersmb-travis.tar.gz
+  - cd ledgersmb
+  - cp conf/ledgersmb.conf.default ledgersmb.conf
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
+  - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
-  - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
-  - cp conf/ledgersmb.conf.travis-ci ledgersmb.conf
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://localhost:5000" make test
+  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove
 
 after_success:
   - >

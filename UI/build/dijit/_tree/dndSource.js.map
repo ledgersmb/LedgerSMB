@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"dndSource.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,qFAIG,QAAA,CAASC,CAAT,CAAiBC,CAAjB,CAAuBC,CAAvB,EAYFF,CAAAG,WAAA,2FAEAF,EAAAG,UAAA,yBAAwCF,CAAxC,CAdE,CAJH;",
-"sources":["dndSource.js.uncompressed.js"],
-"names":["define","kernel","lang","dndSource","deprecated","setObject"]
-}

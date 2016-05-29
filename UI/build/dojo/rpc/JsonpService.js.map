@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"JsonpService.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,6GAEC,QAAA,CAASC,CAAT,CAAgBC,CAAhB,CAAyBC,CAAzB,CAA+BC,CAA/B,CAA2CC,CAA3C,QAKMH,EAAA,yBAAiCE,CAAjC,cAMOE,QAAAA,CAASC,CAATD,CAAeE,CAAfF,EACTG,aADSH,GAERE,CAFQF,EAGVH,CAAAO,MAAA,CAAWD,aAAX,CAA0BD,CAA1B,CAHUF,CAMXL,CAAAU,QAAA,CAAcF,aAAd,CAA6B,QAAA,CAASG,CAAT,SACzBA,CADyB,UACdA,CADc,MAEjBC,MAAJ,yCAAkDD,CAAlD,CAFqB,EAA7B,CANWN,EANP,yBAsBAQ,QAAAA,CAASC,CAATD,CAAiBE,CAAjBF,CAA6BG,CAA7BH,CAAqDI,CAArDJ,EAYKT,CAAAc,IAAAC,MACJF,CADIE,EACCC,eADDD,mBAEUE,sBAFVF,qBAGAG,kBAAA,CAAmBP,CAAnB,CAHAI;QAIAI,YAJAJ,kCAQVK,aAAA,CAAiBC,mBAAA,CAAoBT,CAApB,CAAjB,CAA8DU,kBAAA,CAAmBV,CAAnB,CAA9D,CApBKH,CAtBA,eA6CSS,QAAAA,CAASP,CAATO,EAMVK,CANUL,CAMApB,CAAA0B,YAAA,CAAiBb,CAAjB,CANAO,KAMgCP,CAAAc,OANhCP,CAOZP,CAAA,GAPYO,GAQdpB,EAAAO,MAAA,CAAWkB,CAAX,CAAkBnB,aAAlB,CARcc,OASPK,EATOL,CA7CT,EALN,CAFD;",
-"sources":["JsonpService.js.uncompressed.js"],
-"names":["define","array","declare","lang","RpcService","script","constructor","args","requiredArgs","required","mixin","forEach","req","Error","bind","method","parameters","deferredRequestHandler","url","get","def","serviceUrl","callbackParamName","createRequest","timeout","addCallbacks","resultCallback","errorCallback","params","isArrayLike","length"]
-}

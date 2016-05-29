@@ -45,9 +45,10 @@ use warnings;
 use strict;
 
 use Template;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use DateTime;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
 
 # The following are for EDI only
 my $dt = DateTime->now;
@@ -117,6 +118,8 @@ sub process {
     my $template;
     my $source;
     my $output;
+    my %additional_options = ();
+
         $parent->{binmode} = $binmode;
     if ($parent->{outputfile}) {
             if (ref $parent->{outputfile}){
@@ -126,10 +129,19 @@ sub process {
                 $parent->{outputfile} = $output;
             }
     }
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'ods'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent->{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'txt',
+                      language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -138,12 +150,14 @@ sub process {
         $source = get_template($parent->{template}, $parent);
     }
     $template = Template->new({
-        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+        INCLUDE_PATH => [$parent->{include_path_lang},
+                         $parent->{include_path}, 'UI/lib'],
         START_TAG => quotemeta('<?lsmb'),
         END_TAG => quotemeta('?>'),
         DELIMITER => ';',
         DEBUG => ($parent->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
+        (%additional_options)
         }) || die Template->error();
 
     if (not $template->process(

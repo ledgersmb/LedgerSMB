@@ -5,23 +5,20 @@
 #
 # Perl Module::Build, Module::Install, ExtUtils::MakeMaker
 META.yml
-Makefile
-inc/
 #
 # LedgerSMB runtime files
 ledgersmb.conf
 
 # /
-/Makefile
 /META.yml
-/inc
-/blib
-/pm_to_blib
 /ledgersmb.conf
 /ledgersmb-httpd.conf
 
 # /bin/custom/
 /bin/custom/*
+
+# Dojo build artifacts
+/UI/js/*
 
 # /doc/manual/
 /doc/manual/*.aux

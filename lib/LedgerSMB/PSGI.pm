@@ -2,7 +2,7 @@ package LedgerSMB::PSGI;
 
 =head1 NAME
 
-PSGI wrapper functionality for LedgerSMB
+LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
 =head1 SYNOPSIS
 
@@ -32,58 +32,49 @@ use CGI::Emulate::PSGI;
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 $ENV{GATEWAY_INTERFACE}="cgi/1.1";
-sub app {
-   return CGI::Emulate::PSGI->handler(
-     sub {
-       my $uri = $ENV{REQUEST_URI};
-       $ENV{SCRIPT_NAME} = $uri;
-       my $script = $uri;
-       $ENV{SCRIPT_NAME} =~ s/\?.*//;
-       $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
 
-       my $nscript = $script;
-       $nscript =~ s/l$/m/;
-       $nscript =~ s/\.pm//;
-       if ($uri =~ m|/rest/|){
-         do 'bin/rest-handler.pl';
-       }
-       else {
-           local $@;
-           eval "require LedgerSMB::Scripts::$nscript";
-           if (! $@){
-               _run_new($script);
-           } else {
-               _run_old($script);
-           }
-       }
-    }
-  );
-}
+sub rest_app {
+    return CGI::Emulate::PSGI->handler(
+        sub {
+            do 'bin/rest-handler.pl';
+        });
+};
 
-my $pre_dispatch = undef;
-sub pre_dispatch {
-    $pre_dispatch = shift;
-}
+sub old_app {
+    return CGI::Emulate::PSGI->handler(
+        sub {
+            my $uri = $ENV{REQUEST_URI};
+            $uri =~ s/\?.*//;
+            $ENV{SCRIPT_NAME} = $uri;
 
-my $post_dispatch = undef;
-sub post_dispatch {
-    $pre_dispatch = shift;
+            _run_old();
+        });
+};
+
+sub new_app {
+    return CGI::Emulate::PSGI->handler(
+        sub {
+            my $uri = $ENV{REQUEST_URI};
+            $ENV{SCRIPT_NAME} = $uri;
+            my $script = $uri;
+            $ENV{SCRIPT_NAME} =~ s/\?.*//;
+            $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
+
+            _run_new($script);
+         });
 }
 
 sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-       &$pre_dispatch() if $pre_dispatch;
        do 'bin/old-handler.pl';
-       &$post_dispatch() if $post_dispatch;
        exit;
     }
 }
 
 sub _run_new {
     my ($script) = @_;
-    &$pre_dispatch() if $pre_dispatch;
     if (-f 'bin/lsmb-request.pl'){
         try {
             do 'bin/lsmb-request.pl';
@@ -97,7 +88,6 @@ sub _run_new {
     } else {
         die 'something is wrong, cannot find lsmb-request.pl';
     }
-    &$post_dispatch() if $post_dispatch;
 }
 
 1;

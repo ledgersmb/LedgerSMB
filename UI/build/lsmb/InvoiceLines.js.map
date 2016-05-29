@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"InvoiceLines.js",
-"lineCount":2,
-"mappings":"A;AAAAA,OAAA,gFAMI,QAAA,CAAUC,CAAV,CAAmBC,CAAnB,CAA6BC,CAA7B,CAA0CC,CAA1C,QACWH,EAAA,sBAEFE,CAFE,CAEWC,CAFX,cAGaC,QAAAA,CAASC,CAATD,EACRE,gBAAA,CAAiBL,CAAAM,KAAA,CAAcF,CAAd,CAAjB,CAEAG,UAAA,8BAHQJ,CAHb,EADX,CANJ;",
-"sources":["InvoiceLines.js.uncompressed.js"],
-"names":["require","declare","registry","_WidgetBase","_Container","removeLine","widgetid","removeChild","byId","emit"]
-}

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"LinkPane.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,qFAIG,QAAA,CAASC,CAAT,CAAsBC,CAAtB,CAAuCC,CAAvC,QAMKA,EAAA,0BAAkCF,CAAlC,CAA+CC,CAA/C,mIAgBeE,QAAAA,GAGjBC,eAHiBD,GAInBE,UAJmBF,EAILC,eAAAE,UAJKH,CAMpBI,eAAA,CAAeC,SAAf,CANoBL,CAhBf,cAyBQM,QAAAA,IAzBR,EANL,CAJH;",
-"sources":["LinkPane.js.uncompressed.js"],
-"names":["define","ContentPane","_TemplatedMixin","declare","postMixInProperties","srcNodeRef","title","innerHTML","inherited","arguments","_fillContent"]
-}

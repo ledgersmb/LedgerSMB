@@ -163,8 +163,7 @@ sub save {
     } else {
         die $LedgerSMB::App_State::Locale->text('Must have credit or entity id');
     }
-    $self->prepare_dbhash($ref);
-    return $ref;
+    return __PACKAGE__->new($ref);
 }
 
 =item delete()

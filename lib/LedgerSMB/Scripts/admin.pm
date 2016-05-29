@@ -7,7 +7,7 @@ use warnings;
 
 =head1 NAME
 
-LedgerSMB:Scripts::admin
+LedgerSMB:Scripts::admin - web entry points for user and perms management
 
 =head1 SYNOPSIS
 
