@@ -230,11 +230,13 @@ def 'backup_email_from',
 ### SECTION  ---   database
 
 def 'db_host',
+    key => 'host',
     section => 'database',
     envvar => 'PGHOST',
     doc => '';
 
 def 'db_port',
+    key => 'port',
     section => 'database',
     envvar => 'PGPORT',
     doc => '';
