@@ -46,6 +46,7 @@ use warnings;
 use strict;
 
 use Template;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Template::DBProvider;
 
@@ -121,6 +122,10 @@ sub process {
                   {
                       format => 'csv',
                       language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
                   }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};

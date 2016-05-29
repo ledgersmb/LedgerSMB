@@ -48,6 +48,7 @@ use strict;
 
 use CGI::Simple::Standard qw(:html);
 use Template;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
@@ -146,6 +147,10 @@ sub process {
                   {
                       format => 'html',
                       language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
                   }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};

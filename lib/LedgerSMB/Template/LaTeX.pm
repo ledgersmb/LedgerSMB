@@ -55,6 +55,7 @@ use warnings;
 use strict;
 
 use Template::Latex;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
 use LedgerSMB::Template::DBProvider;
@@ -150,6 +151,10 @@ sub process {
                   {
                       format => 'tex',
                       language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
                   }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};

@@ -14,7 +14,7 @@ use Test::More;
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB LSMB_TEST_DB));
 plan skip_all => (join ', ', @missing) . ' not set' if @missing;
 
-plan tests => 13;
+plan tests => 14;
 
 =head1 TEST PLAN
 
@@ -125,6 +125,35 @@ VALUES ('provider-test2-include', NULL, 'INCLUDEd text',
 $output = '';
 $template->process('provider-test2', {}, \$output) || die $template->error();
 is($output, 'INCLUDEd text', 'Template include loaded and processed');
+
+
+=head2 Template variable processing
+
+=cut
+
+$dbh->do(qq|
+INSERT INTO template (template_name, language_code, template, format,
+                      last_modified)
+VALUES ('provider-test3', NULL, 'Hello <?lsmb name ?>, ....',
+        'html', now())
+|);
+
+$output = '';
+$provider = LedgerSMB::Template::DBProvider->new({
+    _DBH => $dbh,
+    language_code => undef,
+    format => 'html',
+    PARSER => Template::Parser->new({
+       START_TAG => quotemeta('<?lsmb'),
+       END_TAG => quotemeta('?>'),
+    }),
+});
+$template = Template->new({
+   LOAD_TEMPLATES => [ $provider ],
+});
+$template->process('provider-test3', {
+   name => 'yo' }, \$output) || die $template->error();
+is($output, 'Hello yo, ....', 'Template include loaded and processed');
 
 
 
