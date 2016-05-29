@@ -56,6 +56,29 @@ if ($@){
 }
 
 
+# Copied from 01-load.t
+my @exception_modules =
+    (
+     # Exclude because tested conditionally on Template::Plugin::Latex way below
+     'LedgerSMB::Template::LaTeX',
+
+     # Exclude because tested conditionally on XML::Twig way below
+     'LedgerSMB::Template::ODS',
+
+     # Exclude because tested conditionally on XML::Simple way below
+     'LedgerSMB::REST_Format::xml',
+
+     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
+     'LedgerSMB::PSGI',
+
+     # Exclude because tested conditionally on X12::Parser way below
+     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+
+     # Exclude, reports functions which don't exist
+     'LedgerSMB::Sysconfig',
+    );
+
+
 my %also_private = (
     'LedgerSMB::Scripts::payment' => [ qr/^(p\_)/ ],
     'LedgerSMB::DBObject::Payment' => [ qr/^(format_ten_|num2text_)/ ],
@@ -66,7 +89,56 @@ for my $f (@on_disk) {
     $f =~ s#lib/##g;
     $f =~ s#/#::#g;
 
+    pod_coverage_ok($f, { also_private => $also_private{$f} })
+        unless grep { $f eq $_ } @exception_modules;
+}
+
+
+SKIP: {
+    eval{ require Template::Plugin::Latex} ||
+    skip 'Template::Plugin::Latex not installed', 1;
+    eval{ require Template::Latex} ||
+    skip 'Template::Latex not installed', 1;
+
+    my $f = 'LedgerSMB::Template::LaTeX';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require XML::Twig };
+    skip 'XML::Twig not installed', 1 if $@;
+
+    eval { require OpenOffice::OODoc };
+    skip 'OpenOffice::OODoc not installed', 1 if $@;
+
+    my $f = 'LedgerSMB::Template::ODS';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require XML::Simple };
+
+    skip 'XML::Simple not installed', 1 if $@;
+    my $f = 'LedgerSMB::REST_Format::xml';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require CGI::Emulate::PSGI };
+
+    skip 'CGI::Emulate::PSGI not installed', 1 if $@;
+    my $f = 'LedgerSMB::PSGI';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require X12::Parser };
+
+    skip 'X12::Parser not installed', 3 if $@;
+    for my $f ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850',
+               'LedgerSMB::X12::EDI894') {
+        pod_coverage_ok($f, { also_private => $also_private{$f} });
+    }
 }
 
 
