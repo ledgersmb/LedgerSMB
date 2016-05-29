@@ -34,6 +34,7 @@ requires 'PGObject::Util::DBAdmin', '0.08';
 requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Template', '2.14';
+requires 'Text::CSV';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
