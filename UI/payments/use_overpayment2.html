@@ -76,7 +76,7 @@ class="lsmb <?lsmb dojo_theme ?>">
                                         name="notes"
                                         cols="35"
                                         rows="3"
-                                        text=notes ?>
+                                        text=notes } ?>
                 </td>
      </tr>
     </table>
@@ -231,7 +231,7 @@ class="lsmb <?lsmb dojo_theme ?>">
                           type="hidden"
                           id="invoice_id_$i"
                           name="invoice_id_$i"
-                          value=data.invoice.id ?>
+                          value=data.invoice.id } ?>
    </td>
    <td align="center"> <?lsmb data.entity_name ?>
     <?lsmb PROCESS input element_data = {
@@ -287,14 +287,15 @@ class="lsmb <?lsmb dojo_theme ?>">
    <td align="center">
           <?lsmb FOREACH item in vc_list ;
                                   item.id = item.value ;
-                                  item.value = item.value _ '--' _ item.name _ '--' item.vc_discount_accno ;
+                                  item.value = item.value _ '--' _ item.name _ '--' _ item.vc_discount_accno ;
                                   IF item.id == entity_credit_id ;
                                     selected_value = item.value ;
               END ;
-            END ; ?>
+            END  ?>
           <?lsmb PROCESS select element_data = {
+                                name = 'new_entity_id'
                                 value_attr = 'value'
-                                title_attr = 'name'
+                                text_attr = 'name'
                                 options = vc_list
                                 default_values = [ selected_value ] } ?>
    </td>
@@ -362,7 +363,7 @@ class="lsmb <?lsmb dojo_theme ?>">
    <?lsmb # We should use a cipher here, to avoid XSS
            element_data.type  ='hidden';
            element_data.value ='checked'; 
-           INCLUDE input element_data?>
+           INCLUDE input element_data ?>
    <?lsmb END ?>
    </td>
    <td id="warning_column" align="right">
@@ -373,7 +374,7 @@ class="lsmb <?lsmb dojo_theme ?>">
                                 cols="35"
                                 readonly="true"
                                 style="transparent;"
-                                text=warning ?>
+                                text=warning } ?>
    <?lsmb END -?>  
    </td>
   </tr>           
