@@ -113,6 +113,20 @@ sub _template_content {
         : $tpl->{template};
 }
 
+=item _compiled_filename()
+
+Overrides the parent's compiled file name calculation in order to
+disable caching: the filename (template name) isn't the only
+factor determining the template content (other factors: format, language).
+
+=cut
+
+sub _compiled_filename {
+    return undef;
+}
+
+
+
 =back
 
 =cut
