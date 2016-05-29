@@ -35,7 +35,7 @@ ok($provider->isa('Template::Provider'),
 =cut
 
 my $dbh = LedgerSMB::Database->new(
-    dbname => $ENV{PGDATABASE},
+    dbname => $ENV{LSMB_NEW_DB},
     username => $ENV{PGUSER},
     password => $ENV{PGPASSWORD})
     ->connect({ AutoCommit => 0, PrintError => 0, RaiseError => 1 });
