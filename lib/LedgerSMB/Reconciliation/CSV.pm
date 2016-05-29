@@ -1,3 +1,14 @@
+=head1 NAME
+
+LedgerSMB::Reconciliation::CSV - A framework for fixed-width format file handling
+
+=head2 SYNOPSIS
+
+
+
+
+=cut
+
 # CSV parser is basically a framework to handle any CSV files or fixed-width format files.
 # Parsers are defined in CSV/parser_type.
 
@@ -20,6 +31,14 @@ for my $format (readdir(DCSV)){
 }
 };
 
+=head1 METHODS
+
+=head2 $self->load_file($fieldname)
+
+Accesses the $self->{_request} attribute to acquire CSV content from $fieldname
+
+=cut
+
 sub load_file {
 
     my $self = shift @_;
@@ -30,6 +49,13 @@ sub load_file {
     $contents = join("\n", <$handle>);
     return $contents;
 }
+
+=head2 $self->process()
+
+Processes the input reconciliation file by calling the function
+$self->parse_<account_id>() with the parsed content of the CSV file.
+
+=cut
 
 sub process {
     my $self = shift @_;
@@ -50,6 +76,12 @@ sub process {
    }
    return $self->{entries};
 }
+
+=head2 $self->is_error()
+
+Well,...
+
+=cut
 
 sub is_error {
    my $self = shift @_;

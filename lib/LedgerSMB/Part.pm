@@ -21,7 +21,7 @@ TODO (None yet)
 
 =head1 METHODS
 
-=head2 basic_partlist($query)
+=head2 basic_partslist($query)
 
 Returns an array of hashrefs of matching parts.  All fields in the parts
 table are returned.

@@ -36,15 +36,38 @@ sub _build_locale {
     return ($locale) ? $locale : LedgerSMB::App_State->Locale;
 }
 
+=head1 METHODS
+
+=over
+
+=item $self->Text(@args)
+
+Instance method, uses the locale object from the 'locale' attribute
+to call its maketext() function, passing all @args forward.
+
+=cut
+
 sub Text {
     my $self = shift;
 
     return $self->locale->maketext(@_);
 }
 
+=item LedgerSMB::I18N::text(@args)
+
+Translates the string using the arguments passed.
+
+Wrapper around the MakeText::maketext function; uses the locale object
+stored in LedgerSMB::App_State->Locale.
+
+=cut
+
 sub text {
     return LedgerSMB::App_State->Locale->maketext(@_);
 }
+
+
+=back
 
 =head1 COPYRIGHT
 
