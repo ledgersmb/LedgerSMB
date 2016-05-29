@@ -25,7 +25,7 @@ use PGObject::Type::DateTime;
 use Moose;
 use MooseX::NonMoose;
 extends 'Template::Provider';
-with 'PGObject::Simple::Role';
+with 'LedgerSMB::PGObject';
 
 
 =head1 DESCRIPTION

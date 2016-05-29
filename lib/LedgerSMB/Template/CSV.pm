@@ -47,7 +47,7 @@ use strict;
 
 use Template;
 use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;
@@ -101,6 +101,7 @@ sub process {
     my $template;
     my $source;
     my $output;
+    my %additional_options = ();
         $parent->{binmode} = $binmode;
 
     if ($parent->{outputfile}) {
@@ -112,10 +113,15 @@ sub process {
     } else {
         $output = \$parent->{output};
     }
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'csv'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent->{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'csv',
+                      language_code => $parent->{language},
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -124,12 +130,14 @@ sub process {
         $source = get_template($parent->{template});
     }
     $template = Template->new({
-        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+        INCLUDE_PATH => [$parent->{include_path_lang},
+                         $parent->{include_path}, 'UI/lib'],
         START_TAG => quotemeta('<?lsmb'),
         END_TAG => quotemeta('?>'),
         DELIMITER => ';',
         DEBUG => ($parent->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
+        (%additional_options)
         }) || die Template->error();
 
     if (not $template->process(

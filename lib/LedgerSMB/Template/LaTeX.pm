@@ -57,7 +57,7 @@ use strict;
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
 use TeX::Encode;
 
 #my $binmode = ':utf8';
@@ -137,14 +137,20 @@ sub process {
     my $cleanvars = shift;
     my $template;
     my $source;
+    my %additional_options = ();
     $parent->{outputfile} ||=
         "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
 
         $parent->{binmode} = $binmode;
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'tex'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent->{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'tex',
+                      language_code => $parent->{language},
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -170,6 +176,7 @@ sub process {
             ENCODING => 'utf8',
             DEBUG => ($parent->{debug})? 'dirs': undef,
             DEBUG_FORMAT => '',
+            (%additional_options)
         }) || die Template::Latex->error();
     my $out = "$parent->{outputfile}.$format"
         unless ref $parent->{outputfile};

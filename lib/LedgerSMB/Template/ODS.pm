@@ -55,7 +55,7 @@ use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
@@ -847,13 +847,20 @@ sub process {
     my $source;
     my $tempdir = ${LedgerSMB::Sysconfig::tempdir};
     my $output = '';
+    my %additional_options = ();
+
         $parent->{binmode} = $binmode;
     $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'ods'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'ods',
+                      language_code => $parent->{language},
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -868,6 +875,7 @@ sub process {
         DELIMITER => ';',
         DEBUG => ($parent->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
+        (%additional_options)
         }) || die Template->error();
 
     if (not $template->process(
