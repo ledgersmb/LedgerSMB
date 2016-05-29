@@ -43,6 +43,7 @@ find(\&collect, 'lib/LedgerSMB.pm', 'lib/LedgerSMB/');
     grep { ! m#^lib/LedgerSMB/..\.pm# }
     grep { ! m#^lib/LedgerSMB/Form\.pm# }
     grep { ! m#^lib/LedgerSMB/Auth/# }
+    grep { ! m#^lib/LedgerSMB/Num2text\.pm# } # LedgerSMB::Num2text is old code
     @on_disk;
 
 

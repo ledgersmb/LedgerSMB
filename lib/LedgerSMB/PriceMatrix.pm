@@ -34,8 +34,35 @@
 
 package PriceMatrix;
 
+=head1 NAME
+
+PriceMatrix - Customer/vendor specific price determination
+
+=head1 SYNOPSIS
+
+  my $sth = PriceMatrix::price_matrix_query( $dbh, $form );
+  PriceMatrix::price_matrix( $sth, $ref, $transdate, $form, \%myconfig);
+
+=head1 DESCRIPTION
+
+Very much old_code we want to part with
+
+
+=cut
+
 use strict;
 use warnings;
+
+
+=head1 FUNCTIONS
+
+=over
+
+=item price_matrix_query( $dbh, $form )
+
+Returns a DBI statement handle from $dbh, based on the values provided in $form
+
+=cut
 
 sub price_matrix_query {
     my ( $dbh, $form ) = @_;
@@ -113,6 +140,13 @@ sub price_matrix_query {
     $sth;
 }
 
+
+=item price_matrix( $sth, $ref, $transdate, $decimalplaces, $form \%myconfig)
+
+Updates $ref with the price matrix outcomes given $transdate and $form.
+
+=cut
+
 sub price_matrix {
     my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig ) = @_;
     my $customerprice;
@@ -145,6 +179,10 @@ sub price_matrix {
             $ref->{sellprice} = $sellprice;
        }
     }
-
 }
+
+=back
+
+=cut
+
 1;
