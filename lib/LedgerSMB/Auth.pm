@@ -52,11 +52,11 @@ use CGI::Simple;
 use strict;
 use warnings;
 
-if ( !${LedgerSMB::Sysconfig::auth} ) {
-    ${LedgerSMB::Sysconfig::auth} = 'DB';
+if ( !$LedgerSMB::Sysconfig::auth ) {
+    $LedgerSMB::Sysconfig::auth = 'DB';
 }
 
-my $auth_lib = "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
+my $auth_lib = "LedgerSMB/Auth/" . $LedgerSMB::Sysconfig::auth . ".pm";
 require $auth_lib || die $!;
 
 sub http_error {
