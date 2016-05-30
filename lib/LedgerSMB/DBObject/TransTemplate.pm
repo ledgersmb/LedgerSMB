@@ -4,6 +4,32 @@ use strict;
 use warnings;
 use Log::Log4perl;
 
+=head1 NAME
+
+LedgerSMB::DBObject::TransTemplate -- Template transactions for LedgerSMB
+
+=head1 SYNOPSIS
+
+  my $ttrans = LedgerSMB::DBObject::TransTemplate->new(base => $request);
+  $ttrans->save();
+
+=head1 DESCRIPTION
+
+Template transactions are defined examples of transactions that are likely to 
+recur frequently.  They are stored in the database but never part of the books.
+
+They can be modified and then posted.
+
+These modules use what is expected to eventually become the next generation of journal schema for the database.
+
+=head1 METHODS
+
+=head2 save
+
+Saves the given input as a template transaction.
+
+=cut
+
 sub save {
    my $self = shift @_;
    my $logger = Log::Log4perl->get_logger("LedgerSMB");
@@ -47,6 +73,14 @@ sub save {
    }
 }
 
+=head2 search
+
+Searches on supplied criteria (by default just lists all templates)
+
+Normal journal entry search criteria apply.
+
+=cut
+
 sub search {
    my $self = shift @_;
    $self->{approved} = 'false';
@@ -56,13 +90,11 @@ sub search {
    );
 }
 
-sub retrieve {
-   my $self = shift @_;
-   my @vals = $self->call_dbmethod(funcname => 'journal__retrieve');
-   $self->merge(shift @vals);
-   @{$self->{line_items}} = $self->call_dbmethod(funcname => 'journal__retrieve_lines');
-   ($self->{inv_data}) = $self->call_dbmethod(funcname => 'journal__retrieve_invoice');
-}
+=head2 get
+
+Retrieves a given template transaction
+
+=cut
 
 sub get {
     my ($self) = @_;
@@ -79,6 +111,14 @@ sub get {
     }
 }
 
+=head2 get_account_info
+
+Gets information for a given chart of account entry. 
+
+DEPRECATED.  Retrieve via account class instead.
+
+=cut
+
 sub get_account_info {
     my ($self, $acct_id) = @_;
     my ($ref) = $self->call_procedure(
@@ -88,4 +128,24 @@ sub get_account_info {
     return $ref;
 }
 
+=head2 delete
+
+Removes template from database
+
+=cut
+
+sub delete {
+    my ($self, $id) = @_;
+
+    $self->call_procedure(funcname => 'journal__delete',
+                          args => [ $id ]);
+}
+
 1;
+
+=head1 COPYRIGHT
+
+Copytight (C) 2016, the LedgerSMB Core Team.  This file may be re-used under the
+terms of the GNU GPL version 2 or at your option any later version.  Please see
+the included LICENSE.txt for more information.
+

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"PublishCheckBox.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,4FAIO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAsBC,CAAtB,CAA6BC,CAA7B,QACWH,EAAA,yBAAiCG,CAAjC,oBAEMC,QAAAA,CAASC,CAATD,EACLF,CAAAE,QAAA,CAAcF,UAAd,CAA0BG,CAA1B,CADKD,CAFN,YAKSE,QAAAA,OACJC,MACJC,SAAA,CACIP,CAAA,eACG,QAAA,CAASI,CAAT,EACIE,CAAAH,QAAA,CAAaC,CAAb,CADJ,CADH,CADJ,CAFQC,CALT,EADX,CAJP;",
-"sources":["PublishCheckBox.js.uncompressed.js"],
-"names":["define","declare","on","topic","CheckBox","publish","targetValue","postCreate","self","own"]
-}

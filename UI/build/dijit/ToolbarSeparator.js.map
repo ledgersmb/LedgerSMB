@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"ToolbarSeparator.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,4FAKG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAuBC,CAAvB,CAAgCC,CAAhC,QAMKH,EAAA,2BAAmCE,CAAnC,CAA4CC,CAA5C,+HAMUC,QAAAA,GACfC,cAAA,CAAeC,SAAf,CACAL,EAAAM,cAAA,CAAkBC,YAAlB,IAFeJ,CANV,aAWOK,QAAAA,YAXP,EANL,CALH;",
-"sources":["ToolbarSeparator.js.uncompressed.js"],
-"names":["define","declare","dom","_Widget","_TemplatedMixin","buildRendering","inherited","arguments","setSelectable","domNode","isFocusable"]
-}

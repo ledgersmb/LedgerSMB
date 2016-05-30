@@ -343,7 +343,8 @@ sub get {
         );
     }
     @{$self->{report_lines}} = $self->call_dbmethod(
-        funcname=>'reconciliation__report_details_payee'
+        funcname=>'reconciliation__report_details_payee',
+        orderby => [ ( $self->{line_order} // 'scn' ) ]
     );
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => {id => $self->{chart_id} });

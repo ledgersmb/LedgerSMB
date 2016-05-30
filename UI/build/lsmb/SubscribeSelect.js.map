@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"SubscribeSelect.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,0FAIO,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAsBC,CAAtB,CAA6BC,CAA7B,QACWH,EAAA,yBAAiCG,CAAjC,+BAGKC,QAAAA,CAASC,CAATD,GACAE,CADAF,CACWG,aAAA,CAAcF,CAAd,CADXD,GAGAI,QAAA,SAAkBF,CAAlB,CAHAF,CAHL,YASSK,QAAAA,OACJC,MACJC,eAAA,CAAeC,SAAf,CAEAC,SAAA,CACIX,CAAAY,UAAA,CAAgBJ,CAAAR,MAAhB,CAA2B,QAAA,CAASG,CAAT,EACvBK,CAAAN,OAAA,CAAYC,CAAZ,CADuB,CAA3B,CADJ,CAJQI,CATT,EADX,CAJP;",
-"sources":["SubscribeSelect.js.uncompressed.js"],
-"names":["define","declare","on","topic","Select","update","targetValue","newValue","topicMap","set","postCreate","self","inherited","arguments","own","subscribe"]
-}

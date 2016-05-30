@@ -1,44 +1,44 @@
 <?lsmb INCLUDE 'ui-header.html'
-	titlebar = text('Inventory Adjustment Setup') # '
+        titlebar = text('Inventory Adjustment Setup') # '
         stylesheet = stylesheet
-	include_stylesheet = [
-		'css/global.css'
-	]
+        include_stylesheet = [
+                'css/system/global.css'
+        ]
 ?><?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Adjustment Details'); ?></div>
 <form data-dojo-type="lsmb/Form" name="setup_inv_adjust" action="inventory.pl" method="post">
 <div class="tabular col-1">
 <div id="date_input_div">
-	<?lsmb INCLUDE input element_data = {
-		name  = "transdate"
-		class = "date"
-		size  = "12"
-		value = transdate
-		type  = "text"
-		label = text('Date')
-	} ?>
-	</div>
+        <?lsmb INCLUDE input element_data = {
+                name  = "transdate"
+                class = "date"
+                size  = "12"
+                value = transdate
+                type  = "text"
+                label = text('Date')
+        } ?>
+        </div>
 <div id="source_input_div">
-	<?lsmb INCLUDE input element_data = {
-		name  = "source"
-		class = "control_code"
-		size  = "20"
-		value = source
-		type  = "text"
-		label = text('Source')
-	} ?>
-	</div>
+        <?lsmb INCLUDE input element_data = {
+                name  = "source"
+                class = "control_code"
+                size  = "20"
+                value = source
+                type  = "text"
+                label = text('Source')
+        } ?>
+        </div>
 </div>
 <div id="button_div">
-	<?lsmb INCLUDE button element_data = {
-		name  = "action"
-		type  = "submit"
-		text  = text('Continue')
-		class = "submit"
-		value = "enter_adjust"
-	} ?>
-	</div>
+        <?lsmb INCLUDE button element_data = {
+                name  = "action"
+                type  = "submit"
+                text  = text('Continue')
+                class = "submit"
+                value = "enter_adjust"
+        } ?>
+        </div>
 </form>
 </body>
 </html>

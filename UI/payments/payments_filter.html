@@ -1,49 +1,49 @@
 <?lsmb INCLUDE 'ui-header.html'
                 stylesheet = stylesheet
-		titlebar = text('Selection')
+                titlebar = text('Selection')
 ?>
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
 <div id="payments">
 <div class="listtop">
-	<!-- CT:  Strings for locales:
-	<?lsmb text('Filtering Receipts') ?>
-	<?lsmb text('Filtering Payments') ?> -->
-	<?lsmb IF payment.account_class == 1 ?><?lsmb t = 'Payments' 
-	?><?lsmb ELSE ?><?lsmb t = 'Receipts' 
-	?><?lsmb END ?>
-	<?lsmb text("Filtering $t") ?>
+        <!-- CT:  Strings for locales:
+        <?lsmb text('Filtering Receipts') ?>
+        <?lsmb text('Filtering Payments') ?> -->
+        <?lsmb IF payment.account_class == 1 ?><?lsmb t = 'Payments' 
+        ?><?lsmb ELSE ?><?lsmb t = 'Receipts' 
+        ?><?lsmb END ?>
+        <?lsmb text("Filtering $t") ?>
 </div>
 <form data-dojo-type="lsmb/Form" name="search" method="post"
       <?lsmb # action set explicitly,
              # because this file renders from vouchers.pl ?>
       action="payment.pl">
-	
+        
 <?lsmb PROCESS input element_data={
-	value = payment.account_class
-	type = "hidden"
-	name = "account_class"
+        value = payment.account_class
+        type = "hidden"
+        name = "account_class"
 } ?>
 <?lsmb PROCESS input element_data={
-	value = payment.batch_id
-	type = "hidden"
-	name = "batch_id"
+        value = payment.batch_id
+        type = "hidden"
+        name = "batch_id"
 } ?>
 <?lsmb PROCESS input element_data={
-	value = payment.batch_date
-	type = "hidden"
-	name = "batch_date"
+        value = payment.batch_date
+        type = "hidden"
+        name = "batch_date"
 } ?>
 <div id = "payments-filter-categories" class="inputgroup">
 <?lsmb IF payment.projects ?>
 <div id = "payments-filter-projects" class="inputgroup">
   <label for="project"><?lsmb text('Project') ?></label>
   <?lsmb PROCESS select element_data = {
-			name="project_id"
-			id="project"
-			options=payment.projects
-			text_attr='projectnumber'
-			value_attr='id' } ?>
+                        name="project_id"
+                        id="project"
+                        options=payment.projects
+                        text_attr='projectnumber'
+                        value_attr='id' } ?>
 </div>
 <?lsmb END ?>
 
@@ -51,12 +51,12 @@
 <div id = "payments-filter-departments" class="inputgroup">
   <label for="department"><?lsmb text('Department') ?></label>
   <?lsmb PROCESS select element_data = {
-			name="department_id"
-			id="department"
-			default_blank=1
-			options=payment.departments
-			value_attr='id'
-			text_attr='description' } ?>
+                        name="department_id"
+                        id="department"
+                        default_blank=1
+                        options=payment.departments
+                        value_attr='id'
+                        text_attr='description' } ?>
 </div>
 <?lsmb END ?>
 
@@ -67,23 +67,23 @@
 <?lsmb END ?>
 
 <?lsmb PROCESS input element_data = {
-	name = "meta_number"
-	type = "text"
-	value = payment.meta_number
-	label = vendor_customer_code
-	size = '15'
+        name = "meta_number"
+        type = "text"
+        value = payment.meta_number
+        label = vendor_customer_code
+        size = '15'
 } ?>
 
 <?lsmb IF businesses ?>
 <div id = "payments-filter-businesses" class="inputgroup">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
   <?lsmb PROCESS select element_data = {
-			name="business_id"
-			id="businesses"
-			default_blank=1
-			options=payment.businesses
-			value_attr='id'
-			text_attr='description' } ?>
+                        name="business_id"
+                        id="businesses"
+                        default_blank=1
+                        options=payment.businesses
+                        value_attr='id'
+                        text_attr='description' } ?>
 </div>
 <?lsmb END ?>
 <div class="inputgroup" id="account_input">
@@ -103,20 +103,20 @@
 <div id = "payments-filter-daterow" class = "inputgroup">
 <div class="input">
 <?lsmb PROCESS input element_data = {
-	label = text('Date From:')
-	type = "text"
-	class = "date"
-	value = payment.date_from
-	name = "date_from"
-	size = 12
+        label = text('Date From:')
+        type = "text"
+        class = "date"
+        value = payment.date_from
+        name = "date_from"
+        size = 12
 } # ' ?></div><div class="input">
 <?lsmb PROCESS input element_data = {
-	label = text('Date To:')
-	type = "text"
-	class = "date"
-	value = payment.date_to
-	name = "date_to"
-	size = 12
+        label = text('Date To:')
+        type = "text"
+        class = "date"
+        value = payment.date_to
+        name = "date_to"
+        size = 12
 } # ' ?></div>
 </div>
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
@@ -129,38 +129,38 @@
    PROCESS select element_data = {
         id = 'currency'
        name = 'currency'
-       options = curr
-       default_values = [ default_currency ]
+       options = payment.curr
+       default_values = [ payment.default_currency ]
 } ?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
-	
+        
       <?lsmb 
           IF payment.account_class == 1; pay_label = text('Pay From');#'
           ELSIF payment.account_class == 2; pay_label = text('Pay To'); #'
           END;
           PROCESS select element_data = {
-		name = "cash_accno"
-		default_values = [payment.cash_accno]
-		options = payment.cash_accounts
-		value_attr = "accno"
-		text_attr = "text"
-		label = pay_label _ ':'
-	} ?> 
+                name = "cash_accno"
+                default_values = [payment.cash_accno]
+                options = payment.cash_accounts
+                value_attr = "accno"
+                text_attr = "text"
+                label = pay_label _ ':'
+        } ?> 
 
 <?lsmb IF payment.payment_types ?>
 
 <div id = "payments-filter-payment_types" class="inputpayment">
   
  <?lsmb PROCESS select element_data = {
-		name = "payment_type_id"
-		default_values = []
-		options = payment.payment_types
-		value_attr = "id"
-		text_attr = "label"
-		label = text('Payment Type:') #'
-	} ?> 
+                name = "payment_type_id"
+                default_values = []
+                options = payment.payment_types
+                value_attr = "id"
+                text_attr = "label"
+                label = text('Payment Type:') #'
+        } ?> 
 
 
 </div>
@@ -173,19 +173,19 @@
 
 <div class = "inputgroup">
 <?lsmb PROCESS input element_data = {
-	type = "text"
-	size = "20"
-	name = "source_start"
-	label = text('Start Source Numbering At:')
+        type = "text"
+        size = "20"
+        name = "source_start"
+        label = text('Start Source Numbering At:')
 } # '?>
 </div>
 <div>
 <?lsmb PROCESS button element_data = {
-	type = "submit"
-	name = "action"
-	text = text('Continue')
-	class = "submit"
-	value = "display_payments"
+        type = "submit"
+        name = "action"
+        text = text('Continue')
+        class = "submit"
+        value = "display_payments"
 } ?>
 </div>
 </form>

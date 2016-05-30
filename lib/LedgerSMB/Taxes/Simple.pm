@@ -26,6 +26,18 @@
 #====================================================================
 package LedgerSMB::Taxes::Simple;
 
+=head1 NAME
+
+LedgerSMB::Taxes::Simple - Simple tax calculations
+
+=head1 SYNOPSIS
+
+ my $tax_amt = $tax->calculate_tax( $form, $subtotal, $extract, $passrate);
+ my $tax_amt = $tax->apply_tax( $form, $subtotal );
+ my $tax_amt = $tax->extract_tax( $form, $subtotal );
+
+=cut
+
 use strict;
 use warnings;
 
@@ -33,15 +45,96 @@ use Moose;
 use LedgerSMB::PGNumber;
 use LedgerSMB::MooseTypes;
 
+=head1 ATTRIBUTES
+
+=over
+
+=item taxnumber
+
+???
+
+=cut
+
 has taxnumber   => (isa => 'Str', is => 'rw');
+
+=item description
+
+???
+
+=cut
+
 has description => (isa => 'Str', is => 'rw');
-has rate        => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+
+=item rate
+
+The tax rate as a fractional number.
+
+=cut
+
+has rate        => (isa => 'LedgerSMB::Moose::Number',
+                    is => 'ro', coerce => 1);
+
+=item chart
+
+###TODO: document the difference between 'chart' and 'account'??
+
+=cut
+
 has chart       => (isa => 'Str', is => 'ro');
+
+=item account
+
+###TODO: document the difference between 'chart' and 'account'??
+
+=cut
+
 has account     => (isa => 'Str', is => 'rw');
+
+=item value
+
+???
+
+=cut
+
 has value       => (isa => 'LedgerSMB::Moose::Number', is => 'rw', coerce => 1);
+
+=item minvalue
+
+Minimum taxable amount to kick in taxation
+
+=cut
+
 has minvalue    => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+
+=item maxvalue
+
+Maximum taxable amount to apply tax to
+
+=cut
+
 has maxvalue    => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+
+=item pass
+
+Number of the pass to apply this tax.
+
+Taxes can be applied in successive iterations ('passes'), including the
+taxes of the previous iteration in the next pass's subtotal.
+
+=cut
+
 has pass        => (isa => 'Str', is => 'ro');
+
+=back
+
+=head1 METHODS
+
+=over
+
+=item $self->calculate_tax()
+
+
+=cut
 
 sub calculate_tax {
     my ( $self, $form, $subtotal, $extract, $passrate ) = @_;
@@ -57,6 +150,10 @@ sub calculate_tax {
     return $tax;
 }
 
+=item $self->apply_tax
+
+=cut
+
 sub apply_tax {
     my ( $self, $form, $subtotal ) = @_;
     my $tax = $self->calculate_tax( $form, $subtotal, 0 );
@@ -65,11 +162,19 @@ sub apply_tax {
     return $tax;
 }
 
+=item $seslf->extract_tax
+
+=cut
+
 sub extract_tax {
     my ( $self, $form, $subtotal, $passrate ) = @_;
     my $tax = $self->calculate_tax( $form, $subtotal, 1, $passrate );
     $self->value($tax);
     return $tax;
 }
+
+=back
+
+=cut
 
 1;

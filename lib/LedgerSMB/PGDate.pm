@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::PgDate
+
+LedgerSMB::PgDate - Date handling and serialization to database
 
 =cut
 
@@ -136,16 +137,16 @@ used.  If $format is not supplied, the dateformat of the user is used.
 sub to_output {
     my ($self) = @_;
     #return undef if !defined $self;
-	 return '' if !defined $self->{_pgobject_is_date};
+         return '' if ! $self->is_date();
     my $fmt;
-    if ($self->{_pgobject_is_date}){
-        if (defined $LedgerSMB::App_State::User->{dateformat}){
-            $fmt = $LedgerSMB::App_State::User->{dateformat};
-        } else {
-            $fmt = '%F';
-        }
-        $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
+
+    if (defined $LedgerSMB::App_State::User->{dateformat}){
+        $fmt = $LedgerSMB::App_State::User->{dateformat};
+    } else {
+        $fmt = '%F';
     }
+    $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
+
     $fmt .= ' %T' if ($self->is_time);
     $fmt =~ s/^\s+//;
 
@@ -156,6 +157,12 @@ sub to_output {
     );
     return $formatter->format_datetime($self);
 }
+
+=item $self->to_sort()
+
+Returns sortable key for the Date/Time value (epoch)
+
+=cut
 
 sub to_sort {
     my $self = shift;

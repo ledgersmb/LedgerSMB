@@ -1,3 +1,0 @@
-//>>built
-define("lsmb/PrintButton",["dojo/_base/declare","dojo/_base/event","dojo/dom-attr","dijit/form/Button"],function(b,c,d,e){return b("lsmb/PrintButton",[e],{onClick:function(b){var a;a=this.valueNode.form;if("screen"==a.media.value)a=d.get(a,"action")+"?action\x3d"+this.valueNode.value+"\x26id\x3d"+a.id.value+"\x26vc\x3d"+a.vc.value+"\x26formname\x3d"+a.formname.value+"\x26media\x3dscreen\x26format\x3d"+a.format.value,window.location.href=a,c.stop(b);else return this.inherited(arguments)}})});
-//# sourceMappingURL=PrintButton.js.map

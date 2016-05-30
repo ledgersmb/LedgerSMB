@@ -55,11 +55,35 @@ sub country_codes {
 
 }
 
+=head2 METHODS
+
+=over
+
+=item $self->save_preferences()
+
+Saves preferences to the database and reloads the values in the object
+from the db for consistency.
+
+=cut
+
+
 sub save_preferences {
     my ($self) = @_;
     $self->call_dbmethod(funcname => 'user__save_preferences');
     $self->get;
 }
+
+=item $self->change_my_password()
+
+Uses the object keys
+
+ * login
+ * old_password
+ * new_password
+
+to establish a database connection and change the user's password.
+
+=cut
 
 sub change_my_password {
     use LedgerSMB::Auth;
@@ -92,6 +116,11 @@ sub change_my_password {
     $self->{dbh} = $old_dbh;
 }
 
+=item $self->get_option_data()
+
+Sets the options for the user preference screen.
+
+=cut
 
 sub get_option_data {
     my $self = shift @_;
@@ -118,7 +147,7 @@ sub get_option_data {
     }
 
     $self->{cssfiles} = [];
-    opendir CSS, "css/.";
+    opendir CSS, "UI/css/.";
     for my $opt (grep /.*\.css$/, readdir CSS){
          push @{$self->{cssfiles}}, {file => $opt};
     }
@@ -136,8 +165,17 @@ sub get_option_data {
     $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
 }
 
+=item $self->save()
 
-# Return codes:  0 as success, 8 as duplicate user, and 1 as general failure
+Saves (creates) the user in the database
+
+Return codes:
+ - 0 as success,
+ - 8 as duplicate user, and
+ - 1 as general failure
+
+=cut
+
 sub save {
 
     my $self = shift @_;
@@ -164,6 +202,13 @@ sub save {
     }
     return 1;
 }
+
+=item $self->get($id)
+
+Initializes the $self instance with data from the database, identified
+with user id $id.
+
+=cut
 
 sub get {
 
@@ -217,6 +262,12 @@ sub get {
     return $user;
 }
 
+=item $self->remove()
+
+Removes the user identified by $self->{id} and $self->{username}.
+
+=cut
+
 sub remove {
 
     my $self = shift;
@@ -227,20 +278,27 @@ sub remove {
     return $code->[0];
 }
 
-sub save_prefs {
+# sub save_prefs {
 
-    my $self = shift @_;
+#     my $self = shift @_;
 
-    my $pref_id = $self->call_procedure(funcname=>"admin__save_preferences",
-        args=>[
-            'language',
-            'stylesheet',
-            'printer',
-            'dateformat',
-            'numberformat'
-        ]
-    );
-}
+#     my $pref_id = $self->call_procedure(funcname=>"admin__save_preferences",
+#         args=>[
+#             'language',
+#             'stylesheet',
+#             'printer',
+#             'dateformat',
+#             'numberformat'
+#         ]
+#     );
+# }
+
+=item $self->get_all_users()
+
+Retrieves a list of users for the company (database).
+Sets $self->{users} and returns an arrayref.
+
+=cut
 
 sub get_all_users {
 
@@ -250,13 +308,21 @@ sub get_all_users {
     $self->{users} = \@ret;
 }
 
-sub roles {
-
-    my $self = shift @_;
-    my $id = shift @_;
 
 
-}
+# sub roles {
+
+#     my $self = shift @_;
+#     my $id = shift @_;
+
+
+# }
+
+=item $self->save_contact($id, $class, $contact)
+
+#TODO: document this sub!
+
+=cut
 
 sub save_contact {
 
@@ -292,6 +358,11 @@ sub save_contact {
     }
     return 1;
 }
+
+
+=back
+
+=cut
 
 1;
 

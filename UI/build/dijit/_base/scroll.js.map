@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"scroll.js",
-"lineCount":2,
-"mappings":"A;AAAAA,MAAA,gDAGG,QAAA,CAASC,CAAT,CAAsBC,CAAtB,EAWFA,CAAAC,eAXE,CAWqBC,QAAAA,CAAqBC,CAArBD,CAAuCE,CAAvCF,EAKtBH,CAAAE,eAAA,CAA2BE,CAA3B,CAAiCC,CAAjC,CALsBF,CAXrB,CAHH;",
-"sources":["scroll.js.uncompressed.js"],
-"names":["define","windowUtils","dijit","scrollIntoView","dijit.scrollIntoView","node","pos"]
-}

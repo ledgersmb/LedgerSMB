@@ -282,6 +282,12 @@ sub import_asset {
     return $ref;
 }
 
+=item get_invoice_id
+
+Sets the 'invoice_id' attribute to the id of the invoice for the asset
+
+=cut
+
 sub get_invoice_id {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'get_vendor_invoice_id');

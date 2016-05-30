@@ -184,7 +184,7 @@ In these cases one needs to set it manually.  Use this function to do this.
 
 =cut
 
-sub set_segement_sep {
+sub set_segment_sep {
     my ($self, $sep) = @_;
     # ick, ai don't like how this involves messing around with internals.
     $self->parser->{_SEGMENT_SEPARATOR} = $sep;

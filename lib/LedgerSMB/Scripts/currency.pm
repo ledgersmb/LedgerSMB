@@ -77,11 +77,11 @@ sub list_currencies {
     $request->{title} = $request->{_locale}->text('Defined currencies');
     $template->render({
    form    => $request,
-	columns => $columns,
+        columns => $columns,
     heading => $column_heading,
         rows    => $rows,
-	buttons => [],
-	hiddens => [],
+        buttons => [],
+        hiddens => [],
     });
 
 }
@@ -155,11 +155,11 @@ sub list_exchangerate_types {
     $request->{title} = $request->{_locale}->text('Defined exchange rate types');
     $template->render({
    form    => $request,
-	columns => $columns,
+        columns => $columns,
     heading => $column_heading,
         rows    => $rows,
-	buttons => [],
-	hiddens => [],
+        buttons => [],
+        hiddens => [],
     });
 
 }
@@ -260,13 +260,13 @@ sub _list_exchangerates {
 
     $template->render({
    form    => $request,
-	columns => $columns,
+        columns => $columns,
     heading => $column_heading,
         rows    => $rows,
    currencies => \@currencies,
    exchangerate_types => \@exchangerate_types,
-	buttons => [],
-	hiddens => [],
+        buttons => [],
+        hiddens => [],
     });
 
 }
@@ -274,7 +274,7 @@ sub _list_exchangerates {
 
 
 
-=item save_exchangerate_type
+=item save_exchangerate
 
 Creates a currency - or if it exists, updates the description.
 
@@ -289,7 +289,7 @@ sub save_exchangerate {
     return &list_exchangerates($request);
 }
 
-=item delete_exchangerate_type
+=item delete_exchangerate
 
 Deletes an exchangerate type. Returns an error in case the rate type is
 still referenced in the system.

@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"place.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,+FAMG,QAAA,CAASC,CAAT,CAAgBC,CAAhB,CAAsBC,CAAtB,CAAmCC,CAAnC,CAA0CC,CAA1C,MAMEC,eAKkBC,QAAAA,SAKdJ,EAAAK,OAAA,EALcD,CALlBD,CAaJA,EAAAG,cAnBE,CAmBsBL,CAAAM,GAExBJ,EAAAK,2BArBE,CAqBmCC,QAAAA,CAASC,CAATD,CAAeE,CAAfF,CAA2BG,CAA3BH,CAA0CI,CAA1CJ,MAYhCK,CAZgCL,IAajCV,CAAAgB,QAAA,CAAaH,CAAb,CAbiCH,CAcnCK,CAdmCL,CAcvBG,CAduBH,MAgBnCK,CAhBmCL,YAiB3BO,CAjB2BP,GAiBpBG,EAjBoBH,CAkBlCK,CAAAG,KAAA,eAA8BD,CAA9B,QAA2CJ,CAAA,CAAcI,CAAd,CAA3C,EAlBkCP,OAsB7BR,EAAAiB,OAAA,CAAaR,CAAb,CAAmBC,CAAnB,CAA+BG,CAA/B,IAAgDD,CAAhD,CAtB6BJ,CAyBrCN,EAAAgB,wBA9CE,CA8CgChB,CAAAK,2BAUlCL,EAAAiB,6BAxDE,CAwDqCjB,CAAAK,2BAWvCL,EAAAkB,wBAnEE,CAmEgCC,QAAAA,CAAmBC,CAAnBD;AAAyCE,CAAzCF,MAqB7BG,IACJ3B,EAAA4B,QAAA,CAAcH,CAAd,CAAwB,QAAA,CAASI,CAAT,MACnBC,EAAMJ,CADa,QAEhBG,CAFgB,eAIrBF,CAAA,CAAMD,CAAN,WAJqB,CAIcA,CAJd,+BAOrBC,CAAA,CAAMD,CAAN,WAPqB,CAOcA,CAPd,kCAUrBI,CAVqB,EAUdA,CAVc,cAcrBH,CAAA,CAAMG,CAAN,WAdqB,CAcMA,CAdN,UAerBH,EAAA,CAAMG,CAAN,WAfqB,CAeMA,CAfN,kCAkBrBA,CAlBqB,EAkBdA,CAlBc,SAuBrBH,CAAA,CAAMG,CAAN,WAvBqB,CAuBMA,CAvBN,WAwBrBH,CAAA,CAAMG,CAAN,WAxBqB,CAwBMA,CAxBN,YAAxB,CAtBiCN,OAkD1BG,EAlD0BH,CAqDlCvB,EAAA8B,MAAA,CAAW3B,CAAX,CAAkBC,CAAlB,CAxHE,OA2HKD,EA3HL,CANH;",
-"sources":["place.js.uncompressed.js"],
-"names":["define","array","lang","windowUtils","place","dijit","exports","exports.getViewport","getBox","placeOnScreen","at","placeOnScreenAroundElement","exports.placeOnScreenAroundElement","node","aroundNode","aroundCorners","layoutNode","positions","isArray","key","push","around","placeOnScreenAroundNode","placeOnScreenAroundRectangle","getPopupAroundAlignment","exports.getPopupAroundAlignment","position","leftToRight","align","forEach","pos","ltr","mixin"]
-}

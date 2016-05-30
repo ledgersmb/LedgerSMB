@@ -37,7 +37,7 @@ use base qw(App::LedgerSMB::Admin::Database);
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
-use base('LedgerSMB');
+
 use DateTime;
 use Log::Log4perl;
 
@@ -456,10 +456,14 @@ Runs fixes if they have not been applied.
 
 sub apply_changes {
     my ($self) = @_;
-    my $dbh = $self->connect({PrintError=>0, AutoCommit => 0, pg_server_prepare => 0});
+    my $dbh = $self->connect({
+        PrintError=>0,
+        AutoCommit => 0,
+        pg_server_prepare => 0});
     my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
+    $dbh->disconnect;
 }
 
 1;

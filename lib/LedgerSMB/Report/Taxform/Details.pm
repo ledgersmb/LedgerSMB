@@ -110,6 +110,7 @@ sub header_lines {
        { name => 'meta_number',   text => LedgerSMB::Report::text('Account Number') },
     ];
 }
+
 =head2 name
 
 =cut

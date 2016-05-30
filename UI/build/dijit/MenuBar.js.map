@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"MenuBar.js",
-"lineCount":4,
-"mappings":"A;AAAAA,OAAA,SACA,kCADA,mKAEAC;MAAA,uGAKG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAAwBC,CAAxB,CAAmCC,CAAnC,QAKKH,EAAA,iBAAyBE,CAAzB,iBAIUC,CAJV,oFAkBQC,QAAAA,CAAmBC,CAAnBD,KAOVE,iBAPUF,EAOWE,iBAAAC,MAPXH,GAOuCE,iBAAAE,SAPvCJ,CAQZK,gBAAA,CAAiBH,iBAAjB,CAAoCD,CAApC,CARYD,CAlBR,YA8BMM,QAAAA,CAASC,CAATD,EAGXE,cAAA,CAAeC,SAAf,CACGC,eAJQJ,GAIUC,CAAAJ,MAJVG,GAIyBC,CAAAH,SAJzBE,GAKVK,mBAAA,CAAoBJ,CAApB,IALUD,CA9BN,kBAuCYM,QAAAA,CAASL,CAATK,EAGdC,qBAHcD;AAGWL,CAHXK,GAIhBC,qBAJgBD,MAKhBL,CAAAO,YAAA,EALgBF,CAQjBJ,eAAA,CAAeC,SAAf,CARiBG,CAvCZ,cAmDQG,QAAAA,GACbC,cAAA,EADaD,CAnDR,eAsDSE,QAAAA,GACdC,cAAA,EADcD,CAtDT,cAyDQE,QAAAA,CAAmBlB,CAAnBkB,EACbnB,iBAAA,CAAkBC,CAAlB,CADakB,CAzDR,YA4DMC,QAAAA,IA5DN,aA+DOf,QAAAA,CAA+BE,CAA/BF,CAA+CJ,CAA/CI,EAOTE,CAAAJ,MAPSE,EAOKE,CAAAJ,MAAAkB,aAPLhB,IAOkCiB,WAAA,CAAYrB,CAAAsB,KAAZ,CAPlClB,EAO2DJ,CAAAuB,QAP3DnB,GAO2ER,CAAA4B,WAP3EpB,GAQXE,CAAAmB,UAAAC,MAAA,EARWtB,CASXuB,aAAA,IATWvB,EAWXG,cAAA,CAAeC,SAAf,CAXWJ,CA/DP,EALL,CALH;",
-"sources":["MenuBar.js.uncompressed.js"],
-"names":["require","define","declare","keys","_MenuBase","template","_moveToPopup","evt","focusedChild","popup","disabled","onItemClick","focusChild","item","inherited","arguments","activated","_openItemPopup","_onChildDeselect","currentPopupItem","_closePopup","_onLeftArrow","focusPrev","_onRightArrow","focusNext","_onDownArrow","_onUpArrow","isShowingNow","test","type","keyCode","DOWN_ARROW","focusNode","focus","_cleanUp"]
-}

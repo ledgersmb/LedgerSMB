@@ -34,8 +34,6 @@ use LedgerSMB::File;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
 
-use Carp::Always;
-
 my $logger = Log::Log4perl->get_logger("AA");
 
 =pod

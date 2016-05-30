@@ -1,8 +1,0 @@
-{
-"version":3,
-"file":"JsonService.js",
-"lineCount":3,
-"mappings":"A;AAAAA,MAAA,wBAA+B,0FAAA,MAAA,KAA/B,CAGG,QAAA,CAASC,CAAT,CAAkBC,CAAlB,CAA4BC,CAA5B,CAAkCC,CAAlC,CAAwCC,CAAxC,CAA6CC,CAA7C,QAKKL,EAAA,wBAAgCK,CAAhC,gFAQMC,QAAAA,CAASC,CAATD,CAAiBE,CAAjBF,MASPG,EAAW,IAAIR,CACnBS,UAAA,CAAUH,CAAV,CAAkBC,CAAlB,CAA0BC,CAA1B,CAVWH,OAWJG,EAXIH,CARN,MAsBAI,QAAAA,CAASH,CAATG,CAAiBC,CAAjBD,CAA6BE,CAA7BF,CAAqDG,CAArDH,EAYKN,CAAAU,KAAAC,MACJF,CADIE,EACCC,eADDD,UAECE,kBAAA,CAAmBV,CAAnB,CAA2BI,CAA3B,CAFDI,aAGIG,gBAHJH,SAIAI,YAJAJ,mCAOVK,aAAA,CAAiBC,mBAAA,CAAoBT,CAApB,CAAjB;AAA8DU,kBAAA,CAAmBV,CAAnB,CAA9D,CAnBKF,CAtBA,eA4CSO,QAAAA,CAASV,CAATU,CAAiBT,CAAjBS,MAQVM,UAAkBf,CAAlBe,QAAoChB,CAApCgB,MAAoDC,qBAApDD,CARUN,OASPf,EAAAuB,OAAA,CAAYF,CAAZ,CATON,CA5CT,cAwDQS,QAAAA,CAAqBC,CAArBD,KAOVvB,CAAAyB,SAAA,CAAcD,CAAd,CAPUD,eAQGC,EARHD,OASJC,EAAAE,OATIH,cAWGC,EAXHD,OAYJC,EAAAG,OAZIJ,iBAcMC,EAdND,OAeJC,EAAAI,UAfIL,OAkBNC,EAlBMD,CAxDR,EALL,CAHH;",
-"sources":["JsonService.js.uncompressed.js"],
-"names":["define","declare","Deferred","json","lang","xhr","RpcService","callRemote","method","params","deferred","bind","parameters","deferredRequestHandler","url","post","def","serviceUrl","createRequest","contentType","timeout","addCallbacks","resultCallback","errorCallback","req","lastSubmissionId","toJson","parseResults","obj","isObject","result","Result","ResultSet"]
-}
