@@ -1,13 +1,14 @@
 #!perl
 
-BEGIN { 
-	use LedgerSMB;
-	use Test::More;
-	use LedgerSMB::Template;
-	use LedgerSMB::Sysconfig;
-	use LedgerSMB::DBTest;
-        use LedgerSMB::App_State;
-        use LedgerSMB::Locale;
+BEGIN {
+    use lib 't/lib';
+    use LedgerSMB;
+    use Test::More;
+    use LedgerSMB::Template;
+    use LedgerSMB::Sysconfig;
+    use LedgerSMB::DBTest;
+    use LedgerSMB::App_State;
+    use LedgerSMB::Locale;
 }
 
 # TODO: FIXME
@@ -26,27 +27,27 @@ LedgerSMB::App_State::set_Locale(LedgerSMB::Locale->get_handle('en'));
 no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
-	if (defined $ENV{LSMB_NEW_DB}){
-		$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
-	}
-	if (!defined $ENV{PGDATABASE}){
-		die "Oops...  LSMB_TEST_DB set but no db selected!";
-	}
-	plan 'no_plan';
+        if (defined $ENV{LSMB_NEW_DB}){
+                $ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
+        }
+        if (!defined $ENV{PGDATABASE}){
+                die "Oops...  LSMB_TEST_DB set but no db selected!";
+        }
+        plan 'no_plan';
 } else {
-	plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
+        plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
 }
 
 @test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
 
-for (qw(	drafts     login      payment      
-		menu       contact
-		inventory  vouchers recon)
+for (qw(        drafts     login      payment      
+                menu       contact
+                inventory  vouchers recon)
     ){
-	ok(eval { require "LedgerSMB/Scripts/$_.pm" }, "Importing $_");
-	if ($@){
-		print STDERR "Error:  $@\n";
-	}
+        ok(eval { require "LedgerSMB/Scripts/$_.pm" }, "Importing $_");
+        if ($@){
+                print STDERR "Error:  $@\n";
+        }
 } # Import new code namespaces
 
 my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, undef);
@@ -77,71 +78,71 @@ for my $test (@$test_request_data){
         }  
 
         if (ref $test->{'_pre_test_sub'} eq 'CODE'){
-		$test->{'_pre_test_sub'}();
-	}
+                $test->{'_pre_test_sub'}();
+        }
     my $request = LedgerSMB->new();
-	if (lc $test->{_codebase} eq 'old'){
-		next; # skip old codebase tests for now
-		#old_code_test::_load_script($test->{module});
-		#my $qstring = "$test->{module}?";
-		#for $key (keys(%$test)){
-			#if ($key !~ /^_/){
-				#$qstring .= qq|$key=$test->{"$key"}&|;
-			#}	
-		#}
-		#$qstring =~ s/&$//;
-		#$old_code_test::form = Form->new($qstring);
-		#for (keys (%$test)){
-			#$form->{$_} = $test->{$_};
-		#}
-		#is('old_code_test'->can($test->{action}), 0,
-			#"$test->{_test_id}: Action Successful");
-	} else {
-		$request->merge($test);
-		$request->{_locale} = $locale;
-		my $script = $test->{module};
-		if (!$request->{action}){
-			$request->{action} = '__default';
-		}
-		$request->{dbh} = $dbh;
-		if (ref $test->{_api_test} eq 'CODE'){
-			$request->{_test_cases} = $test->{_api_test};
-		}
-		$script =~ s/\.pl$//;
-		is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
-			'CODE',
-			"$test->{_test_id}: Action ($request->{action}) Defined");
-		ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
-	}
+        if (lc $test->{_codebase} eq 'old'){
+                next; # skip old codebase tests for now
+                #old_code_test::_load_script($test->{module});
+                #my $qstring = "$test->{module}?";
+                #for $key (keys(%$test)){
+                        #if ($key !~ /^_/){
+                                #$qstring .= qq|$key=$test->{"$key"}&|;
+                        #}      
+                #}
+                #$qstring =~ s/&$//;
+                #$old_code_test::form = Form->new($qstring);
+                #for (keys (%$test)){
+                        #$form->{$_} = $test->{$_};
+                #}
+                #is('old_code_test'->can($test->{action}), 0,
+                        #"$test->{_test_id}: Action Successful");
+        } else {
+                $request->merge($test);
+                $request->{_locale} = $locale;
+                my $script = $test->{module};
+                if (!$request->{action}){
+                        $request->{action} = '__default';
+                }
+                $request->{dbh} = $dbh;
+                if (ref $test->{_api_test} eq 'CODE'){
+                        $request->{_test_cases} = $test->{_api_test};
+                }
+                $script =~ s/\.pl$//;
+                is(ref "LedgerSMB::Scripts::$script"->can($request->{action}), 
+                        'CODE',
+                        "$test->{_test_id}: Action ($request->{action}) Defined");
+                ok("LedgerSMB::Scripts::$script"->can($request->{action})->($request), "$test->{_test_id}: Action Successful");
+        }
 
     if (ref $test->{_api_test} eq 'CODE'){
         $request->{_test_cases} = $test->{_api_test};
     }
 
-	ok($dbh->rollback, "$test->{_test_id}: rollback");
+        ok($dbh->rollback, "$test->{_test_id}: rollback");
 }
 
 package LedgerSMB::Template;
 use Test::More;
 # Don't render templates.  Just return so we can run tests on data structures.
 sub render {
-	my ($self, $data) = @_;
+        my ($self, $data) = @_;
 
-	if (ref $data->{_test_cases} eq 'CODE'){
-		$data->{_test_cases}($data);
-	}
-	if ($data->{_error_test}){
-		cmp_ok($data->{_died}, '==', '1', 
-			"$data->{_test_id} died as expected");
-	} else {
-		ok(!defined $data->{_died}, 
-			"$data->{_test_id} did not error");
-	}
-	return 1;
+        if (ref $data->{_test_cases} eq 'CODE'){
+                $data->{_test_cases}($data);
+        }
+        if ($data->{_error_test}){
+                cmp_ok($data->{_died}, '==', '1', 
+                        "$data->{_test_id} died as expected");
+        } else {
+                ok(!defined $data->{_died}, 
+                        "$data->{_test_id} did not error");
+        }
+        return 1;
 }
 
 sub _http_output {
-	return 1;
+        return 1;
 }
 package old_code_test;
 # Keeps old code isolated in a different namespace, and provides for reasonable 
@@ -149,10 +150,10 @@ package old_code_test;
 our $form;
 
 sub _load_script {
-	do "bin/arapprn.pl";
-	do "bin/arap.pl";
-	do "bin/io.pl";
-	do "bin/$1[0]";
+        do "bin/arapprn.pl";
+        do "bin/arap.pl";
+        do "bin/io.pl";
+        do "bin/$1[0]";
 }
 
 package LedgerSMB;

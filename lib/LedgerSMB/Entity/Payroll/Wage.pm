@@ -72,9 +72,9 @@ sub list {
                                      args => [$entity_id]);
 }
 
-=item classes($country_id)
+=item types($country_id)
 
-Returns a list of wage classes
+Returns a list of wage types
 
 =cut
 

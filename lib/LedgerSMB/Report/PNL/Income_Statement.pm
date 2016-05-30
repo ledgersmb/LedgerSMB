@@ -71,12 +71,15 @@ sub header_lines {
 
 =head1 METHODS
 
+=over
+
+=item $self->report_base($from_date, $to_date)
+
+Implement query protocol from parent class.
+
 =cut
 
-# private method
-# report_base($from, $to)
-# returns an array of hashrefs of report results.  Used in adding comparison
-# as well as the main report
+
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
@@ -85,6 +88,9 @@ sub report_base {
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->call_dbmethod(funcname => $procname);
 }
+
+
+=back
 
 =head1 SEE ALSO
 

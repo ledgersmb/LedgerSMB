@@ -24,9 +24,9 @@ But see the notes about locking below
 
 =head1 METHODS
 
-=head2 constructor
+=head2 new
 
-LedgerSMB::Database::Loadorder->new($path);
+Constructor. LedgerSMB::Database::Loadorder->new($path);
 
 =cut
 

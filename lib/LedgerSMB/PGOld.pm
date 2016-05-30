@@ -27,6 +27,17 @@ use warnings;
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
+=head1 METHODS
+
+=over
+
+=item new(%args)
+=item rew(\%args)
+
+Constructor.
+
+=cut
+
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
@@ -35,6 +46,12 @@ sub new {
     $self =  PGObject::Simple::new($pkg, %$self);
     return $self;
 }
+
+=item set_dbh
+
+Attribute _DBH builder.  Should probably have been named _set_dbh.
+
+=cut
 
 sub set_dbh {
     my ($self) = @_;
@@ -63,6 +80,13 @@ sub _db_array_literal {
     # No longer needed since we require DBD::Pg 2.x
 }
 
+=item $self->merge(\%base, %args)
+
+Sets the values from hash 'base' in $self, optionally limited by the
+keys enumerated in the array @$args{keys}.
+
+=cut
+
 sub merge {
      my ($self, $base, %args) = @_;
     my @keys = $args{keys} || keys %$base;
@@ -72,5 +96,8 @@ sub merge {
      return $self;
 }
 
+=back
+
+=cut
 
 1;

@@ -16,6 +16,7 @@ The following method is static:
 =item new ($LedgerSMB object);
 
 The following methods are passed through to stored procedures via Autoload.
+
 =item save
 
 =item get

@@ -185,7 +185,7 @@ has 'country_name' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =over
 
-=item get($args hashref)
+=item get_active(\%args)
 
 Retrieves locations and returns them.  Args include:
 
