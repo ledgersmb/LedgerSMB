@@ -48,11 +48,12 @@ use strict;
 
 use CGI::Simple::Standard qw(:html);
 use Template;
+use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
-use LedgerSMB::Template::DB;
+use LedgerSMB::Template::DBProvider;
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;
@@ -116,6 +117,7 @@ sub process {
     my $template;
     my $output;
     my $source;
+    my %additional_options = ();
     $parent->{binmode} = $binmode;
 
     my $dojo_theme;
@@ -141,10 +143,19 @@ sub process {
     } else {
         $output = \$parent->{output};
     }
-        if ($parent->{include_path} eq 'DB'){
-                $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, undef, 'html'
-                );
+    if ($parent->{include_path} eq 'DB'){
+        $source = $parent->{template};
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => 'html',
+                      language_code => $parent->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
+                  }) ];
     } elsif (ref $parent->{template} eq 'SCALAR') {
         $source = $parent->{template};
     } elsif (ref $parent->{template} eq 'ARRAY') {
@@ -165,6 +176,7 @@ sub process {
         TRIM => 1,
         DEBUG => ($parent->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
+        (%additional_options)
         };
         if ($LedgerSMB::Sysconfig::cache_templates){
             $arghash->{COMPILE_EXT} = '.lttc';

@@ -8,6 +8,12 @@ UI changes:
 * Compressed/compiled Dojo for better performance (JohnL)
 * Reports and screens can now be bookmarked (Chris T)
 
+Template changes:
+* All document templates (including INCLUDEs) now in-database (Erik H, #854)
+* 1.4's <?lsmb LETTERHEAD ?> now <?lsmb INCLUDE letterhead ?>
+* 1.3's INCLUDE extensions dropped;
+    <?lsmb INCLUDE letterhead.tex ?> -> <?lsmb INCLUDE letterhead ?>
+
 Code Cleanup:
 * Relying on Plack for webserver integration; stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
