@@ -231,6 +231,8 @@ sub post_invoice {
 
             push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
 
+            push( @{ $form->{discount} }, $form->{"discount_$i"} );
+
             push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
 
             $form->{"weight_$i"} = 0
