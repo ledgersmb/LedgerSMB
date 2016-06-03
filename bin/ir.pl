@@ -330,16 +330,6 @@ sub form_header {
         $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
     }
 
-    if ( $form->{selectlanguage} ) {
-        $lang = qq|
-          <tr>
-        <th align=right nowrap>| . $locale->text('Language') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" id="language-code" name=language_code>$form->{selectlanguage}</select></td>
-          </tr>
-|;
-
-    }
-
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -530,7 +520,6 @@ function on_return_submit(event){
         <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
           </tr>
-          $lang
         </table>
       </td>
     </tr>
