@@ -298,7 +298,7 @@
                                         <?lsmb INCLUDE input element_data = {
                                                 name  = "source_$r.contact_id"
                   id    = "source_$r.contact_id"
-                                                value = (payment.${"source_$r.contact_id"}) ? payment.${"source_$r.contact_id"} : payment.source
+                                                value = (request.${"source_$r.contact_id"}) ? request.${"source_$r.contact_id"} : r.source
                                                 type  = "text"
                                                 size  = "20"
                                                 label = text('Source')
