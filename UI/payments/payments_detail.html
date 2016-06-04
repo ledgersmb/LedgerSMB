@@ -1,6 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html'
-	titlebar = 'Payments'
-	include_script = ['payments/payments_detail.js']
+        titlebar = 'Payments'
+        include_script = ['payments/payments_detail.js']
 ?>
 <?lsmb BLOCK format_money ?><?lsmb number
 ?><?lsmb END # block ?>
@@ -20,483 +20,484 @@
  <form data-dojo-type="lsmb/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
  <!-- Moving all hidden variables to the top.  -CT -->
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "project_id"
-	value = payment.project_id
+        type = "hidden"
+        name = "project_id"
+        value = payment.project_id
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "form_id"
-	value = payment.form_id
+        type = "hidden"
+        name = "form_id"
+        value = payment.form_id
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "account_class"
-	value = payment.account_class
+        type = "hidden"
+        name = "account_class"
+        value = payment.account_class
 
  } ?>
 <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "payment_type_id"
-	value = payment.payment_type_id
+        type = "hidden"
+        name = "payment_type_id"
+        value = payment.payment_type_id
 
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "department_id"
-	value = payment.department_id
+        type = "hidden"
+        name = "department_id"
+        value = payment.department_id
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "meta_number"
-	value = payment.meta_number
+        type = "hidden"
+        name = "meta_number"
+        value = payment.meta_number
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "source_start"
-	value = payment.source_start
+        type = "hidden"
+        name = "source_start"
+        value = payment.source_start
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "approved"
-	value = payment.approved
+        type = "hidden"
+        name = "approved"
+        value = payment.approved
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "currency"
-	value = payment.currency
+        type = "hidden"
+        name = "currency"
+        value = payment.currency
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "ar_ap_accno"
-	value = payment.ar_ap_accno
+        type = "hidden"
+        name = "ar_ap_accno"
+        value = payment.ar_ap_accno
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "date_from"
-	value = payment.date_from
+        type = "hidden"
+        name = "date_from"
+        value = payment.date_from
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "date_to"
-	value = payment.date_to
+        type = "hidden"
+        name = "date_to"
+        value = payment.date_to
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "business_id"
-	value = payment.business_id
+        type = "hidden"
+        name = "business_id"
+        value = payment.business_id
  } ?>
  <?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "batch_id"
-	value = payment.batch_id
+        type = "hidden"
+        name = "batch_id"
+        value = payment.batch_id
  } ?>
 
 
 <div class="container">
 
-	<div id="date_row">
-		<label for="date_paid"><?lsmb text('Posting Date:') ?></label>
-		<?lsmb IF payment.batch_id ?>
-			<?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
-			<span id="date_paid"><?lsmb payment.datepaid ?></span>
-		<?lsmb END ?>
-		<?lsmb INCLUDE input element_data= {
-			value = payment.datepaid
-			name  = "datepaid"
-			size  = 20
-			class = (payment.batch_id) ? "hidden" : "date"
-			type  = (payment.batch_id) ? "hidden" : "text"
-		} ?>
-	</div>
+        <div id="date_row">
+                <label for="date_paid"><?lsmb text('Posting Date:') ?></label>
+                <?lsmb IF payment.batch_id ?>
+                        <?lsmb IF ! payment.datepaid ?><?lsmb payment.datepaid = payment.batch_date ?><?lsmb END ?>
+                        <span id="date_paid"><?lsmb payment.datepaid ?></span>
+                <?lsmb END ?>
+                <?lsmb INCLUDE input element_data= {
+                        value = payment.datepaid
+                        name  = "datepaid"
+                        size  = 20
+                        class = (payment.batch_id) ? "hidden" : "date"
+                        type  = (payment.batch_id) ? "hidden" : "text"
+                } ?>
+        </div>
 
-	<div id="date_filter_row">
-		<label for="filter_from"><?lsmb text('Filtering From:') ?></label>
-		<span id="filter_from"><?lsmb payment.date_from ?></span>
-		<?lsmb text('To:') ?>
-		<span id="filter_to"><?lsmb payment.date_to ?></span>
-	</div>
+        <div id="date_filter_row">
+                <label for="filter_from"><?lsmb text('Filtering From:') ?></label>
+                <span id="filter_from"><?lsmb payment.date_from ?></span>
+                <?lsmb text('To:') ?>
+                <span id="filter_to"><?lsmb payment.date_to ?></span>
+        </div>
 
-	<!-- the department will be shown if it was selected in the first step -->
-	<?lsmb IF payment.department.value  # Only process element if one exists. As in project above ?>
-		<div class="info">
-			<label for="department_info"><?lsmb  text('Department')  ?></label>
-			<span id="department_info">
-				<?lsmb payment.department ?>
-			</span>
-		</div>
-	<?lsmb END ?>
+        <!-- the department will be shown if it was selected in the first step -->
+        <?lsmb IF payment.department.value  # Only process element if one exists. As in project above ?>
+                <div class="info">
+                        <label for="department_info"><?lsmb  text('Department')  ?></label>
+                        <span id="department_info">
+                                <?lsmb payment.department ?>
+                        </span>
+                </div>
+        <?lsmb END ?>
 
-	<div class="info" id="account_row">
-		<label for="account_info">
-			<?lsmb text('Account:'); ?>
-		</label>
-		<span id="account_info">
-			<?lsmb FOREACH a = payment.debt_accounts ?>
-				<?lsmb IF a.accno == payment.ar_ap_accno ?>
-					<?lsmb a.accno ?>--<?lsmb a.description ?>
-				<?lsmb END # If a.accno... ?>
-			<?lsmb	END # FOREACH a ?>
-		</span>
-	</div>
+        <div class="info" id="account_row">
+                <label for="account_info">
+                        <?lsmb text('Account:'); ?>
+                </label>
+                <span id="account_info">
+                        <?lsmb FOREACH a = payment.debt_accounts ?>
+                                <?lsmb IF a.accno == payment.ar_ap_accno ?>
+                                        <?lsmb a.accno ?>--<?lsmb a.description ?>
+                                <?lsmb END # If a.accno... ?>
+                        <?lsmb  END # FOREACH a ?>
+                </span>
+        </div>
 
-	<?lsmb  IF payment.default_currency != payment.currency ?>
-		<div class="info" id="exrate_row">
-			<?lsmb IF payment.fx_from_db ?>
-				<label><?lsmb text('Exchange Rate') ?>:</label> <?lsmb payment.exchangerate ?>
-				<?lsmb PROCESS input element_data = {
-					name  = 'exchangerate'
-					value = payment.exchangerate
-					type  = 'hidden'
-				};
-			ELSE;
+        <?lsmb  IF payment.default_currency != payment.currency ?>
+                <div class="info" id="exrate_row">
+                        <?lsmb IF payment.fx_from_db ?>
+                                <label><?lsmb text('Exchange Rate') ?>:</label> <?lsmb payment.exchangerate ?>
+                                <?lsmb PROCESS input element_data = {
+                                        name  = 'exchangerate'
+                                        value = payment.exchangerate
+                                        type  = 'hidden'
+                                };
+                        ELSE;
 
-				PROCESS input element_data= {
-					label = text('Exchange Rate') #'
-					type  = 'text'
-					class = "numeric"
-					name  = 'exchangerate'
+                                PROCESS input element_data= {
+                                        label = text('Exchange Rate') #'
+                                        type  = 'text'
+                                        class = "numeric"
+                                        name  = 'exchangerate'
                id = 'exchangerate'
-					value = payment.exchangerate
-					size  = 20
-				};
-			END ?>
-		</div>
-	<?lsmb END ?>
+                                        value = payment.exchangerate
+                                        size  = 20
+                                };
+                        END ?>
+                </div>
+        <?lsmb END ?>
 
-	<?lsmb IF payment.business ?>
-		<div class="info">
-			<label for="business_info"><?lsmb text('Business:') ?></label>
-			<span id="business_info">
-				<?lsmb FOREACH b = payment.businesses ?>
-					<?lsmb IF b.id == payment.business ?>
-						<?lsmb b.id ?> -- <?lsmb b.description ?>
-					<?lsmb END # if b.id... ?>
-				<?lsmb END # foreach b ?>
-			</span>
-		</div>
-	<?lsmb END # if business ?>
+        <?lsmb IF payment.business ?>
+                <div class="info">
+                        <label for="business_info"><?lsmb text('Business:') ?></label>
+                        <span id="business_info">
+                                <?lsmb FOREACH b = payment.businesses ?>
+                                        <?lsmb IF b.id == payment.business ?>
+                                                <?lsmb b.id ?> -- <?lsmb b.description ?>
+                                        <?lsmb END # if b.id... ?>
+                                <?lsmb END # foreach b ?>
+                        </span>
+                </div>
+        <?lsmb END # if business ?>
 
-	<div class="payment_type" id="payment_type_label_div">
-		<label for="filter_type_label"><?lsmb text('Payment Type:') ?></label>
-		<span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
-	</div>
+        <div class="payment_type" id="payment_type_label_div">
+                <label for="filter_type_label"><?lsmb text('Payment Type:') ?></label>
+                <span id="filter_type_label"><?lsmb payment_type_return_label ?> </span>
+        </div>
 
-	<div class="info" id="cash_account_div">
-		<?lsmb INCLUDE input element_data = {
-			type  = "hidden"
-			name  = "cash_accno"
-			value = payment.cash_accno
-		} ?>
-		<label><?lsmb text('Pay From') ?></label>
-		<?lsmb FOR c = cash_accounts -?>
-			<?lsmb IF c.accno == payment.cash_accno -?>
-				<?lsmb c.accno ?>--<?lsmb c.description ?>
-			<?lsmb END # if c.accno -?>
-		<?lsmb END # for c -?>
-	</div>
+        <div class="info" id="cash_account_div">
+                <?lsmb INCLUDE input element_data = {
+                        type  = "hidden"
+                        name  = "cash_accno"
+                        value = payment.cash_accno
+                } ?>
+                <label><?lsmb text('Pay From') ?></label>
+                <?lsmb FOR c = cash_accounts -?>
+                        <?lsmb IF c.accno == payment.cash_accno -?>
+                                <?lsmb c.accno ?>--<?lsmb c.description ?>
+                        <?lsmb END # if c.accno -?>
+                <?lsmb END # for c -?>
+        </div>
 
-	<table id="payments-table">
-		<tr class="listheading">
-			<th class="account">
-				<div class="selectall">
-					<?lsmb INCLUDE input element_data = {
-						id    = 'checkbox-selectall'
-						name  = 'selectall'
-						class = 'selectall'
-						value = 0
-						type  = 'checkbox'
+        <table id="payments-table">
+                <tr class="listheading">
+                        <th class="account">
+                                <div class="selectall">
+                                        <?lsmb INCLUDE input element_data = {
+                                                id    = 'checkbox-selectall'
+                                                name  = 'selectall'
+                                                class = 'selectall'
+                                                value = 0
+                                                type  = 'checkbox'
                       "data-dojo-type" = "lsmb/PublishCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
-					} ?>
-				</div>
-				<?lsmb text('Account') ?>
-			</th>
-			<th class="entity_name"><?lsmb text('Name') ?></th>
-			<th class="invoice"><?lsmb text('Invoice Total') ?></th>
-			<th class="payment"><?lsmb text('Payment') ?></th>
-			<th class="payment"><?lsmb text('Details') ?></th>
-		</tr>
+                                        } ?>
+                                </div>
+                                <?lsmb text('Account') ?>
+                        </th>
+                        <th class="entity_name"><?lsmb text('Name') ?></th>
+                        <th class="invoice"><?lsmb text('Invoice Total') ?></th>
+                        <th class="payment"><?lsmb text('Payment') ?></th>
+                        <th class="payment"><?lsmb text('Details') ?></th>
+                </tr>
 
-		<?lsmb rc = 1 ?><?lsmb count = 0 ?>
-		<?lsmb FOREACH r = payment.contact_invoices ?>
-			<?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
-			<tr class="listrow<?lsmb rc ?>">
-				<td class="account_number" rowspan="2" >
-					<?lsmb INCLUDE input element_data = {
-						type  = "hidden"
-						name  = "contact_$count"
-						value = r.contact_id
-					} ?>
-					<?lsmb INCLUDE input element_data = {
-						type = "hidden"
-						name = "contact_label_" _ r.contact_id
-						value = r.econtrol_code _ "--" _ r.account_number _ "--" _ r.contact_name
-					} ?>
-					<?lsmb # IF payment.action == "update_payments" -?>
-						<?lsmb IF ${"id_$r.contact_id"} -?>
-							<?lsmb r.selected = 1 -?>
-						<?lsmb END # IF !${"id_$r.contact_id"} -?>
-					<?lsmb # END # IF action ... -?>
-					<?lsmb INCLUDE input element_data = {
-						type    = "checkbox"
-						id      = "id_" _ r.contact_id
-						name    = "id_" _ r.contact_id
-						value   = r.contact_id
-						checked = (r.selected) ? "checked" : undef
+                <?lsmb rc = 1 ?><?lsmb count = 0 ?>
+                <?lsmb FOREACH r = payment.contact_invoices ?>
+                        <?lsmb rc = (rc + 1) % 2; count = count + 1 ?>
+                        <tr class="listrow<?lsmb rc ?>">
+                                <td class="account_number" rowspan="2" >
+                                        <?lsmb INCLUDE input element_data = {
+                                                type  = "hidden"
+                                                name  = "contact_$count"
+                                                value = r.contact_id
+                                        } ?>
+                                        <?lsmb INCLUDE input element_data = {
+                                                type = "hidden"
+                                                name = "contact_label_" _ r.contact_id
+                                                value = r.econtrol_code _ "--" _ r.account_number _ "--" _ r.contact_name
+                                        } ?>
+                                        <?lsmb # IF payment.action == "update_payments" -?>
+                                                <?lsmb IF payment.${"id_$r.contact_id"} -?>
+                                                        <?lsmb r.selected = 1 -?>
+                                                <?lsmb END # IF payment.${"id_$r.contact_id"} -?>
+                                        <?lsmb # END # IF action ... -?>
+                                        <?lsmb INCLUDE input element_data = {
+                                                type    = "checkbox"
+                                                id      = "id_" _ r.contact_id
+                                                name    = "id_" _ r.contact_id
+                                                value   = r.contact_id
+                                                checked = (r.selected) ? "checked" : undef
                   class   = 'contactcb'
                       "data-dojo-type" = "lsmb/SubscribeCheckBox"
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
-					} ?>
-					<?lsmb r.econtrol_code ?> --
-					<?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
-				</td>
-				<td class="entity_name">
-					<span class="<?lsmb
-						IF r.has_vouchers; 'name_has_vouchers' ;
-						ELSE ; 'name_has_no_vouchers' ;
-						END
-						?>">
-						<?lsmb r.contact_name ?>
-					</span>
-				</td>
-				<td class="invoice"><?lsmb r.to_pay ?>
-					<?lsmb payment.currency ?>
-				</td>
-			        <td>
-					<div class="details_select">
-						<div class="input">
-							<?lsmb INCLUDE input element_data = {
-								name    = "paid_" _ r.contact_id
-								value   = "some"
-								class   = "paid_some"
-								id      = "paid-some-" _ r.contact_id
-								label   = text('Some')
-								checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
-								type    = "radio"
+                                        } ?>
+                                        <?lsmb r.econtrol_code ?> --
+                                        <?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
+                                </td>
+                                <td class="entity_name">
+                                        <span class="<?lsmb
+                                                IF r.has_vouchers; 'name_has_vouchers' ;
+                                                ELSE ; 'name_has_no_vouchers' ;
+                                                END
+                                                ?>">
+                                                <?lsmb r.contact_name ?>
+                                        </span>
+                                </td>
+                                <td class="invoice"><?lsmb r.to_pay ?>
+                                        <?lsmb payment.currency ?>
+                                </td>
+                                <td>
+                                        <div class="details_select">
+                                                <div class="input">
+                                                        <?lsmb INCLUDE input element_data = {
+                                                                name    = "paid_" _ r.contact_id
+                                                                value   = "some"
+                                                                class   = "paid_some"
+                                                                id      = "paid-some-" _ r.contact_id
+                                                                label   = text('Some')
+                                                               type    = "radio"
+                                                               checked = (payment.${"paid_$r.contact_id"} == 'some') ? "checked" : ""
                         "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
-							 }	?>
-						</div>
-						<div class="input">
-							<?lsmb INCLUDE input element_data = {
-								name    = "paid_" _ r.contact_id
-								value   = "all"
-								class   = "paid_all"
-								id      = "paid-all-" _ r.contact_id
-								label   = text('All')
-								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
-								type    = "radio"
-                        "data-dojo-type" = "lsmb/PublishRadioButton"
+                                                         }      ?>
+                                                </div>
+                                                <div class="input">
+                                                        <?lsmb INCLUDE input element_data = {
+                                                                name    = "paid_" _ r.contact_id
+                                                                value   = "all"
+                                                                class   = "paid_all"
+                                                                id      = "paid-all-" _ r.contact_id
+                                                                label   = text('All')
+                                                                type    = "radio"
+                                                               checked = (payment.${"paid_$r.contact_id"} != 'some') ? "checked" : ""
+                                                               "data-dojo-type" = "lsmb/PublishRadioButton"
                         "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
-						 }	?>
-						</div>
-					</div>
-				</td>
-				<td rowspan = 2>
-					<?lsmb INCLUDE input element_data = {
-						name  = "source_$r.contact_id"
+
+                                                 }      ?>
+                                                </div>
+                                        </div>
+                                </td>
+                                <td rowspan = 2>
+                                        <?lsmb INCLUDE input element_data = {
+                                                name  = "source_$r.contact_id"
                   id    = "source_$r.contact_id"
-						value = (payment.${"source_$r.contact_id"}) ? ${"source_$r.contact_id"} : r.source
-						type  = "text"
-						size  = "20"
-						label = text('Source')
-					} ?>
-				</td>
-			</tr>
+                                                value = (payment.${"source_$r.contact_id"}) ? payment.${"source_$r.contact_id"} : payment.source
+                                                type  = "text"
+                                                size  = "20"
+                                                label = text('Source')
+                                        } ?>
+                                </td>
+                        </tr>
 
-			<tr class="listrow<?lsmb rc ?>">
-				<td class="invoice_detail_list" colspan="3">
+                        <tr class="listrow<?lsmb rc ?>">
+                                <td class="invoice_detail_list" colspan="3">
 
-					<table id = "invoice-data-table-<?lsmb r.contact_id ?>"
+                                        <table id = "invoice-data-table-<?lsmb r.contact_id ?>"
                       width="100%"
                       data-dojo-type="lsmb/SubscribeShowHide"
                       data-dojo-props="topic:'ui/pay/bulk/invoice-data-table-<?lsmb r.contact_id ?>',showValues:['some']"
-                      <?lsmb IF 'some' != ${"paid_$r.contact_id"} ; -?>
+                      <?lsmb IF 'some' != payment.${"paid_$r.contact_id"} ; -?>
                       style="display:none"
                       <?lsmb END; ?>
                       >
-						<tr class="listheading">
-							<th class="invoice_date_list"><?lsmb text('Date') ?>
-							</th>
-							<th class="invoice_list">
-								<?lsmb text('Invoice Number') ?>
-							</th>
-						        <th class="total_due_list"><?lsmb text('Total') ?></th>
-							<th class="paid_list"><?lsmb text('Paid') ?></th>
-							<th class="discount_list"><?lsmb text('Discount') ?></th>
-							<th class="net_due_list"><?lsmb text('Net Due') ?> </th>
-							<th class="to_pay_list"><?lsmb text('To Pay') ?></th>
-						</tr>
-						<?lsmb icount = 0 ?>
-						<?lsmb FOREACH i = r.invoices ?>
-					                <?lsmb NEXT IF i.6 + 0 == 0 ?>
-							<?lsmb IF i.7 ?>
-								<?lsmb icount = icount + 1 ?>
-								<tr>
-									<td class="invoice_date_list">
-										&nbsp;<?lsmb i.2 ?>
-										<?lsmb PROCESS input element_data = {
-											type = "hidden"
-											name = "invoice_date_$i.0"
-											value = i.2 } ?>
-									</td>
-									<td class="invoice_list">
-										&nbsp;<?lsmb i.1 ?>
-										<?lsmb PROCESS input element_data = {
-											type = "hidden"
-											name = "invnumber_$i.0"
-											value = i.1 } ?>
-									</td>
-									<td class="total_due_list">
-										&nbsp;<?lsmb i.3 ?>
-										<?lsmb PROCESS input element_data = {
-											type = "hidden"
-											name = "due_$i.0"
-											value = i.6 } ?>
-									</td>
-									<td class="paid_list">
-										&nbsp;<?lsmb i.4 ?>
-									</td>
-									<td class="discount_list">
-										&nbsp;<?lsmb i.5 ?>
-									</td>
-									<td class="net_due_list">
-										&nbsp;<?lsmb i.6 ?>
-										<?lsmb currency ?>
-									</td>
-									<td class="to_pay_list">
-										<?lsmb PROCESS input element_data = {
-											name = "payment_$i.0"
+                                                <tr class="listheading">
+                                                        <th class="invoice_date_list"><?lsmb text('Date') ?>
+                                                        </th>
+                                                        <th class="invoice_list">
+                                                                <?lsmb text('Invoice Number') ?>
+                                                        </th>
+                                                        <th class="total_due_list"><?lsmb text('Total') ?></th>
+                                                        <th class="paid_list"><?lsmb text('Paid') ?></th>
+                                                        <th class="discount_list"><?lsmb text('Discount') ?></th>
+                                                        <th class="net_due_list"><?lsmb text('Net Due') ?> </th>
+                                                        <th class="to_pay_list"><?lsmb text('To Pay') ?></th>
+                                                </tr>
+                                                <?lsmb icount = 0 ?>
+                                                <?lsmb FOREACH i = r.invoices ?>
+                                                        <?lsmb # NEXT IF i.6 + 0 == 0 ?>
+                                                        <?lsmb IF i.7 ?>
+                                                                <?lsmb icount = icount + 1 ?>
+                                                                <tr>
+                                                                        <td class="invoice_date_list">
+                                                                                &nbsp;<?lsmb i.2 ?>
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        type = "hidden"
+                                                                                        name = "invoice_date_$i.0"
+                                                                                        value = i.2 } ?>
+                                                                        </td>
+                                                                        <td class="invoice_list">
+                                                                                &nbsp;<?lsmb i.1 ?>
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        type = "hidden"
+                                                                                        name = "invnumber_$i.0"
+                                                                                        value = i.1 } ?>
+                                                                        </td>
+                                                                        <td class="total_due_list">
+                                                                                &nbsp;<?lsmb i.3 ?>
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        type = "hidden"
+                                                                                        name = "due_$i.0"
+                                                                                        value = i.6 } ?>
+                                                                        </td>
+                                                                        <td class="paid_list">
+                                                                                &nbsp;<?lsmb i.4 ?>
+                                                                        </td>
+                                                                        <td class="discount_list">
+                                                                                &nbsp;<?lsmb i.5 ?>
+                                                                        </td>
+                                                                        <td class="net_due_list">
+                                                                                &nbsp;<?lsmb i.6 ?>
+                                                                                <?lsmb currency ?>
+                                                                        </td>
+                                                                        <td class="to_pay_list">
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        name = "payment_$i.0"
                                  id   = "payment_$i.0"
-											value = i.6
-											size = 20
-											type = "text"
-											class = "monetary" } ?>
-										<?lsmb PROCESS input element_data = {
-											type = "hidden"
-											name = "invoice_" _ r.contact_id _ "_$icount"
-											value = i.0 } ?>
-										<?lsmb PROCESS input element_data = {
-											type = "hidden"
-											name = "net_$i.0"
-											value = payment.${"$r.contact_id_$i.0"} } ?>
-									</td>
-								</tr>
-							<?lsmb ELSE #not $i.7 ?>
-								<tr>
-									<td class="invoice_date_list">
-										&nbsp;<?lsmb i.2 ?>
-									</td>
-									<td class="invoice_list">
-										&nbsp;<?lsmb i.1 ?>
-									</td>
-								        <td class="total_due_list">
-										&nbsp;
-										<?lsmb i.3 ?>
-									</td>
-									<td class="paid_list">
-										&nbsp;
-										<?lsmb i.4 ?>
-									</td>
-									<td class="net_due_list">
-										&nbsp;
-										<?lsmb i.6 ?>
-										<?lsmb currency ?>
-									</td>
-									<td class="to_pay_list">
-										<?lsmb text("Locked by [_1]", i.8) ?>
-									</td>
-								</tr>
-							<?lsmb END # if i.8 ?>
-						<?lsmb END # foreach i ?>
+                                                                                        value = i.6
+                                                                                        size = 20
+                                                                                        type = "text"
+                                                                                        class = "monetary" } ?>
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        type = "hidden"
+                                                                                        name = "invoice_" _ r.contact_id _ "_$icount"
+                                                                                        value = i.0 } ?>
+                                                                                <?lsmb PROCESS input element_data = {
+                                                                                        type = "hidden"
+                                                                                        name = "net_$i.0"
+                                                                                        value = payment.${"$r.contact_id_$i.0"} } ?>
+                                                                        </td>
+                                                                </tr>
+                                                        <?lsmb ELSE #not $i.7 ?>
+                                                                <tr>
+                                                                        <td class="invoice_date_list">
+                                                                                &nbsp;<?lsmb i.2 ?>
+                                                                        </td>
+                                                                        <td class="invoice_list">
+                                                                                &nbsp;<?lsmb i.1 ?>
+                                                                        </td>
+                                                                        <td class="total_due_list">
+                                                                                &nbsp;
+                                                                                <?lsmb i.3 ?>
+                                                                        </td>
+                                                                        <td class="paid_list">
+                                                                                &nbsp;
+                                                                                <?lsmb i.4 ?>
+                                                                        </td>
+                                                                        <td class="net_due_list">
+                                                                                &nbsp;
+                                                                                <?lsmb i.6 ?>
+                                                                                <?lsmb currency ?>
+                                                                        </td>
+                                                                        <td class="to_pay_list">
+                                                                                <?lsmb text("Locked by [_1]", i.8) ?>
+                                                                        </td>
+                                                                </tr>
+                                                        <?lsmb END # if i.8 ?>
+                                                <?lsmb END # foreach i ?>
 
-						<?lsmb INCLUDE input element_data = {
-								 type = "hidden"
-								 name = "invoice_count_" _ r.contact_id
-								 value = icount
-								 } ?>
+                                                <?lsmb INCLUDE input element_data = {
+                                                                 type = "hidden"
+                                                                 name = "invoice_count_" _ r.contact_id
+                                                                 value = icount
+                                                                 } ?>
 
-						<tr class="subtotal">
-							<td colspan="6" class="total_label">
-								<?lsmb text('Contact Total (if paying "some")') ?>
-							</td>
-							<td>
-								<span id='<?lsmb ${"contact_total_$r.id"} ?>'>
-									<?lsmb r.contact_total ?>
-								</span>
-								<span class="currency">
-									<?lsmb payment.currency ?>
-								</span>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		<?lsmb END # foreach r ?>
+                                                <tr class="subtotal">
+                                                        <td colspan="6" class="total_label">
+                                                                <?lsmb text('Contact Total (if paying "some")') ?>
+                                                        </td>
+                                                        <td>
+                                                                <span id='<?lsmb ${"contact_total_$r.id"} ?>'>
+                                                                        <?lsmb r.contact_total ?>
+                                                                </span>
+                                                                <span class="currency">
+                                                                        <?lsmb payment.currency ?>
+                                                                </span>
+                                                        </td>
+                                                </tr>
+                                        </table>
+                                </td>
+                        </tr>
+                <?lsmb END # foreach r ?>
 
-		<tr class="subtotal">
-			<td>
-				&nbsp;
-			</td>
-			<td class="total_label">
-				<?lsmb text('Grand Total') ?>
-			</td>
-			<td>
-				<span id="grand_total">
-					<?lsmb payment.grand_total ?>
-				</span>
-				<span class="currency">
-					<?lsmb payment.currency ?>
-				</span>
-			</td>
-		</tr>
+                <tr class="subtotal">
+                        <td>
+                                &nbsp;
+                        </td>
+                        <td class="total_label">
+                                <?lsmb text('Grand Total') ?>
+                        </td>
+                        <td>
+                                <span id="grand_total">
+                                        <?lsmb payment.grand_total ?>
+                                </span>
+                                <span class="currency">
+                                        <?lsmb payment.currency ?>
+                                </span>
+                        </td>
+                </tr>
 
-	</table>
+        </table>
 
-	<?lsmb INCLUDE input element_data = {
-		type  = "hidden"
-		name  = "contact_count"
-		value = payment.contact_invoices.size
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		name  = "multiple"
-		type  = "hidden"
-		value = '1'
-	} ?>
-	<?lsmb INCLUDE button element_data = {
-		text  = text('Update'),
-		value = 'update_payments'
-		class = "submit"
-		name  = 'action'
-	} ?>
-	<?lsmb INCLUDE button element_data = {
-		text  = text((batch_id) ? 'Save' : 'Post'),
-		# value = 'pre_bulk_post_report'
-		value = 'p_payments_bulk_post'
-		class = "submit"
-		name  = 'action'
-	} ?>
-	<?lsmb IF can_print ?>
-		<?lsmb INCLUDE select element_data = {
-			name    = "media"
-			class   = "select"
-			options = payment.media_options
-			value   = payment.media
-		} ?>
-		<?lsmb INCLUDE select element_data = {
-			name    = "format"
-			class   = "select"
-			options = payment.format_options
-			value   = payment.format
-		} ?>
-		<?lsmb INCLUDE button element_data = {
-			text  = text('Print')
-			value = 'print'
-			class = 'submit'
-			name  = 'action'
-		} ?>
-	<?lsmb END # IF can_print ?>
+        <?lsmb INCLUDE input element_data = {
+                type  = "hidden"
+                name  = "contact_count"
+                value = payment.contact_invoices.size
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                name  = "multiple"
+                type  = "hidden"
+                value = '1'
+        } ?>
+        <?lsmb INCLUDE button element_data = {
+                text  = text('Update'),
+                value = 'update_payments'
+                class = "submit"
+                name  = 'action'
+        } ?>
+        <?lsmb INCLUDE button element_data = {
+                text  = text((batch_id) ? 'Save' : 'Post'),
+                # value = 'pre_bulk_post_report'
+                value = 'p_payments_bulk_post'
+                class = "submit"
+                name  = 'action'
+        } ?>
+        <?lsmb IF can_print ?>
+                <?lsmb INCLUDE select element_data = {
+                        name    = "media"
+                        class   = "select"
+                        options = payment.media_options
+                        value   = payment.media
+                } ?>
+                <?lsmb INCLUDE select element_data = {
+                        name    = "format"
+                        class   = "select"
+                        options = payment.format_options
+                        value   = payment.format
+                } ?>
+                <?lsmb INCLUDE button element_data = {
+                        text  = text('Print')
+                        value = 'print'
+                        class = 'submit'
+                        name  = 'action'
+                } ?>
+        <?lsmb END # IF can_print ?>
 
 </div>
 
