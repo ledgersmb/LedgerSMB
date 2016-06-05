@@ -469,7 +469,7 @@ sub display_payments {
                     unless defined $payment->{"paid_$_->{contact_id}"};
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_to_pay += $invoice->[3];
+            $contact_to_pay += $invoice->[6];
 
             my $fld = "payment_" . $invoice->[0];
             $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
@@ -477,13 +477,17 @@ sub display_payments {
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
+            $invoice->[6] = $invoice->[6]->to_output(money  => 1);
 
-
-            $invoice->[6] = ('display_payments' eq $request->{action})
-                ? $invoice->[6]->to_output(money  => 1)
-                : (LedgerSMB::PGNumber->from_input($payment->{"$fld"} // 0)
-                ->to_output(money => 1));
-
+            if ('display_payments' eq $request->{action}) {
+                $payment->{$fld} = $invoice->[6];
+            }
+            else {
+                $payment->{$fld} //= 0;
+                $payment->{$fld} =
+                    LedgerSMB::PGNumber->from_input($payment->{"$fld"})
+                    ->to_output(money => 1);
+            }
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
