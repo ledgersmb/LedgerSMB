@@ -81,7 +81,7 @@ my @exception_modules =
 
 
 my %also_private = (
-    'LedgerSMB::Scripts::payment' => [ qr/^(p\_)/ ],
+    'LedgerSMB::Scripts::payment' => [ qr/(^p\_)|(_p$)/ ],
     'LedgerSMB::DBObject::Payment' => [ qr/^(format_ten_|num2text_)/ ],
     );
 
