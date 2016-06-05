@@ -465,36 +465,38 @@ sub display_payments {
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments')
                   or (defined $payment->{"id_$_->{contact_id}"})){
-                   $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
+                $payment->{"paid_$_->{contact_id}"} = ""
+                    unless defined $payment->{"paid_$_->{contact_id}"};
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_total +=  $invoice->[6];
             $contact_to_pay += $invoice->[3];
+
+            my $fld = "payment_" . $invoice->[0];
+            $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
+
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
-            $invoice->[6] = $invoice->[6]->to_output(money  => 1);
-            my $fld = "payment_" . $invoice->[0];
 
-            if ('display_payments' eq $request->{action} ){
-                $payment->{"$fld"} = $invoice->[6];
-            }
+
+            $invoice->[6] = ('display_payments' eq $request->{action})
+                ? $invoice->[6]->to_output(money  => 1)
+                : (LedgerSMB::PGNumber->from_input($payment->{"$fld"} // 0)
+                ->to_output(money => 1));
+
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
         }
-        if (($payment->{action} ne 'update_payments')
-                  or (defined $payment->{"id_$_->{contact_id}"})){
-            $_->{contact_total} = $contact_total;
-            $_->{to_pay} = $contact_to_pay;
-            $payment->{grand_total} += $contact_total;
+        $_->{contact_total} = $contact_total;
+        $_->{to_pay} = $contact_to_pay;
+        $payment->{grand_total} += $contact_total;
 
-            my ($check_all) = LedgerSMB::Setting->get('check_payments');
-            if ($payment->{account_class} == 1 and $check_all){
-                 $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
-            }
-
+        my ($check_all) = LedgerSMB::Setting->get('check_payments');
+        if ($payment->{account_class} == 1 and $check_all){
+            $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
         }
+
         $_->{total_due} = $_->{total_due}->to_output(money  => 1);
         $_->{contact_total} = $_->{contact_total}->to_output(money  => 1);
         $_->{to_pay} = $_->{to_pay}->to_output(money  => 1);
