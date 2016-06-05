@@ -242,7 +242,7 @@ sub p_payments_bulk_post {
 
 # wrapper around post_payments_bulk munged for dynatable.
 
-sub p_post_payments_bulk {
+sub post_payments_bulk_p {
     post_payments_bulk(@_);
 }
 
