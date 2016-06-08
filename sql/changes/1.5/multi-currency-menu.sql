@@ -1,4 +1,11 @@
 
+-- insert 4 menu items:
+
+--  * Currencies, with sub items:
+--   * Edit currencies
+--   * Edit rate types
+--   * Edit rates
+
 create or replace function fixes_tmp()
 returns void as $$
 begin
@@ -30,23 +37,7 @@ insert into menu_acl (role_name, acl_type, node_id)
          (select max(id) from menu_node));
    end if;
 
-   return;
-end;
-$$ language plpgsql;
 
-select fixes_tmp();
-
-drop function if exists fixes_tmp();
-
-COMMIT;
-
-DROP FUNCTION IF EXISTS setting__get_currencies();
-
-BEGIN;
-
-create or replace function fixes_tmp()
-returns void as $$
-begin
    perform * from menu_node where label='Edit rate types';
 
    if not found then
@@ -67,33 +58,6 @@ begin
               (SELECT id FROM menu_node WHERE label = 'Edit rate types'));
    end if;
 
-   return;
-end;
-$$ language plpgsql;
-
-select fixes_tmp();
-
-drop function if exists fixes_tmp();
-
-COMMIT;
-
-
-BEGIN;
-ALTER TABLE exchangerate_type ADD COLUMN builtin boolean;
-COMMIT;
-
-BEGIN;
-INSERT INTO exchangerate_type (id, description, builtin)
-     VALUES (1, 'Default rate', 't');
-
-SELECT setval('exchangerate_type_id_seq', 1, 't');
-END;
-
-BEGIN;
-
-create or replace function fixes_tmp()
-returns void as $$
-begin
    perform * from menu_node where label='Edit rates';
 
    if not found then
@@ -120,4 +84,5 @@ $$ language plpgsql;
 
 select fixes_tmp();
 
-drop function if exists fixes_tmp();
+drop function fixes_tmp();
+
