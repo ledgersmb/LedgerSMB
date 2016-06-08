@@ -1,6 +1,6 @@
 CREATE TEMPORARY TABLE test_result (
-	test_name text,
-	success bool
+        test_name text,
+        success bool
 );
 
 INSERT INTO entity (id, name, entity_class, control_code, country_id)

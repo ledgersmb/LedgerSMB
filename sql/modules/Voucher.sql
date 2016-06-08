@@ -18,10 +18,10 @@ CREATE OR REPLACE FUNCTION voucher_get_batch (in_batch_id integer)
 RETURNS batch AS
 $$
 DECLARE
-	batch_out batch%ROWTYPE;
+        batch_out batch%ROWTYPE;
 BEGIN
-	SELECT * INTO batch_out FROM batch b WHERE b.id = in_batch_id;
-	RETURN batch_out;
+        SELECT * INTO batch_out FROM batch b WHERE b.id = in_batch_id;
+        RETURN batch_out;
 END;
 $$ language plpgsql;
 
@@ -30,14 +30,14 @@ $$ Retrieves basic batch information based on batch_id.$$;
 
 DROP TYPE IF EXISTS voucher_list CASCADE;
 CREATE TYPE voucher_list AS (
-	id int,
+        id int,
         invoice bool,
-	reference text,
-	description text,
-	batch_id int,
-	transaction_id integer,
-	amount numeric,
-	transaction_date date,
+        reference text,
+        description text,
+        batch_id int,
+        transaction_id integer,
+        amount numeric,
+        transaction_date date,
         batch_class text,
         batch_class_id int
 );
@@ -47,90 +47,90 @@ CREATE TYPE voucher_list AS (
 CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
 $$
-		SELECT v.id, a.invoice, a.invnumber, e.name,
-			v.batch_id, v.trans_id,
-			a.amount, a.transdate, 'Payable', v.batch_class
-		FROM voucher v
-		JOIN ap a ON (v.trans_id = a.id)
-		JOIN entity_credit_account eca
-			ON (eca.id = a.entity_credit_account)
-		JOIN entity e ON (eca.entity_id = e.id)
-		WHERE v.batch_id = in_batch_id
-			AND v.batch_class = (select id from batch_class
-					WHERE class = 'ap')
-		UNION
-		SELECT v.id, a.invoice, a.invnumber, e.name,
-			v.batch_id, v.trans_id,
-			a.amount, a.transdate, 'Receivable', v.batch_class
-		FROM voucher v
-		JOIN ar a ON (v.trans_id = a.id)
-		JOIN entity_credit_account eca
-			ON (eca.id = a.entity_credit_account)
-		JOIN entity e ON (eca.entity_id = e.id)
-		WHERE v.batch_id = in_batch_id
-			AND v.batch_class = (select id from batch_class
-					WHERE class = 'ar')
-		UNION ALL
-		-- TODO:  Add the class labels to the class table.
-		SELECT v.id, false, a.source,
-			cr.meta_number || '--'  || co.legal_name ,
-			v.batch_id, v.trans_id,
-			sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
-			     ELSE a.amount  END), a.transdate,
-			CASE WHEN bc.class = 'payment' THEN 'Payment'
-			     WHEN bc.class = 'payment_reversal'
-			     THEN 'Payment Reversal'
-			END, v.batch_class
-		FROM voucher v
-		JOIN acc_trans a ON (v.id = a.voucher_id)
+                SELECT v.id, a.invoice, a.invnumber, e.name,
+                        v.batch_id, v.trans_id,
+                        a.amount, a.transdate, 'Payable', v.batch_class
+                FROM voucher v
+                JOIN ap a ON (v.trans_id = a.id)
+                JOIN entity_credit_account eca
+                        ON (eca.id = a.entity_credit_account)
+                JOIN entity e ON (eca.entity_id = e.id)
+                WHERE v.batch_id = in_batch_id
+                        AND v.batch_class = (select id from batch_class
+                                        WHERE class = 'ap')
+                UNION
+                SELECT v.id, a.invoice, a.invnumber, e.name,
+                        v.batch_id, v.trans_id,
+                        a.amount, a.transdate, 'Receivable', v.batch_class
+                FROM voucher v
+                JOIN ar a ON (v.trans_id = a.id)
+                JOIN entity_credit_account eca
+                        ON (eca.id = a.entity_credit_account)
+                JOIN entity e ON (eca.entity_id = e.id)
+                WHERE v.batch_id = in_batch_id
+                        AND v.batch_class = (select id from batch_class
+                                        WHERE class = 'ar')
+                UNION ALL
+                -- TODO:  Add the class labels to the class table.
+                SELECT v.id, false, a.source,
+                        cr.meta_number || '--'  || co.legal_name ,
+                        v.batch_id, v.trans_id,
+                        sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
+                             ELSE a.amount  END), a.transdate,
+                        CASE WHEN bc.class = 'payment' THEN 'Payment'
+                             WHEN bc.class = 'payment_reversal'
+                             THEN 'Payment Reversal'
+                        END, v.batch_class
+                FROM voucher v
+                JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
-		JOIN chart c ON (a.chart_id = c.id)
-		JOIN ap ON (ap.id = a.trans_id)
-		JOIN entity_credit_account cr
-			ON (ap.entity_credit_account = cr.id)
-		JOIN company co ON (cr.entity_id = co.entity_id)
-		WHERE v.batch_id = in_batch_id
-			AND a.voucher_id = v.id
-			AND (bc.class like 'payment%' AND c.link = 'AP')
-		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
+                JOIN chart c ON (a.chart_id = c.id)
+                JOIN ap ON (ap.id = a.trans_id)
+                JOIN entity_credit_account cr
+                        ON (ap.entity_credit_account = cr.id)
+                JOIN company co ON (cr.entity_id = co.entity_id)
+                WHERE v.batch_id = in_batch_id
+                        AND a.voucher_id = v.id
+                        AND (bc.class like 'payment%' AND c.link = 'AP')
+                GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
-		UNION ALL
-		SELECT v.id, false, a.source, a.memo,
-			v.batch_id, v.trans_id,
-			CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
-			     ELSE sum(a.amount)  END, a.transdate,
-			CASE WHEN bc.class = 'receipt' THEN 'Receipt'
-			     WHEN bc.class = 'receipt_reversal'
-			     THEN 'Receipt Reversal'
-			END, v.batch_class
-		FROM voucher v
-		JOIN acc_trans a ON (v.id = a.voucher_id)
+                UNION ALL
+                SELECT v.id, false, a.source, a.memo,
+                        v.batch_id, v.trans_id,
+                        CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
+                             ELSE sum(a.amount)  END, a.transdate,
+                        CASE WHEN bc.class = 'receipt' THEN 'Receipt'
+                             WHEN bc.class = 'receipt_reversal'
+                             THEN 'Receipt Reversal'
+                        END, v.batch_class
+                FROM voucher v
+                JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
-		JOIN chart c ON (a.chart_id = c.id)
-		JOIN ar ON (ar.id = a.trans_id)
-		JOIN entity_credit_account cr
-			ON (ar.entity_credit_account = cr.id)
-		JOIN company co ON (cr.entity_id = co.entity_id)
-		WHERE v.batch_id = in_batch_id
-			AND a.voucher_id = v.id
-			AND (bc.class like 'receipt%' AND c.link = 'AR')
-		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
+                JOIN chart c ON (a.chart_id = c.id)
+                JOIN ar ON (ar.id = a.trans_id)
+                JOIN entity_credit_account cr
+                        ON (ar.entity_credit_account = cr.id)
+                JOIN company co ON (cr.entity_id = co.entity_id)
+                WHERE v.batch_id = in_batch_id
+                        AND a.voucher_id = v.id
+                        AND (bc.class like 'receipt%' AND c.link = 'AR')
+                GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
                         a.memo, v.batch_id, v.trans_id, a.transdate, bc.class
-		UNION ALL
-		SELECT v.id, false, g.reference, g.description,
-			v.batch_id, v.trans_id,
-			sum(a.amount), g.transdate, 'GL', v.batch_class
-		FROM voucher v
-		JOIN gl g ON (g.id = v.trans_id)
-		JOIN acc_trans a ON (v.trans_id = a.trans_id)
-		WHERE a.amount > 0
-			AND v.batch_id = in_batch_id
-			AND v.batch_class IN (select id from batch_class
-					where class = 'gl')
-		GROUP BY v.id, g.reference, g.description, v.batch_id,
-			v.trans_id, g.transdate
-		ORDER BY 7, 1
+                UNION ALL
+                SELECT v.id, false, g.reference, g.description,
+                        v.batch_id, v.trans_id,
+                        sum(a.amount), g.transdate, 'GL', v.batch_class
+                FROM voucher v
+                JOIN gl g ON (g.id = v.trans_id)
+                JOIN acc_trans a ON (v.trans_id = a.trans_id)
+                WHERE a.amount > 0
+                        AND v.batch_id = in_batch_id
+                        AND v.batch_class IN (select id from batch_class
+                                        where class = 'gl')
+                GROUP BY v.id, g.reference, g.description, v.batch_id,
+                        v.trans_id, g.transdate
+                ORDER BY 7, 1
 $$ language sql;
 
 COMMENT ON FUNCTION voucher__list (in_batch_id integer) IS
@@ -174,70 +174,70 @@ $$;
 
 CREATE OR REPLACE FUNCTION
 batch__search(in_class_id int, in_description text, in_created_by_eid int,
-	in_date_from date, in_date_to date,
-	in_amount_gt numeric,
-	in_amount_lt numeric, in_approved bool)
+        in_date_from date, in_date_to date,
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
-		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, b.default_date,
-			sum(
-				CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
-				     THEN al.amount
-				     WHEN vc.id  = 1
-				     THEN ap.amount
-				     WHEN vc.id = 2
+                SELECT b.id, c.class, b.control_code, b.description, u.username,
+                        b.created_on, b.default_date,
+                        sum(
+                                CASE WHEN vc.id = 5 AND al.amount < 0 -- GL
+                                     THEN al.amount
+                                     WHEN vc.id  = 1
+                                     THEN ap.amount
+                                     WHEN vc.id = 2
                                      THEN ar.amount
-				     ELSE 0
+                                     ELSE 0
                                 END) AS transaction_total,
-			sum(
-				CASE WHEN alc.link = 'AR' AND vc.id IN (6, 7)
-				     THEN al.amount
-				     WHEN alc.link = 'AP' AND vc.id IN (3, 4)
-				     THEN al.amount * -1
-				     ELSE 0
-				END
-			   ) AS payment_total,
+                        sum(
+                                CASE WHEN alc.link = 'AR' AND vc.id IN (6, 7)
+                                     THEN al.amount
+                                     WHEN alc.link = 'AP' AND vc.id IN (3, 4)
+                                     THEN al.amount * -1
+                                     ELSE 0
+                                END
+                           ) AS payment_total,
                      batch__lock(b.id)
-		FROM batch b
-		JOIN batch_class c ON (b.batch_class_id = c.id)
-		LEFT JOIN users u ON (u.entity_id = b.created_by)
-		LEFT JOIN voucher v ON (v.batch_id = b.id)
-		LEFT JOIN batch_class vc ON (v.batch_class = vc.id)
-		LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
-		LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
-		LEFT JOIN acc_trans al ON
-			((vc.id = 5 AND v.trans_id = al.trans_id) OR
-				(vc.id IN (3, 4, 6, 7)
-					AND al.voucher_id = v.id))
-		LEFT JOIN chart alc ON (al.chart_id = alc.id)
-		WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
-			(b.description LIKE
-				'%' || in_description || '%' OR
-				in_description IS NULL) AND
-			(in_created_by_eid = b.created_by OR
-				in_created_by_eid IS NULL) AND
-			((in_approved = false OR in_approved IS NULL AND
-				approved_on IS NULL) OR
-				(in_approved = true AND approved_on IS NOT NULL)
-			)
-			and (in_date_from IS NULL
-				or b.default_date >= in_date_from)
-			and (in_date_to IS NULL
-				or b.default_date <= in_date_to)
-		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
-			b.control_code, b.default_date
-		HAVING
-			(in_amount_gt IS NULL OR
-			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
-				al.amount))
-			>= in_amount_gt)
-			AND
-			(in_amount_lt IS NULL OR
-			sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
-				al.amount))
-			<= in_amount_lt)
-		ORDER BY b.control_code, b.description
+                FROM batch b
+                JOIN batch_class c ON (b.batch_class_id = c.id)
+                LEFT JOIN users u ON (u.entity_id = b.created_by)
+                LEFT JOIN voucher v ON (v.batch_id = b.id)
+                LEFT JOIN batch_class vc ON (v.batch_class = vc.id)
+                LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
+                LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
+                LEFT JOIN acc_trans al ON
+                        ((vc.id = 5 AND v.trans_id = al.trans_id) OR
+                                (vc.id IN (3, 4, 6, 7)
+                                        AND al.voucher_id = v.id))
+                LEFT JOIN chart alc ON (al.chart_id = alc.id)
+                WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
+                        (b.description LIKE
+                                '%' || in_description || '%' OR
+                                in_description IS NULL) AND
+                        (in_created_by_eid = b.created_by OR
+                                in_created_by_eid IS NULL) AND
+                        ((in_approved = false OR in_approved IS NULL AND
+                                approved_on IS NULL) OR
+                                (in_approved = true AND approved_on IS NOT NULL)
+                        )
+                        and (in_date_from IS NULL
+                                or b.default_date >= in_date_from)
+                        and (in_date_to IS NULL
+                                or b.default_date <= in_date_to)
+                GROUP BY b.id, c.class, b.description, u.username, b.created_on,
+                        b.control_code, b.default_date
+                HAVING
+                        (in_amount_gt IS NULL OR
+                        sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
+                                al.amount))
+                        >= in_amount_gt)
+                        AND
+                        (in_amount_lt IS NULL OR
+                        sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
+                                al.amount))
+                        <= in_amount_lt)
+                ORDER BY b.control_code, b.description
 
 $$ LANGUAGE SQL;
 
@@ -267,23 +267,23 @@ batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
-		SELECT b.id, c.class, b.control_code, b.description, u.username,
-			b.created_on, b.default_date, NULL::NUMERIC, NULL::numeric, false
-		FROM batch b
-		JOIN batch_class c ON (b.batch_class_id = c.id)
-		LEFT JOIN users u ON (u.entity_id = b.created_by)
-		WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
-			(b.description LIKE
-				'%' || in_description || '%' OR
-				in_description IS NULL) AND
-			(in_created_by_eid = b.created_by OR
-				in_created_by_eid IS NULL) AND
-			((in_approved = false OR in_approved IS NULL AND
-				approved_on IS NULL) OR
-				(in_approved = true AND approved_on IS NOT NULL)
-			)
-		GROUP BY b.id, c.class, b.description, u.username, b.created_on,
-			b.control_code, b.default_date
+                SELECT b.id, c.class, b.control_code, b.description, u.username,
+                        b.created_on, b.default_date, NULL::NUMERIC, NULL::numeric, false
+                FROM batch b
+                JOIN batch_class c ON (b.batch_class_id = c.id)
+                LEFT JOIN users u ON (u.entity_id = b.created_by)
+                WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
+                        (b.description LIKE
+                                '%' || in_description || '%' OR
+                                in_description IS NULL) AND
+                        (in_created_by_eid = b.created_by OR
+                                in_created_by_eid IS NULL) AND
+                        ((in_approved = false OR in_approved IS NULL AND
+                                approved_on IS NULL) OR
+                                (in_approved = true AND approved_on IS NOT NULL)
+                        )
+                GROUP BY b.id, c.class, b.description, u.username, b.created_on,
+                        b.control_code, b.default_date
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION batch_search_mini
@@ -299,8 +299,8 @@ $$;
 
 CREATE OR REPLACE FUNCTION
 batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
-	in_amount_gt numeric,
-	in_amount_lt numeric, in_approved bool)
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool)
 RETURNS SETOF batch_list_item AS
 $$
                SELECT b.id, c.class, b.control_code, b.description, u.username,
@@ -338,33 +338,33 @@ $$;
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
 returns date AS
 $$
-	UPDATE ar SET approved = true
-	WHERE id IN (select trans_id FROM voucher
-		WHERE batch_id = in_batch_id
-		AND batch_class = 2);
+        UPDATE ar SET approved = true
+        WHERE id IN (select trans_id FROM voucher
+                WHERE batch_id = in_batch_id
+                AND batch_class = 2);
 
-	UPDATE ap SET approved = true
-	WHERE id IN (select trans_id FROM voucher
-		WHERE batch_id = in_batch_id
-		AND batch_class = 1);
+        UPDATE ap SET approved = true
+        WHERE id IN (select trans_id FROM voucher
+                WHERE batch_id = in_batch_id
+                AND batch_class = 1);
 
-	UPDATE gl SET approved = true
-	WHERE id IN (select trans_id FROM voucher
-		WHERE batch_id = in_batch_id
-		AND batch_class = 5);
+        UPDATE gl SET approved = true
+        WHERE id IN (select trans_id FROM voucher
+                WHERE batch_id = in_batch_id
+                AND batch_class = 5);
 
-	UPDATE acc_trans SET approved = true
-	WHERE voucher_id IN (select id FROM voucher
-		WHERE batch_id = in_batch_id
-		AND batch_class IN (3, 4, 6, 7));
+        UPDATE acc_trans SET approved = true
+        WHERE voucher_id IN (select id FROM voucher
+                WHERE batch_id = in_batch_id
+                AND batch_class IN (3, 4, 6, 7));
 
-	UPDATE batch
-	SET approved_on = now(),
-		approved_by = (select entity_id FROM users
-			WHERE username = SESSION_USER)
-	WHERE id = in_batch_id;
+        UPDATE batch
+        SET approved_on = now(),
+                approved_by = (select entity_id FROM users
+                        WHERE username = SESSION_USER)
+        WHERE id = in_batch_id;
 
-	SELECT now()::date;
+        SELECT now()::date;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION batch_post(in_batch_id INTEGER) FROM public;
@@ -377,10 +377,10 @@ CREATE OR REPLACE FUNCTION batch_list_classes() RETURNS SETOF batch_class AS
 $$
 DECLARE out_val record;
 BEGIN
-	FOR out_val IN select * from batch_class order by id
- 	LOOP
-		return next out_val;
-	END LOOP;
+        FOR out_val IN select * from batch_class order by id
+        LOOP
+                return next out_val;
+        END LOOP;
 END;
 $$ language plpgsql;
 
@@ -390,7 +390,7 @@ IS $$ Returns a list of all batch classes.$$;
 -- Move to the admin module and call it from there.
 CREATE OR REPLACE FUNCTION batch_get_users() RETURNS SETOF users AS
 $$
-		SELECT * from users WHERE entity_id IN (select created_by from batch)
+                SELECT * from users WHERE entity_id IN (select created_by from batch)
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION batch_get_users() IS
@@ -402,12 +402,12 @@ in_batch_number text, in_description text, in_batch_class text,
 in_batch_date date)
 RETURNS int AS
 $$
-	INSERT INTO
-		batch (batch_class_id, default_date, description, control_code,
-			created_by)
-	VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
-		in_batch_date, in_description, in_batch_number,
-			(select entity_id FROM users WHERE username = session_user))
+        INSERT INTO
+                batch (batch_class_id, default_date, description, control_code,
+                        created_by)
+        VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
+                in_batch_date, in_description, in_batch_number,
+                        (select entity_id FROM users WHERE username = session_user))
         RETURNING id;
 
 $$ LANGUAGE SQL;
@@ -420,47 +420,47 @@ $$ Inserts the batch into the table.$$;
 CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
 $$
 DECLARE
-	t_transaction_ids int[];
+        t_transaction_ids int[];
 BEGIN
-	-- Adjust AR/AP tables for payment and payment reversal vouchers
-	-- voucher_id is only set in acc_trans on payment/receipt vouchers and
-	-- their reversals. -CT
+        -- Adjust AR/AP tables for payment and payment reversal vouchers
+        -- voucher_id is only set in acc_trans on payment/receipt vouchers and
+        -- their reversals. -CT
         perform * from batch where id = in_batch_id and approved_on IS NULL;
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Batch not found';
         END IF;
-	update ar set paid = amount +
-		(select sum(amount) from acc_trans
-		join chart ON (acc_trans.chart_id = chart.id)
-		where link = 'AR' AND trans_id = ar.id
-			AND (voucher_id IS NULL OR voucher_id NOT IN
-				(select id from voucher
-				WHERE batch_id = in_batch_id)))
-	where id in (select trans_id from acc_trans where voucher_id IN
-		(select id from voucher where batch_id = in_batch_id));
+        update ar set paid = amount +
+                (select sum(amount) from acc_trans
+                join chart ON (acc_trans.chart_id = chart.id)
+                where link = 'AR' AND trans_id = ar.id
+                        AND (voucher_id IS NULL OR voucher_id NOT IN
+                                (select id from voucher
+                                WHERE batch_id = in_batch_id)))
+        where id in (select trans_id from acc_trans where voucher_id IN
+                (select id from voucher where batch_id = in_batch_id));
 
-	update ap set paid = amount - (select sum(amount) from acc_trans
-		join chart ON (acc_trans.chart_id = chart.id)
-		where link = 'AP' AND trans_id = ap.id
-			AND (voucher_id IS NULL OR voucher_id NOT IN
-				(select id from voucher
-				WHERE batch_id = in_batch_id)))
-	where id in (select trans_id from acc_trans where voucher_id IN
-		(select id from voucher where batch_id = in_batch_id));
+        update ap set paid = amount - (select sum(amount) from acc_trans
+                join chart ON (acc_trans.chart_id = chart.id)
+                where link = 'AP' AND trans_id = ap.id
+                        AND (voucher_id IS NULL OR voucher_id NOT IN
+                                (select id from voucher
+                                WHERE batch_id = in_batch_id)))
+        where id in (select trans_id from acc_trans where voucher_id IN
+                (select id from voucher where batch_id = in_batch_id));
 
         DELETE FROM ac_tax_form WHERE entry_id IN
                (select entry_id from acc_trans where voucher_id in
                        (select id from voucher where batch_id = in_batch_id)
                );
 
-	DELETE FROM acc_trans WHERE voucher_id IN
-		(select id FROM voucher where batch_id = in_batch_id);
+        DELETE FROM acc_trans WHERE voucher_id IN
+                (select id FROM voucher where batch_id = in_batch_id);
 
-	-- The rest of this function involves the deletion of actual
-	-- transactions, vouchers, and batches, and jobs which are in progress.
-	-- -CT
-	SELECT as_array(trans_id) INTO t_transaction_ids
-	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5, 8, 9);
+        -- The rest of this function involves the deletion of actual
+        -- transactions, vouchers, and batches, and jobs which are in progress.
+        -- -CT
+        SELECT as_array(trans_id) INTO t_transaction_ids
+        FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5, 8, 9);
 
         DELETE FROM ac_tax_form WHERE entry_id in
                (select entry_id from acc_trans
@@ -470,15 +470,15 @@ BEGIN
                  where trans_id = any(t_transaction_ids));
 
         DELETE FROM invoice WHERE trans_id = ANY(t_transaction_ids);
-	DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
-	DELETE FROM ar WHERE id = ANY(t_transaction_ids);
-	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
-	DELETE FROM gl WHERE id = ANY(t_transaction_ids);
-	DELETE FROM voucher WHERE batch_id = in_batch_id;
-	DELETE FROM batch WHERE id = in_batch_id;
-	DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
+        DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
+        DELETE FROM ar WHERE id = ANY(t_transaction_ids);
+        DELETE FROM ap WHERE id = ANY(t_transaction_ids);
+        DELETE FROM gl WHERE id = ANY(t_transaction_ids);
+        DELETE FROM voucher WHERE batch_id = in_batch_id;
+        DELETE FROM batch WHERE id = in_batch_id;
+        DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
 
-	RETURN 1;
+        RETURN 1;
 END;
 $$ language plpgsql SECURITY DEFINER;
 
@@ -492,45 +492,45 @@ CREATE OR REPLACE FUNCTION voucher__delete(in_voucher_id int)
 RETURNS int AS
 $$
 DECLARE
-	voucher_row RECORD;
+        voucher_row RECORD;
 BEGIN
-	SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
-	IF voucher_row.batch_class IN (1, 2, 5) THEN
+        SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
+        IF voucher_row.batch_class IN (1, 2, 5) THEN
         DELETE FROM ac_tax_form WHERE entry_id IN (
                SELECT entry_id
                  FROM acc_trans
                WHERE trans_id = voucher_row.trans_id);
 
-		DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
-		DELETE FROM ar WHERE id = voucher_row.trans_id;
-		DELETE FROM ap WHERE id = voucher_row.trans_id;
-		DELETE FROM gl WHERE id = voucher_row.trans_id;
-		DELETE FROM voucher WHERE id = voucher_row.id;
-		-- DELETE FROM transactions WHERE id = voucher_row.trans_id;
-	ELSE
-		update ar set paid = amount +
-			(select sum(amount) from acc_trans
-			join chart ON (acc_trans.chart_id = chart.id)
-			where link = 'AR' AND trans_id = ar.id
-				AND (voucher_id IS NULL
-				OR voucher_id <> voucher_row.id))
-		where id in (select trans_id from acc_trans
-				where voucher_id = voucher_row.id);
+                DELETE FROM acc_trans WHERE trans_id = voucher_row.trans_id;
+                DELETE FROM ar WHERE id = voucher_row.trans_id;
+                DELETE FROM ap WHERE id = voucher_row.trans_id;
+                DELETE FROM gl WHERE id = voucher_row.trans_id;
+                DELETE FROM voucher WHERE id = voucher_row.id;
+                -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
+        ELSE
+                update ar set paid = amount +
+                        (select sum(amount) from acc_trans
+                        join chart ON (acc_trans.chart_id = chart.id)
+                        where link = 'AR' AND trans_id = ar.id
+                                AND (voucher_id IS NULL
+                                OR voucher_id <> voucher_row.id))
+                where id in (select trans_id from acc_trans
+                                where voucher_id = voucher_row.id);
 
-		update ap set paid = amount - (select sum(amount) from acc_trans
-			join chart ON (acc_trans.chart_id = chart.id)
-			where link = 'AP' AND trans_id = ap.id
-				AND (voucher_id IS NULL
-				OR voucher_id <> voucher_row.id))
-		where id in (select trans_id from acc_trans
-				where voucher_id = voucher_row.id);
+                update ap set paid = amount - (select sum(amount) from acc_trans
+                        join chart ON (acc_trans.chart_id = chart.id)
+                        where link = 'AP' AND trans_id = ap.id
+                                AND (voucher_id IS NULL
+                                OR voucher_id <> voucher_row.id))
+                where id in (select trans_id from acc_trans
+                                where voucher_id = voucher_row.id);
                 DELETE FROM ac_tax_form WHERE entry_id IN
                        (select entry_id from acc_trans
                          where voucher_id = voucher_row.id);
 
-		DELETE FROM acc_trans where voucher_id = voucher_row.id;
-	END IF;
-	RETURN 1;
+                DELETE FROM acc_trans where voucher_id = voucher_row.id;
+        END IF;
+        RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 

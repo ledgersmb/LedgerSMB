@@ -8,7 +8,7 @@ values (-200, '_test1', -200);
 insert into session (session_id, users_id, token, last_used)
 values (-200, -200, md5(random()::text), now());
 
-SELECT account__save(null, accno, description, category, null, null, false, 
+SELECT account__save(null, accno, description, category, null, null, false,
                     false, array[link], false, false)
   FROM (VALUES ('00001', 'testing', 'L', 'AP'),
                ('00002', 'testing2', 'E', 'AP_amount'),
@@ -72,56 +72,56 @@ VALUES (currval('id'), 1, currval('batch_id_seq'));
 
 CREATE FUNCTION test_convert_array(anyarray) RETURNS text AS
 '
-	SELECT array_to_string($1, ''::'');
+        SELECT array_to_string($1, ''::'');
 ' LANGUAGE SQL;
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Batch Voucher In Payment Selection',
-	(SELECT test_convert_array(invoices) LIKE '%::test_show::%'
-			FROM
-				(
+        (SELECT test_convert_array(invoices) LIKE '%::test_show::%'
+                        FROM
+                                (
 SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
 )p));
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Locked Invoice In Payment Selection',
-	(SELECT test_convert_array(invoices) LIKE '%::test_show3::%'
-			FROM
-				(
+        (SELECT test_convert_array(invoices) LIKE '%::test_show3::%'
+                        FROM
+                                (
 SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
 )p));
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Threshold met',
-	(SELECT test_convert_array(invoices) LIKE '%::test_show2::%'
-			FROM
-				(
+        (SELECT test_convert_array(invoices) LIKE '%::test_show2::%'
+                        FROM
+                                (
 SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, NULL, '00001', 'TEST1')
 )p));
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Non-Batch Voucher Not In Payment Selection',
-		(SELECT test_convert_array(invoices) NOT LIKE '%::test_hide::%'
-			FROM
-				(SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1'))p ));
+                (SELECT test_convert_array(invoices) NOT LIKE '%::test_hide::%'
+                        FROM
+                                (SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1'))p ));
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Locked Invoice not in total',
-		(SELECT total_due < 1000000
-			FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')) );
+                (SELECT total_due < 1000000
+                        FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, currval('batch_id_seq')::int, '00001', 'TEST1')) );
 
 INSERT INTO voucher(batch_id, batch_class, id, trans_id)
 values (currval('batch_id_seq')::int, 4, -100, currval('id')::int);
 INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
-	transdate, source)
+        transdate, source)
 values (currval('id')::int,
-	(select id from chart where accno = '00003'), -100, true, '1', now(),
-	'_test_src1');
+        (select id from chart where accno = '00003'), -100, true, '1', now(),
+        '_test_src1');
 INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
-	transdate, source)
+        transdate, source)
 values (currval('id')::int,
-	(select id from chart where accno = '00001'), -100, true, '-1', now(),
-	'_test_src1');
+        (select id from chart where accno = '00001'), -100, true, '-1', now(),
+        '_test_src1');
 
 SELECT * FROM TEST_RESULT;
 

@@ -18,10 +18,10 @@ $$
                         approved, is_template, effective_start, effective_end,
                         currency, entered_by)
         VALUES (coalesce($1, ''), $2, $3, $4,
-                        coalesce($5 , false), 
+                        coalesce($5 , false),
                         coalesce($6, false),
                $4, $4, $7, person__get_my_entity_id()) RETURNING *;
-$$ language sql; 
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric,
@@ -115,7 +115,7 @@ BEGIN
                 LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
 --              WHERE (in_reference IS NULL OR in_reference = j.reference) AND
---                      (in_description IS NULL 
+--                      (in_description IS NULL
 --                              or in_description = j.description) AND
 --                      (in_entry_type is null or in_entry_type = j.journal)
 --                      and (in_transaction_date is null
