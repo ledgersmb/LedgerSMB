@@ -1341,7 +1341,7 @@ database.  We use key-value modelling here because this most accurately maps
 the actual semantics of the data.
 $$ ;
 
-COPY defaults FROM stdin WITH DELIMITER '|'
+COPY defaults FROM stdin WITH DELIMITER '|';
 timeout|90 minutes
 sinumber|1
 sonumber|1
@@ -2772,7 +2772,7 @@ SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
 --
 
-COPY menu_node (id, label, parent, "position") FROM stdin WITH DELIMITER '|'
+COPY menu_node (id, label, parent, "position") FROM stdin WITH DELIMITER '|';
 91|Search Groups|77|6
 92|Search Pricegroups|77|8
 6|Import Inventory|77|13
