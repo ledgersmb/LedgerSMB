@@ -14,7 +14,7 @@ SELECT account__save
        (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
        false);
 INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, paid,
-	approved, curr)
+        approved, curr)
 select '_TEST AP', -1000, '100', '100', '0', FALSE, 'USD';
 
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
@@ -27,7 +27,7 @@ INSERT INTO ac_tax_form (entry_id, reportable)
 VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
 INSERT INTO ar (invnumber, entity_credit_account, amount, netamount, paid,
-	approved, curr)
+        approved, curr)
 select '_TEST AR', -1001, '100', '100', '0', FALSE, 'USD';
 
 INSERT INTO acc_trans (chart_id, trans_id, amount, approved)

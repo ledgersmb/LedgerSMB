@@ -61,7 +61,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                       END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end
                       * CASE WHEN ac.relation = 'invoice' then -1 else 1 end)
 
-		FROM (select id, transdate, entity_credit_account, invoice,
+                FROM (select id, transdate, entity_credit_account, invoice,
                              amount, 'ar' as class FROM ar
                        UNION
                       select id, transdate, entity_credit_account, invoice,
@@ -101,11 +101,11 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                           AND transdate BETWEEN in_begin AND in_end
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
-		JOIN entity_credit_account
+                JOIN entity_credit_account
                   ON (gl.entity_credit_account = entity_credit_account.id)
-		JOIN entity ON (entity.id = entity_credit_account.entity_id)
-		JOIN company ON (entity.id = company.entity_id)
-		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
+                JOIN entity ON (entity.id = entity_credit_account.entity_id)
+                JOIN company ON (entity.id = company.entity_id)
+                JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
              GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
@@ -168,10 +168,10 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                           ON (invoice.id = itf.invoice_id)
                        GROUP BY trans_id
                      ) ac ON (ac.trans_id = gl.id)
-		JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id)
-		JOIN entity ON (entity.id = entity_credit_account.entity_id)
-		JOIN company ON (entity.id = company.entity_id)
-		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
+                JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id)
+                JOIN entity ON (entity.id = entity_credit_account.entity_id)
+                JOIN company ON (entity.id = company.entity_id)
+                JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                 JOIN (SELECT ac.trans_id, sum(ac.amount) as amount,
                              as_array(entry_id) as entry_ids,
                              as_array(chart_id) as chart_ids,
@@ -183,8 +183,8 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                           AND transdate BETWEEN in_begin AND in_end
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
-		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+                WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
+                GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report
@@ -215,7 +215,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                       END * CASE WHEN gl.class = 'ap' THEN -1 else 1 end
                       * CASE WHEN ac.relation = 'invoice' then -1 else 1 end)
 
-		FROM (select id, transdate, entity_credit_account, invoice,
+                FROM (select id, transdate, entity_credit_account, invoice,
                              amount, 'ar' as class FROM ar
                        WHERE transdate BETWEEN in_begin AND in_end
                        UNION
@@ -246,11 +246,11 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                              AND ((gl.invoice is true and ac.relation='invoice')
                                   OR (gl.invoice is false
                                      and ac.relation='acc_trans')))
-		JOIN entity_credit_account
+                JOIN entity_credit_account
                   ON (gl.entity_credit_account = entity_credit_account.id)
-		JOIN entity ON (entity.id = entity_credit_account.entity_id)
-		JOIN company ON (entity.id = company.entity_id)
-		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
+                JOIN entity ON (entity.id = entity_credit_account.entity_id)
+                JOIN company ON (entity.id = company.entity_id)
+                JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
              GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
@@ -314,12 +314,12 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                           ON (invoice.id = itf.invoice_id)
                        GROUP BY trans_id
                      ) ac ON (ac.trans_id = gl.id)
-		JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id)
-		JOIN entity ON (entity.id = entity_credit_account.entity_id)
-		JOIN company ON (entity.id = company.entity_id)
-		JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
-		WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-		GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+                JOIN entity_credit_account ON (gl.entity_credit_account = entity_credit_account.id)
+                JOIN entity ON (entity.id = entity_credit_account.entity_id)
+                JOIN company ON (entity.id = company.entity_id)
+                JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
+                WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
+                GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report_accrual

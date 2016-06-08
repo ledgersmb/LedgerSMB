@@ -52,18 +52,18 @@ analyze test_exempt_tables;
 INSERT INTO test_result(test_name, success)
 select 'No overloaded functions in current schema', count(*) = 0
 FROM (select proname FROM pg_proc
-	WHERE pronamespace =
-		(select oid from pg_namespace
-		where nspname = current_schema())
-		AND proname NOT IN (select funcname FROM test_exempt_funcs)
-	group by proname
-	having count(*) > 1
+        WHERE pronamespace =
+                (select oid from pg_namespace
+                where nspname = current_schema())
+                AND proname NOT IN (select funcname FROM test_exempt_funcs)
+        group by proname
+        having count(*) > 1
 ) t;
 
 select proname FROM pg_proc WHERE pronamespace =
-	(select oid from pg_namespace
-	where nspname = current_schema())
-	AND proname NOT IN (select funcname from test_exempt_funcs)
+        (select oid from pg_namespace
+        where nspname = current_schema())
+        AND proname NOT IN (select funcname from test_exempt_funcs)
 group by proname
 having count(*) > 1;
 
@@ -75,4 +75,3 @@ SELECT (select count(*) from test_result where success is true)
 || ' failed' as message;
 
 ROLLBACK;
-

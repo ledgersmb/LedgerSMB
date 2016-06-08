@@ -12,7 +12,7 @@ values ('AR_paid1', false, true),
        ('AR_overpayment1', false, true);
 
 SELECT account__save (null, accno, description, category::char(1),
-            null, null, false, false, 
+            null, null, false, false,
             case when link is not null then link::text[] else '{}' END,
             false, false)
   FROM (VALUES ('TEST testing 1', 'A', 'A', '00001', null),
@@ -24,7 +24,7 @@ SELECT account__save (null, accno, description, category::char(1),
                ('TEST AR PAID 1', 'A', 'A', '00007', '{AR_paid}'),
                ('TEST AR PAID 2', 'A', 'A', '00008', '{AR_paid1}'),
                ('TEST AR PAID 3', 'A', 'A', '00009', '{IC_tax,AR_paid}'),
-               ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'), 
+               ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'),
                ('TEST AP PAID 1', 'A', 'A', '00011', '{AP_paid}'),
                ('TEST AP PAID 2', 'A', 'A', '00012', '{AP_paid1}'),
                ('TEST AP PAID 3', 'A', 'A', '00013', '{IC_tax,AP_paid}'),

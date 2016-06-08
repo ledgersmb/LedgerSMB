@@ -21,7 +21,7 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         stmt TEXT;
         a_role name;
         a_user name;
-	t_userid int;
+        t_userid int;
     BEGIN
 
         -- Issue the grant
@@ -40,9 +40,9 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
 
         EXECUTE stmt;
 
-	select id into t_userid from users where username = in_username;
-	if not FOUND then
-	  RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
+        select id into t_userid from users where username = in_username;
+        if not FOUND then
+          RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
         end if;
 
         return 1;
@@ -286,7 +286,7 @@ CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
 returns int SET datestyle = 'ISO, YMD' as -- datestyle needed due to legacy code
 $$
 DECLARE
-	t_expires timestamp;
+        t_expires timestamp;
         t_password_duration text;
 BEGIN
     SELECT value INTO t_password_duration FROM defaults
@@ -633,11 +633,11 @@ create or replace function admin__get_roles () returns setof pg_roles as $$
 $$ language sql;
 
 create or replace function user__save_preferences(
-	in_dateformat text,
-	in_numberformat text,
-	in_language text,
-	in_stylesheet text,
-	in_printer text
+        in_dateformat text,
+        in_numberformat text,
+        in_language text,
+        in_stylesheet text,
+        in_printer text
 ) returns bool as
 $$
 BEGIN
@@ -684,26 +684,26 @@ $$ Returns the preferences row for the user.$$;
 
 DROP TYPE if exists user_result CASCADE;
 CREATE TYPE user_result AS (
-	id int,
-	username text,
-	first_name text,
-	last_name text,
-	ssn text,
-	dob date
+        id int,
+        username text,
+        first_name text,
+        last_name text,
+        ssn text,
+        dob date
 );
 
 
 CREATE OR REPLACE FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) RETURNS SETOF user_result AS
 $$
-		SELECT u.id, u.username, p.first_name, p.last_name, e.ssn, e.dob
-		FROM users u
-		JOIN person p ON (u.entity_id = p.entity_id)
-		JOIN entity_employee e ON (e.entity_id = p.entity_id)
-		WHERE u.username LIKE '%' || coalesce(in_username,'') || '%' AND
-			(p.first_name = in_first_name or in_first_name is null)
-			AND (p.last_name = in_last_name or in_last_name is null)
-			AND (in_ssn is NULL or in_ssn = e.ssn)
-			AND (e.dob = in_dob::date or in_dob is NULL)
+                SELECT u.id, u.username, p.first_name, p.last_name, e.ssn, e.dob
+                FROM users u
+                JOIN person p ON (u.entity_id = p.entity_id)
+                JOIN entity_employee e ON (e.entity_id = p.entity_id)
+                WHERE u.username LIKE '%' || coalesce(in_username,'') || '%' AND
+                        (p.first_name = in_first_name or in_first_name is null)
+                        AND (p.last_name = in_last_name or in_last_name is null)
+                        AND (in_ssn is NULL or in_ssn = e.ssn)
+                        AND (e.dob = in_dob::date or in_dob is NULL)
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION  admin__search_users(in_username text, in_first_name text, in_last_name text, in_ssn text, in_dob date) IS
@@ -712,10 +712,10 @@ only username is not an exact match.$$;
 
 DROP TYPE if exists session_result CASCADE;
 CREATE TYPE session_result AS (
-	id int,
-	username text,
-	last_used timestamp,
-	locks_active bigint
+        id int,
+        username text,
+        last_used timestamp,
+        locks_active bigint
 );
 
 CREATE OR REPLACE FUNCTION admin__list_sessions() RETURNS SETOF session_result
@@ -734,8 +734,8 @@ $$ Lists all active sessions.$$;
 CREATE OR REPLACE FUNCTION admin__drop_session(in_session_id int) RETURNS bool AS
 $$
 BEGIN
-	DELETE FROM "session" WHERE session_id = in_session_id;
-	RETURN FOUND;
+        DELETE FROM "session" WHERE session_id = in_session_id;
+        RETURN FOUND;
 END;
 $$ language plpgsql;
 

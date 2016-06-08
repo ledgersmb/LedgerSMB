@@ -185,40 +185,40 @@ CREATE OR REPLACE FUNCTION asset_report__generate_gl(in_report_id int, in_accum_
 RETURNS INT AS
 $$
 DECLARE
-	t_report_dept record;
-	t_dep_amount numeric;
+        t_report_dept record;
+        t_dep_amount numeric;
 
 Begin
-	INSERT INTO gl (reference, description, transdate, approved)
-	SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-		report_date, false
-	FROM asset_report
-	JOIN asset_report_line
-		ON (asset_report.id = asset_report_line.report_id)
-	JOIN asset_item
-		ON (asset_report_line.asset_id = asset_item.id)
-	WHERE asset_report.id = in_report_id
-	GROUP BY asset_report.id, asset_report.report_date;
+        INSERT INTO gl (reference, description, transdate, approved)
+        SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
+                report_date, false
+        FROM asset_report
+        JOIN asset_report_line
+                ON (asset_report.id = asset_report_line.report_id)
+        JOIN asset_item
+                ON (asset_report_line.asset_id = asset_item.id)
+        WHERE asset_report.id = in_report_id
+        GROUP BY asset_report.id, asset_report.report_date;
 
-	INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
-	SELECT gl.id, a.exp_account_id, r.report_date, true, sum(amount) * -1
-	FROM asset_report r
-	JOIN asset_report_line l ON (r.id = l.report_id)
-	JOIN asset_item a ON (l.asset_id = a.id)
-	JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
-	WHERE r.id = in_report_id
-	GROUP BY gl.id, r.report_date, a.exp_account_id;
+        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
+        SELECT gl.id, a.exp_account_id, r.report_date, true, sum(amount) * -1
+        FROM asset_report r
+        JOIN asset_report_line l ON (r.id = l.report_id)
+        JOIN asset_item a ON (l.asset_id = a.id)
+        JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
+        WHERE r.id = in_report_id
+        GROUP BY gl.id, r.report_date, a.exp_account_id;
 
-	INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
-	SELECT gl.id, a.dep_account_id, r.report_date, true, sum(amount)
-	FROM asset_report r
-	JOIN asset_report_line l ON (r.id = l.report_id)
-	JOIN asset_item a ON (l.asset_id = a.id)
-	JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
-	WHERE r.id = in_report_id
-	GROUP BY gl.id, a.dep_account_id, r.report_date, a.tag, a.description;
+        INSERT INTO acc_trans (trans_id, chart_id, transdate, approved, amount)
+        SELECT gl.id, a.dep_account_id, r.report_date, true, sum(amount)
+        FROM asset_report r
+        JOIN asset_report_line l ON (r.id = l.report_id)
+        JOIN asset_item a ON (l.asset_id = a.id)
+        JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
+        WHERE r.id = in_report_id
+        GROUP BY gl.id, a.dep_account_id, r.report_date, a.tag, a.description;
 
-	RETURN in_report_id;
+        RETURN in_report_id;
 END;
 $$ language plpgsql;
 
@@ -231,7 +231,7 @@ $$;
 
 CREATE OR REPLACE FUNCTION asset_class__get (in_id int) RETURNS asset_class AS
 $$
-	SELECT * FROM asset_class WHERE id = in_id;
+        SELECT * FROM asset_class WHERE id = in_id;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_class__get (in_id int) IS
@@ -247,16 +247,16 @@ $$ Returns an alphabetical list of asset classes.$$;
 
 DROP TYPE IF EXISTS asset_class_result CASCADE;
 CREATE TYPE asset_class_result AS (
-	id int,
-	asset_account_id int,
-	asset_accno text,
-	asset_description text,
-	dep_account_id int,
-	dep_accno text,
-	dep_description text,
-	method text,
-	method_id int,
-	label text
+        id int,
+        asset_account_id int,
+        asset_accno text,
+        asset_description text,
+        dep_account_id int,
+        dep_accno text,
+        dep_description text,
+        method text,
+        method_id int,
+        label text
 );
 
 CREATE OR REPLACE FUNCTION asset_class__search
@@ -264,22 +264,22 @@ CREATE OR REPLACE FUNCTION asset_class__search
 in_method int, in_label text)
 RETURNS SETOF asset_class_result AS
 $$
-		SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
-			ac.dep_account_id, ad.accno, ad.description,
+                SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
+                        ac.dep_account_id, ad.accno, ad.description,
                         m.method, ac.method,
-			ac.label
-		FROM asset_class ac
-		JOIN account aa ON (aa.id = ac.asset_account_id)
-		JOIN account ad ON (ad.id = ac.dep_account_id)
-		JOIN asset_dep_method m ON (ac.method = m.id)
-		WHERE
-			(in_asset_account_id is null
-				or in_asset_account_id = ac.asset_account_id)
-			AND (in_dep_account_id is null OR
-				in_dep_account_id = ac.dep_account_id)
-			AND (in_method is null OR in_method = ac.method)
-			AND (in_label IS NULL OR ac.label LIKE
-				'%' || in_label || '%')
+                        ac.label
+                FROM asset_class ac
+                JOIN account aa ON (aa.id = ac.asset_account_id)
+                JOIN account ad ON (ad.id = ac.dep_account_id)
+                JOIN asset_dep_method m ON (ac.method = m.id)
+                WHERE
+                        (in_asset_account_id is null
+                                or in_asset_account_id = ac.asset_account_id)
+                        AND (in_dep_account_id is null OR
+                                in_dep_account_id = ac.dep_account_id)
+                        AND (in_method is null OR in_method = ac.method)
+                        AND (in_label IS NULL OR ac.label LIKE
+                                '%' || in_label || '%')
                ORDER BY label
 $$ language sql;
 
@@ -305,27 +305,27 @@ RETURNS asset_class AS
 $$
 DECLARE ret_val asset_class;
 BEGIN
-	UPDATE asset_class
-	SET asset_account_id = in_asset_account_id,
-		dep_account_id = in_dep_account_id,
-		method = in_method,
-		label = in_label
-	WHERE id = in_id;
+        UPDATE asset_class
+        SET asset_account_id = in_asset_account_id,
+                dep_account_id = in_dep_account_id,
+                method = in_method,
+                label = in_label
+        WHERE id = in_id;
 
-	IF FOUND THEN
-		SELECT * INTO ret_val FROM asset_class where id = in_id;
-		RETURN ret_val;
-	END IF;
+        IF FOUND THEN
+                SELECT * INTO ret_val FROM asset_class where id = in_id;
+                RETURN ret_val;
+        END IF;
 
-	INSERT INTO asset_class (asset_account_id, dep_account_id, method,
-		label)
-	VALUES (in_asset_account_id, in_dep_account_id, in_method,
-		in_label);
+        INSERT INTO asset_class (asset_account_id, dep_account_id, method,
+                label)
+        VALUES (in_asset_account_id, in_dep_account_id, in_method,
+                in_label);
 
-	SELECT * INTO ret_val FROM asset_class
-	WHERE id = currval('asset_class_id_seq');
+        SELECT * INTO ret_val FROM asset_class
+        WHERE id = currval('asset_class_id_seq');
 
-	RETURN ret_val;
+        RETURN ret_val;
 END;
 $$ language plpgsql;
 
@@ -338,7 +338,7 @@ in the table, inserts a new row.  Returns the row saved.$$;
 CREATE OR REPLACE FUNCTION asset__get (in_id int, in_tag text)
 RETURNS asset_item AS
 $$
-	SELECT * from asset_item WHERE id = in_id OR in_tag = tag
+        SELECT * from asset_item WHERE id = in_id OR in_tag = tag
         ORDER BY id desc limit 1;
 $$ language sql;
 
@@ -352,20 +352,20 @@ CREATE OR REPLACE FUNCTION asset__search
 in_purchase_date date, in_purchase_value numeric,
 in_usable_life numeric, in_salvage_value numeric)
 RETURNS SETOF asset_item AS $$
-		SELECT * FROM asset_item
-		WHERE (in_asset_class is null
-			or asset_class_id = in_asset_class)
-			AND (in_description is null or description
-				LIKE '%' || in_description || '%')
-			and (in_tag is null or tag like '%'||in_tag||'%')
-			AND (in_purchase_date is null
-				or purchase_date = in_purchase_date)
-			AND (in_purchase_value is null
-				or in_purchase_value = purchase_value)
-			AND (in_usable_life is null
-				or in_usable_life = usable_life)
-			AND (in_salvage_value is null
-				OR in_salvage_value = salvage_value);
+                SELECT * FROM asset_item
+                WHERE (in_asset_class is null
+                        or asset_class_id = in_asset_class)
+                        AND (in_description is null or description
+                                LIKE '%' || in_description || '%')
+                        and (in_tag is null or tag like '%'||in_tag||'%')
+                        AND (in_purchase_date is null
+                                or purchase_date = in_purchase_date)
+                        AND (in_purchase_value is null
+                                or in_purchase_value = purchase_value)
+                        AND (in_usable_life is null
+                                or in_usable_life = usable_life)
+                        AND (in_salvage_value is null
+                                OR in_salvage_value = salvage_value);
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION asset__search
@@ -381,7 +381,7 @@ CREATE OR REPLACE FUNCTION asset_class__get_asset_accounts()
 RETURNS SETOF account AS $$
 SELECT * FROM account
 WHERE id IN
-	(select account_id from account_link where description = 'Fixed_Asset')
+        (select account_id from account_link where description = 'Fixed_Asset')
 ORDER BY accno;
 $$ LANGUAGE SQL;
 
@@ -393,7 +393,7 @@ CREATE OR REPLACE FUNCTION asset_class__get_dep_accounts()
 RETURNS SETOF account AS $$
 SELECT * FROM account
 WHERE id IN
-	(select account_id from account_link where description = 'Asset_Dep')
+        (select account_id from account_link where description = 'Asset_Dep')
 ORDER BY accno;
 $$ LANGUAGE SQL;
 
@@ -413,42 +413,42 @@ returns asset_item AS
 $$
 DECLARE ret_val asset_item;
 BEGIN
-	UPDATE asset_item
-	SET asset_class_id = in_asset_class,
-		description = in_description,
-		tag = in_tag,
-		purchase_date = in_purchase_date,
-		purchase_value = in_purchase_value,
-		usable_life = in_usable_life,
-		location_id = in_warehouse_id,
-		department_id = in_department_id,
-		invoice_id = in_invoice_id,
-		salvage_value = in_salvage_value,
+        UPDATE asset_item
+        SET asset_class_id = in_asset_class,
+                description = in_description,
+                tag = in_tag,
+                purchase_date = in_purchase_date,
+                purchase_value = in_purchase_value,
+                usable_life = in_usable_life,
+                location_id = in_warehouse_id,
+                department_id = in_department_id,
+                invoice_id = in_invoice_id,
+                salvage_value = in_salvage_value,
                 asset_account_id = in_asset_account_id,
                 exp_account_id = in_exp_account_id,
                 start_depreciation =
                          coalesce(in_start_depreciation, in_purchase_date),
                 dep_account_id = in_dep_account_id
-	WHERE id = in_id;
-	IF FOUND THEN
-		SELECT * INTO ret_val FROM asset_item WHERE id = in_id;
-		return ret_val;
-	END IF;
+        WHERE id = in_id;
+        IF FOUND THEN
+                SELECT * INTO ret_val FROM asset_item WHERE id = in_id;
+                return ret_val;
+        END IF;
 
-	INSERT INTO asset_item (asset_class_id, description, tag, purchase_date,
-		purchase_value, usable_life, salvage_value, department_id,
-		location_id, invoice_id, asset_account_id, dep_account_id,
+        INSERT INTO asset_item (asset_class_id, description, tag, purchase_date,
+                purchase_value, usable_life, salvage_value, department_id,
+                location_id, invoice_id, asset_account_id, dep_account_id,
                 start_depreciation, exp_account_id)
-	VALUES (in_asset_class, in_description, in_tag, in_purchase_date,
-		in_purchase_value, in_usable_life, in_salvage_value,
-		in_department_id, in_warehouse_id, in_invoice_id,
+        VALUES (in_asset_class, in_description, in_tag, in_purchase_date,
+                in_purchase_value, in_usable_life, in_salvage_value,
+                in_department_id, in_warehouse_id, in_invoice_id,
                 in_asset_account_id, in_dep_account_id,
                 coalesce(in_start_depreciation, in_purchase_date),
                 in_exp_account_id);
 
-	SELECT * INTO ret_val FROM asset_item
-	WHERE id = currval('asset_item_id_seq');
-	RETURN ret_val;
+        SELECT * INTO ret_val FROM asset_item
+        WHERE id = currval('asset_item_id_seq');
+        RETURN ret_val;
 END;
 $$ language plpgsql;
 
@@ -520,29 +520,29 @@ in_submit bool)
 RETURNS asset_report AS
 $$
 DECLARE
-	ret_val asset_report;
-	item record;
-	method_text text;
+        ret_val asset_report;
+        item record;
+        method_text text;
 BEGIN
-	UPDATE asset_report
-	set asset_class = in_asset_class,
-		report_class = in_report_class,
-		report_date = in_report_date,
-		submitted = (in_submit or submitted)
-	WHERE id = in_id;
+        UPDATE asset_report
+        set asset_class = in_asset_class,
+                report_class = in_report_class,
+                report_date = in_report_date,
+                submitted = (in_submit or submitted)
+        WHERE id = in_id;
 
-	IF FOUND THEN
-		SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
-	ELSE
-		INSERT INTO asset_report(report_class, asset_class, report_date,
-			submitted)
-		values (in_report_class, in_asset_class, in_report_date,
-			coalesce(in_submit, true));
+        IF FOUND THEN
+                SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
+        ELSE
+                INSERT INTO asset_report(report_class, asset_class, report_date,
+                        submitted)
+                values (in_report_class, in_asset_class, in_report_date,
+                        coalesce(in_submit, true));
 
-		SELECT * INTO ret_val FROM asset_report
-		WHERE id = currval('asset_report_id_seq');
+                SELECT * INTO ret_val FROM asset_report
+                WHERE id = currval('asset_report_id_seq');
 
-	END IF;
+        END IF;
         RETURN ret_val;
 
 END;
@@ -718,7 +718,7 @@ BEGIN
            SET approved_at = now(),
                approved_by = person__get_my_entity_id()
          where id = in_id;
-	SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
+        SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
         if ret_val.dont_approve is not true then
                 if ret_val.report_class = 1 THEN
                     PERFORM asset_report__generate_gl(in_id, in_expense_acct);
@@ -732,8 +732,8 @@ BEGIN
                 ELSE RAISE EXCEPTION 'Invalid report class';
                 END IF;
         end if;
-	SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
-	RETURN ret_val;
+        SELECT * INTO ret_val FROM asset_report WHERE id = in_id;
+        RETURN ret_val;
 end;
 $$ language plpgsql;
 revoke execute on function asset_report__approve(int, int, int, int) from public;
@@ -749,7 +749,7 @@ $$
   INSERT
     INTO gl (reference, description, transdate, approved)
   SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-		report_date, false
+                report_date, false
     FROM asset_report
     JOIN asset_report_line ON (asset_report.id = asset_report_line.report_id)
     JOIN asset_item        ON (asset_report_line.asset_id = asset_item.id)
@@ -983,19 +983,19 @@ COMMENT ON FUNCTION asset_report__begin_import
 $$Creates the outline of an asset import report$$;
 
 CREATE OR REPLACE FUNCTION asset_report__import(
-	in_description text,
-	in_tag text,
-	in_purchase_value numeric,
-	in_salvage_value numeric,
-	in_usable_life numeric,
-	in_purchase_date date,
+        in_description text,
+        in_tag text,
+        in_purchase_value numeric,
+        in_salvage_value numeric,
+        in_usable_life numeric,
+        in_purchase_date date,
         in_start_depreciation date,
-	in_location_id int,
-	in_department_id int,
-	in_asset_account_id int,
-	in_dep_account_id int,
-	in_exp_account_id int,
-	in_asset_class_id int,
+        in_location_id int,
+        in_department_id int,
+        in_asset_account_id int,
+        in_dep_account_id int,
+        in_exp_account_id int,
+        in_asset_class_id int,
         in_invoice_id int,
         in_dep_report_id int,
         in_accum_dep numeric,
@@ -1252,19 +1252,19 @@ BEGIN
             (t_report.asset_class::int, t_report.report_date);
 
     PERFORM asset_report__import(
-	ai.description,
-	ai.tag,
-	ai.purchase_value * rld.percent_disposed / 100,
-	ai.salvage_value * rld.percent_disposed / 100,
-	ai.usable_life,
-	ai.purchase_date,
+        ai.description,
+        ai.tag,
+        ai.purchase_value * rld.percent_disposed / 100,
+        ai.salvage_value * rld.percent_disposed / 100,
+        ai.usable_life,
+        ai.purchase_date,
         ai.start_depreciation,
-	ai.location_id,
-	ai.department_id,
-	ai.asset_account_id,
-	ai.dep_account_id,
-	ai.exp_account_id,
-	ai.asset_class_id,
+        ai.location_id,
+        ai.department_id,
+        ai.asset_account_id,
+        ai.dep_account_id,
+        ai.exp_account_id,
+        ai.asset_class_id,
         ai.invoice_id,
         t_import.id,
         r.accum_depreciation * rld.percent_disposed / 100,
