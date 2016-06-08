@@ -356,4 +356,3 @@ WHERE id
    IN (SELECT account_id
        FROM account_link
        WHERE description LIKE '%_tax');
-

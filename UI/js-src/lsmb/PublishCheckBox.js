@@ -10,6 +10,7 @@ define(['dojo/_base/declare',
                },
                postCreate: function() {
                    var self = this;
+                   this.inherited(arguments);
                    this.own(
                        on(this, 'change',
                           function(targetValue) {

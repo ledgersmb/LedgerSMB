@@ -242,7 +242,7 @@ sub p_payments_bulk_post {
 
 # wrapper around post_payments_bulk munged for dynatable.
 
-sub p_post_payments_bulk {
+sub post_payments_bulk_p {
     post_payments_bulk(@_);
 }
 
@@ -458,26 +458,33 @@ sub display_payments {
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments')
                   or (defined $payment->{"id_$_->{contact_id}"})){
-                   $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
+                $payment->{"paid_$_->{contact_id}"} = ""
+                    unless defined $payment->{"paid_$_->{contact_id}"};
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_total +=  $invoice->[6];
-            $contact_to_pay += $invoice->[3];
+            $contact_to_pay += $invoice->[6];
+
+            my $fld = "payment_" . $invoice->[0];
+            $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
+
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
             $invoice->[6] = $invoice->[6]->to_output(money  => 1);
-            my $fld = "payment_" . $invoice->[0];
 
-            if ('display_payments' eq $request->{action} ){
-                $payment->{"$fld"} = $invoice->[6];
+            if ('display_payments' eq $request->{action}) {
+                $payment->{$fld} = $invoice->[6];
+            }
+            else {
+                $payment->{$fld} //= 0;
+                $payment->{$fld} =
+                    LedgerSMB::PGNumber->from_input($payment->{"$fld"})
+                    ->to_output(money => 1);
             }
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
         }
-        if (($payment->{action} ne 'update_payments')
-                  or (defined $payment->{"id_$_->{contact_id}"})){
             $_->{contact_total} = $contact_total;
             $_->{to_pay} = $contact_to_pay;
             $payment->{grand_total} += $contact_total;
@@ -487,7 +494,6 @@ sub display_payments {
                  $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
             }
 
-        }
         $_->{total_due} = $_->{total_due}->to_output(money  => 1);
         $_->{contact_total} = $_->{contact_total}->to_output(money  => 1);
         $_->{to_pay} = $_->{to_pay}->to_output(money  => 1);

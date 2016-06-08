@@ -18,6 +18,7 @@ define([
                                + '&id=' + f.id.value
                                + '&vc=' + f.vc.value
                                + '&formname=' + f.formname.value
+                               + '&language_code=' + f['language-code'].value
                                + '&media=screen'
                                + '&format=' + f.format.value;
 

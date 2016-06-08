@@ -170,4 +170,3 @@ INSERT INTO defaults (setting_key, value) VALUES ('weightunit' , 'Kg');
 -- INSERT INTO language (code, description) VALUES ('es_AR', 'Spanish (Argentina)');
 
 commit;
-

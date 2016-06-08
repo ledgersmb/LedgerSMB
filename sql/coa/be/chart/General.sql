@@ -462,4 +462,3 @@ WHERE id
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno = '55';
-

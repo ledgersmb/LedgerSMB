@@ -13,36 +13,36 @@ DROP FUNCTION IF EXISTS employee__save
 
 CREATE OR REPLACE FUNCTION employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date,
-	in_role text, in_ssn text, in_sales bool, in_manager_id int,
+        in_role text, in_ssn text, in_sales bool, in_manager_id int,
         in_employeenumber text, in_is_manager bool)
 RETURNS int AS $$
 DECLARE out_id INT;
 BEGIN
-	UPDATE entity_employee
-	SET startdate = coalesce(in_start_date, now()::date),
-		enddate = in_end_date,
-		dob = in_dob,
-		role = in_role,
-		ssn = in_ssn,
-		manager_id = in_manager_id,
-		employeenumber = in_employeenumber,
+        UPDATE entity_employee
+        SET startdate = coalesce(in_start_date, now()::date),
+                enddate = in_end_date,
+                dob = in_dob,
+                role = in_role,
+                ssn = in_ssn,
+                manager_id = in_manager_id,
+                employeenumber = in_employeenumber,
                 is_manager = coalesce(in_is_manager, false),
                 sales = in_sales
-	WHERE entity_id = in_entity_id;
+        WHERE entity_id = in_entity_id;
 
-	out_id = in_entity_id;
+        out_id = in_entity_id;
 
-	IF NOT FOUND THEN
-		INSERT INTO entity_employee
-			(startdate, enddate, dob, role, ssn, manager_id,
-				employeenumber, entity_id, is_manager, sales)
-		VALUES
-			(coalesce(in_start_date, now()::date), in_end_date,
+        IF NOT FOUND THEN
+                INSERT INTO entity_employee
+                        (startdate, enddate, dob, role, ssn, manager_id,
+                                employeenumber, entity_id, is_manager, sales)
+                VALUES
+                        (coalesce(in_start_date, now()::date), in_end_date,
                                 in_dob, in_role, in_ssn,
-				in_manager_id, in_employeenumber,
+                                in_manager_id, in_employeenumber,
                                 in_entity_id, in_is_manager, in_sales);
-		RETURN in_entity_id;
-	END IF;
+                RETURN in_entity_id;
+        END IF;
         RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
@@ -178,18 +178,18 @@ CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)
 RETURNS SETOF employees as
 $$
-		SELECT
-		    s.salutation,
-		    p.first_name,
-		    p.last_name,
-		    ee.*
-		FROM entity_employee ee
-		JOIN entity e on e.id = ee.entity_id
+                SELECT
+                    s.salutation,
+                    p.first_name,
+                    p.last_name,
+                    ee.*
+                FROM entity_employee ee
+                JOIN entity e on e.id = ee.entity_id
                 JOIN person p ON p.entity_id = e.id
                 JOIN salutation s ON s.id = p.salutation_id
-		WHERE ee.sales = 't'::bool AND ee.role='manager'
-			AND ee.entity_id <> coalesce(in_id, -1)
-		ORDER BY name
+                WHERE ee.sales = 't'::bool AND ee.role='manager'
+                        AND ee.entity_id <> coalesce(in_id, -1)
+                ORDER BY name
 $$ language sql;
 
 COMMENT ON FUNCTION employee__list_managers
@@ -208,22 +208,22 @@ LEFT JOIN entity_note emn on (emn.ref_key = em.id);
 
 CREATE OR REPLACE FUNCTION employee_search
 (in_startdatefrom date, in_startdateto date, in_name varchar, in_notes text,
-	in_enddateto date, in_enddatefrom date, in_sales boolean)
+        in_enddateto date, in_enddatefrom date, in_sales boolean)
 RETURNS SETOF employee_search AS
 $$
-		SELECT * FROM employee_search
-		WHERE coalesce(startdate, 'infinity'::timestamp)
-			>= coalesce(in_startdateto, '-infinity'::timestamp)
-			AND coalesce(startdate, '-infinity'::timestamp) <=
-				coalesce(in_startdatefrom,
-						'infinity'::timestamp)
-			AND coalesce(enddate, '-infinity'::timestamp) <=
-				coalesce(in_enddateto, 'infinity'::timestamp)
-			AND coalesce(enddate, 'infinity'::timestamp) >=
-				coalesce(in_enddatefrom, '-infinity'::timestamp)
-			AND (name ~*~ in_name
-			    OR note ~*~ in_notes)
-			AND (sales = 't' OR coalesce(in_sales, 'f') = 'f')
+                SELECT * FROM employee_search
+                WHERE coalesce(startdate, 'infinity'::timestamp)
+                        >= coalesce(in_startdateto, '-infinity'::timestamp)
+                        AND coalesce(startdate, '-infinity'::timestamp) <=
+                                coalesce(in_startdatefrom,
+                                                'infinity'::timestamp)
+                        AND coalesce(enddate, '-infinity'::timestamp) <=
+                                coalesce(in_enddateto, 'infinity'::timestamp)
+                        AND coalesce(enddate, 'infinity'::timestamp) >=
+                                coalesce(in_enddatefrom, '-infinity'::timestamp)
+                        AND (name ~*~ in_name
+                            OR note ~*~ in_notes)
+                        AND (sales = 't' OR coalesce(in_sales, 'f') = 'f')
 $$ language sql;
 
 CREATE OR REPLACE FUNCTION employee__all_salespeople()
