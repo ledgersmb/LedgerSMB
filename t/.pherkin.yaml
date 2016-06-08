@@ -5,4 +5,6 @@ default:
    extensions:
       Pherkin::Extension::LedgerSMB:
          db_name: postgres
+#      Pherkin::Extension::Screenshot:
+#         output_path: screens/
 
