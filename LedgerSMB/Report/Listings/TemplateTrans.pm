@@ -42,8 +42,13 @@ has approved => (is => 'ro', isa => 'Bool', default => 0);
 
 sub columns {
     my ($self) = @_;
-    my $href_base="transtemplate.pl?action=view&";
-    return [{
+    my $href_base="transtemplate.pl?action=view&id=";
+    return [ {
+        col_id => 'row_select',
+        type => 'checkbox',
+        name => '',
+
+     }, {
       col_id => 'id',
         type => 'href',
         name => LedgerSMB::Report::text('ID'),
@@ -72,6 +77,23 @@ none
 
 sub header_lines { [] }
 
+=head2 set_buttons
+
+none
+
+=cut
+
+sub set_buttons {
+    return [
+        { name => 'action',
+            text => LedgerSMB::Report::text('Delete'),
+           value => 'delete',
+            type => 'submit',
+           class => 'submit'
+        },
+        ];
+}
+
 =head2 name
 
 Template Transactions
@@ -87,18 +109,19 @@ sub name {
 
 =cut
 
+my %jtype = (
+    1 => 'gl',
+    2 => 'ar',
+    3 => 'ap',
+    );
+
 sub run_report {
     my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->exec_method(funcname => 'journal__search');
-    my %jtype = (
-       1 => 'gl',
-       2 => 'ar',
-       3 => 'ap',
-    );
     for my $ref(@rows){
        $ref->{journal_type} = $jtype{$ref->{entry_type}};
-       $ref->{row_id} = "entry_type=$ref->{journal_type}&id=$ref->{id}";
+       $ref->{row_id} = $ref->{id};
     }
     $self->rows(\@rows);
 }

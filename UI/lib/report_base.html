@@ -91,9 +91,7 @@ END # BLOCK -?>
 	</tr>
 <?lsmb END # BLOCK -?>
 
-<?lsmb BLOCK date_row ?>
-	<tr>
-
+<?lsmb BLOCK date_from_date ?>
 	  <th align="right"><?lsmb text('From') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                class="date" 
@@ -101,16 +99,17 @@ END # BLOCK -?>
                id="from_date" _ SUFFIX 
                size="11" 
                title=datestyle } ?></td>
+<?lsmb END # BLOCK -?>
+<?lsmb BLOCK date_to_date ?>
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                  class="date" 
-                 name="to_date" _ SUFFIX 
+                 name="to_date" _ SUFFIX
                  id="to_date" _ SUFFIX 
                  size="11" 
                  title=datestyle } ?></td>
-	</tr>
-	
-        <tr>
+<?lsmb END # BLOCK -?>
+<?lsmb BLOCK date_period ?>
 	<th align="right"><?lsmb text('Period') ?></th>
 
 	<td colspan="5">
@@ -153,74 +152,102 @@ END # BLOCK -?>
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
               
 	</td>
-      </tr>
+<?lsmb END # BLOCK -?>
+
+<?lsmb BLOCK date_row ?>
+	<tr>
+	  <?lsmb PROCESS date_from_date ?>
+	  <?lsmb PROCESS date_to_date ?>
+	</tr>
+	
+        <tr>
+	  <?lsmb PROCESS date_period ?>
+        </tr>
 <?lsmb END #BLOCK ?>
-<?lsmb BLOCK date_row_div ?>
-	<div class="input_row">
-          <div class="input_group">
-	  <?lsmb PROCESS input element_data = {
-               label=text('From')
-               class="date" 
-               name="from_date" 
-               id="from_date" 
-               size="11" 
-               title=datestyle } ?></div>
-          <div class="input_group">
-	  <?lsmb PROCESS input element_data = {
-               label=text('To')
-                 class="date" 
-                 name="to_date" 
-                 id="to_date" 
-                 size="11" 
-                 title=datestyle } ?></div>
-        <div class="input_row">
-          <div class="input_group">
-	<label align="right"><?lsmb text('Period') ?></label>
 
-        <?lsmb 
-        all_months.unshift({});
-        all_years.unshift({}); 
-        PROCESS select element_data = {
-               name = "from_month"
-               id = "from_month"
-               options = all_months
-        } ?>
+<?lsmb BLOCK date_from_date_div ?>
+  <div class="input_group">
+  <?lsmb PROCESS input element_data = {
+       label=text('From')
+       class="date" 
+       name="from_date"  _ SUFFIX
+       id="from_date"  _ SUFFIX
+       size="11" 
+       title=datestyle } ?></div>
+<?lsmb END #BLOCK ?>
 
-	<?lsmb PROCESS select element_data = {
+<?lsmb BLOCK date_to_date_div ?>
+  <div class="input_group">
+  <?lsmb PROCESS input element_data = {
+       label=text('To')
+	 class="date" 
+	 name="to_date" _ SUFFIX
+	 id="to_date"  _ SUFFIX
+	 size="11" 
+	 title=datestyle } ?></div>
+<?lsmb END #BLOCK ?>
+
+<?lsmb BLOCK date_period_div ?>
+  <div class="input_group">
+	<label><?lsmb text('Period') ?></label>
+
+	<?lsmb
+		   all_months.unshift({});
+           all_years.unshift({});
+
+		   PROCESS select element_data = {
+				name = "from_month"
+				id = "from_month"
+				options = all_months };
+
+	       PROCESS select element_data = {
                name="from_year"
                id="from_year"
                options = all_years
                text_attr = "date_get_all_years"
-               value_attr = "date_get_all_years"
-        } ?>
-	<?lsmb PROCESS input element_data = {
+               value_attr = "date_get_all_years" };
+
+	       PROCESS input element_data = {
                name="interval"
                id="interval-current"
                class="radio"
                type="radio"
                value="none" 
-               checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
-	<?lsmb PROCESS input element_data = { 
+               checked="checked" } ?>&nbsp;<?lsmb text('Current');
+
+	       PROCESS input element_data = { 
                name="interval" 
                id="interval-month"
                class="radio" 
                type="radio" 
-               value="month" } ?>&nbsp;<?lsmb text('Month') ?>
-	<?lsmb PROCESS input element_data = {
+               value="month" } ?>&nbsp;<?lsmb text('Month');
+
+	       PROCESS input element_data = {
                name="interval"
                id="interval-quarter"
                class="radio"
                type="radio"
-               value="quarter" } ?>&nbsp;<?lsmb text('Quarter') ?>
-        <?lsmb PROCESS input element_data = {
+               value="quarter" } ?>&nbsp;<?lsmb text('Quarter');
+
+           PROCESS input element_data = {
                name="interval"
                id="interval-year"
                class="radio"
                type="radio"
-               value="year" } ?>&nbsp;<?lsmb text('Year') ?>
-              
-	</div>
-      </div>
+               value="year" } ?>&nbsp;<?lsmb text('Year');
+   ?>
+
+  </div>
+<?lsmb END #BLOCK ?>
+
+<?lsmb BLOCK date_row_div ?>
+	<div class="input_row">
+	  <?lsmb PROCESS date_from_date_div ?>
+	  <?lsmb PROCESS date_to_date_div ?>
+          <div class="input_row">
+	    <?lsmb PROCESS date_period_div ?>
+          </div>
+        </div>
 <?lsmb END #BLOCK ?>
 
 <?lsmb 

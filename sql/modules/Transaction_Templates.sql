@@ -46,6 +46,14 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION journal__delete(in_journal_id int) RETURNS void AS
+$$
+  DELETE FROM journal_line WHERE journal_id = $1;
+
+  DELETE FROM journal_entry WHERE id = $1;
+$$ LANGUAGE SQL;
+
+
 CREATE OR REPLACE FUNCTION journal__validate_entry(in_id int) RETURNS bool AS
 $$
 	SELECT sum(amount) = 0 FROM journal_line WHERE journal_id = $1;

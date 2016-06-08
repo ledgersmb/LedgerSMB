@@ -1206,7 +1206,11 @@ sub update {
     if ( $form->{import_text} ) {
         &import_text;
     }
-    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
+    if ($form->{delete_line}) {
+        for (qw(partnumber description partsgroup id qty onhand sellprice)) {
+            delete $form->{"${_}_$form->{delete_line}"};
+        }
+    }
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 

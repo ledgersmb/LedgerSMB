@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::PgDate
+
+LedgerSMB::PgDate - Date handling and serialization to database
 
 =cut
 

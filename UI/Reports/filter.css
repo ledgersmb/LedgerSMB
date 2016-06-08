@@ -1,0 +1,18 @@
+.label { display: block;
+	float: left;
+	width: 170px;	
+}
+
+.input_group { display: block;
+	float: left;
+	width: 40%;
+}
+
+div.input_row {
+	overflow: auto;
+	width: 100%;
+}
+
+.subsection {
+	margin-top: 20px;
+}

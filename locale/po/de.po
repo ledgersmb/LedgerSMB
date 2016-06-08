@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-04-30 18:00+0000\n"
-"PO-Revision-Date: 2016-04-28 08:13+0000\n"
+"POT-Creation-Date: 2016-05-27 12:18+0000\n"
+"PO-Revision-Date: 2016-05-24 09:23+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "de/)\n"
@@ -200,7 +200,7 @@ msgid "Acc_trans Sum"
 msgstr ""
 
 #: LedgerSMB.pm:752 LedgerSMB.pm:753 LedgerSMB/Scripts/configuration.pm:324
-#: LedgerSMB/Scripts/setup.pm:777
+#: LedgerSMB/Scripts/setup.pm:795
 msgid "Access Denied"
 msgstr "Zugriff verweigert"
 
@@ -291,8 +291,8 @@ msgstr "Konto [_1] nicht gefunden"
 msgid "Account [_1] not found."
 msgstr "Konto [_1] nicht gefunden."
 
-#: UI/Reports/filters/balance_sheet.html:59
-#: UI/Reports/filters/income_statement.html:95
+#: UI/Reports/filters/balance_sheet.html:61
+#: UI/Reports/filters/income_statement.html:112
 msgid "Account category"
 msgstr "Kontokategorie"
 
@@ -300,8 +300,8 @@ msgstr "Kontokategorie"
 msgid "Account does not exist!"
 msgstr "Konto existiert nicht!"
 
-#: UI/Reports/filters/balance_sheet.html:28
-#: UI/Reports/filters/income_statement.html:68
+#: UI/Reports/filters/balance_sheet.html:30
+#: UI/Reports/filters/income_statement.html:81
 msgid "Account numbers"
 msgstr "Kontennummer"
 
@@ -326,7 +326,7 @@ msgstr "Konten bis"
 msgid "Accounts without heading"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:24
+#: UI/Reports/filters/income_statement.html:29
 #: UI/rp-search-generate_balance_sheet.html:64
 #: UI/rp-search-generate_income_statement.html:114
 #: UI/rp-search-generate_tax_report.html:92
@@ -843,7 +843,7 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:116
 #: LedgerSMB/Report/Unapproved/Drafts.pm:205 LedgerSMB/Scripts/asset.pm:579
 #: LedgerSMB/Scripts/asset.pm:658 LedgerSMB/Scripts/asset.pm:729
-#: LedgerSMB/Scripts/asset.pm:796 LedgerSMB/Scripts/budgets.pm:108
+#: LedgerSMB/Scripts/asset.pm:796 LedgerSMB/Scripts/budgets.pm:109
 #: UI/reconciliation/report.html:286
 msgid "Approve"
 msgstr "Genehmigen"
@@ -948,7 +948,7 @@ msgstr "Bericht zum Abgang geteilter Anlagen"
 msgid "Asset Tag"
 msgstr "Anlagenkennzeichnung"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:195 LedgerSMB/Report/Balance_Sheet.pm:197
+#: LedgerSMB/Report/Balance_Sheet.pm:214 LedgerSMB/Report/Balance_Sheet.pm:216
 #: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
 #: sql/Pg-database.sql:2887
 msgid "Assets"
@@ -1158,11 +1158,12 @@ msgid "Balance Due"
 msgstr ""
 
 #: UI/Reports/balance_sheet.html:26 UI/Reports/balance_sheet.tex:28
-#: UI/Reports/filters/balance_sheet.html:4 sql/Pg-database.sql:2837
+#: UI/Reports/filters/balance_sheet.html:1
+#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2837
 msgid "Balance Sheet"
 msgstr "Bilanz"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:285
+#: LedgerSMB/Report/Balance_Sheet.pm:304
 msgid "Balance sheet"
 msgstr ""
 
@@ -1224,7 +1225,7 @@ msgstr "Postenbeschreibung"
 msgid "Batch ID"
 msgstr "Posten Nr"
 
-#: LedgerSMB/GL.pm:148 LedgerSMB/IR.pm:419 LedgerSMB/IS.pm:1138
+#: LedgerSMB/GL.pm:148 LedgerSMB/IR.pm:419 LedgerSMB/IS.pm:1141
 msgid "Batch ID Missing"
 msgstr "Posten Nr. fehlt"
 
@@ -1497,11 +1498,11 @@ msgstr ""
 msgid "Cannot delete quotation!"
 msgstr "Angebot konnte nicht gelÃ¶scht werden!"
 
-#: bin/ir.pl:1457 bin/is.pl:1484
+#: bin/ir.pl:1461 bin/is.pl:1488
 msgid "Cannot post invoice for a closed period!"
 msgstr "Rechnung kann in abgeschlossener Periode nicht gebucht werden!"
 
-#: bin/aa.pl:1416 bin/ir.pl:1472 bin/is.pl:1499
+#: bin/aa.pl:1416 bin/ir.pl:1476 bin/is.pl:1503
 msgid "Cannot post payment for a closed period!"
 msgstr "Zahlung kann im abgeschlossenen Zeitraum nicht gebucht werden!"
 
@@ -1547,7 +1548,7 @@ msgstr "Erzeugnisse kÃ¶nnen nicht eingelagert werden!"
 msgid "Card ID"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:31 sql/Pg-database.sql:2852
+#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2852
 msgid "Cash"
 msgstr "Bar"
 
@@ -1745,6 +1746,16 @@ msgstr ""
 msgid "Compare to"
 msgstr "Gegenüberstellen zu"
 
+#: UI/Reports/filters/balance_sheet.html:120
+#: UI/Reports/filters/income_statement.html:176
+msgid "Comparison Periods"
+msgstr ""
+
+#: UI/Reports/filters/balance_sheet.html:88
+#: UI/Reports/filters/income_statement.html:143
+msgid "Comparison selection by"
+msgstr ""
+
 #: UI/payments/check_job.html:24
 msgid "Completed Successfully"
 msgstr ""
@@ -1835,7 +1846,7 @@ msgstr ""
 #: UI/oe-save_warn.html:19 UI/payments/payments_filter.html:185
 #: UI/Reports/co/filter_bm.html:140 UI/Reports/co/filter_cd.html:115
 #: UI/Reports/filters/aging.html:148 UI/Reports/filters/gl.html:289
-#: UI/Reports/filters/income_statement.html:142
+#: UI/Reports/filters/income_statement.html:215
 #: UI/Reports/filters/inventory_activity.html:32
 #: UI/Reports/filters/invoice_outstanding.html:287
 #: UI/Reports/filters/invoice_search.html:380
@@ -1910,7 +1921,7 @@ msgstr ""
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
 msgstr "Pos.conf.pl konnte nicht geÃ¶ffnet werden in [_1] line [_2]: [_3]"
 
-#: bin/ir.pl:1435 bin/is.pl:1463 bin/oe.pl:1379
+#: bin/ir.pl:1439 bin/is.pl:1467 bin/oe.pl:1379
 msgid "Could not save the data.  Please try again"
 msgstr "Daten konnten nicht gespeichert werden.  Bitte versuchen Sie es erneut"
 
@@ -1928,7 +1939,7 @@ msgid "Counted"
 msgstr "GezÃ¤hlt"
 
 #: LedgerSMB/Report/Listings/Overpayments.pm:132
-#: LedgerSMB/Report/Listings/TemplateTrans.pm:64
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:69
 msgid "Counterparty"
 msgstr ""
 
@@ -1957,6 +1968,10 @@ msgstr ""
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
+msgstr ""
+
+#: UI/setup/credentials.html:61
+msgid "Create"
 msgstr ""
 
 #: UI/create_batch.html:2
@@ -2080,7 +2095,7 @@ msgstr "WÃ¤hrung"
 #: templates/demo/statement.tex:38 templates/demo_with_images/statement.html:64
 #: templates/demo_with_images/statement.tex:38
 #: templates/xedemo/statement.html:64 templates/xedemo/statement.tex:38
-#: UI/bp-search.html:40 UI/lib/report_base.html:138 UI/lib/report_base.html:202
+#: UI/bp-search.html:40 UI/lib/report_base.html:137 UI/lib/report_base.html:216
 #: UI/pos-receipts.html:38 UI/rc-reconciliation.html:40
 #: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
 #: UI/rp-search-generate_income_statement.html:33
@@ -2088,7 +2103,7 @@ msgstr "WÃ¤hrung"
 msgid "Current"
 msgstr "Aktuell"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:230 LedgerSMB/Report/Balance_Sheet.pm:232
+#: LedgerSMB/Report/Balance_Sheet.pm:249 LedgerSMB/Report/Balance_Sheet.pm:251
 #: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: LedgerSMB/Scripts/configuration.pm:81
 msgid "Current earnings"
@@ -2135,7 +2150,7 @@ msgstr "Kundennummer"
 msgid "Customer Search"
 msgstr ""
 
-#: bin/aa.pl:1384 bin/is.pl:1472 bin/oe.pl:1312 bin/pe.pl:1273
+#: bin/aa.pl:1384 bin/is.pl:1476 bin/oe.pl:1312 bin/pe.pl:1273
 msgid "Customer missing!"
 msgstr "Kunde fehlt!"
 
@@ -2190,6 +2205,10 @@ msgstr ""
 #: LedgerSMB/Scripts/setup.pm:152
 msgid "Database does not exist."
 msgstr "Datenbank existiert nicht."
+
+#: LedgerSMB/Scripts/setup.pm:757
+msgid "Database exists."
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2330,6 +2349,11 @@ msgstr "Datum bis"
 msgid "Date: [_1]"
 msgstr "Datum: [_1]"
 
+#: UI/Reports/filters/balance_sheet.html:113
+#: UI/Reports/filters/income_statement.html:167
+msgid "Dates"
+msgstr ""
+
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
 msgstr ""
@@ -2454,6 +2478,7 @@ msgstr "Einstellungen"
 #: bin/oe.pl:759 bin/oe.pl:949 bin/pe.pl:173 bin/pe.pl:250 bin/pe.pl:622
 #: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:90
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
 #: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
@@ -2592,7 +2617,7 @@ msgstr "Abschreibung erfolgreich"
 #: LedgerSMB/Report/Listings/Business_Unit.pm:60
 #: LedgerSMB/Report/Listings/GIFI.pm:49
 #: LedgerSMB/Report/Listings/Language.pm:50 LedgerSMB/Report/Listings/SIC.pm:48
-#: LedgerSMB/Report/Listings/TemplateTrans.pm:59
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:64
 #: LedgerSMB/Report/Listings/Warehouse.pm:39 LedgerSMB/Report/PNL/Product.pm:83
 #: LedgerSMB/Report/Timecards.pm:105 LedgerSMB/Report/Timecards.pm:118
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:113
@@ -3109,7 +3134,7 @@ msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
-#: UI/lib/report_base.html:240 sql/Pg-database.sql:2809
+#: UI/lib/report_base.html:267 sql/Pg-database.sql:2809
 msgid "Employees"
 msgstr "Arbeitnehmer"
 
@@ -3167,12 +3192,9 @@ msgstr ""
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:85
-msgid "Enter up to 3 comparison dates"
-msgstr ""
-
-#: UI/Reports/filters/income_statement.html:128
-msgid "Enter up to 3 date ranges for comparison"
+#: UI/Reports/filters/balance_sheet.html:133
+#: UI/Reports/filters/income_statement.html:199
+msgid "Enter up to "
 msgstr ""
 
 #: LedgerSMB/Report/Budget/Search.pm:88
@@ -3220,13 +3242,13 @@ msgstr "Eintragungs ID"
 msgid "Envelope"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:221 LedgerSMB/Report/Balance_Sheet.pm:223
+#: LedgerSMB/Report/Balance_Sheet.pm:240 LedgerSMB/Report/Balance_Sheet.pm:242
 #: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
 #: UI/accounts/edit.html:200 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "Passiva/Eigenkapital"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:203 LedgerSMB/Report/Balance_Sheet.pm:205
+#: LedgerSMB/Report/Balance_Sheet.pm:222 LedgerSMB/Report/Balance_Sheet.pm:224
 msgid "Equity & Liabilities"
 msgstr ""
 
@@ -3242,7 +3264,7 @@ msgstr ""
 msgid "Error creating backup file"
 msgstr "Fehler beim erstellen der Sicherungsdatei"
 
-#: LedgerSMB/Scripts/vouchers.pm:98
+#: LedgerSMB/Scripts/vouchers.pm:99
 msgid "Error creating batch.  Please try again."
 msgstr "Fehler bei erstellen von Posten.  Bitte versuchen Sie es erneut."
 
@@ -3284,7 +3306,7 @@ msgstr "Wechselkurs"
 msgid "Exchange Rate"
 msgstr "Wechselkurs"
 
-#: bin/aa.pl:1423 bin/ir.pl:1479 bin/is.pl:1506
+#: bin/aa.pl:1423 bin/ir.pl:1483 bin/is.pl:1510
 msgid "Exchange rate for payment missing!"
 msgstr "Wechselkurs fÃ¼r Zahlung fehlt!"
 
@@ -3296,7 +3318,7 @@ msgstr ""
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
 msgstr "Wechselkurs stimmt nicht mit Datenbank Ã¼berein.  Ist [_1], Soll [_2]"
 
-#: bin/aa.pl:1405 bin/ir.pl:1460 bin/is.pl:1487 bin/oe.pl:1316 bin/oe.pl:1672
+#: bin/aa.pl:1405 bin/ir.pl:1464 bin/is.pl:1491 bin/oe.pl:1316 bin/oe.pl:1672
 msgid "Exchange rate missing!"
 msgstr "Wechselkurs fehlt!"
 
@@ -3321,7 +3343,7 @@ msgstr ""
 msgid "Expense/Asset"
 msgstr "Aufwand/Anlagen"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:180 LedgerSMB/Report/Balance_Sheet.pm:182
+#: LedgerSMB/Report/Balance_Sheet.pm:199 LedgerSMB/Report/Balance_Sheet.pm:201
 #: LedgerSMB/Report/PNL.pm:175 LedgerSMB/Report/PNL.pm:177
 msgid "Expenses"
 msgstr "Aufwände"
@@ -3584,8 +3606,8 @@ msgstr "Fre"
 #: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
 #: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:23
 #: UI/asset/search_reports.html:25 UI/bp-search.html:27
-#: UI/ca-list-selector.html:31 UI/lib/report_base.html:97
-#: UI/lib/report_base.html:162 UI/pos-receipts.html:16
+#: UI/ca-list-selector.html:31 UI/lib/report_base.html:95
+#: UI/lib/report_base.html:171 UI/pos-receipts.html:16
 #: UI/rc-reconciliation.html:16 UI/Reports/co/filter_bm.html:21
 #: UI/Reports/co/filter_cd.html:39 UI/Reports/filters/contact_search.html:114
 #: UI/Reports/filters/purchase_history.html:119
@@ -3622,14 +3644,14 @@ msgstr "Aus Warenlager"
 msgid "From date"
 msgstr "Von Datum"
 
-#: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:49
-#: UI/Reports/filters/income_statement.html:85
+#: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:51
+#: UI/Reports/filters/income_statement.html:102
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:874 LedgerSMB/Scripts/setup.pm:932
-#: LedgerSMB/Scripts/setup.pm:1137
+#: LedgerSMB/Scripts/setup.pm:892 LedgerSMB/Scripts/setup.pm:950
+#: LedgerSMB/Scripts/setup.pm:1155
 msgid "Full Permissions"
 msgstr "Volle Rechte"
 
@@ -3637,8 +3659,8 @@ msgstr "Volle Rechte"
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
 #: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:178
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:72
-#: UI/Reports/filters/balance_sheet.html:19 UI/Reports/filters/gl.html:241
-#: UI/Reports/filters/income_statement.html:62
+#: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:241
+#: UI/Reports/filters/income_statement.html:72
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
 #: sql/Pg-database.sql:2855
 msgid "GIFI"
@@ -3699,7 +3721,7 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:115 UI/Reports/aging_report.html:99
-#: UI/Reports/filters/balance_sheet.html:99 sql/Pg-database.sql:2781
+#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2781
 #: sql/Pg-database.sql:2819
 msgid "Generate"
 msgstr "Generieren"
@@ -3796,8 +3818,8 @@ msgstr "HTML Vorlagen"
 msgid "Heading"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:36
-#: UI/Reports/filters/income_statement.html:72
+#: UI/Reports/filters/balance_sheet.html:38
+#: UI/Reports/filters/income_statement.html:89
 msgid "Hierarchy type"
 msgstr ""
 
@@ -3835,7 +3857,7 @@ msgstr "hundert"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:192
 #: LedgerSMB/Report/Invoices/Transactions.pm:255
 #: LedgerSMB/Report/Listings/Asset_Class.pm:64
-#: LedgerSMB/Report/Listings/TemplateTrans.pm:50 LedgerSMB/Report/Orders.pm:209
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:55 LedgerSMB/Report/Orders.pm:209
 #: LedgerSMB/Report/Timecards.pm:109
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:92
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
@@ -3865,7 +3887,7 @@ msgstr ""
 msgid "If you would like to access this report again, please try this URL"
 msgstr ""
 
-#: UI/lib/report_base.html:80 UI/Reports/filters/income_statement.html:36
+#: UI/lib/report_base.html:80 UI/Reports/filters/income_statement.html:42
 #: UI/Reports/filters/trial_balance.html:49 UI/rp-search.html:44
 msgid "Ignore Year-ends"
 msgstr ""
@@ -3970,8 +3992,8 @@ msgstr ""
 msgid "Including partnumber"
 msgstr "Einschliesslich Teilnummer"
 
-#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:187
-#: LedgerSMB/Report/Balance_Sheet.pm:189 LedgerSMB/Report/PNL.pm:183
+#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:206
+#: LedgerSMB/Report/Balance_Sheet.pm:208 LedgerSMB/Report/PNL.pm:183
 #: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:87
 #: UI/accounts/edit.html:202 UI/accounts/edit.html:285
 #: UI/accounts/edit.html:367 UI/accounts/edit.html:406
@@ -3983,8 +4005,9 @@ msgstr "Einkommen"
 msgid "Income Class"
 msgstr "Einkommensklasse"
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:59
-#: UI/Reports/filters/income_statement.html:12 UI/Reports/PNL.tex:28
+#: LedgerSMB/Report/PNL/Income_Statement.pm:76
+#: UI/Reports/filters/income_statement.html:1
+#: UI/Reports/filters/income_statement.html:7 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2864
 msgid "Income Statement"
 msgstr "G&V"
@@ -4034,7 +4057,7 @@ msgstr ""
 msgid "Internal Notes"
 msgstr "Interne Notizen"
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:84
+#: LedgerSMB/Report/PNL/Income_Statement.pm:101
 msgid "Invalid Reporting Basis"
 msgstr "UngÃ¼ltige Berichtsgrundlage"
 
@@ -4114,7 +4137,7 @@ msgstr "Inventar gespeichert!"
 msgid "Inventory transferred!"
 msgstr "Inventar Ã¼bertragen!"
 
-#: bin/am.pl:1503 bin/io.pl:1389 bin/io.pl:1588 bin/is.pl:316 bin/is.pl:1510
+#: bin/am.pl:1503 bin/io.pl:1389 bin/io.pl:1588 bin/is.pl:316 bin/is.pl:1514
 #: LedgerSMB/Report/Aging.pm:103 LedgerSMB/Report/Inventory/Search.pm:278
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
@@ -4182,7 +4205,7 @@ msgstr ""
 msgid "Invoice Date"
 msgstr "Rechnungsdatum"
 
-#: bin/aa.pl:1388 bin/io.pl:1714 bin/ir.pl:1444 bin/is.pl:1471
+#: bin/aa.pl:1388 bin/io.pl:1714 bin/ir.pl:1448 bin/is.pl:1475
 msgid "Invoice Date missing!"
 msgstr "Rechnungsdatum fehlt!"
 
@@ -4402,8 +4425,8 @@ msgstr ""
 #: bin/ir.pl:389 bin/pe.pl:399 bin/pe.pl:577 LedgerSMB/Report/Aging.pm:96
 #: LedgerSMB/Report/Listings/Language.pm:68
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:251
-#: UI/Reports/filters/balance_sheet.html:76
-#: UI/Reports/filters/income_statement.html:110 UI/users/preferences.html:76
+#: UI/Reports/filters/balance_sheet.html:78
+#: UI/Reports/filters/income_statement.html:130 UI/users/preferences.html:76
 #: sql/Pg-database.sql:2878
 msgid "Language"
 msgstr "Sprache"
@@ -4476,7 +4499,7 @@ msgstr ""
 msgid "Letterhead"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:212 LedgerSMB/Report/Balance_Sheet.pm:214
+#: LedgerSMB/Report/Balance_Sheet.pm:231 LedgerSMB/Report/Balance_Sheet.pm:233
 #: LedgerSMB/Report/PNL.pm:197 LedgerSMB/Report/PNL.pm:199
 msgid "Liabilities"
 msgstr "Passiven"
@@ -4603,9 +4626,13 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: old-handler.pl:190 UI/login.html:69 UI/setup/credentials.html:53
+#: old-handler.pl:190 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Anmelden"
+
+#: LedgerSMB/Scripts/setup.pm:759
+msgid "Login?"
+msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Logout"
@@ -4659,8 +4686,8 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:873 LedgerSMB/Scripts/setup.pm:931
-#: LedgerSMB/Scripts/setup.pm:1136
+#: LedgerSMB/Scripts/setup.pm:891 LedgerSMB/Scripts/setup.pm:949
+#: LedgerSMB/Scripts/setup.pm:1154
 msgid "Manage Users"
 msgstr "Benutzer verwalten"
 
@@ -4730,7 +4757,7 @@ msgid "Message: "
 msgstr "Nachricht: "
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:84
-#: UI/Reports/filters/income_statement.html:18
+#: UI/Reports/filters/income_statement.html:20
 #: UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
 #: UI/rp-search-generate_tax_report.html:86
@@ -4794,7 +4821,7 @@ msgid "Mon"
 msgstr "Mon"
 
 #: bin/aa.pl:1658 bin/am.pl:824 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:82
-#: UI/bp-search.html:44 UI/lib/report_base.html:143 UI/lib/report_base.html:208
+#: UI/bp-search.html:44 UI/lib/report_base.html:142 UI/lib/report_base.html:223
 #: UI/pos-receipts.html:39 UI/rc-reconciliation.html:47
 #: UI/Reports/co/filter_bm.html:58
 #: UI/rp-search-generate_income_statement.html:40
@@ -4953,7 +4980,7 @@ msgstr "Keine Null BetrÃ¤ge"
 msgid "No Null employeenumber"
 msgstr "Keine Null Mitarbeiternummer"
 
-#: LedgerSMB/Scripts/setup.pm:1138
+#: LedgerSMB/Scripts/setup.pm:1156
 msgid "No changes"
 msgstr ""
 
@@ -4967,7 +4994,7 @@ msgstr ""
 msgid "No duplicate meta_numbers"
 msgstr ""
 
-#: LedgerSMB/Scripts/file.pm:112
+#: LedgerSMB/Scripts/file.pm:117
 msgid "No file uploaded"
 msgstr "Keine Datei hochgeladen"
 
@@ -5049,8 +5076,8 @@ msgstr ""
 msgid "Not Submitted"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:70
-#: UI/Reports/filters/income_statement.html:105
+#: UI/Reports/filters/balance_sheet.html:72
+#: UI/Reports/filters/income_statement.html:123
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 
@@ -5194,7 +5221,7 @@ msgstr "OH"
 msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
 msgstr ""
 
-#: bin/ic.pl:716 LedgerSMB/Scripts/budgets.pm:123 UI/accounts/edit.html:131
+#: bin/ic.pl:716 LedgerSMB/Scripts/budgets.pm:124 UI/accounts/edit.html:131
 #: UI/Reports/filters/search_goods.html:109
 msgid "Obsolete"
 msgstr "Obsolet"
@@ -5670,7 +5697,7 @@ msgstr ""
 msgid "Payment Type:"
 msgstr ""
 
-#: bin/aa.pl:1413 bin/ir.pl:1469 bin/is.pl:1496
+#: bin/aa.pl:1413 bin/ir.pl:1473 bin/is.pl:1500
 msgid "Payment date missing!"
 msgstr "Datum der Einzahlung fehlt!"
 
@@ -5723,13 +5750,18 @@ msgid "Percent Remaining"
 msgstr "Prozent verbleibend"
 
 #: bin/aa.pl:1651 bin/pe.pl:834 UI/bp-search.html:34
-#: UI/ca-list-selector.html:57 UI/lib/report_base.html:114
-#: UI/lib/report_base.html:178 UI/pos-receipts.html:34
+#: UI/ca-list-selector.html:57 UI/lib/report_base.html:113
+#: UI/lib/report_base.html:192 UI/pos-receipts.html:34
 #: UI/rc-reconciliation.html:32 UI/rp-search-generate_income_statement.html:25
 #: UI/rp-search-generate_income_statement.html:85
 #: UI/rp-search-generate_tax_report.html:21
 msgid "Period"
 msgstr "Zeitraum"
+
+#: UI/Reports/filters/balance_sheet.html:105
+#: UI/Reports/filters/income_statement.html:159
+msgid "Periods"
+msgstr ""
 
 #: LedgerSMB/Scripts/contact.pm:165 UI/Contact/divs/person.html:1
 msgid "Person"
@@ -6171,7 +6203,7 @@ msgid "Quantity exceeds available units to stock!"
 msgstr "Menge Ã¼bersteigt verfÃ¼gbare Einheiten am Lager!"
 
 #: bin/aa.pl:1660 bin/pe.pl:843 LedgerSMB/DBObject/Date.pm:88
-#: UI/bp-search.html:47 UI/lib/report_base.html:148 UI/lib/report_base.html:214
+#: UI/bp-search.html:47 UI/lib/report_base.html:147 UI/lib/report_base.html:230
 #: UI/pos-receipts.html:40 UI/rc-reconciliation.html:53
 #: UI/Reports/co/filter_bm.html:63
 #: UI/rp-search-generate_income_statement.html:46
@@ -6395,7 +6427,7 @@ msgstr ""
 msgid "Registration [_1]"
 msgstr ""
 
-#: LedgerSMB/Scripts/budgets.pm:114 UI/reconciliation/report.html:292
+#: LedgerSMB/Scripts/budgets.pm:115 UI/reconciliation/report.html:292
 msgid "Reject"
 msgstr "Verwerfen"
 
@@ -6454,7 +6486,7 @@ msgstr "Bericht für"
 msgid "Report in"
 msgstr ""
 
-#: LedgerSMB/Report/PNL/Income_Statement.pm:68
+#: LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
 msgstr "Grundlage des Berichts"
 
@@ -6530,6 +6562,11 @@ msgstr "BenÃ¶tigt von"
 #: LedgerSMB.pm:756 LedgerSMB.pm:757
 msgid "Required input not provided"
 msgstr "BenÃ¶tigte Eingabe nicht erbracht"
+
+#: LedgerSMB/Report/Balance_Sheet.pm:92
+#: LedgerSMB/Report/PNL/Income_Statement.pm:103
+msgid "Required period type"
+msgstr ""
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
 msgid "Reset Password"
@@ -6716,7 +6753,7 @@ msgstr "Sat"
 #: bin/is.pl:702 bin/oe.pl:722 bin/oe.pl:943 bin/pe.pl:166 bin/pe.pl:243
 #: bin/pe.pl:621 LedgerSMB/Scripts/account.pm:151
 #: LedgerSMB/Scripts/account.pm:164 LedgerSMB/Scripts/asset.pm:442
-#: LedgerSMB/Scripts/budgets.pm:99 t/data/04-complex_template.html:131
+#: LedgerSMB/Scripts/budgets.pm:100 t/data/04-complex_template.html:131
 #: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
 #: t/data/04-complex_template.html:644 UI/am-taxes.html:62
 #: UI/asset/edit_asset.html:206 UI/asset/edit_class.html:57
@@ -6960,7 +6997,7 @@ msgstr ""
 msgid "Select Vendor"
 msgstr "Lieferanten wÃ¤hlen"
 
-#: bin/arapprn.pl:530 bin/is.pl:1531 bin/oe.pl:1398
+#: bin/arapprn.pl:530 bin/is.pl:1535 bin/oe.pl:1398
 msgid "Select a Printer!"
 msgstr "Drucker wÃ¤hlen!"
 
@@ -6984,7 +7021,7 @@ msgstr "Artikel wÃ¤hlen"
 msgid "Select payment"
 msgstr "Zahlung wÃ¤hlen"
 
-#: bin/arapprn.pl:71 bin/arapprn.pl:528 bin/is.pl:1529 bin/oe.pl:1396
+#: bin/arapprn.pl:71 bin/arapprn.pl:528 bin/is.pl:1533 bin/oe.pl:1396
 msgid "Select postscript or PDF!"
 msgstr "WÃ¤hle Postscript oder PDF!"
 
@@ -7861,7 +7898,7 @@ msgstr ""
 msgid "Template Saved!"
 msgstr "Vorlage gespeichert!"
 
-#: LedgerSMB/Report/Listings/TemplateTrans.pm:84
+#: LedgerSMB/Report/Listings/TemplateTrans.pm:106
 msgid "Template Transactions"
 msgstr ""
 
@@ -8017,8 +8054,8 @@ msgstr "drei"
 msgid "Threshold"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:9
-#: UI/Reports/filters/balance_sheet.html:89
+#: UI/Reports/filters/balance_sheet.html:11
+#: UI/Reports/filters/balance_sheet.html:139
 msgid "Through date"
 msgstr ""
 
@@ -8089,7 +8126,7 @@ msgstr "Zeiten"
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
 #: UI/asset/begin_approval.html:31 UI/asset/search_reports.html:34
 #: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:104
-#: UI/lib/report_base.html:170 UI/pos-receipts.html:23
+#: UI/lib/report_base.html:182 UI/pos-receipts.html:23
 #: UI/rc-reconciliation.html:22 UI/Reports/co/filter_bm.html:27
 #: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/purchase_history.html:127
@@ -8507,7 +8544,7 @@ msgstr ""
 
 #: bin/aa.pl:976 bin/aa.pl:1000 bin/gl.pl:279 bin/ic.pl:838 bin/ic.pl:847
 #: bin/ir.pl:614 bin/ir.pl:1027 bin/is.pl:673 bin/is.pl:1117 bin/oe.pl:719
-#: bin/oe.pl:940 bin/oe.pl:2088 bin/pe.pl:620 LedgerSMB/Scripts/budgets.pm:93
+#: bin/oe.pl:940 bin/oe.pl:2088 bin/pe.pl:620 LedgerSMB/Scripts/budgets.pm:94
 #: UI/am-taxes.html:61 UI/payments/payment2.html:333
 #: UI/payments/payments_detail.html:459 UI/payroll/deduction.html:90
 #: UI/payroll/income.html:96 UI/reconciliation/report.html:260
@@ -8576,7 +8613,7 @@ msgstr "Benutzer"
 msgid "User Name"
 msgstr ""
 
-#: LedgerSMB/Scripts/setup.pm:918
+#: LedgerSMB/Scripts/setup.pm:936
 msgid "User already exists. Import?"
 msgstr "Benutzer besteht bereits. Importieren?"
 
@@ -8685,7 +8722,7 @@ msgstr "Lieferantenreferenznummer"
 msgid "Vendor Search"
 msgstr ""
 
-#: bin/aa.pl:1385 bin/ir.pl:1445 bin/oe.pl:1314
+#: bin/aa.pl:1385 bin/ir.pl:1449 bin/oe.pl:1314
 msgid "Vendor missing!"
 msgstr "Lieferant fehlt!"
 
@@ -8745,7 +8782,7 @@ msgstr "Warenlager"
 msgid "Warning!"
 msgstr "Warnung!"
 
-#: UI/lib/ui-header.html:26
+#: UI/lib/ui-header.html:29
 msgid "Warning:  Your password will expire in [_1]"
 msgstr ""
 
@@ -8819,7 +8856,7 @@ msgid "Yahoo"
 msgstr ""
 
 #: bin/aa.pl:1662 bin/am.pl:828 bin/pe.pl:845 LedgerSMB/DBObject/Date.pm:93
-#: UI/bp-search.html:50 UI/lib/report_base.html:153 UI/lib/report_base.html:220
+#: UI/bp-search.html:50 UI/lib/report_base.html:152 UI/lib/report_base.html:237
 #: UI/pos-receipts.html:41 UI/rc-reconciliation.html:59
 #: UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
@@ -8978,7 +9015,7 @@ msgstr ""
 msgid "done"
 msgstr "Erledigt"
 
-#: bin/ir.pl:1143 bin/ir.pl:1419 bin/is.pl:1448 bin/oe.pl:1285
+#: bin/ir.pl:1143 bin/ir.pl:1423 bin/is.pl:1452 bin/oe.pl:1285
 msgid "ea"
 msgstr "ea"
 

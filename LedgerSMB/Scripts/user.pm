@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::user
+LedgerSMB::Scripts::user - web entry points for user self-administration
 
 =head1 SYNPOSIS
 
