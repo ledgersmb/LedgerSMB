@@ -1268,7 +1268,7 @@ sub print_select { # Needed to print new printoptions output from non-template
 
 
 sub print {
-
+    my $saved_form = { %$form };
     $lang = $form->{language_code};
 
     if ($form->{vc} eq 'vendor') {
@@ -1277,21 +1277,22 @@ sub print {
     else {
         IS->retrieve_invoice(\%myconfig, $form);
     }
+    &invoice_links;
+    &prepare_invoice;
     $form->{language_code} = $lang;
+    $form->{media} = $saved_form->{media};
 
     # if this goes to the printer pass through
     my $old_form = undef;
     if ( $form->{media} !~ /(screen|email)/ ) {
         $form->error( $locale->text('Select txt, postscript or PDF!') )
           if ( $form->{format} !~ /(txt|postscript|pdf)/ );
+    }
 
         $old_form = new Form;
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
-    }
-    &print_form($old_form);
-
-
+    &print_form;
 }
 
 sub print_form {
@@ -1506,6 +1507,7 @@ sub print_form {
             1 .. $form->{rowcount};
         @{$form->{sellprice}} = map { $form->{"sellprice_$_"} }
             1 .. $form->{rowcount};
+        $form->{discount} = []; # bug: discount is a number here??
         @{$form->{discount}} = map { $form->{"discount_$_"} }
             1 .. $form->{rowcount};
         @{$form->{linetotal}} = map {

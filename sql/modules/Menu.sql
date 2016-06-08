@@ -26,10 +26,10 @@ $$
                                            t.positions || ',' || n.position
                                       FROM menu_node n
                                       JOIN tree t ON t.id = n.parent)
-		SELECT n.position, n.id, c.level, n.label, c.path, n.parent,
+                SELECT n.position, n.id, c.level, n.label, c.path, n.parent,
                        to_args(array[ma.attribute, ma.value])
-		FROM tree c
-		JOIN menu_node n USING(id)
+                FROM tree c
+                JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
                WHERE n.id IN (select node_id
                                 FROM menu_acl acl
@@ -103,24 +103,24 @@ menu_insert(in_parent_id int, in_position int, in_label text)
 returns int
 AS $$
 DECLARE
-	new_id int;
+        new_id int;
 BEGIN
-	UPDATE menu_node
-	SET position = position * -1
-	WHERE parent = in_parent_id
-		AND position >= in_position;
+        UPDATE menu_node
+        SET position = position * -1
+        WHERE parent = in_parent_id
+                AND position >= in_position;
 
-	INSERT INTO menu_node (parent, position, label)
-	VALUES (in_parent_id, in_position, in_label);
+        INSERT INTO menu_node (parent, position, label)
+        VALUES (in_parent_id, in_position, in_label);
 
-	SELECT INTO new_id currval('menu_node_id_seq');
+        SELECT INTO new_id currval('menu_node_id_seq');
 
-	UPDATE menu_node
-	SET position = (position * -1) + 1
-	WHERE parent = in_parent_id
-		AND position < 0;
+        UPDATE menu_node
+        SET position = (position * -1) + 1
+        WHERE parent = in_parent_id
+                AND position < 0;
 
-	RETURN new_id;
+        RETURN new_id;
 END;
 $$ language plpgsql;
 

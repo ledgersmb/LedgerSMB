@@ -7,7 +7,7 @@ CREATE TYPE lsmb_date_fields AS (
     decade double precision,
     year double precision,
     month double precision,
-    day double precision, 
+    day double precision,
     hour double precision,
     minute double precision,
     second double precision,
@@ -20,11 +20,11 @@ CREATE TYPE lsmb_date_fields AS (
     as_time time
 );
 
-CREATE OR REPLACE FUNCTION lsmb__decompose_timestamp 
+CREATE OR REPLACE FUNCTION lsmb__decompose_timestamp
 (in_timestamp timestamptz)
 RETURNS lsmb_date_fields language sql AS
 $$
-SELECT extract('century' from $1) as century, 
+SELECT extract('century' from $1) as century,
        extract('decade' from $1) as decade,
        extract('year' from $1) as year,
        extract('month' from $1) as month,
@@ -48,7 +48,7 @@ COMMENT ON FUNCTION parse_date(in_date date) IS $$ Simple way to cast a Perl str
 date format of known type. $$;
 
 CREATE OR REPLACE FUNCTION get_default_lang() RETURNS text AS
-$$ SELECT coalesce((select description FROM language 
+$$ SELECT coalesce((select description FROM language
     WHERE code = (SELECT substring(value, 1, 2) FROM defaults
                    WHERE setting_key = 'default_language')), 'english');
 $$ LANGUAGE sql;
@@ -64,16 +64,16 @@ CREATE OR REPLACE FUNCTION invoice__get_by_vendor_number
 (in_meta_number text, in_invoice_number text)
 RETURNS ap AS
 $$
-	SELECT * FROM ap WHERE entity_credit_account = 
-		(select id from entity_credit_account where entity_class = 1
-		AND meta_number = in_meta_number)
-		AND invnumber = in_invoice_number;
+        SELECT * FROM ap WHERE entity_credit_account =
+                (select id from entity_credit_account where entity_class = 1
+                AND meta_number = in_meta_number)
+                AND invnumber = in_invoice_number;
 $$ LANGUAGE SQL;
 
 DROP TYPE if exists tree_record CASCADE;
 CREATE TYPE tree_record AS (t int[]);
 
-CREATE OR REPLACE FUNCTION in_tree 
+CREATE OR REPLACE FUNCTION in_tree
 (in_node_id int, in_search_array tree_record[])
 RETURNS BOOL IMMUTABLE LANGUAGE SQL AS
 $$
@@ -135,8 +135,8 @@ PERFORM * FROM pg_operator where oprname = '~*~';
 
 IF NOT FOUND THEN
 
-CREATE OPERATOR ~*~ ( 
-    procedure = full_ilike_match, 
+CREATE OPERATOR ~*~ (
+    procedure = full_ilike_match,
     leftarg = 'text',
     rightarg = 'text'
 );

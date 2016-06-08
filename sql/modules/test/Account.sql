@@ -12,7 +12,7 @@ values ('AR_paid1', false, true),
        ('AR_overpayment1', false, true);
 
 SELECT account__save (null, accno, description, category::char(1),
-            null, null, false, false, 
+            null, null, false, false,
             case when link is not null then link::text[] else '{}' END,
             false, false)
   FROM (VALUES ('TEST testing 1', 'A', 'A', '00001', null),
@@ -24,7 +24,7 @@ SELECT account__save (null, accno, description, category::char(1),
                ('TEST AR PAID 1', 'A', 'A', '00007', '{AR_paid}'),
                ('TEST AR PAID 2', 'A', 'A', '00008', '{AR_paid1}'),
                ('TEST AR PAID 3', 'A', 'A', '00009', '{IC_tax,AR_paid}'),
-               ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'), 
+               ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'),
                ('TEST AP PAID 1', 'A', 'A', '00011', '{AP_paid}'),
                ('TEST AP PAID 2', 'A', 'A', '00012', '{AP_paid1}'),
                ('TEST AP PAID 3', 'A', 'A', '00013', '{IC_tax,AP_paid}'),
@@ -39,11 +39,11 @@ SELECT account__save (null, accno, description, category::char(1),
                ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', '{AR_overp}')
        ) f (description, charttype, category, accno, link);
 
-INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id) 
+INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id)
 values (-100, 'test1', -100, 1, -1000);
 
 INSERT INTO ap (invnumber, netamount_bc, amount_bc, entity_credit_account,
-                id, curr, netamount_tc, amount_tc) 
+                id, curr, netamount_tc, amount_tc)
 VALUES ('TEST', '0', '0', -100, -100, 'XTS', 0, 0);
 INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc)
 VALUES (-100, (select id from account where accno = '00002'), '0', 'XTS', 0);
@@ -59,15 +59,15 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from chart where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
-SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all() 
+SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all()
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AR Cash Test Accounts', count(*) = 3 FROM chart_list_cash(2) 
+SELECT 'List AR Cash Test Accounts', count(*) = 3 FROM chart_list_cash(2)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AP Cash Test Accounts', count(*) = 3 FROM chart_list_cash(1) 
+SELECT 'List AP Cash Test Accounts', count(*) = 3 FROM chart_list_cash(1)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
@@ -88,9 +88,9 @@ where accno like '0%' AND description LIKE 'TEST%';
 
 SELECT * FROM test_result;
 
-SELECT (select count(*) from test_result where success is true) 
-|| ' tests passed and ' 
-|| (select count(*) from test_result where success is not true) 
+SELECT (select count(*) from test_result where success is true)
+|| ' tests passed and '
+|| (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
 ROLLBACK;

@@ -126,29 +126,29 @@ BEGIN
          case when in_from_date is null then 0 else
               COALESCE(t_balance_sign,
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
-              * (coalesce(cp.amount_bc, 0) 
-              + sum(CASE WHEN ac.transdate < coalesce(in_date_from, 
+              * (coalesce(cp.amount_bc, 0)
+              + sum(CASE WHEN ac.transdate < coalesce(in_date_from,
                                                       t_roll_forward)
-                         THEN ac.amount_bc ELSE 0 END)) end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
+                         THEN ac.amount_bc ELSE 0 END)) end,
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from,
                                                          t_roll_forward)
                                                  AND coalesce(in_to_date,
                                                          ac.transdate)
                              AND ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE 0 END) -
-              case when in_date_from is null then coalesce(cp.debits, 0) else 0 end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
+              case when in_date_from is null then coalesce(cp.debits, 0) else 0 end,
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from,
                                                          t_roll_forward)
                                                  AND coalesce(in_to_date,
                                                          ac.transdate)
-                             AND ac.amount_bc > 0 THEN ac.amount_bc ELSE 0 END) + 
-              case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
-              COALESCE(t_balance_sign, 
+                             AND ac.amount_bc > 0 THEN ac.amount_bc ELSE 0 END) +
+              case when in_date_from is null then coalesce(cp.credits, 0) else 0 end,
+              COALESCE(t_balance_sign,
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
               * (coalesce(cp.amount_bc, 0) + sum(coalesce(ac.amount_bc, 0))),
-              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) < 0 
-                   THEN (sum(ac.amount_bc) + coalesce(cp.amount_bc, 0)) * -1 
+              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) < 0
+                   THEN (sum(ac.amount_bc) + coalesce(cp.amount_bc, 0)) * -1
                    ELSE NULL END,
-              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) > 0 
+              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) > 0
                    THEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id

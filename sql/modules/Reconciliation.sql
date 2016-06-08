@@ -1,13 +1,13 @@
 BEGIN;
 
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(
-	in_report_id int, in_line_ids int[]) RETURNS bool AS
+        in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
 BEGIN
-	UPDATE cr_report set submitted = true where id = in_report_id;
-	PERFORM reconciliation__save_set(in_report_id, in_line_ids);
+        UPDATE cr_report set submitted = true where id = in_report_id;
+        PERFORM reconciliation__save_set(in_report_id, in_line_ids);
 
-	RETURN FOUND;
+        RETURN FOUND;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -54,13 +54,13 @@ in_line_ids is used to specify which report lines are cleared, finalizing the
 report.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
-	in_report_id int, in_line_ids int[]) RETURNS bool AS
+        in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
-	UPDATE cr_report_line SET cleared = false
-	WHERE report_id = in_report_id;
+        UPDATE cr_report_line SET cleared = false
+        WHERE report_id = in_report_id;
 
-	UPDATE cr_report_line SET cleared = true
-	WHERE report_id = in_report_id AND id = ANY(in_line_ids)
+        UPDATE cr_report_line SET cleared = true
+        WHERE report_id = in_report_id AND id = ANY(in_line_ids)
         RETURNING TRUE;
 $$ LANGUAGE SQL;
 
@@ -145,17 +145,17 @@ disable the block_change_when_approved trigger on cr_report.$$;
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
 $$
-	select CASE WHEN c.category in('A', 'E') THEN sum(ac.amount_bc) * -1 ELSE
-		sum(ac.amount_bc) END
-	FROM account c
-	JOIN acc_trans ac ON (ac.chart_id = c.id)
-	JOIN (select id from ar where approved
-		union
-		select id from ap where approved
-		union
-		select id from gl where approved) g on (g.id = ac.trans_id)
-	WHERE c.id = $1 AND ac.cleared is true and ac.approved is true
-		GROUP BY c.id, c.category;
+        select CASE WHEN c.category in('A', 'E') THEN sum(ac.amount_bc) * -1 ELSE
+                sum(ac.amount_bc) END
+        FROM account c
+        JOIN acc_trans ac ON (ac.chart_id = c.id)
+        JOIN (select id from ar where approved
+                union
+                select id from ap where approved
+                union
+                select id from gl where approved) g on (g.id = ac.trans_id)
+        WHERE c.id = $1 AND ac.cleared is true and ac.approved is true
+                GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int) IS
@@ -178,7 +178,7 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         completed cr_report_line;
         total_errors INT;
         in_user TEXT;
-	ac_entries int[];
+        ac_entries int[];
     BEGIN
         in_user := current_user;
 
@@ -190,38 +190,38 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
         -- filed it. This may require clunkier syntax..
 
         --
-	ac_entries := '{}';
+        ac_entries := '{}';
         update cr_report set approved = 't',
-		approved_by = person__get_my_entity_id(),
-		approved_username = SESSION_USER
-	where id = in_report_id;
+                approved_by = person__get_my_entity_id(),
+                approved_username = SESSION_USER
+        where id = in_report_id;
 
-	FOR current_row IN
-		SELECT compound_array(entries) AS entries FROM (
-			select as_array(ac.entry_id) as entries
-		FROM acc_trans ac
-		JOIN transactions t on (ac.trans_id = t.id)
-		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
-			UNION
-		      select id, entity_credit_account::text, 'ap' as table FROM ap
-			UNION
-		      select id, reference, 'gl' as table FROM gl) gl
-			ON (gl.table = t.table_name AND gl.id = t.id)
-		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-			AND ((rl.ledger_id = ac.entry_id
-				AND ac.voucher_id IS NULL)
-				OR (rl.voucher_id = ac.voucher_id)) and rl.cleared is true)
-		WHERE ac.cleared IS FALSE
-			AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
-		GROUP BY gl.ref, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id, gl.table
-		HAVING count(rl.report_id) > 0) a
-	LOOP
-		ac_entries := ac_entries || current_row.entries;
-	END LOOP;
+        FOR current_row IN
+                SELECT compound_array(entries) AS entries FROM (
+                        select as_array(ac.entry_id) as entries
+                FROM acc_trans ac
+                JOIN transactions t on (ac.trans_id = t.id)
+                JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar
+                        UNION
+                      select id, entity_credit_account::text, 'ap' as table FROM ap
+                        UNION
+                      select id, reference, 'gl' as table FROM gl) gl
+                        ON (gl.table = t.table_name AND gl.id = t.id)
+                LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
+                        AND ((rl.ledger_id = ac.entry_id
+                                AND ac.voucher_id IS NULL)
+                                OR (rl.voucher_id = ac.voucher_id)) and rl.cleared is true)
+                WHERE ac.cleared IS FALSE
+                        AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
+                GROUP BY gl.ref, ac.source, ac.transdate,
+                        ac.memo, ac.voucher_id, gl.table
+                HAVING count(rl.report_id) > 0) a
+        LOOP
+                ac_entries := ac_entries || current_row.entries;
+        END LOOP;
 
-	UPDATE acc_trans SET cleared = TRUE
-	where entry_id = any(ac_entries);
+        UPDATE acc_trans SET cleared = TRUE
+        where entry_id = any(ac_entries);
 
         return 1;
     END;
@@ -255,15 +255,15 @@ create or replace function reconciliation__add_entry(
 ) RETURNS INT AS $$
 
     DECLARE
-	in_account int;
+        in_account int;
         la RECORD;
         t_errorcode INT;
         our_value NUMERIC;
         lid INT;
-	in_count int;
-	t_scn TEXT;
-	t_uid int;
-	t_prefix text;
+        in_count int;
+        t_scn TEXT;
+        t_uid int;
+        t_prefix text;
         t_amount numeric;
     BEGIN
         SELECT CASE WHEN a.category in ('A', 'E') THEN in_amount * -1
@@ -272,117 +272,117 @@ create or replace function reconciliation__add_entry(
           FROM cr_report r JOIN account a ON r.chart_id = a.id
          WHERE r.id = in_report_id;
 
-	SELECT value into t_prefix FROM defaults WHERE setting_key = 'check_prefix';
+        SELECT value into t_prefix FROM defaults WHERE setting_key = 'check_prefix';
 
-	t_uid := person__get_my_entity_id();
-	IF in_scn = '' THEN
-		t_scn := NULL;
-	ELSE
-		t_scn := t_prefix || in_scn;
-	END IF;
-	IF t_scn IS NOT NULL THEN
+        t_uid := person__get_my_entity_id();
+        IF in_scn = '' THEN
+                t_scn := NULL;
+        ELSE
+                t_scn := t_prefix || in_scn;
+        END IF;
+        IF t_scn IS NOT NULL THEN
                 -- could this be changed to update, if not found insert?
-		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE scn ilike t_scn AND report_id = in_report_id
-			AND their_balance = 0 AND post_date = in_date;
+                SELECT count(*) INTO in_count FROM cr_report_line
+                WHERE scn ilike t_scn AND report_id = in_report_id
+                        AND their_balance = 0 AND post_date = in_date;
 
-		IF in_count = 0 THEN
-			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance, clear_time,
-				"user", trans_type)
-			VALUES
-			(in_report_id, t_scn, t_amount, 0, in_date, t_uid,
-				in_type);
-		ELSIF in_count = 1 THEN
-			UPDATE cr_report_line
-			SET their_balance = t_amount, clear_time = in_date,
-				cleared = true
-			WHERE t_scn = scn AND report_id = in_report_id
-				AND their_balance = 0 AND post_date = in_date;
-		ELSE
-			SELECT count(*) INTO in_count FROM cr_report_line
-			WHERE t_scn ilike scn AND report_id = in_report_id
-				AND our_value = t_amount and their_balance = 0
+                IF in_count = 0 THEN
+                        INSERT INTO cr_report_line
+                        (report_id, scn, their_balance, our_balance, clear_time,
+                                "user", trans_type)
+                        VALUES
+                        (in_report_id, t_scn, t_amount, 0, in_date, t_uid,
+                                in_type);
+                ELSIF in_count = 1 THEN
+                        UPDATE cr_report_line
+                        SET their_balance = t_amount, clear_time = in_date,
+                                cleared = true
+                        WHERE t_scn = scn AND report_id = in_report_id
+                                AND their_balance = 0 AND post_date = in_date;
+                ELSE
+                        SELECT count(*) INTO in_count FROM cr_report_line
+                        WHERE t_scn ilike scn AND report_id = in_report_id
+                                AND our_value = t_amount and their_balance = 0
                                 AND post_date = in_date;
 
-			IF in_count = 0 THEN -- no match among many of values
-				SELECT id INTO lid FROM cr_report_line
-                        	WHERE t_scn ilike scn
+                        IF in_count = 0 THEN -- no match among many of values
+                                SELECT id INTO lid FROM cr_report_line
+                                WHERE t_scn ilike scn
                                       AND report_id = in_report_id
                                       AND post_date = in_date
-				ORDER BY our_balance ASC limit 1;
+                                ORDER BY our_balance ASC limit 1;
 
-				UPDATE cr_report_line
+                                UPDATE cr_report_line
                                 SET their_balance = t_amount,
-					clear_time = in_date,
-					trans_type = in_type,
-					cleared = true
+                                        clear_time = in_date,
+                                        trans_type = in_type,
+                                        cleared = true
                                 WHERE id = lid;
 
-			ELSIF in_count = 1 THEN -- EXECT MATCH
-				UPDATE cr_report_line
-				SET their_balance = t_amount,
-					trans_type = in_type,
-					clear_time = in_date,
-					cleared = true
-				WHERE t_scn = scn AND report_id = in_report_id
-                                	AND our_value = t_amount
-					AND their_balance = 0
+                        ELSIF in_count = 1 THEN -- EXECT MATCH
+                                UPDATE cr_report_line
+                                SET their_balance = t_amount,
+                                        trans_type = in_type,
+                                        clear_time = in_date,
+                                        cleared = true
+                                WHERE t_scn = scn AND report_id = in_report_id
+                                        AND our_value = t_amount
+                                        AND their_balance = 0
                                         AND post_date = in_date;
-			ELSE -- More than one match
-				SELECT id INTO lid FROM cr_report_line
-                        	WHERE t_scn ilike scn AND report_id = in_report_id
-                                	AND our_value = t_amount
+                        ELSE -- More than one match
+                                SELECT id INTO lid FROM cr_report_line
+                                WHERE t_scn ilike scn AND report_id = in_report_id
+                                        AND our_value = t_amount
                                         AND post_date = in_date
-				ORDER BY id ASC limit 1;
+                                ORDER BY id ASC limit 1;
 
-				UPDATE cr_report_line
+                                UPDATE cr_report_line
                                 SET their_balance = t_amount,
-					trans_type = in_type,
-					cleared = true,
-					clear_time = in_date
+                                        trans_type = in_type,
+                                        cleared = true,
+                                        clear_time = in_date
                                 WHERE id = lid;
 
-			END IF;
-		END IF;
-	ELSE -- scn IS NULL, check on amount instead
-		SELECT count(*) INTO in_count FROM cr_report_line
-		WHERE report_id = in_report_id AND our_balance = t_amount
-			AND their_balance = 0 AND post_date = in_date
-			and scn NOT LIKE t_prefix || '%';
+                        END IF;
+                END IF;
+        ELSE -- scn IS NULL, check on amount instead
+                SELECT count(*) INTO in_count FROM cr_report_line
+                WHERE report_id = in_report_id AND our_balance = t_amount
+                        AND their_balance = 0 AND post_date = in_date
+                        and scn NOT LIKE t_prefix || '%';
 
-		IF in_count = 0 THEN -- no match
-			INSERT INTO cr_report_line
-			(report_id, scn, their_balance, our_balance, clear_time,
-			"user", trans_type)
-			VALUES
-			(in_report_id, t_scn, t_amount, 0, in_date, t_uid,
-			in_type);
-		ELSIF in_count = 1 THEN -- perfect match
-			UPDATE cr_report_line SET their_balance = t_amount,
-					trans_type = in_type,
-					clear_time = in_date,
-					cleared = true
-			WHERE report_id = in_report_id
+                IF in_count = 0 THEN -- no match
+                        INSERT INTO cr_report_line
+                        (report_id, scn, their_balance, our_balance, clear_time,
+                        "user", trans_type)
+                        VALUES
+                        (in_report_id, t_scn, t_amount, 0, in_date, t_uid,
+                        in_type);
+                ELSIF in_count = 1 THEN -- perfect match
+                        UPDATE cr_report_line SET their_balance = t_amount,
+                                        trans_type = in_type,
+                                        clear_time = in_date,
+                                        cleared = true
+                        WHERE report_id = in_report_id
                                 AND our_balance = t_amount
-                        	AND their_balance = 0
+                                AND their_balance = 0
                                 AND post_date = in_date
-				AND in_scn NOT LIKE t_prefix || '%';
-		ELSE -- more than one match
-			SELECT min(id) INTO lid FROM cr_report_line
-			WHERE report_id = in_report_id AND our_balance = t_amount
-                        	AND their_balance = 0 AND post_date = in_date
-				AND scn NOT LIKE t_prefix || '%'
-			LIMIT 1;
+                                AND in_scn NOT LIKE t_prefix || '%';
+                ELSE -- more than one match
+                        SELECT min(id) INTO lid FROM cr_report_line
+                        WHERE report_id = in_report_id AND our_balance = t_amount
+                                AND their_balance = 0 AND post_date = in_date
+                                AND scn NOT LIKE t_prefix || '%'
+                        LIMIT 1;
 
-			UPDATE cr_report_line SET their_balance = t_amount,
-					trans_type = in_type,
-					clear_time = in_date,
-					cleared = true
-			WHERE id = lid;
+                        UPDATE cr_report_line SET their_balance = t_amount,
+                                        trans_type = in_type,
+                                        clear_time = in_date,
+                                        cleared = true
+                        WHERE id = lid;
 
-		END IF;
-	END IF;
+                END IF;
+        END IF;
         return 1;
 
     END;
@@ -425,50 +425,50 @@ $$
          FROM cr_report
         WHERE id = in_report_id;
 
-		INSERT INTO cr_report_line (report_id, scn, their_balance,
-			our_balance, "user", voucher_id, ledger_id, post_date)
-		SELECT in_report_id,
-		       CASE WHEN ac.source IS NULL OR ac.source = ''
+                INSERT INTO cr_report_line (report_id, scn, their_balance,
+                        our_balance, "user", voucher_id, ledger_id, post_date)
+                SELECT in_report_id,
+                       CASE WHEN ac.source IS NULL OR ac.source = ''
                             THEN gl.ref
                             ELSE ac.source END,
-		       0,
-		       sum(CASE WHEN t_recon_fx THEN amount_tc
+                       0,
+                       sum(CASE WHEN t_recon_fx THEN amount_tc
                  ELSE amount_bc END) AS amount,
-				(select entity_id from users
-				where username = CURRENT_USER),
-			ac.voucher_id, min(ac.entry_id), ac.transdate
-		FROM acc_trans ac
-		JOIN transactions t on (ac.trans_id = t.id)
-		JOIN (select id, entity_credit_account::text as ref, curr,
+                                (select entity_id from users
+                                where username = CURRENT_USER),
+                        ac.voucher_id, min(ac.entry_id), ac.transdate
+                FROM acc_trans ac
+                JOIN transactions t on (ac.trans_id = t.id)
+                JOIN (select id, entity_credit_account::text as ref, curr,
                              transdate
                         FROM ar where approved
-			UNION
-		      select id, entity_credit_account::text, curr,
+                        UNION
+                      select id, entity_credit_account::text, curr,
                              transdate
                         FROM ap WHERE approved
-			UNION
-		      select id, reference, '',
+                        UNION
+                      select id, reference, '',
                              transdate
                         FROM gl WHERE approved) gl
-			ON (gl.id = t.id)
-		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-			AND ((rl.ledger_id = ac.entry_id
-				AND ac.voucher_id IS NULL)
-				OR (rl.voucher_id = ac.voucher_id)))
+                        ON (gl.id = t.id)
+                LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
+                        AND ((rl.ledger_id = ac.entry_id
+                                AND ac.voucher_id IS NULL)
+                                OR (rl.voucher_id = ac.voucher_id)))
                 LEFT JOIN cr_report r ON r.id = in_report_id
-		WHERE ac.cleared IS FALSE
-			AND ac.approved IS TRUE
-			AND ac.chart_id = t_chart_id
-			AND ac.transdate <= t_end_date
+                WHERE ac.cleared IS FALSE
+                        AND ac.approved IS TRUE
+                        AND ac.chart_id = t_chart_id
+                        AND ac.transdate <= t_end_date
          AND (ac.entry_id > coalesce(r.max_ac_id, 0))
-		GROUP BY gl.ref, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id
-		HAVING count(rl.id) = 0;
+                GROUP BY gl.ref, ac.source, ac.transdate,
+                        ac.memo, ac.voucher_id
+                HAVING count(rl.id) = 0;
 
-		UPDATE cr_report set updated = now(),
-			their_total = coalesce(in_their_total, their_total),
+                UPDATE cr_report set updated = now(),
+                        their_total = coalesce(in_their_total, their_total),
                         max_ac_id = (select max(entry_id) from acc_trans)
-		where id = in_report_id;
+                where id = in_report_id;
     RETURN in_report_id;
     END;
 $$
@@ -480,8 +480,8 @@ $$Ensures that the list of pending transactions in the report is up to date. $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details (in_report_id INT) RETURNS setof cr_report_line as $$
 
-		select * from cr_report_line where report_id = in_report_id
-		order by scn, post_date
+                select * from cr_report_line where report_id = in_report_id
+                order by scn, post_date
 $$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__report_details (in_report_id INT) IS
@@ -493,24 +493,24 @@ $$ language 'sql';
 
 CREATE OR REPLACE FUNCTION reconciliation__search
 (in_date_from date, in_date_to date,
-	in_balance_from numeric, in_balance_to numeric,
-	in_account_id int, in_submitted bool, in_approved bool)
+        in_balance_from numeric, in_balance_to numeric,
+        in_account_id int, in_submitted bool, in_approved bool)
 returns setof cr_report AS
 $$
-		SELECT r.* FROM cr_report r
-		JOIN account c ON (r.chart_id = c.id)
-		WHERE
-			(in_date_from IS NULL OR in_date_from <= end_date) and
-			(in_date_to IS NULL OR in_date_to >= end_date) AND
-			(in_balance_from IS NULL
-				or in_balance_from <= their_total ) AND
-			(in_balance_to IS NULL
-				OR in_balance_to >= their_total) AND
-			(in_account_id IS NULL OR in_account_id = chart_id) AND
-			(in_submitted IS NULL or in_submitted = submitted) AND
-			(in_approved IS NULL OR in_approved = approved) AND
-			(r.deleted IS FALSE)
-		ORDER BY c.accno, end_date, their_total
+                SELECT r.* FROM cr_report r
+                JOIN account c ON (r.chart_id = c.id)
+                WHERE
+                        (in_date_from IS NULL OR in_date_from <= end_date) and
+                        (in_date_to IS NULL OR in_date_to >= end_date) AND
+                        (in_balance_from IS NULL
+                                or in_balance_from <= their_total ) AND
+                        (in_balance_to IS NULL
+                                OR in_balance_to >= their_total) AND
+                        (in_account_id IS NULL OR in_account_id = chart_id) AND
+                        (in_submitted IS NULL or in_submitted = submitted) AND
+                        (in_approved IS NULL OR in_approved = approved) AND
+                        (r.deleted IS FALSE)
+                ORDER BY c.accno, end_date, their_total
 $$ language sql;
 
 COMMENT ON FUNCTION reconciliation__search
@@ -547,23 +547,23 @@ account number and description from the account table.$$;
 CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
 $$
-	SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
-			IN ('A', 'E') THEN sum(a.amount_bc) * -1
-		ELSE sum(a.amount_bc) END
-	FROM acc_trans a
-	JOIN (
-		SELECT id FROM ar
-		WHERE approved is true
-		UNION
-		SELECT id FROM ap
-		WHERE approved is true
-		UNION
-		SELECT id FROM gl
-		WHERE approved is true
-	) gl ON a.trans_id = gl.id
-	WHERE a.approved IS TRUE
-		AND a.chart_id = in_account_id
-		AND a.transdate <= in_date;
+        SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
+                        IN ('A', 'E') THEN sum(a.amount_bc) * -1
+                ELSE sum(a.amount_bc) END
+        FROM acc_trans a
+        JOIN (
+                SELECT id FROM ar
+                WHERE approved is true
+                UNION
+                SELECT id FROM ap
+                WHERE approved is true
+                UNION
+                SELECT id FROM gl
+                WHERE approved is true
+        ) gl ON a.trans_id = gl.id
+        WHERE a.approved IS TRUE
+                AND a.chart_id = in_account_id
+                AND a.transdate <= in_date;
 
 $$ language sql;
 
@@ -593,8 +593,8 @@ UNION
 
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$
-        	select * from recon_payee where report_id = in_report_id
-        	order by scn, post_date
+                select * from recon_payee where report_id = in_report_id
+                order by scn, post_date
 $$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS

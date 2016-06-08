@@ -61,7 +61,7 @@ SELECT account__save(NULL, '4.2.10','Venta de Activo Fijo','I','', (SELECT id FR
 SELECT account__save(NULL, '4.2.20','Rentas','I','', (SELECT id FROM account WHERE accno LIKE '4.2.'), false, false, string_to_array('asset_gain', ':'), false, false);
 SELECT account__save(NULL, '4.2.30','Cambio de Moneda Ganado','I','', (SELECT id FROM account WHERE accno LIKE '4.2.'), false, false, string_to_array('asset_gain', ':'), false, false);
 -- Gastos
-SELECT account_heading_save(NULL, '5.','GASTOS	 ',NULL);
+SELECT account_heading_save(NULL, '5.','GASTOS   ',NULL);
 SELECT account_heading_save(NULL, '5.1.','COSTO',(SELECT id FROM account_heading WHERE accno LIKE '5.'));
 SELECT account__save(NULL, '5.1.00','Servicios','E','', (SELECT id FROM account WHERE accno LIKE '5.1.'), false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL, '5.1.10','Articulos','E','', (SELECT id FROM account WHERE accno LIKE '5.1.'), false, false, string_to_array('AP_amount:IC_cogs', ':'), false, false);
