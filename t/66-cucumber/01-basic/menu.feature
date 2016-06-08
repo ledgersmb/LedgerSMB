@@ -1,7 +1,7 @@
-@wip @one-db
+@one-db
 Feature: correct operation of the menu and immediate linked pages
-  As a an end-user, I want to be able to navigate the menu and
-  open the screens from the available links. If my authorizations
+  As an end-user, I want to be able to navigate the menu and open
+  the screens from the available links. If my authorizations
   don't allow a specific screen, I expect the links not to be in
   the menu.
 
