@@ -10,7 +10,7 @@ require(
             [_WidgetBase, _Container], {
                 removeLine: function(widgetid) {
                     this.removeChild(registry.byId(widgetid));
-                    
+
                     this.emit('changed',
                               { action: "removed" });
                 } // removeLine

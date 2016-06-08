@@ -12,12 +12,12 @@
  * TabularForm supports a number of classes to help manage layouts for different
  * screen sizes.  While this is somewhat inspired by Twitter Bootstrap(TM), the
  * properties assign to the table instead of the grid column.  In other words
- * because this is for data entry forms, we simply manage the form as a whole 
- * and resize accordingly.  This is important because we typically want to 
+ * because this is for data entry forms, we simply manage the form as a whole
+ * and resize accordingly.  This is important because we typically want to
  * preserve the logical structure of the form when we resize.
  *
- * For columns, we support the following classes.  Each is the number of 
- * columns of inputs supported, so would typically be double (i.e. col-1 is 
+ * For columns, we support the following classes.  Each is the number of
+ * columns of inputs supported, so would typically be double (i.e. col-1 is
  * one column of inputs plus one column of labels).
  *
  * col-1
@@ -35,7 +35,7 @@
  * vertsize-small
  * vertsize-med
  *
- * and 
+ * and
  *
  * vertlabel-mobile
  * vertlabel-small
@@ -52,8 +52,8 @@
  * Note that for nested TabularForm components, they are resized independently.
  *
  * LAYOUT RULES
- * 
- * 1.  class input_row contains a group of inputs which are rendered together 
+ *
+ * 1.  class input_row contains a group of inputs which are rendered together
  * on one or more rows.  Rows are terminated after an input-row completes.
  * 2.  buttons are contained inside a content pane to suppress labels.
  *
@@ -70,8 +70,8 @@ define([
     'dojo/_base/declare',
     'dijit/form/TextBox'
     ],
-    function(TableContainer, dom, cls, registry, cp, query, win, 
-             declare, testbox) 
+    function(TableContainer, dom, cls, registry, cp, query, win,
+             declare, testbox)
     {
       return declare('lsmb/TabularForm',
         [TableContainer],
@@ -85,7 +85,7 @@ define([
                 // Number of columns
                 var class_str = " " + domNode.className + " ";
                 var classes = class_str.match(/ col-\d+ /);
-                if (classes){ 
+                if (classes){
                     this.cols = classes[0].replace(/ col-(\d+) /, "$1");
                 }
 
@@ -97,14 +97,14 @@ define([
                 //labels go vertical on a size of.....
                 classes = class_str.match('/ virtlabel-\w+ /');
                 if (classes){
-                    this.vertlabelsize = 
+                    this.vertlabelsize =
                             classes[0].replace(/ virtlabel-(\w+) /, "$1");
                 }
             }
             var myself = this;
-				query('*', myself.domNode).forEach(function(dnode){
+                                query('*', myself.domNode).forEach(function(dnode){
                 myself.TFRenderElement(dnode)
-				}); 
+                                });
             this.maxCols = this.cols;
             this.initOrient = this.orientation;
         },
@@ -126,7 +126,7 @@ define([
            counter = counter % this.cols;
            for (i = counter; i < this.cols; ++i){
                var spc = new cp({content: '&nbsp;'});
-               this.addChild(spc); 
+               this.addChild(spc);
            }
         },
         resize: function(){
@@ -153,8 +153,8 @@ define([
                 }
             default:
                this.cols = 1;
-               this.orientation = 'vert'; 
-            } 
+               this.orientation = 'vert';
+            }
             switch (this.vertsize){
             case 'mobile':
                 if (winsize.w >= 480){
@@ -170,12 +170,11 @@ define([
                 }
             default:
                 this.cols = 1;
-            } 
+            }
             if (this.orientation !== orient){
                 this.startup();
-            } 
+            }
             return this.inherited(arguments);
         }
         });
      });
-
