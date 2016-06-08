@@ -2804,7 +2804,7 @@ $$This table stores the tree structure of the menu.$$;
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
+SELECT pg_catalog.setval('menu_node_id_seq', 257, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
@@ -3016,6 +3016,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin WITH DELIMITER '|';
 5|Search|1|8
 4|Reports|1|10
 249|Vouchers|1|9
+254|Currency|128|0
 255|Edit currencies|254|0
 256|Edit rate types|254|2
 257|Edit rates|254|3
