@@ -2,7 +2,7 @@
 
 =head1 NAME 
 
-LedgerSMB::Scripts::asset
+LedgerSMB::Scripts::asset - web entry points for fixed assets accounting
 
 =head1 SYNPOSIS
 

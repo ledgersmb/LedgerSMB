@@ -37,18 +37,17 @@ before_install:
   - source ~/travis-perl-helpers/init
   - build-perl
   - perl -V
-  - build-dist
-  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+  - cpanm --notest --quiet --with-develop --installdeps .
   - cpan-install --coverage   # installs converage prereqs, if enabled
+  - cp ledgersmb.conf.default ledgersmb.conf
 
 before_script:
   - coverage-setup
 
 script:
-   export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
+   export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest prove
 
 after_success:
   - coverage-report

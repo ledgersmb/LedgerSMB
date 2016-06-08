@@ -18,8 +18,8 @@ with 'LedgerSMB::Report::Dates';
 =head1 DESCRIPTION
 
 This is the main inventory item search for goods and services in LedgerSMB
-starting with version 1.4.  Compared to LedgerSMB 1.3 this has no summary 
-and details support and no searching for open vs closed invoices. The eqivalent
+starting with version 1.4.  Compared to LedgerSMB 1.3 this has no summary
+and details support and no searching for open vs closed invoices. The equivalent
 of a summary report is found in the inventory activities report instead.
 
 The open/closed detection was omitted for performance reasons, and a search for

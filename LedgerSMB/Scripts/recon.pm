@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::recon
+LedgerSMB::Scripts::recon - web entry points for reconciliation workflow
 
 =head1 SYOPSIS
 

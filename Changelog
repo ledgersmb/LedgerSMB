@@ -37,6 +37,24 @@ Internationalization
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.29
+* Add disambiguating 'Create' button on setup.pl frontpage (Erik H)
+* Fix 'Post and Print' button on payment screen (Erik H, #1489)
+* Simpler installation: move off Makefile.PL to cpanfile (Erik H)
+* Follow-up fix to allow multiple logins per user (Erik H)
+* Fix documentation typos, policy (Erik H, #1206, #1498)
+* Fix error after mailing order (Erik H, #1408)
+* Fix saving over existing sales order drops a line (Erik H, #1431)
+* Implement template transaction deletion (Erik H, #1571)
+* Credit account with missing currency fails to load from db (Erik H, #1116)
+* Fix manual tax shows base amount 0.00 on printed invoice (Erik H, #948)
+* Fix 'X' button on invoice doesn't fully remove part (Erik H, #1564)
+* Add selection of multiple consecutive periods for B/S and PNL (Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.4.28
 * Fix for 1.3 to 1.4 migration of 'recurring' table data (David G, #1447)
 * Support for fixing up data in migrations using drop-downs (Yves L)

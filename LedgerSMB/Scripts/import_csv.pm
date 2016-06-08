@@ -2,7 +2,7 @@
 
 =head1 NAME 
 
-LedgerSMB::Scripts::import_trans
+LedgerSMB::Scripts::import_csv - web entry points for various csv uploads
 
 =head1 SYNPOSIS
 

@@ -1,6 +1,8 @@
-<?lsmb INCLUDE 'ui-header.html';
-       PROCESS 'elements.html'; ?>
-<body class="<?lsmb dojo_theme ?>">
+<?lsmb INCLUDE 'ui-header.html' titlebar = text("Balance Sheet")
+	   include_script = ['UI/Reports/filters/dynamic_report_fields.js'];
+       PROCESS 'elements.html';
+       PROCESS 'report_base.html'; ?>
+<body onLoad="init_balance_sheet()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
 <div class="inputrow">
@@ -16,7 +18,7 @@ PROCESS input element_data = {
 <div class="inputrow">
 <?lsmb
 PROCESS input element_data = {
-   label = text('GIFI')    #'
+   label = text('GIFI')
     name = 'gifi'
       id = 'gifi'
     type = 'checkbox'
@@ -82,25 +84,77 @@ default_values = [USER.language]
 }
 ?>
 </div>
-<div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
-<?lsmb FOR ct IN [1, 2, 3]; ?>
+<div class="subsection">
+<h3><?lsmb text('Comparison selection by') ?></h3>
+<?lsmb
+IF comparison_type != 'by_dates';
+  YES="CHECKED";
+  NO=undef;
+ELSE;
+  NO="CHECKED";
+  YES=undef;
+END;
+?>
+<div class="inputrow">
+<?lsmb
+PROCESS input element_data={
+    type = 'radio',
+    name = 'comparison_type',
+	  id = 'comparison_by_periods',
+   value = 'by_periods',
+   label = text('Periods'),
+ checked = YES,
+};
+PROCESS input element_data={
+    type = 'radio',
+    name = 'comparison_type',
+      id = 'comparison_by_dates',
+   value = 'by_dates',
+   label = text('Dates'),
+ checked = NO
+};
+?>
+</div>
 <div class="inputrow"><?lsmb
 PROCESS input element_data = {
-           label = text('Through date') #'
-            name = 'to_date_' _ ct
-           value = to_date
-           class = 'date'
-            size = 12
+         label = text('Comparison Periods')
+          name = 'comparison_periods'
+     text_attr = 'description'
+    value_attr = 'text'
+         value = comparison_periods
+          size = '3'
+default_values = 0
 };
+PROCESS date_period_div;
 ?></div>
+</div>
+<div class="subsection">
+   <div id="comparison_dates" style="display:none">
+       <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
+       <div class="inputrow">
+       <?lsmb FOREACH c IN [1 .. 9]; ?>
+	  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+	     <?lsmb
+		PROCESS input element_data = {
+			   label = text('Through date') #'
+			    name = 'to_date_' _ c
+			   value = to_date
+			   class = 'date'
+			    size = 12
+		};
+	     ?>
+	  </div>
+	<?lsmb END ?>
+       </div>
+   </div>
+</div>
 <?lsmb
-END;
 PROCESS button element_data = {
-            text = text('Generate')
-            name = 'action'
-           value = 'balance_sheet'
-            type = 'submit'
-           class = 'submit'
+    text = text('Generate')
+    name = 'action'
+   value = 'balance_sheet'
+    type = 'submit'
+   class = 'submit'
 } ?>
 </form>
 </body>

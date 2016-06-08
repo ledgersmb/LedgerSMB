@@ -1,5 +1,6 @@
 =head1 NAME
-LedgerSMB::Scripts::budgets
+
+LedgerSMB::Scripts::budgets - web entry points for administration of budgets
 
 =cut
 

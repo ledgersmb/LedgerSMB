@@ -1219,7 +1219,11 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
-    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
+    if ($form->{delete_line}) {
+        for (qw(partnumber description partsgroup id qty onhand sellprice)) {
+            delete $form->{"${_}_$form->{delete_line}"};
+        }
+    }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
     

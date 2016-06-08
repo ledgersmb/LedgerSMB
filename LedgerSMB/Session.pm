@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Session
+LedgerSMB::Session - Web app user session management
 
 =head1 SYNOPSIS
 
@@ -146,12 +146,6 @@ sub create {
             WHERE username = ?;"
     );
 
-    # TODO Change this to use %myconfig
-    my $deleteExisting = $dbh->prepare(
-        "DELETE 
-           FROM session
-          WHERE session.users_id = (select id from users where username = ?)"
-    );
     my $seedRandom = $dbh->prepare("SELECT setseed(?);");
 
     my $fetchSequence =
@@ -183,14 +177,6 @@ sub create {
     my $auth = $ENV{HTTP_AUTHORIZATION};
     $auth =~ s/^Basic //i;
 
-    #delete any existing stale sessions with this login if they exist
-    if ( !$lsmb->{timeout} ) {
-        $lsmb->{timeout} = 86400;
-    }
-    $deleteExisting->execute( $login)
-      || $lsmb->dberror(
-        __FILE__ . ':' . __LINE__ . ': Delete from session: ' . $DBI::errstr);
-
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed, 
 #pgsql's isn't great either  -CM
@@ -216,7 +202,7 @@ sub create {
 
 
     my $newCookieValue = $newSessionID . ':' . $newToken . ':' 
-	. $lsmb->{company};
+        . $lsmb->{company};
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
@@ -247,11 +233,11 @@ sub destroy {
     my $dbh = $form->{dbh};
 
     my $deleteExisting = $dbh->prepare( "
-        DELETE FROM session 
-               WHERE users_id = (select id from users where username = ?)
+        DELETE FROM session
+               WHERE session_id = ?
     " );
 
-    $deleteExisting->execute($login)
+    $deleteExisting->execute($form->{session_id})
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 

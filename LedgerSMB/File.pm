@@ -207,7 +207,7 @@ sub detect_type {
 
 =item get
 
-Retrives a file.  ID and file_class properties must be set.
+Retrieves a file.  ID and file_class properties must be set.
 
 =cut
 

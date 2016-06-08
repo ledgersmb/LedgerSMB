@@ -2,12 +2,17 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::file
+LedgerSMB::Scripts::file - web entry points for file storage and retrieval
 
 =head1 SYNOPSIS
 
+<<<<<<< HEAD:LedgerSMB/Scripts/file.pm
 This supplies file retrival and attachment workflows
     
+=======
+This supplies file retrieval and attachment workflows
+
+>>>>>>> 481908b... * Fix #1206: Missing summary lines in modules:lib/LedgerSMB/Scripts/file.pm
 =head1 METHODS
         
 =over
