@@ -1,6 +1,6 @@
 CREATE TEMPORARY TABLE test_result (
-	test_name text,
-	success bool
+        test_name text,
+        success bool
 );
 
 -- from https://en.wikipedia.org/wiki/ISO_4217

@@ -24,12 +24,12 @@ CREATE OR REPLACE FUNCTION setting__set (in_setting_key varchar, in_value varcha
 RETURNS BOOL AS
 $$
 BEGIN
-	UPDATE defaults SET value = in_value WHERE setting_key = in_setting_key;
+        UPDATE defaults SET value = in_value WHERE setting_key = in_setting_key;
         IF NOT FOUND THEN
              INSERT INTO defaults (setting_key, value)
                   VALUES (in_setting_key, in_value);
         END IF;
-	RETURN TRUE;
+        RETURN TRUE;
 END;
 $$ language plpgsql;
 
@@ -47,8 +47,8 @@ $$ Returns the value of the setting in the defaults table.$$;
 CREATE OR REPLACE FUNCTION setting_get_default_accounts ()
 RETURNS SETOF defaults AS
 $$
-		SELECT * FROM defaults
-		WHERE setting_key like '%accno_id'
+                SELECT * FROM defaults
+                WHERE setting_key like '%accno_id'
                 ORDER BY setting_key
 $$ LANGUAGE sql;
 
@@ -85,7 +85,7 @@ $$;
 CREATE OR REPLACE FUNCTION setting_increment (in_key varchar) returns varchar
 AS
 $$
-	UPDATE defaults SET value = setting__increment_base(value) 
+        UPDATE defaults SET value = setting__increment_base(value)
         WHERE setting_key = in_key
         RETURNING value;
 

@@ -9,23 +9,23 @@ begin;
 -- Link: Achtung, sehr wenig benutzt da mir die Kentnisse zum Deutschen System fehlen. Sehr gut aufpassen und wenn
 -- Ihr Fehler oder Praktische TIPS hat: gerne!
 -- Link: used to a minimum, update and customization may well be needed!
--- A0 	= Anlagevermögen 		/ Fixed Assets
--- A1-1 = Warenbestand			/ Inventory
--- A1-2 = Forderungen			/ Liabilities
--- A1-3 = Liquide Mittel		/ Assets
--- A1-4	= Aktive Rechnungsabgrenzung 	/ Closing Account results
--- E    = Erträge			/ Income
--- K0	= Wareneinsatz			/ COGS
--- K1   = Personalkosten		/ Salaries etc
--- K2   = Raumkosten			/ Rental etc
--- K3   = Sonstige Kosten		/ Various costs
--- NA 	= Neutrale Aufwendungen		/ Neutral Costs
--- NE	- Neutrale Erlöse		/ Neutral Income
--- P0 	= Eigenkapital			/ Equity
--- P1 	= Rückstellungen		/ Reserves
--- P2 	= Fremdkapital Langfristig	/ Liabilities Long Term
--- P3 	= Fremdkapital Kurzfristig	/ Liabilities Short Term
--- P4	= Passive Rechnungsabgrenzung	/ Closing Account results
+-- A0   = Anlagevermögen                / Fixed Assets
+-- A1-1 = Warenbestand                  / Inventory
+-- A1-2 = Forderungen                   / Liabilities
+-- A1-3 = Liquide Mittel                / Assets
+-- A1-4 = Aktive Rechnungsabgrenzung    / Closing Account results
+-- E    = Erträge                       / Income
+-- K0   = Wareneinsatz                  / COGS
+-- K1   = Personalkosten                / Salaries etc
+-- K2   = Raumkosten                    / Rental etc
+-- K3   = Sonstige Kosten               / Various costs
+-- NA   = Neutrale Aufwendungen         / Neutral Costs
+-- NE   - Neutrale Erlöse               / Neutral Income
+-- P0   = Eigenkapital                  / Equity
+-- P1   = Rückstellungen                / Reserves
+-- P2   = Fremdkapital Langfristig      / Liabilities Long Term
+-- P3   = Fremdkapital Kurzfristig      / Liabilities Short Term
+-- P4   = Passive Rechnungsabgrenzung   / Closing Account results
 --
 -- A0
 SELECT account_heading_save(NULL,'0000','ANLAGEVERMÖGEN', NULL);
