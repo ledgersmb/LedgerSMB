@@ -33,7 +33,7 @@
   }
 }
 
-<?lsmb INCLUDE letterhead.tex ?>
+<?lsmb INCLUDE letterhead ?>
 
 \markboth{<?lsmb company ?>\hfill <?lsmb invnumber ?>}{<?lsmb company ?>\hfill <?lsmb invnumber ?>}
 
@@ -109,7 +109,7 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\textbf{\MakeUppercase{<?lsmb text('Invoice') ?>}}
+\textbf{\MakeUppercase{<?lsmb IF reverse; text('Credit'); END; ?><?lsmb text('Invoice') ?>}}
 \hfill
 
 \vspace{1cm}
