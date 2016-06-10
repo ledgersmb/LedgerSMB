@@ -3,7 +3,7 @@ BEGIN;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Batch Created',
-	batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
+        batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
 
 INSERT INTO entity (id, name, entity_class, control_code, country_id)
 values (-3, 'Test', 1, 'test', 242);
@@ -73,9 +73,9 @@ SELECT 'Empty Batch Detected', count(*) = 1
   FROM batch_search_empty(1,                        -- Batch class ID
                           'EMPTY BATCH TEST',       -- Batch description
                           -100,                       -- Entity ID
-       	                  NULL::numeric,            -- Amount greater than
-       	                  NULL::numeric,            -- Amount less than
-       	                  'f'::bool                 -- Approved
+                          NULL::numeric,            -- Amount greater than
+                          NULL::numeric,            -- Amount less than
+                          'f'::bool                 -- Approved
 );
 
 INSERT INTO test_result(test_name, success)

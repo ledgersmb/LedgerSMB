@@ -22,6 +22,7 @@ requires 'MIME::Base64';
 requires 'MIME::Lite';
 requires 'Math::BigFloat';
 requires 'Moose';
+requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject';
 requires 'PGObject::Simple';

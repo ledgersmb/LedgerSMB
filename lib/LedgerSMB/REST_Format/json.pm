@@ -31,15 +31,36 @@ $json->indent(1);
 $json->utf8(1);
 $json->convert_blessed(1);
 
+
+=head1 METHODS
+
+=over
+
+=item LedgerSMB::REST_Format::json::from_input($request)
+
+Parses and returns the $request->{payload} attribute as a Perl object
+
+=cut
+
 sub from_input{
     my $request = shift @_;
     return $json->decode($request->{payload});
 }
+
+=item LedgerSMB::REST_Format::json::to_output($request, $output)
+
+Serializes the Perl object (hash) $output to JSON.
+
+=cut
 
 sub to_output{
     my $request = shift @_;
     my $output = shift @_;
     return $json->encode(LedgerSMB::Template::TXT::preprocess($output));
 }
+
+=back
+
+=cut
 
 1;

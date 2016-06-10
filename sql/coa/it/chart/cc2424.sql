@@ -261,7 +261,7 @@ INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '
 --
 
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
-	(select id from account where accno = '105001'));
+        (select id from account where accno = '105001'));
 INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '541001'));
 INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '645001'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '756011'));
@@ -281,4 +281,3 @@ SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno = '114001';
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno = '114003';
-

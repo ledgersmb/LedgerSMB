@@ -33,12 +33,28 @@ local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 $ENV{GATEWAY_INTERFACE}="cgi/1.1";
 
+=head1 FUNCTIONS
+
+=over
+
+=item rest_app
+
+Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
+
+=cut
+
 sub rest_app {
     return CGI::Emulate::PSGI->handler(
         sub {
             do 'bin/rest-handler.pl';
         });
 };
+
+=item old_app
+
+Returns a 'PSGI app' which handles requests for the 'old-code' scripts in bin/
+
+=cut
 
 sub old_app {
     return CGI::Emulate::PSGI->handler(
@@ -50,6 +66,14 @@ sub old_app {
             _run_old();
         });
 };
+
+=item new_app
+
+Returns a 'PSGI app' which handles requests for the 'new code' entry points
+in LedgerSMB::Scripts::*
+
+=cut
+
 
 sub new_app {
     return CGI::Emulate::PSGI->handler(
@@ -89,5 +113,9 @@ sub _run_new {
         die 'something is wrong, cannot find lsmb-request.pl';
     }
 }
+
+=back
+
+=cut
 
 1;

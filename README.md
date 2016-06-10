@@ -46,8 +46,10 @@ for production installs.
 
 ## Check out the sources from GitHub
 
-Note: The preferred way of installation is from release tarballs. When using
- tarballs, **this step should be skipped**. To get the latest development version:
+Note: **Skip this step for from-tarball installs**
+Installation from release tarballs is preferred over installation from GitHub.
+
+To get the latest development version:
 
 ```sh
  $ git clone https://github.com/ledgersmb/LedgerSMB.git
@@ -122,8 +124,9 @@ contain a list of distribution provided packages to reduce the CPAN
 installation.
 
 **NOTES**
-For the pdf-ps target, LaTeX is required.
-For the pdf-images target, ImageMagick is  required.
+
+ 1. For the pdf-ps target, LaTeX is required.
+ 1. For the pdf-images target, ImageMagick is  required.
 
 ## PostgreSQL configuration
 
@@ -171,9 +174,9 @@ For most systems, all that's required in this step is:
 
 ## Build optimized JavaScript widgets (aka "build Dojo")
 
-Note: The preferred way of installation is from release tarballs. When using
- tarballs, this step should be skipped as it has been executed during the
- release process.
+Note: **Skip this step for from-tarball installs** The tarrball already contains
+  the "compiled" JavaScript sources.
+
 
 This step requires either ```node``` (NodeJS) or ```java``` to be installed
 and in all cases ```make```.
@@ -188,14 +191,14 @@ haven't been correctly initialised.
 
 ## Running Starman
 
-With the above completed, the system is ready to run the web server:
+With the above steps completed, the system is ready to run the web server:
 
 ```bash
- $ starman tools/starman.psgi
+ $ starman --port 5762 tools/starman.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
-Resolved [*]:5000 to [::]:5000, IPv6
+Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
-Binding to TCP port 5000 on host :: with IPv6
+Binding to TCP port 5762 on host :: with IPv6
 Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ```
 
@@ -221,7 +224,7 @@ We support the following
 ## Next steps
 
 The system is installed and should be available for evaluation through
-http://localhost:5000/setup.pl and http://localhost:5000/login.pl.
+http://localhost:5762/setup.pl and http://localhost:5762/login.pl.
 
 The system is ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).

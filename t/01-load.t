@@ -48,7 +48,7 @@ my @exception_modules =
 my @modules =
     (
           'LedgerSMB::App_State',
-          'LedgerSMB::DBH', 'LedgerSMB::DBTest', 'LedgerSMB::I18N',
+          'LedgerSMB::DBH', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer', 'LedgerSMB::Session',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
@@ -164,7 +164,7 @@ my @modules =
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
-          'LedgerSMB::Template::Elements',
+          'LedgerSMB::Template::Elements', 'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',

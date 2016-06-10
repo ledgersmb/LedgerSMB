@@ -23,7 +23,7 @@ SELECT account__save(NULL, '1.1.2.03','Cliente3','A','', (SELECT id FROM account
 SELECT account__save(NULL, '1.1.2.04','Cliente4','A','', (SELECT id FROM account WHERE accno LIKE '1.1.2.'), false, false, string_to_array('AR_overpayment:AR_amount', ':'), false, false);
 SELECT account_heading_save(NULL, '1.1.3.','RIESGO DE CREDITO',(SELECT id FROM account_heading WHERE accno LIKE '1.1.'));
 SELECT account__save(NULL, '1.1.3.01','Incobrables','A','', (SELECT id FROM account WHERE accno LIKE '1.1.3.'), false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL, '1.1.4.','OTROS A COBRAR	 ',(SELECT id FROM account_heading WHERE accno LIKE '1.1.'));
+SELECT account_heading_save(NULL, '1.1.4.','OTROS A COBRAR       ',(SELECT id FROM account_heading WHERE accno LIKE '1.1.'));
 SELECT account__save(NULL, '1.1.4.01','Anticipos a empleados','A','', (SELECT id FROM account WHERE accno LIKE '1.1.4.'), false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL, '1.1.4.02','Anticipos a proveedores','A','', (SELECT id FROM account WHERE accno LIKE '1.1.4.'), false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '1.1.5.','IMPUESTOS A FAVOR',(SELECT id FROM account_heading WHERE accno LIKE '1.1.'));
@@ -92,13 +92,13 @@ SELECT account__save(NULL, '4.1.2.01','Exportaciones','I','', (SELECT id FROM ac
 SELECT account__save(NULL, '4.1.2.02','Sin IVA','I','', (SELECT id FROM account WHERE accno LIKE '4.1.2.'), false, false, string_to_array('IC_income:AR_amount', ':'), false, false);
 SELECT account_heading_save(NULL, '4.1.3.','DEVOLUCIONES',(SELECT id FROM account_heading WHERE accno LIKE '4.1.'));
 SELECT account_heading_save(NULL, '4.2.','NO OPERACIONALES',(SELECT id FROM account_heading WHERE accno LIKE '4.'));
-SELECT account_heading_save(NULL, '4.2.1.','OTROS INGRESOS	 ',(SELECT id FROM account_heading WHERE accno LIKE '4.2.'));
+SELECT account_heading_save(NULL, '4.2.1.','OTROS INGRESOS       ',(SELECT id FROM account_heading WHERE accno LIKE '4.2.'));
 SELECT account__save(NULL, '4.2.1.01','Intereses ganados','I','', (SELECT id FROM account WHERE accno LIKE '4.2.1.'), false, false, string_to_array('asset_gain', ':'), false, false);
 SELECT account__save(NULL, '4.2.1.02','Venta de activo fijo','I','', (SELECT id FROM account WHERE accno LIKE '4.2.1.'), false, false, string_to_array('asset_gain', ':'), false, false);
 SELECT account__save(NULL, '4.2.1.03','Rentas','I','', (SELECT id FROM account WHERE accno LIKE '4.2.1.'), false, false, string_to_array('asset_gain', ':'), false, false);
 SELECT account__save(NULL, '4.2.1.04','Cambio de moneda ganado','I','', (SELECT id FROM account WHERE accno LIKE '4.2.1.'), false, false, string_to_array('', ':'), false, false);
 -- Gastos
-SELECT account_heading_save(NULL, '5.','GASTOS	 ',NULL);
+SELECT account_heading_save(NULL, '5.','GASTOS   ',NULL);
 SELECT account_heading_save(NULL, '5.1.','COSTO',(SELECT id FROM account_heading WHERE accno LIKE '5.'));
 SELECT account_heading_save(NULL, '5.1.1.','VENTAS',(SELECT id FROM account_heading WHERE accno LIKE '5.1.'));
 SELECT account__save(NULL, '5.1.1.01','Servicio','E','', (SELECT id FROM account WHERE accno LIKE '5.1.1.'), false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
@@ -163,4 +163,3 @@ INSERT INTO defaults (setting_key, value) VALUES ('weightunit' , 'Kg');
 -- INSERT INTO language (code, description) VALUES ('es_AR', 'Spanish (Argentina)');
 
 commit;
-

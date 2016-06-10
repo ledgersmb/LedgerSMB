@@ -317,7 +317,7 @@ SELECT account__save(null, accno, description, category, gifi_accno, null, contr
                (10603, '70100', 'Počáteční účet rozvažný', 'A', 'A', '', '', false),
                (10605, '70200', 'Konečný účet rozvažný', 'A', 'A', '', '', false),
                (10607, '71000', 'Účet zisků a ztrát', 'A', 'A', '', '', false)
-       ) c (id, accno, description, charttype, category, link, gifi_accno, contra);  
+       ) c (id, accno, description, charttype, category, link, gifi_accno, contra);
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
@@ -351,4 +351,3 @@ WHERE id
    IN (SELECT account_id
        FROM account_link
        WHERE description LIKE '%_tax');
-

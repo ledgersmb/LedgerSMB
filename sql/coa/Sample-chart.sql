@@ -70,16 +70,16 @@ SELECT account__save(NULL,'5800','Licenses','E','8760', NULL, false, false, stri
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.05);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2320'),0.08);
 --
-INSERT INTO defaults (setting_key, value) values ('inventory_accno_id',  
-	(select id from chart where accno = '1520'));
+INSERT INTO defaults (setting_key, value) values ('inventory_accno_id',
+        (select id from chart where accno = '1520'));
 INSERT INTO defaults (setting_key, value) values ('income_accno_id',
-	 (select id from chart where accno = '4020')); 
-INSERT INTO defaults (setting_key, value) values ('expense_accno_id', 
-	(select id from chart where accno = '5010')); 
-INSERT INTO defaults (setting_key, value) values ('fxgain_accno_id', 
-	(select id from chart where accno = '4450'));
+         (select id from chart where accno = '4020'));
+INSERT INTO defaults (setting_key, value) values ('expense_accno_id',
+        (select id from chart where accno = '5010'));
+INSERT INTO defaults (setting_key, value) values ('fxgain_accno_id',
+        (select id from chart where accno = '4450'));
 INSERT INTO defaults (setting_key, value) values ('fxloss_accno_id',
- 	(select id from chart where accno = '4450')); 
+        (select id from chart where accno = '4450'));
 INSERT INTO defaults (setting_key, value) values ('curr', 'CAD:USD:EUR');
 INSERT INTO defaults (setting_key, value) values ('weightunit', 'kg');
 --
@@ -90,4 +90,3 @@ WHERE id
    IN (SELECT account_id
        FROM account_link
        WHERE description LIKE '%_tax');
-

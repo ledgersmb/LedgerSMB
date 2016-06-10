@@ -5,30 +5,295 @@
 package LedgerSMB::Sysconfig;
 use strict;
 use warnings;
-# no strict qw(refs);
 use Cwd;
 
-# use LedgerSMB::Form;
+use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
-# For Win32, change $pathsep to ';';
-our $pathsep = ':';
+my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
 
-our $auth = 'DB';
-our $images = getcwd() . '/images';
-our $cssdir = 'css/';
-our $fs_cssdir = 'css/';
-our $dojo_theme = 'claro';
-our $dojo_built = 1;
 
-our $force_username_case = undef; # don't force case
+our %config;
+our %docs;
 
+=head2 def $name, %args;
+
+keys in %args can be:
+
+=over
+
+=item section
+
+=item key
+
+=item default
+
+=item envvar
+
+=back
+
+=cut
+
+sub def {
+    my ($name, %args) = @_;
+    my $sec = $args{section};
+    my $key = $args{key} // $name;
+    my $default = $args{default};
+    my $envvar = $args{envvar};
+
+    $default = $default->()
+        if ref $default && ref $default eq 'CODE';
+
+    $docs{$sec}->{$key} = $args{doc};
+    {
+        no strict 'refs';
+        ${$name} = $cfg->val($sec, $key, $default);
+        $ENV{$envvar} = $cfg->val($sec, $key, $default)
+            if $envvar && defined $cfg->val($sec, $key, $default);
+
+        # create a functional interface
+        *{$name} = sub {
+            my ($nv) = @_; # new value to be assigned
+            my $cv = ${$name};
+
+            ${$name} = $nv if scalar(@_) > 0;
+            return $cv;
+        };
+    }
+}
+
+
+
+### SECTION  ---   main
+
+
+def 'auth',
+    section => 'main',
+    default => 'DB',
+    doc => qq||;
+
+def 'dojo_theme',
+    section => 'main',
+    default => 'claro',
+    doc => qq||;
+
+def 'force_username_case',
+    section => 'main',
+    default => undef,  # don't force case
+    doc => qq||;
+
+def 'max_post_size',
+    section => 'main',
+    default => 1024 * 1024,
+    doc => qq||;
+
+def 'cookie_name',
+    section => 'main',
+    default => "LedgerSMB-1.3",
+    doc => qq||;
+
+# Maximum number of invoices that can be printed on a check
+def 'check_max_invoices',
+    section => 'main',
+    default => 5,
+    doc => qq||;
+
+# set language for login and admin
+def 'language',
+    section => 'main',
+    default => 'en',
+    doc => qq||;
+
+def 'log_level',
+    section => 'main',
+    default => 'ERROR',
+    doc => qq||;
+
+def 'DBI_TRACE',
+    section => 'main', # SHOULD BE 'debug' ????
+    default => 0,
+    doc => qq||;
+
+def 'no_db_str',
+    section => 'main',
+    default => 'database',
+    doc => qq||;
+
+def 'db_autoupdate',
+    section => 'main',
+    default => undef,
+    doc => qq||;
+
+def 'return_accno',
+    section => 'main',
+    default => undef,
+    doc => qq||;
+
+def 'cache_templates',
+    section => 'main',
+    default => 0,
+    doc => qq||;
+
+
+### SECTION  ---   paths
+
+def 'pathsep',
+    section => 'main', # SHOULD BE 'paths' ????
+    default => ':',
+    doc => qq|
+The documentation for the 'main.pathsep' key|;
+
+def 'cssdir',
+    section => 'main', # SHOULD BE 'paths' ????
+    default => 'css/',
+    doc => qq||;
+
+def 'fs_cssdir',
+    section => 'main', # SHOULD BE 'paths' ????
+    default => 'css/',
+    doc => qq||;
+
+# Temporary files stored at"
+def 'tempdir',
+    section => 'main', # SHOULD BE 'paths' ????
+    default => sub { $ENV{TEMP} || '/tmp' },
+    envvar => 'HOME',
+    doc => qq||;
+
+# Path to the translation files
+def 'localepath',
+    section => 'paths',
+    default => 'locale/po',
+    doc => '';
+
+
+# spool directory for batch printing
+def 'spool',
+    section => 'paths',
+    default => 'spool',
+    doc => qq||;
+
+# templates base directory
+def 'templates',
+    section => 'paths',
+    default => 'templates',
+    doc => qq||;
+
+our $cache_template_dir =
+    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
+# Backup path
+our $backuppath = LedgerSMB::Sysconfig::tempdir();
+
+
+### SECTION  ---   mail
+
+def 'sendmail',
+    section => 'mail',
+    default => '/usr/sbin/sendmail -t',
+    doc => qq|location of sendmail|;
+
+
+def 'smtphost',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'smtptimeout',
+    section => 'mail',
+    default => 60,
+    doc => '';
+
+def 'smtpuser',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'smtppass',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'smtpauthmethod',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+def 'backup_email_from',
+    section => 'mail',
+    default => '',
+    doc => '';
+
+
+### SECTION  ---   database
+
+def 'db_host',
+    key => 'host',
+    section => 'database',
+    envvar => 'PGHOST',
+    doc => '';
+
+def 'db_port',
+    key => 'port',
+    section => 'database',
+    envvar => 'PGPORT',
+    doc => '';
+
+def 'default_db',
+    section => 'database',
+    default => undef,
+    doc => '';
+
+def 'db_namespace',
+    section => 'database',
+    default => 'public',
+    doc => '';
+
+def 'db_sslmode',
+    section => 'database',
+    default => undef,
+    envvar => 'PGSSLMODE',
+    doc => '';
+
+
+### SECTION  ---   debug
+
+def 'dojo_built',
+    section => 'debug',
+    default => 1,
+    doc => qq||;
+
+
+
+
+### WHAT DOES THIS DO???
 our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
-# Whitelist for redirect destination
+
+
+
+
+# if you have latex installed set to 1
+###TODO-LOCALIZE-DOLLAR-AT
+our $latex = eval {require Template::Plugin::Latex};
+
+
+# available printers
+our %printer;
+for ($cfg->Parameters('printers')){
+     $printer{$_} = $cfg->val('printers', $_);
+}
+
+
+# Programs
+our $zip = $cfg->val('progarms', 'zip', 'zip -r %dir %dir');
+our $gzip = $cfg->val('programs', 'gzip', "gzip -S .gz");
+
+
+
+# Whitelist for redirect destination / this isn't really configuration.
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
@@ -46,108 +311,12 @@ our @scripts = (
     'is.pl', 'oe.pl',    'pe.pl',
 );
 
-# if you have latex installed set to 1
-###TODO-LOCALIZE-DOLLAR-AT
-our $latex = eval {require Template::Plugin::Latex};
-
-# Defaults to 1 megabyte
-our $max_post_size = 1024 * 1024;
-
-# defaults to LedgerSMB-1.3 - default spelling of cookie
-our $cookie_name = "LedgerSMB-1.3";
-
-# spool directory for batch printing
-our $spool = "spool";
-
-our $cache_templates = 0;
-# path to user configuration files
-our $userspath = "users";
-
-# templates base directory
-our $templates = "templates";
-
-# Temporary files stored at"
-our $tempdir = ( $ENV{TEMP} || '/tmp' );
-
-# member file
-our $memberfile = "users/members";
-
-# location of sendmail
-our $sendmail = "/usr/sbin/sendmail -t";
-
-# SMTP settings
-our $smtphost   = '';
-our $smtptimeout = 60;
-our $smtpuser   = '';
-our $smtppass   = '';
-our $smtpauthmethod = '';
-our $zip = 'zip -r %dir %dir';
-
-# set language for login and admin
-our $language = "en";
-
-# Maximum number of invoices that can be printed on a check
-our $check_max_invoices = 5;
-
-# program to use for file compression
-our $gzip = "gzip -S .gz";
-
-# Path to the translation files
-our $localepath = 'locale/po';
-
-our $no_db_str = 'database';
-our $log_level = 'ERROR';
-our $DBI_TRACE=0;
-# available printers
-our %printer;
-
-my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
-
-# Root variables
-for my $var (
-    qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth
-    db_autoupdate force_username_case max_post_size cookie_name
-    return_accno no_db_str tempdir cache_templates fs_cssdir dojo_theme
-    dojo_built)
-  )
-{
-    no strict 'refs';
-    ${$var} = $cfg->val('main', $var, ${$var});
-}
-
-if ($cssdir !~ m|/$|){
-    $cssdir = "$cssdir/";
-}
-$fs_cssdir =~ s|/$||;
-
-for ($cfg->Parameters('printers')){
-     $printer{$_} = $cfg->val('printers', $_);
-}
-
 # ENV Paths
 for my $var (qw(PATH PERL5LIB)) {
-     $ENV{$var} .= $pathsep . ( join $pathsep, $cfg->val('environment', $var));
+     $ENV{$var} .= $Config{path_sep} . ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
 }
 
-# Application-specific paths
-for my $var (qw(localepath spool templates images)) {
-    no strict 'refs';
-    ${$var} = $cfg->val('paths', $var) if $cfg->val('paths', $var);
-}
 
-# Programs
-for my $var (qw(gzip zip)) {
-    no  strict 'refs';
-    ${$var} = $cfg->val('programs', $var) if $cfg->val('programs', $var);
-}
-
-# mail configuration
-for my $var (qw(sendmail smtphost smtptimeout smtpuser
-             smtppass smtpauthmethod backup_email_from))
-{
-    no strict 'refs';
-    ${$var} = $cfg->val('mail', $var) if $cfg->val('mail', $var);
-}
 
 my $modules_loglevel_overrides='';
 
@@ -157,7 +326,7 @@ for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
 }
 # Log4perl configuration
 our $log4perl_config = qq(
-    log4perl.rootlogger = $log_level, Basic, Debug
+    log4perl.rootlogger = $LedgerSMB::Sysconfig::log_level, Basic, Debug
     )
     .
     $modules_loglevel_overrides
@@ -196,28 +365,13 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
-our $db_host = $cfg->val('database', 'host');
-our $db_port = $cfg->val('database', 'port');
 
-$ENV{PGHOST} = $db_host;
-$ENV{PGPORT} = $db_port;
-our $default_db = $cfg->val('database', 'default_db');
-our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
-$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode')
-    if $cfg->val('database', 'sslmode');
-
-$ENV{HOME} = $tempdir;
-
-our $cache_template_dir = "$tempdir/lsmb_templates";
-# Backup path
-our $backuppath = $tempdir;
-
-if(!(-d "$tempdir")){
+if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
-     if ($pathsep eq ';'){ # We need an actual platform configuration variable
-        $rc = system("mkdir $tempdir");
+     if ($Config{path_sep} eq ';'){ # We need an actual platform configuration variable
+         $rc = system("mkdir " . LedgerSMB::Sysconfig::tempdir());
      } else {
-         $rc=system("mkdir -p $tempdir");#TODO what if error?
+         $rc=system("mkdir -p " . LedgerSMB::Sysconfig::tempdir());
      #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
      }
 }

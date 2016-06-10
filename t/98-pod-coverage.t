@@ -8,84 +8,138 @@
 use strict;
 use warnings;
 
-use LedgerSMB::Locale;
-my $locale =  LedgerSMB::Locale->get_handle('en');
-$LedgerSMB::App_State::Locale = $locale;
-## Prevent "name referenced once" warning by repeating the same assignment again
-$LedgerSMB::App_State::Locale = $locale;
+use Test::More; # plan automatically generated below
+use File::Find;
+
+my @on_disk;
+
+
+sub test_files {
+    my ($critic, $files) = @_;
+
+    for my $file (@$files) {
+        my @findings = $critic->critique($file);
+
+        ok(scalar(@findings) == 0, "Critique for $file");
+        for my $finding (@findings) {
+            diag($finding->description);
+        }
+    }
+
+    return;
+}
+
+sub collect {
+    return if $File::Find::name !~ m/\.(pm|pl)$/;
+
+    my $module = $File::Find::name;
+    push @on_disk, $module
+}
+find(\&collect, 'lib/LedgerSMB.pm', 'lib/LedgerSMB/');
+
+# only check new code; we're scaling down on old code anyway
+@on_disk =
+    grep { ! m#^bin/# }
+    grep { ! m#^lib/LedgerSMB/..\.pm# }
+    grep { ! m#^lib/LedgerSMB/Form\.pm# }
+    grep { ! m#^lib/LedgerSMB/Auth/# }
+    grep { ! m#^lib/LedgerSMB/Num2text\.pm# } # LedgerSMB::Num2text is old code
+    grep { ! m#^lib/LedgerSMB/Sysconfig.pm# } # LedgerSMB::Sysconfig false fail
+    @on_disk;
+
 
 use Test::More;
 eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 63;
+    plan tests => scalar(@on_disk);
 }
-pod_coverage_ok("LedgerSMB");
-pod_coverage_ok("LedgerSMB::Form");
-pod_coverage_ok("LedgerSMB::AM");
-pod_coverage_ok("LedgerSMB::Database");
-pod_coverage_ok("LedgerSMB::Locale");
-pod_coverage_ok("LedgerSMB::Mailer");
-pod_coverage_ok("LedgerSMB::Template");
-pod_coverage_ok("LedgerSMB::Template::CSV");
-pod_coverage_ok("LedgerSMB::Template::HTML");
-pod_coverage_ok("LedgerSMB::Template::TXT");
-pod_coverage_ok("LedgerSMB::User");
-pod_coverage_ok("LedgerSMB::DBObject::Date");
-pod_coverage_ok("LedgerSMB::DBObject::Draft");
-pod_coverage_ok("LedgerSMB::Company_Config");
-pod_coverage_ok("LedgerSMB::DBObject::Admin");
-pod_coverage_ok("LedgerSMB::Scripts::contact");
-pod_coverage_ok("LedgerSMB::Scripts::account");
-pod_coverage_ok("LedgerSMB::Scripts::admin");
-pod_coverage_ok("LedgerSMB::Scripts::asset");
-pod_coverage_ok("LedgerSMB::Scripts::budget_reports");
-pod_coverage_ok("LedgerSMB::Scripts::budgets");
-pod_coverage_ok("LedgerSMB::Scripts::business_unit");
-pod_coverage_ok("LedgerSMB::Scripts::configuration");
-pod_coverage_ok("LedgerSMB::Scripts::contact");
-pod_coverage_ok("LedgerSMB::Scripts::contact_reports");
-pod_coverage_ok("LedgerSMB::Scripts::drafts");
-pod_coverage_ok("LedgerSMB::Scripts::file");
-pod_coverage_ok("LedgerSMB::Scripts::goods");
-pod_coverage_ok("LedgerSMB::Scripts::import_csv");
-pod_coverage_ok("LedgerSMB::Scripts::inventory");
-pod_coverage_ok("LedgerSMB::Scripts::invoice");
-pod_coverage_ok("LedgerSMB::Scripts::inv_reports");
-pod_coverage_ok("LedgerSMB::Scripts::journal");
-pod_coverage_ok("LedgerSMB::Scripts::login");
-pod_coverage_ok("LedgerSMB::Scripts::lreports_co");
-pod_coverage_ok("LedgerSMB::Scripts::menu");
-pod_coverage_ok("LedgerSMB::Scripts::order");
-pod_coverage_ok("LedgerSMB::Scripts::payment",
-               {also_private => [qr/^(p\_)/]}
-);
-pod_coverage_ok("LedgerSMB::Scripts::payroll");
-pod_coverage_ok("LedgerSMB::Scripts::pnl");
-pod_coverage_ok("LedgerSMB::Scripts::recon");
-pod_coverage_ok("LedgerSMB::Scripts::report_aging");
-pod_coverage_ok("LedgerSMB::Scripts::reports");
-pod_coverage_ok("LedgerSMB::Scripts::setup");
-pod_coverage_ok("LedgerSMB::Scripts::taxform");
-pod_coverage_ok("LedgerSMB::Scripts::timecard");
-pod_coverage_ok("LedgerSMB::Scripts::transtemplate");
-pod_coverage_ok("LedgerSMB::Scripts::trial_balance");
-pod_coverage_ok("LedgerSMB::Scripts::user");
-pod_coverage_ok("LedgerSMB::Scripts::vouchers");
-pod_coverage_ok("LedgerSMB::Entity::Person::Employee");
-pod_coverage_ok("LedgerSMB::File");
-pod_coverage_ok("LedgerSMB::File::ECA");
-pod_coverage_ok("LedgerSMB::File::Entity");
-pod_coverage_ok("LedgerSMB::File::Order");
-pod_coverage_ok("LedgerSMB::File::Part");
-pod_coverage_ok("LedgerSMB::File::Transaction");
-pod_coverage_ok("LedgerSMB::Batch");
-pod_coverage_ok("LedgerSMB::DBObject::Payment", 
-               {also_private => [qr/^(format_ten_|num2text_)/]}
-);
-pod_coverage_ok("LedgerSMB::DBObject::Reconciliation");
-pod_coverage_ok("LedgerSMB::DBObject::TaxForm");
-pod_coverage_ok("LedgerSMB::DBObject::Menu");
-pod_coverage_ok("LedgerSMB::DBObject::EOY");
+
+
+# Copied from 01-load.t
+my @exception_modules =
+    (
+     # Exclude because tested conditionally on Template::Plugin::Latex way below
+     'LedgerSMB::Template::LaTeX',
+
+     # Exclude because tested conditionally on XML::Twig way below
+     'LedgerSMB::Template::ODS',
+
+     # Exclude because tested conditionally on XML::Simple way below
+     'LedgerSMB::REST_Format::xml',
+
+     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
+     'LedgerSMB::PSGI',
+
+     # Exclude because tested conditionally on X12::Parser way below
+     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+
+     # Exclude, reports functions which don't exist
+     'LedgerSMB::Sysconfig',
+    );
+
+
+my %also_private = (
+    'LedgerSMB::Scripts::payment' => [ qr/(^p\_)|(_p$)/ ],
+    'LedgerSMB::DBObject::Payment' => [ qr/^(format_ten_|num2text_)/ ],
+    );
+
+for my $f (@on_disk) {
+    $f =~ s/\.pm//g;
+    $f =~ s#lib/##g;
+    $f =~ s#/#::#g;
+
+    pod_coverage_ok($f, { also_private => $also_private{$f} })
+        unless grep { $f eq $_ } @exception_modules;
+}
+
+
+SKIP: {
+    eval{ require Template::Plugin::Latex} ||
+    skip 'Template::Plugin::Latex not installed', 1;
+    eval{ require Template::Latex} ||
+    skip 'Template::Latex not installed', 1;
+
+    my $f = 'LedgerSMB::Template::LaTeX';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require XML::Twig };
+    skip 'XML::Twig not installed', 1 if $@;
+
+    eval { require OpenOffice::OODoc };
+    skip 'OpenOffice::OODoc not installed', 1 if $@;
+
+    my $f = 'LedgerSMB::Template::ODS';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require XML::Simple };
+
+    skip 'XML::Simple not installed', 1 if $@;
+    my $f = 'LedgerSMB::REST_Format::xml';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require CGI::Emulate::PSGI };
+
+    skip 'CGI::Emulate::PSGI not installed', 1 if $@;
+    my $f = 'LedgerSMB::PSGI';
+    pod_coverage_ok($f, { also_private => $also_private{$f} });
+}
+
+SKIP: {
+    eval { require X12::Parser };
+
+    skip 'X12::Parser not installed', 3 if $@;
+    for my $f ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850',
+               'LedgerSMB::X12::EDI894') {
+        pod_coverage_ok($f, { also_private => $also_private{$f} });
+    }
+}
+
 

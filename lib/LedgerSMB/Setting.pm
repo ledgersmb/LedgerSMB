@@ -25,7 +25,13 @@ The following methods are passed through to stored procedures:
 
 =item set ($self->{key}, $self->{value})
 
+=item increment ($self->{key})
+
 =item all_accounts()
+
+=item accounts_by_link($link)
+
+=item get_currencies()
 
 Returns a list of all accounts on the system.
 

@@ -81,12 +81,14 @@ our $DBName;
 
 =back
 
-Each of the above has an accessor function fo the same name which reads the
+Each of the above has an accessor function of the same name which reads the
 data, and a set_... function which writes it.  The set_ function should be
 used sparingly.
 
 The direct access approach is deprecated and is likely to go away in 1.5 with
 the variables above given a "my" scope instead of an "our" one.
+
+=over
 
 =cut
 
@@ -101,33 +103,65 @@ sub _set_n {
     }
 }
 
+=item DBName
+
+=cut
+
 sub DBName {
     return $DBName;
 }
+
+=item set_DBName
+
+=cut
 
 sub set_DBName {
     return _set_n('DBName', @_);
 }
 
+=item User
+
+=cut
+
 sub User {
     return $User;
 }
+
+=item set_User
+
+=cut
 
 sub set_User {
     return _set_n('User', @_);
 }
 
+=item Locale
+
+=cut
+
 sub Locale {
     return $Locale;
 }
+
+=item set_Locale
+
+=cut
 
 sub set_Locale {
     return _set_n('Locale', @_);
 }
 
+=item Roles
+
+=cut
+
 sub Roles {
     return @Roles;
 }
+
+=item set_Roles
+
+=cut
 
 sub set_Roles {
     shift @_ if $_[0] eq __PACKAGE__;
@@ -135,29 +169,55 @@ sub set_Roles {
     return @Roles;
 }
 
+=item Company_Settings
+
+=cut
+
 sub Company_Settings {
     return $Company_Settings;
 }
+
+=item set_Company_Settings
+
+=cut
 
 sub set_Company_Settings {
     return _set_n('Company_Settings', @_);
 }
 
+=item DBH
+
+=cut
+
 sub DBH {
     return $DBH;
 }
+
+=item set_DBH
+
+=cut
 
 sub set_DBH {
     return _set_n('DBH', @_);
 }
 
+=item Role_Prefix
+
+=cut
+
 sub Role_Prefix {
     return $Role_Prefix;
 }
 
+=item set_Role_Prefix
+
+=cut
+
 sub set_Role_Prefix {
     return _set_n('Role_Prefix', @_);
 }
+
+=back
 
 =head1 METHODS
 
@@ -198,6 +258,13 @@ sub get_url {
     }
     return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
 }
+
+=head2 get_relative_url
+
+Returns the script and query string part of the URL of the GET request,
+without the script path, or undef.
+
+=cut
 
 sub get_relative_url {
     if ($ENV{REQUEST_METHOD} ne 'GET') {

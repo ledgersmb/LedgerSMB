@@ -54,17 +54,17 @@ CREATE OR REPLACE FUNCTION entity__list_classes ()
 RETURNS SETOF entity_class AS $$
 DECLARE out_row entity_class;
 BEGIN
-	FOR out_row IN
-		SELECT * FROM entity_class
-		WHERE active and pg_has_role(SESSION_USER,
+        FOR out_row IN
+                SELECT * FROM entity_class
+                WHERE active and pg_has_role(SESSION_USER,
                                    lsmb__role_prefix()
                                    || 'contact_class_'
                                    || lower(regexp_replace(class, ' ', '_')),
                                    'USAGE')
-		ORDER BY id
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
+                ORDER BY id
+        LOOP
+                RETURN NEXT out_row;
+        END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -87,9 +87,9 @@ CREATE OR REPLACE FUNCTION eca__get_entity (
     in_credit_id int
 ) RETURNS setof entity AS $$
 
-    SELECT entity.* 
-      FROM entity_credit_account 
-      JOIN entity ON entity_credit_account.entity_id = entity.id 
+    SELECT entity.*
+      FROM entity_credit_account
+      JOIN entity ON entity_credit_account.entity_id = entity.id
      WHERE entity_credit_account.id = in_credit_id;
 
 $$ language sql;

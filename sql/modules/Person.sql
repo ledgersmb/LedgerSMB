@@ -8,7 +8,7 @@ BEGIN;
 
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$
-	SELECT entity_id from users where username = SESSION_USER;
+        SELECT entity_id from users where username = SESSION_USER;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__get_my_entity_id() IS
@@ -93,8 +93,8 @@ RETURNS INT AS $$
          WHERE id = in_entity_id;
     ELSE
         INSERT INTO entity (name, entity_class, country_id)
-	values (in_first_name || ' ' || in_last_name, 3, in_country_id);
-	e_id := currval('entity_id_seq');
+        values (in_first_name || ' ' || in_last_name, 3, in_country_id);
+        e_id := currval('entity_id_seq');
 
     END IF;
 
@@ -109,13 +109,13 @@ RETURNS INT AS $$
     WHERE
             entity_id = in_entity_id;
     IF FOUND THEN
-	RETURN in_entity_id;
+        RETURN in_entity_id;
     ELSE
         -- Do an insert
 
         INSERT INTO person (salutation_id, first_name, last_name, entity_id,
                            birthdate, personal_id)
-	VALUES (in_salutation_id, in_first_name, in_last_name, e_id,
+        VALUES (in_salutation_id, in_first_name, in_last_name, e_id,
                 in_birthdate, in_personal_id);
 
         RETURN e_id;
@@ -137,19 +137,19 @@ RETURNS SETOF location_result AS
 $$
 DECLARE out_row RECORD;
 BEGIN
-	FOR out_row IN
-		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
-			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
-		FROM location l
-		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
-		JOIN person p ON (ctl.entity_id = p.entity_id)
-		JOIN location_class lc ON (ctl.location_class = lc.id)
-		JOIN country c ON (c.id = l.country_id)
-		WHERE p.entity_id = in_entity_id
-		ORDER BY lc.id, l.id, c.name
-	LOOP
-		RETURN NEXT out_row;
-	END LOOP;
+        FOR out_row IN
+                SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
+                        l.state, l.mail_code, c.id, c.name, lc.id, lc.class
+                FROM location l
+                JOIN entity_to_location ctl ON (ctl.location_id = l.id)
+                JOIN person p ON (ctl.entity_id = p.entity_id)
+                JOIN location_class lc ON (ctl.location_class = lc.id)
+                JOIN country c ON (c.id = l.country_id)
+                WHERE p.entity_id = in_entity_id
+                ORDER BY lc.id, l.id, c.name
+        LOOP
+                RETURN NEXT out_row;
+        END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -159,11 +159,11 @@ $$ Returns a list of locations specified attached to the person.$$;
 CREATE OR REPLACE FUNCTION person__list_contacts(in_entity_id int)
 RETURNS SETOF contact_list AS
 $$
-		SELECT cc.class, cc.id, c.description, c.contact
-		FROM entity_to_contact c
-		JOIN contact_class cc ON (c.contact_class_id = cc.id)
-		JOIN person p ON (c.entity_id = p.entity_id)
-		WHERE p.entity_id = in_entity_id
+                SELECT cc.class, cc.id, c.description, c.contact
+                FROM entity_to_contact c
+                JOIN contact_class cc ON (c.contact_class_id = cc.id)
+                JOIN person p ON (c.entity_id = p.entity_id)
+                WHERE p.entity_id = in_entity_id
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION person__list_contacts(in_entity_id int) IS
@@ -242,10 +242,10 @@ $$ Lists bank accounts for a person$$;
 CREATE OR REPLACE FUNCTION person__list_notes(in_entity_id int)
 RETURNS SETOF entity_note AS
 $$
-		SELECT *
-		FROM entity_note
-		WHERE ref_key = in_entity_id
-		ORDER BY created
+                SELECT *
+                FROM entity_note
+                WHERE ref_key = in_entity_id
+                ORDER BY created
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION person__list_notes(in_entity_id int) IS
@@ -286,10 +286,10 @@ CREATE OR REPLACE FUNCTION person__save_location(
     DECLARE
         l_row location;
         l_id INT;
-	    t_person_id int;
+            t_person_id int;
     BEGIN
-	SELECT id INTO t_person_id
-	FROM person WHERE entity_id = in_entity_id;
+        SELECT id INTO t_person_id
+        FROM person WHERE entity_id = in_entity_id;
 
     UPDATE entity_to_location
        SET location_class = in_location_class
@@ -302,27 +302,27 @@ CREATE OR REPLACE FUNCTION person__save_location(
         -- Create a new one.
         l_id := location_save(
             in_location_id,
-    	    in_line_one,
-    	    in_line_two,
-    	    in_line_three,
-    	    in_city,
-    		in_state,
-    		in_mail_code,
-    		in_country_code);
+            in_line_one,
+            in_line_two,
+            in_line_three,
+            in_city,
+                in_state,
+                in_mail_code,
+                in_country_code);
 
         INSERT INTO entity_to_location
-    		(entity_id, location_id, location_class)
-    	VALUES  (in_entity_id, l_id, in_location_class);
+                (entity_id, location_id, location_class)
+        VALUES  (in_entity_id, l_id, in_location_class);
     ELSE
         l_id := location_save(
             in_location_id,
-    	    in_line_one,
-    	    in_line_two,
-    	    in_line_three,
-    	    in_city,
-    		in_state,
-    		in_mail_code,
-    		in_country_code);
+            in_line_one,
+            in_line_two,
+            in_line_three,
+            in_city,
+                in_state,
+                in_mail_code,
+                in_country_code);
         -- Update the old one.
     END IF;
     return l_id;

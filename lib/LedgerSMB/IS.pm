@@ -143,6 +143,7 @@ sub invoice_details {
     for $i ( 1 .. $form->{rowcount} - 1 ) {
 
         # account numbers
+        print STDERR "id_$i: " . $form->{"id_$i"} . "\n";
         $pth->execute( $form->{"id_$i"} );
         $ref = $pth->fetchrow_hashref(NAME_lc);
         for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
@@ -284,7 +285,6 @@ sub invoice_details {
         }
 
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
-
         if ( $form->{"qty_$i"} ) {
 
             $form->{discount} = [] if ref $form->{discount} ne 'ARRAY';
@@ -681,7 +681,6 @@ sub invoice_details {
     $form->{invtotal} = $form->format_amount( $myconfig, $form->{invtotal}, 2 );
 
     $form->{paid} = $form->format_amount( $myconfig, $form->{paid}, 2 );
-
 }
 
 sub project_description {
@@ -1596,7 +1595,9 @@ sub retrieve_invoice {
         my $taxrate;
         my $ptref;
 
+        my $c = 0;
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $c++;
             PriceMatrix::price_matrix( $pmh, $ref, $form->{transdate},
                 $decimalplaces, $form, $myconfig );
             $form->db_parse_numeric(sth=>$sth, hashref => $ref);
@@ -1627,14 +1628,17 @@ sub retrieve_invoice {
               ( $ref->{fxsellprice} * $form->{ $form->{currency} } );
             $ref->{sellprice} = $ref->{fxsellprice};
 
-
+            $ref->{number} = $ref->{partnumber};
             $ref->{partsgroup} = $ref->{partsgrouptranslation}
               if $ref->{partsgrouptranslation};
 
-        push @{ $form->{invoice_details} }, $ref;
+            push @{ $form->{invoice_details} }, $ref;
+            $form->{"id_$c"} = $ref->{id};
+            $form->{"qty_$c"} = $ref->{qty};
         }
-        $sth->finish;
+        $form->{rowcount} = scalar( @{ $form->{invoice_details} } ) + 1;
 
+        $sth->finish;
     }
 
 }
