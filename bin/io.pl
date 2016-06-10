@@ -1095,6 +1095,7 @@ sub print_options {
     if ( ref $form->{all_language} eq 'ARRAY') {
         $options{lang} = {
             name => 'language_code',
+            id => 'language-code',
             default_values => $form->{oldlanguage_code},
             options => [{text => ' ', value => ''}],
             };
