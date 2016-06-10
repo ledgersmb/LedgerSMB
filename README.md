@@ -205,15 +205,15 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ## Environment Variables
 
 We support the following
-- PERL5LIB        :
+- PERL5LIB        : Optional (but recommended)
      - should be configured before any LedgerSMB related process is executed (including starman/plack)
      - This should have the normal system entries, but also the LedgerSMB install dir should be prepended or appended depending on if the system is dedicated to LedgerSMB (prepend) or used for other things (append)
      - An example would be
     ```
     PERL5LIB='/home/foo/perl5/lib/perl5:/home/foo/perl5/lib/perl5:/usr/local/ledgersmb/'
     ```
-- LSMB_WORKINGDIR :
-     - Optional. Causes a chdir to the specified directory as the first thing done in starman.psgi
+- LSMB_WORKINGDIR : Optional
+     - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
      - An example would be
     ```
