@@ -1,7 +1,7 @@
 #!/usr/bin/plackup
 
 BEGIN {
- if ( $ENV{'LSMB_WORKINGDIR'} && -f "$ENV{'LSMB_WORKINGDIR'}/lib/LedgerSMB.pm" ) ) { chdir $ENV{'LSMB_WORKINGDIR'}; }
+ if ( $ENV{'LSMB_WORKINGDIR'} && -f "$ENV{'LSMB_WORKINGDIR'}/lib/LedgerSMB.pm" ) { chdir $ENV{'LSMB_WORKINGDIR'}; }
 }
 
 package LedgerSMB::FCGI;
