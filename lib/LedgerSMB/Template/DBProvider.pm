@@ -126,7 +126,7 @@ sub _template_content {
     my $tpl = $self->_retrieve_template_data($path);
     return wantarray
         ? ($tpl->{template},
-           (defined $tpl->{template}),
+           (defined $tpl->{template}) ? undef : 'not found',
            ($tpl->{last_modified}) ? int($tpl->{last_modified}->epoch) : undef)
         : $tpl->{template};
 }
