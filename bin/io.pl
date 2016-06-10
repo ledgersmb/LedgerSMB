@@ -1291,8 +1291,7 @@ sub print {
     }
     &invoice_links;
     &prepare_invoice;
-    $form->{language_code} = $lang;
-    $form->{media} = $saved_form->{media};
+    $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
     # if this goes to the printer pass through
     my $old_form = undef;
