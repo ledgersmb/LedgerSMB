@@ -28,7 +28,7 @@ requires 'PGObject';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role';
 requires 'PGObject::Type::BigFloat';
-requires 'PGObject::Type::DateTime';
+requires 'PGObject::Type::DateTime', '1.0.3';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.08';
 requires 'Plack::App::File';
@@ -64,7 +64,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Plugin::Latex';
+        requires 'Template::Plugin::Latex', '3.02';
         requires 'TeX::Encode';
 };
 
@@ -80,7 +80,7 @@ on 'develop' => sub {
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';
-    requires 'Test::BDD::Cucumber', '0.49';
+    requires 'Test::BDD::Cucumber', '0.50';
     requires 'Perl::Critic';
     requires 'Selenium::Remote::Driver';
 };
