@@ -846,15 +846,15 @@ sub process {
     my $cleanvars = shift;
     my $template;
     my $source;
-    my $tempdir = ${LedgerSMB::Sysconfig::tempdir};
+    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
     my $output = '';
     my %additional_options = ();
 
-        $parent->{binmode} = $binmode;
+    $parent->{binmode} = $binmode;
     $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
     if ($parent->{include_path} eq 'DB'){
-        $source = $parent{template};
+        $source = $parent->{template};
         $additional_options{INCLUDE_PATH} = [];
         $additional_options{LOAD_TEMPLATES} =
             [ LedgerSMB::Template::DBProvider->new(
