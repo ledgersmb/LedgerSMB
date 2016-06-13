@@ -15,8 +15,6 @@ extends 'PageObject';
 
 
 
-has driver => (is => 'ro', required => 1);
-
 sub url { return '/setup.pl'; }
 
 sub verify {

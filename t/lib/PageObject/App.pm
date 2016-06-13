@@ -13,8 +13,6 @@ extends 'PageObject';
 use PageObject::App::Main;
 use PageObject::App::Menu;
 
-has driver => (is => 'ro', required => 1);
-
 has menu => (is => 'ro', builder => '_build_menu', lazy => 1);
 has maindiv => (is => 'ro', builder => '_build_maindiv', lazy => 1);
 
