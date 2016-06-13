@@ -102,9 +102,9 @@ before_script:
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
+  - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" #plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
   - sleep 5  # give starman a chance to start
-  - curl localhost:5001/setup.pl >/dev/null 2>&1  # fail early if starman is not running
+  - t/lib/Is_LSMB_running.sh  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
 
 script:
