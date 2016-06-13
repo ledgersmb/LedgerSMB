@@ -81,3 +81,4 @@ CNTadd=`echo -e "$DIFF" | grep -c '^[+][^+].*$'`
 CNTdel=`echo -e "$DIFF" | grep -c '^[-][^-].*$'`
 if (( CNTadd > MaxDiff )); then DIE $EX_DATAERR "Added too many Lines ($CNTadd) to setup.pl.html" "$DIFF"; fi
 if (( CNTdel > MaxDiff )); then DIE $EX_DATAERR "Removed too many Lines ($CNTdel) from setup.pl.html" "$DIFF"; fi
+
