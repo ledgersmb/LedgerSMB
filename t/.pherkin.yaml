@@ -5,6 +5,19 @@ default:
    extensions:
       Pherkin::Extension::LedgerSMB:
          db_name: postgres
+      Pherkin::Extension::Weasel:
+         base_url: http://localhost:5000
+         default_session: selenium
+         sessions:
+           selenium:
+             driver:
+                drv_name: Weasel::Driver::Selenium2
+                wait_timeout: 3000
+                window_size:  1024x1280
+                caps:
+                  port: 4420
+      Pherkin::Extension::PageObject:
+         dummy: 1
 #      Pherkin::Extension::Screenshot:
 #         output_path: screens/
 

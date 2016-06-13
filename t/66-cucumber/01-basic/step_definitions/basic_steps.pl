@@ -15,17 +15,6 @@ use Selenium::Support qw( find_element_by_label
  try_wait_for_page
  prepare_driver element_has_class element_is_dropdown);
 
-Given qr/a LedgerSMB instance/, sub {
-    return if defined C->stash->{feature}->{driver};
-
-    my $driver = new PageObject::Driver(
-        'port' => 4422,
-        ) or die "Can't set up Selenium connection";
-    $driver->set_implicit_wait_timeout(30000);
-    &prepare_driver($driver);
-    C->stash->{feature}->{driver} = $driver;
-};
-
 Given qr/a user named "(.*)" with a password "(.*)"/, sub {
     C->stash->{feature}->{user} = $1;
     C->stash->{feature}->{passwd} = $2;
@@ -39,13 +28,6 @@ Given qr/a database super-user/, sub {
 Given qr/a non-existant company name/, sub {
     C->stash->{feature}->{"the company name"} = "non-existant";
     S->{scenario}->{"non-existent"} = 1;
-};
-
-When qr/I navigate to '(.*)'/, sub {
-    my $url = $ENV{LSMB_BASE_URL} . $1;
-
-    get_driver(C)->get($url);
-    get_driver(C)->try_wait_for_page;;
 };
 
 When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
