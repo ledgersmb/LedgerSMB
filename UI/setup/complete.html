@@ -9,8 +9,8 @@
 <?lsmb INCLUDE 'ui-db-credentials.html' ?>
 <div class="listtop"><?lsmb text('Database Operation Complete') ?></div>
 <p><?lsmb text('This database operation has completed successfully.  LedgerSMB may now be used.'); ?></p>
-<p><a href="setup.pl"><?lsmb text('Return to setup') ?></a></p>
-<p><a href="login.pl"><?lsmb text('Start Using LedgerSMB') ?></a></p>
+<p><a href="setup.pl?action=login&s_user=<?lsmb login ?>&database="><?lsmb text('Return to setup') ?></a></p>
+<p><a href="login.pl?login=username&company=<?lsmb database ?>"><?lsmb text('Start Using LedgerSMB') ?></a></p><!-- Setting login=username is a kludge to prevent the dbadmin user from being pre-entered. A better solution needs to be found. -->
 <?lsmb IF lsmb_info ?>
 <table class='lsmb_info'>
   <thead>
