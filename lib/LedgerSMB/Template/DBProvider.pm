@@ -64,12 +64,14 @@ sub _retrieve_template_data {
     my @rv;
     my (@langs, $lang);
 
-    push @langs, $self->language_code
-        if $self->language_code =~ m/_/;
+    if (defined $self->language_code) {
+        push @langs, $self->language_code
+            if $self->language_code =~ m/_/;
 
-    $lang = $self->language_code;
-    $lang =~ s/_.*//;
-    push @langs, $lang;
+        $lang = $self->language_code;
+        $lang =~ s/_.*//;
+        push @langs, $lang;
+    }
     push @langs, undef;
 
     my $rv;
