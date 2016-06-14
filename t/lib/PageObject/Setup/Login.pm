@@ -8,7 +8,7 @@ use PageObject;
 
 use PageObject::Setup::Admin;
 use PageObject::Setup::CreateConfirm;
-
+use Selenium::Remote::WDKeys;
 
 use Moose;
 extends 'PageObject';
@@ -36,8 +36,10 @@ sub login {
         my $element = $self->driver->find_element_by_label($_->{label});
         $element->click;
         $element->send_keys($_->{value});
+        $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
     } for ({ label => "Super-user login",
-             value => $user },
+             value => $user,
+             list => 1 },
            { label => "Password",
              value => $password },
            { label => "Database",

@@ -13,6 +13,10 @@ use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
 
+# Optimization
+use Plack::Middleware::ConditionalGET;
+use Plack::Builder::Conditionals;
+
 die 'Cannot verify version of libraries, may be including out of date modules?' unless $LedgerSMB::PSGI::VERSION == '1.5';
 
 
@@ -20,6 +24,9 @@ my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();
 
 builder {
+    enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
+        'ConditionalGET';
+
     mount '/rest/' => LedgerSMB::PSGI::rest_app();
 
     # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points

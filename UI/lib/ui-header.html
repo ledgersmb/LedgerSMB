@@ -24,14 +24,14 @@
         <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
 
-        <link rel="stylesheet" href="css/system/global.css" type="text/css" />
-        <?lsmb IF form.stylesheet ?>
+    <link rel="stylesheet" href="css/system/global.css" type="text/css" />
+    <?lsmb IF form.stylesheet ?>
         <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
-        <?lsmb ELSIF stylesheet ?>
+    <?lsmb ELSIF stylesheet ?>
         <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
-        <?lsmb ELSE ?>
-        <?lsmb END ?>
-        <?lsmb FOREACH s = include_stylesheet ?>
+    <?lsmb ELSE ?>
+    <?lsmb END ?>
+    <?lsmb FOREACH s = include_stylesheet ?>
         <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
@@ -59,7 +59,6 @@
             <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <?lsmb END # if html_charset ?>
         <meta name="robots" content="noindex,nofollow" />
-
 </head>
 <?lsmb BLOCK end_html ?>
 </html>

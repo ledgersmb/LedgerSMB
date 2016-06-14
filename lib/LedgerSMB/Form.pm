@@ -613,7 +613,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
           var dojoConfig = {
                async: 1,
                parseOnLoad: 0,
-               packages: [{"name":"lsmb","location":"../.."}]
+               packages: [{"name":"lsmb","location":"../lsmb"}]
            }
            var lsmbConfig = {dateformat: '$dformat'};
         </script>

@@ -266,7 +266,7 @@ sub display_form
             { ndx => 9, key => 'N', value => $locale->text('New') },
           'copy_to_new' =>
             { ndx => 10, key => 'C', value => $locale->text('Copy to New') },
-	 );
+         );
 
           if ($form->{separate_duties}){
           $hiddens{separate_duties}=$form->{separate_duties};

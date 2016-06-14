@@ -727,6 +727,7 @@ sub _failed_check {
     ];
     $template->render({
            form               => $request,
+           base_form          => 'dijit/form/Form',
            heading            => $header,
            headers            => [$check->display_name, $check->instructions],
            columns            => $check->display_cols,

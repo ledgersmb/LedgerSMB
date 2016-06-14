@@ -11,7 +11,9 @@
   "contributors": [{
     "name": "John Locke"
   },{
-    "name": "Davig Godfrey"
+    "name": "David Godfrey"
+  },{
+    "name": "Yves Lavoie"
   }],
   "bugs": "https://github.com/ledgersmb/LedgerSMB/issues",
   "repositories": [{
@@ -20,9 +22,9 @@
     "path": "packages/app"
   }],
   "dependencies": {
-    "dojo": "~1.10.4",
-    "dijit": "~1.10.4",
-    "dojox": "~1.10.4"
+    "dojo": "~1.11",
+    "dijit": "~1.11",
+    "dojox": "~1.11"
   },
   "main": "src",
   "homepage": "http://ledgersmb.org/",
