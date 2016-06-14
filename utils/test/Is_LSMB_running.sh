@@ -61,7 +61,6 @@ DUMPfile() {
 
 [[ -e /tmp/Is_LSMB_running.log ]] && rm /tmp/Is_LSMB_running.log
 [[ -e /tmp/Is_LSMB_running.html ]] && rm /tmp/Is_LSMB_running.html
-[[ -e /tmp/plackup-error.log ]] && rm /tmp/plackup-error.log
 
 if curl --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
