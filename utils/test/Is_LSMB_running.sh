@@ -38,6 +38,8 @@ if (( MaxDiff < 1 )); then HELP $EX_USAGE "Final Argument 'MaxDiff' ($MaxDiff) m
 src='t/data/Is_LSMB_running.html'
 current='/tmp/Is_LSMB_running.html'
 
+printf -v LF "\n";
+
 DIE() {
     E=$1; shift;
     T=$1; shift
@@ -57,6 +59,9 @@ DUMPfile() {
     echo '=============================';
 }
 
+[[ -e /tmp/Is_LSMB_running.log ]] && rm /tmp/Is_LSMB_running.log
+[[ -e /tmp/Is_LSMB_running.html ]] && rm /tmp/Is_LSMB_running.html
+
 if curl --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
 else    # fail early if starman is not running
@@ -72,6 +77,8 @@ fi
 
 if $UPDATE; then
     echo 'Capturing new version of setup.pl'
+    if grep -c '="js-src' >/dev/null /tmp/Is_LSMB_running.html; then
+        DIE $EX_DATAERR "ERROR: ledgersmb.conf sets 'dojo_built = 0'" "change it to 'dojo_built = 1' and try again"; fi
     cp $current $src
 fi
 
@@ -79,6 +86,6 @@ fi
 DIFF=`diff -u0 $src $current`
 CNTadd=`echo -e "$DIFF" | grep -c '^[+][^+].*$'`
 CNTdel=`echo -e "$DIFF" | grep -c '^[-][^-].*$'`
-if (( CNTadd > MaxDiff )); then DIE $EX_DATAERR "Added too many Lines ($CNTadd) to setup.pl.html" "$DIFF"; fi
-if (( CNTdel > MaxDiff )); then DIE $EX_DATAERR "Removed too many Lines ($CNTdel) from setup.pl.html" "$DIFF"; fi
+if (( CNTadd > MaxDiff )); then DIE $EX_DATAERR "Added too many Lines ($CNTadd) to setup.pl.html${LF}Resolve any issues and run${LF}utils/test/Is_LSMB_running.sh --update" "$DIFF"; fi
+if (( CNTdel > MaxDiff )); then DIE $EX_DATAERR "Removed too many Lines ($CNTdel) from setup.pl.html${LF}Resolve any issues and run${LF}utils/test/Is_LSMB_running.sh --update" "$DIFF"; fi
 
