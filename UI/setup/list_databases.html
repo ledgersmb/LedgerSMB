@@ -5,6 +5,13 @@ include_stylesheet=["setup/stylesheet.css"];
        PROCESS "dynatable.html"; ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
+<div class="listtop"><?lsmb text('Database Credentials') ?></div>
+<table class='lsmb_info'>
+  <tbody>
+    <tr><td id="username"><?lsmb text('Username ') ?></td><td>: <?lsmb login ?></td></tr>
+  </tbody>
+</table>
+</br>
 <div class="listtop"><?lsmb text('Available Databases') ?></div>
 <?lsmb 
     INCLUDE dynatable
