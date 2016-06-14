@@ -6,14 +6,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <?lsmb # notice, message, and operation are all localized. ?>
-<div class="listtop"><?lsmb text('Database Credentials') ?></div>
-<table class='lsmb_info'>
-  <tbody>
-    <tr><td id="username"><?lsmb text('Username ') ?></td><td>: <?lsmb login ?></td></tr>
-    <tr><td id="databasename"><?lsmb text('Database ') ?></td><td>: <?lsmb database ?></td></tr>
-  </tbody>
-</table>
-</br>
+<?lsmb INCLUDE 'ui-db-credentials.html' ?>
 <div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <div id="notice"><?lsmb notice ?></div>
 <div id="message"><?lsmb message ?></div>
