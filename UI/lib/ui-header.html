@@ -15,11 +15,11 @@
             # *persistent*
             # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
         ?>
-        <?lsmb IF dojo_built == 0 ?>
-            <?lsmb DOJO_LOCATION = "js-src" ?>
-        <?lsmb ELSE ?>
-            <?lsmb DOJO_LOCATION = "js" ?>
-        <?lsmb END ?>
+        <?lsmb IF dojo_built == 0;
+                DOJO_LOCATION = "js-src";
+            ELSE;
+                DOJO_LOCATION = "js";
+        END ?>
 
         <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
@@ -35,11 +35,11 @@
         <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
         </script>
         <?lsmb END ?>
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
             var dojoConfig = {
                 async: 1,
                 locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
@@ -47,10 +47,10 @@
             };
             var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
         </script>
-        <script type="text/javascript" language="JavaScript" src="<?lsmb DOJO_LOCATION ?>/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="<?lsmb DOJO_LOCATION ?>/lsmb/main.js"></script>
+        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/dojo/dojo.js"></script>
+        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>
-            <script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
+            <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>
 
         <?lsmb IF html_charset ?>
