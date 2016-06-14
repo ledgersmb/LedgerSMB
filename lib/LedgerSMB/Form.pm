@@ -604,18 +604,18 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
-        <link rel="stylesheet" href="lib/dojo/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-        <link rel="stylesheet" href="lib/dojo/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
+        <link rel="stylesheet" href="js/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
+        <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
         <script type="text/javascript" language="JavaScript">
           var dojoConfig = {
                async: 1,
                parseOnLoad: 0,
-               packages: [{"name":"lsmb","location":"../.."}]
+               packages: [{"name":"lsmb","location":"../lsmb"}]
            }
            var lsmbConfig = {dateformat: '$dformat'};
         </script>
-       <script type="text/javascript" language="JavaScript" src="lib/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="lib/main.js"></script>
+       <script type="text/javascript" language="JavaScript" src="js/dojo/dojo.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/lsmb/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
         $headeradd
 </head>

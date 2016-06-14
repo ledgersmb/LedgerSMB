@@ -66,7 +66,7 @@ sub BUILD {
 sub find_element_by_label {
     my ($self, $label) = @_;
 
-    my $label_element = $self->find_element("//label[text()='$label']");
+    my $label_element = $self->find_element("//label[normalize-space(text())='$label']");
     do {
         croak "no label with text '$label'";
         return;
@@ -97,10 +97,10 @@ sub find_button {
     my ($self, $text) = @_;
 
     my $btn = $self->find_element(
-        "//span[text()='$text'
+        "//span[normalize-space(text())='$text'
                 and contains(concat(' ',normalize-space(\@class),' '),
                              ' dijitButtonText ')]
-         | //button[text()='$text']
+         | //button[normalize-space(text())='$text']
          | //input[\@value='$text'
                    and (\@type='submit' or \@type='image' or \@type='reset')]");
     ok($btn, "found button tag '$text'");

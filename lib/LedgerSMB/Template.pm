@@ -189,7 +189,7 @@ sub new {
     $self->{language} = $args{language};
     $self->{no_escape} = $args{no_escape};
     $self->{debug} = $args{debug};
-        $self->{binmode} = undef;
+    $self->{binmode} = undef;
     $self->{outputfile} =
         "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
         $args{output_file};
@@ -200,9 +200,9 @@ sub new {
     $self->{method} ||= $args{media};
     $self->{format_args} = $args{format_options};
     $self->{output_args} = $args{output_options};
-        if ($self->{language}){ # Language takes precedence over locale
-             $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
-        }
+    if ($self->{language}){ # Language takes precedence over locale
+        $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
+    }
 
     if (lc $self->{format} eq 'pdf') {
         $self->{format} = 'LaTeX';
@@ -211,15 +211,15 @@ sub new {
         $self->{format} = 'LaTeX';
         $self->{format_args}{filetype} = 'ps';
     } elsif (lc $self->{format} eq 'xlsx'){
-                $self->{format} = 'XML';
-                $self->{format_args}{filetype} = 'xlsx';
-        } elsif (lc $self->{format} eq 'XML'){
-                $self->{format} = 'XML';
-                $self->{format_args}{filetype} = 'xml';
-        } elsif ($self->{format} =~ /edi$/i){
-                $self->{format_args}{extension} = lc $self->{format};
-                $self->{format} = 'TXT';
-        }
+        $self->{format} = 'XML';
+        $self->{format_args}{filetype} = 'xlsx';
+    } elsif (lc $self->{format} eq 'XML'){
+        $self->{format} = 'XML';
+        $self->{format_args}{filetype} = 'xml';
+    } elsif ($self->{format} =~ /edi$/i){
+        $self->{format_args}{extension} = lc $self->{format};
+        $self->{format} = 'TXT';
+    }
     bless $self, $class;
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
@@ -282,34 +282,32 @@ sub _preprocess {
 sub render {
     my $self = shift;
     my $vars = shift;
-        $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
-        $vars->{ENVARS} = \%ENV;
-        $vars->{USER} = $LedgerSMB::App_State::User;
-        $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
-        $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
-        $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
-        $vars->{LETTERHEAD} = sub {
-            croak "<?lsmb LETTERHEAD ?> deprecated; use <?lsmb INCLUDE letterhead ?>";
+    $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
+    $vars->{ENVARS} = \%ENV;
+    $vars->{USER} = $LedgerSMB::App_State::User;
+    $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
+    $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
+    $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
+    $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
+    my @stdformats = ();
+    for (qw(HTML PDF PS)){
+       if (scalar(grep {/^$_$/} $self->available_formats)){
+           push @stdformats, $_;
+       }
+    }
+    $vars->{STDFORMATS} = \@stdformats;
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        eval {
+            $vars->{PRINTERS} = [
+                {text => $LedgerSMB::App_State::Locale->text('Screen'),
+                 value => 'screen'},
+                ];
         };
-        my @stdformats = ();
-        for (qw(HTML PDF PS)){
-           if (scalar(grep {/^$_$/} $self->available_formats)){
-               push @stdformats, $_;
-           }
-        }
-        $vars->{STDFORMATS} = \@stdformats;
-        { # pre-5.14 compatibility block
-            local ($@); # pre-5.14, do not die() in this block
-            eval {
-                $vars->{PRINTERS} = [
-                    {text => $LedgerSMB::App_State::Locale->text('Screen'),
-                     value => 'screen'},
-                    ];
-            };
-        }
-        for (keys %LedgerSMB::Sysconfig::printer){
-            push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
-        }
+    }
+    for (keys %LedgerSMB::Sysconfig::printers){
+        push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
+    }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
@@ -331,34 +329,31 @@ sub render {
     } else {
         $cleanvars = $format->can('preprocess')->($vars);
     }
-        $cleanvars->{escape} = sub { return $format->escape(@_)};
+    $cleanvars->{escape} = sub { return $format->escape(@_)};
     if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
         $cleanvars->{text} = sub {
                     return $self->escape($self->{locale}->maketext(@_))
                         if defined $_[0]};
     }
     else {
-            $cleanvars->{text} = sub { return $self->escape(shift @_) };
+        $cleanvars->{text} = sub { return $self->escape(shift @_) };
+    }
+    $cleanvars->{tt_url} = sub {
+           my $str  = shift @_;
 
-        }
-        $cleanvars->{tt_url} = sub {
-               my $str  = shift @_;
-
-               my $regex = qr/([^a-zA-Z0-9_.-])/;
-               $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-               return $str;
-        };
-
+           my $regex = qr/([^a-zA-Z0-9_.-])/;
+           $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
+           return $str;
+    };
 
     $format->can('process')->($self, $cleanvars);
-    #return $format->can('postprocess')->($self);
     my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
-        #$logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
+    #$logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
     if (!$self->{'noauto'}) {
         # Clean up
-                $logger->debug("before self output");
+        $logger->debug("before self output");
         $self->output(%$vars);
-                $logger->debug("after self output,but does not seem to return here!");
+        $logger->debug("after self output");
         if ($self->{rendered}) {
             unlink($self->{rendered});
         }
@@ -380,16 +375,16 @@ sub output {
     my $self = shift;
     my %args = @_;
 
-        for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
+    for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
 
     my $method = $self->{method} || $args{method} || $args{media};
-        $method = '' if !defined $method;
+    $method = '' if !defined $method;
 
     if ('email' eq lc $method) {
         $self->_email_output;
-        } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-                cp($self->{rendered}, $args{OUT});
-                return if "zip" eq lc($method);
+    } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
+        cp($self->{rendered}, $args{OUT});
+        return if "zip" eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
     } elsif (defined $self->{output} or lc $method eq 'screen') {
@@ -399,62 +394,62 @@ sub output {
     } else {
         $self->_http_output_file;
     }
-        binmode (STDOUT, ':utf8'); # Reset binmode *after* sending file to
-                                   # email, printer, or screen.  For screen
-                                   # this should have no effect.  For printer
-                                   # or email, this should fix bug 884. --CT
+    binmode (STDOUT, ':utf8'); # Reset binmode *after* sending file to
+                               # email, printer, or screen.  For screen
+                               # this should have no effect.  For printer
+                               # or email, this should fix bug 884. --CT
 }
 
 sub _http_output {
     my ($self, $data) = @_;
-        LedgerSMB::App_State::cleanup();
+    LedgerSMB::App_State::cleanup();
     $data ||= $self->{output};
-        my $cache = 1; # default
-        if ($LedgerSMB::App_State::DBH){
-            # we have a db connection, so are logged in.
-            # Let's see about caching.
-            $cache = 0 if LedgerSMB::Setting->get('disable_back');
-        }
+    my $cache = 1; # default
+    if ($LedgerSMB::App_State::DBH){
+        # we have a db connection, so are logged in.
+        # Let's see about caching.
+        $cache = 0 if LedgerSMB::Setting->get('disable_back');
+    }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
     if (!defined $data and defined $self->{rendered}){
         $data = "";
-                $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
+        $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
         open (DATA, '<', $self->{rendered});
                 binmode DATA, $self->{binmode};
         while (my $line = <DATA>){
             $data .= $line;
         }
-                $logger->trace("end DATA < self->{rendered}");
-            unlink($self->{rendered}) or die 'Unable to delete output file';
+        $logger->trace("end DATA < self->{rendered}");
+        unlink($self->{rendered}) or die 'Unable to delete output file';
     }
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $disposition = "";
     my $name;
-        $name = $format->can('postprocess')->($self) if $format->can('postprocess');
-        $name ||= $self->{rendered};
+    $name = $format->can('postprocess')->($self) if $format->can('postprocess');
+    $name ||= $self->{rendered};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
     }
-        if (!$ENV{LSMB_NOHEAD}){
-            if (!$cache){
-                print "Cache-Control: no-store, no-cache, must-revalidate\n";
-                print "Cache-Control: post-check=0, pre-check=0, false\n";
-                print "Pragma: no-cache\n";
-            }
-         if ($self->{mimetype} =~ /^text/) {
-        print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
+    if (!$ENV{LSMB_NOHEAD}){
+        if (!$cache){
+            print "Cache-Control: no-store, no-cache, must-revalidate\n";
+            print "Cache-Control: post-check=0, pre-check=0, false\n";
+            print "Pragma: no-cache\n";
+        }
+        if ($self->{mimetype} =~ /^text/) {
+            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
         } else {
-        print "Content-Type: $self->{mimetype}$disposition\n\n";
+            print "Content-Type: $self->{mimetype}$disposition\n\n";
         }
-        }
+    }
     binmode STDOUT, $self->{binmode};
     print $data;
-        $logger->trace("end print to STDOUT");
+    $logger->trace("end print to STDOUT");
 }
 
 sub _http_output_file {

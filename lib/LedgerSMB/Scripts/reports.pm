@@ -91,6 +91,8 @@ sub start_report {
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};
+    my $periods = LedgerSMB::App_State::all_periods();
+    $request->{all_periods} = $periods->{dropdown};
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
@@ -172,20 +174,26 @@ sub list_sic {
     LedgerSMB::Report::Listings::SIC->new(%$request)->render($request);
 }
 
-=item balance_sheet
+=item generate_balance_sheet
 
 Generates a balance sheet
 
 =cut
 
-sub balance_sheet {
+use Log::Log4perl;
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::reports');
+
+sub generate_balance_sheet {
     my ($request) = @_;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
+    $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $report = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
         column_path_prefix => [ 0 ]);
     $report->run_report;
-    for my $count (1 .. 3){
+        $report->init_comparisons($request);
+        my $counts = $request->{comparison_periods};
+    for my $count (1 .. $counts){
         next unless $request->{"to_date_$count"};
         $request->{to_date} = $request->{"to_date_$count"};
         my $comparison =
