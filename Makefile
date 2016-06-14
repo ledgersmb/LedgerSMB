@@ -55,6 +55,10 @@ else
     ifeq ($(UNAME_S),Linux)
         OS := LINUX
     endif
+    ifeq ($(UNAME_S),FreeBSD)
+        OS := FREEBSD
+        OSTYPE := FREEBSD
+    endif
     ifeq ($(UNAME_S),Darwin)
         OS := OSX
         OSTYPE := OSX
@@ -63,35 +67,56 @@ else
     OSDISTRO := $(shell lsb_release -si | tr '[:lower:]' '[:upper:]')
     ifndef OSDISTRO
         UNAME_V := $(shell uname -v | tr '[:lower:]' '[:upper:]')
-        ifneq (,$(findstring DEBIAN,$(UNAME_V)))
-            OSDISTRO := DEBIAN
-        endif
-        ifneq (,$(findstring UBUNTU,$(UNAME_V)))
-            OSDISTRO := UBUNTU
-        endif
-        ifneq (,$(findstring LINUXMINT,$(UNAME_V)))
-            OSDISTRO := LINUXMINT
-        endif
-        ifneq (,$(findstring AMZN,$(UNAME_V)))
-            OSDISTRO := AMAZONLINUX
-        endif
+            ifneq (,$(findstring DEBIAN,$(UNAME_V)))
+                OSDISTRO := DEBIAN
+            endif
+            ifneq (,$(findstring UBUNTU,$(UNAME_V)))
+                OSDISTRO := UBUNTU
+            endif
+            ifneq (,$(findstring LINUXMINT,$(UNAME_V)))
+                OSDISTRO := LINUXMINT
+            endif
+            ifneq (,$(findstring AMZN,$(UNAME_V)))
+                OSDISTRO := AMAZONLINUX
+            endif
         REDHAT_RELEASE_FILE := $(shell test -r /etc/redhat-release && cat /etc/redhat-release | tr '[:lower:]' '[:upper:]')
-        ifneq (,$(findstring CENTOS,$(REDHAT_RELEASE_FILE)))
-            OSDISTRO := CENTOS
-        endif
-        ifneq (,$(findstring FEDORA,$(REDHAT_RELEASE_FILE)))
-            OSDISTRO := FEDORA
-        endif
+            ifneq (,$(findstring CENTOS,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := CENTOS
+            endif
+            ifneq (,$(findstring FEDORA,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := FEDORA
+            endif
 # the following are speculative, we need to confirm what is expected.
-        ifneq (,$(findstring RHEL,$(REDHAT_RELEASE_FILE)))
-            OSDISTRO := RHEL
-        endif
-        ifneq (,$(findstring REDHAT,$(REDHAT_RELEASE_FILE)))
-            OSDISTRO := REDHAT
-        endif
+            ifneq (,$(findstring RHEL,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := RHEL
+            endif
+            ifneq (,$(findstring REDHAT,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := REDHAT
+            endif
+        SUSE_RELEASE_FILE := $(shell test -r /etc/suse-release && cat /etc/suse-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring SUSE,$(SUSE_RELEASE_FILE)))
+                OSDISTRO := SUSE
+            endif
+        MANDRAKE_RELEASE_FILE := $(shell test -r /etc/mandrake-release && cat /etc/mandrake-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring MANDRAKE,$(MANDRAKE_RELEASE_FILE)))
+                OSDISTRO := MANDRAKE
+            endif
+        OS_RELEASE_FILE := $(shell test -r /etc/os-release && cat /etc/os-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring DEBIAN,$(OS_RELEASE_FILE)))
+                xOSDISTRO := DEBIAN
+            endif
+            ifneq (,$(findstring SUSE,$(OS_RELEASE_FILE)))
+                xOSDISTRO := SUSE
+            endif
     endif
     ifneq (,$(filter DEBIAN UBUNTU LINUXMINT, $(OSDISTRO)))
         OSTYPE := DEBIAN
+    endif
+    ifneq (,$(filter SUSE, $(OSDISTRO)))
+        OSTYPE := SUSE
+    endif
+    ifneq (,$(filter MANDRAKE, $(OSDISTRO)))
+        OSTYPE := MANDRAKE
     endif
 # this filter is speculative, we need to confirm what is expected.
     ifneq (,$(filter REDHAT RHEL FEDORA CENTOS AMAZONLINUX, $(OSDISTRO)))
@@ -107,7 +132,11 @@ endif
         $(warning http://ledgersmb.org/topics/support)
         $(warning OSTYPE   = $(OSTYPE))
         $(warning OSDISTRO = $(OSDISTRO))
+        $(warning UNAME_V = $(UNAME_V))
         $(warning REDHAT_RELEASE_FILE = $(REDHAT_RELEASE_FILE))
+        $(warning SUSE_RELEASE_FILE = $(SUSE_RELEASE_FILE))
+        $(warning MANDRAKE_RELEASE_FILE = $(MANDRAKE_RELEASE_FILE))
+        $(warning OS_RELEASE_FILE = $(OS_RELEASE_FILE))
         $(error exit)
     endif
 
