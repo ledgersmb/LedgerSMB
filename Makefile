@@ -5,8 +5,12 @@ DIST_DIR=/tmp
 # make dojo
 #   builds dojo for production/release
 dojo:
-	rm -rf UI/js/
-	cd UI/js-src/lsmb/ && ../util/buildscripts/build.sh --profile lsmb.profile.js
+	rm -rf UI/js/;
+	cd UI/js-src/lsmb/ \
+            && ../util/buildscripts/build.sh --profile lsmb.profile.js \
+            | egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
+	git checkout -- UI/js/README;
+	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
 
 # make dist
 #   builds release distribution archive
