@@ -144,7 +144,6 @@ sub invoice_details {
     for $i ( 1 .. $form->{rowcount} - 1 ) {
 
         # account numbers
-        print STDERR "id_$i: " . $form->{"id_$i"} . "\n";
         $pth->execute( $form->{"id_$i"} );
         $ref = $pth->fetchrow_hashref(NAME_lc);
         for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }

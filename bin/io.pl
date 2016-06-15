@@ -1084,6 +1084,7 @@ sub print_options {
     if ( ref $form->{all_language} eq 'ARRAY') {
         $options{lang} = {
             name => 'language_code',
+            id => 'language-code',
             default_values => $form->{oldlanguage_code},
             options => [{text => ' ', value => ''}],
             };
@@ -1279,8 +1280,7 @@ sub print {
     }
     &invoice_links;
     &prepare_invoice;
-    $form->{language_code} = $lang;
-    $form->{media} = $saved_form->{media};
+    $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
     # if this goes to the printer pass through
     my $old_form = undef;

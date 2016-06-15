@@ -7,7 +7,7 @@ Pherkin::Extension::LedgerSMB
 LedgerSMB super-user connection to the PostgreSQL cluster and test
 company management routines
 
-=cut 
+=cut
 
 package Pherkin::Extension::LedgerSMB;
 
@@ -52,12 +52,12 @@ sub pre_feature {
         username => $self->username,
         password => $self->password,
         host     => $self->host);
-    
+
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
                              AutoCommit => 1,
                            });
-    
+
     $self->db($db);
     $self->super_dbh($dbh);
     $stash->{ext_lsmb} = $self;
@@ -77,7 +77,7 @@ sub pre_scenario {
     my ($self, $scenario, $feature_stash, $stash) = @_;
 
     $self->last_scenario_stash($stash);
-    
+
     $stash->{ext_lsmb} = $self;
     $stash->{"the admin"} = $self->admin_user_name;
     $stash->{"the admin password"} = $self->admin_user_password;
@@ -100,7 +100,7 @@ sub create_template {
     my $admin = $self->admin_user_name;
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$template"));
     $self->super_dbh->do(qq(DROP ROLE IF EXISTS "$admin"));
-    
+
     my $db = LedgerSMB::Database->new(
         dbname   => $self->template_db_name,
         username => $self->username,
@@ -181,7 +181,7 @@ sub ensure_nonexisting_user {
     ###TODO: if a database $self->last_scenario_stash->{the company}
     ### exists, verify that the user doesn't exist there and delete it
     ### if it does
-}  
+}
 
 
 1;

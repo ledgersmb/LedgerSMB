@@ -14,6 +14,7 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'Digest::MD5';
 requires 'File::MimeInfo';
+requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon', '0.62';
@@ -26,13 +27,15 @@ requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject';
 requires 'PGObject::Simple';
-requires 'PGObject::Simple::Role';
+requires 'PGObject::Simple::Role', '1.12.1';
 requires 'PGObject::Type::BigFloat';
-requires 'PGObject::Type::DateTime';
+requires 'PGObject::Type::DateTime', '1.0.3';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.08';
 requires 'Plack::App::File';
 requires 'Plack::Builder';
+requires 'Plack::Middleware::ConditionalGET'; # YLA
+requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Template', '2.14';
 requires 'Text::CSV';
 requires 'namespace::autoclean';
@@ -65,7 +68,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Plugin::Latex';
+        requires 'Template::Plugin::Latex', '3.02';
         requires 'TeX::Encode';
 };
 
@@ -81,7 +84,7 @@ on 'develop' => sub {
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';
-    requires 'Test::BDD::Cucumber', '0.49';
+    requires 'Test::BDD::Cucumber', '0.50';
     requires 'Perl::Critic';
     requires 'Selenium::Remote::Driver';
 };

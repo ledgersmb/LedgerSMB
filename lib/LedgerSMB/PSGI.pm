@@ -27,6 +27,7 @@ use LedgerSMB::Scripts::login;
 use LedgerSMB::PGObject;
 use Try::Tiny;
 
+use Plack::Handler::CGI;
 use CGI::Emulate::PSGI;
 
 local $@; # localizes just for initial load.
@@ -44,11 +45,11 @@ Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
 =cut
 
 sub rest_app {
-    return CGI::Emulate::PSGI->handler(
-        sub {
-            do 'bin/rest-handler.pl';
-        });
-};
+   return CGI::Emulate::PSGI->handler(
+     sub {
+       do 'bin/rest-handler.pl';
+    });
+}
 
 =item old_app
 
@@ -65,7 +66,8 @@ sub old_app {
 
             _run_old();
         });
-};
+}
+
 
 =item new_app
 
@@ -76,16 +78,16 @@ in LedgerSMB::Scripts::*
 
 
 sub new_app {
-    return CGI::Emulate::PSGI->handler(
+   return CGI::Emulate::PSGI->handler(
         sub {
-            my $uri = $ENV{REQUEST_URI};
-            $ENV{SCRIPT_NAME} = $uri;
-            my $script = $uri;
-            $ENV{SCRIPT_NAME} =~ s/\?.*//;
-            $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
+           my $uri = $ENV{REQUEST_URI};
+           $ENV{SCRIPT_NAME} = $uri;
+           my $script = $uri;
+           $ENV{SCRIPT_NAME} =~ s/\?.*//;
+           $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
 
-            _run_new($script);
-         });
+           _run_new($script);
+       });
 }
 
 sub _run_old {

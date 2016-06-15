@@ -61,12 +61,30 @@ has 'format' => (is => 'ro');
 sub _retrieve_template_data {
     my ($self, $name) = @_;
 
-    my @rv = $self->call_dbmethod(funcname => 'template__get',
-                                  args => { template_name => $name });
+    my @rv;
+    my (@langs, $lang);
 
-    return undef unless @rv;
+    if (defined $self->language_code) {
+        push @langs, $self->language_code
+            if $self->language_code =~ m/_/;
 
-    my $rv = pop @rv;
+        $lang = $self->language_code;
+        $lang =~ s/_.*//;
+        push @langs, $lang;
+    }
+    push @langs, undef;
+
+    my $rv;
+    for $lang (@langs) {
+        $rv = $self->call_dbmethod(funcname => 'template__get',
+                                   args => {
+                                       template_name => $name,
+                                       language_code => $lang
+                                   });
+        last if defined $rv->{template};
+    }
+    return undef unless defined $rv->{template};
+
     $rv->{last_modified} =
         PGObject::Type::DateTime->from_db($rv->{last_modified});
     return $rv;
@@ -89,8 +107,8 @@ sub _template_modified {
     # TT thinks <path> and ./<path> are the same thing.
     $path =~ s#^./##;
 
-    my ($tpl) = $self->_retrieve_template_data($path);
-    return int($tpl->{last_modified}->epoch);
+    my $tpl = $self->_retrieve_template_data($path);
+    return ($tpl->{last_modified}) ? int($tpl->{last_modified}->epoch) : undef;
 }
 
 =item _template_content($path) {
@@ -109,7 +127,9 @@ sub _template_content {
 
     my $tpl = $self->_retrieve_template_data($path);
     return wantarray
-        ? ($tpl->{template}, undef, int($tpl->{last_modified}->epoch))
+        ? ($tpl->{template},
+           (defined $tpl->{template}) ? undef : 'not found',
+           ($tpl->{last_modified}) ? int($tpl->{last_modified}->epoch) : undef)
         : $tpl->{template};
 }
 
