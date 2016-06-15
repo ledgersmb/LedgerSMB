@@ -2,6 +2,224 @@
 DIST_VER=$(shell git log | head -1 | sed -e 's/commit \(.......\).*/\1/')
 DIST_DIR=/tmp
 
+.DEFAULT_GOAL := help
+
+DEB_essential := cpanminus postgresql make gcc libdbd-pg-perl
+DEB_essential += starman
+DEB_perlmodules := libcgi-emulate-psgi-perl libcgi-simple-perl libconfig-inifiles-perl
+DEB_perlmodules += libdbd-pg-perl libdbi-perl libdatetime-perl
+DEB_perlmodules += libdatetime-format-strptime-perl libdigest-md5-perl
+DEB_perlmodules += libfile-mimeinfo-perl libjson-xs-perl libjson-perl
+DEB_perlmodules += liblocale-maketext-perl liblocale-maketext-lexicon-perl
+DEB_perlmodules += liblog-log4perl-perl libmime-base64-perl libmime-lite-perl
+DEB_perlmodules += libmath-bigint-gmp-perl libmoose-perl libnumber-format-perl
+DEB_perlmodules += libpgobject-perl libpgobject-simple-perl libpgobject-simple-role-perl
+DEB_perlmodules += libpgobject-util-dbmethod-perl libplack-perl libtemplate-perl
+DEB_perlmodules += libnamespace-autoclean-perl libmoosex-nonmoose-perl
+DEB_feature_PDF := libtemplate-plugin-latex-perl libtex-encode-perl
+DEB_feature_PDF := texlive-latex-recommended
+DEB_feature_PDF_utf8 := texlive-xetex
+DEB_feature_OpenOffice := libopenoffice-oodoc-perl
+
+# Core packages provided by Fedora 24
+RHEL_essential := perl-devel perl-CPAN perl-App-cpanminus
+RHEL_essential += postgresql make gcc perl-DBD-Pg
+RHEL_essential += perl-Starman
+RHEL_perlmodules := perl-CGI-Emulate-PSGI perl-CGI-Simple perl-Config-IniFiles
+RHEL_perlmodules += perl-DBD-Pg perl-DBI perl-DateTime perl-DateTime-Format-Strptime
+RHEL_perlmodules += perl-Digest-MD5 perl-File-MimeInfo perl-JSON-XS
+RHEL_perlmodules += perl-Locale-Maketext perl-Locale-Maketext-Lexicon
+RHEL_perlmodules += perl-Log-Log4perl perl-MIME-Base64 perl-MIME-Lite perl-Math-BigInt-GMP
+RHEL_perlmodules += perl-Moose perl-Number-Format perl-Plack perl-Template-Toolkit
+RHEL_perlmodules += perl-namespace-autoclean perl-MooseX-NonMoose
+RHEL_feature_PDF := perl-TeX-Encode texlive
+RHEL_feature_PDF_utf8 := 
+RHEL_feature_OpenOffice := 
+
+FBSD_essential := 
+FBSD_perlmodules := 
+FBSD_feature_PDF := 
+FBSD_feature_OpenOffice := 
+
+APT_GET = sudo apt-get install
+YUM = sudo yum install
+
+# Lets try and work out what OS and DISTRO we are running on
+# some usefull info here http://linuxmafia.com/faq/Admin/release-files.html
+ifeq ($(OS),Windows_NT)
+    OS := WIN32
+    OSTYPE := WINDOWS
+    $(error We currently don't support Windows via this makefile.)
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        OS := LINUX
+    endif
+    ifeq ($(UNAME_S),FreeBSD)
+        OS := FREEBSD
+        OSTYPE := FREEBSD
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        OS := OSX
+        OSTYPE := OSX
+        OSDISTRO := DARWIN
+    endif
+    OSDISTRO := $(shell lsb_release -si | tr '[:lower:]' '[:upper:]')
+    ifndef OSDISTRO
+        UNAME_V := $(shell uname -v | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring DEBIAN,$(UNAME_V)))
+                OSDISTRO := DEBIAN
+            endif
+            ifneq (,$(findstring UBUNTU,$(UNAME_V)))
+                OSDISTRO := UBUNTU
+            endif
+            ifneq (,$(findstring LINUXMINT,$(UNAME_V)))
+                OSDISTRO := LINUXMINT
+            endif
+            ifneq (,$(findstring AMZN,$(UNAME_V)))
+                OSDISTRO := AMAZONLINUX
+            endif
+        REDHAT_RELEASE_FILE := $(shell test -r /etc/redhat-release && cat /etc/redhat-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring CENTOS,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := CENTOS
+            endif
+            ifneq (,$(findstring FEDORA,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := FEDORA
+            endif
+# the following are speculative, we need to confirm what is expected.
+            ifneq (,$(findstring RHEL,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := RHEL
+            endif
+            ifneq (,$(findstring REDHAT,$(REDHAT_RELEASE_FILE)))
+                OSDISTRO := REDHAT
+            endif
+        SUSE_RELEASE_FILE := $(shell test -r /etc/suse-release && cat /etc/suse-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring SUSE,$(SUSE_RELEASE_FILE)))
+                OSDISTRO := SUSE
+            endif
+        MANDRAKE_RELEASE_FILE := $(shell test -r /etc/mandrake-release && cat /etc/mandrake-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring MANDRAKE,$(MANDRAKE_RELEASE_FILE)))
+                OSDISTRO := MANDRAKE
+            endif
+        OS_RELEASE_FILE := $(shell test -r /etc/os-release && cat /etc/os-release | tr '[:lower:]' '[:upper:]')
+            ifneq (,$(findstring DEBIAN,$(OS_RELEASE_FILE)))
+                xOSDISTRO := DEBIAN
+            endif
+            ifneq (,$(findstring SUSE,$(OS_RELEASE_FILE)))
+                xOSDISTRO := SUSE
+            endif
+    endif
+    ifneq (,$(filter DEBIAN UBUNTU LINUXMINT, $(OSDISTRO)))
+        OSTYPE := DEBIAN
+    endif
+    ifneq (,$(filter SUSE, $(OSDISTRO)))
+        OSTYPE := SUSE
+    endif
+    ifneq (,$(filter MANDRAKE, $(OSDISTRO)))
+        OSTYPE := MANDRAKE
+    endif
+# this filter is speculative, we need to confirm what is expected.
+    ifneq (,$(filter REDHAT RHEL FEDORA CENTOS AMAZONLINUX, $(OSDISTRO)))
+        OSTYPE := REDHAT
+    endif
+endif
+    ifndef OSDISTRO
+        $(warning We don't know what distro you are running so can't do anything special for it)
+    endif
+    ifndef OSTYPE
+        $(warning We don't know what OSTYPE (eg: debian or redhat) you are running)
+        $(warning Please report this on the mailing lists or IRC)
+        $(warning http://ledgersmb.org/topics/support)
+        $(warning OSTYPE   = $(OSTYPE))
+        $(warning OSDISTRO = $(OSDISTRO))
+        $(warning UNAME_V = $(UNAME_V))
+        $(warning REDHAT_RELEASE_FILE = $(REDHAT_RELEASE_FILE))
+        $(warning SUSE_RELEASE_FILE = $(SUSE_RELEASE_FILE))
+        $(warning MANDRAKE_RELEASE_FILE = $(MANDRAKE_RELEASE_FILE))
+        $(warning OS_RELEASE_FILE = $(OS_RELEASE_FILE))
+        $(error exit)
+    endif
+
+ifeq ($(OSTYPE),DEBIAN)
+OS_feature_PDF        := deb_feature_PDF
+OS_feature_PDF_utf8   := deb_feature_PDF_utf8
+OS_feature_OpenOffice := deb_feature_OpenOffice
+endif
+ifeq ($(OSTYPE),REDHAT)
+OS_feature_PDF        := rhel_feature_PDF
+OS_feature_PDF_utf8   := rhel_feature_PDF_utf8
+OS_feature_OpenOffice := rhel_feature_OpenOffice
+endif
+ifeq ($(OSTYPE),FREEBSD)
+OS_feature_PDF        := fbsd_feature_PDF
+OS_feature_PDF_utf8   := fbsd_feature_PDF_utf8
+OS_feature_OpenOffice := fbsd_feature_OpenOffice
+endif
+
+# make help
+#   Simple Help on installing LedgerSMB and use of this Makefile
+#   This should always remain the first target
+#   The first target is the default when make is run with no arguments
+define HELP
+Help on installing LedgerSMB can be found in
+  - README.md
+  - http://ledgersmb.org/topic/installing-ledgersmb-15
+
+Help on using this Makefile
+  The following make targets are available
+    - help         : This help text
+    - dojo         : Builds the minified dojo blob we serve to clients
+    - submodules   : Initialises and updates our git submodules
+    - dist         : builds the release distribution archive
+    - dependencies : Installs all dependencies including cpan ones. (except features)
+                     Preferring system perl modules over cpan ones
+                     It attempts to detect OS type if OSTYPE is not set
+                     Valid OS types are
+                        - debian
+                        - redhat
+                        - freebsd
+
+    - debian  : installs all apt dependencies for a debian based system except deb_feature_*
+    - redhat  : installs all apt dependencies for an rpm (redhat) based system except rhel_feature_*
+    - freebsd : installs some known dependencies for a FreeBSD system
+
+    - all_dependencies : same as dependencies but adds all features except feature_PDF_utf8
+    - all_debian  : same as debian but adds all features except deb_feature_PDF_utf8
+    - all_redhat  : same as redhat but adds all features except rhel_feature_PDF_utf8
+    - all_freebsd : same as freebsd but adds all features except fbsd_feature_PDF_utf8
+
+    - cpan                    : installs any remaining perl dependancies using cpanm
+
+    - feature_PDF             : Install system and cpan packages for generating PDF/Postscript output
+    - feature_PDF_utf8        : Install system and cpan packages for UTF8 ouput in PDF/Postscript output
+    - feature_OpenOffice      : Install system and cpan packages for generating OpenOffice output
+
+    #############################################################
+      The following targets would not normally be used manually
+    #############################################################
+
+    - deb_essential           : installs just the "can't do without these" dependencies
+    - deb_perlmodules         : installs all known deb packaged perl modules we depend on
+    - deb_feature_PDF         : installs deb packages for generating PDF/Postscript output
+    - deb_feature_PDF_utf8    : Installs texlive-xetex to allow UTF8 ouput in PDF/Postscript output
+    - deb_feature_OpenOffice  : Installs deb package for generating OpenOffice output
+
+    - rhel_essential          : installs just the "can't do without these" dependencies
+    - rhel_perlmodules        : installs all known rpm packaged perl modules we depend on
+    - rhel_feature_PDF        : installs rpm packages for generating PDF/Postscript output
+    - rhel_feature_PDF_utf8   : Installs texlive-xetex (if available) to allow UTF8 ouput in PDF/Postscript output
+    - rhel_feature_OpenOffice : Installs rpm package for generating OpenOffice output
+
+
+endef
+export HELP
+
+help:
+	@echo "$$HELP"
+	$(warning OSTYPE   = $(OSTYPE))
+	$(warning OSDISTRO = $(OSDISTRO))
+	$(warning REDHAT_RELEASE_FILE = $(REDHAT_RELEASE_FILE))
+
 # make dojo
 #   builds dojo for production/release
 dojo:
@@ -12,8 +230,125 @@ dojo:
 	git checkout -- UI/js/README;
 	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
 
+#make submodules
+#   Initialises and updates our git submodules
+submodules:
+	git submodule update --init --recursive
+
 # make dist
 #   builds release distribution archive
 dist: dojo
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
 	find . | grep -vE '^.$$|/\.git|^\./UI/js-src/(dojo|dijit|util)/|\.uncompressed\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
+
+# make dependencies
+#   Installs all dependencies.
+#   Preferring system perl modules over cpan ones
+#   It attempts to detect OS type if OSTYPE is not set
+#   Valid OS types are
+#       - debian
+#       - redhat
+#       - freebsd
+ifeq ($(OSTYPE),DEBIAN)
+dependencies: debian
+all_dependencies: all_debian
+endif
+ifeq ($(OSTYPE),REDHAT)
+dependencies: redhat
+all_dependencies: all_redhat
+endif
+ifeq ($(OSTYPE),FREEBSD)
+dependencies: freebsd
+all_dependencies: all_freebsd
+endif
+#OSDISTRO
+
+#   make debian
+#       installs all apt dependencies for a debian system
+debian: deb_essential deb_perlmodules
+#   make debian_all
+#       installs all apt dependencies for a debian system Including all features except deb_feature_PDF_utf8
+all_debian: debian deb_feature_PDF deb_feature_OpenOffice
+#   make deb_essential
+#       installs just the "can't do without these" dependencies
+deb_essential:
+	$(APT_GET) $(DEB_essential)
+#   make deb_perlmodules
+#       installs all known deb packaged perl modules we depend on
+deb_perlmodules:
+	$(APT_GET) $(DEB_perlmodules)
+#   make deb_feature_PDF
+#       installs deb packages for generating PDF/Postscript output
+deb_feature_PDF:
+	$(APT_GET) $(DEB_feature_PDF)
+#   make deb_feature_PDF_utf8
+#       Installs texlive-xetex to allow UTF8 ouput in PDF/Postscript output
+deb_feature_PDF_utf8: deb_feature_PDF
+	$(APT_GET) $(DEB_feature_PDF_utf8)
+#   make deb_feature_OpenOffice
+#       Installs deb package for generating OpenOffice output
+deb_feature_OpenOffice:
+	$(APT_GET) $(DEB_feature_OpenOffice)
+
+
+
+#   make redhat
+#       installs all apt dependencies for a RHEL, Fedora, CentOS system
+redhat: rhel_essential rhel_perlmodules
+#   make redhat_all
+#       installs all apt dependencies for a RHEL, Fedora, CentOS system  Including all features except rhel_feature_PDF_utf8
+all_redhat: redhat rhel_feature_PDF rhel_feature_OpenOffice
+#   make rhel_essential
+#       installs just the "can't do without these" dependencies
+rhel_essential:
+	$(YUM) $(RHEL_essential)
+#   make rhel_perlmodules
+#       installs all known rpm packaged perl modules we depend on
+rhel_perlmodules:
+	$(YUM) $(RHEL_perlmodules)
+#   make rhel_feature_PDF
+#       installs rpm packages for generating PDF/Postscript output
+rhel_feature_PDF:
+	$(YUM) $(RHEL_feature_PDF)
+#   make rhel_feature_PDF_utf8
+#       Installs texlive-xetex to allow UTF8 ouput in PDF/Postscript output
+rhel_feature_PDF_utf8: rhel_feature_PDF
+#	$(YUM) $(RHEL_feature_PDF_utf8)
+#   make rhel_feature_OpenOffice
+#       Installs rpm package for generating OpenOffice output
+rhel_feature_OpenOffice:
+#	$(YUM) $(RHEL_feature_OpenOffice)
+
+
+#   make freebsd
+#       installs some known dependencies for a FreeBSD system
+freebsd:
+	@echo "We currently don't do anything special on a freebsd system"
+#   make freebsd_all
+#       installs some known dependencies for a FreeBSD system
+all_freebsd: freebsd
+fbsd_feature_PDF:
+fbsd_feature_PDF_utf8:
+fbsd_feature_OpenOffice:
+
+
+#   make cpan
+#       installs any remaining perl dependancies using cpanm
+cpan:
+	cpanm --local-lib --quiet --notest  --with-feature=starman --installdeps .
+
+
+#   make feature_PDF
+#       Install system and cpan packages for generating PDF/Postscript output
+feature_PDF: $(OS_feature_PDF)
+	cpanm --local-lib --quiet --notest --with-feature=latex-pdf-ps --with-feature=latex-pdf-images --installdeps .
+
+#   make feature_PDF_utf8
+#       Install system and cpan packages for UTF8 ouput in PDF/Postscript output
+feature_PDF_utf8: $(OS_feature_PDF_utf8) feature_PDF
+
+#   make feature_OpenOffice
+#       Install system and cpan packages for generating OpenOffice output
+feature_OpenOffice: $(OS_feature_OpenOffice)
+	cpanm --local-lib --quiet --notest --with-feature=openoffice --installdeps .
+
