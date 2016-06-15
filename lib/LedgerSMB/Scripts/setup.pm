@@ -1030,13 +1030,13 @@ sub process_and_run_upgrade_script {
     $dbh->commit;
 
     $database->load_base_schema({
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                                });
     $database->load_modules('LOADORDER', {
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                            });
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -1294,9 +1294,12 @@ sub rebuild_modules {
     my ($request) = @_;
     my $database = _init_db($request);
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
+    $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die "Upgrade failed.";
-    $database->apply_changes;
     complete($request);
 }
 
