@@ -337,6 +337,7 @@ sub load_base_schema {
         }
         closedir(LOADDIR);
     }
+    $self->apply_changes();
     return 1;
 
 }
@@ -411,7 +412,6 @@ sub create_and_load(){
     log_stdout     => $args->{log},
     errlog  => $args->{errlog},
           });
-    $self->apply_changes();
     $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
@@ -460,7 +460,8 @@ sub apply_changes {
         PrintError=>0,
         AutoCommit => 0,
         pg_server_prepare => 0});
-    my $loadorder = LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+    my $loadorder =
+        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     $dbh->disconnect;
