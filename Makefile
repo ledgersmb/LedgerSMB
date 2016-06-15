@@ -165,6 +165,12 @@ Help on installing LedgerSMB can be found in
   - README.md
   - http://ledgersmb.org/topic/installing-ledgersmb-15
 
+The easiest way to use this makefile to install LedgerSMB is simply to run
+  make all_depndencies
+  make feature_PDF_utf8 # this is optional and is a large additional download
+                        # see discussion about XeLaTeX and UTF8 at
+                        # http://ledgersmb.org
+
 Help on using this Makefile
   The following make targets are available
     - help         : This help text
@@ -184,9 +190,6 @@ Help on using this Makefile
     - freebsd : installs some known dependencies for a FreeBSD system
 
     - all_dependencies : same as dependencies but adds all features except feature_PDF_utf8
-    - all_debian  : same as debian but adds all features except deb_feature_PDF_utf8
-    - all_redhat  : same as redhat but adds all features except rhel_feature_PDF_utf8
-    - all_freebsd : same as freebsd but adds all features except fbsd_feature_PDF_utf8
 
     - cpan                    : installs any remaining perl dependancies using cpanm
 
@@ -197,6 +200,10 @@ Help on using this Makefile
     #############################################################
       The following targets would not normally be used manually
     #############################################################
+
+    - all_debian  : same as debian but adds all features except deb_feature_PDF_utf8
+    - all_redhat  : same as redhat but adds all features except rhel_feature_PDF_utf8
+    - all_freebsd : same as freebsd but adds all features except fbsd_feature_PDF_utf8
 
     - deb_essential           : installs just the "can't do without these" dependencies
     - deb_perlmodules         : installs all known deb packaged perl modules we depend on
