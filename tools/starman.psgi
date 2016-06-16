@@ -12,11 +12,11 @@ use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
-use Plack::Middleware::Pod if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
-
 # Optimization
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
+
+require Plack::Middleware::Pod if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
 
 die 'Cannot verify version of libraries, may be including out of date modules?' unless $LedgerSMB::PSGI::VERSION == '1.5';
 
