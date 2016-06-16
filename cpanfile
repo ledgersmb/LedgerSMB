@@ -36,7 +36,6 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
-requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
 requires 'Template', '2.14';
 requires 'namespace::autoclean';
 
@@ -81,6 +80,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
+    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';

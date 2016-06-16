@@ -12,11 +12,14 @@ dojo:
 	git checkout -- UI/js/README;
 	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
 
+# make pod
+# Genarate displayable documentation
 pod:
 	rm -rf UI/pod
 	mkdir UI/pod
 	utils/pod2projdocs.pl 2>&1 pod2projdocs.log
 
+# make critic
 # Little toy for code critique
 # Make sure that aspell is installed for your locale (apt install aspell-fr, for example)
 # Open UI/pod/critic_html/index.html with prefered browser

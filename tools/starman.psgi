@@ -12,7 +12,7 @@ use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
-use Plack::Middleware::Pod;
+use Plack::Middleware::Pod if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
 
 # Optimization
 use Plack::Middleware::ConditionalGET;
