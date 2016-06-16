@@ -1,3 +1,4 @@
+@weasel
 Feature: Correct operation of setup.pl and login.pl login pages
    In order to assess the further quality of the software,
    we want to assess the availability and correct operation of
@@ -5,7 +6,6 @@ Feature: Correct operation of setup.pl and login.pl login pages
 
 Background:
   Given a user named "Admin" with a password "a6m1n"
-    And a LedgerSMB instance at "http://localhost:5000"
 
 
 Scenario: Viewing setup.pl

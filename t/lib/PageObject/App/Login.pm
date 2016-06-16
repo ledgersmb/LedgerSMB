@@ -12,14 +12,12 @@ extends 'PageObject';
 
 use PageObject::App;
 
-
 sub url { return '/login.pl'; }
 
 sub verify {
     my ($self) = @_;
-    my $driver = $self->driver;
 
-    $driver->find_element_by_label($_)
+    $self->stash->{ext_wsl}->page->find('*labelled', text => $_)
         for ("User Name", "Password", "Company");
     return $self;
 };
@@ -28,7 +26,9 @@ sub verify {
 sub login {
     my ($self, $user, $password, $company) = @_;
     do {
-        my $element = $self->driver->find_element_by_label($_->{label});
+        my $element =
+            $self->stash->{ext_wsl}->page->find('*labelled',
+                                                text => $_->{label});
         $element->click;
         $element->clear;
         $element->send_keys($_->{value});
@@ -38,8 +38,8 @@ sub login {
              value => $password },
            { label => "Company",
              value => $company });
-    $self->driver->find_button("Login")->click;
-    return $self->driver->page(PageObject::App->new(%$self));
+    $self->stash->{ext_wsl}->page->find('*button', text => "Login")->click;
+    return $self->stash->{page} = PageObject::App->new(%$self);
 }
 
 

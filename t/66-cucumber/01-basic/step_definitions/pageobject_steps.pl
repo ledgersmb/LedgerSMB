@@ -59,8 +59,8 @@ When qr/I navigate to the (.*) page/, sub {
         unless exists $pages{$page};
 
     use_module($pages{$page});
-    $pages{$page}->open(driver => get_driver(C));
-    get_driver(C)->verify_page;
+    $pages{$page}->open(stash => S);
+    S->{page}->verify;
 };
 
 When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
@@ -80,7 +80,7 @@ Then qr/I should see the (.*) page/, sub {
     die "Unknown page '$page_name'"
         unless exists $pages{$page_name};
 
-    my $page = get_driver(C)->verify_page;
+    my $page = S->{page}->verify;
     ok($page, "the browser page is the page named '$page_name'");
     ok($pages{$page_name}, "the named page maps to a class name");
     ok($page->isa($pages{$page_name}),

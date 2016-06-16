@@ -19,10 +19,10 @@ sub url { return '/setup.pl'; }
 
 sub verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $stash = $self->stash;
 
-    $driver->find_element_by_label($_)
-        for ("Super-user login", "Password", "Database");
+    $stash->{ext_wsl}->page->find('*labelled', text => $_)
+        for ("Password", "Database", "Super-user login");
     return $self;
 };
 
