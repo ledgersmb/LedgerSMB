@@ -27,7 +27,7 @@ requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject';
 requires 'PGObject::Simple';
-requires 'PGObject::Simple::Role';
+requires 'PGObject::Simple::Role', '1.12.1';
 requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime', '1.0.3';
 requires 'PGObject::Util::DBMethod';
