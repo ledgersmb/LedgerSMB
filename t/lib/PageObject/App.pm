@@ -20,7 +20,7 @@ sub _build_menu { return PageObject::App::Menu->new(%{(shift)}); }
 sub _build_maindiv { return PageObject::App::Main->new(%{(shift)}); }
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
     my $driver = $self->driver;
 

@@ -14,10 +14,10 @@ use PageObject::App;
 
 sub url { return '/login.pl'; }
 
-sub verify {
+sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page->find('*labelled', text => $_)
+    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
         for ("User Name", "Password", "Company");
     return $self;
 };
@@ -27,7 +27,7 @@ sub login {
     my ($self, $user, $password, $company) = @_;
     do {
         my $element =
-            $self->stash->{ext_wsl}->page->find('*labelled',
+            $self->stash->{ext_wsl}->page->find('*labeled',
                                                 text => $_->{label});
         $element->click;
         $element->clear;

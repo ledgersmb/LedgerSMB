@@ -11,7 +11,7 @@ extends 'PageObject';
 
 my $page_heading = 'Add Debit Invoice';
 
-sub verify {
+sub _verify {
     my ($self) = @_;
 
     $self->driver

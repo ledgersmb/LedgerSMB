@@ -27,7 +27,7 @@ sub open {
 }
 
 
-sub verify { croak "Abstract method 'PageObject::verify' called"; }
+sub _verify { croak "Abstract method 'PageObject::verify' called"; }
 
 
 

@@ -23,7 +23,7 @@ sub _build_content { return PageObject::App::Initial->new(%{(shift)}); }
 
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
     my $driver = $self->driver;
 

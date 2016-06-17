@@ -11,7 +11,7 @@ extends 'PageObject::App::Search';
 
 my $page_heading = 'Generate Sales Orders from Purchase Orders';
 
-sub verify {
+sub _verify {
     my ($self) = @_;
 
     $self->driver

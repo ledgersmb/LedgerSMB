@@ -58,7 +58,7 @@ my %menu_path_pageobject_map = (
     );
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
     my $driver = $self->driver;
 

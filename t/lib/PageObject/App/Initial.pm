@@ -12,7 +12,7 @@ extends 'PageObject';
 
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
     my $driver = $self->driver;
 
