@@ -30,3 +30,6 @@ ledgersmb.conf
 # Custom extensions to Tests and Validations
 *_Tests_Custom.pm
 *_Validations_Custom.pm
+
+# test output:
+/screens/*
