@@ -8,24 +8,12 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-use PageObject::Driver;
 use Selenium::Remote::Driver;
 use Selenium::Support qw( find_element_by_label
  find_button find_dropdown find_option
  try_wait_for_page
  prepare_driver element_has_class element_is_dropdown);
 
-
-Given qr/a LedgerSMB instance/, sub {
-    return if defined C->stash->{feature}->{driver};
-
-    my $driver = new PageObject::Driver(
-        'port' => 4422,
-        ) or die "Can't set up Selenium connection";
-    $driver->set_implicit_wait_timeout(30000);
-    &prepare_driver($driver);
-    C->stash->{feature}->{driver} = $driver;
-};
 
 Given qr/a user named "(.*)" with a password "(.*)"/, sub {
     C->stash->{feature}->{user} = $1;

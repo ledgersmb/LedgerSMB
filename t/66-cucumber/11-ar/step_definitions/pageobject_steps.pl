@@ -13,7 +13,6 @@ use LedgerSMB::PGDate;
 
 
 use Module::Runtime qw(use_module);
-use PageObject::Driver;
 use PageObject::App::Login;
 
 use Test::More;
