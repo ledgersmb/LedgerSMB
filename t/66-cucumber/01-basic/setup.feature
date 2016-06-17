@@ -1,3 +1,4 @@
+@weasel
 Feature: setup.pl database creation and migration functionalities
   In order to create company databases or migrate company databases
   from earlier versions and SQL-Ledger, we want system admins to be
@@ -7,12 +8,10 @@ Feature: setup.pl database creation and migration functionalities
 
 Background:
   Given a database super-user
-    And a LedgerSMB instance
-
 
 Scenario: Create a company *with* CoA
- Given a non-existent company named "setup-test"
-   And a non-existent user named "the-user"
+ Given a nonexistent company named "setup-test"
+   And a nonexistent user named "the-user"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the company creation page
@@ -66,7 +65,7 @@ Scenario: Edit user in a company
 
 Scenario: Add user to a company
  Given an existing company named "setup-test"
-   And a non-existent user named "the-user2"
+   And a nonexistent user named "the-user2"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the setup admin page
@@ -97,7 +96,7 @@ Scenario: Add user to a company
 
 Scenario: Add a 'manage users' admin to a company
  Given an existing company named "setup-test"
-   And a non-existent user named "the-admin"
+   And a nonexistent user named "the-admin"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
   Then I should see the setup admin page
@@ -135,7 +134,7 @@ Scenario: Add a 'manage users' admin to a company
 
 
 Scenario: Copy a company
- Given a non-existent company named "setup-test2"
+ Given a nonexistent company named "setup-test2"
    And an existing company named "setup-test"
   When I navigate to the setup login page
    And I log into the company using the super-user credentials
