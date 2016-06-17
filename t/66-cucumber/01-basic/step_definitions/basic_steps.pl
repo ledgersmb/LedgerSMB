@@ -8,7 +8,6 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-use PageObject::Driver;
 use Selenium::Remote::Driver;
 use Selenium::Support qw( find_element_by_label
  find_button find_dropdown find_option
@@ -16,6 +15,7 @@ use Selenium::Support qw( find_element_by_label
  prepare_driver element_has_class element_is_dropdown);
 
 Given qr/a user named "(.*)" with a password "(.*)"/, sub {
+    # note: the LedgerSMB extension has a *very* similar pattern!
     C->stash->{feature}->{user} = $1;
     C->stash->{feature}->{passwd} = $2;
 };
@@ -25,17 +25,19 @@ Given qr/a database super-user/, sub {
     C->stash->{feature}->{"the super-user password"} = $ENV{PGPASSWORD};
 };
 
-Given qr/a non-existant company name/, sub {
-    C->stash->{feature}->{"the company name"} = "non-existant";
-    S->{scenario}->{"non-existent"} = 1;
-};
+# Given qr/a nonexistent company named/, sub {
+#     C->stash->{feature}->{"the company name"} = "nonexistent";
+#     S->{scenario}->{"nonexistent"} = 1;
+# };
 
 When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
     my $param = $2;
     my $value = $3;
     my $label = $4;
 
-    my $element = &find_element_by_label(&get_driver(C), $label);
+    my $element = S->{ext_wsl}->session->find(
+        S->{ext_wsl}->session->page,
+        "*labeled", { text => $label });
     ok($element, "found element with label '$label'");
     $value ||= C->stash->{feature}->{$param};
     $element->click;
@@ -45,9 +47,11 @@ When qr/I enter (([^"].*)|"(.*)") into "(.*)"/, sub {
 When qr/I enter these values:/, sub {
     my $driver = get_driver(C);
     foreach my $field (@{ C->data }) {
-        my $elm = find_element_by_label($driver, $field->{label});
-        if (element_is_dropdown($elm)) {
-            find_option($driver, $field->{value}, $field->{label})->click;
+        my $elm = S->{ext_wsl}->session->find(
+            S->{ext_wsl}->session->page,
+            "*labeled", { text => $field->{label} });
+        if ($elm->can("find_option")) {
+            $elm->find_option($field->{value})->click;
         }
         else {
             $elm->click;

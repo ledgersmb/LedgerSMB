@@ -7,29 +7,22 @@ use warnings;
 
 
 use Module::Runtime qw(use_module);
-use PageObject::Driver;
 use PageObject::App::Login;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
-sub get_driver {
-    my ($context) = @_;
-
-    return $context->stash->{feature}->{driver};
-}
-
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
 
-    get_driver(C)->page->menu->click_menu(\@path);
+    S->{page}->menu->click_menu(\@path);
 };
 
 Given qr/a logged in admin/, sub {
-    PageObject::App::Login->open(driver => get_driver(C));
-    get_driver(C)->verify_page;
-    get_driver(C)->page->login(S->{"the admin"},
+    PageObject::App::Login->open(stash => S);
+    S->{page}->verify_page;
+    S->{page}->login(S->{"the admin"},
                                S->{"the admin password"},
                                S->{"the company"});
 };
@@ -39,7 +32,7 @@ When qr/I confirm database creation with these parameters:/, sub {
     my %data;
 
     $data{$_->{'parameter name'}} = $_->{value} for @$data;
-    get_driver(C)->page->create_database(%data);
+    S->{page}->create_database(%data);
 };
 
 my %pages = (
@@ -66,12 +59,12 @@ When qr/I navigate to the (.*) page/, sub {
 When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
     my $company = $2 || S->{$3};
 
-    if (S->{"non-existent"}) {
-        get_driver(C)->page->login_non_existent(
+    if (S->{"nonexistent company"}) {
+        S->{page}->login_non_existent(
             $ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
     }
     else {
-        get_driver(C)->page->login($ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
+        S->{page}->login($ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
     }
 };
 
@@ -139,20 +132,20 @@ When qr/I create a user with these values:/, sub {
     my %data;
 
     $data{$_->{'label'}} = $_->{value} for @$data;
-    get_driver(C)->page->create_user(%data);
+    S->{page}->create_user(%data);
 };
 
 When qr/I request the users list/, sub {
-    get_driver(C)->page->list_users;
+    S->{page}->list_users;
 };
 
 When qr/I request to add a user/, sub {
-    get_driver(C)->page->add_user;
+    S->{page}->add_user;
 };
 
 Then qr/I should see the table of available users:/, sub {
     my @data = map { $_->{'Username'} } @{ C->data };
-    my $users = get_driver(C)->page->get_users_list;
+    my $users = S->{page}->get_users_list;
 
     is_deeply($users, \@data, "Users on page correspond with expectation");
 };
@@ -160,18 +153,18 @@ Then qr/I should see the table of available users:/, sub {
 When qr/I copy the company to "(.*)"/, sub {
     my $target = $1;
 
-    get_driver(C)->page->copy_company($target);
+    S->{page}->copy_company($target);
 };
 
 When qr/I request the user overview for "(.*)"/, sub {
     my $user = $1;
 
-    get_driver(C)->page->edit_user($user);
+    S->{page}->edit_user($user);
 };
 
 
 Then qr/I should see all permission checkboxes checked/, sub {
-    my $page = get_driver(C)->page;
+    my $page = S->{page};
     my $checkboxes = $page->get_perms_checkboxes(filter => 'all');
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
@@ -183,7 +176,7 @@ Then qr/I should see all permission checkboxes checked/, sub {
 
 
 Then qr/I should see no permission checkboxes checked/, sub {
-    my $page = get_driver(C)->page;
+    my $page = S->{page};
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
     ok(0 == scalar(@{ $checked_boxes }),
@@ -192,7 +185,7 @@ Then qr/I should see no permission checkboxes checked/, sub {
 
 
 Then qr/I should see only these permission checkboxes checked:/, sub {
-    my $page = get_driver(C)->page;
+    my $page = S->{page};
     my @data = map { $_->{"perms label"} } @{ C->data };
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
