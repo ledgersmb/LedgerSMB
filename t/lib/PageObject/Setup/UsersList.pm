@@ -10,12 +10,12 @@ extends 'PageObject';
 
 use PageObject::Setup::EditUser;
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{wsl_ext}->page;
 
     #@@@TODO: There's an assertion missing here
-    $driver->find_elements_containing_text($_)
+    $page->find_all('*contains', text => $_)
         for ("Available Users", "Username");
 
     return $self;
@@ -23,10 +23,10 @@ sub verify {
 
 sub get_users_list {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
-    my $table_elm = $driver->find_element('//table');
-    my $user_links = $driver->find_child_elements($table_elm, './/a');
+    my $user_links = $page->find('.//table')
+        ->find_all('.//a');
 
     my @users = map { $_->get_text } @{ $user_links };
 
@@ -35,12 +35,12 @@ sub get_users_list {
 
 sub edit_user {
     my ($self, $user) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
-    my $user_link = $driver->find_element("//a[text()='$user']");
+    my $user_link = $page->find("//a[text()='$user']");
     $user_link->click;
 
-    return $driver->page(PageObject::Setup::EditUser->new(%$self));
+    return ($self->stash->{page} = PageObject::Setup::EditUser->new(%$self));
 }
 
 

@@ -17,11 +17,11 @@ extends 'PageObject';
 
 sub url { return '/setup.pl'; }
 
-sub verify {
+sub _verify {
     my ($self) = @_;
     my $stash = $self->stash;
 
-    $stash->{ext_wsl}->page->find('*labelled', text => $_)
+    $stash->{ext_wsl}->page->find('*labeled', text => $_)
         for ("Password", "Database", "Super-user login");
     return $self;
 };
@@ -29,9 +29,10 @@ sub verify {
 
 sub login {
     my ($self, $user, $password, $company) = @_;
-    $self->driver->find_element_by_label("Super-user login")->click;
+    $self->stash->{page}->find('*labeled', text => 'Super-user login')->click;
     do {
-        my $element = $self->driver->find_element_by_label($_->{label});
+        my $element =
+            $self->stash->{page}->find('*labeled', text => $_->{label});
         $element->click;
         $element->send_keys($_->{value});
         $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
@@ -42,15 +43,16 @@ sub login {
              value => $password },
            { label => "Database",
              value => $company });
-    $self->driver->find_button("Login")->click;
-    return $self->driver->page(PageObject::Setup::Admin->new(%$self));
+    $self->stash->{page}->find('*button', text => "Login")->click;
+    return $self->stash->{page} = PageObject::Setup::Admin->new(%$self);
 }
 
 sub login_non_existent {
     my $self = shift @_;
 
     $self->login(@_);
-    return $self->driver->page(PageObject::Setup::CreateConfirm->new(%$self));
+    return $self->stash->{page} =
+        PageObject::Setup::CreateConfirm->new(%$self);
 }
 
 

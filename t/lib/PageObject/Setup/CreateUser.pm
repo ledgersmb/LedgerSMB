@@ -16,22 +16,12 @@ my @fields = ("Username", "Password", "Yes", "No", "Salutation",
               "First Name", "Last name", "Employee Number",
               "Date of Birth", "Tax ID/SSN", "Country", "Assign Permissions");
 
-my %field_types = (
-    "Salutation"         => "PageObject::WebElement::DropDown",
-    "Assign Permissions" => "PageObject::WebElement::DropDown",
-    "Country"            => "PageObject::WebElement::DropDown",
-#    "Date of Birth"      =>
-    );
 
-sub field_types {
-    return \%field_types;
-}
-
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
-    $driver->find_element_by_label($_) for @fields;
+    $page->find('*labeled', text => $_) for @fields;
 
     return $self;
 }
@@ -42,19 +32,21 @@ sub create_user {
 
     foreach my $field (@fields) {
         next unless exists $param{$field};
-        my $elm = $self->find_element_by_label($field);
-        if ($elm->isa('PageObject::WebElement::DropDown')) {
+        my $elm =
+            $self->stash->{ext_wsl}->page->find('*labeled', text => $field);
+
+        if ($elm->can('find_option')) {
             $elm->find_option($param{$field})->click;
         }
         else {
             $elm->send_keys($param{$field});
         }
     }
-    $self->find_button("Create User")->click;
+    $self->find('*button', text => "Create User")->click;
 
     return
-        $self->driver->page(
-            PageObject::Setup::OperationConfirmation->new(%$self));
+        $self->stash->{page} =
+            PageObject::Setup::OperationConfirmation->new(%$self);
 }
 
 

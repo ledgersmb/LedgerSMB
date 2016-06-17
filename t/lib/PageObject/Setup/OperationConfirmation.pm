@@ -10,12 +10,12 @@ use Moose;
 extends 'PageObject';
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
     my $elements =
-        $driver->find_elements_containing_text('LedgerSMB may now be used');
+        $page->find_all('*contains', text => 'LedgerSMB may now be used');
 
     croak "Not on the operation confirmation page" .scalar(@$elements)
         if scalar(@$elements) != 1;
