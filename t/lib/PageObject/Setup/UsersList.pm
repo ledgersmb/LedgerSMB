@@ -12,7 +12,7 @@ use PageObject::Setup::EditUser;
 
 sub _verify {
     my ($self) = @_;
-    my $page = $self->stash->{wsl_ext}->page;
+    my $page = $self->stash->{ext_wsl}->page;
 
     #@@@TODO: There's an assertion missing here
     $page->find_all('*contains', text => $_)

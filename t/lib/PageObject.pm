@@ -40,13 +40,18 @@ sub find {
         @args);
 }
 
-
-sub verify {
+sub wait_for_page {
     my ($self) = @_;
 
     $self->stash->{ext_wsl}->wait_for( sub {
         $self->stash->{page}->find('body.done-parsing', scheme => 'css');
-                                         });
+                                       });
+}
+
+sub verify {
+    my ($self) = @_;
+
+    $self->wait_for_page;
     $self->_verify;
 };
 

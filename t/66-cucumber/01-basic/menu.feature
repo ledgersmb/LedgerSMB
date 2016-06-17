@@ -8,8 +8,7 @@ Feature: correct operation of the menu and immediate linked pages
 
 
 Background:
-  Given a LedgerSMB instance
-    And a standard test company
+  Given a standard test company
 
 
 Scenario Outline: Navigate to menu and open screen

@@ -32,7 +32,7 @@ sub create_database {
     my $page = $self->stash->{ext_wsl}->page;
 
     $page->find('*button', text => "Yes")->click;
-#    $driver->try_wait_for_page;
+    $self->wait_for_page;
 
     # assert we're on the "select country" page now
     $page->find('*button', text => $_)
@@ -43,29 +43,29 @@ sub create_database {
         ->click;
 
     $page->find('*button', text => "Next")->click;
-
+    $self->wait_for_page;
 
     # assert we're on the "select CoA" page now
     $page->find('*button', text => $_)
         for ("Next", "Skip");
 
     $page->find('*labeled', text => "Chart of accounts")
-        ->find('*option', text => $param{"Chart of accounts"})
+        ->find_option($param{"Chart of accounts"})
         ->click;
 
     $page->find('*button', text => "Next")->click;
-#    $driver->try_wait_for_page;
+    $self->wait_for_page;
 
     # assert we're on the "Load Templates" page now
     $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 
     $page->find('*labeled', text => 'Templates')
-        ->find('*option', text => $param{"Templates"})
+        ->find_option($param{"Templates"})
         ->click;
 
     $page->find('*button', text => "Load Templates")->click;
-#    $driver->try_wait_for_page;
+    $self->wait_for_page;
 
     return $self->stash->{page} = PageObject::Setup::CreateUser->new(%$self);
 }
