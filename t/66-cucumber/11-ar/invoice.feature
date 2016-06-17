@@ -6,8 +6,7 @@ Feature: AR transaction document handling
 
 
 Scenario: Creation of a new sales invoice
-   Given a LedgerSMB instance
-     And a standard test company
+   Given a standard test company
      And a logged in admin
      And a customer named "Customer 1"
 #     And a service "s1"
