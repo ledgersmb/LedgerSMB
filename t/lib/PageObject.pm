@@ -7,7 +7,12 @@ use Carp;
 use Module::Runtime qw(use_module);
 
 use Moose;
+use Weasel::FindExpanders::Dojo;
 use Weasel::FindExpanders::HTML;
+
+use Weasel::Widgets::Dojo;
+use Weasel::Widgets::HTML;
+
 use Carp::Always;
 
 has stash => (is => 'ro', required => 1);
@@ -26,6 +31,24 @@ sub open {
     return $self;
 }
 
+sub find {
+    my ($self, @args) = @_;
+
+    return $self->stash->{ext_wsl}->find(
+        ###TODO we want to search the page with 'ourselves' as the root of the search
+        $self->stash->{ext_wsl}->page,
+        @args);
+}
+
+
+sub verify {
+    my ($self) = @_;
+
+    $self->stash->{ext_wsl}->wait_for( sub {
+        $self->stash->{page}->find('body.done-parsing', scheme => 'css');
+                                         });
+    $self->_verify;
+};
 
 sub _verify { croak "Abstract method 'PageObject::verify' called"; }
 
