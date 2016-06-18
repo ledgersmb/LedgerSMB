@@ -22,7 +22,6 @@ sub _build_maindiv { return PageObject::App::Main->new(%{(shift)}); }
 
 sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
 
     $self->menu->verify;
     $self->maindiv->verify;
@@ -30,7 +29,14 @@ sub _verify {
     return $self;
 };
 
+sub verify_screen {
+    my ($self) = @_;
 
+    my $content = $self->maindiv->content;
+    $content->verify;
+
+    return $content;
+}
 
 __PACKAGE__->meta->make_immutable;
 

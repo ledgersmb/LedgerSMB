@@ -14,9 +14,9 @@ extends 'PageObject';
 
 sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $driver = $self->stash->{ext_wsl}->page;
 
-    $driver->find_element("//div[\@id='maindiv']");
+    $driver->find("//div[\@id='maindiv']");
     return $self;
 };
 

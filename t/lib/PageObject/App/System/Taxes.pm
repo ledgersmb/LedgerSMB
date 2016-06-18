@@ -14,10 +14,10 @@ my $page_heading = 'Taxes';
 sub _verify {
     my ($self) = @_;
 
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
+    $self->stash->{ext_wsl}->page
+        ->find("//*[\@id='maindiv']
+                      [.//*[\@class='listtop'
+                              and text()='$page_heading']]");
 
     return $self;
 }

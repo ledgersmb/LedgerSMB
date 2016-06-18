@@ -14,8 +14,8 @@ my $page_heading = 'Search Budgets';
 sub _verify {
     my ($self) = @_;
 
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
+    $self->stash->{ext_wsl}->page
+        ->find("//*[\@id='maindiv']
                            [.//*[\@class='listtop'
                                  and text()='$page_heading']]");
 

@@ -60,12 +60,12 @@ my %menu_path_pageobject_map = (
 
 sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
     my @logged_in_found =
-        $driver->find_elements_containing_text("Logged in as");
+        $page->find_all('*contains', text => "Logged in as");
     my @logged_into_found =
-        $driver->find_elements_containing_text("Logged into");
+        $page->find_all('*contains', text => "Logged into");
 
     return $self
         unless ((scalar(@logged_in_found) > 0)
@@ -75,25 +75,23 @@ sub _verify {
 
 sub click_menu {
     my ($self, $path) = @_;
-    my $root = $self->driver->find_element("//*[\@id='top_menu']");
-    my $driver = $self->driver;
+    my $root = $self->stash->{ext_wsl}->page->find("//*[\@id='top_menu']");
 
     my $item = $root;
     my $ul = '';
 
     do {
-        $item = $driver->find_child_element($item,".$ul/li[./a[text()='$_']]");
-        my $link = $driver->find_child_element($item,"./a");
-        $driver->execute_script("arguments[0].scrollIntoView()", $link);
+        $item = $item->find(".$ul/li[./a[text()='$_']]");
+        my $link = $item->find("./a");
         $link->click
             unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
 
         $ul = '/ul';
     } for @$path;
-    
+
     my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
     use_module($tgt_class);
-    return $driver->page->maindiv->content($tgt_class->new(%$self));
+    return $self->stash->{page}->maindiv->content($tgt_class->new(%$self));
 }
 
 

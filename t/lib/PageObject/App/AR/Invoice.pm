@@ -14,8 +14,8 @@ my $page_heading = 'Add Sales Invoice';
 sub _verify {
     my ($self) = @_;
 
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
+    $self->stash->{ext_wsl}->page
+        ->find("//*[\@id='maindiv']
                            [.//*[\@class='listtop'
                                  and text()='$page_heading']]");
 
@@ -27,12 +27,12 @@ sub select_customer {
 
     $self->verify;
     my $elem = 
-        $self->driver->find_element_by_label("Customer");
+        $self->stash->{ext_wsl}->page->find("*labeled", text => "Customer");
 
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->driver->find_button("Update")->click;
+    $self->stash->{ext_wsl}->page->find("*button", text => "Update")->click;
 }
 
 __PACKAGE__->meta->make_immutable;
