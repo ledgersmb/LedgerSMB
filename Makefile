@@ -118,6 +118,9 @@ else
     ifneq (,$(filter MANDRAKE, $(OSDISTRO)))
         OSTYPE := MANDRAKE
     endif
+    ifneq (,$(filter GENTOO, $(OSDISTRO)))
+        OSTYPE := GENTOO
+    endif
 # this filter is speculative, we need to confirm what is expected.
     ifneq (,$(filter REDHAT RHEL FEDORA CENTOS AMAZONLINUX, $(OSDISTRO)))
         OSTYPE := REDHAT
@@ -358,6 +361,10 @@ feature_PDF_utf8: $(OS_feature_PDF_utf8) feature_PDF
 #       Install system and cpan packages for generating OpenOffice output
 feature_OpenOffice: $(OS_feature_OpenOffice)
 	cpanm --local-lib --quiet --notest --with-feature=openoffice --installdeps .
+
+
+postgres_user:
+	sudo createuser -S -d -r -l -P lsmb_dbadmin
 
 ########
 # todo list
