@@ -103,10 +103,10 @@ else
             endif
         OS_RELEASE_FILE := $(shell test -r /etc/os-release && cat /etc/os-release | tr '[:lower:]' '[:upper:]')
             ifneq (,$(findstring DEBIAN,$(OS_RELEASE_FILE)))
-                xOSDISTRO := DEBIAN
+                OSDISTRO := DEBIAN
             endif
             ifneq (,$(findstring SUSE,$(OS_RELEASE_FILE)))
-                xOSDISTRO := SUSE
+                OSDISTRO := SUSE
             endif
     endif
     ifneq (,$(filter DEBIAN UBUNTU LINUXMINT, $(OSDISTRO)))
@@ -117,6 +117,9 @@ else
     endif
     ifneq (,$(filter MANDRAKE, $(OSDISTRO)))
         OSTYPE := MANDRAKE
+    endif
+    ifneq (,$(filter GENTOO, $(OSDISTRO)))
+        OSTYPE := GENTOO
     endif
 # this filter is speculative, we need to confirm what is expected.
     ifneq (,$(filter REDHAT RHEL FEDORA CENTOS AMAZONLINUX, $(OSDISTRO)))
