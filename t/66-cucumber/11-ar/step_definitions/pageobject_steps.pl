@@ -26,14 +26,14 @@ When qr/I open the sales invoice entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
 
     S->{page}->menu->click_menu(\@path);
-    S->verify;
+    S->{page}->verify;
 };
 
 When qr/I open the AR transaction entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
 
     S->{page}->menu->click_menu(\@path);
-    S->verify;
+    S->{page}->verify;
 };
 
 When qr/I select customer "(.*)"/, sub {

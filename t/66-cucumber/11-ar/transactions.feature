@@ -1,4 +1,4 @@
-@TODO @wip @weasel
+@wip @weasel
 Feature: AR transaction document handling
   As a LedgerSMB user, I want to be able to create transactions,
   save them and post them, with or without separation of duties
