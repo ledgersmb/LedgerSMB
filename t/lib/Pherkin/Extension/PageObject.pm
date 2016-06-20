@@ -36,7 +36,7 @@ extends 'Test::BDD::Cucumber::Extension';
 =cut
 
 sub step_directories {
-    return [];
+    return [ 'pageobject_steps/' ];
 }
 
 
