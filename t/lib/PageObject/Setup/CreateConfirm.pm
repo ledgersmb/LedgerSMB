@@ -17,9 +17,10 @@ sub _verify {
 
     my @elements;
     push @elements, @{$page->find_all('*contains', text => $_)}
-       for ("Database Management Console",
-            "Database does not exist",
-            "Create Database");
+       for ("Database does not exist",
+            "Create Database",
+            "Database Management Console",
+           );
     croak "Not on the company creation confirmation page " . scalar(@elements)
         if scalar(@elements) != 3;
 
@@ -31,30 +32,18 @@ sub create_database {
     my %param = @_;
     my $page = $self->stash->{ext_wsl}->page;
 
+    # Confirm database creation
     $page->find('*button', text => "Yes")->click;
-    $self->wait_for_page;
-
-    # assert we're on the "select country" page now
-    $page->find('*button', text => $_)
-        for ("Next", "Skip");
 
     $page->find('*labeled', text => "Country Code")
         ->find_option($param{"Country code"})
         ->click;
-
     $page->find('*button', text => "Next")->click;
-    $self->wait_for_page;
-
-    # assert we're on the "select CoA" page now
-    $page->find('*button', text => $_)
-        for ("Next", "Skip");
 
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
-
     $page->find('*button', text => "Next")->click;
-    $self->wait_for_page;
 
     # assert we're on the "Load Templates" page now
     $page->find('*contains', text => "Select Templates to Load");
@@ -65,7 +54,6 @@ sub create_database {
         ->click;
 
     $page->find('*button', text => "Load Templates")->click;
-    $self->wait_for_page;
 
     return $self->stash->{page} = PageObject::Setup::CreateUser->new(%$self);
 }
