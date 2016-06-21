@@ -383,46 +383,89 @@ UPDATE defaults
                         where );
 */
 /* May have to move this downward*/
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'businessnumber') WHERE setting_key = 'businessnumber';
-INSERT INTO defaults(setting_key,value) SELECT 'company_name',fldvalue FROM sl30.defaults WHERE fldname = 'company';
-INSERT INTO defaults(setting_key,value) SELECT 'company_address',fldvalue FROM sl30.defaults WHERE fldname = 'address';
-INSERT INTO defaults(setting_key,value) SELECT 'company_fax',fldvalue FROM sl30.defaults WHERE fldname = 'fax';
-INSERT INTO defaults(setting_key,value) SELECT 'company_phone',fldvalue FROM sl30.defaults WHERE fldname = 'tel';
-INSERT INTO defaults(setting_key,value) SELECT 'weightunit',fldvalue FROM sl30.defaults WHERE fldname = 'weightunit';
+
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_default(skey varchar(20),slname varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+    )
+    WHERE setting_key = skey AND value IS NULL;
+    INSERT INTO defaults (setting_key, value)
+        SELECT skey,fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+        AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = skey);
+END
+$$
+  LANGUAGE 'plpgsql';
+
+SELECT * FROM pg_temp.f_insert_default('company_name','company');
+SELECT * FROM pg_temp.f_insert_default('company_address','address');
+SELECT * FROM pg_temp.f_insert_default('company_fax','fax');
+SELECT * FROM pg_temp.f_insert_default('company_phone','tel');
+SELECT * FROM pg_temp.f_insert_default('audittrail','audittrail');
+SELECT * FROM pg_temp.f_insert_default('businessnumber','businessnumber');
+SELECT * FROM pg_temp.f_insert_default('decimal_places','precision');
+SELECT * FROM pg_temp.f_insert_default('weightunit','weightunit');
+-- Should we count the actual transferred entries instead?
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_count(slname varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+    )
+    WHERE setting_key = slname AND (value IS NULL OR value = '1');
+    INSERT INTO defaults (setting_key, value)
+        SELECT fldname,fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+        AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = slname);
+END
+$$
+  LANGUAGE 'plpgsql';
+
+SELECT * FROM pg_temp.f_insert_count('customernumber');
+SELECT * FROM pg_temp.f_insert_count('employeenumber');
+SELECT * FROM pg_temp.f_insert_count('glnumber');
+SELECT * FROM pg_temp.f_insert_count('partnumber');
+SELECT * FROM pg_temp.f_insert_count('partnumber');
+SELECT * FROM pg_temp.f_insert_count('projectnumber');
+SELECT * FROM pg_temp.f_insert_count('rfqnumber');
+SELECT * FROM pg_temp.f_insert_count('sinumber');
+SELECT * FROM pg_temp.f_insert_count('sonumber');
+SELECT * FROM pg_temp.f_insert_count('sqnumber');
+SELECT * FROM pg_temp.f_insert_count('vendornumber');
+SELECT * FROM pg_temp.f_insert_count('vinumber');
+
 INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM sl30.curr WHERE rn=1;
-INSERT INTO defaults(setting_key,value)
-SELECT 'inventory_accno_id',id from account
-        where account.accno in (
-        select accno from sl30.chart
-        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'inventory_accno_id' )
-);
-INSERT INTO defaults(setting_key,value)
-SELECT 'income_accno_id',id from account
-        where account.accno in (
-        select accno from sl30.chart
-        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'income_accno_id' )
-);
-INSERT INTO defaults(setting_key,value)
-SELECT 'expense_accno_id',id from account
-        where account.accno in (
-        select accno from sl30.chart
-        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'expense_accno_id' )
-);
-INSERT INTO defaults(setting_key,value)
-SELECT 'fxgain_accno_id',id from account
-        where account.accno in (
-        select accno from sl30.chart
-        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxgain_accno_id' )
-);
-INSERT INTO defaults(setting_key,value)
-SELECT 'fxloss_accno_id',id from account
-        where account.accno in (
-        select accno from sl30.chart
-        where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxloss_accno_id' )
-);
+
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT id FROM account
+        WHERE account.accno IN (
+            SELECT accno FROM sl30.chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+    )
+    WHERE setting_key = skey AND value IS NULL;
+    INSERT INTO defaults (setting_key, value)
+        SELECT skey,id FROM account
+        WHERE account.accno IN (
+            SELECT accno FROM sl30.chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+        AND NOT EXISTS ( SELECT value FROM defaults WHERE setting_key = skey);
+END
+$$
+  LANGUAGE 'plpgsql';
+SELECT * FROM pg_temp.f_insert_account('inventory_accno_id');
+SELECT * FROM pg_temp.f_insert_account('income_accno_id');
+SELECT * FROM pg_temp.f_insert_account('expense_accno_id');
+SELECT * FROM pg_temp.f_insert_account('fxgain_accno_id');
+SELECT * FROM pg_temp.f_insert_account('fxloss_accno_id');
 -- = "sl30.cashovershort_accno_id" ?
 -- "earn_id" = ?
-
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
 SELECT id, parts_id, qty, bom, adj  FROM sl30.assembly;
@@ -760,50 +803,6 @@ SELECT setval('payment_id_seq', max(id)) FROM payment;
 SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
 SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
 SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(reference AS NUMERIC))+1 FROM SL30.gl WHERE reference ~ '^[0-9]+$'
-) WHERE setting_key = 'glnumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(customernumber AS NUMERIC))+1 FROM SL30.customer WHERE customernumber ~ '^[0-9]+$'
-) WHERE setting_key = 'customernumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(employeenumber AS NUMERIC))+1 FROM SL30.employee WHERE employeenumber ~ '^[0-9]+$'
-) WHERE setting_key = 'employeenumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(partnumber AS NUMERIC))+1 FROM SL30.parts WHERE partnumber ~ '^[0-9]+$'
-) WHERE setting_key = 'partnumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(ordnumber AS NUMERIC))+1 FROM SL30.oe WHERE ordnumber ~ '^[0-9]+$'
-) WHERE setting_key = 'ponumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(projectnumber AS NUMERIC))+1 FROM SL30.project WHERE projectnumber ~ '^[0-9]+$'
-) WHERE setting_key = 'projectnumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(vendornumber AS NUMERIC))+1 FROM SL30.vendor WHERE vendornumber ~ '^[0-9]+$'
-) WHERE setting_key = 'vendornumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(invnumber AS NUMERIC))+1 FROM SL30.ar WHERE invnumber ~ '^[0-9]+$'
-) WHERE setting_key = 'sinumber';
-
-UPDATE defaults SET value = (
-    SELECT MAX(CAST(invnumber AS NUMERIC))+1 FROM SL30.ap WHERE invnumber ~ '^[0-9]+$'
-) WHERE setting_key = 'vinumber';
-
---UPDATE defaults SET value = (
---    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
---) WHERE setting_key = 'sonumber';
-
---UPDATE defaults SET value = (
---    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
---) WHERE setting_key = 'sqnumber';
 
 --UPDATE defaults SET value = (
 --    SELECT MAX(CAST(???number AS NUMERIC))+1 FROM SL30.??? WHERE ???number ~ '^[0-9]+$'
