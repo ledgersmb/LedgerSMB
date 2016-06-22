@@ -95,4 +95,5 @@ on 'develop' => sub {
     requires 'Selenium::Remote::Driver';
     requires 'Weasel';
     requires 'Weasel::Driver::Selenium2';
+    requires 'Weasel::Widgets::Dojo';
 };
