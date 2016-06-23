@@ -19,7 +19,7 @@ default:
                 wait_timeout: 3000
                 window_size:  1024x1280
                 caps:
-                  port: 4420
+                  port: 4422
       Pherkin::Extension::PageObject:
          dummy: 1
 
