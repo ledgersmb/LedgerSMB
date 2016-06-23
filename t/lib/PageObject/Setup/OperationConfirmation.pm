@@ -14,11 +14,11 @@ sub _verify {
     my ($self) = @_;
     my $page = $self->stash->{ext_wsl}->page;
 
-    my $elements =
-        $page->find_all('*contains', text => 'LedgerSMB may now be used');
+    my $element =
+        $page->find('*contains', text => 'LedgerSMB may now be used');
 
-    croak "Not on the operation confirmation page" .scalar(@$elements)
-        if scalar(@$elements) != 1;
+    croak "Not on the operation confirmation page"
+        if ! $element;
 
     return $self;
 }
