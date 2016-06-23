@@ -25,7 +25,7 @@ sub get_users_list {
     my ($self) = @_;
     my $page = $self->stash->{ext_wsl}->page;
 
-    my $user_links = $page->find('.//table')
+    my $user_links = $page->find('.//table[@id="user_list"]')
         ->find_all('.//a');
 
     my @users = map { $_->get_text } @{ $user_links };
