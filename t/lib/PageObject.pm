@@ -13,8 +13,6 @@ use Weasel::FindExpanders::HTML;
 use Weasel::Widgets::Dojo;
 use Weasel::Widgets::HTML;
 
-use Carp::Always;
-
 has stash => (is => 'ro', required => 1);
 
 sub field_types { return {}; }
