@@ -28,10 +28,11 @@ builder {
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
 
-    enable "Plack::Middleware::Pod",
+    enable 'Plack::Middleware::Pod',
         path => qr{^/pod/},
         root => './',
-        pod_view => 'Pod::POM::View::HTMl'; # the default
+        pod_view => 'Pod::POM::View::HTMl' # the default
+    if $ENV{PLACK_ENV} =~ "development";
 
     mount '/rest/' => LedgerSMB::PSGI::rest_app();
 
