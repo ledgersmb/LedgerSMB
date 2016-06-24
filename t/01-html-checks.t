@@ -5,7 +5,8 @@ use warnings;
 
 use File::Find;
 use Test::More;
-eval { use HTML::Lint; 1 } or plan skip_all => "HTML::Lint not available";
+eval "use HTML::Lint";
+plan skip_all => "HTML::Lint not available" if $@;
 
 my @on_disk = ();
 my $is_todo = '';
