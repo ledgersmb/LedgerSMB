@@ -39,17 +39,30 @@ sub find {
 }
 
 sub wait_for_page {
-    my ($self) = @_;
+    my ($self, $ref) = @_;
 
-    $self->stash->{ext_wsl}->wait_for( sub {
-        $self->stash->{page}->find('body.done-parsing', scheme => 'css');
-                                       });
+    $self->stash->{ext_wsl}->wait_for(
+        sub {
+
+            if ($ref) {
+                # if there's a reference element,
+                # wait for it to go stale (raise an exception)
+                eval {
+                    $ref->tag_name;
+                    1;
+                } or return 1;
+            }
+            else {
+                $self->stash->{page}
+                ->find('body.done-parsing', scheme => 'css');
+            }
+        });
 }
 
 sub verify {
-    my ($self) = @_;
+    my ($self, $ref) = @_;
 
-    $self->wait_for_page;
+    $self->wait_for_page($ref);
     $self->_verify;
 };
 

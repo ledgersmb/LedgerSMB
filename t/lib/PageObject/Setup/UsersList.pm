@@ -40,7 +40,9 @@ sub edit_user {
     my $user_link = $page->find("//a[text()='$user']");
     $user_link->click;
 
-    return ($self->stash->{page} = PageObject::Setup::EditUser->new(%$self));
+    return ($self->stash->{page} =
+            PageObject::Setup::EditUser->new(%$self))
+        ->verify($user_link);
 }
 
 

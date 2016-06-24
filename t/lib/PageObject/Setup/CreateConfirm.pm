@@ -53,9 +53,13 @@ sub create_database {
         ->find_option($param{"Templates"})
         ->click;
 
-    $page->find('*button', text => "Load Templates")->click;
+    my $btn = $page->find('*button',
+                          text => "Load Templates");
+    $btn->click;
 
-    return $self->stash->{page} = PageObject::Setup::CreateUser->new(%$self);
+    return $self->stash->{page} =
+        PageObject::Setup::CreateUser->new(%$self)
+        ->verify($btn);
 }
 
 

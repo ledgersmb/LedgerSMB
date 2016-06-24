@@ -42,11 +42,12 @@ sub create_user {
             $elm->send_keys($param{$field});
         }
     }
-    $self->find('*button', text => "Create User")->click;
+    my $btn = $self->find('*button', text => "Create User");
+    $btn->click;
 
-    return
-        $self->stash->{page} =
-            PageObject::Setup::OperationConfirmation->new(%$self);
+    return $self->stash->{page} =
+        PageObject::Setup::OperationConfirmation->new(%$self)
+        ->verify($btn);
 }
 
 

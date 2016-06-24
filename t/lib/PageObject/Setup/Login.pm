@@ -43,8 +43,13 @@ sub login {
              value => $password },
            { label => "Database",
              value => $company });
-    $self->stash->{page}->find('*button', text => "Login")->click;
-    return $self->stash->{page} = PageObject::Setup::Admin->new(%$self);
+    my $btn = $self->stash->{page}->find('*button',
+                                         text => "Login");
+    $btn->click;
+
+    return $self->stash->{page} =
+        PageObject::Setup::Admin->new(%$self)
+        ->verify($btn);
 }
 
 sub login_non_existent {

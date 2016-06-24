@@ -17,11 +17,9 @@ sub _verify {
     my ($self) = @_;
     my $stash = $self->stash;
 
-    #@@@TODO: There's an assertion missing here
     $stash->{ext_wsl}->page->find('*contains', text => $_)
         for ("Database Management Console",
              "Confirm Operation",
-             "Logged in as",
              "Rebuild/Upgrade?");
 
     $stash->{ext_wsl}->page->find('*button', text => $_)
@@ -33,17 +31,25 @@ sub _verify {
 sub list_users {
     my ($self) = @_;
     my $stash = $self->stash;
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "List Users");
 
-    $stash->{ext_wsl}->page->find('*button', text => "List Users")->click;
-    return $stash->{page} = PageObject::Setup::UsersList->new(%$self);
+    $btn->click;
+    return $stash->{page} =
+        PageObject::Setup::UsersList->new(%$self)
+        ->verify($btn);
 }
 
 sub add_user {
     my ($self) = @_;
     my $stash = $self->stash;
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "Add User");
 
-    $stash->{ext_wsl}->page->find('*button', text => "Add User")->click;
-    return $stash->{page} = PageObject::Setup::CreateUser->new(%$self);
+    $btn->click;
+    return $stash->{page} =
+        PageObject::Setup::CreateUser->new(%$self)
+        ->verify($btn);
 }
 
 sub copy_company {
@@ -52,10 +58,14 @@ sub copy_company {
 
     $stash->{ext_wsl}->page->find('*labeled', text => "Copy to New Name")
         ->send_keys($target);
-    $stash->{ext_wsl}->page->find('*button', text => "Copy")->click;
+
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "Copy");
+    $btn->click;
 
     return $stash->{page} =
-        PageObject::Setup::OperationConfirmation->new(%$self);
+        PageObject::Setup::OperationConfirmation->new(%$self)
+        ->verify($btn);
 }
 
 __PACKAGE__->meta->make_immutable;
