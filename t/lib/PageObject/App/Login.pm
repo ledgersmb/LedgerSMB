@@ -24,7 +24,10 @@ sub _verify {
 
 
 sub login {
-    my ($self, $user, $password, $company) = @_;
+    my ($self, %args) = @_;
+    my $user = $args{user};
+    my $password = $args{password};
+    my $company = $args{company};
     do {
         my $element =
             $self->stash->{ext_wsl}->page->find('*labeled',
