@@ -1,0 +1,22 @@
+[% USE HTML %]
+[% INCLUDE header %]
+
+<table>
+<tr>
+<th>#</th><th>Line</th>
+</tr>
+[% FOREACH line = lines %]
+        <tr><td><pre>[% line.number %]</pre></td><td><pre>[% HTML.escape( line.content ) %]</pre></td><tr>
+        [% FOREACH v = line.violations %]
+                <tr>
+                  <td><a href=javascript:show_detail('[% v.line_number %].[% v.policy %]')>+</a></td>
+                  <td class='violation_[% v.severity %]'>[% v.description %]. [% v.explanation %].</td>
+                </tr>
+                <tr id='detail_[% v.line_number %].[% v.policy %]' class='detail_hidden'>
+                  <td></td>
+                  <td><pre>[% v.diagnostics %]</pre></td>
+                </tr>
+        [% END %]
+[% END %]
+</table>
+[% INCLUDE footer %]

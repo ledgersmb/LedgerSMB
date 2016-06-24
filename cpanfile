@@ -80,6 +80,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
+    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';

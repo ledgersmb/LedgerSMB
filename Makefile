@@ -251,6 +251,21 @@ dist: dojo
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
 	find . | grep -vE '^.$$|/\.git|^\./UI/js-src/(dojo|dijit|util)/|\.uncompressed\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
+# make pod
+# Genarate displayable documentation
+pod:
+	rm -rf UI/pod
+	mkdir UI/pod
+	utils/pod2projdocs.pl 2>&1 pod2projdocs.log
+
+# make critic
+# Little toy for code critique
+# Make sure that aspell is installed for your locale (apt install aspell-fr, for example)
+# Open UI/pod/critic_html/index.html with prefered browser
+critic:
+	test -d UI/pod || mkdir -p UI/pod
+	./tools/critic_html/critichtml
+
 # make dependencies
 #   Installs all dependencies.
 #   Preferring system perl modules over cpan ones
