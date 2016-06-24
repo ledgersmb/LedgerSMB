@@ -28,8 +28,16 @@ sub _verify {
 
 
 sub login {
-    my ($self, $user, $password, $company) = @_;
-    $self->stash->{page}->find('*labeled', text => 'Super-user login')->click;
+    my ($self, %args) = @_;
+    my $user = $args{user};
+    my $password = $args{password};
+    my $company = $args{company};
+    my $next_page = $args{next_page} //
+        "PageObject::Setup::Admin";
+
+    $self->stash->{page}->find('*labeled',
+                               text => 'Super-user login')
+        ->click;
     do {
         my $element =
             $self->stash->{page}->find('*labeled', text => $_->{label});
@@ -47,17 +55,15 @@ sub login {
                                          text => "Login");
     $btn->click;
 
-    return $self->stash->{page} =
-        PageObject::Setup::Admin->new(%$self)
+    return $self->stash->{page} = $next_page->new(%$self)
         ->verify($btn);
 }
 
 sub login_non_existent {
     my $self = shift @_;
 
-    $self->login(@_);
-    return $self->stash->{page} =
-        PageObject::Setup::CreateConfirm->new(%$self);
+    return $self->login(@_,
+        next_page => "PageObject::Setup::CreateConfirm");
 }
 
 

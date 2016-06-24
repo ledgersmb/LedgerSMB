@@ -11,9 +11,10 @@ use Test::BDD::Cucumber::StepFile;
 
 Given qr/a logged in admin/, sub {
     PageObject::App::Login->open(stash => S);
-    S->{page}->login(S->{"the admin"},
-                     S->{"the admin password"},
-                     S->{"the company"});
+    S->{page}->login(
+        user => S->{"the admin"},
+        password => S->{"the admin password"},
+        company => S->{"the company"});
     S->{page}->verify;
 };
 

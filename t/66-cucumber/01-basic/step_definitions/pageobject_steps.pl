@@ -31,10 +31,15 @@ When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
 
     if (S->{"nonexistent company"}) {
         S->{page}->login_non_existent(
-            $ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
+            user => $ENV{PGUSER},
+            password => $ENV{PGPASSWORD},
+            company => $company);
     }
     else {
-        S->{page}->login($ENV{PGUSER}, $ENV{PGPASSWORD}, $company);
+        S->{page}->login(
+            user => $ENV{PGUSER},
+            password => $ENV{PGPASSWORD},
+            company => $company);
     }
 };
 
