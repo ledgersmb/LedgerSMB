@@ -13,7 +13,10 @@ include_stylesheet=["setup/stylesheet.css"];
                        type = 'href'
                   href_base = 'setup.pl?action=edit_user_roles&amp;database=' _ database _ '&amp;id='}]
             tbody = {rows = users}
-              id = 'user_list' ?>
+            attributes = {
+                id = 'user_list'
+            }
+   ?>
 </body>
 </div>
 </html>

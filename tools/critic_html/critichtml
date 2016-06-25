@@ -1,0 +1,75 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Perl::Critic;
+use Perl::Critic::Utils;
+
+use Template;
+use Cwd qw(abs_path);
+use File::Basename;
+use English qw(-no_match_vars);
+
+use constant SEVERITY  => 1; # Include all violations.
+use constant SKIP_GOOD => 0; # Skip files with no violations?
+
+mkdir 'critic_html';
+mkdir 'critic_html/src';
+
+use autodie;
+
+# Analyse all perl files below the current directory.
+my @files = Perl::Critic::Utils::all_perl_files(q{.});
+
+my @summary = (); # Store statistics on each file processed.
+
+foreach my $file (@files) {
+    # Create a new Critic for per file statistics.
+    my $critic = Perl::Critic->new( '-severity' => SEVERITY );
+
+    my $file_safe = $file;
+    $file_safe =~ s/[\W]/_/g;
+
+    my @violations = $critic->critique($file);
+    next if (!@violations && SKIP_GOOD);
+
+    push @summary, { 'filename' => $file,
+                     'link'     => "src/$file_safe.html",
+                     'stats'    => $critic->statistics() };
+
+    open my $FH, '<', $file;
+    my @lines = <$FH>;
+    close $FH;
+
+    # Attach all violations to the line they were found on.
+    my @violations_by_line = ();
+    my $line_number = 1;
+    foreach my $line (@lines) {
+        # Get all the violations for the current line.
+        my @line_violations = grep { $_->line_number() == $line_number} @violations;
+        push @violations_by_line, { 'number'  => $line_number,
+                                    'content' => $line,
+                                    'violations' => \@line_violations };
+        $line_number++;
+    }
+
+    write_html("critic_html/src/$file_safe.html", 'codefile', { 'title' => "Critic Analysis of $file",
+                                                                'lines' => \@violations_by_line } );
+}
+
+write_html('critic_html/index.html', 'index', { 'title' => 'Perl::Critic::HTML Summary',
+                                                'files' => \@summary });
+
+sub write_html {
+    my ($filename, $template, $data) = @_;
+
+    # Include templates from the install directory.
+    my $tt = Template->new({ 'INCLUDE_PATH' => dirname(abs_path($PROGRAM_NAME)).'/templates' } );
+    print "Writing $filename\n";
+    open my $FILE, '>', $filename;
+    $tt->process($template, $data, $FILE);
+    close $FILE;
+
+    return;
+}

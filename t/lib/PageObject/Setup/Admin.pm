@@ -13,18 +13,16 @@ use PageObject::Setup::CreateUser;
 use PageObject::Setup::UsersList;
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $stash = $self->stash;
 
-    #@@@TODO: There's an assertion missing here
-    $driver->find_elements_containing_text($_)
+    $stash->{ext_wsl}->page->find('*contains', text => $_)
         for ("Database Management Console",
              "Confirm Operation",
-             "Logged in as",
              "Rebuild/Upgrade?");
 
-    $driver->find_button($_)
+    $stash->{ext_wsl}->page->find('*button', text => $_)
         for ("Add User", "List Users", "Load Templates", "Yes",
              "Backup DB", "Backup Roles");
     return $self;
@@ -32,28 +30,42 @@ sub verify {
 
 sub list_users {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $stash = $self->stash;
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "List Users");
 
-    $driver->find_button("List Users")->click;
-    return $driver->page(PageObject::Setup::UsersList->new(%$self));
+    $btn->click;
+    return $stash->{page} =
+        PageObject::Setup::UsersList->new(%$self)
+        ->verify($btn);
 }
 
 sub add_user {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $stash = $self->stash;
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "Add User");
 
-    $driver->find_button("Add User")->click;
-    return $driver->page(PageObject::Setup::CreateUser->new(%$self));
+    $btn->click;
+    return $stash->{page} =
+        PageObject::Setup::CreateUser->new(%$self)
+        ->verify($btn);
 }
 
 sub copy_company {
     my ($self, $target) = @_;
-    my $driver = $self->driver;
+    my $stash = $self->stash;
 
-    $driver->find_element_by_label("Copy to New Name")->send_keys($target);
-    $driver->find_button("Copy")->click;
+    $stash->{ext_wsl}->page->find('*labeled', text => "Copy to New Name")
+        ->send_keys($target);
 
-    return $driver->page(PageObject::Setup::OperationConfirmation->new(%$self));
+    my $btn = $stash->{ext_wsl}->page
+        ->find('*button', text => "Copy");
+    $btn->click;
+
+    return $stash->{page} =
+        PageObject::Setup::OperationConfirmation->new(%$self)
+        ->verify($btn);
 }
 
 __PACKAGE__->meta->make_immutable;

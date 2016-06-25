@@ -23,12 +23,15 @@ sub _build_content { return PageObject::App::Initial->new(%{(shift)}); }
 
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $driver = $self->stash->{ext_wsl}->page;
 
     $self->menu->verify;
-    wait_until { my $elem = $driver->find_element('#maindiv.done-parsing','css'); return ($elem && $elem->is_displayed); };
+    wait_until {
+        my $elem = $driver->find('#maindiv.done-parsing', scheme => 'css');
+        return ($elem && $elem->is_displayed);
+    };
     $self->content->verify;
 
     return $self;

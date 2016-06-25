@@ -4,7 +4,7 @@
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="console-container" data-dojo-type="dijit/layout/BorderContainer"
      style="width: 100%; height: 100%">
-    <div id="maindiv" class="mainpanel"
+    <div id="maindiv" class="mainpanel done-parsing"
          data-dojo-type="lsmb/MainContentPane"
          data-dojo-props="region: 'center'">
       <div id="flicker-container">&nbsp;</div>
@@ -14,9 +14,9 @@
             data-dojo-props="region: 'left', splitter: true">
        <?lsmb INCLUDE menu/expanding.html ?>
      </div>
-	  <div id="errorDialog" title="An error occurred!"
-			 style="display:none;min-width:40ex"
-			 data-dojo-type="dijit/Dialog"></div>
+          <div id="errorDialog" title="An error occurred!"
+                         style="display:none;min-width:40ex"
+                         data-dojo-type="dijit/Dialog"></div>
 </div>
 </body>
 </html>

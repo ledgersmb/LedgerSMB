@@ -11,11 +11,11 @@ extends 'PageObject';
 
 my $page_heading = 'Add Vendor Invoice';
 
-sub verify {
+sub _verify {
     my ($self) = @_;
 
-    $self->driver
-        ->find_element("//*[\@id='maindiv']
+    $self->stash->{ext_wsl}->page
+        ->find("//*[\@id='maindiv']
                            [.//*[\@class='listtop']
                                 [.//*[text()='$page_heading']]]");
 

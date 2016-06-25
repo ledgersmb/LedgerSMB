@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>[% title %]</title>
+<style type="text/css">
+ [% INCLUDE css %]
+</style>
+</head>
+<script type="text/javascript">
+function show_detail(lineNumber) {
+    var detail = document.getElementById("detail_"+lineNumber);
+    if(detail) {
+        detail.className=(detail.className=='detail_hidden') ? 'detail_unhidden' : 'detail_hidden';
+    }
+}
+</script>
+<body>
