@@ -19,6 +19,10 @@ env:
     - secure: q9IckmvMBEEQ6EeM4U8K4y96Lx6tEaxs/A5GYUJxNJVhUkx3YqJKeERArZc4fpoV3CtUCFPDs/tktiFJn1LDeh3s9vJitUAGMU2AQxiUNARXK4EkEdPhvbX+CtusIIKDXYwEqXLiymv6mmpcc9/19CvHUzr9CiKZbb/LpS8lWqc=
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
+addons:
+  artifacts:
+    paths: built-dist/ledgersmb/screens
+
 matrix:
   include:
     - perl: '5.22'
@@ -92,7 +96,6 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
-  - gem install travis-artifacts
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --installdeps .
@@ -117,6 +120,9 @@ before_script:
 script:
   - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove
 
+after_script:
+  - ls -lR screens > screens/index.txt
+
 after_success:
   - >
     if [ "$COVERAGE" != "0" ] ; then
@@ -126,6 +132,3 @@ after_success:
     fi
   - coverage-report
 
-after_failure:
-  - ls -lR screens/ > screens/index.txt
-  - travis-artifacts upload --path screens/ --target-path $TRAVIS_BUILD_ID/$TRAVIS_JOB_ID/screens/
