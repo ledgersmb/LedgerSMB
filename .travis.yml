@@ -19,8 +19,6 @@ env:
     - secure: q9IckmvMBEEQ6EeM4U8K4y96Lx6tEaxs/A5GYUJxNJVhUkx3YqJKeERArZc4fpoV3CtUCFPDs/tktiFJn1LDeh3s9vJitUAGMU2AQxiUNARXK4EkEdPhvbX+CtusIIKDXYwEqXLiymv6mmpcc9/19CvHUzr9CiKZbb/LpS8lWqc=
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
-addons:
-  artifacts: true
 
 matrix:
   include:
@@ -28,6 +26,7 @@ matrix:
       addons:
         postgresql: '9.4'
         sauce_connect: true
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -36,6 +35,7 @@ matrix:
     - perl: '5.20'
       addons:
         postgresql: "9.4"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -44,6 +44,7 @@ matrix:
     - perl: '5.18'
       addons:
         postgresql: "9.4"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -52,6 +53,7 @@ matrix:
     - perl: '5.16'
       addons:
         postgresql: "9.3"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -60,6 +62,7 @@ matrix:
     - perl: '5.14'
       addons:
         postgresql: "9.2"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -68,6 +71,7 @@ matrix:
     - perl: '5.12'
       addons:
         postgresql: "9.2"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -76,6 +80,7 @@ matrix:
     - perl: '5.10'
       addons:
         postgresql: "9.3"
+        artifacts: true
         apt:
           packages:
             - nginx
