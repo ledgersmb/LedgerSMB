@@ -105,6 +105,7 @@ before_script:
   - cd ${HOME}/built-dist
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
+  - mkdir screens
   - cp conf/ledgersmb.conf.default ledgersmb.conf
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
