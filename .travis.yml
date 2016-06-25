@@ -4,6 +4,12 @@ sudo: required
 language: perl
 env:
   global:
+    - ARTIFACTS_BUCKET=lsmb-test
+    - ARTIFACTS_REGION=us-west-2
+    - ARTIFACTS_PATHS="${HOME}/built-dist/ledgersmb/screens:/tmp/plackup-access.log:/tmp/plackup-error.log"
+    # aws creds encrypted for ehuelsmann's repo
+    - secure: "cqxOjaHXFNbT1ujTKgBn0D3FTURzXAcejEcKYjZqCr3qKZQwANWuxSJ4pRPOyj0+iAbyTNDNUNy/Vq6B4rCXMAYgndMVPqTt5nQb99mngJFiuAdrGQrKjf1xWwvl2tT9p6yjoKLJAYb2lzJyCd4vunWUQhg6HveBcglkS+B8iVM="
+    - secure: "kdDv4dLLbft6p6/Kmy1RuW489l70XPhmt/zyDUGvd4Un9E9skbyTIEsFyeVNzatIzF9pOAJEM9zPDRn3luauK8fr0LJDUvYjWh66YHsob+mEPVZVOKpvWgQzVbGIIwmOXsk7LorEifjIwtxL7VRgC3+FtMmU4T15GLARBOPAfGA="
     # ledgersmb org uses Chris Travers' keys
     - secure: UF72BIXXxkPTIJTV4jl3Sm2eg9JdSK0yNqZLdlF2eDc9M1WldvIOr2qg9zJDcBW7M3qB7wKbyBk6PMcqLcY7mCOVTHQB1ORJa8F4dLTK0JFbGLqARAheCrYjQPhy8cIySbV1yFs5hrP2KeTXd0ZcS0bA+MyK0azMRztu+P3WD80=
     - secure: Htra4bK1HEcUoxtraW+Usv+xXuTlIAuMQDWDc7rrMKLKZMNDuC9buuGbOaXDJx1Rty8h05gMkEcN7LD0fD9FhFzDOW7cnKfYHtysH+Gq1a21TZIKb3lgT4n0344Qg/7FuoV9zUl7WWzW5bg6TYvchdOasJ9CVl4n92dYsr4Y+Ck=
@@ -14,12 +20,14 @@ env:
     - secure: q9IckmvMBEEQ6EeM4U8K4y96Lx6tEaxs/A5GYUJxNJVhUkx3YqJKeERArZc4fpoV3CtUCFPDs/tktiFJn1LDeh3s9vJitUAGMU2AQxiUNARXK4EkEdPhvbX+CtusIIKDXYwEqXLiymv6mmpcc9/19CvHUzr9CiKZbb/LpS8lWqc=
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
+
 matrix:
   include:
     - perl: '5.22'
       addons:
         postgresql: '9.4'
         sauce_connect: true
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -28,6 +36,7 @@ matrix:
     - perl: '5.20'
       addons:
         postgresql: "9.4"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -36,6 +45,7 @@ matrix:
     - perl: '5.18'
       addons:
         postgresql: "9.4"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -44,6 +54,7 @@ matrix:
     - perl: '5.16'
       addons:
         postgresql: "9.3"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -52,6 +63,7 @@ matrix:
     - perl: '5.14'
       addons:
         postgresql: "9.2"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -60,6 +72,7 @@ matrix:
     - perl: '5.12'
       addons:
         postgresql: "9.2"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -68,6 +81,7 @@ matrix:
     - perl: '5.10'
       addons:
         postgresql: "9.3"
+        artifacts: true
         apt:
           packages:
             - nginx
@@ -97,6 +111,7 @@ before_script:
   - cd ${HOME}/built-dist
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
+  - mkdir screens
   - cp conf/ledgersmb.conf.default ledgersmb.conf
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
@@ -111,6 +126,9 @@ before_script:
 script:
   - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove
 
+after_script:
+  - ls -lR screens > screens/index.txt
+
 after_success:
   - >
     if [ "$COVERAGE" != "0" ] ; then
@@ -119,3 +137,7 @@ after_success:
        echo "" ;
     fi
   - coverage-report
+
+after_failure:
+  - ls -lr ${HOME}/built-dist/ledgersmb/screens > ${HOME}/built-dist/ledgersmb/screens/index.txt
+  - artifacts upload ${HOME}/built-dist/ledgersmb/screens
