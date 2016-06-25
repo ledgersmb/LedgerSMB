@@ -13,6 +13,7 @@ use YAML::Syck;
 use Test::More;
 use Test::BDD::Cucumber::Loader;
 use Test::BDD::Cucumber::Harness::TestBuilder;
+use Test::BDD::Cucumber::Model::TagSpec;
 
 my @reqenv = qw(PGUSER PGPASSWORD LSMB_BASE_URL);
 my @missing = grep { ! $ENV{$_} } @reqenv;
@@ -36,12 +37,12 @@ my @steps_directories;
 
 for my $ext (@extensions) {
     my $base_dir = file($INC{module_notional_filename(ref $ext)})->dir;
-    my @steps = 
+    my @steps =
         map { File::Spec->rel2abs($_, $base_dir) }
-        @{ $ext->step_directories };    
+        @{ $ext->step_directories };
     push @steps_directories, @steps;
 }
-    
+
 
 $_->pre_execute for @extensions;
 
@@ -51,13 +52,18 @@ my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
     }
 );
 
+# Do not run @wip scenarios
+my $tagspec = Test::BDD::Cucumber::Model::TagSpec->new(
+    tags => [ not => 'wip' ],
+    );
 for my $directory (qw(
       01-basic
       11-ar
 ))
 {
     my ( $executor, @features ) =
-        Test::BDD::Cucumber::Loader->load('t/66-cucumber/' . $directory);
+        Test::BDD::Cucumber::Loader->load('t/66-cucumber/' . $directory,
+                                          $tagspec);
     die "No features found" unless @features;
     $executor->add_extensions(@extensions);
     Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )

@@ -65,6 +65,9 @@ sub _get_database {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
+    LedgerSMB::Auth->http_error('401')
+        if ! defined $creds->{password};
+
     return LedgerSMB::Database->new(
                 username => $creds->{login},
                 password => $creds->{password},

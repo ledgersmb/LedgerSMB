@@ -1,4 +1,4 @@
-package PageObject::App::BatchImport;
+package PageObject::App::Closing;
 
 use strict;
 use warnings;
@@ -9,12 +9,12 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Credit Invoice';
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
+    my @tabs = 
+    $self->stash->{ext_wsl}->page->find("*labeled", text => $_)
         for ("Reference", "Description", "Transaction Date", "From File");
 
     return $self;

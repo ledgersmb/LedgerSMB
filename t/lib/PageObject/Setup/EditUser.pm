@@ -9,18 +9,18 @@ use PageObject;
 extends 'PageObject';
 
 
-sub verify {
+sub _verify {
     my ($self) = @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
 
-    $driver->find_element_by_label($_)
+    $page->find('*labeled', text => $_)
         for ("Password",
              # mention some role names; we want to verify they're there
              "account all",
              "employees manage",
         );
 
-    $driver->find_button($_)
+    $page->find('*button', text => $_)
         for ("Reset Password", "Save Groups");
 
     return $self;
@@ -35,24 +35,23 @@ my %roles_checkbox_filter = (
 
 sub get_perms_checkboxes {
     my $self = shift @_;
-    my $driver = $self->driver;
+    my $page = $self->stash->{ext_wsl}->page;
     my %params = @_;
 
     $params{filter} ||= 'all';
     my $filter = $roles_checkbox_filter{$params{filter}};
 
     my @checkboxes =
-        $driver->find_child_elements(
-            $driver->find_element("//table[\@id='user-roles']"),
-            ".//input[\@type='checkbox' $filter]");
+        $page->find("//table[\@id='user-roles']")
+        ->find_all(".//input[\@type='checkbox' $filter]");
 
     return \@checkboxes;
 }
 
 sub is_checked_perms_checkbox {
     my ($self, $label) = @_;
-    my $driver = $self->driver;
-    my $box = $driver->find_element_by_label($label);
+    my $page = $self->stash->{ext_wsl}->page;
+    my $box = $page->find('*labeled', text => $label);
 
     # assume the returned element is of type checkbox
     return ($box->get_attribute('checked') eq 'true');
