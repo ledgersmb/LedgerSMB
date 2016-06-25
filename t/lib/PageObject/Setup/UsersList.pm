@@ -15,7 +15,7 @@ sub _verify {
     my $page = $self->stash->{ext_wsl}->page;
 
     #@@@TODO: There's an assertion missing here
-    $page->find_all('*contains', text => $_)
+    $page->find('*contains', text => $_)
         for ("Available Users", "Username");
 
     return $self;
