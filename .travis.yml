@@ -4,6 +4,11 @@ sudo: required
 language: perl
 env:
   global:
+    - ARTIFACTS_S3_BUCKET=lsmb-test
+    - ARTIFACTS_AWS_REGION=us-west-2
+    # aws creds encrypted for ehuelsmann's repo
+    - secure: "cyHjHKLP/Xk+fPPyHTL/mTjtKbobFMvezTQKbKmVN+ur+pHSBq2QUbwOdJo6jvUhBjAbeN1uFaKJCudxRJm3NutJbI6XH1uCrLs/8zSxWmBuCrMxuX2rkXbgOGlQ7tB82MwPScm8FrQa2CQMw2T39+2CvTjzUCSdougRc/VUO3w="
+    - secure: "kbNuSQFPm51VGIbAwqXa7nntN4h17zrxJkL8ViSR/mgRIxfex52vjCuEGActLnqx9MwGKd9TCQlNTa42ICZLL0Joavg0sKTQK19wpDRPdHuimoyCOCFjOCjCJu8LwLr7Rn7GpWMD3RIf/1s3oSwJLdIUgsuoTf977QnRXaVDzzI="
     # ledgersmb org uses Chris Travers' keys
     - secure: UF72BIXXxkPTIJTV4jl3Sm2eg9JdSK0yNqZLdlF2eDc9M1WldvIOr2qg9zJDcBW7M3qB7wKbyBk6PMcqLcY7mCOVTHQB1ORJa8F4dLTK0JFbGLqARAheCrYjQPhy8cIySbV1yFs5hrP2KeTXd0ZcS0bA+MyK0azMRztu+P3WD80=
     - secure: Htra4bK1HEcUoxtraW+Usv+xXuTlIAuMQDWDc7rrMKLKZMNDuC9buuGbOaXDJx1Rty8h05gMkEcN7LD0fD9FhFzDOW7cnKfYHtysH+Gq1a21TZIKb3lgT4n0344Qg/7FuoV9zUl7WWzW5bg6TYvchdOasJ9CVl4n92dYsr4Y+Ck=
@@ -87,6 +92,7 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
+  - gem install travis-artifacts
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --installdeps .
@@ -119,3 +125,7 @@ after_success:
        echo "" ;
     fi
   - coverage-report
+
+after_failure:
+  - ls -lR screens/ > screens/index.txt
+  - travis-artifacts upload --path screens/ --target-path $TRAVIS_BUILD_ID/$TRAVIS_JOB_ID/screens/

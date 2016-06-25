@@ -10,7 +10,7 @@ default:
          screenshots_dir: screens
          screenshot_events:
            pre-step: 0
-           post-step: 0
+           post-step: 1
          sessions:
            selenium:
              base_url: http://localhost:5000
