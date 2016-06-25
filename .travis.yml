@@ -20,8 +20,7 @@ env:
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
 addons:
-  artifacts:
-    paths: built-dist/ledgersmb/screens
+  artifacts: true
 
 matrix:
   include:
@@ -132,3 +131,6 @@ after_success:
     fi
   - coverage-report
 
+after_failure:
+  - ls -lr ${HOME}/built-dist/ledgersmb/screens > ${HOME}/built-dist/ledgersmb/screens/index.txt
+  - artifacts upload ${HOME}/built-dist/ledgersmb/screens
