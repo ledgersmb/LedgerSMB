@@ -5,3 +5,6 @@ modules = Carp::Always Data::Dumper
 # Sysconfig.pm needs to be simplified, because it has McCabe = 21
 # but working around that today
 max_mccabe = 22
+
+[CodeLayout::ProhibitHardTabs]
+allow_leading_tabs = 0

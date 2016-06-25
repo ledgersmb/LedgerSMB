@@ -1,0 +1,40 @@
+body {
+	font-family: verdana;
+	
+}
+
+table {
+	border: 1pt solid black;
+}
+
+td {
+	border: 1pt solid black;
+}
+
+th {
+	background-color: #ddd;
+}
+
+.violation_1 {
+	background-color: #fd0;
+}
+.violation_2 {
+	background-color: #fa0;
+}
+.violation_3 {
+	background-color: #f70;
+}
+.violation_4 {
+	background-color: #f40;
+}
+.violation_5 {
+	background-color: #f10;
+}
+
+tr.detail_hidden {
+	display: none;
+}
+tr.detail_unhidden {
+	display: table-row;
+	background: #bbb;
+}

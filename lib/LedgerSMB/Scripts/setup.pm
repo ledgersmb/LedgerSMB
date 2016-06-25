@@ -65,6 +65,9 @@ sub _get_database {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
+    LedgerSMB::Auth->http_error('401')
+        if ! defined $creds->{password};
+
     return LedgerSMB::Database->new(
                 username => $creds->{login},
                 password => $creds->{password},
@@ -727,6 +730,7 @@ sub _failed_check {
     ];
     $template->render({
            form               => $request,
+           base_form          => 'dijit/form/Form',
            heading            => $header,
            headers            => [$check->display_name, $check->instructions],
            columns            => $check->display_cols,
@@ -1029,13 +1033,13 @@ sub process_and_run_upgrade_script {
     $dbh->commit;
 
     $database->load_base_schema({
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                                });
     $database->load_modules('LOADORDER', {
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
-                });
+        log     => $temp . "_stdout",
+        errlog  => $temp . "_stderr",
+                            });
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -1293,9 +1297,12 @@ sub rebuild_modules {
     my ($request) = @_;
     my $database = _init_db($request);
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
+    $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die "Upgrade failed.";
-    $database->apply_changes;
     complete($request);
 }
 

@@ -1,15 +1,14 @@
-@wip @one-db
+@one-db @weasel
 Feature: correct operation of the menu and immediate linked pages
-  As a an end-user, I want to be able to navigate the menu and
-  open the screens from the available links. If my authorizations
+  As an end-user, I want to be able to navigate the menu and open
+  the screens from the available links. If my authorizations
   don't allow a specific screen, I expect the links not to be in
   the menu.
 
 
 
 Background:
-  Given a LedgerSMB instance
-    And a standard test company
+  Given a standard test company
 
 
 Scenario Outline: Navigate to menu and open screen

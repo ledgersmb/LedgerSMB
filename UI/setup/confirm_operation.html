@@ -5,9 +5,9 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <?lsmb # notice, message, and operation are all localized. ?>
-<div id="username"><?lsmb text('Logged in as [_1]', login_name) ?></div>
+<?lsmb INCLUDE 'ui-db-credentials.html' ?>
+<div class="listtop"><?lsmb text('Confirm Operation') ?></div>
 <div id="notice"><?lsmb notice ?></div>
 <div id="message"><?lsmb message ?></div>
 <div id="operation"><?lsmb operation ?></div>

@@ -5,77 +5,60 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Expires" content="-1" />
         <?lsmb IF refresh -?>
-        <meta http-equiv="refresh"
-                content="<?lsmb refresh.delay ?>;<?lsmb refresh.url ?>">
+            <meta http-equiv="refresh" content="<?lsmb refresh.delay ?>;<?lsmb refresh.url ?>">
         <?lsmb END -?>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-   <?lsmb
-      # source comment only!
-      #
-      # don't specify a title on the stylesheets: we want them to be
-      # *persistent*
-      # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
-      ?>
-    <?lsmb IF dojo_built ?>
-    <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
-    <link rel="stylesheet" href="js/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
-    <?lsmb ELSE ?>
-        <link rel="stylesheet" href="dojo/dojo/resources/dojo.css" type="text/css" />
-        <link rel="stylesheet" href="dojo/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
-    <?lsmb END ?>
+        <?lsmb
+            # source comment only!
+            #
+            # don't specify a title on the stylesheets: we want them to be
+            # *persistent*
+            # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
+        ?>
+        <?lsmb IF dojo_built == 0;
+                DOJO_LOCATION = "js-src";
+            ELSE;
+                DOJO_LOCATION = "js";
+        END ?>
 
-        <link rel="stylesheet" href="css/system/global.css" type="text/css" />
-        <?lsmb IF form.stylesheet ?>
+        <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+
+    <link rel="stylesheet" href="css/system/global.css" type="text/css" />
+    <?lsmb IF form.stylesheet ?>
         <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
-        <?lsmb ELSIF stylesheet ?>
+    <?lsmb ELSIF stylesheet ?>
         <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
-        <?lsmb ELSE ?>
-        <?lsmb END ?>
-        <?lsmb FOREACH s = include_stylesheet ?>
+    <?lsmb ELSE ?>
+    <?lsmb END ?>
+    <?lsmb FOREACH s = include_stylesheet ?>
         <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
-        <script type="text/javascript" language="JavaScript">
+        <script type="text/javascript">
         window.alert('<?lsmb text('Warning:  Your password will expire in [_1]', pw_expires)?>');
         </script>
         <?lsmb END ?>
-    <?lsmb IF dojo_built ?>
-    <script type="text/javascript" language="JavaScript">
-        var dojoConfig = {
-            async: 1,
-            locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
-            packages: [{"name":"lsmb","location":"../lsmb"}]
-        };
-        var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
-    </script>
-    <script type="text/javascript" language="JavaScript" src="js/dojo/dojo.js"></script>
-    <script type="text/javascript" language="JavaScript"
-            src="js/lsmb/main.js"></script>
-    <?lsmb ELSE ?>
-        <script type="text/javascript" language="JavaScript">
-          var dojoConfig = {
-               async: 1,
-               locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
-               packages: [{"name":"lsmb","location":"../../lsmb"}]
-           };
-           var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
+        <script type="text/javascript">
+            var dojoConfig = {
+                async: 1,
+                locale: '<?lsmb USER.language.lower().replace('_','-') ?>',
+                packages: [{"name":"lsmb","location":"../lsmb"}]
+            };
+            var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
         </script>
-       <script type="text/javascript" language="JavaScript" src="dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript"
-           src="lsmb/main.js"></script>
-    <?lsmb END ?>
+        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/dojo/dojo.js"></script>
+        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>
-        <script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
+            <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>
 
         <?lsmb IF html_charset ?>
-        <meta http-equiv="content-type" content="text/html; charset=<?lsmb
-                                                           html_charset ?>">
+            <meta http-equiv="content-type" content="text/html; charset=<?lsmb html_charset ?>">
         <?lsmb ELSE ?>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <?lsmb END # if html_charset ?>
         <meta name="robots" content="noindex,nofollow" />
-
 </head>
 <?lsmb BLOCK end_html ?>
 </html>

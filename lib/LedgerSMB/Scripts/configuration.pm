@@ -265,7 +265,7 @@ sub defaults_screen {
             text_attr      => 'name',
             value_attr     => 'id',
         },
-	'default_language' => {
+        'default_language' => {
             name           => 'default_language',
             options        => \@language_code_list,
             default_values => [$request->{'default_language'}],

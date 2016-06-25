@@ -7,9 +7,13 @@ use Carp;
 use Module::Runtime qw(use_module);
 
 use Moose;
+use Weasel::FindExpanders::Dojo;
+use Weasel::FindExpanders::HTML;
 
+use Weasel::Widgets::Dojo;
+use Weasel::Widgets::HTML;
 
-has driver => (is => 'ro', required => 1);
+has stash => (is => 'ro', required => 1);
 
 sub field_types { return {}; }
 
@@ -17,40 +21,54 @@ sub url { croak "Abstract method 'PageObject::url' called"; }
 
 sub open {
     my $self = shift @_;
-    $self = $self->new(@_)
-        unless ref $self;
-    $self->driver->get($ENV{LSMB_BASE_URL} . $self->url);
-    $self->driver->page($self);
+    $self = $self->new(@_) unless ref $self;
+
+    $self->stash->{ext_wsl}->get($self->url);
+    $self->stash->{page} = $self;
+
     return $self;
 }
 
+sub find {
+    my ($self, @args) = @_;
 
-sub verify { croak "Abstract method 'PageObject::verify' called"; }
+    return $self->stash->{ext_wsl}->find(
+        ###TODO we want to search the page with 'ourselves' as the root of the search
+        $self->stash->{ext_wsl}->page,
+        @args);
+}
 
-before 'verify' => sub {
-    my ($self) = @_;
+sub wait_for_page {
+    my ($self, $ref) = @_;
 
-    $self->driver->try_wait_for_page;
+    $self->stash->{ext_wsl}->wait_for(
+        sub {
+
+            if ($ref) {
+                # if there's a reference element,
+                # wait for it to go stale (raise an exception)
+                eval {
+                    $ref->tag_name;
+                    1;
+                } or return 1;
+            }
+            else {
+                $self->stash->{page}
+                ->find('body.done-parsing', scheme => 'css');
+            }
+        });
+}
+
+sub verify {
+    my ($self, $ref) = @_;
+
+    $self->wait_for_page($ref);
+    $self->_verify;
 };
 
+sub _verify { croak "Abstract method 'PageObject::verify' called"; }
 
-sub find_button {
-    my ($self, $text) = @_;
 
-    return PageObject::WebElement->new(
-        driver => $self->driver,
-        element => $self->driver->find_button($text));
-}
-
-sub find_element_by_label {
-    my ($self, $label) = @_;
-    my $types = $self->field_types;
-    my $type = $types->{$label} || 'PageObject::WebElement';
-
-    use_module($type);
-    return $type->new(driver => $self->driver,
-                      element => $self->driver->find_element_by_label($label));
-}
 
 __PACKAGE__->meta->make_immutable;
 

@@ -11,10 +11,10 @@ extends 'PageObject';
 
 my $page_heading = 'Add Credit Invoice';
 
-sub verify {
+sub _verify {
     my ($self) = @_;
 
-    $self->driver->find_element_by_label($_)
+    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
         for ("Reference", "Description", "Transaction Date", "From File");
 
     return $self;

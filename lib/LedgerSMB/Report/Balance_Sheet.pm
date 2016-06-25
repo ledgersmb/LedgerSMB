@@ -42,6 +42,22 @@ Boolean, true if the regular hierarchies need to be ignored,
 
 has legacy_hierarchy => (is => 'rw', isa => 'Bool');
 
+=item comparison_periods
+
+This is the number of periods to compare to
+
+=cut
+
+has comparison_periods => (is => 'ro', isa =>'Int', required => 0, default => 0);
+
+=item comparison_type
+
+This is either by number of periods or by dates
+
+=cut
+
+has comparison_type => (is => 'ro', isa =>'Str', required =>0);
+
 =item column_path_prefix
 
 
@@ -72,6 +88,8 @@ the balance sheet.
 sub run_report {
     my ($self) = @_;
 
+    die $self->Text('Required period type')
+           if $self->comparison_periods and $self->interval eq 'none';
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);
@@ -152,7 +170,7 @@ sub run_report {
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id,
                             { description => $self->date_to->to_output,
-                              to_date => $self->date_to->to_output,
+                              to_date     => $self->date_to->to_output,
                             });
 
     for my $line (@lines) {

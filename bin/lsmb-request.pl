@@ -9,7 +9,7 @@ sub get_script {
                    . "\$script=$script");
 
     if (!$script){
-	$request->error($locale->text('No workflow script specified'));
+        $request->error($locale->text('No workflow script specified'));
     }
 
     return $script;
@@ -35,10 +35,10 @@ sub get_locale {
 
     return $locale;
 }
+
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 my $script = $1;
 $script = '' unless defined $script;
-
 
 sub app_initialize {
     LedgerSMB::App_State->cleanup();
@@ -46,9 +46,7 @@ sub app_initialize {
     Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
     $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
     $logger->debug("Begin");
-
 }
-
 
 sub request_instantiate {
     my $request;
@@ -99,6 +97,7 @@ sub call_script {
 
     $script->can($request->{action})
       || die $locale->text("Action Not Defined: ") . $request->{action};
+
     $script->can( $request->{action} )->($request);
     $request->{dbh}->commit if defined $request->{dbh};
     LedgerSMB::App_State->cleanup();
@@ -123,15 +122,12 @@ sub request_cleanup {
     $logger->debug("End");
 }
 
-
 &app_initialize();
 
 my $request = request_instantiate();
 
 my $locale = get_locale($request);
 $request->{_locale} = $locale;
-
-
 
 my $script = get_script($locale, $request);
 

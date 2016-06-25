@@ -205,7 +205,8 @@ sub apply {
     my $success = eval {
          $dbh->prepare($self->content_wrapped($before, $after))->execute();
     };
-    die "$DBI::state: $DBI::errstr" unless $success or $no_transactions;
+    die "$DBI::state: $DBI::errstr while applying $path"
+        unless $success or $no_transactions;
     $dbh->commit if $need_commit;
     $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
