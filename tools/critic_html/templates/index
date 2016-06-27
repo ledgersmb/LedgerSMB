@@ -1,0 +1,23 @@
+[% INCLUDE header %]
+
+<table>
+<tr>
+  <th>Source File</th><th>LoC</th><th colspan=5>Severity</th>
+</tr>
+<tr>
+  <th colspan=2></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+</tr>
+
+[% FOREACH file = files %]
+<tr>
+  <td><a href='[% file.link %]'>[% file.filename %]</a></td><td>[% file.stats.lines_of_perl %]</td>
+  <td class='violation_1'>[% file.stats.violations_by_severity.1 %]</td>
+  <td class='violation_2'>[% file.stats.violations_by_severity.2 %]</td>
+  <td class='violation_3'>[% file.stats.violations_by_severity.3 %]</td>
+  <td class='violation_4'>[% file.stats.violations_by_severity.4 %]</td>
+  <td class='violation_5'>[% file.stats.violations_by_severity.5 %]</td>
+</tr>
+[% END %]
+
+[% INCLUDE footer %]
+

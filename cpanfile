@@ -80,10 +80,20 @@ feature 'openoffice', "OpenOffice.org output" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
+    requires 'File::Find';
+    requires 'File::Util';
+    requires 'Perl::Critic';
+    requires 'Pherkin::Extension::Weasel';
+    requires 'Test::BDD::Cucumber', '0.50';
+    requires 'Test::Exception';
     requires 'Test::More';
     requires 'Test::Trap';
     requires 'Test::Exception';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Perl::Critic';
+    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
+    requires 'Weasel';
+    requires 'Weasel::Driver::Selenium2';
+    requires 'Weasel::Widgets::Dojo';
 };

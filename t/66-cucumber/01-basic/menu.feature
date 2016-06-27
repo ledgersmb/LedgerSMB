@@ -1,4 +1,4 @@
-@one-db
+@one-db @weasel
 Feature: correct operation of the menu and immediate linked pages
   As an end-user, I want to be able to navigate the menu and open
   the screens from the available links. If my authorizations
@@ -8,8 +8,7 @@ Feature: correct operation of the menu and immediate linked pages
 
 
 Background:
-  Given a LedgerSMB instance
-    And a standard test company
+  Given a standard test company
 
 
 Scenario Outline: Navigate to menu and open screen

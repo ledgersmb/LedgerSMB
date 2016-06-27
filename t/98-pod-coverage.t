@@ -10,6 +10,7 @@ use warnings;
 
 use Test::More; # plan automatically generated below
 use File::Find;
+use File::Util;
 
 my @on_disk;
 
@@ -85,10 +86,11 @@ my %also_private = (
     'LedgerSMB::DBObject::Payment' => [ qr/^(format_ten_|num2text_)/ ],
     );
 
+my $sep = File::Util::SL();
 for my $f (@on_disk) {
     $f =~ s/\.pm//g;
     $f =~ s#lib/##g;
-    $f =~ s#/#::#g;
+    $f =~ s#\Q$sep\E#::#g;
 
     pod_coverage_ok($f, { also_private => $also_private{$f} })
         unless grep { $f eq $_ } @exception_modules;
