@@ -945,7 +945,7 @@ sub create_user {
        my $user = LedgerSMB::Entity::User->new(%$request);
        my $return_with_import;
        try {
-           $user->create;
+           $user->create($request->{reset_password});
        } catch {
            my $err = $_;
            die $err unless $err =~ /duplicate user/i;
