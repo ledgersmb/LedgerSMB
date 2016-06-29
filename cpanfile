@@ -84,6 +84,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'File::Util';
+    requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel';
     requires 'Test::BDD::Cucumber', '0.50';
