@@ -20,6 +20,12 @@ require Plack::Middleware::Pod if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'devel
 
 die 'Cannot verify version of libraries, may be including out of date modules?' unless $LedgerSMB::PSGI::VERSION == '1.5';
 
+# # Lets report to the console what type of dojo we are running with
+if ( $LedgerSMB::Sysconfig::dojo_built) {
+    print "Starting Worker on PID $$ Using Built Dojo\n";
+} else {
+    print "Starting Worker on PID $$ Using Dojo Source\n";
+}
 
 my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();

@@ -15,12 +15,14 @@
                value = user.company
 } ?>
 <table width="100%">
-  <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
+  <tr><th class="listtop"><?lsmb text('Preferences for ')?><?lsmb user.login ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
           <?lsmb text('Preferences Saved') ?>
   </tr><?lsmb END # if action ?>
   <tr><th class="info">
-          <?lsmb text('Your password will expire in [_1]', password_expires) ?>
+  	  <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
+  	  <!-- tracked in issue #1699 -->
+          <?lsmb text('Your password will expire in ')?><?lsmb user.password_expires ?>
     </th>
   </tr>
   <tr>
