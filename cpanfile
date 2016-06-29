@@ -7,6 +7,7 @@ requires 'App::LedgerSMB::Admin', '0.04';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
+requires 'CGI::Simple::Standard';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
@@ -76,6 +77,7 @@ feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
         requires "OpenOffice::OODoc";
+        requires 'OpenOffice::OODoc::Styles';
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps
