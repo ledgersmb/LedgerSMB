@@ -9,19 +9,14 @@ requires 'CGI::Simple';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
-requires 'Data::Dumper';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
-requires 'Digest::MD5';
 requires 'File::MimeInfo';
 requires 'HTTP::Exception'; # YLA
 requires 'JSON';
-requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
-requires 'MIME::Base64';
 requires 'MIME::Lite';
-requires 'Math::BigFloat';
 requires 'Moose';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
@@ -80,14 +75,13 @@ feature 'openoffice', "OpenOffice.org output" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
-    requires 'File::Find';
     requires 'File::Util';
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Test::Exception';
-    requires 'Test::More';
     requires 'Test::Trap';
+    requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Perl::Critic';
