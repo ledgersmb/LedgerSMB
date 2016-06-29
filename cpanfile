@@ -18,6 +18,8 @@ requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'MIME::Lite';
 requires 'Moose';
+requires 'Moose::Role';
+requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject';
@@ -32,6 +34,9 @@ requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Template', '2.14';
+requires 'Template::Parser';
+requires 'Template::Provider';
+requires 'Try::Tiny';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
@@ -62,6 +67,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
+        requires 'Template::Latex';
         requires 'Template::Plugin::Latex', '3.02';
         requires 'TeX::Encode';
 };
