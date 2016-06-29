@@ -36,6 +36,12 @@ Scenario: Create a company *with* CoA
   Then I should see the setup confirmation page
 
 
+Scenario: Login procedure
+ Given an existing company named "setup-test"
+  When I navigate to the setup login page
+   And I log into the company using the super-user credentials
+  Then I should see my setup.pl credentials
+
 Scenario: List users in a company
  Given an existing company named "setup-test"
   When I navigate to the setup login page
