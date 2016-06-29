@@ -4,25 +4,24 @@
 requires 'perl', '5.10.1';
 
 requires 'App::LedgerSMB::Admin', '0.04';
+requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
+requires 'CGI::Simple::Standard';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
-requires 'Data::Dumper';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
-requires 'Digest::MD5';
 requires 'File::MimeInfo';
 requires 'HTTP::Exception'; # YLA
 requires 'JSON';
-requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
-requires 'MIME::Base64';
 requires 'MIME::Lite';
-requires 'Math::BigFloat';
 requires 'Moose';
+requires 'Moose::Role';
+requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject';
@@ -37,6 +36,9 @@ requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Template', '2.14';
+requires 'Template::Parser';
+requires 'Template::Provider';
+requires 'Try::Tiny';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
@@ -67,7 +69,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Plugin::Latex', '3.02';
+        requires 'Template::Latex', '3.08';
         requires 'TeX::Encode';
 };
 
@@ -75,19 +77,20 @@ feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
         requires "OpenOffice::OODoc";
+        requires 'OpenOffice::OODoc::Styles';
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
-    requires 'File::Find';
     requires 'File::Util';
+    requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Test::Exception';
-    requires 'Test::More';
     requires 'Test::Trap';
+    requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Perl::Critic';
