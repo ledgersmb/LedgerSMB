@@ -4,6 +4,7 @@
 requires 'perl', '5.10.1';
 
 requires 'App::LedgerSMB::Admin', '0.04';
+requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
 requires 'Config::IniFiles';
@@ -67,8 +68,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Latex';
-        requires 'Template::Plugin::Latex', '3.02';
+        requires 'Template::Latex', '3.08';
         requires 'TeX::Encode';
 };
 
