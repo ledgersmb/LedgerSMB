@@ -20,7 +20,9 @@
           <?lsmb text('Preferences Saved') ?>
   </tr><?lsmb END # if action ?>
   <tr><th class="info">
-          <?lsmb text('Your password will expire in [_1]', user.password_expires) ?>
+  	  <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
+  	  <!-- tracked in issue #1699 -->
+          <?lsmb text('Your password will expire in ')?><?lsmb user.password_expires ?>
     </th>
   </tr>
   <tr>
