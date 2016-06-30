@@ -1,4 +1,4 @@
-@TODO @wip @one-db @weasel
+@one-db @weasel
 Feature: correct operation of period closing and year end posting
   As an accounting admin, I want to make sure users can't post new
   transactions to prior periods and/or years as of a moment I designate.
