@@ -10,8 +10,22 @@ use Moose;
 extends 'PageObject';
 
 use PageObject::Setup::CreateUser;
+use PageObject::Setup::CredsSection;
 use PageObject::Setup::UsersList;
 
+
+has creds => (
+    is => 'ro',
+    lazy => 1,
+    default => sub {
+        my ($self) = @_;
+
+        return PageObject::Setup::CredsSection->new(
+            %$self,
+            element => $self->stash->{ext_wsl}->page
+            ->find('.//*[@id="credentials"]')
+            );
+    });
 
 sub _verify {
     my ($self) = @_;

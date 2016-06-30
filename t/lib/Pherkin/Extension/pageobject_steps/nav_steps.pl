@@ -97,6 +97,9 @@ Then qr/I should see the (.*) screen/, sub {
        "the screen is of expected class: " . ref $page);
 };
 
+When qr/I select the "(.*)" tab/, sub {
+    S->{ext_wsl}->page->find(".//*[\@role='tab' and text()='$1']")->click;
+};
 
 
 1;

@@ -78,6 +78,16 @@ When qr/I request the user overview for "(.*)"/, sub {
     S->{page}->edit_user($user);
 };
 
+Then qr/I should see my setup.pl credentials/, sub {
+    my $page = S->{page};
+
+    is($page->creds->username,
+       $ENV{PGUSER},
+       'Credentials show the super-user');
+    is($page->creds->database,
+       S->{"the company"},
+       'Credentials show the database');
+};
 
 Then qr/I should see all permission checkboxes checked/, sub {
     my $page = S->{page};
