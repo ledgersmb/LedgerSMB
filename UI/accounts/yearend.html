@@ -6,16 +6,18 @@
          data-dojo-type="dijit/layout/TabContainer"
          style="height: 100%" >
       <div id="closing-year"
-           title="<?lsmb text('Post Yearend') ?>"
+           title="<?lsmb text('Close Year') ?>"
            data-dojo-type="dijit/layout/ContentPane" >
         <table width="100%">
-          <tr><th class="listtop"><?lsmb text('Post Yearend') ?></th></tr>
+          <tr><th class="listtop"><?lsmb text('Closing data') ?></th></tr>
           <tr><td> </td></tr>
           <tr>
     <td>
       <table width="100%">
         <tr>
-          <th align="right"><?lsmb text('Yearend') ?></th>
+          <th align="right"><label
+                               for='end-date'><?lsmb text('Yearend')
+                                                     ?></label></th>
           <td><?lsmb PROCESS input element_data={
             class = 'date',
             name = 'end_date',
@@ -24,7 +26,9 @@
             } -?></td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Reference') ?></th>
+          <th align="right"><label
+                               for="reference"><?lsmb text('Reference')
+                                                  ?></label></th>
           <td><?lsmb PROCESS input element_data={
             name = 'reference',
             size = 20,
@@ -32,7 +36,7 @@
             } -?></td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Description') ?></th>
+          <th align="right"><label for="description"><?lsmb text('Description') ?></label></th>
           <td><?lsmb PROCESS textarea element_data={
             name = 'description',
             rows = 3,
@@ -40,7 +44,7 @@
             } -?></td>
         </tr>
         <tr>
-          <th align="right"><?lsmb text('Retained Earnings') ?></th>
+          <th align="right"><label for="retention-acc-id"><?lsmb text('Retained Earnings') ?></label></th>
           <?lsmb FOREACH opt = eoy.earnings_accounts; 
                      opt.text = opt.accno _ '--' _ opt.description;
                            END -?>
