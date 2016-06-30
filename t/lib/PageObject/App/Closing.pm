@@ -13,10 +13,6 @@ extends 'PageObject';
 sub _verify {
     my ($self) = @_;
 
-    my @tabs = 
-    $self->stash->{ext_wsl}->page->find("*labeled", text => $_)
-        for ("Reference", "Description", "Transaction Date", "From File");
-
     return $self;
 }
 
