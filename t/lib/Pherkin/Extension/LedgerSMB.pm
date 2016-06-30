@@ -48,7 +48,7 @@ sub _build_admin_dbh {
     my ($self) = @_;
 
     my $db = LedgerSMB::Database->new(
-        dbname    => $self->db_name,
+        dbname    => $self->last_scenario_stash->{"the company"},
         username  => $self->admin_user_name,
         password  => $self->admin_user_password,
         host      => $self->host);
@@ -69,6 +69,7 @@ sub step_directories {
 sub pre_feature {
     my ($self, $feature, $stash) = @_;
 
+    print STDERR 'building super-dbh for ' . $self->db_name . "\n";
     my $db = LedgerSMB::Database->new(
         dbname   => $self->db_name,
         username => $self->username,
@@ -188,7 +189,6 @@ sub create_from_template {
 
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
-    $self->db_name($company);
     $self->_clear_admin_dbh;
 }
 
@@ -196,7 +196,6 @@ sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
-    $self->db_name($company);
     $self->_clear_admin_dbh;
 }
 
