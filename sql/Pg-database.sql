@@ -127,7 +127,7 @@ CREATE TABLE account_checkpoint (
   id serial not null unique,
   debits NUMERIC,
   credits NUMERIC,
-  primary key (end_date, account_id)
+  primary key (end_date, account_id, curr)
 );
 
 COMMENT ON TABLE account_checkpoint IS
