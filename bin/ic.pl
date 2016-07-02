@@ -1121,7 +1121,7 @@ sub customer_row {
       <th class="listheading">| . $locale->text('Customer') . qq|</th>
       <th class="listheading">| . $locale->text('Account') . qq|</th>
       $pricegroup
-      <th class="listheading">| . $locale->text('Break') . qq|</th>
+      <th class="listheading">| . $locale->text('Discount') . qq|</th>
       <th class="listheading">| . $locale->text('Sell Price') . qq|</th>
       $currency
       <th class="listheading">| . $locale->text('From') . qq|</th>

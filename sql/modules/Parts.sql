@@ -7,7 +7,9 @@ $$
 SELECT *
   FROM parts
  WHERE ($1 IS NULL OR (partnumber like $1 || '%'))
-       AND ($2 IS NULL
+       AND ($2 IS NULL OR plainto_tsquery(get_default_lang()::regconfig, $2)
+                          = 
+                          plainto_tsquery(get_default_lang()::regconfig, '')
             OR (description
                 @@
                 plainto_tsquery(get_default_lang()::regconfig, $2)))
