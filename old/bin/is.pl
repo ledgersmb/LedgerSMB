@@ -490,25 +490,25 @@ sub form_header {
           </tr>
 
           <tr>
-        <th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
+        <th align="right" nowrap><label for="AR">| . $locale->text('Record in') . qq|</label></th>
         <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR">$form->{selectAR}</select></td>
           </tr>
           $department
           $exchangerate
             <tr>
-               <th align="right" nowrap>| . $locale->text('Description') . qq|
+               <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
-               <td><input data-dojo-type="dijit/form/TextBox" type="text" name="description" size="40"
+               <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
                    value="| . $form->{description} . qq|" /></td>
             </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
-        <td colspan=3><input data-dojo-type="dijit/form/TextBox" name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
+        <th align=right nowrap><label for="shippingpoint">| . $locale->text('Shipping Point') . qq|</label></th>
+        <td colspan=3><input data-dojo-type="dijit/form/TextBox" id="shippingpoint" name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
+        <th align=right nowrap><label for="shipvia">| . $locale->text('Ship via') . qq|</label></th>
         <td colspan=3>
-                   <textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35" rows="3"
+                   <textarea data-dojo-type="dijit/form/Textarea" id="shipvia" name="shipvia" cols="35" rows="3"
                        >$form->{shipvia}</textarea></td>
           </tr>
         </table>
@@ -517,28 +517,28 @@ sub form_header {
         <table>
           $employee
           <tr>
-        <th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
+        <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="invnumber" id="invnumber" size="20" value="$form->{invnumber}">| .  $form->sequence_dropdown('sinumber') . qq|</td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
+        <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}"></td>
 <input type=hidden name="quonumber" value="$form->{quonumber}">
           </tr>
           <tr class="crdate-row">
-        <th align=right>| . $locale->text('Invoice Created') . qq|</th>
+        <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
           </tr>
           <tr class="transdate-row">
-        <th align=right>| . $locale->text('Invoice Date') . qq|</th>
+        <th align=right><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
           </tr>
           <tr>
-        <th align=right>| . $locale->text('Due Date') . qq|</th>
+        <th align=right><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
         <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
           </tr>
           <tr>
-        <th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
+        <th align=right nowrap><label for="ponumber">| . $locale->text('PO Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name="ponumber" id="ponumber" size="20" value="$form->{ponumber}"></td>
           </tr>
         </table>
