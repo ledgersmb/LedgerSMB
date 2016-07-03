@@ -23,7 +23,7 @@ When qr/I confirm database creation with these parameters:/, sub {
     my %data;
 
     $data{$_->{'parameter name'}} = $_->{value} for @$data;
-    S->{page}->create_database(%data);
+    S->{ext_wsl}->page->body->create_database(%data);
 };
 
 When qr/I log into ("(.*)"|(.*)) using the super-user credentials/, sub {
@@ -48,20 +48,20 @@ When qr/I create a user with these values:/, sub {
     my %data;
 
     $data{$_->{'label'}} = $_->{value} for @$data;
-    S->{page}->create_user(%data);
+    S->{ext_wsl}->page->body->create_user(%data);
 };
 
 When qr/I request the users list/, sub {
-    S->{page}->list_users;
+    S->{ext_wsl}->page->body->list_users;
 };
 
 When qr/I request to add a user/, sub {
-    S->{page}->add_user;
+    S->{ext_wsl}->page->body->add_user;
 };
 
 Then qr/I should see the table of available users:/, sub {
     my @data = map { $_->{'Username'} } @{ C->data };
-    my $users = S->{page}->get_users_list;
+    my $users = S->{ext_wsl}->page->body->get_users_list;
 
     is_deeply($users, \@data, "Users on page correspond with expectation");
 };
@@ -69,17 +69,17 @@ Then qr/I should see the table of available users:/, sub {
 When qr/I copy the company to "(.*)"/, sub {
     my $target = $1;
 
-    S->{page}->copy_company($target);
+    S->{ext_wsl}->page->body->copy_company($target);
 };
 
 When qr/I request the user overview for "(.*)"/, sub {
     my $user = $1;
 
-    S->{page}->edit_user($user);
+    S->{ext_wsl}->page->body->edit_user($user);
 };
 
 Then qr/I should see my setup.pl credentials/, sub {
-    my $page = S->{page};
+    my $page = S->{ext_wsl}->page->body;
 
     is($page->creds->username,
        $ENV{PGUSER},
@@ -90,7 +90,7 @@ Then qr/I should see my setup.pl credentials/, sub {
 };
 
 Then qr/I should see all permission checkboxes checked/, sub {
-    my $page = S->{page};
+    my $page = S->{ext_wsl}->page->body;
     my $checkboxes = $page->get_perms_checkboxes(filter => 'all');
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
@@ -102,7 +102,7 @@ Then qr/I should see all permission checkboxes checked/, sub {
 
 
 Then qr/I should see no permission checkboxes checked/, sub {
-    my $page = S->{page};
+    my $page = S->{ext_wsl}->page->body;
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 
     ok(0 == scalar(@{ $checked_boxes }),
@@ -111,7 +111,7 @@ Then qr/I should see no permission checkboxes checked/, sub {
 
 
 Then qr/I should see only these permission checkboxes checked:/, sub {
-    my $page = S->{page};
+    my $page = S->{ext_wsl}->page->body;
     my @data = map { $_->{"perms label"} } @{ C->data };
     my $checked_boxes = $page->get_perms_checkboxes(filter => 'checked');
 

@@ -7,41 +7,47 @@ use Carp;
 use Module::Runtime qw(use_module);
 
 use Moose;
+extends 'Weasel::Element';
+
+use Weasel::FindExpanders qw/ register_find_expander /;
 use Weasel::FindExpanders::Dojo;
 use Weasel::FindExpanders::HTML;
 
+use Weasel::WidgetHandlers qw/ register_widget_handler /;
 use Weasel::Widgets::Dojo;
 use Weasel::Widgets::HTML;
 
-has stash => (is => 'ro', required => 1);
+
+sub self_register {
+    my ($class, $mnemonic, $xpath, %widget_options) = @_;
+    my $xpath_fn = (ref $xpath) ? $xpath : sub { return $xpath };
+
+    {
+        no strict 'refs';
+        ${"${class}::MNEMONIC"} = $mnemonic;
+    }
+    register_find_expander($mnemonic, 'LedgerSMB', $xpath_fn);
+    register_widget_handler($class, 'LedgerSMB', %widget_options);
+}
+
+sub open {
+    my ($class, $session) = @_;
+
+    $session->get($class->url);
+
+    $session->page->wait_for_body;
+    return $session->page->body;
+}
 
 sub field_types { return {}; }
 
 sub url { croak "Abstract method 'PageObject::url' called"; }
 
-sub open {
-    my $self = shift @_;
-    $self = $self->new(@_) unless ref $self;
-
-    $self->stash->{ext_wsl}->get($self->url);
-    $self->stash->{page} = $self;
-
-    return $self;
-}
-
-sub find {
-    my ($self, @args) = @_;
-
-    return $self->stash->{ext_wsl}->find(
-        ###TODO we want to search the page with 'ourselves' as the root of the search
-        $self->stash->{ext_wsl}->page,
-        @args);
-}
 
 sub wait_for_page {
     my ($self, $ref) = @_;
 
-    $self->stash->{ext_wsl}->wait_for(
+    $self->session->wait_for(
         sub {
 
             if ($ref) {
@@ -55,8 +61,8 @@ sub wait_for_page {
                 return 1 if defined $@;
             }
             else {
-                $self->stash->{page}
-                ->find('body.done-parsing', scheme => 'css');
+                $self->session->page
+                    ->find('body.done-parsing', scheme => 'css');
             }
         });
 }

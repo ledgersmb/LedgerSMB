@@ -11,7 +11,7 @@ use Test::BDD::Cucumber::StepFile;
 
 my %pages = (
     "setup login"         => "PageObject::Setup::Login",
-    "company creation"    => "PageObject::Setup::CreateConfirm",
+    "company creation"    => "PageObject::Setup::Admin",
     "user creation"       => "PageObject::Setup::CreateUser",
     "setup confirmation"  => "PageObject::Setup::OperationConfirmation",
     "application login"   => "PageObject::App::Login",
@@ -26,8 +26,7 @@ When qr/I navigate to the (.*) page/, sub {
         unless exists $pages{$page};
 
     use_module($pages{$page});
-    $pages{$page}->open(stash => S);
-    S->{page}->verify;
+    S->{page} = $pages{$page}->open(S->{ext_wsl})->verify;
 };
 
 Then qr/I should see the (.*) page/, sub {
@@ -35,7 +34,7 @@ Then qr/I should see the (.*) page/, sub {
     die "Unknown page '$page_name'"
         unless exists $pages{$page_name};
 
-    my $page = S->{page}->verify;
+    my $page = S->{ext_wsl}->page->body->verify;
     ok($page, "the browser page is the page named '$page_name'");
     ok($pages{$page_name}, "the named page maps to a class name");
     ok($page->isa($pages{$page_name}),
