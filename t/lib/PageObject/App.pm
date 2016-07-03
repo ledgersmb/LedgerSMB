@@ -14,10 +14,17 @@ use PageObject::App::Main;
 use PageObject::App::Menu;
 
 has menu => (is => 'ro', builder => '_build_menu', lazy => 1);
-has maindiv => (is => 'ro', builder => '_build_maindiv', lazy => 1);
+has maindiv => (is => 'ro',
+                builder => '_build_maindiv',
+                lazy => 1);
 
-sub _build_menu { return PageObject::App::Menu->new(%{(shift)}); }
-sub _build_maindiv { return PageObject::App::Main->new(%{(shift)}); }
+sub _build_menu {
+    return PageObject::App::Menu->new(%{(shift)});
+}
+
+sub _build_maindiv {
+    return PageObject::App::Main->new(%{(shift)});
+}
 
 
 sub _verify {

@@ -16,6 +16,10 @@ use PageObject::Setup::OperationConfirmation;
 use PageObject::Setup::UsersList;
 
 
+# APP
+
+use PageObject::App;
+use PageObject::App::Login;
 
 
 1;

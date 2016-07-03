@@ -10,14 +10,23 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-use PageObject::App;
 
 sub url { return '/login.pl'; }
+
+__PACKAGE__->self_register(
+              'app-login',
+              './/body[@id="app-login"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'app-login',
+              });
+
+
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
+    $self->find('*labeled', text => $_)
         for ("User Name", "Password", "Company");
     return $self;
 };
