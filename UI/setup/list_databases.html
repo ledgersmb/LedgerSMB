@@ -3,14 +3,14 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+<body id="setup-list-databases" class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <?lsmb INCLUDE 'ui-db-credentials.html' ?>
 <div class="listtop"><?lsmb text('Available Databases') ?></div>
-<?lsmb 
+<?lsmb
     INCLUDE dynatable
-            columns = [{col_id = 'db', 
-                       name = text('Database'), 
+            columns = [{col_id = 'db',
+                       name = text('Database'),
                        type = 'href'
                   href_base = 'setup.pl?action=login&amp;database='}]
             tbody = {rows = dbs}
