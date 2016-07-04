@@ -10,11 +10,12 @@ use Moose;
 extends 'PageObject';
 
 __PACKAGE__->self_register(
-              'reports-balance-sheet-params',
-              './/div[@id="balance-sheet-parameters"]',
+              'reports-balance-sheet',
+              './/div[@id="PNL" and @class="balance-sheet"]',
               tag_name => 'div',
+              classes => ['balance-sheet'],
               attributes => {
-                  id => 'balance-sheet-parameters',
+                  id => 'PNL',
               });
 
 
@@ -24,21 +25,9 @@ sub _verify {
     return $self;
 }
 
-sub run {
-    my ($self, %options) = @_;
-
-    # TODO: verify that we're in a 'run this report' state
-
-    $self->find('*labeled', text => 'Through date')->send_keys($options{date});
-    $self->find('*button', text => 'Generate')->click;
-    ###TODO: Refresh current page; the 'click' replaced it...
-}
-
 sub account_balances {
     my ($self) = @_;
-    # due to the TODO above, we can't use $self here.. it's gone out of scope
-    my @account_rows = $self->session->page
-        ->find_all('tr.account', scheme => 'css');
+    my @account_rows = $self->find_all('tr.account', scheme => 'css');
     my @rv;
 
     for my $row (@account_rows) {

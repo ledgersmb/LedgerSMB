@@ -59,7 +59,7 @@ my %menu_path_pageobject_map = (
     "General Journal > Search and GL" => 'PageObject::App::Search::GL',
     "General Journal > Year End" => 'PageObject::App::Closing',
     # Time cards
-    "Reports > Balance Sheet" => 'PageObject::App::Report::BalanceSheet',
+    "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',
     "Goods and Services > Add Part" => 'PageObject::App::Parts::Part',
     "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
     "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
