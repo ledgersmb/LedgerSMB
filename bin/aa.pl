@@ -383,6 +383,8 @@ sub form_header {
         $eclass = '2';
     }
     my $title_msgid="$title $form->{ARAP} Transaction";
+    my $status_div_id = $form->{ARAP} . '-transaction'
+         . ($form->{reverse} ? '-reverse' : '');
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
        $form->{title} = $locale->maketext($title_msgid);
@@ -492,8 +494,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $form->header;
 
  print qq|
-<body class="lsmb $form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
-$form->open_status_div . qq|
+<body class="lsmb $form->{dojo_theme}"
+      onload="document.forms[0].${focus}.focus()" /> | .
+$form->open_status_div($status_div_id) . qq|
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">

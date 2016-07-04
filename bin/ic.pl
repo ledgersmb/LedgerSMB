@@ -337,6 +337,7 @@ sub form_header {
     link_part();
 
 
+    $status_div_id = $form->{item};
     if ( $form->{lastcost} > 0 ) {
         $markup =
           $form->round_amount(
@@ -720,7 +721,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
 
     print qq|
 <body class="lsmb $form->{dojo_theme}">
-| . $form->open_status_div . qq|
+| . $form->open_status_div($status_div_id) . qq|
 
 <form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
