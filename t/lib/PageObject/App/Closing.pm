@@ -6,8 +6,17 @@ use warnings;
 use Carp;
 use PageObject;
 
+use PageObject::App::ClosingConfirm;
 use Moose;
 extends 'PageObject';
+
+__PACKAGE__->self_register(
+              'gl-yearend',
+              './/form[@id="gl-yearend"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'gl-yearend',
+              });
 
 
 sub _verify {

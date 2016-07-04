@@ -58,7 +58,6 @@ sub _build_admin_dbh {
                              AutoCommit => 1,
                            });
 
-    print STDERR "building dbh for " . $self->db_name . "\n";
     return $dbh;
 }
 
@@ -69,7 +68,6 @@ sub step_directories {
 sub pre_feature {
     my ($self, $feature, $stash) = @_;
 
-    print STDERR 'building super-dbh for ' . $self->db_name . "\n";
     my $db = LedgerSMB::Database->new(
         dbname   => $self->db_name,
         username => $self->username,

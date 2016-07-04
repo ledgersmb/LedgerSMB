@@ -1,4 +1,4 @@
-package PageObject::App::System::Defaults;
+package PageObject::App::ClosingConfirm;
 
 use strict;
 use warnings;
@@ -10,12 +10,13 @@ use Moose;
 extends 'PageObject';
 
 __PACKAGE__->self_register(
-              'system-settings',
-              './/form[@id="system-settings"]',
-              tag_name => 'form',
+              'gl-yearend-confirm',
+              './/h1[@id="gl-yearend-confirm"]',
+              tag_name => 'h1',
               attributes => {
-                  id => 'system-settings',
+                  id => 'gl-yearend-confirm',
               });
+
 
 sub _verify {
     my ($self) = @_;

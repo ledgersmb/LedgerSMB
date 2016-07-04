@@ -1,72 +1,77 @@
 <?lsmb INCLUDE 'ui-header.html';
-PROCESS elements.html ?> 
-		 
+PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
-<table width="100%"><col width="25%" align="right"><col><col>
-  <tr><th colspan="2" class="listtop"><?lsmb text('System Defaults') ?></th>
-  <?lsmb FOREACH GROUP IN default_settings ?>
-  <tr><th colspan="2" class="listheading"><?lsmb GROUP.title ?></th></tr>
-    <?lsmb FOREACH ITEM IN GROUP.items ?>
-  <tr>
-    <th align="right"><?lsmb ITEM.label ?></th>
-       <td>
-       <?lsmb 
-       IF ITEM.type == 'YES_NO';
-           IF form.${ITEM.name};
-              YES="CHECKED";
-              NO=undef;
-           ELSE;
-              NO="CHECKED";
-              YES=undef;
+  <form data-dojo-type="lsmb/Form"
+        id="system-settings"
+        method="post"
+        action="<?lsmb form.script ?>">
+    <table width="100%"><col width="25%" align="right"><col><col>
+      <tr><th colspan="2" class="listtop"><?lsmb text('System Defaults') ?></th>
+        <?lsmb FOREACH GROUP IN default_settings ?>
+      <tr><th colspan="2" class="listheading"><?lsmb GROUP.title ?></th></tr>
+      <?lsmb FOREACH ITEM IN GROUP.items ?>
+      <tr>
+        <th align="right"><?lsmb ITEM.label ?></th>
+        <td>
+          <?lsmb
+             IF ITEM.type == 'YES_NO';
+               IF form.${ITEM.name};
+                 YES="CHECKED";
+                 NO=undef;
+               ELSE;
+                 NO="CHECKED";
+                 YES=undef;
+               END;
+               PROCESS input element_data = {
+                       name = ITEM.name
+                       id = ITEM.name _ '-yes'
+                       type = 'radio'
+                       label = text('Yes')
+                       value = 1
+                       checked = YES
+                       };
+               PROCESS input element_data = {
+                       name = ITEM.name
+                       id = ITEM.name _ '-no'
+                       type = 'radio'
+                       label = text('No')
+                       value = 0
+                       checked = NO
+                       };
+             ELSIF ITEM.type == 'SELECT_ONE';
+               PROCESS select element_data= selects.${ITEM.name};
+             ELSIF ITEM.type == 'TEXTAREA';
+               PROCESS textarea element_data = {
+                       rows = 3
+                       cols = 33
+                       text = form.${ITEM.name}
+                       name = ITEM.name
+                       };
+             ELSE;
+               PROCESS input element_data = {
+                       name = ITEM.name
+                       type = 'text'
+                       value = form.${ITEM.name}
+                       };
+             END; ?>
+        </td>
+      </tr>
+      <?lsmb END # FOREACH ITEM ?>
+      <?lsmb END # FOREACH GROUP ?>
+    </table>
+    <hr size="3" noshade="noshade" />
+
+    <?lsmb FOREACH hidden IN hiddens.keys;
+              PROCESS input element_data={
+                      type => 'hidden',
+                      name => hidden,
+                      value => hiddens.item(hidden)
+              };
            END;
-           PROCESS input element_data = {
-              name = ITEM.name
-                id = ITEM.name _ '-yes'
-              type = 'radio'
-             label = text('Yes')
-             value = 1
-           checked = YES
-           };
-           PROCESS input element_data = {
-              name = ITEM.name
-                id = ITEM.name _ '-no'
-              type = 'radio'
-             label = text('No')
-             value = 0
-           checked = NO
-           };
-       ELSIF ITEM.type == 'SELECT_ONE';
-           PROCESS select element_data= selects.${ITEM.name};
-       ELSIF ITEM.type == 'TEXTAREA';
-           PROCESS textarea element_data = {
-                    rows = 3
-                    cols = 33
-                    text = form.${ITEM.name} 
-                    name = ITEM.name
-           };
-       ELSE;
-           PROCESS input element_data = {
-                   name = ITEM.name
-                   type = 'text'
-                  value = form.${ITEM.name}
-           }; 
-        END; ?>
-    </td>
-  </tr>
-    <?lsmb END # FOREACH ITEM ?>
-  <?lsmb END # FOREACH GROUP ?> 
-</table>
-<hr size="3" noshade="noshade" />
-
-<?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
-		}; END;
-PROCESS button element_data={name => 'action', value => 'save_defaults' text => text('Save')} ?>
+           PROCESS button element_data={
+                   name => 'action'
+                   value => 'save_defaults'
+                   text => text('Save')} ?>
   </form>
-
 </body>
 </html>

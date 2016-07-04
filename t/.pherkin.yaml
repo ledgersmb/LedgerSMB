@@ -14,6 +14,7 @@ default:
          sessions:
            selenium:
              base_url: http://localhost:5000
+             page_class: PageObject::Root
              driver:
                 drv_name: Weasel::Driver::Selenium2
                 wait_timeout: 3000

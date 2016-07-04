@@ -2,7 +2,7 @@
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+<body id="setup-confirm-operation" class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <?lsmb # notice, message, and operation are all localized. ?>
@@ -11,7 +11,10 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <div id="notice"><?lsmb notice ?></div>
 <div id="message"><?lsmb message ?></div>
 <div id="operation"><?lsmb operation ?></div>
-<form data-dojo-type="dijit/form/Form" action="setup.pl" method="POST" name="confirm_operation">
+<form data-dojo-type="dijit/form/Form"
+      action="setup.pl"
+      method="POST"
+      name="confirm_operation">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'

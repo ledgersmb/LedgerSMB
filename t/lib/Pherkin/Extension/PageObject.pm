@@ -20,7 +20,7 @@ use warnings;
 
 our $VERSION = '0.01';
 
-
+use PageObject::Loader;
 use Test::BDD::Cucumber::Extension;
 
 use Moose;

@@ -314,6 +314,9 @@ sub form_header {
 
     $form->{nextsub} = 'update';
 
+    $status_div_id = 'AP-invoice';
+    $status_div_id .= '-reverse' if $form->{reverse};
+
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
@@ -385,7 +388,7 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
+| . $form->open_status_div($status_div_id) . qq|
 <script>
 function on_return_submit(event){
   var kc;

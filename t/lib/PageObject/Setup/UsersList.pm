@@ -8,14 +8,19 @@ use Moose;
 use PageObject;
 extends 'PageObject';
 
-use PageObject::Setup::EditUser;
+__PACKAGE__->self_register(
+              'setup-userslist',
+              './/body[@id="setup-list-users"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'setup-list-users',
+              });
 
 sub _verify {
     my ($self) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
     #@@@TODO: There's an assertion missing here
-    $page->find_all('*contains', text => $_)
+    $self->find_all('*contains', text => $_)
         for ("Available Users", "Username");
 
     return $self;
@@ -23,9 +28,8 @@ sub _verify {
 
 sub get_users_list {
     my ($self) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
-    my $user_links = $page->find('.//table[@id="user_list"]')
+    my $user_links = $self->find('.//table[@id="user_list"]')
         ->find_all('.//a');
 
     my @users = map { $_->get_text } @{ $user_links };
@@ -35,14 +39,11 @@ sub get_users_list {
 
 sub edit_user {
     my ($self, $user) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
-    my $user_link = $page->find("//a[text()='$user']");
+    my $user_link = $self->find(".//a[text()='$user']");
     $user_link->click;
 
-    return ($self->stash->{page} =
-            PageObject::Setup::EditUser->new(%$self))
-        ->verify($user_link);
+    return $self->session->page->wait_for_body;
 }
 
 

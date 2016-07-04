@@ -308,6 +308,8 @@ sub form_header {
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
+    $status_div_id = 'AR-invoice';
+    $status_div_id .= '-reverse' if $form->{reverse};
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -382,7 +384,7 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
+| . $form->open_status_div($status_div_id) . qq|
 <script>
 function on_return_submit(event){
   var kc;

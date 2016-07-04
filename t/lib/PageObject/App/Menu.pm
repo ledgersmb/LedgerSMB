@@ -12,6 +12,14 @@ use Module::Runtime qw(use_module);
 use Moose;
 extends 'PageObject';
 
+__PACKAGE__->self_register(
+              'app-menu',
+              './/div[@id="menudiv"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'menudiv',
+              });
+
 
 my %menu_path_pageobject_map = (
     "Contacts > Add Contact" => '',
@@ -37,21 +45,21 @@ my %menu_path_pageobject_map = (
     "AP > Reports > AP Aging" => '',
     "AP > Reports > Customer History" => '',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
-    "HR > Employees > Search" => 'PageObject::App::Search::Employee',
+    "HR > Employees > Search" => 'PageObject::App::Search::Contact',
     "Order Entry > Sales Order" => "PageObject::App::Orders::Sales",
     "Order Entry > Purchase Order" => "PageObject::App::Orders::Purchase",
-    "Order Entry > Reports > Sales Orders" => 'PageObject::App::Search::SalesOrder',
-    "Order Entry > Reports > Purchase Orders" => 'PageObject::App::Search::PurchaseOrder',
-    "Order Entry > Generate > Sales Orders" => 'PageObject::App::Search::GenerateSalesOrder',
-    "Order Entry > Generate > Purchase Orders" => 'PageObject::App::Search::GeneratePurchaseOrder',
-    "Order Entry > Combine > Sales Orders" => 'PageObject::App::Search::CombineSalesOrder',
-    "Order Entry > Combine > Purchase Orders" => 'PageObject::App::Search::CombinePurchaseOrder',
-    "Quotations > Reports > Quotations" => 'PageObject::App::Search::Quotation',
-    "Quotations > Reports > RFQs" => 'PageObject::App::Search::RFQ',
+    "Order Entry > Reports > Sales Orders" => 'PageObject::App::Search::Order',
+    "Order Entry > Reports > Purchase Orders" => 'PageObject::App::Search::Order',
+    "Order Entry > Generate > Sales Orders" => 'PageObject::App::Search::Order',
+    "Order Entry > Generate > Purchase Orders" => 'PageObject::App::Search::Order',
+    "Order Entry > Combine > Sales Orders" => 'PageObject::App::Search::Order',
+    "Order Entry > Combine > Purchase Orders" => 'PageObject::App::Search::Order',
+    "Quotations > Reports > Quotations" => 'PageObject::App::Search::Order',
+    "Quotations > Reports > RFQs" => 'PageObject::App::Search::Order',
     "General Journal > Search and GL" => 'PageObject::App::Search::GL',
     "General Journal > Year End" => 'PageObject::App::Closing',
     # Time cards
-    "Reports > Balance Sheet" => 'PageObject::App::Report::BalanceSheet',
+    "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',
     "Goods and Services > Add Part" => 'PageObject::App::Parts::Part',
     "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
     "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
@@ -63,12 +71,11 @@ my %menu_path_pageobject_map = (
 
 sub _verify {
     my ($self) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
     my @logged_in_found =
-        $page->find_all('*contains', text => "Logged in as");
+        $self->find_all('*contains', text => "Logged in as");
     my @logged_into_found =
-        $page->find_all('*contains', text => "Logged into");
+        $self->find_all('*contains', text => "Logged into");
 
     return $self
         unless ((scalar(@logged_in_found) > 0)
@@ -78,10 +85,14 @@ sub _verify {
 
 sub click_menu {
     my ($self, $path) = @_;
-    my $root = $self->stash->{ext_wsl}->page->find("//*[\@id='top_menu']");
+    my $root = $self->find("//*[\@id='top_menu']");
 
     my $item = $root;
     my $ul = '';
+
+    my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
+    # make sure the widget is registered before resolving the Weasel widget
+    use_module($tgt_class);
 
     do {
         $item = $item->find(".$ul/li[./a[text()='$_']]");
@@ -92,9 +103,7 @@ sub click_menu {
         $ul = '/ul';
     } for @$path;
 
-    my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
-    use_module($tgt_class);
-    return $self->stash->{page}->maindiv->content($tgt_class->new(%$self));
+    return $self->session->page->body->maindiv->wait_for_content;
 }
 
 

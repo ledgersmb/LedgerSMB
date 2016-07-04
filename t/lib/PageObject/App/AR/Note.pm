@@ -9,15 +9,17 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Credit Note';
+__PACKAGE__->self_register(
+              'ar-transaction-reverse',
+              './/div[@id="AR-transaction-reverse"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'AR-transaction-reverse',
+              });
+
 
 sub _verify {
     my ($self) = @_;
-
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

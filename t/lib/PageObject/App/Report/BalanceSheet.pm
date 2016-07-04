@@ -9,6 +9,15 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
+__PACKAGE__->self_register(
+              'reports-balance-sheet',
+              './/div[@id="PNL" and @class="balance-sheet"]',
+              tag_name => 'div',
+              classes => ['balance-sheet'],
+              attributes => {
+                  id => 'PNL',
+              });
+
 
 sub _verify {
     my ($self) = @_;
@@ -16,20 +25,9 @@ sub _verify {
     return $self;
 }
 
-sub run {
-    my ($self, %options) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
-
-    # TODO: verify that we're in a 'run this report' state
-
-    $page->find('*labeled', text => 'Through date')->send_keys($options{date});
-    $page->find('*button', text => 'Generate')->click;
-}
-
 sub account_balances {
     my ($self) = @_;
-    my @account_rows = $self->stash->{ext_wsl}->page
-        ->find_all('tr.account', scheme => 'css');
+    my @account_rows = $self->find_all('tr.account', scheme => 'css');
     my @rv;
 
     for my $row (@account_rows) {

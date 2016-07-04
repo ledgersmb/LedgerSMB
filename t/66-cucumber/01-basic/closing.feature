@@ -46,7 +46,8 @@ Scenario: Post year-end
      | Yearend           |                            2015-12-31 |
      | Retained Earnings | 3590--Retained Earnings - prior years |
    And I press "Post Yearend"
-  Then the Balance Sheet per 2015-12-31 looks like:
+  Then I should see the year-end confirmation screen
+   And the Balance Sheet per 2015-12-31 looks like:
      | accno  |  type      |  amount  |
      | 1060   |  asset     |   200.00 |
      | 2210   |  liability |   -15.00 |
