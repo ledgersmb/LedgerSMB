@@ -9,6 +9,14 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
+__PACKAGE__->self_register(
+              'reports-balance-sheet-params',
+              './/div[@id="balance-sheet-parameters"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'balance-sheet-parameters',
+              });
+
 
 sub _verify {
     my ($self) = @_;
@@ -18,17 +26,18 @@ sub _verify {
 
 sub run {
     my ($self, %options) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
     # TODO: verify that we're in a 'run this report' state
 
-    $page->find('*labeled', text => 'Through date')->send_keys($options{date});
-    $page->find('*button', text => 'Generate')->click;
+    $self->find('*labeled', text => 'Through date')->send_keys($options{date});
+    $self->find('*button', text => 'Generate')->click;
+    ###TODO: Refresh current page; the 'click' replaced it...
 }
 
 sub account_balances {
     my ($self) = @_;
-    my @account_rows = $self->stash->{ext_wsl}->page
+    # due to the TODO above, we can't use $self here.. it's gone out of scope
+    my @account_rows = $self->session->page
         ->find_all('tr.account', scheme => 'css');
     my @rv;
 

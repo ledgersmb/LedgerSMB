@@ -9,6 +9,14 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
+__PACKAGE__->self_register(
+              'gl-yearend',
+              './/form[@id="gl-yearend"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'gl-yearend',
+              });
+
 
 sub _verify {
     my ($self) = @_;

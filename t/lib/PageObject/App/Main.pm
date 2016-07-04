@@ -50,13 +50,11 @@ sub wait_for_content {
                     #  it's not out of scope yet...
                     $gone = 0;
                 };
-                return $gone;
+                return 0 if ! $gone;
             }
-            else {
-                return $self->session->page->find('#maindiv.done-parsing',
-                                                  scheme => 'css')
-                    ? 1 : 0;
-            }
+            my $elem = $self->session->page->find('#maindiv.done-parsing',
+                                                  scheme => 'css');
+            return ($elem && $elem->is_displayed) ? 1 : 0;
         });
     return $self->content;
 }
