@@ -25,21 +25,21 @@ use Data::Dumper;
 When qr/I open the sales invoice entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
 
-    S->{page}->menu->click_menu(\@path);
-    S->{page}->verify;
+    S->{ext_wsl}->page->body->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->verify;
 };
 
 When qr/I open the AR transaction entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
 
-    S->{page}->menu->click_menu(\@path);
-    S->{page}->verify;
+    S->{ext_wsl}->page->body->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->verify;
 };
 
 When qr/I select customer "(.*)"/, sub {
     my $customer = $1;
 
-    my $page = S->{page}->maindiv->content;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
     $page->select_customer($customer);
 
 };
