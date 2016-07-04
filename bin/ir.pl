@@ -316,7 +316,7 @@ sub form_header {
 
     $status_div_id = 'AP-invoice';
     $status_div_id .= '-reverse' if $form->{reverse};
-    
+
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
