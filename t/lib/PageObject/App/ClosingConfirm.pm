@@ -1,4 +1,4 @@
-package PageObject::App::Closing;
+package PageObject::App::ClosingConfirm;
 
 use strict;
 use warnings;
@@ -6,16 +6,15 @@ use warnings;
 use Carp;
 use PageObject;
 
-use PageObject::App::ClosingConfirm;
 use Moose;
 extends 'PageObject';
 
 __PACKAGE__->self_register(
-              'gl-yearend',
-              './/form[@id="gl-yearend"]',
-              tag_name => 'form',
+              'gl-yearend-confirm',
+              './/h1[@id="gl-yearend-confirm"]',
+              tag_name => 'h1',
               attributes => {
-                  id => 'gl-yearend',
+                  id => 'gl-yearend-confirm',
               });
 
 
