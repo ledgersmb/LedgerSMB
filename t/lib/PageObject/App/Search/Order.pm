@@ -1,21 +1,22 @@
-package PageObject::App::System::Defaults;
+package PageObject::App::Search::Order;
 
 use strict;
 use warnings;
 
 use Carp;
-use PageObject;
+use PageObject::App::Search;
 
 use Moose;
-extends 'PageObject';
+extends 'PageObject::App::Search';
 
 __PACKAGE__->self_register(
-              'system-settings',
-              './/form[@id="system-settings"]',
+              'search-orders',
+              './/form[@id="search-orders"]',
               tag_name => 'form',
               attributes => {
-                  id => 'system-settings',
+                  id => 'search-orders',
               });
+
 
 sub _verify {
     my ($self) = @_;

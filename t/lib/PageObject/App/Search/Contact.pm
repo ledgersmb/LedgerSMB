@@ -9,15 +9,22 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
+__PACKAGE__->self_register(
+              'search-contact',
+              './/form[@id="search-contact"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'search-contact',
+              });
+
+
 my $page_heading = 'Contact Search';
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
+    $self->find(".//*[\@class='listtop'
+                      and text()='$page_heading']");
 
     return $self;
 }

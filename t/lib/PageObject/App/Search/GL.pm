@@ -9,15 +9,16 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
-my $page_heading = 'General Ledger Reports';
+__PACKAGE__->self_register(
+              'search-gl',
+              './/form[@id="search-gl"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'search-gl',
+              });
 
 sub _verify {
     my ($self) = @_;
-
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }

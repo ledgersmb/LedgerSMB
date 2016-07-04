@@ -24,6 +24,7 @@ sub self_register {
 
     {
         no strict 'refs';
+        no warnings 'once';
         ${"${class}::MNEMONIC"} = $mnemonic;
     }
     register_find_expander($mnemonic, 'LedgerSMB', $xpath_fn);

@@ -19,7 +19,9 @@ use PageObject::Setup::UsersList;
 # APP
 
 use PageObject::App;
+use PageObject::App::Initial;
 use PageObject::App::Login;
-
+use PageObject::App::Menu;
+use PageObject::App::Main;
 
 1;

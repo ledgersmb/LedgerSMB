@@ -11,8 +11,6 @@ use Moose;
 extends 'PageObject';
 
 
-sub url { return '/login.pl'; }
-
 __PACKAGE__->self_register(
               'app-login',
               './/body[@id="app-login"]',
@@ -22,6 +20,7 @@ __PACKAGE__->self_register(
               });
 
 
+sub url { return '/login.pl'; }
 
 sub _verify {
     my ($self) = @_;
@@ -38,9 +37,7 @@ sub login {
     my $password = $args{password};
     my $company = $args{company};
     do {
-        my $element =
-            $self->stash->{ext_wsl}->page->find('*labeled',
-                                                text => $_->{label});
+        my $element = $self->find('*labeled', text => $_->{label});
         $element->click;
         $element->clear;
         $element->send_keys($_->{value});
@@ -50,8 +47,8 @@ sub login {
              value => $password },
            { label => "Company",
              value => $company });
-    $self->stash->{ext_wsl}->page->find('*button', text => "Login")->click;
-    return $self->stash->{page} = PageObject::App->new(%$self);
+    $self->find('*button', text => "Login")->click;
+    return $self->session->page->wait_for_body;
 }
 
 
