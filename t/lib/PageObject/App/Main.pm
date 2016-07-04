@@ -23,9 +23,27 @@ has content => (is => 'rw',
                 isa => 'PageObject',
                 builder => '_build_content',
                 predicate => 'has_content',
+                reader => '_get_content',
+                writer => '_set_content',
                 clearer => 'clear_content',
                 lazy => 1);
 
+sub content {
+    my ($self, $new_value) = @_;
+
+    return $self->_set_content($new_value) if $new_value;
+
+    my $gone = 1;
+    try {
+        $self->_get_content->tag_name
+            if $self->has_content;
+        # we're still here?
+        $gone = 0;
+    };
+    $self->clear_content if $gone; # force builder
+
+    return $self->_get_content;
+}
 
 sub _build_content {
     my ($self) = @_;

@@ -76,6 +76,7 @@ my %screens = (
     'Quotation search' => 'PageObject::App::Search::Order',
     'RFQ search' => 'PageObject::App::Search::Order',
     'GL search' => 'PageObject::App::Search::GL',
+    'year-end confirmation' => 'PageObject::App::ClosingConfirm',
     'part entry' => 'PageObject::App::Parts::Part',
     'service entry' => 'PageObject::App::Parts::Service',
     'assembly entry' => 'PageObject::App::Parts::Assembly',
@@ -89,7 +90,12 @@ Then qr/I should see the (.*) screen/, sub {
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
 
-    my $page = S->{ext_wsl}->page->body->verify_screen;
+    my $page;
+    S->{ext_wsl}->wait_for(
+        sub {
+            $page = S->{ext_wsl}->page->body->maindiv->content;
+            return $page && $page->isa($screens{$page_name});
+        });
     ok($page, "the browser screen is the screen named '$page_name'");
     ok($screens{$page_name}, "the named screen maps to a class name");
     ok($page->isa($screens{$page_name}),
