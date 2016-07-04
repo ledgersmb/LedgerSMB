@@ -1,70 +1,81 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
-<table width="100%">
-  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-	  <th></th>
-	  <th><?lsmb text('Rate (%)') ?></th>
-	  <th><?lsmb text('Min Taxable') ?></th>
-	  <th><?lsmb text('Number') ?></th>
-	  <th><?lsmb text('Valid To') ?></th>
-	  <th><?lsmb text('Ordering') ?></th>
-	  <th><?lsmb text('Tax Rules') ?></th>
-	</tr>
-<?lsmb FOREACH row IN rows; i = loop.count ?>
-	<tr>
-	  <th align="right"><?lsmb row.0 ?></th>
-          <td><?lsmb PROCESS input element_data = {
-               name = "taxrate_" _ i
-               size = 6
-              value = form.item("taxrate_$i")
-          } ?></td>
-          <td><?lsmb PROCESS input element_data = {
-               name = "minvalue_" _ i
-               size = 6
-              value = form.item("minvalue_$i")
-          } ?></td>
-          <td><?lsmb PROCESS input element_data = {
-               name = "taxnumber_" _ i
-               size = 6
-              value = form.item("taxnumber_$i")
-          } ?></td>
-          <td><?lsmb PROCESS input element_data = {
-               name = "validto_" _ i
-               size = 10
-              value = form.item("validto_$i")
-              class = "date"
-          } ?></td>
-	  <td><?lsmb PROCESS input element_data = {
-		     name = "pass_" _ i
-		     size = 6
-		     value = form.item("pass_$i")
-	  } ?></td>
-	  <td><?lsmb PROCESS select element_data=row.1 ?></td>
-	</tr>
-<?lsmb END ?>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size="3" noshade="noshade" /></td>
-  </tr>
-</table>
+  <form data-dojo-type="lsmb/Form"
+        id="system-taxes"
+        method="post"
+        action="<?lsmb form.script ?>">
+    <table width="100%">
+      <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <th></th>
+              <th><?lsmb text('Rate (%)') ?></th>
+              <th><?lsmb text('Min Taxable') ?></th>
+              <th><?lsmb text('Number') ?></th>
+              <th><?lsmb text('Valid To') ?></th>
+              <th><?lsmb text('Ordering') ?></th>
+              <th><?lsmb text('Tax Rules') ?></th>
+            </tr>
+            <?lsmb FOREACH row IN rows; i = loop.count ?>
+            <tr>
+              <th align="right"><?lsmb row.0 ?></th>
+              <td><?lsmb PROCESS input element_data = {
+                         name = "taxrate_" _ i
+                         size = 6
+                         value = form.item("taxrate_$i")
+                         } ?></td>
+              <td><?lsmb PROCESS input element_data = {
+                         name = "minvalue_" _ i
+                         size = 6
+                         value = form.item("minvalue_$i")
+                         } ?></td>
+              <td><?lsmb PROCESS input element_data = {
+                         name = "taxnumber_" _ i
+                         size = 6
+                         value = form.item("taxnumber_$i")
+                         } ?></td>
+              <td><?lsmb PROCESS input element_data = {
+                         name = "validto_" _ i
+                         size = 10
+                         value = form.item("validto_$i")
+                         class = "date"
+                         } ?></td>
+              <td><?lsmb PROCESS input element_data = {
+                         name = "pass_" _ i
+                         size = 6
+                         value = form.item("pass_$i")
+                         } ?></td>
+              <td><?lsmb PROCESS select element_data=row.1 ?></td>
+            </tr>
+            <?lsmb END ?>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td><hr size="3" noshade="noshade" /></td>
+      </tr>
+    </table>
 
-<?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
-		}; END;
-PROCESS button element_data={name => 'action', value => 'update', text => text('Update')};
-PROCESS button element_data={name => 'action', value => 'save_taxes', text => text('Save')} ?>
+    <?lsmb FOREACH hidden IN hiddens.keys;
+             PROCESS input element_data={
+                     type => 'hidden'
+                     name => hidden
+                     value => hiddens.item(hidden)
+                     };
+           END;
+    PROCESS button element_data={
+            name => 'action'
+            value => 'update'
+            text => text('Update')
+            };
+    PROCESS button element_data={
+            name => 'action'
+            value => 'save_taxes'
+            text => text('Save')
+            } ?>
   </form>
-
 </body>
 </html>
