@@ -1,7 +1,27 @@
 
 
-Test file number allocation
-===========================
+# Running the tests
+
+```sh
+ $ prove
+```
+
+will run tests, depending on the installed features and environment
+variables. See below for info on setting environment variables.
+
+To run the '66' tests, the following works with the right PostgreSQL,
+PhantomJS and Starman configurations:
+
+```sh
+ $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL=http://localhos:5000 prove
+```
+
+Note that the '66' tests may be run at a much smaller granularity
+as documented in the [specific README file](66-cucumber/README.md).
+
+
+# Test summary
+
 
 ````plain
 00 - 09: General base checks
@@ -17,24 +37,22 @@ Test file number allocation
 
 Special notes on specific test cases:
 
-43-dbtest.t
------------
+## 43-dbtest.t
+
 This runs defined test cases from sql/modules/test/.  If new
 scripts are added, they must be listed in this script as well.
 
-62-api.t
---------
+## 62-api.t
+
 Runs on the database non-destructively, by rolling back commits.
 Uses request hashes defined in t/data/62-request-data.
 
 
-ENVIRONMENT VARIABLES USED
-==========================
+# ENVIRONMENT VARIABLES
 
 Environment variables are used to provide inputs for tests >= 40.
 
-For database tests (40 - 89)
-----------------------------
+## For database tests (40 - 89)
 
 ````plain
 LSMB_TEST_DB        enables this set of tests
@@ -70,8 +88,8 @@ LSMB_COUNTRY_CODE   Country code for administrator and for loading chart of
 ````
 
 
-For database cleanup test (89)
-------------------------------
+
+## For database cleanup test (89)
 
 If the variable LSMB_INSTALL_DB is set, the database will NOT be removed after
 test cases are run.  Should be used with the `admin user creation` and
