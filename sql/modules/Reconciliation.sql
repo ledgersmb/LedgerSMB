@@ -275,6 +275,9 @@ create or replace function reconciliation__add_entry(
         SELECT value into t_prefix FROM defaults WHERE setting_key = 'check_prefix';
 
         t_uid := person__get_my_entity_id();
+        IF t_uid IS NULL THEN
+                t_uid = robot__get_my_entity_id();
+        END IF;
         IF in_scn = '' THEN
                 t_scn := NULL;
         ELSE
