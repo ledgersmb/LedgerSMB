@@ -250,6 +250,8 @@ SELECT lsmb__create_role('contact_class_referral');
 SELECT lsmb__create_role('contact_class_lead');
 SELECT lsmb__create_role('contact_class_hot_lead');
 SELECT lsmb__create_role('contact_class_cold_lead');
+SELECT lsmb__create_role('contact_class_sub_contractor');
+SELECT lsmb__create_role('contact_class_robot');
 
 SELECT lsmb__create_role('contact_create');
 SELECT lsmb__grant_role('contact_create', 'contact_read');

@@ -56,6 +56,9 @@ SELECT name, 'C-' || customernumber, 2,
 FROM sl30.customer
 GROUP BY name, customernumber;
 
+INSERT INTO entity (name, control_code, entity_class, country_id)
+SELECT 'Migrator', 'R-1', 10, (select id from country
+         where lower(short_name)  =  lower(:default_country));
 UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -311,7 +314,12 @@ UPDATE sl30.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
 INSERT INTO person (first_name, last_name, entity_id)
-select name, name, entity_id FROM sl30.employee;
+SELECT name, name, entity_id FROM sl30.employee;
+
+INSERT INTO robot  (first_name, last_name, entity_id)
+SELECT '', name, id
+FROM entity
+WHERE entity_class = 10 AND control_code = 'R-1';
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
 -- Intentionally do *not* migrate the users table to prevent later conflicts
@@ -538,7 +546,6 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
--- ### TODO: Reconciled disappeared from the source table...
 
 ALTER TABLE sl30.acc_trans ADD COLUMN lsmb_entry_id integer;
 
@@ -560,8 +567,6 @@ SELECT lsmb_entry_id, trans_id, (select id
         WHERE chart_id IS NOT NULL AND trans_id IN (
             SELECT id FROM transactions);
 
-<<<<<<< HEAD
-=======
 -- Reconciliations
 -- Serially reuseable
 INSERT INTO cr_coa_to_account(chart_id, account)
@@ -571,6 +576,11 @@ JOIN public.chart pc on pc.accno = c.accno
 WHERE ac.cleared IS NOT NULL
 AND c.link ~ 'paid'
 AND NOT EXISTS (SELECT 1 FROM cr_coa_to_account WHERE chart_id=pc.id);
+-- Log in the Migrator Robot
+INSERT INTO users(username, notify_password, entity_id)
+SELECT last_name, '1 day', entity_id
+FROM robot
+WHERE last_name = 'Migrator';
 
 -- Compute last day of the month
 CREATE OR REPLACE FUNCTION pg_temp.last_day(DATE)
@@ -610,8 +620,10 @@ JOIN (
     ORDER BY ac.trans_id
 ) n ON n.trans_id = a.trans_id
 ORDER BY cr.id,a.source,a.cleared;
+-- Log out the Migrator
+DELETE FROM users
+WHERE username = 'Migrator';
 
->>>>>>> 271c8a9... Untabify
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
   FROM acc_trans ac

@@ -59,7 +59,7 @@ BEGIN
                 WHERE active and pg_has_role(SESSION_USER,
                                    lsmb__role_prefix()
                                    || 'contact_class_'
-                                   || lower(regexp_replace(class, ' ', '_')),
+                                   || lower(regexp_replace(class, '( |\-)', '_')),
                                    'USAGE')
                 ORDER BY id
         LOOP
