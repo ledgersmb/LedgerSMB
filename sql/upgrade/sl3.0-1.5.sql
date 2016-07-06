@@ -560,58 +560,6 @@ SELECT lsmb_entry_id, trans_id, (select id
         WHERE chart_id IS NOT NULL AND trans_id IN (
             SELECT id FROM transactions);
 
-<<<<<<< HEAD
-=======
--- Reconciliations
--- Serially reuseable
-INSERT INTO cr_coa_to_account(chart_id, account)
-SELECT DISTINCT pc.id, c.description FROM sl30.acc_trans ac
-JOIN sl30.chart c ON ac.chart_id = c.id
-JOIN public.chart pc on pc.accno = c.accno
-WHERE ac.cleared IS NOT NULL
-AND c.link ~ 'paid'
-AND NOT EXISTS (SELECT 1 FROM cr_coa_to_account WHERE chart_id=pc.id);
-
--- Compute last day of the month
-CREATE OR REPLACE FUNCTION pg_temp.last_day(DATE)
-RETURNS DATE AS
-$$
-  SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
-$$ LANGUAGE 'sql' IMMUTABLE STRICT;
-
--- Find the proper user and replace the 50s below and in the next.
-INSERT INTO cr_report(chart_id,updated,end_date,submitted,approved,recon_fx,their_total,entered_by,approved_by)
--- Prevent approving reports for now
---SELECT c.id,MAX(coalesce(a.cleared,l.end_date)) AS updated,l.end_date,true,a.approved,a.fx_transaction,SUM(-a.amount) AS amount,50,50
-SELECT c.id,MAX(coalesce(a.cleared,a.end_date)) AS updated,a.end_date,true,false,a.fx_transaction,SUM(-a.amount) AS amount,50,50
-FROM (
-  SELECT *, pg_temp.last_day(transdate) as end_date
-  FROM sl30.acc_trans
-) a
-JOIN sl30.chart s ON chart_id=s.id
-JOIN chart c ON c.accno=s.accno
-JOIN cr_coa_to_account coa ON coa.chart_id=c.id
-GROUP BY c.id, a.end_date,approved,fx_transaction
-ORDER BY c.id, a.end_date,approved,fx_transaction;
-
-SELECT reconciliation__add_entry(cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC)
-FROM sl30.acc_trans a
-JOIN sl30.chart s ON chart_id=s.id
-JOIN chart c ON c.accno=s.accno
-JOIN cr_coa_to_account coa ON coa.chart_id = c.id
-JOIN public.cr_report cr ON s.id = a.chart_id AND date_trunc('MONTH', a.transdate)::DATE = date_trunc('MONTH', cr.end_date)::DATE
-JOIN (
-    WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
-              UNION SELECT id,'AR'         FROM sl30.ar
-              UNION SELECT id,'GL'         FROM sl30.gl)
-    SELECT DISTINCT ac.trans_id, types.type
-    FROM sl30.acc_trans ac
-    LEFT JOIN types ON ac.trans_id = types.id
-    ORDER BY ac.trans_id
-) n ON n.trans_id = a.trans_id
-ORDER BY cr.id,a.source,a.cleared;
-
->>>>>>> 271c8a9... Untabify
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
   FROM acc_trans ac
