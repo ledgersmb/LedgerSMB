@@ -55,8 +55,8 @@ sub __default {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
-            template => 'credentials',
-        format => 'HTML',
+        template => 'credentials',
+          format => 'HTML',
     );
     $template->render($request);
 }
@@ -699,8 +699,8 @@ sub _failed_check {
     my $count = 1;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
-                           id_column => $check->{id_column},
-                            id_where => $check->{id_where},
+               id_column => $check->{id_column},
+                id_where => $check->{id_where},
                 database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
@@ -717,18 +717,17 @@ sub _failed_check {
            } }
            : { input => {
                    name => $check->column . "_$row->{id}",
-                   value => $row->{$check->column},
+                   value => $row->{$check->column} // "Missing " . $row->{$check->{id_column}},
                    type => 'text',
                    size => 15,
            }};
         push @$rows, $row;
         $hiddens->{"id_$count"} = $row->{$check->id_column},
         ++$count;
-   }
+    }
     $sth->finish();
 
     $hiddens->{count} = $count;
-#    $hiddens->{edit} = $check->column; # Why again. Set in module beginning
 
     my $buttons = [
            { type => 'submit',
@@ -766,18 +765,27 @@ sub fix_tests{
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $edit = $request->{dbh}->quote_identifier($request->{edit});
-        my $where = $request->{id_where};
-    my $sth = $request->{dbh}->prepare(
-            "UPDATE $table SET $edit = ? where $where = ?"
+    my $where = $request->{id_where};
+    my $sthu = $request->{dbh}->prepare(
+        "UPDATE $table SET $edit = ? WHERE $where = ?"
     );
-
+    my $sthi = $request->{dbh}->prepare(
+        "INSERT INTO table($edit,$where) VALUES (?, ?)"
+    );
     for my $count (1 .. $request->{count}){
-        warn $count;
         my $id = $request->{"id_$count"};
-                $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
-            $request->error($sth->errstr);
+        $sthu->execute($request->{"$request->{edit}_$id"}, $id) ||
+        $request->error($sthu->errstr);
+#        my $status = $sthu->execute($request->{"$request->{edit}_$id"}, $id);
+#        if ( $status == 0 ) {
+#            $sthi->execute($request->{"$request->{edit}_$id"}, $id) ||
+#            $request->error($sthi->errstr);
+#        } elsif ( $status < 0 ) {
+#            $request->error($sthu->errstr);
+#        }
     }
-    $sth->finish();
+    $sthu->finish();
+    $sthi->finish();
     $request->{dbh}->commit;
     upgrade($request);
 }
