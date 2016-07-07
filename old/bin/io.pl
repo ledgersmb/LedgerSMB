@@ -413,7 +413,7 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
 </td>|;
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"}
-                 <input type="hidden" name="partnumber_$i"
+                 <input type="hidden" id="partnumber_$i" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $skunumber //= '';

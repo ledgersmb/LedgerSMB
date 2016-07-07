@@ -387,7 +387,7 @@ sub hide_form {
         for (@_) {
             next if not defined $self->{$_};
 
-            print qq|<input type="hidden" name="$_" value="|
+            print qq|<input type="hidden" id="$_" name="$_" value="|
               . $self->quote( $self->{$_} )
               . qq|" />\n|;
         }
@@ -399,7 +399,7 @@ sub hide_form {
               grep { ! m/^all_/ }
               grep { ! m/^_/ }
               sort keys %$self ) {
-            print qq|<input type="hidden" name="$_" value="|
+            print qq|<input type="hidden" id="$_" name="$_" value="|
               . $self->quote( $self->{$_} )
               . qq|" />\n|;
         }
