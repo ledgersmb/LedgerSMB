@@ -101,8 +101,7 @@ $form->error may be called to deny access on some attribute values.
 
 =cut
 # Set this Globally so we only need to do it once
-my $dojo_location = 'js';
-if ($LedgerSMB::Sysconfig::dojo_built == 0 ) { my $dojo_location = 'js-src'; }
+my $dojo_location = ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js';
 
 sub new {
 
