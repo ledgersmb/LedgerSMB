@@ -21,13 +21,14 @@ DECLARE form_test bool;
 BEGIN
         form_test := form_check(in_session_id, in_form_id);
 
-        IF form_test is true THEN
+        IF form_test IS TRUE THEN
                 DELETE FROM open_forms
                 WHERE session_id = in_session_id AND id = in_form_id;
 
                 RETURN TRUE;
 
-        ELSE RETURN FALSE;
+        ELSE
+            RETURN FALSE;
         END IF;
 END;
 $$ language plpgsql SECURITY DEFINER;

@@ -202,6 +202,7 @@ sub _display_report {
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
+    $recon->{form_id} = $request->{form_id};
         my $template = LedgerSMB::Template->new(
             user=> $recon->{_user},
             template => 'reconciliation/report',
@@ -275,34 +276,23 @@ sub _display_report {
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->{cleared_total}->to_output(money => 1);
         $recon->{outstanding_total} = $recon->{outstanding_total}->to_output(money => 1);
-        $recon->{mismatch_our_debits} =
-                $recon->{mismatch_our_debits}->to_output(money => 1);
-        $recon->{mismatch_our_credits} =
-        $recon->{mismatch_our_credits}->to_output(money => 1);
-        $recon->{mismatch_their_debits} =
-        $recon->{mismatch_their_debits}->to_output(money => 1);
-        $recon->{mismatch_their_credits} =
-        $recon->{mismatch_their_credits}->to_output(money => 1);
-        $recon->{statement_gl_calc} =
-        $recon->{statement_gl_calc}->to_output(money => 1);
-        $recon->{total_cleared_debits} =
-                $recon->{total_cleared_debits}->to_output(money => 1);
-        $recon->{total_cleared_credits} =
-                $recon->{total_cleared_credits}->to_output(money => 1);
-        $recon->{total_uncleared_debits} =
-                $recon->{total_uncleared_debits}->to_output(money => 1);
-        $recon->{total_uncleared_credits} =
-                $recon->{total_uncleared_credits}->to_output(money => 1);
+    $recon->{mismatch_our_debits} = $recon->{mismatch_our_debits}->to_output(money => 1);
+    $recon->{mismatch_our_credits} = $recon->{mismatch_our_credits}->to_output(money => 1);
+    $recon->{mismatch_their_debits} = $recon->{mismatch_their_debits}->to_output(money => 1);
+    $recon->{mismatch_their_credits} = $recon->{mismatch_their_credits}->to_output(money => 1);
+    $recon->{statement_gl_calc} = $recon->{statement_gl_calc}->to_output(money => 1);
+    $recon->{total_cleared_debits} = $recon->{total_cleared_debits}->to_output(money => 1);
+    $recon->{total_cleared_credits} = $recon->{total_cleared_credits}->to_output(money => 1);
+    $recon->{total_uncleared_debits} = $recon->{total_uncleared_debits}->to_output(money => 1);
+    $recon->{total_uncleared_credits} = $recon->{total_uncleared_credits}->to_output(money => 1);
     $recon->{their_total} = $recon->{their_total} * $neg_factor;
         $recon->{their_total} = $recon->{their_total}->to_output(money => 1);
     $recon->{our_total} ||= LedgerSMB::PGNumber->from_db(0);
     $recon->{beginning_balance} ||= LedgerSMB::PGNumber->from_db(0);
     $recon->{out_of_balance} ||= LedgerSMB::PGNumber->from_db(0);
     $recon->{our_total} = $recon->{our_total}->to_output(money => 1);
-    $recon->{beginning_balance} =
-        $recon->{beginning_balance}->to_output(money => 1);
-    $recon->{out_of_balance} =
-        $recon->{out_of_balance}->to_output(money => 1);
+    $recon->{beginning_balance} = $recon->{beginning_balance}->to_output(money => 1);
+    $recon->{out_of_balance} = $recon->{out_of_balance}->to_output(money => 1);
 
         return $template->render($recon);
 }
@@ -425,34 +415,16 @@ sub approve {
 
         my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy=> 'all'});
 
-        my $template;
         my $code = $recon->approve($request->{report_id});
-        if ($code == 0) {
-
-            $template = LedgerSMB::Template->new(
+        my $template = $code == 0 ? 'reconciliation/approved'
+                                  : 'reconciliation/report';
+        return LedgerSMB::Template->new(
                 user => $recon->{_user},
-                template => 'reconciliation/approved',
+                        template => $template,
                 locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
-                );
-
-            return $template->render($recon);
-        }
-        else {
-
-            # failure case
-
-            $template = LedgerSMB::Template->new(
-                user => $recon->{_user},
-                template => 'reconciliation/report',
-            locale => $recon->{_locale},
-                format => 'HTML',
-                path=>"UI"
-                );
-            return $template->render($recon
-            );
-        }
+                        )->render($recon);
     }
     else {
         return _display_report($request, $request);

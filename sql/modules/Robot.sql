@@ -1,4 +1,3 @@
-
 -- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
@@ -52,7 +51,7 @@ $$ LANGUAGE SQL;
 
 DROP FUNCTION IF EXISTS robot__save (int, text, text, text, int);
 CREATE OR REPLACE FUNCTION robot__save
-(in_entity_id integer, 
+(in_entity_id integer,
 in_first_name text, in_middle_name text, in_last_name text,
 in_country_id integer
 )
@@ -103,7 +102,7 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION robot__save
-(in_entity_id integer, 
+(in_entity_id integer,
 in_first_name text, in_middle_name text, in_last_name text,
 in_country_id integer
 ) IS

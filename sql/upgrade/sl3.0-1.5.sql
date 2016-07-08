@@ -59,6 +59,7 @@ GROUP BY name, customernumber;
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT 'Migrator', 'R-1', 10, (select id from country
          where lower(short_name)  =  lower(:default_country));
+
 UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -327,7 +328,7 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM sl30.employee em
 --      WHERE login IS NOT NULL;
 
--- No manager information in SL30
+-- No manager-managee information in SL30
 --INSERT
 --  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
 --       employeenumber, dob, manager_id)
@@ -576,6 +577,7 @@ JOIN public.chart pc on pc.accno = c.accno
 WHERE ac.cleared IS NOT NULL
 AND c.link ~ 'paid'
 AND NOT EXISTS (SELECT 1 FROM cr_coa_to_account WHERE chart_id=pc.id);
+
 -- Log in the Migrator Robot
 INSERT INTO users(username, notify_password, entity_id)
 SELECT last_name, '1 day', entity_id
@@ -589,37 +591,59 @@ $$
   SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
 $$ LANGUAGE 'sql' IMMUTABLE STRICT;
 
--- Find the proper user and replace the 50s below and in the next.
-INSERT INTO cr_report(chart_id,updated,end_date,submitted,approved,recon_fx,their_total,entered_by,approved_by)
--- Prevent approving reports for now
---SELECT c.id,MAX(coalesce(a.cleared,l.end_date)) AS updated,l.end_date,true,a.approved,a.fx_transaction,SUM(-a.amount) AS amount,50,50
-SELECT c.id,MAX(coalesce(a.cleared,a.end_date)) AS updated,a.end_date,true,false,a.fx_transaction,SUM(-a.amount) AS amount,50,50
-FROM (
-  SELECT *, pg_temp.last_day(transdate) as end_date
-  FROM sl30.acc_trans
-) a
-JOIN sl30.chart s ON chart_id=s.id
-JOIN chart c ON c.accno=s.accno
-JOIN cr_coa_to_account coa ON coa.chart_id=c.id
-GROUP BY c.id, a.end_date,approved,fx_transaction
-ORDER BY c.id, a.end_date,approved,fx_transaction;
+INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, entered_by, entered_username)
+  SELECT coa.id, SUM(-amount), TRUE,
+            a.end_date,max(a.updated),
+            (SELECT entity_id FROM robot WHERE last_name = 'Migrator'),
+            'Migrator'
+        FROM (
+          SELECT chart_id,
+                 cleared,fx_transaction,approved,transdate,pg_temp.last_day(coalesce(cleared,transdate)) as end_date,
+                 coalesce(cleared,transdate) as updated,
+                 CASE WHEN cleared IS NOT NULL THEN amount
+                 ELSE 0
+                 END AS amount
+          FROM sl30.acc_trans
+        ) a
+        JOIN sl30.chart s ON chart_id=s.id
+        JOIN reconciliation__account_list() coa ON coa.accno=s.accno
+        GROUP BY coa.id, a.end_date
+        ORDER BY coa.id, a.end_date;
 
-SELECT reconciliation__add_entry(cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC)
-FROM sl30.acc_trans a
-JOIN sl30.chart s ON chart_id=s.id
-JOIN chart c ON c.accno=s.accno
-JOIN cr_coa_to_account coa ON coa.chart_id = c.id
-JOIN public.cr_report cr ON s.id = a.chart_id AND date_trunc('MONTH', a.transdate)::DATE = date_trunc('MONTH', cr.end_date)::DATE
-JOIN (
-    WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
-              UNION SELECT id,'AR'         FROM sl30.ar
-              UNION SELECT id,'GL'         FROM sl30.gl)
-    SELECT DISTINCT ac.trans_id, types.type
-    FROM sl30.acc_trans ac
-    LEFT JOIN types ON ac.trans_id = types.id
-    ORDER BY ac.trans_id
-) n ON n.trans_id = a.trans_id
-ORDER BY cr.id,a.source,a.cleared;
+-- cr_report_line will insert the entry and return the ID of the upsert entry.
+-- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
+-- Temp table will be dropped automatically at the end of the transaction.
+WITH cr_entry AS (
+    SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+    FROM sl30.acc_trans a
+    JOIN sl30.chart s ON chart_id=s.id
+    JOIN reconciliation__account_list() coa ON coa.accno=s.accno
+    JOIN public.cr_report cr ON s.id = a.chart_id
+    AND  date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
+    AND (date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE OR a.cleared IS NULL)
+    LEFT JOIN (
+        WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
+                  UNION SELECT id,'AR'         FROM sl30.ar
+                  UNION SELECT id,'GL'         FROM sl30.gl)
+        SELECT DISTINCT ac.trans_id, types.type
+        FROM sl30.acc_trans ac
+        LEFT JOIN types ON ac.trans_id = types.id
+        ORDER BY ac.trans_id
+    ) n ON n.trans_id = a.trans_id
+    ORDER BY cr.id,n.type,a.source ASC NULLS LAST,a.amount
+)
+SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.post_date, cr_entry.lsmb_entry_id
+INTO TEMPORARY _cr_report_line
+FROM cr_entry;
+
+UPDATE cr_report_line cr SET post_date = cr1.post_date, ledger_id = cr1.lsmb_entry_id
+FROM (
+  SELECT id,post_date,lsmb_entry_id
+  FROM _cr_report_line
+) cr1
+WHERE cr.id = cr1.id;
+UPDATE cr_report_line SET insert_time = post_date;
+
 -- Log out the Migrator
 DELETE FROM users
 WHERE username = 'Migrator';
@@ -832,7 +856,6 @@ SELECT setval('users_id_seq', max(id)) FROM users;
 SELECT setval('entity_id_seq', max(id)) FROM entity;
 SELECT setval('company_id_seq', max(id)) FROM company;
 SELECT setval('location_id_seq', max(id)) FROM location;
-SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
 SELECT setval('location_class_id_seq', max(id)) FROM location_class;
 SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
 SELECT setval('salutation_id_seq', max(id)) FROM salutation;
