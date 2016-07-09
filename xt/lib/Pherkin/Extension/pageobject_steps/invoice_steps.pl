@@ -323,4 +323,33 @@ Then qr/I expect to see an invoice with (these|(\d+) empty) lines?/, sub {
     is_deeply(\@actual, C->data, "Invoice lines show expected data on");
 };
 
+my %invoice_property_map = (
+    'Invoice Created' => 'crdate',
+    'Due Date' => 'duedate',
+    'Invoice Date' => 'transdate',
+    'Order Number' => 'ordnumber',
+    'Invoice Number' => 'invnumber',
+    'PO Number' => 'ponumber',
+    'Description' => 'description',
+    'Currency' => 'currency',
+    'Shipping Point' => 'shippingpoint',
+    'Ship via' => 'shipvia',
+    'Notes' => 'notes',
+    'Internal Notes' => 'intnotes',
+    );
+
+Then qr/I expect to see an invoice with these document properties/, sub {
+    my $invoice = S->{ext_wsl}->page->body->maindiv->content;
+    my $today = LedgerSMB::PGDate->today;
+    $today = $today->to_output;
+    map { $_->{value} =~ s/^\@today\@$/$today/ } @{C->data};
+    my %expects = map { $_->{property} => $_->{value} } @{C->data};
+    my %actuals = map {
+        my $id = $invoice_property_map{$_};
+        my $value = $invoice->find(".//*[\@id='$id']")->get_attribute('value');
+        $_ => $value;
+    } keys %expects;
+    is_deeply(\%actuals, \%expects, 'Invoice properties match expectations');
+};
+
 1;
