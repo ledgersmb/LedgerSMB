@@ -32,32 +32,32 @@ PROCESS dynatable
     ], #'
     tbody = {rows = credit_list}; ?>
     <form data-dojo-type="lsmb/Form" id="credit_form" name="credit_form" method="post"
-	action="<?lsmb request.script ?>">
+        action="<?lsmb request.script ?>">
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "form_id"
-		value = form_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "entity_id"
-		value = entity_id
-	} ?>	
-	<?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "id"
-		value = credit_act.id
-	} ?>	
-	<?lsmb ec = credit_act.entity_class;
+                type = "hidden"
+                name = "form_id"
+                value = form_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type = "hidden"
+                name = "entity_id"
+                value = entity_id
+        } ?>    
+        <?lsmb PROCESS input element_data = {
+                type = "hidden"
+                name = "id"
+                value = credit_act.id
+        } ?>    
+        <?lsmb ec = credit_act.entity_class;
               IF !ec;
                  ec=account_class;
                  IF !ec;
                     ec=entity_class;
                  END;
               END;
-	?>	
+        ?>      
         <table>
-	<tr class="eca_row">
+        <tr class="eca_row">
         <td>
         <?lsmb 
 
@@ -73,112 +73,112 @@ PROCESS dynatable
         } ?></td>
 
                 
-	<td>
- 	<?lsmb PROCESS input element_data = {
-		title = text("$entity_classname Number"), #fixme for i18n
-	   label = text("$entity_classname Number"), 
-		type= "text",
-		name = "meta_number",
-		value = credit_act.meta_number,
-		size = "10"
-	}  ?></td>
-	<td><?lsmb PROCESS input element_data = {
-		title = text("Description"),
-		label = text("Description"),
-		type= "text",
-		name = "description",
-		value = credit_act.description,
-		size = "20"
-	} ?></td>
-	</tr>
-	<tr class="pay_to_row">
-	<td colspan = "2">
-	<?lsmb PROCESS input element_data = {
-		title = text('Pay To')
-		label = text('Pay To')      
-		type = "text"
-		size = "50"
-		name = "pay_to_name"
-		value = credit_act.pay_to_name
-		class = "name"
-	} ?>
-	</td>
+        <td>
+        <?lsmb PROCESS input element_data = {
+                title = text("$entity_classname Number"), #fixme for i18n
+           label = text("$entity_classname Number"), 
+                type= "text",
+                name = "meta_number",
+                value = credit_act.meta_number,
+                size = "10"
+        }  ?></td>
+        <td><?lsmb PROCESS input element_data = {
+                title = text("Description"),
+                label = text("Description"),
+                type= "text",
+                name = "description",
+                value = credit_act.description,
+                size = "20"
+        } ?></td>
+        </tr>
+        <tr class="pay_to_row">
+        <td colspan = "2">
+        <?lsmb PROCESS input element_data = {
+                title = text('Pay To')
+                label = text('Pay To')      
+                type = "text"
+                size = "50"
+                name = "pay_to_name"
+                value = credit_act.pay_to_name
+                class = "name"
+        } ?>
+        </td>
         </tr>
         <tr id="date-row">
             <td>
-		<?lsmb PROCESS input element_data = {
-			title = text('Starting Date'),
-			label = text('Starting Date'),
-			name = "startdate",
-			class = "date",
-			value = credit_act.startdate,
-			type = "text",
-			size = "12",
-			maxlength = "10"
-		} #' ?>
+                <?lsmb PROCESS input element_data = {
+                        title = text('Starting Date'),
+                        label = text('Starting Date'),
+                        name = "startdate",
+                        class = "date",
+                        value = credit_act.startdate,
+                        type = "text",
+                        size = "12",
+                        maxlength = "10"
+                } #' ?>
             </td>
             <td>
-		<?lsmb PROCESS input element_data = {
-			title = text('End Date'),
-			label = text('End Date'),
-			name = "enddate",
-			class = "date",
-			value = credit.enddate,
-			type = "text",
-			size = "12",
-			maxlength = "10"
-		} #' ?>
+                <?lsmb PROCESS input element_data = {
+                        title = text('End Date'),
+                        label = text('End Date'),
+                        name = "enddate",
+                        class = "date",
+                        value = credit.enddate,
+                        type = "text",
+                        size = "12",
+                        maxlength = "10"
+                } #' ?>
             </td>
         </tr>
         <tr id="credit-row">
           <td> <?lsmb INCLUDE input element_data = {
-			name = "threshold"
-			value = credit_act.threshold
-			type = "text"
-			size = "20"
-			title = text('Threshold')
-			label = text('Threshold')
-			class = "numeric"
+                        name = "threshold"
+                        value = credit_act.threshold
+                        type = "text"
+                        size = "20"
+                        title = text('Threshold')
+                        label = text('Threshold')
+                        class = "numeric"
                } ?></td>
             <td>
-		<?lsmb INCLUDE input element_data = {
-			title = text('Credit Limit'),
-			label = text('Credit Limit'),
-			name = "creditlimit",
-			value = credit_act.creditlimit,
-			type = "text",
-			size = "20"
-		} #' ?>
+                <?lsmb INCLUDE input element_data = {
+                        title = text('Credit Limit'),
+                        label = text('Credit Limit'),
+                        name = "creditlimit",
+                        value = credit_act.creditlimit,
+                        type = "text",
+                        size = "20"
+                } #' ?>
             </td>
-	</tr>
-	<tr id="discount-gifi-row">
+        </tr>
+        <tr id="discount-gifi-row">
             <td><span id="terms-span">
-		<?lsmb INCLUDE input element_data = {
-			title = text('Payment Terms'),
-			label = text('Payment Terms'),
-			name = "terms",
-			value = credit_act.terms,
-			type = "text",
-			size = "5"
-		} ?> <?lsmb text('days') ?></span>
+                <?lsmb INCLUDE input element_data = {
+                        title = text('Payment Terms'),
+                        label = text('Payment Terms'),
+                        name = "terms",
+                        value = credit_act.terms,
+                        type = "text",
+                        size = "5"
+                } ?> <?lsmb text('days') ?></span>
             </td>
             <td>
-		<?lsmb INCLUDE input element_data = {
-			title = text('Discount'),
-			label = text('Discount'),
-			name = "discount",
-			value = credit_act.discount,
-			type = "text",
-			size = "3",
-			maxlength = 3
-		} ?>% / 
-		<?lsmb INCLUDE input element_data = {
-			name = "discount_terms",
-			value = credit_act.discount_terms,
-			type = "text",
-			size = "3",
-			maxlength = 3
-		} ?> <?lsmb text('days') ?>
+                <?lsmb INCLUDE input element_data = {
+                        title = text('Discount'),
+                        label = text('Discount'),
+                        name = "discount",
+                        value = credit_act.discount,
+                        type = "text",
+                        size = "3",
+                        maxlength = 3
+                } ?>% / 
+                <?lsmb INCLUDE input element_data = {
+                        name = "discount_terms",
+                        value = credit_act.discount_terms,
+                        type = "text",
+                        size = "3",
+                        maxlength = 3
+                } ?> <?lsmb text('days') ?>
             </td>
            <td> <?lsmb INCLUDE select element_data = {
                         name = "discount_account_id"
@@ -193,23 +193,23 @@ PROCESS dynatable
         </tr>
         <tr id="account-link-row">
            <td> <?lsmb INCLUDE select element_data = {
-			name = "ar_ap_account_id"
-			default_values = [credit_act.ar_ap_account_id]
-			options = ar_ap_acc_list
-			title = text((ec == 1) ? 'AP' : 'AR')
-			label = text((ec == 1) ? 'AP' : 'AR')
-			text_attr = "text"
-			value_attr = "id"
+                        name = "ar_ap_account_id"
+                        default_values = [credit_act.ar_ap_account_id]
+                        options = ar_ap_acc_list
+                        title = text((ec == 1) ? 'AP' : 'AR')
+                        label = text((ec == 1) ? 'AP' : 'AR')
+                        text_attr = "text"
+                        value_attr = "id"
                 } ?>
            </td>
            <td> <?lsmb INCLUDE select element_data = {
-			name = "cash_account_id"
-			default_values = [credit_act.cash_account_id]
-			options = cash_acc_list
-			title = text('Payment')
-			label = text('Payment')
-			text_attr = "text"
-			value_attr = "id"
+                        name = "cash_account_id"
+                        default_values = [credit_act.cash_account_id]
+                        options = cash_acc_list
+                        title = text('Payment')
+                        label = text('Payment')
+                        text_attr = "text"
+                        value_attr = "id"
                 } ?>
            </td>
           <td> <?lsmb INCLUDE select element_data = {
@@ -227,16 +227,16 @@ PROCESS dynatable
            <td> <?lsmb IF business_types.size ?>
                 <?lsmb business_types.unshift({});
                        INCLUDE select element_data = {
-			name = "business_id"
-			options = business_types
-			default_values = [credit_act.business_id]
-			text_attr = "description"
-			value_attr = "id"
-			title = text('Business Type') #'
-			label = text('Business Type') #'
-			} ?> 
+                        name = "business_id"
+                        options = business_types
+                        default_values = [credit_act.business_id]
+                        text_attr = "description"
+                        value_attr = "id"
+                        title = text('Business Type') #'
+                        label = text('Business Type') #'
+                        } ?> 
                 <?lsmb END ?>
-	  </td>
+          </td>
           <td><?lsmb IF pricegroups.size ?>
               <div id="pricegroup-div"><?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
@@ -249,34 +249,34 @@ PROCESS dynatable
                           text_attr = 'pricegroup'
                 } ?></div>
               <?lsmb END ?></td>
-	</tr>
+        </tr>
 
-	<tr id="taxform-threshold-row">
-	 <td> <?lsmb IF taxform_list.size ?>
+        <tr id="taxform-threshold-row">
+         <td> <?lsmb IF taxform_list.size ?>
               <?lsmb taxform_list.unshift({});
                      INCLUDE select element_data = {
-			name = "taxform_id"
-			options = taxform_list
-			default_values = [credit_act.taxform_id]
-			text_attr = "form_name"
-			value_attr = "id"
-			title = text('Tax Form') #'
-			label = text('Tax Form') #'
-			} ?> 
+                        name = "taxform_id"
+                        options = taxform_list
+                        default_values = [credit_act.taxform_id]
+                        text_attr = "form_name"
+                        value_attr = "id"
+                        title = text('Tax Form') #'
+                        label = text('Tax Form') #'
+                        } ?> 
               <?lsmb END ?>
-	  </td>
+          </td>
         <td> <?lsmb 
            IF NOT credit_act.language_code;
                 credit_act.language_code = default_language;
            END;
            INCLUDE select element_data = {
-		title = text("Language")
-		label = text("Language")
-		name = "language_code"
+                title = text("Language")
+                label = text("Language")
+                name = "language_code"
                 default_values = [credit_act.language_code],
                 options = language_code_list
-		text_attr = "text"
-		value_attr = "code"
+                text_attr = "text"
+                value_attr = "code"
                 } ?>
         </td>
         </tr>
@@ -319,66 +319,66 @@ PROCESS dynatable
                             } 
             ?> 
          </div>
-		<?lsmb IF credit_act.id;
-		INCLUDE button element_data = {
-			text = text('Save Changes'), #'
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="save_credit" 
-			accesskey="C" 
-			title="Save Credit Account[Alt-C]"
-		};
-		END;
-		INCLUDE button element_data = {
-			text = text('Save New'), #'
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="save_credit_new"  
-			title="Save Credit Account as New" 
-		};
+                <?lsmb IF credit_act.id;
+                INCLUDE button element_data = {
+                        text = text('Save Changes'), #'
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="save_credit" 
+                        accesskey="C" 
+                        title="Save Credit Account[Alt-C]"
+                };
+                END;
+                INCLUDE button element_data = {
+                        text = text('Save New'), #'
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="save_credit_new"  
+                        title="Save Credit Account as New" 
+                };
                 IF credit_act.id;
-		    INCLUDE button element_data = {
+                    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
                         value="add_transaction" 
                         accesskey="A" 
                         title="Transaction [Alt-A]"
-			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
-		    }; 
-		    INCLUDE button element_data = {
+                        text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
+                    }; 
+                    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
                         value="add_invoice" 
                         accesskey="I" 
                         title="Invoice [Alt-I]"
-			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
-		    };
-		    INCLUDE button element_data = {
+                        text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
+                    };
+                    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
                         value="add_order" 
                         accesskey="O" 
                         title="Order [Alt-O]"
-			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
-		    };
-		    INCLUDE button element_data = {
+                        text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
+                    };
+                    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
                         value="rfq" 
                         accesskey="Q" 
                         title="Quotation [Alt-Q]"
-			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
-		    }; ?>
+                        text = (entity_class == 1) ? text('RFQ') : text('Quotation')
+                    }; ?>
                 <a href="contact.pl?action=get_pricelist&amp;credit_id=<?lsmb 
                         credit_act.id ?>"><?lsmb text('Pricelist') ?></a>
                 <?lsmb END ?>
-	</div>	
+        </div>  
     </form>
 <?lsmb IF credit_act.id ?>
 <div class="listtop"><?lsmb text('Profit and Loss') ?></div>
@@ -405,7 +405,6 @@ PROCESS button element_data = {
     value = 'generate_income_statement'
 };
 ?>
-</div>
 </div>
 </form>
 <?lsmb END # IF credit_act.id ?>
