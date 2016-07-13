@@ -9,7 +9,8 @@ INCLUDE 'ui-header.html'
     var activeDiv = "<?lsmb form.charttype ?>";
 </script>
 <div class="TabSet" id="account-tabs">
-<div class="lsmbtab" title="<?lsmb text('Heading') ?>" id="H">
+  <div class="lsmbtab" title="<?lsmb text('Heading') ?>" id="H">
+    <div>
 <form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb form.script ?>">
 <?lsmb PROCESS input element_data = {
         value = 'H'
@@ -105,8 +106,10 @@ INCLUDE 'ui-header.html'
 </tbody>
 </table>
 </form>
+    </div>
 </div>
-<div class="lsmbtab" title="<?lsmb text('Account') ?>" id="A">
+  <div class="lsmbtab" title="<?lsmb text('Account') ?>" id="A">
+    <div>
 <form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb form.script ?>">
 <?lsmb PROCESS input element_data = {
         value = 'A'
@@ -476,11 +479,11 @@ INCLUDE 'ui-header.html'
 </div>
 </div> <!-- dropdown div -->
 <?lsmb FOREACH hidden IN hiddens.keys;
-	INCLUDE input element_data={
-		type = 'hidden',
-		name = hidden,
-		value = hiddens.item(hidden)
-		}; END ?>
+        INCLUDE input element_data={
+                type = 'hidden',
+                name = hidden,
+                value = hiddens.item(hidden)
+                }; END ?>
 
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; PROCESS button element_data=button; END ?>
@@ -516,6 +519,7 @@ INCLUDE 'ui-header.html'
 </tbody>
 </table>
 </form>
+</div>
 </div>
 </body>
 </html>
