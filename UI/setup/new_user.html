@@ -130,6 +130,19 @@ required = 'required'
 } ?>
 </div>
 <div class="input_row">
+<?lsmb  countries.unshift({});
+INCLUDE select element_data = {
+          options = countries
+        text_attr = 'name'
+       value_attr = 'id'
+    default_blank = 1
+   default_values = [country_id]
+             name = 'country_id'
+            label = 'Country'
+         required = 'true'
+} ?>
+</div>
+<div class="input_row">
 <?lsmb INCLUDE input element_data = {
     name = 'dob'
    class = 'date'
@@ -137,8 +150,9 @@ required = 'required'
     size = '10'
    label = text('Date of Birth') #'
    value = dob
-required = 'required'
-} ?>
+required = 'true'
+    "data-dojo-type" = 'lsmb/DateTextBox',
+    'data-dojo-props' = "constraints: {datePattern: 'YYYY-MM-DD'},placeholder: 'YYYY-MM-DD'"} ?>
 </div>
 <div class="input_row">
 <?lsmb INCLUDE input element_data = {
@@ -149,19 +163,6 @@ required = 'required'
    label = text('Tax ID/SSN') #'
    value = ssn
 required = 'required'
-} ?>
-</div>
-<div class="input_row">
-<?lsmb  countries.unshift({});
-INCLUDE select element_data = {
-          options = countries
-        text_attr = 'name'
-       value_attr = 'id'
-    default_blank = 1
-   default_values = [country_id]
-             name = 'country_id'
-            label = 'Country'
-         required = 'required'
 } ?>
 </div>
 <div class="input_row">
