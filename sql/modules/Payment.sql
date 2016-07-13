@@ -858,13 +858,26 @@ BEGIN
                 INSERT INTO acc_trans (chart_id, amount,
                                        trans_id, transdate, approved, source, memo)
                 VALUES (in_cash_account_id[out_count], 
-                        CASE WHEN in_account_class = 1 THEN in_amount[out_count]*current_exchangerate  
-                        ELSE (in_amount[out_count]*current_exchangerate)* - 1
+                        CASE WHEN in_account_class = 1 THEN in_amount[out_count]
+                        ELSE in_amount[out_count]* - 1
                         END,
                         in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
                         in_source[out_count], in_memo[out_count]);
                 INSERT INTO payment_links 
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+
+                INSERT INTO acc_trans (chart_id, amount, fx_transaction,
+                                       trans_id, transdate, approved, source, memo)
+                VALUES (in_cash_account_id[out_count], 
+                        CASE WHEN in_account_class = 1 THEN in_amount[out_count]*(current_exchangerate-1)
+                        ELSE in_amount[out_count]*(current_exchangerate-1)* - 1
+                        END, 't'::boolean,
+                        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
+                        in_source[out_count], in_memo[out_count]);
+                INSERT INTO payment_links 
+                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+
+
                 IF (in_ovp_payment_id IS NOT NULL AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
                         INSERT INTO payment_links
                         VALUES (in_ovp_payment_id[out_count], currval('acc_trans_entry_id_seq'), 0);
@@ -906,14 +919,28 @@ BEGIN
         INSERT INTO acc_trans (chart_id, amount,
                                 trans_id, transdate, approved, source, memo)
                 VALUES (var_account_id, 
-                        CASE WHEN in_account_class = 1 THEN 
-                        
-                        (in_amount[out_count]*old_exchangerate) * -1 
-                        ELSE in_amount[out_count]*old_exchangerate
+                        CASE WHEN in_account_class = 1 THEN
+                        in_amount[out_count]* -1
+                        ELSE in_amount[out_count]
                         END,
                         in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
                         in_source[out_count], in_memo[out_count]);
-        -- Lets set the gain/loss, if  fx_gain_loss_amount equals zero then we dont need to post
+         -- Now we set the links
+         INSERT INTO payment_links 
+                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+         INSERT INTO acc_trans (chart_id, amount, fx_transaction,
+                                trans_id, transdate, approved, source, memo)
+                VALUES (var_account_id, 
+                        CASE WHEN in_account_class = 1 THEN
+                        in_amount[out_count]*(old_exchangerate-1) * -1 
+                        ELSE in_amount[out_count]*(old_exchangerate-1)
+                        END, 't'::boolean,
+                        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
+                        in_source[out_count], in_memo[out_count]);
+         -- Now we set the links
+         INSERT INTO payment_links 
+                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+         -- Lets set the gain/loss, if  fx_gain_loss_amount equals zero then we dont need to post
         -- any transaction
        fx_gain_loss_amount := in_amount[out_count]*current_exchangerate - in_amount[out_count]*old_exchangerate;
        IF (in_account_class = 1) THEN
@@ -922,20 +949,23 @@ BEGIN
        END IF;
 
        IF (fx_gain_loss_amount < 0) THEN
-           INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
+            INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select value::int from defaults WHERE setting_key = 'fxgain_accno_id'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
-        ELSIF (fx_gain_loss_amount > 0) THEN
+            -- Now we set the links
+            INSERT INTO payment_links
+                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+         ELSIF (fx_gain_loss_amount > 0) THEN
             INSERT INTO acc_trans (chart_id, amount, trans_id, transdate, approved, source)
             VALUES ((select value::int from defaults WHERE setting_key = 'fxloss_accno_id'),
                     fx_gain_loss_amount, in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                     in_source[out_count]);
-        END IF; 
-        -- Now we set the links
-         INSERT INTO payment_links 
+            -- Now we set the links
+            INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-      END LOOP;
+         END IF; 
+       END LOOP;
      END IF; -- END IF 
 --
 -- WE NEED TO HANDLE THE OVERPAYMENTS NOW
