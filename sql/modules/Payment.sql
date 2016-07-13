@@ -749,13 +749,13 @@ BEGIN
 
                 INSERT INTO acc_trans (chart_id, amount, fx_transaction,
                                        trans_id, transdate, approved, source, memo)
-                VALUES (in_cash_account_id[out_count], 
+                VALUES (in_cash_account_id[out_count],
                         CASE WHEN in_account_class = 1 THEN in_amount[out_count]*(current_exchangerate-1)
                         ELSE in_amount[out_count]*(current_exchangerate-1)* - 1
                         END, 't'::boolean,
-                        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true), 
+                        in_transaction_id[out_count], in_datepaid, coalesce(in_approved, true),
                         in_source[out_count], in_memo[out_count]);
-                INSERT INTO payment_links 
+                INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
 
 
@@ -807,19 +807,19 @@ BEGIN
                         in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true),
                         in_source[out_count], in_memo[out_count]);
          -- Now we set the links
-         INSERT INTO payment_links 
+         INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
          INSERT INTO acc_trans (chart_id, amount, fx_transaction,
                                 trans_id, transdate, approved, source, memo)
-                VALUES (var_account_id, 
+                VALUES (var_account_id,
                         CASE WHEN in_account_class = 1 THEN
-                        in_amount[out_count]*(old_exchangerate-1) * -1 
+                        in_amount[out_count]*(old_exchangerate-1) * -1
                         ELSE in_amount[out_count]*(old_exchangerate-1)
                         END, 't'::boolean,
-                        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true), 
+                        in_transaction_id[out_count], in_datepaid,  coalesce(in_approved, true),
                         in_source[out_count], in_memo[out_count]);
          -- Now we set the links
-         INSERT INTO payment_links 
+         INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
          -- Lets set the gain/loss, if  fx_gain_loss_amount equals zero then we dont need to post
         -- any transaction
