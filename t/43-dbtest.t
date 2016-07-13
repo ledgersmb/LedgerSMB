@@ -14,7 +14,8 @@ else {
         }
 }
 
-my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment 
+my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment
+                        Payment-fx 
 			Session Voucher System Taxform COGS-FIFO PNL Roles);
 
 
