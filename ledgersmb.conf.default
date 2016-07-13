@@ -4,7 +4,7 @@ logging  = 0
 # Be aware of tempdir setting. If client_browser and server_apache on same 
 # machine, sharing tmp-dir , problems 'Permission denied' if server tries to 
 # write temp-file which already exists as client-owned
-tempdir = /tmp/ledgersmb
+# tempdir = /tmp
 
 # This is the logical CSS directory.  I.e. it is what comes before the 
 # ledgersmb.css in the url.  Example might be /my_css_dir/ or 
