@@ -1,38 +1,4 @@
                                                         -*- fundamental -*-
-Changelog for 1.5 Series
-Forthcoming
-
-UI changes:
-* LedgerSMB now frameless (ChrisT)
-* Full use of Dojo widgets (ErikH)
-* LSMB reports and screens can now be bookmarked (Chris T)
-
-Code Cleanup:
-* LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
-* Removed LedgerSMB's custom dojo page loader (ErikH)
-* Removed dependency on Class::Struct (ChrisT)
-* Removed all inserts into chart view (ChrisT, GH 931)
-* Removed long-broken French chart of accounts (ChrisT)
-* Removed unused saved trial balance components (ChrisT, GH 775)
-
-API Enhancements:
-* Moved a great deal of code into PGObject framework on CPAN (ChrisT)
-* Session handling committed before main action (Chris T, GH 943)
-
-Quality assurance:
-* Verification of pre-defined Chart of Accounts files (ChrisT)
-* Assurance of completeness of 'use'-tested source files (ErikH)
-* Extended 'use'-tests to cover full set of source files (ErikH)
-* New tests validating source code requirements, such as (ErikH)
-  - Reject code using certain modules (Data::Dumper, Carp::Always, ...)
-  - Reject code which isn't formatted correctly
-  - Reject code which uses certain constructs
-* Basic verification of PO (translation) files (ErikH)
-* Basic automated in-browser testing through SauceLabs.com (ErikH/ChrisT)
-
-Internationalization
-* Expansion of webbased translation support through Transifex (ErikH)
-
 
 Changelog for 1.4 Series
 Released 2014-09-15
