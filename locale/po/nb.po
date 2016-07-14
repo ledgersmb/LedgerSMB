@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-05-27 12:18+0000\n"
+"POT-Creation-Date: 2016-07-14 19:04+0000\n"
 "PO-Revision-Date: 2016-05-24 09:24+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -221,7 +221,7 @@ msgstr "Nektet Adgang"
 #: templates/demo_with_images/invoice.html:248
 #: templates/demo_with_images/printPayment.html:44
 #: templates/xedemo/invoice.html:248 templates/xedemo/printPayment.html:44
-#: UI/accounts/edit.html:109 UI/budgetting/budget_entry.html:62
+#: UI/accounts/edit.html:111 UI/budgetting/budget_entry.html:62
 #: UI/Contact/contact.html:20 UI/Contact/divs/credit.html:172
 #: UI/journal/journal_entry.html:114 UI/orders/order.html:253
 #: UI/payments/payment2.html:80 UI/payments/payment2.html:189
@@ -263,7 +263,7 @@ msgstr "Kontonr."
 #: LedgerSMB/Report/Taxform/Detail.pm:82 LedgerSMB/Report/Taxform/Detail.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
 #: LedgerSMB/Scripts/payment.pm:147 t/data/04-complex_template.html:558
-#: UI/accounts/edit.html:25 UI/accounts/edit.html:117
+#: UI/accounts/edit.html:26 UI/accounts/edit.html:120
 #: UI/Contact/divs/bank_act.html:18 UI/payments/use_overpayment2.html:116
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
 #: UI/Reports/filters/contact_search.html:82
@@ -285,7 +285,7 @@ msgid "Account Title"
 msgstr "Kontotype"
 
 #: LedgerSMB/Report/Taxform/Detail.pm:78 LedgerSMB/Report/Taxform/Summary.pm:75
-#: UI/accounts/edit.html:194
+#: UI/accounts/edit.html:197
 msgid "Account Type"
 msgstr "Kontotype"
 
@@ -906,7 +906,7 @@ msgstr "Er du sikker på at du vil fjerne tilbudsnummer"
 msgid "Assemblies restocked!"
 msgstr "Monterte omplassert!"
 
-#: UI/accounts/edit.html:198 UI/Reports/filters/gl.html:127
+#: UI/accounts/edit.html:201 UI/Reports/filters/gl.html:127
 #: sql/Pg-database.sql:3827
 msgid "Asset"
 msgstr "Eiendel"
@@ -1413,7 +1413,7 @@ msgid "CC"
 msgstr "Kopi"
 
 #: bin/ic.pl:530 bin/ic.pl:704 LedgerSMB/Report/Invoices/COGS.pm:130
-#: UI/accounts/edit.html:376
+#: UI/accounts/edit.html:379
 msgid "COGS"
 msgstr "Varekostnad"
 
@@ -1859,7 +1859,7 @@ msgstr "Fortsett"
 msgid "Continue Previous Workflow"
 msgstr "Fortsett til forrige vindu"
 
-#: UI/accounts/edit.html:222
+#: UI/accounts/edit.html:225
 msgid "Contra"
 msgstr "Kontra"
 
@@ -2566,7 +2566,7 @@ msgstr "Avskrive Alle"
 msgid "Depreciate Through"
 msgstr "Avskrive igjennom"
 
-#: LedgerSMB/Scripts/asset.pm:570 UI/accounts/edit.html:445
+#: LedgerSMB/Scripts/asset.pm:570 UI/accounts/edit.html:448
 #: sql/Pg-database.sql:2897
 msgid "Depreciation"
 msgstr "Avskrivning"
@@ -2664,8 +2664,8 @@ msgstr "Avskrivning Vellykket"
 #: templates/xedemo/sales_quotation.html:99 templates/xedemo/timecard.html:85
 #: templates/xedemo/timecard.html:93 templates/xedemo/timecard.tex:38
 #: templates/xedemo/timecard.tex:40 templates/xedemo/work_order.html:130
-#: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:39
-#: UI/accounts/edit.html:146 UI/accounts/yearend.html:35
+#: templates/xedemo/work_order.tex:125 UI/accounts/edit.html:40
+#: UI/accounts/edit.html:149 UI/accounts/yearend.html:35
 #: UI/am-department-form.html:12 UI/am-gifi-form.html:16
 #: UI/am-language-form.html:16 UI/am-sic-form.html:20
 #: UI/am-warehouse-form.html:12 UI/budgetting/budget_entry.html:29
@@ -2741,8 +2741,8 @@ msgstr "Rab"
 msgid "Disc %"
 msgstr "Rab %"
 
-#: LedgerSMB/Scripts/payment.pm:808 UI/accounts/edit.html:315
-#: UI/accounts/edit.html:355 UI/am-business-form.html:16
+#: LedgerSMB/Scripts/payment.pm:808 UI/accounts/edit.html:318
+#: UI/accounts/edit.html:358 UI/am-business-form.html:16
 #: UI/Contact/divs/credit.html:153 UI/payments/payments_detail.html:313
 #: UI/Reports/filters/purchase_history.html:301
 msgid "Discount"
@@ -3242,7 +3242,7 @@ msgstr "Konvulutt"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:240 LedgerSMB/Report/Balance_Sheet.pm:242
 #: LedgerSMB/Report/PNL.pm:204 LedgerSMB/Report/PNL.pm:206
-#: UI/accounts/edit.html:200 UI/Reports/filters/gl.html:139
+#: UI/accounts/edit.html:203 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "Egenkapital"
 
@@ -3250,7 +3250,7 @@ msgstr "Egenkapital"
 msgid "Equity & Liabilities"
 msgstr "Egenkapital & Gjeld"
 
-#: UI/accounts/edit.html:201
+#: UI/accounts/edit.html:204
 msgid "Equity (Temporary)"
 msgstr "Egenkapital (midlertidig)"
 
@@ -3327,8 +3327,8 @@ msgstr "Vekslingskurs"
 msgid "Expected"
 msgstr "Ventet"
 
-#: bin/ic.pl:666 UI/accounts/edit.html:203 UI/accounts/edit.html:415
-#: UI/accounts/edit.html:454 UI/Reports/filters/gl.html:151
+#: bin/ic.pl:666 UI/accounts/edit.html:206 UI/accounts/edit.html:418
+#: UI/accounts/edit.html:457 UI/Reports/filters/gl.html:151
 msgid "Expense"
 msgstr "Utgift"
 
@@ -3336,7 +3336,7 @@ msgstr "Utgift"
 msgid "Expense Account"
 msgstr "Utgiftskonto"
 
-#: UI/accounts/edit.html:328
+#: UI/accounts/edit.html:331
 msgid "Expense/Asset"
 msgstr "Utgift/Eiendel"
 
@@ -3549,11 +3549,11 @@ msgstr "Fem"
 msgid "Five Hundred"
 msgstr "Femhundre"
 
-#: UI/accounts/edit.html:436
+#: UI/accounts/edit.html:439
 msgid "Fixed Asset"
 msgstr "Faste Eiendeler"
 
-#: UI/accounts/edit.html:430 sql/Pg-database.sql:2927
+#: UI/accounts/edit.html:433 sql/Pg-database.sql:2927
 msgid "Fixed Assets"
 msgstr "Faste Eiendeler"
 
@@ -3654,7 +3654,7 @@ msgstr "Fulle Rettigheter"
 
 #: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
-#: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:178
+#: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:181
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:72
 #: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/income_statement.html:72
@@ -3689,7 +3689,7 @@ msgstr "Hovedbok"
 msgid "GL Reference Number"
 msgstr "Hovedbok Referansenummer"
 
-#: UI/accounts/edit.html:463
+#: UI/accounts/edit.html:466
 msgid "Gain"
 msgstr "Overskudd"
 
@@ -3809,7 +3809,7 @@ msgstr "Personal"
 msgid "HTML Templates"
 msgstr "HTML-Maler"
 
-#: UI/accounts/edit.html:12 UI/accounts/edit.html:53 UI/accounts/edit.html:159
+#: UI/accounts/edit.html:12 UI/accounts/edit.html:54 UI/accounts/edit.html:162
 #: UI/am-sic-form.html:17 UI/rp-search-generate_balance_sheet.html:76
 #: UI/rp-search-generate_income_statement.html:126
 msgid "Heading"
@@ -3977,7 +3977,7 @@ msgstr "Inkluder betaling"
 msgid "Include in Report"
 msgstr "Inkludér i rapport"
 
-#: UI/accounts/edit.html:276
+#: UI/accounts/edit.html:279
 msgid "Include in drop-down menus"
 msgstr "Inkludér i rullegardin-menyer"
 
@@ -3992,8 +3992,8 @@ msgstr "Importer Varenummer"
 #: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:206
 #: LedgerSMB/Report/Balance_Sheet.pm:208 LedgerSMB/Report/PNL.pm:183
 #: LedgerSMB/Report/PNL.pm:185 LedgerSMB/Scripts/configuration.pm:87
-#: UI/accounts/edit.html:202 UI/accounts/edit.html:285
-#: UI/accounts/edit.html:367 UI/accounts/edit.html:406
+#: UI/accounts/edit.html:205 UI/accounts/edit.html:288
+#: UI/accounts/edit.html:370 UI/accounts/edit.html:409
 #: UI/Reports/filters/gl.html:145
 msgid "Income"
 msgstr "Inntekt"
@@ -4505,7 +4505,7 @@ msgstr "Brevhode"
 msgid "Liabilities"
 msgstr "Passiva"
 
-#: UI/accounts/edit.html:199 UI/Reports/filters/gl.html:133
+#: UI/accounts/edit.html:202 UI/Reports/filters/gl.html:133
 msgid "Liability"
 msgstr "Gjeld"
 
@@ -4643,7 +4643,7 @@ msgstr "Logg ut"
 msgid "Logout Successful"
 msgstr "Logg ut Vellykket"
 
-#: UI/accounts/edit.html:472
+#: UI/accounts/edit.html:475
 msgid "Loss"
 msgstr "Tap"
 
@@ -5053,7 +5053,7 @@ msgstr "Ingen eksisterende kunde prisgruppe i part kunde"
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr "Ingen eksisterende leverandør prisgruppe i part leverandør"
 
-#: UI/accounts/edit.html:400
+#: UI/accounts/edit.html:403
 msgid "Non-tracking Items"
 msgstr "Ikke sporbare artikler"
 
@@ -5222,7 +5222,7 @@ msgstr "OH"
 msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
 msgstr "OVERBETALT / FORHÅNDSBETALT / BETALT"
 
-#: bin/ic.pl:716 LedgerSMB/Scripts/budgets.pm:124 UI/accounts/edit.html:131
+#: bin/ic.pl:716 LedgerSMB/Scripts/budgets.pm:124 UI/accounts/edit.html:134
 #: UI/Reports/filters/search_goods.html:109
 msgid "Obsolete"
 msgstr "Foreldet"
@@ -5308,7 +5308,7 @@ msgstr ""
 "Opera oppdaget. For å fullføre avlogging, vennligst lukk nettleservinduet "
 "eller slett privat/autentiseringsinformasjon"
 
-#: UI/accounts/edit.html:213
+#: UI/accounts/edit.html:216
 msgid "Options"
 msgstr "Tillegg"
 
@@ -5468,7 +5468,7 @@ msgstr "Over"
 msgid "Overdue"
 msgstr "Overforfall"
 
-#: UI/accounts/edit.html:305 UI/accounts/edit.html:346
+#: UI/accounts/edit.html:308 UI/accounts/edit.html:349
 msgid "Overpayment"
 msgstr "Overbetaling"
 
@@ -5655,12 +5655,12 @@ msgstr "Betal på vegne av"
 msgid "Payable"
 msgstr "Betalbar"
 
-#: UI/accounts/edit.html:322
+#: UI/accounts/edit.html:325
 msgid "Payables"
 msgstr "Utbetalinger"
 
 #: LedgerSMB/Scripts/payment.pm:1062 t/data/04-complex_template.html:282
-#: UI/accounts/edit.html:295 UI/accounts/edit.html:337
+#: UI/accounts/edit.html:298 UI/accounts/edit.html:340
 #: UI/Contact/divs/credit.html:192 UI/payments/payments_detail.html:217
 #: sql/Pg-database.sql:2803
 msgid "Payment"
@@ -6337,7 +6337,7 @@ msgstr "Kvitteringer"
 msgid "Receivable"
 msgstr "Innbetaling"
 
-#: UI/accounts/edit.html:279
+#: UI/accounts/edit.html:282
 msgid "Receivables"
 msgstr "Innbetalinger"
 
@@ -6353,7 +6353,7 @@ msgstr "Motta varer"
 msgid "Received"
 msgstr "Mottatt"
 
-#: UI/accounts/edit.html:235
+#: UI/accounts/edit.html:238
 msgid "Recon"
 msgstr "Avstemme"
 
@@ -6590,7 +6590,7 @@ msgstr "Retturner til Oppsett"
 msgid "Return to the login screen."
 msgstr "Retturner til Logg inn skjerm"
 
-#: bin/ic.pl:535 UI/accounts/edit.html:385
+#: bin/ic.pl:535 UI/accounts/edit.html:388
 msgid "Returns"
 msgstr "Inntekt"
 
@@ -7616,7 +7616,7 @@ msgstr "Endelse"
 msgid "Summary"
 msgstr "Oppsummert"
 
-#: UI/accounts/edit.html:252
+#: UI/accounts/edit.html:255
 msgid "Summary account for"
 msgstr "Oppsummert konto for"
 
@@ -7672,8 +7672,8 @@ msgstr "Merkelappapp"
 #: bin/aa.pl:1713 bin/ic.pl:544 bin/ic.pl:675
 #: LedgerSMB/Report/Contact/Purchase.pm:87
 #: LedgerSMB/Report/Invoices/Outstanding.pm:223
-#: LedgerSMB/Report/Invoices/Transactions.pm:274 UI/accounts/edit.html:246
-#: UI/accounts/edit.html:394 UI/accounts/edit.html:424
+#: LedgerSMB/Report/Invoices/Transactions.pm:274 UI/accounts/edit.html:249
+#: UI/accounts/edit.html:397 UI/accounts/edit.html:427
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:290
 #: UI/Reports/filters/orders.html:176 UI/rp-search-generate_tax_report.html:167
@@ -8284,7 +8284,7 @@ msgstr "Totalt Utestående"
 msgid "Total Paid"
 msgstr "Totalt Betalt"
 
-#: UI/accounts/edit.html:361
+#: UI/accounts/edit.html:364
 msgid "Tracking Items"
 msgstr "Spore Artikler"
 
