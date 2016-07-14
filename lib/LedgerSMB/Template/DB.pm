@@ -113,6 +113,9 @@ sub get {
          args => [$args{template_name}, $args{language_code}, $args{format}]
     );
     die text('Could Not Load Template from DB') unless $temp;
+    for (keys (%$temp)){
+        delete $temp->{$_} unless defined $temp->{$_};
+    }
     return __PACKAGE__->new(%$temp);
 }
 
