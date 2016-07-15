@@ -74,6 +74,7 @@ sub preprocess {
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $rawvars;
     if ( $type eq 'ARRAY' ) {
+        $vars = [];
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
         }
@@ -89,6 +90,7 @@ sub preprocess {
     } elsif ( $type eq 'CODE' ) { # a code reference makes no sense
         return undef;
     } else { # hashes and objects
+        $vars = {};
         for ( keys %{$rawvars} ) {
             $vars->{$_} = preprocess( $rawvars->{$_} );
         }
