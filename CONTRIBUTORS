@@ -4,26 +4,17 @@ individual contributors.
 Current Core Maintainers of LedgerSMB:
 ==================================
 Chris Travers <chris @ metatrontech.com>
-Wrote the inventory activity report, helped with the session handling fix, 
-and other tasks.
-
-Erik Huelsmann <ehuels @ gmail.com> has provided numerous bugfixes and guidance for the
-project.
-
-Havard Sorli <havard @ anix no>
-Contributed documentation fixes, bug hunting, website updates and user support.
-
+Erik Huelsmann <ehuels @ gmail.com>
+Havard Sorli <havard @ anix.no>
+John Locke (Freelock Consulting) <john @ freelock.com>
+Istvan Pongracz < pongracz.istvan @ gmail.com  >
+Herman Vierendeels <herman.vierendeels @ gmail.com>
+Robert James Clay < jame @ rocasa.us >
+Yves Lavoie < ylavoie @ yveslavoie.com >
 
 Other Committers:
 ==================
 Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
-
-Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
-bugfixes.
-
-John Locke (Freelock Consulting) <john @ freelock.com> Contributed a number of 
-bug fixes and provided extensive feedback and assistance during the development
-cycles of 1.3 and 1.4.
 
 Christopher Murtagh <christopher.murtagh @ gmail.com>
 Wrote the session handling fix, has begun reformatting the files to fit the
@@ -128,8 +119,6 @@ Andres Basile < basile @ gmail.com > has contributed a number of bug fixes, as
 well as Gnome.css, Argentina chart of accounts and i18n files as well.
 
 Nick Prater <  nick @ npbroadcast.com > has contributed bugfixes.
-
-Istvan Pongracz has contributed a number of bug fixes and some bug reports.
 
 Brian Wolf <  brian @ activustech.com > has contributed bug reports.
 
