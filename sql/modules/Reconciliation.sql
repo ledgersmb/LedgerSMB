@@ -394,7 +394,7 @@ create or replace function reconciliation__add_entry(
         return lid;
 
     END;
-$$ language 'plpgsql' VOLATILE;
+$$ language 'plpgsql';
 
 comment on function reconciliation__add_entry(
     in_report_id INT,
