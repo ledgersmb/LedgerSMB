@@ -53,6 +53,20 @@ if ( defined $ENV{PERL5OPT}
    $expStackTrace = 1;
 }
 
+###############################################
+## LedgerSMB::Template::*::preprocess checks ##
+###############################################
+
+for my $value ([], {}) {
+    for my $class (qw/ HTML CSV TXT/) {
+        if ("LedgerSMB::Template::$class"->can('preprocess')) {
+            no strict 'refs';
+            my $rv = "LedgerSMB::Template::$class"->can('preprocess')->($value);
+            is(ref $rv, ref $value, "return value type equals input value type ($class)");
+        }
+    }
+}
+
 
 ######################################
 ## LedgerSMB::Template::HTML checks ##
