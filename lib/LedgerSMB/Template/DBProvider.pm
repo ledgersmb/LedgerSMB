@@ -79,10 +79,15 @@ sub _retrieve_template_data {
         $rv = $self->call_dbmethod(funcname => 'template__get',
                                    args => {
                                        template_name => $name,
-                                       language_code => $lang
+                                       language_code => $lang,
+                                       format        => $self->format
                                    });
         last if defined $rv->{template};
     }
+    $rv = $self->call_procedure(funcname => 'template__get',
+                                   args => [
+                                       $name, undef, $self->format
+                                   ]) unless defined $rv->{template};
     return undef unless defined $rv->{template};
 
     $rv->{last_modified} =
