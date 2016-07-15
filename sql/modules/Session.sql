@@ -72,6 +72,7 @@ his/her password.  Returns true if needed, false if not.
 The function also records the next time when the notification will again need to
 be displayed. $$;
 
+DROP FUNCTION IF EXISTS form_open(in_session_id int);
 CREATE OR REPLACE FUNCTION form_open(in_session_id int, in_caller1 varchar DEFAULT NULL, in_caller2 varchar DEFAULT NULL, in_caller3 varchar DEFAULT NULL, in_caller4 varchar DEFAULT NULL)
 RETURNS INT AS
 $$
