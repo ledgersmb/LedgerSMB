@@ -364,9 +364,10 @@ sub get {
     }
     $self->{account_info} = $ref;
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
-                                args => { in_report_date => $self->{end_date} });
+                                args => { chart_id => $ref->{id}, report_date => $self->{end_date} });
 
-    my $our_balance = $ref->{reconciliation__get_cleared_balance} // 0;
+    my $our_balance = $ref->{reconciliation__get_cleared_balance};
+    warn $our_balance;
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
