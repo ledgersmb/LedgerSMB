@@ -363,8 +363,10 @@ sub get {
         $neg = -1;
     }
     $self->{account_info} = $ref;
+    my $begin_date = $self->{end_date};
+    $begin_date->add_interval('month',-1);
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
-                                args => { chart_id => $ref->{id}, report_date => $self->{end_date} });
+                                args => { chart_id => $ref->{id}, report_date => $begin_date });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
     warn $our_balance;
