@@ -1,13 +1,10 @@
 
-var r;
-
-require(['dojo/request'],
-	function(request) {
-	    r = request;
-	});
-
-function submit_form() {
-    var do_submit = true;
+setTimeout(function() {
+require(['dojo/request', "dojo/_base/connect", "dijit/registry", 'dojo/domReady!'], 
+function change_pw(r, connect, registry) {
+    console.log(registry.toArray());
+    console.log(registry.byId("pwchange-pwchange"));
+    registry.byId("pwchange-pwchange").connect("onClick", function submit(){
     var login = document.prefs.username.value;
     var old_password = document.prefs.old_password.value;
     var new_password = document.prefs.new_password.value;
@@ -64,6 +61,8 @@ function submit_form() {
         });
     }
     
-    return false;
-}
-
+    });
+});
+}, 1000);
+/*
+*/
