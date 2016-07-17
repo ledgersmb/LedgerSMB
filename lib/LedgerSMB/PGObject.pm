@@ -31,6 +31,21 @@ with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_pr
 
 use LedgerSMB::App_State;
 
+around BUILDARGS => sub { # remove nulls
+      my $orig  = shift;
+      my $class = shift;
+      my %args;
+      
+      if (scalar @_ == 1){
+           %args = shift;
+      } else {
+           %args = @_;
+      }
+      return $class->$orig(
+          map { $_ => $args{$_} } grep {defined $args{$_}} keys %args
+      );
+};
+
 sub _get_dbh { LedgerSMB::App_State::DBH() }
 sub _get_schema { 'public' } # can be overridden
 sub _get_prefix { '' } # can be overridden
