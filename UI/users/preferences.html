@@ -19,8 +19,8 @@
           <?lsmb text('Preferences Saved') ?>
   </tr><?lsmb END # if action ?>
   <tr><th class="info">
-  	  <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
-  	  <!-- tracked in issue #1699 -->
+          <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
+          <!-- tracked in issue #1699 -->
           <?lsmb text('Your password will expire in ')?><?lsmb user.password_expires ?>
     </th>
   </tr>
@@ -28,55 +28,74 @@
     <td>
       <table width="100%">
         <tr valign="top">
-	  <td>
-	    <table>
+          <td>
+            <table>
+              <tbody>
   <tr><th class="listtop" colspan="2"><?lsmb text('Change Password') ?></th></tr>
-	      <tr>
-		<th align="right"><?lsmb text('Old Password') ?></th>
-		<td><?lsmb PROCESS input element_data = {
-			   type = "password"
-			   name = "old_password"
-			   size = 10
-			   value="" } ?></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Password') ?></th>
-		<td><?lsmb PROCESS input element_data = {
-			   type = "password"
-			   name = "new_password"
-			   size = 10
-			   value="" } ?></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Confirm') ?></th>
-		<td><?lsmb PROCESS input element_data = {
-			   type = "password"
-			   name = "confirm_password"
-			   size = 10 } ?></td>
-	      </tr>
+              <tr>
+                <th align="right"><?lsmb text('Old Password') ?></th>
+                <td><?lsmb PROCESS input element_data = {
+                           type = "password"
+                           name = "old_password"
+                           size = 10
+                           required = 1
+                           value="" } ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Password') ?></th>
+                <td><?lsmb PROCESS input element_data = {
+                           type = "password"
+                           name = "new_password"
+                           size = 10
+                           required = 1
+                           value="" } ?></td>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Confirm') ?></th>
+                <td><?lsmb PROCESS input element_data = {
+                           type = "password"
+                           name = "confirm_password"
+                           required = 1
+                           size = 10 } ?></td>
+              </tr>
+  <tr>
+    <td colspan="2">
+      <button id="pwchange"
+              data-dojo-type="dijit/form/Button">
+        <span><?lsmb text('Change Password') ?></span>
+        <script type="dojo/on" data-dojo-event="click">
+          change_pw();
+        </script>
+      </button>
+      <script type="text/javascript" src="users/preferences.js"></script>
+    </td>
+  </tr>
+              </tbody>
+              <tbody>
+
   <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
-	      <tr>
-		<th align="right"><?lsmb text('Date Format') ?></th>
-		<td><?lsmb PROCESS select element_data={
+              <tr>
+                <th align="right"><?lsmb text('Date Format') ?></th>
+                <td><?lsmb PROCESS select element_data={
                       name = 'dateformat'
                       options = user.dateformats
                       default_values = [ user.prefs.dateformat ]
                       text_attr = 'format'
                       value_attr = 'format'
                     } ?></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Number Format') ?></th>
-		<td><?lsmb PROCESS select element_data={ 
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Number Format') ?></th>
+                <td><?lsmb PROCESS select element_data={ 
                       name = 'numberformat',
                       options = user.numberformats,
                       default_values = [ user.prefs.numberformat ],
                       text_attr = 'format',
                       value_attr = 'format',
                     } ?></td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Language') ?></th>
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Language') ?></th>
                 <td><?lsmb country_codes.unshift({}) ?>
                     <?lsmb PROCESS select element_data={
                      name = 'language',
@@ -85,33 +104,38 @@
                      text_attr = 'label',
                      value_attr = 'id',
                    }?> </td>
-	      </tr>
-	      <tr>
-		<th align="right"><?lsmb text('Stylesheet') ?></th>
-		<td><?lsmb PROCESS select element_data={
+              </tr>
+              <tr>
+                <th align="right"><?lsmb text('Stylesheet') ?></th>
+                <td><?lsmb PROCESS select element_data={
                       name = 'stylesheet'
                       options = user.cssfiles
                       default_values = [ user.prefs.stylesheet ]
                       text_attr = 'file'
                       value_attr = 'file'
                      } ?></td>
-	      </tr>
+              </tr>
 <?lsmb IF printers.defined ?> 
-	      <tr>
-		<th align="right"><?lsmb text('Printer') ?></th>
-		<td><?lsmb PROCESS select element_data={
+              <tr>
+                <th align="right"><?lsmb text('Printer') ?></th>
+                <td><?lsmb PROCESS select element_data={
                      name = 'printer'
                      options = user.printers
                      default_values = [ user.prefs.printer] 
                      text_attr = 'printer'
                      value_attr = 'printer'
                      }?></td>
-	      </tr>
-<?lsmb END ?>
-
-	    </table>
-	  </td>
-	</tr>
+              </tr>
+              <?lsmb END ?>
+<tr>
+  <td colspan="2">
+  </td>
+  </tr>
+  </form>
+</tbody>
+            </table>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
@@ -127,13 +151,5 @@
        value = "save_preferences"
        text = text('Save') } ?>
   </form>
-<?lsmb PROCESS button element_data = {
-       type = "button"
-       class = "submit"
-       name = "pwchange"
-       value = "pwchange"
-       text = text('Change Password') #'
-} ?>
-<script type="text/javascript" src="users/preferences.js"></script>
 </body>
 </html>
