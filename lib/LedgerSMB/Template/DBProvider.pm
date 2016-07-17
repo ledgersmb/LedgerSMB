@@ -76,12 +76,10 @@ sub _retrieve_template_data {
 
     my $rv;
     for $lang (@langs) {
-        $rv = $self->call_dbmethod(funcname => 'template__get',
-                                   args => {
-                                       template_name => $name,
-                                       language_code => $lang,
-                                       format        => $self->format
-                                   });
+        $rv = $self->call_procedure(funcname => 'template__get',
+                                   args => [
+                                       $name, $lang, $self->format
+                                   ]);
         last if defined $rv->{template};
     }
     $rv = $self->call_procedure(funcname => 'template__get',
