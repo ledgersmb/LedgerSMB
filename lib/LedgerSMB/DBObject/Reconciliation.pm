@@ -162,9 +162,9 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
 
-    # Even with https://github.com/ledgersmb/LedgerSMB/issues/838 fixes, array parameters DO NOT WORK
-    #my $code = $self->call_dbmethod(funcname=>'reconciliation__report_approve', args=>[$report_id]); # user
-    my $code = $self->call_dbmethod(funcname=>'reconciliation__report_approve', args=> { in_report_id => $report_id }); # user
+    my $code = $self->call_procedure(
+                           funcname=>'reconciliation__report_approve', 
+                               args=> [$report_id]); # user
 
     if ($code == 0) {  # no problem.
         return $code;
