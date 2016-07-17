@@ -327,8 +327,8 @@ sub _main_screen {
                       funcname => 'entity__list_classes'
     );
 
-    my @roles;
-    @roles = $user->list_roles if $user;
+    my $roles;
+    $roles = $user->list_roles if $user;
 
     $template->render({
                      DIVS => \@DIVS,
@@ -340,7 +340,7 @@ sub _main_screen {
                    person => $person,
                  employee => $person,
                      user => $user,
-                    roles => \@roles,
+                    roles => $roles,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
