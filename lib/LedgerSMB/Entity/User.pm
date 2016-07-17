@@ -95,7 +95,6 @@ sub get {
     );
     $_ = $_->{admin__get_roles_for_user_by_entity} for (@roles);
     $ref->{role_list} = \@roles;
-    
     return $self->new(%$ref);
 }
 
