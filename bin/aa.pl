@@ -205,9 +205,6 @@ sub create_links {
     $form->{formname} = "transaction";
     $form->{media}    = $myconfig{printer};
 
-    $form->{selectformname} =
-      qq|<option value="transaction">| . $locale->text('Transaction');
-
     # currencies
     if (!$form->{currencies}){
         $form->error($locale->text(
@@ -916,8 +913,16 @@ sub form_footer {
     # type=submit $locale->text('Delete')
 
     if ( !$form->{readonly} ) {
-
-        &print_options;
+        my $printops = &print_options;
+        my $formname = { name => 'formname',
+                     options => [
+                                  {text=> $locale->text('Transaction'), value => 'transaction'},
+                                ]
+                   };
+        print_select($form, $formname);
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
 
         print "<br>";
         my $hold_text;
