@@ -95,6 +95,12 @@ take.
 )
 =cut
 
+=item get_dispatch_table
+
+Returns the main dispatch table for the versions with supported upgrades
+
+=cut
+
 sub get_dispatch_table {
     my ($request) = @_;
     my $sl_detect = $request->{_locale}->text("SQL-Ledger database detected.");
@@ -192,7 +198,6 @@ sub login {
                 }
 
                 last;
-                 
             }
         }
 
