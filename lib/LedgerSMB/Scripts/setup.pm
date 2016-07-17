@@ -833,9 +833,10 @@ sub select_coa {
     use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
-
-    if ($request->{coa_lc} =~ /\.\./){
-       $request->error($request->{_locale}->text('Access Denied'));
+    { no warnings 'uninitialized'; # silence warnings if this is missing
+      if ($request->{coa_lc} =~ /\.\./){
+         $request->error($request->{_locale}->text('Access Denied'));
+      }
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
