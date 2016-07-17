@@ -232,13 +232,9 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @callers = ();
     my $i = 1;
-    while (my ($pack, $file, $line, $subname) = caller($i++)) {
-        $callers[$i] = $subname . '#' . $line;
-    }
     my @vars = $self->call_procedure(procname => 'form_open',
-                              args => [$self->{session_id},$callers[1],$callers[2],$callers[3],$callers[4]],
+                              args => [$self->{session_id}],
                               continue_on_error => 1
     );
     if ($args->{commit}){
