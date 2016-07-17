@@ -92,66 +92,77 @@ sub _init_db {
 
 Processes the login and examines the database to determine appropriate steps to
 take.
+)
+=cut
+
+=item get_dispatch_table
+
+Returns the main dispatch table for the versions with supported upgrades
 
 =cut
 
-my @login_actions_dispatch_table =
-    ( { appname => 'sql-ledger',
+sub get_dispatch_table {
+    my ($request) = @_;
+    my $sl_detect = $request->{_locale}->text("SQL-Ledger database detected.");
+    my $migratemsg =  $request->{_locale}->text(
+               "Would you like to migrate the database?"
+    );
+    my $upgrademsg =  $request->{_locale}->text(
+               "Would you like to upgrade the database?"
+    );
+
+    return ( { appname => 'sql-ledger',
         version => '2.7',
-        message => "SQL-Ledger database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $sl_detect,
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '2.8',
-        message => "SQL-Ledger database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $sl_detect,
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => '3.0',
-        message => "SQL-Ledger 3.0 database detected.",
-        operation => "Would you like to migrate the database?",
+        message => $request->{_locale}->text(
+                     "SQL-Ledger 3.0 database detected."
+                   ),
+        operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => undef,
-        message => "Unsupported SQL-Ledger version detected.",
-        operation => "Cancel.",
+        message => $request->{_locale}->text(
+                      "Unsupported SQL-Ledger version detected."
+                   ),
+        operation => $request->{_locale}->text("Cancel"),
         next_action => 'cancel' },
       { appname => 'ledgersmb',
         version => '1.2',
-        message => "LedgerSMB 1.2 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.2 db found."),
+        operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
-        version => '1.3dev',
-        message => 'Development version found.  Please upgrade manually first',
-        operation => 'Cancel?',
-        next_action => 'cancel' },
-      { appname => 'ledgersmb',
-        version => 'legacy',
-        message => 'Legacy version found.  Please upgrade first',
-        operation => 'Cancel?',
-        next_action => 'cancel' },
-      { appname => 'ledgersmb',
         version => '1.3',
-        message => "LedgerSMB 1.3 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.3 db found."),
+        operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
         version => '1.4',
-        message => "LedgerSMB 1.4 db found.",
-        operation => "Would you like to upgrade the database?",
+        message => $request->{_locale}->text("LedgerSMB 1.4 db found."),
+        operation => $upgrademsg,
         # rebuild_modules will upgrade 1.4->1.5 by applying (relevant) changes
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.5',
-        message => "LedgerSMB 1.5 db found.",
-        operation => 'Rebuild/Upgrade?',
+        message => $request->{_locale}->text("LedgerSMB 1.5 db found."),
+        operation => $request->{_locale}->text('Rebuild/Upgrade?'),
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => undef,
-        message => "Unsupported LedgerSMB version detected.",
-        operation => "Cancel.",
+        message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
+        operation => $request->{_locale}->text("Cancel."),
         next_action => 'cancel' } );
+}
+
 
 
 sub login {
@@ -177,20 +188,18 @@ sub login {
     } else {
         my $dispatch_entry;
 
-        foreach $dispatch_entry (@login_actions_dispatch_table) {
+        foreach $dispatch_entry (get_dispatch_table($request)) {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
                 my $field;
-
                 foreach $field (qw|operation message next_action|) {
-                    $request->{$field} =
-                        $request->{_locale}->maketext($dispatch_entry->{$field});
+                    $request->{$field} = $dispatch_entry->{$field};
                 }
+
                 last;
             }
         }
-
 
         if (! defined $request->{next_action}) {
             $request->{message} = $request->{_locale}->text(
