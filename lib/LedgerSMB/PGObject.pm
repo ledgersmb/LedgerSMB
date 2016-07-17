@@ -31,7 +31,10 @@ with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_pr
 
 use LedgerSMB::App_State;
 
-around BUILDARGS => sub { # remove nulls
+# nulls come back from the db as undefs.
+# we have not put this in the main PGObject module because
+# it allows other users of the software to do things however they like.
+around BUILDARGS => sub {
       my $orig  = shift;
       my $class = shift;
       my %args;
