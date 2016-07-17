@@ -591,14 +591,21 @@ $$
   SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
 $$ LANGUAGE 'sql' IMMUTABLE STRICT;
 
+CREATE OR REPLACE FUNCTION PG_TEMP.is_date(S DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
+BEGIN
+  RETURN CASE WHEN $1::DATE IS NULL THEN FALSE ELSE TRUE END;
+EXCEPTION WHEN OTHERS THEN
+  RETURN FALSE;
+END;$$;
+
 INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, entered_by, entered_username)
-  SELECT coa.id, SUM(-amount), TRUE,
+  SELECT coa.id, SUM(SUM(-amount)) OVER (ORDER BY coa.id, a.end_date), TRUE,
             a.end_date,max(a.updated),
             (SELECT entity_id FROM robot WHERE last_name = 'Migrator'),
             'Migrator'
         FROM (
           SELECT chart_id,
-                 cleared,fx_transaction,approved,transdate,pg_temp.last_day(coalesce(cleared,transdate)) as end_date,
+                 cleared,fx_transaction,approved,transdate,pg_temp.last_day(transdate) as end_date,
                  coalesce(cleared,transdate) as updated,
                  CASE WHEN cleared IS NOT NULL THEN amount
                  ELSE 0
@@ -636,7 +643,9 @@ SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_en
 INTO TEMPORARY _cr_report_line
 FROM cr_entry;
 
-UPDATE cr_report_line cr SET post_date = cr1.post_date, ledger_id = cr1.lsmb_entry_id
+UPDATE cr_report_line cr SET post_date = cr1.post_date,
+                             ledger_id = cr1.lsmb_entry_id,
+                             cleared = pg_temp.is_date(clear_time)
 FROM (
   SELECT id,post_date,lsmb_entry_id
   FROM _cr_report_line
