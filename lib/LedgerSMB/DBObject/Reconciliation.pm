@@ -368,7 +368,6 @@ sub get {
                                           report_date => $self->{end_date}->clone->add_interval('month',-1) });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
-    warn $our_balance;
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{outstanding_total} = LedgerSMB::PGNumber->from_db(0);
@@ -387,7 +386,6 @@ sub get {
         }elsif (($self->{their_balance} != '0'
                  and $self->{their_balance} != $self->{our_balance})
                 or $line->{our_balance} == 0){
-
             $line->{err} = 'mismatch';
             $self->{mismatch_our_total} += $line->{our_balance};
             $self->{mismatch_their_total} += $line->{their_balance};

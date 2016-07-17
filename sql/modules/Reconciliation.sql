@@ -241,7 +241,7 @@ COMMENT ON FUNCTION reconciliation__new_report_id
 (in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool)  IS
 $$ Inserts creates a new report and returns the id.$$;
 
-create or replace function reconciliation__add_entry(
+CREATE OR REPLACE FUNCTION reconciliation__add_entry(
     in_report_id INT,
     in_scn TEXT,
     in_type TEXT,
@@ -262,7 +262,7 @@ create or replace function reconciliation__add_entry(
         t_amount numeric;
     BEGIN
         SELECT CASE WHEN a.category in ('A', 'E') THEN in_amount * -1
-                    ELSE in_amount
+                                                  ELSE in_amount
                END into t_amount
           FROM cr_report r JOIN account a ON r.chart_id = a.id
          WHERE r.id = in_report_id;
@@ -287,6 +287,7 @@ create or replace function reconciliation__add_entry(
                         AND their_balance = 0 AND post_date = in_date;
 
                 IF in_count = 0 THEN
+                        -- YLA - Where does our_balance comes from?
                         INSERT INTO cr_report_line
                         (report_id, scn, their_balance, our_balance, clear_time,
                                 "user", trans_type)
@@ -434,62 +435,63 @@ $$
          FROM cr_report
         WHERE id = in_report_id;
 
-                INSERT INTO cr_report_line (report_id, scn, their_balance,
-                        our_balance, "user", voucher_id, ledger_id, post_date)
-                SELECT in_report_id,
-                       CASE WHEN ac.source IS NULL OR ac.source = ''
-                            THEN gl.ref
-                            ELSE ac.source END,
-                       0,
-                       sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
-                                         THEN 1
-                                         WHEN t_recon_fx and gl.table = 'ap'
-                                         THEN ex.sell
-                                         WHEN t_recon_fx and gl.table = 'ar'
-                                         THEN ex.buy
-                                    END) AS amount,
-                                (select entity_id from users
-                                where username = CURRENT_USER),
-                        ac.voucher_id, min(ac.entry_id), ac.transdate
-                FROM acc_trans ac
-                JOIN transactions t on (ac.trans_id = t.id)
-                JOIN (select id, entity_credit_account::text as ref, curr,
-                             transdate, 'ar' as table
-                        FROM ar where approved
-                        UNION
-                      select id, entity_credit_account::text, curr,
-                             transdate, 'ap' as table
-                        FROM ap WHERE approved
-                        UNION
-                      select id, reference, '',
-                             transdate, 'gl' as table
-                        FROM gl WHERE approved) gl
-                        ON (gl.table = t.table_name AND gl.id = t.id)
-                LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-                        AND ((rl.ledger_id = ac.entry_id
-                                AND ac.voucher_id IS NULL)
-                                OR (rl.voucher_id = ac.voucher_id)))
-                LEFT JOIN cr_report r ON r.id = in_report_id
-                LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
-                WHERE ac.cleared IS FALSE
-                        AND ac.approved IS TRUE
-                        AND ac.chart_id = t_chart_id
-                        AND ac.transdate <= t_end_date
-                        AND ((t_recon_fx is not true
-                                and ac.fx_transaction is not true)
-                            OR (t_recon_fx is true
-                                AND (gl.table <> 'gl' OR ac.fx_transaction
-                                                      IS TRUE)))
-                        AND (ac.entry_id > coalesce(r.max_ac_id, 0))
-                GROUP BY gl.ref, ac.source, ac.transdate,
-                        ac.memo, ac.voucher_id, gl.table,
-                        case when gl.table = 'gl' then gl.id else 1 end
-                HAVING count(rl.id) = 0;
+        INSERT INTO cr_report_line (report_id, scn, their_balance,
+                our_balance, "user", voucher_id, ledger_id, post_date)
+        SELECT in_report_id,
+               CASE WHEN ac.source IS NULL OR ac.source = ''
+                    THEN gl.ref
+                    ELSE ac.source END,
+               0,
+               sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
+                                 THEN 1
+                                 WHEN t_recon_fx and gl.table = 'ap'
+                                 THEN ex.sell
+                                 WHEN t_recon_fx and gl.table = 'ar'
+                                 THEN ex.buy
+                            END) AS amount,
+                        (select entity_id from users
+                        where username = CURRENT_USER),
+                ac.voucher_id, min(ac.entry_id), ac.transdate
+        FROM acc_trans ac
+        JOIN transactions t on (ac.trans_id = t.id)
+        JOIN (select id, entity_credit_account::text as ref, curr,
+                     transdate, 'ar' as table
+                FROM ar where approved
+                UNION
+              select id, entity_credit_account::text, curr,
+                     transdate, 'ap' as table
+                FROM ap WHERE approved
+                UNION
+              select id, reference, '',
+                     transdate, 'gl' as table
+                FROM gl WHERE approved) gl
+                ON (gl.table = t.table_name AND gl.id = t.id)
+        LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
+                AND ((rl.ledger_id = ac.entry_id
+                        AND ac.voucher_id IS NULL)
+                        OR (rl.voucher_id = ac.voucher_id)))
+        LEFT JOIN cr_report r ON r.id = in_report_id
+        LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
+        WHERE ac.cleared IS FALSE
+                AND ac.approved IS TRUE
+                AND ac.chart_id = t_chart_id
+                AND ac.transdate <= t_end_date
+                AND ((t_recon_fx is not true
+                        and ac.fx_transaction is not true)
+                    OR (t_recon_fx is true
+                        AND (gl.table <> 'gl' OR ac.fx_transaction
+                                              IS TRUE)))
+                AND (ac.entry_id > coalesce(r.max_ac_id, 0))
+        GROUP BY gl.ref, ac.source, ac.transdate,
+                ac.memo, ac.voucher_id, gl.table,
+                case when gl.table = 'gl' then gl.id else 1 end
+        HAVING count(rl.id) = 0;
 
-                UPDATE cr_report set updated = now(),
-                        their_total = coalesce(in_their_total, their_total),
-         max_ac_id = (select max(entry_id) from acc_trans)
-                where id = in_report_id;
+        UPDATE cr_report set updated = now(),
+                their_total = coalesce(in_their_total, their_total),
+                max_ac_id = (select max(entry_id) from acc_trans)
+        where id = in_report_id;
+
     RETURN in_report_id;
     END;
 $$
