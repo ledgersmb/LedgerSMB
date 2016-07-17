@@ -21,13 +21,14 @@ DECLARE form_test bool;
 BEGIN
         form_test := form_check(in_session_id, in_form_id);
 
-        IF form_test is true THEN
+        IF form_test IS TRUE THEN
                 DELETE FROM open_forms
                 WHERE session_id = in_session_id AND id = in_form_id;
 
                 RETURN TRUE;
 
-        ELSE RETURN FALSE;
+        ELSE
+            RETURN FALSE;
         END IF;
 END;
 $$ language plpgsql SECURITY DEFINER;
@@ -71,7 +72,7 @@ his/her password.  Returns true if needed, false if not.
 The function also records the next time when the notification will again need to
 be displayed. $$;
 
-CREATE OR REPLACE FUNCTION form_open(in_session_id int, in_caller1 varchar DEFAULT NULL, in_caller2 varchar DEFAULT NULL, in_caller3 varchar DEFAULT NULL, in_caller4 varchar DEFAULT NULL)
+CREATE OR REPLACE FUNCTION form_open(in_session_id int)
 RETURNS INT AS
 $$
 DECLARE usertest bool;
@@ -86,15 +87,15 @@ BEGIN
             RAISE EXCEPTION 'Invalid session';
         END IF;
 
-        INSERT INTO open_forms (session_id,caller1,caller2,caller3,caller4,last_used)
-                        VALUES (in_session_id,in_caller1,in_caller2,in_caller3,in_caller4,now())
+        INSERT INTO open_forms (session_id,last_used)
+                        VALUES (in_session_id,now())
         RETURNING id INTO form_id;
 
         RETURN form_id;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
-COMMENT ON FUNCTION form_open(in_session_id int, in_caller1 varchar, in_caller2 varchar, in_caller3 varchar, in_caller4 varchar) IS
+COMMENT ON FUNCTION form_open(in_session_id int) IS
 $$ This opens a form, and returns the id of the form opened.$$;
 
 CREATE OR REPLACE FUNCTION session_check(in_session_id int, in_token text)
