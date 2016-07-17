@@ -131,7 +131,6 @@ sub get {
 
 sub _main_screen {
     my ($request, $company, $person) = @_;
-    
 
     # DIVS logic
     my @DIVS;

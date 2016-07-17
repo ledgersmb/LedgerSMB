@@ -38,7 +38,7 @@ around BUILDARGS => sub {
       my $orig  = shift;
       my $class = shift;
       my %args;
-      
+
       if (scalar @_ == 1){
            %args = shift;
       } else {
