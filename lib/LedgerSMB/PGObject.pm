@@ -40,7 +40,7 @@ around BUILDARGS => sub {
       my %args;
 
       if (scalar @_ == 1){
-           %args = shift;
+           %args = %$_[0];
       } else {
            %args = @_;
       }
