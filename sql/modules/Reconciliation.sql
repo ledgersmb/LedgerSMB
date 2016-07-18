@@ -140,7 +140,7 @@ disable the block_change_when_approved trigger on cr_report.$$;
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT now())
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
     JOIN (      SELECT id FROM ar WHERE approved
