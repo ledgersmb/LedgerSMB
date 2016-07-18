@@ -62,10 +62,10 @@ INSERT INTO test_result (test_name, success)
 select 'Form_open on correct syntax', form_open(currval('session_session_id_seq')::int) > 0;
 
 INSERT INTO test_result (test_name, success)
-select 'Form_close fails on bad values', form_close(currval('session_session_id_seq')::int + 1, currval('open_forms_id_seq')::int) is false;
+select 'Form_close fails on bad values', form_close(currval('session_session_id_seq')::int + 1, -1::int) is false;
 
-INSERT INTO test_result (test_name, success)
-select 'Form_close fails on bad values', form_close(currval('session_session_id_seq')::int, currval('open_forms_id_seq')::int);
+--INSERT INTO test_result (test_name, success)
+--select 'Form_close fails on bad values', form_close(currval('session_session_id_seq')::int, currval('open_forms_id_seq')::int);
 
 INSERT INTO test_result (test_name, success)
 VALUES ('session 2 removed',

@@ -391,7 +391,7 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select distinct gifi_accno from chart
+   test_query => "select distinct gifi_accno as accno from chart
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
@@ -399,9 +399,12 @@ push @tests, __PACKAGE__->new(
                          and gifi_accno !~ '^\\s*\$'",
  display_name => $locale->text('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
- display_cols => [ 'gifi_accno' ],
-        table => 'chart',
- instructions => $locale->text("Please use the SQL-Ledger UI to add the GIFI accounts"),
+ display_cols => [ 'accno', 'description' ],
+        table => 'gifi',
+       column => 'description',
+    id_column => 'accno',
+     id_where => 'description IS NULL AND accno',
+ instructions => $locale->text("Please add the missing GIFI accounts"),
       appname => 'sql-ledger',
   min_version => '2.7',
   max_version => '3.0'
@@ -427,30 +430,32 @@ push @tests, __PACKAGE__->new(
 
 
 
-=pod
+#=pod
 
- push @tests, __PACKAGE__->new(
-    test_query => "select * from customer where arap_accno_id is null",
-    display_name => $locale->text('Empty AR account'),
-    name => 'no_null_ar_accounts',
-    display_cols => [ 'id', 'name', 'contact' ],
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
+#  push @tests, __PACKAGE__->new(
+#     test_query => "select * from customer where arap_accno_id is null",
+#   display_name => $locale->text('Empty AR account'),
+#           name => 'no_null_ar_accounts',
+#   display_cols => [ 'id', 'name', 'contact' ],
+#   instructions => $locale->text("Please correct the empty AR accounts"),
+#        appname => 'sql-ledger',
+#    min_version => '2.7',
+#    max_version => '3.0'
+#     );
 
- push @tests, __PACKAGE__->new(
-    test_query => "select * from vendor where arap_accno_id is null",
-    display_name => $locale->text('Empty AP account'),
-    name => 'no_null_ap_accounts',
-    display_cols => [ 'id', 'name', 'contact' ],
-    appname => 'sql-ledger',
-    min_version => '2.7',
-    max_version => '3.0'
-    );
-*/
+#  push @tests, __PACKAGE__->new(
+#     test_query => "select * from vendor where arap_accno_id is null",
+#   display_name => $locale->text('Empty AP account'),
+#           name => 'no_null_ap_accounts',
+#   display_cols => [ 'id', 'name', 'contact' ],
+#   instructions => $locale->text("Please correct the empty AP accounts"),
+#        appname => 'sql-ledger',
+#    min_version => '2.7',
+#    max_version => '3.0'
+#     );
+#*/
 
-=cut
+#=cut
 
 
 push @tests,__PACKAGE__->new(
@@ -618,7 +623,7 @@ push @tests,__PACKAGE__->new(
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 push @tests,__PACKAGE__->new(
@@ -696,27 +701,27 @@ push @tests, __PACKAGE__->new(
     max_version => '3.0'
     );
 
-#  There's no AP uniqueness requirement?
-# push @tests, __PACKAGE__->new(
-#     test_query => "select *
-#                      from ap
-#                     where invnumber in (select invnumber
-#                                                from ap
-#                                               group by invnumber
-#                                               having count(*) > 1)
-#                     order by invnumber",
-#     display_name => $locale->text('Non-unique invoice numbers'),
-#     name => 'no_duplicate_ap_invoicenumbers',
-#     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
-#                      'ordnumber', 'quonumber', 'approved'],
-#     column => 'invnumber',
-#  instructions => $locale->text(
-#                    'Please make all AP invoice numbers unique'),
-#     table => 'ap',
-#     appname => 'sql-ledger',
-#     min_version => '2.7',
-#     max_version => '3.0'
-#     );
+# There's no AP uniqueness requirement?
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from ap
+                    where invnumber in (select invnumber
+                                               from ap
+                                              group by invnumber
+                                              having count(*) > 1)
+                    order by invnumber",
+    display_name => $locale->text('Non-unique invoice numbers'),
+    name => 'no_duplicate_ap_invoicenumbers',
+    display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+                     'ordnumber', 'quonumber', 'approved'],
+    column => 'invnumber',
+ instructions => $locale->text(
+                   'Please make all AP invoice numbers unique'),
+    table => 'ap',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
 
 push @tests, __PACKAGE__->new(
    test_query => "select * from parts where obsolete is not true
@@ -734,7 +739,7 @@ push @tests, __PACKAGE__->new(
         table => 'parts',
       appname => 'sql-ledger',
   min_version => '2.7',
-  max_version => '2.8'
+  max_version => '3.0'
 );
 
 
@@ -803,7 +808,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -821,7 +826,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -838,7 +843,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -857,7 +862,7 @@ push @tests, __PACKAGE__->new(
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
@@ -877,12 +882,12 @@ push @tests, __PACKAGE__->new(
     table => 'tax',
     appname => 'sql-ledger',
     min_version => '2.7',
-    max_version => '2.8'
+    max_version => '3.0'
     );
 
 
 
-#  ### On the vendor side, SL doesn't use pricegroups
+ ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
 #     test_query => "select *
 #                      from partsvendor

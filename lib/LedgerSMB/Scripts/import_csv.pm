@@ -487,6 +487,10 @@ sub begin_import {
         template => $template_file,
         format => 'HTML'
     );
+    # $request->{page_id} = $request->{type};
+    # $request->{page_id} =~ s/_/-/;
+    # $request->{page_id} .= '-import';
+    $request->{page_id} = 'batch-import';
     $template->render($request);
 }
 

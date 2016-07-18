@@ -10,12 +10,20 @@ use Moose;
 extends 'PageObject';
 
 
+__PACKAGE__->self_register(
+              'setup-operation-complete',
+              './/body[@id="setup-operation-complete"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'setup-operation-complete',
+              });
+
+
 sub _verify {
     my ($self) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
     my $element =
-        $page->find('*contains', text => 'LedgerSMB may now be used');
+        $self->find('*contains', text => 'LedgerSMB may now be used');
 
     croak "Not on the operation confirmation page"
         if ! $element;

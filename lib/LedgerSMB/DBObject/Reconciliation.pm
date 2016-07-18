@@ -162,7 +162,9 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
 
-    my $code = $self->call_dbmethod(funcname=>'reconciliation__report_approve', args=>[$report_id]); # user
+    my $code = $self->call_procedure(
+                           funcname=>'reconciliation__report_approve',
+                               args=> [$report_id]); # user
 
     if ($code == 0) {  # no problem.
         return $code;
@@ -223,16 +225,17 @@ sub delete {
     my ($report_id) = @_;
     my $retval;
     my $found;
-    if ($self->is_allowed_role({allowed_roles => ['reconciliation_approve']})){
+    #TODO: Fix this properly. Access checks like this should move to the database
+    #This can't work for now, $self isn't a ledgerSMB but a PGOld.
+#    if ($self->is_allowed_role({allowed_roles => ['reconciliation_approve']})){
         ($found) = $self->call_procedure(
                            funcname => 'reconciliation__delete_unapproved',
                                args => [$report_id]);
-    } else {
-        ($found) = $self->call_procedure(
-                           funcname => 'reconciliation__delete_my_report',
-                               args => [$report_id]);
-
-    }
+#    } else {
+#        ($found) = $self->call_procedure(
+#                           funcname => 'reconciliation__delete_my_report',
+#                               args => [$report_id]);
+#    }
     if ($found){
         $retval = '0';
     } else {
@@ -270,8 +273,12 @@ sub add_entries {
         # 0 is success
         # 1 is found, but mismatch
         # 2 is not found
+        # YLA 2016-07-08++
+        # The SQL routine always returned 1, no matter what happened.
+        # It now returns the ID of the upserted entry on success.
+        # YLA 2016-07-08--
 
-        # in_scn INT,
+        #in_scn INT,
         #in_amount INT,
         #in_account INT,
         #in_user TEXT,
@@ -339,23 +346,26 @@ sub get {
     $self->merge($ref);
     if (!$self->{submitted}){
         $self->call_dbmethod(
-        funcname=>'reconciliation__pending_transactions'
+            funcname=>'reconciliation__pending_transactions'
         );
     }
+    $self->{enteredby_username} = $ref->{entered_username};
+
     @{$self->{report_lines}} = $self->call_dbmethod(
         funcname=>'reconciliation__report_details_payee',
         orderby => [ ( $self->{line_order} // 'scn' ) ]
     );
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
-                                args => {id => $self->{chart_id} });
+                                args => { id => $self->{chart_id} });
     my $neg = 1;
-    if ($self->{account_info}->{category} =~ /(A|E)/){
+    if (defined $self->{account_info}->{category}   # Report may be empty
+    and $self->{account_info}->{category} =~ /(A|E)/){
         $neg = -1;
     }
     $self->{account_info} = $ref;
-    ($ref) = $self->call_dbmethod(
-                funcname=>'reconciliation__get_cleared_balance'
-    );
+    ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
+                                args => { chart_id => $ref->{id},
+                                          report_date => $self->{end_date}->clone->add_interval('month',-1) });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
@@ -367,28 +377,27 @@ sub get {
     $self->{mismatch_their_total} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_credits} = LedgerSMB::PGNumber->from_db(0);
     $self->{mismatch_their_debits} = LedgerSMB::PGNumber->from_db(0);
-
+    $self->{their_balance} //= 0;   # Report maybe empty
 
     for my $line (@{$self->{report_lines}}){
         if ($line->{cleared}){
             $our_balance += ($neg * $line->{our_balance});
             $self->{cleared_total} += ($neg * $line->{our_balance});
-    }elsif ((($self->{their_balance} != '0')
-        and ($self->{their_balance} != $self->{our_balance}))
-        or $line->{our_balance} == 0){
-
+        }elsif (($self->{their_balance} != '0'
+                 and $self->{their_balance} != $self->{our_balance})
+                or $line->{our_balance} == 0){
             $line->{err} = 'mismatch';
             $self->{mismatch_our_total} += $line->{our_balance};
             $self->{mismatch_their_total} += $line->{their_balance};
             if ($line->{our_balance} < 0){
                 $self->{mismatch_our_debits} += -$line->{our_balance};
             } else {
-        $self->{mismatch_our_credits} += $line->{our_balance};
+                $self->{mismatch_our_credits} += $line->{our_balance};
             }
             if ($line->{their_balance} < 0){
                 $self->{mismatch_their_debits} += -$line->{their_balance};
             } else {
-        $self->{mismatch_their_credits} += $line->{their_balance};
+                $self->{mismatch_their_credits} += $line->{their_balance};
             }
         } else {
             $self->{outstanding_total} += $line->{our_balance};

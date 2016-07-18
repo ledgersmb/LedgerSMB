@@ -9,12 +9,26 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Credit Invoice';
+
+__PACKAGE__->self_register(
+              'batch-import',
+              './/div[@id="batch-import"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'batch-import',
+              });
+# __PACKAGE__->self_register(
+#               'batch-import',
+#               './/div[@id="batch-import"]',
+#               tag_name => 'div',
+#               attributes => {
+#                   id => 'batch-import',
+#               });
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
+    $self->find('*labeled', text => $_)
         for ("Reference", "Description", "Transaction Date", "From File");
 
     return $self;

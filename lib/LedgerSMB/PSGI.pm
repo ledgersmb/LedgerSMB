@@ -27,7 +27,6 @@ use LedgerSMB::Scripts::login;
 use LedgerSMB::PGObject;
 use Try::Tiny;
 
-use Plack::Handler::CGI;
 use CGI::Emulate::PSGI;
 
 local $@; # localizes just for initial load.

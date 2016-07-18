@@ -3,13 +3,13 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; ?>
-<body class="<?lsmb dojo_theme ?>">
+<body id="setup-list-users" class="<?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <div class="listtop"><?lsmb text('Available Users') ?></div>
-<?lsmb 
+<?lsmb
     INCLUDE dynatable
-            columns = [{col_id = 'name', 
-                       name = text('Username'), 
+            columns = [{col_id = 'name',
+                       name = text('Username'),
                        type = 'href'
                   href_base = 'setup.pl?action=edit_user_roles&amp;database=' _ database _ '&amp;id='}]
             tbody = {rows = users}

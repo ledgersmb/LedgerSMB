@@ -203,10 +203,7 @@ sub create_links {
     $crdate     = $form->{crdate};
 
     $form->{formname} = "transaction";
-    $form->{media}    = $myconfig{printer};
-
-    $form->{selectformname} =
-      qq|<option value="transaction">| . $locale->text('Transaction');
+    $form->{media}    //= $myconfig{printer};
 
     # currencies
     if (!$form->{currencies}){
@@ -383,6 +380,8 @@ sub form_header {
         $eclass = '2';
     }
     my $title_msgid="$title $form->{ARAP} Transaction";
+    my $status_div_id = $form->{ARAP} . '-transaction'
+         . ($form->{reverse} ? '-reverse' : '');
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
        $form->{title} = $locale->maketext($title_msgid);
@@ -463,7 +462,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
       ( $form->{"select$form->{vc}"} )
       ? qq|<select data-dojo-type="dijit/form/Select" id="$form->{vc}" name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
       : qq|<input data-dojo-type="dijit/form/TextBox" name="$form->{vc}" value="$form->{$form->{vc}}" size=35>
-                 <a href="contact.pl?action=add&entity_class=$eclass"
+                 <a href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=$eclass"
                     target="new" id="new-contact">[|
                  .  $locale->text('New') . qq|]</a>|;
 
@@ -492,8 +491,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $form->header;
 
  print qq|
-<body class="lsmb $form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
-$form->open_status_div . qq|
+<body class="lsmb $form->{dojo_theme}"
+      onload="document.forms[0].${focus}.focus()" /> | .
+$form->open_status_div($status_div_id) . qq|
 <form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
@@ -913,8 +913,16 @@ sub form_footer {
     # type=submit $locale->text('Delete')
 
     if ( !$form->{readonly} ) {
-
-        &print_options;
+        my $printops = &print_options;
+        my $formname = { name => 'formname',
+                     options => [
+                                  {text=> $locale->text('Transaction'), value => 'transaction'},
+                                ]
+                   };
+        print_select($form, $formname);
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
 
         print "<br>";
         my $hold_text;

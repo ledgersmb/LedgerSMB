@@ -25,7 +25,7 @@ span.warning_label {
 }
 td {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 10pt;
+  font-size: 9pt;
 }
 
 th {
@@ -54,7 +54,7 @@ table.criteria td {
 .login {
   font-family: Verdana, Arial, Helvetica, sans-serif;
 }
-body#login-body {
+body#app-login {
   background: #5a7d9b;
   color: black;
 }

@@ -1187,7 +1187,7 @@ COMMENT ON COLUMN cr_report_line.scn IS
 $$ This is the check number.  Maps to gl.reference $$;
 
 CREATE TABLE cr_coa_to_account (
-    chart_id int not null references account(id),
+    chart_id int not null references account(id) PRIMARY KEY,
     account text not null
 );
 

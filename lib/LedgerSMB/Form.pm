@@ -101,8 +101,7 @@ $form->error may be called to deny access on some attribute values.
 
 =cut
 # Set this Globally so we only need to do it once
-my $dojo_location = 'js';
-if ($LedgerSMB::Sysconfig::dojo_built == 0 ) { my $dojo_location = 'js-src'; }
+my $dojo_location = ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js';
 
 sub new {
 
@@ -607,20 +606,20 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
-        <link rel="stylesheet" href="$dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-        <link rel="stylesheet" href="$dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
-        <script type="text/javascript" language="JavaScript">
-          var dojoConfig = {
-               async: 1,
-               parseOnLoad: 0,
-               packages: [{"name":"lsmb","location":"../lsmb"}]
-           }
-           var lsmbConfig = {dateformat: '$dformat'};
-        </script>
-       <script type="text/javascript" language="JavaScript" src="$dojo_location/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="$dojo_location/lsmb/main.js"></script>
+    <link rel="stylesheet" href="$dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
+    <link rel="stylesheet" href="$dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
+    <script type="text/javascript" language="JavaScript">
+      var dojoConfig = {
+           async: 1,
+           parseOnLoad: 0,
+           packages: [{"name":"lsmb","location":"../lsmb"}]
+       }
+       var lsmbConfig = {dateformat: '$dformat'};
+    </script>
+    <script type="text/javascript" language="JavaScript" src="$dojo_location/dojo/dojo.js"></script>
+    <script type="text/javascript" language="JavaScript" src="$dojo_location/lsmb/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
-        $headeradd
+    $headeradd
 </head>
 
         $self->{pre} \n|;
@@ -640,7 +639,7 @@ to "new."
 =cut
 
 sub open_status_div {
-    my ($self) = @_;
+    my ($self, $div_id) = @_;
     my $class;
     if ($self->{approved} and $self->{id}){
         $class = "posted";
@@ -651,9 +650,10 @@ sub open_status_div {
     }
     my $status = $LedgerSMB::App_State::Locale->text(
             'Action: [_1], ID: [_2]', $self->{action}, $self->{id}
-    );
-    return "<div id='statusdiv' class='$class'>
-            <div id='history'>$status</div>";
+        );
+    my $id = $div_id ? "id=\"$div_id\"" : '';
+    return "<div $id class=\"$class\">
+            <div id=\"history\">$status</div>";
 }
 
 =item $form->close_status_div

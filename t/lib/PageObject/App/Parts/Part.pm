@@ -9,15 +9,16 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-my $page_heading = 'Add Part';
+__PACKAGE__->self_register(
+              'part',
+              './/div[@id="part"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'part',
+              });
 
 sub _verify {
     my ($self) = @_;
-
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }
