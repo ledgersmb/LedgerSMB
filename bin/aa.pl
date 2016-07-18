@@ -198,7 +198,7 @@ sub create_links {
     $crdate	 = $form->{crdate};
 
     $form->{formname} = "transaction";
-    $form->{media}    = $myconfig{printer};
+    $form->{media}    //= $myconfig{printer};
 
     $form->{selectformname} =
       qq|<option value="transaction">| . $locale->text('Transaction');
