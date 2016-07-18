@@ -87,7 +87,7 @@ BEGIN
             RAISE EXCEPTION 'Invalid session';
         END IF;
 
-        INSERT INTO open_forms (session_idlast_used)
+        INSERT INTO open_forms (session_id,last_used)
                         VALUES (in_session_id,now())
         RETURNING id INTO form_id;
 
