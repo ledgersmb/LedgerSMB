@@ -56,6 +56,9 @@ SELECT name, 'C-' || customernumber, 2,
 FROM sl30.customer
 GROUP BY name, customernumber;
 
+INSERT INTO entity (name, control_code, entity_class, country_id)
+SELECT 'Migrator', 'R-1', 10, (select id from country
+         where lower(short_name)  =  lower(:default_country));
 UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -311,7 +314,12 @@ UPDATE sl30.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
 INSERT INTO person (first_name, last_name, entity_id)
-select name, name, entity_id FROM sl30.employee;
+SELECT name, name, entity_id FROM sl30.employee;
+
+INSERT INTO robot  (first_name, last_name, entity_id)
+SELECT '', name, id
+FROM entity
+WHERE entity_class = 10 AND control_code = 'R-1';
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
 -- Intentionally do *not* migrate the users table to prevent later conflicts
