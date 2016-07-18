@@ -1,4 +1,4 @@
-s # This is the base file used to build the LOAD.idx file
+# This is the base file used to build the LOAD.idx file
 # It specifies a lost of db changes in order.
 # lines beginning with ! denote fixes where the fix is deemed applied even if it
 # errors (legacy fixes that may error).
@@ -38,5 +38,3 @@ s # This is the base file used to build the LOAD.idx file
 1.5/parts_fkeys.sql
 1.5/open_forms_callers.sql
 1.5/robot_entity.sql
-
-
