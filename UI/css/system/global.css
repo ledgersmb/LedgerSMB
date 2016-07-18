@@ -211,20 +211,20 @@ html, body {
 
 #reports label
 { display: inline-block;
-	width: 170px;
-	text-align: right;
+        width: 170px;
+        text-align: right;
 }
 
 #reports span.input_group
 { display: block;
-	float: left;
-	width: 40%;
+        float: left;
+        width: 40%;
 }
 
 #reports div.input_row
 {
    display: block;
-	width: 100%;
+        width: 100%;
    clear: both;
 }
 
@@ -411,4 +411,13 @@ html, body {
   .export-link {
       display: inline;
   }
+}
+
+
+.claro .dijitTextBox.dijitTextArea {
+    padding: 0;
+}
+
+.claro textarea.dijitInputInner {
+    outline: none;
 }

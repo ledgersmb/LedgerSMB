@@ -35,9 +35,15 @@ define([
             startup:function(){
                 var self = this;
                 this.inherited(arguments);
+                this.own(
+                    topic.subscribe(
+                        '/invoice/part-select/' + this.linenum,
+                        function(selected) {
+                            self.set('value',selected[self.searchAttr]);
+                        }));
                 this.on('change', function(newValue) {
                     topic.publish('/invoice/part-select/'+self.linenum,
-                                  self.store.get(newValue));
+                                  self.item);
                 });
             }
         });
