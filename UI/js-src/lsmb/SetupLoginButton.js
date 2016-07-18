@@ -18,7 +18,7 @@ define([
                        var self = this;
                        var username = dom.byId('s-user').value;
                        var password = dom.byId('s-password').value;
-                       var company = dom.byId('database').value;
+                       var company = encodeURIComponent(dom.byId('database').value);
 
                        event.stop(evt);
                        xhr(authURL, {
