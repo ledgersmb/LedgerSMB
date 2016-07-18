@@ -34,24 +34,35 @@ SELECT * FROM
   payment_post('1901-01-01', 1, -101, 'XTS', 1.10, NULL,
      'This gl movement is a consequence of a payment transaction',
      ARRAY[(SELECT id FROM account WHERE accno = '00003')],
-     ARRAY[100], NULL, ARRAY['cash '], ARRAY[NULL],
+     ARRAY[110], NULL, ARRAY['cash '], ARRAY[NULL],
      ARRAY[-11], NULL, NULL, NULL, NULL, NULL, NULL, 't');
 --     ARRAY[-11], ARRAY[], ARRAY[], ARRAY[], ARRAY[], ARRAY[], NULL, 't');
+
+
+select sum(amount_bc)
+        from acc_trans
+       where trans_id = -11
+         and chart_id = (select id from account where accno = '00001');
+
+select sum(amount_tc)
+        from acc_trans
+       where trans_id = -11
+         and chart_id = (select id from account where accno = '00001');
 
 INSERT INTO test_result (test_name, success)
 VALUES
     ('Local currency marks fully paid',
-     (select sum(amount_bc)
+     (select abs(sum(amount_bc))
         from acc_trans
        where trans_id = -11
          and chart_id = (select id from account where accno = '00001'))
-     = 0),
+     < 0.01),
     ('Foreign currency marks fully paid',
-     (select sum(amount_tc)
+     (select abs(sum(amount_tc))
         from acc_trans
        where trans_id = -11
          and chart_id = (select id from account where accno = '00001'))
-     = 0);
+     < 0.01);
 
 
 SELECT * FROM TEST_RESULT;
