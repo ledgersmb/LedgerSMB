@@ -163,7 +163,7 @@ sub approve {
     my $report_id = shift @_;
 
     my $code = $self->call_procedure(
-                           funcname=>'reconciliation__report_approve', 
+                           funcname=>'reconciliation__report_approve',
                                args=> [$report_id]); # user
 
     if ($code == 0) {  # no problem.
