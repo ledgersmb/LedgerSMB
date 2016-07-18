@@ -2,7 +2,7 @@
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
+<body id="setup-new-user" class="lsmb <?lsmb dojo_theme ?>">
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Enter User') ?></div>
@@ -29,10 +29,10 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <label id="password-label" for="password" class="password"><?lsmb
 text('Password') ?></label>
 <?lsmb PROCESS input element_data = {
-		 name='password'
-		 type='password'
-		 class = 'password'
-		 size='60' } ?>
+                 name='password'
+                 type='password'
+                 class = 'password'
+                 size='60' } ?>
 </div>
 <div class="input_row">
 <label><?lsmb text('Import') ?></label>

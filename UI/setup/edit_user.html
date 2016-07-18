@@ -3,9 +3,9 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; ?>
-<body class="<?lsmb dojo_theme ?>">
+<body id="setup-edit-user" class="<?lsmb dojo_theme ?>">
  <div class="setupconsole">
-	<div class="listtop">
+        <div class="listtop">
             <?lsmb
                IF request.pls_import;
                        text('Duplicate User Found: Importing User');
@@ -20,8 +20,8 @@ include_stylesheet=["setup/stylesheet.css"];
         </div>
 
     <form data-dojo-type="dijit/form/Form" method="POST">
-	     <input type="hidden" name="id" value="<?lsmb request.id ?>" />
-        <input type="hidden" name="database" value="<?lsmb request.database ?>" />
+      <input type="hidden" name="id" value="<?lsmb request.id ?>" />
+      <input type="hidden" name="database" value="<?lsmb request.database ?>" />
         <table id="user-data">
 
             <?lsmb IF user.user_id and not request.pls_import ?>

@@ -323,8 +323,8 @@ sub _main_screen {
                       funcname => 'entity__list_classes'
     );
 
-    my @roles;
-    @roles = $user->list_roles if $user;
+    my $roles;
+    $roles = $user->list_roles if $user;
 
     $template->render({
                      DIVS => \@DIVS,
@@ -336,7 +336,7 @@ sub _main_screen {
                    person => $person,
                  employee => $person,
                      user => $user,
-                    roles => \@roles,
+                    roles => $roles,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
@@ -936,6 +936,7 @@ This turns the employee into a user.
 sub create_user {
     my ($request) = @_;
     $request->{target_div} = 'user_div';
+    delete $request->{pls_import};
     if ($request->close_form){
        $request->{password} = $request->{reset_password};
        my $user = LedgerSMB::Entity::User->new(%$request);

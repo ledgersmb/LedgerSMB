@@ -10,14 +10,22 @@ use PageObject;
 use Moose;
 extends 'PageObject';
 
-use PageObject::App;
+
+__PACKAGE__->self_register(
+              'app-login',
+              './/body[@id="app-login"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'app-login',
+              });
+
 
 sub url { return '/login.pl'; }
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page->find('*labeled', text => $_)
+    $self->find('*labeled', text => $_)
         for ("User Name", "Password", "Company");
     return $self;
 };
@@ -29,9 +37,7 @@ sub login {
     my $password = $args{password};
     my $company = $args{company};
     do {
-        my $element =
-            $self->stash->{ext_wsl}->page->find('*labeled',
-                                                text => $_->{label});
+        my $element = $self->find('*labeled', text => $_->{label});
         $element->click;
         $element->clear;
         $element->send_keys($_->{value});
@@ -41,8 +47,8 @@ sub login {
              value => $password },
            { label => "Company",
              value => $company });
-    $self->stash->{ext_wsl}->page->find('*button', text => "Login")->click;
-    return $self->stash->{page} = PageObject::App->new(%$self);
+    $self->find('*button', text => "Login")->click;
+    return $self->session->page->wait_for_body;
 }
 
 

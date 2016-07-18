@@ -3,21 +3,43 @@ package PageObject::App;
 use strict;
 use warnings;
 
-use Carp;
 use PageObject;
 
 
 use Moose;
 extends 'PageObject';
 
-use PageObject::App::Main;
-use PageObject::App::Menu;
 
-has menu => (is => 'ro', builder => '_build_menu', lazy => 1);
-has maindiv => (is => 'ro', builder => '_build_maindiv', lazy => 1);
+__PACKAGE__->self_register(
+              'app',
+              './/body[@id="app-main"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'app-main',
+              });
 
-sub _build_menu { return PageObject::App::Menu->new(%{(shift)}); }
-sub _build_maindiv { return PageObject::App::Main->new(%{(shift)}); }
+
+has menu => (is => 'ro',
+             isa => 'PageObject',
+             builder => '_build_menu',
+             lazy => 1);
+
+has maindiv => (is => 'ro',
+                isa => 'PageObject',
+                builder => '_build_maindiv',
+                lazy => 1);
+
+sub _build_menu {
+    my ($self) = @_;
+
+    return $self->find('*app-menu');
+}
+
+sub _build_maindiv {
+    my ($self) = @_;
+
+    return $self->find('*app-main');
+}
 
 
 sub _verify {

@@ -9,7 +9,13 @@ use PageObject;
 extends 'PageObject';
 
 
-use PageObject::Setup::OperationConfirmation;
+__PACKAGE__->self_register(
+              'setup-add-user',
+              './/body[@id="setup-new-user"]',
+              tag_name => 'body',
+              attributes => {
+                  id => 'setup-new-user',
+              });
 
 
 my @fields = ("Username", "Password", "Yes", "No", "Salutation",
@@ -19,10 +25,8 @@ my @fields = ("Username", "Password", "Yes", "No", "Salutation",
 
 sub _verify {
     my ($self) = @_;
-    my $page = $self->stash->{ext_wsl}->page;
 
-    $page->find('*labeled', text => $_) for @fields;
-
+    $self->find('*labeled', text => $_) for @fields;
     return $self;
 }
 
@@ -33,7 +37,7 @@ sub create_user {
     foreach my $field (@fields) {
         next unless exists $param{$field};
         my $elm =
-            $self->stash->{ext_wsl}->page->find('*labeled', text => $field);
+            $self->find('*labeled', text => $field);
 
         if ($elm->can('find_option')) {
             $elm->find_option($param{$field})->click;
@@ -45,9 +49,8 @@ sub create_user {
     my $btn = $self->find('*button', text => "Create User");
     $btn->click;
 
-    return $self->stash->{page} =
-        PageObject::Setup::OperationConfirmation->new(%$self)
-        ->verify($btn);
+    $self->session->page->wait_for_body;
+    return $self->session->page->body;
 }
 
 

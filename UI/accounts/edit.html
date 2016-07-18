@@ -12,6 +12,11 @@ INCLUDE 'ui-header.html'
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Heading') ?>" id="H">
+  <?lsmb # if we put the FORM tag as the toplevel tab element,
+         # we get trouble: content gets cut off; wrap in a div
+         # although maybe the point is not to have the toplevel
+         # be a *widget*...?  ?>
+  <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'H'
@@ -78,6 +83,7 @@ INCLUDE 'ui-header.html'
 <hr />
 </form>
 </div>
+</div>
 <?lsmb END ?>
 <? IF !form.id OR form.charttype == 'A' ?>
 <div data-dojo-type="dijit/layout/ContentPane"
@@ -85,6 +91,7 @@ INCLUDE 'ui-header.html'
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Account') ?>" id="A">
+  <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'A'
@@ -454,21 +461,23 @@ INCLUDE 'ui-header.html'
 </div>
 </div> <!-- dropdown div -->
 <?lsmb FOREACH hidden IN hiddens.keys;
-	INCLUDE input element_data={
-		type = 'hidden',
-		name = hidden,
-		value = hiddens.item(hidden)
-		}; END ?>
+        INCLUDE input element_data={
+                type = 'hidden',
+                name = hidden,
+                value = hiddens.item(hidden)
+                }; END ?>
 
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; button.id = button.value _ '-A'; INCLUDE button element_data=button; END ?>
 <hr />
 </form>
 </div>
+</div>
 <?lsmb #END ?>
 <?lsmb IF form.id ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      title="<?lsmb text('Translations') ?>" id="TranslationPane">
+  <div>
 <form data-dojo-type="lsmb/Form" method="post" action="account.pl">
 <table>
 <caption>Translations</caption>
@@ -518,6 +527,7 @@ INCLUDE 'ui-header.html'
     text = text('Save'),
 } ?>
 </form>
+</div>
 </div>
 <?lsmb END ?>
 </body>

@@ -55,7 +55,7 @@ use LedgerSMB::MooseTypes;
 
 =cut
 
-has taxnumber   => (isa => 'Str', is => 'rw');
+has taxnumber   => (is => 'rw');
 
 =item description
 

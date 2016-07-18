@@ -11,13 +11,16 @@ extends 'PageObject';
 
 my $page_heading = 'Add AR Transaction';
 
+__PACKAGE__->self_register(
+              'ar-transaction',
+              './/div[@id="AR-transaction"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'AR-transaction',
+              });
+
 sub _verify {
     my ($self) = @_;
-
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
 
     return $self;
 }
@@ -26,13 +29,14 @@ sub select_customer {
     my ($self, $customer) = @_;
 
     $self->verify;
-    my $elem = 
-        $self->stash->{ext_wsl}->page->find("*labeled", text => "Customer");
+    my $elem =
+        $self->find("*labeled", text => "Customer");
 
     $elem->clear;
     $elem->send_keys($customer);
 
-    $self->stash->{ext_wsl}->page->find("*button", text => "Update")->click;
+    $self->find("*button", text => "Update")->click;
+    $self->session->page->body->maindiv->wait_for_content;
 }
 
 

@@ -27,9 +27,15 @@ define([
 
                       this.destroyDescendants();
                       return this.set('content', newbody)
-                          .then(function() {
-                              self.show_main_div();
-                          });
+                          .then(
+                              function() {
+                                  self.show_main_div();
+                              },
+                              function() {
+                                  var d = registry.byId('errorDialog');
+                                  d.set('content',
+                                        'Server return value invalid');
+                              });
                   },
                   load_form: function(url, options) {
                       var self = this;

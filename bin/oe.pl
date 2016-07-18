@@ -162,6 +162,14 @@ sub order_links {
 
 }
 
+sub invoice_links { # simple alias to fix order printing
+    order_links()
+}
+
+sub prepare_invoice { # also to fix printing
+    prepare_order()
+}
+
 sub prepare_order {
 
     $form->{format}   = "postscript" if $myconfig{printer};
@@ -288,23 +296,25 @@ sub form_header {
 
     my $ordnumber;
     my $numberfld;
+    my $status_div_id = $form->{type};
+    $status_div_id =~ s/_/-/g;
     if ( $form->{type} =~ /_order$/ ) {
         $quotation = "0";
         $ordnumber = "ordnumber";
-    if ($form->{vc} eq 'customer'){
-             $numberfld = "sonumber";
+        if ($form->{vc} eq 'customer'){
+            $numberfld = "sonumber";
         } else {
-             $numberfld = "ponumber";
+            $numberfld = "ponumber";
         }
     }
     else {
         $quotation = "1";
         $ordnumber = "quonumber";
         if ( $form->{vc} eq 'customer' ) {
-        $numberfld = "sqnumber";
-    } else {
-        $numberfld = "rfqnumber";
-    }
+            $numberfld = "sqnumber";
+        } else {
+            $numberfld = "rfqnumber";
+        }
     }
     $form->{nextsub} = 'update';
 
@@ -509,7 +519,7 @@ sub form_header {
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="new"
-                 href="contact.pl?action=add&entity_class=$eclass">
+                 href="login.pl?action=login&company=$form->{company}#/contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
@@ -553,7 +563,7 @@ sub form_header {
 
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
-| . $form->open_status_div . qq|
+| . $form->open_status_div($status_div_id) . qq|
 <script>
 function on_return_submit(event){
   var kc;
