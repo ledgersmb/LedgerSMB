@@ -16,12 +16,6 @@ VALUES ('00001', 'testing AP', 'A', 'L', 'AP'),
        ('00003', 'testing cash', 'A', 'A', 'AP_paid');
 
 
-INSERT INTO exchangerate (transdate, curr, buy, sell)
-VALUES ('1901-01-01', 'XTS', 1.10, 1.10),
-       ('1901-01-02', 'XTS', 1.0, 1.0);
-
-
-
 -- TEST 1: payment_post() with fx rate 1.1
 
 INSERT INTO company (id, legal_name, entity_id) VALUES (-101, 'TEST', -101);
@@ -37,7 +31,7 @@ INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved
 
 -- Pay the invoice in full
 SELECT * FROM
-  payment_post('1901-01-01', 1, -101, 'XTS', NULL,
+  payment_post('1901-01-01', 1, -101, 'XTS', 1.10, NULL,
      'This gl movement is a consequence of a payment transaction',
      ARRAY[(SELECT id FROM account WHERE accno = '00003')],
      ARRAY[100], NULL, ARRAY['cash '], ARRAY[NULL],
