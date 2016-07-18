@@ -571,8 +571,8 @@ CREATE OR REPLACE FUNCTION reconciliation__get_current_balance
 (in_account_id int, in_date date) returns numeric as
 $$
         SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
-                        IN ('A', 'E') THEN sum(a.amount) * -1
-                ELSE sum(a.amount) END
+                        IN ('A', 'E') THEN sum(a.amount_bc) * -1
+                ELSE sum(a.amount_bc) END
         FROM acc_trans a
         JOIN (
                 SELECT id FROM ar
