@@ -232,6 +232,7 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
+    my $i = 1;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{session_id}],
                               continue_on_error => 1

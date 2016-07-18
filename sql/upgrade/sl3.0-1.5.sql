@@ -56,6 +56,10 @@ SELECT name, 'C-' || customernumber, 2,
 FROM sl30.customer
 GROUP BY name, customernumber;
 
+INSERT INTO entity (name, control_code, entity_class, country_id)
+SELECT 'Migrator', 'R-1', 10, (select id from country
+         where lower(short_name)  =  lower(:default_country));
+
 UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -311,7 +315,12 @@ UPDATE sl30.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
 INSERT INTO person (first_name, last_name, entity_id)
-select name, name, entity_id FROM sl30.employee;
+SELECT name, name, entity_id FROM sl30.employee;
+
+INSERT INTO robot  (first_name, last_name, entity_id)
+SELECT '', name, id
+FROM entity
+WHERE entity_class = 10 AND control_code = 'R-1';
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
 -- Intentionally do *not* migrate the users table to prevent later conflicts
@@ -319,7 +328,7 @@ select name, name, entity_id FROM sl30.employee;
 --     SELECT entity_id, login FROM sl30.employee em
 --      WHERE login IS NOT NULL;
 
--- No manager information in SL30
+-- No manager-managee information in SL30
 --INSERT
 --  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
 --       employeenumber, dob, manager_id)
@@ -538,7 +547,6 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
--- ### TODO: Reconciled disappeared from the source table...
 
 ALTER TABLE sl30.acc_trans ADD COLUMN lsmb_entry_id integer;
 
@@ -559,6 +567,95 @@ SELECT lsmb_entry_id, trans_id, (select id
         FROM sl30.acc_trans
         WHERE chart_id IS NOT NULL AND trans_id IN (
             SELECT id FROM transactions);
+
+-- Reconciliations
+-- Serially reuseable
+INSERT INTO cr_coa_to_account(chart_id, account)
+SELECT DISTINCT pc.id, c.description FROM sl30.acc_trans ac
+JOIN sl30.chart c ON ac.chart_id = c.id
+JOIN public.chart pc on pc.accno = c.accno
+WHERE ac.cleared IS NOT NULL
+AND c.link ~ 'paid'
+AND NOT EXISTS (SELECT 1 FROM cr_coa_to_account WHERE chart_id=pc.id);
+
+-- Log in the Migrator Robot
+INSERT INTO users(username, notify_password, entity_id)
+SELECT last_name, '1 day', entity_id
+FROM robot
+WHERE last_name = 'Migrator';
+
+-- Compute last day of the month
+CREATE OR REPLACE FUNCTION pg_temp.last_day(DATE)
+RETURNS DATE AS
+$$
+  SELECT (date_trunc('MONTH', $1) + INTERVAL '1 MONTH - 1 day')::DATE;
+$$ LANGUAGE 'sql' IMMUTABLE STRICT;
+
+CREATE OR REPLACE FUNCTION PG_TEMP.is_date(S DATE) RETURNS BOOLEAN LANGUAGE PLPGSQL IMMUTABLE AS $$
+BEGIN
+  RETURN CASE WHEN $1::DATE IS NULL THEN FALSE ELSE TRUE END;
+EXCEPTION WHEN OTHERS THEN
+  RETURN FALSE;
+END;$$;
+
+INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, entered_by, entered_username)
+  SELECT coa.id, SUM(SUM(-amount)) OVER (ORDER BY coa.id, a.end_date), TRUE,
+            a.end_date,max(a.updated),
+            (SELECT entity_id FROM robot WHERE last_name = 'Migrator'),
+            'Migrator'
+        FROM (
+          SELECT chart_id,
+                 cleared,fx_transaction,approved,transdate,pg_temp.last_day(transdate) as end_date,
+                 coalesce(cleared,transdate) as updated,
+                 CASE WHEN cleared IS NOT NULL THEN amount
+                 ELSE 0
+                 END AS amount
+          FROM sl30.acc_trans
+        ) a
+        JOIN sl30.chart s ON chart_id=s.id
+        JOIN reconciliation__account_list() coa ON coa.accno=s.accno
+        GROUP BY coa.id, a.end_date
+        ORDER BY coa.id, a.end_date;
+
+-- cr_report_line will insert the entry and return the ID of the upsert entry.
+-- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
+-- Temp table will be dropped automatically at the end of the transaction.
+WITH cr_entry AS (
+    SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+    FROM sl30.acc_trans a
+    JOIN sl30.chart s ON chart_id=s.id
+    JOIN reconciliation__account_list() coa ON coa.accno=s.accno
+    JOIN public.cr_report cr ON s.id = a.chart_id
+    AND  date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
+    AND (date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE OR a.cleared IS NULL)
+    LEFT JOIN (
+        WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
+                  UNION SELECT id,'AR'         FROM sl30.ar
+                  UNION SELECT id,'GL'         FROM sl30.gl)
+        SELECT DISTINCT ac.trans_id, types.type
+        FROM sl30.acc_trans ac
+        LEFT JOIN types ON ac.trans_id = types.id
+        ORDER BY ac.trans_id
+    ) n ON n.trans_id = a.trans_id
+    ORDER BY cr.id,n.type,a.source ASC NULLS LAST,a.amount
+)
+SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.post_date, cr_entry.lsmb_entry_id
+INTO TEMPORARY _cr_report_line
+FROM cr_entry;
+
+UPDATE cr_report_line cr SET post_date = cr1.post_date,
+                             ledger_id = cr1.lsmb_entry_id,
+                             cleared = pg_temp.is_date(clear_time)
+FROM (
+  SELECT id,post_date,lsmb_entry_id
+  FROM _cr_report_line
+) cr1
+WHERE cr.id = cr1.id;
+UPDATE cr_report_line SET insert_time = post_date;
+
+-- Log out the Migrator
+DELETE FROM users
+WHERE username = 'Migrator';
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
@@ -768,7 +865,6 @@ SELECT setval('users_id_seq', max(id)) FROM users;
 SELECT setval('entity_id_seq', max(id)) FROM entity;
 SELECT setval('company_id_seq', max(id)) FROM company;
 SELECT setval('location_id_seq', max(id)) FROM location;
-SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
 SELECT setval('location_class_id_seq', max(id)) FROM location_class;
 SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
 SELECT setval('salutation_id_seq', max(id)) FROM salutation;

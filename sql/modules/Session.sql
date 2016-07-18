@@ -21,13 +21,14 @@ DECLARE form_test bool;
 BEGIN
         form_test := form_check(in_session_id, in_form_id);
 
-        IF form_test is true THEN
+        IF form_test IS TRUE THEN
                 DELETE FROM open_forms
                 WHERE session_id = in_session_id AND id = in_form_id;
 
                 RETURN TRUE;
 
-        ELSE RETURN FALSE;
+        ELSE
+            RETURN FALSE;
         END IF;
 END;
 $$ language plpgsql SECURITY DEFINER;
@@ -75,6 +76,7 @@ CREATE OR REPLACE FUNCTION form_open(in_session_id int)
 RETURNS INT AS
 $$
 DECLARE usertest bool;
+    form_id int;
 BEGIN
         SELECT count(*) = 1 INTO usertest FROM session
          WHERE session_id = in_session_id
@@ -85,8 +87,11 @@ BEGIN
             RAISE EXCEPTION 'Invalid session';
         END IF;
 
-        INSERT INTO open_forms (session_id) VALUES (in_session_id);
-        RETURN currval('open_forms_id_seq');
+        INSERT INTO open_forms (session_id,last_used)
+                        VALUES (in_session_id,now())
+        RETURNING id INTO form_id;
+
+        RETURN form_id;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
