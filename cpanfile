@@ -87,7 +87,7 @@ on 'develop' => sub {
     requires 'File::Util';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
-    requires 'Pherkin::Extension::Weasel';
+    requires 'Pherkin::Extension::Weasel', '0.02';
     requires 'Test::BDD::Cucumber', '0.50';
     requires 'Test::Exception';
     requires 'Test::Trap';
@@ -97,7 +97,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
-    requires 'Weasel';
+    requires 'Weasel', '0.04';
     requires 'Weasel::Driver::Selenium2';
     requires 'Weasel::Widgets::Dojo';
 };

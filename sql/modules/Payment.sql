@@ -794,14 +794,14 @@ BEGIN
           (chart_id, amount_bc, curr, amount_tc, trans_id,
            transdate, approved, source, memo)
                 VALUES (in_cash_account_id[out_count],
-                           in_amount[out_count]*current_exchangerate*sign,
-                 in_curr,
-                 in_amount[out_count]*sign,
-                           in_transaction_id[out_count],
-                 in_datepaid,
-                 coalesce(in_approved, true),
-                           in_source[out_count],
-                 in_memo[out_count]);
+                        in_amount[out_count]*current_exchangerate*sign,
+                        in_curr,
+                        in_amount[out_count]*sign,
+                        in_transaction_id[out_count],
+                        in_datepaid,
+                        coalesce(in_approved, true),
+                        in_source[out_count],
+                        in_memo[out_count]);
        -- Link the ledger line to the payment record
                 INSERT INTO payment_links
                 VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
@@ -809,10 +809,10 @@ BEGIN
        IF (in_ovp_payment_id IS NOT NULL
            AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
          -- do something with an overpayment, but WHAT?? (EH20150705)
-                        INSERT INTO payment_links
-           VALUES (in_ovp_payment_id[out_count],
-                   currval('acc_trans_entry_id_seq'), 0);
-                END IF;
+         INSERT INTO payment_links
+         VALUES (in_ovp_payment_id[out_count],
+                 currval('acc_trans_entry_id_seq'), 0);
+       END IF;
 
         END LOOP;
 
@@ -866,8 +866,8 @@ BEGIN
               -- because by definition the tc and bc amounts are the same.
             VALUES (gain_loss_accno_id,
                     fx_gain_loss_amount,
-                      in_curr,
-                      0, -- the transaction currency side is zero by definition
+                    in_curr,
+                    0, -- the transaction currency side is zero by definition
                     in_transaction_id[out_count],
                     in_datepaid,
                     coalesce(in_approved, true),

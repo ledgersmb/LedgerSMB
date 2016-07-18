@@ -11,7 +11,7 @@ use Test::BDD::Cucumber::StepFile;
 
 my %pages = (
     "setup login"         => "PageObject::Setup::Login",
-    "company creation"    => "PageObject::Setup::CreateConfirm",
+    "company creation"    => "PageObject::Setup::Admin",
     "user creation"       => "PageObject::Setup::CreateUser",
     "setup confirmation"  => "PageObject::Setup::OperationConfirmation",
     "application login"   => "PageObject::App::Login",
@@ -26,8 +26,7 @@ When qr/I navigate to the (.*) page/, sub {
         unless exists $pages{$page};
 
     use_module($pages{$page});
-    $pages{$page}->open(stash => S);
-    S->{page}->verify;
+    S->{page} = $pages{$page}->open(S->{ext_wsl})->verify;
 };
 
 Then qr/I should see the (.*) page/, sub {
@@ -35,7 +34,7 @@ Then qr/I should see the (.*) page/, sub {
     die "Unknown page '$page_name'"
         unless exists $pages{$page_name};
 
-    my $page = S->{page}->verify;
+    my $page = S->{ext_wsl}->page->body->verify;
     ok($page, "the browser page is the page named '$page_name'");
     ok($pages{$page_name}, "the named page maps to a class name");
     ok($page->isa($pages{$page_name}),
@@ -47,7 +46,7 @@ Then qr/I should see the (.*) page/, sub {
 When qr/I navigate the menu and select the item at "(.*)"/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, $1;
 
-    S->{page}->menu->click_menu(\@path);
+    S->{ext_wsl}->page->body->menu->click_menu(\@path);
 };
 
 my %screens = (
@@ -65,18 +64,19 @@ my %screens = (
     'AP search' => 'PageObject::App::Search::AP',
     'Batch import' => 'PageObject::App::BatchImport',
     'Budget search' => 'PageObject::App::Search::Budget',
-    'Employee search' => 'PageObject::App::Search::Employee',
-    'Sales order search' => 'PageObject::App::Search::SalesOrder',
-    'Purchase order search' => 'PageObject::App::Search::PurchaseOrder',
+    'Employee search' => 'PageObject::App::Search::Contact',
+    'Sales order search' => 'PageObject::App::Search::Order',
+    'Purchase order search' => 'PageObject::App::Search::Order',
     'Sales order entry' => 'PageObject::App::Orders::Sales',
     'Purchase order entry' => 'PageObject::App::Orders::Purchase',
-    'generate sales order' => 'PageObject::App::Search::GenerateSalesOrder',
-    'generate purchase order' => 'PageObject::App::Search::GeneratePurchaseOrder',
-    'combine sales order' => 'PageObject::App::Search::CombineSalesOrder',
-    'combine purchase order' => 'PageObject::App::Search::CombinePurchaseOrder',
-    'Quotation search' => 'PageObject::App::Search::Quotation',
-    'RFQ search' => 'PageObject::App::Search::RFQ',
+    'generate sales order' => 'PageObject::App::Search::Order',
+    'generate purchase order' => 'PageObject::App::Search::Order',
+    'combine sales order' => 'PageObject::App::Search::Order',
+    'combine purchase order' => 'PageObject::App::Search::Order',
+    'Quotation search' => 'PageObject::App::Search::Order',
+    'RFQ search' => 'PageObject::App::Search::Order',
     'GL search' => 'PageObject::App::Search::GL',
+    'year-end confirmation' => 'PageObject::App::ClosingConfirm',
     'part entry' => 'PageObject::App::Parts::Part',
     'service entry' => 'PageObject::App::Parts::Service',
     'assembly entry' => 'PageObject::App::Parts::Assembly',
@@ -90,13 +90,21 @@ Then qr/I should see the (.*) screen/, sub {
     die "Unknown screen '$page_name'"
         unless exists $screens{$page_name};
 
-    my $page = S->{page}->verify_screen;
+    my $page;
+    S->{ext_wsl}->wait_for(
+        sub {
+            $page = S->{ext_wsl}->page->body->maindiv->content;
+            return $page && $page->isa($screens{$page_name});
+        });
     ok($page, "the browser screen is the screen named '$page_name'");
     ok($screens{$page_name}, "the named screen maps to a class name");
     ok($page->isa($screens{$page_name}),
        "the screen is of expected class: " . ref $page);
 };
 
+When qr/I select the "(.*)" tab/, sub {
+    S->{ext_wsl}->page->find(".//*[\@role='tab' and text()='$1']")->click;
+};
 
 
 1;

@@ -61,7 +61,8 @@ sub display {
         template => 'preview',
         format   => 'HTML'
     )->render({ request => $request,
-                template => $dbtemp });
+                template => $dbtemp,
+                %$dbtemp });
 }
 
 =head2 edit($request)

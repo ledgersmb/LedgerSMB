@@ -3,7 +3,6 @@ package PageObject::App::Initial;
 use strict;
 use warnings;
 
-use Carp;
 use PageObject;
 
 
@@ -11,12 +10,18 @@ use Moose;
 extends 'PageObject';
 
 
+__PACKAGE__->self_register(
+              'app-main-initial',
+              './/div[@id="flicker-container"]',
+              tag_name => 'div',
+              attributes => {
+                  id => 'flicker-container',
+              });
+
 
 sub _verify {
     my ($self) = @_;
-    my $driver = $self->stash->{ext_wsl}->page;
 
-    $driver->find("//div[\@id='maindiv']");
     return $self;
 };
 

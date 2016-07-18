@@ -54,7 +54,7 @@ Given qr/a customer named "(.*)"/, sub {
     #     # internal fields
     #     _DBH             => $dbh,
     #     );
-    # $eca->save;    
+    # $eca->save;
 
     $dbh->do(qq(INSERT INTO
         entity_credit_account (entity_id, entity_class, ar_ap_account_id,

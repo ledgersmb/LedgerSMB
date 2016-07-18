@@ -90,6 +90,7 @@ sub preprocess {
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $rawvars;
     if ( $type eq 'ARRAY' ) {
+        $vars = [];
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_ );
         }
@@ -102,6 +103,7 @@ sub preprocess {
     } elsif ($type eq 'IO::File'){
         return undef;
     } else { # Hashes and objects
+        $vars = {};
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }

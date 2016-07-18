@@ -640,7 +640,7 @@ to "new."
 =cut
 
 sub open_status_div {
-    my ($self) = @_;
+    my ($self, $div_id) = @_;
     my $class;
     if ($self->{approved} and $self->{id}){
         $class = "posted";
@@ -651,9 +651,10 @@ sub open_status_div {
     }
     my $status = $LedgerSMB::App_State::Locale->text(
             'Action: [_1], ID: [_2]', $self->{action}, $self->{id}
-    );
-    return "<div id='statusdiv' class='$class'>
-            <div id='history'>$status</div>";
+        );
+    my $id = $div_id ? "id=\"$div_id\"" : '';
+    return "<div $id class=\"$class\">
+            <div id=\"history\">$status</div>";
 }
 
 =item $form->close_status_div

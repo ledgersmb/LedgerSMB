@@ -6,16 +6,21 @@ use warnings;
 use Carp;
 use PageObject;
 
+use PageObject::App::ClosingConfirm;
 use Moose;
 extends 'PageObject';
+
+__PACKAGE__->self_register(
+              'gl-yearend',
+              './/form[@id="gl-yearend"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'gl-yearend',
+              });
 
 
 sub _verify {
     my ($self) = @_;
-
-    my @tabs = 
-    $self->stash->{ext_wsl}->page->find("*labeled", text => $_)
-        for ("Reference", "Description", "Transaction Date", "From File");
 
     return $self;
 }

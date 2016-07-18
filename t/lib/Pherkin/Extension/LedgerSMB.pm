@@ -35,10 +35,31 @@ has admin_user_password => (is => 'rw', default => 'password');
 
 has db => (is => 'rw');
 has super_dbh => (is => 'rw');
+has admin_dbh => (is => 'rw', lazy => 1,
+                  builder => '_build_admin_dbh',
+                  clearer => '_clear_admin_dbh',
+    );
 has template_created => (is => 'rw', default => 0);
 has last_scenario_stash => (is => 'rw');
 has last_feature_stash => (is => 'rw');
 
+
+sub _build_admin_dbh {
+    my ($self) = @_;
+
+    my $db = LedgerSMB::Database->new(
+        dbname    => $self->last_scenario_stash->{"the company"},
+        username  => $self->admin_user_name,
+        password  => $self->admin_user_password,
+        host      => $self->host);
+
+    my $dbh = $db->connect({ PrintError => 0,
+                             RaiseError => 1,
+                             AutoCommit => 1,
+                           });
+
+    return $dbh;
+}
 
 sub step_directories {
     return [ 'ledgersmb_steps/' ];
@@ -166,12 +187,14 @@ sub create_from_template {
 
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
+    $self->_clear_admin_dbh;
 }
 
 sub ensure_nonexisting_company {
     my ($self, $company) = @_;
 
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$company"));
+    $self->_clear_admin_dbh;
 }
 
 sub ensure_nonexisting_user {
@@ -183,5 +206,78 @@ sub ensure_nonexisting_user {
     ### if it does
 }
 
+sub assert_closed_posting_date {
+    my ($self, $date) = @_;
+
+    sleep 1; # wait for any handling to finish
+    my $sth = $self->admin_dbh->prepare(
+        qq|
+   INSERT INTO gl (transdate, person_id)
+        VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+     RETURNING id
+|);
+
+    my $rv = eval {
+        $sth->execute($date,
+                      $self->last_scenario_stash->{"the admin user"});
+        1;
+    };
+
+    die "Posting on $date incorrectly accepted"
+        if $rv;
+}
+
+sub post_transaction {
+    my ($self, $posting_date, $lines) = @_;
+
+    my $acc_sth = $self->admin_dbh->prepare(
+        qq|
+SELECT id
+  FROM account
+ WHERE accno = ?
+|);
+
+    for my $line (@$lines) {
+        $line->{amount_bc} =
+            ($line->{credit_bc} || 0) - ($line->{debit_bc} || 0);
+        $line->{amount_tc} =
+            ($line->{credit_tc} || 0) - ($line->{debit_tc} || 0)
+            if exists $line->{credit_tc} || exists $line->{debit_tc};
+        delete $line->{$_} for (qw/ credit_bc credit_tc debit_bc debit_tc /);
+
+        next if $line->{account_id};
+
+        $acc_sth->execute($line->{accno})
+            or die "Failed to retrieve account '$line->{accno}': "
+                   . $acc_sth->errstr;
+        my ($account_id) = $acc_sth->fetchrow_array();
+        $line->{account_id} = $account_id;
+    }
+
+    my $trans_sth = $self->admin_dbh->prepare(
+        qq|
+INSERT INTO gl(transdate, person_id)
+     VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+  RETURNING id
+|);
+    $trans_sth->execute($posting_date,
+                        $self->last_scenario_stash->{"the admin user"})
+        or die "Failed to create 'gl' table row: " . $trans_sth->errstr;
+    my ($trans_id) = $trans_sth->fetchrow_array();
+
+    my $line_sth = $self->admin_dbh->prepare(
+        qq|
+INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
+     VALUES (?, ?, ?, ?, ?, ?)
+|);
+    for my $line (@$lines) {
+        $line_sth->execute($trans_id, $posting_date,
+                           $line->{account_id}, $line->{amount_bc},
+                           $line->{curr} // 'USD',
+                           $line->{amount_tc} // $line->{amount_bc})
+            or die "Failed to insert 'acc_trans' table row: " . $line_sth->errstr;
+    }
+    $self->admin_dbh->commit;
+}
 
 1;
