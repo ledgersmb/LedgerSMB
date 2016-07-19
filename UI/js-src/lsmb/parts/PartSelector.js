@@ -41,10 +41,8 @@ define([
                             self.set('value',selected[self.searchAttr]);
                         }));
                 this.on('change', function(newValue) {
-                    when(self.store.get(newValue),function(value){
-                        topic.publish('/invoice/part-select/'+self.linenum,
-                                      value);
-                    });
+                    topic.publish('/invoice/part-select/'+self.linenum,
+                                  self.item);
                 });
             }
         });
