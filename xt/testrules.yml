@@ -1,0 +1,21 @@
+---
+par:
+ - seq:
+   - par:
+     - seq:
+       - xt/40-dbsetup.t
+       - par:
+         - seq:
+           - par:
+             - seq:
+               - xt/41-coaload.t
+               - xt/43-dbtest.t
+               - xt/44-templates.t
+               - xt/62-api.t
+               - xt/64-x12.t
+               - xt/66-cucumber.t
+   - par:
+     - seq:
+        - xt/89-dropdb.t
+ - par:
+   - **
