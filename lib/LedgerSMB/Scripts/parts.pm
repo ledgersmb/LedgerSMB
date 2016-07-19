@@ -42,7 +42,9 @@ Minimal information is returned:
 
 sub partslist_json {
     my ($request) = @_;
-    my $items = [ LedgerSMB::Part->basic_partslist ];
+    $request->{partnumber} =~ s/\*//g;
+    my $items = [ LedgerSMB::Part->basic_partslist($request->{partnumber}) ];
+    map { $_->{label} = $_->{partnumber} . '--' . $_->{description} } @$items;
     my $json = LedgerSMB::REST_Format::json->to_output($items);
     my $cgi = CGI::Simple->new();
     binmode STDOUT, ':raw';
