@@ -106,7 +106,10 @@
             }
             ?></td>
             <td><?lsmb row.trans_type ?> </td>
-            <td><?lsmb row.clear_time ?></td>
+            <td <?lsmb IF row.clear_time > end_date ?>
+                style='color:red;font-weight:bold;background:white'
+                <?lsmb END ?>
+                ><?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>
             <td><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
