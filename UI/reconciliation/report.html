@@ -34,7 +34,11 @@
     class = "money",
     size = "15",
     value = their_total
-    } ?></td>
+    } ?>
+    <?lsmb IF submit_allowed != 0 ?>
+      &nbsp;<span style='background:red;color:white'>(<?lsmb submit_allowed ?>)</span>
+    <?lsmb END ?>
+ </td>
 </tr>
 <tr>
   <th><?lsmb text('Variance:') ?></th>
@@ -263,7 +267,7 @@
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
-    disabled = submit_allowed ? 'false' : 'true',
+    disabled = submit_allowed == 0 ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
@@ -272,7 +276,7 @@
     name = "action",
     text = text('Approve'),
     value = 'approve',
-    disabled = submit_allowed ? 'false' : 'true',
+    disabled = submit_allowed == 0 ? 'false' : 'true',
     class = "submit"
 };
 INCLUDE button element_data = {
