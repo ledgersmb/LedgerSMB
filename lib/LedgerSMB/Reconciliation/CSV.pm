@@ -44,9 +44,9 @@ sub load_file {
     my $self = shift @_;
     my $fieldname = shift @_;
 
-    my $contents;
+    my $contents = ();
     my $handle = $self->{_request}->upload($fieldname);
-    $contents = join("\n", <$handle>);
+    $contents = join("\n", <$handle>) if defined $handle;
     return $contents;
 }
 
