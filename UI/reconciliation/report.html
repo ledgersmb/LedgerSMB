@@ -260,6 +260,7 @@
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
+    disabled = submit_allowed ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
@@ -268,6 +269,7 @@
     name = "action",
     text = text('Approve'),
     value = 'approve',
+    disabled = submit_allowed ? 'false' : 'true',
     class = "submit"
 };
 INCLUDE button element_data = {
