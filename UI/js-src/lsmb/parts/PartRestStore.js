@@ -39,7 +39,7 @@ define([
                     });
         var store = new Observable(new partsRest({
             idProperty: 'partnumber',
-            target: '/parts.pl?action=partslist_json'
+            target: 'parts.pl?action=partslist_json'
         }));
         console.log('done creating store');
         return store;
