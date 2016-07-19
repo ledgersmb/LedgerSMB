@@ -168,7 +168,6 @@ sub approve {
                            funcname=>'reconciliation__report_approve',
                                args=> [$report_id]); # user
 
-    warn "code = $code";
     if ($code == 0) {  # no problem.
         return $code;
     }
