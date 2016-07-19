@@ -66,6 +66,8 @@ transaction list.
 sub update {
     my $self = shift @_;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
+    $self->{submit_allowed} = abs(($self->{their_total} - $self->{beginning_balance}) - ($self->{total_cleared_credits} - $self->{total_cleared_debits})) >= 0.001;
+
 }
 
 sub _pre_save {
@@ -166,6 +168,7 @@ sub approve {
                            funcname=>'reconciliation__report_approve',
                                args=> [$report_id]); # user
 
+    warn "code = $code";
     if ($code == 0) {  # no problem.
         return $code;
     }
