@@ -651,7 +651,8 @@ FROM (
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
-UPDATE cr_report_line SET insert_time = post_date;
+UPDATE cr_report_line SET insert_time = post_date,
+                          our_balance = their_balance;
 
 -- Log out the Migrator
 DELETE FROM users
