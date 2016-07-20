@@ -158,8 +158,6 @@ use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
-use LedgerSMB::Request::Error;
-use HTTP::Exception;
 use utf8;
 
 
