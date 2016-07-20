@@ -29,10 +29,8 @@ define([
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 
-                      console.log(body);
                       this.destroyDescendants();
                       if (! body) {
-                          console.log('logging body error');
                           this.report_error('Invalid server response: document lacks BODY tag');
                           return;
                       }
