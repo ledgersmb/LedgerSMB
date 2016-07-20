@@ -493,8 +493,7 @@ sub error {
 }
 
 sub _error {
-
-    my ( $self, $msg, $status ) = @_;
+    my ( $self_or_form, $msg, $status ) = @_;
     $msg = "? _error" if !defined $msg;
     $status = 500 if ! defined $status;
 
@@ -509,7 +508,7 @@ Content-Type: text/html; charset=utf-8
 
 <html>
 <body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
-<p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+<p>dbversion: $self_or_form->{dbversion}, company: $self_or_form->{company}</p>
 </body>
 </html>
 |;
