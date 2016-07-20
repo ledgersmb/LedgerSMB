@@ -65,6 +65,16 @@ has date_from => (is => 'ro', lazy => '1', builder => 'from_date');
 
 has date_to => (is => 'ro', lazy => '1', builder => 'to_date');
 
+=head1 METHODS
+
+=head2 get_bracket_dates
+
+This returns a hashref of from_date/to_date that can be mixed into the constructor.
+THese are the first and last date in acc_trans.
+
+=cut
+
+
 sub get_bracket_dates {
     my ($self) = @_;
     my $return_hashref = {};
