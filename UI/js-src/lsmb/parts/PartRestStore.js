@@ -5,7 +5,8 @@ define([
     'dojo/_base/array',
     'dojo/_base/declare',
     'dojo/Evented',
-    'dojo/request'
+    'dojo/request',
+    'dojo/io-query'
     ], function(
         JsonRest,
         Observable,
@@ -13,7 +14,8 @@ define([
         array,
         declare,
         Evented,
-        xhr
+        xhr,
+        io
     ){
         console.log('creating store');
         var partsRest =
@@ -35,6 +37,15 @@ define([
                                 return theOne;
                             });
                             return rv;
+                        },
+                        query: function(query, options) {
+                            if (query && typeof query == "object") {
+                                query = io.objectToQuery(query);
+                            }
+                            if (options && options.type) {
+                                query = '&type=' + options.type + '&' + query
+                            }
+                            return this.inherited(arguments, [query, options]);
                         }
                     });
         var store = new Observable(new partsRest({
