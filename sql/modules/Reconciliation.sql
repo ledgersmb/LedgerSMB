@@ -137,7 +137,7 @@ reports that have already been approved.  To purge old reconciliations you must
 disable the block_change_when_approved trigger on cr_report.$$;
 
 
-CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT now())
+CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
     SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
@@ -487,7 +487,7 @@ $$
                 case when gl.table = 'gl' then gl.id else 1 end
         HAVING count(rl.id) = 0;
 
-        UPDATE cr_report set updated = now(),
+        UPDATE cr_report set updated = date_trunc('second', now()),
                 their_total = coalesce(in_their_total, their_total),
                 max_ac_id = (select max(entry_id) from acc_trans)
         where id = in_report_id;
