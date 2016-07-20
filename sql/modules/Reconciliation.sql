@@ -435,55 +435,51 @@ $$
          FROM cr_report
         WHERE id = in_report_id;
 
-                INSERT INTO cr_report_line (report_id, scn, their_balance,
-                        our_balance, "user", voucher_id, ledger_id, post_date)
-                SELECT in_report_id,
-                       CASE WHEN ac.source IS NULL OR ac.source = ''
-                            THEN gl.ref
-                            ELSE ac.source END,
-                       0,
-                       sum(CASE WHEN t_recon_fx THEN amount_tc
-                           ELSE amount_bc END) AS amount,
-                       (select entity_id from users
-                         where username = CURRENT_USER),
-                        ac.voucher_id, min(ac.entry_id), ac.transdate
-                FROM acc_trans ac
-                JOIN transactions t on (ac.trans_id = t.id)
-                JOIN (select id, entity_credit_account::text as ref, curr,
-                             transdate
-                        FROM ar where approved
-                        UNION
-                      select id, entity_credit_account::text, curr,
-                             transdate
-                        FROM ap WHERE approved
-                        UNION
-                      select id, reference, '',
-                             transdate
-                        FROM gl WHERE approved) gl
-                        ON (gl.id = t.id)
-                LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
-                        AND ((rl.ledger_id = ac.entry_id
-                                AND ac.voucher_id IS NULL)
-                                OR (rl.voucher_id = ac.voucher_id)))
-                LEFT JOIN cr_report r ON r.id = in_report_id
-                WHERE ac.cleared IS FALSE
-                        AND ac.approved IS TRUE
-                        AND ac.chart_id = t_chart_id
-                        AND ac.transdate <= t_end_date
-         AND (ac.entry_id > coalesce(r.max_ac_id, 0))
-                GROUP BY gl.ref, ac.source, ac.transdate,
-                        ac.memo, ac.voucher_id
-                HAVING count(rl.id) = 0;
-
-                UPDATE cr_report set updated = now(),
-                        their_total = coalesce(in_their_total, their_total),
-                        max_ac_id = (select max(entry_id) from acc_trans)
-                where id = in_report_id;
+        INSERT INTO cr_report_line (report_id, scn, their_balance,
+                our_balance, "user", voucher_id, ledger_id, post_date)
+        SELECT in_report_id,
+               CASE WHEN ac.source IS NULL OR ac.source = ''
+                    THEN gl.ref
+                    ELSE ac.source END,
+               0,
+               sum(CASE WHEN t_recon_fx THEN amount_tc
+                        ELSE amount_bc END) AS amount,
+                        (select entity_id from users
+                        where username = CURRENT_USER),
+                ac.voucher_id, min(ac.entry_id), ac.transdate
+        FROM acc_trans ac
+        JOIN transactions t on (ac.trans_id = t.id)
+        JOIN (select id, entity_credit_account::text as ref, curr,
+                     transdate, 'ar' as table
+                FROM ar where approved
+                UNION
+              select id, entity_credit_account::text, curr,
+                     transdate, 'ap' as table
+                FROM ap WHERE approved
+                UNION
+              select id, reference, '',
+                     transdate, 'gl' as table
+                FROM gl WHERE approved) gl
+                ON (gl.table = t.table_name AND gl.id = t.id)
+        LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
+                AND ((rl.ledger_id = ac.entry_id
+                        AND ac.voucher_id IS NULL)
+                        OR (rl.voucher_id = ac.voucher_id)))
+        LEFT JOIN cr_report r ON r.id = in_report_id
+        WHERE ac.cleared IS FALSE
+                AND ac.approved IS TRUE
+                AND ac.chart_id = t_chart_id
+                AND ac.transdate <= t_end_date
+                AND (ac.entry_id > coalesce(r.max_ac_id, 0))
+        GROUP BY gl.ref, ac.source, ac.transdate,
+                ac.memo, ac.voucher_id, gl.table
+        HAVING count(rl.id) = 0;
 
         UPDATE cr_report set updated = now(),
                 their_total = coalesce(in_their_total, their_total),
                 max_ac_id = (select max(entry_id) from acc_trans)
         where id = in_report_id;
+
     RETURN in_report_id;
     END;
 $$

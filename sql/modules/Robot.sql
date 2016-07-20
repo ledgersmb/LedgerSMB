@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> lsmb/master-mc
 -- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
