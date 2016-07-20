@@ -40,14 +40,20 @@ Returns a json array of all accounts
 sub chart_json {
     my ($request) = @_;
     my $label = $request->{label};
+    $label //= '';
     $label =~ s/\*//g;
     my $funcname = 'chart_list_all';
     my @results =
         $request->call_procedure( funcname => $funcname, order_by => 'accno' );
     @results =
-        grep { $_->{label} =~ m/\Q$label\E/ }
         map { $_->{label} = $_->{accno} . '--' . $_->{description}; $_ }
         @results;
+    if ($label){
+        @results =
+            grep { $_->{label} =~ m/\Q$label\E/ }
+            @results;
+    }
+       
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();
     binmode STDOUT, ':raw';
