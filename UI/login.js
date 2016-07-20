@@ -16,7 +16,7 @@ function submit_form() {
 function send_form() {
     var username = document.login.login.value;
 	 var password = document.login.password.value;
-	 var company = document.login.company.value;
+	 var company = encodeURIComponent(document.login.company.value);
 	 var action = document.login.action.value;
 
 	 require(['dojo/request/xhr','dojo/dom', 'dojo/dom-style',

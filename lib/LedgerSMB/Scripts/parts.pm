@@ -42,7 +42,16 @@ Minimal information is returned:
 
 sub partslist_json {
     my ($request) = @_;
-    my $items = [ LedgerSMB::Part->basic_partslist ];
+    $request->{partnumber} =~ s/\*//g;
+    my $type = $request->{type} // '';
+    my $items = [ LedgerSMB::Part->basic_partslist($request->{partnumber}) ];
+    @$items =
+        grep { (! $type) ||
+                   ($type eq 'sales' && $_->{income_accno_id}) ||
+                   ($type eq 'purchase' && $_->{expense_accno_id}) }
+        grep { ! $_->{obsolete} }
+        map { $_->{label} = $_->{partnumber} . '--' . $_->{description}; $_ }
+        @$items;
     my $json = LedgerSMB::REST_Format::json->to_output($items);
     my $cgi = CGI::Simple->new();
     binmode STDOUT, ':raw';

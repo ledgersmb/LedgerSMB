@@ -933,6 +933,7 @@ sub _render_new_user {
     @{$request->{countries}}
     = $request->call_procedure(funcname => 'location_list_country' );
     for my $country (@{$request->{countries}}){
+        last unless defined $request->{coa_lc};
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
         }

@@ -59,6 +59,10 @@ GROUP BY name, customernumber;
 INSERT INTO entity (name, control_code, entity_class, country_id)
 SELECT 'Migrator', 'R-1', 10, (select id from country
          where lower(short_name)  =  lower(:default_country));
+<<<<<<< HEAD
+
+=======
+>>>>>>> lsmb/master-mc
 UPDATE sl30.vendor SET entity_id = (SELECT id FROM entity WHERE 'V-' || vendornumber = control_code);
 
 UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 'C-' || customernumber = control_code), entity_id);
@@ -650,7 +654,12 @@ FROM (
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
+<<<<<<< HEAD
+UPDATE cr_report_line SET insert_time = post_date,
+                          our_balance = their_balance;
+=======
 UPDATE cr_report_line SET insert_time = post_date;
+>>>>>>> lsmb/master-mc
 
 -- Log out the Migrator
 DELETE FROM users

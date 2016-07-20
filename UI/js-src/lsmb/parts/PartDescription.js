@@ -1,23 +1,62 @@
 define([
+    'dijit/form/ComboBox',
     'dijit/form/Textarea',
+    //    'dijit/form/ComboBoxMixin',
+    'dijit/_HasDropDown',
+    'dijit/form/_AutoCompleterMixin',
+    'dijit/form/_ComboBoxMenu',
     'dojo/_base/declare',
-    'dojo/topic'
+    'dojo/topic',
+    'dojo/keys',
+    'lsmb/parts/PartStore',
+    'dojo/text!./templates/DropDownTextarea.html'
     ], function(
-      Textarea,
-        declare,
-        topic
+        ComboBox,
+        Textarea,
+        //        ComboBoxMixin,
+        _HasDropDown,
+        _AutoCompleterMixin,
+        _ComboBoxMenu,
+      declare,
+        topic,
+        keys,
+        store,
+        template
       ){
-        return declare('lsmb/parts/PartsDescription',[Textarea], {
+        return declare('lsmb/parts/PartsDescription',[Textarea, _HasDropDown, _AutoCompleterMixin], {
             linenum: null,
             height: null,
-            startup: function() {
-                var self = this;
+            store:  store,
+            queryExpr: "*${0}*",
+            style: 'width: 15ex',
+            highlightMatch: 'all',
+            searchAttr: 'description',
+            labelAttr: 'label',
+            templateString: template,
+            dropDownClass: _ComboBoxMenu,
+//            baseClass: "dijit
+           startup: function() {
+               var self = this;
+               this.inherited(arguments);
                 this.own(
                     topic.subscribe(
                         '/invoice/part-select/' + this.linenum,
                         function(selected) {
-                            self.set('value',selected.description);
+                            self.set('value',selected[self.searchAttr]);
                         }));
-            } // startup
+               this.on('change',
+                       function(newValue) {
+                           if (self.item) {
+                               topic.publish('/invoice/part-select/' + this.linenum,
+                                             self.item);
+                           }
+                       });
+           }, // startup
+            _onKey: function(e) {
+                if (e.keyCode != keys.SPACE
+                    && e.keyCode != keys.ENTER) {
+                    this.inherited(arguments);
+                }
+            } // _onKey
         });
     });

@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
   my $mw = MediaWiki::API->new();
-  $mw->{config}->{api_url} = 'http://en.wikipedia.org/w/api.php';
+  $mw->{config}->{api_url} = 'https://en.wikipedia.org/w/api.php';
 
 #  # get user info
 #  my $userinfo = $mw->api( {
@@ -196,7 +196,7 @@ print "\n";
 #printpage( getpage(), "==== Original Page Content ====" );
 
 #### Edit the English Page
-$mw->{config}->{api_url} = 'http://en.wikipedia.org/w/api.php';
+$mw->{config}->{api_url} = 'https://en.wikipedia.org/w/api.php';
 login();
 editpage( 'stable', $NewVersion, $NewDate );
 print " view the changes at \n";
@@ -205,7 +205,7 @@ print " https://en.wikipedia.org/wiki/$pagename\n";
 logout();
 
 #### Edit the Spanish Page
-$mw->{config}->{api_url} = 'http://es.wikipedia.org/w/api.php';
+$mw->{config}->{api_url} = 'https://es.wikipedia.org/w/api.php';
 $pagename =~ s/User:/Usuario:/;  # if we are using a users pagename then translate the 'User:' portion of the name
 login();
 editpage( 'stable', $NewVersion, $NewDate );

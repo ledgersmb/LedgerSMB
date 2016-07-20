@@ -20,21 +20,31 @@ define([
               {
                   last_page: null,
                   interceptClick: null,
+                  report_error: function(content) {
+                      var d = registry.byId('errorDialog');
+                      d.set('content', content);
+                      d.show();
+                  },
                   set_main_div: function(doc){
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-                      var newbody = body[1];
 
+                      console.log(body);
                       this.destroyDescendants();
+                      if (! body) {
+                          console.log('logging body error');
+                          this.report_error('Invalid server response: document lacks BODY tag');
+                          return;
+                      }
+
+                      var newbody = body ? body[1] : '';
                       return this.set('content', newbody)
                           .then(
                               function() {
                                   self.show_main_div();
                               },
                               function() {
-                                  var d = registry.byId('errorDialog');
-                                  d.set('content',
-                                        'Server return value invalid');
+                                  self.report_error('Server return value invalid');
                               });
                   },
                   load_form: function(url, options) {

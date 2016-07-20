@@ -1144,7 +1144,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 }
 
 sub update {
-    on_update(); # Used for overrides for POS invoices --CT
 
     &invoice_links;
 
@@ -1252,6 +1251,7 @@ sub update {
 
             if ($rows) {
 
+                $form->{"sellprice_$i"} = $form->{item_list}->[0]->{sellprice};
                 $form->{"qty_$i"} =
                   ( $form->{"qty_$i"} * 1 ) ? $form->{"qty_$i"} : 1;
 

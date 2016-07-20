@@ -30,7 +30,6 @@ table are returned.
 
 sub basic_partslist {
     my ($self, $query) = @_;
-    $query = '' unless defined $query; # no nulls
     my @parts = __PACKAGE__->call_dbmethod(
            funcname => 'parts__search_lite',
            args     => { partnumber => $query, description => $query }

@@ -202,9 +202,6 @@ sub _display_report {
     $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
-    warn $recon->{outstanding_total};
-    warn $recon->{our_balance};
-    warn $recon->{our_total};
     $recon->{form_id} = $request->{form_id};
     my $template = LedgerSMB::Template->new(
         user=> $recon->{_user},
