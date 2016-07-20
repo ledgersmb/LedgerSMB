@@ -66,8 +66,14 @@ transaction list.
 sub update {
     my $self = shift @_;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-    $self->{submit_allowed} = abs(($self->{their_total} - $self->{beginning_balance}) - ($self->{total_cleared_credits} - $self->{total_cleared_debits})) >= 0.001;
-
+    my $their_total = $self->{their_total} // 0;
+    my $beginning_balance = $self->{beginning_balance} // 0;
+    my $total_cleared_credits = $self->{total_cleared_credits} // 0;
+    my $total_cleared_debits = $self->{total_cleared_debits} // 0;
+    $self->{submit_allowed} =
+        abs(($their_total - $beginning_balance)
+            - ($total_cleared_credits - $total_cleared_debits))
+        >= 0.001;
 }
 
 sub _pre_save {
