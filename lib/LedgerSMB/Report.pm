@@ -242,8 +242,8 @@ sub render {
             $self->order_dir('asc');
         }
     }
-    $url =~ s/&?order_by=[^\&]*//g;
-    $url =~ s/&?order_dir=[^\&]*//g;
+    $url =~ s/&?order_by=[^\&]*//g if $url;
+    $url =~ s/&?order_dir=[^\&]*//g if $url;
     $self->order_url($url);
     $self->order_url(
         "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir

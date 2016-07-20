@@ -103,10 +103,10 @@ else
             endif
         OS_RELEASE_FILE := $(shell test -r /etc/os-release && cat /etc/os-release | tr '[:lower:]' '[:upper:]')
             ifneq (,$(findstring DEBIAN,$(OS_RELEASE_FILE)))
-                xOSDISTRO := DEBIAN
+                OSDISTRO := DEBIAN
             endif
             ifneq (,$(findstring SUSE,$(OS_RELEASE_FILE)))
-                xOSDISTRO := SUSE
+                OSDISTRO := SUSE
             endif
     endif
     ifneq (,$(filter DEBIAN UBUNTU LINUXMINT, $(OSDISTRO)))

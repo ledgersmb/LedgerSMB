@@ -171,7 +171,7 @@ sub search {
             $recon->{show_approved} = 1;
             $recon->{show_submitted} = 1;
         }
-        @{$recon->{recon_accounts}} = $recon->get_accounts();
+    @{$recon->{recon_accounts}} = $recon->get_accounts();
     unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
     $recon->{report_name} = 'reconciliation_search';
     LedgerSMB::Scripts::reports::start_report($recon);
@@ -190,121 +190,99 @@ it has been created.
 =cut
 
 sub _display_report {
-        my ($recon, $request) = @_;
-        $recon->get();
-        my $setting_handle = LedgerSMB::Setting->new({base => $recon});
-        $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
-        delete $recon->{reverse} unless $recon->{account_info}->{category}
-                                        eq 'A';
-        $request->close_form;
-        $request->open_form;
-        $recon->unapproved_checks;
-        $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
-        $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
-        $recon->get();
-        my $template = LedgerSMB::Template->new(
-            user=> $recon->{_user},
-            template => 'reconciliation/report',
-            locale => $recon->{_locale},
-            format=>'HTML',
-            path=>"UI"
-        );
-        $recon->{sort_options} = [
-        {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
-        {id => 'scn', label => $recon->{_locale}->text('Source')},
-        {id => 'post_date', label => $recon->{_locale}->text('Post Date')},
-        {id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
-        {id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
-        ];
-        if (!$recon->{line_order}){
-           $recon->{line_order} = 'scn';
+    my ($recon, $request) = @_;
+    $recon->get();
+    my $setting_handle = LedgerSMB::Setting->new({base => $recon});
+    $recon->{reverse} = $setting_handle->get('reverse_bank_recs');
+    delete $recon->{reverse} unless $recon->{account_info}->{category}
+                                    eq 'A';
+    $request->close_form;
+    $request->open_form;
+    $recon->unapproved_checks;
+    $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
+    $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    $recon->get();
+    $recon->{form_id} = $request->{form_id};
+    my $template = LedgerSMB::Template->new(
+        user=> $recon->{_user},
+        template => 'reconciliation/report',
+        locale => $recon->{_locale},
+        format=>'HTML',
+        path=>"UI"
+    );
+    $recon->{sort_options} = [
+            {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
+            {id => 'scn', label => $recon->{_locale}->text('Source')},
+            {id => 'post_date', label => $recon->{_locale}->text('Post Date')},
+            {id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
+            {id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
+    ];
+    if (!$recon->{line_order}){
+       $recon->{line_order} = 'scn';
+    }
+    for my $field (qw/ total_cleared_credits total_cleared_debits total_uncleared_credits total_uncleared_debits /) {
+      $recon->{"$field"} = LedgerSMB::PGNumber->from_input(0);
+    }
+    my $neg_factor = 1;
+    if ($recon->{account_info}->{category} =~ /(A|E)/){
+       $recon->{their_total} *= -1;
+       $neg_factor = -1;
+    }
+    # Credit/Debit separation (useful for some)
+    for my $l (@{$recon->{report_lines}}){
+        if ($l->{their_balance} > 0){
+           $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_credits} = $l->{their_balance};
         }
-        $recon->{total_cleared_credits} = LedgerSMB::PGNumber->from_input(0);
-        $recon->{total_cleared_debits} = LedgerSMB::PGNumber->from_input(0);
-        $recon->{total_uncleared_credits} = LedgerSMB::PGNumber->from_input(0);
-        $recon->{total_uncleared_debits} = LedgerSMB::PGNumber->from_input(0);
-        my $neg_factor = 1;
-        if ($recon->{account_info}->{category} =~ /(A|E)/){
-           $recon->{their_total} *= -1;
-           $neg_factor = -1;
-
+        else {
+           $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_debits} = $l->{their_balance}->bneg;
         }
-
-
-        # Credit/Debit separation (useful for some)
-        for my $l (@{$recon->{report_lines}}){
-            if ($l->{their_balance} > 0){
-               $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
-               $l->{their_credits} = $l->{their_balance};
-            }
-            else {
-               $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
-               $l->{their_debits} = $l->{their_balance}->bneg;
-            }
-            if ($l->{our_balance} > 0){
-               $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
-               $l->{our_credits} = $l->{our_balance};
-            }
-            else {
-               $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
-               $l->{our_debits} = $l->{our_balance}->bneg;
-            }
-
-            if ($l->{cleared}){
-                 $recon->{total_cleared_credits}->badd($l->{our_credits});
-                 $recon->{total_cleared_debits}->badd($l->{our_debits});
-            } else {
-                 $recon->{total_uncleared_credits}->badd($l->{our_credits});
-                 $recon->{total_uncleared_debits}->badd($l->{our_debits});
-            }
-
-            $l->{their_balance} = $l->{their_balance}->to_output(money => 1);
-            $l->{our_balance} = $l->{our_balance}->to_output(money => 1);
-            $l->{their_debits} = $l->{their_debits}->to_output(money => 1);
-            $l->{their_credits} = $l->{their_credits}->to_output(money => 1);
-            $l->{our_debits} = $l->{our_debits}->to_output(money => 1);
-            $l->{our_credits} = $l->{our_credits}->to_output(money => 1);
+        if ($l->{our_balance} > 0){
+           $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_credits} = $l->{our_balance};
         }
+        else {
+           $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_debits} = $l->{our_balance}->bneg;
+        }
+        if ($l->{cleared}){
+             $recon->{total_cleared_credits}->badd($l->{our_credits});
+             $recon->{total_cleared_debits}->badd($l->{our_debits});
+        } else {
+             $recon->{total_uncleared_credits}->badd($l->{our_credits});
+             $recon->{total_uncleared_debits}->badd($l->{our_debits});
+        }
+        for my $amt_name (qw/ our_ their_ /) {
+            for my $bal_type (qw/ balance credits debits/) {
+                $l->{"$amt_name$bal_type"} = $l->{"$amt_name$bal_type"}->to_output(money=>1);
+            }
+        }
+    }
 
     $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
     $recon->{statement_gl_calc} = $neg_factor *
-                ($recon->{their_total}
-        + $recon->{outstanding_total}
-                + $recon->{mismatch_our_total});
+                                    ($recon->{their_total}
+                                    + $recon->{outstanding_total}
+                                    + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-        $recon->{cleared_total} = $recon->{cleared_total}->to_output(money => 1);
-        $recon->{outstanding_total} = $recon->{outstanding_total}->to_output(money => 1);
-        $recon->{mismatch_our_debits} =
-                $recon->{mismatch_our_debits}->to_output(money => 1);
-        $recon->{mismatch_our_credits} =
-        $recon->{mismatch_our_credits}->to_output(money => 1);
-        $recon->{mismatch_their_debits} =
-        $recon->{mismatch_their_debits}->to_output(money => 1);
-        $recon->{mismatch_their_credits} =
-        $recon->{mismatch_their_credits}->to_output(money => 1);
-        $recon->{statement_gl_calc} =
-        $recon->{statement_gl_calc}->to_output(money => 1);
-        $recon->{total_cleared_debits} =
-                $recon->{total_cleared_debits}->to_output(money => 1);
-        $recon->{total_cleared_credits} =
-                $recon->{total_cleared_credits}->to_output(money => 1);
-        $recon->{total_uncleared_debits} =
-                $recon->{total_uncleared_debits}->to_output(money => 1);
-        $recon->{total_uncleared_credits} =
-                $recon->{total_uncleared_credits}->to_output(money => 1);
-    $recon->{their_total} = $recon->{their_total} * $neg_factor;
-        $recon->{their_total} = $recon->{their_total}->to_output(money => 1);
-    $recon->{our_total} ||= LedgerSMB::PGNumber->from_db(0);
-    $recon->{beginning_balance} ||= LedgerSMB::PGNumber->from_db(0);
-    $recon->{out_of_balance} ||= LedgerSMB::PGNumber->from_db(0);
-    $recon->{our_total} = $recon->{our_total}->to_output(money => 1);
-    $recon->{beginning_balance} =
-        $recon->{beginning_balance}->to_output(money => 1);
-    $recon->{out_of_balance} =
-        $recon->{out_of_balance}->to_output(money => 1);
 
-        return $template->render($recon);
+    for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
+      for my $bal_type (qw/ credits debits/) {
+         $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
+      }
+    }
+    $recon->{their_total} = $recon->{their_total} * $neg_factor;
+
+    for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total /) {
+      $recon->{"$field"} = $recon->{"$field"}->to_output(money=>1);
+    }
+    for my $field (qw/ our_total beginning_balance out_of_balance /) {
+        $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
+        $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
+    }
+    return $template->render($recon);
 }
 
 
@@ -425,34 +403,16 @@ sub approve {
 
         my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy=> 'all'});
 
-        my $template;
         my $code = $recon->approve($request->{report_id});
-        if ($code == 0) {
-
-            $template = LedgerSMB::Template->new(
+        my $template = $code == 0 ? 'reconciliation/approved'
+                                  : 'reconciliation/report';
+        return LedgerSMB::Template->new(
                 user => $recon->{_user},
-                template => 'reconciliation/approved',
+                        template => $template,
                 locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
-                );
-
-            return $template->render($recon);
-        }
-        else {
-
-            # failure case
-
-            $template = LedgerSMB::Template->new(
-                user => $recon->{_user},
-                template => 'reconciliation/report',
-            locale => $recon->{_locale},
-                format => 'HTML',
-                path=>"UI"
-                );
-            return $template->render($recon
-            );
-        }
+                        )->render($recon);
     }
     else {
         return _display_report($request, $request);

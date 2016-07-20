@@ -153,9 +153,11 @@ sub display_row {
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
     if ($form->{vc} eq 'customer'){
-       $lsmb_module = 'AR';
+        $lsmb_module = 'AR';
+        $parts_list = 'sales';
     } elsif ($form->{vc} eq 'vendor'){
-       $lsmb_module = 'AP';
+        $lsmb_module = 'AP';
+        $parts_list = 'purchase';
     }
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
@@ -339,7 +341,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
                             id="description_$i" name="description_$i"
                             $desc_disabled size=48
-                            data-dojo-props="linenum: $i"
+                            data-dojo-props="linenum:$i,fetchProperties:{type:'$parts_list'}"
                             style="width:100%;"
                             rows="1"
                             >$form->{"description_$i"}</div></td>|;
@@ -418,7 +420,7 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
         } else {
             $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
-qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required: false, linenum: $i" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,linenum:$i,fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|

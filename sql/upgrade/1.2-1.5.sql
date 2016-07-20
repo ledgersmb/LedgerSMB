@@ -737,7 +737,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('entity_id_seq', max(id)) FROM entity;
  SELECT setval('company_id_seq', max(id)) FROM company;
  SELECT setval('location_id_seq', max(id)) FROM location;
- SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
  SELECT setval('location_class_id_seq', max(id)) FROM location_class;
  SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
  SELECT setval('salutation_id_seq', max(id)) FROM salutation;
