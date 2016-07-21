@@ -69,7 +69,6 @@ for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE PE IC AM)) {
 package lsmb_legacy;
 use Digest::MD5;
 use Try::Tiny;
-use LedgerSMB::App_State;
 
 $| = 1;
 
@@ -79,16 +78,13 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
-use LedgerSMB::Request::Error;
 use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
 
-use Data::Dumper;
-
 
 $form = new Form;
-use Data::Dumper;
+use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
 # name of this script
@@ -125,14 +121,6 @@ use DBI qw(:sql_types);
 $form->{charset} = 'UTF-8';
 $locale->encoding('UTF-8');
 
-if ($@) {
-    $form->{callback} = "";
-    $msg1             = $locale->text('You are logged out!');
-    $msg2             = $locale->text('Login');
-    $form->redirect(
-        "$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
-}
-
 try {
     $form->db_init( \%myconfig );
 
@@ -144,7 +132,7 @@ try {
 
     if ($myconfig{language}){
         $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-            or &_error($form, __FILE__ . ':' . __LINE__
+            or LedgerSMB::_error($form, __FILE__ . ':' . __LINE__
                        . ": Locale not loaded: $!\n" );
     }
 
@@ -189,7 +177,7 @@ try {
   # -- CT
     $form->{_error} = 1;
     $LedgerSMB::App_State::DBH = undef;
-    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    LedgerSMB::_error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
 };
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
@@ -202,29 +190,4 @@ $form->{dbh}->disconnect()
     if defined $form->{dbh};
 
 # end
-
-
-sub _error {
-
-    my ( $self, $msg ) = @_;
-    my $error;
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => "$msg");
-    }
-
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
-    }
-}
 

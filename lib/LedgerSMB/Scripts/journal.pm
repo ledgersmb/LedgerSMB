@@ -46,14 +46,9 @@ sub chart_json {
     my @results =
         $request->call_procedure( funcname => $funcname, order_by => 'accno' );
     @results =
+        grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
         map { $_->{label} = $_->{accno} . '--' . $_->{description}; $_ }
         @results;
-    if ($label){
-        @results =
-            grep { $_->{label} =~ m/\Q$label\E/ }
-            @results;
-    }
-       
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();
     binmode STDOUT, ':raw';
