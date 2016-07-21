@@ -341,6 +341,7 @@ a hashrefo of information from the account table.
 
 =cut
 
+use Data::Dumper;
 sub get {
     my ($self) = shift @_;
     my ($ref) = $self->call_dbmethod(funcname=>'reconciliation__report_summary');
@@ -356,6 +357,12 @@ sub get {
         funcname=>'reconciliation__report_details_payee',
         orderby => [ ( $self->{line_order} // 'scn' ) ]
     );
+    my $db_report_days;
+    @{$db_report_days} = $self->call_dbmethod(
+                            funcname=>'reconciliation__report_details_payee_with_days',
+                                                    args => { report_id => $self->{id},
+                                                              end_date => $self->{end_date} });
+    my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => { id => $self->{chart_id} });
     my $neg = 1;
@@ -403,6 +410,7 @@ sub get {
         } else {
             $self->{outstanding_total} += $line->{our_balance};
         }
+        $line->{days} = $report_days{$line->{id}};
     }
     $self->{our_total} = $our_balance;
     @{$self->{accounts}} = $self->get_accounts;

@@ -36,7 +36,7 @@
     value = their_total
     } ?>
     <?lsmb IF submit_allowed != 0 ?>
-      &nbsp;<span style='background:red;color:white'>(<?lsmb submit_allowed ?>)</span>
+      &nbsp;<span class="no-submit">(<?lsmb submit_allowed ?>)</span>
     <?lsmb END ?>
  </td>
 </tr>
@@ -110,8 +110,14 @@
             }
             ?></td>
             <td><?lsmb row.trans_type ?> </td>
-            <td <?lsmb IF row.clear_time > end_date ?>
-                style='color:red;font-weight:bold;background:white'
+            <td 
+                <?lsmb IF row.days && row.days < 0 ?>
+                class="cleared-future"
+                title="<?lsmb text('Clear time is ')?>&nbsp;<?lsmb rows.days ?>&nbsp;<?lsmb text(' days in the future') ?>"
+                <?lsmb END ?>
+                <?lsmb IF row.days && row.days > 45 ?>
+                class="cleared-past"
+                title="<?lsmb text('Clear time over ')?>&nbsp;<?lsmb row.days ?>&nbsp;<?lsmb text(' days') ?>"
                 <?lsmb END ?>
                 ><?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>

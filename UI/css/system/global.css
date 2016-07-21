@@ -324,6 +324,19 @@ html, body {
 
 #reconciliation span.data {
 }
+
+#reconciliation td.no-submit {
+        background: red;
+}
+
+#reconciliation td.cleared-future {
+        font-weight: bold;
+}
+
+#reconciliation td.cleared-past {
+        font-weight: bold;
+}
+
 #reconciliation th {
         font-weight: bold;
 }

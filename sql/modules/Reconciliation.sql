@@ -619,20 +619,27 @@ CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id IN
                 order by scn, post_date
 $$ language 'sql';
 
-COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
-$$ Pulls the payee information for the reconciliation report.$$;
-
-CREATE OR REPLACE FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT,in_end_date DATE DEFAULT NULL)
-RETURNS SETOF record as $$
-                SELECT rp.*,
+DROP TYPE IF EXISTS recon_payee_days CASCADE;
+CREATE TYPE recon_payee_days AS (
+        id BIGINT,
+        days INT
+);
+CREATE OR REPLACE FUNCTION reconciliation__report_details_payee_with_days (
+        in_report_id INT, in_end_date DATE DEFAULT NULL)
+RETURNS setof recon_payee_days AS $$
+BEGIN
+            RETURN QUERY
+                SELECT rp.id,
                         CASE WHEN in_end_date IS NULL THEN NULL
                         ELSE      in_end_date - clear_time
-                        END AS days
+                        END AS d
                 FROM recon_payee rp
-                WHERE rp.report_id = in_report_id
-$$ language 'sql';
+                WHERE rp.report_id = in_report_id;
 
-COMMENT ON FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT) IS
+RETURN;
+END;$$ LANGUAGE 'plpgsql';
+
+COMMENT ON FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT,in_end_date DATE) IS
 $$ Pulls the payee information for the reconciliation report.$$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';

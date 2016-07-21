@@ -258,6 +258,25 @@ tr.record {
 tr.warning {
 	background-color: yellow;
 }
+
+span.no-submit {
+        font-weight: bold;
+        color: white;
+        background: red;
+}
+
+td.cleared-future {
+        font-weight: bold;
+        color: red;
+        background: white;
+}
+
+td.cleared-past {
+        font-weight: bold;
+        color: black;
+        background: yellow;
+}
+
 input[type=checkbox].remove::before {
     display: inline-block;
     content: ' X '; 
