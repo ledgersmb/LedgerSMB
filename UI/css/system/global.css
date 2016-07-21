@@ -143,6 +143,7 @@ html, body {
 /********* For business units editing page ********/
 
 #business_units div.table { display: table; }
+#business_units form.tr,
 #business_units div.tr { display: table-row; }
 #business_units div.td,
 #business_units div.th {
