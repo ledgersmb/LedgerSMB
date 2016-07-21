@@ -614,13 +614,25 @@ UNION
  SELECT gl.id, gl.description
    FROM gl) n ON n.id = ac.trans_id;
 
-
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$
                 select * from recon_payee where report_id = in_report_id
                 order by scn, post_date
 $$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
+$$ Pulls the payee information for the reconciliation report.$$;
+
+CREATE OR REPLACE FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT,in_end_date DATE DEFAULT NULL)
+RETURNS SETOF record as $$
+                SELECT rp.*,
+                        CASE WHEN in_end_date IS NULL THEN NULL
+                        ELSE      in_end_date - clear_time
+                        END AS days
+                FROM recon_payee rp
+                WHERE rp.report_id = in_report_id
+$$ language 'sql';
+
+COMMENT ON FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT) IS
 $$ Pulls the payee information for the reconciliation report.$$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
