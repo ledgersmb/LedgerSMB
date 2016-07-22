@@ -341,7 +341,6 @@ a hashrefo of information from the account table.
 
 =cut
 
-use Data::Dumper;
 sub get {
     my ($self) = shift @_;
     my ($ref) = $self->call_dbmethod(funcname=>'reconciliation__report_summary');
