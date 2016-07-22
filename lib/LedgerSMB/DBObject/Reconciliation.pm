@@ -66,14 +66,6 @@ transaction list.
 sub update {
     my $self = shift @_;
     $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-    my $their_total = $self->{their_total} // 0;
-    my $beginning_balance = $self->{beginning_balance} // 0;
-    my $total_cleared_credits = $self->{total_cleared_credits} // 0;
-    my $total_cleared_debits = $self->{total_cleared_debits} // 0;
-    $self->{submit_allowed} =
-        abs(($their_total - $beginning_balance)
-            - ($total_cleared_credits - $total_cleared_debits))
-        >= 0.001;
 }
 
 sub _pre_save {
@@ -363,6 +355,12 @@ sub get {
         funcname=>'reconciliation__report_details_payee',
         orderby => [ ( $self->{line_order} // 'scn' ) ]
     );
+    my $db_report_days;
+    @{$db_report_days} = $self->call_dbmethod(
+                            funcname=>'reconciliation__report_details_payee_with_days',
+                                                    args => { report_id => $self->{id},
+                                                              end_date => $self->{end_date} });
+    my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => { id => $self->{chart_id} });
     my $neg = 1;
@@ -410,6 +408,7 @@ sub get {
         } else {
             $self->{outstanding_total} += $line->{our_balance};
         }
+        $line->{days} = $report_days{$line->{id}};
     }
     $self->{our_total} = $our_balance;
     @{$self->{accounts}} = $self->get_accounts;
