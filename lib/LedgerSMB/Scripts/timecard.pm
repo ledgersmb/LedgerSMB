@@ -206,9 +206,9 @@ sub print {
   no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
-    $template->render($request);;
+    $template->render($request);
     $template->output(%$request);
-    return if $request->{media} eq 'screen';
+    return if lc($request->{media}) eq 'screen';
     display($request);
 }
 
