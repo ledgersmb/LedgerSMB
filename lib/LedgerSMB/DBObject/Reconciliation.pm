@@ -416,6 +416,7 @@ sub get {
         } else {
             $self->{outstanding_total} += $line->{our_balance};
         }
+        $line->{days} = $report_days{$line->{id}};
     }
     $self->{our_total} = $our_balance;
     @{$self->{accounts}} = $self->get_accounts;
