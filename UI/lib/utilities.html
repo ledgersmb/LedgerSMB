@@ -27,7 +27,7 @@ END;
 IF ! formats.defined;
    formats = [];
    FOR F IN LIST_FORMATS();
-      formats.push({text = F, id = F});
+      formats.push({text = F, value = F});
    END;
 END;
 
@@ -41,7 +41,7 @@ IF !printers.defined;
    printers = [];
 END;
 
-printers.push({ text = text('Screen'), id = 'screen' });
+printers.push({ text = text('Screen'), value = 'screen' });
 PROCESS select element_data = {
            name = "media"
         options = printers

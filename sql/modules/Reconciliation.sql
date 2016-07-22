@@ -137,7 +137,7 @@ reports that have already been approved.  To purge old reconciliations you must
 disable the block_change_when_approved trigger on cr_report.$$;
 
 
-CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT now())
+CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
     SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
@@ -487,7 +487,7 @@ $$
                 case when gl.table = 'gl' then gl.id else 1 end
         HAVING count(rl.id) = 0;
 
-        UPDATE cr_report set updated = now(),
+        UPDATE cr_report set updated = date_trunc('second', now()),
                 their_total = coalesce(in_their_total, their_total),
                 max_ac_id = (select max(entry_id) from acc_trans)
         where id = in_report_id;
@@ -614,13 +614,32 @@ UNION
  SELECT gl.id, gl.description
    FROM gl) n ON n.id = ac.trans_id;
 
-
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$
                 select * from recon_payee where report_id = in_report_id
                 order by scn, post_date
 $$ language 'sql';
 
-COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
+DROP TYPE IF EXISTS recon_payee_days CASCADE;
+CREATE TYPE recon_payee_days AS (
+        id BIGINT,
+        days INT
+);
+CREATE OR REPLACE FUNCTION reconciliation__report_details_payee_with_days (
+        in_report_id INT, in_end_date DATE DEFAULT NULL)
+RETURNS setof recon_payee_days AS $$
+BEGIN
+            RETURN QUERY
+                SELECT rp.id,
+                        CASE WHEN in_end_date IS NULL THEN NULL
+                        ELSE      in_end_date - clear_time
+                        END AS d
+                FROM recon_payee rp
+                WHERE rp.report_id = in_report_id;
+
+RETURN;
+END;$$ LANGUAGE 'plpgsql';
+
+COMMENT ON FUNCTION reconciliation__report_details_payee_with_days (in_report_id INT,in_end_date DATE) IS
 $$ Pulls the payee information for the reconciliation report.$$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
