@@ -4,7 +4,6 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>">
 <div id="business_units">
 <div class="table">
 <!-- headings -->
@@ -13,17 +12,21 @@
     <div class="th"><?lsmb text('Label') ?></div>
     <div class="th"><?lsmb text('Active') ?></div>
     <div class="th"><?lsmb text('Ordering') ?></div>
-  <?lsmb FOREACH m IN modules ?>
+  <?lsmb FOREACH m IN request.modules ?>
     <div class="th"><?lsmb text(m.label) ?></div>
   <?lsmb END ?>
     <div class="th">&nbsp;</div>
     <div class="th">&nbsp;</div>
 </div>
-<?lsmb classes.push({});
-       FOR c IN classes;
+<?lsmb request.classes.push({});
+       FOR c IN request.classes;
            id = c.id;
 ?>
-<div class="tr">
+<form data-dojo-type="lsmb/Form"
+      action="<?lsmb request.script ?>"
+      method="POST"
+      class="tr">
+<!-- div class="tr"-->
 
 <div class="td">
 <?lsmb PROCESS input element_data = {
@@ -58,12 +61,14 @@
     size = 4
 } ?>
 </div>
-  <?lsmb FOREACH m IN modules ?>
+  <?lsmb FOREACH m IN request.modules ?>
     <div class="td"><?lsmb
     checked = undef;
     FOREACH mm IN c.modules;
        IF mm.id == m.id;
-            checked = 'checked';
+          checked = 'checked';
+       ELSE;
+          checked = '';
        END;
     END;
     PROCESS input element_data = {
@@ -111,10 +116,10 @@ PROCESS button element_data = {
     text = text('List Units')#'
 };
 END; ?></div>
-</div>
+<!-- /div -->
+</form>
 <?lsmb END ?>
 </div>
-</form>
 </div>
 
 </body>
