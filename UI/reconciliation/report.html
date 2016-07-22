@@ -110,16 +110,27 @@
             }
             ?></td>
             <td><?lsmb row.trans_type ?> </td>
-            <td 
-                <?lsmb IF row.days && row.days < 0 ?>
-                class="cleared-future"
-                title="<?lsmb text('Clear time is ')?>&nbsp;<?lsmb rows.days ?>&nbsp;<?lsmb text(' days in the future') ?>"
-                <?lsmb END ?>
-                <?lsmb IF row.days && row.days > 45 ?>
-                class="cleared-past"
-                title="<?lsmb text('Clear time over ')?>&nbsp;<?lsmb row.days ?>&nbsp;<?lsmb text(' days') ?>"
-                <?lsmb END ?>
-                ><?lsmb row.clear_time ?></td>
+            <?lsmb id=''; class=''; element_data = {};
+                IF row.days;
+                    id="cleared_time_$row.id";
+                    IF row.days < 0;
+                        class='cleared-future';
+                        element_data = {
+                            id = id
+                            msg = text('Clear date is [*,_1,day] in the future',row.days)
+                        };
+                    ELSIF row.days > 45;
+                        class='cleared-past';
+                        element_data = {
+                            id = id
+                            msg = text('Clear date over [*,_1,day]',row.days)
+                        };
+                    END;
+                END;
+            ?>
+            <td id='<?lsmb id ?>' class='<?lsmb class ?>'>
+                <?lsmb INCLUDE tooltip element_data; ?>
+            <?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>
             <td><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
