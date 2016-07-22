@@ -40,6 +40,7 @@ Returns a json array of all accounts
 sub chart_json {
     my ($request) = @_;
     my $label = $request->{label};
+    $label //= '';
     $label =~ s/\*//g;
     my $funcname = 'chart_list_all';
     my @results =
