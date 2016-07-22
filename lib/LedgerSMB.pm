@@ -158,14 +158,13 @@ use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
-use LedgerSMB::Request::Error;
-use HTTP::Exception;
 use utf8;
 
 
 $CGI::Simple::POST_MAX = -1;
 
 use Try::Tiny;
+use Carp;
 use DBI;
 
 use base qw(LedgerSMB::Request);
@@ -488,48 +487,33 @@ sub finalize_request {
                 # Without dying, we tend to continue with a bad dbh. --CT
 }
 
-# To be replaced with a generic interface to an Error class
-use Carp;
 sub error {
     my ($self, $msg) = @_;
     Carp::croak $msg;
 }
 
 sub _error {
-
-    my ( $self, $msg, $status ) = @_;
-    my $error;
+    my ( $self_or_form, $msg, $status ) = @_;
     $msg = "? _error" if !defined $msg;
     $status = 500 if ! defined $status;
-    #local ($@); # pre-5.14, do not die() in this block
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => $msg,
-                                                status => $status );
-    }
 
-    if ( $ENV{GATEWAY_INTERFACE} ) {
+    if ( ! $ENV{GATEWAY_INTERFACE} && $ENV{error_function} ) {
 
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
+        &{ $ENV{error_function} }($msg);
 
     }
     else {
+        print qq|Status: $status ISE
+Content-Type: text/html; charset=utf-8
 
-        if ( $ENV{error_function} ) {
-
-            &{ $ENV{error_function} }($msg);
-
-        } else {
-
-            my $e = HTTP::Exception->new($status);
-            $e->message($msg);
-            $e->throw;
-
-        }
+<html>
+<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
+<p>dbversion: $self_or_form->{dbversion}, company: $self_or_form->{company}</p>
+</body>
+</html>
+|;
     }
-    #die;
+    die;
 }
 
 # Database routines used throughout
