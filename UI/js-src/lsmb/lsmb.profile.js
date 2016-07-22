@@ -88,7 +88,7 @@ var profile = (function(){
         layers: {
             "dojo/dojo": {
                 include: [ "dojo/dojo", "dojo/query",
-                           "dojo/domReady", "dojo/on" ],
+                           "dojo/domReady", "dojo/on", "dijit/Tooltip" ],
                 customBase: true,
                 boot: true
             },
