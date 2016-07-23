@@ -24,7 +24,7 @@ define([
         template
       ){
         return declare('lsmb/parts/PartsDescription',[Textarea, _HasDropDown, _AutoCompleterMixin], {
-            linenum: null,
+            channel: null,
             height: null,
             store:  store,
             queryExpr: "*${0}*",
@@ -34,24 +34,24 @@ define([
             labelAttr: 'label',
             templateString: template,
             dropDownClass: _ComboBoxMenu,
-//            baseClass: "dijit
-           startup: function() {
-               var self = this;
-               this.inherited(arguments);
-                this.own(
-                    topic.subscribe(
-                        '/invoice/part-select/' + this.linenum,
-                        function(selected) {
-                            self.set('value',selected[self.searchAttr]);
-                        }));
-               this.on('change',
-                       function(newValue) {
-                           if (self.item) {
-                               topic.publish('/invoice/part-select/' + this.linenum,
-                                             self.item);
-                           }
-                       });
-           }, // startup
+            startup: function() {
+                var self = this;
+                this.inherited(arguments);
+                if (this.channel) {
+                    this.own(
+                        topic.subscribe(
+                            this.channel,
+                            function(selected) {
+                                self.set('value',selected[self.searchAttr]);
+                            }));
+                    this.on('change',
+                            function(newValue) {
+                                if (self.item) {
+                                    topic.publish(self.channel, self.item);
+                                }
+                            });
+                }
+            }, // startup
             _onKey: function(e) {
                 if (e.keyCode != keys.SPACE
                     && e.keyCode != keys.ENTER) {
