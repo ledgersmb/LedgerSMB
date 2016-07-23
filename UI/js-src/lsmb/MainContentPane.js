@@ -29,12 +29,10 @@ define([
                       var self = this;
                       var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 
-                      this.destroyDescendants();
                       if (! body) {
                           this.report_error('Invalid server response: document lacks BODY tag');
                           return;
                       }
-
                       var newbody = body ? body[1] : '';
                       return this.set('content', newbody)
                           .then(
@@ -74,15 +72,15 @@ define([
                   },
                   fade_main_div: function() {
                       // mention we're processing the request
-                      style.set(this.domNode, 'opacity', "30%");
                       domClass.replace(this.domNode, 'parsing', 'done-parsing');
+                      style.set(this.domNode, 'opacity', "30%");
                   },
                   hide_main_div: function() {
                       style.set(this.domNode, 'visibility', 'hidden');
-                      domClass.replace(this.domNode, 'done-parsing', 'parsing');
                   },
                   show_main_div: function() {
                       style.set(this.domNode, 'visibility', 'visible');
+                      domClass.replace(this.domNode, 'done-parsing', 'parsing');
                   },
                   set: function() {
                       var newContent = null;
