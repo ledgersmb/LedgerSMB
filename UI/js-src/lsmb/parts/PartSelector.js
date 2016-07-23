@@ -21,29 +21,30 @@ define([
             searchAttr: 'partnumber',
             labelAttr: 'label',
             autoComplete: false,
-            initialValue:null,
-            linenum: null,
-          constructor:function(){
-           this.inherited(arguments);
-           this.initialValue=arguments[0].value;
-          },
-          postCreate:function(){
-           var mySelf=this;
-              this.inherited(arguments);
-          },//postCreate
+            initialValue: null,
+            channel: null,
+            constructor:function(){
+                this.inherited(arguments);
+                this.initialValue=arguments[0].value;
+            },
+            postCreate:function(){
+                var mySelf=this;
+                this.inherited(arguments);
+            },//postCreate
             startup:function(){
                 var self = this;
                 this.inherited(arguments);
-                this.own(
-                    topic.subscribe(
-                        '/invoice/part-select/' + this.linenum,
-                        function(selected) {
-                            self.set('value',selected[self.searchAttr]);
-                        }));
-                this.on('change', function(newValue) {
-                    topic.publish('/invoice/part-select/'+self.linenum,
-                                  self.item);
-                });
+                if (this.channel) {
+                    this.own(
+                        topic.subscribe(
+                            this.channel,
+                            function(selected) {
+                                self.set('value',selected[self.searchAttr]);
+                            }));
+                    this.on('change', function(newValue) {
+                        topic.publish(self.channel, self.item);
+                    });
+                }
             }
         });
 
