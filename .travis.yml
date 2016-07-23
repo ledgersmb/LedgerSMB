@@ -120,8 +120,10 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove -j9 t/*.t
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" HARNESS_RULESFILE="xt/testrules.yml" prove -j9 xt/*.t
+  # Temporary drop Weasel verbosity
+  - utils/test/quiet_weasel.sh $HOME/locallib/lib/perl5/Weasel/Session.pm
+  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove  -j$(test-jobs) t/*.t
+  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" HARNESS_RULESFILE="xt/testrules.yml" prove  -j$(test-jobs) xt/*.t
 
 after_success:
   - >
