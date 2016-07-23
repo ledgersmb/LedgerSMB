@@ -34,7 +34,11 @@
     class = "money",
     size = "15",
     value = their_total
-    } ?></td>
+    } ?>
+    <?lsmb IF submit_allowed != 0 ?>
+      &nbsp;<span class="no-submit">(<?lsmb submit_allowed ?>)</span>
+    <?lsmb END ?>
+ </td>
 </tr>
 <tr>
   <th><?lsmb text('Variance:') ?></th>
@@ -106,7 +110,27 @@
             }
             ?></td>
             <td><?lsmb row.trans_type ?> </td>
-            <td><?lsmb row.clear_time ?></td>
+            <?lsmb id=''; class=''; element_data = {};
+                IF row.days;
+                    id="cleared_time_$row.id";
+                    IF row.days < 0;
+                        class='cleared-future';
+                        element_data = {
+                            id = id
+                            msg = text('Clear date is [*,_1,day] in the future',row.days)
+                        };
+                    ELSIF row.days > 45;
+                        class='cleared-past';
+                        element_data = {
+                            id = id
+                            msg = text('Clear date over [*,_1,day]',row.days)
+                        };
+                    END;
+                END;
+            ?>
+            <td id='<?lsmb id ?>' class='<?lsmb class ?>'>
+                <?lsmb INCLUDE tooltip element_data; ?>
+            <?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>
             <td><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
@@ -260,7 +284,7 @@
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
-    disabled = submit_allowed ? 'false' : 'true',
+    disabled = submit_allowed == 0 ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
@@ -269,7 +293,7 @@
     name = "action",
     text = text('Approve'),
     value = 'approve',
-    disabled = submit_allowed ? 'false' : 'true',
+    disabled = submit_allowed == 0 ? 'false' : 'true',
     class = "submit"
 };
 INCLUDE button element_data = {

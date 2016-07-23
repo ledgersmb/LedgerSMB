@@ -48,10 +48,6 @@ no_db_str = database
 # has been selected.
 #dojo_theme = claro
 
-# This is the boolean indicating if dojo's compacted output ("built output")
-# should be used or the development version [1 = 'true' ==> 'built version']
-#dojo_built = 1
-
 
 [environment]
 # If the server can't find applications, append to the path
@@ -106,6 +102,14 @@ host = localhost
 db_namespace = public
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
+
+[debug]
+
+# This is the boolean indicating if dojo's compacted output ("built output")
+# should be used or the development version [1 = 'true' ==> 'built version']
+#dojo_built = 1
+
+
 
 [log4perl_config_modules_loglevel]
 LedgerSMB = INFO

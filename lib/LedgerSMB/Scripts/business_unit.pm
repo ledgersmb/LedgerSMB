@@ -44,7 +44,7 @@ sub list_classes {
         template => 'list_classes',
         format => 'HTML'
     );
-    $template->render($request);
+    $template->render({request => $request});
 }
 
 =item add

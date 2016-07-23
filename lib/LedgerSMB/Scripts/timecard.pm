@@ -204,9 +204,9 @@ sub print {
   no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
-    $template->render($request);;
+    $template->render($request);
     $template->output(%$request);
-    return if $request->{media} eq 'screen';
+    return if lc($request->{media}) eq 'screen';
     display($request);
 }
 
@@ -245,6 +245,11 @@ sub get {
     $tcard->{transdate} = LedgerSMB::PGDate->from_db(
               $tcard->checkedin->to_db,
              'date');
+    $tcard->{transdate}->is_time(0);
+    my ($part) = $tcard->call_procedure(
+         funcname => 'part__get_by_id', args => [$tcard->parts_id]
+    );
+    $tcard->{partnumber} = $part->{partnumber};
     display($tcard);
 }
 

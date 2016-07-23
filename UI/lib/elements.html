@@ -371,3 +371,9 @@
 <?lsmb END ?>
 
 <?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>
+
+<?lsmb BLOCK tooltip; ?>
+  <?lsmb IF element_data && element_data.id.defined() && element_data.msg.defined(); ?>
+    <div data-dojo-type="dijit/Tooltip" connectId=<?lsmb element_data.id ?> ><?lsmb element_data.msg ?></div>
+  <?lsmb END ?>
+<?lsmb END ?>
