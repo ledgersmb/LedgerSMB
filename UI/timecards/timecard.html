@@ -31,23 +31,26 @@ END; ?>
                  value_attr = 'id'
        } ?></td>
 <tr><th><?lsmb  text('Partnumber') ?></th>
-    <td><?lsmb PROCESS input element_data = {
-               name = 'partnumber'
-              value = partnumber
-               type = 'text'
-               size = '32'
-              class = 'control-code'
-         } ?>
+  <td>
+    <input data-dojo-type="lsmb/parts/PartSelector"
+           data-dojo-props="required:false,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
+           name="partnumber"
+           id="partnumber"
+           size="32"
+           value="<?lsmb partnumber ?>"
+           accesskey="p"
+           title="[p]"
+           class="control-code" />
     </td>
 </tr>
 <tr><th><?lsmb text('Description') ?></th>
-    <td><?lsmb PROCESS input element_data = {
-               name = 'description'
-              value = description
-               type = 'text'
-               size = '48'
-              class = 'description'
-         } ?>
+  <td>
+    <div data-dojo-type="lsmb/parts/PartDescription"
+         data-dojo-props="channel:'/timecard/part-select/day'"
+         name="description"
+         id="description"
+         style="width:100%"
+         class="description"><?lsmb description ?></div>
     </td>
 </tr>
 <tr><th><?lsmb text('Date Worked') ?></th>
@@ -131,11 +134,11 @@ END; ?>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
     <td colspan=3><?lsmb PROCESS textarea element_data = {
-								 name="notes"
-								 rows=2
-								 cols=46
-								 wrap="soft"
-								 text=notes } ?>
+                                                                 name="notes"
+                                                                 rows=2
+                                                                 cols=46
+                                                                 wrap="soft"
+                                                                 text=notes } ?>
     </td>
 </tr>
 </table>
