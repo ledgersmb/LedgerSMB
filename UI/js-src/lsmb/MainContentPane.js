@@ -33,7 +33,6 @@ define([
                           this.report_error('Invalid server response: document lacks BODY tag');
                           return;
                       }
-
                       var newbody = body ? body[1] : '';
                       return this.set('content', newbody)
                           .then(
