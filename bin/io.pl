@@ -1088,14 +1088,14 @@ sub print {
     my $saved_form = { %$form };
     $lang = $form->{language_code};
 
+    &invoice_links;
+    &prepare_invoice;
     if ($form->{vc} eq 'vendor') {
         IR->retrieve_invoice(\%myconfig, $form);
     }
     else {
         IS->retrieve_invoice(\%myconfig, $form);
     }
-    &invoice_links;
-    &prepare_invoice;
     $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
     # if this goes to the printer pass through
