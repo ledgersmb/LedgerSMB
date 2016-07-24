@@ -57,23 +57,23 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from account where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
-SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all()
+SELECT 'All Test Accounts Exist', count(*) = 22 FROM chart_list_all()
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AR Cash Test Accounts', count(*) = 3 FROM chart_list_cash(2)
+SELECT 'List AR Cash Test Accounts', count(*) = 2 FROM chart_list_cash(2)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AP Cash Test Accounts', count(*) = 3 FROM chart_list_cash(1)
+SELECT 'List AP Cash Test Accounts', count(*) = 2 FROM chart_list_cash(1)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AP Overpayment Accts', count(*) = 3 FROM chart_list_overpayment(1)
+SELECT 'List AP Overpayment Accts', count(*) = 2 FROM chart_list_overpayment(1)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AR Overpayment Accts', count(*) = 3 FROM chart_list_overpayment(2)
+SELECT 'List AR Overpayment Accts', count(*) = 2 FROM chart_list_overpayment(2)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
@@ -83,6 +83,7 @@ where accno like '0%' AND description LIKE 'TEST%';
 INSERT INTO test_result(test_name, success)
 SELECT 'Test AR Accounts Are Found', count(*) = 2 FROM chart_get_ar_ap(2)
 where accno like '0%' AND description LIKE 'TEST%';
+
 
 SELECT * FROM test_result;
 
