@@ -1334,7 +1334,6 @@ CREATE TYPE payment_line_item AS (
   chart_id int,
   chart_accno text,
   chart_description text,
-  chart_link text[],
   amount numeric,
   trans_date date,
   source text,
@@ -1351,13 +1350,12 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
  RETURNS SETOF payment_line_item AS
  $$
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
-     ac.chart_id, ch.accno as chart_accno, ch.description as chart_description, as_array(l.description) as chart_link,
+     ac.chart_id, ch.accno as chart_accno, ch.description as chart_description,
      ac.amount,  ac.transdate as trans_date, ac.source, ac.cleared, ac.fx_transaction,
      ac.memo, ac.invoice_id, ac.approved, ac.cleared_on, ac.reconciled_on
      FROM acc_trans ac
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
      JOIN account ch ON (ch.id = ac.chart_id)
-     JOIN account_link l ON ch.id = l.account_id
      LEFT JOIN (SELECT id,invnumber
                  FROM ar WHERE in_account_class = 2
                  UNION
