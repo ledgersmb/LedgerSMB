@@ -939,22 +939,21 @@ sub create_links {
     my $ref;
 
     my $query = qq|
-        SELECT accno, description, link
-          FROM chart
-         WHERE link LIKE ?
+        SELECT accno, description, as_array(l.description) as link
+          FROM account a
+          JOIN account_link l ON a.id = l.account_id
+         WHERE l.description LIKE ?
          ORDER BY accno|;
     my $sth = $dbh->prepare($query);
-    $sth->execute("%$module%") || $form->dberror($query);
+    $sth->execute("$module%") || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        foreach my $key ( split /:/, $ref->{link} ) {
-            if ( $key =~ /$module/ ) {
-                push @{ $form->{"${module}_links"}{$key} },
+        if ( $key =~ /$module/ ) {
+            push @{ $form->{"${module}_links"}{$key} },
                   {
                     accno       => $ref->{accno},
                     description => $ref->{description}
                   };
-            }
         }
     }
     $sth->finish;

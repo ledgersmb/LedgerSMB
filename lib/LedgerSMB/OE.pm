@@ -2154,7 +2154,7 @@ sub generate_orders {
             FROM entity_credit_account v
             LEFT JOIN eca_tax vt ON (v.id = vt.vendor_id)
             LEFT JOIN tax t ON (t.chart_id = vt.chart_id)
-            LEFT JOIN chart c ON (c.id = t.chart_id)
+            LEFT JOIN account c ON (c.id = t.chart_id)
             WHERE v.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute($vendor_id) || $form->dberror($query);
@@ -2212,7 +2212,7 @@ sub generate_orders {
                 SELECT p.description, p.unit, c.accno
                 FROM parts p
                 LEFT JOIN partstax pt ON (p.id = pt.parts_id)
-                LEFT JOIN chart c ON (c.id = pt.chart_id)
+                LEFT JOIN account c ON (c.id = pt.chart_id)
                 WHERE p.id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute($parts_id) || $form->dberror($query);

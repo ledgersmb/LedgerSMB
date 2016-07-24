@@ -60,7 +60,7 @@ sub init_taxes {
     my $query = qq|
         SELECT t.taxnumber, c.description,
             t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
-            FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
+            FROM tax t INNER JOIN account c ON (t.chart_id = c.id)
             INNER JOIN taxmodule m
                 ON (t.taxmodule_id = m.taxmodule_id)
             WHERE c.accno = ?

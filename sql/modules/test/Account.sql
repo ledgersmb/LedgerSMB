@@ -51,10 +51,10 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Accounts created', currval('account_id_seq') is not null);
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Chart 1 is orphaned', account_has_transactions((select id from chart where description = 'TEST testing 1')) is false);
+VALUES ('Chart 1 is orphaned', account_has_transactions((select id from account where description = 'TEST testing 1')) is false);
 
 INSERT INTO test_result(test_name, success)
-VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from chart where accno = '00002')) is true);
+VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from account where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
 SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all()

@@ -964,7 +964,7 @@ sub get_jcitems {
     $query = qq|
         SELECT c.accno, t.rate
           FROM tax t
-          JOIN chart c ON (c.id = t.chart_id)|;
+          JOIN account c ON (c.id = t.chart_id)|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {

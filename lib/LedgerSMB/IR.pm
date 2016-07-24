@@ -1280,22 +1280,21 @@ sub item_links {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-           SELECT accno, description, link
-             FROM chart
-                WHERE link LIKE '%IC%'
+           SELECT accno, description, as_array(l.description) as link
+             FROM account a
+             JOIN account_link l ON a.id = l.account-id
+            WHERE l.description like 'IC%'
          ORDER BY accno|;
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        foreach my $key ( split( /:/, $ref->{link} ) ) {
-            if ( $key =~ /IC/ ) {
-                push @{ $form->{IC_links}{$key} },
+        foreach my $key ( @{$ref->{link}} ) {
+            push @{ $form->{IC_links}{$key} },
                   {
                     accno       => $ref->{accno},
                     description => $ref->{description}
                   };
-            }
         }
     }
 

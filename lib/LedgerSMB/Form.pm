@@ -2091,8 +2091,8 @@ sub all_taxaccounts {
         # rebuild tax rates
         $query = qq|SELECT t.rate, t.taxnumber
                       FROM tax t
-                      JOIN chart c ON (c.id = t.chart_id)
-                     WHERE c.accno = ?
+                      JOIN account a ON (c.id = t.chart_id)
+                     WHERE a.accno = ?
                     $where
                   ORDER BY accno, validto|;
 
@@ -2341,10 +2341,10 @@ sub create_links {
     }
 
     # now get the account numbers
-    $query = qq|SELECT a.accno, a.description, a.link
-                  FROM chart a
-                  JOIN account ON a.id = account.id AND NOT account.obsolete
-                 WHERE (link LIKE ?) OR account.tax
+    $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
+                  JOIN account a
+                  JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
+                 WHERE (l.description LIKE ?) OR a.tax
                        AND (a.id in (select acc_trans.chart_id
                                        FROM acc_trans
                                       WHERE trans_id = coalesce(?, -1))
@@ -2360,10 +2360,9 @@ sub create_links {
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         my $link = $ref->{link};
 
-        $link .= ($link ? ":" : "") . "${module}_tax"
-            if $tax_accounts{$ref->{accno}};
+        push @$link "${module}_tax" if $tax_accounts{$ref->{accno}};
 
-        foreach my $key ( split /:/, $link ) {
+        foreach my $key ( @$link ) {
 
             if ( $key =~ /$module/ ) {
 
@@ -2490,7 +2489,7 @@ sub create_links {
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
             FROM acc_trans a
-            JOIN chart c ON (c.id = a.chart_id)
+            JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
             WHERE a.trans_id = ?
                 AND a.fx_transaction = '0'

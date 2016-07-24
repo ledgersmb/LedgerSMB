@@ -10,10 +10,17 @@ insert into session (session_id, users_id, token, last_used)
 values (-200, -200, md5(random()::text), now());
 
 
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00001', 'testing AP', 'A', 'L', 'AP'),
-       ('00002', 'testing AP cost', 'A', 'E', 'AP_amount'),
-       ('00003', 'testing cash', 'A', 'A', 'AP_paid');
+INSERT INTO account (accno, description, category)
+VALUES ('00001', 'testing AP', 'L'),
+       ('00002', 'testing AP cost', 'E'),
+       ('00003', 'testing cash', 'A');
+
+INSERT INTO account_link (account_id, description)
+SELECT id, 'AP' account WHERE accno = '00001'
+UNION
+SELECT id, 'AP_amount' account WHERE accno = '00002'
+UNION
+SELECT id, 'AP_paid' account WHERE accno = '00003'
 
 
 INSERT INTO exchangerate (transdate, curr, buy, sell)
