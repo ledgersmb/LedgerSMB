@@ -179,6 +179,7 @@ Help on using this Makefile
     - help         : This help text
     - dojo         : Builds the minified dojo blob we serve to clients
     - submodules   : Initialises and updates our git submodules
+    - test         : Runs tests
     - dist         : builds the release distribution archive
     - dependencies : Installs all dependencies including cpan ones. (except features)
                      Preferring system perl modules over cpan ones
@@ -380,6 +381,9 @@ feature_OpenOffice: $(OS_feature_OpenOffice)
 
 postgres_user:
 	sudo createuser -S -d -r -l -P lsmb_dbadmin
+
+test:
+	prove -Ilib t/*.t
 
 ########
 # todo list
