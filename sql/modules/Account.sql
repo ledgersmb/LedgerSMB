@@ -86,19 +86,21 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION chart_list_all() IS
 $$ Generates a list of chart view entries.$$;
 
+drop function if exists chart_get_ar_ap(int)
 CREATE OR REPLACE FUNCTION chart_get_ar_ap(in_account_class int)
-RETURNS SETOF chart AS
+RETURNS SETOF account AS
 $$
-DECLARE out_row chart%ROWTYPE;
+DECLARE out_row account%ROWTYPE;
 BEGIN
         IF in_account_class NOT IN (1, 2) THEN
                 RAISE EXCEPTION 'Bad Account Type';
         END IF;
        FOR out_row IN
-               SELECT * FROM chart
-               WHERE link = CASE WHEN in_account_class = 1 THEN 'AP'
+               SELECT * FROM account
+               WHERE id in (select account_id from account_link
+                               where description = CASE WHEN in_account_class = 1 THEN 'AP'
                                WHEN in_account_class = 2 THEN 'AR'
-                               END
+                               END)
                ORDER BY accno
        LOOP
                RETURN NEXT out_row;
@@ -136,20 +138,20 @@ If in_link_desc is provided, the list is further filtered by which accounts are
 set to an account_link.description equal to that provided.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_overpayment(in_account_class int)
-RETURNS SETOF chart AS
+RETURNS SETOF account AS
 $$
 DECLARE resultrow record;
         link_string text;
 BEGIN
         IF in_account_class = 1 THEN
-           link_string := '%AP_overpayment%';
+           link_string := 'AP_overpayment';
         ELSE
-           link_string := '%AR_overpayment%';
+           link_string := 'AR_overpayment';
         END IF;
 
         FOR resultrow IN
-          SELECT *  FROM chart
-          WHERE link LIKE link_string
+          SELECT *  FROM account
+          WHERE id in (select account_id from account_link where description = link_string)
           ORDER BY accno
           LOOP
           return next resultrow;
@@ -162,21 +164,21 @@ $$ Returns a list of AP_overpayment accounts if in_account_class is 1
 Otherwise it returns a list of AR_overpayment accounts.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_cash(in_account_class int)
-returns setof chart
+returns setof account
 as $$
  DECLARE resultrow record;
          link_string text;
  BEGIN
          IF in_account_class = 1 THEN
-            link_string := '%AP_paid%';
+            link_string := 'AP_paid';
          ELSE
-            link_string := '%AR_paid%';
+            link_string := 'AR_paid';
          END IF;
 
          FOR resultrow IN
-           SELECT *  FROM chart
-           WHERE link LIKE link_string
-           ORDER BY accno
+          SELECT *  FROM account
+          WHERE id in (select account_id from account_link where description = link_string)
+          ORDER BY accno
            LOOP
            return next resultrow;
          END LOOP;
@@ -196,14 +198,14 @@ DECLARE resultrow record;
         link_string text;
 BEGIN
         IF in_account_class = 1 THEN
-           link_string := '%AP_discount%';
+           link_string := 'AP_discount';
         ELSE
-           link_string := '%AR_discount%';
+           link_string := 'AR_discount';
         END IF;
 
         FOR resultrow IN
-          SELECT *  FROM chart
-          WHERE link LIKE link_string
+          SELECT *  FROM account
+          WHERE id in (select account_id from account_link where description = link_string)
           ORDER BY accno
           LOOP
           return next resultrow;
@@ -318,19 +320,15 @@ $$Deletes the translation for the account+language combination.$$;
 
 
 
-CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
+CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS account_heading AS
 $$
-SELECT ah.id, ah.accno, ah.description,
-       'H'::text as charttype, NULL::char as category, null::text as link,
-       ah.parent_id as account_heading,
-       null::text as gifi_accno, false as contra,
-       false as tax
+SELECT *
    from account_heading ah
   WHERE id = in_id;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_heading_get(in_id int) IS
-$$Returns an entry from the chart view which matches the id requested, and which
+$$Returns an entry from the account heading tablewhich matches the id requested, and which
 is a heading, not an account.$$;
 
 DROP FUNCTION IF EXISTS account_heading__list_translations(int);
