@@ -76,10 +76,11 @@ in_gifi bool) IS
 $$ This is a simple routine to generate trial balances for the full
 company, for a project, or for a department.$$;
 
+DROP FUNCTION IF EXISTS chart_list_all();
 CREATE OR REPLACE FUNCTION chart_list_all()
-RETURNS SETOF chart AS
+RETURNS SETOF account AS
 $$
-SELECT * FROM chart ORDER BY accno;
+SELECT * FROM account ORDER BY accno;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION chart_list_all() IS
