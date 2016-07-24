@@ -23,12 +23,13 @@ chdir 'sql/modules/test/';
 
 for my $testscript (@testscripts){
         open (TEST, '-|', "psql -f $testscript.sql");
-        my @testlines = grep /\|\s+(t|f)\s?$/, <TEST>;
+        my @fullout = <TEST>;
+        my @testlines = grep /\|\s+(t|f)\s?$/, @fullout;
         cmp_ok(scalar @testlines, '>', 0, "$testscript.sql returned test results");
         for my $test (@testlines){
                 my @parts = split /\|/, $test;
                 like($parts[1], qr/t\s?$/, $parts[0]);
-                like($test, qr/ 0 failed/, "$testscript reported no failures") if $test =~ /\d+ tests passed and \d+ failed/;
+                like($_, qr/ 0 failed/, "$testscript reported no failures") for grep { /\d+ tests passed and \d+ failed/ } @fullout;
         }
 }
 
