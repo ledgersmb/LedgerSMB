@@ -29,7 +29,7 @@ for my $testscript (@testscripts){
         for my $test (@testlines){
                 my @parts = split /\|/, $test;
                 like($parts[1], qr/t\s?$/, $parts[0]);
-                like($_, qr/ 0 failed/, "$testscript reported no failures") for grep { /\d+ tests passed and \d+ failed/ } @fullout;
         }
+        like($_, qr/ 0 failed/, "$testscript reported no failures") for grep { /\d+ tests passed and \d+ failed/ } @fullout;
 }
 
