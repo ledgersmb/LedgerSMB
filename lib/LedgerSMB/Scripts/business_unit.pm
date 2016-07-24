@@ -185,6 +185,7 @@ sub save {
                               if defined $request->{end_date};
     my $unit = LedgerSMB::Business_Unit->new(%$request);
     $unit->save;
+    $request->{message} = $request->{_locale}->text("Added id [_1]", $unit->id);
     add($request);
 }
 
