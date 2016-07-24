@@ -1357,7 +1357,7 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
      FROM acc_trans ac
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
      JOIN account ch ON (ch.id = ac.chart_id)
-     JOIN accunt_link l ON ch.id = l.account_id
+     JOIN account_link l ON ch.id = l.account_id
      LEFT JOIN (SELECT id,invnumber
                  FROM ar WHERE in_account_class = 2
                  UNION
