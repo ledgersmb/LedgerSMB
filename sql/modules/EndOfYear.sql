@@ -206,21 +206,28 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
 $$
-        SELECT coalesce(coalesce(sum(ac.amount) + cp.amount, sum(ac.amount)), 0)
-        FROM acc_trans ac
-        JOIN (select id, approved from ar union
-                select id, approved from ap union
-                select id, approved from gl) a ON (a.id = ac.trans_id)
-        LEFT JOIN (select account_id, end_date, amount from account_checkpoint
-                WHERE account_id = in_account_id AND end_date < in_transdate
-                ORDER BY end_date desc limit 1
-        ) cp ON (cp.account_id = ac.chart_id)
-        WHERE ac.chart_id = in_account_id
-                AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
-                and ac.approved and a.approved
-                and ac.transdate <= in_transdate
-        GROUP BY cp.amount, ac.chart_id;
+WITH cp AS (
+  SELECT amount, end_date, account_id
+    FROM account_checkpoint
+   WHERE account_id = in_account_id
+     AND end_date <= in_transdate
+ORDER BY end_date DESC LIMIT 1
+),
+ac AS (
+  SELECT acc_trans.amount
+    FROM acc_trans
+    JOIN (select id from ar where approved
+          union select id from ap where approved
+          union select id from gl where approved) a on acc_trans.trans_id = a.id
+  LEFT JOIN cp ON acc_trans.chart_id = cp.account_id
+   WHERE transdate > coalesce(cp.end_date, in_transdate - '1 day'::interval)
+     AND transdate <= in_transdate
+     AND chart_id = in_account_id)
 
+ SELECT coalesce((select sum(amount)
+                    from (select amount from cp
+                          union select amount from ac) as a),
+                 0);
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION account__obtain_balance
