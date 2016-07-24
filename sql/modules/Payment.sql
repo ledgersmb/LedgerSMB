@@ -245,7 +245,7 @@ $$
                         JOIN entity_credit_account c ON (c.id = a.entity_credit_account)
                 --        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
                         WHERE ((l.description = 'AP' AND in_account_class = 1)
-                              OR l.descriptionk = 'AR' AND in_account_class = 2))
+                              OR (l.descriptionk = 'AR' AND in_account_class = 2))
                         AND a.invoice_class = in_account_class
                         AND c.entity_class = in_account_class
                         AND c.id = in_entity_credit_id
