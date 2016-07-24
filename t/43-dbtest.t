@@ -28,6 +28,7 @@ for my $testscript (@testscripts){
         for my $test (@testlines){
                 my @parts = split /\|/, $test;
                 like($parts[1], qr/t\s?$/, $parts[0]);
+                like($test, qr/ 0 failed/, "$testscript reported no failures") if $test =~ /\d+ tests passed and \d+ failed/;
         }
 }
 
