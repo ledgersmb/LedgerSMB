@@ -220,13 +220,14 @@ ac AS (
           union select id from ap where approved
           union select id from gl where approved) a on acc_trans.trans_id = a.id
   LEFT JOIN cp ON acc_trans.chart_id = cp.account_id
-   WHERE transdate > coalesce(cp.end_date, in_transdate - '1 day'::interval)
+   WHERE (cp.end_date IS NULL OR transdate > cp.end_date)
      AND transdate <= in_transdate
      AND chart_id = in_account_id)
 
  SELECT coalesce((select sum(amount)
-                    from (select amount from cp
-                          union select amount from ac) as a),
+                    from (select sum(amount) as amount from cp
+                          union all
+                          select sum(amount) from ac) as a),
                  0);
 $$ LANGUAGE SQL;
 
