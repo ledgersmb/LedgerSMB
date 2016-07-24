@@ -2360,7 +2360,7 @@ sub create_links {
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         my $link = $ref->{link};
 
-        push @$link "${module}_tax" if $tax_accounts{$ref->{accno}};
+        push(@$link,"${module}_tax") if $tax_accounts{$ref->{accno}};
 
         foreach my $key ( @$link ) {
 
