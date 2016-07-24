@@ -86,7 +86,7 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION chart_list_all() IS
 $$ Generates a list of chart view entries.$$;
 
-drop function if exists chart_get_ar_ap(int)
+drop function if exists chart_get_ar_ap(int);
 CREATE OR REPLACE FUNCTION chart_get_ar_ap(in_account_class int)
 RETURNS SETOF account AS
 $$
