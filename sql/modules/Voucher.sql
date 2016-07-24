@@ -431,8 +431,8 @@ BEGIN
         END IF;
         update ar set paid = amount +
                 (select sum(amount) from acc_trans
-                join account ON (acc_trans.chart_id = account.id)
-                where link = 'AR' AND trans_id = ar.id
+                join account_link a ON (acc_trans.chart_id = a.account_id)
+                where a.description = 'AR' AND trans_id = ar.id
                         AND (voucher_id IS NULL OR voucher_id NOT IN
                                 (select id from voucher
                                 WHERE batch_id = in_batch_id)))
@@ -440,8 +440,8 @@ BEGIN
                 (select id from voucher where batch_id = in_batch_id));
 
         update ap set paid = amount - (select sum(amount) from acc_trans
-                join account ON (acc_trans.chart_id = account.id)
-                where link = 'AP' AND trans_id = ap.id
+                join account_link a ON (acc_trans.chart_id = a.account_id)
+                where a.description = 'AP' AND trans_id = ap.id
                         AND (voucher_id IS NULL OR voucher_id NOT IN
                                 (select id from voucher
                                 WHERE batch_id = in_batch_id)))
