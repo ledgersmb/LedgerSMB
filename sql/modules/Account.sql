@@ -49,7 +49,7 @@ BEGIN
                                         UNION ALL
                                         select id, approved FROM ar) g
                                         ON (g.id = ac.trans_id)
-                                JOIN chart c ON (c.id = ac.chart_id)
+                                JOIN account c ON (c.id = ac.chart_id)
                                 WHERE ac.transdate <= in_date_to
                                         AND ac.approved AND g.approved
                                         AND (in_project_id IS NULL
@@ -82,9 +82,6 @@ RETURNS SETOF account AS
 $$
 SELECT * FROM account ORDER BY accno;
 $$ LANGUAGE SQL;
-
-COMMENT ON FUNCTION chart_list_all() IS
-$$ Generates a list of chart view entries.$$;
 
 drop function if exists chart_get_ar_ap(int);
 CREATE OR REPLACE FUNCTION chart_get_ar_ap(in_account_class int)
@@ -192,7 +189,7 @@ If in_account_class is 1 it returns a list of AP cash accounts and
 if 2, AR cash accounts.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_discount(in_account_class int)
-RETURNS SETOF chart AS
+RETURNS SETOF account AS
 $$
 DECLARE resultrow record;
         link_string text;
@@ -255,11 +252,10 @@ $$ Returns set of accounts where the tax attribute is true.$$;
 
 DROP FUNCTION IF EXISTS account_get(int);
 
-CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
+DROP FUNCTION IF EXISTS account_get(int);
+CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account AS
 $$
-select c.id, c.accno, c.description,
-       'A'::text as charttype, c.category, concat_colon(l.description) as link,
-       heading, gifi_accno, contra, tax
+select c.*
   from account c
   left join account_link l
     ON (c.id = l.account_id)
@@ -269,7 +265,7 @@ group by c.id, c.accno, c.description, c.category,
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_get(in_id int) IS
-$$Returns an entry from the chart view which matches the id requested, and which
+$$Returns an entry from the account table which matches the id requested, and which
 is an account, not a heading.$$;
 
 DROP FUNCTION IF EXISTS account__list_translations(int);
@@ -554,19 +550,6 @@ $$ This deletes an account heading with the id specified.  If the heading has
 accounts associated with it, it will fail and raise a foreign key constraint.
 $$;
 
-CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
-DO INSTEAD
-SELECT CASE WHEN new.charttype='H' THEN
- account_heading_save(new.id, new.accno, new.description, NULL)
-ELSE
- account__save(new.id, new.accno, new.description, new.category,
-  new.gifi_accno, NULL,
-  -- should these be rewritten as coalesces? --CT
-  CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
-  CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END,
-  string_to_array(new.link, ':'), false, false)
-END;
-
 CREATE OR REPLACE FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
 RETURNS void AS $BODY$
     DECLARE
@@ -577,7 +560,7 @@ RETURNS void AS $BODY$
 
         IF NOT FOUND THEN
            -- This is a new account. Insert the relevant data.
-           SELECT id INTO v_chart_id FROM chart WHERE accno = in_accno;
+           SELECT id INTO v_chart_id FROM account WHERE accno = in_accno;
            INSERT INTO cr_coa_to_account (chart_id, account) VALUES (v_chart_id, in_accno||'--'||in_description);
         END IF;
         -- Already found, no need to do anything. =)
