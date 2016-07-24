@@ -107,7 +107,7 @@ $$
                 FROM voucher v
                 JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
-                JOIN account_link l ON (a.chart_id = c.id)
+                JOIN account_link l ON (a.chart_id = l.account_id)
                 JOIN ar ON (ar.id = a.trans_id)
                 JOIN entity_credit_account cr
                         ON (ar.entity_credit_account = cr.id)
