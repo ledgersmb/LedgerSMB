@@ -12,7 +12,7 @@
    ELSE;
       text('Add Reporting Unit');
     END; ?></div>
-<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/Form" id="businessunit-edit" action="business_unit.pl" name="businessunit-edit" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
 	type = "hidden"
@@ -66,7 +66,6 @@ default_blank = 1
         value = end_date
          size = 12
 } ?>
-</div>
 </div>
 <div class="inputrow" id="descrow">
 <?lsmb PROCESS input element_data = {
