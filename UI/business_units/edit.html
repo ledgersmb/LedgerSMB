@@ -4,6 +4,9 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+<?lsmb IF message ?>
+<div><?lsmb message ?></div>
+<?lsmb END ?>
 <div id="business_units">
 <div class="listtop">
    <?lsmb 
