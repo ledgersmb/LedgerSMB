@@ -156,14 +156,6 @@ sub order_links {
 
 }
 
-sub invoice_links { # simple alias to fix order printing
-    order_links()
-}
-
-sub prepare_invoice { # also to fix printing
-    prepare_order()
-}
-
 sub prepare_order {
 
     $form->{format}   = "postscript" if $myconfig{printer};
@@ -580,7 +572,7 @@ function on_return_submit(event){
     }
     $form->hide_form(qw(entity_control_code meta_number tax_id address city));
     $form->hide_form(
-        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
+        qw(id type printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
    lock_description)
     );
 
@@ -648,7 +640,8 @@ function on_return_submit(event){
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
             'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
+              { ndx => 2, key => 'P', value => $locale->text('Print'),
+                type => 'lsmb/PrintButton' },
             'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
             'ship_to' =>
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
@@ -657,14 +650,16 @@ function on_return_submit(event){
             'print_and_save' => {
                 ndx   => 6,
                 key   => 'R',
-                value => $locale->text('Print and Save')
+                value => $locale->text('Print and Save'),
+                type => 'lsmb/PrintButton'
             },
             'save_as_new' =>
               { ndx => 7, key => 'N', value => $locale->text('Save as new') },
             'print_and_save_as_new' => {
                 ndx   => 8,
                 key   => 'W',
-                value => $locale->text('Print and Save as new')
+                value => $locale->text('Print and Save as new'),
+                type => 'lsmb/PrintButton'
             },
             'sales_invoice' =>
               { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
