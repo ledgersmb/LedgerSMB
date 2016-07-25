@@ -247,21 +247,10 @@ dojo: $(ARCHIVE)
 	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
 
 $(HOMEDIR):
-	pwd
 	mkdir -p $(HOMEDIR)
 
 $(ARCHIVE): $(HOMEDIR)
     #TODO: Protect for concurrent invocations
-#ifneq ($(wildcard $(FLAG)),)
-#	loop=300
-#	while [ $${loop} -gt 0 ] ; do \
-#	    echo -n '.' ; \
-#	    loop=`expr $$loop - 1`; \
-#	done;
-## Timeout
-#	@echo "$@\n\tCompilation waited for more than 5 minutes\n";
-#	exit 124;   # Timeout
-#endif
 
 ifeq ($(wildcard $(ARCHIVE)),)
 	touch $(FLAG)
