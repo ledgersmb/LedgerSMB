@@ -949,7 +949,7 @@ sub create_links {
     $sth->execute("$module%") || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        if ( $key =~ /$module/ ) {
+        for my $key (@{$ref->{link}}){
             push @{ $form->{"${module}_links"}{$key} },
                   {
                     accno       => $ref->{accno},
