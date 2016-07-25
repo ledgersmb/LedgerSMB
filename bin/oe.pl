@@ -156,14 +156,6 @@ sub order_links {
 
 }
 
-sub invoice_links { # simple alias to fix order printing
-    order_links()
-}
-
-sub prepare_invoice { # also to fix printing
-    prepare_order()
-}
-
 sub prepare_order {
 
     $form->{format}   = "postscript" if $myconfig{printer};
