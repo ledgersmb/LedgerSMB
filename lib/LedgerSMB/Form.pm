@@ -2342,13 +2342,14 @@ sub create_links {
 
     # now get the account numbers
     $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
-                  JOIN account a
+                  FROM account a
                   JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
                  WHERE (l.description LIKE ?) OR a.tax
                        AND (a.id in (select acc_trans.chart_id
                                        FROM acc_trans
                                       WHERE trans_id = coalesce(?, -1))
-                           OR NOT account.obsolete)
+                           OR NOT a.obsolete)
+              GROUP BY a.accno, a.description
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
