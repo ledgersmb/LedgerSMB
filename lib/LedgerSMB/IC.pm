@@ -939,11 +939,12 @@ sub create_links {
     my $ref;
 
     my $query = qq|
-        SELECT accno, description, as_array(l.description) as link
+        SELECT a.accno, a.description, as_array(l.description) as link
           FROM account a
           JOIN account_link l ON a.id = l.account_id
          WHERE l.description LIKE ?
-         ORDER BY accno|;
+         GROUP BY a.accno, a.description
+         ORDER BY a.accno|;
     my $sth = $dbh->prepare($query);
     $sth->execute("$module%") || $form->dberror($query);
 
