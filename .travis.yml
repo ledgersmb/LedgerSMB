@@ -73,7 +73,7 @@ matrix:
             - nginx
 
 before_cache:
-  - mkdir $HOME/dojo_archive 2>/dev/null
+  - mkdir -p $HOME/dojo_archive
 
 cache:
   directories:
