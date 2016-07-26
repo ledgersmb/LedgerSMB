@@ -108,6 +108,8 @@ sub prepare_message {
     for my $key (keys %args) {
         $self->{$key} = $args{$key};
     }
+    die 'No email from address' unless $self->{from};
+
 
     my $domain = $self->{from};
     $domain =~ s/(.*?\@|>)//g;
