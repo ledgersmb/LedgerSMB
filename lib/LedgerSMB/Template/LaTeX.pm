@@ -66,8 +66,8 @@ BEGIN {
 delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
 delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00e5)};
 %TeX::Encode::charmap::CHAR_MAP = (
-    %TeX::Encode::charmap::CHARS, 
-    %TeX::Encode::charmap::ACCENTED_CHARS, 
+    %TeX::Encode::charmap::CHARS,
+    %TeX::Encode::charmap::ACCENTED_CHARS,
     %TeX::Encode::charmap::GREEK);
 for(keys %TeX::Encode::charmap::MATH)
 {
