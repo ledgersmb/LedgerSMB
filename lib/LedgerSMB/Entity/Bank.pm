@@ -96,7 +96,7 @@ blessed reference.  All return results are objects.
 =cut
 
 dbmethod list => (funcname => 'list_bank_account',
-                   arglist => ['entity_id'],
+                   arg_list => ['entity_id'],
                funcschema => 'public',
            returns_objects => 1 );
 
