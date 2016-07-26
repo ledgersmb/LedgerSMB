@@ -27,5 +27,5 @@ ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
                 ignores => [ 'App::LedgerSMB::Admin', 'Image::Size',
                              'LaTeX::Driver', 'PGObject::Util::DBAdmin',
-                             'Starman' ] );
+                             'Starman', 'TeX::Encode::charmap'] );
 
