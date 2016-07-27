@@ -62,7 +62,7 @@ sub columns {
           type => 'text',
           name => LedgerSMB::Report::text('Start Date') },
 
-      { col_id => 'description',
+      { col_id => 'end_date',
           type => 'text',
           name => LedgerSMB::Report::text('End Date') },
     ];
