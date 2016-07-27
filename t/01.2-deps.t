@@ -2,6 +2,7 @@
 
 use Module::CPANfile;
 use File::Find;
+
 BEGIN { 
  local $@;
   eval { 
@@ -20,27 +21,6 @@ BEGIN {
   }
 }
    
-
-BEGIN { 
- sub skip_all {
-   my $reason = shift;
-   require Test::More;
-   Test::More::plan(skip_all => $reason);
-   exit 0;
- }
- local $@;
-  eval { 
-   require Test::Dependencies;
-   if ($Test::Dependencies::VERSION < 0.20) {
-       skip_all('Must have Test::Dependencies version 0.20 or higher, had version ' . $Test::Dependencies::VERSION);
-   }
-   Test::Dependencies->import();
-  };
-  warn $@;
-  if ($@){
-       skip_all('Must have Test::Dependencies version 0.20 or higher');
-  }
-}
    
 
 use Test::Dependencies exclude =>
