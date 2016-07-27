@@ -95,7 +95,7 @@ sub run_report {
     $self->rows([
       map { { %$_, row_id => $_->{id}, } }
        $self->call_dbmethod(funcname => 'business_unit__list_by_class',
-                              args => { class_id => $self->id } )
+                              args => { business_unit_class_id => $self->id } )
     ]);
 }
 
