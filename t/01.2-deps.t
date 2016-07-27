@@ -11,7 +11,7 @@ BEGIN {
        Test::More::plan(skip_all =>'Must have Test::Dependencies version 0.20 or higher, had version ' . $Test::Dependencies::VERSION);
        exit 0;
    }
-   Test::Dependencies::import();
+   Test::Dependencies->import();
   };
   warn $@;
   if ($@){
