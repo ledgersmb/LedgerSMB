@@ -4,29 +4,23 @@ BEGIN;
 
 -- Docstrings already added to this file.
 
+DROP FUNCTION IF EXISTS date_get_all_years();
 CREATE OR REPLACE FUNCTION date_get_all_years() returns setof INT AS
 $$
-DECLARE next_record int;
-BEGIN
 
-SELECT MIN(EXTRACT ('YEAR' FROM transdate))::INT
-INTO next_record
-FROM acc_trans;
+WITH RECURSIVE max_dates AS ( -- max dates in each year
+    SELECT (SELECT transdate as raw_date FROM acc_trans order by transdate desc limit 1)
+    UNION ALL
+    SELECT (SELECT transdate FROM acc_trans a WHERE  date_trunc('year', m.raw_date::timestamp)::date > a.transdate
+            ORDER BY transdate desc limit 1)
+      FROM max_dates m
+     WHERE m.raw_date is not null
+)
+SELECT extract('year' from raw_date)::int
+ FROM max_dates where raw_date is not null;
 
-LOOP
+$$ language sql;
 
-  EXIT WHEN next_record IS NULL;
-  RETURN NEXT next_record;
-  SELECT MIN(EXTRACT ('YEAR' FROM transdate))::INT AS YEAR
-  INTO next_record
-  FROM acc_trans
-  WHERE EXTRACT ('YEAR' FROM transdate) > next_record;
-
-
-END LOOP;
-
-END;
-$$ language plpgsql;
 COMMENT ON FUNCTION date_get_all_years() IS
 $$ This function return each year inside transdate in transactions.
 Currently it uses a sparse index scan because the number of rows returned is

@@ -341,7 +341,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 qq|<td><div data-dojo-type="lsmb/parts/PartDescription"
                             id="description_$i" name="description_$i"
                             $desc_disabled size=48
-                            data-dojo-props="linenum:$i,fetchProperties:{type:'$parts_list'}"
+                            data-dojo-props="channel:'/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}"
                             style="width:100%;"
                             rows="1"
                             >$form->{"description_$i"}</div></td>|;
@@ -420,7 +420,7 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
         } else {
             $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
-qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,linenum:$i,fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,channel: '/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]" style="width:100%">$skunumber</td>|;
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
@@ -1077,14 +1077,21 @@ sub print {
     my $saved_form = { %$form };
     $lang = $form->{language_code};
 
-    if ($form->{vc} eq 'vendor') {
-        IR->retrieve_invoice(\%myconfig, $form);
+    if ($form->{type} eq 'invoice') {
+        &invoice_links;
+        &prepare_invoice;
+
+        if ($form->{vc} eq 'vendor') {
+            IR->retrieve_invoice(\%myconfig, $form);
+        }
+        else {
+            IS->retrieve_invoice(\%myconfig, $form);
+        }
     }
     else {
-        IS->retrieve_invoice(\%myconfig, $form);
+        &order_links;
+        &prepare_order;
     }
-    &invoice_links;
-    &prepare_invoice;
     $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
     # if this goes to the printer pass through

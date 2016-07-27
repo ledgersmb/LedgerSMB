@@ -58,6 +58,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'InputOutput',
                               'Miscelenea',
                               'Modules::RequireVersionVar',
+                              'NamingConventions::Capitalization',
                               'Objects',
                               'RegularExpressions',
                               'Subroutines',
@@ -86,6 +87,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'InputOutput',
                               'Miscelenea',
                               'Modules',
+                              'NamingConventions::Capitalization',
                               'Objects',
                               'RegularExpressions',
                               'Subroutines',
@@ -98,5 +100,6 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'ProhibitPuncutationVars',
                 ]),
             \@on_disk_oldcode);
+
 
 

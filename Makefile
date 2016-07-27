@@ -179,6 +179,7 @@ Help on using this Makefile
     - help         : This help text
     - dojo         : Builds the minified dojo blob we serve to clients
     - submodules   : Initialises and updates our git submodules
+    - test         : Runs tests
     - dist         : builds the release distribution archive
     - dependencies : Installs all dependencies including cpan ones. (except features)
                      Preferring system perl modules over cpan ones
@@ -232,13 +233,36 @@ help:
 
 # make dojo
 #   builds dojo for production/release
-dojo:
+SHELL := /bin/bash
+HOMEDIR := ~/dojo_archive
+SHA := $(shell git ls-files -s UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit | sha1sum | cut -d' ' -f 1)
+ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar.xz
+TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar.xz
+FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
+
+dojo: $(ARCHIVE)
 	rm -rf UI/js/;
-	cd UI/js-src/lsmb/ \
-            && ../util/buildscripts/build.sh --profile lsmb.profile.js \
-            | egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
-	git checkout -- UI/js/README;
+	tar Jxf $(ARCHIVE)
+	ls $(HOMEDIR)
 	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
+
+$(HOMEDIR):
+	mkdir -p $(HOMEDIR)
+
+$(ARCHIVE): $(HOMEDIR)
+    #TODO: Protect for concurrent invocations
+
+ifeq ($(wildcard $(ARCHIVE)),)
+	touch $(FLAG)
+	cd UI/js-src/lsmb/ \
+		&& ../util/buildscripts/build.sh --profile lsmb.profile.js \
+		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
+	#git checkout -- UI/js/README;
+	cd ../../..
+	tar Jcf $(TEMP) UI/js
+	mv $(TEMP) $(ARCHIVE)
+	rm $(FLAG)
+endif
 
 #make submodules
 #   Initialises and updates our git submodules
@@ -380,6 +404,9 @@ feature_OpenOffice: $(OS_feature_OpenOffice)
 
 postgres_user:
 	sudo createuser -S -d -r -l -P lsmb_dbadmin
+
+test:
+	prove -Ilib t/*.t
 
 ########
 # todo list

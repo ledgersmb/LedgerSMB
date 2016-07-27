@@ -92,9 +92,8 @@ BEGIN
                                amount_bc, curr, amount_tc)
         SELECT in_end_date, a.chart_id, currval('id'),
                 (sum(a.amount_bc) + coalesce(max(cp.amount_bc), 0)) * -1,
-                defaults_get_defaultcurrency(),
-                -- post only default currency in retained earnings
-                (sum(a.amount_bc) + coalesce(max(cp.amount_bc), 0)) * -1
+                a.curr,
+                  (sum(a.amount_bc) + coalesce(max(cp.amount_bc), 0)) * -1
         FROM acc_trans a
         LEFT JOIN (
                 SELECT account_id, end_date,
@@ -108,16 +107,16 @@ BEGIN
                 AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
                 AND (acc.category IN ('I', 'E')
                       OR acc.category = 'Q' AND acc.is_temp)
-        GROUP BY a.chart_id;
+        GROUP BY a.chart_id, a.curr;
 
         INSERT INTO acc_trans (transdate, trans_id, chart_id,
                                amount_bc, curr, amount_tc)
         SELECT in_end_date, currval('id'), in_retention_acc_id,
                coalesce(sum(amount_bc) * -1, 0),
-               curr,
+               -- post only default currency in retained earnings
+               defaults_get_defaultcurrency(),
                coalesce(sum(amount_tc) * -1, 0)
-        FROM acc_trans WHERE trans_id = currval('id')
-        GROUP BY curr;
+        FROM acc_trans WHERE trans_id = currval('id');
 
 
         SELECT count(*) INTO ret_val from acc_trans
@@ -223,22 +222,29 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
 $$
-        SELECT coalesce(coalesce(sum(ac.amount_bc) + cp.amount_bc,
-                   sum(ac.amount_bc)), 0)
-        FROM acc_trans ac
-        JOIN (select id, approved from ar union
-                select id, approved from ap union
-                select id, approved from gl) a ON (a.id = ac.trans_id)
-        LEFT JOIN (select account_id, end_date, amount_bc from account_checkpoint
-                WHERE account_id = in_account_id AND end_date < in_transdate
-                ORDER BY end_date desc limit 1
-        ) cp ON (cp.account_id = ac.chart_id)
-        WHERE ac.chart_id = in_account_id
-                AND ac.transdate > coalesce(cp.end_date, ac.transdate - '1 day'::interval)
-                and ac.approved and a.approved
-                and ac.transdate <= in_transdate
-        GROUP BY cp.amount_bc, ac.chart_id;
+WITH cp AS (
+  SELECT amount_bc, end_date, account_id
+    FROM account_checkpoint
+   WHERE account_id = in_account_id
+     AND end_date <= in_transdate
+ORDER BY end_date DESC LIMIT 1
+),
+ac AS (
+  SELECT acc_trans.amount_bc
+    FROM acc_trans
+    JOIN (select id from ar where approved
+          union select id from ap where approved
+          union select id from gl where approved) a on acc_trans.trans_id = a.id
+  LEFT JOIN cp ON acc_trans.chart_id = cp.account_id
+   WHERE (cp.end_date IS NULL OR transdate > cp.end_date)
+     AND transdate <= in_transdate
+     AND chart_id = in_account_id)
 
+ SELECT coalesce((select sum(amount)
+                    from (select sum(amount_bc) as amount from cp
+                          union all
+                          select sum(amount_bc) from ac) as a),
+                 0);
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION account__obtain_balance

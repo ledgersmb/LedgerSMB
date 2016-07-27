@@ -238,8 +238,7 @@ sub _main_screen {
                credit_id => $credit_act->{id}}
     );
     my @bank_account =
-         LedgerSMB::Entity::Bank->list(
-         entity_id => $entity_id);
+         LedgerSMB::Entity::Bank->list($entity_id);
     my @notes =
          LedgerSMB::Entity::Note->list($entity_id,
                                                  $credit_act->{id});

@@ -238,6 +238,7 @@ SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
 
 \echo Contact Management
 SELECT lsmb__create_role('contact_read');
+SELECT lsmb__grant_role('contact_read', 'file_read');
 SELECT lsmb__grant_perms('contact_read', 'partsvendor', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'partscustomer', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'taxcategory', 'SELECT');
