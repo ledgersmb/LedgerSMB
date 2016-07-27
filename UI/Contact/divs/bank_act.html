@@ -4,8 +4,8 @@
      <?lsmb IF request.target_div == 'bank_act_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
-<?lsmb 
-href_base = script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
+<?lsmb
+href_base = request.script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
             '&form_id=' _ form_id _ '&credit_id=' _ credit_id _ '&id=';
 FOREACH ba IN bank_account;
     ba.iban_href_suffix = '&bic=' _ ba.bic _ '&iban=' _ ba.iban _
@@ -27,63 +27,63 @@ PROCESS dynatable
 <form data-dojo-type="lsmb/Form" name="bank_acct" action="<?lsmb request.script ?>" method="post">
 <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "form_id"
-		value = form_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
-		value=entity_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="credit_id" 
-		value=credit_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="bank_account_id" 
-		value=request.id
-	} ?>
-	<div>
-	<?lsmb INCLUDE input element_data = {
-		type="text" 
-		title = text('BIC/SWIFT Code')
-		label = "_none_"
-		name="bic" 
-		value=request.bic
-		size=20
-	} #' ?>
-	</div>
-	<div>
-	<?lsmb PROCESS input element_data = {
-		type="text" 
-		title = text('Bank Account')
-		label = "_none_"
-		name="iban" 
-		value=request.iban
-		size=20
+                type = "hidden"
+                name = "form_id"
+                value = form_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="entity_id" 
+                value=entity_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="credit_id" 
+                value=credit_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="bank_account_id" 
+                value=request.id
+        } ?>
+        <div>
+        <?lsmb INCLUDE input element_data = {
+                type="text" 
+                title = text('BIC/SWIFT Code')
+                label = "_none_"
+                name="bic" 
+                value=request.bic
+                size=20
+        } #' ?>
+        </div>
+        <div>
+        <?lsmb PROCESS input element_data = {
+                type="text" 
+                title = text('Bank Account')
+                label = "_none_"
+                name="iban" 
+                value=request.iban
+                size=20
                 required = 'true'
-	} #' ?>
-	</div>
-	<div>
-	<?lsmb PROCESS input element_data = {
-		type="text" 
-		title = text('Remark')
-		label = "_none_"
-		name="remark" 
-		value=request.remark
-		size=30
-	} # ?>
-	</div>
+        } #' ?>
+        </div>
+        <div>
+        <?lsmb PROCESS input element_data = {
+                type="text" 
+                title = text('Remark')
+                label = "_none_"
+                name="remark" 
+                value=request.remark
+                size=30
+        } # ?>
+        </div>
 </div>
-	<div><?lsmb PROCESS button element_data = {
-		name="action" 
-		value="save_bank_account"
-		class="submit"
-		text = text('Save') 
-		} ?>
-	</div>
+        <div><?lsmb PROCESS button element_data = {
+                name="action" 
+                value="save_bank_account"
+                class="submit"
+                text = text('Save') 
+                } ?>
+        </div>
 </form>
 </div>

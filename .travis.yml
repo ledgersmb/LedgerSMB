@@ -72,10 +72,14 @@ matrix:
           packages:
             - nginx
 
+before_cache:
+  - mkdir -p $HOME/dojo_archive
+
 cache:
   directories:
     - $HOME/locallib
     - $HOME/travis_phantomjs
+    - $HOME/dojo_archive
 
 before_install:
   - phantomjs --version
@@ -126,3 +130,4 @@ after_success:
        echo "" ;
     fi
   - coverage-report
+

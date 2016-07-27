@@ -4,69 +4,63 @@
      <?lsmb IF request.target_div == 'contact_info_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
 <div class="listtop"><?lsmb text('Contact Information') ?></div>
-<?lsmb 
+<?lsmb
 
 FOREACH ROW IN contacts;
     ROW.edit = '[' _ text('Edit') _ ']';
     ROW.delete = '[' _ text('Delete') _ ']';
-    ROW.edit_href_suffix = 
-               tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
-               tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _
-               '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
-               credit_act.id _ '&action=edit&target_div=contact_info_div&for_credit='
-               _ ROW.credit_id;
-    ROW.delete_href_suffix = 
-               tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
-               tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _ 
-               '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
-               credit_act.id _ '&action=delete_contact&' _
-               'target_div=contact_info_div&for_credit=' _ ROW.credit_id;
+    base_suffix =
+               "$request.script?entity_id=$entity_id&contact=$ROW.contact" _
+               "&class_id=$ROW.class_id&description=$ROW.description" _
+               "&credit_id=$credit_act.id&for_credit=$ROW.credit_id&target_div=contact_info_div";
+    ROW.edit_href_suffix = base_suffix _ '&action=edit';
+    ROW.delete_href_suffix = base_suffix _ '&action=delete_contact';
     IF ROW.credit_id;
          ROW.for_credit = 'X';
     END;
 END;
-PROCESS dynatable 
+PROCESS dynatable
         attributes = {id = 'contact-list' }
         tbody = {rows = contacts}
         columns = [
-         {col_id='for_credit', type='text', name=text('This Account') }, #' 
+         {col_id='for_credit', type='text', name=text('This Account') }, #'
          {col_id='class', type='text', name=text('Type') },
          {col_id='description', type='text', name=text('Description') },
          {col_id='contact', type='text', name=text('Contact Info') } #'
          {col_id='edit', type='href', href_base='', name='' }
          {col_id='delete', type='href', href_base='', name='' }
         ] ?>
-	<form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
+        <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "form_id"
-		value = form_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
-		value=entity_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="credit_id" 
-		value=credit_act.id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="old_class_id" 
-		value=request.class_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="old_contact" 
-		value=request.contact
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="contact_id" 
-		value=request.contact_id
-	} ?>
+                type = "hidden"
+                name = "form_id"
+                value = form_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden"
+                name="entity_id" 
+                value=entity_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="credit_id" 
+                value=credit_act.id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="old_class_id" 
+                value=request.class_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="old_contact" 
+                value=request.contact
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden" 
+                name="contact_id" 
+                value=request.contact_id
+        } ?>
         <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
         <div>
            
@@ -88,55 +82,55 @@ PROCESS dynatable
              <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
                     END; ?>
         </div>
-	<div>
-		<?lsmb PROCESS select element_data = {
-			name = "class_id"
-			title = "Type"
-			label = "_none_"
-			text_attr = "class"
-			value_attr = "id"
-			default_values = [request.class_id]		
-			options = contact_class_list
-		} ?>
-	</div>
-	<div>
-		<?lsmb PROCESS input element_data = {
-			title = text('Description'),
-			label = "_none_"
-			name = "description"
+        <div>
+                <?lsmb PROCESS select element_data = {
+                        name = "class_id"
+                        title = "Type"
+                        label = "_none_"
+                        text_attr = "class"
+                        value_attr = "id"
+                        default_values = [request.class_id]             
+                        options = contact_class_list
+                } ?>
+        </div>
+        <div>
+                <?lsmb PROCESS input element_data = {
+                        title = text('Description'),
+                        label = "_none_"
+                        name = "description"
                         id   = 'contact_description'
-			value = request.description
-			type = "text"
-			size = "20"
-		}  ?>
-	</div>
-	<div>
-		<?lsmb PROCESS input element_data = {
-			title = text('Contact Info'),
-			label = "_none_"
-			name = "contact"
-			value = request.contact
-			type = "text"
-			size = "20"
+                        value = request.description
+                        type = "text"
+                        size = "20"
+                }  ?>
+        </div>
+        <div>
+                <?lsmb PROCESS input element_data = {
+                        title = text('Contact Info'),
+                        label = "_none_"
+                        name = "contact"
+                        value = request.contact
+                        type = "text"
+                        size = "20"
                         required = 'true'
-		} #' ?>
-	</div></div>
-	<div><?lsmb PROCESS button element_data = {
-		name = "action",
-		value = "save_contact",
-		text =  text('Save Contact'),
-		class = "submit"
-		} #' ?>
-	<?lsmb IF request.contact.defined ?> 
-	<?lsmb PROCESS button element_data = {
-		name = "action",
-		value = "save_contact_new",
-		text =  text('Save As New'),
-		class = "submit"
-		} #' ?>
- 	<?lsmb END # IF old_contact.defined ?>
-	</div>
-	</form>
-	
+                } #' ?>
+        </div></div>
+        <div><?lsmb PROCESS button element_data = {
+                name = "action",
+                value = "save_contact",
+                text =  text('Save Contact'),
+                class = "submit"
+                } #' ?>
+        <?lsmb IF request.contact.defined ?> 
+        <?lsmb PROCESS button element_data = {
+                name = "action",
+                value = "save_contact_new",
+                text =  text('Save As New'),
+                class = "submit"
+                } #' ?>
+        <?lsmb END # IF old_contact.defined ?>
+        </div>
+        </form>
+        
 </div>
 

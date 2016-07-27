@@ -1329,9 +1329,9 @@ sub assembly_row {
             $column_data{qty} =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="linenum: $i"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="channel: '/part/part-select/$i'"></td>|;
             $column_data{description} =
-qq|<td><input data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 value="$form->{"description_$i"}" data-dojo-props="linenum: $i"></td>|;
+qq|<td><div data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 data-dojo-props="channel: '/part/part-select/$i'">$form->{"description_$i"}</div></td>|;
             $column_data{partsgroup} =
 qq|<td><select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 

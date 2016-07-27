@@ -147,7 +147,7 @@ $$
           UNION SELECT id FROM ap WHERE approved
           UNION SELECT id FROM gl WHERE approved
           ) g ON g.id = ac.trans_id
-    WHERE c.id = $1 AND ac.cleared_on <= $2
+    WHERE c.id = $1 AND cleared
       AND ac.approved IS true
                 GROUP BY c.id, c.category;
 $$ LANGUAGE sql;

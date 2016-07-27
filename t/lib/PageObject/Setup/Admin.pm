@@ -85,17 +85,21 @@ sub create_database {
     # Confirm database creation
     $page->find('*button', text => "Yes")->click;
 
+    $page->find('#setup-select-coa.done-parsing', scheme => 'css');
     $page->find('*labeled', text => "Country Code")
         ->find_option($param{"Country code"})
         ->click;
     $page->find('*button', text => "Next")->click;
 
+    $page->find('*labeled', text => "Chart of accounts");
+    $page->find('#setup-select-coa.done-parsing', scheme => 'css');
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
     $page->find('*button', text => "Next")->click;
 
     # assert we're on the "Load Templates" page now
+    $page->find('#setup-template-info.done-parsing', scheme => 'css');
     $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 

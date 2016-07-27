@@ -15,6 +15,7 @@ define([
                        if (f.media.value == 'screen') {
                            var url = domattr.get(f, 'action')
                                + '?action=' + this.valueNode.value
+                               + '&type=' + f.type.value
                                + '&id=' + f.id.value
                                + '&vc=' + f.vc.value
                                + '&formname=' + f.formname.value

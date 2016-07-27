@@ -59,7 +59,29 @@ use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
 use LedgerSMB::Template::DBProvider;
+use TeX::Encode::charmap;
 use TeX::Encode;
+
+BEGIN {
+delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
+delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00e5)};
+%TeX::Encode::charmap::CHAR_MAP = (
+    %TeX::Encode::charmap::CHARS,
+    %TeX::Encode::charmap::ACCENTED_CHARS,
+    %TeX::Encode::charmap::GREEK);
+for(keys %TeX::Encode::charmap::MATH)
+{
+        $TeX::Encode::charmap::CHAR_MAP{$_} ||= '$' . $TeX::Encode::charmap::MATH{$_} . '$';
+}
+for(keys %TeX::Encode::charmap::MATH_CHARS)
+{
+        $TeX::Encode::charmap::CHAR_MAP{$TeX::Encode::charmap::MATH_CHARS{$_}} ||= '$' . $_ . '$';
+}
+
+$TeX::Encode::charmap::CHAR_MAP_RE = '[' . join('', map { quotemeta($_) } sort { length($b) <=> length($a) } keys %TeX::Encode::charmap::CHAR_MAP) . ']';
+}
+
+
 
 #my $binmode = ':utf8';
 my $binmode = ':raw';
