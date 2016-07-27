@@ -1052,7 +1052,7 @@ sub order_details {
             push( @{ $form->{runningnumber} }, $runningnumber++ );
             push( @{ $form->{number} },        qq|$form->{"partnumber_$i"}| );
             push( @{ $form->{sku} },           qq|$form->{"sku_$i"}| );
-            push( @{ $form->{description} },   qq|$form->{"description_$i"}| );
+            push( @{ $form->{item_description} },   qq|$form->{"description_$i"}| );
             push( @{ $form->{itemnotes} },     $form->{"notes_$i"} );
             push(
                 @{ $form->{qty} },

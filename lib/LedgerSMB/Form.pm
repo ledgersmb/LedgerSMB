@@ -1245,7 +1245,7 @@ sub generate_selects {
         $form->{selectprojectnumber} = "<option></option>\n";
           $form->{selectprojectnumber} = "";
         for ( @{ $form->{all_project} } ) {
-                my $value = "$_->{projectnumber}--$_->{id}";
+            my $value = "$_->{projectnumber}--$_->{id}";
             $form->{selectprojectnumber} .=
                      # change the format here, then change it below!
                      qq|<option value="$value">$_->{projectnumber}</option>\n|;
