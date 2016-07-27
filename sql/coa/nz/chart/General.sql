@@ -8,7 +8,7 @@ SELECT account_heading_save(NULL, '10500', 'BANK AND CASH ACCOUNTS', (SELECT id 
 SELECT account__save(NULL,'10501','Bank Account','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'10510','Petty Cash','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'10520','Company Credit Card','L','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT cr_coa_to_account_save(accno, accno || '--' || description) FROM account WHERE accno in ('10501', '10510', '10520');   
+SELECT cr_coa_to_account_save(accno, accno || '--' || description) FROM account WHERE accno in ('10501', '10510', '10520');
 
 SELECT account_heading_save(NULL, '11000', 'CUSTOMERS AND SETTLEMENT ACCOUNTS', (SELECT id FROM account_heading WHERE accno = '10000'));
 SELECT account__save(NULL,'11001','Accounts Receivables','A','', NULL, false, false, string_to_array('AR', ':'), false, false);
