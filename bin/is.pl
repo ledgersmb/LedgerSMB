@@ -402,6 +402,7 @@ function on_return_submit(event){
       id="invoice"
       data-dojo-type="lsmb/Invoice"
       action="$form->{script}" >
+<input type="hidden" name="type" value="invoice" />
 |;
 
     $form->hide_form(
