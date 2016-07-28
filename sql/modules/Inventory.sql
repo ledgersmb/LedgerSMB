@@ -64,20 +64,23 @@ CREATE AGGREGATE product(
         stype = numeric
 );
 
-CREATE OR REPLACE FUNCTION inventory_create_report(in_transdate date) RETURNS int
+DROP FUNCTION IF EXISTS inventory_create_report(in_transdate date);
+CREATE OR REPLACE FUNCTION inventory_create_report(in_transdate date) RETURNS inventory_report
 AS
 $$
         INSERT INTO inventory_report(transdate) values (in_transdate)
-        RETURNING id;
+        RETURNING *;
 $$ language sql;
 
+DROP FUNCTION IF EXISTS inventory_report__add_line
+(in_report_id int, in_parts_id int, in_onhand int, in_counted int);
 CREATE OR REPLACE FUNCTION inventory_report__add_line
 (in_report_id int, in_parts_id int, in_onhand int, in_counted int)
-RETURNS int AS
+RETURNS iventory_report_line AS
 $$
         INSERT INTO inventory_report_line(adjust_id, parts_id, expected, counted)
         VALUES (in_report_id, in_parts_id, in_onhand, in_counted)
-        RETURNING adjust_id;
+        RETURNING *;
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION inventory__get_item_by_partnumber(in_partnumber text)
