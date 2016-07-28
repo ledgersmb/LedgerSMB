@@ -50,7 +50,7 @@ WHERE control_code is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_notes',
-       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) > 0;
+       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'entity__save_note subject record',
@@ -60,7 +60,7 @@ SELECT 'entity__save_note subject record',
 
 INSERT INTO test_result(test_name, success)
 SELECT 'eca_save_notes',
-       eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) > 0;
+       eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) is not null;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'eca__save_notes subject record',
