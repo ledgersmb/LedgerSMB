@@ -76,7 +76,7 @@ DROP FUNCTION IF EXISTS inventory_report__add_line
 (in_report_id int, in_parts_id int, in_onhand int, in_counted int);
 CREATE OR REPLACE FUNCTION inventory_report__add_line
 (in_report_id int, in_parts_id int, in_onhand int, in_counted int)
-RETURNS iventory_report_line AS
+RETURNS inventory_report_line AS
 $$
         INSERT INTO inventory_report_line(adjust_id, parts_id, expected, counted)
         VALUES (in_report_id, in_parts_id, in_onhand, in_counted)
