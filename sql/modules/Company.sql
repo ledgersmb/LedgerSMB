@@ -966,7 +966,7 @@ BEGIN
 
         IF FOUND THEN
              SELECT * INTO out_bank from entity_bank_account WHERE id = in_bank_account_id;
-             
+
         ELSE
                 INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
                 VALUES(in_entity_id, in_bic, in_iban, in_remark);
@@ -977,7 +977,7 @@ BEGIN
                 UPDATE entity_credit_account SET bank_account = out_bank.id
                 WHERE id = in_credit_id;
         END IF;
-        return out_bank; 
+        return out_bank;
 
 END;
 $$ LANGUAGE PLPGSQL;
