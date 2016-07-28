@@ -878,13 +878,13 @@ sub get_jcitems {
     if ( $form->{projectnumber} ) {
         ( $null, $var ) = split /--/, $form->{projectnumber};
         $var = $dbh->quote($var);
-        $where .= " AND j.project_id = $var";
+        $where .= " AND j.business_unit_id = $var";
     }
 
     if ( $form->{employee} ) {
         ( $null, $var ) = split /--/, $form->{employee};
         $var = $dbh->quote($var);
-        $where .= " AND j.employee_id = $var";
+        $where .= " AND j.person_id = $var";
     }
 
     ( $form->{transdatefrom}, $form->{transdateto} ) =

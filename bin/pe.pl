@@ -485,10 +485,10 @@ sub edit_translation {
     $form->error( $locale->text('Languages not defined!') )
       unless @{ $form->{all_language} };
 
-    $form->{selectlanguage} = qq|<option>\n|;
+    $form->{selectlanguage} = qq|<option></option>\n|;
     for ( @{ $form->{all_language} } ) {
         $form->{selectlanguage} .=
-          qq|<option value="$_->{code}">$_->{description}\n|;
+          qq|<option value="$_->{code}">$_->{description}</option>\n|;
     }
 
     $form->{"$form->{number}"} =
@@ -797,16 +797,16 @@ sub project_sales_order {
     PE->project_sales_order( \%myconfig, \%$form );
 
     if ( @{ $form->{all_years} } ) {
-        $form->{selectaccountingyear} = "<option>\n";
+        $form->{selectaccountingyear} = "<option></option>\n";
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+            $form->{selectaccountingyear} .= qq|<option>$_</option>\n|;
         }
 
-        $form->{selectaccountingmonth} = "<option>\n";
+        $form->{selectaccountingmonth} = "<option></option>\n";
         for ( sort keys %{ $form->{all_month} } ) {
             $form->{selectaccountingmonth} .=
               qq|<option value=$_>|
-              . $locale->maketext( $form->{all_month}{$_} ) . qq|\n|;
+              . $locale->maketext( $form->{all_month}{$_} ) . qq|</option>\n|;
         }
 
         $selectfrom = qq|
@@ -842,10 +842,10 @@ sub project_sales_order {
 |;
 
     if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
+        $form->{selectprojectnumber} = "<option></option>\n";
         for ( @{ $form->{all_project} } ) {
             $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
+qq|<option value="$_->{control_code}--$_->{id}">$_->{control_code}--$_->{description}</option>\n|;
         }
     }
     else {
@@ -853,10 +853,10 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     }
 
     if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "<option>\n";
+        $form->{selectemployee} = "<option></option>\n";
         for ( @{ $form->{all_employee} } ) {
             $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
 
         $employee = qq|
