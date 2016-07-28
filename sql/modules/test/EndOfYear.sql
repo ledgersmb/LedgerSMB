@@ -58,8 +58,6 @@ insert into test_result(success, test_name)
 select account__obtain_balance('1520-06-01'::date, -1000) = 20000,
        'account__obtain_balance (after checkpoint and transaction)';
 
-select * from acc_trans where transdate = '1520-05-01';
-
 SELECT * FROM test_result;
 
 SELECT (select count(*) from test_result where success is true)
