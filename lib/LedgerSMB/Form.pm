@@ -2091,7 +2091,7 @@ sub all_taxaccounts {
         # rebuild tax rates
         $query = qq|SELECT t.rate, t.taxnumber
                       FROM tax t
-                      JOIN account a ON (c.id = t.chart_id)
+                      JOIN account a ON (a.id = t.chart_id)
                      WHERE a.accno = ?
                     $where
                   ORDER BY accno, validto|;
