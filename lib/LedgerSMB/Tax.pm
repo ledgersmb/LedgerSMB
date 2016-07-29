@@ -79,10 +79,10 @@ sub init_taxes {
         $sth->execute($taxaccount, $form->{transdate}) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
         next unless $ref;
-     #   $ref->{rate} = LedgerSMB::PGNumber->from_db($ref->{rate});
-     #   $ref->{value} = LedgerSMB::PGNumber->from_db($ref->{value});
-     #   $ref->{maxvalue} = LedgerSMB::PGNumber->from_db($ref->{maxvalue});
-     #   $ref->{minvalue} = LedgerSMB::PGNumber->from_db($ref->{minvalue});
+        $ref->{rate} = LedgerSMB::PGNumber->from_db($ref->{rate});
+        $ref->{value} = LedgerSMB::PGNumber->from_db($ref->{value});
+        $ref->{maxvalue} = LedgerSMB::PGNumber->from_db($ref->{maxvalue});
+        $ref->{minvalue} = LedgerSMB::PGNumber->from_db($ref->{minvalue});
         $ref->{minvalue} //= 0;
 
         my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
