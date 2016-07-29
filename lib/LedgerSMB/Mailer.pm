@@ -217,13 +217,13 @@ sub send {
             'smtp',
             $LedgerSMB::Sysconfig::smtphost,
             Timeout => $LedgerSMB::Sysconfig::smtptimeout
-            ) || return $!;
+            ) || return "could not send via smtp: $!";
     } else {
         $self->{_message}->send(
             'sendmail',
             SendMail => $LedgerSMB::Sysconfig::sendmail,
                 SetSender => 1
-            ) || return $!;
+            ) || return "could not send via sendmail exe:  $!";
     }
 }
 
