@@ -9,7 +9,7 @@ SELECT *
        AND credit_id = in_credit_id;
 $$;
 
-CREATE OR REPLACE FUNTION pricematrix__for_customer
+CREATE OR REPLACE FUNCTION pricematrix__for_customer
 (in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric)
 RETURNS SETOF partscustomer LANGUAGE SQL AS
 $$
