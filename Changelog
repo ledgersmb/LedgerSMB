@@ -52,6 +52,14 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.31
+* Fixed user with contact all privileges can't create contacts (Chris T #1219)
+* Fixed new user with manage users can't see employee (Chris T #1841)
+* Fixed Can't upload html templates (Chris T, #1179)
+* Fixed can't log into companies with & in their names (Chris T, #1004)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.30
 * Fix payment reversal of foreign-currency invoices (Erik H, #1716)
 * No longer default the temporary directory to /tmp/ledgersmb (Erik H)
