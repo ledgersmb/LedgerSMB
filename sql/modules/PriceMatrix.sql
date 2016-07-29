@@ -24,10 +24,11 @@ LEFT JOIN pricegroup pg ON eca.pricegroup_id = pg.id
             in_transdate
         AND (p.credit_id = eca.id OR p.pricegroup_id = pg.id
              OR (p.credit_id is null and p.pricegroup_id is null))
+        AND coalesce(qty, 1) <= coalesce(in_qty, in_qty)
   ORDER BY case WHEN p.credit_id = eca.id THEN 1
                 WHEN p.pricegroup_id = pg.id THEN 2
                 ELSE 3
-            end asc;
+            end asc, qty desc;
 
 $$;
 

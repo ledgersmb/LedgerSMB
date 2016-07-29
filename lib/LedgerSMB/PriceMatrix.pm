@@ -71,7 +71,7 @@ sub price_matrix_query {
 
     if ( $form->{customer_id} ) {
         $sth = $dbh->prepare('
-            SELECT * FROM pricematrix__for_customer(?, ?, ?) 
+            SELECT * FROM pricematrix__for_customer(?, ?, ?, ?) 
         ') || $form->dberror('pricematrix__for_customer');
     }
     elsif ( $form->{vendor_id} ) {
@@ -93,7 +93,7 @@ Updates $ref with the price matrix outcomes given $transdate and $form.
 =cut
 
 sub price_matrix {
-    my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig ) = @_;
+    my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig, $qty) = @_;
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
@@ -101,7 +101,7 @@ sub price_matrix {
     my %p = ();
     # depends if this is a customer or vendor
     if ( $form->{customer_id} ) {
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate} );
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty);
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {
