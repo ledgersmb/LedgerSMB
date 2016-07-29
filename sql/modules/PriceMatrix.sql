@@ -1,7 +1,7 @@
 BEGIN;
 
 CREATE OR REPLACE FUNCTION pricematrix__for_vendor(in_credit_id int, in_parts_id int)
-returns SETOF partsvendor AS
+returns SETOF partsvendor LANGUAGE SQL AS
 $$
 SELECT *
   FROM partsvendor
