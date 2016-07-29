@@ -41,7 +41,7 @@ BEGIN
 
 	INSERT INTO 
 	account_checkpoint (end_date, account_id, amount, debits, credits)
-    SELECT in_end_date, COALESCE(a.chart_id, cp.account_id),
+    SELECT in_end_date, COALESCE(account.id),
 	    COALESCE(SUM (a.amount),0) + coalesce(MAX (cp.amount), 0),
 	    COALESCE(SUM (CASE WHEN (a.amount < 0) THEN a.amount ELSE 0 END), 0) +
 	     COALESCE( MIN (cp.debits), 0),
@@ -55,6 +55,7 @@ BEGIN
 		from account_checkpoint
 		WHERE end_date = cp_date
 		) cp on (a.chart_id = cp.account_id)
+        RIGHT JOIN account ON account.id = a.chart_id or account.id = cp.accunt_id`
 	group by COALESCE(a.chart_id, cp.account_id);
 
 	SELECT count(*) INTO ret_val FROM account_checkpoint 
