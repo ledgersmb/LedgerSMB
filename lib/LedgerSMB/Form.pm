@@ -937,12 +937,11 @@ sub round_amount {
 
     # These rounding rules follow from the previous implementation.
     # They should be changed to allow different rules for different accounts.
-    warn $amount;
     LedgerSMB::PGNumber->round_mode('+inf') if $amount >= 0;
     LedgerSMB::PGNumber->round_mode('-inf') if $amount < 0;
 
-    $amount = LedgerSMB::PGNumber->from_input($amount)->ffround( -$places ) if $places >= 0;
-    $amount = LedgerSMB::PGNumber->from_input($amount)->ffround( -( $places - 1 ) )
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -$places ) if $places >= 0;
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -( $places - 1 ) )
       if $places < 0;
 
     $amount->precision(undef); #we are assuming whole cents so do not round
