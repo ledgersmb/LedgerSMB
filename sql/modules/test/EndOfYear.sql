@@ -67,8 +67,4 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
-select eoy_create_checkpoint('1200-01-01');
-
-SELECT * FROM account_checkpoint;
-
 ROLLBACK;
