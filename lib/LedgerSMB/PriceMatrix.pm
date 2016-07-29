@@ -67,74 +67,19 @@ Returns a DBI statement handle from $dbh, based on the values provided in $form
 sub price_matrix_query {
     my ( $dbh, $form ) = @_;
 
-    my $query;
     my $sth;
 
-    my @queryargs;
-    my $transdate = $form->{dbh}->quote( $form->{transdate} );
-    my $credit_id     = $form->{dbh}->quote( $form->{customer_id} );
-
     if ( $form->{customer_id} ) {
-        my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
-        $query = qq|
-                SELECT p.parts_id, p.credit_id AS entity_id,
-                NULL AS pricegroup_id,
-                p.pricebreak, p.sellprice, p.validfrom,
-                p.validto, p.curr, NULL AS pricegroup,
-                1 as priority
-            FROM partscustomer p
-            WHERE p.parts_id = ?
-                AND coalesce(p.validfrom, $transdate) <=
-                    $transdate
-                AND coalesce(p.validto, $transdate) >=
-                    $transdate
-                AND p.credit_id = $credit_id
-
-            UNION
-
-                SELECT p.parts_id, p.credit_id AS entity_id,
-                p.pricegroup_id,
-                p.pricebreak, p.sellprice, p.validfrom,
-                p.validto, p.curr, g.pricegroup, 2 AS priority
-            FROM partscustomer p
-            JOIN pricegroup g ON (g.id = p.pricegroup_id)
-            JOIN entity_credit_account c ON (c.pricegroup_id = g.id)
-            WHERE p.parts_id = ?
-                AND coalesce(p.validfrom, $transdate) <=
-                    $transdate
-                AND coalesce(p.validto, $transdate) >=
-                    $transdate
-                AND c.id = $credit_id
-
-            UNION
-
-                SELECT p.parts_id, p.credit_id AS entity_id,
-                p.pricegroup_id,
-                p.pricebreak, p.sellprice, p.validfrom,
-                p.validto, p.curr, g.pricegroup, 3 AS priority
-            FROM partscustomer p
-            LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-            WHERE p.credit_id = 0
-                AND p.pricegroup_id = 0
-                AND coalesce(p.validfrom, $transdate) <=
-                    $transdate
-                AND coalesce(p.validto, $transdate) >=
-                    $transdate
-                AND p.parts_id = ?
-
-            ORDER BY priority LIMIT 1;
-            |;
-        $sth = $dbh->prepare($query) || $form->dberror($query);
+        $sth = $dbh->prepare('
+            SELECT * FROM pricematrix__for_customer(?, ?, ?) 
+        ') || $form->dberror('pricematrix__for_customer');
     }
     elsif ( $form->{vendor_id} ) {
 
-        # price matrix and vendor's partnumber
-        $query = qq|
-            SELECT partnumber, lastcost
-            FROM partsvendor
-            WHERE parts_id = ?
-            AND credit_id = $credit_id|;
-        $sth = $dbh->prepare($query) || $form->dberror($query);
+        $sth = $dbh->prepare(
+           'select * from pricematrix__for_vendor(?, ?)
+            ORDER BY lastcost DESC' # pessimistic
+        ) || $form->dberror('pricematrix__for_vendor');
     }
 
     $sth;
@@ -156,9 +101,9 @@ sub price_matrix {
     my %p = ();
     # depends if this is a customer or vendor
     if ( $form->{customer_id} ) {
-        $pmh->execute( $ref->{id}, $ref->{id}, $ref->{id} );
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate} );
     } elsif ( $form->{vendor_id} ) {
-        $pmh->execute( $ref->{id} );
+        $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {
         $form->error('Missing counter-party (customer or vendor)');
         return;
