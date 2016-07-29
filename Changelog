@@ -8,6 +8,9 @@ Changelog for 1.4.31
 * Fixed new user with manage users can't see employee (Chris T #1841)
 * Fixed Can't upload html templates (Chris T, #1179)
 * Fixed can't log into companies with & in their names (Chris T, #1004)
+* Added NZ chart of accounts (Kiwi)
+* Fixed can't create checkpoints before transactions (Chris T, #1704)
+# Fixed contact_all insufficient to create contacts (Chris T, #1219)
 
 Chris T is Chris Travers
 
