@@ -35,8 +35,8 @@ CREATE TYPE eca__pricematrix AS (
   validfrom date,
   validto date,
   curr char(3),
-  qty numeric,
-  entry_id int
+  entry_id int,
+  qty numeric
 );
 
 
