@@ -35,6 +35,7 @@ CREATE TYPE eca__pricematrix AS (
   validfrom date,
   validto date,
   curr char(3),
+  qty numeric,
   entry_id int
 );
 
@@ -1372,7 +1373,7 @@ RETURNS SETOF eca__pricematrix AS
 $$
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL::numeric, NULL::int, NULL::text, pc.validfrom,
-       pc.validto, pc.curr, pc.entry_id
+       pc.validto, pc.curr, pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.pricegroup_id = eca.pricegroup_id
@@ -1385,7 +1386,7 @@ $$
 
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL, NULL::int, NULL, pc.validfrom, pc.validto, pc.curr,
-       pc.entry_id
+       pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.credit_id = eca.id
@@ -1393,7 +1394,7 @@ SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
  UNION
 SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
        pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-       pv.entry_id
+       pv.entry_id, null
   FROM partsvendor pv
   JOIN parts p on pv.parts_id = p.id
   JOIN entity_credit_account eca ON pv.credit_id = eca.id
@@ -1466,7 +1467,7 @@ IF FOUND THEN -- VENDOR
 
     SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
            pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-           pv.entry_id
+           pv.entry_id, null
       INTO retval
       FROM partsvendor pv
       JOIN parts p ON p.id = pv.parts_id
@@ -1484,21 +1485,22 @@ IF FOUND THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, in_qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, pc.qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id
@@ -1549,7 +1551,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION pricelist__save
 (in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric,
  in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date,
- in_curr char(3), in_entry_id int)
+ in_curr char(3), in_entry_id int, in_qty numeric)
 RETURNS eca__pricematrix AS
 $$
 DECLARE
@@ -1595,21 +1597,22 @@ ELSIF t_entity_class = 2 THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id
