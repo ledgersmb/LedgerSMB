@@ -17,7 +17,7 @@ $$
      FROM partscustomer p
      JOIN entity_credit_account eca ON eca.id = in_credit_id
 LEFT JOIN pricegroup pg ON eca.pricegroup_id = pg.id
-    WHERE p.parts_id = in_parts_id,
+    WHERE p.parts_id = in_parts_id
         AND coalesce(p.validfrom, in_transdate) <=
             in_transdate
         AND coalesce(p.validto, in_transdate) >=
