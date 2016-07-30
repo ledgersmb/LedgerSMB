@@ -143,9 +143,11 @@ see the included License.txt for details.
 package LedgerSMB::REST_Handler;
 
 use FindBin;
+use lib '.';
 BEGIN {
   lib->import($FindBin::Bin) unless $ENV{mod_perl}
 }
+
 
 use DBI;
 use CGI::Simple;
