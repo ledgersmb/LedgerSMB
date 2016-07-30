@@ -320,6 +320,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
         $form->{"customer_mn_$i"} = $ref->{meta_number};
         $form->{"pricegroup_$i"} = "$ref->{pricegroup}--$ref->{gid}"
           if $ref->{gid};
+        $form->{"customerqty_$i"} = $ref->{qty};
 
         for (qw(validfrom validto pricebreak customerprice customercurr)) {
             $form->{"${_}_$i"} = $ref->{$_};
@@ -1127,6 +1128,7 @@ sub customer_row {
       $currency
       <th class="listheading">| . $locale->text('From') . qq|</th>
       <th class="listheading">| . $locale->text('To') . qq|</th>
+      <th class="listheading">| . $locale->text('Min Qty') . qq|</th>
     </tr>
 |;
 
@@ -1193,6 +1195,7 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
       $currency
       <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
       <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+      <td><input class="date" data-dojo-type="dijit/form/TextBox" name="customerqty_$i" size=11 value="$form->{"customerqty_$i"}"></td>
     </tr>
 |;
     }

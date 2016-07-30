@@ -225,7 +225,7 @@ sub get_part {
                SELECT pc.pricebreak, pc.sellprice AS customerprice,
                       pc.curr AS customercurr, pc.validfrom,
                       pc.validto, e.name, c.id AS cid,
-                      g.pricegroup, g.id AS gid, c.meta_number
+                      g.pricegroup, g.id AS gid, c.meta_number, pc.qty
                  FROM partscustomer pc
             LEFT JOIN entity_credit_account c
                                   ON (c.id = pc.credit_id)
@@ -601,14 +601,15 @@ sub save {
                             (parts_id, credit_id,
                             pricegroup_id, pricebreak,
                             sellprice, curr,
-                            validfrom, validto)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)|;
+                            validfrom, validto, qty)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},                 $customer_id,
                 $pricegroup_id,              $form->{"pricebreak_$i"},
                 $form->{"customerprice_$i"}, $form->{"customercurr_$i"},
-                $validfrom,                  $validto
+                $validfrom,                  $validto,
+                $form->{"customerqty_$i"}
             ) || $form->dberror($query);
         }
     }
