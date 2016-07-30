@@ -1,4 +1,3 @@
-use lib '.';
 sub get_script {
     my ($locale, $request) = @_;
 
