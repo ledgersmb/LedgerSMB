@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 package LedgerSMB::Rest;
-use lib '.';
+use FindBin;
+use lib $FindBin::Bin;
 
 =head1 NAME
 
