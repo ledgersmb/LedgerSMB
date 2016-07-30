@@ -100,9 +100,6 @@ sub _run_old {
     }
 }
 
-######## SECTION OF HELPERS FROM lsmb_request.pl
-# Could use some cleanup but I think we want it eventually to just go away.
-
 sub _get_script {
     my ($locale, $request) = @_;
 
@@ -219,8 +216,6 @@ sub _request_cleanup {
         if defined $request->{dbh};
     $logger->debug("End");
 }
-
-#### END HELPERS SECTION
 
 sub _run_new {
     my ($script) = @_;
