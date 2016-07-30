@@ -93,15 +93,21 @@ Updates $ref with the price matrix outcomes given $transdate and $form.
 =cut
 
 sub price_matrix {
-    my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig, $qty) = @_;
+    my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig) = @_;
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
     my $mref;
     my %p = ();
+    my $qty;
     # depends if this is a customer or vendor
     if ( $form->{customer_id} ) {
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty);
+        if ($form->{rowcount} and not $form->{qtycache}){
+           $form->{qtycache} = { map {$form->{"id_$_"} => 0 } (1 .. $form->{rowcount}) };
+           $form->{qtycache}->{$form->{"id_$_"}} += $form->{"qty_$_"} for (1 .. $form->{rowcount} - 1);
+        }
+        $qty = $form->{qtycache}->{$ref->{id}} || 0;
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $form->{"qty_$form->{rowcount}"});
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {
@@ -118,6 +124,11 @@ sub price_matrix {
                            - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
+            if ($mref->{qty} > $form->{qtycache}->{$ref->{id}}){
+                for my $i (1 .. $form->{rowcount}){
+                    $form->{"sellprice_$i"} = $sellprice;
+                }
+            }
        } elsif ($form->{vendor_id}){
             $sellprice = $mref->{lastcost} || $ref->{sellprice};
             die $sellprice;
