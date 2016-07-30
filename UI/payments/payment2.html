@@ -10,7 +10,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         PROCESS input element_data=accountclass ?>
     <?lsmb login.type = 'hidden' ; PROCESS input element_data=login ?>
     <?lsmb #WE NEED TO KNOW HOW MANY COLUMNS ARE WE USING, PLEASE DO NOT MOVE THE NEXT LINE -?>
-    <?lsmb column_count = 0 -?>
+    <?lsmb column_count = 0; FOREACH column IN column_headers; column_count = column_count + 1; END -?>
 
     <table width="100%">
       <tr id="top_bar" class="listtop">
@@ -18,7 +18,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <?lsmb header.text ?>
           <?lsmb type.type = 'hidden' ; PROCESS input element_data=type ?>
         </th>
-
       </tr>
     </table>
     <table width="100%" id="info_table">
@@ -149,9 +148,25 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
     </table>
     <table width="100%">
       <tr class="listheading">
-        <?lsmb FOREACH column IN column_headers  # Loop through columns ?>
-        <?lsmb column_count = column_count + 1 -?>
-        <th class="listheading"><?lsmb column.text ?></th>
+        <?lsmb j=1; FOREACH column IN column_headers;  # Loop through columns
+                   IF j < column_count ; THEN -?>
+                       <th class="listheading"><?lsmb column.text ?></th>
+        <?lsmb     ELSE -?>
+                       <th class="listheading">
+                            <button type="button" data-dojo-type="dijit/form/Button">
+                                <?lsmb column.text -?>
+                                <script type="dojo/on" data-dojo-event="click">
+                                    require(["dojo/domReady!"], function(){
+                                        dojo.query('input[name^="checkbox_"]', this.domNode).forEach(function (node, index, arr) {
+                                            var n = dijit.getEnclosingWidget(node);
+                                            n.set('checked',!n.get('checked'));
+                                        });
+                                    });
+                                </script>
+                            </button>
+                       </th>
+        <?lsmb     END;
+                   j = j + 1; ?>
         <?lsmb END ?>
       </tr>
       <?lsmb # We have to clear i for later usage :)  ?>
