@@ -1,1 +1,1 @@
-alter table partscustomer add qty numeric;
+alter table partscustomer add qty numeric default 0;
