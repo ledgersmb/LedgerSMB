@@ -19,6 +19,7 @@ this software.
 =cut
 
 package LedgerSMB::Handler;
+use lib '.';
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
