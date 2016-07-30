@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use lib '.';
 use LedgerSMB::RESTXML::Handler;
 
 # To Enable the REST API,  Delete these 5 lines.

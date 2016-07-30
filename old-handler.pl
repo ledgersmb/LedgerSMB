@@ -46,6 +46,7 @@
 #
 #######################################################################
 
+use lib '.';
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
 use LedgerSMB::App_State;
