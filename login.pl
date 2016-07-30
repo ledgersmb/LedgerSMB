@@ -49,6 +49,7 @@
 #
 #######################################################################
 use FindBin;
+use lib '.';
 BEGIN {
   lib->import($FindBin::Bin) unless $ENV{mod_perl}
 }
