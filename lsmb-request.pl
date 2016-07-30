@@ -19,7 +19,7 @@ this software.
 =cut
 
 package LedgerSMB::Handler;
-
+use lib '.';
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
 use Error qw(:try);
