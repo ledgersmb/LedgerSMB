@@ -67,6 +67,7 @@ for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {
     }   
 }
 package lsmb_legacy;
+use lib '.';
 use Digest::MD5;
 use Try::Tiny;
 use LedgerSMB::App_State;
