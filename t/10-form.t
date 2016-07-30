@@ -158,7 +158,7 @@ cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 3), '==', 2
 ## $form->debug checks
 $form = new Form;
 @r = trap{$form->debug};
-like($trap->stdout, qr/\naction = \ndbversion = \d+\.\d+\.\d+\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}\n/, 'debug: STDOUT');
+like($trap->stdout, qr/\naction = \ndbversion = \d+\.\d+\.\d+-dev\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}\n/, 'debug: STDOUT');
 SKIP: {
 	skip 'Environment for file test not clean' if -f "t/lsmb-10.$$";
 	$form->debug("t/lsmb-10.$$");
@@ -167,7 +167,7 @@ SKIP: {
 	my @str = <$FH>;
 	close($FH);
 	chomp(@str);
-	like(join("\n", @str), qr/action = \ndbversion = \d+\.\d+\.\d+\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}/, "debug: t/lsmb-10.$$ contents");
+	like(join("\n", @str), qr/action = \ndbversion = \d+\.\d+\.\d+-dev\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}/, "debug: t/lsmb-10.$$ contents");
 	is(unlink("t/lsmb-10.$$"), 1, "debug: removing t/lsmb-10.$$");
 	ok(!-e "t/lsmb-10.$$", "debug: t/lsmb-10.$$ removed");
 };
@@ -176,7 +176,7 @@ SKIP: {
 $form = new Form;
 $form->{header} = 1;
 @r = trap{$form->hide_form};
-like($trap->stdout, qr/<input type="hidden" name="action" value="" \/>\n<input type="hidden" name="dbversion" value="\d+\.\d+\.\d+" \/>\n<input type="hidden" name="login" value="" \/>\n<input type="hidden" name="nextsub" value="" \/>\n<input type="hidden" name="path" value="bin\/mozilla" \/>\n<input type="hidden" name="version" value="$form->{version}" \/>/, 
+like($trap->stdout, qr/<input type="hidden" name="action" value="" \/>\n<input type="hidden" name="dbversion" value="\d+\.\d+\.\d+-dev" \/>\n<input type="hidden" name="login" value="" \/>\n<input type="hidden" name="nextsub" value="" \/>\n<input type="hidden" name="path" value="bin\/mozilla" \/>\n<input type="hidden" name="version" value="$form->{version}" \/>/, 
 	'hide_form: base');
 ok(!$form->{header}, 'hide_form: header flag cleared');
 
