@@ -248,7 +248,7 @@ while (<>) {
           && do { $state = NUL; redo; };
 
       $state==DATA &&
-          m/^$delim/g
+          m/^\Q$delim\E/g
           && do { ++$col_no; redo; };
 
       $state==DATA &&
