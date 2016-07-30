@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 package LedgerSMB::Rest;
+use lib '.';
 
 =head1 NAME
 
