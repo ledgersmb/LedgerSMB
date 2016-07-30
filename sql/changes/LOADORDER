@@ -34,3 +34,4 @@
 1.5/parts_fkeys.sql
 1.5/open_forms_callers.sql
 1.5/robot_entity.sql
+1.5/add_qty_to_pricematrix.sql
