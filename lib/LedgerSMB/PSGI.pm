@@ -224,7 +224,9 @@ sub _request_cleanup {
 
 sub _run_new {
     my ($script) = @_;
-    try {
+    if (-f 'bin/lsmb-request.pl'){
+        try {
+
             $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
             my $script = $1;
             $script = '' unless defined $script;
@@ -255,6 +257,7 @@ sub _run_new {
             die $_
                 unless $_ =~ /^Died at/;
         }
+    }
 }
 
 =back
