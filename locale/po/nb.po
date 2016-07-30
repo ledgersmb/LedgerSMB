@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-18 07:51+0000\n"
+"POT-Creation-Date: 2016-07-30 17:24+0000\n"
 "PO-Revision-Date: 2016-05-24 09:24+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -347,7 +347,7 @@ msgstr "Kostnadsbase"
 msgid "Accum. Depreciation"
 msgstr "Akkumulert Nedskrivning"
 
-#: lsmb-request.pl:113
+#: lsmb-request.pl:114
 msgid "Action Not Defined: "
 msgstr "Ikke definert funksjon"
 
@@ -2760,7 +2760,7 @@ msgstr "Rabatt:"
 msgid "Disp. Aquired Value"
 msgstr "Vis Aktivert Verdi"
 
-#: UI/templates/preview.html:53
+#: UI/templates/preview.html:62
 msgid "Display"
 msgstr "Vis"
 
@@ -2928,7 +2928,7 @@ msgstr "EDI forandre ID internt"
 #: bin/aa.pl:147 LedgerSMB/Report/COA.pm:122 LedgerSMB/Report/COA.pm:192
 #: t/data/04-complex_template.html:506 UI/Admin/edit_user.html:151
 #: UI/Contact/divs/address.html:47 UI/Contact/divs/contact_info.html:6
-#: UI/templates/preview.html:59
+#: UI/templates/preview.html:68
 msgid "Edit"
 msgstr "Endre"
 
@@ -4627,7 +4627,7 @@ msgstr "Logget ut på grunn av ikke aktivitet"
 msgid "Logging in.  Please wait."
 msgstr "Logg inn. Vent litt"
 
-#: old-handler.pl:190 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:191 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Login"
 
@@ -4999,7 +4999,7 @@ msgstr "Ingen Duplikate meta-nummer"
 msgid "No file uploaded"
 msgstr "Ingen fil lastet opp"
 
-#: UI/templates/edit.html:5 UI/templates/preview.html:35
+#: UI/templates/edit.html:5 UI/templates/preview.html:44
 msgid "No language"
 msgstr "Ingen språk valgt"
 
@@ -5027,7 +5027,7 @@ msgstr "Ingen MVA fra valgte"
 msgid "No unassigned amounts in Transactions"
 msgstr ""
 
-#: lsmb-request.pl:82
+#: lsmb-request.pl:83
 msgid "No workflow script specified"
 msgstr "Det er ikke angitt noe arbeidsflyt-script"
 
@@ -7648,7 +7648,7 @@ msgstr "System"
 msgid "System Defaults"
 msgstr "Systemets standardinnstillinger"
 
-#: old-handler.pl:176
+#: old-handler.pl:177
 msgid "System currently down for maintenance!"
 msgstr "Systemet er nede for vedlikehold"
 
@@ -8446,7 +8446,7 @@ msgstr "Type:"
 msgid "UPDATE"
 msgstr "OPPDATER"
 
-#: lsmb-request.pl:110
+#: lsmb-request.pl:111
 msgid "Unable to open script"
 msgstr "Kan ikke åpne skript"
 
@@ -8567,7 +8567,7 @@ msgstr "Oppgradert"
 msgid "Upgrade Info"
 msgstr "Oppgradert Info"
 
-#: UI/file/attachment_screen.html:48 UI/templates/preview.html:28
+#: UI/file/attachment_screen.html:48 UI/templates/preview.html:37
 msgid "Upload"
 msgstr "Laste opp"
 
@@ -8734,7 +8734,7 @@ msgstr "Leverandør mangler!"
 msgid "Vendor not on file!"
 msgstr "Leverandør mangler i database!"
 
-#: old-handler.pl:234
+#: old-handler.pl:235
 msgid "Version"
 msgstr "Versjon"
 
@@ -8894,7 +8894,7 @@ msgstr "År"
 msgid "Yes"
 msgstr "Ja"
 
-#: old-handler.pl:189
+#: old-handler.pl:190
 msgid "You are logged out!"
 msgstr "Du er utlogget"
 
@@ -8967,7 +8967,7 @@ msgstr "[_1]: Kunde ikke i registret"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverandør ikke i registret"
 
-#: old-handler.pl:243
+#: old-handler.pl:244
 msgid "action not defined!"
 msgstr "Handling ikke definert"
 
