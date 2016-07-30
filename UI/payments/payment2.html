@@ -98,7 +98,11 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   ?>
               <th align="right" nowrap id="date_label_column"><?lsmb text('Date') ?></th>
               <?lsmb- datepaid.class = 'date' ?>
-              <td colspan="2" id="date_column"> <?lsmb PROCESS input element_data=datepaid ?><?lsmb datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid ?> </td>
+              <td colspan="2" id="date_column">
+                <?lsmb PROCESS input element_data=datepaid ?>
+                <?lsmb datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid ?>
+                <?lsmb INCLUDE tooltip element_data = { id => "date_column", msg => text("Date to register payment") }; ?>
+              </td>
             </tr>
             <tr id="source_row">
               <?lsmb # here goes all the posible sources which we can use -?>
@@ -113,11 +117,13 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                                 name="source"
                                                 options=sources
                                                 default_values=[selected_source] }; ?>
+                <?lsmb INCLUDE tooltip element_data = { id => 'source_column', msg => text("Only for documentation") }; ?>
               </td>
               <td id="source_text_column">
                 <?lsmb PROCESS input element_data={ name  => 'source_value'
                 id    => 'source_value'
                 value => source_value } -?>
+                <?lsmb INCLUDE tooltip element_data = { id => 'source_value', msg => text("Source documentation") }; ?>
               </td>
             </tr>
             <tr id="currency_row">
@@ -153,7 +159,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                        <th class="listheading"><?lsmb column.text ?></th>
         <?lsmb     ELSE -?>
                        <th class="listheading">
-                            <button type="button" data-dojo-type="dijit/form/Button">
+                            <button type="button" id="checkbox_all" data-dojo-type="dijit/form/Button">
                                 <?lsmb column.text -?>
                                 <script type="dojo/on" data-dojo-event="click">
                                     require(["dojo/domReady!"], function(){
@@ -164,6 +170,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                     });
                                 </script>
                             </button>
+                            <?lsmb INCLUDE tooltip element_data = { id => "checkbox_all", msg => text("Toggle all removal checkboxes") }; ?>
                        </th>
         <?lsmb     END;
                    j = j + 1; ?>
@@ -199,13 +206,19 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                       class="checkbox"
                       checked=CHECKED } ?>
         </td>
-        <td align="center"><?lsmb row.memo.id=row.memo.name ; PROCESS input element_data=row.memo; -?></td>
+        <td align="center">
+            <?lsmb row.memo.id=row.memo.name ; PROCESS input element_data=row.memo; -?>
+            <?lsmb INCLUDE tooltip element_data = { id => row.memo.name, msg => text("Memo to help retrieval") }; ?>
+        </td>
         <?lsmb IF defaultcurrency.text != curr.value ?>
         <td><?lsmb row.exchange_rate ?></td>
         <?lsmb END ?>
         <td><?lsmb row.due ?></td>
         <?lsmb IF defaultcurrency.text != curr.value ?>
-        <td><div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div></td>
+        <td>
+            <div id="<?lsmb "div_topay_invoice_$i" ?>"><?lsmb row.due_fx ?></div>
+            <?lsmb INCLUDE tooltip element_data = { id => "div_topay_invoice_$i", msg => text("Amount to pay") }; ?>
+        </td>
         <?lsmb END ?>
         <?lsmb #This should be computed and updated to the div using  ?>
         <?lsmb topay_subtotal=topay_subtotal + row.topay_fx.value; -?>
@@ -270,7 +283,9 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <td valign="MIDDLE"><?lsmb PROCESS input element_data = {
                                                        type="checkbox"
                                                        class="remove"
+                                                       id="checkbox_" _ row.invoice.id
                                                        name="checkbox_" _ row.invoice.id } ?>
+            <?lsmb INCLUDE tooltip element_data = { id => "checkbox_" _ row.invoice.id, msg => text("Toggle removal of entry in current payment") }; ?>
         </td>
       </tr>
       <?lsmb END ?>
