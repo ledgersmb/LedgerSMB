@@ -149,7 +149,7 @@ SKIP: {
 		'Debug Contents, var1 type'); 
 	cmp_ok(grep (/'action' => ''/, @str), '>', 0,
 		'Debug contents, blank action');
-	cmp_ok(grep (/'dbversion' => '\d+\.\d+\.\d+'/, @str), '>', 0,
+	cmp_ok(grep (/'dbversion' => '\d+\.\d+\.\d+-dev'/, @str), '>', 0,
 		'Debug contents, dbversion format');
 	cmp_ok(grep (/'path' => 'bin\/mozilla'/, @str), '>', 0,
 		'Debug contents, path');
