@@ -35,6 +35,9 @@
                   {col_id = 'validto',
                      name = text('Valid To') #'
                      type = 'input_text'},
+                  {col_id = 'qty',
+                     name = text('Min Qty') #'
+                     type = 'input_text'},
          );
                         
      END;
