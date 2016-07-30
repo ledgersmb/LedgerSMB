@@ -48,7 +48,7 @@ sub save {
     for my $ref (@$lines){
         my $line = __PACKAGE__->new({base => $self,
                                copy => 'list',
-                              merge => ['entity_class', 'credit_id'], }
+                              merge => ['entity_class', 'credit_id', 'qty'], }
         );
         $line->merge($ref);
         $line->call_dbmethod(funcname => 'pricelist__save');
