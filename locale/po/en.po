@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1418,7 +1418,7 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr ""
 
@@ -1467,7 +1467,7 @@ msgstr ""
 msgid "Chart of Accounts"
 msgstr ""
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr ""
 
@@ -2486,10 +2486,6 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: pos.conf.pl:41
-msgid "Discover"
-msgstr ""
-
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
 msgstr ""
@@ -3365,10 +3361,6 @@ msgstr ""
 msgid "Generic Jabber"
 msgstr ""
 
-#: pos.conf.pl:44
-msgid "Gift Cert"
-msgstr ""
-
 #: t/data/04-strings-for-translation.html:8
 msgid "Goods & Services"
 msgstr ""
@@ -4168,7 +4160,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr ""
 
@@ -6898,7 +6890,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -7918,7 +7910,7 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr ""
 
@@ -7928,10 +7920,6 @@ msgstr ""
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8089,7 +8077,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: old-handler.pl:132
+#: old-handler.pl:133
 msgid "You are logged out!"
 msgstr ""
 
@@ -8206,7 +8194,7 @@ msgstr ""
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: old-handler.pl:182
+#: old-handler.pl:183
 msgid "action not defined!"
 msgstr ""
 

@@ -1,34 +1,19 @@
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2004
 #
-# Greek texts:
-#
-#  Author: Dimitris Andavoglou <dimitrisand@nortech.gr>
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
-"Last-Translator: Dimitris Andavoglou <dimitrisand@nortech.gr>\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
+"PO-Revision-Date: 2015-12-29 12:32+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: Greek (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"el/)\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
@@ -192,9 +177,8 @@ msgid "Account"
 msgstr "Λογαριασμός"
 
 #: UI/payments/use_overpayment2.html:117
-#, fuzzy
 msgid "Account Description"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
@@ -210,14 +194,13 @@ msgid "Account Number missing!"
 msgstr "Ο κωδικός λογαριασμού λείπει"
 
 #: scripts/payment.pl:161
-#, fuzzy
 msgid "Account Title"
-msgstr "Τύπος Κωδικού"
+msgstr ""
 
 #: UI/accounts/edit.html:80 UI/taxform/details_report.html:19
 #: UI/taxform/summary_report.html:19
 msgid "Account Type"
-msgstr "Τύπος Κωδικού"
+msgstr ""
 
 #: bin/am.pl:137
 msgid "Account Type missing!"
@@ -245,14 +228,12 @@ msgstr "Ο λογαρισμός αποθηκεύτηκε"
 
 #: UI/payments/payments_detail.html:139 UI/reconciliation/report.html:10
 #: UI/reconciliation/search.html:47
-#, fuzzy
 msgid "Account:"
-msgstr "Λογαριασμός"
+msgstr ""
 
 #: bin/bp.pl:309 bin/rp.pl:1968
-#, fuzzy
 msgid "Account: [_1]"
-msgstr "Λογαριασμός"
+msgstr ""
 
 #: bin/ic.pl:1016 UI/Contact/contact.html:69 UI/Contact/contact.html:392
 #: UI/rp-search.html:24
@@ -280,14 +261,12 @@ msgstr ""
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
-#, fuzzy
 msgid "Actions"
-msgstr "Παρακρατήσεις"
+msgstr ""
 
 #: t/data/04-complex_template.html:496
-#, fuzzy
 msgid "Actions:"
-msgstr "Παρακρατήσεις"
+msgstr ""
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
@@ -323,27 +302,24 @@ msgid "Add Account"
 msgstr "Προσθήκη λογαριασμού"
 
 #: sql/Pg-database.sql:2500
-#, fuzzy
 msgid "Add Accounts"
-msgstr "Προσθήκη λογαριασμού"
+msgstr ""
 
 #: bin/ic.pl:63 bin/ic.pl:1936 sql/Pg-database.sql:2452
 msgid "Add Assembly"
 msgstr ""
 
 #: scripts/asset.pl:254
-#, fuzzy
 msgid "Add Asset"
-msgstr "Πάγιο"
+msgstr ""
 
 #: scripts/asset.pl:101
 msgid "Add Asset Class"
 msgstr ""
 
 #: sql/Pg-database.sql:2598
-#, fuzzy
 msgid "Add Assets"
-msgstr "Πάγιο"
+msgstr ""
 
 #: bin/am.pl:826 bin/am.pl:851 sql/Pg-database.sql:2506
 msgid "Add Business"
@@ -354,9 +330,8 @@ msgid "Add Class"
 msgstr ""
 
 #: bin/is.pl:86 bin/is.pl:106
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Add Creditor Invoice"
+msgstr ""
 
 #: bin/aa.pl:449
 msgid "Add Credit Note"
@@ -368,9 +343,8 @@ msgid "Add Customer"
 msgstr "Προσθήκη Πελάτη"
 
 #: bin/ir.pl:77 bin/ir.pl:96
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Προσθήκη Τιμολογίου πώλησης"
+msgstr ""
 
 #: bin/aa.pl:447
 msgid "Add Debit Note"
@@ -410,9 +384,8 @@ msgid "Add Language"
 msgstr "Προσθήκη γλώσσας"
 
 #: sql/Pg-database.sql:2453
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Προσθήκη υπηρεσίας"
+msgstr ""
 
 #: bin/pos.pl:106
 msgid "Add POS Invoice"
@@ -459,9 +432,8 @@ msgid "Add Service"
 msgstr "Προσθήκη υπηρεσίας"
 
 #: bin/jc.pl:59 bin/jc.pl:79 bin/jc.pl:1949
-#, fuzzy
 msgid "Add Stores Card"
-msgstr "Προσθήκη Παραγγελίας"
+msgstr ""
 
 #: sql/Pg-database.sql:2571
 msgid "Add Tax Form"
@@ -506,14 +478,12 @@ msgid "Add Warehouse"
 msgstr "Προσθήκη Αποθήκης"
 
 #: bin/io.pl:2027
-#, fuzzy
 msgid "Add line1"
-msgstr "Προσθήκη υπηρεσίας"
+msgstr ""
 
 #: bin/io.pl:2030
-#, fuzzy
 msgid "Add line2"
-msgstr "Προσθήκη υπηρεσίας"
+msgstr ""
 
 #: bin/io.pl:2034
 msgid "Add line3 "
@@ -527,26 +497,22 @@ msgid "Address"
 msgstr "Διέυθυνση"
 
 #: t/data/04-complex_template.html:385
-#, fuzzy
 msgid "Address1"
-msgstr "Διέυθυνση"
+msgstr ""
 
 #: t/data/04-complex_template.html:420
-#, fuzzy
 msgid "Address:"
-msgstr "Διέυθυνση"
+msgstr ""
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
-#, fuzzy
 msgid "Address: [_1]"
-msgstr "Διέυθυνση"
+msgstr ""
 
 #: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
-#, fuzzy
 msgid "Addresses"
-msgstr "Διέυθυνση"
+msgstr ""
 
 #: sql/Pg-database.sql:2448
 msgid "Adjust Till"
@@ -565,23 +531,20 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:26
-#, fuzzy
 msgid "Adjustment"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:13
-#, fuzzy
 msgid "Adjustment Date"
-msgstr "Ημερομηνία λήξης"
+msgstr ""
 
 #: UI/employee.html:101
 msgid "Admin"
 msgstr ""
 
 #: sql/Pg-database.sql:2572
-#, fuzzy
 msgid "Admin Users"
-msgstr "Προσθήκη χρήστη"
+msgstr ""
 
 #: bin/rp.pl:981 UI/rp-search-aging.html:67
 msgid "Aged"
@@ -599,12 +562,11 @@ msgstr "Όλα"
 
 #: UI/rp-search-generate_trial_balance.html:100
 msgid "All Accounts"
-msgstr "Όλοι οι λογαριασμοί"
+msgstr ""
 
 #: bin/aa.pl:1774
-#, fuzzy
 msgid "All Invoices"
-msgstr "Τιμολόγια"
+msgstr ""
 
 #: sql/Pg-database.sql:2458
 msgid "All Items"
@@ -653,9 +615,8 @@ msgid "All prices in [_1]."
 msgstr ""
 
 #: bin/jc.pl:321 bin/jc.pl:521 bin/jc.pl:535
-#, fuzzy
 msgid "Allocated"
-msgstr "Παροχές"
+msgstr ""
 
 #: bin/aa.pl:717 bin/aa.pl:848 bin/aa.pl:1702 bin/aa.pl:2076 bin/am.pl:2219
 #: bin/gl.pl:623 bin/gl.pl:635 bin/ir.pl:612 bin/ir.pl:788 bin/is.pl:713
@@ -705,9 +666,8 @@ msgid "Amount Due"
 msgstr ""
 
 #: UI/reconciliation/search.html:28
-#, fuzzy
 msgid "Amount From"
-msgstr "Ποσό"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:148
 msgid "Amount to be used"
@@ -784,9 +744,8 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: bin/ir.pl:1391 bin/is.pl:1485
-#, fuzzy
 msgid "Are you sure you want to delete Invoice Number [_1]?"
-msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις το αριθμό τιμολογίου"
+msgstr ""
 
 #: bin/oe.pl:2352
 msgid "Are you sure you want to delete Order Number"
@@ -801,9 +760,8 @@ msgid "Are you sure you want to delete Transaction"
 msgstr "Είσαι σίγουρος ότι θέλεις να διαγράψεις την κίνηση"
 
 #: bin/jc.pl:1309
-#, fuzzy
 msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις τον αριθμό παραγγελίας"
+msgstr ""
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
@@ -815,7 +773,7 @@ msgstr ""
 
 #: bin/ic.pl:1291
 msgid "Assemblies"
-msgstr "Συναρμολογήσεις"
+msgstr ""
 
 #: bin/ic.pl:4036
 msgid "Assemblies restocked!"
@@ -838,25 +796,22 @@ msgstr "Πάγιο"
 #: scripts/asset.pl:168 UI/asset/edit_asset.html:151
 #: UI/asset/edit_class.html:35 UI/asset/search_asset.html:142
 #: UI/asset/search_class.html:43
-#, fuzzy
 msgid "Asset Account"
-msgstr "Λίστα Λογαριασμών"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset_Class.pm:68 scripts/asset.pl:635
 #: UI/asset/begin_approval.html:15 UI/asset/begin_report.html:14
 #: UI/asset/search_reports.html:12
-#, fuzzy
 msgid "Asset Class"
-msgstr "Πάγιο"
+msgstr ""
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
 msgstr ""
 
 #: sql/Pg-database.sql:2594
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Συναρμολογήσεις"
+msgstr ""
 
 #: scripts/asset.pl:556
 msgid "Asset Depreciation Report"
@@ -871,33 +826,28 @@ msgid "Asset Partial Disposal Report"
 msgstr ""
 
 #: scripts/asset.pl:496
-#, fuzzy
 msgid "Asset Tag"
-msgstr "Πάγιο"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:73
 #: templates/demo_with_images/balance_sheet.html:73
 #: templates/xedemo/balance_sheet.html:73 sql/Pg-database.sql:2595
-#, fuzzy
 msgid "Assets"
-msgstr "Πάγιο"
+msgstr ""
 
 #: bin/aa.pl:1094 bin/ic.pl:946 bin/ir.pl:991 bin/is.pl:1124 bin/oe.pl:967
 #: UI/journal/journal_entry.html:349
-#, fuzzy
 msgid "Attach"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: UI/file/attachment_screen.html:22
-#, fuzzy
 msgid "Attach File"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: bin/aa.pl:1066 bin/ic.pl:918 bin/ir.pl:965 bin/is.pl:1098 bin/oe.pl:941
 #: UI/journal/journal_entry.html:325
-#, fuzzy
 msgid "Attached To"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: bin/aa.pl:1065 bin/ic.pl:917 bin/ir.pl:964 bin/is.pl:1097 bin/oe.pl:940
 #: UI/journal/journal_entry.html:324
@@ -912,16 +862,14 @@ msgstr ""
 #: bin/aa.pl:1046 bin/aa.pl:1067 bin/ic.pl:898 bin/ic.pl:919 bin/ir.pl:945
 #: bin/ir.pl:966 bin/is.pl:1078 bin/is.pl:1099 bin/oe.pl:921 bin/oe.pl:942
 #: UI/journal/journal_entry.html:306 UI/journal/journal_entry.html:326
-#, fuzzy
 msgid "Attached at"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: bin/aa.pl:1047 bin/aa.pl:1068 bin/ic.pl:899 bin/ic.pl:920 bin/ir.pl:946
 #: bin/ir.pl:967 bin/is.pl:1079 bin/is.pl:1100 bin/oe.pl:922 bin/oe.pl:943
 #: UI/journal/journal_entry.html:307 UI/journal/journal_entry.html:327
-#, fuzzy
 msgid "Attached by"
-msgstr "Εξάρτημα"
+msgstr ""
 
 #: bin/io.pl:1397 bin/rp.pl:1329
 msgid "Attachment"
@@ -1040,14 +988,12 @@ msgid "Backup"
 msgstr "Αντίγραφο ασφαλείας"
 
 #: UI/setup/confirm_operation.html:64
-#, fuzzy
 msgid "Backup DB"
-msgstr "Αντίγραφο ασφαλείας"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:71
-#, fuzzy
 msgid "Backup Roles"
-msgstr "Αντίγραφο ασφαλείας"
+msgstr ""
 
 #: scripts/recon.pl:187 UI/journal/search.html:283
 msgid "Balance"
@@ -1057,9 +1003,8 @@ msgstr "Ισοζύγιο"
 #: templates/demo_with_images/invoice.html:197
 #: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
 #: templates/xedemo/invoice.tex:168
-#, fuzzy
 msgid "Balance Due"
-msgstr "Ισοζύγιο"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:63
 #: templates/demo_with_images/balance_sheet.html:63
@@ -1069,20 +1014,17 @@ msgid "Balance Sheet"
 msgstr "Ισοζύγιο"
 
 #: UI/Contact/contact.html:1109
-#, fuzzy
 msgid "Bank Account"
-msgstr "Λογαριασμός"
+msgstr ""
 
 #: t/data/04-complex_template.html:601
-#, fuzzy
 msgid "Bank Account:"
-msgstr "Λογαριασμός"
+msgstr ""
 
 #: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Λογαριασμοί"
+msgstr ""
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1105,23 +1047,20 @@ msgid "Batch Date"
 msgstr ""
 
 #: bin/rp.pl:2014
-#, fuzzy
 msgid "Batch Description"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: LedgerSMB/GL.pm:178 LedgerSMB/IR.pm:359 LedgerSMB/IS.pm:1273
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Δεν υπάρχει η ημερομηνία"
+msgstr ""
 
 #: bin/aa.pl:632
 msgid "Batch Name"
 msgstr ""
 
 #: UI/create_batch.html:13
-#, fuzzy
 msgid "Batch Number"
-msgstr "Αριθμός"
+msgstr ""
 
 #: sql/Pg-database.sql:2593
 msgid "Batch Printing"
@@ -1149,14 +1088,12 @@ msgid "Bcc: [_1]"
 msgstr ""
 
 #: UI/reconciliation/report.html:20
-#, fuzzy
 msgid "Beginning Statement Balance:"
-msgstr "Ισοζύγιο Έναρξης"
+msgstr ""
 
 #: scripts/taxform.pl:134
-#, fuzzy
 msgid "Beginning year required"
-msgstr "Ισοζύγιο Έναρξης"
+msgstr ""
 
 #: sql/Pg-database.sql:631
 msgid "Billing"
@@ -1213,9 +1150,8 @@ msgid "Books are open"
 msgstr "Τα βιβλία είναι ανοιχτά"
 
 #: UI/accounts/yearend.html:66
-#, fuzzy
 msgid "Books closed on"
-msgstr "Τα βιβλία είναι ανοιχτά"
+msgstr ""
 
 #: bin/ic.pl:2921
 msgid "Break"
@@ -1230,23 +1166,20 @@ msgid "Business"
 msgstr "Επιχείρηση"
 
 #: UI/payments/payments_filter.html:78
-#, fuzzy
 msgid "Business Class"
-msgstr "Επιχείρηση"
+msgstr ""
 
 #: UI/am-defaults.html:26
 msgid "Business Number"
 msgstr "Κωδικός Επιχείρησης"
 
 #: UI/Contact/contact.html:571
-#, fuzzy
 msgid "Business Type"
-msgstr "Επιχείρηση"
+msgstr ""
 
 #: t/data/04-complex_template.html:294
-#, fuzzy
 msgid "Business Type:"
-msgstr "Επιχείρηση"
+msgstr ""
 
 #: bin/am.pl:874
 msgid "Business deleted!"
@@ -1257,9 +1190,8 @@ msgid "Business saved!"
 msgstr ""
 
 #: UI/payments/payments_detail.html:173
-#, fuzzy
 msgid "Business:"
-msgstr "Επιχείρηση"
+msgstr ""
 
 #: bin/oe.pl:1867
 msgid "C"
@@ -1298,14 +1230,12 @@ msgid "Calculate Taxes"
 msgstr ""
 
 #: bin/is.pl:631
-#, fuzzy
 msgid "Can't void a voided invoice!"
-msgstr "Δεν μπορεί να διαγραφεί το τιμολόγιο"
+msgstr ""
 
 #: bin/io.pl:2216
-#, fuzzy
 msgid "Cancel"
-msgstr "Ισοζύγιο"
+msgstr ""
 
 #: scripts/setup.pl:117 scripts/setup.pl:123 scripts/setup.pl:139
 #: scripts/setup.pl:151
@@ -1333,23 +1263,20 @@ msgid "Cannot create Assembly; Income account does not exist!"
 msgstr ""
 
 #: bin/ic.pl:168
-#, fuzzy
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr "Ο λογαριασμός δεν υπάρχει"
+msgstr ""
 
 #: bin/ic.pl:165
 msgid "Cannot create Labor; Inventory account does not exist!"
 msgstr ""
 
 #: bin/ic.pl:135
-#, fuzzy
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr "Ο λογαριασμός δεν υπάρχει"
+msgstr ""
 
 #: bin/ic.pl:132
-#, fuzzy
 msgid "Cannot create Part; Income account does not exist!"
-msgstr "Ο λογαριασμός δεν υπάρχει"
+msgstr ""
 
 #: bin/ic.pl:129
 msgid "Cannot create Part; Inventory account does not exist!"
@@ -1384,18 +1311,16 @@ msgid "Cannot delete order!"
 msgstr "Δεν μπορεί να διαγραφεί η παραγγελία"
 
 #: bin/gl.pl:1121
-#, fuzzy
 msgid "Cannot delete posted transaction"
-msgstr "Δεν μπορεί να διαγραφεί η κίνηση"
+msgstr ""
 
 #: bin/oe.pl:2394
 msgid "Cannot delete quotation!"
 msgstr ""
 
 #: bin/jc.pl:1325
-#, fuzzy
 msgid "Cannot delete time card!"
-msgstr "Cannot delete debtor!"
+msgstr ""
 
 #: bin/aa.pl:1483
 msgid "Cannot delete transaction!"
@@ -1459,24 +1384,20 @@ msgid "Cannot save stores card for a closed period!"
 msgstr ""
 
 #: bin/jc.pl:1200
-#, fuzzy
 msgid "Cannot save stores card!"
-msgstr "Δεν μπορεί να αποθηκευτεί η παραγγελία"
+msgstr ""
 
 #: bin/am.pl:1805
-#, fuzzy
 msgid "Cannot save taxes!"
-msgstr "Δεν μπορεί να αποθηκευτεί η παραγγελία"
+msgstr ""
 
 #: bin/jc.pl:1159
-#, fuzzy
 msgid "Cannot save time card for a closed period!"
-msgstr "Δεν μπορεί να αποθηκευτεί η παραγγελία"
+msgstr ""
 
 #: bin/jc.pl:1184
-#, fuzzy
 msgid "Cannot save time card!"
-msgstr "Δεν μπορεί να αποθηκευτεί η παραγγελία"
+msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
@@ -1505,14 +1426,13 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr "Ρευστά"
 
 #: UI/payments/payment2.html:229 UI/payments/search.html:56
-#, fuzzy
 msgid "Cash Account"
-msgstr "Λογαριασμός"
+msgstr ""
 
 #: bin/ps.pl:288
 msgid "Cash Breakdown:"
@@ -1527,9 +1447,8 @@ msgid "Cc: [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:777
-#, fuzzy
 msgid "Cell Phone"
-msgstr "Τηλ. Σπιτιού"
+msgstr ""
 
 #: bin/pos.pl:564
 msgid "Change"
@@ -1537,7 +1456,7 @@ msgstr ""
 
 #: UI/users/preferences.html:24
 msgid "Change Password"
-msgstr "Αλλαγή κωδικού"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:960 scripts/employee.pl:229
 msgid "Changes not saved.  Please try again."
@@ -1548,23 +1467,21 @@ msgid "Chargeable"
 msgstr ""
 
 #: bin/jc.pl:515 bin/jc.pl:529
-#, fuzzy
 msgid "Chargeout Rate"
-msgstr "Τιμή συναλλάγματος"
+msgstr ""
 
 #: bin/am.pl:183 bin/ca.pl:100 sql/Pg-database.sql:2480
 #: sql/Pg-database.sql:2581
 msgid "Chart of Accounts"
 msgstr "Γράφημα των Κωδικών"
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Επιταγή"
 
 #: bin/pos.pl:343
-#, fuzzy
 msgid "Check ID"
-msgstr "Επιταγή"
+msgstr ""
 
 #: bin/ic.pl:3836
 msgid "Check Inventory"
@@ -1587,9 +1504,8 @@ msgid "Checks"
 msgstr "Επιταγές"
 
 #: UI/payments/payment1_5.html:23
-#, fuzzy
 msgid "Choose a company"
-msgstr "Εταιρία"
+msgstr ""
 
 #: bin/arap.pl:176 t/data/04-complex_template.html:386
 #: UI/Contact/contact.html:784 UI/Contact/contact.html:872
@@ -1599,9 +1515,8 @@ msgid "City"
 msgstr "Πόλη"
 
 #: t/data/04-complex_template.html:445
-#, fuzzy
 msgid "City:"
-msgstr "Πόλη"
+msgstr ""
 
 #: scripts/asset.pl:317 UI/Contact/contact.html:309
 msgid "Class"
@@ -1618,9 +1533,8 @@ msgid "Cleared"
 msgstr ""
 
 #: UI/reconciliation/report.html:65
-#, fuzzy
 msgid "Cleared Transactions"
-msgstr "Κινήσεις Αγορών"
+msgstr ""
 
 #: bin/jc.pl:638
 msgid "Clocked"
@@ -1631,9 +1545,8 @@ msgid "Close Books up to"
 msgstr "Κλείσιμο βιβλίων μέχρι"
 
 #: bin/ps.pl:212 sql/Pg-database.sql:2403
-#, fuzzy
 msgid "Close Till"
-msgstr "Κλεισμένο"
+msgstr ""
 
 #: bin/aa.pl:1600 bin/aa.pl:1991 bin/ic.pl:1077 bin/ic.pl:1585 bin/ic.pl:1588
 #: bin/jc.pl:315 bin/jc.pl:1425 bin/oe.pl:348 bin/oe.pl:1422 bin/oe.pl:1942
@@ -1661,28 +1574,24 @@ msgid "Company"
 msgstr "Εταιρία"
 
 #: bin/am.pl:77
-#, fuzzy
 msgid "Company Address"
-msgstr "Όνομα εταιρίας"
+msgstr ""
 
 #: bin/am.pl:79
-#, fuzzy
 msgid "Company Fax"
-msgstr "Όνομα εταιρίας"
+msgstr ""
 
 #: bin/am.pl:76 UI/Contact/history_filter.html:33 UI/Contact/search.html:31
 msgid "Company Name"
 msgstr "Όνομα εταιρίας"
 
 #: bin/am.pl:78
-#, fuzzy
 msgid "Company Phone"
-msgstr "Όνομα εταιρίας"
+msgstr ""
 
 #: UI/am-company-logo.html:7
-#, fuzzy
 msgid "Company: [_1]"
-msgstr "Εταιρία"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1735,9 +1644,8 @@ msgid "Consolidate Purchase Orders"
 msgstr ""
 
 #: bin/oe.pl:1262
-#, fuzzy
 msgid "Consolidate Sales Orders"
-msgstr "Προσθήκη Παραγγελίας"
+msgstr ""
 
 #: bin/io.pl:2102 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
@@ -1761,14 +1669,12 @@ msgstr "Επαφή"
 #: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
 #: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
 #: UI/Contact/history_filter.html:41
-#, fuzzy
 msgid "Contact Info"
-msgstr "Επαφή"
+msgstr ""
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
-#, fuzzy
 msgid "Contact Info:"
-msgstr "Επαφή"
+msgstr ""
 
 #: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
@@ -1805,9 +1711,8 @@ msgid "Control Code"
 msgstr ""
 
 #: UI/create_batch.html:47
-#, fuzzy
 msgid "Control Number"
-msgstr "Κωδικός Λογαριασμού"
+msgstr ""
 
 #: bin/rp.pl:1358 UI/io-email.html:65
 msgid "Copies"
@@ -1826,9 +1731,8 @@ msgid "Copy to New"
 msgstr ""
 
 #: UI/setup/confirm_operation.html:35
-#, fuzzy
 msgid "Copy to New Name"
-msgstr "Όνομα εταιρίας"
+msgstr ""
 
 #: bin/ic.pl:2820 bin/ic.pl:3065 bin/jc.pl:890 bin/oe.pl:3512
 msgid "Cost"
@@ -1855,9 +1759,8 @@ msgid "Could not transfer Inventory!"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:24
-#, fuzzy
 msgid "Counted"
-msgstr "Χώρα"
+msgstr ""
 
 #: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
 #: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
@@ -1868,29 +1771,24 @@ msgid "Country"
 msgstr "Χώρα"
 
 #: UI/setup/select_coa.html:30
-#, fuzzy
 msgid "Country Code"
-msgstr "Χώρα"
+msgstr ""
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
-#, fuzzy
 msgid "Country:"
-msgstr "Χώρα"
+msgstr ""
 
 #: UI/create_batch.html:2
-#, fuzzy
 msgid "Create Batch"
-msgstr "Create Dataset"
+msgstr ""
 
 #: scripts/setup.pl:145
-#, fuzzy
 msgid "Create Database?"
-msgstr "Create Dataset"
+msgstr ""
 
 #: UI/create_batch.html:9
-#, fuzzy
 msgid "Create New Batch"
-msgstr "Create Dataset"
+msgstr ""
 
 #: UI/reconciliation/upload.html:56
 msgid "Create New Report"
@@ -1901,9 +1799,8 @@ msgid "Create New TaxForm"
 msgstr ""
 
 #: UI/setup/new_user.html:109
-#, fuzzy
 msgid "Create User"
-msgstr "Create Dataset"
+msgstr ""
 
 #: UI/asset/search_reports.html:47 UI/batch/filter.html:33
 #: UI/batch/search_transactions.html:26 UI/create_batch.html:49
@@ -1924,9 +1821,8 @@ msgid "Credit Card Track"
 msgstr ""
 
 #: bin/am.pl:2862 sql/Pg-database.sql:2550
-#, fuzzy
 msgid "Credit Invoice"
-msgstr "Επεξεργασία απόδειξης ταμειακής"
+msgstr ""
 
 #: bin/aa.pl:612 bin/ir.pl:467 bin/is.pl:521 bin/oe.pl:457 bin/pos.pl:364
 #: UI/Contact/contact.html:398 UI/Contact/contact.html:497
@@ -1935,19 +1831,16 @@ msgid "Credit Limit"
 msgstr "Όριο Πίστωσης"
 
 #: t/data/04-complex_template.html:201
-#, fuzzy
 msgid "Credit Limit:"
-msgstr "Όριο Πίστωσης"
+msgstr ""
 
 #: sql/Pg-database.sql:2549
-#, fuzzy
 msgid "Credit Note"
-msgstr "Πίστωση"
+msgstr ""
 
 #: scripts/payment.pl:166
-#, fuzzy
 msgid "Credits"
-msgstr "Πίστωση"
+msgstr ""
 
 #: bin/ps.pl:182 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
@@ -2012,9 +1905,8 @@ msgid "Customer History"
 msgstr "Ιστορικό Πελάτη"
 
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:30
-#, fuzzy
 msgid "Customer Name"
-msgstr "Κωδικός Πελάτη"
+msgstr ""
 
 #: bin/aa.pl:1660 bin/am.pl:67 bin/io.pl:1984 scripts/payment.pl:326
 #: UI/am-defaults.html:176 UI/Contact/history_filter.html:69
@@ -2023,9 +1915,8 @@ msgid "Customer Number"
 msgstr "Κωδικός Πελάτη"
 
 #: UI/Contact/search.html:8
-#, fuzzy
 msgid "Customer Search"
-msgstr "Κωδικός Πελάτη"
+msgstr ""
 
 #: bin/aa.pl:1306 bin/is.pl:1385 bin/oe.pl:2261 bin/pe.pl:2872 bin/pos.pl:687
 msgid "Customer missing!"
@@ -2040,9 +1931,8 @@ msgid "Customer/Vendor Accounts"
 msgstr ""
 
 #: bin/bp.pl:303
-#, fuzzy
 msgid "Customer: [_1]"
-msgstr "Πελάτης"
+msgstr ""
 
 #: sql/Pg-database.sql:2547
 msgid "Customers"
@@ -2085,14 +1975,12 @@ msgid "Database Management Console"
 msgstr ""
 
 #: UI/setup/complete.html:8
-#, fuzzy
 msgid "Database Operation Complete"
-msgstr "Διαχειριστής βάσης δεδομένων"
+msgstr ""
 
 #: scripts/setup.pl:144
-#, fuzzy
 msgid "Database does not exist."
-msgstr "does not exist"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2164,17 +2052,15 @@ msgstr "Ημερομηνία"
 
 #: UI/am-userconfig.html:25 UI/users/preferences.html:39
 msgid "Date Format"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: UI/reconciliation/search.html:10
-#, fuzzy
 msgid "Date From"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: UI/payments/payments_filter.html:99
-#, fuzzy
 msgid "Date From:"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: bin/aa.pl:1711 bin/aa.pl:2085
 msgid "Date Paid"
@@ -2189,32 +2075,28 @@ msgid "Date Reversed"
 msgstr ""
 
 #: UI/payments/payments_filter.html:107
-#, fuzzy
 msgid "Date To:"
-msgstr "Ημερομηνία"
+msgstr ""
 
 #: UI/payments/payment1.html:57
-#, fuzzy
 msgid "Date from"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: bin/jc.pl:1142
 msgid "Date missing!"
 msgstr "Δεν υπάρχει η ημερομηνία"
 
 #: UI/Admin/user_search.html:51
-#, fuzzy
 msgid "Date of Birth"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: bin/oe.pl:3066
 msgid "Date received missing!"
 msgstr ""
 
 #: bin/aa.pl:1764 UI/Contact/search.html:108 UI/payments/payment1.html:67
-#, fuzzy
 msgid "Date to"
-msgstr "Ημερομηνία"
+msgstr ""
 
 #: bin/jc.pl:604
 msgid "Date worked"
@@ -2242,19 +2124,16 @@ msgid "Debit"
 msgstr "Χρέος"
 
 #: bin/am.pl:2863 sql/Pg-database.sql:2556
-#, fuzzy
 msgid "Debit Invoice"
-msgstr "Τιμολόγιο"
+msgstr ""
 
 #: sql/Pg-database.sql:2555
-#, fuzzy
 msgid "Debit Note"
-msgstr "Χρέος"
+msgstr ""
 
 #: scripts/payment.pl:165
-#, fuzzy
 msgid "Debits"
-msgstr "Χρέος"
+msgstr ""
 
 #: bin/aa.pl:91 bin/ca.pl:83 bin/gl.pl:86 bin/io.pl:87
 #: LedgerSMB/App_State.pm:180
@@ -2268,30 +2147,25 @@ msgstr "Δεκέμβριος"
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
-#, fuzzy
 msgid "Decimal Places"
-msgstr "Δεκαδικά"
+msgstr ""
 
 #: bin/am.pl:1342
-#, fuzzy
 msgid "Default"
-msgstr "Προεπιλογές"
+msgstr ""
 
 #: UI/setup/migrate_sl_info.html:61 UI/setup/upgrade_info.html:61
-#, fuzzy
 msgid "Default AP"
-msgstr "Προεπιλογές"
+msgstr ""
 
 #: UI/setup/migrate_sl_info.html:45 UI/setup/upgrade_info.html:45
-#, fuzzy
 msgid "Default AR"
-msgstr "Προεπιλογές"
+msgstr ""
 
 #: UI/am-defaults.html:100 UI/setup/migrate_sl_info.html:32
 #: UI/setup/upgrade_info.html:32
-#, fuzzy
 msgid "Default Country"
-msgstr "Χώρα"
+msgstr ""
 
 #: bin/am.pl:73
 msgid "Default Email BCC"
@@ -2310,9 +2184,8 @@ msgid "Default Email To"
 msgstr ""
 
 #: scripts/taxform.pl:283
-#, fuzzy
 msgid "Default Reportable"
-msgstr "Προεπιλογές αποθηκεύτηκαν"
+msgstr ""
 
 #: bin/am.pl:1305
 msgid "Default Template"
@@ -2345,14 +2218,12 @@ msgid "Delete Account"
 msgstr "Διαγραφή Λογαριασμού"
 
 #: scripts/vouchers.pl:493
-#, fuzzy
 msgid "Delete Batch"
-msgstr "Delete Dataset"
+msgstr ""
 
 #: bin/am.pl:1250
-#, fuzzy
 msgid "Delete Language"
-msgstr "Επεξεργασία γλώσσας"
+msgstr ""
 
 #: bin/arap.pl:871 bin/arap.pl:877
 msgid "Delete Schedule"
@@ -2363,9 +2234,8 @@ msgid "Delete Timecard"
 msgstr ""
 
 #: scripts/vouchers.pl:499
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Διαγραφή Λογαριασμού"
+msgstr ""
 
 #: bin/am.pl:1261
 msgid "Deleting a language will also delete the templates for the language [_1]"
@@ -2375,9 +2245,8 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
 #: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
-#, fuzzy
 msgid "Delivery"
-msgstr "Driver"
+msgstr ""
 
 #: bin/io.pl:227 LedgerSMB/ScriptLib/Company.pm:558
 #: UI/Contact/history_filter.html:319 UI/Contact/search.html:288
@@ -2389,9 +2258,8 @@ msgid "Dep. Basis"
 msgstr ""
 
 #: scripts/asset.pl:738
-#, fuzzy
 msgid "Dep. Method"
-msgstr "Μέθοδος"
+msgstr ""
 
 #: scripts/asset.pl:736 scripts/asset.pl:801 scripts/asset.pl:872
 msgid "Dep. Starts"
@@ -2431,17 +2299,15 @@ msgstr "Τμήμα αποθηκεύτηκε"
 #: templates/demo/balance_sheet.html:68
 #: templates/demo_with_images/balance_sheet.html:68
 #: templates/xedemo/balance_sheet.html:68
-#, fuzzy
 msgid "Department:"
-msgstr "Τμήμα"
+msgstr ""
 
 #: bin/rp.pl:628 bin/rp.pl:986 bin/rp.pl:1741 bin/rp.pl:1932 bin/rp.pl:1973
 #: templates/demo/income_statement.html:72
 #: templates/demo_with_images/income_statement.html:72
 #: templates/xedemo/income_statement.html:72
-#, fuzzy
 msgid "Department: [_1]"
-msgstr "Τμήμα"
+msgstr ""
 
 #: bin/am.pl:627 UI/payments/payment1.html:28 sql/Pg-database.sql:2579
 msgid "Departments"
@@ -2460,16 +2326,14 @@ msgid "Depreciate Through"
 msgstr ""
 
 #: scripts/asset.pl:677 UI/accounts/edit.html:321 sql/Pg-database.sql:2605
-#, fuzzy
 msgid "Depreciation"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: scripts/asset.pl:169 UI/asset/edit_asset.html:161
 #: UI/asset/edit_class.html:45 UI/asset/search_asset.html:152
 #: UI/asset/search_class.html:54
-#, fuzzy
 msgid "Depreciation Account"
-msgstr "Διαγραφή Λογαριασμού"
+msgstr ""
 
 #: scripts/asset.pl:170 UI/asset/edit_class.html:23
 #: UI/asset/search_class.html:19
@@ -2568,14 +2432,12 @@ msgstr "Περιγραφή λείπει"
 
 #: UI/asset/edit_asset.html:61 UI/asset/search_asset.html:55
 #: UI/taxform/add_taxform.html:47
-#, fuzzy
 msgid "Description:"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: bin/rp.pl:1978
-#, fuzzy
 msgid "Description: [_1]"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: bin/aa.pl:1620 bin/ic.pl:1081 bin/ic.pl:1599 bin/pe.pl:2519
 #: UI/Contact/history_filter.html:213 UI/Contact/search.html:215
@@ -2584,9 +2446,8 @@ msgid "Detail"
 msgstr "Λεπτομέρεια"
 
 #: UI/payments/payments_detail.html:215
-#, fuzzy
 msgid "Details"
-msgstr "Λεπτομέρεια"
+msgstr ""
 
 #: scripts/setup.pl:115
 msgid "Development version found.  Please upgrade first"
@@ -2615,9 +2476,8 @@ msgid "Disc %"
 msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:556
-#, fuzzy
 msgid "Disc."
-msgstr "Έκπτωση"
+msgstr ""
 
 #: scripts/payment.pl:903 UI/accounts/edit.html:200 UI/accounts/edit.html:240
 #: UI/am-business-form.html:16 UI/Contact/contact.html:517
@@ -2627,19 +2487,12 @@ msgid "Discount"
 msgstr "Έκπτωση"
 
 #: bin/am.pl:793
-#, fuzzy
 msgid "Discount %"
-msgstr "Έκπτωση"
+msgstr ""
 
 #: t/data/04-complex_template.html:242
-#, fuzzy
 msgid "Discount:"
-msgstr "Έκπτωση"
-
-#: pos.conf.pl:41
-#, fuzzy
-msgid "Discover"
-msgstr "Έκπτωση"
+msgstr ""
 
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
@@ -2682,14 +2535,12 @@ msgid "Done"
 msgstr "Εντάξει"
 
 #: scripts/setup.pl:359
-#, fuzzy
 msgid "Double customernumbers"
-msgstr "Κωδικός Πελάτη"
+msgstr ""
 
 #: scripts/setup.pl:369
-#, fuzzy
 msgid "Double vendornumbers"
-msgstr "Creditor Number"
+msgstr ""
 
 #: sql/Pg-database.sql:680
 msgid "Dr."
@@ -2729,9 +2580,8 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:78 templates/xedemo/invoice.html:108
 #: templates/xedemo/invoice.tex:118 templates/xedemo/receipt.tex:64
 #: templates/xedemo/statement.html:76
-#, fuzzy
 msgid "Due"
-msgstr "Δεκ"
+msgstr ""
 
 #: bin/aa.pl:691 bin/aa.pl:1718 bin/aa.pl:2052 bin/ir.pl:532 bin/is.pl:598
 #: bin/rp.pl:944 UI/orders/order.html:96 UI/taxform/details_report.html:22
@@ -2743,9 +2593,8 @@ msgid "Due Date missing!"
 msgstr "Η ημερομηνία λήξης λείπει"
 
 #: scripts/setup.pl:630
-#, fuzzy
 msgid "Duplicte employee numbers"
-msgstr "Αρ. Υπαλλήλου"
+msgstr ""
 
 #: bin/am.pl:2223 bin/arap.pl:649 bin/is.pl:984 bin/is.pl:1005 bin/oe.pl:801
 #: bin/oe.pl:820 bin/oe.pl:3029 bin/rp.pl:1224 bin/rp.pl:1232
@@ -2792,21 +2641,19 @@ msgstr "Επεξεργασία λογαριασμού"
 
 #: bin/ic.pl:96 bin/ic.pl:743
 msgid "Edit Assembly"
-msgstr "Επεξεργασία συναρμολόγησης"
+msgstr ""
 
 #: scripts/asset.pl:99
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Επεξεργασία συναρμολόγησης"
+msgstr ""
 
 #: bin/am.pl:852
 msgid "Edit Business"
-msgstr "Επεξεργασία επιχείρησης"
+msgstr ""
 
 #: bin/aa.pl:450
-#, fuzzy
 msgid "Edit Credit Note"
-msgstr "Επεξεργασία Πελάτη"
+msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
 msgid "Edit Customer"
@@ -2846,7 +2693,7 @@ msgstr ""
 
 #: bin/am.pl:1184
 msgid "Edit Language"
-msgstr "Επεξεργασία γλώσσας"
+msgstr ""
 
 #: bin/pos.pl:165
 msgid "Edit POS Invoice"
@@ -2857,9 +2704,8 @@ msgid "Edit Part"
 msgstr ""
 
 #: bin/am.pl:1751
-#, fuzzy
 msgid "Edit Preferences for [_1]"
-msgstr "Επεξεργασία προτιμήσεων για"
+msgstr ""
 
 #: bin/pe.pl:1731
 msgid "Edit Pricegroup"
@@ -2894,18 +2740,16 @@ msgid "Edit Service"
 msgstr "Επεξεργασία υπηρεσίας"
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Taxform"
-msgstr "Edit Creditor"
+msgstr ""
 
 #: bin/am.pl:1393 bin/am.pl:1411
 msgid "Edit Template"
 msgstr ""
 
 #: bin/jc.pl:76
-#, fuzzy
 msgid "Edit Time Card"
-msgstr "Επεξεργασία χρήστη"
+msgstr ""
 
 #: UI/Contact/contact.html:243
 msgid "Edit User"
@@ -2924,9 +2768,8 @@ msgid "Edit Warehouse"
 msgstr ""
 
 #: UI/Admin/edit_user.html:10
-#, fuzzy
 msgid "Editing User"
-msgstr "Επεξεργασία χρήστη"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
 msgid "Eight"
@@ -2977,9 +2820,8 @@ msgid "Employee"
 msgstr "Υπάλληλος"
 
 #: UI/Admin/edit_user.html:116
-#, fuzzy
 msgid "Employee No."
-msgstr "Όνομα Υπαλλήλου"
+msgstr ""
 
 #: bin/am.pl:66 scripts/employee.pl:310 t/data/04-complex_template.html:92
 #: UI/am-defaults.html:172 UI/Contact/contact.html:181
@@ -2989,9 +2831,8 @@ msgid "Employee Number"
 msgstr "Αρ. Υπαλλήλου"
 
 #: UI/Contact/search.html:10
-#, fuzzy
 msgid "Employee Search"
-msgstr "Αρ. Υπαλλήλου"
+msgstr ""
 
 #: sql/Pg-database.sql:2425
 msgid "Employees"
@@ -3004,23 +2845,20 @@ msgstr ""
 #: scripts/employee.pl:316 UI/Contact/contact.html:222
 #: UI/Contact/contact.html:400 UI/Contact/contact.html:484
 #: UI/employee/filter.html:210 UI/employee.html:127
-#, fuzzy
 msgid "End Date"
-msgstr "Ημ. Παραγγελίας"
+msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
-#, fuzzy
 msgid "End Date:"
-msgstr "Ημ. Παραγγελίας"
+msgstr ""
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
 msgid "Enddate"
 msgstr ""
 
 #: UI/reconciliation/report.html:46
-#, fuzzy
 msgid "Ending GL Balance:"
-msgstr "Ισοζύγιο Έναρξης"
+msgstr ""
 
 #: UI/reconciliation/report.html:24 UI/reconciliation/report.html:38
 msgid "Ending Statement Balance:"
@@ -3039,20 +2877,18 @@ msgid "Enforce transaction reversal for all dates"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:11
-#, fuzzy
 msgid "Enter Inventory"
-msgstr "Απογραφή"
+msgstr ""
 
 #: UI/setup/new_user.html:7
-#, fuzzy
 msgid "Enter User"
-msgstr "Επεξεργασία χρήστη"
+msgstr ""
 
 #: UI/am-defaults.html:116
 msgid ""
 "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native "
 "and foreign currencies"
-msgstr "ΕΥΡ"
+msgstr ""
 
 #: scripts/recon.pl:192
 msgid "Entered By"
@@ -3075,14 +2911,12 @@ msgid "Entity Code"
 msgstr ""
 
 #: bin/aa.pl:646
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Ελεγχος"
+msgstr ""
 
 #: sql/Pg-database.sql:919
-#, fuzzy
 msgid "Entity Credit Account"
-msgstr "Επεξεργασία λογαριασμού"
+msgstr ""
 
 #: bin/gl.pl:529 UI/accounts/edit.html:86 UI/journal/search.html:181
 msgid "Equity"
@@ -3151,9 +2985,8 @@ msgid "Exchange rate missing!"
 msgstr ""
 
 #: bin/ps.pl:78
-#, fuzzy
 msgid "Expected"
-msgstr "Έξοδα"
+msgstr ""
 
 #: bin/gl.pl:531 bin/ic.pl:683 bin/ic.pl:1912 UI/accounts/edit.html:88
 #: UI/accounts/edit.html:291 UI/accounts/edit.html:330 UI/am-defaults.html:82
@@ -3162,9 +2995,8 @@ msgid "Expense"
 msgstr "Έξοδα"
 
 #: UI/asset/edit_asset.html:179
-#, fuzzy
 msgid "Expense Account"
-msgstr "Διαγραφή Λογαριασμού"
+msgstr ""
 
 #: UI/accounts/edit.html:213
 msgid "Expense/Asset"
@@ -3173,9 +3005,8 @@ msgstr "Έξοδο/Πάγιο"
 #: templates/demo/income_statement.html:110
 #: templates/demo_with_images/income_statement.html:110
 #: templates/xedemo/income_statement.html:110
-#, fuzzy
 msgid "Expenses"
-msgstr "Έξοδα"
+msgstr ""
 
 #: bin/ic.pl:1868 bin/io.pl:208 bin/pos.pl:757 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3353,9 +3184,8 @@ msgid "Five Hundred"
 msgstr ""
 
 #: UI/accounts/edit.html:312
-#, fuzzy
 msgid "Fixed Asset"
-msgstr "Πάγιο"
+msgstr ""
 
 #: UI/accounts/edit.html:306 sql/Pg-database.sql:2587
 msgid "Fixed Assets"
@@ -3416,23 +3246,20 @@ msgid "From"
 msgstr "Από"
 
 #: UI/payments/search.html:74
-#, fuzzy
 msgid "From Date"
-msgstr "Ημ. Παραγγελίας"
+msgstr ""
 
 #: UI/asset/import_asset.html:51
-#, fuzzy
 msgid "From File"
-msgstr "Από"
+msgstr ""
 
 #: bin/oe.pl:3243
 msgid "From Warehouse"
 msgstr ""
 
 #: bin/bp.pl:330 bin/rp.pl:1992
-#, fuzzy
 msgid "From [_1]"
-msgstr "Από"
+msgstr ""
 
 #: UI/asset/begin_report.html:31
 msgid "Full"
@@ -3487,9 +3314,8 @@ msgid "Gain (Loss)"
 msgstr ""
 
 #: UI/asset/begin_approval.html:46
-#, fuzzy
 msgid "Gain Account"
-msgstr "Επεξεργασία λογαριασμού"
+msgstr ""
 
 #: sql/Pg-database.sql:2385
 msgid "General Journal"
@@ -3543,19 +3369,13 @@ msgstr ""
 msgid "Generic Jabber"
 msgstr ""
 
-#: pos.conf.pl:44
-msgid "Gift Cert"
+#: t/data/04-strings-for-translation.html:8
+msgid "Goods & Services"
 msgstr ""
 
-#: t/data/04-strings-for-translation.html:8
-#, fuzzy
-msgid "Goods & Services"
-msgstr "Προσθήκη υπηρεσίας"
-
 #: sql/Pg-database.sql:2386
-#, fuzzy
 msgid "Goods and Services"
-msgstr "Προσθήκη υπηρεσίας"
+msgstr ""
 
 #: UI/payments/payments_detail.html:387
 msgid "Grand Total"
@@ -3574,9 +3394,8 @@ msgid "Group Translations"
 msgstr ""
 
 #: UI/io-email.html:81 UI/orders/order.html:297
-#, fuzzy
 msgid "Group by"
-msgstr "Ομάδα"
+msgstr ""
 
 #: bin/pe.pl:1381
 msgid "Group deleted!"
@@ -3668,9 +3487,8 @@ msgid "Image"
 msgstr "Εικόνα"
 
 #: UI/am-defaults.html:38
-#, fuzzy
 msgid "Images in Templates"
-msgstr "New Templates"
+msgstr ""
 
 #: UI/Admin/edit_user.html:55 UI/setup/new_user.html:32
 #: sql/Pg-database.sql:2600
@@ -3754,9 +3572,8 @@ msgid "Income Statement"
 msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:76
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Αλλαγή κωδικού"
+msgstr ""
 
 #: bin/ic.pl:1199 bin/ic.pl:3075
 msgid "Individual Items"
@@ -3812,9 +3629,8 @@ msgid "Inventory"
 msgstr "Απογραφή"
 
 #: sql/Pg-database.sql:2484
-#, fuzzy
 msgid "Inventory Activity"
-msgstr "Απογραφή"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:2
 msgid "Inventory Adjustment Entry"
@@ -3887,19 +3703,16 @@ msgstr "Τιμολόγιο"
 #: templates/xedemo/packing_list.html:78 templates/xedemo/packing_list.tex:87
 #: templates/xedemo/pick_list.html:77 templates/xedemo/pick_list.tex:80
 #: templates/xedemo/statement.html:73 templates/xedemo/statement.tex:56
-#, fuzzy
 msgid "Invoice #"
-msgstr "Τιμολόγιο"
+msgstr ""
 
 #: bin/aa.pl:683 bin/aa.pl:1716 bin/aa.pl:2048 bin/ir.pl:524 bin/is.pl:590
-#, fuzzy
 msgid "Invoice Created"
-msgstr "Ημ. τιμολογίου"
+msgstr ""
 
 #: bin/aa.pl:1312
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "Το τιμολόγιο διαγράφηκε"
+msgstr ""
 
 #: bin/aa.pl:687 bin/aa.pl:1690 bin/ir.pl:528 bin/is.pl:594
 #: UI/orders/order.html:90
@@ -3912,9 +3725,8 @@ msgstr ""
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
-#, fuzzy
 msgid "Invoice No."
-msgstr "Τιμολόγιο"
+msgstr ""
 
 #: bin/aa.pl:675 bin/aa.pl:1569 bin/aa.pl:1683 bin/aa.pl:1927 bin/bp.pl:100
 #: bin/ic.pl:1839 bin/ir.pl:515 bin/is.pl:581
@@ -3930,38 +3742,32 @@ msgid "Invoice Number missing!"
 msgstr "Το τιμολόγιο διαγράφηκε"
 
 #: bin/bp.pl:314
-#, fuzzy
 msgid "Invoice Number: [_1]"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: UI/taxform/details_report.html:24 UI/taxform/summary_report.html:23
-#, fuzzy
 msgid "Invoice Sum"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: UI/payments/payments_detail.html:213
-#, fuzzy
 msgid "Invoice Total"
-msgstr "Ημ. τιμολογίου"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:145
-#, fuzzy
 msgid "Invoice date"
-msgstr "Ημ. τιμολογίου"
+msgstr ""
 
 #: bin/ir.pl:1406 bin/is.pl:1507
 msgid "Invoice deleted!"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:146
-#, fuzzy
 msgid "Invoice due"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:295
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Ημ. τιμολογίου"
+msgstr ""
 
 #: bin/aa.pl:2061 UI/Contact/history_filter.html:178
 msgid "Invoices"
@@ -4001,9 +3807,8 @@ msgstr "Τιμολόγια"
 #: templates/xedemo/sales_quotation.html:97
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
 #: UI/io-email.html:96 UI/payments/payment2.html:227
-#, fuzzy
 msgid "Item"
-msgstr "Τεμάχια"
+msgstr ""
 
 #: bin/ic.pl:3795
 msgid "Item deleted!"
@@ -4015,7 +3820,7 @@ msgstr "Τεμάχιο δεν είναι σε αρχείο"
 
 #: bin/ic.pl:1287
 msgid "Items"
-msgstr "Τεμάχια"
+msgstr ""
 
 #: templates/demo/packing_list.tex:21
 #: templates/demo_with_images/packing_list.tex:21
@@ -4049,9 +3854,8 @@ msgid "Job"
 msgstr ""
 
 #: bin/jc.pl:1846
-#, fuzzy
 msgid "Job Description"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: UI/payments/check_job.html:26
 msgid "Job Failed"
@@ -4075,9 +3879,8 @@ msgid "Job Title"
 msgstr ""
 
 #: t/data/04-complex_template.html:78
-#, fuzzy
 msgid "Job Title:"
-msgstr "Τύπος Κωδικού"
+msgstr ""
 
 #: bin/pe.pl:1377
 msgid "Job deleted!"
@@ -4091,23 +3894,20 @@ msgstr ""
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
 #: templates/xedemo/timecard.tex:37
-#, fuzzy
 msgid "Job/Project #"
-msgstr "Έργο"
+msgstr ""
 
 #: bin/am.pl:65 UI/am-defaults.html:168
-#, fuzzy
 msgid "Job/Project Number"
-msgstr "Αριθμός έργου"
+msgstr ""
 
 #: bin/pe.pl:775 bin/pe.pl:952
 msgid "Jobs"
 msgstr ""
 
 #: sql/Pg-database.sql:2447
-#, fuzzy
 msgid "Journal Entry"
-msgstr "Χώρα"
+msgstr ""
 
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:86
 msgid "Journal Lines"
@@ -4151,9 +3951,8 @@ msgid "Labor Code"
 msgstr ""
 
 #: bin/jc.pl:1151
-#, fuzzy
 msgid "Labor Code missing!"
-msgstr "Ο Κωδικός λείπει"
+msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
@@ -4189,9 +3988,8 @@ msgid "Languages not defined!"
 msgstr ""
 
 #: t/data/04-complex_template.html:67
-#, fuzzy
 msgid "Last"
-msgstr "Όνομα"
+msgstr ""
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4202,9 +4000,8 @@ msgstr ""
 #: scripts/employee.pl:313 UI/Admin/edit_user.html:106
 #: UI/Admin/user_search.html:31 UI/Contact/contact.html:126
 #: UI/employee/filter.html:47 UI/employee/filter.html:168
-#, fuzzy
 msgid "Last Name"
-msgstr "Όνομα"
+msgstr ""
 
 #: UI/am-defaults.html:64
 msgid "Last Numbers & Default Accounts"
@@ -4215,9 +4012,8 @@ msgid "Last Only"
 msgstr ""
 
 #: scripts/recon.pl:191
-#, fuzzy
 msgid "Last Updated"
-msgstr "Dataset updated!"
+msgstr ""
 
 #: UI/setup/new_user.html:75
 msgid "Last name"
@@ -4245,9 +4041,8 @@ msgid "LedgerSMB 1.3 found"
 msgstr ""
 
 #: UI/menu/expanding.html:5
-#, fuzzy
 msgid "LedgerSMB Accounting Menu"
-msgstr "Μενπύ Λογιστικής"
+msgstr ""
 
 #: UI/setup/complete.html:15 UI/setup/confirm_operation.html:79
 msgid "LedgerSMB Database Statistics"
@@ -4266,9 +4061,8 @@ msgid "Less Cash in Till At Start: [_1]"
 msgstr ""
 
 #: UI/reconciliation/report.html:42
-#, fuzzy
 msgid "Less Outstanding Checks:"
-msgstr "Αξιοσημείωτο"
+msgstr ""
 
 #: sql/Pg-database.sql:2527 sql/Pg-database.sql:2543
 msgid "Letterhead"
@@ -4277,9 +4071,8 @@ msgstr ""
 #: templates/demo/balance_sheet.html:101
 #: templates/demo_with_images/balance_sheet.html:101
 #: templates/xedemo/balance_sheet.html:101
-#, fuzzy
 msgid "Liabilities"
-msgstr "Παθητικό"
+msgstr ""
 
 #: bin/gl.pl:528 UI/accounts/edit.html:85 UI/journal/search.html:175
 msgid "Liability"
@@ -4314,9 +4107,8 @@ msgid "List Businesses"
 msgstr ""
 
 #: sql/Pg-database.sql:2597
-#, fuzzy
 msgid "List Classes"
-msgstr "Λίστα αποθηκών"
+msgstr ""
 
 #: sql/Pg-database.sql:2421
 msgid "List Departments"
@@ -4347,9 +4139,8 @@ msgid "List Transactions"
 msgstr "Λίστα Κινήσεων"
 
 #: sql/Pg-database.sql:2505
-#, fuzzy
 msgid "List Warehouse"
-msgstr "Λίστα αποθηκών"
+msgstr ""
 
 #: scripts/asset.pl:319 UI/asset/edit_asset.html:134
 #: UI/asset/search_asset.html:125 UI/payments/payment2.html:38
@@ -4358,9 +4149,8 @@ msgid "Location"
 msgstr ""
 
 #: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
-#, fuzzy
 msgid "Locations"
-msgstr "Παρακρατήσεις"
+msgstr ""
 
 #: UI/payments/payments_detail.html:362
 msgid "Locked by [_1]"
@@ -4378,7 +4168,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr "Εισαγωγή"
 
@@ -4395,9 +4185,8 @@ msgid "Loss"
 msgstr ""
 
 #: UI/asset/begin_approval.html:56
-#, fuzzy
 msgid "Loss Account"
-msgstr "Λίστα Λογαριασμών"
+msgstr ""
 
 #: sql/Pg-database.sql:781
 msgid "MSN"
@@ -4409,9 +4198,8 @@ msgstr ""
 
 #: scripts/setup.pl:528 scripts/setup.pl:992 scripts/setup.pl:1038
 #: scripts/setup.pl:1140
-#, fuzzy
 msgid "Manage Users"
-msgstr "Διευθυντής"
+msgstr ""
 
 #: bin/aa.pl:1559 bin/aa.pl:2095 bin/oe.pl:1330 bin/oe.pl:1873
 #: UI/Contact/contact.html:157 UI/Contact/contact.html:190 UI/employee.html:99
@@ -4423,23 +4211,20 @@ msgid "Manager First Name"
 msgstr ""
 
 #: scripts/employee.pl:320 UI/employee/filter.html:266
-#, fuzzy
 msgid "Manager ID"
-msgstr "Διευθυντής"
+msgstr ""
 
 #: scripts/employee.pl:324 UI/employee/filter.html:294
 msgid "Manager Last Name"
 msgstr ""
 
 #: t/data/04-complex_template.html:98
-#, fuzzy
 msgid "Manager:"
-msgstr "Διευθυντής"
+msgstr ""
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
-#, fuzzy
 msgid "Manual"
-msgstr "Ιανουάριος"
+msgstr ""
 
 #: bin/aa.pl:82 bin/ca.pl:74 bin/gl.pl:77 bin/io.pl:78
 #: LedgerSMB/App_State.pm:169
@@ -4464,9 +4249,8 @@ msgid "Max per dropdown"
 msgstr ""
 
 #: UI/batch/filter.html:58 UI/batch/search_transactions.html:51
-#, fuzzy
 msgid "Maximum Value"
-msgstr "Μέγιστο"
+msgstr ""
 
 #: bin/aa.pl:84 bin/ca.pl:76 bin/gl.pl:79 bin/io.pl:80
 #: LedgerSMB/App_State.pm:173 LedgerSMB/DBObject/Date.pm:64
@@ -4497,9 +4281,8 @@ msgid "Message"
 msgstr "Μύνημα"
 
 #: bin/arap.pl:1044
-#, fuzzy
 msgid "Message: "
-msgstr "Μύνημα"
+msgstr ""
 
 #: scripts/asset.pl:1009 UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
@@ -4508,9 +4291,8 @@ msgid "Method"
 msgstr "Μέθοδος"
 
 #: UI/asset/edit_asset.html:100
-#, fuzzy
 msgid "Method Default"
-msgstr "Προεπιλογές"
+msgstr ""
 
 #: bin/ic.pl:508 bin/ic.pl:1170 bin/ic.pl:1184 bin/ic.pl:1661 bin/ic.pl:1887
 msgid "Microfiche"
@@ -4530,9 +4312,8 @@ msgid "Million"
 msgstr ""
 
 #: UI/am-taxes.html:13
-#, fuzzy
 msgid "Min Taxable"
-msgstr "Δεν είναι φορολογίσιμο"
+msgstr ""
 
 #: UI/batch/filter.html:50 UI/batch/search_transactions.html:43
 msgid "Minimum Value"
@@ -4578,9 +4359,8 @@ msgid "More information has been reported in the error logs"
 msgstr ""
 
 #: sql/Pg-database.sql:682
-#, fuzzy
 msgid "Mr."
-msgstr "Μαρ"
+msgstr ""
 
 #: sql/Pg-database.sql:683
 msgid "Mrs."
@@ -4602,9 +4382,8 @@ msgstr "Όνομα"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
-#, fuzzy
 msgid "Name:"
-msgstr "Όνομα"
+msgstr ""
 
 #: sql/Pg-database.sql:2602
 msgid "Net Book Value"
@@ -4632,9 +4411,8 @@ msgid "New Reconciliation Report"
 msgstr ""
 
 #: UI/Admin/edit_user.html:13
-#, fuzzy
 msgid "New User"
-msgstr "Προσθήκη χρήστη"
+msgstr ""
 
 #: sql/Pg-database.sql:2589
 msgid "New Window"
@@ -4676,18 +4454,16 @@ msgid "No"
 msgstr "Όχι"
 
 #: LedgerSMB/ScriptLib/Company.pm:666
-#, fuzzy
 msgid "No AR or AP Account Selected"
-msgstr "Ο λογαριασμός διαγράφηκε"
+msgstr ""
 
 #: bin/jc.pl:147 bin/jc.pl:260
 msgid "No Employees on file!"
 msgstr ""
 
 #: bin/ic.pl:2455
-#, fuzzy
 msgid "No History!"
-msgstr "Ιστορικό"
+msgstr ""
 
 #: LedgerSMB/DBObject/Draft.pm:57 LedgerSMB/DBObject/Draft.pm:76
 msgid "No ID Set"
@@ -4698,9 +4474,8 @@ msgid "No Labor codes on file!"
 msgstr ""
 
 #: bin/jc.pl:134
-#, fuzzy
 msgid "No Parts on file!"
-msgstr "Creditor not on file!"
+msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
@@ -4711,9 +4486,8 @@ msgid "No Services on file!"
 msgstr ""
 
 #: scripts/setup.pl:620
-#, fuzzy
 msgid "No blank employee name"
-msgstr "Όνομα Υπαλλήλου"
+msgstr ""
 
 #: LedgerSMB/DBObject/Company.pm:134
 msgid "No company or credit id in LedgerSMB::DBObject::delete_contact"
@@ -4732,9 +4506,8 @@ msgid "No file uploaded"
 msgstr ""
 
 #: scripts/setup.pl:614
-#, fuzzy
 msgid "No null employeenumber"
-msgstr "Αρ. Υπαλλήλου"
+msgstr ""
 
 #: bin/jc.pl:103
 msgid "No open Jobs!"
@@ -4757,14 +4530,12 @@ msgid "No."
 msgstr ""
 
 #: sql/Pg-database.sql:2394
-#, fuzzy
 msgid "Non-Taxable"
-msgstr "Δεν είναι φορολογίσιμο"
+msgstr ""
 
 #: bin/jc.pl:642
-#, fuzzy
 msgid "Non-chargeable"
-msgstr "Δεν είναι φορολογίσιμο"
+msgstr ""
 
 #: scripts/setup.pl:422
 msgid ""
@@ -4781,9 +4552,8 @@ msgid "Non-tracking Items"
 msgstr ""
 
 #: scripts/setup.pl:397
-#, fuzzy
 msgid "Non-unique invoice numbers"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: bin/rp.pl:276
 msgid "None"
@@ -4798,9 +4568,8 @@ msgid "Not Submitted"
 msgstr ""
 
 #: UI/Contact/contact.html:1170
-#, fuzzy
 msgid "Note Class"
-msgstr "Σημειώσεις"
+msgstr ""
 
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
@@ -4859,9 +4628,8 @@ msgid "November"
 msgstr "Νοέμβριος"
 
 #: scripts/setup.pl:376 scripts/setup.pl:386
-#, fuzzy
 msgid "Null employee numbers"
-msgstr "Αρ. Υπαλλήλου"
+msgstr ""
 
 #: scripts/setup.pl:412
 msgid "Null make numbers"
@@ -4958,9 +4726,8 @@ msgid "Off Hold"
 msgstr ""
 
 #: UI/users/preferences.html:26
-#, fuzzy
 msgid "Old Password"
-msgstr "Αλλαγή κωδικού"
+msgstr ""
 
 #: bin/ic.pl:480 bin/ic.pl:706 bin/ic.pl:1114 bin/ic.pl:1494
 #: UI/inventory/adjustment_entry.html:25
@@ -4991,9 +4758,8 @@ msgid "Open"
 msgstr "’νοιγμα"
 
 #: bin/pos.pl:619
-#, fuzzy
 msgid "Open Till"
-msgstr "’νοιγμα"
+msgstr ""
 
 #: UI/logout.html:15
 msgid ""
@@ -5006,9 +4772,8 @@ msgid "Options"
 msgstr ""
 
 #: UI/file/attachment_screen.html:35
-#, fuzzy
 msgid "Or"
-msgstr "Ο"
+msgstr ""
 
 #: UI/create_batch.html:43
 msgid "Or Add To Batch"
@@ -5047,14 +4812,12 @@ msgstr "Παραγγελία"
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
 #: templates/xedemo/work_order.html:102
-#, fuzzy
 msgid "Order #"
-msgstr "Παραγγελία"
+msgstr ""
 
 #: UI/reconciliation/report.html:245
-#, fuzzy
 msgid "Order By"
-msgstr "Παραγγελία"
+msgstr ""
 
 #: bin/oe.pl:436 bin/oe.pl:2878 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103
@@ -5087,9 +4850,8 @@ msgid "Order Number missing!"
 msgstr ""
 
 #: bin/bp.pl:319
-#, fuzzy
 msgid "Order Number: [_1]"
-msgstr "Αρ. Παραγγελίας"
+msgstr ""
 
 #: bin/oe.pl:2389
 msgid "Order deleted!"
@@ -5102,20 +4864,17 @@ msgstr ""
 #: templates/demo/statement.html:74
 #: templates/demo_with_images/statement.html:74
 #: templates/xedemo/statement.html:74
-#, fuzzy
 msgid "Order#"
-msgstr "Παραγγελία"
+msgstr ""
 
 #: UI/am-taxes.html:16
-#, fuzzy
 msgid "Ordering"
-msgstr "Παραγγελία"
+msgstr ""
 
 #: UI/Contact/history_filter.html:186 UI/setup/complete.html:23
 #: UI/setup/confirm_operation.html:87
-#, fuzzy
 msgid "Orders"
-msgstr "Παραγγελία"
+msgstr ""
 
 #: bin/pe.pl:2947
 msgid "Orders generated!"
@@ -5127,34 +4886,29 @@ msgid "Orphaned"
 msgstr ""
 
 #: UI/setup/confirm_operation.html:28
-#, fuzzy
 msgid "Other Actions"
-msgstr "Μετά Έκπτωσις"
+msgstr ""
 
 #: scripts/recon.pl:307
-#, fuzzy
 msgid "Our Balance"
-msgstr "Ισοζύγιο"
+msgstr ""
 
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/reconciliation/report.html:197
-#, fuzzy
 msgid "Our Credits"
-msgstr "Πίστωση"
+msgstr ""
 
 #: UI/reconciliation/report.html:74 UI/reconciliation/report.html:137
 #: UI/reconciliation/report.html:196
-#, fuzzy
 msgid "Our Debits"
-msgstr "Χρέος"
+msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
 #: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
 #: templates/xedemo/timecard.tex:30
-#, fuzzy
 msgid "Out"
-msgstr "Οκτ"
+msgstr ""
 
 #: bin/gl.pl:1190
 msgid "Out of balance transaction!"
@@ -5166,9 +4920,8 @@ msgid "Outstanding"
 msgstr "Αξιοσημείωτο"
 
 #: UI/reconciliation/report.html:189
-#, fuzzy
 msgid "Outstanding Transactions"
-msgstr "Λίστα Κινήσεων"
+msgstr ""
 
 #: UI/rc-display-form.html:79
 msgid "Over"
@@ -5179,14 +4932,12 @@ msgid "Overdue"
 msgstr ""
 
 #: UI/accounts/edit.html:190 UI/accounts/edit.html:231
-#, fuzzy
 msgid "Overpayment"
-msgstr "Προπληρωμή"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:147
-#, fuzzy
 msgid "Overpayment Account"
-msgstr "Διαγραφή Λογαριασμού"
+msgstr ""
 
 #: bin/am.pl:2438 bin/arapprn.pl:535 bin/io.pl:1438 bin/jc.pl:2047
 #: bin/rp.pl:1349 UI/Contact/pricelist.html:91
@@ -5194,9 +4945,8 @@ msgid "PDF"
 msgstr ""
 
 #: bin/ic.pl:2591
-#, fuzzy
 msgid "PO"
-msgstr "Ο"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:82 templates/demo/ap_transaction.tex:63
 #: templates/demo/ar_transaction.html:81
@@ -5307,9 +5057,8 @@ msgid "Password"
 msgstr ""
 
 #: bin/am.pl:70 UI/am-defaults.html:188
-#, fuzzy
 msgid "Password Duration"
-msgstr "Password changed!"
+msgstr ""
 
 #: bin/am.pl:1815
 msgid "Password does not match!"
@@ -5320,18 +5069,16 @@ msgid "Password duration must be an integer"
 msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:148
-#, fuzzy
 msgid "Password required"
-msgstr "Password changed!"
+msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:79
 msgid "Passwords must match."
 msgstr ""
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:127
-#, fuzzy
 msgid "Pay From"
-msgstr "Από"
+msgstr ""
 
 #: scripts/payment.pl:159 UI/Contact/contact.html:461
 #: UI/payments/payments_filter.html:128
@@ -5358,9 +5105,8 @@ msgstr ""
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
 #: templates/xedemo/printPayment.html:32
-#, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Αρ. Παραγγελίας"
+msgstr ""
 
 #: UI/payments/payments_filter.html:124
 msgid "Payment Processing"
@@ -5379,9 +5125,8 @@ msgid "Payment Type :"
 msgstr ""
 
 #: UI/payments/payments_filter.html:149
-#, fuzzy
 msgid "Payment Type:"
-msgstr "Προπληρωμή"
+msgstr ""
 
 #: bin/aa.pl:1335 bin/ir.pl:1340 bin/is.pl:1408
 msgid "Payment date missing!"
@@ -5434,9 +5179,8 @@ msgid "Percent Disposed"
 msgstr ""
 
 #: scripts/asset.pl:806
-#, fuzzy
 msgid "Percent Remaining"
-msgstr "Τρέχωντα κέρδη"
+msgstr ""
 
 #: bin/aa.pl:1642 bin/ic.pl:2412 bin/jc.pl:172 bin/oe.pl:1444 bin/pe.pl:708
 #: bin/pe.pl:2433 UI/bp-search.html:34 UI/ca-list-selector.html:57
@@ -5505,14 +5249,12 @@ msgid "Please select a vendor with unused overpayments"
 msgstr ""
 
 #: sql/Pg-database.sql:2399
-#, fuzzy
 msgid "Point of Sale"
-msgstr "Εκτύπωση και αποθήκευση"
+msgstr ""
 
 #: UI/employee/filter.html:84
-#, fuzzy
 msgid "Position"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: bin/aa.pl:941 bin/aa.pl:970 bin/gl.pl:269 bin/ir.pl:877 bin/ir.pl:891
 #: bin/is.pl:980 bin/is.pl:1001 bin/pos.pl:611 scripts/drafts.pl:251
@@ -5525,18 +5267,16 @@ msgid "Post Batch"
 msgstr ""
 
 #: scripts/recon.pl:306 UI/create_batch.html:51
-#, fuzzy
 msgid "Post Date"
-msgstr "Ημερομηνία"
+msgstr ""
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
 msgid "Post Yearend"
 msgstr ""
 
 #: bin/aa.pl:988 bin/gl.pl:312
-#, fuzzy
 msgid "Post as Saved"
-msgstr "Εκτύπωση και αποθήκευση"
+msgstr ""
 
 #: bin/aa.pl:993 bin/gl.pl:319
 msgid "Post as Shown"
@@ -5548,38 +5288,32 @@ msgstr ""
 
 #: UI/reconciliation/report.html:72 UI/reconciliation/report.html:135
 #: UI/reconciliation/report.html:194
-#, fuzzy
 msgid "Posted Date"
-msgstr "Ημερομηνία λήξης"
+msgstr ""
 
 #: bin/pos.pl:726
 msgid "Posted!"
 msgstr ""
 
 #: UI/payments/payments_detail.html:108
-#, fuzzy
 msgid "Posting Date:"
-msgstr "Existing Datasets"
+msgstr ""
 
 #: bin/am.pl:2749
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Λίστα Κινήσεων"
+msgstr ""
 
 #: bin/am.pl:2589
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Επεξεργασία τιμολογίου"
+msgstr ""
 
 #: bin/am.pl:2611 bin/am.pl:2620
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: bin/am.pl:2599
-#, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Edit Creditor Invoice"
+msgstr ""
 
 #: bin/am.pl:2437 bin/arapprn.pl:534 bin/io.pl:1434 bin/jc.pl:2046
 #: bin/rp.pl:1350
@@ -5591,14 +5325,12 @@ msgid "Preferences"
 msgstr "Επιλογές"
 
 #: UI/users/preferences.html:14
-#, fuzzy
 msgid "Preferences Saved"
-msgstr "Επιλογές αποθηκεύτηκαν"
+msgstr ""
 
 #: UI/users/preferences.html:12
-#, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Επεξεργασία προτιμήσεων για"
+msgstr ""
 
 #: bin/am.pl:1820
 msgid "Preferences saved!"
@@ -5651,9 +5383,8 @@ msgid "Pricelist for [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:775
-#, fuzzy
 msgid "Primary Phone"
-msgstr "Τηλ. Σπιτιού"
+msgstr ""
 
 #: bin/aa.pl:940 bin/aa.pl:969 bin/am.pl:2224 bin/arap.pl:724 bin/bp.pl:499
 #: bin/bp.pl:506 bin/is.pl:979 bin/is.pl:1000 bin/jc.pl:687 bin/jc.pl:698
@@ -5665,9 +5396,8 @@ msgid "Print"
 msgstr "Εκτύπωση"
 
 #: bin/bp.pl:123
-#, fuzzy
 msgid "Print [_1]"
-msgstr "Εκτύπωση"
+msgstr ""
 
 #: bin/pos.pl:612 bin/pos.pl:623
 msgid "Print and Post"
@@ -5679,9 +5409,8 @@ msgid "Print and Save"
 msgstr "Εκτύπωση και αποθήκευση"
 
 #: bin/jc.pl:1229
-#, fuzzy
 msgid "Print and Save Transaction"
-msgstr "Εκτύπωση και αποθήκευση"
+msgstr ""
 
 #: bin/jc.pl:691 bin/jc.pl:710 bin/jc.pl:935 bin/jc.pl:956 bin/oe.pl:800
 #: bin/oe.pl:831
@@ -5752,14 +5481,12 @@ msgstr ""
 #: bin/rp.pl:633 templates/demo/income_statement.html:76
 #: templates/demo_with_images/income_statement.html:76
 #: templates/xedemo/income_statement.html:76
-#, fuzzy
 msgid "Project Number: [_1]"
-msgstr "Αριθμός έργου"
+msgstr ""
 
 #: bin/aa.pl:1694
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Αριθμός έργου"
+msgstr ""
 
 #: bin/rp.pl:565
 msgid "Project Transactions"
@@ -5791,14 +5518,12 @@ msgid "Projects"
 msgstr "Έργα"
 
 #: scripts/asset.pl:315 scripts/asset.pl:498
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Ημερομηνία λήξης"
+msgstr ""
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Ημερομηνία λήξης"
+msgstr ""
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
@@ -5918,9 +5643,8 @@ msgstr ""
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
 #: templates/xedemo/sales_quotation.tex:76
-#, fuzzy
 msgid "Quotation #"
-msgstr "Προσθήκη προσφοράς"
+msgstr ""
 
 #: bin/oe.pl:520
 msgid "Quotation Date"
@@ -6032,9 +5756,8 @@ msgid "Receive Merchandise"
 msgstr ""
 
 #: scripts/payment.pl:958
-#, fuzzy
 msgid "Received"
-msgstr "Απόδειξη"
+msgstr ""
 
 #: UI/accounts/edit.html:120
 msgid "Recon"
@@ -6079,14 +5802,12 @@ msgid "Reference"
 msgstr ""
 
 #: bin/io.pl:1646
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Το τιμολόγιο διαγράφηκε"
+msgstr ""
 
 #: UI/batch/search_transactions.html:35
-#, fuzzy
 msgid "Reference/Invoice Number"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: sql/Pg-database.sql:501
 msgid "Referral"
@@ -6097,9 +5818,8 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
 #: templates/xedemo/ar_transaction.tex:143
-#, fuzzy
 msgid "Registration"
-msgstr "Διαχείριση"
+msgstr ""
 
 #: templates/demo/invoice.html:303 templates/demo_with_images/invoice.html:303
 #: templates/xedemo/invoice.html:303
@@ -6226,9 +5946,8 @@ msgid "Required input not provided"
 msgstr ""
 
 #: sql/Pg-database.sql:2460
-#, fuzzy
 msgid "Requirements"
-msgstr "Τμήματα"
+msgstr ""
 
 #: bin/ps.pl:307
 msgid "Reset Till By [_1]"
@@ -6251,33 +5970,28 @@ msgid "Return to the login screen."
 msgstr ""
 
 #: sql/Pg-database.sql:2564
-#, fuzzy
 msgid "Reverse Payment"
-msgstr "Προπληρωμή"
+msgstr ""
 
 #: scripts/payment.pl:392
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Προπληρωμή"
+msgstr ""
 
 #: sql/Pg-database.sql:2562
-#, fuzzy
 msgid "Reverse Receipts"
-msgstr "Απόδειξη"
+msgstr ""
 
 #: scripts/employee.pl:317 UI/employee/filter.html:224 UI/employee.html:90
 msgid "Role"
 msgstr ""
 
 #: UI/setup/complete.html:16 UI/setup/confirm_operation.html:80
-#, fuzzy
 msgid "Row counts"
-msgstr "Λογαριασμοί"
+msgstr ""
 
 #: UI/setup/begin_backup.html:49
-#, fuzzy
 msgid "Run Backup"
-msgstr "Αντίγραφο ασφαλείας"
+msgstr ""
 
 #: UI/Contact/contact.html:361 sql/Pg-database.sql:2576
 msgid "SIC"
@@ -6300,9 +6014,8 @@ msgid "SKU"
 msgstr ""
 
 #: bin/ic.pl:2589
-#, fuzzy
 msgid "SO"
-msgstr "Ο"
+msgstr ""
 
 #: scripts/setup.pl:93
 msgid "SQL-Ledger database detected."
@@ -6364,9 +6077,8 @@ msgid "Sales Quotation Number"
 msgstr ""
 
 #: t/data/04-complex_template.html:85
-#, fuzzy
 msgid "Sales:"
-msgstr "Πώληση"
+msgstr ""
 
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
@@ -6388,9 +6100,8 @@ msgid "Salesperson"
 msgstr ""
 
 #: UI/employee/filter.html:126
-#, fuzzy
 msgid "Salutation"
-msgstr "Προσθήκη προσφοράς"
+msgstr ""
 
 #: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
 msgid "Salvage Value:"
@@ -6431,28 +6142,24 @@ msgid "Save Changes"
 msgstr ""
 
 #: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
-#, fuzzy
 msgid "Save Contact"
-msgstr "Επαφή"
+msgstr ""
 
 #: UI/Admin/edit_user.html:192
-#, fuzzy
 msgid "Save Groups"
-msgstr "Ομάδα"
+msgstr ""
 
 #: bin/aa.pl:978 bin/ir.pl:906 bin/is.pl:1017
-#, fuzzy
 msgid "Save Info"
-msgstr "Αποθήκευση"
+msgstr ""
 
 #: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr ""
 
 #: UI/Contact/contact.html:686
-#, fuzzy
 msgid "Save New"
-msgstr "Αποθήκευση"
+msgstr ""
 
 #: UI/Contact/contact.html:921
 msgid "Save New Location"
@@ -6463,19 +6170,16 @@ msgid "Save Schedule"
 msgstr ""
 
 #: bin/am.pl:1429
-#, fuzzy
 msgid "Save Template"
-msgstr "Setup Templates"
+msgstr ""
 
 #: bin/jc.pl:1239
-#, fuzzy
 msgid "Save Transaction"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: UI/Admin/edit_user.html:148
-#, fuzzy
 msgid "Save User"
-msgstr "Αποθήκευση"
+msgstr ""
 
 #: scripts/setup.pl:729
 msgid "Save and Retry"
@@ -6523,55 +6227,48 @@ msgid "Search Asset Class"
 msgstr ""
 
 #: sql/Pg-database.sql:2599
-#, fuzzy
 msgid "Search Assets"
-msgstr "Αναζήτηση"
+msgstr ""
 
 #: UI/employee/filter.html:8
-#, fuzzy
 msgid "Search Employees"
-msgstr "Υπάλληλοι"
+msgstr ""
 
 #: UI/payments/search.html:7 UI/payments/search.html:31
-#, fuzzy
 msgid "Search Payments"
-msgstr "Τμήματα"
+msgstr ""
 
 #: UI/reconciliation/search.html:4
 msgid "Search Reconciliation Reports"
 msgstr ""
 
 #: scripts/admin.pl:367 scripts/employee.pl:296
-#, fuzzy
 msgid "Search Results"
-msgstr "Αναζήτηση"
+msgstr ""
 
 #: UI/batch/search_transactions.html:10
 msgid "Search Unapproved Transactions"
 msgstr ""
 
 #: sql/Pg-database.sql:2583
-#, fuzzy
 msgid "Search Users"
-msgstr "Αναζήτηση"
+msgstr ""
 
 #: UI/Admin/user_search.html:5
 msgid "Search for Users"
 msgstr ""
 
 #: scripts/asset.pl:600
-#, fuzzy
 msgid "Search reports"
-msgstr "Αναζήτηση"
+msgstr ""
 
 #: sql/Pg-database.sql:776
 msgid "Secondary Phone"
 msgstr ""
 
 #: UI/reconciliation/report.html:260
-#, fuzzy
 msgid "Select All"
-msgstr "Επιλογή όλων"
+msgstr ""
 
 #: bin/pe.pl:2764
 msgid "Select Customer"
@@ -6591,9 +6288,8 @@ msgid "Select all"
 msgstr "Επιλογή όλων"
 
 #: UI/taxform/add_taxform.html:62
-#, fuzzy
 msgid "Select by Default:"
-msgstr "Επιλογή όλων"
+msgstr ""
 
 #: bin/arap.pl:183 bin/ic.pl:3489 bin/pe.pl:2290
 msgid "Select from one of the names below"
@@ -6604,9 +6300,8 @@ msgid "Select from one of the projects below"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:141
-#, fuzzy
 msgid "Select invoices"
-msgstr "Δεν μπορεί να διαγραφεί το τιμολόγιο"
+msgstr ""
 
 #: bin/io.pl:529
 msgid "Select items"
@@ -6626,9 +6321,8 @@ msgid "Select txt, postscript or PDF!"
 msgstr ""
 
 #: UI/payments/payments_filter.html:7
-#, fuzzy
 msgid "Selection"
-msgstr "Επιλογή"
+msgstr ""
 
 #: bin/ic.pl:3061
 msgid "Sell"
@@ -6651,9 +6345,8 @@ msgid "Sep"
 msgstr ""
 
 #: UI/am-defaults.html:34
-#, fuzzy
 msgid "Separate Duties"
-msgstr "Τμήματα"
+msgstr ""
 
 #: bin/aa.pl:74 bin/ca.pl:66 bin/gl.pl:69 bin/io.pl:70
 #: LedgerSMB/App_State.pm:177 LedgerSMB/DBObject/Date.pm:68
@@ -6699,9 +6392,8 @@ msgid "Service Code"
 msgstr ""
 
 #: bin/jc.pl:1147
-#, fuzzy
 msgid "Service Code missing!"
-msgstr "Ο Κωδικός λείπει"
+msgstr ""
 
 #: bin/jc.pl:237 bin/jc.pl:509 bin/jc.pl:1373
 msgid "Service/Labor Code"
@@ -6720,9 +6412,8 @@ msgid "Sessions"
 msgstr ""
 
 #: UI/Admin/edit_user.html:146
-#, fuzzy
 msgid "Set Password"
-msgstr "Αλλαγή κωδικού"
+msgstr ""
 
 #: UI/users/preferences.html:37
 msgid "Settings"
@@ -6741,9 +6432,8 @@ msgid "Seventeen"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:95
-#, fuzzy
 msgid "Seventy"
-msgstr "Απογραφή"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:128
 #: templates/demo_with_images/balance_sheet.html:128
@@ -6962,9 +6652,8 @@ msgid "Source"
 msgstr "Πηγή"
 
 #: bin/rp.pl:1983
-#, fuzzy
 msgid "Source: [_1]"
-msgstr "Πηγή"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:194
 #: templates/demo_with_images/sales_quotation.html:194
@@ -6999,14 +6688,12 @@ msgstr ""
 #: scripts/employee.pl:315 UI/Contact/contact.html:212
 #: UI/Contact/contact.html:399 UI/employee/filter.html:52
 #: UI/employee/filter.html:196 UI/employee.html:121
-#, fuzzy
 msgid "Start Date"
-msgstr "Ημ. Παραγγελίας"
+msgstr ""
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Ημ. Παραγγελίας"
+msgstr ""
 
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
@@ -7022,14 +6709,12 @@ msgid "Startdate"
 msgstr ""
 
 #: UI/Contact/contact.html:473
-#, fuzzy
 msgid "Starting Date"
-msgstr "Existing Datasets"
+msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Existing Datasets"
+msgstr ""
 
 #: bin/io.pl:2040
 msgid "State"
@@ -7101,9 +6786,8 @@ msgid "Stores Card"
 msgstr ""
 
 #: bin/jc.pl:1197
-#, fuzzy
 msgid "Stores Card saved!"
-msgstr "Ο Πελάτης αποθηκεύτηκε!"
+msgstr ""
 
 #: bin/jc.pl:207 bin/jc.pl:1775
 msgid "Stores Cards"
@@ -7214,7 +6898,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -7226,9 +6910,8 @@ msgstr ""
 
 #: scripts/asset.pl:313 scripts/asset.pl:735 scripts/asset.pl:799
 #: scripts/asset.pl:870 scripts/asset.pl:1006
-#, fuzzy
 msgid "Tag"
-msgstr "Φόρος"
+msgstr ""
 
 #: UI/asset/edit_asset.html:44 UI/asset/search_asset.html:38
 msgid "Tag:"
@@ -7243,9 +6926,8 @@ msgid "Tax"
 msgstr "Φόρος"
 
 #: bin/ir.pl:615 bin/is.pl:716
-#, fuzzy
 msgid "Tax Code"
-msgstr "Κωδικός"
+msgstr ""
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
@@ -7264,9 +6946,8 @@ msgid "Tax Form Reports"
 msgstr ""
 
 #: sql/Pg-database.sql:2570
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Μορφή ημερομηνίας"
+msgstr ""
 
 #: bin/aa.pl:651 bin/ir.pl:490 bin/is.pl:544 UI/Admin/user_search.html:41
 msgid "Tax ID"
@@ -7278,21 +6959,18 @@ msgid "Tax Included"
 msgstr ""
 
 #: UI/Contact/contact.html:352
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Α.Φ.Μ."
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Α.Φ.Μ."
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
-#, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Α.Φ.Μ."
+msgstr ""
 
 #: UI/am-taxes.html:17
 msgid "Tax Rules"
@@ -7321,9 +6999,8 @@ msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1802
-#, fuzzy
 msgid "Taxes saved!"
-msgstr "User saved!"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:229
 #: templates/demo/ar_transaction.html:235 templates/demo/invoice.html:314
@@ -7342,9 +7019,8 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Αριθμός"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
@@ -7441,9 +7117,8 @@ msgid "Template saved!"
 msgstr ""
 
 #: UI/am-defaults.html:107
-#, fuzzy
 msgid "Templates directory"
-msgstr "Templates"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:69
 msgid "Ten"
@@ -7503,9 +7178,8 @@ msgid "The amount of"
 msgstr ""
 
 #: scripts/payment.pl:1649 scripts/payment.pl:1655
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις το αριθμό τιμολογίου"
+msgstr ""
 
 #: scripts/payment.pl:1909
 msgid "The amount to be pay from the accno"
@@ -7516,14 +7190,12 @@ msgid "The amount to be pay of the invoice number"
 msgstr ""
 
 #: scripts/recon.pl:308
-#, fuzzy
 msgid "Their Balance"
-msgstr "Ισοζύγιο"
+msgstr ""
 
 #: UI/reconciliation/report.html:77 UI/reconciliation/report.html:140
-#, fuzzy
 msgid "Their Credits"
-msgstr "Πίστωση"
+msgstr ""
 
 #: UI/reconciliation/report.html:76 UI/reconciliation/report.html:139
 msgid "Their Debits"
@@ -7578,9 +7250,8 @@ msgid "Threshold"
 msgstr ""
 
 #: UI/payments/search.html:82
-#, fuzzy
 msgid "Through Date"
-msgstr "Ημερομηνία λήξης"
+msgstr ""
 
 #: bin/jc.pl:1433
 msgid "Thursday"
@@ -7603,14 +7274,12 @@ msgid "Time Card"
 msgstr ""
 
 #: bin/jc.pl:1322
-#, fuzzy
 msgid "Time Card deleted!"
-msgstr "User deleted!"
+msgstr ""
 
 #: bin/jc.pl:1181
-#, fuzzy
 msgid "Time Card saved!"
-msgstr "User saved!"
+msgstr ""
 
 #: bin/bp.pl:60 bin/bp.pl:95 bin/jc.pl:203 bin/jc.pl:1336
 #: sql/Pg-database.sql:2477 sql/Pg-database.sql:2495
@@ -7664,9 +7333,8 @@ msgid "To %1"
 msgstr ""
 
 #: UI/reconciliation/upload.html:35
-#, fuzzy
 msgid "To Date"
-msgstr "Ημερομηνία"
+msgstr ""
 
 #: UI/payments/payments_detail.html:296
 msgid "To Pay"
@@ -7787,30 +7455,26 @@ msgstr ""
 #: templates/demo/balance_sheet.html:149
 #: templates/demo_with_images/balance_sheet.html:149
 #: templates/xedemo/balance_sheet.html:149
-#, fuzzy
 msgid "Total Equity"
-msgstr "Επιείκια"
+msgstr ""
 
 #: templates/demo/income_statement.html:131
 #: templates/demo_with_images/income_statement.html:131
 #: templates/xedemo/income_statement.html:131
-#, fuzzy
 msgid "Total Expenses"
-msgstr "Έξοδα"
+msgstr ""
 
 #: templates/demo/income_statement.html:104
 #: templates/demo_with_images/income_statement.html:104
 #: templates/xedemo/income_statement.html:104
-#, fuzzy
 msgid "Total Income"
-msgstr "Εισόδημα"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:122
 #: templates/demo_with_images/balance_sheet.html:122
 #: templates/xedemo/balance_sheet.html:122
-#, fuzzy
 msgid "Total Liabilities"
-msgstr "Παθητικό"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:155
 #: templates/demo_with_images/balance_sheet.html:155
@@ -7821,15 +7485,13 @@ msgstr ""
 #: templates/demo/statement.html:123
 #: templates/demo_with_images/statement.html:123
 #: templates/xedemo/statement.html:123
-#, fuzzy
 msgid "Total Outstanding"
-msgstr "Αξιοσημείωτο"
+msgstr ""
 
 #: templates/demo/statement.tex:81 templates/demo_with_images/statement.tex:81
 #: templates/xedemo/statement.tex:81
-#, fuzzy
 msgid "Total outstanding"
-msgstr "Αξιοσημείωτο"
+msgstr ""
 
 #: UI/accounts/edit.html:246
 msgid "Tracking Items"
@@ -7844,14 +7506,12 @@ msgid "Transaction"
 msgstr ""
 
 #: sql/Pg-database.sql:2379
-#, fuzzy
 msgid "Transaction Approval"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: UI/Contact/history_filter.html:140
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: bin/gl.pl:1138
 msgid "Transaction Date missing!"
@@ -7863,9 +7523,8 @@ msgstr ""
 
 #: UI/batch/search_transactions.html:13 UI/reconciliation/report.html:69
 #: UI/reconciliation/report.html:132
-#, fuzzy
 msgid "Transaction Type"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: bin/aa.pl:1480
 msgid "Transaction deleted!"
@@ -8025,19 +7684,16 @@ msgid "Under"
 msgstr ""
 
 #: scripts/setup.pl:648
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Αρ. τιμολογίου"
+msgstr ""
 
 #: scripts/setup.pl:598
-#, fuzzy
 msgid "Unique Customernumber"
-msgstr "Κωδικός Πελάτη"
+msgstr ""
 
 #: scripts/setup.pl:608
-#, fuzzy
 msgid "Unique Vendornumber"
-msgstr "Creditor Number"
+msgstr ""
 
 #: scripts/setup.pl:640
 msgid "Unique nonobsolete partnumbers"
@@ -8064,9 +7720,8 @@ msgstr ""
 #: templates/xedemo/invoice.html:140
 #: templates/xedemo/request_quotation.html:145
 #: templates/xedemo/request_quotation.tex:124
-#, fuzzy
 msgid "Unit Price"
-msgstr "Λίστα τιμών"
+msgstr ""
 
 #: scripts/setup.pl:149
 msgid "Unknown database found."
@@ -8077,18 +7732,16 @@ msgid "Unknown version found."
 msgstr ""
 
 #: scripts/vouchers.pl:362
-#, fuzzy
 msgid "Unlock"
-msgstr "Unlock System"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:97
 msgid "Unsupport account type"
 msgstr ""
 
 #: UI/payments/search.html:17
-#, fuzzy
 msgid "Unsupported Number"
-msgstr "Creditor Number"
+msgstr ""
 
 #: UI/Contact/search.html:12
 msgid "Unsupported Search"
@@ -8138,9 +7791,8 @@ msgid "Use AR Overpayment"
 msgstr ""
 
 #: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2419
-#, fuzzy
 msgid "Use Overpayment"
-msgstr "Προπληρωμή"
+msgstr ""
 
 #: bin/io.pl:2208
 msgid "Use Shipto"
@@ -8161,20 +7813,17 @@ msgstr ""
 
 #: UI/Admin/edit_user.html:26 UI/Admin/edit_user.html:39
 #: UI/setup/new_user.html:22
-#, fuzzy
 msgid "Username"
-msgstr "User saved!"
+msgstr ""
 
 #: UI/Admin/user_search.html:11
-#, fuzzy
 msgid "Username:"
-msgstr "User saved!"
+msgstr ""
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:46
 #: UI/setup/confirm_operation.html:90
-#, fuzzy
 msgid "Users"
-msgstr "User saved!"
+msgstr ""
 
 #: UI/Contact/pricelist.csv:34 UI/Contact/pricelist.html:47
 #: UI/Contact/pricelist.tex:46
@@ -8196,9 +7845,8 @@ msgid "Valid until"
 msgstr ""
 
 #: UI/reconciliation/report.html:34
-#, fuzzy
 msgid "Variance:"
-msgstr "Ισοζύγιο"
+msgstr ""
 
 #: bin/aa.pl:577 bin/aa.pl:1668 bin/aa.pl:1899 bin/aa.pl:2035 bin/bp.pl:82
 #: bin/ic.pl:2817 bin/ir.pl:456 bin/oe.pl:1381 bin/oe.pl:1756 bin/oe.pl:3506
@@ -8230,9 +7878,8 @@ msgid "Vendor Invoices"
 msgstr ""
 
 #: UI/payments/payment1.html:37 UI/payments/payment2.html:31
-#, fuzzy
 msgid "Vendor Name"
-msgstr "Creditor Number"
+msgstr ""
 
 #: bin/aa.pl:1669 bin/am.pl:68 bin/io.pl:1985 scripts/payment.pl:325
 #: UI/am-defaults.html:180 UI/asset/edit_asset.html:185
@@ -8244,19 +7891,16 @@ msgstr "Creditor Number"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:35
 #: UI/Contact/pricelist.tex:29
-#, fuzzy
 msgid "Vendor Partnumber"
-msgstr "Creditor Number"
+msgstr ""
 
 #: bin/ic.pl:2819
-#, fuzzy
 msgid "Vendor Reference Number"
-msgstr "Creditor Number"
+msgstr ""
 
 #: UI/Contact/search.html:6
-#, fuzzy
 msgid "Vendor Search"
-msgstr "Creditor Number"
+msgstr ""
 
 #: bin/aa.pl:1307 bin/ir.pl:1317 bin/oe.pl:2263
 msgid "Vendor missing!"
@@ -8267,15 +7911,14 @@ msgid "Vendor not on file!"
 msgstr "Creditor not on file!"
 
 #: bin/bp.pl:304
-#, fuzzy
 msgid "Vendor: [_1]"
-msgstr "Creditor"
+msgstr ""
 
 #: sql/Pg-database.sql:2554
 msgid "Vendors"
 msgstr "Creditors"
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr ""
 
@@ -8285,10 +7928,6 @@ msgstr ""
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8446,7 +8085,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: old-handler.pl:132
+#: old-handler.pl:133
 msgid "You are logged out!"
 msgstr ""
 
@@ -8503,18 +8142,16 @@ msgid "Zero"
 msgstr ""
 
 #: bin/io.pl:2043
-#, fuzzy
 msgid "Zip Code"
-msgstr "Κωδικός"
+msgstr ""
 
 #: UI/Contact/contact.html:890
 msgid "Zip/Post Code"
 msgstr ""
 
 #: t/data/04-complex_template.html:463
-#, fuzzy
 msgid "Zip/Post Code:"
-msgstr "Κωδικός"
+msgstr ""
 
 #: UI/Contact/history_filter.html:104 UI/Contact/search.html:94
 #: UI/employee.html:65
@@ -8522,9 +8159,8 @@ msgid "Zip/Postal Code"
 msgstr ""
 
 #: bin/gl.pl:196
-#, fuzzy
 msgid "[_1] Cash Transfer Transaction"
-msgstr "Επεξεργασία κίνησης μεταφοράς χρημάτων"
+msgstr ""
 
 #: bin/aa.pl:432
 msgid "[_1] Credit Note"
@@ -8539,9 +8175,8 @@ msgid "[_1] General Ledger Transaction"
 msgstr ""
 
 #: bin/arap.pl:170
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Αριθμός"
+msgstr ""
 
 #: bin/am.pl:272 bin/rp.pl:845 bin/rp.pl:1262
 msgid "[_1] Report"
@@ -8552,25 +8187,22 @@ msgid "[_1] To [_2]"
 msgstr ""
 
 #: bin/aa.pl:426
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Κινήση Αγοράς"
+msgstr ""
 
 #: bin/ic.pl:3447
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "Debtor not on file!"
+msgstr ""
 
 #: bin/ic.pl:3369
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "Creditor not on file!"
+msgstr ""
 
 #: bin/am.pl:155
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: old-handler.pl:182
+#: old-handler.pl:183
 msgid "action not defined!"
 msgstr ""
 
@@ -8589,9 +8221,8 @@ msgid "cash"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:485
-#, fuzzy
 msgid "check"
-msgstr "Επιταγή"
+msgstr ""
 
 #: bin/io.pl:2037
 msgid "city"
@@ -8604,24 +8235,20 @@ msgid "days"
 msgstr ""
 
 #: UI/am-defaults.html:42
-#, fuzzy
 msgid "default_language"
-msgstr "Επεξεργασία γλώσσας"
+msgstr ""
 
 #: scripts/admin.pl:411
-#, fuzzy
 msgid "delete"
-msgstr "Διαγραφή"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:486
-#, fuzzy
 msgid "deposit"
-msgstr "Κατάθεση"
+msgstr ""
 
 #: sql/Pg-database.sql:3775
-#, fuzzy
 msgid "depreciation"
-msgstr "Περιγραφή"
+msgstr ""
 
 #: sql/Pg-database.sql:3776
 msgid "disposal"
@@ -8637,9 +8264,8 @@ msgid "ea"
 msgstr ""
 
 #: scripts/admin.pl:354
-#, fuzzy
 msgid "edit"
-msgstr "Πίστωση"
+msgstr ""
 
 #: bin/am.pl:2703 bin/am.pl:2800 bin/am.pl:2847
 msgid "failed"
@@ -8700,9 +8326,8 @@ msgid "nl"
 msgstr ""
 
 #: UI/employee.html:164
-#, fuzzy
 msgid "notes"
-msgstr "Σημειώσεις"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:487
 msgid "other"
@@ -8713,9 +8338,8 @@ msgid "partial disposal"
 msgstr ""
 
 #: sql/Pg-database.sql:3667
-#, fuzzy
 msgid "production"
-msgstr "Παρακρατήσεις"
+msgstr ""
 
 #: bin/arap.pl:1047 bin/io.pl:1842
 msgid "sent"
@@ -8741,206 +8365,3 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Access Control"
-#~ msgstr "Έλεγχος πρόσβασης"
-
-#~ msgid "Accounting"
-#~ msgstr "Λογιστική"
-
-#~ msgid "Administrator"
-#~ msgstr "Διαχειριστής"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "All Datasets up to date!"
-
-#~ msgid "Amount missing!"
-#~ msgstr "Ποσό που λείπει"
-
-#~ msgid "Backup sent to"
-#~ msgstr "Αποστολή αντιγράφου ασφαλείας σε.."
-
-#~ msgid "Based on"
-#~ msgstr "Βασισμένο σε"
-
-#~ msgid "Cannot create Lock!"
-#~ msgstr "Cannot create Lock!"
-
-#~ msgid "Cannot delete vendor!"
-#~ msgstr "Δεν μπορεί να διαγραφεί ο πιστωτής"
-
-#~ msgid "Cannot post Receipt!"
-#~ msgstr "Δεν μπορεί να εκδοθεί απόδειξη"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Change Admin Password"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Click on login name to edit!"
-
-#~ msgid "Connect to"
-#~ msgstr "Σύνδεση με"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Create Chart of Accounts"
-
-#~ msgid "Customer deleted!"
-#~ msgstr "Ο πελάτης διαγράφηκε!"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "DBI δεν έχει εγκατασταθεί!"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Database Driver not checked!"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Database User missing!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Dataset missing!"
-
-#~ msgid "Decrease"
-#~ msgstr "Μείωση"
-
-#~ msgid "Deduct after"
-#~ msgstr "Παρακράτηση μετά"
-
-#~ msgid "Deduction deleted!"
-#~ msgstr "Παρακράτηση διαγράφηκε"
-
-#~ msgid "Deduction saved!"
-#~ msgstr "Παρακράτηση αποθηκεύτηκε"
-
-#~ msgid "Directory"
-#~ msgstr "Directory"
-
-#~ msgid "Employee deleted!"
-#~ msgstr "Ο Υπάλληλος Διαγράφηκε"
-
-#~ msgid "Employee saved!"
-#~ msgstr "Ο Υπάλληλος αποθηκεύτηκε"
-
-#~ msgid "Employer"
-#~ msgstr "Εργοδότης"
-
-#~ msgid "Host"
-#~ msgstr "Host"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Hostname missing!"
-
-#~ msgid "Increase"
-#~ msgstr "Αύξηση"
-
-#~ msgid ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-#~ msgstr ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-
-#~ msgid "Licensed to"
-#~ msgstr "Αδεια σε"
-
-#~ msgid "List Projects"
-#~ msgstr "Λίστα Έργων"
-
-#~ msgid "Lock System"
-#~ msgstr "Lock System"
-
-#~ msgid "Lockfile created!"
-#~ msgstr "Lockfile created!"
-
-#~ msgid "Lockfile removed!"
-#~ msgstr "Lockfile removed!"
-
-#~ msgid "Login name missing!"
-#~ msgstr "Login name missing!"
-
-#~ msgid "Multibyte Encoding"
-#~ msgstr "Multibyte Encoding"
-
-#~ msgid "Name missing!"
-#~ msgstr "Το όνομα δεν υπάρχει"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "No Database Drivers available!"
-
-#~ msgid "No Dataset selected!"
-#~ msgstr "No Dataset selected!"
-
-#~ msgid "Nothing to delete!"
-#~ msgstr "Δεν υπάρχει τίποτα για διαγραφή!"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Oracle Database Administration"
-
-#~ msgid "Order saved!"
-#~ msgstr "Η Παραγγελία αποθηκεύτηκε"
-
-#~ msgid "Payroll Deduction"
-#~ msgstr "Κράτηση μισθού"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Pg Database Administration"
-
-#~ msgid "PgPP Database Administration"
-#~ msgstr "PgPP Database Administration"
-
-#~ msgid "Port"
-#~ msgstr "Port"
-
-#~ msgid "Port missing!"
-#~ msgstr "Port missing!"
-
-#~ msgid "Printing ... "
-#~ msgstr "Εκτυπώνεται..."
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "The following Datasets are not in use and can be deleted"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "The following Datasets need to be updated"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-
-#~ msgid "Update Dataset"
-#~ msgstr "Update Dataset"
-
-#~ msgid "Use Templates"
-#~ msgstr "Use Templates"
-
-#~ msgid "Vendor deleted!"
-#~ msgstr "Creditor deleted!"
-
-#~ msgid "Vendor saved!"
-#~ msgstr "Creditor saved!"
-
-#~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr "You must enter a host and port for local and remote connections!"
-
-#~ msgid "is already a member!"
-#~ msgstr "is already a member!"
-
-#~ msgid "successfully created!"
-#~ msgstr "successfully created!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "successfully deleted!"
-
-#~ msgid "website"
-#~ msgstr "website"

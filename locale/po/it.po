@@ -1,37 +1,19 @@
-# #-#-#-#-#  it.po (LedgerSMB 1.1.1)  #-#-#-#-#
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2001-2003
 #
-# Italian texts:
-#
-#  Author: Paolo Bizzarri <p.bizzarri@icube.it>
-#          Luca Venturini <luca@yepa.com>
-#          Alessandro Pasotti <apasotti@isoleborromee.it>
-#          Daniele Giacomini <daniele@swlibero.org> 2003.09.28-2003.11.05
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
+"PO-Revision-Date: 2015-12-29 12:32+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"it/)\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
@@ -70,9 +52,8 @@ msgid "90"
 msgstr ""
 
 #: bin/ic.pl:3067
-#, fuzzy
 msgid "A"
-msgstr "Debiti Fornitori"
+msgstr ""
 
 #: templates/demo/invoice.tex:32 templates/demo/packing_list.tex:22
 #: templates/demo_with_images/invoice.tex:32
@@ -196,9 +177,8 @@ msgid "Account"
 msgstr "Conto"
 
 #: UI/payments/use_overpayment2.html:117
-#, fuzzy
 msgid "Account Description"
-msgstr "Descrizione"
+msgstr ""
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
@@ -214,14 +194,13 @@ msgid "Account Number missing!"
 msgstr "Manca il numero di conto!"
 
 #: scripts/payment.pl:161
-#, fuzzy
 msgid "Account Title"
-msgstr "Tipo di conto"
+msgstr ""
 
 #: UI/accounts/edit.html:80 UI/taxform/details_report.html:19
 #: UI/taxform/summary_report.html:19
 msgid "Account Type"
-msgstr "Tipo di conto"
+msgstr ""
 
 #: bin/am.pl:137
 msgid "Account Type missing!"
@@ -237,12 +216,11 @@ msgstr ""
 
 #: bin/am.pl:326
 msgid "Account deleted!"
-msgstr "Conto cancellato!"
+msgstr ""
 
 #: bin/am.pl:440
-#, fuzzy
 msgid "Account does not exist!"
-msgstr "non esiste"
+msgstr ""
 
 #: bin/am.pl:171
 msgid "Account saved!"
@@ -250,14 +228,12 @@ msgstr "Conto salvato!"
 
 #: UI/payments/payments_detail.html:139 UI/reconciliation/report.html:10
 #: UI/reconciliation/search.html:47
-#, fuzzy
 msgid "Account:"
-msgstr "Conto"
+msgstr ""
 
 #: bin/bp.pl:309 bin/rp.pl:1968
-#, fuzzy
 msgid "Account: [_1]"
-msgstr "Conto"
+msgstr ""
 
 #: bin/ic.pl:1016 UI/Contact/contact.html:69 UI/Contact/contact.html:392
 #: UI/rp-search.html:24
@@ -285,14 +261,12 @@ msgstr ""
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
-#, fuzzy
 msgid "Actions"
-msgstr "Transazioni Fornitori"
+msgstr ""
 
 #: t/data/04-complex_template.html:496
-#, fuzzy
 msgid "Actions:"
-msgstr "Transazioni Fornitori"
+msgstr ""
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
@@ -316,56 +290,48 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: bin/aa.pl:416 bin/aa.pl:451
-#, fuzzy
 msgid "Add AP Transaction"
-msgstr "Aggiungi Transazione"
+msgstr ""
 
 #: bin/aa.pl:415
-#, fuzzy
 msgid "Add AR Transaction"
-msgstr "Aggiungi Transazione"
+msgstr ""
 
 #: scripts/account.pl:41
 msgid "Add Account"
 msgstr "Aggiungi conto"
 
 #: sql/Pg-database.sql:2500
-#, fuzzy
 msgid "Add Accounts"
-msgstr "Aggiungi conto"
+msgstr ""
 
 #: bin/ic.pl:63 bin/ic.pl:1936 sql/Pg-database.sql:2452
 msgid "Add Assembly"
 msgstr "Aggiungi Assemblato"
 
 #: scripts/asset.pl:254
-#, fuzzy
 msgid "Add Asset"
-msgstr "Aggiungi Assemblato"
+msgstr ""
 
 #: scripts/asset.pl:101
-#, fuzzy
 msgid "Add Asset Class"
-msgstr "Aggiungi Assemblato"
+msgstr ""
 
 #: sql/Pg-database.sql:2598
-#, fuzzy
 msgid "Add Assets"
-msgstr "Aggiungi Assemblato"
+msgstr ""
 
 #: bin/am.pl:826 bin/am.pl:851 sql/Pg-database.sql:2506
-#, fuzzy
 msgid "Add Business"
-msgstr "Aggiungi Utente"
+msgstr ""
 
 #: sql/Pg-database.sql:2596
 msgid "Add Class"
 msgstr ""
 
 #: bin/is.pl:86 bin/is.pl:106
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Aggiungi Fattura di vendita"
+msgstr ""
 
 #: bin/aa.pl:449
 msgid "Add Credit Note"
@@ -377,24 +343,21 @@ msgid "Add Customer"
 msgstr "Aggiungi Cliente"
 
 #: bin/ir.pl:77 bin/ir.pl:96
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Aggiungi Fattura di vendita"
+msgstr ""
 
 #: bin/aa.pl:447
 msgid "Add Debit Note"
 msgstr ""
 
 #: bin/am.pl:670 bin/am.pl:695 sql/Pg-database.sql:2406
-#, fuzzy
 msgid "Add Department"
-msgstr "Aggiungi Articolo"
+msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:60
 #: sql/Pg-database.sql:2426
-#, fuzzy
 msgid "Add Employee"
-msgstr "Dipendente"
+msgstr ""
 
 #: bin/oe.pl:2560
 msgid "Add Exchange Rate"
@@ -405,9 +368,8 @@ msgid "Add GIFI"
 msgstr "Aggiungi codice GIFI"
 
 #: bin/pe.pl:1477 bin/pe.pl:1524 sql/Pg-database.sql:2454
-#, fuzzy
 msgid "Add Group"
-msgstr "Aggiungi conto"
+msgstr ""
 
 #: bin/pe.pl:61 bin/pe.pl:302 bin/pe.pl:1102
 msgid "Add Job"
@@ -418,28 +380,24 @@ msgid "Add Labor/Overhead"
 msgstr ""
 
 #: bin/am.pl:1157 bin/am.pl:1183 sql/Pg-database.sql:2508
-#, fuzzy
 msgid "Add Language"
-msgstr "Lingua"
+msgstr ""
 
 #: sql/Pg-database.sql:2453
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Aggiungi Servizio"
+msgstr ""
 
 #: bin/pos.pl:106
-#, fuzzy
 msgid "Add POS Invoice"
-msgstr "Aggiungi Fattura di vendita"
+msgstr ""
 
 #: bin/ic.pl:61 bin/ic.pl:1922 sql/Pg-database.sql:2450
 msgid "Add Part"
 msgstr "Aggiungi Articolo"
 
 #: bin/pe.pl:1683 bin/pe.pl:1730 sql/Pg-database.sql:2455
-#, fuzzy
 msgid "Add Pricegroup"
-msgstr "Aggiungi Servizio"
+msgstr ""
 
 #: bin/pe.pl:660 bin/pe.pl:1089 sql/Pg-database.sql:2470
 msgid "Add Project"
@@ -450,18 +408,16 @@ msgid "Add Purchase Order"
 msgstr "Aggiungi Ordine di acquisto"
 
 #: bin/io.pl:1184 bin/oe.pl:72
-#, fuzzy
 msgid "Add Quotation"
-msgstr "Aggiungi Transazione"
+msgstr ""
 
 #: bin/io.pl:1173 bin/oe.pl:68
 msgid "Add Request for Quotation"
 msgstr ""
 
 #: bin/am.pl:994 bin/am.pl:1019 sql/Pg-database.sql:2510
-#, fuzzy
 msgid "Add SIC"
-msgstr "Aggiungi codice GIFI"
+msgstr ""
 
 #: bin/is.pl:90 bin/is.pl:109 bin/oe.pl:2476
 msgid "Add Sales Invoice"
@@ -476,28 +432,24 @@ msgid "Add Service"
 msgstr "Aggiungi Servizio"
 
 #: bin/jc.pl:59 bin/jc.pl:79 bin/jc.pl:1949
-#, fuzzy
 msgid "Add Stores Card"
-msgstr "Aggiungi Ordine di vendita"
+msgstr ""
 
 #: sql/Pg-database.sql:2571
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Aggiungi Articolo"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:2
-#, fuzzy
 msgid "Add TaxForm"
-msgstr "Aggiungi Articolo"
+msgstr ""
 
 #: bin/jc.pl:56 bin/jc.pl:1707 bin/jc.pl:1717 bin/jc.pl:1727
 msgid "Add Time Card"
 msgstr ""
 
 #: sql/Pg-database.sql:2471
-#, fuzzy
 msgid "Add Timecard"
-msgstr "Aggiungi Articolo"
+msgstr ""
 
 #: bin/io.pl:2212
 msgid "Add To List"
@@ -518,23 +470,20 @@ msgid "Add Vendor"
 msgstr "Aggiungi Fornitore"
 
 #: bin/ir.pl:81 bin/oe.pl:2468
-#, fuzzy
 msgid "Add Vendor Invoice"
-msgstr "Aggiungi Fattura di vendita"
+msgstr ""
 
 #: bin/am.pl:2006 bin/am.pl:2032 sql/Pg-database.sql:2504
 msgid "Add Warehouse"
 msgstr ""
 
 #: bin/io.pl:2027
-#, fuzzy
 msgid "Add line1"
-msgstr "Aggiungi Servizio"
+msgstr ""
 
 #: bin/io.pl:2030
-#, fuzzy
 msgid "Add line2"
-msgstr "Aggiungi Servizio"
+msgstr ""
 
 #: bin/io.pl:2034
 msgid "Add line3 "
@@ -548,26 +497,22 @@ msgid "Address"
 msgstr "Indirizzo"
 
 #: t/data/04-complex_template.html:385
-#, fuzzy
 msgid "Address1"
-msgstr "Indirizzo"
+msgstr ""
 
 #: t/data/04-complex_template.html:420
-#, fuzzy
 msgid "Address:"
-msgstr "Indirizzo"
+msgstr ""
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
-#, fuzzy
 msgid "Address: [_1]"
-msgstr "Indirizzo"
+msgstr ""
 
 #: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
-#, fuzzy
 msgid "Addresses"
-msgstr "Indirizzo"
+msgstr ""
 
 #: sql/Pg-database.sql:2448
 msgid "Adjust Till"
@@ -586,23 +531,20 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:26
-#, fuzzy
 msgid "Adjustment"
-msgstr "Attachment"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:13
-#, fuzzy
 msgid "Adjustment Date"
-msgstr "Scadenza Fattura"
+msgstr ""
 
 #: UI/employee.html:101
 msgid "Admin"
 msgstr ""
 
 #: sql/Pg-database.sql:2572
-#, fuzzy
 msgid "Admin Users"
-msgstr "Aggiungi Utente"
+msgstr ""
 
 #: bin/rp.pl:981 UI/rp-search-aging.html:67
 msgid "Aged"
@@ -619,14 +561,12 @@ msgid "All"
 msgstr "Tutti"
 
 #: UI/rp-search-generate_trial_balance.html:100
-#, fuzzy
 msgid "All Accounts"
-msgstr "Conti"
+msgstr ""
 
 #: bin/aa.pl:1774
-#, fuzzy
 msgid "All Invoices"
-msgstr "Fatture"
+msgstr ""
 
 #: sql/Pg-database.sql:2458
 msgid "All Items"
@@ -726,14 +666,12 @@ msgid "Amount Due"
 msgstr "Importo Dovuto"
 
 #: UI/reconciliation/search.html:28
-#, fuzzy
 msgid "Amount From"
-msgstr "Importo"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:148
-#, fuzzy
 msgid "Amount to be used"
-msgstr "Importo Dovuto"
+msgstr ""
 
 #: sql/Pg-database.sql:3697
 msgid "Annual Straight Line Daily"
@@ -806,32 +744,28 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: bin/ir.pl:1391 bin/is.pl:1485
-#, fuzzy
 msgid "Are you sure you want to delete Invoice Number [_1]?"
-msgstr "Sei sicuro di voler cancellare la Fattura numero"
+msgstr ""
 
 #: bin/oe.pl:2352
 msgid "Are you sure you want to delete Order Number"
 msgstr "Sei sicuro di volre cancellare l'ordine numero"
 
 #: bin/oe.pl:2357
-#, fuzzy
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "Sei sicuro di voler cancellare la Fattura numero"
+msgstr ""
 
 #: bin/aa.pl:1458
 msgid "Are you sure you want to delete Transaction"
-msgstr "Sei sicuro di voler cancellare la Transazione"
+msgstr ""
 
 #: bin/jc.pl:1309
-#, fuzzy
 msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-msgstr "Sei sicuro di volre cancellare l'ordine numero"
+msgstr ""
 
 #: bin/bp.pl:202
-#, fuzzy
 msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr "Sei sicuro di volre cancellare l'ordine numero"
+msgstr ""
 
 #: bin/pe.pl:515 bin/pe.pl:755
 msgid "As of"
@@ -839,7 +773,7 @@ msgstr ""
 
 #: bin/ic.pl:1291
 msgid "Assemblies"
-msgstr "Assemblati"
+msgstr ""
 
 #: bin/ic.pl:4036
 msgid "Assemblies restocked!"
@@ -847,14 +781,12 @@ msgstr "Assemblati ricaricati!"
 
 #: bin/ic.pl:1897 bin/pe.pl:354 bin/pe.pl:533 bin/pe.pl:1005
 #: sql/Pg-database.sql:2465
-#, fuzzy
 msgid "Assembly"
-msgstr "Aggiungi Assemblato"
+msgstr ""
 
 #: bin/pe.pl:643
-#, fuzzy
 msgid "Assembly stocked!"
-msgstr "Assemblati ricaricati!"
+msgstr ""
 
 #: bin/gl.pl:527 LedgerSMB/DBObject/Asset.pm:111 UI/accounts/edit.html:84
 #: UI/journal/search.html:169 sql/Pg-database.sql:3766
@@ -864,25 +796,22 @@ msgstr "Attivit&agrave;"
 #: scripts/asset.pl:168 UI/asset/edit_asset.html:151
 #: UI/asset/edit_class.html:35 UI/asset/search_asset.html:142
 #: UI/asset/search_class.html:43
-#, fuzzy
 msgid "Asset Account"
-msgstr "Lista Conti"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset_Class.pm:68 scripts/asset.pl:635
 #: UI/asset/begin_approval.html:15 UI/asset/begin_report.html:14
 #: UI/asset/search_reports.html:12
-#, fuzzy
 msgid "Asset Class"
-msgstr "Attivit&agrave;"
+msgstr ""
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
 msgstr ""
 
 #: sql/Pg-database.sql:2594
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Assemblati"
+msgstr ""
 
 #: scripts/asset.pl:556
 msgid "Asset Depreciation Report"
@@ -897,33 +826,28 @@ msgid "Asset Partial Disposal Report"
 msgstr ""
 
 #: scripts/asset.pl:496
-#, fuzzy
 msgid "Asset Tag"
-msgstr "Attivit&agrave;"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:73
 #: templates/demo_with_images/balance_sheet.html:73
 #: templates/xedemo/balance_sheet.html:73 sql/Pg-database.sql:2595
-#, fuzzy
 msgid "Assets"
-msgstr "Attivit&agrave;"
+msgstr ""
 
 #: bin/aa.pl:1094 bin/ic.pl:946 bin/ir.pl:991 bin/is.pl:1124 bin/oe.pl:967
 #: UI/journal/journal_entry.html:349
-#, fuzzy
 msgid "Attach"
-msgstr "Attachment"
+msgstr ""
 
 #: UI/file/attachment_screen.html:22
-#, fuzzy
 msgid "Attach File"
-msgstr "Attachment"
+msgstr ""
 
 #: bin/aa.pl:1066 bin/ic.pl:918 bin/ir.pl:965 bin/is.pl:1098 bin/oe.pl:941
 #: UI/journal/journal_entry.html:325
-#, fuzzy
 msgid "Attached To"
-msgstr "Attachment"
+msgstr ""
 
 #: bin/aa.pl:1065 bin/ic.pl:917 bin/ir.pl:964 bin/is.pl:1097 bin/oe.pl:940
 #: UI/journal/journal_entry.html:324
@@ -938,16 +862,14 @@ msgstr ""
 #: bin/aa.pl:1046 bin/aa.pl:1067 bin/ic.pl:898 bin/ic.pl:919 bin/ir.pl:945
 #: bin/ir.pl:966 bin/is.pl:1078 bin/is.pl:1099 bin/oe.pl:921 bin/oe.pl:942
 #: UI/journal/journal_entry.html:306 UI/journal/journal_entry.html:326
-#, fuzzy
 msgid "Attached at"
-msgstr "Attachment"
+msgstr ""
 
 #: bin/aa.pl:1047 bin/aa.pl:1068 bin/ic.pl:899 bin/ic.pl:920 bin/ir.pl:946
 #: bin/ir.pl:967 bin/is.pl:1079 bin/is.pl:1100 bin/oe.pl:922 bin/oe.pl:943
 #: UI/journal/journal_entry.html:307 UI/journal/journal_entry.html:327
-#, fuzzy
 msgid "Attached by"
-msgstr "Attachment"
+msgstr ""
 
 #: bin/io.pl:1397 bin/rp.pl:1329
 msgid "Attachment"
@@ -988,7 +910,7 @@ msgstr ""
 
 #: bin/am.pl:1830 UI/am-audit-control.html:6 sql/Pg-database.sql:2496
 msgid "Audit Control"
-msgstr "Controllo accessi"
+msgstr ""
 
 #: bin/am.pl:1888
 msgid "Audit trail disabled"
@@ -1021,9 +943,8 @@ msgid "Automatic"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:118
-#, fuzzy
 msgid "Available"
-msgstr "Tassabile"
+msgstr ""
 
 #: UI/setup/list_databases.html:7
 msgid "Available Databases"
@@ -1067,14 +988,12 @@ msgid "Backup"
 msgstr "Backup"
 
 #: UI/setup/confirm_operation.html:64
-#, fuzzy
 msgid "Backup DB"
-msgstr "Backup"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:71
-#, fuzzy
 msgid "Backup Roles"
-msgstr "Backup"
+msgstr ""
 
 #: scripts/recon.pl:187 UI/journal/search.html:283
 msgid "Balance"
@@ -1084,9 +1003,8 @@ msgstr "Saldo"
 #: templates/demo_with_images/invoice.html:197
 #: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
 #: templates/xedemo/invoice.tex:168
-#, fuzzy
 msgid "Balance Due"
-msgstr "Saldo"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:63
 #: templates/demo_with_images/balance_sheet.html:63
@@ -1096,20 +1014,17 @@ msgid "Balance Sheet"
 msgstr "Stato Patrimoniale"
 
 #: UI/Contact/contact.html:1109
-#, fuzzy
 msgid "Bank Account"
-msgstr "Collegamenti tra Conti"
+msgstr ""
 
 #: t/data/04-complex_template.html:601
-#, fuzzy
 msgid "Bank Account:"
-msgstr "Collegamenti tra Conti"
+msgstr ""
 
 #: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Collegamenti tra Conti"
+msgstr ""
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1132,23 +1047,20 @@ msgid "Batch Date"
 msgstr ""
 
 #: bin/rp.pl:2014
-#, fuzzy
 msgid "Batch Description"
-msgstr "Descrizione"
+msgstr ""
 
 #: LedgerSMB/GL.pm:178 LedgerSMB/IR.pm:359 LedgerSMB/IS.pm:1273
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Manca la data!"
+msgstr ""
 
 #: bin/aa.pl:632
 msgid "Batch Name"
 msgstr ""
 
 #: UI/create_batch.html:13
-#, fuzzy
 msgid "Batch Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: sql/Pg-database.sql:2593
 msgid "Batch Printing"
@@ -1176,37 +1088,32 @@ msgid "Bcc: [_1]"
 msgstr ""
 
 #: UI/reconciliation/report.html:20
-#, fuzzy
 msgid "Beginning Statement Balance:"
-msgstr "Saldo"
+msgstr ""
 
 #: scripts/taxform.pl:134
 msgid "Beginning year required"
 msgstr ""
 
 #: sql/Pg-database.sql:631
-#, fuzzy
 msgid "Billing"
-msgstr "miliardo"
+msgstr ""
 
 #: sql/Pg-database.sql:793
-#, fuzzy
 msgid "Billing BCC"
-msgstr "miliardo"
+msgstr ""
 
 #: sql/Pg-database.sql:792
-#, fuzzy
 msgid "Billing CC"
-msgstr "miliardo"
+msgstr ""
 
 #: sql/Pg-database.sql:791
-#, fuzzy
 msgid "Billing Email"
-msgstr "miliardo"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:104
 msgid "Billion"
-msgstr "miliardo"
+msgstr ""
 
 #: bin/ic.pl:496 bin/ic.pl:1137 bin/ic.pl:1800 bin/ic.pl:3905 bin/io.pl:210
 #: bin/oe.pl:2932 bin/pe.pl:418 templates/demo/bin_list.html:154
@@ -1231,23 +1138,20 @@ msgstr "Codice BIN"
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
 #: sql/Pg-database.sql:2522 sql/Pg-database.sql:2536
-#, fuzzy
 msgid "Bin List"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: bin/bp.pl:57 bin/bp.pl:92 sql/Pg-database.sql:2493
-#, fuzzy
 msgid "Bin Lists"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: bin/am.pl:1879
 msgid "Books are open"
-msgstr "I conti sono aperti"
+msgstr ""
 
 #: UI/accounts/yearend.html:66
-#, fuzzy
 msgid "Books closed on"
-msgstr "I conti sono aperti"
+msgstr ""
 
 #: bin/ic.pl:2921
 msgid "Break"
@@ -1258,52 +1162,44 @@ msgid "Bug: No such account"
 msgstr ""
 
 #: bin/is.pl:424 bin/oe.pl:416 bin/pos.pl:279
-#, fuzzy
 msgid "Business"
-msgstr "Partita IVA"
+msgstr ""
 
 #: UI/payments/payments_filter.html:78
-#, fuzzy
 msgid "Business Class"
-msgstr "Partita IVA"
+msgstr ""
 
 #: UI/am-defaults.html:26
 msgid "Business Number"
 msgstr "Partita IVA"
 
 #: UI/Contact/contact.html:571
-#, fuzzy
 msgid "Business Type"
-msgstr "Partita IVA"
+msgstr ""
 
 #: t/data/04-complex_template.html:294
-#, fuzzy
 msgid "Business Type:"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/am.pl:874
-#, fuzzy
 msgid "Business deleted!"
-msgstr "Utente cancellato!"
+msgstr ""
 
 #: bin/am.pl:867
-#, fuzzy
 msgid "Business saved!"
-msgstr "Utente salvato!"
+msgstr ""
 
 #: UI/payments/payments_detail.html:173
-#, fuzzy
 msgid "Business:"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/oe.pl:1867
 msgid "C"
-msgstr "C"
+msgstr ""
 
 #: sql/Pg-database.sql:789
-#, fuzzy
 msgid "CC"
-msgstr "C"
+msgstr ""
 
 #: bin/ic.pl:535 bin/ic.pl:721 UI/accounts/edit.html:261
 msgid "COGS"
@@ -1318,9 +1214,8 @@ msgid "CSV File:"
 msgstr ""
 
 #: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869 LedgerSMB/ScriptLib/Company.pm:412
-#, fuzzy
 msgid "CSV Report"
-msgstr "Prospetti"
+msgstr ""
 
 #: UI/rp-search-generate_trial_balance.html:64
 msgid "Calc. Precision"
@@ -1335,14 +1230,12 @@ msgid "Calculate Taxes"
 msgstr ""
 
 #: bin/is.pl:631
-#, fuzzy
 msgid "Can't void a voided invoice!"
-msgstr "Non puoi cancellare la fattura!"
+msgstr ""
 
 #: bin/io.pl:2216
-#, fuzzy
 msgid "Cancel"
-msgstr "Saldo"
+msgstr ""
 
 #: scripts/setup.pl:117 scripts/setup.pl:123 scripts/setup.pl:139
 #: scripts/setup.pl:151
@@ -1350,9 +1243,8 @@ msgid "Cancel?"
 msgstr ""
 
 #: bin/jc.pl:1193
-#, fuzzy
 msgid "Cannot add stores card for a completed job!"
-msgstr "Non puoi salvare una transazione per un periodo chiuso!"
+msgstr ""
 
 #: bin/jc.pl:1177
 msgid "Cannot add time card for a completed job!"
@@ -1400,15 +1292,15 @@ msgstr ""
 
 #: bin/am.pl:329
 msgid "Cannot delete account!"
-msgstr "Non puoi cancellare il conto!"
+msgstr ""
 
 #: bin/am.pl:321
 msgid "Cannot delete default account!"
-msgstr "Non puoi cancellare il conto di default!"
+msgstr ""
 
 #: bin/ir.pl:1409 bin/is.pl:1510
 msgid "Cannot delete invoice!"
-msgstr "Non puoi cancellare la fattura!"
+msgstr ""
 
 #: bin/ic.pl:3798
 msgid "Cannot delete item!"
@@ -1419,23 +1311,20 @@ msgid "Cannot delete order!"
 msgstr "Non puoi cancellare l'ordine"
 
 #: bin/gl.pl:1121
-#, fuzzy
 msgid "Cannot delete posted transaction"
-msgstr "Non puoi cancellare la transazione"
+msgstr ""
 
 #: bin/oe.pl:2394
-#, fuzzy
 msgid "Cannot delete quotation!"
-msgstr "Non puoi cancellare la transazione"
+msgstr ""
 
 #: bin/jc.pl:1325
-#, fuzzy
 msgid "Cannot delete time card!"
-msgstr "Non puoi cancellare il cliente!"
+msgstr ""
 
 #: bin/aa.pl:1483
 msgid "Cannot delete transaction!"
-msgstr "Non puoi cancellare la transazione"
+msgstr ""
 
 #: scripts/setup.pl:68 scripts/setup.pl:78
 msgid "Cannot find Contrib script [_1] in [_2]."
@@ -1467,18 +1356,16 @@ msgid "Cannot post transaction!"
 msgstr "Non puoi salvare la transazione!"
 
 #: bin/bp.pl:234
-#, fuzzy
 msgid "Cannot remove files!"
-msgstr "Non puoi cancellare l'articolo"
+msgstr ""
 
 #: bin/am.pl:174
 msgid "Cannot save account!"
 msgstr "Non puoi salvare il conto!"
 
 #: bin/am.pl:1794
-#, fuzzy
 msgid "Cannot save defaults!"
-msgstr "Non puoi salvare il conto!"
+msgstr ""
 
 #: bin/oe.pl:2292
 msgid "Cannot save order!"
@@ -1489,34 +1376,28 @@ msgid "Cannot save preferences!"
 msgstr "Non puoi salvare le preferenze!"
 
 #: bin/oe.pl:2309
-#, fuzzy
 msgid "Cannot save quotation!"
-msgstr "Non puoi salvare il conto!"
+msgstr ""
 
 #: bin/jc.pl:1160
-#, fuzzy
 msgid "Cannot save stores card for a closed period!"
-msgstr "Non puoi salvare una transazione per un periodo chiuso!"
+msgstr ""
 
 #: bin/jc.pl:1200
-#, fuzzy
 msgid "Cannot save stores card!"
-msgstr "Non puoi salvare l'ordine!"
+msgstr ""
 
 #: bin/am.pl:1805
-#, fuzzy
 msgid "Cannot save taxes!"
-msgstr "Non puoi salvare l'ordine!"
+msgstr ""
 
 #: bin/jc.pl:1159
-#, fuzzy
 msgid "Cannot save time card for a closed period!"
-msgstr "Non puoi salvare una transazione per un periodo chiuso!"
+msgstr ""
 
 #: bin/jc.pl:1184
-#, fuzzy
 msgid "Cannot save time card!"
-msgstr "Non puoi salvare l'ordine!"
+msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
@@ -1527,9 +1408,8 @@ msgid "Cannot set multiple options for [_1]"
 msgstr ""
 
 #: bin/pe.pl:646
-#, fuzzy
 msgid "Cannot stock Assembly!"
-msgstr "Non puoi caricare gli assemblati!"
+msgstr ""
 
 #: bin/ic.pl:4039
 msgid "Cannot stock assemblies!"
@@ -1546,14 +1426,13 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr "Cassa"
 
 #: UI/payments/payment2.html:229 UI/payments/search.html:56
-#, fuzzy
 msgid "Cash Account"
-msgstr "Conti relativi a tasse"
+msgstr ""
 
 #: bin/ps.pl:288
 msgid "Cash Breakdown:"
@@ -1568,9 +1447,8 @@ msgid "Cc: [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:777
-#, fuzzy
 msgid "Cell Phone"
-msgstr "Tel."
+msgstr ""
 
 #: bin/pos.pl:564
 msgid "Change"
@@ -1578,7 +1456,7 @@ msgstr ""
 
 #: UI/users/preferences.html:24
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:960 scripts/employee.pl:229
 msgid "Changes not saved.  Please try again."
@@ -1597,19 +1475,17 @@ msgstr ""
 msgid "Chart of Accounts"
 msgstr "Piano dei Conti"
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Assegno"
 
 #: bin/pos.pl:343
-#, fuzzy
 msgid "Check ID"
-msgstr "Assegno"
+msgstr ""
 
 #: bin/ic.pl:3836
-#, fuzzy
 msgid "Check Inventory"
-msgstr "Inventario"
+msgstr ""
 
 #: bin/am.pl:69 UI/am-defaults.html:184
 msgid "Check Prefix"
@@ -1624,14 +1500,12 @@ msgid "Checking Job [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:2487
-#, fuzzy
 msgid "Checks"
-msgstr "Assegno"
+msgstr ""
 
 #: UI/payments/payment1_5.html:23
-#, fuzzy
 msgid "Choose a company"
-msgstr "Ragione Sociale"
+msgstr ""
 
 #: bin/arap.pl:176 t/data/04-complex_template.html:386
 #: UI/Contact/contact.html:784 UI/Contact/contact.html:872
@@ -1659,9 +1533,8 @@ msgid "Cleared"
 msgstr ""
 
 #: UI/reconciliation/report.html:65
-#, fuzzy
 msgid "Cleared Transactions"
-msgstr "Transazioni"
+msgstr ""
 
 #: bin/jc.pl:638
 msgid "Clocked"
@@ -1672,9 +1545,8 @@ msgid "Close Books up to"
 msgstr "Chiudi i conti fino a"
 
 #: bin/ps.pl:212 sql/Pg-database.sql:2403
-#, fuzzy
 msgid "Close Till"
-msgstr "Chiuso"
+msgstr ""
 
 #: bin/aa.pl:1600 bin/aa.pl:1991 bin/ic.pl:1077 bin/ic.pl:1585 bin/ic.pl:1588
 #: bin/jc.pl:315 bin/jc.pl:1425 bin/oe.pl:348 bin/oe.pl:1422 bin/oe.pl:1942
@@ -1693,9 +1565,8 @@ msgid "Code"
 msgstr ""
 
 #: bin/am.pl:1034 bin/am.pl:1194
-#, fuzzy
 msgid "Code missing!"
-msgstr "Cliente mancante!"
+msgstr ""
 
 #: UI/Contact/contact.html:42 UI/Contact/contact.html:67 UI/login.html:37
 #: UI/taxform/details_report.html:18 UI/taxform/summary_report.html:18
@@ -1703,29 +1574,24 @@ msgid "Company"
 msgstr "Ragione Sociale"
 
 #: bin/am.pl:77
-#, fuzzy
 msgid "Company Address"
-msgstr "Indirizzo"
+msgstr ""
 
 #: bin/am.pl:79
-#, fuzzy
 msgid "Company Fax"
-msgstr "Ragione Sociale"
+msgstr ""
 
 #: bin/am.pl:76 UI/Contact/history_filter.html:33 UI/Contact/search.html:31
-#, fuzzy
 msgid "Company Name"
-msgstr "Ragione Sociale"
+msgstr ""
 
 #: bin/am.pl:78
-#, fuzzy
 msgid "Company Phone"
-msgstr "Ragione Sociale"
+msgstr ""
 
 #: UI/am-company-logo.html:7
-#, fuzzy
 msgid "Company: [_1]"
-msgstr "Ragione Sociale"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1733,23 +1599,20 @@ msgid "Compare to"
 msgstr "Confronta con"
 
 #: bin/pe.pl:218 bin/pe.pl:232 bin/pe.pl:538 bin/pe.pl:1010
-#, fuzzy
 msgid "Completed"
-msgstr "Confronta con"
+msgstr ""
 
 #: UI/payments/check_job.html:24
 msgid "Completed Successfully"
 msgstr ""
 
 #: bin/ic.pl:1292 sql/Pg-database.sql:2466
-#, fuzzy
 msgid "Components"
-msgstr "Confronta con"
+msgstr ""
 
 #: UI/am-userconfig.html:21 UI/users/preferences.html:34
-#, fuzzy
 msgid "Confirm"
-msgstr "Conferma!"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:7
 msgid "Confirm Operation"
@@ -1773,19 +1636,16 @@ msgid "Consolidate"
 msgstr ""
 
 #: bin/oe.pl:1737 bin/oe.pl:1793
-#, fuzzy
 msgid "Consolidate Orders"
-msgstr "Ordini di vendita"
+msgstr ""
 
 #: bin/oe.pl:1318
-#, fuzzy
 msgid "Consolidate Purchase Orders"
-msgstr "Modifica Ordine di acquisto"
+msgstr ""
 
 #: bin/oe.pl:1262
-#, fuzzy
 msgid "Consolidate Sales Orders"
-msgstr "Modifica Ordine di vendita"
+msgstr ""
 
 #: bin/io.pl:2102 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
@@ -1809,14 +1669,12 @@ msgstr "Contatto"
 #: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
 #: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
 #: UI/Contact/history_filter.html:41
-#, fuzzy
 msgid "Contact Info"
-msgstr "Contatto"
+msgstr ""
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
-#, fuzzy
 msgid "Contact Info:"
-msgstr "Contatto"
+msgstr ""
 
 #: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
@@ -1844,9 +1702,8 @@ msgid "Continue"
 msgstr "Continua"
 
 #: UI/accounts/edit.html:107
-#, fuzzy
 msgid "Contra"
-msgstr "Contatto"
+msgstr ""
 
 #: bin/arap.pl:168 UI/Contact/contact.html:292 UI/Contact/search.html:35
 #: UI/taxform/summary_report.html:21
@@ -1854,9 +1711,8 @@ msgid "Control Code"
 msgstr ""
 
 #: UI/create_batch.html:47
-#, fuzzy
 msgid "Control Number"
-msgstr "Numero di conto"
+msgstr ""
 
 #: bin/rp.pl:1358 UI/io-email.html:65
 msgid "Copies"
@@ -1871,18 +1727,16 @@ msgid "Copy to COA"
 msgstr "Inserisci come conto"
 
 #: bin/aa.pl:967 bin/ir.pl:890 bin/is.pl:998
-#, fuzzy
 msgid "Copy to New"
-msgstr "Inserisci come conto"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:35
 msgid "Copy to New Name"
 msgstr ""
 
 #: bin/ic.pl:2820 bin/ic.pl:3065 bin/jc.pl:890 bin/oe.pl:3512
-#, fuzzy
 msgid "Cost"
-msgstr "Ultimo Costo"
+msgstr ""
 
 #: bin/am.pl:634 UI/am-department-form.html:29
 msgid "Cost Center"
@@ -1897,27 +1751,24 @@ msgid "Could not save the data.  Please try again"
 msgstr ""
 
 #: bin/oe.pl:3081
-#, fuzzy
 msgid "Could not save!"
-msgstr "Conto salvato!"
+msgstr ""
 
 #: bin/oe.pl:3376
 msgid "Could not transfer Inventory!"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:24
-#, fuzzy
 msgid "Counted"
-msgstr "Importo"
+msgstr ""
 
 #: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
 #: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
 #: UI/Contact/contact.html:345 UI/Contact/contact.html:787
 #: UI/Contact/contact.html:905 UI/Contact/history_filter.html:112
 #: UI/Contact/search.html:99 UI/employee.html:71
-#, fuzzy
 msgid "Country"
-msgstr "Importo"
+msgstr ""
 
 #: UI/setup/select_coa.html:30
 msgid "Country Code"
@@ -1928,19 +1779,16 @@ msgid "Country:"
 msgstr ""
 
 #: UI/create_batch.html:2
-#, fuzzy
 msgid "Create Batch"
-msgstr "Crea Dataset"
+msgstr ""
 
 #: scripts/setup.pl:145
-#, fuzzy
 msgid "Create Database?"
-msgstr "Crea Dataset"
+msgstr ""
 
 #: UI/create_batch.html:9
-#, fuzzy
 msgid "Create New Batch"
-msgstr "Crea Dataset"
+msgstr ""
 
 #: UI/reconciliation/upload.html:56
 msgid "Create New Report"
@@ -1951,9 +1799,8 @@ msgid "Create New TaxForm"
 msgstr ""
 
 #: UI/setup/new_user.html:109
-#, fuzzy
 msgid "Create User"
-msgstr "Crea Dataset"
+msgstr ""
 
 #: UI/asset/search_reports.html:47 UI/batch/filter.html:33
 #: UI/batch/search_transactions.html:26 UI/create_batch.html:49
@@ -1974,9 +1821,8 @@ msgid "Credit Card Track"
 msgstr ""
 
 #: bin/am.pl:2862 sql/Pg-database.sql:2550
-#, fuzzy
 msgid "Credit Invoice"
-msgstr "Modifica Fattura di Vendita"
+msgstr ""
 
 #: bin/aa.pl:612 bin/ir.pl:467 bin/is.pl:521 bin/oe.pl:457 bin/pos.pl:364
 #: UI/Contact/contact.html:398 UI/Contact/contact.html:497
@@ -1985,19 +1831,16 @@ msgid "Credit Limit"
 msgstr "Fido"
 
 #: t/data/04-complex_template.html:201
-#, fuzzy
 msgid "Credit Limit:"
-msgstr "Fido"
+msgstr ""
 
 #: sql/Pg-database.sql:2549
-#, fuzzy
 msgid "Credit Note"
-msgstr "Avere"
+msgstr ""
 
 #: scripts/payment.pl:166
-#, fuzzy
 msgid "Credits"
-msgstr "Avere"
+msgstr ""
 
 #: bin/ps.pl:182 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
@@ -2044,9 +1887,8 @@ msgid "Current"
 msgstr "Corrente"
 
 #: bin/rp.pl:528
-#, fuzzy
 msgid "Current Earnings"
-msgstr "Guadagni"
+msgstr ""
 
 #: bin/aa.pl:574 bin/aa.pl:1659 bin/aa.pl:1898 bin/aa.pl:2034 bin/bp.pl:81
 #: bin/ic.pl:2918 bin/is.pl:512 bin/oe.pl:1382 bin/oe.pl:1818 bin/pe.pl:1012
@@ -2059,26 +1901,22 @@ msgid "Customer"
 msgstr "Cliente"
 
 #: UI/Contact/history_filter.html:17
-#, fuzzy
 msgid "Customer History"
-msgstr "Clienti"
+msgstr ""
 
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:30
-#, fuzzy
 msgid "Customer Name"
-msgstr "Cliente salvato!"
+msgstr ""
 
 #: bin/aa.pl:1660 bin/am.pl:67 bin/io.pl:1984 scripts/payment.pl:326
 #: UI/am-defaults.html:176 UI/Contact/history_filter.html:69
 #: UI/payments/payments_filter.html:65 UI/payments/search.html:15
-#, fuzzy
 msgid "Customer Number"
-msgstr "Cliente"
+msgstr ""
 
 #: UI/Contact/search.html:8
-#, fuzzy
 msgid "Customer Search"
-msgstr "Cliente"
+msgstr ""
 
 #: bin/aa.pl:1306 bin/is.pl:1385 bin/oe.pl:2261 bin/pe.pl:2872 bin/pos.pl:687
 msgid "Customer missing!"
@@ -2093,13 +1931,12 @@ msgid "Customer/Vendor Accounts"
 msgstr ""
 
 #: bin/bp.pl:303
-#, fuzzy
 msgid "Customer: [_1]"
-msgstr "Cliente"
+msgstr ""
 
 #: sql/Pg-database.sql:2547
 msgid "Customers"
-msgstr "Clienti"
+msgstr ""
 
 #: scripts/asset.pl:875
 msgid "D M"
@@ -2138,14 +1975,12 @@ msgid "Database Management Console"
 msgstr ""
 
 #: UI/setup/complete.html:8
-#, fuzzy
 msgid "Database Operation Complete"
-msgstr "Amministratore del Database"
+msgstr ""
 
 #: scripts/setup.pl:144
-#, fuzzy
 msgid "Database does not exist."
-msgstr "non esiste"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2217,73 +2052,63 @@ msgstr "Data"
 
 #: UI/am-userconfig.html:25 UI/users/preferences.html:39
 msgid "Date Format"
-msgstr "Formato della data"
+msgstr ""
 
 #: UI/reconciliation/search.html:10
-#, fuzzy
 msgid "Date From"
-msgstr "Formato della data"
+msgstr ""
 
 #: UI/payments/payments_filter.html:99
-#, fuzzy
 msgid "Date From:"
-msgstr "Formato della data"
+msgstr ""
 
 #: bin/aa.pl:1711 bin/aa.pl:2085
 msgid "Date Paid"
 msgstr "Data di pagamento"
 
 #: bin/oe.pl:2799
-#, fuzzy
 msgid "Date Received"
-msgstr "Data di pagamento"
+msgstr ""
 
 #: UI/payments/search.html:88 UI/payments/search.html:102
 msgid "Date Reversed"
 msgstr ""
 
 #: UI/payments/payments_filter.html:107
-#, fuzzy
 msgid "Date To:"
-msgstr "Data"
+msgstr ""
 
 #: UI/payments/payment1.html:57
-#, fuzzy
 msgid "Date from"
-msgstr "Formato della data"
+msgstr ""
 
 #: bin/jc.pl:1142
 msgid "Date missing!"
-msgstr "Manca la data!"
+msgstr ""
 
 #: UI/Admin/user_search.html:51
-#, fuzzy
 msgid "Date of Birth"
-msgstr "Formato della data"
+msgstr ""
 
 #: bin/oe.pl:3066
-#, fuzzy
 msgid "Date received missing!"
-msgstr "Manca la data!"
+msgstr ""
 
 #: bin/aa.pl:1764 UI/Contact/search.html:108 UI/payments/payment1.html:67
-#, fuzzy
 msgid "Date to"
-msgstr "Data"
+msgstr ""
 
 #: bin/jc.pl:604
-#, fuzzy
 msgid "Date worked"
-msgstr "Formato della data"
+msgstr ""
 
 #: bin/arap.pl:1039 bin/io.pl:1835
 msgid "Date: [_1]"
 msgstr ""
 
 #: bin/am.pl:2173
-#, fuzzy
 msgid "Day"
-msgstr "Mag"
+msgstr ""
 
 #: bin/arap.pl:769
 msgid "Day(s)"
@@ -2299,19 +2124,16 @@ msgid "Debit"
 msgstr "Dare"
 
 #: bin/am.pl:2863 sql/Pg-database.sql:2556
-#, fuzzy
 msgid "Debit Invoice"
-msgstr "Fattura"
+msgstr ""
 
 #: sql/Pg-database.sql:2555
-#, fuzzy
 msgid "Debit Note"
-msgstr "Dare"
+msgstr ""
 
 #: scripts/payment.pl:165
-#, fuzzy
 msgid "Debits"
-msgstr "Dare"
+msgstr ""
 
 #: bin/aa.pl:91 bin/ca.pl:83 bin/gl.pl:86 bin/io.pl:87
 #: LedgerSMB/App_State.pm:180
@@ -2325,9 +2147,8 @@ msgstr "Dicembre"
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
-#, fuzzy
 msgid "Decimal Places"
-msgstr "Numero di decimali"
+msgstr ""
 
 #: bin/am.pl:1342
 msgid "Default"
@@ -2343,9 +2164,8 @@ msgstr ""
 
 #: UI/am-defaults.html:100 UI/setup/migrate_sl_info.html:32
 #: UI/setup/upgrade_info.html:32
-#, fuzzy
 msgid "Default Country"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: bin/am.pl:73
 msgid "Default Email BCC"
@@ -2368,18 +2188,16 @@ msgid "Default Reportable"
 msgstr ""
 
 #: bin/am.pl:1305
-#, fuzzy
 msgid "Default Template"
-msgstr "Configurazione dei modelli"
+msgstr ""
 
 #: sql/Pg-database.sql:2498
 msgid "Defaults"
 msgstr ""
 
 #: bin/am.pl:1791
-#, fuzzy
 msgid "Defaults saved!"
-msgstr "Modello salvato!"
+msgstr ""
 
 #: bin/aa.pl:945 bin/aa.pl:974 bin/am.pl:102 bin/am.pl:114 bin/am.pl:199
 #: bin/am.pl:253 bin/am.pl:483 bin/am.pl:492 bin/gl.pl:275 bin/ic.pl:857
@@ -2397,31 +2215,27 @@ msgstr "Cancella"
 
 #: bin/am.pl:314
 msgid "Delete Account"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: scripts/vouchers.pl:493
-#, fuzzy
 msgid "Delete Batch"
-msgstr "Cancella Dataset"
+msgstr ""
 
 #: bin/am.pl:1250
-#, fuzzy
 msgid "Delete Language"
-msgstr "Lingua"
+msgstr ""
 
 #: bin/arap.pl:871 bin/arap.pl:877
-#, fuzzy
 msgid "Delete Schedule"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: bin/jc.pl:1298
 msgid "Delete Timecard"
 msgstr ""
 
 #: scripts/vouchers.pl:499
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: bin/am.pl:1261
 msgid "Deleting a language will also delete the templates for the language [_1]"
@@ -2431,9 +2245,8 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
 #: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
-#, fuzzy
 msgid "Delivery"
-msgstr "Data di spedizione"
+msgstr ""
 
 #: bin/io.pl:227 LedgerSMB/ScriptLib/Company.pm:558
 #: UI/Contact/history_filter.html:319 UI/Contact/search.html:288
@@ -2472,26 +2285,22 @@ msgstr ""
 #: UI/journal/search.html:73 UI/journal/search.html:296
 #: UI/payments/payment2.html:71 UI/payments/payments_detail.html:131
 #: UI/payments/payments_filter.html:52 UI/rp-search.html:13
-#, fuzzy
 msgid "Department"
-msgstr "Sollecito"
+msgstr ""
 
 #: bin/am.pl:719
-#, fuzzy
 msgid "Department deleted!"
-msgstr "Articolo Cancellato!"
+msgstr ""
 
 #: bin/am.pl:712
-#, fuzzy
 msgid "Department saved!"
-msgstr "Modello salvato!"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:68
 #: templates/demo_with_images/balance_sheet.html:68
 #: templates/xedemo/balance_sheet.html:68
-#, fuzzy
 msgid "Department:"
-msgstr "Sollecito"
+msgstr ""
 
 #: bin/rp.pl:628 bin/rp.pl:986 bin/rp.pl:1741 bin/rp.pl:1932 bin/rp.pl:1973
 #: templates/demo/income_statement.html:72
@@ -2501,9 +2310,8 @@ msgid "Department: [_1]"
 msgstr ""
 
 #: bin/am.pl:627 UI/payments/payment1.html:28 sql/Pg-database.sql:2579
-#, fuzzy
 msgid "Departments"
-msgstr "Pagamenti"
+msgstr ""
 
 #: sql/Pg-database.sql:2601
 msgid "Depreciate"
@@ -2518,16 +2326,14 @@ msgid "Depreciate Through"
 msgstr ""
 
 #: scripts/asset.pl:677 UI/accounts/edit.html:321 sql/Pg-database.sql:2605
-#, fuzzy
 msgid "Depreciation"
-msgstr "Descrizione"
+msgstr ""
 
 #: scripts/asset.pl:169 UI/asset/edit_asset.html:161
 #: UI/asset/edit_class.html:45 UI/asset/search_asset.html:152
 #: UI/asset/search_class.html:54
-#, fuzzy
 msgid "Depreciation Account"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: scripts/asset.pl:170 UI/asset/edit_class.html:23
 #: UI/asset/search_class.html:19
@@ -2617,25 +2423,21 @@ msgid "Description"
 msgstr "Descrizione"
 
 #: bin/pe.pl:1805
-#, fuzzy
 msgid "Description Translations"
-msgstr "Lista Transazioni"
+msgstr ""
 
 #: bin/am.pl:710 bin/am.pl:865 bin/am.pl:1035 bin/am.pl:1195 bin/am.pl:2046
-#, fuzzy
 msgid "Description missing!"
-msgstr "Descrizione"
+msgstr ""
 
 #: UI/asset/edit_asset.html:61 UI/asset/search_asset.html:55
 #: UI/taxform/add_taxform.html:47
-#, fuzzy
 msgid "Description:"
-msgstr "Descrizione"
+msgstr ""
 
 #: bin/rp.pl:1978
-#, fuzzy
 msgid "Description: [_1]"
-msgstr "Descrizione"
+msgstr ""
 
 #: bin/aa.pl:1620 bin/ic.pl:1081 bin/ic.pl:1599 bin/pe.pl:2519
 #: UI/Contact/history_filter.html:213 UI/Contact/search.html:215
@@ -2674,9 +2476,8 @@ msgid "Disc %"
 msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:556
-#, fuzzy
 msgid "Disc."
-msgstr "Sconto"
+msgstr ""
 
 #: scripts/payment.pl:903 UI/accounts/edit.html:200 UI/accounts/edit.html:240
 #: UI/am-business-form.html:16 UI/Contact/contact.html:517
@@ -2686,19 +2487,12 @@ msgid "Discount"
 msgstr "Sconto"
 
 #: bin/am.pl:793
-#, fuzzy
 msgid "Discount %"
-msgstr "Sconto"
+msgstr ""
 
 #: t/data/04-complex_template.html:242
-#, fuzzy
 msgid "Discount:"
-msgstr "Sconto"
-
-#: pos.conf.pl:41
-#, fuzzy
-msgid "Discover"
-msgstr "Sconto"
+msgstr ""
 
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
@@ -2786,9 +2580,8 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:78 templates/xedemo/invoice.html:108
 #: templates/xedemo/invoice.tex:118 templates/xedemo/receipt.tex:64
 #: templates/xedemo/statement.html:76
-#, fuzzy
 msgid "Due"
-msgstr "Dic"
+msgstr ""
 
 #: bin/aa.pl:691 bin/aa.pl:1718 bin/aa.pl:2052 bin/ir.pl:532 bin/is.pl:598
 #: bin/rp.pl:944 UI/orders/order.html:96 UI/taxform/details_report.html:22
@@ -2810,28 +2603,24 @@ msgid "E-mail"
 msgstr "E-mail"
 
 #: UI/rp-email.html:8
-#, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Manda il sollecito via e-mail a"
+msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "E-mail"
+msgstr ""
 
 #: bin/am.pl:2831 bin/io.pl:1638 bin/rp.pl:1417
 msgid "E-mail address missing!"
 msgstr "Indirizzo e-mail mancante!"
 
 #: bin/arap.pl:691
-#, fuzzy
 msgid "E-mail message"
-msgstr "E-mail"
+msgstr ""
 
 #: bin/io.pl:1451
-#, fuzzy
 msgid "E-mailed"
-msgstr "E-mail"
+msgstr ""
 
 #: bin/aa.pl:144 t/data/04-complex_template.html:506
 #: UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
@@ -2839,14 +2628,12 @@ msgid "Edit"
 msgstr "Modifica"
 
 #: bin/aa.pl:418 bin/aa.pl:452
-#, fuzzy
 msgid "Edit AP Transaction"
-msgstr "Transazione Fornitore"
+msgstr ""
 
 #: bin/aa.pl:417
-#, fuzzy
 msgid "Edit AR Transaction"
-msgstr "Transazione Cliente"
+msgstr ""
 
 #: scripts/account.pl:68
 msgid "Edit Account"
@@ -2854,87 +2641,75 @@ msgstr "Modifica Conto"
 
 #: bin/ic.pl:96 bin/ic.pl:743
 msgid "Edit Assembly"
-msgstr "Modifica Assemblato"
+msgstr ""
 
 #: scripts/asset.pl:99
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Modifica Assemblato"
+msgstr ""
 
 #: bin/am.pl:852
-#, fuzzy
 msgid "Edit Business"
-msgstr "Modifica Utente"
+msgstr ""
 
 #: bin/aa.pl:450
 msgid "Edit Credit Note"
 msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
-#, fuzzy
 msgid "Edit Customer"
-msgstr "Aggiungi Cliente"
+msgstr ""
 
 #: bin/aa.pl:448
 msgid "Edit Debit Note"
 msgstr ""
 
 #: bin/am.pl:696
-#, fuzzy
 msgid "Edit Department"
-msgstr "Modifica Modello"
+msgstr ""
 
 #: bin/pe.pl:2057
-#, fuzzy
 msgid "Edit Description Translations"
-msgstr "Lista Transazioni"
+msgstr ""
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:61
-#, fuzzy
 msgid "Edit Employee"
-msgstr "Dipendente"
+msgstr ""
 
 #: bin/am.pl:467
 msgid "Edit GIFI"
-msgstr "Modifica codice GIFI"
+msgstr ""
 
 #: bin/pe.pl:1525
-#, fuzzy
 msgid "Edit Group"
-msgstr "Modifica Conto"
+msgstr ""
 
 #: bin/pe.pl:62 bin/pe.pl:302
-#, fuzzy
 msgid "Edit Job"
-msgstr "Modifica"
+msgstr ""
 
 #: bin/ic.pl:97
 msgid "Edit Labor/Overhead"
 msgstr ""
 
 #: bin/am.pl:1184
-#, fuzzy
 msgid "Edit Language"
-msgstr "Lingua"
+msgstr ""
 
 #: bin/pos.pl:165
-#, fuzzy
 msgid "Edit POS Invoice"
-msgstr "Modifica Fattura di Vendita"
+msgstr ""
 
 #: bin/ic.pl:94 bin/ic.pl:741
 msgid "Edit Part"
-msgstr "Modifica Articolo"
+msgstr ""
 
 #: bin/am.pl:1751
-#, fuzzy
 msgid "Edit Preferences for [_1]"
-msgstr "Modifica Preferenze di"
+msgstr ""
 
 #: bin/pe.pl:1731
-#, fuzzy
 msgid "Edit Pricegroup"
-msgstr "Modifica Servizio"
+msgstr ""
 
 #: bin/pe.pl:659
 msgid "Edit Project"
@@ -2945,18 +2720,16 @@ msgid "Edit Purchase Order"
 msgstr "Modifica Ordine di acquisto"
 
 #: bin/oe.pl:105
-#, fuzzy
 msgid "Edit Quotation"
-msgstr "Modifica Articolo"
+msgstr ""
 
 #: bin/oe.pl:101
 msgid "Edit Request for Quotation"
 msgstr ""
 
 #: bin/am.pl:1020
-#, fuzzy
 msgid "Edit SIC"
-msgstr "Modifica codice GIFI"
+msgstr ""
 
 #: bin/oe.pl:96
 msgid "Edit Sales Order"
@@ -2967,42 +2740,36 @@ msgid "Edit Service"
 msgstr "Modifica Servizio"
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Taxform"
-msgstr "Modifica Articolo"
+msgstr ""
 
 #: bin/am.pl:1393 bin/am.pl:1411
 msgid "Edit Template"
 msgstr "Modifica Modello"
 
 #: bin/jc.pl:76
-#, fuzzy
 msgid "Edit Time Card"
-msgstr "Modifica Articolo"
+msgstr ""
 
 #: UI/Contact/contact.html:243
 msgid "Edit User"
 msgstr "Modifica Utente"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:59
-#, fuzzy
 msgid "Edit Vendor"
-msgstr "Aggiungi Fornitore"
+msgstr ""
 
 #: bin/ir.pl:99
-#, fuzzy
 msgid "Edit Vendor Invoice"
-msgstr "Modifica Fattura di Vendita"
+msgstr ""
 
 #: bin/am.pl:2033
-#, fuzzy
 msgid "Edit Warehouse"
-msgstr "Modifica Progetto"
+msgstr ""
 
 #: UI/Admin/edit_user.html:10
-#, fuzzy
 msgid "Editing User"
-msgstr "Modifica Utente"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
 msgid "Eight"
@@ -3021,14 +2788,12 @@ msgid "Eleven"
 msgstr "undici"
 
 #: LedgerSMB/Num2text.pm:71
-#, fuzzy
 msgid "Eleven-o"
-msgstr "undici"
+msgstr ""
 
 #: UI/employee.html:77 sql/Pg-database.sql:788
-#, fuzzy
 msgid "Email"
-msgstr "E-mail"
+msgstr ""
 
 #: bin/gl.pl:876
 msgid "Email CSV Report"
@@ -3055,27 +2820,23 @@ msgid "Employee"
 msgstr "Dipendente"
 
 #: UI/Admin/edit_user.html:116
-#, fuzzy
 msgid "Employee No."
-msgstr "Dipendente"
+msgstr ""
 
 #: bin/am.pl:66 scripts/employee.pl:310 t/data/04-complex_template.html:92
 #: UI/am-defaults.html:172 UI/Contact/contact.html:181
 #: UI/employee/filter.html:18 UI/employee/filter.html:112
 #: UI/setup/new_user.html:84
-#, fuzzy
 msgid "Employee Number"
-msgstr "Dipendente"
+msgstr ""
 
 #: UI/Contact/search.html:10
-#, fuzzy
 msgid "Employee Search"
-msgstr "Dipendente"
+msgstr ""
 
 #: sql/Pg-database.sql:2425
-#, fuzzy
 msgid "Employees"
-msgstr "Dipendente"
+msgstr ""
 
 #: UI/batch/filter.html:25
 msgid "Empty"
@@ -3084,28 +2845,24 @@ msgstr ""
 #: scripts/employee.pl:316 UI/Contact/contact.html:222
 #: UI/Contact/contact.html:400 UI/Contact/contact.html:484
 #: UI/employee/filter.html:210 UI/employee.html:127
-#, fuzzy
 msgid "End Date"
-msgstr "Data dell'ordine"
+msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
-#, fuzzy
 msgid "End Date:"
-msgstr "Data dell'ordine"
+msgstr ""
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
-#, fuzzy
 msgid "Enddate"
-msgstr "Aggiorna"
+msgstr ""
 
 #: UI/reconciliation/report.html:46
 msgid "Ending GL Balance:"
 msgstr ""
 
 #: UI/reconciliation/report.html:24 UI/reconciliation/report.html:38
-#, fuzzy
 msgid "Ending Statement Balance:"
-msgstr "Saldo"
+msgstr ""
 
 #: scripts/taxform.pl:137
 msgid "Ending year required"
@@ -3120,22 +2877,18 @@ msgid "Enforce transaction reversal for all dates"
 msgstr "Forza l'uso delle transazioni inverse per tutte le date"
 
 #: UI/inventory/adjustment_entry.html:11
-#, fuzzy
 msgid "Enter Inventory"
-msgstr "Inventario"
+msgstr ""
 
 #: UI/setup/new_user.html:7
-#, fuzzy
 msgid "Enter User"
-msgstr "Modifica Utente"
+msgstr ""
 
 #: UI/am-defaults.html:116
 msgid ""
 "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native "
 "and foreign currencies"
 msgstr ""
-"Inserisci fino a 3 valute separate da \":\" (es.: EUR:USD:CAD) per la valuta "
-"locale e quelle straniere"
 
 #: scripts/recon.pl:192
 msgid "Entered By"
@@ -3158,14 +2911,12 @@ msgid "Entity Code"
 msgstr ""
 
 #: bin/aa.pl:646
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Controllo accessi"
+msgstr ""
 
 #: sql/Pg-database.sql:919
-#, fuzzy
 msgid "Entity Credit Account"
-msgstr "Modifica Conto"
+msgstr ""
 
 #: bin/gl.pl:529 UI/accounts/edit.html:86 UI/journal/search.html:181
 msgid "Equity"
@@ -3230,14 +2981,12 @@ msgstr ""
 
 #: bin/aa.pl:1327 bin/ir.pl:1332 bin/is.pl:1400 bin/oe.pl:2265 bin/oe.pl:2609
 #: bin/pos.pl:700
-#, fuzzy
 msgid "Exchange rate missing!"
-msgstr "Data di Scadenza mancante!"
+msgstr ""
 
 #: bin/ps.pl:78
-#, fuzzy
 msgid "Expected"
-msgstr "Costi"
+msgstr ""
 
 #: bin/gl.pl:531 bin/ic.pl:683 bin/ic.pl:1912 UI/accounts/edit.html:88
 #: UI/accounts/edit.html:291 UI/accounts/edit.html:330 UI/am-defaults.html:82
@@ -3246,9 +2995,8 @@ msgid "Expense"
 msgstr "Costi"
 
 #: UI/asset/edit_asset.html:179
-#, fuzzy
 msgid "Expense Account"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: UI/accounts/edit.html:213
 msgid "Expense/Asset"
@@ -3257,9 +3005,8 @@ msgstr "Acquisti/Attivit&agrave;"
 #: templates/demo/income_statement.html:110
 #: templates/demo_with_images/income_statement.html:110
 #: templates/xedemo/income_statement.html:110
-#, fuzzy
 msgid "Expenses"
-msgstr "Costi"
+msgstr ""
 
 #: bin/ic.pl:1868 bin/io.pl:208 bin/pos.pl:757 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3275,9 +3022,8 @@ msgid "FX"
 msgstr ""
 
 #: bin/pe.pl:2940
-#, fuzzy
 msgid "Failed to save order!"
-msgstr "Non puoi salvare l'ordine!"
+msgstr ""
 
 #: sql/Pg-database.sql:783
 msgid "Fax"
@@ -3411,14 +3157,12 @@ msgid "Filtering From:"
 msgstr ""
 
 #: UI/payments/payments_filter.html:14
-#, fuzzy
 msgid "Filtering Payments"
-msgstr "Pagamenti"
+msgstr ""
 
 #: UI/payments/payments_filter.html:13
-#, fuzzy
 msgid "Filtering Receipts"
-msgstr "Incassi"
+msgstr ""
 
 #: t/data/04-complex_template.html:53
 msgid "First"
@@ -3436,23 +3180,20 @@ msgid "Five"
 msgstr "cinque"
 
 #: LedgerSMB/Num2text.pm:99
-#, fuzzy
 msgid "Five Hundred"
-msgstr "cento"
+msgstr ""
 
 #: UI/accounts/edit.html:312
-#, fuzzy
 msgid "Fixed Asset"
-msgstr "Attivit&agrave;"
+msgstr ""
 
 #: UI/accounts/edit.html:306 sql/Pg-database.sql:2587
 msgid "Fixed Assets"
 msgstr ""
 
 #: bin/arap.pl:797
-#, fuzzy
 msgid "For"
-msgstr "quattro"
+msgstr ""
 
 #: UI/am-defaults.html:88
 msgid "Foreign Exchange Gain"
@@ -3472,7 +3213,7 @@ msgstr "quaranta"
 
 #: LedgerSMB/Num2text.pm:63
 msgid "Four"
-msgstr "quattro"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:74
 msgid "Fourteen"
@@ -3505,23 +3246,20 @@ msgid "From"
 msgstr "Dal"
 
 #: UI/payments/search.html:74
-#, fuzzy
 msgid "From Date"
-msgstr "Data dell'ordine"
+msgstr ""
 
 #: UI/asset/import_asset.html:51
-#, fuzzy
 msgid "From File"
-msgstr "Dal"
+msgstr ""
 
 #: bin/oe.pl:3243
 msgid "From Warehouse"
 msgstr ""
 
 #: bin/bp.pl:330 bin/rp.pl:1992
-#, fuzzy
 msgid "From [_1]"
-msgstr "Dal"
+msgstr ""
 
 #: UI/asset/begin_report.html:31
 msgid "Full"
@@ -3556,13 +3294,12 @@ msgid "GL"
 msgstr ""
 
 #: bin/am.pl:55 UI/am-defaults.html:136
-#, fuzzy
 msgid "GL Reference Number"
-msgstr "Riferimento"
+msgstr ""
 
 #: bin/gl.pl:820
 msgid "GL Transaction"
-msgstr "Transazione di Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/gl.pl:921
 msgid "GL report sent to [_1]"
@@ -3577,88 +3314,72 @@ msgid "Gain (Loss)"
 msgstr ""
 
 #: UI/asset/begin_approval.html:46
-#, fuzzy
 msgid "Gain Account"
-msgstr "Collegamenti tra Conti"
+msgstr ""
 
 #: sql/Pg-database.sql:2385
-#, fuzzy
 msgid "General Journal"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/gl.pl:537
 msgid "General Ledger"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/gl.pl:458 UI/journal/search.html:16
-#, fuzzy
 msgid "General Ledger Reports"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/gl.pl:535
-#, fuzzy
 msgid "General Ledger: [_1] [_2]"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: sql/Pg-database.sql:2435 sql/Pg-database.sql:2472
-#, fuzzy
 msgid "Generate"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: UI/Contact/contact.html:312
 msgid "Generate Control Code"
 msgstr ""
 
 #: bin/oe.pl:3614
-#, fuzzy
 msgid "Generate Orders"
-msgstr "Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/oe.pl:1781 bin/oe.pl:3519
-#, fuzzy
 msgid "Generate Purchase Orders"
-msgstr "Ordini di acquisto"
+msgstr ""
 
 #: bin/oe.pl:1309
 msgid "Generate Purchase Orders from Sales Order"
 msgstr ""
 
 #: bin/oe.pl:1725
-#, fuzzy
 msgid "Generate Sales Order"
-msgstr "Modifica Ordine di vendita"
+msgstr ""
 
 #: bin/oe.pl:1253
 msgid "Generate Sales Order from Purchase Orders"
 msgstr ""
 
 #: bin/pe.pl:2489 bin/pe.pl:2669 bin/pe.pl:2759
-#, fuzzy
 msgid "Generate Sales Orders"
-msgstr "Ordini di vendita"
+msgstr ""
 
 #: sql/Pg-database.sql:784
 msgid "Generic Jabber"
 msgstr ""
 
-#: pos.conf.pl:44
-msgid "Gift Cert"
+#: t/data/04-strings-for-translation.html:8
+msgid "Goods & Services"
 msgstr ""
 
-#: t/data/04-strings-for-translation.html:8
-#, fuzzy
-msgid "Goods & Services"
-msgstr "Beni e Servizi"
-
 #: sql/Pg-database.sql:2386
-#, fuzzy
 msgid "Goods and Services"
-msgstr "Beni e Servizi"
+msgstr ""
 
 #: UI/payments/payments_detail.html:387
-#, fuzzy
 msgid "Grand Total"
-msgstr "Totale Linea"
+msgstr ""
 
 #: bin/ic.pl:429 bin/ic.pl:987 bin/ic.pl:993 bin/ic.pl:1632 bin/ic.pl:1796
 #: bin/ic.pl:2393 bin/ic.pl:2399 bin/ic.pl:2539 bin/ic.pl:3068 bin/io.pl:230
@@ -3669,28 +3390,24 @@ msgid "Group"
 msgstr ""
 
 #: bin/pe.pl:1817
-#, fuzzy
 msgid "Group Translations"
-msgstr "Transazione di Contabilit&agrave; generale"
+msgstr ""
 
 #: UI/io-email.html:81 UI/orders/order.html:297
 msgid "Group by"
 msgstr ""
 
 #: bin/pe.pl:1381
-#, fuzzy
 msgid "Group deleted!"
-msgstr "Codice GIFI cancellato!"
+msgstr ""
 
 #: bin/pe.pl:1314
-#, fuzzy
 msgid "Group missing!"
-msgstr "Manca l'importo"
+msgstr ""
 
 #: bin/pe.pl:1316
-#, fuzzy
 msgid "Group saved!"
-msgstr "Codice GIFI salvato!"
+msgstr ""
 
 #: bin/pe.pl:792 bin/pe.pl:1422 sql/Pg-database.sql:2463
 msgid "Groups"
@@ -3714,18 +3431,16 @@ msgstr "Modelli HTML"
 #: UI/rp-search-generate_income_statement.html:126
 #: UI/rp-search-generate_trial_balance.html:88 UI/rp-search-projects.html:70
 msgid "Heading"
-msgstr "Intestazione"
+msgstr ""
 
 #: t/data/04-complex_template.html:35 UI/Contact/contact.html:77
 #: sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
-#, fuzzy
 msgid "History"
-msgstr "Directory"
+msgstr ""
 
 #: UI/employee.html:115 sql/Pg-database.sql:785
-#, fuzzy
 msgid "Home Phone"
-msgstr "Tel."
+msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
@@ -3760,9 +3475,8 @@ msgstr ""
 #: templates/demo/printPayment.html:87
 #: templates/demo_with_images/printPayment.html:87
 #: templates/xedemo/printPayment.html:87
-#, fuzzy
 msgid "Identification"
-msgstr "Conciliazione"
+msgstr ""
 
 #: UI/rp-search.html:44
 msgid "Ignore Year-ends"
@@ -3773,15 +3487,13 @@ msgid "Image"
 msgstr "Immagine"
 
 #: UI/am-defaults.html:38
-#, fuzzy
 msgid "Images in Templates"
-msgstr "Modelli LaTeX"
+msgstr ""
 
 #: UI/Admin/edit_user.html:55 UI/setup/new_user.html:32
 #: sql/Pg-database.sql:2600
-#, fuzzy
 msgid "Import"
-msgstr "Prospetti"
+msgstr ""
 
 #: bin/ir.pl:726 bin/ir.pl:737
 msgid "Import Text"
@@ -3807,23 +3519,20 @@ msgid "In-line"
 msgstr "In-line"
 
 #: bin/pe.pl:847 bin/pe.pl:942 UI/Contact/search.html:317
-#, fuzzy
 msgid "Inactive"
-msgstr "Attivo"
+msgstr ""
 
 #: UI/rc-reconciliation.html:110 UI/rp-search-payments.html:90
 msgid "Include Exchange Rate Difference"
 msgstr ""
 
 #: UI/employee/filter.html:72
-#, fuzzy
 msgid "Include In Report"
-msgstr "Includi nel Prospetto"
+msgstr ""
 
 #: bin/arap.pl:617
-#, fuzzy
 msgid "Include Payment"
-msgstr "Conto Economico"
+msgstr ""
 
 #: bin/aa.pl:1785 bin/ic.pl:1363 bin/jc.pl:307 bin/oe.pl:1552
 #: UI/ca-list-selector.html:69 UI/Contact/history_filter.html:170
@@ -3863,9 +3572,8 @@ msgid "Income Statement"
 msgstr "Conto Economico"
 
 #: LedgerSMB/DBObject/User.pm:76
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Cambia password"
+msgstr ""
 
 #: bin/ic.pl:1199 bin/ic.pl:3075
 msgid "Individual Items"
@@ -3921,9 +3629,8 @@ msgid "Inventory"
 msgstr "Inventario"
 
 #: sql/Pg-database.sql:2484
-#, fuzzy
 msgid "Inventory Activity"
-msgstr "Inventario"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:2
 msgid "Inventory Adjustment Entry"
@@ -3934,11 +3641,8 @@ msgid "Inventory Adjustment Setup"
 msgstr ""
 
 #: bin/ic.pl:3608
-#, fuzzy
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
 msgstr ""
-"La quantit&agrave; in inventario deve essere zero per poter mettere "
-"l'articolo come obsoleto!"
 
 #: bin/ic.pl:3615
 msgid ""
@@ -3950,13 +3654,10 @@ msgstr ""
 #: bin/ic.pl:3614
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
-"La quantit&agrave; in inventario deve essere zero per poter mettere "
-"l'articolo come obsoleto!"
 
 #: bin/oe.pl:3078
-#, fuzzy
 msgid "Inventory saved!"
-msgstr "Fornitore salvato!"
+msgstr ""
 
 #: bin/oe.pl:3373
 msgid "Inventory transferred!"
@@ -4004,19 +3705,16 @@ msgstr "Fattura"
 #: templates/xedemo/packing_list.html:78 templates/xedemo/packing_list.tex:87
 #: templates/xedemo/pick_list.html:77 templates/xedemo/pick_list.tex:80
 #: templates/xedemo/statement.html:73 templates/xedemo/statement.tex:56
-#, fuzzy
 msgid "Invoice #"
-msgstr "Fattura"
+msgstr ""
 
 #: bin/aa.pl:683 bin/aa.pl:1716 bin/aa.pl:2048 bin/ir.pl:524 bin/is.pl:590
-#, fuzzy
 msgid "Invoice Created"
-msgstr "Data Registrazione Fattura"
+msgstr ""
 
 #: bin/aa.pl:1312
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "Manca la data della Fattura!"
+msgstr ""
 
 #: bin/aa.pl:687 bin/aa.pl:1690 bin/ir.pl:528 bin/is.pl:594
 #: UI/orders/order.html:90
@@ -4029,9 +3727,8 @@ msgstr "Manca la data della Fattura!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
-#, fuzzy
 msgid "Invoice No."
-msgstr "Fattura"
+msgstr ""
 
 #: bin/aa.pl:675 bin/aa.pl:1569 bin/aa.pl:1683 bin/aa.pl:1927 bin/bp.pl:100
 #: bin/ic.pl:1839 bin/ir.pl:515 bin/is.pl:581
@@ -4047,42 +3744,36 @@ msgid "Invoice Number missing!"
 msgstr "Manca il numero della Fattura!"
 
 #: bin/bp.pl:314
-#, fuzzy
 msgid "Invoice Number: [_1]"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: UI/taxform/details_report.html:24 UI/taxform/summary_report.html:23
-#, fuzzy
 msgid "Invoice Sum"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: UI/payments/payments_detail.html:213
-#, fuzzy
 msgid "Invoice Total"
-msgstr "Data Registrazione Fattura"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:145
-#, fuzzy
 msgid "Invoice date"
-msgstr "Data Registrazione Fattura"
+msgstr ""
 
 #: bin/ir.pl:1406 bin/is.pl:1507
 msgid "Invoice deleted!"
-msgstr "Fattura Cancellata!"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:146
-#, fuzzy
 msgid "Invoice due"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:295
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Data Registrazione Fattura"
+msgstr ""
 
 #: bin/aa.pl:2061 UI/Contact/history_filter.html:178
 msgid "Invoices"
-msgstr "Fatture"
+msgstr ""
 
 #: bin/ic.pl:3049 bin/io.pl:193 templates/demo/bin_list.html:146
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:134
@@ -4165,61 +3856,52 @@ msgid "Job"
 msgstr ""
 
 #: bin/jc.pl:1846
-#, fuzzy
 msgid "Job Description"
-msgstr "Descrizione"
+msgstr ""
 
 #: UI/payments/check_job.html:26
 msgid "Job Failed"
 msgstr ""
 
 #: bin/jc.pl:1364
-#, fuzzy
 msgid "Job Name"
-msgstr "Nome"
+msgstr ""
 
 #: bin/jc.pl:228 bin/jc.pl:496 bin/jc.pl:868 bin/jc.pl:1362 bin/jc.pl:1842
 #: bin/pe.pl:510 bin/pe.pl:762
-#, fuzzy
 msgid "Job Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/jc.pl:1150
-#, fuzzy
 msgid "Job Number missing!"
-msgstr "Manca il numero di conto!"
+msgstr ""
 
 #: UI/Contact/contact.html:137
 msgid "Job Title"
 msgstr ""
 
 #: t/data/04-complex_template.html:78
-#, fuzzy
 msgid "Job Title:"
-msgstr "Tipo di conto"
+msgstr ""
 
 #: bin/pe.pl:1377
-#, fuzzy
 msgid "Job deleted!"
-msgstr "Fornitore cancellato!"
+msgstr ""
 
 #: bin/pe.pl:1357
-#, fuzzy
 msgid "Job saved!"
-msgstr "Fornitore salvato!"
+msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
 #: templates/xedemo/timecard.tex:37
-#, fuzzy
 msgid "Job/Project #"
-msgstr "Progetto"
+msgstr ""
 
 #: bin/am.pl:65 UI/am-defaults.html:168
-#, fuzzy
 msgid "Job/Project Number"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/pe.pl:775 bin/pe.pl:952
 msgid "Jobs"
@@ -4271,9 +3953,8 @@ msgid "Labor Code"
 msgstr ""
 
 #: bin/jc.pl:1151
-#, fuzzy
 msgid "Labor Code missing!"
-msgstr "Manca la data!"
+msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
@@ -4293,28 +3974,24 @@ msgid "Language"
 msgstr "Lingua"
 
 #: bin/am.pl:1276
-#, fuzzy
 msgid "Language deleted!"
-msgstr "Fattura Cancellata!"
+msgstr ""
 
 #: bin/am.pl:1236
-#, fuzzy
 msgid "Language saved!"
-msgstr "Lingua"
+msgstr ""
 
 #: bin/am.pl:1116
-#, fuzzy
 msgid "Languages"
-msgstr "Lingua"
+msgstr ""
 
 #: bin/pe.pl:2033
 msgid "Languages not defined!"
 msgstr ""
 
 #: t/data/04-complex_template.html:67
-#, fuzzy
 msgid "Last"
-msgstr "Ultimo Costo"
+msgstr ""
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4325,22 +4002,20 @@ msgstr "Ultimo Costo"
 #: scripts/employee.pl:313 UI/Admin/edit_user.html:106
 #: UI/Admin/user_search.html:31 UI/Contact/contact.html:126
 #: UI/employee/filter.html:47 UI/employee/filter.html:168
-#, fuzzy
 msgid "Last Name"
-msgstr "Nome"
+msgstr ""
 
 #: UI/am-defaults.html:64
 msgid "Last Numbers & Default Accounts"
-msgstr "Ultimi numeri e Conti di Default"
+msgstr ""
 
 #: bin/rp.pl:275
 msgid "Last Only"
 msgstr ""
 
 #: scripts/recon.pl:191
-#, fuzzy
 msgid "Last Updated"
-msgstr "Aggiornato"
+msgstr ""
 
 #: UI/setup/new_user.html:75
 msgid "Last name"
@@ -4368,9 +4043,8 @@ msgid "LedgerSMB 1.3 found"
 msgstr ""
 
 #: UI/menu/expanding.html:5
-#, fuzzy
 msgid "LedgerSMB Accounting Menu"
-msgstr "Menu Contabilit&agrave;"
+msgstr ""
 
 #: UI/setup/complete.html:15 UI/setup/confirm_operation.html:79
 msgid "LedgerSMB Database Statistics"
@@ -4399,9 +4073,8 @@ msgstr ""
 #: templates/demo/balance_sheet.html:101
 #: templates/demo_with_images/balance_sheet.html:101
 #: templates/xedemo/balance_sheet.html:101
-#, fuzzy
 msgid "Liabilities"
-msgstr "Passivit&agrave;"
+msgstr ""
 
 #: bin/gl.pl:528 UI/accounts/edit.html:85 UI/journal/search.html:175
 msgid "Liability"
@@ -4417,25 +4090,23 @@ msgstr "Totale Linea"
 
 #: bin/am.pl:198
 msgid "Link"
-msgstr "Collegamenti"
+msgstr ""
 
 #: bin/ic.pl:788 bin/pe.pl:369
 msgid "Link Accounts"
 msgstr "Collegamenti tra Conti"
 
 #: bin/ic.pl:3063
-#, fuzzy
 msgid "List"
-msgstr "Lista codici GIFI"
+msgstr ""
 
 #: sql/Pg-database.sql:2501
 msgid "List Accounts"
-msgstr "Lista Conti"
+msgstr ""
 
 #: sql/Pg-database.sql:2507
-#, fuzzy
 msgid "List Businesses"
-msgstr "Partita IVA"
+msgstr ""
 
 #: sql/Pg-database.sql:2597
 msgid "List Classes"
@@ -4450,18 +4121,16 @@ msgid "List GIFI"
 msgstr "Lista codici GIFI"
 
 #: sql/Pg-database.sql:2509
-#, fuzzy
 msgid "List Languages"
-msgstr "Lingua"
+msgstr ""
 
 #: bin/ic.pl:446 bin/ic.pl:998 bin/ic.pl:1813 bin/pe.pl:391
 msgid "List Price"
 msgstr "Prezzo di Listino"
 
 #: sql/Pg-database.sql:2511
-#, fuzzy
 msgid "List SIC"
-msgstr "Lista codici GIFI"
+msgstr ""
 
 #: sql/Pg-database.sql:2585
 msgid "List Tax Forms"
@@ -4469,7 +4138,7 @@ msgstr ""
 
 #: bin/ca.pl:193 UI/ca-list-selector.html:96
 msgid "List Transactions"
-msgstr "Lista Transazioni"
+msgstr ""
 
 #: sql/Pg-database.sql:2505
 msgid "List Warehouse"
@@ -4478,14 +4147,12 @@ msgstr ""
 #: scripts/asset.pl:319 UI/asset/edit_asset.html:134
 #: UI/asset/search_asset.html:125 UI/payments/payment2.html:38
 #: UI/payments/use_overpayment2.html:34
-#, fuzzy
 msgid "Location"
-msgstr "Conciliazione"
+msgstr ""
 
 #: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
-#, fuzzy
 msgid "Locations"
-msgstr "Conciliazione"
+msgstr ""
 
 #: UI/payments/payments_detail.html:362
 msgid "Locked by [_1]"
@@ -4503,7 +4170,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr "Login"
 
@@ -4520,9 +4187,8 @@ msgid "Loss"
 msgstr ""
 
 #: UI/asset/begin_approval.html:56
-#, fuzzy
 msgid "Loss Account"
-msgstr "Lista Conti"
+msgstr ""
 
 #: sql/Pg-database.sql:781
 msgid "MSN"
@@ -4559,9 +4225,8 @@ msgid "Manager:"
 msgstr ""
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
-#, fuzzy
 msgid "Manual"
-msgstr "Gennaio"
+msgstr ""
 
 #: bin/aa.pl:82 bin/ca.pl:74 bin/gl.pl:77 bin/io.pl:78
 #: LedgerSMB/App_State.pm:169
@@ -4618,9 +4283,8 @@ msgid "Message"
 msgstr "Messaggio"
 
 #: bin/arap.pl:1044
-#, fuzzy
 msgid "Message: "
-msgstr "Messaggio"
+msgstr ""
 
 #: scripts/asset.pl:1009 UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
@@ -4647,12 +4311,11 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:103
 msgid "Million"
-msgstr "milione"
+msgstr ""
 
 #: UI/am-taxes.html:13
-#, fuzzy
 msgid "Min Taxable"
-msgstr "Tassabile"
+msgstr ""
 
 #: UI/batch/filter.html:50 UI/batch/search_transactions.html:43
 msgid "Minimum Value"
@@ -4698,9 +4361,8 @@ msgid "More information has been reported in the error logs"
 msgstr ""
 
 #: sql/Pg-database.sql:682
-#, fuzzy
 msgid "Mr."
-msgstr "Mar"
+msgstr ""
 
 #: sql/Pg-database.sql:683
 msgid "Mrs."
@@ -4722,9 +4384,8 @@ msgstr "Nome"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
-#, fuzzy
 msgid "Name:"
-msgstr "Nome"
+msgstr ""
 
 #: sql/Pg-database.sql:2602
 msgid "Net Book Value"
@@ -4748,14 +4409,12 @@ msgid "New Asset Report Search"
 msgstr ""
 
 #: UI/reconciliation/upload.html:6
-#, fuzzy
 msgid "New Reconciliation Report"
-msgstr "Conciliazione"
+msgstr ""
 
 #: UI/Admin/edit_user.html:13
-#, fuzzy
 msgid "New User"
-msgstr "Utente"
+msgstr ""
 
 #: sql/Pg-database.sql:2589
 msgid "New Window"
@@ -4767,23 +4426,20 @@ msgid "Next"
 msgstr ""
 
 #: bin/arap.pl:626
-#, fuzzy
 msgid "Next Date"
-msgstr "Scadenza Fattura"
+msgstr ""
 
 #: bin/am.pl:2283
-#, fuzzy
 msgid "Next Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:68
 msgid "Nine"
 msgstr "nove"
 
 #: LedgerSMB/Num2text.pm:101
-#, fuzzy
 msgid "Nine Hundred"
-msgstr "cento"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:79
 msgid "Nineteen"
@@ -4800,14 +4456,12 @@ msgid "No"
 msgstr "No"
 
 #: LedgerSMB/ScriptLib/Company.pm:666
-#, fuzzy
 msgid "No AR or AP Account Selected"
-msgstr "Conto cancellato!"
+msgstr ""
 
 #: bin/jc.pl:147 bin/jc.pl:260
-#, fuzzy
 msgid "No Employees on file!"
-msgstr "Fornitore non in archivio!"
+msgstr ""
 
 #: bin/ic.pl:2455
 msgid "No History!"
@@ -4818,23 +4472,20 @@ msgid "No ID Set"
 msgstr ""
 
 #: bin/jc.pl:127
-#, fuzzy
 msgid "No Labor codes on file!"
-msgstr "Fornitore non in archivio!"
+msgstr ""
 
 #: bin/jc.pl:134
-#, fuzzy
 msgid "No Parts on file!"
-msgstr "Fornitore non in archivio!"
+msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
 msgstr ""
 
 #: bin/jc.pl:130
-#, fuzzy
 msgid "No Services on file!"
-msgstr "Progetto non archiviato!"
+msgstr ""
 
 #: scripts/setup.pl:620
 msgid "No blank employee name"
@@ -4865,9 +4516,8 @@ msgid "No open Jobs!"
 msgstr ""
 
 #: bin/jc.pl:106 bin/pe.pl:2471
-#, fuzzy
 msgid "No open Projects!"
-msgstr "Progetti"
+msgstr ""
 
 #: scripts/payment.pl:1345
 msgid "No overpayment account selected.  Was one set up?"
@@ -4882,9 +4532,8 @@ msgid "No."
 msgstr "No."
 
 #: sql/Pg-database.sql:2394
-#, fuzzy
 msgid "Non-Taxable"
-msgstr "Tassabile"
+msgstr ""
 
 #: bin/jc.pl:642
 msgid "Non-chargeable"
@@ -4897,18 +4546,16 @@ msgid ""
 msgstr ""
 
 #: sql/Pg-database.sql:2411
-#, fuzzy
 msgid "Non-taxable"
-msgstr "Tassabile"
+msgstr ""
 
 #: UI/accounts/edit.html:276
 msgid "Non-tracking Items"
 msgstr ""
 
 #: scripts/setup.pl:397
-#, fuzzy
 msgid "Non-unique invoice numbers"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: bin/rp.pl:276
 msgid "None"
@@ -4923,9 +4570,8 @@ msgid "Not Submitted"
 msgstr ""
 
 #: UI/Contact/contact.html:1170
-#, fuzzy
 msgid "Note Class"
-msgstr "Note"
+msgstr ""
 
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
@@ -4957,9 +4603,8 @@ msgid "Notes:<br />"
 msgstr ""
 
 #: bin/oe.pl:3075
-#, fuzzy
 msgid "Nothing entered!"
-msgstr "Non hai selezionato nulla!"
+msgstr ""
 
 #: bin/bp.pl:192 bin/oe.pl:3390 bin/oe.pl:3656 bin/oe.pl:3680 bin/pe.pl:2789
 #: bin/rp.pl:1386 bin/rp.pl:1646
@@ -4967,14 +4612,12 @@ msgid "Nothing selected!"
 msgstr "Non hai selezionato nulla!"
 
 #: bin/arapprn.pl:121
-#, fuzzy
 msgid "Nothing to print!"
-msgstr "Nulla da cancellare!"
+msgstr ""
 
 #: bin/oe.pl:3102
-#, fuzzy
 msgid "Nothing to transfer!"
-msgstr "Nulla da cancellare!"
+msgstr ""
 
 #: bin/aa.pl:90 bin/ca.pl:82 bin/gl.pl:85 bin/io.pl:86
 #: LedgerSMB/App_State.pm:179
@@ -5047,22 +4690,20 @@ msgid "Number Format"
 msgstr "Formato Numerico"
 
 #: bin/io.pl:1144
-#, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Manca il codice nella riga"
+msgstr ""
 
 #: bin/oe.pl:1865
 msgid "O"
-msgstr "O"
+msgstr ""
 
 #: UI/Contact/pricelist.html:96
 msgid "ODS"
 msgstr ""
 
 #: bin/io.pl:212
-#, fuzzy
 msgid "OH"
-msgstr "O"
+msgstr ""
 
 #: UI/payments/payment2.html:224
 msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
@@ -5087,9 +4728,8 @@ msgid "Off Hold"
 msgstr ""
 
 #: UI/users/preferences.html:26
-#, fuzzy
 msgid "Old Password"
-msgstr "Password"
+msgstr ""
 
 #: bin/ic.pl:480 bin/ic.pl:706 bin/ic.pl:1114 bin/ic.pl:1494
 #: UI/inventory/adjustment_entry.html:25
@@ -5097,9 +4737,8 @@ msgid "On Hand"
 msgstr "Disponibilit&agrave;"
 
 #: bin/aa.pl:957 bin/aa.pl:1776 bin/ir.pl:904 bin/is.pl:802
-#, fuzzy
 msgid "On Hold"
-msgstr "Disponibilit&agrave;"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:59
 msgid "One"
@@ -5121,9 +4760,8 @@ msgid "Open"
 msgstr "Aperto"
 
 #: bin/pos.pl:619
-#, fuzzy
 msgid "Open Till"
-msgstr "Aperto"
+msgstr ""
 
 #: UI/logout.html:15
 msgid ""
@@ -5136,9 +4774,8 @@ msgid "Options"
 msgstr ""
 
 #: UI/file/attachment_screen.html:35
-#, fuzzy
 msgid "Or"
-msgstr "O"
+msgstr ""
 
 #: UI/create_batch.html:43
 msgid "Or Add To Batch"
@@ -5177,14 +4814,12 @@ msgstr "Ordine"
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
 #: templates/xedemo/work_order.html:102
-#, fuzzy
 msgid "Order #"
-msgstr "Ordine"
+msgstr ""
 
 #: UI/reconciliation/report.html:245
-#, fuzzy
 msgid "Order By"
-msgstr "Ordine"
+msgstr ""
 
 #: bin/oe.pl:436 bin/oe.pl:2878 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103
@@ -5217,41 +4852,35 @@ msgid "Order Number missing!"
 msgstr "Manca il numero dell'ordine!"
 
 #: bin/bp.pl:319
-#, fuzzy
 msgid "Order Number: [_1]"
-msgstr "Numero Fattura Fornitore"
+msgstr ""
 
 #: bin/oe.pl:2389
 msgid "Order deleted!"
 msgstr "Ordine Cancellato!"
 
 #: bin/oe.pl:3642 bin/oe.pl:3669
-#, fuzzy
 msgid "Order generation failed!"
-msgstr "Ordine Cancellato!"
+msgstr ""
 
 #: templates/demo/statement.html:74
 #: templates/demo_with_images/statement.html:74
 #: templates/xedemo/statement.html:74
-#, fuzzy
 msgid "Order#"
-msgstr "Ordine"
+msgstr ""
 
 #: UI/am-taxes.html:16
-#, fuzzy
 msgid "Ordering"
-msgstr "Ordine"
+msgstr ""
 
 #: UI/Contact/history_filter.html:186 UI/setup/complete.html:23
 #: UI/setup/confirm_operation.html:87
-#, fuzzy
 msgid "Orders"
-msgstr "Ordine"
+msgstr ""
 
 #: bin/pe.pl:2947
-#, fuzzy
 msgid "Orders generated!"
-msgstr "Ordine Cancellato!"
+msgstr ""
 
 #: bin/ic.pl:1108 bin/ic.pl:1491 bin/pe.pl:727 bin/pe.pl:934 bin/pe.pl:1408
 #: bin/pe.pl:1613 UI/Contact/search.html:318
@@ -5263,34 +4892,29 @@ msgid "Other Actions"
 msgstr ""
 
 #: scripts/recon.pl:307
-#, fuzzy
 msgid "Our Balance"
-msgstr "Saldo"
+msgstr ""
 
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/reconciliation/report.html:197
-#, fuzzy
 msgid "Our Credits"
-msgstr "Avere"
+msgstr ""
 
 #: UI/reconciliation/report.html:74 UI/reconciliation/report.html:137
 #: UI/reconciliation/report.html:196
-#, fuzzy
 msgid "Our Debits"
-msgstr "Dare"
+msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
 #: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
 #: templates/xedemo/timecard.tex:30
-#, fuzzy
 msgid "Out"
-msgstr "Ott"
+msgstr ""
 
 #: bin/gl.pl:1190
-#, fuzzy
 msgid "Out of balance transaction!"
-msgstr "Non conciliato!"
+msgstr ""
 
 #: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2391
 #: sql/Pg-database.sql:2408
@@ -5298,9 +4922,8 @@ msgid "Outstanding"
 msgstr ""
 
 #: UI/reconciliation/report.html:189
-#, fuzzy
 msgid "Outstanding Transactions"
-msgstr "Lista Transazioni"
+msgstr ""
 
 #: UI/rc-display-form.html:79
 msgid "Over"
@@ -5311,14 +4934,12 @@ msgid "Overdue"
 msgstr ""
 
 #: UI/accounts/edit.html:190 UI/accounts/edit.html:231
-#, fuzzy
 msgid "Overpayment"
-msgstr "Pagamento"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:147
-#, fuzzy
 msgid "Overpayment Account"
-msgstr "Cancella Conto"
+msgstr ""
 
 #: bin/am.pl:2438 bin/arapprn.pl:535 bin/io.pl:1438 bin/jc.pl:2047
 #: bin/rp.pl:1349 UI/Contact/pricelist.html:91
@@ -5326,9 +4947,8 @@ msgid "PDF"
 msgstr "PDF"
 
 #: bin/ic.pl:2591
-#, fuzzy
 msgid "PO"
-msgstr "O"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:82 templates/demo/ap_transaction.tex:63
 #: templates/demo/ar_transaction.html:81
@@ -5344,14 +4964,12 @@ msgstr ""
 #: bin/aa.pl:695 bin/aa.pl:1577 bin/aa.pl:1688 bin/aa.pl:1939 bin/aa.pl:2071
 #: bin/ir.pl:536 bin/is.pl:602 bin/oe.pl:444 bin/oe.pl:1464 bin/oe.pl:1471
 #: bin/oe.pl:1841 bin/oe.pl:1915 bin/oe.pl:2883 UI/orders/order.html:102
-#, fuzzy
 msgid "PO Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: sql/Pg-database.sql:2544
-#, fuzzy
 msgid "POS Invoice"
-msgstr "Fattura"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:270
 msgid "POST"
@@ -5382,9 +5000,8 @@ msgid "Packing List Number missing!"
 msgstr "Manca il codice della Packing List!"
 
 #: bin/bp.pl:52 bin/bp.pl:87 sql/Pg-database.sql:2490
-#, fuzzy
 msgid "Packing Lists"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: bin/aa.pl:1714 bin/aa.pl:2082 scripts/payment.pl:902
 #: templates/demo/invoice.html:184 templates/demo/invoice.tex:164
@@ -5403,18 +5020,16 @@ msgstr "Articolo"
 #: LedgerSMB/ScriptLib/Company.pm:552 UI/am-defaults.html:164
 #: UI/Contact/history_filter.html:248 UI/Contact/search.html:225
 #: UI/rp-search-generate_inv_activity.html:56
-#, fuzzy
 msgid "Part Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:1074
 msgid "Part not found"
 msgstr ""
 
 #: UI/asset/begin_report.html:42
-#, fuzzy
 msgid "Partial"
-msgstr "Articolo"
+msgstr ""
 
 #: scripts/asset.pl:796
 msgid "Partial Disposal Report [_1] on date [_2]"
@@ -5422,22 +5037,20 @@ msgstr ""
 
 #: UI/Contact/pricelist.csv:7 UI/Contact/pricelist.html:22
 #: UI/Contact/pricelist.tex:12 UI/inventory/adjustment_entry.html:22
-#, fuzzy
 msgid "Partnumber"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/ic.pl:1288 sql/Pg-database.sql:2459
 msgid "Parts"
-msgstr "Articoli"
+msgstr ""
 
 #: bin/ic.pl:2458 bin/ic.pl:2606
 msgid "Parts Requirements"
 msgstr ""
 
 #: sql/Pg-database.sql:2469
-#, fuzzy
 msgid "Partsgroup"
-msgstr "Articoli"
+msgstr ""
 
 #: UI/Admin/edit_user.html:47 UI/am-userconfig.html:17 UI/get_password.html:41
 #: UI/login.html:12 UI/setup/credentials.html:30 UI/setup/new_user.html:28
@@ -5446,9 +5059,8 @@ msgid "Password"
 msgstr "Password"
 
 #: bin/am.pl:70 UI/am-defaults.html:188
-#, fuzzy
 msgid "Password Duration"
-msgstr "Password cambiata!"
+msgstr ""
 
 #: bin/am.pl:1815
 msgid "Password does not match!"
@@ -5459,18 +5071,16 @@ msgid "Password duration must be an integer"
 msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:148
-#, fuzzy
 msgid "Password required"
-msgstr "Password cambiata!"
+msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:79
 msgid "Passwords must match."
 msgstr ""
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:127
-#, fuzzy
 msgid "Pay From"
-msgstr "Dal"
+msgstr ""
 
 #: scripts/payment.pl:159 UI/Contact/contact.html:461
 #: UI/payments/payments_filter.html:128
@@ -5497,33 +5107,28 @@ msgstr "Pagamento"
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
 #: templates/xedemo/printPayment.html:32
-#, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Numero Fattura Fornitore"
+msgstr ""
 
 #: UI/payments/payments_filter.html:124
-#, fuzzy
 msgid "Payment Processing"
-msgstr "Manca la data del pagamento!"
+msgstr ""
 
 #: scripts/payment.pl:379
-#, fuzzy
 msgid "Payment Results"
-msgstr "Pagamenti"
+msgstr ""
 
 #: UI/payments/search.html:85
 msgid "Payment Reversal Information"
 msgstr ""
 
 #: UI/payments/payments_detail.html:184
-#, fuzzy
 msgid "Payment Type :"
-msgstr "Pagamento Salvato"
+msgstr ""
 
 #: UI/payments/payments_filter.html:149
-#, fuzzy
 msgid "Payment Type:"
-msgstr "Pagamento Salvato"
+msgstr ""
 
 #: bin/aa.pl:1335 bin/ir.pl:1340 bin/is.pl:1408
 msgid "Payment date missing!"
@@ -5572,14 +5177,12 @@ msgid "Percent"
 msgstr ""
 
 #: scripts/asset.pl:803
-#, fuzzy
 msgid "Percent Disposed"
-msgstr "Pagamento Salvato"
+msgstr ""
 
 #: scripts/asset.pl:806
-#, fuzzy
 msgid "Percent Remaining"
-msgstr "Rimanente"
+msgstr ""
 
 #: bin/aa.pl:1642 bin/ic.pl:2412 bin/jc.pl:172 bin/oe.pl:1444 bin/pe.pl:708
 #: bin/pe.pl:2433 UI/bp-search.html:34 UI/ca-list-selector.html:57
@@ -5590,13 +5193,12 @@ msgstr "Rimanente"
 #: UI/rp-search-generate_tax_report.html:21
 #: UI/rp-search-generate_trial_balance.html:21 UI/rp-search-payments.html:49
 #: UI/rp-search-projects.html:25 UI/taxform/filter.html:40
-#, fuzzy
 msgid "Period"
-msgstr "per il Periodo"
+msgstr ""
 
 #: UI/Contact/search.html:52
 msgid "Phone"
-msgstr "Tel."
+msgstr ""
 
 #: bin/am.pl:2865 bin/io.pl:1361 bin/io.pl:1379 bin/io.pl:1570 bin/is.pl:293
 #: bin/oe.pl:304 bin/oe.pl:323 templates/demo/pick_list.html:4
@@ -5607,14 +5209,12 @@ msgstr "Tel."
 #: templates/xedemo/pick_list.html:4 templates/xedemo/pick_list.html:18
 #: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2518
 #: sql/Pg-database.sql:2532
-#, fuzzy
 msgid "Pick List"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: bin/bp.pl:53 bin/bp.pl:88 sql/Pg-database.sql:2491
-#, fuzzy
 msgid "Pick Lists"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: templates/demo/statement.tex:87 templates/demo_with_images/statement.tex:87
 #: templates/xedemo/statement.tex:87
@@ -5655,9 +5255,8 @@ msgid "Point of Sale"
 msgstr ""
 
 #: UI/employee/filter.html:84
-#, fuzzy
 msgid "Position"
-msgstr "Descrizione"
+msgstr ""
 
 #: bin/aa.pl:941 bin/aa.pl:970 bin/gl.pl:269 bin/ir.pl:877 bin/ir.pl:891
 #: bin/is.pl:980 bin/is.pl:1001 bin/pos.pl:611 scripts/drafts.pl:251
@@ -5670,24 +5269,20 @@ msgid "Post Batch"
 msgstr ""
 
 #: scripts/recon.pl:306 UI/create_batch.html:51
-#, fuzzy
 msgid "Post Date"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
-#, fuzzy
 msgid "Post Yearend"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/aa.pl:988 bin/gl.pl:312
-#, fuzzy
 msgid "Post as Saved"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/aa.pl:993 bin/gl.pl:319
-#, fuzzy
 msgid "Post as Shown"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/aa.pl:944 bin/gl.pl:271 bin/ir.pl:878 bin/ir.pl:893 bin/is.pl:983
 msgid "Post as new"
@@ -5695,34 +5290,28 @@ msgstr "Salva come nuovo"
 
 #: UI/reconciliation/report.html:72 UI/reconciliation/report.html:135
 #: UI/reconciliation/report.html:194
-#, fuzzy
 msgid "Posted Date"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/pos.pl:726
-#, fuzzy
 msgid "Posted!"
-msgstr "Salva"
+msgstr ""
 
 #: UI/payments/payments_detail.html:108
-#, fuzzy
 msgid "Posting Date:"
-msgstr "Datasets esistenti"
+msgstr ""
 
 #: bin/am.pl:2749
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Transazione di Contabilit&agrave; generale"
+msgstr ""
 
 #: bin/am.pl:2589
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Modifica Fattura di Vendita"
+msgstr ""
 
 #: bin/am.pl:2611 bin/am.pl:2620
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Transazione Fornitore"
+msgstr ""
 
 #: bin/am.pl:2599
 msgid "Posting Vendor Invoice [_1]"
@@ -5738,14 +5327,12 @@ msgid "Preferences"
 msgstr "Preferenze"
 
 #: UI/users/preferences.html:14
-#, fuzzy
 msgid "Preferences Saved"
-msgstr "Preferenze Salvate!"
+msgstr ""
 
 #: UI/users/preferences.html:12
-#, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Modifica Preferenze di"
+msgstr ""
 
 #: bin/am.pl:1820
 msgid "Preferences saved!"
@@ -5769,35 +5356,29 @@ msgstr "Prezzo"
 
 #: bin/ic.pl:2895 bin/pe.pl:813 bin/pe.pl:1618 bin/pe.pl:1625 bin/pe.pl:1754
 #: UI/Contact/contact.html:590
-#, fuzzy
 msgid "Pricegroup"
-msgstr "Prezzo"
+msgstr ""
 
 #: bin/pe.pl:1385
-#, fuzzy
 msgid "Pricegroup deleted!"
-msgstr "Ordine Cancellato!"
+msgstr ""
 
 #: bin/pe.pl:1320
-#, fuzzy
 msgid "Pricegroup missing!"
-msgstr "Manca la Porta"
+msgstr ""
 
 #: bin/pe.pl:1322
-#, fuzzy
 msgid "Pricegroup saved!"
-msgstr "Ordine Salvato!"
+msgstr ""
 
 #: bin/pe.pl:807 bin/pe.pl:1628 sql/Pg-database.sql:2464
-#, fuzzy
 msgid "Pricegroups"
-msgstr "Prezzo"
+msgstr ""
 
 #: t/data/04-complex_template.html:361 UI/Contact/contact.html:737
 #: UI/Contact/pricelist.html:16
-#, fuzzy
 msgid "Pricelist"
-msgstr "Prezzo"
+msgstr ""
 
 #: UI/Contact/pricelist.tex:65
 msgid "Pricelist for [_1]"
@@ -5817,9 +5398,8 @@ msgid "Print"
 msgstr "Stampa"
 
 #: bin/bp.pl:123
-#, fuzzy
 msgid "Print [_1]"
-msgstr "Stampa"
+msgstr ""
 
 #: bin/pos.pl:612 bin/pos.pl:623
 msgid "Print and Post"
@@ -5831,29 +5411,25 @@ msgid "Print and Save"
 msgstr ""
 
 #: bin/jc.pl:1229
-#, fuzzy
 msgid "Print and Save Transaction"
-msgstr "Lista Transazioni"
+msgstr ""
 
 #: bin/jc.pl:691 bin/jc.pl:710 bin/jc.pl:935 bin/jc.pl:956 bin/oe.pl:800
 #: bin/oe.pl:831
-#, fuzzy
 msgid "Print and Save as new"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/arapprn.pl:558 bin/io.pl:1450 bin/jc.pl:2069 bin/pos.pl:1092
-#, fuzzy
 msgid "Printed"
-msgstr "Stampante"
+msgstr ""
 
 #: UI/am-userconfig.html:42 UI/users/preferences.html:83
 msgid "Printer"
-msgstr "Stampante"
+msgstr ""
 
 #: bin/am.pl:2786 bin/bp.pl:253
-#, fuzzy
 msgid "Printing"
-msgstr "Stampa"
+msgstr ""
 
 #: scripts/asset.pl:742
 msgid "Prior Dep."
@@ -5868,18 +5444,16 @@ msgid "Proceeds"
 msgstr ""
 
 #: bin/am.pl:2360 UI/am-list-recurring.html:62
-#, fuzzy
 msgid "Process Transactions"
-msgstr "Transazioni Fornitori"
+msgstr ""
 
 #: bin/pe.pl:216 bin/pe.pl:230 bin/pe.pl:536 bin/pe.pl:1008
 msgid "Production"
 msgstr ""
 
 #: bin/am.pl:635 UI/am-department-form.html:36
-#, fuzzy
 msgid "Profit Center"
-msgstr "Stampante"
+msgstr ""
 
 #: bin/aa.pl:712 bin/aa.pl:2136 bin/io.pl:229 bin/pe.pl:946 bin/pe.pl:2509
 #: UI/io-email.html:83 UI/journal/journal_entry.html:133
@@ -5893,41 +5467,36 @@ msgid "Project Description Translations"
 msgstr ""
 
 #: bin/jc.pl:1369
-#, fuzzy
 msgid "Project Name"
-msgstr "Progetto salvato!"
+msgstr ""
 
 #: bin/jc.pl:232 bin/jc.pl:504 bin/jc.pl:1367 bin/pe.pl:1827 bin/pe.pl:2659
 #: bin/rp.pl:324 LedgerSMB/ScriptLib/Company.pm:559
 #: UI/Contact/history_filter.html:328 UI/Contact/search.html:296
-#, fuzzy
 msgid "Project Number"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/jc.pl:1146
 msgid "Project Number missing!"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/rp.pl:633 templates/demo/income_statement.html:76
 #: templates/demo_with_images/income_statement.html:76
 #: templates/xedemo/income_statement.html:76
-#, fuzzy
 msgid "Project Number: [_1]"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/aa.pl:1694
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/rp.pl:565
-#, fuzzy
 msgid "Project Transactions"
-msgstr "Transazioni Fornitori"
+msgstr ""
 
 #: bin/pe.pl:1373
 msgid "Project deleted!"
-msgstr "Progetto cancellato!"
+msgstr ""
 
 #: bin/arap.pl:375
 msgid "Project not on file!"
@@ -5935,17 +5504,15 @@ msgstr "Progetto non archiviato!"
 
 #: bin/pe.pl:1310
 msgid "Project saved!"
-msgstr "Progetto salvato!"
+msgstr ""
 
 #: bin/jc.pl:1374
-#, fuzzy
 msgid "Project/Job Name"
-msgstr "Progetto salvato!"
+msgstr ""
 
 #: bin/jc.pl:236 bin/jc.pl:508 bin/jc.pl:1372
-#, fuzzy
 msgid "Project/Job Number"
-msgstr "Manca il codice del progetto!"
+msgstr ""
 
 #: bin/pe.pl:732 bin/pe.pl:947 UI/payments/payment2.html:61
 #: sql/Pg-database.sql:2565
@@ -5953,14 +5520,12 @@ msgid "Projects"
 msgstr "Progetti"
 
 #: scripts/asset.pl:315 scripts/asset.pl:498
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Ordine di acquisto"
+msgstr ""
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Ordine di acquisto"
+msgstr ""
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
@@ -5979,9 +5544,8 @@ msgid "Purchase Order"
 msgstr "Ordine di acquisto"
 
 #: UI/am-defaults.html:152
-#, fuzzy
 msgid "Purchase Order Number"
-msgstr "Ordine di acquisto"
+msgstr ""
 
 #: bin/am.pl:2232 bin/bp.pl:56 bin/bp.pl:91 bin/ic.pl:1027 bin/oe.pl:1234
 #: bin/oe.pl:1709 bin/oe.pl:1719 bin/oe.pl:1731 sql/Pg-database.sql:2432
@@ -5990,14 +5554,12 @@ msgid "Purchase Orders"
 msgstr "Ordini di acquisto"
 
 #: scripts/asset.pl:316 scripts/asset.pl:499
-#, fuzzy
 msgid "Purchase Value"
-msgstr "Ordine di acquisto"
+msgstr ""
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
-#, fuzzy
 msgid "Purchase Value:"
-msgstr "Ordine di acquisto"
+msgstr ""
 
 #: bin/ic.pl:1247 bin/ic.pl:1807 bin/ic.pl:3051 bin/ic.pl:3908 bin/io.pl:201
 #: bin/io.pl:519 bin/jc.pl:888 bin/jc.pl:1857 bin/oe.pl:2928 bin/oe.pl:3235
@@ -6091,28 +5653,24 @@ msgid "Quotation Date"
 msgstr ""
 
 #: bin/io.pl:1656 bin/oe.pl:2252 bin/oe.pl:2418
-#, fuzzy
 msgid "Quotation Date missing!"
-msgstr "Manca la data della transazione!"
+msgstr ""
 
 #: bin/bp.pl:108 bin/oe.pl:499 bin/oe.pl:1300 bin/oe.pl:1912
-#, fuzzy
 msgid "Quotation Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/io.pl:1655 bin/oe.pl:2417
-#, fuzzy
 msgid "Quotation Number missing!"
-msgstr "Manca il numero di conto!"
+msgstr ""
 
 #: bin/bp.pl:324
 msgid "Quotation Number: [_1]"
 msgstr ""
 
 #: bin/oe.pl:2393
-#, fuzzy
 msgid "Quotation deleted!"
-msgstr "Transazione cancellata!"
+msgstr ""
 
 #: bin/bp.pl:58 bin/bp.pl:93 bin/ic.pl:1050 bin/oe.pl:1298 bin/oe.pl:1804
 #: UI/Contact/history_filter.html:195 sql/Pg-database.sql:2384
@@ -6138,9 +5696,8 @@ msgid "RFQ #"
 msgstr ""
 
 #: bin/am.pl:63 bin/oe.pl:509 bin/oe.pl:1273 UI/am-defaults.html:160
-#, fuzzy
 msgid "RFQ Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/bp.pl:59 bin/bp.pl:94 sql/Pg-database.sql:2446 sql/Pg-database.sql:2494
 msgid "RFQs"
@@ -6158,9 +5715,8 @@ msgid "Rate"
 msgstr "Tasso"
 
 #: UI/am-taxes.html:12
-#, fuzzy
 msgid "Rate (%)"
-msgstr "Tasso"
+msgstr ""
 
 #: UI/accounts/yearend.html:69
 msgid "Re-Open As Of"
@@ -6191,50 +5747,43 @@ msgstr "Incassi"
 
 #: UI/accounts/edit.html:164
 msgid "Receivables"
-msgstr "Crediti Clienti"
+msgstr ""
 
 #: sql/Pg-database.sql:2440
-#, fuzzy
 msgid "Receive"
-msgstr "Crediti Clienti"
+msgstr ""
 
 #: bin/oe.pl:1243 bin/oe.pl:1706 bin/oe.pl:2798
 msgid "Receive Merchandise"
 msgstr ""
 
 #: scripts/payment.pl:958
-#, fuzzy
 msgid "Received"
-msgstr "Crediti Clienti"
+msgstr ""
 
 #: UI/accounts/edit.html:120
-#, fuzzy
 msgid "Recon"
-msgstr "Registra in"
+msgstr ""
 
 #: UI/reconciliation/upload.html:43
-#, fuzzy
 msgid "Reconcile as FX"
-msgstr "Conciliazione"
+msgstr ""
 
 #: sql/Pg-database.sql:2424 sql/Pg-database.sql:2560 sql/Pg-database.sql:2569
 msgid "Reconciliation"
 msgstr "Conciliazione"
 
 #: UI/reconciliation/report.html:16
-#, fuzzy
 msgid "Reconciliation Date:"
-msgstr "Conciliazione"
+msgstr ""
 
 #: UI/reconciliation/report.html:7
-#, fuzzy
 msgid "Reconciliation Report"
-msgstr "Conciliazione"
+msgstr ""
 
 #: scripts/recon.pl:223
-#, fuzzy
 msgid "Reconciliation Sets"
-msgstr "Conciliazione"
+msgstr ""
 
 #: bin/ir.pl:504 bin/is.pl:561 bin/pos.pl:377 UI/orders/order.html:42
 msgid "Record in"
@@ -6245,9 +5794,8 @@ msgid "Recurring Transaction for [_1]"
 msgstr ""
 
 #: bin/am.pl:2186 UI/am-list-recurring.html:8 sql/Pg-database.sql:2567
-#, fuzzy
 msgid "Recurring Transactions"
-msgstr "Transazioni Clienti"
+msgstr ""
 
 #: bin/am.pl:2205 bin/arap.pl:825 bin/gl.pl:575 UI/accounts/yearend.html:21
 #: UI/journal/journal_entry.html:23 UI/journal/search.html:24
@@ -6256,14 +5804,12 @@ msgid "Reference"
 msgstr "Riferimento"
 
 #: bin/io.pl:1646
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Manca il numero della Fattura!"
+msgstr ""
 
 #: UI/batch/search_transactions.html:35
-#, fuzzy
 msgid "Reference/Invoice Number"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: sql/Pg-database.sql:501
 msgid "Referral"
@@ -6274,9 +5820,8 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
 #: templates/xedemo/ar_transaction.tex:143
-#, fuzzy
 msgid "Registration"
-msgstr "Amministrazione"
+msgstr ""
 
 #: templates/demo/invoice.html:303 templates/demo_with_images/invoice.html:303
 #: templates/xedemo/invoice.html:303
@@ -6322,14 +5867,12 @@ msgid "Repeat"
 msgstr ""
 
 #: UI/reconciliation/approved.html:3
-#, fuzzy
 msgid "Report Approved"
-msgstr "Prospetto per"
+msgstr ""
 
 #: scripts/asset.pl:626
-#, fuzzy
 msgid "Report Results"
-msgstr "Prospetti"
+msgstr ""
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
@@ -6405,9 +5948,8 @@ msgid "Required input not provided"
 msgstr ""
 
 #: sql/Pg-database.sql:2460
-#, fuzzy
 msgid "Requirements"
-msgstr "Necessario dal"
+msgstr ""
 
 #: bin/ps.pl:307
 msgid "Reset Till By [_1]"
@@ -6415,7 +5957,7 @@ msgstr ""
 
 #: UI/accounts/yearend.html:37
 msgid "Retained Earnings"
-msgstr "Guadagni"
+msgstr ""
 
 #: UI/Contact/contact.html:319
 msgid "Retrieve"
@@ -6430,47 +5972,40 @@ msgid "Return to the login screen."
 msgstr ""
 
 #: sql/Pg-database.sql:2564
-#, fuzzy
 msgid "Reverse Payment"
-msgstr "Pagamento"
+msgstr ""
 
 #: scripts/payment.pl:392
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Pagamenti"
+msgstr ""
 
 #: sql/Pg-database.sql:2562
-#, fuzzy
 msgid "Reverse Receipts"
-msgstr "Incassi"
+msgstr ""
 
 #: scripts/employee.pl:317 UI/employee/filter.html:224 UI/employee.html:90
 msgid "Role"
 msgstr ""
 
 #: UI/setup/complete.html:16 UI/setup/confirm_operation.html:80
-#, fuzzy
 msgid "Row counts"
-msgstr "Conti"
+msgstr ""
 
 #: UI/setup/begin_backup.html:49
-#, fuzzy
 msgid "Run Backup"
-msgstr "Backup"
+msgstr ""
 
 #: UI/Contact/contact.html:361 sql/Pg-database.sql:2576
 msgid "SIC"
 msgstr ""
 
 #: bin/am.pl:1044
-#, fuzzy
 msgid "SIC deleted!"
-msgstr "Codice GIFI cancellato!"
+msgstr ""
 
 #: bin/am.pl:1037
-#, fuzzy
 msgid "SIC saved!"
-msgstr "Codice GIFI salvato!"
+msgstr ""
 
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
@@ -6481,9 +6016,8 @@ msgid "SKU"
 msgstr ""
 
 #: bin/ic.pl:2589
-#, fuzzy
 msgid "SO"
-msgstr "O"
+msgstr ""
 
 #: scripts/setup.pl:93
 msgid "SQL-Ledger database detected."
@@ -6495,9 +6029,8 @@ msgid "SSN"
 msgstr ""
 
 #: sql/Pg-database.sql:2400 sql/Pg-database.sql:3730
-#, fuzzy
 msgid "Sale"
-msgstr "Vendite"
+msgstr ""
 
 #: scripts/employee.pl:319 UI/Contact/contact.html:148
 #: UI/employee/filter.html:252 UI/employee.html:83 sql/Pg-database.sql:632
@@ -6514,9 +6047,8 @@ msgid "Sales Invoice/AR Transaction Number"
 msgstr ""
 
 #: bin/bp.pl:51 bin/bp.pl:86 bin/ic.pl:1042 sql/Pg-database.sql:2485
-#, fuzzy
 msgid "Sales Invoices"
-msgstr "Fattura di vendita"
+msgstr ""
 
 #: bin/am.pl:2650 bin/am.pl:2866 bin/ic.pl:1537 bin/io.pl:1353 bin/io.pl:1533
 #: bin/is.pl:986 bin/is.pl:1007 bin/oe.pl:302 bin/oe.pl:807 bin/oe.pl:836
@@ -6532,9 +6064,8 @@ msgid "Sales Order"
 msgstr "Ordine di vendita"
 
 #: bin/am.pl:59 UI/am-defaults.html:144
-#, fuzzy
 msgid "Sales Order Number"
-msgstr "Numero Fattura Fornitore"
+msgstr ""
 
 #: bin/am.pl:2231 bin/bp.pl:54 bin/bp.pl:89 bin/ic.pl:1046 bin/oe.pl:1280
 #: bin/oe.pl:1761 bin/oe.pl:1774 bin/oe.pl:1787 sql/Pg-database.sql:2431
@@ -6548,9 +6079,8 @@ msgid "Sales Quotation Number"
 msgstr ""
 
 #: t/data/04-complex_template.html:85
-#, fuzzy
 msgid "Sales:"
-msgstr "Vendite"
+msgstr ""
 
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
@@ -6568,9 +6098,8 @@ msgstr "Vendite"
 #: templates/xedemo/invoice.html:110 templates/xedemo/invoice.tex:119
 #: templates/xedemo/sales_order.html:105 templates/xedemo/sales_order.tex:107
 #: templates/xedemo/work_order.html:105 UI/Contact/search.html:57
-#, fuzzy
 msgid "Salesperson"
-msgstr "Ordini di vendita"
+msgstr ""
 
 #: UI/employee/filter.html:126
 msgid "Salutation"
@@ -6603,41 +6132,36 @@ msgid "Save"
 msgstr "Salva"
 
 #: UI/Contact/contact.html:1039
-#, fuzzy
 msgid "Save As New"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: scripts/payment.pl:234
 msgid "Save Batch"
 msgstr ""
 
 #: UI/Contact/contact.html:676
-#, fuzzy
 msgid "Save Changes"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
-#, fuzzy
 msgid "Save Contact"
-msgstr "Contatto"
+msgstr ""
 
 #: UI/Admin/edit_user.html:192
 msgid "Save Groups"
 msgstr ""
 
 #: bin/aa.pl:978 bin/ir.pl:906 bin/is.pl:1017
-#, fuzzy
 msgid "Save Info"
-msgstr "Salva"
+msgstr ""
 
 #: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr ""
 
 #: UI/Contact/contact.html:686
-#, fuzzy
 msgid "Save New"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: UI/Contact/contact.html:921
 msgid "Save New Location"
@@ -6648,29 +6172,24 @@ msgid "Save Schedule"
 msgstr ""
 
 #: bin/am.pl:1429
-#, fuzzy
 msgid "Save Template"
-msgstr "Modelli LaTeX"
+msgstr ""
 
 #: bin/jc.pl:1239
-#, fuzzy
 msgid "Save Transaction"
-msgstr "Transazione Fornitore"
+msgstr ""
 
 #: UI/Admin/edit_user.html:148
-#, fuzzy
 msgid "Save User"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: scripts/setup.pl:729
-#, fuzzy
 msgid "Save and Retry"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/aa.pl:1001
-#, fuzzy
 msgid "Save as New"
-msgstr "Salva come nuovo"
+msgstr ""
 
 #: bin/am.pl:101 bin/am.pl:110 bin/ic.pl:856 bin/ic.pl:873 bin/jc.pl:690
 #: bin/jc.pl:706 bin/jc.pl:934 bin/jc.pl:952 bin/oe.pl:799 bin/oe.pl:827
@@ -6702,9 +6221,8 @@ msgstr "Schermo"
 #: UI/Contact/search.html:473 UI/payments/search.html:130
 #: UI/reconciliation/search.html:102 sql/Pg-database.sql:2397
 #: sql/Pg-database.sql:2414 sql/Pg-database.sql:2427 sql/Pg-database.sql:2475
-#, fuzzy
 msgid "Search"
-msgstr "Marzo"
+msgstr ""
 
 #: UI/asset/search_class.html:3
 msgid "Search Asset Class"
@@ -6715,19 +6233,16 @@ msgid "Search Assets"
 msgstr ""
 
 #: UI/employee/filter.html:8
-#, fuzzy
 msgid "Search Employees"
-msgstr "Dipendente"
+msgstr ""
 
 #: UI/payments/search.html:7 UI/payments/search.html:31
-#, fuzzy
 msgid "Search Payments"
-msgstr "Pagamenti"
+msgstr ""
 
 #: UI/reconciliation/search.html:4
-#, fuzzy
 msgid "Search Reconciliation Reports"
-msgstr "Conciliazione"
+msgstr ""
 
 #: scripts/admin.pl:367 scripts/employee.pl:296
 msgid "Search Results"
@@ -6754,19 +6269,16 @@ msgid "Secondary Phone"
 msgstr ""
 
 #: UI/reconciliation/report.html:260
-#, fuzzy
 msgid "Select All"
-msgstr "Seleziona tutto"
+msgstr ""
 
 #: bin/pe.pl:2764
-#, fuzzy
 msgid "Select Customer"
-msgstr "Cliente"
+msgstr ""
 
 #: bin/oe.pl:3619
-#, fuzzy
 msgid "Select Vendor"
-msgstr "Fornitore"
+msgstr ""
 
 #: bin/arapprn.pl:577 bin/is.pl:1448 bin/jc.pl:1264 bin/oe.pl:2335
 #: bin/pos.pl:1027
@@ -6778,9 +6290,8 @@ msgid "Select all"
 msgstr "Seleziona tutto"
 
 #: UI/taxform/add_taxform.html:62
-#, fuzzy
 msgid "Select by Default:"
-msgstr "Seleziona tutto"
+msgstr ""
 
 #: bin/arap.pl:183 bin/ic.pl:3489 bin/pe.pl:2290
 msgid "Select from one of the names below"
@@ -6791,19 +6302,16 @@ msgid "Select from one of the projects below"
 msgstr "Seleziona uno dei seguenti progetti"
 
 #: UI/payments/use_overpayment2.html:141
-#, fuzzy
 msgid "Select invoices"
-msgstr "Fattura di vendita"
+msgstr ""
 
 #: bin/io.pl:529
-#, fuzzy
 msgid "Select items"
-msgstr "Seleziona tutto"
+msgstr ""
 
 #: bin/arapprn.pl:421
-#, fuzzy
 msgid "Select payment"
-msgstr "Seleziona tutto"
+msgstr ""
 
 #: bin/arapprn.pl:70 bin/arapprn.pl:78 bin/arapprn.pl:575 bin/is.pl:1446
 #: bin/jc.pl:1262 bin/jc.pl:2095 bin/oe.pl:2333 bin/rp.pl:1548
@@ -6811,14 +6319,12 @@ msgid "Select postscript or PDF!"
 msgstr "Scegli tra postscript e PDF!"
 
 #: bin/io.pl:1498
-#, fuzzy
 msgid "Select txt, postscript or PDF!"
-msgstr "Scegli tra postscript e PDF!"
+msgstr ""
 
 #: UI/payments/payments_filter.html:7
-#, fuzzy
 msgid "Selection"
-msgstr "Seleziona tutto"
+msgstr ""
 
 #: bin/ic.pl:3061
 msgid "Sell"
@@ -6832,9 +6338,8 @@ msgid "Sell Price"
 msgstr "Prezzo di Vendita"
 
 #: bin/am.pl:2824
-#, fuzzy
 msgid "Sending"
-msgstr "Intestazione"
+msgstr ""
 
 #: bin/aa.pl:88 bin/ca.pl:80 bin/gl.pl:83 bin/io.pl:84
 #: LedgerSMB/App_State.pm:177
@@ -6871,9 +6376,8 @@ msgstr ""
 #: templates/demo/work_order.tex:126 templates/xedemo/bin_list.tex:107
 #: templates/xedemo/packing_list.tex:115 templates/xedemo/work_order.tex:126
 #: UI/Contact/history_filter.html:337 UI/Contact/search.html:304
-#, fuzzy
 msgid "Serial Number"
-msgstr "Numero Fattura Fornitore"
+msgstr ""
 
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
@@ -6886,14 +6390,12 @@ msgid "Service"
 msgstr "Servizio"
 
 #: bin/jc.pl:233 bin/jc.pl:505 bin/jc.pl:1368 bin/pe.pl:2654
-#, fuzzy
 msgid "Service Code"
-msgstr "Servizio"
+msgstr ""
 
 #: bin/jc.pl:1147
-#, fuzzy
 msgid "Service Code missing!"
-msgstr "Manca la data della Fattura!"
+msgstr ""
 
 #: bin/jc.pl:237 bin/jc.pl:509 bin/jc.pl:1373
 msgid "Service/Labor Code"
@@ -6901,21 +6403,19 @@ msgstr ""
 
 #: bin/ic.pl:1290 sql/Pg-database.sql:2461
 msgid "Services"
-msgstr "Servizi"
+msgstr ""
 
 #: UI/get_password.html:35
 msgid "Session expired!"
 msgstr ""
 
 #: sql/Pg-database.sql:2584
-#, fuzzy
 msgid "Sessions"
-msgstr "Versione"
+msgstr ""
 
 #: UI/Admin/edit_user.html:146
-#, fuzzy
 msgid "Set Password"
-msgstr "Password"
+msgstr ""
 
 #: UI/users/preferences.html:37
 msgid "Settings"
@@ -6926,9 +6426,8 @@ msgid "Seven"
 msgstr "sette"
 
 #: LedgerSMB/Num2text.pm:100
-#, fuzzy
 msgid "Seven Hundred"
-msgstr "cento"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:77
 msgid "Seventeen"
@@ -6970,9 +6469,8 @@ msgstr ""
 #: templates/xedemo/bin_list.tex:53 templates/xedemo/invoice.html:23
 #: templates/xedemo/invoice.tex:75 templates/xedemo/sales_order.html:29
 #: templates/xedemo/work_order.html:29
-#, fuzzy
 msgid "Ship To"
-msgstr "Spedire a"
+msgstr ""
 
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
 #: templates/demo/purchase_order.html:30
@@ -6984,9 +6482,8 @@ msgstr "Spedire a"
 #: templates/xedemo/packing_list.html:29 templates/xedemo/pick_list.html:28
 #: templates/xedemo/purchase_order.html:30
 #: templates/xedemo/request_quotation.html:30
-#, fuzzy
 msgid "Ship To:"
-msgstr "Spedire a"
+msgstr ""
 
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109
@@ -6997,9 +6494,8 @@ msgstr "Spedire a"
 #: templates/demo/work_order.html:107 templates/xedemo/purchase_order.html:107
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
-#, fuzzy
 msgid "Ship Via"
-msgstr "Porto"
+msgstr ""
 
 #: bin/aa.pl:943 bin/io.pl:1970 bin/is.pl:982 bin/is.pl:1003 bin/oe.pl:798
 #: bin/oe.pl:818 bin/oe.pl:3028
@@ -7040,19 +6536,16 @@ msgid "Ship via"
 msgstr "Porto"
 
 #: sql/Pg-database.sql:633 sql/Pg-database.sql:2383
-#, fuzzy
 msgid "Shipping"
-msgstr "Invio"
+msgstr ""
 
 #: bin/oe.pl:2795
-#, fuzzy
 msgid "Shipping Date"
-msgstr "Datasets esistenti"
+msgstr ""
 
 #: bin/oe.pl:3062
-#, fuzzy
 msgid "Shipping Date missing!"
-msgstr "Manca la data!"
+msgstr ""
 
 #: bin/aa.pl:1726 bin/aa.pl:2102 bin/is.pl:568 bin/oe.pl:641 bin/oe.pl:2857
 #: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
@@ -7161,9 +6654,8 @@ msgid "Source"
 msgstr "Sorgente"
 
 #: bin/rp.pl:1983
-#, fuzzy
 msgid "Source: [_1]"
-msgstr "Sorgente"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:194
 #: templates/demo_with_images/sales_quotation.html:194
@@ -7198,14 +6690,12 @@ msgstr ""
 #: scripts/employee.pl:315 UI/Contact/contact.html:212
 #: UI/Contact/contact.html:399 UI/employee/filter.html:52
 #: UI/employee/filter.html:196 UI/employee.html:121
-#, fuzzy
 msgid "Start Date"
-msgstr "Data dell'ordine"
+msgstr ""
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Data dell'ordine"
+msgstr ""
 
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
@@ -7221,19 +6711,16 @@ msgid "Startdate"
 msgstr ""
 
 #: UI/Contact/contact.html:473
-#, fuzzy
 msgid "Starting Date"
-msgstr "Datasets esistenti"
+msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Datasets esistenti"
+msgstr ""
 
 #: bin/io.pl:2040
-#, fuzzy
 msgid "State"
-msgstr "Sollecito"
+msgstr ""
 
 #: t/data/04-complex_template.html:387 UI/Contact/contact.html:785
 #: UI/Contact/contact.html:881 UI/Contact/history_filter.html:96
@@ -7257,27 +6744,24 @@ msgid "Statement"
 msgstr "Sollecito"
 
 #: bin/rp.pl:1415
-#, fuzzy
 msgid "Statement - [_1]"
-msgstr "Sollecito"
+msgstr ""
 
 #: UI/rc-display-form.html:66 UI/reconciliation/upload.html:29
 msgid "Statement Balance"
 msgstr "Saldo"
 
 #: scripts/recon.pl:188
-#, fuzzy
 msgid "Statement Date"
-msgstr "Sollecito"
+msgstr ""
 
 #: bin/rp.pl:1540
-#, fuzzy
 msgid "Statement sent to [_1]"
-msgstr "Sollecito mandato a"
+msgstr ""
 
 #: bin/rp.pl:1664
 msgid "Statements sent to printer!"
-msgstr "Solleciti mandati in stampa!"
+msgstr ""
 
 #: UI/payments/check_job.html:19
 msgid "Status: Complete"
@@ -7304,9 +6788,8 @@ msgid "Stores Card"
 msgstr ""
 
 #: bin/jc.pl:1197
-#, fuzzy
 msgid "Stores Card saved!"
-msgstr "Cliente salvato!"
+msgstr ""
 
 #: bin/jc.pl:207 bin/jc.pl:1775
 msgid "Stores Cards"
@@ -7323,12 +6806,11 @@ msgstr ""
 
 #: UI/Contact/contact.html:1159 UI/io-email.html:22 UI/rp-email.html:21
 msgid "Subject"
-msgstr "Oggetto"
+msgstr ""
 
 #: bin/arap.pl:1042 bin/io.pl:1838 UI/Contact/contact.html:1191
-#, fuzzy
 msgid "Subject: [_1]"
-msgstr "Oggetto"
+msgstr ""
 
 #: UI/reconciliation/search.html:85
 msgid "Submission Status"
@@ -7376,9 +6858,8 @@ msgid "Subtotal"
 msgstr "Totale Parziale"
 
 #: UI/rc-till-closing.html:69
-#, fuzzy
 msgid "Subtotal:"
-msgstr "Totale Parziale"
+msgstr ""
 
 #: bin/aa.pl:1617 bin/ic.pl:1079 bin/ic.pl:1593 bin/pe.pl:2517
 #: UI/Contact/history_filter.html:204 UI/Contact/search.html:206
@@ -7388,9 +6869,8 @@ msgid "Summary"
 msgstr ""
 
 #: UI/accounts/edit.html:137
-#, fuzzy
 msgid "Summary account for"
-msgstr "Conto di riferimento del modulo:"
+msgstr ""
 
 #: bin/jc.pl:1429
 msgid "Sunday"
@@ -7405,9 +6885,8 @@ msgid "Superuser Credentials"
 msgstr ""
 
 #: UI/employee.html:97
-#, fuzzy
 msgid "Supervisor"
-msgstr "Servizi"
+msgstr ""
 
 #: UI/ca-list-selector.html:45
 msgid "Swaps debits and credits to match bank statements"
@@ -7421,7 +6900,7 @@ msgstr "Sistema"
 msgid "System Defaults"
 msgstr ""
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -7433,9 +6912,8 @@ msgstr ""
 
 #: scripts/asset.pl:313 scripts/asset.pl:735 scripts/asset.pl:799
 #: scripts/asset.pl:870 scripts/asset.pl:1006
-#, fuzzy
 msgid "Tag"
-msgstr "Tassa"
+msgstr ""
 
 #: UI/asset/edit_asset.html:44 UI/asset/search_asset.html:38
 msgid "Tag:"
@@ -7450,9 +6928,8 @@ msgid "Tax"
 msgstr "Tassa"
 
 #: bin/ir.pl:615 bin/is.pl:716
-#, fuzzy
 msgid "Tax Code"
-msgstr "Credito IVA"
+msgstr ""
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
@@ -7467,14 +6944,12 @@ msgid "Tax Form Name"
 msgstr ""
 
 #: UI/taxform/filter.html:21
-#, fuzzy
 msgid "Tax Form Reports"
-msgstr "Prospetti"
+msgstr ""
 
 #: sql/Pg-database.sql:2570
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Formato della data"
+msgstr ""
 
 #: bin/aa.pl:651 bin/ir.pl:490 bin/is.pl:544 UI/Admin/user_search.html:41
 msgid "Tax ID"
@@ -7486,14 +6961,12 @@ msgid "Tax Included"
 msgstr "Tasse Incluse"
 
 #: UI/Contact/contact.html:352
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Partita IVA"
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Partita IVA"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
@@ -7508,9 +6981,8 @@ msgstr ""
 #: templates/demo/purchase_order.html:192
 #: templates/demo_with_images/purchase_order.html:192
 #: templates/xedemo/purchase_order.html:192
-#, fuzzy
 msgid "Tax included"
-msgstr "Tasse Incluse"
+msgstr ""
 
 #: bin/io.pl:214
 msgid "TaxForm"
@@ -7521,18 +6993,16 @@ msgid "Taxable"
 msgstr "Tassabile"
 
 #: sql/Pg-database.sql:2393
-#, fuzzy
 msgid "Taxable Sales"
-msgstr "Tassabile"
+msgstr ""
 
 #: bin/am.pl:1544 UI/Contact/contact.html:635 sql/Pg-database.sql:2497
 msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1802
-#, fuzzy
 msgid "Taxes saved!"
-msgstr "Modello salvato!"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:229
 #: templates/demo/ar_transaction.html:235 templates/demo/invoice.html:314
@@ -7551,9 +7021,8 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Partita IVA"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
@@ -7650,13 +7119,12 @@ msgid "Template saved!"
 msgstr "Modello salvato!"
 
 #: UI/am-defaults.html:107
-#, fuzzy
 msgid "Templates directory"
-msgstr "Modelli"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:69
 msgid "Ten"
-msgstr "dieci"
+msgstr ""
 
 #: bin/oe.pl:406 UI/Contact/contact.html:506
 msgid "Terms"
@@ -7690,9 +7158,8 @@ msgid "Terms: [_1] days"
 msgstr ""
 
 #: sql/Pg-database.sql:2573
-#, fuzzy
 msgid "Text Templates"
-msgstr "Modelli LaTeX"
+msgstr ""
 
 #: templates/demo/invoice.tex:213 templates/demo/sales_order.tex:175
 #: templates/demo_with_images/invoice.tex:217
@@ -7713,9 +7180,8 @@ msgid "The amount of"
 msgstr ""
 
 #: scripts/payment.pl:1649 scripts/payment.pl:1655
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Sei sicuro di voler cancellare la Fattura numero"
+msgstr ""
 
 #: scripts/payment.pl:1909
 msgid "The amount to be pay from the accno"
@@ -7726,14 +7192,12 @@ msgid "The amount to be pay of the invoice number"
 msgstr ""
 
 #: scripts/recon.pl:308
-#, fuzzy
 msgid "Their Balance"
-msgstr "Bilancio di Verifica"
+msgstr ""
 
 #: UI/reconciliation/report.html:77 UI/reconciliation/report.html:140
-#, fuzzy
 msgid "Their Credits"
-msgstr "Avere"
+msgstr ""
 
 #: UI/reconciliation/report.html:76 UI/reconciliation/report.html:139
 msgid "Their Debits"
@@ -7788,9 +7252,8 @@ msgid "Threshold"
 msgstr ""
 
 #: UI/payments/search.html:82
-#, fuzzy
 msgid "Through Date"
-msgstr "Scadenza Fattura"
+msgstr ""
 
 #: bin/jc.pl:1433
 msgid "Thursday"
@@ -7813,14 +7276,12 @@ msgid "Time Card"
 msgstr ""
 
 #: bin/jc.pl:1322
-#, fuzzy
 msgid "Time Card deleted!"
-msgstr "Utente cancellato!"
+msgstr ""
 
 #: bin/jc.pl:1181
-#, fuzzy
 msgid "Time Card saved!"
-msgstr "Utente salvato!"
+msgstr ""
 
 #: bin/bp.pl:60 bin/bp.pl:95 bin/jc.pl:203 bin/jc.pl:1336
 #: sql/Pg-database.sql:2477 sql/Pg-database.sql:2495
@@ -7874,9 +7335,8 @@ msgid "To %1"
 msgstr ""
 
 #: UI/reconciliation/upload.html:35
-#, fuzzy
 msgid "To Date"
-msgstr "Data"
+msgstr ""
 
 #: UI/payments/payments_detail.html:296
 msgid "To Pay"
@@ -7914,9 +7374,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:28
 #: UI/payments/payments_detail.html:126 UI/reconciliation/search.html:18
 #: UI/reconciliation/search.html:36
-#, fuzzy
 msgid "To:"
-msgstr "Al"
+msgstr ""
 
 #: bin/arap.pl:1040 bin/io.pl:1836
 msgid "To: [_1]"
@@ -7928,12 +7387,11 @@ msgstr ""
 
 #: bin/ic.pl:1197
 msgid "Top Level"
-msgstr "Livello Top"
+msgstr ""
 
 #: sql/Pg-database.sql:2387
-#, fuzzy
 msgid "Top-level"
-msgstr "Livello Top"
+msgstr ""
 
 #: bin/aa.pl:1707 bin/aa.pl:2080 bin/ir.pl:763 bin/is.pl:850 bin/jc.pl:517
 #: bin/jc.pl:531 bin/jc.pl:894 bin/oe.pl:762 bin/oe.pl:1503 bin/oe.pl:1855
@@ -7999,30 +7457,26 @@ msgstr ""
 #: templates/demo/balance_sheet.html:149
 #: templates/demo_with_images/balance_sheet.html:149
 #: templates/xedemo/balance_sheet.html:149
-#, fuzzy
 msgid "Total Equity"
-msgstr "Capitale"
+msgstr ""
 
 #: templates/demo/income_statement.html:131
 #: templates/demo_with_images/income_statement.html:131
 #: templates/xedemo/income_statement.html:131
-#, fuzzy
 msgid "Total Expenses"
-msgstr "Costi"
+msgstr ""
 
 #: templates/demo/income_statement.html:104
 #: templates/demo_with_images/income_statement.html:104
 #: templates/xedemo/income_statement.html:104
-#, fuzzy
 msgid "Total Income"
-msgstr "Ricavi"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:122
 #: templates/demo_with_images/balance_sheet.html:122
 #: templates/xedemo/balance_sheet.html:122
-#, fuzzy
 msgid "Total Liabilities"
-msgstr "Passivit&agrave;"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:155
 #: templates/demo_with_images/balance_sheet.html:155
@@ -8042,48 +7496,41 @@ msgid "Total outstanding"
 msgstr ""
 
 #: UI/accounts/edit.html:246
-#, fuzzy
 msgid "Tracking Items"
-msgstr "Lista Etichette"
+msgstr ""
 
 #: bin/is.pl:427 bin/oe.pl:420 bin/pos.pl:282
-#, fuzzy
 msgid "Trade Discount"
-msgstr "Sconto"
+msgstr ""
 
 #: bin/aa.pl:196 bin/am.pl:2860
-#, fuzzy
 msgid "Transaction"
-msgstr "Transazioni"
+msgstr ""
 
 #: sql/Pg-database.sql:2379
-#, fuzzy
 msgid "Transaction Approval"
-msgstr "Transazione salvata!"
+msgstr ""
 
 #: UI/Contact/history_filter.html:140
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Transazione salvata!"
+msgstr ""
 
 #: bin/gl.pl:1138
 msgid "Transaction Date missing!"
 msgstr "Manca la data della transazione!"
 
 #: bin/pe.pl:2452
-#, fuzzy
 msgid "Transaction Dates"
-msgstr "Transazioni"
+msgstr ""
 
 #: UI/batch/search_transactions.html:13 UI/reconciliation/report.html:69
 #: UI/reconciliation/report.html:132
-#, fuzzy
 msgid "Transaction Type"
-msgstr "Transazione salvata!"
+msgstr ""
 
 #: bin/aa.pl:1480
 msgid "Transaction deleted!"
-msgstr "Transazione cancellata!"
+msgstr ""
 
 #: bin/aa.pl:1383
 msgid "Transaction posted!"
@@ -8091,17 +7538,16 @@ msgstr "Transazione salvata!"
 
 #: bin/am.pl:1869
 msgid "Transaction reversal enforced for all dates"
-msgstr "Uso delle transazioni inverse forzato per tutte le date"
+msgstr ""
 
 #: bin/am.pl:1875
-#, fuzzy
 msgid "Transaction reversal enforced up to [_1]"
-msgstr "Uso delle transazioni inverse forzato fino a"
+msgstr ""
 
 #: UI/setup/complete.html:25 UI/setup/confirm_operation.html:89
 #: sql/Pg-database.sql:2390 sql/Pg-database.sql:2407 sql/Pg-database.sql:2476
 msgid "Transactions"
-msgstr "Transazioni"
+msgstr ""
 
 #: bin/oe.pl:3237 bin/oe.pl:3353 sql/Pg-database.sql:2441
 #: sql/Pg-database.sql:2558
@@ -8109,43 +7555,36 @@ msgid "Transfer"
 msgstr ""
 
 #: bin/oe.pl:3114 bin/oe.pl:3264
-#, fuzzy
 msgid "Transfer Inventory"
-msgstr "Inventario"
+msgstr ""
 
 #: bin/oe.pl:3132
 msgid "Transfer from"
 msgstr ""
 
 #: bin/oe.pl:3136
-#, fuzzy
 msgid "Transfer to"
-msgstr "Transazioni"
+msgstr ""
 
 #: bin/pe.pl:1936 bin/pe.pl:2111
-#, fuzzy
 msgid "Translation"
-msgstr "Transazioni"
+msgstr ""
 
 #: bin/pe.pl:1366
-#, fuzzy
 msgid "Translation deleted!"
-msgstr "Transazione cancellata!"
+msgstr ""
 
 #: bin/io.pl:772
-#, fuzzy
 msgid "Translation not on file!"
-msgstr "Cliente non sul file!"
+msgstr ""
 
 #: sql/Pg-database.sql:2467 sql/Pg-database.sql:2478
-#, fuzzy
 msgid "Translations"
-msgstr "Transazioni"
+msgstr ""
 
 #: bin/pe.pl:1274
-#, fuzzy
 msgid "Translations saved!"
-msgstr "Transazione salvata!"
+msgstr ""
 
 #: bin/rp.pl:588 sql/Pg-database.sql:2481
 msgid "Trial Balance"
@@ -8168,54 +7607,44 @@ msgid "Twenty"
 msgstr "venti"
 
 #: LedgerSMB/Num2text.pm:89
-#, fuzzy
 msgid "Twenty Eight"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:86
-#, fuzzy
 msgid "Twenty Five"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:85
-#, fuzzy
 msgid "Twenty Four"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:90
-#, fuzzy
 msgid "Twenty Nine"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:81
-#, fuzzy
 msgid "Twenty One"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:82
-#, fuzzy
 msgid "Twenty One-o"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:88
-#, fuzzy
 msgid "Twenty Seven"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:87
-#, fuzzy
 msgid "Twenty Six"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:84
-#, fuzzy
 msgid "Twenty Three"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:83
-#, fuzzy
 msgid "Twenty Two"
-msgstr "venti"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:61
 msgid "Two"
@@ -8257,9 +7686,8 @@ msgid "Under"
 msgstr ""
 
 #: scripts/setup.pl:648
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: scripts/setup.pl:598
 msgid "Unique Customernumber"
@@ -8294,9 +7722,8 @@ msgstr "Unit&agrave;"
 #: templates/xedemo/invoice.html:140
 #: templates/xedemo/request_quotation.html:145
 #: templates/xedemo/request_quotation.tex:124
-#, fuzzy
 msgid "Unit Price"
-msgstr "Prezzo di Listino"
+msgstr ""
 
 #: scripts/setup.pl:149
 msgid "Unknown database found."
@@ -8315,9 +7742,8 @@ msgid "Unsupport account type"
 msgstr ""
 
 #: UI/payments/search.html:17
-#, fuzzy
 msgid "Unsupported Number"
-msgstr "Protocollo Numero"
+msgstr ""
 
 #: UI/Contact/search.html:12
 msgid "Unsupported Search"
@@ -8371,9 +7797,8 @@ msgid "Use Overpayment"
 msgstr ""
 
 #: bin/io.pl:2208
-#, fuzzy
 msgid "Use Shipto"
-msgstr "Spedire a"
+msgstr ""
 
 #: scripts/payment.pl:1776
 msgid "Use overpayment/prepayment"
@@ -8390,20 +7815,17 @@ msgstr ""
 
 #: UI/Admin/edit_user.html:26 UI/Admin/edit_user.html:39
 #: UI/setup/new_user.html:22
-#, fuzzy
 msgid "Username"
-msgstr "Utente"
+msgstr ""
 
 #: UI/Admin/user_search.html:11
-#, fuzzy
 msgid "Username:"
-msgstr "Utente"
+msgstr ""
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:46
 #: UI/setup/confirm_operation.html:90
-#, fuzzy
 msgid "Users"
-msgstr "Utente"
+msgstr ""
 
 #: UI/Contact/pricelist.csv:34 UI/Contact/pricelist.html:47
 #: UI/Contact/pricelist.tex:46
@@ -8425,9 +7847,8 @@ msgid "Valid until"
 msgstr ""
 
 #: UI/reconciliation/report.html:34
-#, fuzzy
 msgid "Variance:"
-msgstr "Saldo"
+msgstr ""
 
 #: bin/aa.pl:577 bin/aa.pl:1668 bin/aa.pl:1899 bin/aa.pl:2035 bin/bp.pl:82
 #: bin/ic.pl:2817 bin/ir.pl:456 bin/oe.pl:1381 bin/oe.pl:1756 bin/oe.pl:3506
@@ -8441,54 +7862,47 @@ msgid "Vendor"
 msgstr "Fornitore"
 
 #: UI/Contact/history_filter.html:15
-#, fuzzy
 msgid "Vendor History"
-msgstr "Fornitori"
+msgstr ""
 
 #: bin/aa.pl:2449 bin/gl.pl:852 bin/ic.pl:1552 bin/oe.pl:804 bin/oe.pl:842
 #: t/data/04-complex_template.html:334 UI/Contact/contact.html:710
 #: sql/Pg-database.sql:2552
-#, fuzzy
 msgid "Vendor Invoice"
-msgstr "Fattura di vendita"
+msgstr ""
 
 #: bin/am.pl:61 UI/am-defaults.html:148
 msgid "Vendor Invoice/AP Transaction Number"
 msgstr ""
 
 #: bin/ic.pl:1023
-#, fuzzy
 msgid "Vendor Invoices"
-msgstr "Fatture"
+msgstr ""
 
 #: UI/payments/payment1.html:37 UI/payments/payment2.html:31
-#, fuzzy
 msgid "Vendor Name"
-msgstr "Fornitore salvato!"
+msgstr ""
 
 #: bin/aa.pl:1669 bin/am.pl:68 bin/io.pl:1985 scripts/payment.pl:325
 #: UI/am-defaults.html:180 UI/asset/edit_asset.html:185
 #: UI/asset/search_asset.html:164 UI/Contact/history_filter.html:67
 #: UI/payments/payments_filter.html:63 UI/payments/search.html:16
 #: UI/taxform/filter.html:89
-#, fuzzy
 msgid "Vendor Number"
-msgstr "Numero Fattura Fornitore"
+msgstr ""
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:35
 #: UI/Contact/pricelist.tex:29
-#, fuzzy
 msgid "Vendor Partnumber"
-msgstr "Fornitore salvato!"
+msgstr ""
 
 #: bin/ic.pl:2819
 msgid "Vendor Reference Number"
 msgstr ""
 
 #: UI/Contact/search.html:6
-#, fuzzy
 msgid "Vendor Search"
-msgstr "Fornitore"
+msgstr ""
 
 #: bin/aa.pl:1307 bin/ir.pl:1317 bin/oe.pl:2263
 msgid "Vendor missing!"
@@ -8499,29 +7913,23 @@ msgid "Vendor not on file!"
 msgstr "Fornitore non in archivio!"
 
 #: bin/bp.pl:304
-#, fuzzy
 msgid "Vendor: [_1]"
-msgstr "Fornitore"
+msgstr ""
 
 #: sql/Pg-database.sql:2554
 msgid "Vendors"
-msgstr "Fornitori"
+msgstr ""
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr "Versione"
 
 #: UI/am-company-logo.html:6
-#, fuzzy
 msgid "Version [_1]"
-msgstr "Versione"
+msgstr ""
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8609,19 +8017,16 @@ msgstr ""
 #: templates/demo/work_order.tex:109 templates/xedemo/work_order.html:4
 #: templates/xedemo/work_order.html:18 templates/xedemo/work_order.tex:109
 #: sql/Pg-database.sql:2520 sql/Pg-database.sql:2534
-#, fuzzy
 msgid "Work Order"
-msgstr "Ordine"
+msgstr ""
 
 #: bin/bp.pl:55 bin/bp.pl:90 sql/Pg-database.sql:2488
-#, fuzzy
 msgid "Work Orders"
-msgstr "Ordine"
+msgstr ""
 
 #: UI/employee.html:109
-#, fuzzy
 msgid "Work Phone"
-msgstr "Tel."
+msgstr ""
 
 #: scripts/setup.pl:96
 msgid "Would you like to migrate the database?"
@@ -8660,14 +8065,12 @@ msgid "Yearend complete"
 msgstr ""
 
 #: bin/am.pl:2100
-#, fuzzy
 msgid "Yearend date missing!"
-msgstr "Manca la data del pagamento!"
+msgstr ""
 
 #: bin/am.pl:2139
-#, fuzzy
 msgid "Yearend posted!"
-msgstr "Pagamento Salvato"
+msgstr ""
 
 #: bin/am.pl:2142
 msgid "Yearend posting failed!"
@@ -8684,7 +8087,7 @@ msgstr ""
 msgid "Yes"
 msgstr "Si"
 
-#: old-handler.pl:132
+#: old-handler.pl:133
 msgid "You are logged out!"
 msgstr ""
 
@@ -8721,9 +8124,8 @@ msgid "You are saving an existing quotation"
 msgstr ""
 
 #: bin/jc.pl:1241
-#, fuzzy
 msgid "You are saving an existing transaction!"
-msgstr "Non puoi salvare la transazione!"
+msgstr ""
 
 #: bin/ps.pl:320
 msgid "You are under by [_1]"
@@ -8771,47 +8173,40 @@ msgid "[_1] Debit Note"
 msgstr ""
 
 #: bin/gl.pl:199
-#, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "Aggiungi Transazione di Contabilità Generale"
+msgstr ""
 
 #: bin/arap.pl:170
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Partita IVA"
+msgstr ""
 
 #: bin/am.pl:272 bin/rp.pl:845 bin/rp.pl:1262
-#, fuzzy
 msgid "[_1] Report"
-msgstr "Prospetti"
+msgstr ""
 
 #: bin/rp.pl:472 bin/rp.pl:487
 msgid "[_1] To [_2]"
 msgstr ""
 
 #: bin/aa.pl:426
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Transazione Fornitore"
+msgstr ""
 
 #: bin/ic.pl:3447
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "Cliente non sul file!"
+msgstr ""
 
 #: bin/ic.pl:3369
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "Fornitore non in archivio!"
+msgstr ""
 
 #: bin/am.pl:155
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: old-handler.pl:182
-#, fuzzy
+#: old-handler.pl:183
 msgid "action not defined!"
-msgstr "Transazione salvata!"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:2
 msgid "as at"
@@ -8820,18 +8215,16 @@ msgstr "Al"
 #: templates/demo/balance_sheet.html:64
 #: templates/demo_with_images/balance_sheet.html:64
 #: templates/xedemo/balance_sheet.html:64
-#, fuzzy
 msgid "as at [_1]"
-msgstr "Al"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:484
 msgid "cash"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:485
-#, fuzzy
 msgid "check"
-msgstr "Assegno"
+msgstr ""
 
 #: bin/io.pl:2037
 msgid "city"
@@ -8848,19 +8241,16 @@ msgid "default_language"
 msgstr ""
 
 #: scripts/admin.pl:411
-#, fuzzy
 msgid "delete"
-msgstr "Cancella"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:486
-#, fuzzy
 msgid "deposit"
-msgstr "Deposito"
+msgstr ""
 
 #: sql/Pg-database.sql:3775
-#, fuzzy
 msgid "depreciation"
-msgstr "Conciliazione"
+msgstr ""
 
 #: sql/Pg-database.sql:3776
 msgid "disposal"
@@ -8876,9 +8266,8 @@ msgid "ea"
 msgstr "ci"
 
 #: scripts/admin.pl:354
-#, fuzzy
 msgid "edit"
-msgstr "Avere"
+msgstr ""
 
 #: bin/am.pl:2703 bin/am.pl:2800 bin/am.pl:2847
 msgid "failed"
@@ -8888,21 +8277,19 @@ msgstr ""
 #: templates/demo_with_images/income_statement.html:64
 #: templates/xedemo/income_statement.html:64
 msgid "for Period"
-msgstr "per il Periodo"
+msgstr ""
 
 #: bin/rp.pl:1004
-#, fuzzy
 msgid "for Period To [_1]"
-msgstr "per il Periodo"
+msgstr ""
 
 #: t/data/04-gettext.tex:10
 msgid "fr"
 msgstr ""
 
 #: sql/Pg-database.sql:3777
-#, fuzzy
 msgid "import"
-msgstr "Prospetti"
+msgstr ""
 
 #: sql/Pg-database.sql:3702
 msgid "in months"
@@ -8941,9 +8328,8 @@ msgid "nl"
 msgstr ""
 
 #: UI/employee.html:164
-#, fuzzy
 msgid "notes"
-msgstr "Note"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:487
 msgid "other"
@@ -8981,165 +8367,3 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Access Control"
-#~ msgstr "Controllo degli accessi"
-
-#~ msgid "Accounting"
-#~ msgstr "Contabilit&agrave;"
-
-#~ msgid "Administrator"
-#~ msgstr "Amministratore"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "Tutti i Datasets sono aggiornati!"
-
-#~ msgid "Backup sent to"
-#~ msgstr "Backup inviato a"
-
-#~ msgid "Cannot delete vendor!"
-#~ msgstr "Non puoi cancellare il fornitore"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Cambia password dell'amministratore"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Clicca sul nome per effettuare modifiche"
-
-#~ msgid "Connect to"
-#~ msgstr "Connetti a"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Crea Piano dei conti"
-
-#~ msgid "Customer deleted!"
-#~ msgstr "Cliente cancellato!"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "Modulo DBI non installato"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Il driver del database non e' stato controllato!"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Manca lo user del Database!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Dataset mancante!"
-
-#~ msgid "Dataset updated!"
-#~ msgstr "Dataset aggiornato!"
-
-#~ msgid "Driver"
-#~ msgstr "Driver"
-
-#~ msgid "Dropdown Limit"
-#~ msgstr "Limite per i menu a discesa"
-
-#~ msgid "Edit General Ledger Transaction"
-#~ msgstr "Modifica Transazione di Contabilit&agrave; Generale"
-
-#~ msgid "Host"
-#~ msgstr "Host"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Manca il nome del server"
-
-#~ msgid "Incorrect Dataset version!"
-#~ msgstr "Versione del Dataset non corretta!"
-
-#~ msgid ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-#~ msgstr ""
-#~ "Lascia in bianco il server e la porta a meno che tu non voglia fare una "
-#~ "connessione remota"
-
-#~ msgid "Licensed to"
-#~ msgstr "Dato in Licenza a"
-
-#~ msgid "Name missing!"
-#~ msgstr "Manca il Nome!"
-
-#~ msgid "New Templates"
-#~ msgstr "Nuovi Modelli"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "Nessun Database Driver disponibile!"
-
-#~ msgid "No Dataset selected!"
-#~ msgstr "Nessun Dataset selezionato!"
-
-#~ msgid "No email address for"
-#~ msgstr "Manca l'indirizzo e-mail per"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Amministratore del Database Oracle"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Amministratore del Database Pg"
-
-#~ msgid "Port"
-#~ msgstr "Porta"
-
-#~ msgid "Save to File"
-#~ msgstr "Salva su file"
-
-#~ msgid "Select from one of the items below"
-#~ msgstr "Seleziona uno dei seguenti Articoli"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Spedisci via e-mail"
-
-#~ msgid "Tax collected"
-#~ msgstr "Debito IVA"
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "I seguenti datasets non sono in uso e possono essere cancellati"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "I seguenti datasets devono essere aggiornati"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "Questo &egrave; un controllo preliminare per verificare le risorse "
-#~ "esistenti. Nulla verr&agrave; creato o cancellato in questa fase!"
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "Per aggiungere un utente ad un gruppo, modifica i dati dell'utente, cambia "
-#~ "lo username e salva. Un nuovo utente con gli stessi dati verr&agrave; "
-#~ "salvato con il nuovo username."
-
-#~ msgid "Unit of measure"
-#~ msgstr "Unit&agrave; di misura"
-
-#~ msgid "Update Dataset"
-#~ msgstr "Aggiorna il Dataset"
-
-#~ msgid "Use Templates"
-#~ msgstr "Usa Modelli"
-
-#~ msgid "You did not enter a name!"
-#~ msgstr "Non hai inserito il nome!"
-
-#~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr ""
-#~ "Devi inserire un server ed una porta per le connessioni locali e remote!"
-
-#~ msgid "is already a member!"
-#~ msgstr "&egrave; gi&agrave; utente!"
-
-#~ msgid "successfully created!"
-#~ msgstr "creato!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "cancellato!"
-
-#~ msgid "website"
-#~ msgstr "sito web"

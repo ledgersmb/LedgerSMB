@@ -1,33 +1,19 @@
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2001
 #
-# Turkish texts:
-#
-#  Author: Mufit Eribol <meribol@deltagrup.com.tr>
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
+"PO-Revision-Date: 2015-12-29 12:32+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"tr/)\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
@@ -191,9 +177,8 @@ msgid "Account"
 msgstr "Hesap"
 
 #: UI/payments/use_overpayment2.html:117
-#, fuzzy
 msgid "Account Description"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
@@ -209,14 +194,13 @@ msgid "Account Number missing!"
 msgstr "Hesap Numarası yok!"
 
 #: scripts/payment.pl:161
-#, fuzzy
 msgid "Account Title"
-msgstr "Hesap Türü"
+msgstr ""
 
 #: UI/accounts/edit.html:80 UI/taxform/details_report.html:19
 #: UI/taxform/summary_report.html:19
 msgid "Account Type"
-msgstr "Hesap Türü"
+msgstr ""
 
 #: bin/am.pl:137
 msgid "Account Type missing!"
@@ -244,14 +228,12 @@ msgstr ""
 
 #: UI/payments/payments_detail.html:139 UI/reconciliation/report.html:10
 #: UI/reconciliation/search.html:47
-#, fuzzy
 msgid "Account:"
-msgstr "Hesap"
+msgstr ""
 
 #: bin/bp.pl:309 bin/rp.pl:1968
-#, fuzzy
 msgid "Account: [_1]"
-msgstr "Hesap"
+msgstr ""
 
 #: bin/ic.pl:1016 UI/Contact/contact.html:69 UI/Contact/contact.html:392
 #: UI/rp-search.html:24
@@ -279,14 +261,12 @@ msgstr ""
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
-#, fuzzy
 msgid "Actions"
-msgstr "Borç İşlemleri"
+msgstr ""
 
 #: t/data/04-complex_template.html:496
-#, fuzzy
 msgid "Actions:"
-msgstr "Borç İşlemleri"
+msgstr ""
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
@@ -322,28 +302,24 @@ msgid "Add Account"
 msgstr "Hesap Ekle"
 
 #: sql/Pg-database.sql:2500
-#, fuzzy
 msgid "Add Accounts"
-msgstr "Hesap Ekle"
+msgstr ""
 
 #: bin/ic.pl:63 bin/ic.pl:1936 sql/Pg-database.sql:2452
 msgid "Add Assembly"
 msgstr "Grup Ekle"
 
 #: scripts/asset.pl:254
-#, fuzzy
 msgid "Add Asset"
-msgstr "Grup Ekle"
+msgstr ""
 
 #: scripts/asset.pl:101
-#, fuzzy
 msgid "Add Asset Class"
-msgstr "Grup Ekle"
+msgstr ""
 
 #: sql/Pg-database.sql:2598
-#, fuzzy
 msgid "Add Assets"
-msgstr "Grup Ekle"
+msgstr ""
 
 #: bin/am.pl:826 bin/am.pl:851 sql/Pg-database.sql:2506
 msgid "Add Business"
@@ -354,9 +330,8 @@ msgid "Add Class"
 msgstr ""
 
 #: bin/is.pl:86 bin/is.pl:106
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: bin/aa.pl:449
 msgid "Add Credit Note"
@@ -368,9 +343,8 @@ msgid "Add Customer"
 msgstr "Alıcı Ekle"
 
 #: bin/ir.pl:77 bin/ir.pl:96
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: bin/aa.pl:447
 msgid "Add Debit Note"
@@ -410,9 +384,8 @@ msgid "Add Language"
 msgstr ""
 
 #: sql/Pg-database.sql:2453
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: bin/pos.pl:106
 msgid "Add POS Invoice"
@@ -459,19 +432,16 @@ msgid "Add Service"
 msgstr "Hizmet Ekle"
 
 #: bin/jc.pl:59 bin/jc.pl:79 bin/jc.pl:1949
-#, fuzzy
 msgid "Add Stores Card"
-msgstr "Satış Siparişi Ekle"
+msgstr ""
 
 #: sql/Pg-database.sql:2571
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Parça Ekle"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:2
-#, fuzzy
 msgid "Add TaxForm"
-msgstr "Parça Ekle"
+msgstr ""
 
 #: bin/jc.pl:56 bin/jc.pl:1707 bin/jc.pl:1717 bin/jc.pl:1727
 msgid "Add Time Card"
@@ -508,14 +478,12 @@ msgid "Add Warehouse"
 msgstr ""
 
 #: bin/io.pl:2027
-#, fuzzy
 msgid "Add line1"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: bin/io.pl:2030
-#, fuzzy
 msgid "Add line2"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: bin/io.pl:2034
 msgid "Add line3 "
@@ -529,26 +497,22 @@ msgid "Address"
 msgstr "Adres"
 
 #: t/data/04-complex_template.html:385
-#, fuzzy
 msgid "Address1"
-msgstr "Adres"
+msgstr ""
 
 #: t/data/04-complex_template.html:420
-#, fuzzy
 msgid "Address:"
-msgstr "Adres"
+msgstr ""
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
-#, fuzzy
 msgid "Address: [_1]"
-msgstr "Adres"
+msgstr ""
 
 #: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
-#, fuzzy
 msgid "Addresses"
-msgstr "Adres"
+msgstr ""
 
 #: sql/Pg-database.sql:2448
 msgid "Adjust Till"
@@ -571,18 +535,16 @@ msgid "Adjustment"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:13
-#, fuzzy
 msgid "Adjustment Date"
-msgstr "Vade Tarihi"
+msgstr ""
 
 #: UI/employee.html:101
 msgid "Admin"
 msgstr ""
 
 #: sql/Pg-database.sql:2572
-#, fuzzy
 msgid "Admin Users"
-msgstr "Kullanıcı Ekle"
+msgstr ""
 
 #: bin/rp.pl:981 UI/rp-search-aging.html:67
 msgid "Aged"
@@ -603,9 +565,8 @@ msgid "All Accounts"
 msgstr ""
 
 #: bin/aa.pl:1774
-#, fuzzy
 msgid "All Invoices"
-msgstr "Fatura"
+msgstr ""
 
 #: sql/Pg-database.sql:2458
 msgid "All Items"
@@ -705,9 +666,8 @@ msgid "Amount Due"
 msgstr ""
 
 #: UI/reconciliation/search.html:28
-#, fuzzy
 msgid "Amount From"
-msgstr "Miktar"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:148
 msgid "Amount to be used"
@@ -784,9 +744,8 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: bin/ir.pl:1391 bin/is.pl:1485
-#, fuzzy
 msgid "Are you sure you want to delete Invoice Number [_1]?"
-msgstr "Fatura Numarasını silmek istediğinizden emin misiniz? Fiş: "
+msgstr ""
 
 #: bin/oe.pl:2352
 msgid "Are you sure you want to delete Order Number"
@@ -798,12 +757,11 @@ msgstr ""
 
 #: bin/aa.pl:1458
 msgid "Are you sure you want to delete Transaction"
-msgstr "İşlemi silmek istediğinizden emin misiniz? Fiş: "
+msgstr ""
 
 #: bin/jc.pl:1309
-#, fuzzy
 msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-msgstr "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: "
+msgstr ""
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
@@ -815,7 +773,7 @@ msgstr ""
 
 #: bin/ic.pl:1291
 msgid "Assemblies"
-msgstr "Gruplar"
+msgstr ""
 
 #: bin/ic.pl:4036
 msgid "Assemblies restocked!"
@@ -838,25 +796,22 @@ msgstr "Aktif"
 #: scripts/asset.pl:168 UI/asset/edit_asset.html:151
 #: UI/asset/edit_class.html:35 UI/asset/search_asset.html:142
 #: UI/asset/search_class.html:43
-#, fuzzy
 msgid "Asset Account"
-msgstr "Hesap Ekle"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset_Class.pm:68 scripts/asset.pl:635
 #: UI/asset/begin_approval.html:15 UI/asset/begin_report.html:14
 #: UI/asset/search_reports.html:12
-#, fuzzy
 msgid "Asset Class"
-msgstr "Aktif"
+msgstr ""
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
 msgstr ""
 
 #: sql/Pg-database.sql:2594
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Gruplar"
+msgstr ""
 
 #: scripts/asset.pl:556
 msgid "Asset Depreciation Report"
@@ -871,16 +826,14 @@ msgid "Asset Partial Disposal Report"
 msgstr ""
 
 #: scripts/asset.pl:496
-#, fuzzy
 msgid "Asset Tag"
-msgstr "Aktif"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:73
 #: templates/demo_with_images/balance_sheet.html:73
 #: templates/xedemo/balance_sheet.html:73 sql/Pg-database.sql:2595
-#, fuzzy
 msgid "Assets"
-msgstr "Aktif"
+msgstr ""
 
 #: bin/aa.pl:1094 bin/ic.pl:946 bin/ir.pl:991 bin/is.pl:1124 bin/oe.pl:967
 #: UI/journal/journal_entry.html:349
@@ -990,9 +943,8 @@ msgid "Automatic"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:118
-#, fuzzy
 msgid "Available"
-msgstr "Vergiye tabi"
+msgstr ""
 
 #: UI/setup/list_databases.html:7
 msgid "Available Databases"
@@ -1036,14 +988,12 @@ msgid "Backup"
 msgstr "Yedekleme"
 
 #: UI/setup/confirm_operation.html:64
-#, fuzzy
 msgid "Backup DB"
-msgstr "Yedekleme"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:71
-#, fuzzy
 msgid "Backup Roles"
-msgstr "Yedekleme"
+msgstr ""
 
 #: scripts/recon.pl:187 UI/journal/search.html:283
 msgid "Balance"
@@ -1053,9 +1003,8 @@ msgstr ""
 #: templates/demo_with_images/invoice.html:197
 #: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
 #: templates/xedemo/invoice.tex:168
-#, fuzzy
 msgid "Balance Due"
-msgstr "Bilanço"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:63
 #: templates/demo_with_images/balance_sheet.html:63
@@ -1065,20 +1014,17 @@ msgid "Balance Sheet"
 msgstr "Bilanço"
 
 #: UI/Contact/contact.html:1109
-#, fuzzy
 msgid "Bank Account"
-msgstr "Bağlı Hesaplar"
+msgstr ""
 
 #: t/data/04-complex_template.html:601
-#, fuzzy
 msgid "Bank Account:"
-msgstr "Bağlı Hesaplar"
+msgstr ""
 
 #: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Bağlı Hesaplar"
+msgstr ""
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1101,9 +1047,8 @@ msgid "Batch Date"
 msgstr ""
 
 #: bin/rp.pl:2014
-#, fuzzy
 msgid "Batch Description"
-msgstr "Açıklama"
+msgstr ""
 
 #: LedgerSMB/GL.pm:178 LedgerSMB/IR.pm:359 LedgerSMB/IS.pm:1273
 msgid "Batch ID Missing"
@@ -1114,9 +1059,8 @@ msgid "Batch Name"
 msgstr ""
 
 #: UI/create_batch.html:13
-#, fuzzy
 msgid "Batch Number"
-msgstr "Numara"
+msgstr ""
 
 #: sql/Pg-database.sql:2593
 msgid "Batch Printing"
@@ -1222,23 +1166,20 @@ msgid "Business"
 msgstr ""
 
 #: UI/payments/payments_filter.html:78
-#, fuzzy
 msgid "Business Class"
-msgstr "ŞirketNo"
+msgstr ""
 
 #: UI/am-defaults.html:26
 msgid "Business Number"
 msgstr "ŞirketNo"
 
 #: UI/Contact/contact.html:571
-#, fuzzy
 msgid "Business Type"
-msgstr "ŞirketNo"
+msgstr ""
 
 #: t/data/04-complex_template.html:294
-#, fuzzy
 msgid "Business Type:"
-msgstr "ŞirketNo"
+msgstr ""
 
 #: bin/am.pl:874
 msgid "Business deleted!"
@@ -1249,9 +1190,8 @@ msgid "Business saved!"
 msgstr ""
 
 #: UI/payments/payments_detail.html:173
-#, fuzzy
 msgid "Business:"
-msgstr "ŞirketNo"
+msgstr ""
 
 #: bin/oe.pl:1867
 msgid "C"
@@ -1274,9 +1214,8 @@ msgid "CSV File:"
 msgstr ""
 
 #: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869 LedgerSMB/ScriptLib/Company.pm:412
-#, fuzzy
 msgid "CSV Report"
-msgstr "Raporlar"
+msgstr ""
 
 #: UI/rp-search-generate_trial_balance.html:64
 msgid "Calc. Precision"
@@ -1357,7 +1296,7 @@ msgstr ""
 
 #: bin/am.pl:321
 msgid "Cannot delete default account!"
-msgstr "Öntanımlı hesap silinmez!"
+msgstr ""
 
 #: bin/ir.pl:1409 bin/is.pl:1510
 msgid "Cannot delete invoice!"
@@ -1372,18 +1311,16 @@ msgid "Cannot delete order!"
 msgstr ""
 
 #: bin/gl.pl:1121
-#, fuzzy
 msgid "Cannot delete posted transaction"
-msgstr "Öntanımlı hesap silinmez!"
+msgstr ""
 
 #: bin/oe.pl:2394
 msgid "Cannot delete quotation!"
 msgstr ""
 
 #: bin/jc.pl:1325
-#, fuzzy
 msgid "Cannot delete time card!"
-msgstr "Öntanımlı hesap silinmez!"
+msgstr ""
 
 #: bin/aa.pl:1483
 msgid "Cannot delete transaction!"
@@ -1447,9 +1384,8 @@ msgid "Cannot save stores card for a closed period!"
 msgstr ""
 
 #: bin/jc.pl:1200
-#, fuzzy
 msgid "Cannot save stores card!"
-msgstr "Cannot create Lock!"
+msgstr ""
 
 #: bin/am.pl:1805
 msgid "Cannot save taxes!"
@@ -1460,9 +1396,8 @@ msgid "Cannot save time card for a closed period!"
 msgstr ""
 
 #: bin/jc.pl:1184
-#, fuzzy
 msgid "Cannot save time card!"
-msgstr "Cannot create Lock!"
+msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
@@ -1491,14 +1426,13 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr ""
 
 #: UI/payments/payment2.html:229 UI/payments/search.html:56
-#, fuzzy
 msgid "Cash Account"
-msgstr "Vergi Hesapları"
+msgstr ""
 
 #: bin/ps.pl:288
 msgid "Cash Breakdown:"
@@ -1513,9 +1447,8 @@ msgid "Cc: [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:777
-#, fuzzy
 msgid "Cell Phone"
-msgstr "Telefon"
+msgstr ""
 
 #: bin/pos.pl:564
 msgid "Change"
@@ -1523,7 +1456,7 @@ msgstr ""
 
 #: UI/users/preferences.html:24
 msgid "Change Password"
-msgstr "Şifre Değiştir"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:960 scripts/employee.pl:229
 msgid "Changes not saved.  Please try again."
@@ -1534,16 +1467,15 @@ msgid "Chargeable"
 msgstr ""
 
 #: bin/jc.pl:515 bin/jc.pl:529
-#, fuzzy
 msgid "Chargeout Rate"
-msgstr "Döviz Kuru"
+msgstr ""
 
 #: bin/am.pl:183 bin/ca.pl:100 sql/Pg-database.sql:2480
 #: sql/Pg-database.sql:2581
 msgid "Chart of Accounts"
 msgstr "Hesap Planı"
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr ""
 
@@ -1572,9 +1504,8 @@ msgid "Checks"
 msgstr ""
 
 #: UI/payments/payment1_5.html:23
-#, fuzzy
 msgid "Choose a company"
-msgstr "Şirket"
+msgstr ""
 
 #: bin/arap.pl:176 t/data/04-complex_template.html:386
 #: UI/Contact/contact.html:784 UI/Contact/contact.html:872
@@ -1602,9 +1533,8 @@ msgid "Cleared"
 msgstr ""
 
 #: UI/reconciliation/report.html:65
-#, fuzzy
 msgid "Cleared Transactions"
-msgstr "İşlemler"
+msgstr ""
 
 #: bin/jc.pl:638
 msgid "Clocked"
@@ -1644,28 +1574,24 @@ msgid "Company"
 msgstr "Şirket"
 
 #: bin/am.pl:77
-#, fuzzy
 msgid "Company Address"
-msgstr "Adres"
+msgstr ""
 
 #: bin/am.pl:79
-#, fuzzy
 msgid "Company Fax"
-msgstr "Şirket"
+msgstr ""
 
 #: bin/am.pl:76 UI/Contact/history_filter.html:33 UI/Contact/search.html:31
 msgid "Company Name"
 msgstr ""
 
 #: bin/am.pl:78
-#, fuzzy
 msgid "Company Phone"
-msgstr "Şirket"
+msgstr ""
 
 #: UI/am-company-logo.html:7
-#, fuzzy
 msgid "Company: [_1]"
-msgstr "Şirket"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1710,19 +1636,16 @@ msgid "Consolidate"
 msgstr ""
 
 #: bin/oe.pl:1737 bin/oe.pl:1793
-#, fuzzy
 msgid "Consolidate Orders"
-msgstr "Satış Siparişleri"
+msgstr ""
 
 #: bin/oe.pl:1318
-#, fuzzy
 msgid "Consolidate Purchase Orders"
-msgstr "Alış Siparişini Düzenle"
+msgstr ""
 
 #: bin/oe.pl:1262
-#, fuzzy
 msgid "Consolidate Sales Orders"
-msgstr "Satış Siparişini Düzenle"
+msgstr ""
 
 #: bin/io.pl:2102 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
@@ -1746,14 +1669,12 @@ msgstr "Kontak"
 #: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
 #: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
 #: UI/Contact/history_filter.html:41
-#, fuzzy
 msgid "Contact Info"
-msgstr "Kontak"
+msgstr ""
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
-#, fuzzy
 msgid "Contact Info:"
-msgstr "Kontak"
+msgstr ""
 
 #: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
@@ -1790,9 +1711,8 @@ msgid "Control Code"
 msgstr ""
 
 #: UI/create_batch.html:47
-#, fuzzy
 msgid "Control Number"
-msgstr "Hesap Numarası"
+msgstr ""
 
 #: bin/rp.pl:1358 UI/io-email.html:65
 msgid "Copies"
@@ -1839,9 +1759,8 @@ msgid "Could not transfer Inventory!"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:24
-#, fuzzy
 msgid "Counted"
-msgstr "Miktar"
+msgstr ""
 
 #: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
 #: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
@@ -1860,19 +1779,16 @@ msgid "Country:"
 msgstr ""
 
 #: UI/create_batch.html:2
-#, fuzzy
 msgid "Create Batch"
-msgstr "Veriseti Oluştur"
+msgstr ""
 
 #: scripts/setup.pl:145
-#, fuzzy
 msgid "Create Database?"
-msgstr "Veriseti Oluştur"
+msgstr ""
 
 #: UI/create_batch.html:9
-#, fuzzy
 msgid "Create New Batch"
-msgstr "Veriseti Oluştur"
+msgstr ""
 
 #: UI/reconciliation/upload.html:56
 msgid "Create New Report"
@@ -1883,9 +1799,8 @@ msgid "Create New TaxForm"
 msgstr ""
 
 #: UI/setup/new_user.html:109
-#, fuzzy
 msgid "Create User"
-msgstr "Veriseti Oluştur"
+msgstr ""
 
 #: UI/asset/search_reports.html:47 UI/batch/filter.html:33
 #: UI/batch/search_transactions.html:26 UI/create_batch.html:49
@@ -1906,9 +1821,8 @@ msgid "Credit Card Track"
 msgstr ""
 
 #: bin/am.pl:2862 sql/Pg-database.sql:2550
-#, fuzzy
 msgid "Credit Invoice"
-msgstr "Fatura"
+msgstr ""
 
 #: bin/aa.pl:612 bin/ir.pl:467 bin/is.pl:521 bin/oe.pl:457 bin/pos.pl:364
 #: UI/Contact/contact.html:398 UI/Contact/contact.html:497
@@ -1917,19 +1831,16 @@ msgid "Credit Limit"
 msgstr "Kredi Limiti"
 
 #: t/data/04-complex_template.html:201
-#, fuzzy
 msgid "Credit Limit:"
-msgstr "Kredi Limiti"
+msgstr ""
 
 #: sql/Pg-database.sql:2549
-#, fuzzy
 msgid "Credit Note"
-msgstr "Alacak"
+msgstr ""
 
 #: scripts/payment.pl:166
-#, fuzzy
 msgid "Credits"
-msgstr "Alacak"
+msgstr ""
 
 #: bin/ps.pl:182 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
@@ -1994,9 +1905,8 @@ msgid "Customer History"
 msgstr ""
 
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:30
-#, fuzzy
 msgid "Customer Name"
-msgstr "Alıcı"
+msgstr ""
 
 #: bin/aa.pl:1660 bin/am.pl:67 bin/io.pl:1984 scripts/payment.pl:326
 #: UI/am-defaults.html:176 UI/Contact/history_filter.html:69
@@ -2005,9 +1915,8 @@ msgid "Customer Number"
 msgstr ""
 
 #: UI/Contact/search.html:8
-#, fuzzy
 msgid "Customer Search"
-msgstr "Alıcı"
+msgstr ""
 
 #: bin/aa.pl:1306 bin/is.pl:1385 bin/oe.pl:2261 bin/pe.pl:2872 bin/pos.pl:687
 msgid "Customer missing!"
@@ -2022,9 +1931,8 @@ msgid "Customer/Vendor Accounts"
 msgstr ""
 
 #: bin/bp.pl:303
-#, fuzzy
 msgid "Customer: [_1]"
-msgstr "Alıcı"
+msgstr ""
 
 #: sql/Pg-database.sql:2547
 msgid "Customers"
@@ -2067,14 +1975,12 @@ msgid "Database Management Console"
 msgstr ""
 
 #: UI/setup/complete.html:8
-#, fuzzy
 msgid "Database Operation Complete"
-msgstr "Veritabani Yonetimi"
+msgstr ""
 
 #: scripts/setup.pl:144
-#, fuzzy
 msgid "Database does not exist."
-msgstr "mevcut değil"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2146,17 +2052,15 @@ msgstr "Tarih"
 
 #: UI/am-userconfig.html:25 UI/users/preferences.html:39
 msgid "Date Format"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: UI/reconciliation/search.html:10
-#, fuzzy
 msgid "Date From"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: UI/payments/payments_filter.html:99
-#, fuzzy
 msgid "Date From:"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: bin/aa.pl:1711 bin/aa.pl:2085
 msgid "Date Paid"
@@ -2171,32 +2075,28 @@ msgid "Date Reversed"
 msgstr ""
 
 #: UI/payments/payments_filter.html:107
-#, fuzzy
 msgid "Date To:"
-msgstr "Tarih"
+msgstr ""
 
 #: UI/payments/payment1.html:57
-#, fuzzy
 msgid "Date from"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: bin/jc.pl:1142
 msgid "Date missing!"
 msgstr ""
 
 #: UI/Admin/user_search.html:51
-#, fuzzy
 msgid "Date of Birth"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: bin/oe.pl:3066
 msgid "Date received missing!"
 msgstr ""
 
 #: bin/aa.pl:1764 UI/Contact/search.html:108 UI/payments/payment1.html:67
-#, fuzzy
 msgid "Date to"
-msgstr "Tarih"
+msgstr ""
 
 #: bin/jc.pl:604
 msgid "Date worked"
@@ -2224,19 +2124,16 @@ msgid "Debit"
 msgstr "Borç"
 
 #: bin/am.pl:2863 sql/Pg-database.sql:2556
-#, fuzzy
 msgid "Debit Invoice"
-msgstr "Fatura"
+msgstr ""
 
 #: sql/Pg-database.sql:2555
-#, fuzzy
 msgid "Debit Note"
-msgstr "Borç"
+msgstr ""
 
 #: scripts/payment.pl:165
-#, fuzzy
 msgid "Debits"
-msgstr "Borç"
+msgstr ""
 
 #: bin/aa.pl:91 bin/ca.pl:83 bin/gl.pl:86 bin/io.pl:87
 #: LedgerSMB/App_State.pm:180
@@ -2267,9 +2164,8 @@ msgstr ""
 
 #: UI/am-defaults.html:100 UI/setup/migrate_sl_info.html:32
 #: UI/setup/upgrade_info.html:32
-#, fuzzy
 msgid "Default Country"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: bin/am.pl:73
 msgid "Default Email BCC"
@@ -2319,17 +2215,15 @@ msgstr "Sil"
 
 #: bin/am.pl:314
 msgid "Delete Account"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: scripts/vouchers.pl:493
-#, fuzzy
 msgid "Delete Batch"
-msgstr "Verisetini Sil"
+msgstr ""
 
 #: bin/am.pl:1250
-#, fuzzy
 msgid "Delete Language"
-msgstr "Dil"
+msgstr ""
 
 #: bin/arap.pl:871 bin/arap.pl:877
 msgid "Delete Schedule"
@@ -2340,9 +2234,8 @@ msgid "Delete Timecard"
 msgstr ""
 
 #: scripts/vouchers.pl:499
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: bin/am.pl:1261
 msgid "Deleting a language will also delete the templates for the language [_1]"
@@ -2352,9 +2245,8 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
 #: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
-#, fuzzy
 msgid "Delivery"
-msgstr "Sürücü"
+msgstr ""
 
 #: bin/io.pl:227 LedgerSMB/ScriptLib/Company.pm:558
 #: UI/Contact/history_filter.html:319 UI/Contact/search.html:288
@@ -2434,16 +2326,14 @@ msgid "Depreciate Through"
 msgstr ""
 
 #: scripts/asset.pl:677 UI/accounts/edit.html:321 sql/Pg-database.sql:2605
-#, fuzzy
 msgid "Depreciation"
-msgstr "Açıklama"
+msgstr ""
 
 #: scripts/asset.pl:169 UI/asset/edit_asset.html:161
 #: UI/asset/edit_class.html:45 UI/asset/search_asset.html:152
 #: UI/asset/search_class.html:54
-#, fuzzy
 msgid "Depreciation Account"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: scripts/asset.pl:170 UI/asset/edit_class.html:23
 #: UI/asset/search_class.html:19
@@ -2542,14 +2432,12 @@ msgstr ""
 
 #: UI/asset/edit_asset.html:61 UI/asset/search_asset.html:55
 #: UI/taxform/add_taxform.html:47
-#, fuzzy
 msgid "Description:"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/rp.pl:1978
-#, fuzzy
 msgid "Description: [_1]"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/aa.pl:1620 bin/ic.pl:1081 bin/ic.pl:1599 bin/pe.pl:2519
 #: UI/Contact/history_filter.html:213 UI/Contact/search.html:215
@@ -2588,9 +2476,8 @@ msgid "Disc %"
 msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:556
-#, fuzzy
 msgid "Disc."
-msgstr "İndirim"
+msgstr ""
 
 #: scripts/payment.pl:903 UI/accounts/edit.html:200 UI/accounts/edit.html:240
 #: UI/am-business-form.html:16 UI/Contact/contact.html:517
@@ -2600,19 +2487,12 @@ msgid "Discount"
 msgstr "İndirim"
 
 #: bin/am.pl:793
-#, fuzzy
 msgid "Discount %"
-msgstr "İndirim"
+msgstr ""
 
 #: t/data/04-complex_template.html:242
-#, fuzzy
 msgid "Discount:"
-msgstr "İndirim"
-
-#: pos.conf.pl:41
-#, fuzzy
-msgid "Discover"
-msgstr "İndirim"
+msgstr ""
 
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
@@ -2700,9 +2580,8 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:78 templates/xedemo/invoice.html:108
 #: templates/xedemo/invoice.tex:118 templates/xedemo/receipt.tex:64
 #: templates/xedemo/statement.html:76
-#, fuzzy
 msgid "Due"
-msgstr "Ara"
+msgstr ""
 
 #: bin/aa.pl:691 bin/aa.pl:1718 bin/aa.pl:2052 bin/ir.pl:532 bin/is.pl:598
 #: bin/rp.pl:944 UI/orders/order.html:96 UI/taxform/details_report.html:22
@@ -2728,9 +2607,8 @@ msgid "E-mail Statement to [_1]"
 msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "Posta"
+msgstr ""
 
 #: bin/am.pl:2831 bin/io.pl:1638 bin/rp.pl:1417
 msgid "E-mail address missing!"
@@ -2763,12 +2641,11 @@ msgstr "Hesabı Düzenle"
 
 #: bin/ic.pl:96 bin/ic.pl:743
 msgid "Edit Assembly"
-msgstr "Grubu Düzenle"
+msgstr ""
 
 #: scripts/asset.pl:99
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Grubu Düzenle"
+msgstr ""
 
 #: bin/am.pl:852
 msgid "Edit Business"
@@ -2824,12 +2701,11 @@ msgstr ""
 
 #: bin/ic.pl:94 bin/ic.pl:741
 msgid "Edit Part"
-msgstr "Parçayı Düzenle"
+msgstr ""
 
 #: bin/am.pl:1751
-#, fuzzy
 msgid "Edit Preferences for [_1]"
-msgstr "Tercihleri Düzenle: "
+msgstr ""
 
 #: bin/pe.pl:1731
 msgid "Edit Pricegroup"
@@ -2864,18 +2740,16 @@ msgid "Edit Service"
 msgstr "Hizmeti Düzenle"
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Taxform"
-msgstr "Parçayı Düzenle"
+msgstr ""
 
 #: bin/am.pl:1393 bin/am.pl:1411
 msgid "Edit Template"
 msgstr "Şablonu Düzenle"
 
 #: bin/jc.pl:76
-#, fuzzy
 msgid "Edit Time Card"
-msgstr "Parçayı Düzenle"
+msgstr ""
 
 #: UI/Contact/contact.html:243
 msgid "Edit User"
@@ -2894,23 +2768,20 @@ msgid "Edit Warehouse"
 msgstr ""
 
 #: UI/Admin/edit_user.html:10
-#, fuzzy
 msgid "Editing User"
-msgstr "Kullanıcı Bilgilerini Düzenle"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
-#, fuzzy
 msgid "Eight"
-msgstr "Ağırlık"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:78
 msgid "Eighteen"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:96
-#, fuzzy
 msgid "Eighty"
-msgstr "Ağırlık"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:70
 msgid "Eleven"
@@ -2921,9 +2792,8 @@ msgid "Eleven-o"
 msgstr ""
 
 #: UI/employee.html:77 sql/Pg-database.sql:788
-#, fuzzy
 msgid "Email"
-msgstr "Posta"
+msgstr ""
 
 #: bin/gl.pl:876
 msgid "Email CSV Report"
@@ -2975,14 +2845,12 @@ msgstr ""
 #: scripts/employee.pl:316 UI/Contact/contact.html:222
 #: UI/Contact/contact.html:400 UI/Contact/contact.html:484
 #: UI/employee/filter.html:210 UI/employee.html:127
-#, fuzzy
 msgid "End Date"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
-#, fuzzy
 msgid "End Date:"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
 msgid "Enddate"
@@ -3009,22 +2877,18 @@ msgid "Enforce transaction reversal for all dates"
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:11
-#, fuzzy
 msgid "Enter Inventory"
-msgstr "Stok"
+msgstr ""
 
 #: UI/setup/new_user.html:7
-#, fuzzy
 msgid "Enter User"
-msgstr "Kullanıcı Bilgilerini Düzenle"
+msgstr ""
 
 #: UI/am-defaults.html:116
 msgid ""
 "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native "
 "and foreign currencies"
 msgstr ""
-"Yerel ve yabancı para birimleri için 3 harfli tanımlama giriniz yi tıklayınız "
-"(USD:TRL:EUR)"
 
 #: scripts/recon.pl:192
 msgid "Entered By"
@@ -3051,9 +2915,8 @@ msgid "Entity Control Code"
 msgstr ""
 
 #: sql/Pg-database.sql:919
-#, fuzzy
 msgid "Entity Credit Account"
-msgstr "Hesabı Düzenle"
+msgstr ""
 
 #: bin/gl.pl:529 UI/accounts/edit.html:86 UI/journal/search.html:181
 msgid "Equity"
@@ -3122,9 +2985,8 @@ msgid "Exchange rate missing!"
 msgstr ""
 
 #: bin/ps.pl:78
-#, fuzzy
 msgid "Expected"
-msgstr "Gider"
+msgstr ""
 
 #: bin/gl.pl:531 bin/ic.pl:683 bin/ic.pl:1912 UI/accounts/edit.html:88
 #: UI/accounts/edit.html:291 UI/accounts/edit.html:330 UI/am-defaults.html:82
@@ -3133,9 +2995,8 @@ msgid "Expense"
 msgstr "Gider"
 
 #: UI/asset/edit_asset.html:179
-#, fuzzy
 msgid "Expense Account"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: UI/accounts/edit.html:213
 msgid "Expense/Asset"
@@ -3144,9 +3005,8 @@ msgstr "Gider/Varlıklar"
 #: templates/demo/income_statement.html:110
 #: templates/demo_with_images/income_statement.html:110
 #: templates/xedemo/income_statement.html:110
-#, fuzzy
 msgid "Expenses"
-msgstr "Gider"
+msgstr ""
 
 #: bin/ic.pl:1868 bin/io.pl:208 bin/pos.pl:757 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3297,9 +3157,8 @@ msgid "Filtering From:"
 msgstr ""
 
 #: UI/payments/payments_filter.html:14
-#, fuzzy
 msgid "Filtering Payments"
-msgstr "Ödemeler"
+msgstr ""
 
 #: UI/payments/payments_filter.html:13
 msgid "Filtering Receipts"
@@ -3325,9 +3184,8 @@ msgid "Five Hundred"
 msgstr ""
 
 #: UI/accounts/edit.html:312
-#, fuzzy
 msgid "Fixed Asset"
-msgstr "Aktif"
+msgstr ""
 
 #: UI/accounts/edit.html:306 sql/Pg-database.sql:2587
 msgid "Fixed Assets"
@@ -3388,23 +3246,20 @@ msgid "From"
 msgstr "Başlangıç"
 
 #: UI/payments/search.html:74
-#, fuzzy
 msgid "From Date"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: UI/asset/import_asset.html:51
-#, fuzzy
 msgid "From File"
-msgstr "Başlangıç"
+msgstr ""
 
 #: bin/oe.pl:3243
 msgid "From Warehouse"
 msgstr ""
 
 #: bin/bp.pl:330 bin/rp.pl:1992
-#, fuzzy
 msgid "From [_1]"
-msgstr "Başlangıç"
+msgstr ""
 
 #: UI/asset/begin_report.html:31
 msgid "Full"
@@ -3459,28 +3314,24 @@ msgid "Gain (Loss)"
 msgstr ""
 
 #: UI/asset/begin_approval.html:46
-#, fuzzy
 msgid "Gain Account"
-msgstr "Bağlı Hesaplar"
+msgstr ""
 
 #: sql/Pg-database.sql:2385
-#, fuzzy
 msgid "General Journal"
-msgstr "Defteri Kebir"
+msgstr ""
 
 #: bin/gl.pl:537
 msgid "General Ledger"
-msgstr "Defteri Kebir"
+msgstr ""
 
 #: bin/gl.pl:458 UI/journal/search.html:16
-#, fuzzy
 msgid "General Ledger Reports"
-msgstr "Defteri Kebir"
+msgstr ""
 
 #: bin/gl.pl:535
-#, fuzzy
 msgid "General Ledger: [_1] [_2]"
-msgstr "Defteri Kebir"
+msgstr ""
 
 #: sql/Pg-database.sql:2435 sql/Pg-database.sql:2472
 msgid "Generate"
@@ -3518,24 +3369,17 @@ msgstr ""
 msgid "Generic Jabber"
 msgstr ""
 
-#: pos.conf.pl:44
-msgid "Gift Cert"
+#: t/data/04-strings-for-translation.html:8
+msgid "Goods & Services"
 msgstr ""
 
-#: t/data/04-strings-for-translation.html:8
-#, fuzzy
-msgid "Goods & Services"
-msgstr "Hizmet Ekle"
-
 #: sql/Pg-database.sql:2386
-#, fuzzy
 msgid "Goods and Services"
-msgstr "Hizmet Ekle"
+msgstr ""
 
 #: UI/payments/payments_detail.html:387
-#, fuzzy
 msgid "Grand Total"
-msgstr "Toplam"
+msgstr ""
 
 #: bin/ic.pl:429 bin/ic.pl:987 bin/ic.pl:993 bin/ic.pl:1632 bin/ic.pl:1796
 #: bin/ic.pl:2393 bin/ic.pl:2399 bin/ic.pl:2539 bin/ic.pl:3068 bin/io.pl:230
@@ -3643,15 +3487,13 @@ msgid "Image"
 msgstr ""
 
 #: UI/am-defaults.html:38
-#, fuzzy
 msgid "Images in Templates"
-msgstr "Yeni Şablonlar"
+msgstr ""
 
 #: UI/Admin/edit_user.html:55 UI/setup/new_user.html:32
 #: sql/Pg-database.sql:2600
-#, fuzzy
 msgid "Import"
-msgstr "Raporlar"
+msgstr ""
 
 #: bin/ir.pl:726 bin/ir.pl:737
 msgid "Import Text"
@@ -3685,9 +3527,8 @@ msgid "Include Exchange Rate Difference"
 msgstr ""
 
 #: UI/employee/filter.html:72
-#, fuzzy
 msgid "Include In Report"
-msgstr "Raporla"
+msgstr ""
 
 #: bin/arap.pl:617
 msgid "Include Payment"
@@ -3731,9 +3572,8 @@ msgid "Income Statement"
 msgstr "Gelir Tablosu"
 
 #: LedgerSMB/DBObject/User.pm:76
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Şifre Değiştir"
+msgstr ""
 
 #: bin/ic.pl:1199 bin/ic.pl:3075
 msgid "Individual Items"
@@ -3789,9 +3629,8 @@ msgid "Inventory"
 msgstr "Stok"
 
 #: sql/Pg-database.sql:2484
-#, fuzzy
 msgid "Inventory Activity"
-msgstr "Stok"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:2
 msgid "Inventory Adjustment Entry"
@@ -3802,9 +3641,8 @@ msgid "Inventory Adjustment Setup"
 msgstr ""
 
 #: bin/ic.pl:3608
-#, fuzzy
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
-msgstr "Bu Parçayı çıkarmadan önce stok miktarı sıfır olmalıdır"
+msgstr ""
 
 #: bin/ic.pl:3615
 msgid ""
@@ -3813,7 +3651,7 @@ msgstr "Bu grubu çıkarmadan önce stok miktarı sıfır olmalıdır"
 
 #: bin/ic.pl:3614
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
-msgstr "Bu Parçayı çıkarmadan önce stok miktarı sıfır olmalıdır"
+msgstr ""
 
 #: bin/oe.pl:3078
 msgid "Inventory saved!"
@@ -3865,19 +3703,16 @@ msgstr "Fatura"
 #: templates/xedemo/packing_list.html:78 templates/xedemo/packing_list.tex:87
 #: templates/xedemo/pick_list.html:77 templates/xedemo/pick_list.tex:80
 #: templates/xedemo/statement.html:73 templates/xedemo/statement.tex:56
-#, fuzzy
 msgid "Invoice #"
-msgstr "Fatura"
+msgstr ""
 
 #: bin/aa.pl:683 bin/aa.pl:1716 bin/aa.pl:2048 bin/ir.pl:524 bin/is.pl:590
-#, fuzzy
 msgid "Invoice Created"
-msgstr "Fatura Tarihi"
+msgstr ""
 
 #: bin/aa.pl:1312
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "Fatura Tarihi yok!"
+msgstr ""
 
 #: bin/aa.pl:687 bin/aa.pl:1690 bin/ir.pl:528 bin/is.pl:594
 #: UI/orders/order.html:90
@@ -3890,9 +3725,8 @@ msgstr "Fatura Tarihi yok!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
-#, fuzzy
 msgid "Invoice No."
-msgstr "Fatura"
+msgstr ""
 
 #: bin/aa.pl:675 bin/aa.pl:1569 bin/aa.pl:1683 bin/aa.pl:1927 bin/bp.pl:100
 #: bin/ic.pl:1839 bin/ir.pl:515 bin/is.pl:581
@@ -3908,38 +3742,32 @@ msgid "Invoice Number missing!"
 msgstr "Fatura Numarası yok!"
 
 #: bin/bp.pl:314
-#, fuzzy
 msgid "Invoice Number: [_1]"
-msgstr "Fatura No"
+msgstr ""
 
 #: UI/taxform/details_report.html:24 UI/taxform/summary_report.html:23
-#, fuzzy
 msgid "Invoice Sum"
-msgstr "Fatura No"
+msgstr ""
 
 #: UI/payments/payments_detail.html:213
-#, fuzzy
 msgid "Invoice Total"
-msgstr "Fatura Tarihi"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:145
-#, fuzzy
 msgid "Invoice date"
-msgstr "Fatura Tarihi"
+msgstr ""
 
 #: bin/ir.pl:1406 bin/is.pl:1507
 msgid "Invoice deleted!"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:146
-#, fuzzy
 msgid "Invoice due"
-msgstr "Fatura No"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:295
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Fatura Tarihi"
+msgstr ""
 
 #: bin/aa.pl:2061 UI/Contact/history_filter.html:178
 msgid "Invoices"
@@ -4026,9 +3854,8 @@ msgid "Job"
 msgstr ""
 
 #: bin/jc.pl:1846
-#, fuzzy
 msgid "Job Description"
-msgstr "Açıklama"
+msgstr ""
 
 #: UI/payments/check_job.html:26
 msgid "Job Failed"
@@ -4052,9 +3879,8 @@ msgid "Job Title"
 msgstr ""
 
 #: t/data/04-complex_template.html:78
-#, fuzzy
 msgid "Job Title:"
-msgstr "Hesap Türü"
+msgstr ""
 
 #: bin/pe.pl:1377
 msgid "Job deleted!"
@@ -4072,9 +3898,8 @@ msgid "Job/Project #"
 msgstr ""
 
 #: bin/am.pl:65 UI/am-defaults.html:168
-#, fuzzy
 msgid "Job/Project Number"
-msgstr "Sipariş No"
+msgstr ""
 
 #: bin/pe.pl:775 bin/pe.pl:952
 msgid "Jobs"
@@ -4126,9 +3951,8 @@ msgid "Labor Code"
 msgstr ""
 
 #: bin/jc.pl:1151
-#, fuzzy
 msgid "Labor Code missing!"
-msgstr "Port yok!"
+msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
@@ -4164,9 +3988,8 @@ msgid "Languages not defined!"
 msgstr ""
 
 #: t/data/04-complex_template.html:67
-#, fuzzy
 msgid "Last"
-msgstr "İsim"
+msgstr ""
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4177,22 +4000,20 @@ msgstr ""
 #: scripts/employee.pl:313 UI/Admin/edit_user.html:106
 #: UI/Admin/user_search.html:31 UI/Contact/contact.html:126
 #: UI/employee/filter.html:47 UI/employee/filter.html:168
-#, fuzzy
 msgid "Last Name"
-msgstr "İsim"
+msgstr ""
 
 #: UI/am-defaults.html:64
 msgid "Last Numbers & Default Accounts"
-msgstr "Son Numaralar ve Öntanımlı Hesaplar"
+msgstr ""
 
 #: bin/rp.pl:275
 msgid "Last Only"
 msgstr ""
 
 #: scripts/recon.pl:191
-#, fuzzy
 msgid "Last Updated"
-msgstr "Dataset updated!"
+msgstr ""
 
 #: UI/setup/new_user.html:75
 msgid "Last name"
@@ -4220,9 +4041,8 @@ msgid "LedgerSMB 1.3 found"
 msgstr ""
 
 #: UI/menu/expanding.html:5
-#, fuzzy
 msgid "LedgerSMB Accounting Menu"
-msgstr "Muhasebe Menüsü"
+msgstr ""
 
 #: UI/setup/complete.html:15 UI/setup/confirm_operation.html:79
 msgid "LedgerSMB Database Statistics"
@@ -4251,9 +4071,8 @@ msgstr ""
 #: templates/demo/balance_sheet.html:101
 #: templates/demo_with_images/balance_sheet.html:101
 #: templates/xedemo/balance_sheet.html:101
-#, fuzzy
 msgid "Liabilities"
-msgstr "Pasif"
+msgstr ""
 
 #: bin/gl.pl:528 UI/accounts/edit.html:85 UI/journal/search.html:175
 msgid "Liability"
@@ -4269,7 +4088,7 @@ msgstr ""
 
 #: bin/am.pl:198
 msgid "Link"
-msgstr "Bağla"
+msgstr ""
 
 #: bin/ic.pl:788 bin/pe.pl:369
 msgid "Link Accounts"
@@ -4317,7 +4136,7 @@ msgstr ""
 
 #: bin/ca.pl:193 UI/ca-list-selector.html:96
 msgid "List Transactions"
-msgstr "İşlemleri Listele"
+msgstr ""
 
 #: sql/Pg-database.sql:2505
 msgid "List Warehouse"
@@ -4349,7 +4168,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr "Giriş"
 
@@ -4366,9 +4185,8 @@ msgid "Loss"
 msgstr ""
 
 #: UI/asset/begin_approval.html:56
-#, fuzzy
 msgid "Loss Account"
-msgstr "Hesap"
+msgstr ""
 
 #: sql/Pg-database.sql:781
 msgid "MSN"
@@ -4405,9 +4223,8 @@ msgid "Manager:"
 msgstr ""
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
-#, fuzzy
 msgid "Manual"
-msgstr "Ocak"
+msgstr ""
 
 #: bin/aa.pl:82 bin/ca.pl:74 bin/gl.pl:77 bin/io.pl:78
 #: LedgerSMB/App_State.pm:169
@@ -4495,9 +4312,8 @@ msgid "Million"
 msgstr ""
 
 #: UI/am-taxes.html:13
-#, fuzzy
 msgid "Min Taxable"
-msgstr "Vergiye tabi"
+msgstr ""
 
 #: UI/batch/filter.html:50 UI/batch/search_transactions.html:43
 msgid "Minimum Value"
@@ -4543,9 +4359,8 @@ msgid "More information has been reported in the error logs"
 msgstr ""
 
 #: sql/Pg-database.sql:682
-#, fuzzy
 msgid "Mr."
-msgstr "Mar"
+msgstr ""
 
 #: sql/Pg-database.sql:683
 msgid "Mrs."
@@ -4567,9 +4382,8 @@ msgstr "İsim"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
-#, fuzzy
 msgid "Name:"
-msgstr "İsim"
+msgstr ""
 
 #: sql/Pg-database.sql:2602
 msgid "Net Book Value"
@@ -4597,9 +4411,8 @@ msgid "New Reconciliation Report"
 msgstr ""
 
 #: UI/Admin/edit_user.html:13
-#, fuzzy
 msgid "New User"
-msgstr "Kullanıcı"
+msgstr ""
 
 #: sql/Pg-database.sql:2589
 msgid "New Window"
@@ -4661,9 +4474,8 @@ msgid "No Labor codes on file!"
 msgstr ""
 
 #: bin/jc.pl:134
-#, fuzzy
 msgid "No Parts on file!"
-msgstr "Bu kalem dosyada yok!"
+msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
@@ -4718,9 +4530,8 @@ msgid "No."
 msgstr ""
 
 #: sql/Pg-database.sql:2394
-#, fuzzy
 msgid "Non-Taxable"
-msgstr "Vergiye tabi"
+msgstr ""
 
 #: bin/jc.pl:642
 msgid "Non-chargeable"
@@ -4741,9 +4552,8 @@ msgid "Non-tracking Items"
 msgstr ""
 
 #: scripts/setup.pl:397
-#, fuzzy
 msgid "Non-unique invoice numbers"
-msgstr "Fatura No"
+msgstr ""
 
 #: bin/rp.pl:276
 msgid "None"
@@ -4758,9 +4568,8 @@ msgid "Not Submitted"
 msgstr ""
 
 #: UI/Contact/contact.html:1170
-#, fuzzy
 msgid "Note Class"
-msgstr "Notlar:"
+msgstr ""
 
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
@@ -4879,9 +4688,8 @@ msgid "Number Format"
 msgstr "Rakam Formatı"
 
 #: bin/io.pl:1144
-#, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Sırada Numara yok!"
+msgstr ""
 
 #: bin/oe.pl:1865
 msgid "O"
@@ -4918,9 +4726,8 @@ msgid "Off Hold"
 msgstr ""
 
 #: UI/users/preferences.html:26
-#, fuzzy
 msgid "Old Password"
-msgstr "Şifre"
+msgstr ""
 
 #: bin/ic.pl:480 bin/ic.pl:706 bin/ic.pl:1114 bin/ic.pl:1494
 #: UI/inventory/adjustment_entry.html:25
@@ -4928,9 +4735,8 @@ msgid "On Hand"
 msgstr "Stok:"
 
 #: bin/aa.pl:957 bin/aa.pl:1776 bin/ir.pl:904 bin/is.pl:802
-#, fuzzy
 msgid "On Hold"
-msgstr "Stok:"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:59
 msgid "One"
@@ -5006,14 +4812,12 @@ msgstr "Sipariş"
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
 #: templates/xedemo/work_order.html:102
-#, fuzzy
 msgid "Order #"
-msgstr "Sipariş"
+msgstr ""
 
 #: UI/reconciliation/report.html:245
-#, fuzzy
 msgid "Order By"
-msgstr "Sipariş"
+msgstr ""
 
 #: bin/oe.pl:436 bin/oe.pl:2878 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103
@@ -5046,9 +4850,8 @@ msgid "Order Number missing!"
 msgstr "Sipariş Numarası yok!"
 
 #: bin/bp.pl:319
-#, fuzzy
 msgid "Order Number: [_1]"
-msgstr "Sipariş No"
+msgstr ""
 
 #: bin/oe.pl:2389
 msgid "Order deleted!"
@@ -5061,20 +4864,17 @@ msgstr ""
 #: templates/demo/statement.html:74
 #: templates/demo_with_images/statement.html:74
 #: templates/xedemo/statement.html:74
-#, fuzzy
 msgid "Order#"
-msgstr "Sipariş"
+msgstr ""
 
 #: UI/am-taxes.html:16
-#, fuzzy
 msgid "Ordering"
-msgstr "Sipariş"
+msgstr ""
 
 #: UI/Contact/history_filter.html:186 UI/setup/complete.html:23
 #: UI/setup/confirm_operation.html:87
-#, fuzzy
 msgid "Orders"
-msgstr "Sipariş"
+msgstr ""
 
 #: bin/pe.pl:2947
 msgid "Orders generated!"
@@ -5090,29 +4890,25 @@ msgid "Other Actions"
 msgstr ""
 
 #: scripts/recon.pl:307
-#, fuzzy
 msgid "Our Balance"
-msgstr "Proforma Bilanço"
+msgstr ""
 
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/reconciliation/report.html:197
-#, fuzzy
 msgid "Our Credits"
-msgstr "Alacak"
+msgstr ""
 
 #: UI/reconciliation/report.html:74 UI/reconciliation/report.html:137
 #: UI/reconciliation/report.html:196
-#, fuzzy
 msgid "Our Debits"
-msgstr "Borç"
+msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
 #: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
 #: templates/xedemo/timecard.tex:30
-#, fuzzy
 msgid "Out"
-msgstr "Eki"
+msgstr ""
 
 #: bin/gl.pl:1190
 msgid "Out of balance transaction!"
@@ -5124,9 +4920,8 @@ msgid "Outstanding"
 msgstr ""
 
 #: UI/reconciliation/report.html:189
-#, fuzzy
 msgid "Outstanding Transactions"
-msgstr "İşlemleri Listele"
+msgstr ""
 
 #: UI/rc-display-form.html:79
 msgid "Over"
@@ -5137,14 +4932,12 @@ msgid "Overdue"
 msgstr ""
 
 #: UI/accounts/edit.html:190 UI/accounts/edit.html:231
-#, fuzzy
 msgid "Overpayment"
-msgstr "Ödeme"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:147
-#, fuzzy
 msgid "Overpayment Account"
-msgstr "Hesabı Sil"
+msgstr ""
 
 #: bin/am.pl:2438 bin/arapprn.pl:535 bin/io.pl:1438 bin/jc.pl:2047
 #: bin/rp.pl:1349 UI/Contact/pricelist.html:91
@@ -5233,9 +5026,8 @@ msgid "Part not found"
 msgstr ""
 
 #: UI/asset/begin_report.html:42
-#, fuzzy
 msgid "Partial"
-msgstr "Parça"
+msgstr ""
 
 #: scripts/asset.pl:796
 msgid "Partial Disposal Report [_1] on date [_2]"
@@ -5248,16 +5040,15 @@ msgstr ""
 
 #: bin/ic.pl:1288 sql/Pg-database.sql:2459
 msgid "Parts"
-msgstr "Parçalar"
+msgstr ""
 
 #: bin/ic.pl:2458 bin/ic.pl:2606
 msgid "Parts Requirements"
 msgstr ""
 
 #: sql/Pg-database.sql:2469
-#, fuzzy
 msgid "Partsgroup"
-msgstr "Parçalar"
+msgstr ""
 
 #: UI/Admin/edit_user.html:47 UI/am-userconfig.html:17 UI/get_password.html:41
 #: UI/login.html:12 UI/setup/credentials.html:30 UI/setup/new_user.html:28
@@ -5266,9 +5057,8 @@ msgid "Password"
 msgstr "Şifre"
 
 #: bin/am.pl:70 UI/am-defaults.html:188
-#, fuzzy
 msgid "Password Duration"
-msgstr "Password changed!"
+msgstr ""
 
 #: bin/am.pl:1815
 msgid "Password does not match!"
@@ -5279,18 +5069,16 @@ msgid "Password duration must be an integer"
 msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:148
-#, fuzzy
 msgid "Password required"
-msgstr "Password changed!"
+msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:79
 msgid "Passwords must match."
 msgstr ""
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:127
-#, fuzzy
 msgid "Pay From"
-msgstr "Başlangıç"
+msgstr ""
 
 #: scripts/payment.pl:159 UI/Contact/contact.html:461
 #: UI/payments/payments_filter.html:128
@@ -5317,33 +5105,28 @@ msgstr "Ödeme"
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
 #: templates/xedemo/printPayment.html:32
-#, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Sipariş No"
+msgstr ""
 
 #: UI/payments/payments_filter.html:124
-#, fuzzy
 msgid "Payment Processing"
-msgstr "Ödeme Tarihi yok"
+msgstr ""
 
 #: scripts/payment.pl:379
-#, fuzzy
 msgid "Payment Results"
-msgstr "Ödemeler"
+msgstr ""
 
 #: UI/payments/search.html:85
 msgid "Payment Reversal Information"
 msgstr ""
 
 #: UI/payments/payments_detail.html:184
-#, fuzzy
 msgid "Payment Type :"
-msgstr "Ödeme"
+msgstr ""
 
 #: UI/payments/payments_filter.html:149
-#, fuzzy
 msgid "Payment Type:"
-msgstr "Ödeme"
+msgstr ""
 
 #: bin/aa.pl:1335 bin/ir.pl:1340 bin/is.pl:1408
 msgid "Payment date missing!"
@@ -5413,7 +5196,7 @@ msgstr ""
 
 #: UI/Contact/search.html:52
 msgid "Phone"
-msgstr "Telefon"
+msgstr ""
 
 #: bin/am.pl:2865 bin/io.pl:1361 bin/io.pl:1379 bin/io.pl:1570 bin/is.pl:293
 #: bin/oe.pl:304 bin/oe.pl:323 templates/demo/pick_list.html:4
@@ -5470,9 +5253,8 @@ msgid "Point of Sale"
 msgstr ""
 
 #: UI/employee/filter.html:84
-#, fuzzy
 msgid "Position"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/aa.pl:941 bin/aa.pl:970 bin/gl.pl:269 bin/ir.pl:877 bin/ir.pl:891
 #: bin/is.pl:980 bin/is.pl:1001 bin/pos.pl:611 scripts/drafts.pl:251
@@ -5485,9 +5267,8 @@ msgid "Post Batch"
 msgstr ""
 
 #: scripts/recon.pl:306 UI/create_batch.html:51
-#, fuzzy
 msgid "Post Date"
-msgstr "Tarih"
+msgstr ""
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
 msgid "Post Yearend"
@@ -5507,32 +5288,28 @@ msgstr ""
 
 #: UI/reconciliation/report.html:72 UI/reconciliation/report.html:135
 #: UI/reconciliation/report.html:194
-#, fuzzy
 msgid "Posted Date"
-msgstr "Vade Tarihi"
+msgstr ""
 
 #: bin/pos.pl:726
 msgid "Posted!"
 msgstr ""
 
 #: UI/payments/payments_detail.html:108
-#, fuzzy
 msgid "Posting Date:"
-msgstr "Verisetleri"
+msgstr ""
 
 #: bin/am.pl:2749
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "İşlemleri Listele"
+msgstr ""
 
 #: bin/am.pl:2589
 msgid "Posting Sales Invoice [_1]"
 msgstr ""
 
 #: bin/am.pl:2611 bin/am.pl:2620
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "İşlemleri Listele"
+msgstr ""
 
 #: bin/am.pl:2599
 msgid "Posting Vendor Invoice [_1]"
@@ -5548,14 +5325,12 @@ msgid "Preferences"
 msgstr "Tercihler"
 
 #: UI/users/preferences.html:14
-#, fuzzy
 msgid "Preferences Saved"
-msgstr "Tercihler kaydedildi!"
+msgstr ""
 
 #: UI/users/preferences.html:12
-#, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Tercihleri Düzenle: "
+msgstr ""
 
 #: bin/am.pl:1820
 msgid "Preferences saved!"
@@ -5634,9 +5409,8 @@ msgid "Print and Save"
 msgstr ""
 
 #: bin/jc.pl:1229
-#, fuzzy
 msgid "Print and Save Transaction"
-msgstr "İşlemleri Listele"
+msgstr ""
 
 #: bin/jc.pl:691 bin/jc.pl:710 bin/jc.pl:935 bin/jc.pl:956 bin/oe.pl:800
 #: bin/oe.pl:831
@@ -5649,7 +5423,7 @@ msgstr ""
 
 #: UI/am-userconfig.html:42 UI/users/preferences.html:83
 msgid "Printer"
-msgstr "Yazıcı"
+msgstr ""
 
 #: bin/am.pl:2786 bin/bp.pl:253
 msgid "Printing"
@@ -5711,9 +5485,8 @@ msgid "Project Number: [_1]"
 msgstr ""
 
 #: bin/aa.pl:1694
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Sipariş No"
+msgstr ""
 
 #: bin/rp.pl:565
 msgid "Project Transactions"
@@ -5745,14 +5518,12 @@ msgid "Projects"
 msgstr ""
 
 #: scripts/asset.pl:315 scripts/asset.pl:498
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Satınalma Siparişi"
+msgstr ""
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Satınalma Siparişi"
+msgstr ""
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
@@ -5781,14 +5552,12 @@ msgid "Purchase Orders"
 msgstr "Satınalma Siparişleri"
 
 #: scripts/asset.pl:316 scripts/asset.pl:499
-#, fuzzy
 msgid "Purchase Value"
-msgstr "Satınalma Siparişi"
+msgstr ""
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
-#, fuzzy
 msgid "Purchase Value:"
-msgstr "Satınalma Siparişi"
+msgstr ""
 
 #: bin/ic.pl:1247 bin/ic.pl:1807 bin/ic.pl:3051 bin/ic.pl:3908 bin/io.pl:201
 #: bin/io.pl:519 bin/jc.pl:888 bin/jc.pl:1857 bin/oe.pl:2928 bin/oe.pl:3235
@@ -5944,9 +5713,8 @@ msgid "Rate"
 msgstr "Oran"
 
 #: UI/am-taxes.html:12
-#, fuzzy
 msgid "Rate (%)"
-msgstr "Oran"
+msgstr ""
 
 #: UI/accounts/yearend.html:69
 msgid "Re-Open As Of"
@@ -5977,7 +5745,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:164
 msgid "Receivables"
-msgstr "Alacaklar"
+msgstr ""
 
 #: sql/Pg-database.sql:2440
 msgid "Receive"
@@ -5988,14 +5756,12 @@ msgid "Receive Merchandise"
 msgstr ""
 
 #: scripts/payment.pl:958
-#, fuzzy
 msgid "Received"
-msgstr "Alacaklar"
+msgstr ""
 
 #: UI/accounts/edit.html:120
-#, fuzzy
 msgid "Recon"
-msgstr "Kaydet"
+msgstr ""
 
 #: UI/reconciliation/upload.html:43
 msgid "Reconcile as FX"
@@ -6036,14 +5802,12 @@ msgid "Reference"
 msgstr ""
 
 #: bin/io.pl:1646
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Fatura Numarası yok!"
+msgstr ""
 
 #: UI/batch/search_transactions.html:35
-#, fuzzy
 msgid "Reference/Invoice Number"
-msgstr "Fatura No"
+msgstr ""
 
 #: sql/Pg-database.sql:501
 msgid "Referral"
@@ -6054,9 +5818,8 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
 #: templates/xedemo/ar_transaction.tex:143
-#, fuzzy
 msgid "Registration"
-msgstr "Yönetim"
+msgstr ""
 
 #: templates/demo/invoice.html:303 templates/demo_with_images/invoice.html:303
 #: templates/xedemo/invoice.html:303
@@ -6106,9 +5869,8 @@ msgid "Report Approved"
 msgstr ""
 
 #: scripts/asset.pl:626
-#, fuzzy
 msgid "Report Results"
-msgstr "Raporlar"
+msgstr ""
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
@@ -6184,9 +5946,8 @@ msgid "Required input not provided"
 msgstr ""
 
 #: sql/Pg-database.sql:2460
-#, fuzzy
 msgid "Requirements"
-msgstr "Talep tarihi:"
+msgstr ""
 
 #: bin/ps.pl:307
 msgid "Reset Till By [_1]"
@@ -6209,14 +5970,12 @@ msgid "Return to the login screen."
 msgstr ""
 
 #: sql/Pg-database.sql:2564
-#, fuzzy
 msgid "Reverse Payment"
-msgstr "Ödeme"
+msgstr ""
 
 #: scripts/payment.pl:392
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Ödemeler"
+msgstr ""
 
 #: sql/Pg-database.sql:2562
 msgid "Reverse Receipts"
@@ -6227,14 +5986,12 @@ msgid "Role"
 msgstr ""
 
 #: UI/setup/complete.html:16 UI/setup/confirm_operation.html:80
-#, fuzzy
 msgid "Row counts"
-msgstr "Vergi Hesapları"
+msgstr ""
 
 #: UI/setup/begin_backup.html:49
-#, fuzzy
 msgid "Run Backup"
-msgstr "Yedekleme"
+msgstr ""
 
 #: UI/Contact/contact.html:361 sql/Pg-database.sql:2576
 msgid "SIC"
@@ -6320,9 +6077,8 @@ msgid "Sales Quotation Number"
 msgstr ""
 
 #: t/data/04-complex_template.html:85
-#, fuzzy
 msgid "Sales:"
-msgstr "Satışlar"
+msgstr ""
 
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
@@ -6374,9 +6130,8 @@ msgid "Save"
 msgstr "Kaydet"
 
 #: UI/Contact/contact.html:1039
-#, fuzzy
 msgid "Save As New"
-msgstr "Dosyaya Kaydet"
+msgstr ""
 
 #: scripts/payment.pl:234
 msgid "Save Batch"
@@ -6387,27 +6142,24 @@ msgid "Save Changes"
 msgstr ""
 
 #: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
-#, fuzzy
 msgid "Save Contact"
-msgstr "Kontak"
+msgstr ""
 
 #: UI/Admin/edit_user.html:192
 msgid "Save Groups"
 msgstr ""
 
 #: bin/aa.pl:978 bin/ir.pl:906 bin/is.pl:1017
-#, fuzzy
 msgid "Save Info"
-msgstr "Kaydet"
+msgstr ""
 
 #: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr ""
 
 #: UI/Contact/contact.html:686
-#, fuzzy
 msgid "Save New"
-msgstr "Kaydet"
+msgstr ""
 
 #: UI/Contact/contact.html:921
 msgid "Save New Location"
@@ -6418,28 +6170,24 @@ msgid "Save Schedule"
 msgstr ""
 
 #: bin/am.pl:1429
-#, fuzzy
 msgid "Save Template"
-msgstr "Şablon Kur"
+msgstr ""
 
 #: bin/jc.pl:1239
-#, fuzzy
 msgid "Save Transaction"
-msgstr "İşlemler"
+msgstr ""
 
 #: UI/Admin/edit_user.html:148
-#, fuzzy
 msgid "Save User"
-msgstr "Kaydet"
+msgstr ""
 
 #: scripts/setup.pl:729
 msgid "Save and Retry"
 msgstr ""
 
 #: bin/aa.pl:1001
-#, fuzzy
 msgid "Save as New"
-msgstr "Dosyaya Kaydet"
+msgstr ""
 
 #: bin/am.pl:101 bin/am.pl:110 bin/ic.pl:856 bin/ic.pl:873 bin/jc.pl:690
 #: bin/jc.pl:706 bin/jc.pl:934 bin/jc.pl:952 bin/oe.pl:799 bin/oe.pl:827
@@ -6487,9 +6235,8 @@ msgid "Search Employees"
 msgstr ""
 
 #: UI/payments/search.html:7 UI/payments/search.html:31
-#, fuzzy
 msgid "Search Payments"
-msgstr "Ödemeler"
+msgstr ""
 
 #: UI/reconciliation/search.html:4
 msgid "Search Reconciliation Reports"
@@ -6553,9 +6300,8 @@ msgid "Select from one of the projects below"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:141
-#, fuzzy
 msgid "Select invoices"
-msgstr "Servisler"
+msgstr ""
 
 #: bin/io.pl:529
 msgid "Select items"
@@ -6575,9 +6321,8 @@ msgid "Select txt, postscript or PDF!"
 msgstr ""
 
 #: UI/payments/payments_filter.html:7
-#, fuzzy
 msgid "Selection"
-msgstr "Açıklama"
+msgstr ""
 
 #: bin/ic.pl:3061
 msgid "Sell"
@@ -6647,9 +6392,8 @@ msgid "Service Code"
 msgstr ""
 
 #: bin/jc.pl:1147
-#, fuzzy
 msgid "Service Code missing!"
-msgstr "Fatura Tarihi yok!"
+msgstr ""
 
 #: bin/jc.pl:237 bin/jc.pl:509 bin/jc.pl:1373
 msgid "Service/Labor Code"
@@ -6657,21 +6401,19 @@ msgstr ""
 
 #: bin/ic.pl:1290 sql/Pg-database.sql:2461
 msgid "Services"
-msgstr "Servisler"
+msgstr ""
 
 #: UI/get_password.html:35
 msgid "Session expired!"
 msgstr ""
 
 #: sql/Pg-database.sql:2584
-#, fuzzy
 msgid "Sessions"
-msgstr "Versiyon"
+msgstr ""
 
 #: UI/Admin/edit_user.html:146
-#, fuzzy
 msgid "Set Password"
-msgstr "Şifre"
+msgstr ""
 
 #: UI/users/preferences.html:37
 msgid "Settings"
@@ -6690,9 +6432,8 @@ msgid "Seventeen"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:95
-#, fuzzy
 msgid "Seventy"
-msgstr "Stok"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:128
 #: templates/demo_with_images/balance_sheet.html:128
@@ -6911,9 +6652,8 @@ msgid "Source"
 msgstr "Kaynak"
 
 #: bin/rp.pl:1983
-#, fuzzy
 msgid "Source: [_1]"
-msgstr "Kaynak"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:194
 #: templates/demo_with_images/sales_quotation.html:194
@@ -6948,14 +6688,12 @@ msgstr ""
 #: scripts/employee.pl:315 UI/Contact/contact.html:212
 #: UI/Contact/contact.html:399 UI/employee/filter.html:52
 #: UI/employee/filter.html:196 UI/employee.html:121
-#, fuzzy
 msgid "Start Date"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Sipariş Tarihi"
+msgstr ""
 
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
@@ -6971,14 +6709,12 @@ msgid "Startdate"
 msgstr ""
 
 #: UI/Contact/contact.html:473
-#, fuzzy
 msgid "Starting Date"
-msgstr "Verisetleri"
+msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Verisetleri"
+msgstr ""
 
 #: bin/io.pl:2040
 msgid "State"
@@ -7014,9 +6750,8 @@ msgid "Statement Balance"
 msgstr ""
 
 #: scripts/recon.pl:188
-#, fuzzy
 msgid "Statement Date"
-msgstr "Gelir Tablosu"
+msgstr ""
 
 #: bin/rp.pl:1540
 msgid "Statement sent to [_1]"
@@ -7051,9 +6786,8 @@ msgid "Stores Card"
 msgstr ""
 
 #: bin/jc.pl:1197
-#, fuzzy
 msgid "Stores Card saved!"
-msgstr "User saved!"
+msgstr ""
 
 #: bin/jc.pl:207 bin/jc.pl:1775
 msgid "Stores Cards"
@@ -7122,9 +6856,8 @@ msgid "Subtotal"
 msgstr "Aratoplam"
 
 #: UI/rc-till-closing.html:69
-#, fuzzy
 msgid "Subtotal:"
-msgstr "Aratoplam"
+msgstr ""
 
 #: bin/aa.pl:1617 bin/ic.pl:1079 bin/ic.pl:1593 bin/pe.pl:2517
 #: UI/Contact/history_filter.html:204 UI/Contact/search.html:206
@@ -7134,9 +6867,8 @@ msgid "Summary"
 msgstr ""
 
 #: UI/accounts/edit.html:137
-#, fuzzy
 msgid "Summary account for"
-msgstr "Bu kaydedilecek hesap özeti mi"
+msgstr ""
 
 #: bin/jc.pl:1429
 msgid "Sunday"
@@ -7166,7 +6898,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -7178,9 +6910,8 @@ msgstr ""
 
 #: scripts/asset.pl:313 scripts/asset.pl:735 scripts/asset.pl:799
 #: scripts/asset.pl:870 scripts/asset.pl:1006
-#, fuzzy
 msgid "Tag"
-msgstr "Vergi"
+msgstr ""
 
 #: UI/asset/edit_asset.html:44 UI/asset/search_asset.html:38
 msgid "Tag:"
@@ -7195,9 +6926,8 @@ msgid "Tax"
 msgstr "Vergi"
 
 #: bin/ir.pl:615 bin/is.pl:716
-#, fuzzy
 msgid "Tax Code"
-msgstr "Vergi Dahil"
+msgstr ""
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
@@ -7212,14 +6942,12 @@ msgid "Tax Form Name"
 msgstr ""
 
 #: UI/taxform/filter.html:21
-#, fuzzy
 msgid "Tax Form Reports"
-msgstr "Raporlar"
+msgstr ""
 
 #: sql/Pg-database.sql:2570
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Tarih Formatı"
+msgstr ""
 
 #: bin/aa.pl:651 bin/ir.pl:490 bin/is.pl:544 UI/Admin/user_search.html:41
 msgid "Tax ID"
@@ -7231,14 +6959,12 @@ msgid "Tax Included"
 msgstr "Vergi Dahil"
 
 #: UI/Contact/contact.html:352
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Numara"
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Numara"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
@@ -7253,9 +6979,8 @@ msgstr ""
 #: templates/demo/purchase_order.html:192
 #: templates/demo_with_images/purchase_order.html:192
 #: templates/xedemo/purchase_order.html:192
-#, fuzzy
 msgid "Tax included"
-msgstr "Vergi Dahil"
+msgstr ""
 
 #: bin/io.pl:214
 msgid "TaxForm"
@@ -7266,18 +6991,16 @@ msgid "Taxable"
 msgstr "Vergiye tabi"
 
 #: sql/Pg-database.sql:2393
-#, fuzzy
 msgid "Taxable Sales"
-msgstr "Vergiye tabi"
+msgstr ""
 
 #: bin/am.pl:1544 UI/Contact/contact.html:635 sql/Pg-database.sql:2497
 msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1802
-#, fuzzy
 msgid "Taxes saved!"
-msgstr "User saved!"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:229
 #: templates/demo/ar_transaction.html:235 templates/demo/invoice.html:314
@@ -7296,9 +7019,8 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Numara"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
@@ -7395,9 +7117,8 @@ msgid "Template saved!"
 msgstr ""
 
 #: UI/am-defaults.html:107
-#, fuzzy
 msgid "Templates directory"
-msgstr "Şablonlar"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:69
 msgid "Ten"
@@ -7419,9 +7140,8 @@ msgid "Terms Net [_1] days"
 msgstr ""
 
 #: t/data/04-complex_template.html:210
-#, fuzzy
 msgid "Terms:"
-msgstr "Şartlar"
+msgstr ""
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
@@ -7458,9 +7178,8 @@ msgid "The amount of"
 msgstr ""
 
 #: scripts/payment.pl:1649 scripts/payment.pl:1655
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Fatura Numarasını silmek istediğinizden emin misiniz? Fiş: "
+msgstr ""
 
 #: scripts/payment.pl:1909
 msgid "The amount to be pay from the accno"
@@ -7471,14 +7190,12 @@ msgid "The amount to be pay of the invoice number"
 msgstr ""
 
 #: scripts/recon.pl:308
-#, fuzzy
 msgid "Their Balance"
-msgstr "Proforma Bilanço"
+msgstr ""
 
 #: UI/reconciliation/report.html:77 UI/reconciliation/report.html:140
-#, fuzzy
 msgid "Their Credits"
-msgstr "Alacak"
+msgstr ""
 
 #: UI/reconciliation/report.html:76 UI/reconciliation/report.html:139
 msgid "Their Debits"
@@ -7533,9 +7250,8 @@ msgid "Threshold"
 msgstr ""
 
 #: UI/payments/search.html:82
-#, fuzzy
 msgid "Through Date"
-msgstr "Vade Tarihi"
+msgstr ""
 
 #: bin/jc.pl:1433
 msgid "Thursday"
@@ -7558,14 +7274,12 @@ msgid "Time Card"
 msgstr ""
 
 #: bin/jc.pl:1322
-#, fuzzy
 msgid "Time Card deleted!"
-msgstr "User deleted!"
+msgstr ""
 
 #: bin/jc.pl:1181
-#, fuzzy
 msgid "Time Card saved!"
-msgstr "User saved!"
+msgstr ""
 
 #: bin/bp.pl:60 bin/bp.pl:95 bin/jc.pl:203 bin/jc.pl:1336
 #: sql/Pg-database.sql:2477 sql/Pg-database.sql:2495
@@ -7619,9 +7333,8 @@ msgid "To %1"
 msgstr ""
 
 #: UI/reconciliation/upload.html:35
-#, fuzzy
 msgid "To Date"
-msgstr "Tarih"
+msgstr ""
 
 #: UI/payments/payments_detail.html:296
 msgid "To Pay"
@@ -7659,9 +7372,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:28
 #: UI/payments/payments_detail.html:126 UI/reconciliation/search.html:18
 #: UI/reconciliation/search.html:36
-#, fuzzy
 msgid "To:"
-msgstr "Bitiş"
+msgstr ""
 
 #: bin/arap.pl:1040 bin/io.pl:1836
 msgid "To: [_1]"
@@ -7743,16 +7455,14 @@ msgstr ""
 #: templates/demo/balance_sheet.html:149
 #: templates/demo_with_images/balance_sheet.html:149
 #: templates/xedemo/balance_sheet.html:149
-#, fuzzy
 msgid "Total Equity"
-msgstr "Sermaye"
+msgstr ""
 
 #: templates/demo/income_statement.html:131
 #: templates/demo_with_images/income_statement.html:131
 #: templates/xedemo/income_statement.html:131
-#, fuzzy
 msgid "Total Expenses"
-msgstr "Gider"
+msgstr ""
 
 #: templates/demo/income_statement.html:104
 #: templates/demo_with_images/income_statement.html:104
@@ -7763,9 +7473,8 @@ msgstr ""
 #: templates/demo/balance_sheet.html:122
 #: templates/demo_with_images/balance_sheet.html:122
 #: templates/xedemo/balance_sheet.html:122
-#, fuzzy
 msgid "Total Liabilities"
-msgstr "Pasif"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:155
 #: templates/demo_with_images/balance_sheet.html:155
@@ -7797,14 +7506,12 @@ msgid "Transaction"
 msgstr ""
 
 #: sql/Pg-database.sql:2379
-#, fuzzy
 msgid "Transaction Approval"
-msgstr "İşlemler"
+msgstr ""
 
 #: UI/Contact/history_filter.html:140
-#, fuzzy
 msgid "Transaction Date"
-msgstr "İşlemler"
+msgstr ""
 
 #: bin/gl.pl:1138
 msgid "Transaction Date missing!"
@@ -7816,9 +7523,8 @@ msgstr ""
 
 #: UI/batch/search_transactions.html:13 UI/reconciliation/report.html:69
 #: UI/reconciliation/report.html:132
-#, fuzzy
 msgid "Transaction Type"
-msgstr "İşlemler"
+msgstr ""
 
 #: bin/aa.pl:1480
 msgid "Transaction deleted!"
@@ -7839,7 +7545,7 @@ msgstr ""
 #: UI/setup/complete.html:25 UI/setup/confirm_operation.html:89
 #: sql/Pg-database.sql:2390 sql/Pg-database.sql:2407 sql/Pg-database.sql:2476
 msgid "Transactions"
-msgstr "İşlemler"
+msgstr ""
 
 #: bin/oe.pl:3237 bin/oe.pl:3353 sql/Pg-database.sql:2441
 #: sql/Pg-database.sql:2558
@@ -7939,9 +7645,8 @@ msgid "Twenty Two"
 msgstr ""
 
 #: LedgerSMB/Num2text.pm:61
-#, fuzzy
 msgid "Two"
-msgstr "Bitiş"
+msgstr ""
 
 #: bin/io.pl:2099 scripts/asset.pl:634 t/data/04-complex_template.html:384
 #: UI/Contact/contact.html:395 UI/Contact/contact.html:782
@@ -7979,9 +7684,8 @@ msgid "Under"
 msgstr ""
 
 #: scripts/setup.pl:648
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Fatura No"
+msgstr ""
 
 #: scripts/setup.pl:598
 msgid "Unique Customernumber"
@@ -8016,9 +7720,8 @@ msgstr "Birim"
 #: templates/xedemo/invoice.html:140
 #: templates/xedemo/request_quotation.html:145
 #: templates/xedemo/request_quotation.tex:124
-#, fuzzy
 msgid "Unit Price"
-msgstr "Liste Fiyatı"
+msgstr ""
 
 #: scripts/setup.pl:149
 msgid "Unknown database found."
@@ -8029,18 +7732,16 @@ msgid "Unknown version found."
 msgstr ""
 
 #: scripts/vouchers.pl:362
-#, fuzzy
 msgid "Unlock"
-msgstr "Unlock System"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:97
 msgid "Unsupport account type"
 msgstr ""
 
 #: UI/payments/search.html:17
-#, fuzzy
 msgid "Unsupported Number"
-msgstr "Fatura No"
+msgstr ""
 
 #: UI/Contact/search.html:12
 msgid "Unsupported Search"
@@ -8112,20 +7813,17 @@ msgstr ""
 
 #: UI/Admin/edit_user.html:26 UI/Admin/edit_user.html:39
 #: UI/setup/new_user.html:22
-#, fuzzy
 msgid "Username"
-msgstr "Kullanıcı"
+msgstr ""
 
 #: UI/Admin/user_search.html:11
-#, fuzzy
 msgid "Username:"
-msgstr "Kullanıcı"
+msgstr ""
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:46
 #: UI/setup/confirm_operation.html:90
-#, fuzzy
 msgid "Users"
-msgstr "Kullanıcı"
+msgstr ""
 
 #: UI/Contact/pricelist.csv:34 UI/Contact/pricelist.html:47
 #: UI/Contact/pricelist.tex:46
@@ -8180,9 +7878,8 @@ msgid "Vendor Invoices"
 msgstr ""
 
 #: UI/payments/payment1.html:37 UI/payments/payment2.html:31
-#, fuzzy
 msgid "Vendor Name"
-msgstr "Satıcı"
+msgstr ""
 
 #: bin/aa.pl:1669 bin/am.pl:68 bin/io.pl:1985 scripts/payment.pl:325
 #: UI/am-defaults.html:180 UI/asset/edit_asset.html:185
@@ -8202,9 +7899,8 @@ msgid "Vendor Reference Number"
 msgstr ""
 
 #: UI/Contact/search.html:6
-#, fuzzy
 msgid "Vendor Search"
-msgstr "Satıcı"
+msgstr ""
 
 #: bin/aa.pl:1307 bin/ir.pl:1317 bin/oe.pl:2263
 msgid "Vendor missing!"
@@ -8215,29 +7911,23 @@ msgid "Vendor not on file!"
 msgstr ""
 
 #: bin/bp.pl:304
-#, fuzzy
 msgid "Vendor: [_1]"
-msgstr "Satıcı"
+msgstr ""
 
 #: sql/Pg-database.sql:2554
 msgid "Vendors"
 msgstr ""
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr "Versiyon"
 
 #: UI/am-company-logo.html:6
-#, fuzzy
 msgid "Version [_1]"
-msgstr "Versiyon"
+msgstr ""
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8395,7 +8085,7 @@ msgstr ""
 msgid "Yes"
 msgstr "Evet"
 
-#: old-handler.pl:132
+#: old-handler.pl:133
 msgid "You are logged out!"
 msgstr ""
 
@@ -8481,44 +8171,38 @@ msgid "[_1] Debit Note"
 msgstr ""
 
 #: bin/gl.pl:199
-#, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "Defteri Kebire İşlem Ekle"
+msgstr ""
 
 #: bin/arap.pl:170
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Numara"
+msgstr ""
 
 #: bin/am.pl:272 bin/rp.pl:845 bin/rp.pl:1262
-#, fuzzy
 msgid "[_1] Report"
-msgstr "Raporlar"
+msgstr ""
 
 #: bin/rp.pl:472 bin/rp.pl:487
 msgid "[_1] To [_2]"
 msgstr ""
 
 #: bin/aa.pl:426
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Borç İşlemleri"
+msgstr ""
 
 #: bin/ic.pl:3447
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "Bu kalem dosyada yok!"
+msgstr ""
 
 #: bin/ic.pl:3369
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "Bu kalem dosyada yok!"
+msgstr ""
 
 #: bin/am.pl:155
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: old-handler.pl:182
+#: old-handler.pl:183
 msgid "action not defined!"
 msgstr ""
 
@@ -8555,18 +8239,16 @@ msgid "default_language"
 msgstr ""
 
 #: scripts/admin.pl:411
-#, fuzzy
 msgid "delete"
-msgstr "Sil"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:486
 msgid "deposit"
 msgstr ""
 
 #: sql/Pg-database.sql:3775
-#, fuzzy
 msgid "depreciation"
-msgstr "Açıklama"
+msgstr ""
 
 #: sql/Pg-database.sql:3776
 msgid "disposal"
@@ -8582,9 +8264,8 @@ msgid "ea"
 msgstr "ad"
 
 #: scripts/admin.pl:354
-#, fuzzy
 msgid "edit"
-msgstr "Alacak"
+msgstr ""
 
 #: bin/am.pl:2703 bin/am.pl:2800 bin/am.pl:2847
 msgid "failed"
@@ -8594,21 +8275,19 @@ msgstr ""
 #: templates/demo_with_images/income_statement.html:64
 #: templates/xedemo/income_statement.html:64
 msgid "for Period"
-msgstr "Dönem:"
+msgstr ""
 
 #: bin/rp.pl:1004
-#, fuzzy
 msgid "for Period To [_1]"
-msgstr "Dönem:"
+msgstr ""
 
 #: t/data/04-gettext.tex:10
 msgid "fr"
 msgstr ""
 
 #: sql/Pg-database.sql:3777
-#, fuzzy
 msgid "import"
-msgstr "Raporlar"
+msgstr ""
 
 #: sql/Pg-database.sql:3702
 msgid "in months"
@@ -8647,9 +8326,8 @@ msgid "nl"
 msgstr ""
 
 #: UI/employee.html:164
-#, fuzzy
 msgid "notes"
-msgstr "Notlar:"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:487
 msgid "other"
@@ -8687,154 +8365,3 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Access Control"
-#~ msgstr "Giriş Kontrol"
-
-#~ msgid "Accounting"
-#~ msgstr "Muhasebe"
-
-#~ msgid "Administrator"
-#~ msgstr "Administrator"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "All Datasets up to date!"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Yönetici Şifresini Değiştir"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Düzenlemek için giriş ismini tıklayın."
-
-#~ msgid "Connect to"
-#~ msgstr "Bağlan"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Hesap Planı Oluştur"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "DBJ kurulu değil"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Database Driver not checked!"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Veritabanı Kullanıcısı yok!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Veriseti Yok!"
-
-#~ msgid "Directory"
-#~ msgstr "Dizin"
-
-#~ msgid "Edit General Ledger Transaction"
-#~ msgstr "Defteri Kebir İşlemini Düzenle"
-
-#~ msgid "Host"
-#~ msgstr "Host"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Host yok!"
-
-#~ msgid ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-#~ msgstr ""
-#~ "Uzakta baglantı yapmak istemiyorsanız host ve port alanlarını boş "
-#~ "bırakınız."
-
-#~ msgid "Licensed to"
-#~ msgstr "Lisans Sahibi:"
-
-#~ msgid "Lock System"
-#~ msgstr "Lock System"
-
-#~ msgid "Lockfile created!"
-#~ msgstr "Lockfile created!"
-
-#~ msgid "Lockfile removed!"
-#~ msgstr "Lockfile removed!"
-
-#~ msgid "Login name missing!"
-#~ msgstr "Login name missing!"
-
-#~ msgid "Multibyte Encoding"
-#~ msgstr "Multibyte Encoding"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "Veritabanı Sürücüsü yok!"
-
-#~ msgid "No Dataset selected!"
-#~ msgstr "Veriseti seçilmedi!"
-
-#~ msgid "No email address for"
-#~ msgstr "E-posta adresi yok: "
-
-#~ msgid "Nothing to delete!"
-#~ msgstr "Nothing to delete!"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Oracle Veritabanı Yönetimi"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Pg Veritabanı Yönetimi"
-
-#~ msgid "PgPP Database Administration"
-#~ msgstr "PgPP Database Administration"
-
-#~ msgid "Port"
-#~ msgstr "Port"
-
-#~ msgid "Select from one of the items below"
-#~ msgstr "Aşağıdaki kalemlerden birini seç"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "E-postayla gönder"
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "Aşağıdaki Verisetleri kullanılmamaktadır ve silinebilir"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "The following Datasets need to be updated"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "Mevcut fiş bilgileri için bu bir ön kontroldür. Bu aşamada hiçbirşey "
-#~ "oluşturulmaz ve silinemez"
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "Gruba yeni kullanıcı eklemek için, giriş ismini değiştirin ve kaydedin. "
-#~ "Yeni kullanıcı yeni giriş altında aynı parametrelerle kaydedilecektir."
-
-#~ msgid "Unit of measure"
-#~ msgstr "Ölçme Birimi"
-
-#~ msgid "Update Dataset"
-#~ msgstr "Update Dataset"
-
-#~ msgid "Use Templates"
-#~ msgstr "Şablon Kullan"
-
-#~ msgid "You did not enter a name!"
-#~ msgstr "İsim girmediniz!"
-
-#~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr "Yerel ve uzak bağlantılar için bir host ve port girmek zorundasınız!"
-
-#~ msgid "is already a member!"
-#~ msgstr "üyedir!"
-
-#~ msgid "successfully created!"
-#~ msgstr "başarıyla oluşturuldu!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "başarıyla silindi!"
-
-#~ msgid "website"
-#~ msgstr "Websitesi"

@@ -1,33 +1,19 @@
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2005
 #
-# British English texts:
-#
-#  Author:
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
+"PO-Revision-Date: 2015-12-29 12:29+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"Language-Team: English (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
+"language/en_CA/)\n"
+"Language: en_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
@@ -398,9 +384,8 @@ msgid "Add Language"
 msgstr ""
 
 #: sql/Pg-database.sql:2453
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Add Labour/Overhead"
+msgstr ""
 
 #: bin/pos.pl:106
 msgid "Add POS Invoice"
@@ -1334,9 +1319,8 @@ msgid "Cannot delete quotation!"
 msgstr ""
 
 #: bin/jc.pl:1325
-#, fuzzy
 msgid "Cannot delete time card!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/aa.pl:1483
 msgid "Cannot delete transaction!"
@@ -1400,9 +1384,8 @@ msgid "Cannot save stores card for a closed period!"
 msgstr ""
 
 #: bin/jc.pl:1200
-#, fuzzy
 msgid "Cannot save stores card!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/am.pl:1805
 msgid "Cannot save taxes!"
@@ -1413,9 +1396,8 @@ msgid "Cannot save time card for a closed period!"
 msgstr ""
 
 #: bin/jc.pl:1184
-#, fuzzy
 msgid "Cannot save time card!"
-msgstr "Cannot create Labour"
+msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
@@ -1444,7 +1426,7 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr ""
 
@@ -1493,14 +1475,13 @@ msgstr ""
 msgid "Chart of Accounts"
 msgstr ""
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Cheque"
 
 #: bin/pos.pl:343
-#, fuzzy
 msgid "Check ID"
-msgstr "Cheque"
+msgstr ""
 
 #: bin/ic.pl:3836
 msgid "Check Inventory"
@@ -1726,9 +1707,8 @@ msgstr ""
 
 #: bin/arap.pl:168 UI/Contact/contact.html:292 UI/Contact/search.html:35
 #: UI/taxform/summary_report.html:21
-#, fuzzy
 msgid "Control Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: UI/create_batch.html:47
 msgid "Control Number"
@@ -1791,9 +1771,8 @@ msgid "Country"
 msgstr ""
 
 #: UI/setup/select_coa.html:30
-#, fuzzy
 msgid "Country Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
@@ -2168,9 +2147,8 @@ msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
-#, fuzzy
 msgid "Decimal Places"
-msgstr "Decimal places"
+msgstr ""
 
 #: bin/am.pl:1342
 msgid "Default"
@@ -2516,10 +2494,6 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: pos.conf.pl:41
-msgid "Discover"
-msgstr ""
-
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
 msgstr ""
@@ -2629,14 +2603,12 @@ msgid "E-mail"
 msgstr "Email"
 
 #: UI/rp-email.html:8
-#, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "Email"
+msgstr ""
 
 #: bin/am.pl:2831 bin/io.pl:1638 bin/rp.pl:1417
 msgid "E-mail address missing!"
@@ -2717,7 +2689,7 @@ msgstr ""
 
 #: bin/ic.pl:97
 msgid "Edit Labor/Overhead"
-msgstr "Edit Labour/Overhead"
+msgstr ""
 
 #: bin/am.pl:1184
 msgid "Edit Language"
@@ -2820,9 +2792,8 @@ msgid "Eleven-o"
 msgstr ""
 
 #: UI/employee.html:77 sql/Pg-database.sql:788
-#, fuzzy
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: bin/gl.pl:876
 msgid "Email CSV Report"
@@ -3396,10 +3367,6 @@ msgstr ""
 
 #: sql/Pg-database.sql:784
 msgid "Generic Jabber"
-msgstr ""
-
-#: pos.conf.pl:44
-msgid "Gift Cert"
 msgstr ""
 
 #: t/data/04-strings-for-translation.html:8
@@ -3976,18 +3943,16 @@ msgid "Label:"
 msgstr ""
 
 #: sql/Pg-database.sql:2462
-#, fuzzy
 msgid "Labor"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/jc.pl:229 bin/jc.pl:497 bin/jc.pl:1363
 msgid "Labor Code"
 msgstr "Labour Code"
 
 #: bin/jc.pl:1151
-#, fuzzy
 msgid "Labor Code missing!"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
@@ -3997,9 +3962,8 @@ msgstr "Labour/Overhead"
 #: templates/demo_with_images/timecard.html:89
 #: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
 #: templates/xedemo/timecard.tex:39
-#, fuzzy
 msgid "Labor/Service Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/ir.pl:338 bin/pe.pl:1932 bin/pe.pl:2110 bin/pos.pl:309 bin/rp.pl:940
 #: UI/am-userconfig.html:33 UI/Contact/contact.html:613
@@ -4204,7 +4168,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr ""
 
@@ -4225,9 +4189,8 @@ msgid "Loss Account"
 msgstr ""
 
 #: sql/Pg-database.sql:781
-#, fuzzy
 msgid "MSN"
-msgstr "SIN"
+msgstr ""
 
 #: bin/ic.pl:1121 bin/ic.pl:1130 bin/ic.pl:1649 bin/ic.pl:1830 bin/ic.pl:2778
 msgid "Make"
@@ -4511,18 +4474,16 @@ msgid "No Labor codes on file!"
 msgstr "No Labour codes on file!"
 
 #: bin/jc.pl:134
-#, fuzzy
 msgid "No Parts on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
 msgstr ""
 
 #: bin/jc.pl:130
-#, fuzzy
 msgid "No Services on file!"
-msgstr "No Labour codes on file!"
+msgstr ""
 
 #: scripts/setup.pl:620
 msgid "No blank employee name"
@@ -6431,9 +6392,8 @@ msgid "Service Code"
 msgstr ""
 
 #: bin/jc.pl:1147
-#, fuzzy
 msgid "Service Code missing!"
-msgstr "Service/Labour Code"
+msgstr ""
 
 #: bin/jc.pl:237 bin/jc.pl:509 bin/jc.pl:1373
 msgid "Service/Labor Code"
@@ -6732,9 +6692,8 @@ msgid "Start Date"
 msgstr ""
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
@@ -6754,9 +6713,8 @@ msgid "Starting Date"
 msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/io.pl:2040
 msgid "State"
@@ -6792,9 +6750,8 @@ msgid "Statement Balance"
 msgstr ""
 
 #: scripts/recon.pl:188
-#, fuzzy
 msgid "Statement Date"
-msgstr "Email Statement to"
+msgstr ""
 
 #: bin/rp.pl:1540
 msgid "Statement sent to [_1]"
@@ -6941,7 +6898,7 @@ msgstr ""
 msgid "System Defaults"
 msgstr ""
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -6969,9 +6926,8 @@ msgid "Tax"
 msgstr ""
 
 #: bin/ir.pl:615 bin/is.pl:716
-#, fuzzy
 msgid "Tax Code"
-msgstr "Labour Code"
+msgstr ""
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
@@ -7003,21 +6959,18 @@ msgid "Tax Included"
 msgstr ""
 
 #: UI/Contact/contact.html:352
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
-#, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: UI/am-taxes.html:17
 msgid "Tax Rules"
@@ -7066,9 +7019,8 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Tax Number / SIN"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
@@ -7966,7 +7918,7 @@ msgstr ""
 msgid "Vendors"
 msgstr ""
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr ""
 
@@ -7976,10 +7928,6 @@ msgstr ""
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8137,7 +8085,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: old-handler.pl:132
+#: old-handler.pl:133
 msgid "You are logged out!"
 msgstr ""
 
@@ -8254,7 +8202,7 @@ msgstr ""
 msgid "account cannot be set to any other type of account"
 msgstr ""
 
-#: old-handler.pl:182
+#: old-handler.pl:183
 msgid "action not defined!"
 msgstr ""
 
@@ -8273,9 +8221,8 @@ msgid "cash"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:485
-#, fuzzy
 msgid "check"
-msgstr "Cheque"
+msgstr ""
 
 #: bin/io.pl:2037
 msgid "city"
@@ -8418,12 +8365,3 @@ msgstr ""
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Excempt age <"
-#~ msgstr "Exempt age <"
-
-#~ msgid "Licensed to"
-#~ msgstr "Licenced to"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Send by Email"

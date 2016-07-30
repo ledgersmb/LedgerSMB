@@ -7,13 +7,13 @@ msgstr ""
 "POT-Creation-Date: 2016-07-30 18:32+0000\n"
 "PO-Revision-Date: 2015-12-29 12:32+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
-"Language-Team: Spanish (Paraguay) (http://www.transifex.com/ledgersmb/"
-"ledgersmb/language/es_PY/)\n"
-"Language: es_PY\n"
+"Language-Team: Malay (Malaysia) (http://www.transifex.com/ledgersmb/ledgersmb/"
+"language/ms_MY/)\n"
+"Language: ms_MY\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
@@ -37,23 +37,23 @@ msgstr ""
 #: templates/demo_with_images/statement.html:78
 #: templates/xedemo/statement.html:78
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: templates/demo/statement.html:79
 #: templates/demo_with_images/statement.html:79
 #: templates/xedemo/statement.html:79
 msgid "60"
-msgstr ""
+msgstr "60"
 
 #: templates/demo/statement.html:80
 #: templates/demo_with_images/statement.html:80
 #: templates/xedemo/statement.html:80
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: bin/ic.pl:3067
 msgid "A"
-msgstr "A"
+msgstr ""
 
 #: templates/demo/invoice.tex:32 templates/demo/packing_list.tex:22
 #: templates/demo_with_images/invoice.tex:32
@@ -73,15 +73,15 @@ msgstr ""
 #: UI/setup/complete.html:19 UI/setup/confirm_operation.html:83
 #: sql/Pg-database.sql:2404
 msgid "AP"
-msgstr "Cuentas a Pagar"
+msgstr "AP"
 
 #: sql/Pg-database.sql:2409
 msgid "AP Aging"
-msgstr "Vencimiento de Cuentas a Pagar"
+msgstr "Penuaan AP"
 
 #: bin/aa.pl:1609
 msgid "AP Outstanding"
-msgstr "Cuentas a Pagar pendientes"
+msgstr "AP Memberangsangkan"
 
 #: bin/aa.pl:2444 bin/gl.pl:845 t/data/04-complex_template.html:325
 #: templates/demo/ap_transaction.html:4 templates/demo/ap_transaction.html:18
@@ -94,29 +94,29 @@ msgstr "Cuentas a Pagar pendientes"
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/contact.html:701
 #: sql/Pg-database.sql:2516 sql/Pg-database.sql:2530
 msgid "AP Transaction"
-msgstr "Movimiento de Cuentas a Pagar"
+msgstr "Transakai AP"
 
 #: bin/aa.pl:1565
 msgid "AP Transactions"
-msgstr "Movimientos de Cuentas a Pagar"
+msgstr "Transaksi Ap"
 
 #: sql/Pg-database.sql:2551
 msgid "AP Voucher"
-msgstr ""
+msgstr "Baucer AP"
 
 #: bin/am.pl:2228 scripts/drafts.pl:47 scripts/drafts.pl:193
 #: UI/setup/complete.html:20 UI/setup/confirm_operation.html:84
 #: sql/Pg-database.sql:2388
 msgid "AR"
-msgstr "Cuentas a Cobrar"
+msgstr "AR"
 
 #: sql/Pg-database.sql:2392
 msgid "AR Aging"
-msgstr "Vencimiento Cuentas a Cobrar"
+msgstr "penuaan AR"
 
 #: bin/aa.pl:1608
 msgid "AR Outstanding"
-msgstr "Cuentas a Cobrar pendientes"
+msgstr "AR Memberangsangkan"
 
 #: bin/aa.pl:2432 bin/gl.pl:829 templates/demo/ar_transaction.html:4
 #: templates/demo/ar_transaction.html:18 templates/demo/ar_transaction.tex:33
@@ -128,15 +128,15 @@ msgstr "Cuentas a Cobrar pendientes"
 #: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2515
 #: sql/Pg-database.sql:2529
 msgid "AR Transaction"
-msgstr "Movimiento de Cuentas a Cobrar"
+msgstr "Transaksi AR"
 
 #: bin/aa.pl:1564 bin/aa.pl:2144
 msgid "AR Transactions"
-msgstr "Movimientos de Cuentas a Cobrar"
+msgstr "Transaksi AR"
 
 #: sql/Pg-database.sql:2545
 msgid "AR Voucher"
-msgstr ""
+msgstr "Baucer AR"
 
 #: bin/ca.pl:252
 msgid "AR/AP"
@@ -148,7 +148,7 @@ msgstr ""
 
 #: bin/am.pl:2158
 msgid "About"
-msgstr "Acerca de"
+msgstr "Tentang"
 
 #: UI/taxform/details_report.html:23 UI/taxform/summary_report.html:22
 msgid "Acc_trans Sum"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: LedgerSMB.pm:1092 LedgerSMB.pm:1093 scripts/setup.pl:866
 msgid "Access Denied"
-msgstr ""
+msgstr "Akses Dinafikan"
 
 #: bin/aa.pl:656 bin/aa.pl:719 bin/aa.pl:850 bin/aa.pl:1744 bin/aa.pl:1883
 #: bin/aa.pl:2074 bin/aa.pl:2124 bin/am.pl:193 bin/ca.pl:201 bin/gl.pl:549
@@ -174,11 +174,11 @@ msgstr ""
 #: UI/rc-reconciliation.html:12 UI/rp-search-aging.html:11
 #: UI/rp-search-payments.html:2
 msgid "Account"
-msgstr "Cuenta"
+msgstr "Akaun"
 
 #: UI/payments/use_overpayment2.html:117
 msgid "Account Description"
-msgstr ""
+msgstr "Deskripsi Akaun"
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
@@ -187,15 +187,15 @@ msgstr ""
 #: UI/rp-search-generate_income_statement.html:138
 #: UI/taxform/details_report.html:20 UI/taxform/summary_report.html:20
 msgid "Account Number"
-msgstr "Número de Cuenta"
+msgstr "Nombor Akaun"
 
 #: bin/am.pl:136
 msgid "Account Number missing!"
-msgstr "¡Falta el Número de Cuenta!"
+msgstr "Nombor Akaun hilang!"
 
 #: scripts/payment.pl:161
 msgid "Account Title"
-msgstr ""
+msgstr "Nama Akaun"
 
 #: UI/accounts/edit.html:80 UI/taxform/details_report.html:19
 #: UI/taxform/summary_report.html:19
@@ -204,7 +204,7 @@ msgstr ""
 
 #: bin/am.pl:137
 msgid "Account Type missing!"
-msgstr "¡Falta el Tipo de Cuenta!"
+msgstr "Jenis Akaun hilang!"
 
 #: LedgerSMB/GL.pm:236
 msgid "Account [_1] not found"
@@ -220,11 +220,11 @@ msgstr ""
 
 #: bin/am.pl:440
 msgid "Account does not exist!"
-msgstr "¡Cuenta no existe!"
+msgstr "Akaun tidak wujud"
 
 #: bin/am.pl:171
 msgid "Account saved!"
-msgstr "¡Cuenta guardada!"
+msgstr "Akaun disimpan!"
 
 #: UI/payments/payments_detail.html:139 UI/reconciliation/report.html:10
 #: UI/reconciliation/search.html:47
@@ -238,7 +238,7 @@ msgstr ""
 #: bin/ic.pl:1016 UI/Contact/contact.html:69 UI/Contact/contact.html:392
 #: UI/rp-search.html:24
 msgid "Accounts"
-msgstr "Cuentas"
+msgstr ""
 
 #: bin/ic.pl:1067 UI/rp-search-generate_balance_sheet.html:64
 #: UI/rp-search-generate_income_statement.html:114
@@ -252,7 +252,7 @@ msgstr ""
 
 #: lsmb-request.pl:103
 msgid "Action Not Defined: "
-msgstr ""
+msgstr "Tindakan tidak ditakrif: "
 
 #: LedgerSMB/Form.pm:688 UI/lib/elements.html:363
 msgid "Action: [_1], ID: [_2]"
@@ -262,7 +262,7 @@ msgstr ""
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
 msgid "Actions"
-msgstr ""
+msgstr "Tindakan"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
@@ -270,16 +270,16 @@ msgstr ""
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
-msgstr "Activar Rastro Auditoría"
+msgstr ""
 
 #: bin/aa.pl:1775 bin/ic.pl:1336 bin/ic.pl:1468 bin/pe.pl:845 bin/pe.pl:937
 #: UI/Contact/search.html:104 UI/Contact/search.html:316
 msgid "Active"
-msgstr "Activo"
+msgstr "Aktif"
 
 #: scripts/admin.pl:416
 msgid "Active Sessions"
-msgstr ""
+msgstr "Sesi Aktif"
 
 #: bin/ps.pl:77
 msgid "Actual"
@@ -287,51 +287,51 @@ msgstr ""
 
 #: bin/am.pl:2892 bin/ic.pl:3912 bin/pe.pl:540
 msgid "Add"
-msgstr "Agregar"
+msgstr "Tambah"
 
 #: bin/aa.pl:416 bin/aa.pl:451
 msgid "Add AP Transaction"
-msgstr "Agregar Asiento de Cuentas a Pagar"
+msgstr ""
 
 #: bin/aa.pl:415
 msgid "Add AR Transaction"
-msgstr "Agregar Asiento de Cuentas a Cobrar"
+msgstr ""
 
 #: scripts/account.pl:41
 msgid "Add Account"
-msgstr "Agregar Cuenta"
+msgstr "Tambah akaun"
 
 #: sql/Pg-database.sql:2500
 msgid "Add Accounts"
-msgstr ""
+msgstr "Tambah Akaun"
 
 #: bin/ic.pl:63 bin/ic.pl:1936 sql/Pg-database.sql:2452
 msgid "Add Assembly"
-msgstr "Agregar Ensamblaje"
+msgstr "Tambah Pemasangan "
 
 #: scripts/asset.pl:254
 msgid "Add Asset"
-msgstr ""
+msgstr "Tambah Aset"
 
 #: scripts/asset.pl:101
 msgid "Add Asset Class"
-msgstr ""
+msgstr "Tambah Kelas Aset"
 
 #: sql/Pg-database.sql:2598
 msgid "Add Assets"
-msgstr ""
+msgstr "Tambah aset"
 
 #: bin/am.pl:826 bin/am.pl:851 sql/Pg-database.sql:2506
 msgid "Add Business"
-msgstr "Agregar Negocio"
+msgstr "Tambah Bisnes"
 
 #: sql/Pg-database.sql:2596
 msgid "Add Class"
-msgstr ""
+msgstr "Tambah kelas"
 
 #: bin/is.pl:86 bin/is.pl:106
 msgid "Add Credit Invoice"
-msgstr ""
+msgstr "Tambah Kredit Invois"
 
 #: bin/aa.pl:449
 msgid "Add Credit Note"
@@ -340,11 +340,11 @@ msgstr ""
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:56
 #: sql/Pg-database.sql:2395
 msgid "Add Customer"
-msgstr "Agregar Cliente"
+msgstr "Tambah Pelanggan"
 
 #: bin/ir.pl:77 bin/ir.pl:96
 msgid "Add Debit Invoice"
-msgstr ""
+msgstr "Penambahan Invois debit"
 
 #: bin/aa.pl:447
 msgid "Add Debit Note"
@@ -357,19 +357,19 @@ msgstr ""
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:60
 #: sql/Pg-database.sql:2426
 msgid "Add Employee"
-msgstr "Agregar Empleado"
+msgstr "Tambah Pekerja"
 
 #: bin/oe.pl:2560
 msgid "Add Exchange Rate"
-msgstr "Agregar Cotización de Moneda"
+msgstr "Tambah kadar pertukaran"
 
 #: bin/am.pl:466 sql/Pg-database.sql:2502
 msgid "Add GIFI"
-msgstr "Agregar PCF"
+msgstr "Tambah GIFI"
 
 #: bin/pe.pl:1477 bin/pe.pl:1524 sql/Pg-database.sql:2454
 msgid "Add Group"
-msgstr "Agregar Grupo"
+msgstr "Tambah Kumpulan"
 
 #: bin/pe.pl:61 bin/pe.pl:302 bin/pe.pl:1102
 msgid "Add Job"
@@ -381,7 +381,7 @@ msgstr ""
 
 #: bin/am.pl:1157 bin/am.pl:1183 sql/Pg-database.sql:2508
 msgid "Add Language"
-msgstr "Agregar Idioma"
+msgstr "Tambah Bahasa"
 
 #: sql/Pg-database.sql:2453
 msgid "Add Overhead"
@@ -389,47 +389,47 @@ msgstr ""
 
 #: bin/pos.pl:106
 msgid "Add POS Invoice"
-msgstr "Agregar Factura Punto de Venta"
+msgstr "Tambah POS Invois"
 
 #: bin/ic.pl:61 bin/ic.pl:1922 sql/Pg-database.sql:2450
 msgid "Add Part"
-msgstr "Agregar Artículo"
+msgstr "Tambah Bahagian"
 
 #: bin/pe.pl:1683 bin/pe.pl:1730 sql/Pg-database.sql:2455
 msgid "Add Pricegroup"
-msgstr "Agregar Grupo de Precios"
+msgstr "Tambah Kumpulan Harga"
 
 #: bin/pe.pl:660 bin/pe.pl:1089 sql/Pg-database.sql:2470
 msgid "Add Project"
-msgstr "Agregar Proyecto"
+msgstr "Tambah Projek"
 
 #: bin/io.pl:1151 bin/oe.pl:60
 msgid "Add Purchase Order"
-msgstr "Agregar Orden de Compra"
+msgstr "Tambah Pesanan Belian"
 
 #: bin/io.pl:1184 bin/oe.pl:72
 msgid "Add Quotation"
-msgstr "Agregar Cotización"
+msgstr "Tambah Sebut Harga"
 
 #: bin/io.pl:1173 bin/oe.pl:68
 msgid "Add Request for Quotation"
-msgstr "Pedir Cotización"
+msgstr "Tambah Permintaan untuk Sebut Harga"
 
 #: bin/am.pl:994 bin/am.pl:1019 sql/Pg-database.sql:2510
 msgid "Add SIC"
-msgstr "Agregar CIS"
+msgstr "Tambah SIC"
 
 #: bin/is.pl:90 bin/is.pl:109 bin/oe.pl:2476
 msgid "Add Sales Invoice"
-msgstr "Agregar Factura de Venta"
+msgstr "Tambah Jualan Invois"
 
 #: bin/io.pl:1162 bin/oe.pl:64
 msgid "Add Sales Order"
-msgstr "Agregar Orden de Venta"
+msgstr "Tambah Pesanan Jualan"
 
 #: bin/ic.pl:62 bin/ic.pl:1929 sql/Pg-database.sql:2451
 msgid "Add Service"
-msgstr "Agregar Servicio"
+msgstr "Tambah Perkhidmatan"
 
 #: bin/jc.pl:59 bin/jc.pl:79 bin/jc.pl:1949
 msgid "Add Stores Card"
@@ -437,7 +437,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2571
 msgid "Add Tax Form"
-msgstr ""
+msgstr "Tambah Borang Cukai"
 
 #: UI/taxform/add_taxform.html:2
 msgid "Add TaxForm"
@@ -449,7 +449,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2471
 msgid "Add Timecard"
-msgstr ""
+msgstr "Tambah Kad Masa "
 
 #: bin/io.pl:2212
 msgid "Add To List"
@@ -457,44 +457,44 @@ msgstr ""
 
 #: sql/Pg-database.sql:2389 sql/Pg-database.sql:2405
 msgid "Add Transaction"
-msgstr "Agregar Transacción"
+msgstr "Tambah Transaksi"
 
 #: UI/Contact/contact.html:250 UI/setup/confirm_operation.html:52
 #: sql/Pg-database.sql:2582
 msgid "Add User"
-msgstr "Agregar Usuario"
+msgstr "Tambah pengguna"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:58
 #: sql/Pg-database.sql:2412
 msgid "Add Vendor"
-msgstr "Agregar Proveedor"
+msgstr "Tambah Pembekal"
 
 #: bin/ir.pl:81 bin/oe.pl:2468
 msgid "Add Vendor Invoice"
-msgstr "Agregar Factura de Proveedor"
+msgstr "Penambahan Invois Pembekal"
 
 #: bin/am.pl:2006 bin/am.pl:2032 sql/Pg-database.sql:2504
 msgid "Add Warehouse"
-msgstr "Agregar Almacén"
+msgstr "Tambah Gudang"
 
 #: bin/io.pl:2027
 msgid "Add line1"
-msgstr ""
+msgstr "Tambah barisan1"
 
 #: bin/io.pl:2030
 msgid "Add line2"
-msgstr ""
+msgstr "Tambah barisan2"
 
 #: bin/io.pl:2034
 msgid "Add line3 "
-msgstr ""
+msgstr "Tambah barisan3"
 
 #: bin/aa.pl:661 bin/arap.pl:174 bin/ic.pl:3483 bin/ir.pl:495 bin/is.pl:549
 #: bin/oe.pl:479 bin/pe.pl:2286 UI/Contact/contact.html:783
 #: UI/Contact/contact.html:843 UI/Contact/history_filter.html:80
 #: UI/Contact/search.html:79 UI/employee.html:42
 msgid "Address"
-msgstr "Dirección"
+msgstr "Alamat"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
@@ -512,7 +512,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
 msgid "Addresses"
-msgstr ""
+msgstr "Alamat"
 
 #: sql/Pg-database.sql:2448
 msgid "Adjust Till"
@@ -520,15 +520,15 @@ msgstr ""
 
 #: scripts/asset.pl:878
 msgid "Adjusted Basis"
-msgstr ""
+msgstr "Basis Yang Diubah"
 
 #: bin/gl.pl:135
 msgid "Adjusting Till: (till) Source: (source)"
-msgstr ""
+msgstr "Melaraskan Till: (till) Sumber: (sumber) "
 
 #: bin/gl.pl:137
 msgid "Adjusting till due to data entry error."
-msgstr ""
+msgstr "Melaraskan till Kerana kesilapan kemasukan data."
 
 #: UI/inventory/adjustment_entry.html:26
 msgid "Adjustment"
@@ -544,7 +544,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2572
 msgid "Admin Users"
-msgstr ""
+msgstr "Pengguna admin"
 
 #: bin/rp.pl:981 UI/rp-search-aging.html:67
 msgid "Aged"
@@ -558,7 +558,7 @@ msgstr ""
 #: UI/Contact/search.html:315 UI/journal/search.html:163
 #: UI/payments/payments_detail.html:270
 msgid "All"
-msgstr "Todo"
+msgstr "Semua"
 
 #: UI/rp-search-generate_trial_balance.html:100
 msgid "All Accounts"
@@ -566,7 +566,7 @@ msgstr ""
 
 #: bin/aa.pl:1774
 msgid "All Invoices"
-msgstr ""
+msgstr "Semua Invois"
 
 #: sql/Pg-database.sql:2458
 msgid "All Items"
@@ -656,14 +656,14 @@ msgstr ""
 #: UI/orders/order.html:249 UI/payments/payment2.html:232
 #: UI/rp-search-generate_tax_report.html:158
 msgid "Amount"
-msgstr "Importe"
+msgstr "Jumlah"
 
 #: bin/aa.pl:1720 bin/aa.pl:2088 scripts/payment.pl:906 scripts/payment.pl:912
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
 msgid "Amount Due"
-msgstr "Importe Adeudado"
+msgstr "Jumlah terhutang"
 
 #: UI/reconciliation/search.html:28
 msgid "Amount From"
@@ -683,19 +683,19 @@ msgstr ""
 
 #: LedgerSMB/Batch.pm:102
 msgid "Any"
-msgstr ""
+msgstr "Selain"
 
 #: scripts/payment.pl:1305
 msgid "Applied discount"
-msgstr ""
+msgstr "Diskaun dipohon"
 
 #: scripts/payment.pl:1894 scripts/payment.pl:1972
 msgid "Applied discount by an overpayment"
-msgstr ""
+msgstr "Dikaun dipohon daripada lebihan bayaran"
 
 #: scripts/payment.pl:904
 msgid "Apply Disc"
-msgstr ""
+msgstr "Permohonan cakera"
 
 #: UI/reconciliation/search.html:64
 msgid "Approval Status"
@@ -704,20 +704,20 @@ msgstr ""
 #: scripts/asset.pl:686 scripts/asset.pl:765 scripts/asset.pl:836
 #: scripts/asset.pl:903 UI/reconciliation/report.html:280
 msgid "Approve"
-msgstr ""
+msgstr "Diluluskan"
 
 #: scripts/recon.pl:190 UI/asset/search_reports.html:60 UI/batch/filter.html:19
 #: UI/reconciliation/search.html:59
 msgid "Approved"
-msgstr ""
+msgstr "Diluluskan"
 
 #: scripts/recon.pl:193
 msgid "Approved By"
-msgstr ""
+msgstr "Diluluskan Oleh"
 
 #: scripts/asset.pl:637
 msgid "Approved at"
-msgstr ""
+msgstr "Disahkan Di"
 
 #: templates/demo/printPayment.html:117
 #: templates/demo_with_images/printPayment.html:117
@@ -728,20 +728,20 @@ msgstr ""
 #: bin/aa.pl:83 bin/ca.pl:75 bin/gl.pl:78 bin/io.pl:79
 #: LedgerSMB/App_State.pm:170
 msgid "Apr"
-msgstr "Abr"
+msgstr "Apr"
 
 #: bin/aa.pl:69 bin/ca.pl:61 bin/gl.pl:64 bin/io.pl:65
 #: LedgerSMB/App_State.pm:170 LedgerSMB/DBObject/Date.pm:63
 msgid "April"
-msgstr "Abril"
+msgstr "April"
 
 #: scripts/asset.pl:737 scripts/asset.pl:802 scripts/asset.pl:874
 msgid "Aquired Value"
-msgstr ""
+msgstr "Nilai Diperlukan"
 
 #: scripts/asset.pl:808
 msgid "Aquired Value Remaining"
-msgstr ""
+msgstr "Dapatan Nilai Yang Tinggal"
 
 #: bin/ir.pl:1391 bin/is.pl:1485
 msgid "Are you sure you want to delete Invoice Number [_1]?"
@@ -749,11 +749,11 @@ msgstr ""
 
 #: bin/oe.pl:2352
 msgid "Are you sure you want to delete Order Number"
-msgstr "¿Seguro que desea borrar la Orden de Compra/Pedido?"
+msgstr "Adakah anda pasti mahu memadam nombor pesanan"
 
 #: bin/oe.pl:2357
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "¿Seguro que desea borrar la Cotización?"
+msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
 
 #: bin/aa.pl:1458
 msgid "Are you sure you want to delete Transaction"
@@ -765,7 +765,7 @@ msgstr ""
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr "¿Seguro que desea borrar las entradas seleccionadas de la cola?"
+msgstr "Adakah anda pasti anda mahu memadam entri ditandakan daripada barisan?"
 
 #: bin/pe.pl:515 bin/pe.pl:755
 msgid "As of"
@@ -777,7 +777,7 @@ msgstr ""
 
 #: bin/ic.pl:4036
 msgid "Assemblies restocked!"
-msgstr "Ensamblajes re-inventariados!"
+msgstr "Pemasangan diisi semula"
 
 #: bin/ic.pl:1897 bin/pe.pl:354 bin/pe.pl:533 bin/pe.pl:1005
 #: sql/Pg-database.sql:2465
@@ -791,54 +791,54 @@ msgstr ""
 #: bin/gl.pl:527 LedgerSMB/DBObject/Asset.pm:111 UI/accounts/edit.html:84
 #: UI/journal/search.html:169 sql/Pg-database.sql:3766
 msgid "Asset"
-msgstr "Activo"
+msgstr "Aset"
 
 #: scripts/asset.pl:168 UI/asset/edit_asset.html:151
 #: UI/asset/edit_class.html:35 UI/asset/search_asset.html:142
 #: UI/asset/search_class.html:43
 msgid "Asset Account"
-msgstr ""
+msgstr "Akaun Aset"
 
 #: LedgerSMB/DBObject/Asset_Class.pm:68 scripts/asset.pl:635
 #: UI/asset/begin_approval.html:15 UI/asset/begin_report.html:14
 #: UI/asset/search_reports.html:12
 msgid "Asset Class"
-msgstr ""
+msgstr "Kelas Aset"
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
-msgstr ""
+msgstr "Mengelasan Aset"
 
 #: sql/Pg-database.sql:2594
 msgid "Asset Classes"
-msgstr ""
+msgstr "Kelas aset"
 
 #: scripts/asset.pl:556
 msgid "Asset Depreciation Report"
-msgstr ""
+msgstr "Laporan Aset Susut Nilai"
 
 #: scripts/asset.pl:558
 msgid "Asset Disposal Report"
-msgstr ""
+msgstr "Laporan Aset Pembuangan"
 
 #: scripts/asset.pl:563
 msgid "Asset Partial Disposal Report"
-msgstr ""
+msgstr "Laporan Aset "
 
 #: scripts/asset.pl:496
 msgid "Asset Tag"
-msgstr ""
+msgstr "Tanda Aset"
 
 #: templates/demo/balance_sheet.html:73
 #: templates/demo_with_images/balance_sheet.html:73
 #: templates/xedemo/balance_sheet.html:73 sql/Pg-database.sql:2595
 msgid "Assets"
-msgstr ""
+msgstr "Aset"
 
 #: bin/aa.pl:1094 bin/ic.pl:946 bin/ir.pl:991 bin/is.pl:1124 bin/oe.pl:967
 #: UI/journal/journal_entry.html:349
 msgid "Attach"
-msgstr ""
+msgstr "Lampiran"
 
 #: UI/file/attachment_screen.html:22
 msgid "Attach File"
@@ -847,33 +847,33 @@ msgstr ""
 #: bin/aa.pl:1066 bin/ic.pl:918 bin/ir.pl:965 bin/is.pl:1098 bin/oe.pl:941
 #: UI/journal/journal_entry.html:325
 msgid "Attached To"
-msgstr ""
+msgstr "Dilampirkan Kepada"
 
 #: bin/aa.pl:1065 bin/ic.pl:917 bin/ir.pl:964 bin/is.pl:1097 bin/oe.pl:940
 #: UI/journal/journal_entry.html:324
 msgid "Attached To Type"
-msgstr ""
+msgstr "Dilampirkan Untuk Menaip"
 
 #: bin/aa.pl:1042 bin/ic.pl:894 bin/ir.pl:941 bin/is.pl:1074 bin/oe.pl:917
 #: UI/journal/journal_entry.html:302
 msgid "Attached and Linked Files"
-msgstr ""
+msgstr "Dilampirkan dan Fail Berkaitan"
 
 #: bin/aa.pl:1046 bin/aa.pl:1067 bin/ic.pl:898 bin/ic.pl:919 bin/ir.pl:945
 #: bin/ir.pl:966 bin/is.pl:1078 bin/is.pl:1099 bin/oe.pl:921 bin/oe.pl:942
 #: UI/journal/journal_entry.html:306 UI/journal/journal_entry.html:326
 msgid "Attached at"
-msgstr ""
+msgstr "Dilampirkan pada"
 
 #: bin/aa.pl:1047 bin/aa.pl:1068 bin/ic.pl:899 bin/ic.pl:920 bin/ir.pl:946
 #: bin/ir.pl:967 bin/is.pl:1079 bin/is.pl:1100 bin/oe.pl:922 bin/oe.pl:943
 #: UI/journal/journal_entry.html:307 UI/journal/journal_entry.html:327
 msgid "Attached by"
-msgstr ""
+msgstr "Dilampirkan oleh"
 
 #: bin/io.pl:1397 bin/rp.pl:1329
 msgid "Attachment"
-msgstr "Adjunto"
+msgstr "Lampiran"
 
 #: templates/demo/bin_list.html:51 templates/demo/bin_list.html:84
 #: templates/demo/packing_list.html:52 templates/demo/pick_list.html:51
@@ -927,12 +927,12 @@ msgstr ""
 #: bin/aa.pl:87 bin/ca.pl:79 bin/gl.pl:82 bin/io.pl:83
 #: LedgerSMB/App_State.pm:176
 msgid "Aug"
-msgstr "Ago"
+msgstr "Ogos"
 
 #: bin/aa.pl:73 bin/ca.pl:65 bin/gl.pl:68 bin/io.pl:69
 #: LedgerSMB/App_State.pm:176 LedgerSMB/DBObject/Date.pm:67
 msgid "August"
-msgstr "Agosto"
+msgstr "Ogos"
 
 #: UI/Contact/contact.html:1193
 msgid "Author: [_1]"
@@ -940,7 +940,7 @@ msgstr ""
 
 #: bin/ir.pl:574 bin/is.pl:491 bin/is.pl:671
 msgid "Automatic"
-msgstr ""
+msgstr "Automatik"
 
 #: UI/payments/use_overpayment2.html:118
 msgid "Available"
@@ -956,7 +956,7 @@ msgstr ""
 
 #: bin/ic.pl:454 bin/ic.pl:1007
 msgid "Average Cost"
-msgstr ""
+msgstr "Kos Purata"
 
 #: bin/ic.pl:1820
 msgid "Avg Cost"
@@ -981,11 +981,11 @@ msgstr ""
 
 #: bin/ic.pl:1205 bin/ic.pl:1435 bin/ic.pl:3066
 msgid "BOM"
-msgstr "Lista de Materiales"
+msgstr "Bil Bahan"
 
 #: UI/setup/confirm_operation.html:57
 msgid "Backup"
-msgstr "Copia de Seguridad de los datos"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:64
 msgid "Backup DB"
@@ -997,7 +997,7 @@ msgstr ""
 
 #: scripts/recon.pl:187 UI/journal/search.html:283
 msgid "Balance"
-msgstr "Saldo"
+msgstr "Baki"
 
 #: templates/demo/invoice.html:197 templates/demo/invoice.tex:169
 #: templates/demo_with_images/invoice.html:197
@@ -1011,7 +1011,7 @@ msgstr ""
 #: templates/xedemo/balance_sheet.html:63 sql/Pg-database.sql:2483
 #: sql/Pg-database.sql:2513
 msgid "Balance Sheet"
-msgstr "Balance General"
+msgstr "Helaian Kira-kira"
 
 #: UI/Contact/contact.html:1109
 msgid "Bank Account"
@@ -1024,7 +1024,7 @@ msgstr ""
 #: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Akaun Bank"
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1032,39 +1032,39 @@ msgstr ""
 
 #: bin/ir.pl:614 bin/is.pl:715 scripts/asset.pl:1011
 msgid "Basis"
-msgstr ""
+msgstr "Asas"
 
 #: bin/rp.pl:2013
 msgid "Batch"
-msgstr ""
+msgstr "Kumpulan"
 
 #: bin/aa.pl:627
 msgid "Batch Control Code"
-msgstr ""
+msgstr "Kod kawalan batch"
 
 #: UI/create_batch.html:28
 msgid "Batch Date"
-msgstr ""
+msgstr "Tarikh Kumpulan"
 
 #: bin/rp.pl:2014
 msgid "Batch Description"
-msgstr ""
+msgstr "Deskripsi Kumpulan"
 
 #: LedgerSMB/GL.pm:178 LedgerSMB/IR.pm:359 LedgerSMB/IS.pm:1273
 msgid "Batch ID Missing"
-msgstr ""
+msgstr "Kumpulan ID hilang"
 
 #: bin/aa.pl:632
 msgid "Batch Name"
-msgstr ""
+msgstr "Nama Batch"
 
 #: UI/create_batch.html:13
 msgid "Batch Number"
-msgstr ""
+msgstr "Nombor Kumpulan"
 
 #: sql/Pg-database.sql:2593
 msgid "Batch Printing"
-msgstr ""
+msgstr "Percetakan kumpulan"
 
 #: UI/batch/filter.html:3 UI/batch/filter.html:7
 #: UI/batch/search_transactions.html:6
@@ -1073,15 +1073,15 @@ msgstr ""
 
 #: UI/batch/filter.html:11 UI/create_batch.html:46
 msgid "Batch Type"
-msgstr ""
+msgstr "Jenis Kumpulan"
 
 #: sql/Pg-database.sql:2380
 msgid "Batches"
-msgstr ""
+msgstr "Kelompok"
 
 #: UI/io-email.html:24 UI/rp-email.html:23
 msgid "Bcc"
-msgstr "B.C.C."
+msgstr ""
 
 #: bin/arap.pl:1033 bin/io.pl:1817
 msgid "Bcc: [_1]"
@@ -1097,7 +1097,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:631
 msgid "Billing"
-msgstr ""
+msgstr "Bill"
 
 #: sql/Pg-database.sql:793
 msgid "Billing BCC"
@@ -1129,7 +1129,7 @@ msgstr ""
 #: templates/xedemo/pick_list.tex:102 templates/xedemo/work_order.html:133
 #: UI/io-email.html:105
 msgid "Bin"
-msgstr "Ubicación"
+msgstr "Tong"
 
 #: bin/am.pl:2869 bin/io.pl:1374 bin/io.pl:1388 bin/io.pl:1588 bin/oe.pl:317
 #: bin/oe.pl:329 templates/demo/bin_list.html:4 templates/demo/bin_list.html:18
@@ -1139,11 +1139,11 @@ msgstr "Ubicación"
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
 #: sql/Pg-database.sql:2522 sql/Pg-database.sql:2536
 msgid "Bin List"
-msgstr "Lista de Ubicaciones"
+msgstr "Senarai Bin"
 
 #: bin/bp.pl:57 bin/bp.pl:92 sql/Pg-database.sql:2493
 msgid "Bin Lists"
-msgstr "Listas de Ubicaciones"
+msgstr "Senarai Buangan"
 
 #: bin/am.pl:1879
 msgid "Books are open"
@@ -1155,15 +1155,15 @@ msgstr ""
 
 #: bin/ic.pl:2921
 msgid "Break"
-msgstr "Romper"
+msgstr "Membatalkan"
 
 #: scripts/account.pl:66
 msgid "Bug: No such account"
-msgstr ""
+msgstr "Bug: Tiada akaun itu"
 
 #: bin/is.pl:424 bin/oe.pl:416 bin/pos.pl:279
 msgid "Business"
-msgstr "Negocio"
+msgstr "Perniagaan"
 
 #: UI/payments/payments_filter.html:78
 msgid "Business Class"
@@ -1171,11 +1171,11 @@ msgstr ""
 
 #: UI/am-defaults.html:26
 msgid "Business Number"
-msgstr "RUC"
+msgstr "Nombor Bisnes"
 
 #: UI/Contact/contact.html:571
 msgid "Business Type"
-msgstr ""
+msgstr "Jenis Perniagaan"
 
 #: t/data/04-complex_template.html:294
 msgid "Business Type:"
@@ -1183,11 +1183,11 @@ msgstr ""
 
 #: bin/am.pl:874
 msgid "Business deleted!"
-msgstr "¡Negocio borrado!"
+msgstr "Perniagaan dipadam"
 
 #: bin/am.pl:867
 msgid "Business saved!"
-msgstr "¡Negocio guardado!"
+msgstr "Perniagaan disimpan"
 
 #: UI/payments/payments_detail.html:173
 msgid "Business:"
@@ -1203,7 +1203,7 @@ msgstr ""
 
 #: bin/ic.pl:535 bin/ic.pl:721 UI/accounts/edit.html:261
 msgid "COGS"
-msgstr "Costo de Artículos Vendidos"
+msgstr "COGS"
 
 #: UI/Contact/pricelist.html:100
 msgid "CSV"
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869 LedgerSMB/ScriptLib/Company.pm:412
 msgid "CSV Report"
-msgstr ""
+msgstr "Laporan CSV"
 
 #: UI/rp-search-generate_trial_balance.html:64
 msgid "Calc. Precision"
@@ -1223,15 +1223,15 @@ msgstr ""
 
 #: bin/ps.pl:209
 msgid "Calculate"
-msgstr ""
+msgstr "Kira"
 
 #: bin/ir.pl:755 bin/is.pl:489 bin/is.pl:842
 msgid "Calculate Taxes"
-msgstr ""
+msgstr "Kira Cukai"
 
 #: bin/is.pl:631
 msgid "Can't void a voided invoice!"
-msgstr ""
+msgstr "Tidak boleh membatalkan invois yang telah dibatalkan"
 
 #: bin/io.pl:2216
 msgid "Cancel"
@@ -1240,7 +1240,7 @@ msgstr ""
 #: scripts/setup.pl:117 scripts/setup.pl:123 scripts/setup.pl:139
 #: scripts/setup.pl:151
 msgid "Cancel?"
-msgstr ""
+msgstr "Batal ?"
 
 #: bin/jc.pl:1193
 msgid "Cannot add stores card for a completed job!"
@@ -1260,35 +1260,35 @@ msgstr ""
 
 #: bin/ic.pl:157
 msgid "Cannot create Assembly; Income account does not exist!"
-msgstr ""
+msgstr "Pengumpulan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/ic.pl:168
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr ""
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun COGS tidak wujud!"
 
 #: bin/ic.pl:165
 msgid "Cannot create Labor; Inventory account does not exist!"
-msgstr ""
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun inventori tidak wujud!"
 
 #: bin/ic.pl:135
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr ""
+msgstr "Bahagian tidak boleh dihasilkan; Akaun COGS tidak wujud!"
 
 #: bin/ic.pl:132
 msgid "Cannot create Part; Income account does not exist!"
-msgstr ""
+msgstr "Bahagian tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/ic.pl:129
 msgid "Cannot create Part; Inventory account does not exist!"
-msgstr ""
+msgstr "Bahagian tidak boleh dihasilkan; Akaun inventori tidak wujud!"
 
 #: bin/ic.pl:148
 msgid "Cannot create Service; Expense account does not exist!"
-msgstr ""
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun perbelanjaan tidak wujud!"
 
 #: bin/ic.pl:144
 msgid "Cannot create Service; Income account does not exist!"
-msgstr ""
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/am.pl:329
 msgid "Cannot delete account!"
@@ -1304,11 +1304,11 @@ msgstr ""
 
 #: bin/ic.pl:3798
 msgid "Cannot delete item!"
-msgstr "¡No se puede borrar el Artículo!"
+msgstr "Barang tidak boleh dipadam"
 
 #: bin/oe.pl:2390
 msgid "Cannot delete order!"
-msgstr "¡No se puede borrar la Orden!"
+msgstr "Tidak boleh memadam pesanan"
 
 #: bin/gl.pl:1121
 msgid "Cannot delete posted transaction"
@@ -1316,7 +1316,7 @@ msgstr ""
 
 #: bin/oe.pl:2394
 msgid "Cannot delete quotation!"
-msgstr "¡No se puede borrar la Cotización!"
+msgstr "Tidak boleh memadam sebut harga!"
 
 #: bin/jc.pl:1325
 msgid "Cannot delete time card!"
@@ -1332,36 +1332,38 @@ msgstr ""
 
 #: bin/ir.pl:1329 bin/is.pl:1397
 msgid "Cannot post invoice for a closed period!"
-msgstr "¡No se puede registrar una Factura para un periodo cerrado!"
+msgstr "Tidak boleh simpan invois untuk jangka masa yang terdekat!"
 
 #: bin/ir.pl:1369 bin/is.pl:1439
 msgid "Cannot post invoice!"
-msgstr "¡No se puede registrar la Factura!"
+msgstr "Invois tidak boleh disimpan!"
 
 #: bin/aa.pl:1338 bin/ir.pl:1343 bin/is.pl:1411
 msgid "Cannot post payment for a closed period!"
-msgstr "¡No se puede registrar un Pago para un periodo cerrado!"
+msgstr "Tidak boleh simpan bayaran untuk jangka masa yang terdekat!"
 
 #: bin/aa.pl:1324 bin/gl.pl:1144
 msgid "Cannot post transaction for a closed period!"
-msgstr "¡No se puede registrar un Asiento para un periodo cerrado!"
+msgstr "Tidak boleh menyimpan transaksi untuk tempoh tertutup"
 
 #: bin/gl.pl:1180
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
+"Tidak boleh menyimpan transaksi dengan kemasukan debit dan kredit untuk akaun "
+"yang sama"
 
 #: bin/aa.pl:1386 bin/gl.pl:1163 bin/pos.pl:729
 msgid "Cannot post transaction!"
-msgstr "¡No se puede registrar el Asiento!"
+msgstr "Transaksi gagal dihantar!"
 
 #: bin/bp.pl:234
 msgid "Cannot remove files!"
-msgstr "¡No se pueden borrar los archivos!"
+msgstr "Fail tidak boleh dipindahkan"
 
 #: bin/am.pl:174
 msgid "Cannot save account!"
-msgstr "¡No se puede guardar la Cuenta!"
+msgstr "Akaun tidak boleh disimpan!"
 
 #: bin/am.pl:1794
 msgid "Cannot save defaults!"
@@ -1369,15 +1371,15 @@ msgstr ""
 
 #: bin/oe.pl:2292
 msgid "Cannot save order!"
-msgstr "¡No se puede guardar la Orden!"
+msgstr "Tidak Boleh Menyimpan Pesanan"
 
 #: bin/am.pl:1823
 msgid "Cannot save preferences!"
-msgstr "¡No se puede guardar las Preferencias!"
+msgstr "Pilihan tidak disimpan!"
 
 #: bin/oe.pl:2309
 msgid "Cannot save quotation!"
-msgstr "¡No se puede guardar la Cotización!"
+msgstr "Tidah Boleh Menyimpan Sebut Harga!"
 
 #: bin/jc.pl:1160
 msgid "Cannot save stores card for a closed period!"
@@ -1389,7 +1391,7 @@ msgstr ""
 
 #: bin/am.pl:1805
 msgid "Cannot save taxes!"
-msgstr ""
+msgstr "Cukai tidak disimpan!"
 
 #: bin/jc.pl:1159
 msgid "Cannot save time card for a closed period!"
@@ -1401,9 +1403,7 @@ msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
-msgstr ""
-"No se puede configurar una Cuenta para más de una de las opciones (AR, AP o "
-"IC)"
+msgstr "Tidak boleh tentukan akaun untuk lebih daripada satu AR,AP atau IC"
 
 #: bin/am.pl:166
 msgid "Cannot set multiple options for [_1]"
@@ -1415,7 +1415,7 @@ msgstr ""
 
 #: bin/ic.pl:4039
 msgid "Cannot stock assemblies!"
-msgstr "¡No se pueden almacenar los ensamblajes!"
+msgstr "Pemasangan tidak boleh diisi semula"
 
 #: LedgerSMB/DBObject/Admin.pm:74
 msgid "Caps not allowed in usernames."
@@ -1430,7 +1430,7 @@ msgstr ""
 
 #: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
-msgstr "Efectivo"
+msgstr "Tunai"
 
 #: UI/payments/payment2.html:229 UI/payments/search.html:56
 msgid "Cash Account"
@@ -1438,11 +1438,11 @@ msgstr ""
 
 #: bin/ps.pl:288
 msgid "Cash Breakdown:"
-msgstr ""
+msgstr "Pecahan Tunai:"
 
 #: UI/io-email.html:18 UI/rp-email.html:17
 msgid "Cc"
-msgstr "C.C."
+msgstr ""
 
 #: bin/arap.pl:1032 bin/io.pl:1816
 msgid "Cc: [_1]"
@@ -1454,7 +1454,7 @@ msgstr ""
 
 #: bin/pos.pl:564
 msgid "Change"
-msgstr "Cambiar"
+msgstr "Tukar"
 
 #: UI/users/preferences.html:24
 msgid "Change Password"
@@ -1475,23 +1475,23 @@ msgstr ""
 #: bin/am.pl:183 bin/ca.pl:100 sql/Pg-database.sql:2480
 #: sql/Pg-database.sql:2581
 msgid "Chart of Accounts"
-msgstr "Plan de Cuentas"
+msgstr "Carta Akaun"
 
 #: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
-msgstr "Cheque"
+msgstr "Semak"
 
 #: bin/pos.pl:343
 msgid "Check ID"
-msgstr ""
+msgstr "Semak ID"
 
 #: bin/ic.pl:3836
 msgid "Check Inventory"
-msgstr "Verificar existencia"
+msgstr "Periksa Senarai Barang"
 
 #: bin/am.pl:69 UI/am-defaults.html:184
 msgid "Check Prefix"
-msgstr ""
+msgstr "Semak Imbuhan"
 
 #: UI/payments/check_job.html:7
 msgid "Checking Job"
@@ -1503,7 +1503,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2487
 msgid "Checks"
-msgstr "Cheques"
+msgstr "Cek"
 
 #: UI/payments/payment1_5.html:23
 msgid "Choose a company"
@@ -1514,7 +1514,7 @@ msgstr ""
 #: UI/Contact/history_filter.html:88 UI/Contact/search.html:84
 #: UI/employee.html:53
 msgid "City"
-msgstr "Ciudad"
+msgstr "Bandar"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
@@ -1522,17 +1522,17 @@ msgstr ""
 
 #: scripts/asset.pl:317 UI/Contact/contact.html:309
 msgid "Class"
-msgstr ""
+msgstr "Kelas"
 
 #: scripts/recon.pl:304 UI/reconciliation/report.html:70
 #: UI/reconciliation/report.html:133
 msgid "Clear date"
-msgstr ""
+msgstr "Tarikh dipadam"
 
 #: UI/rc-reconciliation.html:80 UI/reconciliation/report.html:68
 #: UI/reconciliation/report.html:131 UI/reconciliation/report.html:192
 msgid "Cleared"
-msgstr "Reconciliado"
+msgstr "Padamkan"
 
 #: UI/reconciliation/report.html:65
 msgid "Cleared Transactions"
@@ -1544,18 +1544,18 @@ msgstr ""
 
 #: UI/am-audit-control.html:19
 msgid "Close Books up to"
-msgstr "Cerrar los Libros hasta"
+msgstr ""
 
 #: bin/ps.pl:212 sql/Pg-database.sql:2403
 msgid "Close Till"
-msgstr ""
+msgstr "Tutup Till"
 
 #: bin/aa.pl:1600 bin/aa.pl:1991 bin/ic.pl:1077 bin/ic.pl:1585 bin/ic.pl:1588
 #: bin/jc.pl:315 bin/jc.pl:1425 bin/oe.pl:348 bin/oe.pl:1422 bin/oe.pl:1942
 #: UI/Contact/history_filter.html:236 UI/Contact/search.html:186
 #: UI/Contact/search.html:406
 msgid "Closed"
-msgstr "Cerrado"
+msgstr "Tutup"
 
 #: bin/ps.pl:83
 msgid "Closing Till For [_1]"
@@ -1564,32 +1564,32 @@ msgstr ""
 #: bin/am.pl:953 bin/am.pl:1121 bin/am.pl:1324 UI/am-language-form.html:12
 #: UI/am-sic-form.html:12
 msgid "Code"
-msgstr "Código"
+msgstr "kod"
 
 #: bin/am.pl:1034 bin/am.pl:1194
 msgid "Code missing!"
-msgstr "¡Falta el Código!"
+msgstr "kod hilang"
 
 #: UI/Contact/contact.html:42 UI/Contact/contact.html:67 UI/login.html:37
 #: UI/taxform/details_report.html:18 UI/taxform/summary_report.html:18
 msgid "Company"
-msgstr "Empresa"
+msgstr "Syarikat"
 
 #: bin/am.pl:77
 msgid "Company Address"
-msgstr ""
+msgstr "Alamat Syarikat"
 
 #: bin/am.pl:79
 msgid "Company Fax"
-msgstr ""
+msgstr "Faks Syarikat"
 
 #: bin/am.pl:76 UI/Contact/history_filter.html:33 UI/Contact/search.html:31
 msgid "Company Name"
-msgstr "Razón Social"
+msgstr "Nama Syarikat"
 
 #: bin/am.pl:78
 msgid "Company Phone"
-msgstr ""
+msgstr "Nombor Telefon Syarikat"
 
 #: UI/am-company-logo.html:7
 msgid "Company: [_1]"
@@ -1598,7 +1598,7 @@ msgstr ""
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
 msgid "Compare to"
-msgstr "Comparar con"
+msgstr ""
 
 #: bin/pe.pl:218 bin/pe.pl:232 bin/pe.pl:538 bin/pe.pl:1010
 msgid "Completed"
@@ -1614,7 +1614,7 @@ msgstr ""
 
 #: UI/am-userconfig.html:21 UI/users/preferences.html:34
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:7
 msgid "Confirm Operation"
@@ -1623,7 +1623,7 @@ msgstr ""
 #: bin/aa.pl:1441 bin/am.pl:1242 bin/bp.pl:194 bin/ir.pl:1388 bin/is.pl:1482
 #: bin/jc.pl:1291 bin/oe.pl:2371
 msgid "Confirm!"
-msgstr "¡Confirmar!"
+msgstr "Sah!"
 
 #: LedgerSMB.pm:1098
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
@@ -1631,7 +1631,7 @@ msgstr ""
 
 #: bin/ps.pl:324
 msgid "Congratulations!  Your till is exactly balanced."
-msgstr ""
+msgstr "Tahniah! Till anda seimbang."
 
 #: sql/Pg-database.sql:2436
 msgid "Consolidate"
@@ -1666,13 +1666,13 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:74 UI/Contact/search.html:44
 #: sql/Pg-database.sql:499
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Hubungan"
 
 #: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
 #: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
 #: UI/Contact/history_filter.html:41
 msgid "Contact Info"
-msgstr ""
+msgstr "Maklumat Hubungi"
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
 msgid "Contact Info:"
@@ -1701,16 +1701,16 @@ msgstr ""
 #: UI/payments/payments_filter.html:172 UI/search_results.html:33
 #: UI/taxform/filter.html:111
 msgid "Continue"
-msgstr "Continuar"
+msgstr "Sambung"
 
 #: UI/accounts/edit.html:107
 msgid "Contra"
-msgstr "Cuentas del Orden"
+msgstr ""
 
 #: bin/arap.pl:168 UI/Contact/contact.html:292 UI/Contact/search.html:35
 #: UI/taxform/summary_report.html:21
 msgid "Control Code"
-msgstr ""
+msgstr "Kod kawalan"
 
 #: UI/create_batch.html:47
 msgid "Control Number"
@@ -1718,7 +1718,7 @@ msgstr ""
 
 #: bin/rp.pl:1358 UI/io-email.html:65
 msgid "Copies"
-msgstr "Copias"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:42
 msgid "Copy"
@@ -1726,11 +1726,11 @@ msgstr ""
 
 #: bin/am.pl:482 bin/am.pl:498
 msgid "Copy to COA"
-msgstr "Copiar al Plan de Cuentas"
+msgstr "Salin kepada COA"
 
 #: bin/aa.pl:967 bin/ir.pl:890 bin/is.pl:998
 msgid "Copy to New"
-msgstr ""
+msgstr "Salin Ke Baru"
 
 #: UI/setup/confirm_operation.html:35
 msgid "Copy to New Name"
@@ -1738,11 +1738,11 @@ msgstr ""
 
 #: bin/ic.pl:2820 bin/ic.pl:3065 bin/jc.pl:890 bin/oe.pl:3512
 msgid "Cost"
-msgstr "Costo"
+msgstr "kos"
 
 #: bin/am.pl:634 UI/am-department-form.html:29
 msgid "Cost Center"
-msgstr "Centro de Costos"
+msgstr ""
 
 #: bin/gl.pl:91 bin/pos.pl:56 bin/ps.pl:55 bin/ps.pl:85 bin/ps.pl:226
 msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
@@ -1750,19 +1750,19 @@ msgstr ""
 
 #: bin/ir.pl:1307 bin/is.pl:1376 bin/oe.pl:2242
 msgid "Could not save the data.  Please try again"
-msgstr ""
+msgstr "Data tidak boleh disimpan. Sila cuba lagi"
 
 #: bin/oe.pl:3081
 msgid "Could not save!"
-msgstr "¡No se pudo guardar!"
+msgstr "Tidak boleh disimpan"
 
 #: bin/oe.pl:3376
 msgid "Could not transfer Inventory!"
-msgstr "¡No se pudo transferir existencia!"
+msgstr "Tidak dapat memindahkan Inventori!"
 
 #: UI/inventory/adjustment_entry.html:24
 msgid "Counted"
-msgstr ""
+msgstr "Dikira"
 
 #: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
 #: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
@@ -1770,7 +1770,7 @@ msgstr ""
 #: UI/Contact/contact.html:905 UI/Contact/history_filter.html:112
 #: UI/Contact/search.html:99 UI/employee.html:71
 msgid "Country"
-msgstr "País"
+msgstr "Negara"
 
 #: UI/setup/select_coa.html:30
 msgid "Country Code"
@@ -1786,7 +1786,7 @@ msgstr ""
 
 #: scripts/setup.pl:145
 msgid "Create Database?"
-msgstr ""
+msgstr "Bina pankalan data?"
 
 #: UI/create_batch.html:9
 msgid "Create New Batch"
@@ -1816,21 +1816,21 @@ msgstr ""
 #: bin/aa.pl:2133 bin/am.pl:197 UI/journal/journal_entry.html:129
 #: UI/journal/search.html:249
 msgid "Credit"
-msgstr "Crédito"
+msgstr "Kredit"
 
 #: bin/pos.pl:462
 msgid "Credit Card Track"
-msgstr ""
+msgstr "Track Kad Kredit"
 
 #: bin/am.pl:2862 sql/Pg-database.sql:2550
 msgid "Credit Invoice"
-msgstr ""
+msgstr "Invois kredit"
 
 #: bin/aa.pl:612 bin/ir.pl:467 bin/is.pl:521 bin/oe.pl:457 bin/pos.pl:364
 #: UI/Contact/contact.html:398 UI/Contact/contact.html:497
 #: UI/orders/order.html:34
 msgid "Credit Limit"
-msgstr "Límite de Crédito"
+msgstr "Had Kredit"
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
@@ -1838,15 +1838,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2549
 msgid "Credit Note"
-msgstr ""
+msgstr "Nota kredit"
 
 #: scripts/payment.pl:166
 msgid "Credits"
-msgstr ""
+msgstr "Kredit"
 
 #: bin/ps.pl:182 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
-msgstr ""
+msgstr "Ralat terkumpul:"
 
 #: bin/ps.pl:305
 msgid "Cumulative Error: [_1]"
@@ -1855,7 +1855,7 @@ msgstr ""
 #: bin/aa.pl:2111 bin/ic.pl:1874 bin/ic.pl:2806 bin/ic.pl:2905 bin/oe.pl:1858
 #: bin/oe.pl:3517 bin/rp.pl:2015
 msgid "Curr"
-msgstr "Div"
+msgstr ""
 
 #: bin/aa.pl:476 bin/aa.pl:1709 bin/ic.pl:1093 bin/ir.pl:353 bin/is.pl:369
 #: bin/oe.pl:370 bin/oe.pl:1506 bin/oe.pl:2574 bin/pos.pl:214
@@ -1870,7 +1870,7 @@ msgstr "Div"
 #: UI/payments/use_overpayment1.html:43 UI/payments/use_overpayment2.html:85
 #: UI/rp-aging.csv:6
 msgid "Currency"
-msgstr "Divisa"
+msgstr "Mata Wang"
 
 #: bin/aa.pl:1647 bin/ca.pl:239 bin/jc.pl:177 bin/oe.pl:1449 bin/pe.pl:713
 #: bin/pe.pl:2438 bin/rp.pl:945 LedgerSMB/DBObject/Date.pm:77
@@ -1886,11 +1886,11 @@ msgstr "Divisa"
 #: UI/rp-search-generate_trial_balance.html:29 UI/rp-search-payments.html:57
 #: UI/rp-search-projects.html:33
 msgid "Current"
-msgstr "Actual"
+msgstr "Semasa"
 
 #: bin/rp.pl:528
 msgid "Current Earnings"
-msgstr "Resultado del Período"
+msgstr "Pendapatan Semasa"
 
 #: bin/aa.pl:574 bin/aa.pl:1659 bin/aa.pl:1898 bin/aa.pl:2034 bin/bp.pl:81
 #: bin/ic.pl:2918 bin/is.pl:512 bin/oe.pl:1382 bin/oe.pl:1818 bin/pe.pl:1012
@@ -1900,11 +1900,11 @@ msgstr "Resultado del Período"
 #: UI/rp-search-generate_tax_report.html:139 UI/taxform/details_report.html:31
 #: UI/taxform/summary_report.html:30 sql/Pg-database.sql:497
 msgid "Customer"
-msgstr "Cliente"
+msgstr "Pelanggan"
 
 #: UI/Contact/history_filter.html:17
 msgid "Customer History"
-msgstr "Historial del Cliente"
+msgstr "Rekod Pelanggan"
 
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:30
 msgid "Customer Name"
@@ -1914,7 +1914,7 @@ msgstr ""
 #: UI/am-defaults.html:176 UI/Contact/history_filter.html:69
 #: UI/payments/payments_filter.html:65 UI/payments/search.html:15
 msgid "Customer Number"
-msgstr "Código del Cliente"
+msgstr "Nombor Pelanggan"
 
 #: UI/Contact/search.html:8
 msgid "Customer Search"
@@ -1922,11 +1922,11 @@ msgstr ""
 
 #: bin/aa.pl:1306 bin/is.pl:1385 bin/oe.pl:2261 bin/pe.pl:2872 bin/pos.pl:687
 msgid "Customer missing!"
-msgstr "¡Falta el Cliente!"
+msgstr "Pelanggan hilang"
 
 #: bin/arap.pl:155 bin/pe.pl:2208 bin/pe.pl:2847
 msgid "Customer not on file!"
-msgstr "¡El cliente no existe!"
+msgstr "Pelangan tiada dalam fail!"
 
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:88
 msgid "Customer/Vendor Accounts"
@@ -1947,7 +1947,7 @@ msgstr ""
 #: scripts/employee.pl:314 UI/Contact/contact.html:202
 #: UI/employee/filter.html:182 UI/employee.html:139
 msgid "DOB"
-msgstr "Fecha de nacimiento"
+msgstr ""
 
 #: t/data/04-complex_template.html:106
 msgid "DOB:"
@@ -1955,19 +1955,19 @@ msgstr ""
 
 #: bin/aa.pl:1296 scripts/payment.pl:437
 msgid "Data not saved.  Please try again."
-msgstr ""
+msgstr "Data gagal disimpan. Sila cuba lagi"
 
 #: scripts/recon.pl:130
 msgid "Data not saved.  Please update again."
-msgstr ""
+msgstr "Data tidak disimpan. Tolong update semula."
 
 #: UI/setup/credentials.html:41 UI/setup/list_databases.html:11
 msgid "Database"
-msgstr "Base de datos"
+msgstr ""
 
 #: UI/am-company-logo.html:20
 msgid "Database Host"
-msgstr "Servidor de Base de Datos"
+msgstr ""
 
 #: UI/setup/begin_backup.html:6 UI/setup/complete.html:7
 #: UI/setup/confirm_operation.html:6 UI/setup/credentials.html:7
@@ -1982,11 +1982,11 @@ msgstr ""
 
 #: scripts/setup.pl:144
 msgid "Database does not exist."
-msgstr ""
+msgstr "Pengkalan data tidak wujud"
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
-msgstr "Base de Datos"
+msgstr ""
 
 #: bin/aa.pl:847 bin/aa.pl:2044 bin/bp.pl:367 bin/ir.pl:787 bin/is.pl:875
 #: bin/jc.pl:876 bin/jc.pl:1450 bin/jc.pl:1838 bin/oe.pl:1484 bin/oe.pl:1831
@@ -2050,7 +2050,7 @@ msgstr "Base de Datos"
 #: UI/payments/payments_detail.html:287 UI/payments/use_overpayment2.html:80
 #: UI/rp-search-generate_tax_report.html:127
 msgid "Date"
-msgstr "Fecha"
+msgstr "Tarikh"
 
 #: UI/am-userconfig.html:25 UI/users/preferences.html:39
 msgid "Date Format"
@@ -2058,7 +2058,7 @@ msgstr ""
 
 #: UI/reconciliation/search.html:10
 msgid "Date From"
-msgstr ""
+msgstr "Dari Tarikh"
 
 #: UI/payments/payments_filter.html:99
 msgid "Date From:"
@@ -2066,11 +2066,11 @@ msgstr ""
 
 #: bin/aa.pl:1711 bin/aa.pl:2085
 msgid "Date Paid"
-msgstr "Fecha de Pago"
+msgstr "Tarikh Dibayar"
 
 #: bin/oe.pl:2799
 msgid "Date Received"
-msgstr "Fecha de recepción"
+msgstr "Tarikh diterima"
 
 #: UI/payments/search.html:88 UI/payments/search.html:102
 msgid "Date Reversed"
@@ -2094,11 +2094,11 @@ msgstr ""
 
 #: bin/oe.pl:3066
 msgid "Date received missing!"
-msgstr "¡Falta la fecha de recepción!"
+msgstr "Tarikh diterima hilang"
 
 #: bin/aa.pl:1764 UI/Contact/search.html:108 UI/payments/payment1.html:67
 msgid "Date to"
-msgstr ""
+msgstr "Tarikh kepada"
 
 #: bin/jc.pl:604
 msgid "Date worked"
@@ -2114,7 +2114,7 @@ msgstr ""
 
 #: bin/arap.pl:769
 msgid "Day(s)"
-msgstr ""
+msgstr "Hari"
 
 #: bin/am.pl:2174
 msgid "Days"
@@ -2123,29 +2123,29 @@ msgstr ""
 #: bin/aa.pl:2131 bin/am.pl:196 UI/journal/journal_entry.html:128
 #: UI/journal/search.html:242
 msgid "Debit"
-msgstr "Débito"
+msgstr "Debit"
 
 #: bin/am.pl:2863 sql/Pg-database.sql:2556
 msgid "Debit Invoice"
-msgstr ""
+msgstr "Invois debit"
 
 #: sql/Pg-database.sql:2555
 msgid "Debit Note"
-msgstr ""
+msgstr "Nota debit"
 
 #: scripts/payment.pl:165
 msgid "Debits"
-msgstr ""
+msgstr "Debit"
 
 #: bin/aa.pl:91 bin/ca.pl:83 bin/gl.pl:86 bin/io.pl:87
 #: LedgerSMB/App_State.pm:180
 msgid "Dec"
-msgstr "Dic"
+msgstr "Dis"
 
 #: bin/aa.pl:77 bin/ca.pl:69 bin/gl.pl:72 bin/io.pl:73
 #: LedgerSMB/App_State.pm:180 LedgerSMB/DBObject/Date.pm:71
 msgid "December"
-msgstr "Diciembre"
+msgstr "Disember"
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
@@ -2154,7 +2154,7 @@ msgstr ""
 
 #: bin/am.pl:1342
 msgid "Default"
-msgstr ""
+msgstr "Tetapan Utama"
 
 #: UI/setup/migrate_sl_info.html:61 UI/setup/upgrade_info.html:61
 msgid "Default AP"
@@ -2167,35 +2167,35 @@ msgstr ""
 #: UI/am-defaults.html:100 UI/setup/migrate_sl_info.html:32
 #: UI/setup/upgrade_info.html:32
 msgid "Default Country"
-msgstr ""
+msgstr "Negara"
 
 #: bin/am.pl:73
 msgid "Default Email BCC"
-msgstr ""
+msgstr "Tetapan utama Email BCC"
 
 #: bin/am.pl:72
 msgid "Default Email CC"
-msgstr ""
+msgstr "Tetapan utama Email CC"
 
 #: bin/am.pl:75
 msgid "Default Email From"
-msgstr ""
+msgstr "Tetapan utama Email daripada"
 
 #: bin/am.pl:71
 msgid "Default Email To"
-msgstr ""
+msgstr "Tetapan utama Email kepada"
 
 #: scripts/taxform.pl:283
 msgid "Default Reportable"
-msgstr ""
+msgstr "Tetapan Utama yang dilaporkan"
 
 #: bin/am.pl:1305
 msgid "Default Template"
-msgstr ""
+msgstr "Tetapan utama templat"
 
 #: sql/Pg-database.sql:2498
 msgid "Defaults"
-msgstr "Valores predeterminados"
+msgstr "Asal"
 
 #: bin/am.pl:1791
 msgid "Defaults saved!"
@@ -2213,7 +2213,7 @@ msgstr ""
 #: UI/Contact/contact.html:1066 UI/Contact/pricelist.html:66
 #: UI/reconciliation/report.html:288
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Padam"
 
 #: bin/am.pl:314
 msgid "Delete Account"
@@ -2221,15 +2221,15 @@ msgstr ""
 
 #: scripts/vouchers.pl:493
 msgid "Delete Batch"
-msgstr ""
+msgstr "Padam Kumpulan"
 
 #: bin/am.pl:1250
 msgid "Delete Language"
-msgstr ""
+msgstr "Padam Bahasa"
 
 #: bin/arap.pl:871 bin/arap.pl:877
 msgid "Delete Schedule"
-msgstr ""
+msgstr "Padam Jadual"
 
 #: bin/jc.pl:1298
 msgid "Delete Timecard"
@@ -2237,7 +2237,7 @@ msgstr ""
 
 #: scripts/vouchers.pl:499
 msgid "Delete Vouchers"
-msgstr ""
+msgstr "Padam Baucer"
 
 #: bin/am.pl:1261
 msgid "Deleting a language will also delete the templates for the language [_1]"
@@ -2253,7 +2253,7 @@ msgstr ""
 #: bin/io.pl:227 LedgerSMB/ScriptLib/Company.pm:558
 #: UI/Contact/history_filter.html:319 UI/Contact/search.html:288
 msgid "Delivery Date"
-msgstr "Fecha de entrega"
+msgstr "Tarikh Penghantaran"
 
 #: scripts/asset.pl:740
 msgid "Dep. Basis"
@@ -2288,7 +2288,7 @@ msgstr ""
 #: UI/payments/payment2.html:71 UI/payments/payments_detail.html:131
 #: UI/payments/payments_filter.html:52 UI/rp-search.html:13
 msgid "Department"
-msgstr "Departamento"
+msgstr "Jabatan"
 
 #: bin/am.pl:719
 msgid "Department deleted!"
@@ -2317,7 +2317,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2601
 msgid "Depreciate"
-msgstr ""
+msgstr "Penyusutan"
 
 #: UI/asset/begin_depreciation_all.html:5
 msgid "Depreciate All"
@@ -2325,30 +2325,30 @@ msgstr ""
 
 #: UI/asset/import_asset.html:43
 msgid "Depreciate Through"
-msgstr ""
+msgstr "Melalui Penyusutan"
 
 #: scripts/asset.pl:677 UI/accounts/edit.html:321 sql/Pg-database.sql:2605
 msgid "Depreciation"
-msgstr ""
+msgstr "Susut Nilai"
 
 #: scripts/asset.pl:169 UI/asset/edit_asset.html:161
 #: UI/asset/edit_class.html:45 UI/asset/search_asset.html:152
 #: UI/asset/search_class.html:54
 msgid "Depreciation Account"
-msgstr ""
+msgstr "Akaun Susut Nilai"
 
 #: scripts/asset.pl:170 UI/asset/edit_class.html:23
 #: UI/asset/search_class.html:19
 msgid "Depreciation Method"
-msgstr ""
+msgstr "Kaedah Susut Nilai"
 
 #: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
 msgid "Depreciation Starts"
-msgstr ""
+msgstr "Permulaan Susut Nilai"
 
 #: scripts/asset.pl:75
 msgid "Depreciation Successful"
-msgstr ""
+msgstr "susut nilai berjaya"
 
 #: bin/aa.pl:720 bin/aa.pl:1585 bin/aa.pl:1951 bin/aa.pl:2140 bin/am.pl:195
 #: bin/am.pl:632 bin/am.pl:791 bin/am.pl:957 bin/am.pl:1123 bin/am.pl:1326
@@ -2422,20 +2422,20 @@ msgstr ""
 #: UI/rp-search-generate_tax_report.html:150 UI/rp-search-payments.html:12
 #: sql/Pg-database.sql:2468 sql/Pg-database.sql:2479
 msgid "Description"
-msgstr "Descripción"
+msgstr "Penerangan"
 
 #: bin/pe.pl:1805
 msgid "Description Translations"
-msgstr "Traducciones de la descripción"
+msgstr "Huraian terjemahan"
 
 #: bin/am.pl:710 bin/am.pl:865 bin/am.pl:1035 bin/am.pl:1195 bin/am.pl:2046
 msgid "Description missing!"
-msgstr "¡Falta la descripción!"
+msgstr "Penerangan hilang"
 
 #: UI/asset/edit_asset.html:61 UI/asset/search_asset.html:55
 #: UI/taxform/add_taxform.html:47
 msgid "Description:"
-msgstr ""
+msgstr "Huraian"
 
 #: bin/rp.pl:1978
 msgid "Description: [_1]"
@@ -2445,7 +2445,7 @@ msgstr ""
 #: UI/Contact/history_filter.html:213 UI/Contact/search.html:215
 #: UI/rc-reconciliation.html:99 UI/rp-search-aging.html:51
 msgid "Detail"
-msgstr "Detalle"
+msgstr "Butiran"
 
 #: UI/payments/payments_detail.html:215
 msgid "Details"
@@ -2453,11 +2453,11 @@ msgstr ""
 
 #: scripts/setup.pl:115
 msgid "Development version found.  Please upgrade first"
-msgstr ""
+msgstr "Versi baru dijumpai. Sila naik taraf dahulu"
 
 #: UI/rc-display-form.html:98
 msgid "Difference"
-msgstr "Diferencia"
+msgstr ""
 
 #: UI/am-defaults.html:48
 msgid "Disable Back Button"
@@ -2486,11 +2486,11 @@ msgstr ""
 #: UI/Contact/contact.html:556 UI/Contact/history_filter.html:308
 #: UI/Contact/search.html:278 UI/payments/payments_detail.html:294
 msgid "Discount"
-msgstr "Descuento"
+msgstr "Diskaun"
 
 #: bin/am.pl:793
 msgid "Discount %"
-msgstr ""
+msgstr "Diskaun"
 
 #: t/data/04-complex_template.html:242
 msgid "Discount:"
@@ -2506,15 +2506,15 @@ msgstr ""
 
 #: scripts/asset.pl:679 sql/Pg-database.sql:2603 sql/Pg-database.sql:2606
 msgid "Disposal"
-msgstr ""
+msgstr "Pembuangan"
 
 #: scripts/asset.pl:873
 msgid "Disposal Date"
-msgstr ""
+msgstr "Tarikh Pembuangan"
 
 #: scripts/asset.pl:501
 msgid "Disposal Method"
-msgstr ""
+msgstr "Cara Pembuangan"
 
 #: scripts/asset.pl:867
 msgid "Disposal Report [_1] on date [_2]"
@@ -2522,7 +2522,7 @@ msgstr ""
 
 #: LedgerSMB.pm:1095
 msgid "Division by 0 error"
-msgstr ""
+msgstr "Kesalahan bahagian 0"
 
 #: bin/io.pl:2330
 msgid "Do not keep field empty [_1]"
@@ -2530,11 +2530,11 @@ msgstr ""
 
 #: scripts/setup.pl:321
 msgid "Don't know what to do with backup"
-msgstr ""
+msgstr "Tidak mengetahui apa yang perlu dibuat dengan backup "
 
 #: bin/oe.pl:3022 bin/oe.pl:3030
 msgid "Done"
-msgstr "Terminado"
+msgstr "Selesai"
 
 #: scripts/setup.pl:359
 msgid "Double customernumbers"
@@ -2546,19 +2546,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:680
 msgid "Dr."
-msgstr ""
+msgstr "Dr."
 
 #: bin/aa.pl:1155 bin/aa.pl:1430 bin/gl.pl:128
 msgid "Draft Posted"
-msgstr ""
+msgstr "Draf yang tercatat"
 
 #: sql/Pg-database.sql:2568
 msgid "Drafts"
-msgstr ""
+msgstr "Draf"
 
 #: bin/ic.pl:512 bin/ic.pl:1168 bin/ic.pl:1181 bin/ic.pl:1657 bin/ic.pl:1883
 msgid "Drawing"
-msgstr "Plano"
+msgstr "Lukisan"
 
 #: scripts/admin.pl:362
 msgid "Drop from All"
@@ -2583,16 +2583,16 @@ msgstr ""
 #: templates/xedemo/invoice.tex:118 templates/xedemo/receipt.tex:64
 #: templates/xedemo/statement.html:76
 msgid "Due"
-msgstr ""
+msgstr "Tarikh Akhir"
 
 #: bin/aa.pl:691 bin/aa.pl:1718 bin/aa.pl:2052 bin/ir.pl:532 bin/is.pl:598
 #: bin/rp.pl:944 UI/orders/order.html:96 UI/taxform/details_report.html:22
 msgid "Due Date"
-msgstr "Fecha de vencimiento"
+msgstr "Tarikh Akhir"
 
 #: bin/aa.pl:1311
 msgid "Due Date missing!"
-msgstr "¡Falta fecha de vencimiento!"
+msgstr "Tarikh akhir hilang!"
 
 #: scripts/setup.pl:630
 msgid "Duplicte employee numbers"
@@ -2602,7 +2602,7 @@ msgstr ""
 #: bin/oe.pl:820 bin/oe.pl:3029 bin/rp.pl:1224 bin/rp.pl:1232
 #: UI/Contact/search.html:48 UI/io-email.html:16 UI/rp-email.html:15
 msgid "E-mail"
-msgstr "Correo electrónico"
+msgstr "E-mail"
 
 #: UI/rp-email.html:8
 msgid "E-mail Statement to [_1]"
@@ -2614,32 +2614,32 @@ msgstr ""
 
 #: bin/am.pl:2831 bin/io.pl:1638 bin/rp.pl:1417
 msgid "E-mail address missing!"
-msgstr "¡Falta dirección E-mail!"
+msgstr "alamat emel hilang"
 
 #: bin/arap.pl:691
 msgid "E-mail message"
-msgstr ""
+msgstr "Pesanan e-mail"
 
 #: bin/io.pl:1451
 msgid "E-mailed"
-msgstr "Enviado por e-mail"
+msgstr ""
 
 #: bin/aa.pl:144 t/data/04-complex_template.html:506
 #: UI/Admin/edit_user.html:153 UI/Contact/contact.html:950
 msgid "Edit"
-msgstr "Modificar"
+msgstr "Ubahsuai"
 
 #: bin/aa.pl:418 bin/aa.pl:452
 msgid "Edit AP Transaction"
-msgstr "Modificar asiento de Cuentas a Pagar"
+msgstr ""
 
 #: bin/aa.pl:417
 msgid "Edit AR Transaction"
-msgstr "Modificar asiento de Cuentas a Cobrar"
+msgstr ""
 
 #: scripts/account.pl:68
 msgid "Edit Account"
-msgstr "Modificar cuenta"
+msgstr "Mengubah akaun"
 
 #: bin/ic.pl:96 bin/ic.pl:743
 msgid "Edit Assembly"
@@ -2647,11 +2647,11 @@ msgstr ""
 
 #: scripts/asset.pl:99
 msgid "Edit Asset Class"
-msgstr ""
+msgstr "Mengedit Kelas Aset"
 
 #: bin/am.pl:852
 msgid "Edit Business"
-msgstr "Modificar Negocio"
+msgstr ""
 
 #: bin/aa.pl:450
 msgid "Edit Credit Note"
@@ -2659,7 +2659,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
 msgid "Edit Customer"
-msgstr "Modificar Cliente"
+msgstr "Ubahsuai Pelanggan"
 
 #: bin/aa.pl:448
 msgid "Edit Debit Note"
@@ -2671,11 +2671,11 @@ msgstr ""
 
 #: bin/pe.pl:2057
 msgid "Edit Description Translations"
-msgstr "Modificar Traducciones de Descripción"
+msgstr "Edit Penerangan Penterjemahan"
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:61
 msgid "Edit Employee"
-msgstr "Modificar Empleado"
+msgstr "Ubahsuai Pekerja"
 
 #: bin/am.pl:467
 msgid "Edit GIFI"
@@ -2683,7 +2683,7 @@ msgstr ""
 
 #: bin/pe.pl:1525
 msgid "Edit Group"
-msgstr "Modificar Grupo"
+msgstr ""
 
 #: bin/pe.pl:62 bin/pe.pl:302
 msgid "Edit Job"
@@ -2691,7 +2691,7 @@ msgstr ""
 
 #: bin/ic.pl:97
 msgid "Edit Labor/Overhead"
-msgstr "Modificar Mano de Obra"
+msgstr ""
 
 #: bin/am.pl:1184
 msgid "Edit Language"
@@ -2699,11 +2699,11 @@ msgstr ""
 
 #: bin/pos.pl:165
 msgid "Edit POS Invoice"
-msgstr "Modificar Ticket"
+msgstr "Edit POS Invois"
 
 #: bin/ic.pl:94 bin/ic.pl:741
 msgid "Edit Part"
-msgstr "Modificar Artículo"
+msgstr ""
 
 #: bin/am.pl:1751
 msgid "Edit Preferences for [_1]"
@@ -2711,35 +2711,35 @@ msgstr ""
 
 #: bin/pe.pl:1731
 msgid "Edit Pricegroup"
-msgstr "Modificar Grupo de Precios"
+msgstr ""
 
 #: bin/pe.pl:659
 msgid "Edit Project"
-msgstr "Modificar Proyecto"
+msgstr "Ubahsuai Projek"
 
 #: bin/oe.pl:91
 msgid "Edit Purchase Order"
-msgstr "Modificar Orden de Compra"
+msgstr "Ubah Pesanan Pembelian"
 
 #: bin/oe.pl:105
 msgid "Edit Quotation"
-msgstr "Modificar Cotización"
+msgstr "Ubah Sebut Harga"
 
 #: bin/oe.pl:101
 msgid "Edit Request for Quotation"
-msgstr "Modificar Solicitud de Cotización"
+msgstr "Ubah Permintaan Untuk Sebut Harga"
 
 #: bin/am.pl:1020
 msgid "Edit SIC"
-msgstr "Modificar CIS"
+msgstr ""
 
 #: bin/oe.pl:96
 msgid "Edit Sales Order"
-msgstr "Modificar Orden de Venta"
+msgstr "Ubah Pesanan Jualan"
 
 #: bin/ic.pl:95 bin/ic.pl:742
 msgid "Edit Service"
-msgstr "Modificar Servicio"
+msgstr ""
 
 #: UI/taxform/add_taxform.html:11
 msgid "Edit Taxform"
@@ -2747,7 +2747,7 @@ msgstr ""
 
 #: bin/am.pl:1393 bin/am.pl:1411
 msgid "Edit Template"
-msgstr "Modificar Plantilla"
+msgstr "Edit Templat"
 
 #: bin/jc.pl:76
 msgid "Edit Time Card"
@@ -2755,19 +2755,19 @@ msgstr ""
 
 #: UI/Contact/contact.html:243
 msgid "Edit User"
-msgstr "Modificar Usuario"
+msgstr ""
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:59
 msgid "Edit Vendor"
-msgstr "Modificar Proveedor"
+msgstr "Ubahsuai Pembekal"
 
 #: bin/ir.pl:99
 msgid "Edit Vendor Invoice"
-msgstr "Modificar Factura de Proveedor"
+msgstr "Penyuntingan Invois Pembekal"
 
 #: bin/am.pl:2033
 msgid "Edit Warehouse"
-msgstr "Modificar Almacén"
+msgstr ""
 
 #: UI/Admin/edit_user.html:10
 msgid "Editing User"
@@ -2775,23 +2775,23 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
 msgid "Eight"
-msgstr "ocho"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:78
 msgid "Eighteen"
-msgstr "dieciocho"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:96
 msgid "Eighty"
-msgstr "ochenta"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:70
 msgid "Eleven"
-msgstr "once"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:71
 msgid "Eleven-o"
-msgstr "once"
+msgstr ""
 
 #: UI/employee.html:77 sql/Pg-database.sql:788
 msgid "Email"
@@ -2819,7 +2819,7 @@ msgstr ""
 #: templates/xedemo/timecard.tex:22 UI/Contact/search.html:60
 #: sql/Pg-database.sql:498
 msgid "Employee"
-msgstr "Empleado"
+msgstr "Pekerja"
 
 #: UI/Admin/edit_user.html:116
 msgid "Employee No."
@@ -2830,7 +2830,7 @@ msgstr ""
 #: UI/employee/filter.html:18 UI/employee/filter.html:112
 #: UI/setup/new_user.html:84
 msgid "Employee Number"
-msgstr "Código del empleado"
+msgstr "Nombor Pekerja"
 
 #: UI/Contact/search.html:10
 msgid "Employee Search"
@@ -2838,7 +2838,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2425
 msgid "Employees"
-msgstr "Empleados"
+msgstr "Pekerjaan"
 
 #: UI/batch/filter.html:25
 msgid "Empty"
@@ -2848,7 +2848,7 @@ msgstr ""
 #: UI/Contact/contact.html:400 UI/Contact/contact.html:484
 #: UI/employee/filter.html:210 UI/employee.html:127
 msgid "End Date"
-msgstr ""
+msgstr "Tarikh Akhir"
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
 msgid "End Date:"
@@ -2872,15 +2872,15 @@ msgstr ""
 
 #: bin/am.pl:2216
 msgid "Ends"
-msgstr ""
+msgstr "Tamat"
 
 #: UI/am-audit-control.html:12
 msgid "Enforce transaction reversal for all dates"
-msgstr "Forzar reversión de asientos para todas las fechas"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:11
 msgid "Enter Inventory"
-msgstr ""
+msgstr "Masukan inventori"
 
 #: UI/setup/new_user.html:7
 msgid "Enter User"
@@ -2894,11 +2894,11 @@ msgstr ""
 
 #: scripts/recon.pl:192
 msgid "Entered By"
-msgstr ""
+msgstr "Dimasukkan Oleh"
 
 #: scripts/asset.pl:636
 msgid "Entered at"
-msgstr ""
+msgstr "Di Masukkan Di"
 
 #: t/data/04-complex_template.html:629 UI/Contact/contact.html:1192
 msgid "Entered at: [_1]"
@@ -2906,15 +2906,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:917
 msgid "Entity"
-msgstr ""
+msgstr "Entiti"
 
 #: bin/ir.pl:482 bin/is.pl:536 bin/oe.pl:471
 msgid "Entity Code"
-msgstr ""
+msgstr "Kod Entiti"
 
 #: bin/aa.pl:646
 msgid "Entity Control Code"
-msgstr ""
+msgstr "Kod Kawalan entiti"
 
 #: sql/Pg-database.sql:919
 msgid "Entity Credit Account"
@@ -2922,7 +2922,7 @@ msgstr ""
 
 #: bin/gl.pl:529 UI/accounts/edit.html:86 UI/journal/search.html:181
 msgid "Equity"
-msgstr "Patrimonio"
+msgstr ""
 
 #: bin/ps.pl:79
 msgid "Error"
@@ -2930,15 +2930,15 @@ msgstr ""
 
 #: scripts/setup.pl:281
 msgid "Error creating backup file"
-msgstr ""
+msgstr "Kesalahan membina backup data"
 
 #: scripts/vouchers.pl:94
 msgid "Error creating batch.  Please try again."
-msgstr ""
+msgstr "Kesalahan mencipta kumpulan. sila cuba lagi. "
 
 #: LedgerSMB.pm:1099
 msgid "Error from Function:"
-msgstr ""
+msgstr "Kesalahan daripada fungsi"
 
 #: UI/payments/check_job.html:30
 msgid "Error:"
@@ -2946,7 +2946,7 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:70
 msgid "Error: Cannot include summary account in other dropdown menus"
-msgstr ""
+msgstr "Ralat: Tidak boleh termasuk ringkasan akaun selain menu dropdown"
 
 #: scripts/asset.pl:739
 msgid "Est. Life"
@@ -2954,11 +2954,11 @@ msgstr ""
 
 #: bin/am.pl:2221 bin/arap.pl:792
 msgid "Every"
-msgstr ""
+msgstr "Setiap"
 
 #: bin/aa.pl:849 bin/ir.pl:789 bin/is.pl:877 UI/orders/order.html:251
 msgid "Exch"
-msgstr "Cambio"
+msgstr "Tukar"
 
 #: bin/aa.pl:489 bin/aa.pl:495 bin/ir.pl:367 bin/ir.pl:375 bin/is.pl:383
 #: bin/is.pl:389 bin/oe.pl:384 bin/oe.pl:392 bin/oe.pl:2582 bin/pos.pl:228
@@ -2967,11 +2967,11 @@ msgstr "Cambio"
 #: UI/payments/payments_detail.html:161 UI/payments/search.html:115
 #: UI/payments/use_overpayment2.html:93
 msgid "Exchange Rate"
-msgstr "Tasa de Cambio"
+msgstr "Kadar Pertukaran"
 
 #: bin/aa.pl:1345 bin/ir.pl:1350 bin/is.pl:1418
 msgid "Exchange rate for payment missing!"
-msgstr "¡Falta la tasa de cambio para el pago!"
+msgstr "Kadar pertukaran pembayaran hilang!"
 
 #: scripts/payment.pl:1231
 msgid "Exchange rate hasn\\'t been defined"
@@ -2984,17 +2984,17 @@ msgstr ""
 #: bin/aa.pl:1327 bin/ir.pl:1332 bin/is.pl:1400 bin/oe.pl:2265 bin/oe.pl:2609
 #: bin/pos.pl:700
 msgid "Exchange rate missing!"
-msgstr "¡Falta la tasa de cambio!"
+msgstr "Kadar pertukaran hilang!"
 
 #: bin/ps.pl:78
 msgid "Expected"
-msgstr ""
+msgstr "Telah dijangka"
 
 #: bin/gl.pl:531 bin/ic.pl:683 bin/ic.pl:1912 UI/accounts/edit.html:88
 #: UI/accounts/edit.html:291 UI/accounts/edit.html:330 UI/am-defaults.html:82
 #: UI/journal/search.html:193
 msgid "Expense"
-msgstr "Egreso"
+msgstr "perbelanjaan"
 
 #: UI/asset/edit_asset.html:179
 msgid "Expense Account"
@@ -3002,7 +3002,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:213
 msgid "Expense/Asset"
-msgstr "Egreso/Activo"
+msgstr ""
 
 #: templates/demo/income_statement.html:110
 #: templates/demo_with_images/income_statement.html:110
@@ -3017,19 +3017,19 @@ msgstr ""
 #: templates/xedemo/invoice.html:142
 #: templates/xedemo/request_quotation.html:146
 msgid "Extended"
-msgstr "Importe"
+msgstr "Dilanjutkan"
 
 #: UI/journal/journal_entry.html:127
 msgid "FX"
-msgstr "Cotización de Monedas"
+msgstr ""
 
 #: bin/pe.pl:2940
 msgid "Failed to save order!"
-msgstr ""
+msgstr "Gagal menyimpan Pesanan!"
 
 #: sql/Pg-database.sql:783
 msgid "Fax"
-msgstr "Fax"
+msgstr ""
 
 #: templates/demo/ar_transaction.html:53 templates/demo/ar_transaction.tex:27
 #: templates/demo/letterhead.tex:14
@@ -3120,39 +3120,39 @@ msgstr "Feb"
 #: bin/aa.pl:67 bin/ca.pl:59 bin/gl.pl:62 bin/io.pl:63
 #: LedgerSMB/App_State.pm:168 LedgerSMB/DBObject/Date.pm:61
 msgid "February"
-msgstr "Febrero"
+msgstr "Februari"
 
 #: LedgerSMB.pm:490
 msgid "Field \\\"Name\\\" Not Defined"
-msgstr ""
+msgstr "Bidang\\\"Nama\\\" Tidak Ditentukan"
 
 #: LedgerSMB/Num2text.pm:75
 msgid "Fifteen"
-msgstr "quince"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:93
 msgid "Fifty"
-msgstr "cincuenta"
+msgstr ""
 
 #: UI/file/attachment_screen.html:39
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 #: scripts/asset.pl:1154
 msgid "File Imported"
-msgstr ""
+msgstr "Fail Masukkan"
 
 #: bin/aa.pl:1044 bin/aa.pl:1063 bin/ic.pl:896 bin/ic.pl:915 bin/ir.pl:943
 #: bin/ir.pl:962 bin/is.pl:1076 bin/is.pl:1095 bin/oe.pl:919 bin/oe.pl:938
 #: UI/journal/journal_entry.html:304 UI/journal/journal_entry.html:322
 msgid "File name"
-msgstr ""
+msgstr "Nama Fail"
 
 #: bin/aa.pl:1045 bin/aa.pl:1064 bin/ic.pl:897 bin/ic.pl:916 bin/ir.pl:944
 #: bin/ir.pl:963 bin/is.pl:1077 bin/is.pl:1096 bin/oe.pl:920 bin/oe.pl:939
 #: UI/journal/journal_entry.html:305 UI/journal/journal_entry.html:323
 msgid "File type"
-msgstr ""
+msgstr "Jenis Fail"
 
 #: UI/payments/payments_detail.html:124
 msgid "Filtering From:"
@@ -3179,11 +3179,11 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:64
 msgid "Five"
-msgstr "cinco"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:99
 msgid "Five Hundred"
-msgstr "quinientos"
+msgstr ""
 
 #: UI/accounts/edit.html:312
 msgid "Fixed Asset"
@@ -3191,19 +3191,19 @@ msgstr ""
 
 #: UI/accounts/edit.html:306 sql/Pg-database.sql:2587
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Aset tetap"
 
 #: bin/arap.pl:797
 msgid "For"
-msgstr ""
+msgstr "Untuk"
 
 #: UI/am-defaults.html:88
 msgid "Foreign Exchange Gain"
-msgstr "Ganancia en Moneda Extranjera"
+msgstr "Keuntungan Pertukaran Asing"
 
 #: UI/am-defaults.html:94
 msgid "Foreign Exchange Loss"
-msgstr "Pérdida en Moneda Extranjera"
+msgstr "Kerugian Pertukaran Asing"
 
 #: UI/taxform/filter.html:28
 msgid "Form"
@@ -3211,15 +3211,15 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:92
 msgid "Forty"
-msgstr "cuarenta"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:63
 msgid "Four"
-msgstr "cuatro"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:74
 msgid "Fourteen"
-msgstr "catorce"
+msgstr ""
 
 #: bin/jc.pl:1434
 msgid "Friday"
@@ -3245,11 +3245,11 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:2 UI/rp-search-payments.html:30
 #: UI/rp-search-projects.html:6
 msgid "From"
-msgstr "Desde"
+msgstr "Dari"
 
 #: UI/payments/search.html:74
 msgid "From Date"
-msgstr ""
+msgstr "Tarikh Mula"
 
 #: UI/asset/import_asset.html:51
 msgid "From File"
@@ -3257,7 +3257,7 @@ msgstr ""
 
 #: bin/oe.pl:3243
 msgid "From Warehouse"
-msgstr ""
+msgstr "Daripada gudang"
 
 #: bin/bp.pl:330 bin/rp.pl:1992
 msgid "From [_1]"
@@ -3270,34 +3270,34 @@ msgstr ""
 #: scripts/setup.pl:529 scripts/setup.pl:993 scripts/setup.pl:1039
 #: scripts/setup.pl:1141
 msgid "Full Permissions"
-msgstr ""
+msgstr "Permintaan penuh"
 
 #: bin/am.pl:194 bin/am.pl:341 bin/ca.pl:196 bin/gl.pl:556 bin/rp.pl:1707
 #: UI/accounts/edit.html:71 UI/am-gifi-form.html:12 UI/journal/search.html:289
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
 msgid "GIFI"
-msgstr "Plan de Cuentas Fiscal (PCF)"
+msgstr "GIFI"
 
 #: bin/am.pl:560
 msgid "GIFI deleted!"
-msgstr "¡Borrado el código PCF!"
+msgstr "GIFI dipadam"
 
 #: bin/am.pl:521 bin/am.pl:529
 msgid "GIFI missing!"
-msgstr "¡Falta el código PCF!"
+msgstr "GIFI hilang"
 
 #: bin/am.pl:523
 msgid "GIFI saved!"
-msgstr "¡Guardado el código PCF!"
+msgstr "GIFI disimpan"
 
 #: bin/am.pl:2230 scripts/drafts.pl:49 scripts/drafts.pl:195
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:85
 msgid "GL"
-msgstr ""
+msgstr "GL"
 
 #: bin/am.pl:55 UI/am-defaults.html:136
 msgid "GL Reference Number"
-msgstr ""
+msgstr "Nombor rujukan GL"
 
 #: bin/gl.pl:820
 msgid "GL Transaction"
@@ -3313,7 +3313,7 @@ msgstr ""
 
 #: scripts/asset.pl:879
 msgid "Gain (Loss)"
-msgstr ""
+msgstr "Dapat (Kerugian)"
 
 #: UI/asset/begin_approval.html:46
 msgid "Gain Account"
@@ -3321,7 +3321,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2385
 msgid "General Journal"
-msgstr ""
+msgstr "Jurnal umum"
 
 #: bin/gl.pl:537
 msgid "General Ledger"
@@ -3337,7 +3337,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2435 sql/Pg-database.sql:2472
 msgid "Generate"
-msgstr ""
+msgstr "Hasilkan"
 
 #: UI/Contact/contact.html:312
 msgid "Generate Control Code"
@@ -3345,11 +3345,11 @@ msgstr ""
 
 #: bin/oe.pl:3614
 msgid "Generate Orders"
-msgstr ""
+msgstr "Menjana pesanan"
 
 #: bin/oe.pl:1781 bin/oe.pl:3519
 msgid "Generate Purchase Orders"
-msgstr ""
+msgstr "Menjana Pesanan Pembelian"
 
 #: bin/oe.pl:1309
 msgid "Generate Purchase Orders from Sales Order"
@@ -3365,7 +3365,7 @@ msgstr ""
 
 #: bin/pe.pl:2489 bin/pe.pl:2669 bin/pe.pl:2759
 msgid "Generate Sales Orders"
-msgstr ""
+msgstr "Menjana Pesanan Jualan"
 
 #: sql/Pg-database.sql:784
 msgid "Generic Jabber"
@@ -3377,7 +3377,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2386
 msgid "Goods and Services"
-msgstr ""
+msgstr "Barangan dan Servis"
 
 #: UI/payments/payments_detail.html:387
 msgid "Grand Total"
@@ -3389,11 +3389,11 @@ msgstr ""
 #: bin/pe.pl:798 bin/pe.pl:1412 bin/pe.pl:1419 bin/pe.pl:1548
 #: UI/io-email.html:87
 msgid "Group"
-msgstr "Grupo"
+msgstr "Kumpulan"
 
 #: bin/pe.pl:1817
 msgid "Group Translations"
-msgstr "Traducción de Grupos"
+msgstr "Kumpulan Terjemahan"
 
 #: UI/io-email.html:81 UI/orders/order.html:297
 msgid "Group by"
@@ -3401,19 +3401,19 @@ msgstr ""
 
 #: bin/pe.pl:1381
 msgid "Group deleted!"
-msgstr "¡Grupo borrado!"
+msgstr "Kumpulan dipadam"
 
 #: bin/pe.pl:1314
 msgid "Group missing!"
-msgstr "¡Falta el grupo!"
+msgstr "Kumpulan hilang"
 
 #: bin/pe.pl:1316
 msgid "Group saved!"
-msgstr "¡Grupo guardado!"
+msgstr "Kumpulan disimpan"
 
 #: bin/pe.pl:792 bin/pe.pl:1422 sql/Pg-database.sql:2463
 msgid "Groups"
-msgstr "Grupos"
+msgstr "Kumpulan"
 
 #: sql/Pg-database.sql:780
 msgid "Gtalk"
@@ -3422,18 +3422,18 @@ msgstr ""
 #: t/data/04-complex_template.html:25 UI/Contact/contact.html:65
 #: sql/Pg-database.sql:2381
 msgid "HR"
-msgstr "Recursos Humanos"
+msgstr "HR"
 
 #: sql/Pg-database.sql:2575
 msgid "HTML Templates"
-msgstr "Plantillas HTML"
+msgstr "Template HTML"
 
 #: UI/accounts/edit.html:52 UI/am-sic-form.html:17
 #: UI/rp-search-generate_balance_sheet.html:76
 #: UI/rp-search-generate_income_statement.html:126
 #: UI/rp-search-generate_trial_balance.html:88 UI/rp-search-projects.html:70
 msgid "Heading"
-msgstr "Encabezado"
+msgstr ""
 
 #: t/data/04-complex_template.html:35 UI/Contact/contact.html:77
 #: sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
@@ -3442,7 +3442,7 @@ msgstr ""
 
 #: UI/employee.html:115 sql/Pg-database.sql:785
 msgid "Home Phone"
-msgstr "Teléfono (particular)"
+msgstr ""
 
 #: templates/demo/timecard.html:60 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:60
@@ -3453,7 +3453,7 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:98
 msgid "Hundred"
-msgstr "ciento"
+msgstr ""
 
 #: UI/employee.html:145
 msgid "IBAN"
@@ -3486,20 +3486,20 @@ msgstr ""
 
 #: bin/ic.pl:506 bin/ic.pl:1177 bin/ic.pl:1879
 msgid "Image"
-msgstr "Imagen"
+msgstr "Gambar"
 
 #: UI/am-defaults.html:38
 msgid "Images in Templates"
-msgstr ""
+msgstr "Imej untuk templat"
 
 #: UI/Admin/edit_user.html:55 UI/setup/new_user.html:32
 #: sql/Pg-database.sql:2600
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: bin/ir.pl:726 bin/ir.pl:737
 msgid "Import Text"
-msgstr ""
+msgstr "Teks Import"
 
 #: UI/Admin/edit_user.html:7
 msgid "Importing User"
@@ -3518,15 +3518,15 @@ msgstr ""
 
 #: bin/io.pl:1399 bin/rp.pl:1330
 msgid "In-line"
-msgstr "Incorporado"
+msgstr "Selaras"
 
 #: bin/pe.pl:847 bin/pe.pl:942 UI/Contact/search.html:317
 msgid "Inactive"
-msgstr ""
+msgstr "Tidak Aktif"
 
 #: UI/rc-reconciliation.html:110 UI/rp-search-payments.html:90
 msgid "Include Exchange Rate Difference"
-msgstr "Incluir Diferencia por Tasa de Cambio"
+msgstr ""
 
 #: UI/employee/filter.html:72
 msgid "Include In Report"
@@ -3534,7 +3534,7 @@ msgstr ""
 
 #: bin/arap.pl:617
 msgid "Include Payment"
-msgstr ""
+msgstr "Termasuk pembayaran"
 
 #: bin/aa.pl:1785 bin/ic.pl:1363 bin/jc.pl:307 bin/oe.pl:1552
 #: UI/ca-list-selector.html:69 UI/Contact/history_filter.html:170
@@ -3545,11 +3545,11 @@ msgstr ""
 #: UI/rp-search-generate_tax_report.html:104
 #: UI/rp-search-generate_trial_balance.html:82 UI/rp-search-projects.html:64
 msgid "Include in Report"
-msgstr "Incluir en informe"
+msgstr "Masukkan didalam laporan"
 
 #: UI/accounts/edit.html:161
 msgid "Include in drop-down menus"
-msgstr "Incluir en listas desplegables"
+msgstr ""
 
 #: bin/gl.pl:530 bin/ic.pl:530 bin/ic.pl:657 bin/ic.pl:678 bin/ic.pl:1910
 #: bin/pe.pl:261 templates/demo/income_statement.html:81
@@ -3558,7 +3558,7 @@ msgstr "Incluir en listas desplegables"
 #: UI/accounts/edit.html:170 UI/accounts/edit.html:252
 #: UI/accounts/edit.html:282 UI/am-defaults.html:76 UI/journal/search.html:187
 msgid "Income"
-msgstr "Ingreso"
+msgstr "Pendapatan"
 
 #: templates/demo/income_statement.html:137
 #: templates/demo_with_images/income_statement.html:137
@@ -3571,15 +3571,15 @@ msgstr ""
 #: templates/xedemo/income_statement.html:63 sql/Pg-database.sql:2482
 #: sql/Pg-database.sql:2512
 msgid "Income Statement"
-msgstr "Cuadro de Resultados"
+msgstr "Penyata Pendapatan"
 
 #: LedgerSMB/DBObject/User.pm:76
 msgid "Incorrect Password"
-msgstr ""
+msgstr "Kata Laluan Tidak Tepat"
 
 #: bin/ic.pl:1199 bin/ic.pl:3075
 msgid "Individual Items"
-msgstr "Artículos individuales"
+msgstr "Barang Individu"
 
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
@@ -3591,16 +3591,16 @@ msgstr ""
 
 #: LedgerSMB.pm:1091
 msgid "Internal Database Error"
-msgstr ""
+msgstr "Kesalahan Dalaman Pangkalan Data"
 
 #: LedgerSMB/DBObject/Account.pm:74
 msgid "Internal Database Error."
-msgstr ""
+msgstr "Ralat Dalam Pangkalan Data"
 
 #: bin/aa.pl:819 bin/ir.pl:725 bin/ir.pl:734 bin/is.pl:819 bin/is.pl:827
 #: bin/oe.pl:749 UI/orders/order.html:200
 msgid "Internal Notes"
-msgstr "Notas internas"
+msgstr "Nota Dalaman"
 
 #: bin/aa.pl:2226
 msgid "Invalid Project Data:"
@@ -3612,23 +3612,23 @@ msgstr ""
 
 #: scripts/setup.pl:278
 msgid "Invalid backup request"
-msgstr ""
+msgstr "Permintaan backup tidak sah"
 
 #: LedgerSMB.pm:1094
 msgid "Invalid date/time entered"
-msgstr ""
+msgstr "Tarikh/Masa tidak sah dimasukkan"
 
 #: bin/am.pl:2790 bin/am.pl:2837
 msgid "Invalid redirect"
-msgstr ""
+msgstr "peralihan yang tidak sah"
 
 #: scripts/recon.pl:416
 msgid "Invalid statement balance.  Hint: Try entering a number"
-msgstr ""
+msgstr "Baki kenyataan tidak sah. Petunjuk: Sila masukkan nombor"
 
 #: bin/ic.pl:525 bin/ic.pl:1907 UI/am-defaults.html:70
 msgid "Inventory"
-msgstr "Existencia"
+msgstr "inventori"
 
 #: sql/Pg-database.sql:2484
 msgid "Inventory Activity"
@@ -3650,7 +3650,6 @@ msgstr ""
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
-"¡La existencia debe ser cero antes de poder cambiar el ensamblaje a obsoleto!"
 
 #: bin/ic.pl:3614
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
@@ -3658,11 +3657,11 @@ msgstr ""
 
 #: bin/oe.pl:3078
 msgid "Inventory saved!"
-msgstr "¡Existencias guardadas!"
+msgstr "Inventori disimpan"
 
 #: bin/oe.pl:3373
 msgid "Inventory transferred!"
-msgstr "¡Existencias transferidas!"
+msgstr "Inventori di hantar"
 
 #: bin/aa.pl:2056 bin/am.pl:2861 bin/bp.pl:371 bin/io.pl:1337 bin/io.pl:1528
 #: bin/is.pl:292 bin/is.pl:1423 bin/rp.pl:941 scripts/payment.pl:899
@@ -3676,7 +3675,7 @@ msgstr "¡Existencias transferidas!"
 #: UI/rp-search-generate_tax_report.html:119 sql/Pg-database.sql:918
 #: sql/Pg-database.sql:2514 sql/Pg-database.sql:2528
 msgid "Invoice"
-msgstr "Factura"
+msgstr "Invois"
 
 #: templates/demo/ap_transaction.html:69 templates/demo/ap_transaction.tex:59
 #: templates/demo/ar_transaction.html:68 templates/demo/ar_transaction.tex:76
@@ -3720,11 +3719,11 @@ msgstr ""
 #: bin/aa.pl:687 bin/aa.pl:1690 bin/ir.pl:528 bin/is.pl:594
 #: UI/orders/order.html:90
 msgid "Invoice Date"
-msgstr "Fecha de factura"
+msgstr "Tarikh Invois"
 
 #: bin/aa.pl:1310 bin/io.pl:1650 bin/ir.pl:1316 bin/is.pl:1384
 msgid "Invoice Date missing!"
-msgstr "¡Falta la fecha de la factura!"
+msgstr "Tarikh Invois hilang!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
@@ -3738,11 +3737,11 @@ msgstr ""
 #: UI/payments/payments_detail.html:290 UI/payments/use_overpayment2.html:143
 #: UI/taxform/details_report.html:21
 msgid "Invoice Number"
-msgstr "Número de factura"
+msgstr "Nombor Invois"
 
 #: bin/io.pl:1649
 msgid "Invoice Number missing!"
-msgstr "¡Falta el Número de Factura!"
+msgstr ""
 
 #: bin/bp.pl:314
 msgid "Invoice Number: [_1]"
@@ -3770,7 +3769,7 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:295
 msgid "Invoice not found"
-msgstr ""
+msgstr "Invois tidak dijumpai"
 
 #: bin/aa.pl:2061 UI/Contact/history_filter.html:178
 msgid "Invoices"
@@ -3811,15 +3810,15 @@ msgstr ""
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
 #: UI/io-email.html:96 UI/payments/payment2.html:227
 msgid "Item"
-msgstr ""
+msgstr "Barang"
 
 #: bin/ic.pl:3795
 msgid "Item deleted!"
-msgstr "¡Concepto borrado!"
+msgstr "Barang dipadam"
 
 #: bin/io.pl:805
 msgid "Item not on file!"
-msgstr "¡El concepto no está registrado!"
+msgstr "Item tiada di dalam fail!"
 
 #: bin/ic.pl:1287
 msgid "Items"
@@ -3845,12 +3844,12 @@ msgstr ""
 #: bin/aa.pl:80 bin/ca.pl:72 bin/gl.pl:75 bin/io.pl:76
 #: LedgerSMB/App_State.pm:167
 msgid "Jan"
-msgstr "Ene"
+msgstr "Jan"
 
 #: bin/aa.pl:66 bin/ca.pl:58 bin/gl.pl:61 bin/io.pl:62
 #: LedgerSMB/App_State.pm:167 LedgerSMB/DBObject/Date.pm:60
 msgid "January"
-msgstr "Enero"
+msgstr "Januari"
 
 #: bin/pe.pl:950
 msgid "Job"
@@ -3902,7 +3901,7 @@ msgstr ""
 
 #: bin/am.pl:65 UI/am-defaults.html:168
 msgid "Job/Project Number"
-msgstr ""
+msgstr "Nombor Tugasan/Projek"
 
 #: bin/pe.pl:775 bin/pe.pl:952
 msgid "Jobs"
@@ -3910,7 +3909,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2447
 msgid "Journal Entry"
-msgstr ""
+msgstr "jurnal kedatangan"
 
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:86
 msgid "Journal Lines"
@@ -3924,7 +3923,7 @@ msgstr "Jul"
 #: bin/aa.pl:72 bin/ca.pl:64 bin/gl.pl:67 bin/io.pl:68
 #: LedgerSMB/App_State.pm:175 LedgerSMB/DBObject/Date.pm:66
 msgid "July"
-msgstr "Julio"
+msgstr "Julai"
 
 #: bin/aa.pl:85 bin/ca.pl:77 bin/gl.pl:80 bin/io.pl:81
 #: LedgerSMB/App_State.pm:174
@@ -3935,11 +3934,11 @@ msgstr "Jun"
 #: LedgerSMB/App_State.pm:174 LedgerSMB/DBObject/Date.pm:65
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
-msgstr "Junio"
+msgstr "Jun"
 
 #: sql/Pg-database.sql:2574
 msgid "LaTeX Templates"
-msgstr "Plantillas LaTeX"
+msgstr "Template LaTeX"
 
 #: UI/asset/edit_class.html:17 UI/asset/search_class.html:12
 msgid "Label:"
@@ -3959,7 +3958,7 @@ msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
-msgstr "Mano de Obra"
+msgstr "Tenaga Kerja/Overhead"
 
 #: templates/demo/timecard.html:89 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:89
@@ -3972,23 +3971,23 @@ msgstr ""
 #: UI/am-userconfig.html:33 UI/Contact/contact.html:613
 #: UI/users/preferences.html:60 sql/Pg-database.sql:2577
 msgid "Language"
-msgstr "Idioma"
+msgstr "Bahasa"
 
 #: bin/am.pl:1276
 msgid "Language deleted!"
-msgstr "¡Idioma borrado!"
+msgstr "Bahasa dipadam"
 
 #: bin/am.pl:1236
 msgid "Language saved!"
-msgstr "¡Idioma guardado!"
+msgstr "Bahasa disimpan"
 
 #: bin/am.pl:1116
 msgid "Languages"
-msgstr "Idiomas"
+msgstr "Bahasa"
 
 #: bin/pe.pl:2033
 msgid "Languages not defined!"
-msgstr "¡Idiomas no definido!"
+msgstr "Bahasa tidak ditakrifkan"
 
 #: t/data/04-complex_template.html:67
 msgid "Last"
@@ -3998,7 +3997,7 @@ msgstr ""
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
 #: UI/Contact/pricelist.tex:25
 msgid "Last Cost"
-msgstr ""
+msgstr "Kos Lepas"
 
 #: scripts/employee.pl:313 UI/Admin/edit_user.html:106
 #: UI/Admin/user_search.html:31 UI/Contact/contact.html:126
@@ -4012,11 +4011,11 @@ msgstr ""
 
 #: bin/rp.pl:275
 msgid "Last Only"
-msgstr ""
+msgstr "Hanya terakhir"
 
 #: scripts/recon.pl:191
 msgid "Last Updated"
-msgstr ""
+msgstr "Kemaskini Terakhir"
 
 #: UI/setup/new_user.html:75
 msgid "Last name"
@@ -4024,7 +4023,7 @@ msgstr ""
 
 #: bin/oe.pl:3515 sql/Pg-database.sql:500
 msgid "Lead"
-msgstr ""
+msgstr "Utama"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:38
 #: UI/Contact/pricelist.tex:33
@@ -4033,15 +4032,15 @@ msgstr ""
 
 #: bin/ic.pl:2822
 msgid "Leadtime"
-msgstr "Tiempo de Entrega"
+msgstr "Tempoh Proses"
 
 #: scripts/setup.pl:108
 msgid "LedgerSMB 1.2 db found"
-msgstr ""
+msgstr "lejarSMB 1.2 db dikesan"
 
 #: scripts/setup.pl:128
 msgid "LedgerSMB 1.3 found"
-msgstr ""
+msgstr "LejarSMB 1.3 dijumpai"
 
 #: UI/menu/expanding.html:5
 msgid "LedgerSMB Accounting Menu"
@@ -4057,7 +4056,7 @@ msgstr ""
 
 #: scripts/setup.pl:121
 msgid "Legacy version found.  Please upgrade first"
-msgstr ""
+msgstr "Versi Legacy dijumpai. Sila naik taraf pertama"
 
 #: bin/ps.pl:302
 msgid "Less Cash in Till At Start: [_1]"
@@ -4069,7 +4068,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2527 sql/Pg-database.sql:2543
 msgid "Letterhead"
-msgstr ""
+msgstr "Tajuk Surat"
 
 #: templates/demo/balance_sheet.html:101
 #: templates/demo_with_images/balance_sheet.html:101
@@ -4079,7 +4078,7 @@ msgstr ""
 
 #: bin/gl.pl:528 UI/accounts/edit.html:85 UI/journal/search.html:175
 msgid "Liability"
-msgstr "Pasivo"
+msgstr ""
 
 #: UI/asset/search_class.html:30
 msgid "Lifetime Measured In"
@@ -4087,7 +4086,7 @@ msgstr ""
 
 #: bin/ic.pl:1010
 msgid "Line Total"
-msgstr "Total de la línea"
+msgstr ""
 
 #: bin/am.pl:198
 msgid "Link"
@@ -4095,11 +4094,11 @@ msgstr ""
 
 #: bin/ic.pl:788 bin/pe.pl:369
 msgid "Link Accounts"
-msgstr "Vincular Cuentas"
+msgstr "Akaun Pautan"
 
 #: bin/ic.pl:3063
 msgid "List"
-msgstr "Lista"
+msgstr "Senarai"
 
 #: sql/Pg-database.sql:2501
 msgid "List Accounts"
@@ -4107,11 +4106,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2507
 msgid "List Businesses"
-msgstr "Mostrar empresas"
+msgstr "Senarai Perniagaan"
 
 #: sql/Pg-database.sql:2597
 msgid "List Classes"
-msgstr ""
+msgstr "Senarai kelas"
 
 #: sql/Pg-database.sql:2421
 msgid "List Departments"
@@ -4119,37 +4118,37 @@ msgstr ""
 
 #: sql/Pg-database.sql:2503
 msgid "List GIFI"
-msgstr "Mostrar PCF"
+msgstr "Senarai GIFI"
 
 #: sql/Pg-database.sql:2509
 msgid "List Languages"
-msgstr "Mostrar Idiomas"
+msgstr "senarai Bahasa"
 
 #: bin/ic.pl:446 bin/ic.pl:998 bin/ic.pl:1813 bin/pe.pl:391
 msgid "List Price"
-msgstr "Precio de Lista"
+msgstr "Senarai harga"
 
 #: sql/Pg-database.sql:2511
 msgid "List SIC"
-msgstr "Mostrar CIS"
+msgstr "Senarai SIC"
 
 #: sql/Pg-database.sql:2585
 msgid "List Tax Forms"
-msgstr ""
+msgstr "Senarai borang cukai"
 
 #: bin/ca.pl:193 UI/ca-list-selector.html:96
 msgid "List Transactions"
-msgstr "Mostrar Transacciones"
+msgstr ""
 
 #: sql/Pg-database.sql:2505
 msgid "List Warehouse"
-msgstr ""
+msgstr "Senarai Gudang"
 
 #: scripts/asset.pl:319 UI/asset/edit_asset.html:134
 #: UI/asset/search_asset.html:125 UI/payments/payment2.html:38
 #: UI/payments/use_overpayment2.html:34
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
 msgid "Locations"
@@ -4173,11 +4172,11 @@ msgstr ""
 
 #: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
-msgstr "Entrada al sistema"
+msgstr "Daftar masuk"
 
 #: sql/Pg-database.sql:2588
 msgid "Logout"
-msgstr "Salir del Sistema"
+msgstr "Log keluar"
 
 #: UI/logout.html:24
 msgid "Logout Successful"
@@ -4197,17 +4196,17 @@ msgstr ""
 
 #: bin/ic.pl:1121 bin/ic.pl:1130 bin/ic.pl:1649 bin/ic.pl:1830 bin/ic.pl:2778
 msgid "Make"
-msgstr "Marca"
+msgstr "Buat"
 
 #: scripts/setup.pl:528 scripts/setup.pl:992 scripts/setup.pl:1038
 #: scripts/setup.pl:1140
 msgid "Manage Users"
-msgstr ""
+msgstr "Pengguna diurus"
 
 #: bin/aa.pl:1559 bin/aa.pl:2095 bin/oe.pl:1330 bin/oe.pl:1873
 #: UI/Contact/contact.html:157 UI/Contact/contact.html:190 UI/employee.html:99
 msgid "Manager"
-msgstr "Gerente"
+msgstr "Pengurus"
 
 #: scripts/employee.pl:323 UI/employee/filter.html:280
 msgid "Manager First Name"
@@ -4227,29 +4226,29 @@ msgstr ""
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: bin/aa.pl:82 bin/ca.pl:74 bin/gl.pl:77 bin/io.pl:78
 #: LedgerSMB/App_State.pm:169
 msgid "Mar"
-msgstr "Mar"
+msgstr "Mac"
 
 #: bin/aa.pl:68 bin/ca.pl:60 bin/gl.pl:63 bin/io.pl:64
 #: LedgerSMB/App_State.pm:169 LedgerSMB/DBObject/Date.pm:62
 msgid "March"
-msgstr "Marzo"
+msgstr "Mac"
 
 #: bin/bp.pl:265
 msgid "Marked entries printed!"
-msgstr "¡Entradas seleccionadas impresas!"
+msgstr "Entri bertanda dicetak"
 
 #: bin/ic.pl:469 bin/ic.pl:646 bin/ic.pl:1013
 msgid "Markup"
-msgstr "Margen"
+msgstr "Tanda"
 
 #: bin/am.pl:58
 msgid "Max per dropdown"
-msgstr ""
+msgstr "Maksima setiap penurunan"
 
 #: UI/batch/filter.html:58 UI/batch/search_transactions.html:51
 msgid "Maximum Value"
@@ -4258,11 +4257,11 @@ msgstr ""
 #: bin/aa.pl:84 bin/ca.pl:76 bin/gl.pl:79 bin/io.pl:80
 #: LedgerSMB/App_State.pm:173 LedgerSMB/DBObject/Date.pm:64
 msgid "May"
-msgstr "Mayo"
+msgstr "Mei"
 
 #: bin/aa.pl:70 bin/ca.pl:62 bin/gl.pl:65 bin/io.pl:66
 msgid "May "
-msgstr "Mayo"
+msgstr ""
 
 #: bin/aa.pl:852 bin/gl.pl:569 bin/ir.pl:616 bin/ir.pl:792 bin/is.pl:717
 #: bin/is.pl:880 bin/pos.pl:460 bin/rp.pl:2016 scripts/payment.pl:164
@@ -4273,7 +4272,7 @@ msgstr "Mayo"
 #: UI/orders/order.html:248 UI/payments/payment2.html:231
 #: UI/rp-search-payments.html:23
 msgid "Memo"
-msgstr "Nota"
+msgstr "Memo"
 
 #: bin/rp.pl:1988
 msgid "Memo: [_1]"
@@ -4281,17 +4280,17 @@ msgstr ""
 
 #: bin/io.pl:1840 UI/io-email.html:34 UI/rp-email.html:33
 msgid "Message"
-msgstr "Mensaje"
+msgstr "Pesanan"
 
 #: bin/arap.pl:1044
 msgid "Message: "
-msgstr ""
+msgstr "Mesej: "
 
 #: scripts/asset.pl:1009 UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
 #: UI/rp-search-generate_tax_report.html:86
 msgid "Method"
-msgstr "Método"
+msgstr "Cara"
 
 #: UI/asset/edit_asset.html:100
 msgid "Method Default"
@@ -4299,7 +4298,7 @@ msgstr ""
 
 #: bin/ic.pl:508 bin/ic.pl:1170 bin/ic.pl:1184 bin/ic.pl:1661 bin/ic.pl:1887
 msgid "Microfiche"
-msgstr "Microficha"
+msgstr "Mikrofis"
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
@@ -4328,11 +4327,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:681
 msgid "Miss."
-msgstr ""
+msgstr "Cik"
 
 #: bin/ic.pl:1123 bin/ic.pl:1133 bin/ic.pl:1653 bin/ic.pl:1834 bin/ic.pl:2779
 msgid "Model"
-msgstr "Modelo"
+msgstr "Model"
 
 #: bin/jc.pl:1430
 msgid "Monday"
@@ -4347,11 +4346,11 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:36 UI/rp-search-payments.html:64
 #: UI/rp-search-projects.html:40
 msgid "Month"
-msgstr "Mes"
+msgstr "Bulan"
 
 #: bin/arap.pl:771
 msgid "Month(s)"
-msgstr ""
+msgstr "Bulan"
 
 #: bin/am.pl:2176
 msgid "Months"
@@ -4363,25 +4362,25 @@ msgstr ""
 
 #: sql/Pg-database.sql:682
 msgid "Mr."
-msgstr ""
+msgstr "Encik"
 
 #: sql/Pg-database.sql:683
 msgid "Mrs."
-msgstr ""
+msgstr "Puan"
 
 #: sql/Pg-database.sql:684
 msgid "Ms."
-msgstr ""
+msgstr "Cik"
 
 #: bin/rp.pl:684
 msgid "N/A"
-msgstr "N/A"
+msgstr "Tiada"
 
 #: bin/arap.pl:166 bin/ic.pl:1090 bin/ic.pl:1852 UI/Contact/contact.html:330
 #: UI/employee.html:36 UI/login.html:11 UI/payments/payments_detail.html:212
 #: UI/payments/search.html:47
 msgid "Name"
-msgstr "Nombre"
+msgstr "Nama"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
@@ -4390,7 +4389,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2602
 msgid "Net Book Value"
-msgstr ""
+msgstr "Nilai buku bersih"
 
 #: UI/payments/payments_detail.html:295
 msgid "Net Due"
@@ -4399,7 +4398,7 @@ msgstr ""
 #: bin/aa.pl:530 bin/aa.pl:980 bin/gl.pl:277 bin/ir.pl:394 bin/ir.pl:908
 #: bin/is.pl:406 bin/is.pl:1019 bin/oe.pl:542
 msgid "New"
-msgstr ""
+msgstr "Baru"
 
 #: UI/asset/begin_report.html:6
 msgid "New Asset Report"
@@ -4419,46 +4418,46 @@ msgstr ""
 
 #: sql/Pg-database.sql:2589
 msgid "New Window"
-msgstr "Ventana nueva"
+msgstr "Tetingkap baru"
 
 #: bin/am.pl:2212 UI/inventory/adjustment_entry.html:71
 #: UI/setup/select_coa.html:47
 msgid "Next"
-msgstr ""
+msgstr "Seterusnya"
 
 #: bin/arap.pl:626
 msgid "Next Date"
-msgstr ""
+msgstr "Tarikh seterusnya"
 
 #: bin/am.pl:2283
 msgid "Next Number"
-msgstr ""
+msgstr "Nombor Seterusnya"
 
 #: LedgerSMB/Num2text.pm:68
 msgid "Nine"
-msgstr "nueve"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:101
 msgid "Nine Hundred"
-msgstr "novecientos"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:79
 msgid "Nineteen"
-msgstr "diecinueve"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:97
 msgid "Ninety"
-msgstr "noventa"
+msgstr ""
 
 #: scripts/taxform.pl:294 UI/am-audit-control.html:15
 #: UI/am-audit-control.html:26 UI/am-defaults.html:55
 #: UI/ca-list-selector.html:41
 msgid "No"
-msgstr "No"
+msgstr "Tidak"
 
 #: LedgerSMB/ScriptLib/Company.pm:666
 msgid "No AR or AP Account Selected"
-msgstr ""
+msgstr "Tiada Akaun AR atau AP Terpilih"
 
 #: bin/jc.pl:147 bin/jc.pl:260
 msgid "No Employees on file!"
@@ -4466,11 +4465,11 @@ msgstr ""
 
 #: bin/ic.pl:2455
 msgid "No History!"
-msgstr ""
+msgstr "Tiada Maklumat Terdahulu"
 
 #: LedgerSMB/DBObject/Draft.pm:57 LedgerSMB/DBObject/Draft.pm:76
 msgid "No ID Set"
-msgstr ""
+msgstr "Tiada Set ID"
 
 #: bin/jc.pl:127
 msgid "No Labor codes on file!"
@@ -4482,7 +4481,7 @@ msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
-msgstr ""
+msgstr "Tiada permintaan dilakukan"
 
 #: bin/jc.pl:130
 msgid "No Services on file!"
@@ -4502,11 +4501,11 @@ msgstr ""
 
 #: bin/aa.pl:201 bin/ir.pl:124 bin/is.pl:133
 msgid "No currencies defined.  Please set these up under System/Defaults."
-msgstr ""
+msgstr "Tiada mata wang ditakrifkan. Sila tetapkan mengikut sistem"
 
 #: scripts/file.pl:106
 msgid "No file uploaded"
-msgstr ""
+msgstr "Tiada data dimuat naik"
 
 #: scripts/setup.pl:614
 msgid "No null employeenumber"
@@ -4518,19 +4517,21 @@ msgstr ""
 
 #: bin/jc.pl:106 bin/pe.pl:2471
 msgid "No open Projects!"
-msgstr ""
+msgstr "Tiada projek yang terbuka"
 
 #: scripts/payment.pl:1345
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
+"Tiada akaun lebihan pembayaran dipilih. Adakah anda telah membuka akaun "
+"tersebut?"
 
 #: lsmb-request.pl:75
 msgid "No workflow script specified"
-msgstr ""
+msgstr "Tiada workflow script yang dinyatakan"
 
 #: bin/aa.pl:1678 bin/ic.pl:1238 bin/oe.pl:1477
 msgid "No."
-msgstr "Nº"
+msgstr "Tidak."
 
 #: sql/Pg-database.sql:2394
 msgid "Non-Taxable"
@@ -4560,7 +4561,7 @@ msgstr ""
 
 #: bin/rp.pl:276
 msgid "None"
-msgstr ""
+msgstr "Tiada"
 
 #: UI/reconciliation/search.html:60
 msgid "Not Approved"
@@ -4572,7 +4573,7 @@ msgstr ""
 
 #: UI/Contact/contact.html:1170
 msgid "Note Class"
-msgstr ""
+msgstr "Kelas Nota"
 
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
@@ -4597,7 +4598,7 @@ msgstr ""
 #: UI/orders/order.html:199 UI/payments/payment2.html:51
 #: UI/payments/use_overpayment2.html:72
 msgid "Notes"
-msgstr "Notas"
+msgstr "Nota"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
@@ -4605,20 +4606,20 @@ msgstr ""
 
 #: bin/oe.pl:3075
 msgid "Nothing entered!"
-msgstr "¡No se suministró nada!"
+msgstr "Tiada apa-apa yang dimasukan"
 
 #: bin/bp.pl:192 bin/oe.pl:3390 bin/oe.pl:3656 bin/oe.pl:3680 bin/pe.pl:2789
 #: bin/rp.pl:1386 bin/rp.pl:1646
 msgid "Nothing selected!"
-msgstr "¡No se seleccionó nada!"
+msgstr "Anda tidak memilih apa-apa!"
 
 #: bin/arapprn.pl:121
 msgid "Nothing to print!"
-msgstr "¡No hay nada para imprimir!"
+msgstr "Tiada apa untuk dicetak!"
 
 #: bin/oe.pl:3102
 msgid "Nothing to transfer!"
-msgstr "¡Nada que transferir!"
+msgstr "TIada apa-apa untuk dihantar"
 
 #: bin/aa.pl:90 bin/ca.pl:82 bin/gl.pl:85 bin/io.pl:86
 #: LedgerSMB/App_State.pm:179
@@ -4628,7 +4629,7 @@ msgstr "Nov"
 #: bin/aa.pl:76 bin/ca.pl:68 bin/gl.pl:71 bin/io.pl:72
 #: LedgerSMB/App_State.pm:179 LedgerSMB/DBObject/Date.pm:70
 msgid "November"
-msgstr "Noviembre"
+msgstr "November"
 
 #: scripts/setup.pl:376 scripts/setup.pl:386
 msgid "Null employee numbers"
@@ -4684,11 +4685,11 @@ msgstr ""
 #: UI/am-taxes.html:14 UI/Contact/contact.html:396 UI/employee.html:29
 #: UI/io-email.html:99
 msgid "Number"
-msgstr "Número"
+msgstr "Nombor"
 
 #: UI/am-userconfig.html:29 UI/users/preferences.html:49
 msgid "Number Format"
-msgstr "Formato Numérico"
+msgstr ""
 
 #: bin/io.pl:1144
 msgid "Number missing in Row [_1]"
@@ -4704,7 +4705,7 @@ msgstr ""
 
 #: bin/io.pl:212
 msgid "OH"
-msgstr ""
+msgstr "OH"
 
 #: UI/payments/payment2.html:224
 msgid "OVERPAYMENT / ADVANCED PAYMENT / PREPAYMENT"
@@ -4712,21 +4713,21 @@ msgstr ""
 
 #: bin/ic.pl:733 bin/ic.pl:1339 bin/ic.pl:1477
 msgid "Obsolete"
-msgstr "Obsoleto"
+msgstr "Lama"
 
 #: bin/aa.pl:89 bin/ca.pl:81 bin/gl.pl:84 bin/io.pl:85
 #: LedgerSMB/App_State.pm:178
 msgid "Oct"
-msgstr "Oct"
+msgstr "Okt"
 
 #: bin/aa.pl:75 bin/ca.pl:67 bin/gl.pl:70 bin/io.pl:71
 #: LedgerSMB/App_State.pm:178 LedgerSMB/DBObject/Date.pm:69
 msgid "October"
-msgstr "Octubre"
+msgstr "Oktober"
 
 #: bin/aa.pl:955 bin/is.pl:800
 msgid "Off Hold"
-msgstr ""
+msgstr "Teruskan"
 
 #: UI/users/preferences.html:26
 msgid "Old Password"
@@ -4735,34 +4736,34 @@ msgstr ""
 #: bin/ic.pl:480 bin/ic.pl:706 bin/ic.pl:1114 bin/ic.pl:1494
 #: UI/inventory/adjustment_entry.html:25
 msgid "On Hand"
-msgstr "Existencia"
+msgstr "Dalam Tangan"
 
 #: bin/aa.pl:957 bin/aa.pl:1776 bin/ir.pl:904 bin/is.pl:802
 msgid "On Hold"
-msgstr ""
+msgstr "Ditahan"
 
 #: LedgerSMB/Num2text.pm:59
 msgid "One"
-msgstr "un"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:60
 msgid "One-o"
-msgstr "uno"
+msgstr ""
 
 #: bin/ic.pl:2587
 msgid "Onhand"
-msgstr ""
+msgstr "Dalam Tangan"
 
 #: bin/aa.pl:1597 bin/aa.pl:1985 bin/ic.pl:1075 bin/ic.pl:1580 bin/jc.pl:312
 #: bin/jc.pl:1419 bin/oe.pl:345 bin/oe.pl:1419 bin/oe.pl:1938 bin/pos.pl:158
 #: UI/Contact/history_filter.html:227 UI/Contact/search.html:179
 #: UI/Contact/search.html:399 sql/Pg-database.sql:2401
 msgid "Open"
-msgstr "Abierto"
+msgstr "Buka"
 
 #: bin/pos.pl:619
 msgid "Open Till"
-msgstr ""
+msgstr "Buka Till"
 
 #: UI/logout.html:15
 msgid ""
@@ -4785,7 +4786,7 @@ msgstr ""
 #: bin/aa.pl:2067 bin/bp.pl:375 bin/ic.pl:2593 bin/oe.pl:1837 bin/oe.pl:3508
 #: bin/rp.pl:942 UI/Contact/search.html:146
 msgid "Order"
-msgstr "Orden"
+msgstr "Pesanan"
 
 #: templates/demo/ap_transaction.html:88 templates/demo/ap_transaction.tex:66
 #: templates/demo/ar_transaction.html:87 templates/demo/ar_transaction.tex:83
@@ -4830,15 +4831,15 @@ msgstr ""
 #: templates/demo/work_order.html:103 templates/xedemo/purchase_order.html:103
 #: templates/xedemo/sales_order.html:103 templates/xedemo/work_order.html:103
 msgid "Order Date"
-msgstr "Fecha de la orden"
+msgstr "Tarikh Pesanan"
 
 #: bin/io.pl:1654 bin/oe.pl:2249 bin/oe.pl:2412
 msgid "Order Date missing!"
-msgstr "¡Falta la fecha de la orden!"
+msgstr "Tarikh Pesanan Hilang!"
 
 #: sql/Pg-database.sql:2382
 msgid "Order Entry"
-msgstr "Carga de Ordenes"
+msgstr "Entri pesanan"
 
 #: bin/aa.pl:679 bin/aa.pl:1573 bin/aa.pl:1686 bin/aa.pl:1933 bin/bp.pl:104
 #: bin/ic.pl:1843 bin/ir.pl:519 bin/is.pl:585 bin/oe.pl:431 bin/oe.pl:1236
@@ -4846,11 +4847,11 @@ msgstr "Carga de Ordenes"
 #: bin/oe.pl:1311 bin/oe.pl:1320 bin/oe.pl:1908 bin/oe.pl:2873
 #: UI/orders/order.html:84
 msgid "Order Number"
-msgstr "Número de la orden"
+msgstr "Nombor Pesanan"
 
 #: bin/io.pl:1653 bin/oe.pl:2411
 msgid "Order Number missing!"
-msgstr "No se ha definido el número de la orden"
+msgstr "Nombor Pesanan Hilang!"
 
 #: bin/bp.pl:319
 msgid "Order Number: [_1]"
@@ -4858,11 +4859,11 @@ msgstr ""
 
 #: bin/oe.pl:2389
 msgid "Order deleted!"
-msgstr "¡Orden borrada!"
+msgstr "Pesanan dipadam"
 
 #: bin/oe.pl:3642 bin/oe.pl:3669
 msgid "Order generation failed!"
-msgstr ""
+msgstr "Penjanaan Pesanan gagal!"
 
 #: templates/demo/statement.html:74
 #: templates/demo_with_images/statement.html:74
@@ -4881,12 +4882,12 @@ msgstr ""
 
 #: bin/pe.pl:2947
 msgid "Orders generated!"
-msgstr ""
+msgstr "Pesanan dihasilkan!"
 
 #: bin/ic.pl:1108 bin/ic.pl:1491 bin/pe.pl:727 bin/pe.pl:934 bin/pe.pl:1408
 #: bin/pe.pl:1613 UI/Contact/search.html:318
 msgid "Orphaned"
-msgstr "Huérfano"
+msgstr "Yatim"
 
 #: UI/setup/confirm_operation.html:28
 msgid "Other Actions"
@@ -4894,7 +4895,7 @@ msgstr ""
 
 #: scripts/recon.pl:307
 msgid "Our Balance"
-msgstr ""
+msgstr "Baki kita"
 
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/reconciliation/report.html:197
@@ -4915,12 +4916,12 @@ msgstr ""
 
 #: bin/gl.pl:1190
 msgid "Out of balance transaction!"
-msgstr "¡Asiento desbalanceado!"
+msgstr "Kehabisan Baki Transaksi"
 
 #: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2391
 #: sql/Pg-database.sql:2408
 msgid "Outstanding"
-msgstr "Pendiente"
+msgstr ""
 
 #: UI/reconciliation/report.html:189
 msgid "Outstanding Transactions"
@@ -4949,7 +4950,7 @@ msgstr "PDF"
 
 #: bin/ic.pl:2591
 msgid "PO"
-msgstr ""
+msgstr "Nota Pesanan"
 
 #: templates/demo/ap_transaction.html:82 templates/demo/ap_transaction.tex:63
 #: templates/demo/ar_transaction.html:81
@@ -4966,19 +4967,19 @@ msgstr ""
 #: bin/ir.pl:536 bin/is.pl:602 bin/oe.pl:444 bin/oe.pl:1464 bin/oe.pl:1471
 #: bin/oe.pl:1841 bin/oe.pl:1915 bin/oe.pl:2883 UI/orders/order.html:102
 msgid "PO Number"
-msgstr ""
+msgstr "Jumlah PO"
 
 #: sql/Pg-database.sql:2544
 msgid "POS Invoice"
-msgstr "Factura Punto de Venta"
+msgstr "Invois POS"
 
 #: UI/payments/use_overpayment2.html:270
 msgid "POST"
-msgstr ""
+msgstr "SIMPAN"
 
 #: UI/payments/payment2.html:339 UI/payments/use_overpayment2.html:276
 msgid "POST AND PRINT"
-msgstr ""
+msgstr "SIMPAN dan Cetak"
 
 #: bin/am.pl:2864 bin/io.pl:1365 bin/io.pl:1383 bin/io.pl:1547 bin/is.pl:294
 #: bin/is.pl:961 bin/oe.pl:305 bin/oe.pl:324 templates/demo/packing_list.html:4
@@ -4990,19 +4991,19 @@ msgstr ""
 #: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2517
 #: sql/Pg-database.sql:2531
 msgid "Packing List"
-msgstr "Lista de Empaque"
+msgstr "Senarai Bungkusan"
 
 #: bin/io.pl:1652
 msgid "Packing List Date missing!"
-msgstr "¡Falta la fecha en la lista de empaque!"
+msgstr ""
 
 #: bin/io.pl:1651
 msgid "Packing List Number missing!"
-msgstr "¡Falta el número en la lista de empaque!"
+msgstr ""
 
 #: bin/bp.pl:52 bin/bp.pl:87 sql/Pg-database.sql:2490
 msgid "Packing Lists"
-msgstr "Listas de empaque"
+msgstr "Senarai Bungkusan"
 
 #: bin/aa.pl:1714 bin/aa.pl:2082 scripts/payment.pl:902
 #: templates/demo/invoice.html:184 templates/demo/invoice.tex:164
@@ -5010,11 +5011,11 @@ msgstr "Listas de empaque"
 #: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
 #: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:293
 msgid "Paid"
-msgstr "Pagado"
+msgstr "Dibaya"
 
 #: bin/io.pl:819
 msgid "Part"
-msgstr "Artículo"
+msgstr "Bahagian"
 
 #: bin/am.pl:64 bin/jc.pl:880 bin/jc.pl:1850 bin/oe.pl:3140 bin/oe.pl:3218
 #: bin/oe.pl:3252 bin/oe.pl:3502 bin/pe.pl:2656
@@ -5022,7 +5023,7 @@ msgstr "Artículo"
 #: UI/Contact/history_filter.html:248 UI/Contact/search.html:225
 #: UI/rp-search-generate_inv_activity.html:56
 msgid "Part Number"
-msgstr ""
+msgstr "Bahagian nombor"
 
 #: LedgerSMB/ScriptLib/Company.pm:1074
 msgid "Part not found"
@@ -5039,7 +5040,7 @@ msgstr ""
 #: UI/Contact/pricelist.csv:7 UI/Contact/pricelist.html:22
 #: UI/Contact/pricelist.tex:12 UI/inventory/adjustment_entry.html:22
 msgid "Partnumber"
-msgstr "Número de artículo"
+msgstr "Nombor Bahagian"
 
 #: bin/ic.pl:1288 sql/Pg-database.sql:2459
 msgid "Parts"
@@ -5047,7 +5048,7 @@ msgstr ""
 
 #: bin/ic.pl:2458 bin/ic.pl:2606
 msgid "Parts Requirements"
-msgstr ""
+msgstr "Bahagian yang Diperlukan"
 
 #: sql/Pg-database.sql:2469
 msgid "Partsgroup"
@@ -5057,15 +5058,15 @@ msgstr ""
 #: UI/login.html:12 UI/setup/credentials.html:30 UI/setup/new_user.html:28
 #: UI/users/preferences.html:30
 msgid "Password"
-msgstr "Contraseña"
+msgstr ""
 
 #: bin/am.pl:70 UI/am-defaults.html:188
 msgid "Password Duration"
-msgstr ""
+msgstr "Jangka Masa Kata Laluan"
 
 #: bin/am.pl:1815
 msgid "Password does not match!"
-msgstr "¡La contraseña no coincide!"
+msgstr "Kata laluan tidak sepadan!"
 
 #: bin/am.pl:1783
 msgid "Password duration must be an integer"
@@ -5073,11 +5074,11 @@ msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:148
 msgid "Password required"
-msgstr ""
+msgstr "Kata laluan diperlukan"
 
 #: LedgerSMB/DBObject/User.pm:79
 msgid "Passwords must match."
-msgstr ""
+msgstr "Kata laluan mestilah sempadan"
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:127
 msgid "Pay From"
@@ -5086,7 +5087,7 @@ msgstr ""
 #: scripts/payment.pl:159 UI/Contact/contact.html:461
 #: UI/payments/payments_filter.html:128
 msgid "Pay To"
-msgstr ""
+msgstr "Bayar Kepada"
 
 #: templates/demo/printPayment.html:95
 #: templates/demo_with_images/printPayment.html:95
@@ -5096,14 +5097,14 @@ msgstr ""
 
 #: UI/accounts/edit.html:207
 msgid "Payables"
-msgstr "Cuentas a Pagar"
+msgstr ""
 
 #: scripts/payment.pl:1135 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:180 UI/accounts/edit.html:222
 #: UI/Contact/contact.html:547 UI/payments/payments_detail.html:214
 #: sql/Pg-database.sql:2418
 msgid "Payment"
-msgstr "Pago"
+msgstr "Pembayaran"
 
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
@@ -5117,7 +5118,7 @@ msgstr ""
 
 #: scripts/payment.pl:379
 msgid "Payment Results"
-msgstr ""
+msgstr "Hasil Pembayaran"
 
 #: UI/payments/search.html:85
 msgid "Payment Reversal Information"
@@ -5133,7 +5134,7 @@ msgstr ""
 
 #: bin/aa.pl:1335 bin/ir.pl:1340 bin/is.pl:1408
 msgid "Payment date missing!"
-msgstr "¡Falta la fecha del pago!"
+msgstr "Tarikh pembayaran hilang!"
 
 #: templates/demo/invoice.tex:30 templates/demo_with_images/invoice.tex:30
 #: templates/xedemo/invoice.tex:29
@@ -5163,11 +5164,12 @@ msgstr ""
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:14
 #: sql/Pg-database.sql:2423 sql/Pg-database.sql:2563
 msgid "Payments"
-msgstr "Pagos"
+msgstr "Bayaran"
 
 #: bin/is.pl:642
 msgid "Payments associated with voided invoice may need to be reversed."
 msgstr ""
+"Bayaran berkaitan dengan invois yang dibatalkan mungkin perlu diterbalikkan"
 
 #: scripts/asset.pl:1016
 msgid "Pct. Dep."
@@ -5175,15 +5177,15 @@ msgstr ""
 
 #: scripts/asset.pl:502
 msgid "Percent"
-msgstr ""
+msgstr "Peratus"
 
 #: scripts/asset.pl:803
 msgid "Percent Disposed"
-msgstr ""
+msgstr "Peratusan Pembuangan"
 
 #: scripts/asset.pl:806
 msgid "Percent Remaining"
-msgstr ""
+msgstr "Peratusan Yang Tinggal"
 
 #: bin/aa.pl:1642 bin/ic.pl:2412 bin/jc.pl:172 bin/oe.pl:1444 bin/pe.pl:708
 #: bin/pe.pl:2433 UI/bp-search.html:34 UI/ca-list-selector.html:57
@@ -5195,11 +5197,11 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:21 UI/rp-search-payments.html:49
 #: UI/rp-search-projects.html:25 UI/taxform/filter.html:40
 msgid "Period"
-msgstr "Periodo"
+msgstr "Tempoh"
 
 #: UI/Contact/search.html:52
 msgid "Phone"
-msgstr "Teléfono"
+msgstr ""
 
 #: bin/am.pl:2865 bin/io.pl:1361 bin/io.pl:1379 bin/io.pl:1570 bin/is.pl:293
 #: bin/oe.pl:304 bin/oe.pl:323 templates/demo/pick_list.html:4
@@ -5211,11 +5213,11 @@ msgstr "Teléfono"
 #: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2518
 #: sql/Pg-database.sql:2532
 msgid "Pick List"
-msgstr "Lista de Selección"
+msgstr "Senarai Pilihan"
 
 #: bin/bp.pl:53 bin/bp.pl:88 sql/Pg-database.sql:2491
 msgid "Pick Lists"
-msgstr "Listas de Selección"
+msgstr "Senarai Pilihan"
 
 #: templates/demo/statement.tex:87 templates/demo_with_images/statement.tex:87
 #: templates/xedemo/statement.tex:87
@@ -5263,15 +5265,15 @@ msgstr ""
 #: bin/is.pl:980 bin/is.pl:1001 bin/pos.pl:611 scripts/drafts.pl:251
 #: scripts/vouchers.pl:350 UI/payments/payment2.html:333
 msgid "Post"
-msgstr "Registrar"
+msgstr "Simpan"
 
 #: scripts/vouchers.pl:487
 msgid "Post Batch"
-msgstr ""
+msgstr "Simpan Kumpulan"
 
 #: scripts/recon.pl:306 UI/create_batch.html:51
 msgid "Post Date"
-msgstr ""
+msgstr "Tarikh disimpan"
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
 msgid "Post Yearend"
@@ -5279,15 +5281,15 @@ msgstr ""
 
 #: bin/aa.pl:988 bin/gl.pl:312
 msgid "Post as Saved"
-msgstr ""
+msgstr "Hantar Sebagai Simpanan"
 
 #: bin/aa.pl:993 bin/gl.pl:319
 msgid "Post as Shown"
-msgstr ""
+msgstr "Simpan seperti yang dipaparkan"
 
 #: bin/aa.pl:944 bin/gl.pl:271 bin/ir.pl:878 bin/ir.pl:893 bin/is.pl:983
 msgid "Post as new"
-msgstr "Registrar como nuevo"
+msgstr "Simpan Sebagai Baru"
 
 #: UI/reconciliation/report.html:72 UI/reconciliation/report.html:135
 #: UI/reconciliation/report.html:194
@@ -5296,7 +5298,7 @@ msgstr ""
 
 #: bin/pos.pl:726
 msgid "Posted!"
-msgstr "¡Registrado!"
+msgstr "Sudah Disimpan"
 
 #: UI/payments/payments_detail.html:108
 msgid "Posting Date:"
@@ -5325,7 +5327,7 @@ msgstr "Postscript"
 
 #: sql/Pg-database.sql:2590
 msgid "Preferences"
-msgstr "Preferencias"
+msgstr "Keutamaan"
 
 #: UI/users/preferences.html:14
 msgid "Preferences Saved"
@@ -5337,7 +5339,7 @@ msgstr ""
 
 #: bin/am.pl:1820
 msgid "Preferences saved!"
-msgstr "¡Preferencias guardadas!"
+msgstr "Pilihan disimpan!"
 
 #: bin/io.pl:205 bin/io.pl:517 bin/pos.pl:755 templates/demo/invoice.tex:139
 #: templates/demo/purchase_order.html:131 templates/demo/sales_order.html:133
@@ -5353,33 +5355,33 @@ msgstr "¡Preferencias guardadas!"
 #: templates/xedemo/sales_quotation.html:102
 #: templates/xedemo/sales_quotation.tex:90
 msgid "Price"
-msgstr "Precio"
+msgstr "Harga"
 
 #: bin/ic.pl:2895 bin/pe.pl:813 bin/pe.pl:1618 bin/pe.pl:1625 bin/pe.pl:1754
 #: UI/Contact/contact.html:590
 msgid "Pricegroup"
-msgstr "Grupo de precios"
+msgstr "Harga Kumpulan"
 
 #: bin/pe.pl:1385
 msgid "Pricegroup deleted!"
-msgstr "¡Grupo de precios borrado!"
+msgstr "Kumpulan harga dipadam"
 
 #: bin/pe.pl:1320
 msgid "Pricegroup missing!"
-msgstr "¡Falta el grupo de precios!"
+msgstr "Kumpulan harga hilang"
 
 #: bin/pe.pl:1322
 msgid "Pricegroup saved!"
-msgstr "¡Grupo de precios guardado!"
+msgstr "Kumpulan harga disimpan"
 
 #: bin/pe.pl:807 bin/pe.pl:1628 sql/Pg-database.sql:2464
 msgid "Pricegroups"
-msgstr "Grupos de precios"
+msgstr "Kumpulan harga"
 
 #: t/data/04-complex_template.html:361 UI/Contact/contact.html:737
 #: UI/Contact/pricelist.html:16
 msgid "Pricelist"
-msgstr "Lista de Precios"
+msgstr ""
 
 #: UI/Contact/pricelist.tex:65
 msgid "Pricelist for [_1]"
@@ -5396,7 +5398,7 @@ msgstr ""
 #: UI/payments/payments_detail.html:435 UI/taxform/details_report.html:55
 #: UI/taxform/summary_report.html:53
 msgid "Print"
-msgstr "Imprimir"
+msgstr "Cetak"
 
 #: bin/bp.pl:123
 msgid "Print [_1]"
@@ -5404,12 +5406,12 @@ msgstr ""
 
 #: bin/pos.pl:612 bin/pos.pl:623
 msgid "Print and Post"
-msgstr "Imprimir y Registrar"
+msgstr "Cetak dan Simpan"
 
 #: bin/jc.pl:689 bin/jc.pl:703 bin/jc.pl:933 bin/jc.pl:949 bin/oe.pl:797
 #: bin/oe.pl:824
 msgid "Print and Save"
-msgstr "Imprimir y guardar"
+msgstr "Cetak dan Simpan"
 
 #: bin/jc.pl:1229
 msgid "Print and Save Transaction"
@@ -5418,19 +5420,19 @@ msgstr ""
 #: bin/jc.pl:691 bin/jc.pl:710 bin/jc.pl:935 bin/jc.pl:956 bin/oe.pl:800
 #: bin/oe.pl:831
 msgid "Print and Save as new"
-msgstr ""
+msgstr "Cetak dan Simpan sebagai yang baru"
 
 #: bin/arapprn.pl:558 bin/io.pl:1450 bin/jc.pl:2069 bin/pos.pl:1092
 msgid "Printed"
-msgstr "Impreso"
+msgstr "Sudah Dicetak"
 
 #: UI/am-userconfig.html:42 UI/users/preferences.html:83
 msgid "Printer"
-msgstr "Impresora"
+msgstr ""
 
 #: bin/am.pl:2786 bin/bp.pl:253
 msgid "Printing"
-msgstr ""
+msgstr "percetakan"
 
 #: scripts/asset.pl:742
 msgid "Prior Dep."
@@ -5442,11 +5444,11 @@ msgstr ""
 
 #: scripts/asset.pl:500 scripts/asset.pl:877
 msgid "Proceeds"
-msgstr ""
+msgstr "Teruskan"
 
 #: bin/am.pl:2360 UI/am-list-recurring.html:62
 msgid "Process Transactions"
-msgstr ""
+msgstr "Proses Transaksi"
 
 #: bin/pe.pl:216 bin/pe.pl:230 bin/pe.pl:536 bin/pe.pl:1008
 msgid "Production"
@@ -5454,18 +5456,18 @@ msgstr ""
 
 #: bin/am.pl:635 UI/am-department-form.html:36
 msgid "Profit Center"
-msgstr "Centro de Ingresos"
+msgstr ""
 
 #: bin/aa.pl:712 bin/aa.pl:2136 bin/io.pl:229 bin/pe.pl:946 bin/pe.pl:2509
 #: UI/io-email.html:83 UI/journal/journal_entry.html:133
 #: UI/payments/payments_filter.html:41
 #: UI/rp-search-generate_income_statement.html:2 UI/rp-search-projects.html:2
 msgid "Project"
-msgstr "Proyecto"
+msgstr "Projek"
 
 #: bin/pe.pl:1822
 msgid "Project Description Translations"
-msgstr "Traducciones de descripción de proyecto"
+msgstr "Huraian Projek Penterjemahan"
 
 #: bin/jc.pl:1369
 msgid "Project Name"
@@ -5475,7 +5477,7 @@ msgstr ""
 #: bin/rp.pl:324 LedgerSMB/ScriptLib/Company.pm:559
 #: UI/Contact/history_filter.html:328 UI/Contact/search.html:296
 msgid "Project Number"
-msgstr "Número del Proyecto"
+msgstr "Nombor Projek"
 
 #: bin/jc.pl:1146
 msgid "Project Number missing!"
@@ -5489,7 +5491,7 @@ msgstr ""
 
 #: bin/aa.pl:1694
 msgid "Project Numbers"
-msgstr ""
+msgstr "Nombor Projek"
 
 #: bin/rp.pl:565
 msgid "Project Transactions"
@@ -5501,7 +5503,7 @@ msgstr ""
 
 #: bin/arap.pl:375
 msgid "Project not on file!"
-msgstr "¡Proyecto no registrado!"
+msgstr "Projek tiada dalam fail"
 
 #: bin/pe.pl:1310
 msgid "Project saved!"
@@ -5518,15 +5520,15 @@ msgstr ""
 #: bin/pe.pl:732 bin/pe.pl:947 UI/payments/payment2.html:61
 #: sql/Pg-database.sql:2565
 msgid "Projects"
-msgstr "Proyectos"
+msgstr "Projek"
 
 #: scripts/asset.pl:315 scripts/asset.pl:498
 msgid "Purchase Date"
-msgstr ""
+msgstr "Tarikh Pembelian"
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
 msgid "Purchase Date:"
-msgstr ""
+msgstr "Tarikh Pembelian"
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
@@ -5542,25 +5544,25 @@ msgstr ""
 #: sql/Pg-database.sql:1535 sql/Pg-database.sql:2429 sql/Pg-database.sql:2521
 #: sql/Pg-database.sql:2535
 msgid "Purchase Order"
-msgstr "Orden de Compra"
+msgstr "Beli Pesanan"
 
 #: UI/am-defaults.html:152
 msgid "Purchase Order Number"
-msgstr "Número de Orden de Compra"
+msgstr ""
 
 #: bin/am.pl:2232 bin/bp.pl:56 bin/bp.pl:91 bin/ic.pl:1027 bin/oe.pl:1234
 #: bin/oe.pl:1709 bin/oe.pl:1719 bin/oe.pl:1731 sql/Pg-database.sql:2432
 #: sql/Pg-database.sql:2434 sql/Pg-database.sql:2438 sql/Pg-database.sql:2492
 msgid "Purchase Orders"
-msgstr "Ordenes de Compra"
+msgstr "Beli Pesanan"
 
 #: scripts/asset.pl:316 scripts/asset.pl:499
 msgid "Purchase Value"
-msgstr ""
+msgstr "Nilai Pembtanelian"
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
 msgid "Purchase Value:"
-msgstr ""
+msgstr "Nilai Pembelian"
 
 #: bin/ic.pl:1247 bin/ic.pl:1807 bin/ic.pl:3051 bin/ic.pl:3908 bin/io.pl:201
 #: bin/io.pl:519 bin/jc.pl:888 bin/jc.pl:1857 bin/oe.pl:2928 bin/oe.pl:3235
@@ -5603,11 +5605,11 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:89 templates/xedemo/work_order.html:131
 #: UI/Contact/history_filter.html:288 UI/Contact/search.html:262
 msgid "Qty"
-msgstr "Cant."
+msgstr "Kuantiti"
 
 #: bin/ic.pl:4025
 msgid "Quantity exceeds available units to stock!"
-msgstr "¡La cantidad excede al stock disponible!"
+msgstr "Kuantiti melebihi unit yang ada kepada stok!"
 
 #: bin/aa.pl:1651 bin/ca.pl:243 bin/jc.pl:181 bin/oe.pl:1453 bin/pe.pl:717
 #: bin/pe.pl:2442 LedgerSMB/DBObject/Date.pm:88 UI/bp-search.html:47
@@ -5618,11 +5620,11 @@ msgstr "¡La cantidad excede al stock disponible!"
 #: UI/rp-search-generate_trial_balance.html:42 UI/rp-search-payments.html:70
 #: UI/rp-search-projects.html:46
 msgid "Quarter"
-msgstr "Trimestre"
+msgstr "Suku"
 
 #: bin/arapprn.pl:536 bin/io.pl:1421 bin/jc.pl:2043
 msgid "Queue"
-msgstr ""
+msgstr "Queue"
 
 #: bin/io.pl:1452 bin/jc.pl:2073
 msgid "Queued"
@@ -5641,7 +5643,7 @@ msgstr ""
 #: sql/Pg-database.sql:1536 sql/Pg-database.sql:2442 sql/Pg-database.sql:2524
 #: sql/Pg-database.sql:2540
 msgid "Quotation"
-msgstr "Cotización"
+msgstr "Sebut Harga"
 
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
@@ -5651,19 +5653,19 @@ msgstr ""
 
 #: bin/oe.pl:520
 msgid "Quotation Date"
-msgstr "Fecha de Cotización"
+msgstr "Tarikh Sebut Harga"
 
 #: bin/io.pl:1656 bin/oe.pl:2252 bin/oe.pl:2418
 msgid "Quotation Date missing!"
-msgstr "¡Falta la Fecha de Cotización!"
+msgstr "Tarikh Sebut Harga Hilang!"
 
 #: bin/bp.pl:108 bin/oe.pl:499 bin/oe.pl:1300 bin/oe.pl:1912
 msgid "Quotation Number"
-msgstr "Número de Cotización"
+msgstr "Bilangan Sebut Harga"
 
 #: bin/io.pl:1655 bin/oe.pl:2417
 msgid "Quotation Number missing!"
-msgstr "¡Falta el Número de Cotización!"
+msgstr "Nombor sebut harga hilang!"
 
 #: bin/bp.pl:324
 msgid "Quotation Number: [_1]"
@@ -5671,13 +5673,13 @@ msgstr ""
 
 #: bin/oe.pl:2393
 msgid "Quotation deleted!"
-msgstr "¡Cotización borrada!"
+msgstr "Sebut Harga dipadam!"
 
 #: bin/bp.pl:58 bin/bp.pl:93 bin/ic.pl:1050 bin/oe.pl:1298 bin/oe.pl:1804
 #: UI/Contact/history_filter.html:195 sql/Pg-database.sql:2384
 #: sql/Pg-database.sql:2445 sql/Pg-database.sql:2489
 msgid "Quotations"
-msgstr "Cotizaciones"
+msgstr "Sebutan Harga"
 
 #: bin/ic.pl:1031 bin/ic.pl:1542 bin/io.pl:1348 bin/oe.pl:291 bin/oe.pl:806
 #: bin/oe.pl:849 bin/oe.pl:1745 bin/oe.pl:1750
@@ -5685,7 +5687,7 @@ msgstr "Cotizaciones"
 #: sql/Pg-database.sql:1537 sql/Pg-database.sql:2443 sql/Pg-database.sql:2525
 #: sql/Pg-database.sql:2541
 msgid "RFQ"
-msgstr "Solicitud de cotización"
+msgstr "RFQ"
 
 #: templates/demo/request_quotation.html:103
 #: templates/demo/request_quotation.tex:106
@@ -5698,22 +5700,22 @@ msgstr ""
 
 #: bin/am.pl:63 bin/oe.pl:509 bin/oe.pl:1273 UI/am-defaults.html:160
 msgid "RFQ Number"
-msgstr "Número de Solicitud de cotización"
+msgstr "Nombor RFQ"
 
 #: bin/bp.pl:59 bin/bp.pl:94 sql/Pg-database.sql:2446 sql/Pg-database.sql:2494
 msgid "RFQs"
-msgstr "Solicitudes de cotización"
+msgstr "RFQs"
 
 #: bin/ic.pl:489 bin/ic.pl:1141 bin/ic.pl:1822 bin/ic.pl:3910
 msgid "ROP"
-msgstr "Existencia mínima"
+msgstr ""
 
 #: bin/ir.pl:613 bin/is.pl:714 templates/demo/timecard.html:101
 #: templates/demo/timecard.tex:44 templates/demo_with_images/timecard.html:101
 #: templates/demo_with_images/timecard.tex:44
 #: templates/xedemo/timecard.html:101 templates/xedemo/timecard.tex:44
 msgid "Rate"
-msgstr "Tarifa"
+msgstr "Kadar"
 
 #: UI/am-taxes.html:12
 msgid "Rate (%)"
@@ -5729,34 +5731,34 @@ msgstr ""
 
 #: scripts/setup.pl:131
 msgid "Rebuild/Upgrade?"
-msgstr ""
+msgstr "Menbina semula/menaik taraf"
 
 #: bin/io.pl:150 bin/oe.pl:2912 templates/demo/bin_list.html:152
 #: templates/demo_with_images/bin_list.html:152
 #: templates/xedemo/bin_list.html:152
 msgid "Recd"
-msgstr "Recb."
+msgstr "Terima"
 
 #: scripts/payment.pl:1135 sql/Pg-database.sql:2417 sql/Pg-database.sql:2539
 msgid "Receipt"
-msgstr "Recibo"
+msgstr "Resit"
 
 #: bin/pos.pl:1105 UI/payments/payment1.html:19 sql/Pg-database.sql:2402
 #: sql/Pg-database.sql:2422 sql/Pg-database.sql:2561
 msgid "Receipts"
-msgstr "Recibos"
+msgstr "Resit"
 
 #: UI/accounts/edit.html:164
 msgid "Receivables"
-msgstr "Cuentas a Cobrar"
+msgstr ""
 
 #: sql/Pg-database.sql:2440
 msgid "Receive"
-msgstr "Recibir"
+msgstr "Diterima"
 
 #: bin/oe.pl:1243 bin/oe.pl:1706 bin/oe.pl:2798
 msgid "Receive Merchandise"
-msgstr "Recibir mercadería"
+msgstr "Penerimaan barang dagangan"
 
 #: scripts/payment.pl:958
 msgid "Received"
@@ -5772,7 +5774,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2424 sql/Pg-database.sql:2560 sql/Pg-database.sql:2569
 msgid "Reconciliation"
-msgstr "Reconciliación"
+msgstr ""
 
 #: UI/reconciliation/report.html:16
 msgid "Reconciliation Date:"
@@ -5788,7 +5790,7 @@ msgstr ""
 
 #: bin/ir.pl:504 bin/is.pl:561 bin/pos.pl:377 UI/orders/order.html:42
 msgid "Record in"
-msgstr "Registrar en"
+msgstr "Rekod Kemasukan"
 
 #: bin/arap.pl:804
 msgid "Recurring Transaction for [_1]"
@@ -5796,13 +5798,13 @@ msgstr ""
 
 #: bin/am.pl:2186 UI/am-list-recurring.html:8 sql/Pg-database.sql:2567
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "Perulangan Input Transaksi"
 
 #: bin/am.pl:2205 bin/arap.pl:825 bin/gl.pl:575 UI/accounts/yearend.html:21
 #: UI/journal/journal_entry.html:23 UI/journal/search.html:24
 #: UI/journal/search.html:219
 msgid "Reference"
-msgstr "Referencia"
+msgstr "Rujukan"
 
 #: bin/io.pl:1646
 msgid "Reference Number Missing"
@@ -5836,7 +5838,7 @@ msgstr ""
 #: bin/aa.pl:614 bin/ir.pl:472 bin/is.pl:526 bin/oe.pl:462 bin/pos.pl:367
 #: UI/orders/order.html:36
 msgid "Remaining"
-msgstr "Remanente"
+msgstr "Baki"
 
 #: t/data/04-complex_template.html:559 UI/Contact/contact.html:1053
 #: UI/Contact/contact.html:1118 UI/employee.html:151
@@ -5849,15 +5851,15 @@ msgstr ""
 
 #: bin/bp.pl:500 bin/bp.pl:508
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Dipindahkan"
 
 #: bin/bp.pl:231
 msgid "Removed spoolfiles!"
-msgstr "¡Archivos de la cola eliminados!"
+msgstr "Fail spool dipindahkan!"
 
 #: bin/bp.pl:225
 msgid "Removing marked entries from queue ..."
-msgstr "Eliminado entradas seleccionadas de la cola ..."
+msgstr "Mengeluarkan penyertaan ditandakan daripada baris gilir ..."
 
 #: UI/accounts/yearend.html:85
 msgid "Reopen Books"
@@ -5865,7 +5867,7 @@ msgstr ""
 
 #: bin/arap.pl:788
 msgid "Repeat"
-msgstr ""
+msgstr "Pengulangan"
 
 #: UI/reconciliation/approved.html:3
 msgid "Report Approved"
@@ -5873,7 +5875,7 @@ msgstr ""
 
 #: scripts/asset.pl:626
 msgid "Report Results"
-msgstr ""
+msgstr "Hasil Laporan"
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
@@ -5885,7 +5887,7 @@ msgstr ""
 
 #: UI/rp-search-generate_tax_report.html:67
 msgid "Report for"
-msgstr "Informe de"
+msgstr ""
 
 #: sql/Pg-database.sql:2396 sql/Pg-database.sql:2413 sql/Pg-database.sql:2430
 #: sql/Pg-database.sql:2444 sql/Pg-database.sql:2449 sql/Pg-database.sql:2457
@@ -5893,7 +5895,7 @@ msgstr "Informe de"
 #: sql/Pg-database.sql:2559 sql/Pg-database.sql:2566 sql/Pg-database.sql:2586
 #: sql/Pg-database.sql:2604
 msgid "Reports"
-msgstr "Informes"
+msgstr "Laporan"
 
 #: bin/oe.pl:3510
 msgid "Req"
@@ -5909,7 +5911,7 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:18
 #: templates/xedemo/request_quotation.tex:100
 msgid "Request for Quotation"
-msgstr "Solicitud de cotización"
+msgstr "Pemintaan Bagi Sebut Harga"
 
 #: bin/oe.pl:1271 bin/oe.pl:1744
 msgid "Request for Quotations"
@@ -5942,7 +5944,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:104 templates/xedemo/sales_order.tex:106
 #: templates/xedemo/work_order.html:104
 msgid "Required by"
-msgstr "Requerido para el"
+msgstr "Diperlukan oleh"
 
 #: LedgerSMB.pm:1096 LedgerSMB.pm:1097
 msgid "Required input not provided"
@@ -5950,7 +5952,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2460
 msgid "Requirements"
-msgstr ""
+msgstr "Keperluan"
 
 #: bin/ps.pl:307
 msgid "Reset Till By [_1]"
@@ -5958,7 +5960,7 @@ msgstr ""
 
 #: UI/accounts/yearend.html:37
 msgid "Retained Earnings"
-msgstr "Resultado del Ejercicio"
+msgstr ""
 
 #: UI/Contact/contact.html:319
 msgid "Retrieve"
@@ -5974,15 +5976,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2564
 msgid "Reverse Payment"
-msgstr ""
+msgstr "Pembayaran Balik"
 
 #: scripts/payment.pl:392
 msgid "Reverse Payments"
-msgstr ""
+msgstr "Pembayaran Balik"
 
 #: sql/Pg-database.sql:2562
 msgid "Reverse Receipts"
-msgstr ""
+msgstr "Pembatalan Resit"
 
 #: scripts/employee.pl:317 UI/employee/filter.html:224 UI/employee.html:90
 msgid "Role"
@@ -5998,15 +6000,15 @@ msgstr ""
 
 #: UI/Contact/contact.html:361 sql/Pg-database.sql:2576
 msgid "SIC"
-msgstr "CIS"
+msgstr "SIC"
 
 #: bin/am.pl:1044
 msgid "SIC deleted!"
-msgstr "¡CIS borrado!"
+msgstr "SIC dipadam"
 
 #: bin/am.pl:1037
 msgid "SIC saved!"
-msgstr "¡CIS guardado!"
+msgstr "SIC disimpan"
 
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
@@ -6018,11 +6020,11 @@ msgstr "SKU"
 
 #: bin/ic.pl:2589
 msgid "SO"
-msgstr ""
+msgstr "Nota Penjualan"
 
 #: scripts/setup.pl:93
 msgid "SQL-Ledger database detected."
-msgstr ""
+msgstr "Pangkalan data Lejar dikesan"
 
 #: scripts/employee.pl:318 UI/employee/filter.html:238 UI/employee.html:133
 #: UI/payments/payment1.html:44
@@ -6031,25 +6033,25 @@ msgstr ""
 
 #: sql/Pg-database.sql:2400 sql/Pg-database.sql:3730
 msgid "Sale"
-msgstr "Venta"
+msgstr ""
 
 #: scripts/employee.pl:319 UI/Contact/contact.html:148
 #: UI/employee/filter.html:252 UI/employee.html:83 sql/Pg-database.sql:632
 msgid "Sales"
-msgstr "Ventas"
+msgstr "Jualan"
 
 #: bin/aa.pl:2437 bin/gl.pl:836 bin/ic.pl:1557 bin/is.pl:960 bin/oe.pl:803
 #: bin/oe.pl:834 sql/Pg-database.sql:2546
 msgid "Sales Invoice"
-msgstr "Factura (venta)"
+msgstr "Jualan Invois"
 
 #: bin/am.pl:57 UI/am-defaults.html:140
 msgid "Sales Invoice/AR Transaction Number"
-msgstr ""
+msgstr "jualan invois/nombor urus niaga AR"
 
 #: bin/bp.pl:51 bin/bp.pl:86 bin/ic.pl:1042 sql/Pg-database.sql:2485
 msgid "Sales Invoices"
-msgstr "Facturas (venta)"
+msgstr "Jualan Terperinci"
 
 #: bin/am.pl:2650 bin/am.pl:2866 bin/ic.pl:1537 bin/io.pl:1353 bin/io.pl:1533
 #: bin/is.pl:986 bin/is.pl:1007 bin/oe.pl:302 bin/oe.pl:807 bin/oe.pl:836
@@ -6062,22 +6064,22 @@ msgstr "Facturas (venta)"
 #: templates/xedemo/sales_order.tex:99 sql/Pg-database.sql:1534
 #: sql/Pg-database.sql:2428 sql/Pg-database.sql:2519 sql/Pg-database.sql:2533
 msgid "Sales Order"
-msgstr "Orden de Venta"
+msgstr "Pesanan Jualan"
 
 #: bin/am.pl:59 UI/am-defaults.html:144
 msgid "Sales Order Number"
-msgstr "Número de Orden de Venta"
+msgstr "Nombor pesanan jualan"
 
 #: bin/am.pl:2231 bin/bp.pl:54 bin/bp.pl:89 bin/ic.pl:1046 bin/oe.pl:1280
 #: bin/oe.pl:1761 bin/oe.pl:1774 bin/oe.pl:1787 sql/Pg-database.sql:2431
 #: sql/Pg-database.sql:2433 sql/Pg-database.sql:2437 sql/Pg-database.sql:2473
 #: sql/Pg-database.sql:2486
 msgid "Sales Orders"
-msgstr "Ordenes de Venta"
+msgstr "Pesanan Jualan"
 
 #: bin/am.pl:62 UI/am-defaults.html:156
 msgid "Sales Quotation Number"
-msgstr "Número de Cotización"
+msgstr "Nombor Sebut Harga Jualan"
 
 #: t/data/04-complex_template.html:85
 msgid "Sales:"
@@ -6100,7 +6102,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:105 templates/xedemo/sales_order.tex:107
 #: templates/xedemo/work_order.html:105 UI/Contact/search.html:57
 msgid "Salesperson"
-msgstr "Vendedor"
+msgstr "Penjual"
 
 #: UI/employee/filter.html:126
 msgid "Salutation"
@@ -6108,7 +6110,7 @@ msgstr ""
 
 #: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
 msgid "Salvage Value:"
-msgstr ""
+msgstr "Nilai Penyelamat"
 
 #: bin/jc.pl:1435
 msgid "Saturday"
@@ -6130,7 +6132,7 @@ msgstr ""
 #: UI/reconciliation/report.html:266 UI/taxform/add_taxform.html:73
 #: UI/users/preferences.html:106
 msgid "Save"
-msgstr "Guardar"
+msgstr "Simpan"
 
 #: UI/Contact/contact.html:1039
 msgid "Save As New"
@@ -6138,7 +6140,7 @@ msgstr ""
 
 #: scripts/payment.pl:234
 msgid "Save Batch"
-msgstr ""
+msgstr "Simpan sejumlah"
 
 #: UI/Contact/contact.html:676
 msgid "Save Changes"
@@ -6154,7 +6156,7 @@ msgstr ""
 
 #: bin/aa.pl:978 bin/ir.pl:906 bin/is.pl:1017
 msgid "Save Info"
-msgstr ""
+msgstr "Simpan Maklumat"
 
 #: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
@@ -6170,11 +6172,11 @@ msgstr ""
 
 #: bin/arap.pl:870 bin/arap.pl:875
 msgid "Save Schedule"
-msgstr ""
+msgstr "Simpan Jadual"
 
 #: bin/am.pl:1429
 msgid "Save Template"
-msgstr ""
+msgstr "Simpan Templat"
 
 #: bin/jc.pl:1239
 msgid "Save Transaction"
@@ -6186,17 +6188,17 @@ msgstr ""
 
 #: scripts/setup.pl:729
 msgid "Save and Retry"
-msgstr ""
+msgstr "Simpan dan cuba lagi"
 
 #: bin/aa.pl:1001
 msgid "Save as New"
-msgstr ""
+msgstr "Simpan sebagai baru"
 
 #: bin/am.pl:101 bin/am.pl:110 bin/ic.pl:856 bin/ic.pl:873 bin/jc.pl:690
 #: bin/jc.pl:706 bin/jc.pl:934 bin/jc.pl:952 bin/oe.pl:799 bin/oe.pl:827
 #: scripts/account.pl:140
 msgid "Save as new"
-msgstr "Guardar como nuevo"
+msgstr "Simpan sebagai baru"
 
 #: bin/am.pl:2695
 msgid "Saving [_1] [_2]"
@@ -6205,16 +6207,16 @@ msgstr ""
 #: bin/aa.pl:942 bin/aa.pl:972 bin/gl.pl:273 bin/ir.pl:879 bin/ir.pl:900
 #: bin/is.pl:981 bin/is.pl:1009
 msgid "Schedule"
-msgstr ""
+msgstr "Jadual"
 
 #: bin/arapprn.pl:562 bin/io.pl:1453 UI/journal/journal_entry.html:294
 msgid "Scheduled"
-msgstr ""
+msgstr "Sudah Dijadualkan"
 
 #: bin/arapprn.pl:521 bin/io.pl:1409 bin/jc.pl:2030 bin/pos.pl:1072
 #: bin/rp.pl:1338 scripts/payment.pl:638
 msgid "Screen"
-msgstr "Pantalla"
+msgstr "Skrin"
 
 #: UI/Admin/user_search.html:60 UI/asset/search_asset.html:185
 #: UI/asset/search_class.html:65 UI/asset/search_reports.html:69
@@ -6223,7 +6225,7 @@ msgstr "Pantalla"
 #: UI/reconciliation/search.html:102 sql/Pg-database.sql:2397
 #: sql/Pg-database.sql:2414 sql/Pg-database.sql:2427 sql/Pg-database.sql:2475
 msgid "Search"
-msgstr "Búsqueda"
+msgstr "Cari"
 
 #: UI/asset/search_class.html:3
 msgid "Search Asset Class"
@@ -6231,7 +6233,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2599
 msgid "Search Assets"
-msgstr ""
+msgstr "Carian aset"
 
 #: UI/employee/filter.html:8
 msgid "Search Employees"
@@ -6255,7 +6257,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2583
 msgid "Search Users"
-msgstr ""
+msgstr "Carian pengguna"
 
 #: UI/Admin/user_search.html:5
 msgid "Search for Users"
@@ -6263,7 +6265,7 @@ msgstr ""
 
 #: scripts/asset.pl:600
 msgid "Search reports"
-msgstr ""
+msgstr "Pemeriksaan Laporan"
 
 #: sql/Pg-database.sql:776
 msgid "Secondary Phone"
@@ -6275,32 +6277,32 @@ msgstr ""
 
 #: bin/pe.pl:2764
 msgid "Select Customer"
-msgstr ""
+msgstr "Pilih Pelanggan"
 
 #: bin/oe.pl:3619
 msgid "Select Vendor"
-msgstr ""
+msgstr "Pilih Pembekal"
 
 #: bin/arapprn.pl:577 bin/is.pl:1448 bin/jc.pl:1264 bin/oe.pl:2335
 #: bin/pos.pl:1027
 msgid "Select a Printer!"
-msgstr ""
+msgstr "Pilih Mesin Pencetak!"
 
 #: bin/bp.pl:498 bin/bp.pl:504 bin/rp.pl:1222 bin/rp.pl:1228
 msgid "Select all"
-msgstr "Seleccionar todo"
+msgstr "Pilih semua"
 
 #: UI/taxform/add_taxform.html:62
 msgid "Select by Default:"
-msgstr ""
+msgstr "Pilih Tetapan utama"
 
 #: bin/arap.pl:183 bin/ic.pl:3489 bin/pe.pl:2290
 msgid "Select from one of the names below"
-msgstr "Seleccione uno de los nombres de la lista"
+msgstr "Pilih salah satu nama dibawah"
 
 #: bin/arap.pl:399
 msgid "Select from one of the projects below"
-msgstr "Seleccione uno de los proyectos de la lista"
+msgstr "Pilih salah satu projek dibawah"
 
 #: UI/payments/use_overpayment2.html:141
 msgid "Select invoices"
@@ -6308,20 +6310,20 @@ msgstr ""
 
 #: bin/io.pl:529
 msgid "Select items"
-msgstr ""
+msgstr "Pilih item-item"
 
 #: bin/arapprn.pl:421
 msgid "Select payment"
-msgstr "Seleccione el pago"
+msgstr "Pilih pembayaran"
 
 #: bin/arapprn.pl:70 bin/arapprn.pl:78 bin/arapprn.pl:575 bin/is.pl:1446
 #: bin/jc.pl:1262 bin/jc.pl:2095 bin/oe.pl:2333 bin/rp.pl:1548
 msgid "Select postscript or PDF!"
-msgstr "¡Seleccione postscript o PDF!"
+msgstr "Pilih postscript atau PDF!"
 
 #: bin/io.pl:1498
 msgid "Select txt, postscript or PDF!"
-msgstr "¡Seleccione Texto, Postscript o PDF!"
+msgstr "Pilih txt, postscript atau PDF!"
 
 #: UI/payments/payments_filter.html:7
 msgid "Selection"
@@ -6329,18 +6331,18 @@ msgstr ""
 
 #: bin/ic.pl:3061
 msgid "Sell"
-msgstr "Vender"
+msgstr "Jual"
 
 #: bin/ic.pl:442 bin/ic.pl:1001 bin/ic.pl:1862 bin/ic.pl:2922 bin/pe.pl:397
 #: LedgerSMB/ScriptLib/Company.pm:555 UI/Contact/history_filter.html:268
 #: UI/Contact/pricelist.csv:31 UI/Contact/pricelist.html:44
 #: UI/Contact/pricelist.tex:42 UI/Contact/search.html:243
 msgid "Sell Price"
-msgstr "Precio de venta"
+msgstr "Harga Jualan"
 
 #: bin/am.pl:2824
 msgid "Sending"
-msgstr ""
+msgstr "menghantar"
 
 #: bin/aa.pl:88 bin/ca.pl:80 bin/gl.pl:83 bin/io.pl:84
 #: LedgerSMB/App_State.pm:177
@@ -6349,12 +6351,12 @@ msgstr "Sep"
 
 #: UI/am-defaults.html:34
 msgid "Separate Duties"
-msgstr ""
+msgstr "Tugas Berasingan"
 
 #: bin/aa.pl:74 bin/ca.pl:66 bin/gl.pl:69 bin/io.pl:70
 #: LedgerSMB/App_State.pm:177 LedgerSMB/DBObject/Date.pm:68
 msgid "September"
-msgstr "Septiembre"
+msgstr "September"
 
 #: templates/demo/packing_list.html:121
 #: templates/demo_with_images/packing_list.html:121
@@ -6366,7 +6368,7 @@ msgstr ""
 
 #: bin/io.pl:228 bin/oe.pl:2935
 msgid "Serial No."
-msgstr "Núm. de serie"
+msgstr "No. Siri"
 
 #: bin/ic.pl:1099 bin/ic.pl:1102 bin/ic.pl:1638 bin/ic.pl:1892
 #: LedgerSMB/ScriptLib/Company.pm:557 templates/demo/bin_list.tex:107
@@ -6378,7 +6380,7 @@ msgstr "Núm. de serie"
 #: templates/xedemo/packing_list.tex:115 templates/xedemo/work_order.tex:126
 #: UI/Contact/history_filter.html:337 UI/Contact/search.html:304
 msgid "Serial Number"
-msgstr "Número de serie"
+msgstr "Nombor Siri"
 
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
@@ -6388,11 +6390,11 @@ msgstr ""
 
 #: bin/io.pl:821
 msgid "Service"
-msgstr "Servicio"
+msgstr "Servis"
 
 #: bin/jc.pl:233 bin/jc.pl:505 bin/jc.pl:1368 bin/pe.pl:2654
 msgid "Service Code"
-msgstr ""
+msgstr "kod servis"
 
 #: bin/jc.pl:1147
 msgid "Service Code missing!"
@@ -6412,7 +6414,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2584
 msgid "Sessions"
-msgstr ""
+msgstr "Sesi"
 
 #: UI/Admin/edit_user.html:146
 msgid "Set Password"
@@ -6424,25 +6426,25 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:66
 msgid "Seven"
-msgstr "siete"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:100
 msgid "Seven Hundred"
-msgstr "setecientos"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:77
 msgid "Seventeen"
-msgstr "diecisiete"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:95
 msgid "Seventy"
-msgstr "setenta"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:128
 #: templates/demo_with_images/balance_sheet.html:128
 #: templates/xedemo/balance_sheet.html:128
 msgid "Shareholder's Equity"
-msgstr ""
+msgstr "Ekuiti Pemegang Saham"
 
 #: bin/io.pl:143 bin/oe.pl:2908 templates/demo/packing_list.html:124
 #: templates/demo/pick_list.html:114
@@ -6451,11 +6453,11 @@ msgstr ""
 #: templates/xedemo/packing_list.html:124 templates/xedemo/pick_list.html:114
 #: sql/Pg-database.sql:2439
 msgid "Ship"
-msgstr "Enviar"
+msgstr "Hantar"
 
 #: bin/oe.pl:1289 bin/oe.pl:1800 bin/oe.pl:2794
 msgid "Ship Merchandise"
-msgstr "Enviar Mercadería"
+msgstr "Barang dagangan kapal"
 
 #: templates/demo/bin_list.html:30 templates/demo/bin_list.tex:53
 #: templates/demo/invoice.html:23 templates/demo/invoice.tex:76
@@ -6496,12 +6498,12 @@ msgstr ""
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
 msgid "Ship Via"
-msgstr ""
+msgstr "Hantar Melalui"
 
 #: bin/aa.pl:943 bin/io.pl:1970 bin/is.pl:982 bin/is.pl:1003 bin/oe.pl:798
 #: bin/oe.pl:818 bin/oe.pl:3028
 msgid "Ship to"
-msgstr "Enviar a"
+msgstr "Hantar kepada"
 
 #: bin/aa.pl:1728 bin/aa.pl:1758 bin/aa.pl:1963 bin/aa.pl:2106 bin/is.pl:572
 #: bin/oe.pl:645 bin/oe.pl:1495 bin/oe.pl:1536 bin/oe.pl:1862 bin/oe.pl:1920
@@ -6534,19 +6536,19 @@ msgstr "Enviar a"
 #: templates/xedemo/sales_quotation.html:76
 #: templates/xedemo/sales_quotation.tex:79 UI/orders/order.html:68
 msgid "Ship via"
-msgstr "Enviar por"
+msgstr "Penghantaran melalui"
 
 #: sql/Pg-database.sql:633 sql/Pg-database.sql:2383
 msgid "Shipping"
-msgstr "Envío"
+msgstr "Penghantaran"
 
 #: bin/oe.pl:2795
 msgid "Shipping Date"
-msgstr "Fecha de envío"
+msgstr "Tarikh penghantaran"
 
 #: bin/oe.pl:3062
 msgid "Shipping Date missing!"
-msgstr "¡Falta la fecha de envío!"
+msgstr "Tarikh penghantaran hilang!"
 
 #: bin/aa.pl:1726 bin/aa.pl:2102 bin/is.pl:568 bin/oe.pl:641 bin/oe.pl:2857
 #: templates/demo/bin_list.html:114 templates/demo/bin_list.tex:84
@@ -6588,17 +6590,17 @@ msgstr "¡Falta la fecha de envío!"
 #: templates/xedemo/sales_quotation.tex:78 templates/xedemo/work_order.html:106
 #: UI/orders/order.html:62
 msgid "Shipping Point"
-msgstr "Punto de envío"
+msgstr "Lokasi Penghantaran"
 
 #: bin/ic.pl:1116 bin/ic.pl:1498
 msgid "Short"
-msgstr "Corto"
+msgstr ""
 
 #: templates/demo/printPayment.html:82
 #: templates/demo_with_images/printPayment.html:82
 #: templates/xedemo/printPayment.html:82
 msgid "Signature"
-msgstr "Firma"
+msgstr ""
 
 #: sql/Pg-database.sql:1934
 msgid "Simple"
@@ -6606,19 +6608,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:685
 msgid "Sir."
-msgstr ""
+msgstr "Tuan"
 
 #: LedgerSMB/Num2text.pm:65
 msgid "Six"
-msgstr "sies"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:76
 msgid "Sixteen"
-msgstr "dieciséis"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:94
 msgid "Sixty"
-msgstr "sesenta"
+msgstr ""
 
 #: UI/setup/select_coa.html:56
 msgid "Skip"
@@ -6652,7 +6654,7 @@ msgstr ""
 #: UI/reconciliation/report.html:71 UI/reconciliation/report.html:134
 #: UI/reconciliation/report.html:193 UI/rp-search-payments.html:19
 msgid "Source"
-msgstr "Origen"
+msgstr "Sumber"
 
 #: bin/rp.pl:1983
 msgid "Source: [_1]"
@@ -6678,21 +6680,21 @@ msgstr ""
 
 #: bin/bp.pl:389
 msgid "Spoolfile"
-msgstr "Cola de Impresión"
+msgstr "Fail spool"
 
 #: UI/rp-search.html:30
 msgid "Standard"
-msgstr "Estándard"
+msgstr ""
 
 #: bin/am.pl:946
 msgid "Standard Industrial Codes"
-msgstr "Código Industrial Estandardizado (CIS)"
+msgstr "Standart kod industri"
 
 #: scripts/employee.pl:315 UI/Contact/contact.html:212
 #: UI/Contact/contact.html:399 UI/employee/filter.html:52
 #: UI/employee/filter.html:196 UI/employee.html:121
 msgid "Start Date"
-msgstr ""
+msgstr "Tarikh Permulaan"
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
@@ -6709,7 +6711,7 @@ msgstr ""
 #: bin/arap.pl:829 bin/jc.pl:191 bin/pe.pl:343 bin/pe.pl:529 bin/pe.pl:697
 #: bin/pe.pl:996 bin/pe.pl:1218 UI/Contact/history_filter.html:122
 msgid "Startdate"
-msgstr "Fecha de inicio"
+msgstr "Tarikh mula"
 
 #: UI/Contact/contact.html:473
 msgid "Starting Date"
@@ -6721,13 +6723,13 @@ msgstr ""
 
 #: bin/io.pl:2040
 msgid "State"
-msgstr "Departamento"
+msgstr "Negeri"
 
 #: t/data/04-complex_template.html:387 UI/Contact/contact.html:785
 #: UI/Contact/contact.html:881 UI/Contact/history_filter.html:96
 #: UI/Contact/search.html:89 UI/employee.html:59
 msgid "State/Province"
-msgstr "Departamento"
+msgstr ""
 
 #: t/data/04-complex_template.html:454
 msgid "State/Province:"
@@ -6742,7 +6744,7 @@ msgstr ""
 #: templates/xedemo/statement.tex:49 sql/Pg-database.sql:2523
 #: sql/Pg-database.sql:2537
 msgid "Statement"
-msgstr "Estado de cuenta"
+msgstr "Kenyataan"
 
 #: bin/rp.pl:1415
 msgid "Statement - [_1]"
@@ -6750,11 +6752,11 @@ msgstr ""
 
 #: UI/rc-display-form.html:66 UI/reconciliation/upload.html:29
 msgid "Statement Balance"
-msgstr "Saldo bancario"
+msgstr "Baki Penyata"
 
 #: scripts/recon.pl:188
 msgid "Statement Date"
-msgstr ""
+msgstr "Tarikh Penyata"
 
 #: bin/rp.pl:1540
 msgid "Statement sent to [_1]"
@@ -6774,11 +6776,11 @@ msgstr ""
 
 #: bin/ic.pl:632
 msgid "Stock"
-msgstr "Existencia"
+msgstr "Stok"
 
 #: bin/ic.pl:3805 bin/ic.pl:3917 sql/Pg-database.sql:2456
 msgid "Stock Assembly"
-msgstr "Reponer ensamblaje"
+msgstr "Himpunan Stok "
 
 #: bin/pe.pl:486 bin/pe.pl:748
 msgid "Stock Finished Goods"
@@ -6799,7 +6801,7 @@ msgstr ""
 #: UI/am-userconfig.html:37 UI/users/preferences.html:72
 #: sql/Pg-database.sql:2591
 msgid "Stylesheet"
-msgstr "Hoja de estilos"
+msgstr ""
 
 #: t/data/04-complex_template.html:231
 msgid "Subcontract GIFI:"
@@ -6823,7 +6825,7 @@ msgstr ""
 
 #: scripts/recon.pl:189 UI/reconciliation/search.html:80
 msgid "Submitted"
-msgstr ""
+msgstr "Dihantar"
 
 #: bin/aa.pl:1806 bin/ca.pl:257 bin/ic.pl:1382 bin/io.pl:1697 bin/ir.pl:694
 #: bin/is.pl:784 bin/jc.pl:326 bin/oe.pl:730 bin/oe.pl:1569 bin/pos.pl:450
@@ -6856,7 +6858,7 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:94 UI/rp-search-payments.html:100
 #: UI/rp-search-projects.html:76
 msgid "Subtotal"
-msgstr "Subtotal"
+msgstr "Jumlah Kecil"
 
 #: UI/rc-till-closing.html:69
 msgid "Subtotal:"
@@ -6867,7 +6869,7 @@ msgstr ""
 #: UI/rc-reconciliation.html:92 UI/rp-search-aging.html:44
 #: UI/rp-search-generate_tax_report.html:60
 msgid "Summary"
-msgstr "Resúmen"
+msgstr "Ringkasan"
 
 #: UI/accounts/edit.html:137
 msgid "Summary account for"
@@ -6895,11 +6897,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2592
 msgid "System"
-msgstr "Sistema"
+msgstr "Sistem"
 
 #: UI/am-defaults.html:21
 msgid "System Defaults"
-msgstr "Predeterminados del Sistema"
+msgstr ""
 
 #: old-handler.pl:120
 msgid "System currently down for maintenance!"
@@ -6914,7 +6916,7 @@ msgstr ""
 #: scripts/asset.pl:313 scripts/asset.pl:735 scripts/asset.pl:799
 #: scripts/asset.pl:870 scripts/asset.pl:1006
 msgid "Tag"
-msgstr ""
+msgstr "Tanda"
 
 #: UI/asset/edit_asset.html:44 UI/asset/search_asset.html:38
 msgid "Tag:"
@@ -6926,23 +6928,23 @@ msgstr ""
 #: UI/accounts/edit.html:300 UI/Contact/search.html:424
 #: UI/rp-search-generate_tax_report.html:167
 msgid "Tax"
-msgstr "Impuestos"
+msgstr "Cukai"
 
 #: bin/ir.pl:615 bin/is.pl:716
 msgid "Tax Code"
-msgstr ""
+msgstr "Kod Cukai"
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
-msgstr ""
+msgstr "Bentuk cukai digunakan"
 
 #: scripts/taxform.pl:268
 msgid "Tax Form List"
-msgstr ""
+msgstr "Cukai dalam bentuk senarai"
 
 #: scripts/taxform.pl:281
 msgid "Tax Form Name"
-msgstr ""
+msgstr "Cukai dalam bentuk nama"
 
 #: UI/taxform/filter.html:21
 msgid "Tax Form Reports"
@@ -6950,7 +6952,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2570
 msgid "Tax Forms"
-msgstr ""
+msgstr "Borang cukai"
 
 #: bin/aa.pl:651 bin/ir.pl:490 bin/is.pl:544 UI/Admin/user_search.html:41
 msgid "Tax ID"
@@ -6959,7 +6961,7 @@ msgstr ""
 #: bin/ir.pl:603 bin/is.pl:703 bin/oe.pl:705 bin/pos.pl:424
 #: UI/Contact/contact.html:664 UI/orders/order.html:233
 msgid "Tax Included"
-msgstr "IVA Incluido"
+msgstr "Disertakan dengan Cukai"
 
 #: UI/Contact/contact.html:352
 msgid "Tax Number/SSN"
@@ -6987,11 +6989,11 @@ msgstr ""
 
 #: bin/io.pl:214
 msgid "TaxForm"
-msgstr ""
+msgstr "BorangCukai"
 
 #: sql/Pg-database.sql:2410
 msgid "Taxable"
-msgstr "Gravado"
+msgstr ""
 
 #: sql/Pg-database.sql:2393
 msgid "Taxable Sales"
@@ -6999,11 +7001,11 @@ msgstr ""
 
 #: bin/am.pl:1544 UI/Contact/contact.html:635 sql/Pg-database.sql:2497
 msgid "Taxes"
-msgstr ""
+msgstr "Cukai"
 
 #: bin/am.pl:1802
 msgid "Taxes saved!"
-msgstr ""
+msgstr "Cukai disimpan!"
 
 #: templates/demo/ap_transaction.html:229
 #: templates/demo/ar_transaction.html:235 templates/demo/invoice.html:314
@@ -7117,7 +7119,7 @@ msgstr ""
 
 #: bin/am.pl:1445
 msgid "Template saved!"
-msgstr "¡Plantilla guardada!"
+msgstr "Templat disimpan"
 
 #: UI/am-defaults.html:107
 msgid "Templates directory"
@@ -7129,7 +7131,7 @@ msgstr ""
 
 #: bin/oe.pl:406 UI/Contact/contact.html:506
 msgid "Terms"
-msgstr "Condiciones"
+msgstr "Terma"
 
 #: templates/demo/purchase_order.html:184 templates/demo/sales_order.html:183
 #: templates/demo/sales_quotation.html:151
@@ -7160,7 +7162,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2573
 msgid "Text Templates"
-msgstr "Plantillas de texto"
+msgstr "Template teks"
 
 #: templates/demo/invoice.tex:213 templates/demo/sales_order.tex:175
 #: templates/demo_with_images/invoice.tex:217
@@ -7182,19 +7184,19 @@ msgstr ""
 
 #: scripts/payment.pl:1649 scripts/payment.pl:1655
 msgid "The amount of the invoice number"
-msgstr ""
+msgstr "Jumlah nombor invois "
 
 #: scripts/payment.pl:1909
 msgid "The amount to be pay from the accno"
-msgstr ""
+msgstr "Jumlah yang perlu dibayar daripada accno"
 
 #: scripts/payment.pl:1877
 msgid "The amount to be pay of the invoice number"
-msgstr ""
+msgstr "Jumlah yang perlu dibayar untuk nombor invois"
 
 #: scripts/recon.pl:308
 msgid "Their Balance"
-msgstr ""
+msgstr "Baki mereka"
 
 #: UI/reconciliation/report.html:77 UI/reconciliation/report.html:140
 msgid "Their Credits"
@@ -7214,11 +7216,11 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:73
 msgid "Thirteen"
-msgstr "trece"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:91
 msgid "Thirty"
-msgstr "treinta"
+msgstr ""
 
 #: UI/setup/complete.html:9
 msgid ""
@@ -7234,19 +7236,19 @@ msgstr ""
 
 #: scripts/payment.pl:1245
 msgid "This gl movement, is a consecuence of a payment transaction"
-msgstr ""
+msgstr "Pertukaran gl ini ialah disebabkan oleh pembayaran transit"
 
 #: scripts/payment.pl:1962
 msgid "This gl movement, is the result of a overpayment transaction"
-msgstr ""
+msgstr "Pergerakan gl ialah hasil daripada transit lebihan bayaran"
 
 #: LedgerSMB/Num2text.pm:102
 msgid "Thousand"
-msgstr "mil"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:62
 msgid "Three"
-msgstr "tres"
+msgstr ""
 
 #: t/data/04-complex_template.html:302 UI/Contact/contact.html:580
 msgid "Threshold"
@@ -7262,7 +7264,7 @@ msgstr ""
 
 #: bin/aa.pl:1665 bin/aa.pl:2098 bin/rp.pl:2031
 msgid "Till"
-msgstr "Caja Registradora"
+msgstr "Till"
 
 #: bin/jc.pl:281
 msgid "Time"
@@ -7287,7 +7289,7 @@ msgstr ""
 #: bin/bp.pl:60 bin/bp.pl:95 bin/jc.pl:203 bin/jc.pl:1336
 #: sql/Pg-database.sql:2477 sql/Pg-database.sql:2495
 msgid "Time Cards"
-msgstr ""
+msgstr "Kad Masa"
 
 #: bin/jc.pl:616
 msgid "Time In"
@@ -7303,7 +7305,7 @@ msgstr ""
 
 #: bin/am.pl:2222
 msgid "Times"
-msgstr ""
+msgstr "Masa"
 
 #: bin/gl.pl:609 bin/ic.pl:1062 bin/ic.pl:1612 bin/ic.pl:2925 bin/jc.pl:196
 #: bin/jc.pl:1412 bin/jc.pl:1828 bin/oe.pl:1546 bin/oe.pl:1933 bin/oe.pl:3233
@@ -7329,15 +7331,15 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:10 UI/rp-search-payments.html:38
 #: UI/rp-search-projects.html:14
 msgid "To"
-msgstr "Hasta"
+msgstr "Kepada"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To %1"
-msgstr ""
+msgstr "Kepada %1"
 
 #: UI/reconciliation/upload.html:35
 msgid "To Date"
-msgstr ""
+msgstr "Kepada tarikh"
 
 #: UI/payments/payments_detail.html:296
 msgid "To Pay"
@@ -7345,7 +7347,7 @@ msgstr ""
 
 #: bin/oe.pl:3248
 msgid "To Warehouse"
-msgstr ""
+msgstr "Ke gudang"
 
 #: bin/aa.pl:1978 bin/bp.pl:336 bin/rp.pl:1997
 msgid "To [_1]"
@@ -7365,7 +7367,7 @@ msgstr ""
 
 #: scripts/payment.pl:955
 msgid "To pay"
-msgstr ""
+msgstr "Untuk bayar"
 
 #: templates/demo/purchase_order.html:29
 #: templates/demo/request_quotation.html:28
@@ -7384,7 +7386,7 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:185
 msgid "Too many links on summary account!"
-msgstr ""
+msgstr "Terlalu banyak sambungan dalam ringkasan akaun"
 
 #: bin/ic.pl:1197
 msgid "Top Level"
@@ -7392,7 +7394,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2387
 msgid "Top-level"
-msgstr ""
+msgstr "Tahap Tertinggi"
 
 #: bin/aa.pl:1707 bin/aa.pl:2080 bin/ir.pl:763 bin/is.pl:850 bin/jc.pl:517
 #: bin/jc.pl:531 bin/jc.pl:894 bin/oe.pl:762 bin/oe.pl:1503 bin/oe.pl:1855
@@ -7439,7 +7441,7 @@ msgstr ""
 #: UI/rp-search-generate_tax_report.html:175 UI/taxform/details_report.html:25
 #: UI/taxform/summary_report.html:24
 msgid "Total"
-msgstr "Total"
+msgstr "Jumlah"
 
 #: scripts/asset.pl:745
 msgid "Total Accum. Dep."
@@ -7502,27 +7504,27 @@ msgstr ""
 
 #: bin/is.pl:427 bin/oe.pl:420 bin/pos.pl:282
 msgid "Trade Discount"
-msgstr "Descuento comercial"
+msgstr "Diskaun Perniagaan "
 
 #: bin/aa.pl:196 bin/am.pl:2860
 msgid "Transaction"
-msgstr "Asiento"
+msgstr "Transaksi"
 
 #: sql/Pg-database.sql:2379
 msgid "Transaction Approval"
-msgstr ""
+msgstr "Transaksi Diterima"
 
 #: UI/Contact/history_filter.html:140
 msgid "Transaction Date"
-msgstr ""
+msgstr "Tarikh Transaksi"
 
 #: bin/gl.pl:1138
 msgid "Transaction Date missing!"
-msgstr "¡Falta la fecha del Asiento!"
+msgstr "Tarikh Transaksi Hilang!"
 
 #: bin/pe.pl:2452
 msgid "Transaction Dates"
-msgstr ""
+msgstr "Tarikh Penterjemahan"
 
 #: UI/batch/search_transactions.html:13 UI/reconciliation/report.html:69
 #: UI/reconciliation/report.html:132
@@ -7535,7 +7537,7 @@ msgstr ""
 
 #: bin/aa.pl:1383
 msgid "Transaction posted!"
-msgstr "¡Asiento registrado!"
+msgstr "Transaksi berjaya di hantar!"
 
 #: bin/am.pl:1869
 msgid "Transaction reversal enforced for all dates"
@@ -7548,32 +7550,32 @@ msgstr ""
 #: UI/setup/complete.html:25 UI/setup/confirm_operation.html:89
 #: sql/Pg-database.sql:2390 sql/Pg-database.sql:2407 sql/Pg-database.sql:2476
 msgid "Transactions"
-msgstr "Asientos"
+msgstr ""
 
 #: bin/oe.pl:3237 bin/oe.pl:3353 sql/Pg-database.sql:2441
 #: sql/Pg-database.sql:2558
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Hantar"
 
 #: bin/oe.pl:3114 bin/oe.pl:3264
 msgid "Transfer Inventory"
-msgstr "Transferir existencia"
+msgstr "Hantar Inventori"
 
 #: bin/oe.pl:3132
 msgid "Transfer from"
-msgstr ""
+msgstr "Hantar daripada"
 
 #: bin/oe.pl:3136
 msgid "Transfer to"
-msgstr "Transferir a"
+msgstr "Hantar ke"
 
 #: bin/pe.pl:1936 bin/pe.pl:2111
 msgid "Translation"
-msgstr "Traducción"
+msgstr "Penterjmahan"
 
 #: bin/pe.pl:1366
 msgid "Translation deleted!"
-msgstr "¡Traducción borrada!"
+msgstr "Terjemahan dipadam"
 
 #: bin/io.pl:772
 msgid "Translation not on file!"
@@ -7581,19 +7583,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:2467 sql/Pg-database.sql:2478
 msgid "Translations"
-msgstr "Traducciones"
+msgstr "Terjemahan"
 
 #: bin/pe.pl:1274
 msgid "Translations saved!"
-msgstr "¡Traducciones guardadas!"
+msgstr "Terjemahan disimpan"
 
 #: bin/rp.pl:588 sql/Pg-database.sql:2481
 msgid "Trial Balance"
-msgstr "Balance de Sumas y Saldos"
+msgstr "Baki Percubaan"
 
 #: LedgerSMB/Num2text.pm:105
 msgid "Trillion"
-msgstr "billón"
+msgstr ""
 
 #: bin/jc.pl:1431
 msgid "Tuesday"
@@ -7601,65 +7603,65 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:72
 msgid "Twelve"
-msgstr "doce"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:80
 msgid "Twenty"
-msgstr "veinte"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:89
 msgid "Twenty Eight"
-msgstr "veintiocho"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:86
 msgid "Twenty Five"
-msgstr "veinticinco"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:85
 msgid "Twenty Four"
-msgstr "veinticuatro"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:90
 msgid "Twenty Nine"
-msgstr "veintinueve"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:81
 msgid "Twenty One"
-msgstr "veintiún"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:82
 msgid "Twenty One-o"
-msgstr "veintiuno"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:88
 msgid "Twenty Seven"
-msgstr "veintisiete"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:87
 msgid "Twenty Six"
-msgstr "veintiséis"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:84
 msgid "Twenty Three"
-msgstr "veintitrés"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:83
 msgid "Twenty Two"
-msgstr "veintidós"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:61
 msgid "Two"
-msgstr "dos"
+msgstr ""
 
 #: bin/io.pl:2099 scripts/asset.pl:634 t/data/04-complex_template.html:384
 #: UI/Contact/contact.html:395 UI/Contact/contact.html:782
 #: UI/Contact/contact.html:837 UI/Contact/contact.html:930
 msgid "Type"
-msgstr ""
+msgstr "Jenis"
 
 #: bin/am.pl:786 UI/am-business-form.html:12 sql/Pg-database.sql:2578
 msgid "Type of Business"
-msgstr "Clase de Negocio"
+msgstr "Jenis Bisnes"
 
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
@@ -7668,11 +7670,11 @@ msgstr ""
 
 #: UI/payments/use_overpayment2.html:264
 msgid "UPDATE"
-msgstr ""
+msgstr "KEMASKINI"
 
 #: lsmb-request.pl:98
 msgid "Unable to open script"
-msgstr ""
+msgstr "Tidak boleh membuka script"
 
 #: LedgerSMB/DBObject/Asset_Class.pm:67 LedgerSMB/DBObject/Asset.pm:110
 msgid "Unable to save [_1] object"
@@ -7680,7 +7682,7 @@ msgstr ""
 
 #: LedgerSMB/Contact.pm:60
 msgid "Unable to save contact information"
-msgstr ""
+msgstr "Informasi hubungan gagal disimpan"
 
 #: UI/rc-display-form.html:78
 msgid "Under"
@@ -7688,15 +7690,15 @@ msgstr ""
 
 #: scripts/setup.pl:648
 msgid "Unique AR Invoice numbers"
-msgstr ""
+msgstr "Nombor Unik AR Invois"
 
 #: scripts/setup.pl:598
 msgid "Unique Customernumber"
-msgstr ""
+msgstr "Nombor pelanggan unik"
 
 #: scripts/setup.pl:608
 msgid "Unique Vendornumber"
-msgstr ""
+msgstr "Nombor Unik Pembekal"
 
 #: scripts/setup.pl:640
 msgid "Unique nonobsolete partnumbers"
@@ -7713,7 +7715,7 @@ msgstr ""
 #: templates/xedemo/sales_order.tex:120 UI/Contact/history_filter.html:298
 #: UI/Contact/search.html:270
 msgid "Unit"
-msgstr "Unidad"
+msgstr "Unit"
 
 #: templates/demo/invoice.html:140 templates/demo/request_quotation.html:145
 #: templates/demo/request_quotation.tex:124
@@ -7728,11 +7730,11 @@ msgstr ""
 
 #: scripts/setup.pl:149
 msgid "Unknown database found."
-msgstr ""
+msgstr "Pangkalan data tidak dikenali dijumpai"
 
 #: scripts/setup.pl:137
 msgid "Unknown version found."
-msgstr ""
+msgstr "Versi tidak dikenali dijumpai"
 
 #: scripts/vouchers.pl:362
 msgid "Unlock"
@@ -7752,7 +7754,7 @@ msgstr ""
 
 #: scripts/setup.pl:101
 msgid "Unsupported version.  Cancel?"
-msgstr ""
+msgstr "versi tidak disokong"
 
 #: bin/aa.pl:939 bin/aa.pl:963 bin/gl.pl:268 bin/ic.pl:854 bin/ic.pl:863
 #: bin/ir.pl:876 bin/ir.pl:886 bin/is.pl:978 bin/is.pl:994 bin/jc.pl:686
@@ -7762,11 +7764,11 @@ msgstr ""
 #: UI/payments/payment2.html:327 UI/payments/payments_detail.html:409
 #: UI/reconciliation/report.html:254
 msgid "Update"
-msgstr "Actualizar"
+msgstr "Terbaru"
 
 #: bin/ic.pl:805 bin/ic.pl:1253 bin/ic.pl:1804 bin/pe.pl:386
 msgid "Updated"
-msgstr "Actualizado"
+msgstr "Dikemaskini"
 
 #: UI/setup/migrate_sl_info.html:75 UI/setup/upgrade_info.html:75
 msgid "Upgrade"
@@ -7787,15 +7789,15 @@ msgstr ""
 #: scripts/asset.pl:318 UI/asset/edit_asset.html:93
 #: UI/asset/search_asset.html:87
 msgid "Usable Life"
-msgstr ""
+msgstr "Kehidupan yang Boleh Digunakan"
 
 #: sql/Pg-database.sql:2420
 msgid "Use AR Overpayment"
-msgstr ""
+msgstr "Menggunakan Bayaran Lebih AR"
 
 #: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2419
 msgid "Use Overpayment"
-msgstr ""
+msgstr "Menggunakan Bayaran Lebih"
 
 #: bin/io.pl:2208
 msgid "Use Shipto"
@@ -7803,16 +7805,16 @@ msgstr ""
 
 #: scripts/payment.pl:1776
 msgid "Use overpayment/prepayment"
-msgstr ""
+msgstr "Guna lebihan pembayaran/prabayaran"
 
 #: t/data/04-complex_template.html:36 UI/am-company-logo.html:12
 #: UI/Contact/contact.html:78 UI/employee.html:94
 msgid "User"
-msgstr "Usuario"
+msgstr "Pengguna"
 
 #: scripts/setup.pl:1025
 msgid "User already exists. Import?"
-msgstr ""
+msgstr "Pengguna telah wujud. impot?"
 
 #: UI/Admin/edit_user.html:26 UI/Admin/edit_user.html:39
 #: UI/setup/new_user.html:22
@@ -7845,7 +7847,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:73
 #: templates/xedemo/sales_quotation.tex:77
 msgid "Valid until"
-msgstr "Válido hasta"
+msgstr "Sah Sehingga"
 
 #: UI/reconciliation/report.html:34
 msgid "Variance:"
@@ -7860,21 +7862,21 @@ msgstr ""
 #: UI/rp-search-generate_tax_report.html:141 UI/taxform/details_report.html:30
 #: UI/taxform/summary_report.html:29 sql/Pg-database.sql:496
 msgid "Vendor"
-msgstr "Proveedor"
+msgstr "Pembekal"
 
 #: UI/Contact/history_filter.html:15
 msgid "Vendor History"
-msgstr "Historial del Proveedor"
+msgstr "Rekod Pembekal"
 
 #: bin/aa.pl:2449 bin/gl.pl:852 bin/ic.pl:1552 bin/oe.pl:804 bin/oe.pl:842
 #: t/data/04-complex_template.html:334 UI/Contact/contact.html:710
 #: sql/Pg-database.sql:2552
 msgid "Vendor Invoice"
-msgstr "Factura de Proveedor"
+msgstr "Pembekal Senarai Bekalan"
 
 #: bin/am.pl:61 UI/am-defaults.html:148
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr ""
+msgstr "invois pembekal/nombor urus niaga AP"
 
 #: bin/ic.pl:1023
 msgid "Vendor Invoices"
@@ -7890,7 +7892,7 @@ msgstr ""
 #: UI/payments/payments_filter.html:63 UI/payments/search.html:16
 #: UI/taxform/filter.html:89
 msgid "Vendor Number"
-msgstr "Código de Proveedor"
+msgstr "Nombor Pembekal"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:35
 #: UI/Contact/pricelist.tex:29
@@ -7899,7 +7901,7 @@ msgstr ""
 
 #: bin/ic.pl:2819
 msgid "Vendor Reference Number"
-msgstr ""
+msgstr "Nombor Rujukan Pembekal"
 
 #: UI/Contact/search.html:6
 msgid "Vendor Search"
@@ -7907,11 +7909,11 @@ msgstr ""
 
 #: bin/aa.pl:1307 bin/ir.pl:1317 bin/oe.pl:2263
 msgid "Vendor missing!"
-msgstr "¡Falta el Proveedor!"
+msgstr "Pembekal hilang!"
 
 #: bin/arap.pl:156 bin/pe.pl:2209 bin/pe.pl:2848
 msgid "Vendor not on file!"
-msgstr "¡Proveedor no registrado!"
+msgstr "Pembekal tiada dalam fail!"
 
 #: bin/bp.pl:304
 msgid "Vendor: [_1]"
@@ -7923,7 +7925,7 @@ msgstr ""
 
 #: old-handler.pl:175
 msgid "Version"
-msgstr "Versión"
+msgstr "Versi"
 
 #: UI/am-company-logo.html:6
 msgid "Version [_1]"
@@ -7935,11 +7937,11 @@ msgstr ""
 
 #: bin/is.pl:1015
 msgid "Void"
-msgstr ""
+msgstr "Batal"
 
 #: sql/Pg-database.sql:2557
 msgid "Vouchers"
-msgstr ""
+msgstr "Baucer"
 
 #: bin/ic.pl:1156 bin/ic.pl:1162 bin/ic.pl:1620 bin/ic.pl:1902 bin/oe.pl:1349
 #: bin/oe.pl:1887 bin/oe.pl:2811 templates/demo/bin_list.html:112
@@ -7955,15 +7957,15 @@ msgstr ""
 #: templates/xedemo/packing_list.html:83 templates/xedemo/packing_list.tex:90
 #: templates/xedemo/pick_list.html:81 templates/xedemo/pick_list.tex:82
 msgid "Warehouse"
-msgstr "Almacén"
+msgstr "Gudang"
 
 #: bin/am.pl:1967 sql/Pg-database.sql:2580
 msgid "Warehouses"
-msgstr "Almacenes"
+msgstr "Gudang-gudang"
 
 #: bin/arap.pl:581 bin/jc.pl:1247
 msgid "Warning!"
-msgstr "¡Advertencia!"
+msgstr ""
 
 #: UI/lib/ui-header.html:28
 msgid "Warning:  Your password will expire in [_1]"
@@ -7979,7 +7981,7 @@ msgstr ""
 
 #: bin/arap.pl:770
 msgid "Week(s)"
-msgstr ""
+msgstr "Minggu"
 
 #: bin/am.pl:2178
 msgid "Weeks"
@@ -7988,15 +7990,15 @@ msgstr ""
 #: bin/ic.pl:552 bin/ic.pl:579 bin/ic.pl:601 bin/ic.pl:1145 bin/ic.pl:1824
 #: bin/pe.pl:402
 msgid "Weight"
-msgstr "Peso"
+msgstr "Berat"
 
 #: UI/am-defaults.html:30
 msgid "Weight Unit"
-msgstr "Unidad de peso"
+msgstr "Berat Unit"
 
 #: bin/io.pl:812
 msgid "What type of item is this?"
-msgstr "¿Que tipo de articulo es este?"
+msgstr "Apakah jenis item ini?"
 
 #: UI/setup/begin_backup.html:7
 msgid "Where shall we send the backup?"
@@ -8019,11 +8021,11 @@ msgstr ""
 #: templates/xedemo/work_order.html:18 templates/xedemo/work_order.tex:109
 #: sql/Pg-database.sql:2520 sql/Pg-database.sql:2534
 msgid "Work Order"
-msgstr "Orden de Trabajo"
+msgstr "Pesanan Kerja"
 
 #: bin/bp.pl:55 bin/bp.pl:90 sql/Pg-database.sql:2488
 msgid "Work Orders"
-msgstr "Ordenes de Trabajo"
+msgstr "Arahan Kerja"
 
 #: UI/employee.html:109
 msgid "Work Phone"
@@ -8031,11 +8033,11 @@ msgstr ""
 
 #: scripts/setup.pl:96
 msgid "Would you like to migrate the database?"
-msgstr ""
+msgstr "Adakah anda ingin memindah pangkalan data"
 
 #: scripts/setup.pl:110
 msgid "Would you like to upgrade the database?"
-msgstr ""
+msgstr "Adakah anda ingin menaik taraf pangkalan data?"
 
 #: sql/Pg-database.sql:779
 msgid "Yahoo"
@@ -8050,11 +8052,11 @@ msgstr ""
 #: UI/rp-search-generate_trial_balance.html:48 UI/rp-search-payments.html:76
 #: UI/rp-search-projects.html:52
 msgid "Year"
-msgstr "Año"
+msgstr "Tahun"
 
 #: bin/arap.pl:772
 msgid "Year(s)"
-msgstr ""
+msgstr "Tahun"
 
 #: bin/am.pl:2073 UI/accounts/yearend.html:12 UI/accounts/yearend.html:25
 #: sql/Pg-database.sql:2499
@@ -8086,11 +8088,11 @@ msgstr ""
 #: UI/am-audit-control.html:25 UI/am-defaults.html:51
 #: UI/ca-list-selector.html:42 UI/setup/confirm_operation.html:25
 msgid "Yes"
-msgstr "Si"
+msgstr "Ya"
 
 #: old-handler.pl:133
 msgid "You are logged out!"
-msgstr ""
+msgstr "Anda sudah daftar keluar!"
 
 #: bin/ps.pl:317
 msgid "You are over by [_1]"
@@ -8142,11 +8144,11 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:58
 msgid "Zero"
-msgstr "cero"
+msgstr ""
 
 #: bin/io.pl:2043
 msgid "Zip Code"
-msgstr ""
+msgstr "Kod Pos"
 
 #: UI/Contact/contact.html:890
 msgid "Zip/Post Code"
@@ -8203,7 +8205,7 @@ msgstr ""
 
 #: bin/am.pl:155
 msgid "account cannot be set to any other type of account"
-msgstr "No se puede cambiar a otro Tipo de Cuenta"
+msgstr "Akaun tidak boleh ditentukan untuk menjadi akaun yang lain"
 
 #: old-handler.pl:183
 msgid "action not defined!"
@@ -8211,7 +8213,7 @@ msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:2
 msgid "as at"
-msgstr "como a"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:64
 #: templates/demo_with_images/balance_sheet.html:64
@@ -8221,21 +8223,21 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:484
 msgid "cash"
-msgstr ""
+msgstr "tunai"
 
 #: LedgerSMB/DBObject/Payment.pm:485
 msgid "check"
-msgstr ""
+msgstr "cek"
 
 #: bin/io.pl:2037
 msgid "city"
-msgstr ""
+msgstr "Bandar"
 
 #: bin/ic.pl:2875 bin/oe.pl:408 t/data/04-complex_template.html:215
 #: t/data/04-complex_template.html:255 UI/Contact/contact.html:511
 #: UI/Contact/contact.html:530
 msgid "days"
-msgstr "días"
+msgstr "Hari"
 
 #: UI/am-defaults.html:42
 msgid "default_language"
@@ -8243,11 +8245,11 @@ msgstr ""
 
 #: scripts/admin.pl:411
 msgid "delete"
-msgstr ""
+msgstr "padam"
 
 #: LedgerSMB/DBObject/Payment.pm:486
 msgid "deposit"
-msgstr ""
+msgstr "deposit"
 
 #: sql/Pg-database.sql:3775
 msgid "depreciation"
@@ -8260,11 +8262,11 @@ msgstr ""
 #: bin/am.pl:2629 bin/am.pl:2700 bin/am.pl:2754 bin/am.pl:2797 bin/am.pl:2844
 #: bin/bp.pl:264
 msgid "done"
-msgstr "Terminado"
+msgstr "selesai"
 
 #: bin/ir.pl:1037 bin/ir.pl:1294 bin/is.pl:1363 bin/oe.pl:1220
 msgid "ea"
-msgstr "c/u"
+msgstr ""
 
 #: scripts/admin.pl:354
 msgid "edit"
@@ -8272,7 +8274,7 @@ msgstr ""
 
 #: bin/am.pl:2703 bin/am.pl:2800 bin/am.pl:2847
 msgid "failed"
-msgstr ""
+msgstr "gagal"
 
 #: templates/demo/income_statement.html:64
 #: templates/demo_with_images/income_statement.html:64
@@ -8306,23 +8308,23 @@ msgstr ""
 
 #: scripts/payment.pl:1909
 msgid "is bigger than the amount available"
-msgstr ""
+msgstr "lebih besar daripada jumlah yang tersedia"
 
 #: scripts/payment.pl:1655
 msgid "is lesser than 0"
-msgstr ""
+msgstr "kurang daripada 0"
 
 #: scripts/payment.pl:1649
 msgid "is lesser than the amount to be paid"
-msgstr ""
+msgstr "kurang daripada jumlah perlu dibayar"
 
 #: scripts/payment.pl:1877
 msgid "is null"
-msgstr ""
+msgstr "kosong"
 
 #: bin/am.pl:2154
 msgid "localhost"
-msgstr "servidor local"
+msgstr "localhost"
 
 #: t/data/04-gettext.html:3 t/data/04-gettext.html:4
 msgid "nl"
@@ -8334,7 +8336,7 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:487
 msgid "other"
-msgstr ""
+msgstr "lain-lain"
 
 #: sql/Pg-database.sql:3778
 msgid "partial disposal"
@@ -8346,7 +8348,7 @@ msgstr ""
 
 #: bin/arap.pl:1047 bin/io.pl:1842
 msgid "sent"
-msgstr "Enviado"
+msgstr "hantar"
 
 #: sql/Pg-database.sql:3666
 msgid "time"
@@ -8354,17 +8356,20 @@ msgstr ""
 
 #: bin/arap.pl:799
 msgid "time(s)"
-msgstr ""
+msgstr "masa(s)"
 
 #: bin/ic.pl:3228
 msgid "unexpected error!"
-msgstr ""
+msgstr "Kesilapan yang tidak dijangka"
 
 #: scripts/payment.pl:1917 scripts/payment.pl:1934 scripts/payment.pl:1989
 #: scripts/payment.pl:2006
 msgid "use of an overpayment"
-msgstr ""
+msgstr "guna lebihan bayaran"
 
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
+
+#~ msgid "Discover"
+#~ msgstr "Cari"

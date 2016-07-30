@@ -1,72 +1,56 @@
-# #-#-#-#-#  et.po (LedgerSMB 1.1.1)  #-#-#-#-#
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2006
 #
-# Estonian texts:
-#
-#  Author: Andrei Kolu <andrei.kolu@mail.ee>
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
-#, fuzzy
+# Translators:
+# Peeter Pärtel <peeter@sigma.ee>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-28 21:28+0000\n"
-"Last-Translator: Andrei Kolu <andrei.kolu@mail.ee>\n"
+"POT-Creation-Date: 2016-07-30 18:32+0000\n"
+"PO-Revision-Date: 2016-02-13 21:57+0000\n"
+"Last-Translator: Peeter Pärtel <peeter@sigma.ee>\n"
+"Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"language/et/)\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: templates/demo/purchase_order.html:132
 #: templates/demo_with_images/purchase_order.html:132
 #: templates/xedemo/purchase_order.html:132
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: scripts/asset.pl:1012
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "(+) Jääkväärtus"
 
 #: scripts/asset.pl:1014
 msgid "(-) Accum. Dep."
-msgstr ""
+msgstr "(-) Kogunenud amort"
 
 #: scripts/asset.pl:1015
 msgid "(=) NBV"
-msgstr ""
+msgstr "(=) Netoväärtus"
 
 #: templates/demo/statement.html:78
 #: templates/demo_with_images/statement.html:78
 #: templates/xedemo/statement.html:78
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: templates/demo/statement.html:79
 #: templates/demo_with_images/statement.html:79
 #: templates/xedemo/statement.html:79
 msgid "60"
-msgstr ""
+msgstr "60"
 
 #: templates/demo/statement.html:80
 #: templates/demo_with_images/statement.html:80
 #: templates/xedemo/statement.html:80
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: bin/ic.pl:3067
 msgid "A"
@@ -84,7 +68,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:778
 msgid "AIM"
-msgstr ""
+msgstr "AIM"
 
 #: bin/am.pl:2229 scripts/drafts.pl:48 scripts/drafts.pl:194
 #: UI/setup/complete.html:19 UI/setup/confirm_operation.html:83
@@ -119,7 +103,7 @@ msgstr "OR Tehingud"
 
 #: sql/Pg-database.sql:2551
 msgid "AP Voucher"
-msgstr ""
+msgstr "Ostuvautšer"
 
 #: bin/am.pl:2228 scripts/drafts.pl:47 scripts/drafts.pl:193
 #: UI/setup/complete.html:20 UI/setup/confirm_operation.html:84
@@ -153,11 +137,11 @@ msgstr "MR Tehingud"
 
 #: sql/Pg-database.sql:2545
 msgid "AR Voucher"
-msgstr ""
+msgstr "Müügivautšer"
 
 #: bin/ca.pl:252
 msgid "AR/AP"
-msgstr "MR/OR"
+msgstr ""
 
 #: sql/Pg-database.sql:3728
 msgid "Abandonment"
@@ -169,12 +153,11 @@ msgstr "Programmi Info"
 
 #: UI/taxform/details_report.html:23 UI/taxform/summary_report.html:22
 msgid "Acc_trans Sum"
-msgstr ""
+msgstr "Summa"
 
 #: LedgerSMB.pm:1092 LedgerSMB.pm:1093 scripts/setup.pl:866
-#, fuzzy
 msgid "Access Denied"
-msgstr "Ligipääs Keelatud!"
+msgstr "Ligipääs keelatud"
 
 #: bin/aa.pl:656 bin/aa.pl:719 bin/aa.pl:850 bin/aa.pl:1744 bin/aa.pl:1883
 #: bin/aa.pl:2074 bin/aa.pl:2124 bin/am.pl:193 bin/ca.pl:201 bin/gl.pl:549
@@ -195,9 +178,8 @@ msgid "Account"
 msgstr "Konto"
 
 #: UI/payments/use_overpayment2.html:117
-#, fuzzy
 msgid "Account Description"
-msgstr "Tööülesande Kirjeldus"
+msgstr "Konto kirjeldus"
 
 #: bin/ic.pl:2818 bin/ic.pl:3480 scripts/payment.pl:160
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:26
@@ -213,14 +195,13 @@ msgid "Account Number missing!"
 msgstr "Konto Number puudu"
 
 #: scripts/payment.pl:161
-#, fuzzy
 msgid "Account Title"
-msgstr "Konto Tüüp"
+msgstr ""
 
 #: UI/accounts/edit.html:80 UI/taxform/details_report.html:19
 #: UI/taxform/summary_report.html:19
 msgid "Account Type"
-msgstr "Konto Tüüp"
+msgstr "Konto tüüp"
 
 #: bin/am.pl:137
 msgid "Account Type missing!"
@@ -228,15 +209,15 @@ msgstr "Konto Tüüp puudu!"
 
 #: LedgerSMB/GL.pm:236
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "Kontot [_1] ei leitud"
 
 #: bin/gl.pl:1086
 msgid "Account [_1] not found."
-msgstr ""
+msgstr "Kontot [_1] ei leitud."
 
 #: bin/am.pl:326
 msgid "Account deleted!"
-msgstr "Konto on kustutatud!"
+msgstr ""
 
 #: bin/am.pl:440
 msgid "Account does not exist!"
@@ -248,14 +229,12 @@ msgstr "Konto on salvestatud"
 
 #: UI/payments/payments_detail.html:139 UI/reconciliation/report.html:10
 #: UI/reconciliation/search.html:47
-#, fuzzy
 msgid "Account:"
-msgstr "Konto"
+msgstr "Konto:"
 
 #: bin/bp.pl:309 bin/rp.pl:1968
-#, fuzzy
 msgid "Account: [_1]"
-msgstr "Konto"
+msgstr ""
 
 #: bin/ic.pl:1016 UI/Contact/contact.html:69 UI/Contact/contact.html:392
 #: UI/rp-search.html:24
@@ -266,7 +245,7 @@ msgstr "Kontod"
 #: UI/rp-search-generate_income_statement.html:114
 #: UI/rp-search-generate_tax_report.html:92
 msgid "Accrual"
-msgstr "Kapitalisatsioon"
+msgstr "Tekkepõhine"
 
 #: scripts/asset.pl:876
 msgid "Accum. Depreciation"
@@ -283,14 +262,12 @@ msgstr ""
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 #: UI/Contact/contact.html:788 UI/Contact/contact.html:933
 #: UI/Contact/contact.html:1054
-#, fuzzy
 msgid "Actions"
-msgstr "Hinnaalandused"
+msgstr "Tegevused"
 
 #: t/data/04-complex_template.html:496
-#, fuzzy
 msgid "Actions:"
-msgstr "Hinnaalandused"
+msgstr "Tegevused:"
 
 #: UI/am-audit-control.html:23
 msgid "Activate Audit trail"
@@ -326,47 +303,40 @@ msgid "Add Account"
 msgstr "Lisa Konto"
 
 #: sql/Pg-database.sql:2500
-#, fuzzy
 msgid "Add Accounts"
-msgstr "Lisa Konto"
+msgstr "Lisa kontod"
 
 #: bin/ic.pl:63 bin/ic.pl:1936 sql/Pg-database.sql:2452
 msgid "Add Assembly"
 msgstr "Lisa Komplekt"
 
 #: scripts/asset.pl:254
-#, fuzzy
 msgid "Add Asset"
-msgstr "Lisa Komplekt"
+msgstr "Lisa vara"
 
 #: scripts/asset.pl:101
-#, fuzzy
 msgid "Add Asset Class"
-msgstr "Lisa Komplekt"
+msgstr "Lisa varaklass"
 
 #: sql/Pg-database.sql:2598
-#, fuzzy
 msgid "Add Assets"
-msgstr "Lisa Komplekt"
+msgstr "Lisa varad"
 
 #: bin/am.pl:826 bin/am.pl:851 sql/Pg-database.sql:2506
 msgid "Add Business"
 msgstr "Lisa Ettevõte"
 
 #: sql/Pg-database.sql:2596
-#, fuzzy
 msgid "Add Class"
-msgstr "Lisa Standardiseeritud Tööstuskood"
+msgstr ""
 
 #: bin/is.pl:86 bin/is.pl:106
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Kreeditarve"
+msgstr "Lisa kreeditarve"
 
 #: bin/aa.pl:449
-#, fuzzy
 msgid "Add Credit Note"
-msgstr "Kreeditarve"
+msgstr "Lisa kreeditkanne"
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:56
 #: sql/Pg-database.sql:2395
@@ -374,9 +344,8 @@ msgid "Add Customer"
 msgstr "Lisa Klient"
 
 #: bin/ir.pl:77 bin/ir.pl:96
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Deebitarve"
+msgstr "Lisa deebet arve"
 
 #: bin/aa.pl:447
 msgid "Add Debit Note"
@@ -384,7 +353,7 @@ msgstr ""
 
 #: bin/am.pl:670 bin/am.pl:695 sql/Pg-database.sql:2406
 msgid "Add Department"
-msgstr "Lisa Osakond"
+msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:60
 #: sql/Pg-database.sql:2426
@@ -405,20 +374,19 @@ msgstr "Lisa Grupp"
 
 #: bin/pe.pl:61 bin/pe.pl:302 bin/pe.pl:1102
 msgid "Add Job"
-msgstr "Lisa Ülesanne"
+msgstr ""
 
 #: bin/ic.pl:64 bin/ic.pl:1943
 msgid "Add Labor/Overhead"
-msgstr "Lisa Tööjõud/Kulud"
+msgstr "Lisa tööjõu-/üldkulu"
 
 #: bin/am.pl:1157 bin/am.pl:1183 sql/Pg-database.sql:2508
 msgid "Add Language"
 msgstr "Lisa Keel"
 
 #: sql/Pg-database.sql:2453
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Lisa Tööjõud/Kulud"
+msgstr "Lisa üldkulu"
 
 #: bin/pos.pl:106
 msgid "Add POS Invoice"
@@ -466,26 +434,23 @@ msgstr "Lisa Teenus"
 
 #: bin/jc.pl:59 bin/jc.pl:79 bin/jc.pl:1949
 msgid "Add Stores Card"
-msgstr "Lisa Tagavarade Kaart"
+msgstr ""
 
 #: sql/Pg-database.sql:2571
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Lisa Detail"
+msgstr "Lisa maksuvorm"
 
 #: UI/taxform/add_taxform.html:2
-#, fuzzy
 msgid "Add TaxForm"
-msgstr "Lisa Detail"
+msgstr "Lisa maksuvorm"
 
 #: bin/jc.pl:56 bin/jc.pl:1707 bin/jc.pl:1717 bin/jc.pl:1727
 msgid "Add Time Card"
-msgstr "Lisa Ajakaart"
+msgstr ""
 
 #: sql/Pg-database.sql:2471
-#, fuzzy
 msgid "Add Timecard"
-msgstr "Lisa Ajakaart"
+msgstr "Lisa ajakaart"
 
 #: bin/io.pl:2212
 msgid "Add To List"
@@ -514,19 +479,16 @@ msgid "Add Warehouse"
 msgstr "Lisa Kaubaladu"
 
 #: bin/io.pl:2027
-#, fuzzy
 msgid "Add line1"
-msgstr "Lisa Ettevõte"
+msgstr "Lisa rida 1"
 
 #: bin/io.pl:2030
-#, fuzzy
 msgid "Add line2"
-msgstr "Lisa Ettevõte"
+msgstr "Lisa rida 2"
 
 #: bin/io.pl:2034
-#, fuzzy
 msgid "Add line3 "
-msgstr "Lisa Ettevõte"
+msgstr "Lisa rida 3"
 
 #: bin/aa.pl:661 bin/arap.pl:174 bin/ic.pl:3483 bin/ir.pl:495 bin/is.pl:549
 #: bin/oe.pl:479 bin/pe.pl:2286 UI/Contact/contact.html:783
@@ -536,26 +498,22 @@ msgid "Address"
 msgstr "Aadress"
 
 #: t/data/04-complex_template.html:385
-#, fuzzy
 msgid "Address1"
-msgstr "Aadress"
+msgstr "Aadress 1"
 
 #: t/data/04-complex_template.html:420
-#, fuzzy
 msgid "Address:"
-msgstr "Aadress"
+msgstr "Aadress:"
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
-#, fuzzy
 msgid "Address: [_1]"
-msgstr "Aadress"
+msgstr "Aadress: [_1]"
 
 #: t/data/04-complex_template.html:30 UI/Contact/contact.html:72
-#, fuzzy
 msgid "Addresses"
-msgstr "Aadress"
+msgstr "Aadressid"
 
 #: sql/Pg-database.sql:2448
 msgid "Adjust Till"
@@ -574,23 +532,20 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: UI/inventory/adjustment_entry.html:26
-#, fuzzy
 msgid "Adjustment"
-msgstr "Manus"
+msgstr "Korrigeerimine"
 
 #: UI/inventory/adjustment_entry.html:13
-#, fuzzy
 msgid "Adjustment Date"
-msgstr "Maksetähtaeg"
+msgstr "Korrigeerimise kuupäev"
 
 #: UI/employee.html:101
 msgid "Admin"
 msgstr ""
 
 #: sql/Pg-database.sql:2572
-#, fuzzy
 msgid "Admin Users"
-msgstr "Lisa Kasutaja"
+msgstr ""
 
 #: bin/rp.pl:981 UI/rp-search-aging.html:67
 msgid "Aged"
@@ -598,7 +553,7 @@ msgstr "Aegunud"
 
 #: bin/rp.pl:978
 msgid "Aged Overdue"
-msgstr "Aegunud Võlgnevused"
+msgstr ""
 
 #: bin/pe.pl:843 bin/pe.pl:931 bin/pe.pl:1405 bin/pe.pl:1610 bin/rp.pl:274
 #: UI/Contact/search.html:315 UI/journal/search.html:163
@@ -608,16 +563,15 @@ msgstr "Kõik"
 
 #: UI/rp-search-generate_trial_balance.html:100
 msgid "All Accounts"
-msgstr "Kõik Kontod"
+msgstr ""
 
 #: bin/aa.pl:1774
-#, fuzzy
 msgid "All Invoices"
-msgstr "Kaubaarved"
+msgstr "Kõik arved"
 
 #: sql/Pg-database.sql:2458
 msgid "All Items"
-msgstr "Kõik Kaubaartiklid"
+msgstr ""
 
 #: templates/demo/statement.html:138
 #: templates/demo_with_images/statement.html:138
@@ -713,14 +667,12 @@ msgid "Amount Due"
 msgstr "Maksmisele kuuluv summa"
 
 #: UI/reconciliation/search.html:28
-#, fuzzy
 msgid "Amount From"
-msgstr "Summa"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:148
-#, fuzzy
 msgid "Amount to be used"
-msgstr "Maksmisele kuuluv summa"
+msgstr ""
 
 #: sql/Pg-database.sql:3697
 msgid "Annual Straight Line Daily"
@@ -735,9 +687,8 @@ msgid "Any"
 msgstr ""
 
 #: scripts/payment.pl:1305
-#, fuzzy
 msgid "Applied discount"
-msgstr "Kaubanduslik Mahahindlus"
+msgstr ""
 
 #: scripts/payment.pl:1894 scripts/payment.pl:1972
 msgid "Applied discount by an overpayment"
@@ -754,12 +705,12 @@ msgstr ""
 #: scripts/asset.pl:686 scripts/asset.pl:765 scripts/asset.pl:836
 #: scripts/asset.pl:903 UI/reconciliation/report.html:280
 msgid "Approve"
-msgstr ""
+msgstr "Kiida heaks"
 
 #: scripts/recon.pl:190 UI/asset/search_reports.html:60 UI/batch/filter.html:19
 #: UI/reconciliation/search.html:59
 msgid "Approved"
-msgstr ""
+msgstr "Heaks kiidetud"
 
 #: scripts/recon.pl:193
 msgid "Approved By"
@@ -794,9 +745,8 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: bin/ir.pl:1391 bin/is.pl:1485
-#, fuzzy
 msgid "Are you sure you want to delete Invoice Number [_1]?"
-msgstr "Kas oled kindel, et soovid kustutada Kaubaarve Number"
+msgstr ""
 
 #: bin/oe.pl:2352
 msgid "Are you sure you want to delete Order Number"
@@ -808,12 +758,11 @@ msgstr "Kas oled kindel, et soovid Koteeringu Number"
 
 #: bin/aa.pl:1458
 msgid "Are you sure you want to delete Transaction"
-msgstr "Kas oled kindel, et soovid kustutada kande"
+msgstr ""
 
 #: bin/jc.pl:1309
-#, fuzzy
 msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-msgstr "Oled kindel, et soovid kustutada ajakardi"
+msgstr ""
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
@@ -821,11 +770,11 @@ msgstr "Kas olete kindel, et soovite eemaldada märgitud väljad järjekorrast?"
 
 #: bin/pe.pl:515 bin/pe.pl:755
 msgid "As of"
-msgstr "nagu"
+msgstr ""
 
 #: bin/ic.pl:1291
 msgid "Assemblies"
-msgstr "Koosteosad"
+msgstr ""
 
 #: bin/ic.pl:4036
 msgid "Assemblies restocked!"
@@ -834,11 +783,11 @@ msgstr "Koosteosade laovaru täiendatud!"
 #: bin/ic.pl:1897 bin/pe.pl:354 bin/pe.pl:533 bin/pe.pl:1005
 #: sql/Pg-database.sql:2465
 msgid "Assembly"
-msgstr "Komplekt"
+msgstr ""
 
 #: bin/pe.pl:643
 msgid "Assembly stocked!"
-msgstr "Komplekt ladustatud"
+msgstr ""
 
 #: bin/gl.pl:527 LedgerSMB/DBObject/Asset.pm:111 UI/accounts/edit.html:84
 #: UI/journal/search.html:169 sql/Pg-database.sql:3766
@@ -848,67 +797,58 @@ msgstr "Vara"
 #: scripts/asset.pl:168 UI/asset/edit_asset.html:151
 #: UI/asset/edit_class.html:35 UI/asset/search_asset.html:142
 #: UI/asset/search_class.html:43
-#, fuzzy
 msgid "Asset Account"
-msgstr "Kontode Nimekiri"
+msgstr "Vara konto"
 
 #: LedgerSMB/DBObject/Asset_Class.pm:68 scripts/asset.pl:635
 #: UI/asset/begin_approval.html:15 UI/asset/begin_report.html:14
 #: UI/asset/search_reports.html:12
-#, fuzzy
 msgid "Asset Class"
-msgstr "Vara"
+msgstr "Varaklass"
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
-msgstr ""
+msgstr "Varaklass:"
 
 #: sql/Pg-database.sql:2594
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Koosteosad"
+msgstr "Varaklassid"
 
 #: scripts/asset.pl:556
-#, fuzzy
 msgid "Asset Depreciation Report"
-msgstr "Kooskõlastamise Raport"
+msgstr "Vara amortisatsiooni aruanne"
 
 #: scripts/asset.pl:558
 msgid "Asset Disposal Report"
-msgstr ""
+msgstr "Vara realiseerimise aruanne"
 
 #: scripts/asset.pl:563
 msgid "Asset Partial Disposal Report"
-msgstr ""
+msgstr "Vara osalise realiseerimise aruanne"
 
 #: scripts/asset.pl:496
-#, fuzzy
 msgid "Asset Tag"
-msgstr "Vara"
+msgstr "Vara silt"
 
 #: templates/demo/balance_sheet.html:73
 #: templates/demo_with_images/balance_sheet.html:73
 #: templates/xedemo/balance_sheet.html:73 sql/Pg-database.sql:2595
-#, fuzzy
 msgid "Assets"
-msgstr "Vara"
+msgstr "Varad"
 
 #: bin/aa.pl:1094 bin/ic.pl:946 bin/ir.pl:991 bin/is.pl:1124 bin/oe.pl:967
 #: UI/journal/journal_entry.html:349
-#, fuzzy
 msgid "Attach"
-msgstr "Manus"
+msgstr "Manusta"
 
 #: UI/file/attachment_screen.html:22
-#, fuzzy
 msgid "Attach File"
-msgstr "Manus"
+msgstr "Manusta fail"
 
 #: bin/aa.pl:1066 bin/ic.pl:918 bin/ir.pl:965 bin/is.pl:1098 bin/oe.pl:941
 #: UI/journal/journal_entry.html:325
-#, fuzzy
 msgid "Attached To"
-msgstr "Manus"
+msgstr ""
 
 #: bin/aa.pl:1065 bin/ic.pl:917 bin/ir.pl:964 bin/is.pl:1097 bin/oe.pl:940
 #: UI/journal/journal_entry.html:324
@@ -923,16 +863,14 @@ msgstr ""
 #: bin/aa.pl:1046 bin/aa.pl:1067 bin/ic.pl:898 bin/ic.pl:919 bin/ir.pl:945
 #: bin/ir.pl:966 bin/is.pl:1078 bin/is.pl:1099 bin/oe.pl:921 bin/oe.pl:942
 #: UI/journal/journal_entry.html:306 UI/journal/journal_entry.html:326
-#, fuzzy
 msgid "Attached at"
-msgstr "Manus"
+msgstr ""
 
 #: bin/aa.pl:1047 bin/aa.pl:1068 bin/ic.pl:899 bin/ic.pl:920 bin/ir.pl:946
 #: bin/ir.pl:967 bin/is.pl:1079 bin/is.pl:1100 bin/oe.pl:922 bin/oe.pl:943
 #: UI/journal/journal_entry.html:307 UI/journal/journal_entry.html:327
-#, fuzzy
 msgid "Attached by"
-msgstr "Manus"
+msgstr ""
 
 #: bin/io.pl:1397 bin/rp.pl:1329
 msgid "Attachment"
@@ -973,19 +911,19 @@ msgstr ""
 
 #: bin/am.pl:1830 UI/am-audit-control.html:6 sql/Pg-database.sql:2496
 msgid "Audit Control"
-msgstr "Audiitorkontroll"
+msgstr "Audit"
 
 #: bin/am.pl:1888
 msgid "Audit trail disabled"
-msgstr "Auditi jälgimine välja lülitatud"
+msgstr ""
 
 #: bin/am.pl:1885
 msgid "Audit trail enabled"
-msgstr "Auditi jälgimine sisse lülitatud"
+msgstr ""
 
 #: bin/am.pl:1895
 msgid "Audit trail removed up to"
-msgstr "Auditi jäljed kustutatud kuni"
+msgstr ""
 
 #: bin/aa.pl:87 bin/ca.pl:79 bin/gl.pl:82 bin/io.pl:83
 #: LedgerSMB/App_State.pm:176
@@ -999,20 +937,19 @@ msgstr "August"
 
 #: UI/Contact/contact.html:1193
 msgid "Author: [_1]"
-msgstr ""
+msgstr "Autor: [_1]"
 
 #: bin/ir.pl:574 bin/is.pl:491 bin/is.pl:671
 msgid "Automatic"
 msgstr ""
 
 #: UI/payments/use_overpayment2.html:118
-#, fuzzy
 msgid "Available"
-msgstr "Maksustatav"
+msgstr "Kasutatav"
 
 #: UI/setup/list_databases.html:7
 msgid "Available Databases"
-msgstr ""
+msgstr "Kasutatavad andmebaasid"
 
 #: UI/payments/use_overpayment2.html:114
 msgid "Available overpayments"
@@ -1024,25 +961,24 @@ msgstr "Keskmised Kulud"
 
 #: bin/ic.pl:1820
 msgid "Avg Cost"
-msgstr "Kesk. Kulud"
+msgstr ""
 
 #: sql/Pg-database.sql:790
-#, fuzzy
 msgid "BCC"
-msgstr "BIC (S.W.I.F.T)"
+msgstr "Pimekoopia"
 
 #: UI/employee.html:157
 msgid "BIC"
-msgstr "BIC (S.W.I.F.T)"
+msgstr ""
 
 #: t/data/04-complex_template.html:557 UI/Contact/contact.html:1051
 #: UI/Contact/contact.html:1100
 msgid "BIC/SWIFT Code"
-msgstr ""
+msgstr "BIC/SWIFT kood"
 
 #: t/data/04-complex_template.html:592
 msgid "BIC/SWIFT Code:"
-msgstr ""
+msgstr "BIC/SWIFT kood:"
 
 #: bin/ic.pl:1205 bin/ic.pl:1435 bin/ic.pl:3066
 msgid "BOM"
@@ -1053,14 +989,12 @@ msgid "Backup"
 msgstr "Varukoopia"
 
 #: UI/setup/confirm_operation.html:64
-#, fuzzy
 msgid "Backup DB"
-msgstr "Varukoopia"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:71
-#, fuzzy
 msgid "Backup Roles"
-msgstr "Varukoopia"
+msgstr ""
 
 #: scripts/recon.pl:187 UI/journal/search.html:283
 msgid "Balance"
@@ -1070,9 +1004,8 @@ msgstr "Bilanss"
 #: templates/demo_with_images/invoice.html:197
 #: templates/demo_with_images/invoice.tex:169 templates/xedemo/invoice.html:197
 #: templates/xedemo/invoice.tex:168
-#, fuzzy
 msgid "Balance Due"
-msgstr "Bilanss"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:63
 #: templates/demo_with_images/balance_sheet.html:63
@@ -1082,20 +1015,17 @@ msgid "Balance Sheet"
 msgstr "Bilansiaruanne"
 
 #: UI/Contact/contact.html:1109
-#, fuzzy
 msgid "Bank Account"
-msgstr "Seosta Kontod"
+msgstr "Arveldusarve"
 
 #: t/data/04-complex_template.html:601
-#, fuzzy
 msgid "Bank Account:"
-msgstr "Seosta Kontod"
+msgstr "Arveldusarve:"
 
 #: t/data/04-complex_template.html:32 t/data/04-complex_template.html:554
 #: UI/Contact/contact.html:74 UI/Contact/contact.html:1048
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Seosta Kontod"
+msgstr "Arveldusarved"
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1114,28 +1044,24 @@ msgid "Batch Control Code"
 msgstr ""
 
 #: UI/create_batch.html:28
-#, fuzzy
 msgid "Batch Date"
-msgstr "Järgmine Kuupäev"
+msgstr ""
 
 #: bin/rp.pl:2014
-#, fuzzy
 msgid "Batch Description"
-msgstr "Selgitus"
+msgstr ""
 
 #: LedgerSMB/GL.pm:178 LedgerSMB/IR.pm:359 LedgerSMB/IS.pm:1273
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Mass. Väljatrükk"
+msgstr ""
 
 #: bin/aa.pl:632
 msgid "Batch Name"
 msgstr ""
 
 #: UI/create_batch.html:13
-#, fuzzy
 msgid "Batch Number"
-msgstr "Detaili Number"
+msgstr ""
 
 #: sql/Pg-database.sql:2593
 msgid "Batch Printing"
@@ -1143,9 +1069,8 @@ msgstr "Mass. Väljatrükk"
 
 #: UI/batch/filter.html:3 UI/batch/filter.html:7
 #: UI/batch/search_transactions.html:6
-#, fuzzy
 msgid "Batch Selection"
-msgstr "Mass. Väljatrükk"
+msgstr ""
 
 #: UI/batch/filter.html:11 UI/create_batch.html:46
 msgid "Batch Type"
@@ -1161,37 +1086,31 @@ msgstr "Bcc"
 
 #: bin/arap.pl:1033 bin/io.pl:1817
 msgid "Bcc: [_1]"
-msgstr ""
+msgstr "Pimekoopia: [_1]"
 
 #: UI/reconciliation/report.html:20
-#, fuzzy
 msgid "Beginning Statement Balance:"
-msgstr "Bilansiaruanne"
+msgstr ""
 
 #: scripts/taxform.pl:134
-#, fuzzy
 msgid "Beginning year required"
-msgstr "Algsaldo"
+msgstr ""
 
 #: sql/Pg-database.sql:631
-#, fuzzy
 msgid "Billing"
-msgstr "miljard"
+msgstr "Maksja"
 
 #: sql/Pg-database.sql:793
-#, fuzzy
 msgid "Billing BCC"
-msgstr "miljard"
+msgstr "Maksja BCC"
 
 #: sql/Pg-database.sql:792
-#, fuzzy
 msgid "Billing CC"
-msgstr "miljard"
+msgstr "Maksja CC"
 
 #: sql/Pg-database.sql:791
-#, fuzzy
 msgid "Billing Email"
-msgstr "miljard"
+msgstr "Maksja e-posti"
 
 #: LedgerSMB/Num2text.pm:104
 msgid "Billion"
@@ -1229,12 +1148,11 @@ msgstr "Pakendi Saatelehed"
 
 #: bin/am.pl:1879
 msgid "Books are open"
-msgstr "Žurnaalid on avatud"
+msgstr ""
 
 #: UI/accounts/yearend.html:66
-#, fuzzy
 msgid "Books closed on"
-msgstr "Žurnaalid on avatud"
+msgstr ""
 
 #: bin/ic.pl:2921
 msgid "Break"
@@ -1242,30 +1160,27 @@ msgstr "Katkestus"
 
 #: scripts/account.pl:66
 msgid "Bug: No such account"
-msgstr ""
+msgstr "Eelarve: Konto puudub"
 
 #: bin/is.pl:424 bin/oe.pl:416 bin/pos.pl:279
 msgid "Business"
 msgstr "Ettevõte"
 
 #: UI/payments/payments_filter.html:78
-#, fuzzy
 msgid "Business Class"
-msgstr "Ettevõte"
+msgstr ""
 
 #: UI/am-defaults.html:26
 msgid "Business Number"
 msgstr "Ettevõtte Registrinumber"
 
 #: UI/Contact/contact.html:571
-#, fuzzy
 msgid "Business Type"
-msgstr "Ettevõte"
+msgstr "Ettevõtte tüüp"
 
 #: t/data/04-complex_template.html:294
-#, fuzzy
 msgid "Business Type:"
-msgstr "Ettevõte"
+msgstr "Ettevõtte tüüp:"
 
 #: bin/am.pl:874
 msgid "Business deleted!"
@@ -1276,18 +1191,16 @@ msgid "Business saved!"
 msgstr "Ettevõte salvestatud"
 
 #: UI/payments/payments_detail.html:173
-#, fuzzy
 msgid "Business:"
-msgstr "Ettevõte"
+msgstr "Ettevõte:"
 
 #: bin/oe.pl:1867
 msgid "C"
-msgstr "C"
+msgstr ""
 
 #: sql/Pg-database.sql:789
-#, fuzzy
 msgid "CC"
-msgstr "C"
+msgstr "Koopia"
 
 #: bin/ic.pl:535 bin/ic.pl:721 UI/accounts/edit.html:261
 msgid "COGS"
@@ -1295,16 +1208,15 @@ msgstr "Müügikulud"
 
 #: UI/Contact/pricelist.html:100
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: UI/reconciliation/report.html:52 UI/reconciliation/upload.html:16
 msgid "CSV File:"
-msgstr ""
+msgstr "CSV fail:"
 
 #: bin/am.pl:382 bin/ca.pl:163 bin/gl.pl:869 LedgerSMB/ScriptLib/Company.pm:412
-#, fuzzy
 msgid "CSV Report"
-msgstr "Aruanded"
+msgstr ""
 
 #: UI/rp-search-generate_trial_balance.html:64
 msgid "Calc. Precision"
@@ -1316,90 +1228,80 @@ msgstr ""
 
 #: bin/ir.pl:755 bin/is.pl:489 bin/is.pl:842
 msgid "Calculate Taxes"
-msgstr ""
+msgstr "Arvuta maksud"
 
 #: bin/is.pl:631
-#, fuzzy
 msgid "Can't void a voided invoice!"
-msgstr "Arvet ei saa kustutada"
+msgstr "Tühistatud arvet ei saa tühistada!"
 
 #: bin/io.pl:2216
-#, fuzzy
 msgid "Cancel"
-msgstr "Bilanss"
+msgstr "Tühista"
 
 #: scripts/setup.pl:117 scripts/setup.pl:123 scripts/setup.pl:139
 #: scripts/setup.pl:151
 msgid "Cancel?"
-msgstr ""
+msgstr "Tühista?"
 
 #: bin/jc.pl:1193
 msgid "Cannot add stores card for a completed job!"
-msgstr "Ei saa lisada tagavarade kaarti juba lõpetatud tööülesandele!"
+msgstr ""
 
 #: bin/jc.pl:1177
 msgid "Cannot add time card for a completed job!"
-msgstr "Ei saa lisada ajakaarti juba lõpetatud tööülesandele!"
+msgstr ""
 
 #: bin/jc.pl:1190
 msgid "Cannot change stores card for a completed job!"
-msgstr "Ei saa muuta tagavarade kaarti juba lõpetatud tööülesandele!"
+msgstr ""
 
 #: bin/jc.pl:1174
 msgid "Cannot change time card for a completed job!"
-msgstr "Ei saa muuta ajakaarti juba lõpetatud tööülesandele!"
+msgstr ""
 
 #: bin/ic.pl:157
-#, fuzzy
 msgid "Cannot create Assembly; Income account does not exist!"
-msgstr "Tulude konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:168
-#, fuzzy
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr "Müügikulude kontot puudu!"
+msgstr ""
 
 #: bin/ic.pl:165
-#, fuzzy
 msgid "Cannot create Labor; Inventory account does not exist!"
-msgstr "Laoseisu konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:135
-#, fuzzy
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr "Müügikulude kontot puudu!"
+msgstr ""
 
 #: bin/ic.pl:132
-#, fuzzy
 msgid "Cannot create Part; Income account does not exist!"
-msgstr "Tulude konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:129
-#, fuzzy
 msgid "Cannot create Part; Inventory account does not exist!"
-msgstr "Laoseisu konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:148
-#, fuzzy
 msgid "Cannot create Service; Expense account does not exist!"
-msgstr "Kulude konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:144
-#, fuzzy
 msgid "Cannot create Service; Income account does not exist!"
-msgstr "Tulude konto puudu!"
+msgstr ""
 
 #: bin/am.pl:329
 msgid "Cannot delete account!"
-msgstr "Kontot ei saa kustutada!"
+msgstr ""
 
 #: bin/am.pl:321
 msgid "Cannot delete default account!"
-msgstr "Tähtaegunud võla kontot ei saa kustutada!"
+msgstr ""
 
 #: bin/ir.pl:1409 bin/is.pl:1510
 msgid "Cannot delete invoice!"
-msgstr "Arvet ei saa kustutada"
+msgstr ""
 
 #: bin/ic.pl:3798
 msgid "Cannot delete item!"
@@ -1410,7 +1312,6 @@ msgid "Cannot delete order!"
 msgstr "Tellimust ei saa kustutada!"
 
 #: bin/gl.pl:1121
-#, fuzzy
 msgid "Cannot delete posted transaction"
 msgstr "Kannet ei saa kustutada!"
 
@@ -1420,11 +1321,11 @@ msgstr "Koteeringut ei saa kustutada!"
 
 #: bin/jc.pl:1325
 msgid "Cannot delete time card!"
-msgstr "Ei saa kustutada ajakaarti!"
+msgstr ""
 
 #: bin/aa.pl:1483
 msgid "Cannot delete transaction!"
-msgstr "Kannet ei saa kustutada!"
+msgstr ""
 
 #: scripts/setup.pl:68 scripts/setup.pl:78
 msgid "Cannot find Contrib script [_1] in [_2]."
@@ -1465,7 +1366,7 @@ msgstr "Kontot ei saa salvestada!"
 
 #: bin/am.pl:1794
 msgid "Cannot save defaults!"
-msgstr "Ei saa salvestada tähtaegunud võlgu!"
+msgstr ""
 
 #: bin/oe.pl:2292
 msgid "Cannot save order!"
@@ -1481,37 +1382,35 @@ msgstr "Koteeringut ei saa salvestada!"
 
 #: bin/jc.pl:1160
 msgid "Cannot save stores card for a closed period!"
-msgstr "Ei saa salvestada tagavarade kaarti juba suletud perioodil!"
+msgstr ""
 
 #: bin/jc.pl:1200
 msgid "Cannot save stores card!"
-msgstr "Ei saa salvestada tagavarade kaarti!"
+msgstr ""
 
 #: bin/am.pl:1805
-#, fuzzy
 msgid "Cannot save taxes!"
-msgstr "Tellimust ei saa salvestada!"
+msgstr "Makse ei saa salvestada!"
 
 #: bin/jc.pl:1159
 msgid "Cannot save time card for a closed period!"
-msgstr "Ei saa salvestada ajakaarti juba suletud perioodil!"
+msgstr ""
 
 #: bin/jc.pl:1184
 msgid "Cannot save time card!"
-msgstr "Ajakaarti ei saa salvestada!"
+msgstr ""
 
 #: bin/am.pl:145
 msgid "Cannot set account for more than one of AR, AP or IC"
 msgstr "Konto saab olla, kas Nõue, Kohustuse või Tulu/Kulu tüüpi"
 
 #: bin/am.pl:166
-#, fuzzy
 msgid "Cannot set multiple options for [_1]"
-msgstr "Ei saa märgistada mitut valikut"
+msgstr ""
 
 #: bin/pe.pl:646
 msgid "Cannot stock Assembly!"
-msgstr "Komplekti pole võimalik ladustada!"
+msgstr ""
 
 #: bin/ic.pl:4039
 msgid "Cannot stock assemblies!"
@@ -1526,16 +1425,15 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:44
 #: templates/xedemo/timecard.tex:27
 msgid "Card ID"
-msgstr ""
+msgstr "Kaardi ID"
 
-#: bin/ic.pl:1069 pos.conf.pl:43 sql/Pg-database.sql:2416
+#: bin/ic.pl:1069 sql/Pg-database.sql:2416
 msgid "Cash"
 msgstr "Kassaseis"
 
 #: UI/payments/payment2.html:229 UI/payments/search.html:56
-#, fuzzy
 msgid "Cash Account"
-msgstr "Maksukonto"
+msgstr "Raha konto"
 
 #: bin/ps.pl:288
 msgid "Cash Breakdown:"
@@ -1547,12 +1445,11 @@ msgstr "Cc"
 
 #: bin/arap.pl:1032 bin/io.pl:1816
 msgid "Cc: [_1]"
-msgstr ""
+msgstr "Koopia: [_1]"
 
 #: sql/Pg-database.sql:777
-#, fuzzy
 msgid "Cell Phone"
-msgstr "Kodune Telefon"
+msgstr "Mobiil"
 
 #: bin/pos.pl:564
 msgid "Change"
@@ -1560,7 +1457,7 @@ msgstr "Tagasi"
 
 #: UI/users/preferences.html:24
 msgid "Change Password"
-msgstr "Muuda Parool"
+msgstr "Muuda salasõna"
 
 #: LedgerSMB/ScriptLib/Company.pm:960 scripts/employee.pl:229
 msgid "Changes not saved.  Please try again."
@@ -1571,23 +1468,21 @@ msgid "Chargeable"
 msgstr "Maksustatav"
 
 #: bin/jc.pl:515 bin/jc.pl:529
-#, fuzzy
 msgid "Chargeout Rate"
-msgstr "Maksustatav"
+msgstr ""
 
 #: bin/am.pl:183 bin/ca.pl:100 sql/Pg-database.sql:2480
 #: sql/Pg-database.sql:2581
 msgid "Chart of Accounts"
 msgstr "Kontoplaan"
 
-#: bin/bp.pl:96 pos.conf.pl:42 sql/Pg-database.sql:2538
+#: bin/bp.pl:96 sql/Pg-database.sql:2538
 msgid "Check"
 msgstr "Kontrolli"
 
 #: bin/pos.pl:343
-#, fuzzy
 msgid "Check ID"
-msgstr "Kontrolli"
+msgstr ""
 
 #: bin/ic.pl:3836
 msgid "Check Inventory"
@@ -1606,14 +1501,12 @@ msgid "Checking Job [_1]"
 msgstr ""
 
 #: sql/Pg-database.sql:2487
-#, fuzzy
 msgid "Checks"
-msgstr "Kontrolli"
+msgstr ""
 
 #: UI/payments/payment1_5.html:23
-#, fuzzy
 msgid "Choose a company"
-msgstr "Firma"
+msgstr "Vali ettevõte"
 
 #: bin/arap.pl:176 t/data/04-complex_template.html:386
 #: UI/Contact/contact.html:784 UI/Contact/contact.html:872
@@ -1623,7 +1516,6 @@ msgid "City"
 msgstr "Linn"
 
 #: t/data/04-complex_template.html:445
-#, fuzzy
 msgid "City:"
 msgstr "Linn"
 
@@ -1633,9 +1525,8 @@ msgstr ""
 
 #: scripts/recon.pl:304 UI/reconciliation/report.html:70
 #: UI/reconciliation/report.html:133
-#, fuzzy
 msgid "Clear date"
-msgstr "Laekunud"
+msgstr "Laekumise kuupäev"
 
 #: UI/rc-reconciliation.html:80 UI/reconciliation/report.html:68
 #: UI/reconciliation/report.html:131 UI/reconciliation/report.html:192
@@ -1643,9 +1534,8 @@ msgid "Cleared"
 msgstr "Laekunud"
 
 #: UI/reconciliation/report.html:65
-#, fuzzy
 msgid "Cleared Transactions"
-msgstr "Viia läbi Tehing"
+msgstr "Laekunud tehingud"
 
 #: bin/jc.pl:638
 msgid "Clocked"
@@ -1656,9 +1546,8 @@ msgid "Close Books up to"
 msgstr "Sulge Žurnaalid kuni"
 
 #: bin/ps.pl:212 sql/Pg-database.sql:2403
-#, fuzzy
 msgid "Close Till"
-msgstr "Suletud"
+msgstr ""
 
 #: bin/aa.pl:1600 bin/aa.pl:1991 bin/ic.pl:1077 bin/ic.pl:1585 bin/ic.pl:1588
 #: bin/jc.pl:315 bin/jc.pl:1425 bin/oe.pl:348 bin/oe.pl:1422 bin/oe.pl:1942
@@ -1686,28 +1575,24 @@ msgid "Company"
 msgstr "Firma"
 
 #: bin/am.pl:77
-#, fuzzy
 msgid "Company Address"
-msgstr "Firma Nimi"
+msgstr "Ettevõtte aadress"
 
 #: bin/am.pl:79
-#, fuzzy
 msgid "Company Fax"
-msgstr "Firma Nimi"
+msgstr "Ettevõtte faks"
 
 #: bin/am.pl:76 UI/Contact/history_filter.html:33 UI/Contact/search.html:31
 msgid "Company Name"
 msgstr "Firma Nimi"
 
 #: bin/am.pl:78
-#, fuzzy
 msgid "Company Phone"
-msgstr "Firma Nimi"
+msgstr "Ettevõtte telefon"
 
 #: UI/am-company-logo.html:7
-#, fuzzy
 msgid "Company: [_1]"
-msgstr "Firma"
+msgstr "Ettevõte: [_1]"
 
 #: UI/rp-search-generate_balance_sheet.html:17
 #: UI/rp-search-generate_income_statement.html:57
@@ -1716,7 +1601,7 @@ msgstr "Võrdlus perioodiga"
 
 #: bin/pe.pl:218 bin/pe.pl:232 bin/pe.pl:538 bin/pe.pl:1010
 msgid "Completed"
-msgstr "Lõpetatud"
+msgstr ""
 
 #: UI/payments/check_job.html:24
 msgid "Completed Successfully"
@@ -1724,7 +1609,7 @@ msgstr ""
 
 #: bin/ic.pl:1292 sql/Pg-database.sql:2466
 msgid "Components"
-msgstr "Komponendid"
+msgstr ""
 
 #: UI/am-userconfig.html:21 UI/users/preferences.html:34
 msgid "Confirm"
@@ -1749,19 +1634,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:2436
 msgid "Consolidate"
-msgstr "Koonda"
+msgstr ""
 
 #: bin/oe.pl:1737 bin/oe.pl:1793
 msgid "Consolidate Orders"
-msgstr "Tellimuste Koondamine"
+msgstr ""
 
 #: bin/oe.pl:1318
 msgid "Consolidate Purchase Orders"
-msgstr "Ostutellimuste Koondamine"
+msgstr ""
 
 #: bin/oe.pl:1262
 msgid "Consolidate Sales Orders"
-msgstr "Müügitellimuste Koondamine"
+msgstr ""
 
 #: bin/io.pl:2102 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
@@ -1785,18 +1670,16 @@ msgstr "Kontakt"
 #: t/data/04-complex_template.html:31 UI/Contact/contact.html:73
 #: UI/Contact/contact.html:932 UI/Contact/contact.html:1022
 #: UI/Contact/history_filter.html:41
-#, fuzzy
 msgid "Contact Info"
-msgstr "Kontakt"
+msgstr "Kontakti info"
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
-#, fuzzy
 msgid "Contact Info:"
-msgstr "Kontakt"
+msgstr "Kontakti info:"
 
 #: t/data/04-complex_template.html:491 UI/Contact/contact.html:927
 msgid "Contact Information"
-msgstr ""
+msgstr "Kontakti info"
 
 #: UI/payments/payments_detail.html:374
 msgid "Contact Total (if paying \"some\")"
@@ -1825,14 +1708,12 @@ msgstr "Ammortisatsioon"
 
 #: bin/arap.pl:168 UI/Contact/contact.html:292 UI/Contact/search.html:35
 #: UI/taxform/summary_report.html:21
-#, fuzzy
 msgid "Control Code"
-msgstr "Tööseadusandlus"
+msgstr "Kontrollkood"
 
 #: UI/create_batch.html:47
-#, fuzzy
 msgid "Control Number"
-msgstr "Konto Number"
+msgstr "Kontrollnumber"
 
 #: bin/rp.pl:1358 UI/io-email.html:65
 msgid "Copies"
@@ -1840,21 +1721,19 @@ msgstr "Koopiat"
 
 #: UI/setup/confirm_operation.html:42
 msgid "Copy"
-msgstr ""
+msgstr "Kopeeri"
 
 #: bin/am.pl:482 bin/am.pl:498
 msgid "Copy to COA"
 msgstr "Kopeeri kontoplaani"
 
 #: bin/aa.pl:967 bin/ir.pl:890 bin/is.pl:998
-#, fuzzy
 msgid "Copy to New"
-msgstr "Kopeeri kontoplaani"
+msgstr "Kopeeri uueks"
 
 #: UI/setup/confirm_operation.html:35
-#, fuzzy
 msgid "Copy to New Name"
-msgstr "Firma Nimi"
+msgstr "Kopeeri uueks nimega"
 
 #: bin/ic.pl:2820 bin/ic.pl:3065 bin/jc.pl:890 bin/oe.pl:3512
 msgid "Cost"
@@ -1881,9 +1760,8 @@ msgid "Could not transfer Inventory!"
 msgstr "Laoseisu ei saa ümber paigutada!"
 
 #: UI/inventory/adjustment_entry.html:24
-#, fuzzy
 msgid "Counted"
-msgstr "Riik"
+msgstr ""
 
 #: bin/io.pl:2046 scripts/taxform.pl:282 t/data/04-complex_template.html:389
 #: UI/Admin/edit_user.html:127 UI/Contact/contact.html:174
@@ -1894,42 +1772,36 @@ msgid "Country"
 msgstr "Riik"
 
 #: UI/setup/select_coa.html:30
-#, fuzzy
 msgid "Country Code"
-msgstr "Riik"
+msgstr "Riigi kood"
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
-#, fuzzy
 msgid "Country:"
-msgstr "Riik"
+msgstr "Riik:"
 
 #: UI/create_batch.html:2
-#, fuzzy
 msgid "Create Batch"
-msgstr "Uus Andmekogu"
+msgstr ""
 
 #: scripts/setup.pl:145
-#, fuzzy
 msgid "Create Database?"
-msgstr "Uus Andmekogu"
+msgstr "Lisame andmebaasi?"
 
 #: UI/create_batch.html:9
-#, fuzzy
 msgid "Create New Batch"
-msgstr "Uus Andmekogu"
+msgstr ""
 
 #: UI/reconciliation/upload.html:56
 msgid "Create New Report"
-msgstr ""
+msgstr "Lisa uus aruanne"
 
 #: UI/taxform/add_taxform.html:13
 msgid "Create New TaxForm"
 msgstr ""
 
 #: UI/setup/new_user.html:109
-#, fuzzy
 msgid "Create User"
-msgstr "Uus Andmekogu"
+msgstr "Lisa kasutaja"
 
 #: UI/asset/search_reports.html:47 UI/batch/filter.html:33
 #: UI/batch/search_transactions.html:26 UI/create_batch.html:49
@@ -1960,23 +1832,20 @@ msgid "Credit Limit"
 msgstr "Krediidilimiit"
 
 #: t/data/04-complex_template.html:201
-#, fuzzy
 msgid "Credit Limit:"
-msgstr "Krediidilimiit"
+msgstr "Krediidilimiit:"
 
 #: sql/Pg-database.sql:2549
-#, fuzzy
 msgid "Credit Note"
-msgstr "Kreeditarve"
+msgstr ""
 
 #: scripts/payment.pl:166
-#, fuzzy
 msgid "Credits"
-msgstr "Kreedit"
+msgstr ""
 
 #: bin/ps.pl:182 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
-msgstr ""
+msgstr "Kumulatiivne viga:"
 
 #: bin/ps.pl:305
 msgid "Cumulative Error: [_1]"
@@ -2037,9 +1906,8 @@ msgid "Customer History"
 msgstr "Kliendi Ajalugu"
 
 #: UI/payments/payment1.html:36 UI/payments/payment2.html:30
-#, fuzzy
 msgid "Customer Name"
-msgstr "Kliendi Number"
+msgstr "Kliendi nimi"
 
 #: bin/aa.pl:1660 bin/am.pl:67 bin/io.pl:1984 scripts/payment.pl:326
 #: UI/am-defaults.html:176 UI/Contact/history_filter.html:69
@@ -2048,9 +1916,8 @@ msgid "Customer Number"
 msgstr "Kliendi Number"
 
 #: UI/Contact/search.html:8
-#, fuzzy
 msgid "Customer Search"
-msgstr "Kliendi Number"
+msgstr "Kliendi otsing"
 
 #: bin/aa.pl:1306 bin/is.pl:1385 bin/oe.pl:2261 bin/pe.pl:2872 bin/pos.pl:687
 msgid "Customer missing!"
@@ -2065,13 +1932,12 @@ msgid "Customer/Vendor Accounts"
 msgstr ""
 
 #: bin/bp.pl:303
-#, fuzzy
 msgid "Customer: [_1]"
-msgstr "Klient"
+msgstr ""
 
 #: sql/Pg-database.sql:2547
 msgid "Customers"
-msgstr "Kliendid"
+msgstr ""
 
 #: scripts/asset.pl:875
 msgid "D M"
@@ -2084,7 +1950,7 @@ msgstr "Sünniaeg"
 
 #: t/data/04-complex_template.html:106
 msgid "DOB:"
-msgstr ""
+msgstr "Sünnikuupäev:"
 
 #: bin/aa.pl:1296 scripts/payment.pl:437
 msgid "Data not saved.  Please try again."
@@ -2110,14 +1976,12 @@ msgid "Database Management Console"
 msgstr ""
 
 #: UI/setup/complete.html:8
-#, fuzzy
 msgid "Database Operation Complete"
-msgstr "Andmebaasi administreerimine"
+msgstr ""
 
 #: scripts/setup.pl:144
-#, fuzzy
 msgid "Database does not exist."
-msgstr "ei eksisteeri"
+msgstr ""
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2189,17 +2053,15 @@ msgstr "Kuupäev"
 
 #: UI/am-userconfig.html:25 UI/users/preferences.html:39
 msgid "Date Format"
-msgstr "Kuupäeva Formaat"
+msgstr "Kuupäeva formaat"
 
 #: UI/reconciliation/search.html:10
-#, fuzzy
 msgid "Date From"
-msgstr "Kuupäeva Formaat"
+msgstr ""
 
 #: UI/payments/payments_filter.html:99
-#, fuzzy
 msgid "Date From:"
-msgstr "Kuupäeva Formaat"
+msgstr ""
 
 #: bin/aa.pl:1711 bin/aa.pl:2085
 msgid "Date Paid"
@@ -2210,41 +2072,36 @@ msgid "Date Received"
 msgstr "Kättesaamise kuupäev"
 
 #: UI/payments/search.html:88 UI/payments/search.html:102
-#, fuzzy
 msgid "Date Reversed"
-msgstr "Kättesaamise kuupäev"
+msgstr ""
 
 #: UI/payments/payments_filter.html:107
-#, fuzzy
 msgid "Date To:"
-msgstr "Kuupäev"
+msgstr ""
 
 #: UI/payments/payment1.html:57
-#, fuzzy
 msgid "Date from"
-msgstr "Kuupäeva Formaat"
+msgstr ""
 
 #: bin/jc.pl:1142
 msgid "Date missing!"
-msgstr "Kuupäev puudub!"
+msgstr ""
 
 #: UI/Admin/user_search.html:51
-#, fuzzy
 msgid "Date of Birth"
-msgstr "Kuupäeva Formaat"
+msgstr "Sünnikuupäev"
 
 #: bin/oe.pl:3066
 msgid "Date received missing!"
 msgstr "Kattesaamise kuupäev puudub!"
 
 #: bin/aa.pl:1764 UI/Contact/search.html:108 UI/payments/payment1.html:67
-#, fuzzy
 msgid "Date to"
-msgstr "Kuupäev"
+msgstr ""
 
 #: bin/jc.pl:604
 msgid "Date worked"
-msgstr "Töötatud kuupäeval"
+msgstr ""
 
 #: bin/arap.pl:1039 bin/io.pl:1835
 msgid "Date: [_1]"
@@ -2272,14 +2129,12 @@ msgid "Debit Invoice"
 msgstr "Deebitarve"
 
 #: sql/Pg-database.sql:2555
-#, fuzzy
 msgid "Debit Note"
-msgstr "Deebitarve"
+msgstr ""
 
 #: scripts/payment.pl:165
-#, fuzzy
 msgid "Debits"
-msgstr "Deebet"
+msgstr ""
 
 #: bin/aa.pl:91 bin/ca.pl:83 bin/gl.pl:86 bin/io.pl:87
 #: LedgerSMB/App_State.pm:180
@@ -2293,54 +2148,45 @@ msgstr "Detsember"
 
 #: UI/rp-search-generate_balance_sheet.html:43
 #: UI/rp-search-generate_income_statement.html:93
-#, fuzzy
 msgid "Decimal Places"
 msgstr "Komakohad"
 
 #: bin/am.pl:1342
-#, fuzzy
 msgid "Default"
-msgstr "Vaikeväärtused"
+msgstr ""
 
 #: UI/setup/migrate_sl_info.html:61 UI/setup/upgrade_info.html:61
-#, fuzzy
 msgid "Default AP"
-msgstr "Vaikeväärtused"
+msgstr ""
 
 #: UI/setup/migrate_sl_info.html:45 UI/setup/upgrade_info.html:45
-#, fuzzy
 msgid "Default AR"
-msgstr "Vaikeväärtused"
+msgstr ""
 
 #: UI/am-defaults.html:100 UI/setup/migrate_sl_info.html:32
 #: UI/setup/upgrade_info.html:32
-#, fuzzy
 msgid "Default Country"
-msgstr "Riik"
+msgstr ""
 
 #: bin/am.pl:73
-#, fuzzy
 msgid "Default Email BCC"
-msgstr "Vaikimisi Dokumendipõhi"
+msgstr ""
 
 #: bin/am.pl:72
-#, fuzzy
 msgid "Default Email CC"
-msgstr "Vaikimisi Dokumendipõhi"
+msgstr ""
 
 #: bin/am.pl:75
 msgid "Default Email From"
 msgstr ""
 
 #: bin/am.pl:71
-#, fuzzy
 msgid "Default Email To"
-msgstr "Vaikimisi Dokumendipõhi"
+msgstr ""
 
 #: scripts/taxform.pl:283
-#, fuzzy
 msgid "Default Reportable"
-msgstr "Vaikimisi Dokumendipõhi"
+msgstr ""
 
 #: bin/am.pl:1305
 msgid "Default Template"
@@ -2352,7 +2198,7 @@ msgstr "Vaikeväärtused"
 
 #: bin/am.pl:1791
 msgid "Defaults saved!"
-msgstr "Vaikeväärtused salvestatud!"
+msgstr ""
 
 #: bin/aa.pl:945 bin/aa.pl:974 bin/am.pl:102 bin/am.pl:114 bin/am.pl:199
 #: bin/am.pl:253 bin/am.pl:483 bin/am.pl:492 bin/gl.pl:275 bin/ic.pl:857
@@ -2370,45 +2216,39 @@ msgstr "Kustuta"
 
 #: bin/am.pl:314
 msgid "Delete Account"
-msgstr "Kustuta Lonto"
+msgstr ""
 
 #: scripts/vouchers.pl:493
-#, fuzzy
 msgid "Delete Batch"
-msgstr "Kustuta Andmekogu"
+msgstr ""
 
 #: bin/am.pl:1250
-#, fuzzy
 msgid "Delete Language"
-msgstr "Muuda Keel"
+msgstr ""
 
 #: bin/arap.pl:871 bin/arap.pl:877
 msgid "Delete Schedule"
 msgstr "Kustutata Ajakava"
 
 #: bin/jc.pl:1298
-#, fuzzy
 msgid "Delete Timecard"
-msgstr "Ei saa kustutada ajakaarti!"
+msgstr ""
 
 #: scripts/vouchers.pl:499
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Kustutata Ajakava"
+msgstr ""
 
 #: bin/am.pl:1261
-#, fuzzy
 msgid "Deleting a language will also delete the templates for the language [_1]"
 msgstr ""
-"Keele kustutamisele järgneb kõigi selle keele dokumendipõhjade kustutamine"
+"[_1] keele kustutamine kustutab ka kõik selles keeles olevad dokumendipõhjad"
 
 #: templates/demo/invoice.tex:136 templates/demo/request_quotation.html:144
 #: templates/demo_with_images/invoice.tex:136
 #: templates/demo_with_images/request_quotation.html:144
 #: templates/xedemo/invoice.tex:135 templates/xedemo/request_quotation.html:144
-#, fuzzy
 msgid "Delivery"
-msgstr "Tarnetähtaeg"
+msgstr "Üleandmine"
 
 #: bin/io.pl:227 LedgerSMB/ScriptLib/Company.pm:558
 #: UI/Contact/history_filter.html:319 UI/Contact/search.html:288
@@ -2420,9 +2260,8 @@ msgid "Dep. Basis"
 msgstr ""
 
 #: scripts/asset.pl:738
-#, fuzzy
 msgid "Dep. Method"
-msgstr "Meetod"
+msgstr ""
 
 #: scripts/asset.pl:736 scripts/asset.pl:801 scripts/asset.pl:872
 msgid "Dep. Starts"
@@ -2453,26 +2292,24 @@ msgstr "Osakond"
 
 #: bin/am.pl:719
 msgid "Department deleted!"
-msgstr "Osakond kustutatud!"
+msgstr ""
 
 #: bin/am.pl:712
 msgid "Department saved!"
-msgstr "Osakond salvestatud!"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:68
 #: templates/demo_with_images/balance_sheet.html:68
 #: templates/xedemo/balance_sheet.html:68
-#, fuzzy
 msgid "Department:"
-msgstr "Osakond"
+msgstr ""
 
 #: bin/rp.pl:628 bin/rp.pl:986 bin/rp.pl:1741 bin/rp.pl:1932 bin/rp.pl:1973
 #: templates/demo/income_statement.html:72
 #: templates/demo_with_images/income_statement.html:72
 #: templates/xedemo/income_statement.html:72
-#, fuzzy
 msgid "Department: [_1]"
-msgstr "Osakond"
+msgstr ""
 
 #: bin/am.pl:627 UI/payments/payment1.html:28 sql/Pg-database.sql:2579
 msgid "Departments"
@@ -2491,16 +2328,14 @@ msgid "Depreciate Through"
 msgstr ""
 
 #: scripts/asset.pl:677 UI/accounts/edit.html:321 sql/Pg-database.sql:2605
-#, fuzzy
 msgid "Depreciation"
-msgstr "Selgitus"
+msgstr ""
 
 #: scripts/asset.pl:169 UI/asset/edit_asset.html:161
 #: UI/asset/edit_class.html:45 UI/asset/search_asset.html:152
 #: UI/asset/search_class.html:54
-#, fuzzy
 msgid "Depreciation Account"
-msgstr "Kustuta Lonto"
+msgstr ""
 
 #: scripts/asset.pl:170 UI/asset/edit_class.html:23
 #: UI/asset/search_class.html:19
@@ -2599,14 +2434,12 @@ msgstr "Selgitus puudub!"
 
 #: UI/asset/edit_asset.html:61 UI/asset/search_asset.html:55
 #: UI/taxform/add_taxform.html:47
-#, fuzzy
 msgid "Description:"
-msgstr "Selgitus"
+msgstr "Nimetus:"
 
 #: bin/rp.pl:1978
-#, fuzzy
 msgid "Description: [_1]"
-msgstr "Selgitus"
+msgstr ""
 
 #: bin/aa.pl:1620 bin/ic.pl:1081 bin/ic.pl:1599 bin/pe.pl:2519
 #: UI/Contact/history_filter.html:213 UI/Contact/search.html:215
@@ -2615,9 +2448,8 @@ msgid "Detail"
 msgstr "Detail"
 
 #: UI/payments/payments_detail.html:215
-#, fuzzy
 msgid "Details"
-msgstr "Detail"
+msgstr ""
 
 #: scripts/setup.pl:115
 msgid "Development version found.  Please upgrade first"
@@ -2629,7 +2461,7 @@ msgstr "Erinevus"
 
 #: UI/am-defaults.html:48
 msgid "Disable Back Button"
-msgstr ""
+msgstr "Keela tagasi nupp"
 
 #: templates/demo/invoice.html:141 templates/demo/invoice.tex:140
 #: templates/demo/sales_order.html:134 templates/demo/sales_order.tex:121
@@ -2643,12 +2475,11 @@ msgstr ""
 #: templates/xedemo/sales_order.html:134 templates/xedemo/sales_order.tex:121
 #: templates/xedemo/sales_quotation.html:103
 msgid "Disc %"
-msgstr ""
+msgstr "Allahindluse %"
 
 #: LedgerSMB/ScriptLib/Company.pm:556
-#, fuzzy
 msgid "Disc."
-msgstr "Diskonto"
+msgstr ""
 
 #: scripts/payment.pl:903 UI/accounts/edit.html:200 UI/accounts/edit.html:240
 #: UI/am-business-form.html:16 UI/Contact/contact.html:517
@@ -2658,23 +2489,16 @@ msgid "Discount"
 msgstr "Diskonto"
 
 #: bin/am.pl:793
-#, fuzzy
 msgid "Discount %"
-msgstr "Diskonto"
+msgstr ""
 
 #: t/data/04-complex_template.html:242
-#, fuzzy
 msgid "Discount:"
-msgstr "Diskonto"
-
-#: pos.conf.pl:41
-#, fuzzy
-msgid "Discover"
-msgstr "Diskonto"
+msgstr "Allahindlus:"
 
 #: scripts/asset.pl:805
 msgid "Disp. Aquired Value"
-msgstr ""
+msgstr "Näita soetusmaksumust"
 
 #: UI/rp-search-generate_trial_balance.html:53
 msgid "Display Precision"
@@ -2682,23 +2506,23 @@ msgstr ""
 
 #: scripts/asset.pl:679 sql/Pg-database.sql:2603 sql/Pg-database.sql:2606
 msgid "Disposal"
-msgstr ""
+msgstr "Realiseerimine"
 
 #: scripts/asset.pl:873
 msgid "Disposal Date"
-msgstr ""
+msgstr "Realiseerimise kuupäev"
 
 #: scripts/asset.pl:501
 msgid "Disposal Method"
-msgstr ""
+msgstr "Realiseerimise meetod"
 
 #: scripts/asset.pl:867
 msgid "Disposal Report [_1] on date [_2]"
-msgstr ""
+msgstr "Realiseerimise aruanne [_1] kuupäeval [_2]"
 
 #: LedgerSMB.pm:1095
 msgid "Division by 0 error"
-msgstr ""
+msgstr "Viga nulliga jagamisel"
 
 #: bin/io.pl:2330
 msgid "Do not keep field empty [_1]"
@@ -2706,34 +2530,31 @@ msgstr ""
 
 #: scripts/setup.pl:321
 msgid "Don't know what to do with backup"
-msgstr ""
+msgstr "Ei tea, mida teha varukoopiaga"
 
 #: bin/oe.pl:3022 bin/oe.pl:3030
 msgid "Done"
 msgstr "Valmis"
 
 #: scripts/setup.pl:359
-#, fuzzy
 msgid "Double customernumbers"
-msgstr "Kliendi Number"
+msgstr ""
 
 #: scripts/setup.pl:369
-#, fuzzy
 msgid "Double vendornumbers"
-msgstr "Tarnija Number"
+msgstr ""
 
 #: sql/Pg-database.sql:680
 msgid "Dr."
-msgstr ""
+msgstr "Doktor"
 
 #: bin/aa.pl:1155 bin/aa.pl:1430 bin/gl.pl:128
-#, fuzzy
 msgid "Draft Posted"
-msgstr "Postitatud!"
+msgstr "Mustand salvestatud"
 
 #: sql/Pg-database.sql:2568
 msgid "Drafts"
-msgstr ""
+msgstr "Mustandid"
 
 #: bin/ic.pl:512 bin/ic.pl:1168 bin/ic.pl:1181 bin/ic.pl:1657 bin/ic.pl:1883
 msgid "Drawing"
@@ -2761,9 +2582,8 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:78 templates/xedemo/invoice.html:108
 #: templates/xedemo/invoice.tex:118 templates/xedemo/receipt.tex:64
 #: templates/xedemo/statement.html:76
-#, fuzzy
 msgid "Due"
-msgstr "Dets"
+msgstr "Tähtaeg"
 
 #: bin/aa.pl:691 bin/aa.pl:1718 bin/aa.pl:2052 bin/ir.pl:532 bin/is.pl:598
 #: bin/rp.pl:944 UI/orders/order.html:96 UI/taxform/details_report.html:22
@@ -2775,9 +2595,8 @@ msgid "Due Date missing!"
 msgstr "Maksetähtaeg puudub!"
 
 #: scripts/setup.pl:630
-#, fuzzy
 msgid "Duplicte employee numbers"
-msgstr "Teenistuja Number"
+msgstr ""
 
 #: bin/am.pl:2223 bin/arap.pl:649 bin/is.pl:984 bin/is.pl:1005 bin/oe.pl:801
 #: bin/oe.pl:820 bin/oe.pl:3029 bin/rp.pl:1224 bin/rp.pl:1232
@@ -2786,14 +2605,12 @@ msgid "E-mail"
 msgstr "E-post"
 
 #: UI/rp-email.html:8
-#, fuzzy
 msgid "E-mail Statement to [_1]"
-msgstr "Saata E-postiga Kasumiaruanne aadressil"
+msgstr ""
 
 #: UI/io-email.html:7
-#, fuzzy
 msgid "E-mail [_1]"
-msgstr "E-post"
+msgstr "E-post [_1]"
 
 #: bin/am.pl:2831 bin/io.pl:1638 bin/rp.pl:1417
 msgid "E-mail address missing!"
@@ -2826,34 +2643,31 @@ msgstr "Muuda Konto"
 
 #: bin/ic.pl:96 bin/ic.pl:743
 msgid "Edit Assembly"
-msgstr "Muuda Komplekti"
+msgstr "Muuda komplekti"
 
 #: scripts/asset.pl:99
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Muuda Komplekti"
+msgstr "Muuda vara klassi"
 
 #: bin/am.pl:852
 msgid "Edit Business"
 msgstr "Muuda Ettevõtte"
 
 #: bin/aa.pl:450
-#, fuzzy
 msgid "Edit Credit Note"
-msgstr "Muuda Klienti"
+msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:57
 msgid "Edit Customer"
 msgstr "Muuda Klienti"
 
 #: bin/aa.pl:448
-#, fuzzy
 msgid "Edit Debit Note"
-msgstr "Muuda Hinnaaland"
+msgstr ""
 
 #: bin/am.pl:696
 msgid "Edit Department"
-msgstr "Muuda Osakonna"
+msgstr ""
 
 #: bin/pe.pl:2057
 msgid "Edit Description Translations"
@@ -2873,7 +2687,7 @@ msgstr "Muuda Gruppi andmed"
 
 #: bin/pe.pl:62 bin/pe.pl:302
 msgid "Edit Job"
-msgstr "Redigeeri Tööülesanne"
+msgstr ""
 
 #: bin/ic.pl:97
 msgid "Edit Labor/Overhead"
@@ -2881,7 +2695,7 @@ msgstr "Muuda Tööjõukulu"
 
 #: bin/am.pl:1184
 msgid "Edit Language"
-msgstr "Muuda Keel"
+msgstr "Muuda keelt"
 
 #: bin/pos.pl:165
 msgid "Edit POS Invoice"
@@ -2892,9 +2706,8 @@ msgid "Edit Part"
 msgstr "Muuda Detail"
 
 #: bin/am.pl:1751
-#, fuzzy
 msgid "Edit Preferences for [_1]"
-msgstr "Muuda Määrangud: "
+msgstr ""
 
 #: bin/pe.pl:1731
 msgid "Edit Pricegroup"
@@ -2929,9 +2742,8 @@ msgid "Edit Service"
 msgstr "Muuda Teenus"
 
 #: UI/taxform/add_taxform.html:11
-#, fuzzy
 msgid "Edit Taxform"
-msgstr "Muuda Detail"
+msgstr ""
 
 #: bin/am.pl:1393 bin/am.pl:1411
 msgid "Edit Template"
@@ -2939,7 +2751,7 @@ msgstr "Muuda Dokumendipõhi"
 
 #: bin/jc.pl:76
 msgid "Edit Time Card"
-msgstr "Muuda Ajakaarti"
+msgstr ""
 
 #: UI/Contact/contact.html:243
 msgid "Edit User"
@@ -2958,38 +2770,32 @@ msgid "Edit Warehouse"
 msgstr "Muuda Kaubaladu"
 
 #: UI/Admin/edit_user.html:10
-#, fuzzy
 msgid "Editing User"
-msgstr "Muuda Kasutaja"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:67
 msgid "Eight"
 msgstr "kaheksa"
 
 #: LedgerSMB/Num2text.pm:78
-#, fuzzy
 msgid "Eighteen"
-msgstr "kaheksa"
+msgstr "kaheksateist"
 
 #: LedgerSMB/Num2text.pm:96
-#, fuzzy
 msgid "Eighty"
-msgstr "kaheksa"
+msgstr "kaheksakümmend"
 
 #: LedgerSMB/Num2text.pm:70
-#, fuzzy
 msgid "Eleven"
-msgstr "seitse"
+msgstr "üksteist"
 
 #: LedgerSMB/Num2text.pm:71
-#, fuzzy
 msgid "Eleven-o"
-msgstr "seitse"
+msgstr ""
 
 #: UI/employee.html:77 sql/Pg-database.sql:788
-#, fuzzy
 msgid "Email"
-msgstr "E-post"
+msgstr "E-posti aadress"
 
 #: bin/gl.pl:876
 msgid "Email CSV Report"
@@ -3016,9 +2822,8 @@ msgid "Employee"
 msgstr "Töötaja"
 
 #: UI/Admin/edit_user.html:116
-#, fuzzy
 msgid "Employee No."
-msgstr "Teenistuja Nimi"
+msgstr "Töötaja nr."
 
 #: bin/am.pl:66 scripts/employee.pl:310 t/data/04-complex_template.html:92
 #: UI/am-defaults.html:172 UI/Contact/contact.html:181
@@ -3028,9 +2833,8 @@ msgid "Employee Number"
 msgstr "Teenistuja Number"
 
 #: UI/Contact/search.html:10
-#, fuzzy
 msgid "Employee Search"
-msgstr "Teenistuja Number"
+msgstr "Töötaja otsing"
 
 #: sql/Pg-database.sql:2425
 msgid "Employees"
@@ -3043,28 +2847,24 @@ msgstr ""
 #: scripts/employee.pl:316 UI/Contact/contact.html:222
 #: UI/Contact/contact.html:400 UI/Contact/contact.html:484
 #: UI/employee/filter.html:210 UI/employee.html:127
-#, fuzzy
 msgid "End Date"
-msgstr "Tellimuse Kuupäev"
+msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
-#, fuzzy
 msgid "End Date:"
-msgstr "Tellimuse Kuupäev"
+msgstr ""
 
 #: bin/pe.pl:345 bin/pe.pl:1000 bin/pe.pl:1220
 msgid "Enddate"
-msgstr "Lõputähtaeg"
+msgstr ""
 
 #: UI/reconciliation/report.html:46
-#, fuzzy
 msgid "Ending GL Balance:"
-msgstr "Algsaldo"
+msgstr ""
 
 #: UI/reconciliation/report.html:24 UI/reconciliation/report.html:38
-#, fuzzy
 msgid "Ending Statement Balance:"
-msgstr "Bilansiaruanne"
+msgstr ""
 
 #: scripts/taxform.pl:137
 msgid "Ending year required"
@@ -3079,22 +2879,18 @@ msgid "Enforce transaction reversal for all dates"
 msgstr "Kohustuslik tehingute storneerimine kõikide kuupäevade ulatuses"
 
 #: UI/inventory/adjustment_entry.html:11
-#, fuzzy
 msgid "Enter Inventory"
-msgstr "Laoliikumine"
+msgstr ""
 
 #: UI/setup/new_user.html:7
-#, fuzzy
 msgid "Enter User"
-msgstr "Muuda Kasutaja"
+msgstr ""
 
 #: UI/am-defaults.html:116
 msgid ""
 "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native "
 "and foreign currencies"
 msgstr ""
-"Sisesta kohalikud- ja välisvaluutad (kuni 3 tähemärki, koolonitega eraltatud, "
-"nt. CAD:USD:EUR)"
 
 #: scripts/recon.pl:192
 msgid "Entered By"
@@ -3117,14 +2913,12 @@ msgid "Entity Code"
 msgstr ""
 
 #: bin/aa.pl:646
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Audiitorkontroll"
+msgstr ""
 
 #: sql/Pg-database.sql:919
-#, fuzzy
 msgid "Entity Credit Account"
-msgstr "Muuda Konto"
+msgstr ""
 
 #: bin/gl.pl:529 UI/accounts/edit.html:86 UI/journal/search.html:181
 msgid "Equity"
@@ -3180,9 +2974,8 @@ msgid "Exchange rate for payment missing!"
 msgstr "Maksel puudub valuutakurss!"
 
 #: scripts/payment.pl:1231
-#, fuzzy
 msgid "Exchange rate hasn\\'t been defined"
-msgstr "Valuutakurss puudu!"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:795
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
@@ -3194,9 +2987,8 @@ msgid "Exchange rate missing!"
 msgstr "Valuutakurss puudu!"
 
 #: bin/ps.pl:78
-#, fuzzy
 msgid "Expected"
-msgstr "Kulu"
+msgstr ""
 
 #: bin/gl.pl:531 bin/ic.pl:683 bin/ic.pl:1912 UI/accounts/edit.html:88
 #: UI/accounts/edit.html:291 UI/accounts/edit.html:330 UI/am-defaults.html:82
@@ -3205,9 +2997,8 @@ msgid "Expense"
 msgstr "Kulu"
 
 #: UI/asset/edit_asset.html:179
-#, fuzzy
 msgid "Expense Account"
-msgstr "Maksukonto"
+msgstr "Kulukonto"
 
 #: UI/accounts/edit.html:213
 msgid "Expense/Asset"
@@ -3216,9 +3007,8 @@ msgstr "Kulu/Vara"
 #: templates/demo/income_statement.html:110
 #: templates/demo_with_images/income_statement.html:110
 #: templates/xedemo/income_statement.html:110
-#, fuzzy
 msgid "Expenses"
-msgstr "Kulu"
+msgstr "Kulud"
 
 #: bin/ic.pl:1868 bin/io.pl:208 bin/pos.pl:757 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3338,76 +3128,70 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:75
 msgid "Fifteen"
-msgstr ""
+msgstr "viisteist"
 
 #: LedgerSMB/Num2text.pm:93
 msgid "Fifty"
-msgstr ""
+msgstr "viiskümmend"
 
 #: UI/file/attachment_screen.html:39
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 #: scripts/asset.pl:1154
 msgid "File Imported"
-msgstr ""
+msgstr "Fail imporditud"
 
 #: bin/aa.pl:1044 bin/aa.pl:1063 bin/ic.pl:896 bin/ic.pl:915 bin/ir.pl:943
 #: bin/ir.pl:962 bin/is.pl:1076 bin/is.pl:1095 bin/oe.pl:919 bin/oe.pl:938
 #: UI/journal/journal_entry.html:304 UI/journal/journal_entry.html:322
 msgid "File name"
-msgstr ""
+msgstr "Faili nimi"
 
 #: bin/aa.pl:1045 bin/aa.pl:1064 bin/ic.pl:897 bin/ic.pl:916 bin/ir.pl:944
 #: bin/ir.pl:963 bin/is.pl:1077 bin/is.pl:1096 bin/oe.pl:920 bin/oe.pl:939
 #: UI/journal/journal_entry.html:305 UI/journal/journal_entry.html:323
 msgid "File type"
-msgstr ""
+msgstr "Faili tüüp"
 
 #: UI/payments/payments_detail.html:124
 msgid "Filtering From:"
 msgstr ""
 
 #: UI/payments/payments_filter.html:14
-#, fuzzy
 msgid "Filtering Payments"
-msgstr "Maksed"
+msgstr ""
 
 #: UI/payments/payments_filter.html:13
-#, fuzzy
 msgid "Filtering Receipts"
-msgstr "Laekumid"
+msgstr ""
 
 #: t/data/04-complex_template.html:53
-#, fuzzy
 msgid "First"
-msgstr "Projekti Nimi"
+msgstr ""
 
 #: scripts/employee.pl:311 UI/Admin/edit_user.html:95
 #: UI/Admin/user_search.html:21 UI/Contact/contact.html:106
 #: UI/employee/filter.html:29 UI/employee/filter.html:140
 #: UI/setup/new_user.html:66
-#, fuzzy
 msgid "First Name"
-msgstr "Projekti Nimi"
+msgstr "Eesnimi"
 
 #: LedgerSMB/Num2text.pm:64
 msgid "Five"
 msgstr "viis"
 
 #: LedgerSMB/Num2text.pm:99
-#, fuzzy
 msgid "Five Hundred"
-msgstr "sada"
+msgstr "viissada"
 
 #: UI/accounts/edit.html:312
-#, fuzzy
 msgid "Fixed Asset"
-msgstr "Vara"
+msgstr "Põhivara"
 
 #: UI/accounts/edit.html:306 sql/Pg-database.sql:2587
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Põhivarad"
 
 #: bin/arap.pl:797
 msgid "For"
@@ -3434,13 +3218,12 @@ msgid "Four"
 msgstr "neli"
 
 #: LedgerSMB/Num2text.pm:74
-#, fuzzy
 msgid "Fourteen"
-msgstr "neli"
+msgstr "neliteist"
 
 #: bin/jc.pl:1434
 msgid "Friday"
-msgstr "Reede"
+msgstr ""
 
 #: bin/aa.pl:1762 bin/aa.pl:1970 bin/gl.pl:602 bin/ic.pl:1060 bin/ic.pl:1605
 #: bin/ic.pl:2924 bin/jc.pl:193 bin/jc.pl:1404 bin/jc.pl:1820 bin/oe.pl:1544
@@ -3465,23 +3248,20 @@ msgid "From"
 msgstr "Alates"
 
 #: UI/payments/search.html:74
-#, fuzzy
 msgid "From Date"
-msgstr "Tellimuse Kuupäev"
+msgstr ""
 
 #: UI/asset/import_asset.html:51
-#, fuzzy
 msgid "From File"
-msgstr "Alates"
+msgstr ""
 
 #: bin/oe.pl:3243
 msgid "From Warehouse"
 msgstr "Tuleb Kaubalaost"
 
 #: bin/bp.pl:330 bin/rp.pl:1992
-#, fuzzy
 msgid "From [_1]"
-msgstr "Alates"
+msgstr ""
 
 #: UI/asset/begin_report.html:31
 msgid "Full"
@@ -3521,7 +3301,7 @@ msgstr "Pearaamatu Viitenumber"
 
 #: bin/gl.pl:820
 msgid "GL Transaction"
-msgstr "Pearaamatu Kanne"
+msgstr ""
 
 #: bin/gl.pl:921
 msgid "GL report sent to [_1]"
@@ -3536,37 +3316,32 @@ msgid "Gain (Loss)"
 msgstr ""
 
 #: UI/asset/begin_approval.html:46
-#, fuzzy
 msgid "Gain Account"
-msgstr "Seosta Kontod"
+msgstr ""
 
 #: sql/Pg-database.sql:2385
-#, fuzzy
 msgid "General Journal"
-msgstr "Pearaamat"
+msgstr ""
 
 #: bin/gl.pl:537
 msgid "General Ledger"
-msgstr "Pearaamat"
+msgstr ""
 
 #: bin/gl.pl:458 UI/journal/search.html:16
-#, fuzzy
 msgid "General Ledger Reports"
-msgstr "Pearaamat"
+msgstr ""
 
 #: bin/gl.pl:535
-#, fuzzy
 msgid "General Ledger: [_1] [_2]"
-msgstr "Pearaamat"
+msgstr ""
 
 #: sql/Pg-database.sql:2435 sql/Pg-database.sql:2472
 msgid "Generate"
 msgstr "Genereeri"
 
 #: UI/Contact/contact.html:312
-#, fuzzy
 msgid "Generate Control Code"
-msgstr "Genereeri Tellimused"
+msgstr ""
 
 #: bin/oe.pl:3614
 msgid "Generate Orders"
@@ -3578,43 +3353,35 @@ msgstr "Genereeri Ostutellimused"
 
 #: bin/oe.pl:1309
 msgid "Generate Purchase Orders from Sales Order"
-msgstr "Genereeri Ostutellimused Müügitellimustest"
+msgstr ""
 
 #: bin/oe.pl:1725
 msgid "Generate Sales Order"
-msgstr "Genereeri Müügitellimused"
+msgstr ""
 
 #: bin/oe.pl:1253
 msgid "Generate Sales Order from Purchase Orders"
-msgstr "Genereeri Müügitellimused Ostutellimustest"
+msgstr ""
 
 #: bin/pe.pl:2489 bin/pe.pl:2669 bin/pe.pl:2759
 msgid "Generate Sales Orders"
 msgstr "Genereeri Müügitellimused"
 
 #: sql/Pg-database.sql:784
-#, fuzzy
 msgid "Generic Jabber"
-msgstr "Genereeri"
-
-#: pos.conf.pl:44
-msgid "Gift Cert"
 msgstr ""
 
 #: t/data/04-strings-for-translation.html:8
-#, fuzzy
 msgid "Goods & Services"
-msgstr "Tooted ja Teenused"
+msgstr "Tooted ja teenused"
 
 #: sql/Pg-database.sql:2386
-#, fuzzy
 msgid "Goods and Services"
-msgstr "Tooted ja Teenused"
+msgstr "Tooted ja teenused"
 
 #: UI/payments/payments_detail.html:387
-#, fuzzy
 msgid "Grand Total"
-msgstr "Rea Summa"
+msgstr "Kokku"
 
 #: bin/ic.pl:429 bin/ic.pl:987 bin/ic.pl:993 bin/ic.pl:1632 bin/ic.pl:1796
 #: bin/ic.pl:2393 bin/ic.pl:2399 bin/ic.pl:2539 bin/ic.pl:3068 bin/io.pl:230
@@ -3629,7 +3396,6 @@ msgid "Group Translations"
 msgstr "Grupeeri Tõlked"
 
 #: UI/io-email.html:81 UI/orders/order.html:297
-#, fuzzy
 msgid "Group by"
 msgstr "Grupeeri"
 
@@ -3651,7 +3417,7 @@ msgstr "Grupid"
 
 #: sql/Pg-database.sql:780
 msgid "Gtalk"
-msgstr ""
+msgstr "Gtalk"
 
 #: t/data/04-complex_template.html:25 UI/Contact/contact.html:65
 #: sql/Pg-database.sql:2381
@@ -3672,7 +3438,7 @@ msgstr "Päis"
 #: t/data/04-complex_template.html:35 UI/Contact/contact.html:77
 #: sql/Pg-database.sql:2398 sql/Pg-database.sql:2415
 msgid "History"
-msgstr "Ajalugu"
+msgstr ""
 
 #: UI/employee.html:115 sql/Pg-database.sql:785
 msgid "Home Phone"
@@ -3691,7 +3457,7 @@ msgstr "sada"
 
 #: UI/employee.html:145
 msgid "IBAN"
-msgstr "Pangaarve NR."
+msgstr ""
 
 #: bin/aa.pl:1680 bin/aa.pl:2040 bin/am.pl:2209 bin/bp.pl:387 bin/jc.pl:1446
 #: bin/jc.pl:1834 bin/oe.pl:1479 bin/oe.pl:1827 scripts/asset.pl:166
@@ -3705,36 +3471,31 @@ msgid "ID"
 msgstr "ID"
 
 #: sql/Pg-database.sql:782
-#, fuzzy
 msgid "IRC"
-msgstr "BIC (S.W.I.F.T)"
+msgstr ""
 
 #: templates/demo/printPayment.html:87
 #: templates/demo_with_images/printPayment.html:87
 #: templates/xedemo/printPayment.html:87
-#, fuzzy
 msgid "Identification"
-msgstr "Kooskõlastamine"
+msgstr ""
 
 #: UI/rp-search.html:44
-#, fuzzy
 msgid "Ignore Year-ends"
-msgstr "Aastalõpp"
+msgstr ""
 
 #: bin/ic.pl:506 bin/ic.pl:1177 bin/ic.pl:1879
 msgid "Image"
 msgstr "Pilt"
 
 #: UI/am-defaults.html:38
-#, fuzzy
 msgid "Images in Templates"
-msgstr "LaTeX Dokumendipõhjad"
+msgstr ""
 
 #: UI/Admin/edit_user.html:55 UI/setup/new_user.html:32
 #: sql/Pg-database.sql:2600
-#, fuzzy
 msgid "Import"
-msgstr "Aruanded"
+msgstr ""
 
 #: bin/ir.pl:726 bin/ir.pl:737
 msgid "Import Text"
@@ -3768,9 +3529,8 @@ msgid "Include Exchange Rate Difference"
 msgstr "Lisa Valuutavahetuskursside erinevus"
 
 #: UI/employee/filter.html:72
-#, fuzzy
 msgid "Include In Report"
-msgstr "Kaasa Aruandesse"
+msgstr ""
 
 #: bin/arap.pl:617
 msgid "Include Payment"
@@ -3814,9 +3574,8 @@ msgid "Income Statement"
 msgstr "Kasumiaruanne"
 
 #: LedgerSMB/DBObject/User.pm:76
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Muuda Parool"
+msgstr "Vigane salasõna"
 
 #: bin/ic.pl:1199 bin/ic.pl:3075
 msgid "Individual Items"
@@ -3872,23 +3631,20 @@ msgid "Inventory"
 msgstr "Laoseis"
 
 #: sql/Pg-database.sql:2484
-#, fuzzy
 msgid "Inventory Activity"
-msgstr "Laoseis"
+msgstr "Lao liikumised"
 
 #: UI/inventory/adjustment_entry.html:2
 msgid "Inventory Adjustment Entry"
 msgstr ""
 
 #: UI/inventory/adjustment_setup.html:2
-#, fuzzy
 msgid "Inventory Adjustment Setup"
-msgstr "Laoseisu konto puudu!"
+msgstr ""
 
 #: bin/ic.pl:3608
-#, fuzzy
 msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
-msgstr "Enne toote aegunuks märkimist peab laoseis null olema!"
+msgstr ""
 
 #: bin/ic.pl:3615
 msgid ""
@@ -3949,19 +3705,16 @@ msgstr "Kaubaarve"
 #: templates/xedemo/packing_list.html:78 templates/xedemo/packing_list.tex:87
 #: templates/xedemo/pick_list.html:77 templates/xedemo/pick_list.tex:80
 #: templates/xedemo/statement.html:73 templates/xedemo/statement.tex:56
-#, fuzzy
 msgid "Invoice #"
-msgstr "Kaubaarve"
+msgstr "Arve nr"
 
 #: bin/aa.pl:683 bin/aa.pl:1716 bin/aa.pl:2048 bin/ir.pl:524 bin/is.pl:590
-#, fuzzy
 msgid "Invoice Created"
-msgstr "Kaubaarve Kuupäev"
+msgstr "Arve loonud"
 
 #: bin/aa.pl:1312
-#, fuzzy
 msgid "Invoice Created Date missing!"
-msgstr "Kaubaarvel Kuupäev puudu!"
+msgstr ""
 
 #: bin/aa.pl:687 bin/aa.pl:1690 bin/ir.pl:528 bin/is.pl:594
 #: UI/orders/order.html:90
@@ -3974,9 +3727,8 @@ msgstr "Kaubaarvel Kuupäev puudu!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
-#, fuzzy
 msgid "Invoice No."
-msgstr "Kaubaarve"
+msgstr "Arve nr"
 
 #: bin/aa.pl:675 bin/aa.pl:1569 bin/aa.pl:1683 bin/aa.pl:1927 bin/bp.pl:100
 #: bin/ic.pl:1839 bin/ir.pl:515 bin/is.pl:581
@@ -3992,42 +3744,36 @@ msgid "Invoice Number missing!"
 msgstr "Kaubaarve Number puudu!"
 
 #: bin/bp.pl:314
-#, fuzzy
 msgid "Invoice Number: [_1]"
-msgstr "Kaubaarve Number"
+msgstr ""
 
 #: UI/taxform/details_report.html:24 UI/taxform/summary_report.html:23
-#, fuzzy
 msgid "Invoice Sum"
-msgstr "Kaubaarve Number"
+msgstr ""
 
 #: UI/payments/payments_detail.html:213
-#, fuzzy
 msgid "Invoice Total"
-msgstr "Kaubaarve Kuupäev"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:145
-#, fuzzy
 msgid "Invoice date"
-msgstr "Kaubaarve Kuupäev"
+msgstr ""
 
 #: bin/ir.pl:1406 bin/is.pl:1507
 msgid "Invoice deleted!"
-msgstr "Kaubaarve kustutatud!"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:146
-#, fuzzy
 msgid "Invoice due"
-msgstr "Kaubaarve Number"
+msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:295
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Kaubaarve Kuupäev"
+msgstr "Arvet ei leitud"
 
 #: bin/aa.pl:2061 UI/Contact/history_filter.html:178
 msgid "Invoices"
-msgstr "Kaubaarved"
+msgstr ""
 
 #: bin/ic.pl:3049 bin/io.pl:193 templates/demo/bin_list.html:146
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:134
@@ -4076,7 +3822,7 @@ msgstr "Kaubaartikkel pole failis !"
 
 #: bin/ic.pl:1287
 msgid "Items"
-msgstr "Kaubaartiklid"
+msgstr ""
 
 #: templates/demo/packing_list.tex:21
 #: templates/demo_with_images/packing_list.tex:21
@@ -4107,54 +3853,51 @@ msgstr "Jaanuar"
 
 #: bin/pe.pl:950
 msgid "Job"
-msgstr "Tööülesanne"
+msgstr ""
 
 #: bin/jc.pl:1846
 msgid "Job Description"
-msgstr "Tööülesande Kirjeldus"
+msgstr ""
 
 #: UI/payments/check_job.html:26
-#, fuzzy
 msgid "Job Failed"
-msgstr "Tööülesanne salvestatud!"
+msgstr ""
 
 #: bin/jc.pl:1364
 msgid "Job Name"
-msgstr "Tööülesande Nimetus"
+msgstr ""
 
 #: bin/jc.pl:228 bin/jc.pl:496 bin/jc.pl:868 bin/jc.pl:1362 bin/jc.pl:1842
 #: bin/pe.pl:510 bin/pe.pl:762
 msgid "Job Number"
-msgstr "Tööülesande Number"
+msgstr ""
 
 #: bin/jc.pl:1150
 msgid "Job Number missing!"
-msgstr "Tööülesande Number puudu!"
+msgstr ""
 
 #: UI/Contact/contact.html:137
 msgid "Job Title"
 msgstr ""
 
 #: t/data/04-complex_template.html:78
-#, fuzzy
 msgid "Job Title:"
-msgstr "Tööülesanne salvestatud!"
+msgstr ""
 
 #: bin/pe.pl:1377
 msgid "Job deleted!"
-msgstr "Tööülesanne kustutatud!"
+msgstr ""
 
 #: bin/pe.pl:1357
 msgid "Job saved!"
-msgstr "Tööülesanne salvestatud!"
+msgstr ""
 
 #: templates/demo/timecard.html:81 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:81
 #: templates/demo_with_images/timecard.tex:37 templates/xedemo/timecard.html:81
 #: templates/xedemo/timecard.tex:37
-#, fuzzy
 msgid "Job/Project #"
-msgstr "Töö/Projekti Number"
+msgstr ""
 
 #: bin/am.pl:65 UI/am-defaults.html:168
 msgid "Job/Project Number"
@@ -4162,12 +3905,11 @@ msgstr "Töö/Projekti Number"
 
 #: bin/pe.pl:775 bin/pe.pl:952
 msgid "Jobs"
-msgstr "Tööülesanded"
+msgstr ""
 
 #: sql/Pg-database.sql:2447
-#, fuzzy
 msgid "Journal Entry"
-msgstr "Riik"
+msgstr ""
 
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:86
 msgid "Journal Lines"
@@ -4203,17 +3945,16 @@ msgid "Label:"
 msgstr ""
 
 #: sql/Pg-database.sql:2462
-#, fuzzy
 msgid "Labor"
-msgstr "Tööseadusandlus"
+msgstr ""
 
 #: bin/jc.pl:229 bin/jc.pl:497 bin/jc.pl:1363
 msgid "Labor Code"
-msgstr "Tööseadusandlus"
+msgstr ""
 
 #: bin/jc.pl:1151
 msgid "Labor Code missing!"
-msgstr "Tööseadusandluse Kood puudu!"
+msgstr ""
 
 #: bin/ic.pl:715 bin/ic.pl:1289
 msgid "Labor/Overhead"
@@ -4223,9 +3964,8 @@ msgstr "Tööjõud/Kulud"
 #: templates/demo_with_images/timecard.html:89
 #: templates/demo_with_images/timecard.tex:39 templates/xedemo/timecard.html:89
 #: templates/xedemo/timecard.tex:39
-#, fuzzy
 msgid "Labor/Service Code"
-msgstr "Teenuse Kood"
+msgstr ""
 
 #: bin/ir.pl:338 bin/pe.pl:1932 bin/pe.pl:2110 bin/pos.pl:309 bin/rp.pl:940
 #: UI/am-userconfig.html:33 UI/Contact/contact.html:613
@@ -4250,9 +3990,8 @@ msgid "Languages not defined!"
 msgstr "Keeled pole defineeritud!"
 
 #: t/data/04-complex_template.html:67
-#, fuzzy
 msgid "Last"
-msgstr "Viimane Maksumus"
+msgstr "Viimane"
 
 #: bin/ic.pl:463 bin/ic.pl:640 bin/ic.pl:1004 bin/ic.pl:1817
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
@@ -4263,26 +4002,24 @@ msgstr "Viimane Maksumus"
 #: scripts/employee.pl:313 UI/Admin/edit_user.html:106
 #: UI/Admin/user_search.html:31 UI/Contact/contact.html:126
 #: UI/employee/filter.html:47 UI/employee/filter.html:168
-#, fuzzy
 msgid "Last Name"
-msgstr "Nimi"
+msgstr "Perekonnanimi"
 
 #: UI/am-defaults.html:64
 msgid "Last Numbers & Default Accounts"
-msgstr "Viimased Numbrid ja Vaikimisi Kontod"
+msgstr ""
 
 #: bin/rp.pl:275
 msgid "Last Only"
 msgstr ""
 
 #: scripts/recon.pl:191
-#, fuzzy
 msgid "Last Updated"
-msgstr "Värskendatud"
+msgstr ""
 
 #: UI/setup/new_user.html:75
 msgid "Last name"
-msgstr ""
+msgstr "Perekonnanimi"
 
 #: bin/oe.pl:3515 sql/Pg-database.sql:500
 msgid "Lead"
@@ -4290,9 +4027,8 @@ msgstr "Juhtimine"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:38
 #: UI/Contact/pricelist.tex:33
-#, fuzzy
 msgid "Lead Time"
-msgstr "Tellimuse täitmisaeg"
+msgstr "Tarneaeg"
 
 #: bin/ic.pl:2822
 msgid "Leadtime"
@@ -4307,9 +4043,8 @@ msgid "LedgerSMB 1.3 found"
 msgstr ""
 
 #: UI/menu/expanding.html:5
-#, fuzzy
 msgid "LedgerSMB Accounting Menu"
-msgstr "Raamatupidamisarvestuse Menüü"
+msgstr ""
 
 #: UI/setup/complete.html:15 UI/setup/confirm_operation.html:79
 msgid "LedgerSMB Database Statistics"
@@ -4328,9 +4063,8 @@ msgid "Less Cash in Till At Start: [_1]"
 msgstr ""
 
 #: UI/reconciliation/report.html:42
-#, fuzzy
 msgid "Less Outstanding Checks:"
-msgstr "OR Laekumata"
+msgstr ""
 
 #: sql/Pg-database.sql:2527 sql/Pg-database.sql:2543
 msgid "Letterhead"
@@ -4339,9 +4073,8 @@ msgstr ""
 #: templates/demo/balance_sheet.html:101
 #: templates/demo_with_images/balance_sheet.html:101
 #: templates/xedemo/balance_sheet.html:101
-#, fuzzy
 msgid "Liabilities"
-msgstr "Võlg"
+msgstr ""
 
 #: bin/gl.pl:528 UI/accounts/edit.html:85 UI/journal/search.html:175
 msgid "Liability"
@@ -4357,7 +4090,7 @@ msgstr "Rea Summa"
 
 #: bin/am.pl:198
 msgid "Link"
-msgstr "Seosed"
+msgstr ""
 
 #: bin/ic.pl:788 bin/pe.pl:369
 msgid "Link Accounts"
@@ -4369,20 +4102,19 @@ msgstr "Nimekiri"
 
 #: sql/Pg-database.sql:2501
 msgid "List Accounts"
-msgstr "Kontode Nimekiri"
+msgstr ""
 
 #: sql/Pg-database.sql:2507
 msgid "List Businesses"
 msgstr "Ettevõtete Nimekiri"
 
 #: sql/Pg-database.sql:2597
-#, fuzzy
 msgid "List Classes"
-msgstr "Ettevõtete Nimekiri"
+msgstr ""
 
 #: sql/Pg-database.sql:2421
 msgid "List Departments"
-msgstr "Osakondade Nimekiri"
+msgstr ""
 
 #: sql/Pg-database.sql:2503
 msgid "List GIFI"
@@ -4401,30 +4133,26 @@ msgid "List SIC"
 msgstr "SIC-Standardiseeritud Tööstuskoodide Nimekiri"
 
 #: sql/Pg-database.sql:2585
-#, fuzzy
 msgid "List Tax Forms"
-msgstr "Osakondade Nimekiri"
+msgstr "Maksuvormide nimekiri"
 
 #: bin/ca.pl:193 UI/ca-list-selector.html:96
 msgid "List Transactions"
 msgstr "Tehingute Nimekiri"
 
 #: sql/Pg-database.sql:2505
-#, fuzzy
 msgid "List Warehouse"
-msgstr "Kaubaladude Nimekiri"
+msgstr "Ladude nimekiri"
 
 #: scripts/asset.pl:319 UI/asset/edit_asset.html:134
 #: UI/asset/search_asset.html:125 UI/payments/payment2.html:38
 #: UI/payments/use_overpayment2.html:34
-#, fuzzy
 msgid "Location"
-msgstr "Koteering"
+msgstr "Asukoht"
 
 #: t/data/04-complex_template.html:368 UI/Contact/contact.html:746
-#, fuzzy
 msgid "Locations"
-msgstr "Koteeringud"
+msgstr "Asukohad"
 
 #: UI/payments/payments_detail.html:362
 msgid "Locked by [_1]"
@@ -4442,7 +4170,7 @@ msgstr ""
 msgid "Logged into [_1]"
 msgstr ""
 
-#: old-handler.pl:133 UI/login.html:52 UI/setup/credentials.html:50
+#: old-handler.pl:134 UI/login.html:52 UI/setup/credentials.html:50
 msgid "Login"
 msgstr "Logi sisse"
 
@@ -4456,17 +4184,15 @@ msgstr ""
 
 #: UI/accounts/edit.html:348
 msgid "Loss"
-msgstr ""
+msgstr "Kahjum"
 
 #: UI/asset/begin_approval.html:56
-#, fuzzy
 msgid "Loss Account"
-msgstr "Kontode Nimekiri"
+msgstr "Kahjumi konto"
 
 #: sql/Pg-database.sql:781
-#, fuzzy
 msgid "MSN"
-msgstr "Isikukood"
+msgstr "MSN"
 
 #: bin/ic.pl:1121 bin/ic.pl:1130 bin/ic.pl:1649 bin/ic.pl:1830 bin/ic.pl:2778
 msgid "Make"
@@ -4474,9 +4200,8 @@ msgstr "Tootja"
 
 #: scripts/setup.pl:528 scripts/setup.pl:992 scripts/setup.pl:1038
 #: scripts/setup.pl:1140
-#, fuzzy
 msgid "Manage Users"
-msgstr "Juhataja"
+msgstr "Kasutajate haldamine"
 
 #: bin/aa.pl:1559 bin/aa.pl:2095 bin/oe.pl:1330 bin/oe.pl:1873
 #: UI/Contact/contact.html:157 UI/Contact/contact.html:190 UI/employee.html:99
@@ -4488,23 +4213,20 @@ msgid "Manager First Name"
 msgstr ""
 
 #: scripts/employee.pl:320 UI/employee/filter.html:266
-#, fuzzy
 msgid "Manager ID"
-msgstr "Juhataja"
+msgstr ""
 
 #: scripts/employee.pl:324 UI/employee/filter.html:294
 msgid "Manager Last Name"
 msgstr ""
 
 #: t/data/04-complex_template.html:98
-#, fuzzy
 msgid "Manager:"
-msgstr "Juhataja"
+msgstr "Juhataja:"
 
 #: bin/ir.pl:578 bin/is.pl:495 bin/is.pl:675
-#, fuzzy
 msgid "Manual"
-msgstr "Jaanuar"
+msgstr ""
 
 #: bin/aa.pl:82 bin/ca.pl:74 bin/gl.pl:77 bin/io.pl:78
 #: LedgerSMB/App_State.pm:169
@@ -4526,12 +4248,11 @@ msgstr "Kate"
 
 #: bin/am.pl:58
 msgid "Max per dropdown"
-msgstr ""
+msgstr "Hüppikmenüü max valikute arv"
 
 #: UI/batch/filter.html:58 UI/batch/search_transactions.html:51
-#, fuzzy
 msgid "Maximum Value"
-msgstr "Maksimum"
+msgstr ""
 
 #: bin/aa.pl:84 bin/ca.pl:76 bin/gl.pl:79 bin/io.pl:80
 #: LedgerSMB/App_State.pm:173 LedgerSMB/DBObject/Date.pm:64
@@ -4562,9 +4283,8 @@ msgid "Message"
 msgstr "Sõnum"
 
 #: bin/arap.pl:1044
-#, fuzzy
 msgid "Message: "
-msgstr "Sõnum"
+msgstr "Teade: "
 
 #: scripts/asset.pl:1009 UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
@@ -4573,9 +4293,8 @@ msgid "Method"
 msgstr "Meetod"
 
 #: UI/asset/edit_asset.html:100
-#, fuzzy
 msgid "Method Default"
-msgstr "Vaikeväärtused"
+msgstr ""
 
 #: bin/ic.pl:508 bin/ic.pl:1170 bin/ic.pl:1184 bin/ic.pl:1661 bin/ic.pl:1887
 msgid "Microfiche"
@@ -4583,21 +4302,20 @@ msgstr "Mikrofišš"
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
-msgstr ""
+msgstr "Keskmine"
 
 #: scripts/employee.pl:312 UI/Contact/contact.html:115
 #: UI/employee/filter.html:38 UI/employee/filter.html:154
 msgid "Middle Name"
-msgstr ""
+msgstr "Keskmine nimi"
 
 #: LedgerSMB/Num2text.pm:103
 msgid "Million"
 msgstr "miljon"
 
 #: UI/am-taxes.html:13
-#, fuzzy
 msgid "Min Taxable"
-msgstr "Maksustatav"
+msgstr ""
 
 #: UI/batch/filter.html:50 UI/batch/search_transactions.html:43
 msgid "Minimum Value"
@@ -4617,7 +4335,7 @@ msgstr "Mudel"
 
 #: bin/jc.pl:1430
 msgid "Monday"
-msgstr "Esmaspäev"
+msgstr ""
 
 #: bin/aa.pl:1649 bin/am.pl:2175 bin/ca.pl:241 bin/jc.pl:179 bin/oe.pl:1451
 #: bin/pe.pl:715 bin/pe.pl:2440 LedgerSMB/DBObject/Date.pm:82
@@ -4636,24 +4354,23 @@ msgstr "Kuu(d)"
 
 #: bin/am.pl:2176
 msgid "Months"
-msgstr "Kuud"
+msgstr "kuud"
 
 #: LedgerSMB.pm:1108
 msgid "More information has been reported in the error logs"
 msgstr ""
 
 #: sql/Pg-database.sql:682
-#, fuzzy
 msgid "Mr."
-msgstr "Mär"
+msgstr "Härra"
 
 #: sql/Pg-database.sql:683
 msgid "Mrs."
-msgstr ""
+msgstr "Proua"
 
 #: sql/Pg-database.sql:684
 msgid "Ms."
-msgstr ""
+msgstr "Preili"
 
 #: bin/rp.pl:684
 msgid "N/A"
@@ -4667,9 +4384,8 @@ msgstr "Nimi"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/contact.html:102
-#, fuzzy
 msgid "Name:"
-msgstr "Nimi"
+msgstr "Nimi:"
 
 #: sql/Pg-database.sql:2602
 msgid "Net Book Value"
@@ -4682,7 +4398,7 @@ msgstr ""
 #: bin/aa.pl:530 bin/aa.pl:980 bin/gl.pl:277 bin/ir.pl:394 bin/ir.pl:908
 #: bin/is.pl:406 bin/is.pl:1019 bin/oe.pl:542
 msgid "New"
-msgstr ""
+msgstr "Uus"
 
 #: UI/asset/begin_report.html:6
 msgid "New Asset Report"
@@ -4693,14 +4409,12 @@ msgid "New Asset Report Search"
 msgstr ""
 
 #: UI/reconciliation/upload.html:6
-#, fuzzy
 msgid "New Reconciliation Report"
-msgstr "Kooskõlastamise Raport"
+msgstr ""
 
 #: UI/Admin/edit_user.html:13
-#, fuzzy
 msgid "New User"
-msgstr "Kasutaja"
+msgstr "Uus kasutaja"
 
 #: sql/Pg-database.sql:2589
 msgid "New Window"
@@ -4724,19 +4438,16 @@ msgid "Nine"
 msgstr "üheksa"
 
 #: LedgerSMB/Num2text.pm:101
-#, fuzzy
 msgid "Nine Hundred"
-msgstr "sada"
+msgstr "üheksasada"
 
 #: LedgerSMB/Num2text.pm:79
-#, fuzzy
 msgid "Nineteen"
-msgstr "üheksa"
+msgstr "üheksateist"
 
 #: LedgerSMB/Num2text.pm:97
-#, fuzzy
 msgid "Ninety"
-msgstr "üheksa"
+msgstr "üheksakümmend"
 
 #: scripts/taxform.pl:294 UI/am-audit-control.html:15
 #: UI/am-audit-control.html:26 UI/am-defaults.html:55
@@ -4745,13 +4456,12 @@ msgid "No"
 msgstr "Ei"
 
 #: LedgerSMB/ScriptLib/Company.pm:666
-#, fuzzy
 msgid "No AR or AP Account Selected"
-msgstr "Konto on kustutatud!"
+msgstr ""
 
 #: bin/jc.pl:147 bin/jc.pl:260
 msgid "No Employees on file!"
-msgstr "Failis puuduvad Töötajad"
+msgstr ""
 
 #: bin/ic.pl:2455
 msgid "No History!"
@@ -4763,11 +4473,11 @@ msgstr ""
 
 #: bin/jc.pl:127
 msgid "No Labor codes on file!"
-msgstr "Failis puuduvad Tööseadusandluse koodid"
+msgstr ""
 
 #: bin/jc.pl:134
 msgid "No Parts on file!"
-msgstr "Failis puuduvad Detailid"
+msgstr ""
 
 #: scripts/setup.pl:1066
 msgid "No Permissions Assigned"
@@ -4775,12 +4485,11 @@ msgstr ""
 
 #: bin/jc.pl:130
 msgid "No Services on file!"
-msgstr "Failis puuduvad Teenused"
+msgstr ""
 
 #: scripts/setup.pl:620
-#, fuzzy
 msgid "No blank employee name"
-msgstr "Teenistuja Nimi"
+msgstr ""
 
 #: LedgerSMB/DBObject/Company.pm:134
 msgid "No company or credit id in LedgerSMB::DBObject::delete_contact"
@@ -4799,13 +4508,12 @@ msgid "No file uploaded"
 msgstr ""
 
 #: scripts/setup.pl:614
-#, fuzzy
 msgid "No null employeenumber"
-msgstr "Teenistuja Number"
+msgstr ""
 
 #: bin/jc.pl:103
 msgid "No open Jobs!"
-msgstr "Puuduvad alustatud Tööülesanded"
+msgstr ""
 
 #: bin/jc.pl:106 bin/pe.pl:2471
 msgid "No open Projects!"
@@ -4824,13 +4532,12 @@ msgid "No."
 msgstr "Nr."
 
 #: sql/Pg-database.sql:2394
-#, fuzzy
 msgid "Non-Taxable"
-msgstr "Maksuvaba"
+msgstr ""
 
 #: bin/jc.pl:642
 msgid "Non-chargeable"
-msgstr "Maksuvaba"
+msgstr ""
 
 #: scripts/setup.pl:422
 msgid ""
@@ -4840,16 +4547,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2411
 msgid "Non-taxable"
-msgstr "Maksuvaba"
+msgstr ""
 
 #: UI/accounts/edit.html:276
 msgid "Non-tracking Items"
 msgstr "Mitte jälgitavad Kaubaartiklid"
 
 #: scripts/setup.pl:397
-#, fuzzy
 msgid "Non-unique invoice numbers"
-msgstr "Kaubaarve Number"
+msgstr ""
 
 #: bin/rp.pl:276
 msgid "None"
@@ -4864,9 +4570,8 @@ msgid "Not Submitted"
 msgstr ""
 
 #: UI/Contact/contact.html:1170
-#, fuzzy
 msgid "Note Class"
-msgstr "Märkused"
+msgstr ""
 
 #: bin/aa.pl:818 bin/aa.pl:1589 bin/aa.pl:1722 bin/aa.pl:1957 bin/aa.pl:2090
 #: bin/gl.pl:595 bin/ic.pl:793 bin/ic.pl:1265 bin/ic.pl:1793 bin/ir.pl:722
@@ -4895,7 +4600,7 @@ msgstr "Märkused"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
-msgstr ""
+msgstr "Märkused:<br />"
 
 #: bin/oe.pl:3075
 msgid "Nothing entered!"
@@ -4925,9 +4630,8 @@ msgid "November"
 msgstr "November"
 
 #: scripts/setup.pl:376 scripts/setup.pl:386
-#, fuzzy
 msgid "Null employee numbers"
-msgstr "Teenistuja Number"
+msgstr ""
 
 #: scripts/setup.pl:412
 msgid "Null make numbers"
@@ -4986,18 +4690,16 @@ msgid "Number Format"
 msgstr "Numbri Formaat"
 
 #: bin/io.pl:1144
-#, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Antud real puudub Number"
+msgstr ""
 
 #: bin/oe.pl:1865
 msgid "O"
-msgstr "Avatud"
+msgstr ""
 
 #: UI/Contact/pricelist.html:96
-#, fuzzy
 msgid "ODS"
-msgstr "MüügiPunkt"
+msgstr "ODS"
 
 #: bin/io.pl:212
 msgid "OH"
@@ -5026,9 +4728,8 @@ msgid "Off Hold"
 msgstr ""
 
 #: UI/users/preferences.html:26
-#, fuzzy
 msgid "Old Password"
-msgstr "Parool"
+msgstr "Kehtiv salasõna"
 
 #: bin/ic.pl:480 bin/ic.pl:706 bin/ic.pl:1114 bin/ic.pl:1494
 #: UI/inventory/adjustment_entry.html:25
@@ -5036,9 +4737,8 @@ msgid "On Hand"
 msgstr "Saadaval"
 
 #: bin/aa.pl:957 bin/aa.pl:1776 bin/ir.pl:904 bin/is.pl:802
-#, fuzzy
 msgid "On Hold"
-msgstr "Saadaval"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:59
 msgid "One"
@@ -5060,9 +4760,8 @@ msgid "Open"
 msgstr "Avatud"
 
 #: bin/pos.pl:619
-#, fuzzy
 msgid "Open Till"
-msgstr "Avatud"
+msgstr ""
 
 #: UI/logout.html:15
 msgid ""
@@ -5075,9 +4774,8 @@ msgid "Options"
 msgstr ""
 
 #: UI/file/attachment_screen.html:35
-#, fuzzy
 msgid "Or"
-msgstr "Avatud"
+msgstr ""
 
 #: UI/create_batch.html:43
 msgid "Or Add To Batch"
@@ -5116,14 +4814,12 @@ msgstr "Tellimus"
 #: templates/xedemo/purchase_order.tex:105
 #: templates/xedemo/sales_order.html:102 templates/xedemo/sales_order.tex:105
 #: templates/xedemo/work_order.html:102
-#, fuzzy
 msgid "Order #"
-msgstr "Tellimus"
+msgstr ""
 
 #: UI/reconciliation/report.html:245
-#, fuzzy
 msgid "Order By"
-msgstr "Tellimus"
+msgstr ""
 
 #: bin/oe.pl:436 bin/oe.pl:2878 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103
@@ -5156,9 +4852,8 @@ msgid "Order Number missing!"
 msgstr "Tellimuse Number puudub"
 
 #: bin/bp.pl:319
-#, fuzzy
 msgid "Order Number: [_1]"
-msgstr "Tellimuse Number"
+msgstr ""
 
 #: bin/oe.pl:2389
 msgid "Order deleted!"
@@ -5171,20 +4866,17 @@ msgstr "Arve genereerimine ebaõnnestus!"
 #: templates/demo/statement.html:74
 #: templates/demo_with_images/statement.html:74
 #: templates/xedemo/statement.html:74
-#, fuzzy
 msgid "Order#"
-msgstr "Tellimus"
+msgstr ""
 
 #: UI/am-taxes.html:16
-#, fuzzy
 msgid "Ordering"
-msgstr "Tellimus"
+msgstr ""
 
 #: UI/Contact/history_filter.html:186 UI/setup/complete.html:23
 #: UI/setup/confirm_operation.html:87
-#, fuzzy
 msgid "Orders"
-msgstr "Tellimus"
+msgstr ""
 
 #: bin/pe.pl:2947
 msgid "Orders generated!"
@@ -5196,34 +4888,29 @@ msgid "Orphaned"
 msgstr "Seosteta"
 
 #: UI/setup/confirm_operation.html:28
-#, fuzzy
 msgid "Other Actions"
-msgstr "Pärast Mahaarvatist"
+msgstr ""
 
 #: scripts/recon.pl:307
-#, fuzzy
 msgid "Our Balance"
-msgstr "Bilanss"
+msgstr ""
 
 #: UI/reconciliation/report.html:75 UI/reconciliation/report.html:138
 #: UI/reconciliation/report.html:197
-#, fuzzy
 msgid "Our Credits"
-msgstr "Kreedit"
+msgstr ""
 
 #: UI/reconciliation/report.html:74 UI/reconciliation/report.html:137
 #: UI/reconciliation/report.html:196
-#, fuzzy
 msgid "Our Debits"
-msgstr "Deebet"
+msgstr ""
 
 #: templates/demo/timecard.html:56 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:56
 #: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:56
 #: templates/xedemo/timecard.tex:30
-#, fuzzy
 msgid "Out"
-msgstr "Okt"
+msgstr ""
 
 #: bin/gl.pl:1190
 msgid "Out of balance transaction!"
@@ -5235,28 +4922,24 @@ msgid "Outstanding"
 msgstr "Laekumata"
 
 #: UI/reconciliation/report.html:189
-#, fuzzy
 msgid "Outstanding Transactions"
-msgstr "Korduvad Tehingud"
+msgstr "Ülevalolevad kanded"
 
 #: UI/rc-display-form.html:79
-#, fuzzy
 msgid "Over"
-msgstr "Tähtaegunud"
+msgstr "Üle"
 
 #: UI/rp-search-aging.html:76
 msgid "Overdue"
 msgstr "Tähtaegunud"
 
 #: UI/accounts/edit.html:190 UI/accounts/edit.html:231
-#, fuzzy
 msgid "Overpayment"
-msgstr "Ettemaksmine"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:147
-#, fuzzy
 msgid "Overpayment Account"
-msgstr "Kustuta Lonto"
+msgstr ""
 
 #: bin/am.pl:2438 bin/arapprn.pl:535 bin/io.pl:1438 bin/jc.pl:2047
 #: bin/rp.pl:1349 UI/Contact/pricelist.html:91
@@ -5276,7 +4959,7 @@ msgstr "Hanketellimus"
 #: templates/xedemo/ap_transaction.tex:63
 #: templates/xedemo/ar_transaction.html:81
 msgid "PO #"
-msgstr ""
+msgstr "Ostutellimus"
 
 #: bin/aa.pl:695 bin/aa.pl:1577 bin/aa.pl:1688 bin/aa.pl:1939 bin/aa.pl:2071
 #: bin/ir.pl:536 bin/is.pl:602 bin/oe.pl:444 bin/oe.pl:1464 bin/oe.pl:1471
@@ -5290,11 +4973,11 @@ msgstr "MP Kaubaarve"
 
 #: UI/payments/use_overpayment2.html:270
 msgid "POST"
-msgstr ""
+msgstr "Salvesta"
 
 #: UI/payments/payment2.html:339 UI/payments/use_overpayment2.html:276
 msgid "POST AND PRINT"
-msgstr ""
+msgstr "Salvesta ja trüki"
 
 #: bin/am.pl:2864 bin/io.pl:1365 bin/io.pl:1383 bin/io.pl:1547 bin/is.pl:294
 #: bin/is.pl:961 bin/oe.pl:305 bin/oe.pl:324 templates/demo/packing_list.html:4
@@ -5342,12 +5025,11 @@ msgstr "Detaili Number"
 
 #: LedgerSMB/ScriptLib/Company.pm:1074
 msgid "Part not found"
-msgstr ""
+msgstr "Toodet ei leitud"
 
 #: UI/asset/begin_report.html:42
-#, fuzzy
 msgid "Partial"
-msgstr "Detail"
+msgstr ""
 
 #: scripts/asset.pl:796
 msgid "Partial Disposal Report [_1] on date [_2]"
@@ -5360,16 +5042,15 @@ msgstr "Detailinumber"
 
 #: bin/ic.pl:1288 sql/Pg-database.sql:2459
 msgid "Parts"
-msgstr "Detailid"
+msgstr ""
 
 #: bin/ic.pl:2458 bin/ic.pl:2606
 msgid "Parts Requirements"
 msgstr "Detailide Vajadus"
 
 #: sql/Pg-database.sql:2469
-#, fuzzy
 msgid "Partsgroup"
-msgstr "Hinnagrupp"
+msgstr ""
 
 #: UI/Admin/edit_user.html:47 UI/am-userconfig.html:17 UI/get_password.html:41
 #: UI/login.html:12 UI/setup/credentials.html:30 UI/setup/new_user.html:28
@@ -5378,9 +5059,8 @@ msgid "Password"
 msgstr "Parool"
 
 #: bin/am.pl:70 UI/am-defaults.html:188
-#, fuzzy
 msgid "Password Duration"
-msgstr "Parool muudetud!"
+msgstr "Salasõna kestus"
 
 #: bin/am.pl:1815
 msgid "Password does not match!"
@@ -5391,19 +5071,16 @@ msgid "Password duration must be an integer"
 msgstr ""
 
 #: LedgerSMB/DBObject/User.pm:148
-#, fuzzy
 msgid "Password required"
-msgstr "Parool muudetud!"
+msgstr "Salasõna on kohustuslik"
 
 #: LedgerSMB/DBObject/User.pm:79
-#, fuzzy
 msgid "Passwords must match."
-msgstr "Paroolid ei klapi!"
+msgstr "Salasõnad peavad kattuma."
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:127
-#, fuzzy
 msgid "Pay From"
-msgstr "Alates"
+msgstr ""
 
 #: scripts/payment.pl:159 UI/Contact/contact.html:461
 #: UI/payments/payments_filter.html:128
@@ -5430,33 +5107,28 @@ msgstr "Makse"
 #: templates/demo/printPayment.html:32
 #: templates/demo_with_images/printPayment.html:32
 #: templates/xedemo/printPayment.html:32
-#, fuzzy
 msgid "Payment Order Number [_1]"
-msgstr "Müügiarve Number"
+msgstr ""
 
 #: UI/payments/payments_filter.html:124
-#, fuzzy
 msgid "Payment Processing"
-msgstr "Maksekuupäev puudu!"
+msgstr ""
 
 #: scripts/payment.pl:379
-#, fuzzy
 msgid "Payment Results"
-msgstr "Maksed"
+msgstr ""
 
 #: UI/payments/search.html:85
 msgid "Payment Reversal Information"
 msgstr ""
 
 #: UI/payments/payments_detail.html:184
-#, fuzzy
 msgid "Payment Type :"
-msgstr "Makse saadetud!"
+msgstr ""
 
 #: UI/payments/payments_filter.html:149
-#, fuzzy
 msgid "Payment Type:"
-msgstr "Makse saadetud!"
+msgstr ""
 
 #: bin/aa.pl:1335 bin/ir.pl:1340 bin/is.pl:1408
 msgid "Payment date missing!"
@@ -5505,14 +5177,12 @@ msgid "Percent"
 msgstr ""
 
 #: scripts/asset.pl:803
-#, fuzzy
 msgid "Percent Disposed"
-msgstr "Makse saadetud!"
+msgstr ""
 
 #: scripts/asset.pl:806
-#, fuzzy
 msgid "Percent Remaining"
-msgstr "Jääk"
+msgstr ""
 
 #: bin/aa.pl:1642 bin/ic.pl:2412 bin/jc.pl:172 bin/oe.pl:1444 bin/pe.pl:708
 #: bin/pe.pl:2433 UI/bp-search.html:34 UI/ca-list-selector.html:57
@@ -5581,14 +5251,12 @@ msgid "Please select a vendor with unused overpayments"
 msgstr ""
 
 #: sql/Pg-database.sql:2399
-#, fuzzy
 msgid "Point of Sale"
-msgstr "Trüki ja Salvesta"
+msgstr ""
 
 #: UI/employee/filter.html:84
-#, fuzzy
 msgid "Position"
-msgstr "Tootmine"
+msgstr ""
 
 #: bin/aa.pl:941 bin/aa.pl:970 bin/gl.pl:269 bin/ir.pl:877 bin/ir.pl:891
 #: bin/is.pl:980 bin/is.pl:1001 bin/pos.pl:611 scripts/drafts.pl:251
@@ -5601,24 +5269,20 @@ msgid "Post Batch"
 msgstr ""
 
 #: scripts/recon.pl:306 UI/create_batch.html:51
-#, fuzzy
 msgid "Post Date"
-msgstr "Postita uuena"
+msgstr ""
 
 #: UI/accounts/yearend.html:6 UI/accounts/yearend.html:63
-#, fuzzy
 msgid "Post Yearend"
-msgstr "Aastalõpp"
+msgstr ""
 
 #: bin/aa.pl:988 bin/gl.pl:312
-#, fuzzy
 msgid "Post as Saved"
-msgstr "Postita uuena"
+msgstr ""
 
 #: bin/aa.pl:993 bin/gl.pl:319
-#, fuzzy
 msgid "Post as Shown"
-msgstr "Postita uuena"
+msgstr ""
 
 #: bin/aa.pl:944 bin/gl.pl:271 bin/ir.pl:878 bin/ir.pl:893 bin/is.pl:983
 msgid "Post as new"
@@ -5626,38 +5290,32 @@ msgstr "Postita uuena"
 
 #: UI/reconciliation/report.html:72 UI/reconciliation/report.html:135
 #: UI/reconciliation/report.html:194
-#, fuzzy
 msgid "Posted Date"
-msgstr "Postitatud!"
+msgstr ""
 
 #: bin/pos.pl:726
 msgid "Posted!"
 msgstr "Postitatud!"
 
 #: UI/payments/payments_detail.html:108
-#, fuzzy
 msgid "Posting Date:"
-msgstr "Postitamine ebaõnnestus"
+msgstr ""
 
 #: bin/am.pl:2749
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Pearaamatu Kanne"
+msgstr ""
 
 #: bin/am.pl:2589
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Müügiarve"
+msgstr ""
 
 #: bin/am.pl:2611 bin/am.pl:2620
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "OR Tehing"
+msgstr ""
 
 #: bin/am.pl:2599
-#, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Tarnija Kaubaarve "
+msgstr ""
 
 #: bin/am.pl:2437 bin/arapprn.pl:534 bin/io.pl:1434 bin/jc.pl:2046
 #: bin/rp.pl:1350
@@ -5669,14 +5327,12 @@ msgid "Preferences"
 msgstr "Eelistused"
 
 #: UI/users/preferences.html:14
-#, fuzzy
 msgid "Preferences Saved"
-msgstr "Eelistused salvestatud!"
+msgstr "Määrangud salvestatud"
 
 #: UI/users/preferences.html:12
-#, fuzzy
 msgid "Preferences for [_1]"
-msgstr "Muuda Määrangud: "
+msgstr ""
 
 #: bin/am.pl:1820
 msgid "Preferences saved!"
@@ -5725,14 +5381,12 @@ msgid "Pricelist"
 msgstr "Hinnakiri"
 
 #: UI/Contact/pricelist.tex:65
-#, fuzzy
 msgid "Pricelist for [_1]"
-msgstr "Hinnakiri"
+msgstr ""
 
 #: sql/Pg-database.sql:775
-#, fuzzy
 msgid "Primary Phone"
-msgstr "Kodune Telefon"
+msgstr ""
 
 #: bin/aa.pl:940 bin/aa.pl:969 bin/am.pl:2224 bin/arap.pl:724 bin/bp.pl:499
 #: bin/bp.pl:506 bin/is.pl:979 bin/is.pl:1000 bin/jc.pl:687 bin/jc.pl:698
@@ -5744,9 +5398,8 @@ msgid "Print"
 msgstr "Trüki"
 
 #: bin/bp.pl:123
-#, fuzzy
 msgid "Print [_1]"
-msgstr "Trüki"
+msgstr ""
 
 #: bin/pos.pl:612 bin/pos.pl:623
 msgid "Print and Post"
@@ -5758,9 +5411,8 @@ msgid "Print and Save"
 msgstr "Trüki ja Salvesta"
 
 #: bin/jc.pl:1229
-#, fuzzy
 msgid "Print and Save Transaction"
-msgstr "Trüki ja Salvesta uuena"
+msgstr ""
 
 #: bin/jc.pl:691 bin/jc.pl:710 bin/jc.pl:935 bin/jc.pl:956 bin/oe.pl:800
 #: bin/oe.pl:831
@@ -5797,7 +5449,7 @@ msgstr "Viia läbi Tehing"
 
 #: bin/pe.pl:216 bin/pe.pl:230 bin/pe.pl:536 bin/pe.pl:1008
 msgid "Production"
-msgstr "Tootmine"
+msgstr ""
 
 #: bin/am.pl:635 UI/am-department-form.html:36
 msgid "Profit Center"
@@ -5816,7 +5468,7 @@ msgstr "Projekti Kirjelduse Selgitus"
 
 #: bin/jc.pl:1369
 msgid "Project Name"
-msgstr "Projekti Nimi"
+msgstr ""
 
 #: bin/jc.pl:232 bin/jc.pl:504 bin/jc.pl:1367 bin/pe.pl:1827 bin/pe.pl:2659
 #: bin/rp.pl:324 LedgerSMB/ScriptLib/Company.pm:559
@@ -5826,27 +5478,25 @@ msgstr "Projekti Number"
 
 #: bin/jc.pl:1146
 msgid "Project Number missing!"
-msgstr "Projekti Number puudu!"
+msgstr ""
 
 #: bin/rp.pl:633 templates/demo/income_statement.html:76
 #: templates/demo_with_images/income_statement.html:76
 #: templates/xedemo/income_statement.html:76
-#, fuzzy
 msgid "Project Number: [_1]"
-msgstr "Projekti Number"
+msgstr ""
 
 #: bin/aa.pl:1694
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Projekti Number"
+msgstr ""
 
 #: bin/rp.pl:565
 msgid "Project Transactions"
-msgstr "Projekti Kanded"
+msgstr ""
 
 #: bin/pe.pl:1373
 msgid "Project deleted!"
-msgstr "Projekt kustutatud!"
+msgstr ""
 
 #: bin/arap.pl:375
 msgid "Project not on file!"
@@ -5854,15 +5504,15 @@ msgstr "Projekti pole failis!"
 
 #: bin/pe.pl:1310
 msgid "Project saved!"
-msgstr "Projekt salvestatud!"
+msgstr ""
 
 #: bin/jc.pl:1374
 msgid "Project/Job Name"
-msgstr "Projekti/Tööülesande Nimi"
+msgstr ""
 
 #: bin/jc.pl:236 bin/jc.pl:508 bin/jc.pl:1372
 msgid "Project/Job Number"
-msgstr "Projekti/Tööülesande Number"
+msgstr ""
 
 #: bin/pe.pl:732 bin/pe.pl:947 UI/payments/payment2.html:61
 #: sql/Pg-database.sql:2565
@@ -5870,14 +5520,12 @@ msgid "Projects"
 msgstr "Projektid"
 
 #: scripts/asset.pl:315 scripts/asset.pl:498
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Hanketellimus"
+msgstr ""
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Hanketellimus"
+msgstr ""
 
 #: bin/am.pl:2656 bin/am.pl:2868 bin/ic.pl:1532 bin/io.pl:1370 bin/io.pl:1581
 #: bin/ir.pl:880 bin/ir.pl:897 bin/oe.pl:316 bin/oe.pl:808 bin/oe.pl:847
@@ -5906,14 +5554,12 @@ msgid "Purchase Orders"
 msgstr "Hanketellimused"
 
 #: scripts/asset.pl:316 scripts/asset.pl:499
-#, fuzzy
 msgid "Purchase Value"
-msgstr "Hanketellimus"
+msgstr ""
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
-#, fuzzy
 msgid "Purchase Value:"
-msgstr "Hanketellimus"
+msgstr ""
 
 #: bin/ic.pl:1247 bin/ic.pl:1807 bin/ic.pl:3051 bin/ic.pl:3908 bin/io.pl:201
 #: bin/io.pl:519 bin/jc.pl:888 bin/jc.pl:1857 bin/oe.pl:2928 bin/oe.pl:3235
@@ -5979,7 +5625,7 @@ msgstr "Järjekord"
 
 #: bin/io.pl:1452 bin/jc.pl:2073
 msgid "Queued"
-msgstr "Järjekorras"
+msgstr ""
 
 #: bin/bp.pl:379 bin/ic.pl:1547 bin/ic.pl:1847 bin/io.pl:1343 bin/io.pl:1595
 #: bin/io.pl:1602 bin/oe.pl:282 bin/oe.pl:805 bin/oe.pl:838 bin/oe.pl:1807
@@ -5999,9 +5645,8 @@ msgstr "Koteering"
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
 #: templates/xedemo/sales_quotation.tex:76
-#, fuzzy
 msgid "Quotation #"
-msgstr "Koteering"
+msgstr "Müügipakkumine nr"
 
 #: bin/oe.pl:520
 msgid "Quotation Date"
@@ -6020,9 +5665,8 @@ msgid "Quotation Number missing!"
 msgstr "Koteeringu Number puudub!"
 
 #: bin/bp.pl:324
-#, fuzzy
 msgid "Quotation Number: [_1]"
-msgstr "Koteeringu Number"
+msgstr ""
 
 #: bin/oe.pl:2393
 msgid "Quotation deleted!"
@@ -6048,9 +5692,8 @@ msgstr "Hinnapakkumuse Taotlus"
 #: templates/demo_with_images/request_quotation.tex:106
 #: templates/xedemo/request_quotation.html:103
 #: templates/xedemo/request_quotation.tex:106
-#, fuzzy
 msgid "RFQ #"
-msgstr "Hinnapakkumuse Taotlus"
+msgstr "Müügipakkumise taotluse nr"
 
 #: bin/am.pl:63 bin/oe.pl:509 bin/oe.pl:1273 UI/am-defaults.html:160
 msgid "RFQ Number"
@@ -6072,9 +5715,8 @@ msgid "Rate"
 msgstr "Tariif"
 
 #: UI/am-taxes.html:12
-#, fuzzy
 msgid "Rate (%)"
-msgstr "Tariif"
+msgstr "Määr (%)"
 
 #: UI/accounts/yearend.html:69
 msgid "Re-Open As Of"
@@ -6116,46 +5758,40 @@ msgid "Receive Merchandise"
 msgstr "Kauba Vastuvõtt"
 
 #: scripts/payment.pl:958
-#, fuzzy
 msgid "Received"
-msgstr "Vastuvõtt"
+msgstr "Vastu võetud"
 
 #: UI/accounts/edit.html:120
-#, fuzzy
 msgid "Recon"
-msgstr "Sihtkonto"
+msgstr ""
 
 #: UI/reconciliation/upload.html:43
-#, fuzzy
 msgid "Reconcile as FX"
-msgstr "Kooskõlastamine"
+msgstr ""
 
 #: sql/Pg-database.sql:2424 sql/Pg-database.sql:2560 sql/Pg-database.sql:2569
 msgid "Reconciliation"
 msgstr "Kooskõlastamine"
 
 #: UI/reconciliation/report.html:16
-#, fuzzy
 msgid "Reconciliation Date:"
-msgstr "Kooskõlastamine"
+msgstr ""
 
 #: UI/reconciliation/report.html:7
 msgid "Reconciliation Report"
-msgstr "Kooskõlastamise Raport"
+msgstr ""
 
 #: scripts/recon.pl:223
-#, fuzzy
 msgid "Reconciliation Sets"
-msgstr "Kooskõlastamise Raport"
+msgstr ""
 
 #: bin/ir.pl:504 bin/is.pl:561 bin/pos.pl:377 UI/orders/order.html:42
 msgid "Record in"
 msgstr "Sihtkonto"
 
 #: bin/arap.pl:804
-#, fuzzy
 msgid "Recurring Transaction for [_1]"
-msgstr "Korduvad Tehingud"
+msgstr ""
 
 #: bin/am.pl:2186 UI/am-list-recurring.html:8 sql/Pg-database.sql:2567
 msgid "Recurring Transactions"
@@ -6168,14 +5804,12 @@ msgid "Reference"
 msgstr "Teatis"
 
 #: bin/io.pl:1646
-#, fuzzy
 msgid "Reference Number Missing"
-msgstr "Pearaamatu Viitenumber"
+msgstr ""
 
 #: UI/batch/search_transactions.html:35
-#, fuzzy
 msgid "Reference/Invoice Number"
-msgstr "Pearaamatu Viitenumber"
+msgstr ""
 
 #: sql/Pg-database.sql:501
 msgid "Referral"
@@ -6186,9 +5820,8 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.tex:143
 #: templates/xedemo/ar_transaction.html:224
 #: templates/xedemo/ar_transaction.tex:143
-#, fuzzy
 msgid "Registration"
-msgstr "Arvepidamine"
+msgstr ""
 
 #: templates/demo/invoice.html:303 templates/demo_with_images/invoice.html:303
 #: templates/xedemo/invoice.html:303
@@ -6234,14 +5867,12 @@ msgid "Repeat"
 msgstr "Korrata"
 
 #: UI/reconciliation/approved.html:3
-#, fuzzy
 msgid "Report Approved"
-msgstr "Aruanne"
+msgstr ""
 
 #: scripts/asset.pl:626
-#, fuzzy
 msgid "Report Results"
-msgstr "Aruanded"
+msgstr ""
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
@@ -6281,7 +5912,7 @@ msgstr "Hinnapakkumuse Taotlus"
 
 #: bin/oe.pl:1271 bin/oe.pl:1744
 msgid "Request for Quotations"
-msgstr "Hinnapakkumuse Taotlused"
+msgstr ""
 
 #: UI/io-email.html:74 UI/rp-email.html:58
 msgid "Request read receipt"
@@ -6341,33 +5972,28 @@ msgid "Return to the login screen."
 msgstr ""
 
 #: sql/Pg-database.sql:2564
-#, fuzzy
 msgid "Reverse Payment"
-msgstr "Ettemaksmine"
+msgstr ""
 
 #: scripts/payment.pl:392
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Maksed"
+msgstr ""
 
 #: sql/Pg-database.sql:2562
-#, fuzzy
 msgid "Reverse Receipts"
-msgstr "Laekumid"
+msgstr ""
 
 #: scripts/employee.pl:317 UI/employee/filter.html:224 UI/employee.html:90
 msgid "Role"
-msgstr "Roll"
+msgstr ""
 
 #: UI/setup/complete.html:16 UI/setup/confirm_operation.html:80
-#, fuzzy
 msgid "Row counts"
-msgstr "Kontod"
+msgstr ""
 
 #: UI/setup/begin_backup.html:49
-#, fuzzy
 msgid "Run Backup"
-msgstr "Varukoopia"
+msgstr ""
 
 #: UI/Contact/contact.html:361 sql/Pg-database.sql:2576
 msgid "SIC"
@@ -6383,7 +6009,7 @@ msgstr "Standardiseeritud Tööstuskood Salvestatud!"
 
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
-msgstr ""
+msgstr "Standardiseeritud tööstuskood:"
 
 #: bin/io.pl:231 bin/io.pl:511 bin/oe.pl:2914 bin/oe.pl:3500
 msgid "SKU"
@@ -6453,9 +6079,8 @@ msgid "Sales Quotation Number"
 msgstr "Müügipakkumuse Number"
 
 #: t/data/04-complex_template.html:85
-#, fuzzy
 msgid "Sales:"
-msgstr "Müük"
+msgstr "Müük:"
 
 #: bin/aa.pl:539 bin/aa.pl:1544 bin/aa.pl:1915 bin/aa.pl:2030 bin/is.pl:441
 #: bin/oe.pl:563 bin/oe.pl:1266 bin/oe.pl:1284 bin/oe.pl:1293 bin/oe.pl:1313
@@ -6477,17 +6102,16 @@ msgid "Salesperson"
 msgstr "Müüja"
 
 #: UI/employee/filter.html:126
-#, fuzzy
 msgid "Salutation"
-msgstr "Koteering"
+msgstr "Tervitus"
 
 #: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
 msgid "Salvage Value:"
-msgstr ""
+msgstr "Jääkväärtus:"
 
 #: bin/jc.pl:1435
 msgid "Saturday"
-msgstr "Laupäev"
+msgstr ""
 
 #: bin/aa.pl:1000 bin/am.pl:100 bin/am.pl:108 bin/am.pl:119 bin/am.pl:481
 #: bin/am.pl:487 bin/gl.pl:282 bin/ic.pl:855 bin/ic.pl:864 bin/jc.pl:688
@@ -6508,43 +6132,36 @@ msgid "Save"
 msgstr "Salvesta"
 
 #: UI/Contact/contact.html:1039
-#, fuzzy
 msgid "Save As New"
 msgstr "Salvesta uuena"
 
 #: scripts/payment.pl:234
-#, fuzzy
 msgid "Save Batch"
-msgstr "Salvestada Ajakava"
+msgstr ""
 
 #: UI/Contact/contact.html:676
-#, fuzzy
 msgid "Save Changes"
-msgstr "Salvesta uuena"
+msgstr "Salvesta muudatused"
 
 #: t/data/04-complex_template.html:546 UI/Contact/contact.html:1032
-#, fuzzy
 msgid "Save Contact"
-msgstr "Kontakt"
+msgstr ""
 
 #: UI/Admin/edit_user.html:192
-#, fuzzy
 msgid "Save Groups"
-msgstr "Grupid"
+msgstr ""
 
 #: bin/aa.pl:978 bin/ir.pl:906 bin/is.pl:1017
-#, fuzzy
 msgid "Save Info"
-msgstr "Salvesta"
+msgstr ""
 
 #: t/data/04-complex_template.html:485 UI/Contact/contact.html:914
 msgid "Save Location"
 msgstr ""
 
 #: UI/Contact/contact.html:686
-#, fuzzy
 msgid "Save New"
-msgstr "Salvesta uuena"
+msgstr ""
 
 #: UI/Contact/contact.html:921
 msgid "Save New Location"
@@ -6555,27 +6172,22 @@ msgid "Save Schedule"
 msgstr "Salvestada Ajakava"
 
 #: bin/am.pl:1429
-#, fuzzy
 msgid "Save Template"
-msgstr "LaTeX Dokumendipõhjad"
+msgstr ""
 
 #: bin/jc.pl:1239
-#, fuzzy
 msgid "Save Transaction"
-msgstr "Tehing"
+msgstr ""
 
 #: UI/Admin/edit_user.html:148
-#, fuzzy
 msgid "Save User"
-msgstr "Salvesta uuena"
+msgstr ""
 
 #: scripts/setup.pl:729
-#, fuzzy
 msgid "Save and Retry"
-msgstr "Salvesta uuena"
+msgstr ""
 
 #: bin/aa.pl:1001
-#, fuzzy
 msgid "Save as New"
 msgstr "Salvesta uuena"
 
@@ -6617,58 +6229,48 @@ msgid "Search Asset Class"
 msgstr ""
 
 #: sql/Pg-database.sql:2599
-#, fuzzy
 msgid "Search Assets"
-msgstr "Otsi"
+msgstr ""
 
 #: UI/employee/filter.html:8
-#, fuzzy
 msgid "Search Employees"
-msgstr "Teenistujad"
+msgstr ""
 
 #: UI/payments/search.html:7 UI/payments/search.html:31
-#, fuzzy
 msgid "Search Payments"
-msgstr "Maksed"
+msgstr ""
 
 #: UI/reconciliation/search.html:4
-#, fuzzy
 msgid "Search Reconciliation Reports"
-msgstr "Kooskõlastamise Raport"
+msgstr ""
 
 #: scripts/admin.pl:367 scripts/employee.pl:296
-#, fuzzy
 msgid "Search Results"
-msgstr "Otsi"
+msgstr ""
 
 #: UI/batch/search_transactions.html:10
-#, fuzzy
 msgid "Search Unapproved Transactions"
-msgstr "Viia läbi Tehing"
+msgstr ""
 
 #: sql/Pg-database.sql:2583
-#, fuzzy
 msgid "Search Users"
-msgstr "Otsi"
+msgstr ""
 
 #: UI/Admin/user_search.html:5
 msgid "Search for Users"
 msgstr ""
 
 #: scripts/asset.pl:600
-#, fuzzy
 msgid "Search reports"
-msgstr "Otsi"
+msgstr ""
 
 #: sql/Pg-database.sql:776
-#, fuzzy
 msgid "Secondary Phone"
-msgstr "Töötelefon"
+msgstr ""
 
 #: UI/reconciliation/report.html:260
-#, fuzzy
 msgid "Select All"
-msgstr "Vali kõik"
+msgstr ""
 
 #: bin/pe.pl:2764
 msgid "Select Customer"
@@ -6688,9 +6290,8 @@ msgid "Select all"
 msgstr "Vali kõik"
 
 #: UI/taxform/add_taxform.html:62
-#, fuzzy
 msgid "Select by Default:"
-msgstr "Vali kõik"
+msgstr ""
 
 #: bin/arap.pl:183 bin/ic.pl:3489 bin/pe.pl:2290
 msgid "Select from one of the names below"
@@ -6701,9 +6302,8 @@ msgid "Select from one of the projects below"
 msgstr "Vali üks alltoodud projektidest"
 
 #: UI/payments/use_overpayment2.html:141
-#, fuzzy
 msgid "Select invoices"
-msgstr "Müügiarved"
+msgstr "Vali arved"
 
 #: bin/io.pl:529
 msgid "Select items"
@@ -6723,9 +6323,8 @@ msgid "Select txt, postscript or PDF!"
 msgstr "Valida .txt, postscript või PDF!"
 
 #: UI/payments/payments_filter.html:7
-#, fuzzy
 msgid "Selection"
-msgstr "Vali"
+msgstr ""
 
 #: bin/ic.pl:3061
 msgid "Sell"
@@ -6748,9 +6347,8 @@ msgid "Sep"
 msgstr "Sept"
 
 #: UI/am-defaults.html:34
-#, fuzzy
 msgid "Separate Duties"
-msgstr "Osakonnad"
+msgstr ""
 
 #: bin/aa.pl:74 bin/ca.pl:66 bin/gl.pl:69 bin/io.pl:70
 #: LedgerSMB/App_State.pm:177 LedgerSMB/DBObject/Date.pm:68
@@ -6762,9 +6360,8 @@ msgstr "September"
 #: templates/demo_with_images/work_order.html:134
 #: templates/demo/work_order.html:134 templates/xedemo/packing_list.html:121
 #: templates/xedemo/work_order.html:134
-#, fuzzy
 msgid "Serial #"
-msgstr "Seerianr."
+msgstr ""
 
 #: bin/io.pl:228 bin/oe.pl:2935
 msgid "Serial No."
@@ -6785,7 +6382,6 @@ msgstr "Seerianumber"
 #: templates/demo/bin_list.html:149
 #: templates/demo_with_images/bin_list.html:149
 #: templates/xedemo/bin_list.html:149
-#, fuzzy
 msgid "Serialnumber"
 msgstr "Seerianumber"
 
@@ -6799,52 +6395,47 @@ msgstr "Teenuse Kood"
 
 #: bin/jc.pl:1147
 msgid "Service Code missing!"
-msgstr "Teenuse Kood puudu!"
+msgstr ""
 
 #: bin/jc.pl:237 bin/jc.pl:509 bin/jc.pl:1373
 msgid "Service/Labor Code"
-msgstr "Teenuse/Töö Kood"
+msgstr ""
 
 #: bin/ic.pl:1290 sql/Pg-database.sql:2461
 msgid "Services"
-msgstr "Teenused"
+msgstr ""
 
 #: UI/get_password.html:35
 msgid "Session expired!"
-msgstr "Sessioon aegunud!"
+msgstr "Seanss on aegunud!"
 
 #: sql/Pg-database.sql:2584
-#, fuzzy
 msgid "Sessions"
-msgstr "Versioon"
+msgstr "Seansid"
 
 #: UI/Admin/edit_user.html:146
-#, fuzzy
 msgid "Set Password"
-msgstr "Parool"
+msgstr "Seadista salasõna"
 
 #: UI/users/preferences.html:37
 msgid "Settings"
-msgstr ""
+msgstr "Seaded"
 
 #: LedgerSMB/Num2text.pm:66
 msgid "Seven"
 msgstr "seitse"
 
 #: LedgerSMB/Num2text.pm:100
-#, fuzzy
 msgid "Seven Hundred"
-msgstr "sada"
+msgstr "seitsesada"
 
 #: LedgerSMB/Num2text.pm:77
-#, fuzzy
 msgid "Seventeen"
-msgstr "seitse"
+msgstr "seitseteist"
 
 #: LedgerSMB/Num2text.pm:95
-#, fuzzy
 msgid "Seventy"
-msgstr "seitse"
+msgstr "seitsekümmend"
 
 #: templates/demo/balance_sheet.html:128
 #: templates/demo_with_images/balance_sheet.html:128
@@ -6878,9 +6469,8 @@ msgstr "Kauba Saatmine"
 #: templates/xedemo/bin_list.tex:53 templates/xedemo/invoice.html:23
 #: templates/xedemo/invoice.tex:75 templates/xedemo/sales_order.html:29
 #: templates/xedemo/work_order.html:29
-#, fuzzy
 msgid "Ship To"
-msgstr "Kaubasaaja"
+msgstr ""
 
 #: templates/demo/packing_list.html:29 templates/demo/pick_list.html:28
 #: templates/demo/purchase_order.html:30
@@ -6892,9 +6482,8 @@ msgstr "Kaubasaaja"
 #: templates/xedemo/packing_list.html:29 templates/xedemo/pick_list.html:28
 #: templates/xedemo/purchase_order.html:30
 #: templates/xedemo/request_quotation.html:30
-#, fuzzy
 msgid "Ship To:"
-msgstr "Kaubasaaja"
+msgstr ""
 
 #: templates/demo/purchase_order.html:107 templates/demo/sales_order.html:107
 #: templates/demo/sales_order.tex:109
@@ -6905,9 +6494,8 @@ msgstr "Kaubasaaja"
 #: templates/demo/work_order.html:107 templates/xedemo/purchase_order.html:107
 #: templates/xedemo/sales_order.html:107 templates/xedemo/sales_order.tex:109
 #: templates/xedemo/work_order.html:107
-#, fuzzy
 msgid "Ship Via"
-msgstr "Tarneviis"
+msgstr ""
 
 #: bin/aa.pl:943 bin/io.pl:1970 bin/is.pl:982 bin/is.pl:1003 bin/oe.pl:798
 #: bin/oe.pl:818 bin/oe.pl:3028
@@ -7025,15 +6613,15 @@ msgstr "kuus"
 
 #: LedgerSMB/Num2text.pm:76
 msgid "Sixteen"
-msgstr ""
+msgstr "kuusteist"
 
 #: LedgerSMB/Num2text.pm:94
 msgid "Sixty"
-msgstr ""
+msgstr "kuuskümmend"
 
 #: UI/setup/select_coa.html:56
 msgid "Skip"
-msgstr ""
+msgstr "Jäta vahele"
 
 #: UI/payments/payments_detail.html:261
 msgid "Some"
@@ -7041,7 +6629,7 @@ msgstr ""
 
 #: UI/io-email.html:94 UI/orders/order.html:306
 msgid "Sort by"
-msgstr ""
+msgstr "Sorteeri"
 
 #: bin/aa.pl:851 bin/aa.pl:1581 bin/aa.pl:1945 bin/aa.pl:2128 bin/gl.pl:563
 #: bin/ir.pl:791 bin/is.pl:879 bin/pos.pl:459 bin/ps.pl:76 bin/rp.pl:2019
@@ -7066,9 +6654,8 @@ msgid "Source"
 msgstr "Allikas"
 
 #: bin/rp.pl:1983
-#, fuzzy
 msgid "Source: [_1]"
-msgstr "Allikas"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:194
 #: templates/demo_with_images/sales_quotation.html:194
@@ -7103,14 +6690,12 @@ msgstr "Standardiseeritud Tööstuskood"
 #: scripts/employee.pl:315 UI/Contact/contact.html:212
 #: UI/Contact/contact.html:399 UI/employee/filter.html:52
 #: UI/employee/filter.html:196 UI/employee.html:121
-#, fuzzy
 msgid "Start Date"
-msgstr "Alguskuupäev"
+msgstr "Alguse kuupäev"
 
 #: t/data/04-complex_template.html:114
-#, fuzzy
 msgid "Start Date:"
-msgstr "Alguskuupäev"
+msgstr "Alguse kuupäev:"
 
 #: UI/payments/payments_filter.html:166
 msgid "Start Source Numbering At:"
@@ -7118,7 +6703,7 @@ msgstr ""
 
 #: UI/setup/complete.html:11
 msgid "Start Using LedgerSMB"
-msgstr ""
+msgstr "Hakka kasutama LedgerSMB tarkvara"
 
 #: bin/arap.pl:829 bin/jc.pl:191 bin/pe.pl:343 bin/pe.pl:529 bin/pe.pl:697
 #: bin/pe.pl:996 bin/pe.pl:1218 UI/Contact/history_filter.html:122
@@ -7126,14 +6711,12 @@ msgid "Startdate"
 msgstr "Alguskuupäev"
 
 #: UI/Contact/contact.html:473
-#, fuzzy
 msgid "Starting Date"
-msgstr "Koteeringu kuupäev"
+msgstr ""
 
 #: t/data/04-complex_template.html:177
-#, fuzzy
 msgid "Starting Date:"
-msgstr "Koteeringu kuupäev"
+msgstr ""
 
 #: bin/io.pl:2040
 msgid "State"
@@ -7146,9 +6729,8 @@ msgid "State/Province"
 msgstr "Riik/Maakond"
 
 #: t/data/04-complex_template.html:454
-#, fuzzy
 msgid "State/Province:"
-msgstr "Riik/Maakond"
+msgstr "Maakond:"
 
 #: bin/rp.pl:1325 templates/demo/statement.html:4
 #: templates/demo/statement.html:20 templates/demo/statement.tex:49
@@ -7162,32 +6744,28 @@ msgid "Statement"
 msgstr "Aruanne"
 
 #: bin/rp.pl:1415
-#, fuzzy
 msgid "Statement - [_1]"
-msgstr "Aruanne"
+msgstr ""
 
 #: UI/rc-display-form.html:66 UI/reconciliation/upload.html:29
 msgid "Statement Balance"
 msgstr "Bilansiaruanne"
 
 #: scripts/recon.pl:188
-#, fuzzy
 msgid "Statement Date"
-msgstr "Aruanne"
+msgstr ""
 
 #: bin/rp.pl:1540
-#, fuzzy
 msgid "Statement sent to [_1]"
-msgstr "Aruanne saadetud"
+msgstr ""
 
 #: bin/rp.pl:1664
 msgid "Statements sent to printer!"
-msgstr "Aruanded saadetud printerile"
+msgstr ""
 
 #: UI/payments/check_job.html:19
-#, fuzzy
 msgid "Status: Complete"
-msgstr "Lõpetatud"
+msgstr ""
 
 #: UI/payments/check_job.html:17
 msgid "Status: Still Running"
@@ -7203,19 +6781,19 @@ msgstr "Komplekti Ladustamine"
 
 #: bin/pe.pl:486 bin/pe.pl:748
 msgid "Stock Finished Goods"
-msgstr "Ladusta Valmistoodang"
+msgstr ""
 
 #: bin/jc.pl:782
 msgid "Stores Card"
-msgstr "Tagavarade Kaart"
+msgstr ""
 
 #: bin/jc.pl:1197
 msgid "Stores Card saved!"
-msgstr "Tagavarade Kaart salvestatud!"
+msgstr ""
 
 #: bin/jc.pl:207 bin/jc.pl:1775
 msgid "Stores Cards"
-msgstr "Tagavarade Kaardid"
+msgstr ""
 
 #: UI/am-userconfig.html:37 UI/users/preferences.html:72
 #: sql/Pg-database.sql:2591
@@ -7223,18 +6801,16 @@ msgid "Stylesheet"
 msgstr "Laaditabel"
 
 #: t/data/04-complex_template.html:231
-#, fuzzy
 msgid "Subcontract GIFI:"
-msgstr "Allhanke GIFI"
+msgstr ""
 
 #: UI/Contact/contact.html:1159 UI/io-email.html:22 UI/rp-email.html:21
 msgid "Subject"
-msgstr "Pealkiri"
+msgstr ""
 
 #: bin/arap.pl:1042 bin/io.pl:1838 UI/Contact/contact.html:1191
-#, fuzzy
 msgid "Subject: [_1]"
-msgstr "Pealkiri"
+msgstr ""
 
 #: UI/reconciliation/search.html:85
 msgid "Submission Status"
@@ -7282,9 +6858,8 @@ msgid "Subtotal"
 msgstr "Vahekokkuvõte"
 
 #: UI/rc-till-closing.html:69
-#, fuzzy
 msgid "Subtotal:"
-msgstr "Vahekokkuvõte"
+msgstr "Vahesumma:"
 
 #: bin/aa.pl:1617 bin/ic.pl:1079 bin/ic.pl:1593 bin/pe.pl:2517
 #: UI/Contact/history_filter.html:204 UI/Contact/search.html:206
@@ -7294,13 +6869,12 @@ msgid "Summary"
 msgstr "Kokkuvõte"
 
 #: UI/accounts/edit.html:137
-#, fuzzy
 msgid "Summary account for"
-msgstr "Kirje summaarne konto"
+msgstr ""
 
 #: bin/jc.pl:1429
 msgid "Sunday"
-msgstr "Pühapäev"
+msgstr ""
 
 #: UI/setup/credentials.html:20
 msgid "Super-user login"
@@ -7312,7 +6886,7 @@ msgstr ""
 
 #: UI/employee.html:97
 msgid "Supervisor"
-msgstr "Ülevaataja"
+msgstr ""
 
 #: UI/ca-list-selector.html:45
 msgid "Swaps debits and credits to match bank statements"
@@ -7326,7 +6900,7 @@ msgstr "Süsteem"
 msgid "System Defaults"
 msgstr "Süsteemi Vaikeväärtused"
 
-#: old-handler.pl:119
+#: old-handler.pl:120
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -7338,9 +6912,8 @@ msgstr ""
 
 #: scripts/asset.pl:313 scripts/asset.pl:735 scripts/asset.pl:799
 #: scripts/asset.pl:870 scripts/asset.pl:1006
-#, fuzzy
 msgid "Tag"
-msgstr "Maks"
+msgstr ""
 
 #: UI/asset/edit_asset.html:44 UI/asset/search_asset.html:38
 msgid "Tag:"
@@ -7355,9 +6928,8 @@ msgid "Tax"
 msgstr "Maks"
 
 #: bin/ir.pl:615 bin/is.pl:716
-#, fuzzy
 msgid "Tax Code"
-msgstr "Tööseadusandlus"
+msgstr ""
 
 #: bin/aa.pl:721
 msgid "Tax Form Applied"
@@ -7368,19 +6940,16 @@ msgid "Tax Form List"
 msgstr ""
 
 #: scripts/taxform.pl:281
-#, fuzzy
 msgid "Tax Form Name"
-msgstr "Maks Nnumber "
+msgstr ""
 
 #: UI/taxform/filter.html:21
-#, fuzzy
 msgid "Tax Form Reports"
-msgstr "Aruanded"
+msgstr ""
 
 #: sql/Pg-database.sql:2570
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Kuupäeva Formaat"
+msgstr ""
 
 #: bin/aa.pl:651 bin/ir.pl:490 bin/is.pl:544 UI/Admin/user_search.html:41
 msgid "Tax ID"
@@ -7392,33 +6961,28 @@ msgid "Tax Included"
 msgstr "Sisaldab Käibemaksu"
 
 #: UI/Contact/contact.html:352
-#, fuzzy
 msgid "Tax Number/SSN"
-msgstr "Maksu Number / Isikukood"
+msgstr ""
 
 #: t/data/04-complex_template.html:222
-#, fuzzy
 msgid "Tax Number/SSN:"
-msgstr "Maksu Number / Isikukood"
+msgstr ""
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
-#, fuzzy
 msgid "Tax Number: [_1]"
-msgstr "Maks Nnumber "
+msgstr ""
 
 #: UI/am-taxes.html:17
-#, fuzzy
 msgid "Tax Rules"
-msgstr "Maks Nnumber "
+msgstr ""
 
 #: templates/demo/purchase_order.html:192
 #: templates/demo_with_images/purchase_order.html:192
 #: templates/xedemo/purchase_order.html:192
-#, fuzzy
 msgid "Tax included"
-msgstr "Sisaldab Käibemaksu"
+msgstr ""
 
 #: bin/io.pl:214
 msgid "TaxForm"
@@ -7429,18 +6993,16 @@ msgid "Taxable"
 msgstr "Maksustatav"
 
 #: sql/Pg-database.sql:2393
-#, fuzzy
 msgid "Taxable Sales"
-msgstr "Maksuvaba Müük"
+msgstr ""
 
 #: bin/am.pl:1544 UI/Contact/contact.html:635 sql/Pg-database.sql:2497
 msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1802
-#, fuzzy
 msgid "Taxes saved!"
-msgstr "Dokumendipõhjad salvestatud!"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:229
 #: templates/demo/ar_transaction.html:235 templates/demo/invoice.html:314
@@ -7459,16 +7021,14 @@ msgstr ""
 #: templates/demo/ar_transaction.html:61
 #: templates/demo_with_images/ar_transaction.html:61
 #: templates/xedemo/ar_transaction.html:61
-#, fuzzy
 msgid "Taxnumber:"
-msgstr "Maks Nnumber "
+msgstr ""
 
 #: templates/demo/ap_transaction.html:62
 #: templates/demo_with_images/ap_transaction.html:62
 #: templates/xedemo/ap_transaction.html:62
-#, fuzzy
 msgid "Taxnumber: [_1]"
-msgstr "Maks Nnumber "
+msgstr ""
 
 #: templates/demo/ar_transaction.html:49 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -7559,13 +7119,12 @@ msgid "Template saved!"
 msgstr "Dokumendipõhjad salvestatud!"
 
 #: UI/am-defaults.html:107
-#, fuzzy
 msgid "Templates directory"
-msgstr "Dokumendipõhjad"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:69
 msgid "Ten"
-msgstr "kümme"
+msgstr ""
 
 #: bin/oe.pl:406 UI/Contact/contact.html:506
 msgid "Terms"
@@ -7583,9 +7142,8 @@ msgid "Terms Net [_1] days"
 msgstr ""
 
 #: t/data/04-complex_template.html:210
-#, fuzzy
 msgid "Terms:"
-msgstr "Tingimused"
+msgstr ""
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
@@ -7622,9 +7180,8 @@ msgid "The amount of"
 msgstr ""
 
 #: scripts/payment.pl:1649 scripts/payment.pl:1655
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Kas oled kindel, et soovid kustutada Kaubaarve Number"
+msgstr ""
 
 #: scripts/payment.pl:1909
 msgid "The amount to be pay from the accno"
@@ -7635,14 +7192,12 @@ msgid "The amount to be pay of the invoice number"
 msgstr ""
 
 #: scripts/recon.pl:308
-#, fuzzy
 msgid "Their Balance"
-msgstr "Proovibilanss"
+msgstr ""
 
 #: UI/reconciliation/report.html:77 UI/reconciliation/report.html:140
-#, fuzzy
 msgid "Their Credits"
-msgstr "Kreedit"
+msgstr ""
 
 #: UI/reconciliation/report.html:76 UI/reconciliation/report.html:139
 msgid "Their Debits"
@@ -7697,13 +7252,12 @@ msgid "Threshold"
 msgstr ""
 
 #: UI/payments/search.html:82
-#, fuzzy
 msgid "Through Date"
-msgstr "Maksetähtaeg"
+msgstr ""
 
 #: bin/jc.pl:1433
 msgid "Thursday"
-msgstr "Neljapäev"
+msgstr ""
 
 #: bin/aa.pl:1665 bin/aa.pl:2098 bin/rp.pl:2031
 msgid "Till"
@@ -7711,7 +7265,7 @@ msgstr "Rahalaegas"
 
 #: bin/jc.pl:281
 msgid "Time"
-msgstr "Aeg"
+msgstr ""
 
 #: bin/jc.pl:395 templates/demo/timecard.html:4 templates/demo/timecard.html:18
 #: templates/demo/timecard.tex:17 templates/demo_with_images/timecard.html:4
@@ -7719,15 +7273,15 @@ msgstr "Aeg"
 #: templates/demo_with_images/timecard.tex:17 templates/xedemo/timecard.html:4
 #: templates/xedemo/timecard.html:18 templates/xedemo/timecard.tex:17
 msgid "Time Card"
-msgstr "Aja Kaart"
+msgstr ""
 
 #: bin/jc.pl:1322
 msgid "Time Card deleted!"
-msgstr "Ajakaart kustutatud!"
+msgstr ""
 
 #: bin/jc.pl:1181
 msgid "Time Card saved!"
-msgstr "Ajakaart salvestatud!"
+msgstr ""
 
 #: bin/bp.pl:60 bin/bp.pl:95 bin/jc.pl:203 bin/jc.pl:1336
 #: sql/Pg-database.sql:2477 sql/Pg-database.sql:2495
@@ -7743,9 +7297,8 @@ msgid "Time Out"
 msgstr "Aeg välja"
 
 #: sql/Pg-database.sql:2526 sql/Pg-database.sql:2542
-#, fuzzy
 msgid "Timecard"
-msgstr "Aja Kaart"
+msgstr ""
 
 #: bin/am.pl:2222
 msgid "Times"
@@ -7782,9 +7335,8 @@ msgid "To %1"
 msgstr ""
 
 #: UI/reconciliation/upload.html:35
-#, fuzzy
 msgid "To Date"
-msgstr "Kuupäev"
+msgstr ""
 
 #: UI/payments/payments_detail.html:296
 msgid "To Pay"
@@ -7822,9 +7374,8 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:28
 #: UI/payments/payments_detail.html:126 UI/reconciliation/search.html:18
 #: UI/reconciliation/search.html:36
-#, fuzzy
 msgid "To:"
-msgstr "Kuni"
+msgstr ""
 
 #: bin/arap.pl:1040 bin/io.pl:1836
 msgid "To: [_1]"
@@ -7836,12 +7387,11 @@ msgstr ""
 
 #: bin/ic.pl:1197
 msgid "Top Level"
-msgstr "Kõrgtase"
+msgstr ""
 
 #: sql/Pg-database.sql:2387
-#, fuzzy
 msgid "Top-level"
-msgstr "Kõrgtase"
+msgstr ""
 
 #: bin/aa.pl:1707 bin/aa.pl:2080 bin/ir.pl:763 bin/is.pl:850 bin/jc.pl:517
 #: bin/jc.pl:531 bin/jc.pl:894 bin/oe.pl:762 bin/oe.pl:1503 bin/oe.pl:1855
@@ -7907,30 +7457,26 @@ msgstr ""
 #: templates/demo/balance_sheet.html:149
 #: templates/demo_with_images/balance_sheet.html:149
 #: templates/xedemo/balance_sheet.html:149
-#, fuzzy
 msgid "Total Equity"
-msgstr "Omandiõigus"
+msgstr ""
 
 #: templates/demo/income_statement.html:131
 #: templates/demo_with_images/income_statement.html:131
 #: templates/xedemo/income_statement.html:131
-#, fuzzy
 msgid "Total Expenses"
-msgstr "Kulu"
+msgstr ""
 
 #: templates/demo/income_statement.html:104
 #: templates/demo_with_images/income_statement.html:104
 #: templates/xedemo/income_statement.html:104
-#, fuzzy
 msgid "Total Income"
-msgstr "Tulu"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:122
 #: templates/demo_with_images/balance_sheet.html:122
 #: templates/xedemo/balance_sheet.html:122
-#, fuzzy
 msgid "Total Liabilities"
-msgstr "Võlg"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:155
 #: templates/demo_with_images/balance_sheet.html:155
@@ -7941,15 +7487,13 @@ msgstr ""
 #: templates/demo/statement.html:123
 #: templates/demo_with_images/statement.html:123
 #: templates/xedemo/statement.html:123
-#, fuzzy
 msgid "Total Outstanding"
-msgstr "Laekumata"
+msgstr ""
 
 #: templates/demo/statement.tex:81 templates/demo_with_images/statement.tex:81
 #: templates/xedemo/statement.tex:81
-#, fuzzy
 msgid "Total outstanding"
-msgstr "Laekumata"
+msgstr ""
 
 #: UI/accounts/edit.html:246
 msgid "Tracking Items"
@@ -7964,14 +7508,12 @@ msgid "Transaction"
 msgstr "Tehing"
 
 #: sql/Pg-database.sql:2379
-#, fuzzy
 msgid "Transaction Approval"
-msgstr "Tehing saadetud!"
+msgstr ""
 
 #: UI/Contact/history_filter.html:140
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Tehingte Kuupäevad"
+msgstr ""
 
 #: bin/gl.pl:1138
 msgid "Transaction Date missing!"
@@ -7983,13 +7525,12 @@ msgstr "Tehingte Kuupäevad"
 
 #: UI/batch/search_transactions.html:13 UI/reconciliation/report.html:69
 #: UI/reconciliation/report.html:132
-#, fuzzy
 msgid "Transaction Type"
-msgstr "Tehing"
+msgstr ""
 
 #: bin/aa.pl:1480
 msgid "Transaction deleted!"
-msgstr "Tehing kustutatud!"
+msgstr ""
 
 #: bin/aa.pl:1383
 msgid "Transaction posted!"
@@ -7997,12 +7538,11 @@ msgstr "Tehing saadetud!"
 
 #: bin/am.pl:1869
 msgid "Transaction reversal enforced for all dates"
-msgstr "Tehingute storneerimine on kohustuslik kõikide kuupäevade ulatuses"
+msgstr ""
 
 #: bin/am.pl:1875
-#, fuzzy
 msgid "Transaction reversal enforced up to [_1]"
-msgstr "Tehingute storneerimine on kohustuslik kuni"
+msgstr ""
 
 #: UI/setup/complete.html:25 UI/setup/confirm_operation.html:89
 #: sql/Pg-database.sql:2390 sql/Pg-database.sql:2407 sql/Pg-database.sql:2476
@@ -8036,7 +7576,7 @@ msgstr "Tõlge kustutatud"
 
 #: bin/io.pl:772
 msgid "Translation not on file!"
-msgstr "Tõlget puudub failis!"
+msgstr ""
 
 #: sql/Pg-database.sql:2467 sql/Pg-database.sql:2478
 msgid "Translations"
@@ -8056,35 +7596,35 @@ msgstr "biljon"
 
 #: bin/jc.pl:1431
 msgid "Tuesday"
-msgstr "Teisipäev"
+msgstr ""
 
 #: LedgerSMB/Num2text.pm:72
 msgid "Twelve"
-msgstr ""
+msgstr "kaksteist"
 
 #: LedgerSMB/Num2text.pm:80
 msgid "Twenty"
-msgstr ""
+msgstr "kakskümmend"
 
 #: LedgerSMB/Num2text.pm:89
 msgid "Twenty Eight"
-msgstr ""
+msgstr "Kakskümmend kaheksa"
 
 #: LedgerSMB/Num2text.pm:86
 msgid "Twenty Five"
-msgstr ""
+msgstr "Kakskümmend viis"
 
 #: LedgerSMB/Num2text.pm:85
 msgid "Twenty Four"
-msgstr ""
+msgstr "kakskümmend neli"
 
 #: LedgerSMB/Num2text.pm:90
 msgid "Twenty Nine"
-msgstr ""
+msgstr "kakskümmend üheksa"
 
 #: LedgerSMB/Num2text.pm:81
 msgid "Twenty One"
-msgstr ""
+msgstr "kakskümmend üks"
 
 #: LedgerSMB/Num2text.pm:82
 msgid "Twenty One-o"
@@ -8092,19 +7632,19 @@ msgstr ""
 
 #: LedgerSMB/Num2text.pm:88
 msgid "Twenty Seven"
-msgstr ""
+msgstr "kakskümmend seitse"
 
 #: LedgerSMB/Num2text.pm:87
 msgid "Twenty Six"
-msgstr ""
+msgstr "kakskümmend kuus"
 
 #: LedgerSMB/Num2text.pm:84
 msgid "Twenty Three"
-msgstr ""
+msgstr "kakskümmend kolm"
 
 #: LedgerSMB/Num2text.pm:83
 msgid "Twenty Two"
-msgstr ""
+msgstr "kakskümmend kaks"
 
 #: LedgerSMB/Num2text.pm:61
 msgid "Two"
@@ -8146,19 +7686,16 @@ msgid "Under"
 msgstr ""
 
 #: scripts/setup.pl:648
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Kaubaarve Number"
+msgstr ""
 
 #: scripts/setup.pl:598
-#, fuzzy
 msgid "Unique Customernumber"
-msgstr "Kliendi Number"
+msgstr ""
 
 #: scripts/setup.pl:608
-#, fuzzy
 msgid "Unique Vendornumber"
-msgstr "Tarnija Number"
+msgstr ""
 
 #: scripts/setup.pl:640
 msgid "Unique nonobsolete partnumbers"
@@ -8185,9 +7722,8 @@ msgstr "Ühik"
 #: templates/xedemo/invoice.html:140
 #: templates/xedemo/request_quotation.html:145
 #: templates/xedemo/request_quotation.tex:124
-#, fuzzy
 msgid "Unit Price"
-msgstr "Hinnakirjahind"
+msgstr "Ühiku hind"
 
 #: scripts/setup.pl:149
 msgid "Unknown database found."
@@ -8198,18 +7734,16 @@ msgid "Unknown version found."
 msgstr ""
 
 #: scripts/vouchers.pl:362
-#, fuzzy
 msgid "Unlock"
-msgstr "Avada Süsteem"
+msgstr ""
 
 #: LedgerSMB/ScriptLib/Company.pm:97
 msgid "Unsupport account type"
 msgstr ""
 
 #: UI/payments/search.html:17
-#, fuzzy
 msgid "Unsupported Number"
-msgstr "Tarnija Number"
+msgstr ""
 
 #: UI/Contact/search.html:12
 msgid "Unsupported Search"
@@ -8259,14 +7793,12 @@ msgid "Use AR Overpayment"
 msgstr ""
 
 #: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2419
-#, fuzzy
 msgid "Use Overpayment"
-msgstr "Ettemaksmine"
+msgstr ""
 
 #: bin/io.pl:2208
-#, fuzzy
 msgid "Use Shipto"
-msgstr "Kaubasaaja"
+msgstr ""
 
 #: scripts/payment.pl:1776
 msgid "Use overpayment/prepayment"
@@ -8283,31 +7815,27 @@ msgstr ""
 
 #: UI/Admin/edit_user.html:26 UI/Admin/edit_user.html:39
 #: UI/setup/new_user.html:22
-#, fuzzy
 msgid "Username"
-msgstr "Kasutaja"
+msgstr "Kasutajanimi"
 
 #: UI/Admin/user_search.html:11
-#, fuzzy
 msgid "Username:"
-msgstr "Kasutaja"
+msgstr "Kasutajanimi:"
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:46
 #: UI/setup/confirm_operation.html:90
-#, fuzzy
 msgid "Users"
-msgstr "Kasutaja"
+msgstr "Kasutajad"
 
 #: UI/Contact/pricelist.csv:34 UI/Contact/pricelist.html:47
 #: UI/Contact/pricelist.tex:46
 msgid "Valid From"
-msgstr ""
+msgstr "Kahtib alates"
 
 #: UI/am-taxes.html:15 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:50
 #: UI/Contact/pricelist.tex:50
-#, fuzzy
 msgid "Valid To"
-msgstr "Kehtiv kuni"
+msgstr "Kehtib kuni"
 
 #: bin/oe.pl:493 bin/oe.pl:1303 bin/oe.pl:1806
 #: templates/demo/sales_quotation.html:73 templates/demo/sales_quotation.tex:76
@@ -8319,9 +7847,8 @@ msgid "Valid until"
 msgstr "Kehtiv kuni"
 
 #: UI/reconciliation/report.html:34
-#, fuzzy
 msgid "Variance:"
-msgstr "Bilanss"
+msgstr ""
 
 #: bin/aa.pl:577 bin/aa.pl:1668 bin/aa.pl:1899 bin/aa.pl:2035 bin/bp.pl:82
 #: bin/ic.pl:2817 bin/ir.pl:456 bin/oe.pl:1381 bin/oe.pl:1756 bin/oe.pl:3506
@@ -8350,12 +7877,11 @@ msgstr "Tarnija Kaubaarve/OR Number"
 
 #: bin/ic.pl:1023
 msgid "Vendor Invoices"
-msgstr "Tarnija Kaubaarved"
+msgstr ""
 
 #: UI/payments/payment1.html:37 UI/payments/payment2.html:31
-#, fuzzy
 msgid "Vendor Name"
-msgstr "Tarnija Number"
+msgstr "Tarnija nimi"
 
 #: bin/aa.pl:1669 bin/am.pl:68 bin/io.pl:1985 scripts/payment.pl:325
 #: UI/am-defaults.html:180 UI/asset/edit_asset.html:185
@@ -8367,19 +7893,16 @@ msgstr "Tarnija Number"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:35
 #: UI/Contact/pricelist.tex:29
-#, fuzzy
 msgid "Vendor Partnumber"
-msgstr "Tarnija Number"
+msgstr ""
 
 #: bin/ic.pl:2819
-#, fuzzy
 msgid "Vendor Reference Number"
-msgstr "Pearaamatu Viitenumber"
+msgstr ""
 
 #: UI/Contact/search.html:6
-#, fuzzy
 msgid "Vendor Search"
-msgstr "Tarnija Number"
+msgstr "Tarnija otsing"
 
 #: bin/aa.pl:1307 bin/ir.pl:1317 bin/oe.pl:2263
 msgid "Vendor missing!"
@@ -8390,29 +7913,23 @@ msgid "Vendor not on file!"
 msgstr "Tarnija pole failis!"
 
 #: bin/bp.pl:304
-#, fuzzy
 msgid "Vendor: [_1]"
-msgstr "Tarnija"
+msgstr ""
 
 #: sql/Pg-database.sql:2554
 msgid "Vendors"
-msgstr "Tarnijad"
+msgstr ""
 
-#: old-handler.pl:174
+#: old-handler.pl:175
 msgid "Version"
 msgstr "Versioon"
 
 #: UI/am-company-logo.html:6
-#, fuzzy
 msgid "Version [_1]"
-msgstr "Versioon"
+msgstr "Versioon [_1]"
 
 #: scripts/recon.pl:219
 msgid "View"
-msgstr ""
-
-#: pos.conf.pl:40
-msgid "Visa/MC"
 msgstr ""
 
 #: bin/is.pl:1015
@@ -8421,7 +7938,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2557
 msgid "Vouchers"
-msgstr ""
+msgstr "Vautšer"
 
 #: bin/ic.pl:1156 bin/ic.pl:1162 bin/ic.pl:1620 bin/ic.pl:1902 bin/oe.pl:1349
 #: bin/oe.pl:1887 bin/oe.pl:2811 templates/demo/bin_list.html:112
@@ -8449,11 +7966,11 @@ msgstr "Tähelepanu!"
 
 #: UI/lib/ui-header.html:28
 msgid "Warning:  Your password will expire in [_1]"
-msgstr ""
+msgstr "Tähelepanu! Sinu salasõna aegub [_1] jooksul"
 
 #: bin/jc.pl:1432
 msgid "Wednesday"
-msgstr "Kolmapäev"
+msgstr ""
 
 #: bin/am.pl:2177
 msgid "Week"
@@ -8509,7 +8026,7 @@ msgstr "Töökäsud"
 
 #: UI/employee.html:109
 msgid "Work Phone"
-msgstr "Töötelefon"
+msgstr ""
 
 #: scripts/setup.pl:96
 msgid "Would you like to migrate the database?"
@@ -8521,7 +8038,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:779
 msgid "Yahoo"
-msgstr ""
+msgstr "Yahoo"
 
 #: bin/aa.pl:1653 bin/am.pl:2179 bin/ca.pl:245 bin/ic.pl:2574 bin/jc.pl:183
 #: bin/oe.pl:1455 bin/pe.pl:719 bin/pe.pl:2444 LedgerSMB/DBObject/Date.pm:93
@@ -8541,24 +8058,23 @@ msgstr "Aasta(t)"
 #: bin/am.pl:2073 UI/accounts/yearend.html:12 UI/accounts/yearend.html:25
 #: sql/Pg-database.sql:2499
 msgid "Yearend"
-msgstr "Aastalõpp"
+msgstr "Kasumi eraldamine"
 
 #: UI/accounts/yearend_complete.html:4
-#, fuzzy
 msgid "Yearend complete"
-msgstr "Aastalõpp postitatud!"
+msgstr "Kasumi eraldamine tehtud"
 
 #: bin/am.pl:2100
 msgid "Yearend date missing!"
-msgstr "Aastalõpu kuupäev puudub!"
+msgstr ""
 
 #: bin/am.pl:2139
 msgid "Yearend posted!"
-msgstr "Aastalõpp postitatud!"
+msgstr ""
 
 #: bin/am.pl:2142
 msgid "Yearend posting failed!"
-msgstr "Aastalõpu postitus ebaõnnestus!"
+msgstr ""
 
 #: bin/am.pl:2180
 msgid "Years"
@@ -8571,10 +8087,9 @@ msgstr "Aastat"
 msgid "Yes"
 msgstr "Jah"
 
-#: old-handler.pl:132
-#, fuzzy
+#: old-handler.pl:133
 msgid "You are logged out!"
-msgstr "Oled välja logitud"
+msgstr "Oled välja logitud!"
 
 #: bin/ps.pl:317
 msgid "You are over by [_1]"
@@ -8582,35 +8097,35 @@ msgstr ""
 
 #: bin/arap.pl:563
 msgid "You are posting an existing transaction!"
-msgstr "Postitad juba olemasolevat tehingut"
+msgstr ""
 
 #: bin/arap.pl:559
 msgid "You are printing and posting an existing transaction!"
-msgstr "Trükida ja postitad juba olemasolevat tehingut"
+msgstr ""
 
 #: bin/arap.pl:535
 msgid "You are printing and saving an existing order"
-msgstr "Trükid ja salvestad juba olemasolevat tellimust"
+msgstr ""
 
 #: bin/arap.pl:547
 msgid "You are printing and saving an existing quotation"
-msgstr "Trükid ja salvestad juba olemasolevat pakkumust"
+msgstr ""
 
 #: bin/jc.pl:1232
 msgid "You are printing and saving an existing transaction!"
-msgstr "Trükid ja salvestad juba olemasolevat tehingut!"
+msgstr ""
 
 #: bin/arap.pl:539
 msgid "You are saving an existing order"
-msgstr "Salvestad juba olemasolevat tellimust"
+msgstr ""
 
 #: bin/arap.pl:551
 msgid "You are saving an existing quotation"
-msgstr "Salvestad juba olemasolevat pakkumust"
+msgstr ""
 
 #: bin/jc.pl:1241
 msgid "You are saving an existing transaction!"
-msgstr "Salvestad juba olemasolevat tehingut\""
+msgstr ""
 
 #: bin/ps.pl:320
 msgid "You are under by [_1]"
@@ -8618,93 +8133,80 @@ msgstr ""
 
 #: UI/am-userconfig.html:9 UI/users/preferences.html:17
 msgid "Your password will expire in [_1]"
-msgstr ""
+msgstr "Sinu salasõna aegub [_1] jooksul"
 
 #: t/data/04-complex_template.html:388 UI/Contact/contact.html:786
-#, fuzzy
 msgid "ZIP/Post Code"
-msgstr "Postiindex"
+msgstr "Postiindeks"
 
 #: LedgerSMB/Num2text.pm:58
 msgid "Zero"
 msgstr "null"
 
 #: bin/io.pl:2043
-#, fuzzy
 msgid "Zip Code"
-msgstr "Postiindex"
+msgstr "Postiindeks"
 
 #: UI/Contact/contact.html:890
-#, fuzzy
 msgid "Zip/Post Code"
-msgstr "Postiindex"
+msgstr "Postiindeks"
 
 #: t/data/04-complex_template.html:463
-#, fuzzy
 msgid "Zip/Post Code:"
-msgstr "Postiindex"
+msgstr "Postiindeks:"
 
 #: UI/Contact/history_filter.html:104 UI/Contact/search.html:94
 #: UI/employee.html:65
 msgid "Zip/Postal Code"
-msgstr "Postiindex"
+msgstr "Postiindeks"
 
 #: bin/gl.pl:196
-#, fuzzy
 msgid "[_1] Cash Transfer Transaction"
-msgstr "Lisa Sularahamüügi Tehing"
+msgstr ""
 
 #: bin/aa.pl:432
-#, fuzzy
 msgid "[_1] Credit Note"
-msgstr "Kreeditarve"
+msgstr ""
 
 #: bin/aa.pl:435
 msgid "[_1] Debit Note"
 msgstr ""
 
 #: bin/gl.pl:199
-#, fuzzy
 msgid "[_1] General Ledger Transaction"
-msgstr "Lisa Pearaamatu Tehing"
+msgstr "[_1] Pearaamatu kanne"
 
 #: bin/arap.pl:170
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Number"
+msgstr "[_1] Number"
 
 #: bin/am.pl:272 bin/rp.pl:845 bin/rp.pl:1262
-#, fuzzy
 msgid "[_1] Report"
-msgstr "Aruanded"
+msgstr ""
 
 #: bin/rp.pl:472 bin/rp.pl:487
 msgid "[_1] To [_2]"
 msgstr ""
 
 #: bin/aa.pl:426
-#, fuzzy
 msgid "[_1] [_2] Transaction"
-msgstr "Tehing"
+msgstr "[_1] [_2] Tehing"
 
 #: bin/ic.pl:3447
-#, fuzzy
 msgid "[_1]: Customer not on file!"
-msgstr "Klient puudub failis!"
+msgstr ""
 
 #: bin/ic.pl:3369
-#, fuzzy
 msgid "[_1]: Vendor not on file!"
-msgstr "Tarnija pole failis!"
+msgstr ""
 
 #: bin/am.pl:155
 msgid "account cannot be set to any other type of account"
 msgstr "konto tüüpi ei saa muuta teiseks kontotüübiks"
 
-#: old-handler.pl:182
-#, fuzzy
+#: old-handler.pl:183
 msgid "action not defined!"
-msgstr "Keeled pole defineeritud!"
+msgstr ""
 
 #: UI/rp-search-generate_balance_sheet.html:2
 msgid "as at"
@@ -8713,22 +8215,20 @@ msgstr "seisuga"
 #: templates/demo/balance_sheet.html:64
 #: templates/demo_with_images/balance_sheet.html:64
 #: templates/xedemo/balance_sheet.html:64
-#, fuzzy
 msgid "as at [_1]"
-msgstr "seisuga"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:484
 msgid "cash"
-msgstr ""
+msgstr "sularaha"
 
 #: LedgerSMB/DBObject/Payment.pm:485
-#, fuzzy
 msgid "check"
-msgstr "Kontrolli"
+msgstr "tšekk"
 
 #: bin/io.pl:2037
 msgid "city"
-msgstr ""
+msgstr "linn"
 
 #: bin/ic.pl:2875 bin/oe.pl:408 t/data/04-complex_template.html:215
 #: t/data/04-complex_template.html:255 UI/Contact/contact.html:511
@@ -8737,24 +8237,20 @@ msgid "days"
 msgstr "päeva"
 
 #: UI/am-defaults.html:42
-#, fuzzy
 msgid "default_language"
-msgstr "Muuda Keel"
+msgstr ""
 
 #: scripts/admin.pl:411
-#, fuzzy
 msgid "delete"
-msgstr "Kustuta"
+msgstr "kustuta"
 
 #: LedgerSMB/DBObject/Payment.pm:486
-#, fuzzy
 msgid "deposit"
-msgstr "Deposiit"
+msgstr ""
 
 #: sql/Pg-database.sql:3775
-#, fuzzy
 msgid "depreciation"
-msgstr "Kooskõlastamine"
+msgstr ""
 
 #: sql/Pg-database.sql:3776
 msgid "disposal"
@@ -8770,9 +8266,8 @@ msgid "ea"
 msgstr "tk"
 
 #: scripts/admin.pl:354
-#, fuzzy
 msgid "edit"
-msgstr "Kreedit"
+msgstr ""
 
 #: bin/am.pl:2703 bin/am.pl:2800 bin/am.pl:2847
 msgid "failed"
@@ -8782,32 +8277,27 @@ msgstr "nurjus"
 #: templates/demo_with_images/income_statement.html:64
 #: templates/xedemo/income_statement.html:64
 msgid "for Period"
-msgstr "Periood"
+msgstr ""
 
 #: bin/rp.pl:1004
-#, fuzzy
 msgid "for Period To [_1]"
-msgstr "Periood"
+msgstr ""
 
 #: t/data/04-gettext.tex:10
-#, fuzzy
 msgid "fr"
-msgstr "läheb"
+msgstr "fr"
 
 #: sql/Pg-database.sql:3777
-#, fuzzy
 msgid "import"
-msgstr "Aruanded"
+msgstr ""
 
 #: sql/Pg-database.sql:3702
-#, fuzzy
 msgid "in months"
-msgstr "Kuud"
+msgstr ""
 
 #: sql/Pg-database.sql:3697 sql/Pg-database.sql:3705
-#, fuzzy
 msgid "in years"
-msgstr "Aastat"
+msgstr ""
 
 #: sql/Pg-database.sql:3506
 msgid "in_label"
@@ -8827,7 +8317,7 @@ msgstr ""
 
 #: scripts/payment.pl:1877
 msgid "is null"
-msgstr ""
+msgstr "on tühi"
 
 #: bin/am.pl:2154
 msgid "localhost"
@@ -8835,34 +8325,31 @@ msgstr "localhost"
 
 #: t/data/04-gettext.html:3 t/data/04-gettext.html:4
 msgid "nl"
-msgstr ""
+msgstr "nl"
 
 #: UI/employee.html:164
-#, fuzzy
 msgid "notes"
-msgstr "Märkused"
+msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:487
 msgid "other"
-msgstr ""
+msgstr "muu"
 
 #: sql/Pg-database.sql:3778
 msgid "partial disposal"
 msgstr ""
 
 #: sql/Pg-database.sql:3667
-#, fuzzy
 msgid "production"
-msgstr "Tootmine"
+msgstr "tootmine"
 
 #: bin/arap.pl:1047 bin/io.pl:1842
 msgid "sent"
 msgstr "saadetud"
 
 #: sql/Pg-database.sql:3666
-#, fuzzy
 msgid "time"
-msgstr "Kord(a)"
+msgstr "aeg"
 
 #: bin/arap.pl:799
 msgid "time(s)"
@@ -8879,409 +8366,4 @@ msgstr ""
 
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
-msgstr ""
-
-#~ msgid "Above"
-#~ msgstr "Alla"
-
-#~ msgid "Access Control"
-#~ msgstr "Ligipääsukontroll"
-
-#~ msgid "Accounting"
-#~ msgstr "Raamatupidamisarvestus"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Aktiveeri Auditi jälgimine"
-
-#~ msgid "Add Deduction"
-#~ msgstr "Lisa Hinnaaland"
-
-#~ msgid "Administrator"
-#~ msgstr "Arvepidaja"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "Kõik Andmehulgad on kaasaegsed!"
-
-#~ msgid "Allowances"
-#~ msgstr "Diskontod"
-
-#~ msgid "Amount missing!"
-#~ msgstr "Summa puudub!"
-
-#~ msgid "Audit trails disabled"
-#~ msgstr "Auditi jälgimine välja lülitatud"
-
-#~ msgid "Audit trails enabled"
-#~ msgstr "Auditi jälgimine sisse lülitatud"
-
-#~ msgid "Backup sent to"
-#~ msgstr "Varukoopia saadetud"
-
-#~ msgid "Based on"
-#~ msgstr "Põhineb"
-
-#~ msgid "Before Deduction"
-#~ msgstr "Enne Hinnaalandust"
-
-#~ msgid "Below"
-#~ msgstr "All"
-
-#~ msgid "Billing Address"
-#~ msgstr "Arve Esitamise Aadress"
-
-#~ msgid "Cannot create Assembly"
-#~ msgstr "Ei saa luua Komplekti"
-
-#~ msgid "Cannot create Labor"
-#~ msgstr "Ei saa luua Tööjõudu"
-
-#~ msgid "Cannot create Lock!"
-#~ msgstr "Ei saa Lukustada!"
-
-#~ msgid "Cannot create Part"
-#~ msgstr "Ei saa luua Detaili"
-
-#~ msgid "Cannot create Service"
-#~ msgstr "Ei saa luua Teenust"
-
-#~ msgid "Cannot delete customer!"
-#~ msgstr "Kienti ei saa kustutada!"
-
-#~ msgid "Cannot delete vendor!"
-#~ msgstr "Tarnijat ei saa kustutada!"
-
-#~ msgid "Cannot post Payment!"
-#~ msgstr "Makset ei saa salvestada!"
-
-#~ msgid "Cannot post Receipt!"
-#~ msgstr "Sisetulekuarderit ei saa salvestada!"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Ei saa märgistada mitut valikut Kaubaartiklile"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Muuda Adminni Parool"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Redigeerimiseks kliki kasutajanimel"
-
-#~ msgid "Connect to"
-#~ msgstr "Ühenda"
-
-#~ msgid "Could not save pricelist!"
-#~ msgstr "Hinnakirja salvestamine ebaõnnestus!"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Uus kontoplaan"
-
-#~ msgid "Customer deleted!"
-#~ msgstr "Klient on kustutatud!"
-
-#~ msgid "Customer saved!"
-#~ msgstr "Klient salvestatud!"
-
-#~ msgid "DBA"
-#~ msgstr "DBA"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "DBI on installeerimata"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Andmebaasi draiver valimata!"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Andmebaasi kasutaja puudub!"
-
-#~ msgid "Dataset is newer than version!"
-#~ msgstr "Andmekogu versioon, on uuem süsteemi omast!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Andmekogu puudub!"
-
-#~ msgid "Dataset updated!"
-#~ msgstr "Andmekogu uuendatud!"
-
-#~ msgid "Deduct after"
-#~ msgstr "Hinnaaland pärast"
-
-#~ msgid "Deduction deleted!"
-#~ msgstr "Hinnaaland kustutatud!"
-
-#~ msgid "Deduction saved!"
-#~ msgstr "Hinnaaland salvestatud!"
-
-#~ msgid "Directory"
-#~ msgstr "Aadressiraamat"
-
-#~ msgid "Driver"
-#~ msgstr "Ohjur"
-
-#~ msgid "Dropdown Limit"
-#~ msgstr "Rippmenüü Piirang"
-
-#~ msgid "Edit Cash Transfer Transaction"
-#~ msgstr "Muuda Raha Ülekande Tehing"
-
-#~ msgid "Edit General Ledger Transaction"
-#~ msgstr "Muuda Pearaamatu Tehing"
-
-#~ msgid "Edit Sales Invoice"
-#~ msgstr "Muuda Müügiarve"
-
-#~ msgid "Employee deleted!"
-#~ msgstr "Teenistuja kustutatud"
-
-#~ msgid "Employee pays"
-#~ msgstr "Teenistuja töötasu"
-
-#~ msgid "Employee saved!"
-#~ msgstr "Teenistuja salvestatud"
-
-#~ msgid "Employer"
-#~ msgstr "Tööandja"
-
-#~ msgid "Employer pays"
-#~ msgstr "Tööandja töötasu"
-
-#~ msgid "Exempt age <"
-#~ msgstr "Vabastatud aeg <"
-
-#~ msgid "Existing Datasets"
-#~ msgstr "Olemasolevad Andmekogud"
-
-#~ msgid "Group Items"
-#~ msgstr "Grupeeri Kaubaartiklid"
-
-#~ msgid "Host"
-#~ msgstr "Server"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Serveri nimi puudu!"
-
-#~ msgid "Incorrect Dataset version!"
-#~ msgstr "Vale Andmekogu versioon"
-
-#~ msgid "Item already on pricelist!"
-#~ msgstr "Kaubaartikkel on juba hinnakirjas!"
-
-#~ msgid "Licensed to"
-#~ msgstr "Litsentsi omanik"
-
-#~ msgid "List Projects"
-#~ msgstr "Projektide Nimekiri"
-
-#~ msgid "Lock System"
-#~ msgstr "Lukusta Süsteem"
-
-#~ msgid "Lockfile created!"
-#~ msgstr "Lukustusfail loodud!"
-
-#~ msgid "Lockfile removed!"
-#~ msgstr "Lukustusfail eemaldatud!"
-
-#~ msgid "Login name missing!"
-#~ msgstr "Kasutajanimi puudu!"
-
-#~ msgid "Menu Width"
-#~ msgstr "Menüü Laius"
-
-#~ msgid "Multibyte Encoding"
-#~ msgstr "Multibyte Encoding"
-
-#~ msgid "Name missing!"
-#~ msgstr "Nimi puudu!"
-
-#~ msgid "New Templates"
-#~ msgstr "Uus Dokumendipõhi"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "Ühtegi Andmebaasiohjurit pole saadaval!"
-
-#~ msgid "No Dataset selected!"
-#~ msgstr "Andmekogu valimata!"
-
-#~ msgid "No email address for"
-#~ msgstr "E-posti aadress puudu"
-
-#~ msgid "Non-taxable Purchases"
-#~ msgstr "Maksuvaba Ostud"
-
-#~ msgid "Nothing open!"
-#~ msgstr "Midagi ei avane!"
-
-#~ msgid "Nothing to delete!"
-#~ msgstr "Midagi pole kustutada!"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Oracle Andmebaasi Administreerimine"
-
-#~ msgid "Order saved!"
-#~ msgstr "Tellimus salvestatud!"
-
-#~ msgid "Out of balance!"
-#~ msgstr "Bilanss ei klapi!"
-
-#~ msgid "Payments posted!"
-#~ msgstr "Maksed postitatud!"
-
-#~ msgid "Payroll Deduction"
-#~ msgstr "Palga Mahaarvatis"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Pg Andmebaasi Administreerimine"
-
-#~ msgid "PgPP Database Administration"
-#~ msgstr "PgPP Database Administration"
-
-#~ msgid "Port"
-#~ msgstr "Port"
-
-#~ msgid "Port missing!"
-#~ msgstr "Port puudub!"
-
-#~ msgid "Pos"
-#~ msgstr "NR."
-
-#~ msgid "Posting"
-#~ msgstr "Postitamine"
-
-#~ msgid "Print and Post as new"
-#~ msgstr "Trüki ja Postita uuena"
-
-#~ msgid "Printing ... "
-#~ msgstr "Trükib ..."
-
-#~ msgid "R"
-#~ msgstr "M"
-
-#~ msgid "Rate missing!"
-#~ msgstr "Tariif puudu!"
-
-#~ msgid "Receipt posted!"
-#~ msgstr "Kviitung postitatud"
-
-#~ msgid "Remove Audit trail up to"
-#~ msgstr "Eemaldada Auditi jäljed kuni"
-
-#~ msgid "Remove Audit trails up to"
-#~ msgstr "Kustuta Auditi jäljed kuni"
-
-#~ msgid "S"
-#~ msgstr "Laupäev/Pühapäev"
-
-#~ msgid "Sales Invoice."
-#~ msgstr "Müügiarve."
-
-#~ msgid "Save Pricelist"
-#~ msgstr "Salvesta Hinnakiri"
-
-#~ msgid "Save to File"
-#~ msgstr "Salvesta Faili"
-
-#~ msgid "Saving"
-#~ msgstr "Salvestab"
-
-#~ msgid "Select a printer!"
-#~ msgstr "Vali printer!"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Saada E-postiga"
-
-#~ msgid "Session Timeout"
-#~ msgstr "Sessiooni aegumine"
-
-#~ msgid "Setup Templates"
-#~ msgstr "Dokumendipõhjade seadistamine"
-
-#~ msgid "Shipping Address"
-#~ msgstr "Tarneaadress"
-
-#~ msgid "Tax Accounts"
-#~ msgstr "Maksukontod"
-
-#~ msgid "Tax collected"
-#~ msgstr "Kogutud maksud"
-
-#~ msgid "Tax paid"
-#~ msgstr "Makstud maksud"
-
-#~ msgid "Text"
-#~ msgstr "Tekst"
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "Järgnevad andmebaasid ei ole kasutusel ning võib kustutada"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "Järgmised andmebaasid vajavad uuendamist"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "Olemasolevate allikate eelkontroll. Praeguses staadiumis ei toimu andmete "
-#~ "lisamist ega kustutamist."
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "Kasutaja gruppi lisamiseks redigeeri nime, muuda kasutajanimi ja salvesta. "
-#~ "Luuakse samade parameetritega uus kasutaja"
-
-#~ msgid "Unit Rate"
-#~ msgstr "Ühiku Tase"
-
-#~ msgid "Unit of measure"
-#~ msgstr "Mõõtühik"
-
-#~ msgid "Update Dataset"
-#~ msgstr "Värkenda Andmekogu"
-
-#~ msgid "Upgrading to Version"
-#~ msgstr "Täiustamine Versioonini"
-
-#~ msgid "Use Templates"
-#~ msgstr "Kasuta Dokumendipõhju"
-
-#~ msgid "User deleted!"
-#~ msgstr "Kasutaja kustutatud!"
-
-#~ msgid "User saved!"
-#~ msgstr "Kasutaja salvestatud!"
-
-#~ msgid "Vendor Invoice."
-#~ msgstr "Tarnija Kaubaarve."
-
-#~ msgid "Vendor deleted!"
-#~ msgstr "Tarnija kustutatud!"
-
-#~ msgid "Vendor saved!"
-#~ msgstr "Tarnija salvestatud!"
-
-#~ msgid "Warehouse deleted!"
-#~ msgstr "Kaubaladu kustutatud!"
-
-#~ msgid "Warehouse saved!"
-#~ msgstr "Kaubaladu salvestatud!"
-
-#~ msgid "You did not enter a name!"
-#~ msgstr "Jätsid nime sisestamata!"
-
-#~ msgid "is already a member!"
-#~ msgstr "on juba kasutaja!"
-
-#~ msgid "locked!"
-#~ msgstr "lukustatud!"
-
-#~ msgid "posted!"
-#~ msgstr "salvestatud!"
-
-#~ msgid "successfully created!"
-#~ msgstr "loodud!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "kustutatud!"
-
-#~ msgid "website"
-#~ msgstr "kodulehekülg"
+msgstr "zh_CN"
