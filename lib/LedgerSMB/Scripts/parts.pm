@@ -42,7 +42,7 @@ Minimal information is returned:
 
 sub partslist_json {
     my ($request) = @_;
-    $request->{partnumber} =~ s/\*//g;
+    $request->{partnumber} =~ s/\*//g if $request->{partnumber};
     my $type = $request->{type} // '';
     my $items = [ LedgerSMB::Part->basic_partslist($request->{partnumber}) ];
     @$items =

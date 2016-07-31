@@ -895,6 +895,7 @@ sub save_pricelist {
                    price => $request->{"lastcost_$id"} ||
                             $request->{"sellprice_$id"},
                 leadtime => $request->{"leadtime_$id"},
+                     qty => $request->{"qty_$id"},
         };
     }
 

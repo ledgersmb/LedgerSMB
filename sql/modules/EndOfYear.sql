@@ -61,7 +61,10 @@ BEGIN
                 from account_checkpoint
                 WHERE end_date = cp_date
                 ) cp on (a.chart_id = cp.account_id) and (a.curr = cp.curr)
-        group by COALESCE(a.chart_id, cp.account_id), COALESCE(a.curr, cp.curr);
+        RIGHT JOIN account ON account.id = a.chart_id
+                              or account.id = cp.account_id
+        group by COALESCE(a.chart_id, cp.account_id),
+                 COALESCE(a.curr, cp.curr), account.id;
 
         SELECT count(*) INTO ret_val FROM account_checkpoint
         where end_date = in_end_date;

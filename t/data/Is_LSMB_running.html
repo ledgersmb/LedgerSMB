@@ -37,7 +37,7 @@
         <meta name="robots" content="noindex,nofollow" />
 </head>
 
-<body class="lsmb claro">
+<body id="setup-login" class="lsmb claro">
 <div class="setupconsole">
 <h2>Database Management Console</h2>
 <div class="listtop">Superuser Credentials</div>
@@ -48,21 +48,21 @@
 <div id="userpass">
 <div class="inputrow">
 <label id="s-user-label" for="s-user" class="username">Super-user login</label>
-	  <select id="s-user" class="username" title="Super-user login" name="s_user" size="15" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
+          <select id="s-user" class="username" title="Super-user login" name="s_user" size="15" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
             
-	    <option  id="s-user-1" value="lsmb_dbadmin" >lsmb_dbadmin</option><option  id="s-user-2" value="postgres" >postgres</option>
-	  </select>
+            <option  id="s-user-1" value="lsmb_dbadmin" >lsmb_dbadmin</option><option  id="s-user-2" value="postgres" >postgres</option>
+          </select>
 </div>
 <div class="inputrow">
 <label id="s-password-label" for="s-password" class="password">Password</label>
       
-	  <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" />
+          <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" />
 </div>
 </div>
 <div class="inputrow">
 <label id="database-label" for="database" class="database">Database</label>
       
-	  <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />
+          <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />
 </div></div>
 <div class="inputrow" style="text-align:center">
   <button data-dojo-type="lsmb/SetupLoginButton"

@@ -236,7 +236,7 @@ while (<>) {
           && do { $state = DELIM; $delim = $2 || $3; redo; };
 
       ($state==FROM || $state==DELIM) &&
-          m/^$/g
+          m/^;?$/g
           && do { $state = DATA; $col_no = 1;
                   # process the NEXT line, as this one will keep matching!
                   # we're in a line-based context here...
@@ -248,7 +248,7 @@ while (<>) {
           && do { $state = NUL; redo; };
 
       $state==DATA &&
-          m/^$delim/g
+          m/^\Q$delim\E/g
           && do { ++$col_no; redo; };
 
       $state==DATA &&
