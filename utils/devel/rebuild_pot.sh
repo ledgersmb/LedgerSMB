@@ -1,7 +1,15 @@
 #!/bin/sh
 
+set -x
+
 date_now=`date --utc "+%F %R%z"`
-version_now=`perl -MLedgerSMB -e 'print \$LedgerSMB::VERSION'`
+version_now=`perl -Ilib -MLedgerSMB -e 'print \$LedgerSMB::VERSION'`
+
+if test "q$version_now" = "q" ;
+then
+   echo "Version detection failed!"
+   exit 1
+fi
 
 cat - > locale/LedgerSMB.pot <<EOF
 msgid ""
@@ -17,7 +25,7 @@ EOF
 
 # EXTRACT STRINGS AND CREATE POT
 find . -name '*.pl' -o -name '*.pm' | \
-  grep -v blib | grep -v LaTeX | sort | \
+  grep -v blib | grep -v t/lib/ | grep -v LaTeX | sort | \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ t/data/ \
@@ -27,11 +35,13 @@ find UI/ templates/ t/data/ \
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
-msguniq -s --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot
+msguniq -s --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot \
+  || exit 1
 
 # Merge with .po files
 
 for pofile in `find . -name '*.po'`
 do
-    msgmerge -s --width=80 --update $pofile locale/LedgerSMB.pot
+    msgmerge -s --width=80 --backup=off --update $pofile locale/LedgerSMB.pot \
+      || (echo "failed $pofile" ;  exit 1)
 done
