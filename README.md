@@ -172,6 +172,11 @@ For most systems, all that's required in this step is:
  $ cp conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
+ > Note: the default search location for `ledgersmb.conf`
+ > is in the root directory of the project where Starman
+ > will be started; when the `LSMB_CONFIG_FILE` environment
+ > variable is set, its path will be taken from that variable
+
 ## Build optimized JavaScript widgets (aka "build Dojo")
 
 Note: **Skip this step for from-tarball installs** The tarrball already contains
