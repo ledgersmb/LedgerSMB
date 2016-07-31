@@ -831,7 +831,9 @@ sub payment2 {
     for my $invoice (@open_invoices) {
         $invoice->{invoice_date} = $invoice->{invoice_date}->to_output;
         if (  !$request->{"checkbox_$invoice->{invoice_id}"}) {
-            my $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
+            my $request_topay_fx_bigfloat
+                = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
+            print STDERR "rtpfx: $request_topay_fx_bigfloat\n";
             # SHOULD I APPLY DISCCOUNTS?
             $request->{"optional_discount_$invoice->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$invoice->{invoice_id}"};
 
@@ -894,48 +896,43 @@ sub payment2 {
             }
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
             my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
-
+            my $invoice_id = $invoice->{invoice_id};
             push @invoice_data, {
                 invoice => {
                     number => $invoice->{invnumber},
-                    id     =>  $invoice->{invoice_id},
+                    id     =>  $invoice_id,
                     href   => $uri
                 },
                 invoice_date      => "$invoice->{invoice_date}",
                 amount            => $invoice->{amount}->to_output,
-                due               => $request->{"optional_discount_$invoice->{invoice_id}"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
+                due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
                 paid              => $paid_formatted,
-                discount          => $request->{"optional_discount_$invoice->{invoice_id}"} ? "$invoice->{discount}" : 0 ,
-                optional_discount =>  $request->{"optional_discount_$invoice->{invoice_id}"},
+                discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
+                optional_discount =>  $request->{"optional_discount_$invoice_id"},
                 exchange_rate     =>  "$invoice->{exchangerate}",
                 due_fx            =>  "$due_fx", # This was set at the begining of the for statement
                 topay             => "$invoice->{due}" - "$invoice->{discount}",
-                source_text       =>  $request->{"source_text_$invoice->{invoice_id}"},
-                optional          =>  $request->{"optional_pay_$invoice->{invoice_id}"},
-                selected_account  =>  $request->{"account_$invoice->{invoice_id}"},
-                selected_source   =>  $request->{"source_$invoice->{invoice_id}"},
+                source_text       =>  $request->{"source_text_$invoice_id"},
+                optional          =>  $request->{"optional_pay_$invoice_id"},
+                selected_account  =>  $request->{"account_$invoice_id"},
+                selected_source   =>  $request->{"source_$invoice_id"},
                 memo              =>  {
-                    name  => "memo_invoice_$invoice->{invoice_id}",
-                    value => $request->{"memo_invoice_$invoice->{invoice_id}"}
+                    name  => "memo_invoice_$invoice_id",
+                    value => $request->{"memo_invoice_$invoice_id"}
                 },#END HASH
                 topay_fx          =>  {
-                    name  => "topay_fx_$invoice->{invoice_id}",
-                    value =>  (defined $request->{"topay_fx_$invoice->{invoice_id}"}) ?
-                        $request->{"topay_fx_$invoice->{invoice_id}"} eq 'N/A' ?
-                        "$topay_fx_value" :
-                        "$request_topay_fx_bigfloat":
-                        "$topay_fx_value"
-                        # Ugly hack, but works ;) ...
+                    name  => "topay_fx_$invoice_id",
+                    value => $request->{"topay_fx_$invoice_id"} // "$topay_fx_value"
                 }#END HASH
             };# END PUSH
 
             push @topay_state, {
-                id  => "topaystate_$invoice->{invoice_id}",
-                value => $request->{"topaystate_$invoice->{invoice_id}"}
+                id  => "topaystate_$invoice_id",
+                value => $request->{"topaystate_$invoice_id"}
             }; #END PUSH
         }
         else {
-            push @selected_checkboxes, {name => "checkbox_$invoice->{invoice_id}",
+            push @selected_checkboxes, {name => "checkbox_$invoice_id",
                                         value => "checked"} ;
         } #END IF
     }# END FOR
