@@ -482,7 +482,7 @@ SELECT
 INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 
 INSERT INTO business_unit (id, class_id, control_code, description)
-SELECT id, 1, id, description
+SELECT id, 1, description, description
   FROM lsmb13.department;
 
 INSERT INTO business_unit
