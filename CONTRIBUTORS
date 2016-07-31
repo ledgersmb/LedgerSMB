@@ -3,14 +3,15 @@ individual contributors.
 
 Current Core Maintainers of LedgerSMB:
 ==================================
-Chris Travers <chris @ metatrontech.com>
-Erik Huelsmann <ehuels @ gmail.com>
-Havard Sorli <havard @ anix.no>
-John Locke (Freelock Consulting) <john @ freelock.com>
+Chris Travers < chris @ metatrontech.com >
+Erik Huelsmann < ehuels @ gmail.com >
+Havard Sorli < havard @ anix.no >
+John Locke (Freelock Consulting) < john @ freelock.com >
 Istvan Pongracz < pongracz.istvan @ gmail.com  >
-Herman Vierendeels <herman.vierendeels @ gmail.com>
+Herman Vierendeels < herman.vierendeels @ gmail.com >
 Robert James Clay < jame @ rocasa.us >
 Yves Lavoie < ylavoie @ yveslavoie.com >
+David Godfrey < lsmbdev @ sbts.com.au >
 
 Other Committers:
 ==================
@@ -32,8 +33,6 @@ db-centric changes.
 
 Other Contributors:
 ========================
-David Godfrey (SB Tech Services) <lsmbdev@sbts.com.au> contributed
-release announcement scripts and various corrections.
 
 David Bandel <david.bandel @ gmail.com> Provided some bug fixes and 
 documentation corrections.
@@ -128,6 +127,9 @@ documentation and a number of bugfixes
 Ward Vandewege [email redacted] has contributed some bug fixes to LedgerSMB database management and migration scripts.
 
 Bill Appelbe < bappelbe @ gmail.com > has contributed some of our documentation.
+
+Kaare Rasmussen < kaare at jasonic dot dk > has contributed significantly bug 
+reports and at least one bug fix.
 
 Original Authors of SQL-Ledger:
 ===================================

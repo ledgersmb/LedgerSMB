@@ -84,7 +84,8 @@ sub display {
           $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
     @{$request->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
-    $request->{total} = $request->{qty} + $request->{non_billable};
+    $request->{total} =
+        ($request->{qty} // 0) + ($request->{non_billable} // 0);
      my $template = LedgerSMB::Template->new(
          user     => $request->{_user},
          locale   => $request->{_locale},
@@ -144,7 +145,7 @@ sub save {
            $request->{partnumber}
     );
     $request->{jctype} ||= 1;
-    $request->{total} = $request->{qty} + $request->{non_chargeable};
+    $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
     $request->{checkedin} = $request->{transdate};
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
@@ -250,6 +251,8 @@ sub get {
          funcname => 'part__get_by_id', args => [$tcard->parts_id]
     );
     $tcard->{partnumber} = $part->{partnumber};
+    $tcard->{qty} //= 0;
+    $tcard->{non_billable} //= 0;
     display($tcard);
 }
 

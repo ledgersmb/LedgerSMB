@@ -35,7 +35,8 @@ CREATE TYPE eca__pricematrix AS (
   validfrom date,
   validto date,
   curr char(3),
-  entry_id int
+  entry_id int,
+  qty numeric
 );
 
 
@@ -400,13 +401,14 @@ The entity credit account must exist before calling this function, and must
 have a type of either 1 or 2.
 $$;
 
+DROP FUNCTION if exists entity__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
-RETURNS INT AS
+RETURNS entity_note AS
 $$
         -- TODO, change this to create vector too
         INSERT INTO entity_note (ref_key, note_class, entity_id, note, vector, subject)
         VALUES (in_entity_id, 1, in_entity_id, in_note, '', in_subject)
-        RETURNING id;
+        RETURNING *;
 
 $$ LANGUAGE SQL;
 
@@ -415,13 +417,14 @@ COMMENT ON FUNCTION entity__save_notes
 $$ Saves an entity-level note.  Such a note is valid for all credit accounts
 attached to that entity.  Returns the id of the note.  $$;
 
+DROP FUNCTION if exists eca__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
-RETURNS INT AS
+RETURNS eca_note AS
 $$
         -- TODO, change this to create vector too
         INSERT INTO eca_note (ref_key, note_class, note, vector, subject)
         VALUES (in_credit_id, 3, in_note, '', in_subject)
-        RETURNING id;
+        RETURNING *;
 
 $$ LANGUAGE SQL;
 
@@ -946,12 +949,16 @@ DROP FUNCTION IF EXISTS entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
 in_bank_account_id int);
 
+drop function if exists entity__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
+in_bank_account_id int);
+
 CREATE OR REPLACE FUNCTION entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
 in_bank_account_id int)
-RETURNS int AS
+RETURNS entity_bank_account AS
 $$
-DECLARE out_id int;
+DECLARE out_bank entity_bank_account;
 BEGIN
         UPDATE entity_bank_account
            SET bic = coalesce(in_bic,''),
@@ -960,19 +967,20 @@ BEGIN
          WHERE id = in_bank_account_id;
 
         IF FOUND THEN
-                out_id = in_bank_account_id;
+             SELECT * INTO out_bank from entity_bank_account WHERE id = in_bank_account_id;
+
         ELSE
                 INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
                 VALUES(in_entity_id, in_bic, in_iban, in_remark);
-                SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+                SELECT * INTO out_bank from entity_bank_account WHERE id = CURRVAL('entity_bank_account_id_seq');
         END IF;
 
         IF in_credit_id IS NOT NULL THEN
-                UPDATE entity_credit_account SET bank_account = out_id
+                UPDATE entity_credit_account SET bank_account = out_bank.id
                 WHERE id = in_credit_id;
         END IF;
+        return out_bank;
 
-        RETURN out_id;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -1020,24 +1028,24 @@ COMMENT ON FUNCTION eca__delete_contact
 $$ Returns true if at least one record was deleted.  False if no records were
 affected.$$;
 
+DROP FUNCTION IF EXISTS entity__save_contact
+(in_entity_id int, in_class_id int, in_description text, in_contact text,
+in_old_contact text, in_old_class_id int);
+
 CREATE OR REPLACE FUNCTION entity__save_contact
 (in_entity_id int, in_class_id int, in_description text, in_contact text,
  in_old_contact text, in_old_class_id int)
-RETURNS INT AS
+RETURNS entity_to_contact AS
 $$
-DECLARE out_id int;
-BEGIN
         DELETE FROM entity_to_contact
          WHERE entity_id = in_entity_id AND contact = in_old_contact
                AND contact_class_id = in_old_class_id;
 
         INSERT INTO entity_to_contact
                (entity_id, contact_class_id, description, contact)
-        VALUES (in_entity_id, in_class_id, in_description, in_contact);
-
-        RETURN 1;
-END;
-$$ LANGUAGE PLPGSQL;
+        VALUES (in_entity_id, in_class_id, in_description, in_contact)
+         RETURNING *;
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION entity__save_contact
 (in_entity_id int, in_contact_class int, in_description text, in_contact text,
@@ -1305,9 +1313,9 @@ DROP FUNCTION IF EXISTS eca__save_contact(int, int, text, text, text, int);
 CREATE OR REPLACE FUNCTION eca__save_contact
 (in_credit_id int, in_class_id int, in_description text, in_contact text,
 in_old_contact text, in_old_class_id int)
-RETURNS INT AS
+RETURNS eca_to_contact AS
 $$
-DECLARE out_id int;
+DECLARE out_contact eca_to_contact;
 BEGIN
 
     PERFORM *
@@ -1323,15 +1331,16 @@ BEGIN
                contact_class_id = in_class_id
          WHERE credit_id = in_credit_id
            AND contact_class_id = in_old_class_id
-           AND contact = in_old_contact;
-    ELSE
+           AND contact = in_old_contact
+        returning * INTO out_contact;
+        return out_contact;
+    END IF;
         INSERT INTO eca_to_contact(credit_id, contact_class_id,
                 description, contact)
-        VALUES (in_credit_id, in_class_id, in_description, in_contact);
+        VALUES (in_credit_id, in_class_id, in_description, in_contact)
+        RETURNING * into out_contact;
+        return out_contact;
 
-    END IF;
-
-        RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -1365,7 +1374,7 @@ RETURNS SETOF eca__pricematrix AS
 $$
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL::numeric, NULL::int, NULL::text, pc.validfrom,
-       pc.validto, pc.curr, pc.entry_id
+       pc.validto, pc.curr, pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.pricegroup_id = eca.pricegroup_id
@@ -1378,7 +1387,7 @@ $$
 
 SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
        pc.sellprice, NULL, NULL::int, NULL, pc.validfrom, pc.validto, pc.curr,
-       pc.entry_id
+       pc.entry_id, pc.qty
   FROM partscustomer pc
   JOIN parts p on pc.parts_id = p.id
   JOIN entity_credit_account eca ON pc.credit_id = eca.id
@@ -1386,7 +1395,7 @@ SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id, pc.pricebreak,
  UNION
 SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
        pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-       pv.entry_id
+       pv.entry_id, null
   FROM partsvendor pv
   JOIN parts p on pv.parts_id = p.id
   JOIN entity_credit_account eca ON pv.credit_id = eca.id
@@ -1459,7 +1468,7 @@ IF FOUND THEN -- VENDOR
 
     SELECT pv.parts_id, p.partnumber, p.description, pv.credit_id, NULL, NULL,
            pv.lastcost, pv.leadtime::int, pv.partnumber, NULL, NULL, pv.curr,
-           pv.entry_id
+           pv.entry_id, null
       INTO retval
       FROM partsvendor pv
       JOIN parts p ON p.id = pv.parts_id
@@ -1477,21 +1486,22 @@ IF FOUND THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, in_qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, pc.qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id
@@ -1542,7 +1552,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION pricelist__save
 (in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric,
  in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date,
- in_curr char(3), in_entry_id int)
+ in_curr char(3), in_entry_id int, in_qty numeric)
 RETURNS eca__pricematrix AS
 $$
 DECLARE
@@ -1588,21 +1598,22 @@ ELSIF t_entity_class = 2 THEN -- CUSTOMER
            sellprice  = in_price,
            validfrom  = in_validfrom,
            validto    = in_validto,
+           qty        = in_qty,
            curr       = in_curr
      WHERE entry_id = in_entry_id and credit_id = in_credit_id;
 
     IF NOT FOUND THEN
         INSERT INTO partscustomer
-               (parts_id, credit_id, sellprice, validfrom, validto, curr)
+               (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr);
+                in_curr, qty);
 
         t_insert := true;
     END IF;
 
     SELECT pc.parts_id, p.partnumber, p.description, pc.credit_id,
            pc.pricebreak, pc.sellprice, NULL, NULL, NULL, pc.validfrom,
-           pc.validto, pc.curr, pc.entry_id
+           pc.validto, pc.curr, pc.entry_id, qty
       INTO retval
       FROM partscustomer pc
       JOIN parts p on pc.parts_id = p.id

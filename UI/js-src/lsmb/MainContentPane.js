@@ -27,7 +27,7 @@ define([
                   },
                   set_main_div: function(doc){
                       var self = this;
-                      var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+                      var body = doc.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
 
                       if (! body) {
                           this.report_error('Invalid server response: document lacks BODY tag');

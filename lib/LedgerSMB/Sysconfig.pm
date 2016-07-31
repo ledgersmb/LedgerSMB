@@ -13,8 +13,15 @@ use DBI qw(:sql_types);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
-my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
-
+my $cfg_file = $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf';
+my $cfg;
+if (-r $cfg_file) {
+    $cfg = Config::IniFiles->new( -file => $cfg_file ) || die @Config::IniFiles::errors;
+}
+else {
+    warn "No configuration file; running with default settings";
+    $cfg = Config::IniFiles->new();
+}
 
 our %config;
 our %docs;
@@ -288,7 +295,7 @@ for ($cfg->Parameters('printers')){
 
 
 # Programs
-our $zip = $cfg->val('progarms', 'zip', 'zip -r %dir %dir');
+our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
 our $gzip = $cfg->val('programs', 'gzip', "gzip -S .gz");
 
 

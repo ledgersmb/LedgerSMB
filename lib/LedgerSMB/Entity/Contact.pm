@@ -163,6 +163,7 @@ sub save {
     } else {
         die $LedgerSMB::App_State::Locale->text('Must have credit or entity id');
     }
+    $ref->{class_id} = $ref->{contact_class_id};
     return __PACKAGE__->new($ref);
 }
 
