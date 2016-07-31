@@ -176,6 +176,9 @@ For most systems, all that's required in this step is:
  > is in the root directory of the project where Starman
  > will be started; when the `LSMB_CONFIG_FILE` environment
  > variable is set, its path will be taken from that variable
+ >
+ > e.g.
+ > `LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf`
 
 ## Build optimized JavaScript widgets (aka "build Dojo")
 
