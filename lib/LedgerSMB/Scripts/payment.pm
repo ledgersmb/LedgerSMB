@@ -446,7 +446,6 @@ This displays the bulk payment screen with current data.
 
 sub display_payments {
     my ($request) = @_;
-    print STDERR "d\n";
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
@@ -459,12 +458,10 @@ sub display_payments {
     } else {
         $payment->{exchangerate} = undef;
     }
-    print STDERR "d1\n";
     $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
         my $contact_to_pay = 0;
-            print STDERR "d2\n";
 
         for my $invoice (@{$_->{invoices}}){
             if (($payment->{action} ne 'update_payments')
@@ -833,7 +830,6 @@ sub payment2 {
         if (  !$request->{"checkbox_$invoice->{invoice_id}"}) {
             my $request_topay_fx_bigfloat
                 = LedgerSMB::PGNumber->from_input($request->{"topay_fx_$invoice->{invoice_id}"});
-            print STDERR "rtpfx: $request_topay_fx_bigfloat\n";
             # SHOULD I APPLY DISCCOUNTS?
             $request->{"optional_discount_$invoice->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$invoice->{invoice_id}"};
 
@@ -932,7 +928,7 @@ sub payment2 {
             }; #END PUSH
         }
         else {
-            push @selected_checkboxes, {name => "checkbox_$invoice_id",
+            push @selected_checkboxes, {name => "checkbox_$invoice->{invoice_id}",
                                         value => "checked"} ;
         } #END IF
     }# END FOR
