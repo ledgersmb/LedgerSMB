@@ -2,7 +2,7 @@
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
    # Defaults for input attributes
   input_keys = ['type', 'name', 'disabled', 'size', 'value',
-	'data-dojo-type','data-dojo-props', 'required']
+        'data-dojo-type','data-dojo-props', 'required']
 
   # ELEMENT DEFAULTS
 
@@ -14,7 +14,7 @@
 
   #radio
   radiobutton_defaults = {
-	 'data-dojo-type' = 'dijit/form/RadioButton'
+         'data-dojo-type' = 'dijit/form/RadioButton'
   }
 
   #file
@@ -74,9 +74,9 @@
          IF !element_data.title.defined();
              element_data.title = element_data.label;
          END;
-	     IF !element_data.type.defined();
-	         element_data.type = "text";
-	     END;
+             IF !element_data.type.defined();
+                 element_data.type = "text";
+             END;
          # Some inputs have no defaults,
          # so make sure everything is empty to start with.
          input_defaults = {};
@@ -84,49 +84,49 @@
          # we need to set 'element_type' for labels to get a 'for' attribute
          # on type='password' inputs
          element_type = 'input';
-	      PROCESS auto_id;
-	      SWITCH element_data.type;  # Merge in type-specific attributes.
-	      CASE 'file';
-	        input_type_keys = input_keys.merge(['accept']);
-	        input_defaults = file_defaults;
-	      CASE 'image';
-	        input_type_keys = input_keys.merge(['alt', 'src']);
-	      CASE ['checkbox'];
-	        input_type_keys = input_keys.merge(['checked']);
-	        input_defaults = checkbox_defaults;
-	      CASE ['radio'];
-	        input_type_keys = input_keys.merge(['checked']);
+              PROCESS auto_id;
+              SWITCH element_data.type;  # Merge in type-specific attributes.
+              CASE 'file';
+                input_type_keys = input_keys.merge(['accept']);
+                input_defaults = file_defaults;
+              CASE 'image';
+                input_type_keys = input_keys.merge(['alt', 'src']);
+              CASE ['checkbox'];
+                input_type_keys = input_keys.merge(['checked']);
+                input_defaults = checkbox_defaults;
+              CASE ['radio'];
+                input_type_keys = input_keys.merge(['checked']);
             input_defaults = radiobutton_defaults;
-	      CASE ['password'];
-	        input_type_keys = input_keys;
-	        input_defaults = password_defaults;
-	      CASE 'text';
+              CASE ['password'];
+                input_type_keys = input_keys;
+                input_defaults = password_defaults;
+              CASE 'text';
             IF 'date' == element_data.class;
-	        input_type_keys = input_keys;
+                input_type_keys = input_keys;
             input_defaults = date_defaults;
             ELSE;
-	        input_type_keys = input_keys.merge(['maxlength', 'readonly']);
-	        input_defaults = text_defaults;
+                input_type_keys = input_keys.merge(['maxlength', 'readonly']);
+                input_defaults = text_defaults;
             END;
-	      CASE 'currency';
+              CASE 'currency';
             input_type_keys = input_keys;
             input_defaults = currency_defaults;
-	      CASE;
-	        input_type_keys = input_keys;
-	    END;
-	  ?>
-	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data = element_data
-	    attribute_defaults = input_defaults
-	    element_keys = input_type_keys
-	  ?>
-	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes
-	  ?>
+              CASE;
+                input_type_keys = input_keys;
+            END;
+          ?>
+          <?lsmb PROCESS attributes  # Process regular attributes.
+            attribute_data = element_data
+            attribute_defaults = input_defaults
+            element_keys = input_type_keys
+          ?>
+          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+            custom_attribute_data=element_data.attributes
+          ?>
       <?lsmb IF label_pos == -1 ?>
         <?lsmb PROCESS auto_label  # Process element label. ?>
       <?lsmb END ?>
-	  <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
+          <input<?lsmb all_attributes ?><?lsmb all_custom_attributes ?> />
       <?lsmb IF label_pos == 1 ?>
         <?lsmb PROCESS auto_label  # Process element label. ?>
       <?lsmb END ?>
@@ -139,24 +139,24 @@
               IF !element_data.title.defined();
                   element_data.title = element_data.label;
               END; ?>
-  	<?lsmb
-	    element_type = 'textarea';
-	    PROCESS auto_id;
-	  ?>
-	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data=element_data
-	    attribute_defaults = textarea_defaults
+        <?lsmb
+            element_type = 'textarea';
+            PROCESS auto_id;
+          ?>
+          <?lsmb PROCESS attributes  # Process regular attributes.
+            attribute_data=element_data
+            attribute_defaults = textarea_defaults
 
-				# Attributes that apply to textareas.
-	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly',
-				'tabindex', 'accesskey', 'value', 'style', 'wrap',
-				'data-dojo-type', 'data-dojo-props']
-	  ?>
-	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes
-	  ?>
-	  <?lsmb PROCESS auto_label  # Process element label. ?>
-	  <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
+                                # Attributes that apply to textareas.
+            element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly',
+                                'tabindex', 'accesskey', 'value', 'style', 'wrap',
+                                'data-dojo-type', 'data-dojo-props']
+          ?>
+          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+            custom_attribute_data=element_data.attributes
+          ?>
+          <?lsmb PROCESS auto_label  # Process element label. ?>
+          <textarea<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></textarea>
   <?lsmb END ?>
 <?lsmb END ?>
 
@@ -172,16 +172,16 @@
         <?lsmb text_attr =  element_data.text_attr ?>
         <?lsmb element.delete('text_attr') ?>
     <?lsmb ELSE ?>
-	<?lsmb text_attr = 'text' ?>
+        <?lsmb text_attr = 'text' ?>
     <?lsmb END ?>
     <?lsmb IF element_data.defined('value_attr') ?>
         <?lsmb value_attr =  element_data.value_attr ?>
         <?lsmb element.delete('value_attr') ?>
     <?lsmb ELSE ?>
-	<?lsmb value_attr = 'value' ?>
+        <?lsmb value_attr = 'value' ?>
     <?lsmb END ?>
     <?lsmb IF element_data.defined('default_values') ?>
-	    <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
+            <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
         i = 0;
         FOREACH select_default IN element_data.default_values;
           UNLESS select_default.defined;
@@ -191,37 +191,37 @@
         END;
       ?>
     <?lsmb END ?>
-  	<?lsmb
-	    element_type = 'select';
-	    PROCESS auto_id;
-	    parent_id = element_data.id;
+        <?lsmb
+            element_type = 'select';
+            PROCESS auto_id;
+            parent_id = element_data.id;
             optindex = 1;
-	  ?>
-	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data=element_data
-	    attribute_defaults = select_defaults
+          ?>
+          <?lsmb PROCESS attributes  # Process regular attributes.
+            attribute_data=element_data
+            attribute_defaults = select_defaults
             # Attributes that apply to selects.
-	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
+            element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
-	  ?>
-	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes
-	  ?>
-	  <?lsmb PROCESS auto_label  # Process element label. ?>
-	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
+          ?>
+          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+            custom_attribute_data=element_data.attributes
+          ?>
+          <?lsmb PROCESS auto_label  # Process element label. ?>
+          <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
             <?lsmb IF default_blank; "<option></option>"; END; ?>
-	    <?lsmb  # Build options.
-	      FOREACH optionds IN element_data.options;
+            <?lsmb  # Build options.
+              FOREACH optionds IN element_data.options;
                   option_data = {};
                   FOREACH key IN optionds.keys;
                       option_data.$key = optionds.$key;
                   END;
-	        PROCESS option 	parent_id = parent_id, optindex = optindex;
+                PROCESS option  parent_id = parent_id, optindex = optindex;
                 optindex=optindex+1;
 
-	      END;
-	    ?>
-	  </select>
+              END;
+            ?>
+          </select>
   <?lsmb END ?>
 <?lsmb END ?>
 
@@ -251,40 +251,40 @@
 <?lsmb # BUTTON ELEMENT ?>
 <?lsmb BLOCK button ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
-  	<?lsmb
-	    element_type = 'button';
-	    PROCESS auto_id;
-	  ?>
-	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data=element_data
-	    attribute_defaults = button_defaults
-	    element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
-		 'tabindex', 'data-dojo-type']  # Attributes that apply to buttons.
-	  ?>
-	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes
-	  ?>
-	  <?lsmb PROCESS auto_label  # Process element label. ?>
-	  <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
+        <?lsmb
+            element_type = 'button';
+            PROCESS auto_id;
+          ?>
+          <?lsmb PROCESS attributes  # Process regular attributes.
+            attribute_data=element_data
+            attribute_defaults = button_defaults
+            element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
+                 'tabindex', 'data-dojo-type']  # Attributes that apply to buttons.
+          ?>
+          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+            custom_attribute_data=element_data.attributes
+          ?>
+          <?lsmb PROCESS auto_label  # Process element label. ?>
+          <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
   <?lsmb END ?>
 <?lsmb END ?>
 
 <?lsmb # LABEL ELEMENT ?>
 <?lsmb BLOCK label ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
-  	<?lsmb
-	    element_type = 'label';
-	    PROCESS auto_id;
-	  ?>
-	  <?lsmb PROCESS attributes
-	    attribute_data=element_data
-	    attribute_defaults = {}  # Make sure old defaults are cleared out.
-	    element_keys=['for']  # Attributes that apply to labels.
-	  ?>
-	  <?lsmb PROCESS custom_attributes
-	    custom_attribute_data=element_data.attributes
-	  ?>
-	  <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
+        <?lsmb
+            element_type = 'label';
+            PROCESS auto_id;
+          ?>
+          <?lsmb PROCESS attributes
+            attribute_data=element_data
+            attribute_defaults = {}  # Make sure old defaults are cleared out.
+            element_keys=['for']  # Attributes that apply to labels.
+          ?>
+          <?lsmb PROCESS custom_attributes
+            custom_attribute_data=element_data.attributes
+          ?>
+          <label<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></label>
   <?lsmb END ?>
 <?lsmb END ?>
 
