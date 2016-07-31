@@ -197,6 +197,11 @@ Builds the required content for the ```UI/js/``` directory from the content
 in the ```UI/js-src/``` directory.  Note that this step fails when submodules
 haven't been correctly initialised.
 
+ > Note: In case correct building of the dojo assets isn't working,
+ > it is possible (at the expense of performance/speed) to run without
+ > preprocessed dojo assets by setting `dojo_built = 0` in the `[debug]`
+ > section of the `ledgersmb.conf` configuration file.
+
 ## Running Starman
 
 With the above steps completed, the system is ready to run the web server:
