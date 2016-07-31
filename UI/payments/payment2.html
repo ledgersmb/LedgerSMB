@@ -199,7 +199,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                                       type = "text"
                                       id = row.topay_fx.id
                                       name = row.topay_fx.name
-                                      value = format_amount(row.topay_fx.value)
+                                      value = row.topay_fx.value
                                   } ?>
           <img src="payments/img/up.gif"
                data-dojo-type="lsmb/MaximizeMinimize"
@@ -262,7 +262,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>
       <tr class="listsubtotal">
         <th colspan="<?lsmb colspan -?>" align="right"><?lsmb text('Subtotal') -?></th>
-        <th colspan="2"><?lsmb format_amount(topay_subtotal) -?>&nbsp;<?lsmb curr.value -?></th>
+        <th colspan="2"><?lsmb topay_subtotal -?>&nbsp;<?lsmb curr.value -?></th>
       </tr>
     </table>
     <table width="100%">
@@ -421,7 +421,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    <tr class="listtotal">
    <?lsmb payment_total = overpayment_subtotal + topay_subtotal -?>
    <th colspan="5" align="right"><?lsmb text('Total') -?></th>
-   <th colspan="2"><?lsmb format_amount(payment_total) -?>&nbsp;<?lsmb curr.value -?></th>
+   <th colspan="2"><?lsmb payment_total -?>&nbsp;<?lsmb curr.value -?></th>
    </tr>
    </table>
 
