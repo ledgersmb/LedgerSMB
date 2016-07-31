@@ -694,7 +694,7 @@ sub payment2 {
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
     # VARIABLES
     my ($project_id, $project_number, $project_name, $department_id, $department_name );
-    my @array_options;
+    my @open_invoices;
     my @project;
     my @selected_checkboxes;
     my @department;
@@ -827,24 +827,24 @@ sub payment2 {
     }
     my @invoice_data;
     my @topay_state;
-    @array_options  = $Payment->get_open_invoices();
+    @open_invoices  = $Payment->get_open_invoices();
     my $unhandled_overpayment;
-    for my $ref (0 .. $#array_options) {
-        $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
-        if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
-            my $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+    for my $ref (0 .. $#open_invoices) {
+        $open_invoices[$ref]->{invoice_date} = $open_invoices[$ref]->{invoice_date}->to_output;
+        if (  !$request->{"checkbox_$open_invoices[$ref]->{invoice_id}"}) {
+            my $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$open_invoices[$ref]->{invoice_id}"});
             # SHOULD I APPLY DISCCOUNTS?
-            $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
-            
+            $request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"};
+
             # LETS SET THE EXCHANGERATE VALUES
             #tshvr4 meaning of next statement? does the same in either case!
-            my $due_fx = $array_options[$ref]->{due_fx};
-            
+            my $due_fx = $open_invoices[$ref]->{due_fx};
+
             my $topay_fx_value;
             if ("$exchangerate") {
                 $topay_fx_value =   $due_fx;
-                if (!$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
-                    $topay_fx_value = $due_fx = $due_fx + ($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
+                if (!$request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"}) {
+                    $topay_fx_value = $due_fx = $due_fx + ($open_invoices[$ref]->{discount}/$open_invoices[$ref]->{exchangerate});
                 }
             } else {
                 #    $topay_fx_value = "N/A";
@@ -853,11 +853,11 @@ sub payment2 {
 
             # We need to check for unhandled overpayment, see the post function for details
             # First we will see if the discount should apply?
-            
-            
+
+
             # We need to compute the unhandled_overpayment, notice that all the values inside the if already have
             # the exchangerate applied
-            
+
             # XXX:  This causes issues currently, so display of unhandled overpayment has
             # disabled.  Was getting numbers that didn't make a lot of sense to me. --CT
             $due_fx ||= 0;
@@ -865,16 +865,16 @@ sub payment2 {
             if ( $due_fx <  $request_topay_fx_bigfloat) {
                 # We need to store all the overpayments so we can use it on the screen
                 $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx;
-                #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
+                #$request->{"topay_fx_$open_invoices[$ref]->{invoice_id}"} = "$due_fx";
                 $request_topay_fx_bigfloat=$due_fx;
             }
-            my $paid = $array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount};
+            my $paid = $open_invoices[$ref]->{amount} - $open_invoices[$ref]->{due} - $open_invoices[$ref]->{discount};
             my $paid_formatted=$paid->to_output;
             #Now its time to build the link to the invoice :)
             my $uri_module;
             #TODO move following code to sub getModuleForUri() ?
             if($Payment->{account_class} == 1) { # 1 is vendor
-                if($array_options[$ref]->{invoice}) {
+                if($open_invoices[$ref]->{invoice}) {
                     $uri_module='ir';
                 }
                 else {
@@ -882,7 +882,7 @@ sub payment2 {
                 }
             }#account_class 1
             elsif($Payment->{account_class} == 2) { # 2 is customer
-                if($array_options[$ref]->{invoice}) {
+                if($open_invoices[$ref]->{invoice}) {
                     $uri_module='is';
                 }
                 else {
@@ -894,35 +894,35 @@ sub payment2 {
                 $uri_module='??';
             }
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            my $uri =$uri_module.'.pl?action=edit&id='.$array_options[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
+            my $uri =$uri_module.'.pl?action=edit&id='.$open_invoices[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
 
             push @invoice_data, {
                 invoice => {
-                    number => $array_options[$ref]->{invnumber},
-                    id     =>  $array_options[$ref]->{invoice_id},
+                    number => $open_invoices[$ref]->{invnumber},
+                    id     =>  $open_invoices[$ref]->{invoice_id},
                     href   => $uri
                 },
-                invoice_date      => "$array_options[$ref]->{invoice_date}",
-                amount            => $array_options[$ref]->{amount}->to_output,
-                due               => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount},
+                invoice_date      => "$open_invoices[$ref]->{invoice_date}",
+                amount            => $open_invoices[$ref]->{amount}->to_output,
+                due               => $request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"}?  $open_invoices[$ref]->{due} : $open_invoices[$ref]->{due} + $open_invoices[$ref]->{discount},
                 paid              => $paid_formatted,
-                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
-                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
-                exchange_rate     =>  "$array_options[$ref]->{exchangerate}",
+                discount          => $request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"} ? "$open_invoices[$ref]->{discount}" : 0 ,
+                optional_discount =>  $request->{"optional_discount_$open_invoices[$ref]->{invoice_id}"},
+                exchange_rate     =>  "$open_invoices[$ref]->{exchangerate}",
                 due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-                topay             => "$array_options[$ref]->{due}" - "$array_options[$ref]->{discount}",
-                source_text       =>  $request->{"source_text_$array_options[$ref]->{invoice_id}"},
-                optional          =>  $request->{"optional_pay_$array_options[$ref]->{invoice_id}"},
-                selected_account  =>  $request->{"account_$array_options[$ref]->{invoice_id}"},
-                selected_source   =>  $request->{"source_$array_options[$ref]->{invoice_id}"},
+                topay             => "$open_invoices[$ref]->{due}" - "$open_invoices[$ref]->{discount}",
+                source_text       =>  $request->{"source_text_$open_invoices[$ref]->{invoice_id}"},
+                optional          =>  $request->{"optional_pay_$open_invoices[$ref]->{invoice_id}"},
+                selected_account  =>  $request->{"account_$open_invoices[$ref]->{invoice_id}"},
+                selected_source   =>  $request->{"source_$open_invoices[$ref]->{invoice_id}"},
                 memo              =>  {
-                    name  => "memo_invoice_$array_options[$ref]->{invoice_id}",
-                    value => $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"}
+                    name  => "memo_invoice_$open_invoices[$ref]->{invoice_id}",
+                    value => $request->{"memo_invoice_$open_invoices[$ref]->{invoice_id}"}
                 },#END HASH
                 topay_fx          =>  {
-                    name  => "topay_fx_$array_options[$ref]->{invoice_id}",
-                    value =>  (defined $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) ?
-                        $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
+                    name  => "topay_fx_$open_invoices[$ref]->{invoice_id}",
+                    value =>  (defined $request->{"topay_fx_$open_invoices[$ref]->{invoice_id}"}) ?
+                        $request->{"topay_fx_$open_invoices[$ref]->{invoice_id}"} eq 'N/A' ?
                         "$topay_fx_value" :
                         "$request_topay_fx_bigfloat":
                         "$topay_fx_value"
@@ -931,13 +931,12 @@ sub payment2 {
             };# END PUSH
 
             push @topay_state, {
-                id  => "topaystate_$array_options[$ref]->{invoice_id}",
-                value => $request->{"topaystate_$array_options[$ref]->{invoice_id}"}
+                id  => "topaystate_$open_invoices[$ref]->{invoice_id}",
+                value => $request->{"topaystate_$open_invoices[$ref]->{invoice_id}"}
             }; #END PUSH
-            
         }
         else {
-            push @selected_checkboxes, {name => "checkbox_$array_options[$ref]->{invoice_id}",
+            push @selected_checkboxes, {name => "checkbox_$open_invoices[$ref]->{invoice_id}",
                                         value => "checked"} ;
         } #END IF
     }# END FOR
