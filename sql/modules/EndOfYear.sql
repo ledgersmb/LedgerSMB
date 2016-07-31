@@ -42,10 +42,10 @@ BEGIN
         INSERT INTO
         account_checkpoint (end_date, account_id, amount_bc,
                             amount_tc, curr, debits, credits)
-    SELECT in_end_date, COALESCE(a.chart_id, cp.account_id),
+    SELECT in_end_date, account.id,
             COALESCE(SUM (a.amount_bc),0) + coalesce(MAX (cp.amount_bc), 0),
             COALESCE(SUM (a.amount_tc),0) + coalesce(MAX (cp.amount_tc), 0),
-            COALESCE(a.curr, cp.curr),
+            COALESCE(a.curr, cp.curr, defaults_get_defaultcurrency()),
             COALESCE(SUM (CASE WHEN (a.amount_bc < 0) THEN a.amount_bc
                                ELSE 0 END), 0)
             + COALESCE(MIN (cp.debits), 0),
@@ -63,8 +63,8 @@ BEGIN
                 ) cp on (a.chart_id = cp.account_id) and (a.curr = cp.curr)
         RIGHT JOIN account ON account.id = a.chart_id
                               or account.id = cp.account_id
-        group by COALESCE(a.chart_id, cp.account_id),
-                 COALESCE(a.curr, cp.curr), account.id;
+        group by COALESCE(a.curr, cp.curr, defaults_get_defaultcurrency()),
+                 account.id;
 
         SELECT count(*) INTO ret_val FROM account_checkpoint
         where end_date = in_end_date;
