@@ -435,3 +435,7 @@ html, body {
 .claro textarea.dijitInputInner {
     outline: none;
 }
+
+.no-fx-transaction .fx-row {
+    display: none;
+}

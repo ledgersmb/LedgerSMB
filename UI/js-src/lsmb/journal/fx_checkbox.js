@@ -3,15 +3,13 @@ define([
     'dojo/_base/declare',
     'dojo/on',
     'dojo/dom',
-    'dojo/dom-class',
-    'dojo/ready'
+    'dojo/dom-class'
 ], function(
     CheckBox,
     declare,
     on,
     dom,
-    domClass,
-    ready){
+    domClass){
     return declare('lsmb/journal/fx_checkbox',[CheckBox],{
         postCreate: function() {
             var self = this;
