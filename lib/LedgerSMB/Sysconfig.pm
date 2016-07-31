@@ -272,6 +272,11 @@ def 'dojo_built',
     default => 1,
     doc => qq||;
 
+def 'debug_ui',
+    section => 'debug',
+    default => 0,
+    doc => qq||;
+
 
 
 

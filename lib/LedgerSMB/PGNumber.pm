@@ -13,6 +13,7 @@ use strict;
 use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
 
 PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
@@ -208,6 +209,9 @@ Specifies the negative format
 
 sub to_output {
     my $self = shift @_;
+    die "Not a PGNumber" if not $self->isa("PGNumber");
+    die "Argument missing" if $#_ < 0;
+    return "N/A" if !defined $_ && $LedgerSMB::Sysconfig::debug_ui;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     $args{money} = 1 if $ENV{LSMB_ALWAYS_MONEY};
     my $is_neg = $self->is_neg;
