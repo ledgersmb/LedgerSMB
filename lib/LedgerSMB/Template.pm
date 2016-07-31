@@ -288,6 +288,11 @@ sub render {
     $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
     $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
     $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
+    $vars->{SETTINGS} = {
+        default_currency =>
+            (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
+        decimal_places => $LedgerSMB::Company_Config::decimal_places,
+    };
     $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
     my @stdformats = ();
     for (qw(HTML PDF PS)){

@@ -38,7 +38,13 @@
   # default currency
   currency_defaults = {
     "data-dojo-type" = 'dijit/form/CurrencyTextBox',
-    "data-dojo-props" = "currency:'USD'"
+    "data-dojo-props" = "currency:'$SETTINGS.default_currency'"
+  }
+
+  # default monetary (currency without currency indicator)
+  monetary_defaults = {
+    "data-dojo-type" = 'dijit/form/NumberTextBox',
+    "data-dojo-props" = "constraints:{pattern:'0.00'}"
   }
 
   # date
@@ -111,6 +117,9 @@
               CASE 'currency';
             input_type_keys = input_keys;
             input_defaults = currency_defaults;
+              CASE 'monetary';
+            input_type_keys = input_keys;
+            input_defaults = monetary_defaults;
               CASE;
                 input_type_keys = input_keys;
             END;
