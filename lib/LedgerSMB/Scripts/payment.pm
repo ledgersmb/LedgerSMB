@@ -1053,7 +1053,6 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
-        format_amount => sub {return LedgerSMB::PGNumber->to_output(@_)}
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
