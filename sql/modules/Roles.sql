@@ -302,6 +302,7 @@ SELECT lsmb__grant_menu('employees_manage', 49, 'allow');
 
 SELECT lsmb__create_role('contact_edit');
 SELECT lsmb__grant_role('contact_edit', 'contact_read');
+SELECT lsmb__grant_role('contact_create', 'contact_edit');
 SELECT lsmb__grant_perms('contact_edit', 'entity', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'company', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'location', 'UPDATE');
