@@ -119,7 +119,6 @@ sub attach_file {
         my $fdata = join ("", <$fh>);
         $file->content($fdata);
     }
-    $file->merge($request);
     $request->{content} = $file->content;
     $file->attach;
     my $cgi = CGI::Simple->new;

@@ -172,6 +172,14 @@ For most systems, all that's required in this step is:
  $ cp conf/ledgersmb.conf.default ledgersmb.conf
 ```
 
+ > Note: the default search location for `ledgersmb.conf`
+ > is in the root directory of the project where Starman
+ > will be started; when the `LSMB_CONFIG_FILE` environment
+ > variable is set, its path will be taken from that variable
+ >
+ > e.g.
+ > `LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf`
+
 ## Build optimized JavaScript widgets (aka "build Dojo")
 
 Note: **Skip this step for from-tarball installs** The tarrball already contains
@@ -188,6 +196,11 @@ and in all cases ```make```.
 Builds the required content for the ```UI/js/``` directory from the content
 in the ```UI/js-src/``` directory.  Note that this step fails when submodules
 haven't been correctly initialised.
+
+ > Note: In case correct building of the dojo assets isn't working,
+ > it is possible (at the expense of performance/speed) to run without
+ > preprocessed dojo assets by setting `dojo_built = 0` in the `[debug]`
+ > section of the `ledgersmb.conf` configuration file.
 
 ## Running Starman
 

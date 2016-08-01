@@ -1,3 +1,11 @@
+# This file is an example file for the configuration of LedgerSMB.
+# A copy should be in the ledgersmb root directory, or an environment
+# variable by the name LSMB_CONFIG_FILE should hold the name
+# of an alternative location
+#
+# e.g.
+# LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf
+
 [main]
 auth = DB
 logging  = 0

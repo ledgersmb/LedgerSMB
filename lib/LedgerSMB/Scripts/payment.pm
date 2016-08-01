@@ -640,6 +640,7 @@ if ($#array_options == -1) {
                                    name => $array_options[$ref]->{name},
                                    meta_number => $array_options[$ref]->{meta_number}};
    }
+   @company_options = sort { $a->{name} cmp $b->{name} } @company_options;
    my $select = {
     companies => \@company_options,
     script       => 'payment.pl',
@@ -1053,7 +1054,6 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
-        format_amount => sub {return LedgerSMB::PGNumber->to_output(@_)}
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
