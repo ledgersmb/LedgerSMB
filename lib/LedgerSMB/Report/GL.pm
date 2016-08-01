@@ -166,7 +166,7 @@ sub columns {
     my @bclasses = LedgerSMB::Business_Unit_Class->list('1', 'gl');
     for my $class (@bclasses){
         push @COLS, {col_id =>  "bc_" . $class->id,
-                       name => LedgerSMB::Report::maketext($class->label),
+                       name => LedgerSMB::Report::text($class->label),
                        type => 'text',
                      pwidth => '2'};
     }
