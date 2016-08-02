@@ -14,10 +14,14 @@ define("lsmb/ComparisonSelectionIncome",
                 comparisons: 0,
                 container: "",
                 _show: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,"display","block");
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","block");
+                    }
                 },
                 _hide: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,"display","none");
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","none");
+                    }
                 },
                 _interval: function(state) {
                     ( state ? this._show : this._hide )(dom.byId("date_period_id"));
@@ -27,7 +31,7 @@ define("lsmb/ComparisonSelectionIncome",
                     if ( state ) _regid.focus();
                 },
                 _toggles: function(ids,l) {
-                    for ( i = 1 ; i <= 9 ; i++ ) {
+                    for ( var i = 1 ; i <= 9 ; i++ ) {
                         var _cdDom = dom.byId(ids + "_" + i);
                         var state = ( i <= this.comparisons && l );
                         registry.byId("from_date_" + i).set("required",state);
@@ -45,15 +49,15 @@ define("lsmb/ComparisonSelectionIncome",
                 },
                 _setComparisonsAttr: function (comparisons) {
                     this.comparisons = comparisons;
-                    this._toggles("comparison_dates",this.type=="by_dates");
-                    this._toggles("comparison_dates_to",this.type=="by_dates");
+                    this._toggles("comparison_dates",this.type === "by_dates");
+                    this._toggles("comparison_dates_to",this.type === "by_dates");
                 },
                 _getComparisonsAttr: function (comparisons) {
                     return this.comparisons;
                 },
                 update: function(targetValue) {
                     var _cDom = dom.byId(this.id);
-                    if ( targetValue == "by_dates"   ) {
+                    if ( targetValue === "by_dates"   ) {
                         this.set("type",targetValue);
                         this._show(this.container);
                         this._hide("date_period_id");
@@ -62,7 +66,7 @@ define("lsmb/ComparisonSelectionIncome",
                         registry.byId("to_date").set("disabled",false);
                         this._toggles("comparison_dates",1);
                         this._toggles("comparison_dates_to",1);
-                    } else if ( targetValue == "by_periods" ) {
+                    } else if ( targetValue === "by_periods" ) {
                         this.set("type",targetValue);
                         this._hide(this.container);
                         this._show("date_period_id");
@@ -73,7 +77,7 @@ define("lsmb/ComparisonSelectionIncome",
                         this._toggles("comparison_dates_to",0);
                     } else if ( targetValue >= 0 && targetValue <= 9 ) {
                         this.set("comparisons",targetValue);
-                        this._interval(targetValue > 0 && this.get("type") == "by_periods");
+                        this._interval(targetValue > 0 && this.get("type") === "by_periods");
                     }
                 },
                 postCreate: function() {

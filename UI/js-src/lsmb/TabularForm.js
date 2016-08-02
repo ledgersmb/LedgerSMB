@@ -102,9 +102,9 @@ define([
                 }
             }
             var myself = this;
-                                query("*", myself.domNode).forEach(function(dnode){
+            query("*", myself.domNode).forEach(function(dnode){
                 myself.TFRenderElement(dnode)
-                                });
+            });
             this.maxCols = this.cols;
             this.initOrient = this.orientation;
         },
@@ -124,7 +124,7 @@ define([
                ++counter;
            });
            counter = counter % this.cols;
-           for (i = counter; i < this.cols; ++i){
+           for ( var i = counter; i < this.cols; ++i){
                var spc = new cp({content: "&nbsp;"});
                this.addChild(spc);
            }

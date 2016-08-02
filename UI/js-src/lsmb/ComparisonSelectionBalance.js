@@ -14,20 +14,26 @@ define("lsmb/ComparisonSelectionBalance",
                 comparisons: 0,
                 container: "",
                 _show: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,"display","block");
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","block");
+                    }
                 },
                 _hide: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,"display","none");
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","none");
+                    }
                 },
                 _interval: function(state) {
                     ( state ? this._show : this._hide )(dom.byId("date_period_id"));
                     var _regid = registry.byId("interval");
                     _regid.set("required",state)
                           .set("disabled",!state);
-                    if ( state ) _regid.focus();
+                    if ( state ) {
+                        _regid.focus();
+                    }
                 },
                 _toggles: function(ids,l) {
-                    for ( i = 1 ; i <= 9 ; i++ ) {
+                    for ( var i = 1 ; i <= 9 ; i++ ) {
                         var _cdDom = dom.byId(ids + "_" + i);
                         var state = ( i <= this.comparisons && l );
                         registry.byId("to_date_" + i).set("required",state);
