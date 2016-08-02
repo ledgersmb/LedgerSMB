@@ -1,9 +1,9 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/RadioButton'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/RadioButton"],
        function(declare, on, topic, RadioButton) {
-           return declare('lsmb/PublishRadioButton', [RadioButton], {
+           return declare("lsmb/PublishRadioButton", [RadioButton], {
                topic: "",
                publish: function() {
                    topic.publish(this.topic, this.value);
@@ -12,7 +12,7 @@ define(['dojo/_base/declare',
                    var self = this;
                    this.inherited(arguments);
                    this.own(
-                       on(this.domNode, 'change',
+                       on(this.domNode, "change",
                           function() {
                               self.publish();
                           })

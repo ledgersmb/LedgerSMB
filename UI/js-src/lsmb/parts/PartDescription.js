@@ -1,15 +1,15 @@
 define([
-    'dijit/form/ComboBox',
-    'dijit/form/Textarea',
-    //    'dijit/form/ComboBoxMixin',
-    'dijit/_HasDropDown',
-    'dijit/form/_AutoCompleterMixin',
-    'dijit/form/_ComboBoxMenu',
-    'dojo/_base/declare',
-    'dojo/topic',
-    'dojo/keys',
-    'lsmb/parts/PartStore',
-    'dojo/text!./templates/DropDownTextarea.html'
+    "dijit/form/ComboBox",
+    "dijit/form/Textarea",
+    //    "dijit/form/ComboBoxMixin",
+    "dijit/_HasDropDown",
+    "dijit/form/_AutoCompleterMixin",
+    "dijit/form/_ComboBoxMenu",
+    "dojo/_base/declare",
+    "dojo/topic",
+    "dojo/keys",
+    "lsmb/parts/PartStore",
+    "dojo/text!./templates/DropDownTextarea.html"
     ], function(
         ComboBox,
         Textarea,
@@ -23,16 +23,16 @@ define([
         store,
         template
       ){
-        return declare('lsmb/parts/PartsDescription',[Textarea, _HasDropDown, _AutoCompleterMixin], {
+        return declare("lsmb/parts/PartsDescription",[Textarea, _HasDropDown, _AutoCompleterMixin], {
             channel: null,
             height: null,
             store:  store,
             queryExpr: "*${0}*",
-            style: 'width: 15ex',
+            style: "width: 15ex",
             autoComplete: false,
-            highlightMatch: 'all',
-            searchAttr: 'description',
-            labelAttr: 'label',
+            highlightMatch: "all",
+            searchAttr: "description",
+            labelAttr: "label",
             templateString: template,
             dropDownClass: _ComboBoxMenu,
             startup: function() {
@@ -43,9 +43,9 @@ define([
                         topic.subscribe(
                             this.channel,
                             function(selected) {
-                                self.set('value',selected[self.searchAttr]);
+                                self.set("value",selected[self.searchAttr]);
                             }));
-                    this.on('change',
+                    this.on("change",
                             function(newValue) {
                                 if (self.item) {
                                     topic.publish(self.channel, self.item);

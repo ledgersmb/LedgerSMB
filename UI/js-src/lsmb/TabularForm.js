@@ -60,26 +60,26 @@
  */
 
 define([
-    'lsmb/layout/TableContainer',
-    'dojo/dom',
-    'dojo/dom-class',
-    'dijit/registry',
-    'dijit/layout/ContentPane',
-    'dojo/query',
-    'dojo/window',
-    'dojo/_base/declare',
-    'dijit/form/TextBox'
+    "lsmb/layout/TableContainer",
+    "dojo/dom",
+    "dojo/dom-class",
+    "dijit/registry",
+    "dijit/layout/ContentPane",
+    "dojo/query",
+    "dojo/window",
+    "dojo/_base/declare",
+    "dijit/form/TextBox"
     ],
     function(TableContainer, dom, cls, registry, cp, query, win,
              declare, testbox)
     {
-      return declare('lsmb/TabularForm',
+      return declare("lsmb/TabularForm",
         [TableContainer],
         {
-        vertsize: 'mobile',
-        vertlabelsize: 'mobile',
+        vertsize: "mobile",
+        vertlabelsize: "mobile",
         maxCols: 1,
-        initOrient: 'horiz',
+        initOrient: "horiz",
         constructor: function (mixIn, domNode){
             if (domNode !== undefined){
                 // Number of columns
@@ -90,19 +90,19 @@ define([
                 }
 
                 //resize to one column on a size of....
-                classes = class_str.match('/ virtsize-\w+ /');
+                classes = class_str.match("/ virtsize-\w+ /");
                 if (classes){
                     this.vertsize = classes[0].replace(/ virtsize-(\w+) /, "$1");               }
 
                 //labels go vertical on a size of.....
-                classes = class_str.match('/ virtlabel-\w+ /');
+                classes = class_str.match("/ virtlabel-\w+ /");
                 if (classes){
                     this.vertlabelsize =
                             classes[0].replace(/ virtlabel-(\w+) /, "$1");
                 }
             }
             var myself = this;
-                                query('*', myself.domNode).forEach(function(dnode){
+                                query("*", myself.domNode).forEach(function(dnode){
                 myself.TFRenderElement(dnode)
                                 });
             this.maxCols = this.cols;
@@ -113,19 +113,19 @@ define([
               if (registry.byId(dnode.id)){
                  return;
               }
-              if (cls.contains(dnode, 'input-row')){
+              if (cls.contains(dnode, "input-row")){
                  TFRenderRow(dnode);
               }
         },
         TFRenderRow: function (dnode){
            var counter = 0;
-           query('*', dnode).forEach(function(dnode){
+           query("*", dnode).forEach(function(dnode){
                TFRenderElement(dnode);
                ++counter;
            });
            counter = counter % this.cols;
            for (i = counter; i < this.cols; ++i){
-               var spc = new cp({content: '&nbsp;'});
+               var spc = new cp({content: "&nbsp;"});
                this.addChild(spc);
            }
         },
@@ -133,19 +133,19 @@ define([
             var winsize = win.getBox();
             var orient = this.orientation;
             switch (this.vertlabelsize){
-            case 'mobile':
+            case "mobile":
                 if (winsize.w >= 480){
                    this.cols=this.maxCols;
                    this.orientation=this.initOrient;
                    break;
                 }
-            case 'small':
+            case "small":
                 if (winsize.w >= 768){
                    this.cols=this.maxCols;
                    this.orientation=this.initOrient;
                    break;
                 }
-            case 'med':
+            case "med":
                 if (winsize.w >= 992){
                    this.cols=this.maxCols;
                    this.orientation=this.initOrient;
@@ -153,18 +153,18 @@ define([
                 }
             default:
                this.cols = 1;
-               this.orientation = 'vert';
+               this.orientation = "vert";
             }
             switch (this.vertsize){
-            case 'mobile':
+            case "mobile":
                 if (winsize.w >= 480){
                    break;
                 }
-            case 'small':
+            case "small":
                 if (winsize.w >= 768){
                    break;
                 }
-            case 'med':
+            case "med":
                 if (winsize.w >= 992){
                    break;
                 }

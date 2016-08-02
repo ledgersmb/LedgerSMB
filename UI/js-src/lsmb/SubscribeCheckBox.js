@@ -1,12 +1,12 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/CheckBox'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/CheckBox"],
        function(declare, on, topic, CheckBox) {
-           return declare('lsmb/SubscribeCheckBox', [CheckBox], {
+           return declare("lsmb/SubscribeCheckBox", [CheckBox], {
                topic: "",
                update: function(targetValue) {
-                   this.set('checked', targetValue);
+                   this.set("checked", targetValue);
                },
                postCreate: function() {
                    var self = this;

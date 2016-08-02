@@ -1,17 +1,17 @@
 define([
-    'dijit/form/Form',
-    'dojo/_base/declare',
-    'dojo/_base/event',
-    'dojo/on',
-    'dojo/hash',
-    'dojo/dom-attr',
-    'dojo/dom-form',
-    'dojo/query',
-    'dijit/registry'
+    "dijit/form/Form",
+    "dojo/_base/declare",
+    "dojo/_base/event",
+    "dojo/on",
+    "dojo/hash",
+    "dojo/dom-attr",
+    "dojo/dom-form",
+    "dojo/query",
+    "dijit/registry"
     ],
        function(Form, declare, event, on, hash, domattr, domform,
                 query, registry) {
-           return declare('lsmb/Form',
+           return declare("lsmb/Form",
                           [Form],
               {
                   clickedAction: null,
@@ -20,10 +20,10 @@ define([
                       this.inherited(arguments);
 
                       // <button> tags get rewritten to <input type="submit" tags...
-                      query('input[type="submit"]', this.domNode)
+                      query("input[type=\"submit\"]", this.domNode)
                           .forEach(function(b) {
-                              on(b, 'click', function(){
-                                  self.clickedAction = domattr.get(b, 'value');
+                              on(b, "click", function(){
+                                  self.clickedAction = domattr.get(b, "value");
                               });
                           });
 
@@ -38,26 +38,26 @@ define([
 
                       var method = this.method;
                       if (undefined == method){
-                          method = 'GET';
+                          method = "GET";
                       }
                       var url = this.action;
 
                       var options = { "handleAs": "text" };
-                      if ('get' == method.toLowerCase()){
+                      if ("get" == method.toLowerCase()){
                           var qobj = domform.toQuery(this.domNode);
-                          qobj = 'action=' + this.clickedAction + '&' + qobj;
-                          url = url + '?' + qobj;
+                          qobj = "action=" + this.clickedAction + "&" + qobj;
+                          url = url + "?" + qobj;
                           hash(url); // add GET forms to the back button history
                       } else {
-                          options['method'] = method;
-                          if ('multipart/form-data' == this.domNode.enctype) {
-                              options['data'] = new FormData(this.domNode);
+                          options["method"] = method;
+                          if ("multipart/form-data" == this.domNode.enctype) {
+                              options["data"] = new FormData(this.domNode);
                           } else {
                               // old code (Form.pm) wants x-www-urlencoded
-                              options['data'] = 'action='+this.clickedAction
-                                  + '&' + domform.toQuery(this.domNode);
+                              options["data"] = "action="+this.clickedAction
+                                  + "&" + domform.toQuery(this.domNode);
                           }
-                          registry.byId('maindiv').load_form(url, options);
+                          registry.byId("maindiv").load_form(url, options);
                       }
                   }
               });
