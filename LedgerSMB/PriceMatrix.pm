@@ -112,6 +112,7 @@ sub price_matrix_query {
 
 sub price_matrix {
     my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig ) = @_;
+    return if $form->{id};
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
@@ -138,7 +139,6 @@ sub price_matrix {
             $ref->{sellprice} = $sellprice;
        } elsif ($form->{vendor_id}){
             $sellprice = $mref->{lastcost} || $ref->{sellprice};
-            die $sellprice;
             $ref->{sellprice} = $sellprice;    
        }
     }
