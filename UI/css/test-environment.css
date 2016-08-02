@@ -132,9 +132,9 @@ cornerlogo {
 }
 
 #top_menu {
-  margin: 10px 0px 0px 0px;
-  padding: 0px;
-  -webkit-padding-start: 0px;
+  margin: 10px 0 0 0;
+  padding: 0;
+  -webkit-padding-start: 0;
   list-style: none;
   background-image: none;
 }
@@ -147,7 +147,7 @@ cornerlogo {
 .menu_open {
 background-image: url('../images/up.gif');
 background-repeat: no-repeat;
-background-position: 0px 0px; 
+background-position: 0 0; 
 padding-left: 12px; 
 padding-top: 2px;
 font-size: 12px;
@@ -156,7 +156,7 @@ font-size: 12px;
 .menu_closed {
 background-image: url('../images/down.gif');
 background-repeat: no-repeat;
-background-position: 0px 0px; 
+background-position: 0 0; 
 padding-left: 12px; 
 padding-top: 2px;
 font-size: 12px;

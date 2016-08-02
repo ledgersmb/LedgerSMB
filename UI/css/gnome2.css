@@ -32,13 +32,13 @@ body {
 
 ul#top_menu {
  list-style-type:none;
- padding: 0px;
+ padding: 0;
   font-size: 14px;
 }
 
 ul.submenu {
  list-style-type:none;
- padding: 0px;
+ padding: 0;
  margin-top: 4px;
  margin-bottom: 4px;
  border: 1px solid #000;
@@ -217,21 +217,21 @@ body.admin {
 
 .menuOut a {
   cursor: pointer;
-  margin: 0px;
+  margin: 0;
   background-color: #eeeeee;
   font-size: 11px;
   color: #000084;
-  border: 0px solid #000000;
-  padding: 0px;
+  border: 0 solid #000000;
+  padding: 0;
   text-align: left;
 }
 
 .menuOver a {
-  margin: 0px;
+  margin: 0;
   background-color: transparent;
   font-size: 11px;
   color: #ffffff;
-  padding: 0px;
+  padding: 0;
   text-align: left;
 }
 
