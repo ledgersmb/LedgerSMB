@@ -94,6 +94,7 @@ Updates $ref with the price matrix outcomes given $transdate and $form.
 
 sub price_matrix {
     my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig) = @_;
+    return if $form->{id};
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
