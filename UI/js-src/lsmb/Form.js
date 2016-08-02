@@ -36,10 +36,9 @@ define([
                       if (! this.validate())
                           return;
 
-                      var method = this.method;
-                      if (undefined == method){
-                          method = "GET";
-                      }
+                      var method = (typeof this.method === "undefined")
+                                 ? "GET"
+                                 : this.method;
                       var url = this.action;
 
                       var options = { "handleAs": "text" };
