@@ -633,6 +633,7 @@ if ($#array_options == -1) {
                                    name => $array_options[$ref]->{name},
                                    meta_number => $array_options[$ref]->{meta_number}};
    }
+   @company_options = sort { $a->{name} cmp $b->{name} } @company_options;
    my $select = {
     companies => \@company_options,
     script       => 'payment.pl',
@@ -1049,7 +1050,6 @@ sub payment2 {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
- format_amount => sub {return LedgerSMB::PGNumber->to_output(@_)}
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
@@ -1143,9 +1143,9 @@ for my $ref (0 .. $#array_options) {
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
      my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( $request->round_amount($sign * "$array_options[$ref]->{due_fx}")
+     if ( LedgerSMB::PGNumber($sign * $array_options[$ref]->{due_fx})->from_input->bround($LedgerSMB::Company_Config::decimal_places)
             <
-          $request->round_amount($sign * $request_topay_fx_bigfloat )
+          LedgerSMB::PGNumber($sign * $request_topay_fx_bigfloat)->from_input->bround($LedgerSMB::Company_Config::decimal_places)
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
          $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;

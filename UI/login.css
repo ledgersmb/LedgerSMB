@@ -30,7 +30,6 @@ div.label {
 }
 div.input {
     width: 14em;
-    margin: 0px;
     text-align: left;
     float: left;
     border-width: 3px;
@@ -55,7 +54,7 @@ div#login-indicator {
     font-size: x-large;
     margin-left: auto;
     margin-right: auto;
-    width: 100%
+    width: 100%;
     text-align: center;
     visibility: hidden;
 }
