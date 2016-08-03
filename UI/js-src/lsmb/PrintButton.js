@@ -4,9 +4,10 @@ define([
     'dojo/dom-attr',
     'dijit/form/Button',
     'dojo/request/iframe',
-    'dojo/dom-form'
+    'dojo/dom-form',
+    'dijit/registry'
 ],
-       function(declare, event, domattr, Button, iframe, domform) {
+       function(declare, event, domattr, Button, iframe, domform, registry) {
            return declare('lsmb/PrintButton',
                           [Button],
                {
@@ -35,6 +36,10 @@ define([
 
                            iframe(domattr.get(f, 'action'), {
                                data: data
+                           }).then(function(){
+                               //success? do nothing
+                           }, function(err) {
+                               registry.byId('maindiv').report_request_error(err);
                            });
                            event.stop(evt);
                            return;
