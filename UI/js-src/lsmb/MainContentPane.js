@@ -20,6 +20,16 @@ define([
               {
                   last_page: null,
                   interceptClick: null,
+                  report_request_error: function(err) {
+                      var d = registry.byId('errorDialog');
+                      if (0 == err.response.status) {
+                          d.set('content',
+                                'Could not connect to server');
+                      } else {
+                          d.set('content',err.response.data);
+                      }
+                      d.show();
+                  },
                   report_error: function(content) {
                       var d = registry.byId('errorDialog');
                       d.set('content', content);
@@ -53,14 +63,7 @@ define([
                           },
                           function(err){
                               self.show_main_div();
-                              var d = registry.byId('errorDialog');
-                              if (0 == err.response.status) {
-                                  d.set('content',
-                                        'Could not connect to server');
-                              } else {
-                                  d.set('content',err.response.data);
-                              }
-                              d.show();
+                              self.report_request_error(err);
                           });
                   },
                   load_link: function(href) {
