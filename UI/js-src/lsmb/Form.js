@@ -42,7 +42,7 @@ define([
                       var url = this.action;
 
                       var options = { "handleAs": "text" };
-                      if ("get" == method.toLowerCase()){
+                      if ("get" === method.toLowerCase()){
                           var qobj = domform.toQuery(this.domNode);
                           qobj = "action=" + this.clickedAction + "&" + qobj;
                           url = url + "?" + qobj;
