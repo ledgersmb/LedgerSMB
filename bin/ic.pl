@@ -118,7 +118,7 @@ sub link_part {
     # currencies
     $form->{selectcurrency} = "";
     for ( split /:/, $form->{currencies} ) {
-        $form->{selectcurrency} .= "<option>$_</option>\n";
+        $form->{selectcurrency} .= qq|<option value="$_">$_</option>\n|;
     }
 
     # readonly
@@ -398,7 +398,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
     for (qw(IC_inventory IC_income IC_expense IC_returns)) {
         if ( $form->{$_} ) {
             if ( $form->{orphaned} ) {
-                $form->{"select$_"} =~ s/ selected//;
+                $form->{"select$_"} =~ s/ selected="selected"//;
                 $form->{"select$_"} =~
                   s/option([^>]*)>\Q$form->{$_}\E/option $1 selected="selected">$form->{$_}/;
             }
@@ -1031,9 +1031,9 @@ sub vendor_row {
     for $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected//;
+            $form->{selectcurrency} =~ s/ selected="selected"//;
             $form->{selectcurrency} =~
-s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
+s/(value="$form->{"vendorcurr_$i"}")/$1 selected="selected"/;
             $currency = qq|
       <td><select data-dojo-type="dijit/form/Select" id="vendorcurr-$i" name="vendorcurr_$i">$form->{selectcurrency}</select></td>|;
         }
@@ -1135,9 +1135,9 @@ sub customer_row {
     for $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
-            $form->{selectcurrency} =~ s/ selected//;
+            $form->{selectcurrency} =~ s/ selected="selected"//;
             $form->{selectcurrency} =~
-s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
+s/(value="$form->{"customercurr_$i"}")/$1 selected="selected"/;
             $currency = qq|
       <td><select data-dojo-type="dijit/form/Select" id="customercurr-$i" name="customercurr_$i">$form->{selectcurrency}</select></td>|;
         }
@@ -1586,7 +1586,7 @@ qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
 sub check_customer {
 
     @flds =
-      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr);
+      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr qty);
     @a     = ();
     $count = 0;
 
