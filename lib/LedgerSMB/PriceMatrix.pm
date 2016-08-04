@@ -126,7 +126,7 @@ sub price_matrix {
                            - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
-            if ($mref->{qty} > $form->{qtycache}->{$ref->{id}}){
+            if ($mref->{qty} > ($form->{qtycache}->{$ref->{id}} // 0)){
                 for my $i (1 .. $form->{rowcount}){
                     $form->{"sellprice_$i"} = $sellprice;
                 }
