@@ -232,7 +232,7 @@ sub get_part {
             LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
                         LEFT JOIN entity e ON (e.id = c.entity_id)
                 WHERE pc.parts_id = ?
-             ORDER BY e.name, g.pricegroup, pc.pricebreak|;
+             ORDER BY e.name, g.pricegroup, pc.qty asc, pc.pricebreak|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
