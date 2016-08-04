@@ -71,7 +71,7 @@ sub price_matrix_query {
 
     if ( $form->{customer_id} ) {
         $sth = $dbh->prepare('
-            SELECT * FROM pricematrix__for_customer(?, ?, ?, ?) 
+            SELECT * FROM pricematrix__for_customer(?, ?, ?, ?, ?) 
         ') || $form->dberror('pricematrix__for_customer');
     }
     elsif ( $form->{vendor_id} ) {
@@ -109,7 +109,8 @@ sub price_matrix {
         }
         $qty = $form->{qtycache}->{$ref->{id}} || 0;
         my $qty2 = $form->{"qty_$form->{rowcount}"} || 1; # default qty
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2);
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2, $form->{currency});
+        warn join ',', ($form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2, $form->{currency}, $pmh->rows);
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {

@@ -9,8 +9,10 @@ SELECT *
        AND credit_id = in_credit_id;
 $$;
 
+DROP FUNCTION IF EXISTS pricematrix__for_customer
+(in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric);
 CREATE OR REPLACE FUNCTION pricematrix__for_customer
-(in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric)
+(in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric, in_currency text)
 RETURNS SETOF partscustomer LANGUAGE SQL AS
 $$
    SELECT p.*
@@ -25,6 +27,8 @@ LEFT JOIN pricegroup pg ON eca.pricegroup_id = pg.id
         AND (p.credit_id = eca.id OR p.pricegroup_id = pg.id
              OR (p.credit_id is null and p.pricegroup_id is null))
         AND coalesce(qty, 0) <= coalesce(in_qty, 0)
+        AND coalesce(p.curr, defaults_get_defaultcurrency()) =
+            coalesce(in_currency, defaults_get_defaultcurrency())
   ORDER BY case WHEN p.credit_id = eca.id THEN 1
                 WHEN p.pricegroup_id = pg.id THEN 2
                 ELSE 3
