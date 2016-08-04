@@ -1586,7 +1586,7 @@ qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
 sub check_customer {
 
     @flds =
-      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr qty);
+      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr customerqty);
     @a     = ();
     $count = 0;
 
