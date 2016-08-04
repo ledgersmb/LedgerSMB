@@ -94,6 +94,7 @@ Updates $ref with the price matrix outcomes given $transdate and $form.
 
 sub price_matrix {
     my ( $pmh, $ref, $transdate, $decimalplaces, $form, $myconfig) = @_;
+    return if $form->{id};
     my $customerprice;
     my $pricegroupprice;
     my $sellprice;
@@ -107,7 +108,8 @@ sub price_matrix {
            $form->{qtycache}->{$form->{"id_$_"}} += $form->{"qty_$_"} for (1 .. $form->{rowcount} - 1);
         }
         $qty = $form->{qtycache}->{$ref->{id}} || 0;
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $form->{"qty_$form->{rowcount}"});
+        my $qty2 = $form->{"qty_$form->{rowcount}"} || 1; # default qty
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2);
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {
