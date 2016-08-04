@@ -108,7 +108,8 @@ sub price_matrix {
            $form->{qtycache}->{$form->{"id_$_"}} += $form->{"qty_$_"} for (1 .. $form->{rowcount} - 1);
         }
         $qty = $form->{qtycache}->{$ref->{id}} || 0;
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $form->{"qty_$form->{rowcount}"});
+        my $qty2 = $form->{"qty_$form->{rowcount}"} || 1; # default qty
+        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2);
     } elsif ( $form->{vendor_id} ) {
         $pmh->execute( $form->{vendor_id}, $ref->{id} );
     } else {
@@ -125,7 +126,7 @@ sub price_matrix {
                            - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
-            if ($mref->{qty} > $form->{qtycache}->{$ref->{id}}){
+            if ($mref->{qty} > ($form->{qtycache}->{$ref->{id}} // 0)){
                 for my $i (1 .. $form->{rowcount}){
                     $form->{"sellprice_$i"} = $sellprice;
                 }
