@@ -362,7 +362,8 @@ sub print {
         $payment->{batch_control_code} = $batch->{control_code};
     }
 
-    $payment->{format_amount} = sub {return PGObject::PGNumber->from_input(@_)->to_output(); };
+    $payment->{format_amount} =
+        sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(); };
 
     if ($payment->{multiple}){
         $payment->{checks} = [];
@@ -412,13 +413,14 @@ sub print {
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(
-            user => $payment->{_user}, template => 'check_multiple',
+            user => $payment->{_user},
+            template => 'check_multiple',
             format => uc $payment->{'format'},
-        no_auto_output => 1,
+            no_auto_output => 1,
             output_args => $payment,
         );
-            $template->render($payment);
-            $template->output(%$payment);
+        $template->render($payment);
+        $template->output(%$payment);
         $request->{action} = 'update_payments';
         display_payments(@_);
 
@@ -1147,9 +1149,9 @@ for my $ref (0 .. $#array_options) {
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
      my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( $request->round_amount($sign * "$array_options[$ref]->{due_fx}")
+     if ( LedgerSMB::PGNumber($sign * $array_options[$ref]->{due_fx})->from_input->bround($LedgerSMB::Company_Config::decimal_places)
             <
-          $request->round_amount($sign * $request_topay_fx_bigfloat )
+          LedgerSMB::PGNumber($sign * $request_topay_fx_bigfloat)->from_input->bround($LedgerSMB::Company_Config::decimal_places)
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
          $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;

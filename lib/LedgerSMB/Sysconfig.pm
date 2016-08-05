@@ -284,7 +284,7 @@ our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 # if you have latex installed set to 1
 ###TODO-LOCALIZE-DOLLAR-AT
-our $latex = eval {require Template::Plugin::Latex};
+our $latex = eval {require Template::Plugin::Latex; 1;};
 
 
 # available printers

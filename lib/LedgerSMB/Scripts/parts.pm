@@ -44,7 +44,9 @@ sub partslist_json {
     my ($request) = @_;
     $request->{partnumber} =~ s/\*//g if $request->{partnumber};
     my $type = $request->{type} // '';
-    my $items = [ LedgerSMB::Part->basic_partslist($request->{partnumber}) ];
+    my $items = [ LedgerSMB::Part->basic_partslist(
+                      partnumber => $request->{partnumber},
+                      description => $request->{description}) ];
     @$items =
         grep { (! $type) ||
                    ($type eq 'sales' && $_->{income_accno_id}) ||

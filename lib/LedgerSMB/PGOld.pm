@@ -41,6 +41,10 @@ Constructor.
 sub new {
     my $pkg = shift;
     my $args = (ref $_[0]) ? $_[0] : { @_ };
+    if ($args->{_DBH}) {
+        $args->{dbh} = $args->{_DBH};
+        delete $args->{_DBH};
+    };
     my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
     my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
     $self =  PGObject::Simple::new($pkg, %$self);

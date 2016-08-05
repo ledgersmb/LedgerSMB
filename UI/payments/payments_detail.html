@@ -478,7 +478,7 @@
                 class = "submit"
                 name  = 'action'
         } ?>
-        <?lsmb IF can_print ?>
+        <?lsmb IF payment.can_print ?>
                 <?lsmb INCLUDE select element_data = {
                         name    = "media"
                         class   = "select"
@@ -495,7 +495,9 @@
                         text  = text('Print')
                         value = 'print'
                         class = 'submit'
-                        name  = 'action'
+                       name  = 'action'
+                       'data-dojo-type' = 'lsmb/PrintButton'
+                       'data-dojo-props' = "minimalGET: false"
                 } ?>
         <?lsmb END # IF can_print ?>
 

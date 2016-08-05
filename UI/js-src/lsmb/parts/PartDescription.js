@@ -29,6 +29,7 @@ define([
             store:  store,
             queryExpr: "*${0}*",
             style: 'width: 15ex',
+            autoComplete: false,
             highlightMatch: 'all',
             searchAttr: 'description',
             labelAttr: 'label',

@@ -106,10 +106,13 @@
               CASE ['password'];
                 input_type_keys = input_keys;
                 input_defaults = password_defaults;
+              CASE 'date';
+                input_type_keys = input_keys;
+                input_defaults = date_defaults;
               CASE 'text';
             IF 'date' == element_data.class;
                 input_type_keys = input_keys;
-            input_defaults = date_defaults;
+                input_defaults = date_defaults;
             ELSE;
                 input_type_keys = input_keys.merge(['maxlength', 'readonly']);
                 input_defaults = text_defaults;
@@ -268,7 +271,7 @@
             attribute_data=element_data
             attribute_defaults = button_defaults
             element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
-                 'tabindex', 'data-dojo-type']  # Attributes that apply to buttons.
+                 'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to buttons.
           ?>
           <?lsmb PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes
