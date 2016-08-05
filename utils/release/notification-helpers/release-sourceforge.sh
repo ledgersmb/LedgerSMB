@@ -220,18 +220,18 @@ ValidateEnvironment() {
 main() {
     clear;
         cat <<-EOF
-             _________________________________________________
-            /________________________________________________/|
-            |                                               | |
-            |  Ready update the Sourceforge default link    | |
-            |      for project                              | |
-            |           *  $(printf "%-33s" "${cfgValue[sourceforge_Project]}";)| |
-            |                                               | |
-            |  DEBUG=$DEBUG                                   | |
-            |_______________________________________________|/
-
-
-        EOF
+	     _________________________________________________
+	    /________________________________________________/|
+	    |                                               | |
+	    |  Ready update the Sourceforge default link    | |
+	    |      for project                              | |
+	    |           *  $(printf "%-33s" "${cfgValue[sourceforge_Project]}";)| |
+	    |                                               | |
+	    |  DEBUG=$DEBUG                                   | |
+	    |_______________________________________________|/
+	
+	
+	EOF
 
     GetKey 'Yn' "Continue and Update Sourceforge Default Link?";
     if TestKey "Y"; then RunAllUpdates $Version $Date; fi
