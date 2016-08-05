@@ -80,7 +80,7 @@ sub new_app {
    return CGI::Emulate::PSGI->handler(
         sub {
            my $uri = $ENV{REQUEST_URI};
-           $ENV{SCRIPT_NAME} = $uri;
+           local $ENV{SCRIPT_NAME} = $uri;
            my $script = $uri;
            $ENV{SCRIPT_NAME} =~ s/\?.*//;
            $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
