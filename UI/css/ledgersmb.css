@@ -321,10 +321,10 @@ input[type=checkbox].remove:checked:before {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {
@@ -337,10 +337,10 @@ span.indicator {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {
