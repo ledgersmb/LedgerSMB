@@ -41,6 +41,7 @@ sub columns {
          type => 'href',
     href_base => 'file.pl?action=get&file_class=' . _set_file_class() .
                  "&id=",
+  href_target => '_download',
          name => text('File Name'), },
      { col_id => 'description',
          type => 'text',
