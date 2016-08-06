@@ -5,6 +5,7 @@ Icons: http://download.gnome.org/sources/gnome-icon-theme
 Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo.it>; Josef Vyba­ral <cornelius@vybiral.info>; Hylke Bons <h.bons@student.rug.nl>; Ricardo Gonzalez <rick@jinlabs.com>; Lapo Calamandrei <calamandrei@gmail.com>; Rodney Dawes <dobey@novell.com>; Luca Ferretti <elle.uca@libero.it>; Tuomas Kuosmanen <tigert@gimp.org>; Andreas Nilsson <nisses.mail@home.se>; Jakub Steiner <jimmac@novell.com>
 This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.
 */
+@import url(system/global.css);
 
 /* general stuff */
 A:link { text-decoration: none; }

@@ -16,6 +16,7 @@ Regards,
 
 stylesheet for ledger-smb 
 */
+@import url(system/global.css);
 
 /* general stuff */
 A:link { color: #a0522d; text-decoration: none; }
