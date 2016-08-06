@@ -349,7 +349,6 @@ sub render {
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
         return [map { { %$_, %{shift @newlines} } } @$lines ];
     };
-    $request->{hiddens} = { '_from' => 'report' } unless exists $request->{hiddens};
     $template->render({report => $self,
                  company_name => LedgerSMB::Setting->get('company_name'),
               company_address => LedgerSMB::Setting->get('company_address'),
