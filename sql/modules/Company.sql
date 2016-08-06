@@ -732,7 +732,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION company__save (
-    in_id int, in_control_code text, in_entity_class int,
+    in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
