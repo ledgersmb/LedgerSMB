@@ -396,19 +396,6 @@ sub form_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div($status_div_id) . qq|
-<script>
-function on_return_submit(event){
-  var kc;
-  if (window.event){
-    kc = window.event.keyCode;
-  } else {
-    kc = event.which;
-  }
-  if (kc == '13' && document.activeElement.tagName != 'TEXTAREA'){
-        document.forms[0].submit();
-  }
-}
-</script>
 <form method="post"
       id="invoice"
       data-dojo-type="lsmb/Invoice"
@@ -1090,7 +1077,7 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td>
+       target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>| . $file->{uploaded_at} . qq|</td>
 <td>$file->{uploaded_by_name}</td>

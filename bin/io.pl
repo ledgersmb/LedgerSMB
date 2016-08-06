@@ -1104,6 +1104,7 @@ sub print {
         $old_form = new Form;
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
+    $form->{rowcount}++;
     &print_form;
 }
 
