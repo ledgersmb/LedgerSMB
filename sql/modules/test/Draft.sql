@@ -13,7 +13,7 @@ SELECT account__save
 SELECT account__save
        (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
        false);
-INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, 
+INSERT INTO ap (invnumber, entity_credit_account, amount, netamount,
         approved, curr)
 select '_TEST AP', -1000, '100', '100', FALSE, 'USD';
 
@@ -26,7 +26,7 @@ SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00002';
 INSERT INTO ac_tax_form (entry_id, reportable)
 VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
-INSERT INTO ar (invnumber, entity_credit_account, amount, netamount, 
+INSERT INTO ar (invnumber, entity_credit_account, amount, netamount,
         approved, curr)
 select '_TEST AR', -1001, '100', '100', FALSE, 'USD';
 
