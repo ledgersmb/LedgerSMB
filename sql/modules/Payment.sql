@@ -359,7 +359,7 @@ $$
                     JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id,
                                  curr, 1 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved, paid
+                                 approved
                             FROM ap
                        LEFT JOIN (select * from voucher where batch_class = 1) v
                                  ON (ap.id = v.trans_id)
@@ -369,7 +369,7 @@ $$
                           SELECT ar.id, invnumber, transdate, amount, entity_id,
                                  curr, 2 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved, paid
+                                 approved
                             FROM ar
                        LEFT JOIN (select * from voucher where batch_class = 2) v
                                  ON (ar.id = v.trans_id)
