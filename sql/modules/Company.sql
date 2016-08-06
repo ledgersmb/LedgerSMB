@@ -105,22 +105,22 @@ $$
                    person_id, notes
              FROM ar
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
-             JOIN account_link l ON acc_trans.chart_id = l.account_id 
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AR'
             where $16 = 2 and $13 = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount) = 0) 
+                  having (($17 and sum(acc_trans.amount) = 0)
                       or ($18 and 0 <> sum(acc_trans.amount)))
             UNION ALL
            select invnumber, curr, ap.transdate, entity_credit_account, id,
                   person_id, notes
              FROM ap
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
-             JOIN account_link l ON acc_trans.chart_id = l.account_id 
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AP'
             where $16 = 1 and $13 = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount) = 0) or 
+                  having (($17 and sum(acc_trans.amount) = 0) or
                        ($18 and sum(acc_trans.amount) <> 0))
      )
      SELECT eca.id, e.name, eca.meta_number,
