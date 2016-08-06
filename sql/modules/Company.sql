@@ -100,6 +100,29 @@ CREATE OR REPLACE FUNCTION eca__history
  in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
+     WITH arap AS (
+       select  invnumber, curr, ar.transdate, entity_credit_account, id,
+                   person_id, notes
+             FROM ar
+             JOIN acc_trans ON ar.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AR'
+            where $16 = 2 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount) = 0)
+                      or ($18 and 0 <> sum(acc_trans.amount)))
+            UNION ALL
+           select invnumber, curr, ap.transdate, entity_credit_account, id,
+                  person_id, notes
+             FROM ap
+             JOIN acc_trans ON ap.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AP'
+            where $16 = 1 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount_bc) = 0) or
+                       ($18 and sum(acc_trans.amount_bc) <> 0))
+     )
      SELECT eca.id, e.name, eca.meta_number,
             a.id as invoice_id, a.invnumber, a.curr::text,
             p.id AS parts_id, p.partnumber,
@@ -117,19 +140,8 @@ $$
           select * from entity_credit_account WHERE $2 is null
           ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
-     JOIN (select  invnumber, curr, transdate, entity_credit_account, id,
-                   person_id, notes
-             FROM ar
-            where $16 = 2 and $13 = 'i'
-                  and (($17 and amount_bc = paid_deprecated)
-                       or ($18 and amount_bc <> paid_deprecated))
-            UNION
-           select invnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-             FROM ap
-            where $16 = 1 and $13 = 'i'
-                  and (($17 and amount_bc = paid_deprecated)
-                       or ($18 and amount_bc <> paid_deprecated))
+     JOIN (
+           SELECT * FROM arap
            union
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
@@ -671,22 +683,26 @@ DROP FUNCTION IF EXISTS company_save (
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 );
---TODO 1.5 in_id not used in function,drop it
-CREATE OR REPLACE FUNCTION company__save (
+
+DROP FUNCTION IF EXISTS company__save (
     in_id int, in_control_code text, in_entity_class int,
+    in_legal_name text, in_tax_id TEXT,
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
+);
+
+CREATE OR REPLACE FUNCTION company__save (
+    in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 ) RETURNS company AS $$
 DECLARE t_entity_id INT;
-        --t_company_id INT;--not used
         t_control_code TEXT;
         t_retval COMPANY;
 BEGIN
-        --t_company_id := in_id;--not used
 
         IF in_control_code IS NULL THEN
-                --t_control_code := setting_increment('company_control');
                 t_control_code := setting_increment('entity_control');
         ELSE
                 t_control_code := in_control_code;
@@ -729,7 +745,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION company__save (
-    in_id int, in_control_code text, in_entity_class int,
+    in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text

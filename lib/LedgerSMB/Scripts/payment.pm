@@ -362,7 +362,8 @@ sub print {
         $payment->{batch_control_code} = $batch->{control_code};
     }
 
-    $payment->{format_amount} = sub {return PGObject::PGNumber->from_input(@_)->to_output(); };
+    $payment->{format_amount} =
+        sub {return LedgerSMB::PGNumber->from_input(@_)->to_output(); };
 
     if ($payment->{multiple}){
         $payment->{checks} = [];
@@ -412,13 +413,14 @@ sub print {
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(
-            user => $payment->{_user}, template => 'check_multiple',
+            user => $payment->{_user},
+            template => 'check_multiple',
             format => uc $payment->{'format'},
-        no_auto_output => 1,
+            no_auto_output => 1,
             output_args => $payment,
         );
-            $template->render($payment);
-            $template->output(%$payment);
+        $template->render($payment);
+        $template->output(%$payment);
         $request->{action} = 'update_payments';
         display_payments(@_);
 

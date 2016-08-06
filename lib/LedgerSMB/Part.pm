@@ -21,7 +21,7 @@ TODO (None yet)
 
 =head1 METHODS
 
-=head2 basic_partslist($query)
+=head2 basic_partslist(partnumber => $number, description => $desc)
 
 Returns an array of hashrefs of matching parts.  All fields in the parts
 table are returned.
@@ -29,11 +29,11 @@ table are returned.
 =cut
 
 sub basic_partslist {
-    my ($self, $query) = @_;
+    my ($self, %args) = @_;
     my @parts = __PACKAGE__->call_dbmethod(
-           funcname => 'parts__search_lite',
-           args     => { partnumber => $query, description => $query }
-    );
+        funcname => 'parts__search_lite',
+        args     => \%args
+        );
     return @parts;
 }
 

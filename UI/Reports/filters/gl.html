@@ -33,15 +33,6 @@
               <th align="right"><?lsmb text('Account') ?></th>
               <td colspan="3">
                 <!-- tshvr fixed accno is better here, but commented for test
-                     <?lsmb IF accno;
-                            accno;
-                            PROCESS input element_data = {
-                            name = 'accno',
-                            id = 'accno',
-                            type = 'hidden',
-                            value = accno
-                            };
-                            ELSE;
                             PROCESS input element_data = {
                             name = "accno"
                             id = 'accno'
@@ -53,7 +44,16 @@
                             END ?> </td>
               -->
                 <!-- tshvr test http://sourceforge.net/p/ledger-smb/bugs/1057/ -->
-                <?lsmb PROCESS input element_data = {
+                     <?lsmb IF accno;
+                            accno;
+                            PROCESS input element_data = {
+                            name = 'accno',
+                            id = 'accno',
+                            type = 'hidden',
+                            value = accno
+                            };
+                            ELSE;
+                  PROCESS input element_data = {
                        name = "accno"
                        id = 'accno'
                        size = '15'
@@ -61,7 +61,7 @@
                        type = 'text'
                        class = 'AccountBox'
                        "data-dojo-type"='lsmb/accounts/AccountSelector'
-                       } ?> </td>
+                       }; END ?> </td>
               <!--tshvr end test-->
             </tr>
             <tr>

@@ -71,7 +71,7 @@ sub price_matrix_query {
 
     if ( $form->{customer_id} ) {
         $sth = $dbh->prepare('
-            SELECT * FROM pricematrix__for_customer(?, ?, ?, ?) 
+            SELECT * FROM pricematrix__for_customer(?, ?, ?, ?, ?) 
         ') || $form->dberror('pricematrix__for_customer');
     }
     elsif ( $form->{vendor_id} ) {
@@ -108,9 +108,13 @@ sub price_matrix {
            $form->{qtycache}->{$form->{"id_$_"}} += $form->{"qty_$_"} for (1 .. $form->{rowcount} - 1);
         }
         $qty = $form->{qtycache}->{$ref->{id}} || 0;
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $form->{"qty_$form->{rowcount}"});
+        my $qty2 = $form->{"qty_$form->{rowcount}"} || 1; # default qty
+        $pmh->execute( $form->{customer_id}, $ref->{id},
+                       $form->{transdate}, $qty + $qty2, $form->{currency})
+            or $form->dberror($pmh->errstr);
     } elsif ( $form->{vendor_id} ) {
-        $pmh->execute( $form->{vendor_id}, $ref->{id} );
+        $pmh->execute( $form->{vendor_id}, $ref->{id} )
+            or $form->dberror($pmh->errstr);
     } else {
         $form->error('Missing counter-party (customer or vendor)');
         return;
@@ -125,7 +129,7 @@ sub price_matrix {
                            - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
-            if ($mref->{qty} > $form->{qtycache}->{$ref->{id}}){
+            if ($mref->{qty} > ($form->{qtycache}->{$ref->{id}} // 0)){
                 for my $i (1 .. $form->{rowcount}){
                     $form->{"sellprice_$i"} = $sellprice;
                 }

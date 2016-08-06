@@ -1,5 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' 
-            include_stylesheet=[ 'css/journal.css' ] ?>
+        stylesheet=form.stylesheet ?>
 <?lsmb PROCESS elements.html ?> 
 
 <body class="lsmb <?lsmb dojo_theme ?>">
@@ -102,6 +102,7 @@
 
           </td>
         </tr>
+<<<<<<< HEAD
         <tr>
           <th align="right"><?lsmb text('FX') ?></th>
           <td colspan="3">
@@ -114,12 +115,15 @@
                    checked=form.fx_transaction } ?>
           </td>
         </tr>
+=======
+>>>>>>> lsmb/master
       </table>
     </td>
  </tr>
 
 <tr>
     <td>
+<<<<<<< HEAD
       <table width="100%" id="transaction-table"
              <?lsmb IF form.fx_transaction ?>
              class="fx-transaction"
@@ -127,6 +131,9 @@
              class="no-fx-transaction"
              <?lsmb END ?>
              >
+=======
+      <table width="100%">
+>>>>>>> lsmb/master
           <tr class="listheading">
           <th class="listheading"><?lsmb text('Account') ?></th>
           <th class="listheading"><?lsmb text('FX') ?></th>
@@ -143,12 +150,16 @@
                <?lsmb END ?>
           <?lsmb END ?>
         </tr>
+<<<<<<< HEAD
           <?lsmb
         curr = [];
         FOREACH c IN form.currencies;
            curr.push({ text = c, value = c });
         END;
         FOREACH displayrow IN displayrows ?> 
+=======
+        <?lsmb FOREACH displayrow IN displayrows ?> 
+>>>>>>> lsmb/master
         <tr>
                 <?lsmb INDEX=displayrow.index ?>
                   <td>
@@ -180,6 +191,28 @@
               
                       <td>
 
+<<<<<<< HEAD
+=======
+                            <?lsmb IF  displayrow.fx_transactionset == 1 ?>
+                                           <?lsmb PROCESS input element_data = {
+                                              value = 1
+                                              type = "checkbox"
+                                              checked = "true"
+                                              name = "fx_transaction_$INDEX"
+                                              id = "fxt_$INDEX"
+                                              } ?>
+                            <?lsmb ELSE ?>
+                                           <?lsmb PROCESS input element_data = {
+                                              value = 1
+                                              type = "checkbox"
+                                              checked = ""
+                                              name = "fx_transaction_$INDEX"
+                                              id = "fxt_$INDEX"
+                                              } ?>
+                            <?lsmb END ?>
+                            
+
+>>>>>>> lsmb/master
                       </td>
                 
                   
@@ -272,6 +305,7 @@
                   <?lsmb END ?>
 
         </tr>
+<<<<<<< HEAD
      <tr class="fx-row">
        <td><!-- account cell is empty --></td>
        <td><?lsmb PROCESS select element_data = {
@@ -303,6 +337,8 @@
                   
                    </td>
      </tr>
+=======
+>>>>>>> lsmb/master
         <?lsmb END ?>
         <tr class="listtotal">
           <th>&nbsp;</th>
@@ -356,7 +392,7 @@
 <?lsmb FOREACH file IN form.files ?>
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=<?lsmb form.id 
-            ?>&id=<?lsmb file.id ?>"
+            ?>&id=<?lsmb file.id ?>" target="_download"
             ><?lsmb file.file_name ?></a></td> 
 <td><?lsmb file.mime_type ?></td> 
 <td><?lsmb file.uploaded_at ?></td> 

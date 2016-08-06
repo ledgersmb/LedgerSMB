@@ -55,9 +55,9 @@ verify_dependencies() {
    verify_dependency "sha256sum"
    verify_dependency "sftp"
    verify_dependency "tx"
+   verify_dependency "make"
    verify_dependency "msgmerge"
    verify_dependency "msguniq"
-   verify_dependency "make"
 }
 
 verify_release_key() {
@@ -72,26 +72,25 @@ setup_workspace() {
 }
 
 populate_workspace() {
-   (cd $our_workspace && \
-    $git clone --single-branch --branch "$branch" "$URL" "$checkout_dir" && \
-    cd "$checkout_dir" && $git submodule update --init --recursive ) \
-    || fail "Failed to check out branch '$branch' from '$URL'!"
-   if test -e "$our_workspace/$checkout_dir/LedgerSMB.pm"
+   ( cd $our_workspace && \
+    $git clone --recursive --single-branch --branch "$branch" "$URL" "$checkout_dir" ) \
+   || fail "Failed to check out branch '$branch' from '$URL'!"
+   if test -e "$our_workspace/$checkout_dir/LedgerSMB.pm" ;
    then
-       LedgerSMBpm_path="LedgerSMB.pm"
+     LedgerSMBpm_path="LedgerSMB.pm"
    else
-       LedgerSMBpm_path="lib/LedgerSMB.pm"
+     LedgerSMBpm_path="lib/LedgerSMB.pm"
    fi
    echo "LedgerSMB.pm found at $LedgerSMBpm_path"
+   #cp $our_workspace/$checkout_dir/conf/ledgersmb.conf.default $our_workspace/$checkout_dir/ledgersmb.conf 2>/dev/null
 }
 
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
-    $find . -name '*~' -exec rm \{} + && \
-    $find . -name '*.orig' -exec rm \{} + && \
-    $git add --all locale && \
-    git commit -m "* Automated release language update" \
+    ($find . -name '*~' -exec rm \{} + ) && \
+    ($find . -name '*.orig' -exec rm \{} + ) && \
+    $git add --all locale && git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
 }
@@ -102,7 +101,7 @@ detect_current_version() {
      $sed -ne "/^our \$VERSION/ {
   s/^our \$VERSION = '\\(.*\\)';\$/\\1/
   p
-}" "$LedgerSMBpm_path")
+}" "$LedgerSMBpm_path" )
    if [[ -z "$current_version" ]] ; then
      fail "Failed to detect current version!"
    fi
@@ -166,7 +165,7 @@ commit_versiontag() {
 
 create_versiontarball() {
    (cd "$our_workspace/$checkout_dir" && \
-    $make dist DIST_VER="$release_version" DIST_DIR=../ ) \
+    $make dist DIST_DIR=../ DIST_VER=$release_version ) \
    || fail "Failed to create release archive!"
 }
 

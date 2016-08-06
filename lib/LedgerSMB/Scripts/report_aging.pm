@@ -36,7 +36,7 @@ Runs the report and displays it
 sub run_report{
     my ($request) = @_;
 
-    delete $request->{category} if ($request->{category} eq 'X');
+    _strip_specials($request);
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
@@ -71,6 +71,7 @@ sub generate_statement {
     use LedgerSMB::Entity::Credit_Account;
     use LedgerSMB::Entity::Location;
     use LedgerSMB::Entity::Contact;
+    _strip_specials($request);
 
     my $rtype = $request->{report_type}; # in case we need it later
     $request->{report_type} = 'detail'; # needed to generate statement
@@ -110,7 +111,7 @@ sub generate_statement {
            contacts => \@contact_info
         };
         push @statements, $statement;
-        last if $request->{print_to} eq 'email';
+        last if $request->{media} eq 'email';
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
@@ -120,12 +121,12 @@ sub generate_statement {
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
-        method => $request->{print_to},
+        method => $request->{media},
         no_auto_output => 1,
     );
-    if ($request->{print_to} eq 'email'){
+    if ($request->{media} eq 'email'){
        #TODO -- mailer stuff
-    } elsif ($request->{print_to} eq 'screen'){
+    } elsif ($request->{media} eq 'screen'){
         $template->render({statements => \@statements});
         $template->output;
     } else {
@@ -135,6 +136,12 @@ sub generate_statement {
         LedgerSMB::Scripts::reports::start_report($request);
     }
 
+}
+
+sub _strip_specials {
+    my $request = shift;
+    delete $request->{$_} for (qw(buttons rows _DBH options locale));
+    delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
 }
 
 =back

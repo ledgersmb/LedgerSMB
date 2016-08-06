@@ -35,7 +35,7 @@ IF request.action == 'select_all';
 END;
 
 FOREACH KEY IN report.keys();
-    IF KEY == 'rows' or KEY.keys();
+    IF KEY == 'rows';
        NEXT;
     ELSE;
         PROCESS input element_data = {
@@ -83,7 +83,7 @@ options = PFORMATS
 };
 
 PROCESS select element_data = {
-   name = 'print_to'
+   name = 'media'
 options = PRINTERS
   class = 'printers'
 };
@@ -100,8 +100,9 @@ PROCESS button element_data = {
     text = text('Generate')
     name = 'action'
    value = 'generate_statement'
-    type = 'submit'
    class = 'submit'
+   'data-dojo-type' = 'lsmb/PrintButton'
+   'data-dojo-props' = 'minimalGET:false'
 };
  ?>
 </form><br />

@@ -11,15 +11,27 @@ define([
     'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/query',
+    'dojo/request/iframe',
     'dojo/dom-class'
     ],
        function(ContentPane, declare, event, registry, style,
-                lang, Promise, on, hash, all, xhr, query, domClass) {
+                lang, Promise, on, hash, all, xhr, query, iframe,
+                domClass) {
            return declare('lsmb/MainContentPane',
                           [ContentPane],
               {
                   last_page: null,
                   interceptClick: null,
+                  report_request_error: function(err) {
+                      var d = registry.byId('errorDialog');
+                      if (0 == err.response.status) {
+                          d.set('content',
+                                'Could not connect to server');
+                      } else {
+                          d.set('content',err.response.data);
+                      }
+                      d.show();
+                  },
                   report_error: function(content) {
                       var d = registry.byId('errorDialog');
                       d.set('content', content);
@@ -53,15 +65,26 @@ define([
                           },
                           function(err){
                               self.show_main_div();
-                              var d = registry.byId('errorDialog');
-                              if (0 == err.response.status) {
-                                  d.set('content',
-                                        'Could not connect to server');
-                              } else {
-                                  d.set('content',err.response.data);
-                              }
-                              d.show();
+                              self.report_request_error(err);
                           });
+                  },
+                  download_link: function(href) {
+                      // while it would have been nice for the code below
+                      // to work, content downloaded into the iframe through
+                      // dojo/request/iframe breaks all but the first request
+                      // supposedly because the response never causes the
+                      // 'onload' event to fire -- as the content isn't really
+                      // loaded...
+
+                      // var self = this;
+                      // var deferred = iframe.get(href, { });
+                      // iframe.doc();
+                      // return deferred .then(
+                      //     function() {
+                      //         // we never reach success???
+                      //     }, function(err) {
+                      //         self.report_request_error(err);
+                      //     });
                   },
                   load_link: function(href) {
                       if (this.last_page == href) {
