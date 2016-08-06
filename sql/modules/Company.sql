@@ -100,7 +100,7 @@ CREATE OR REPLACE FUNCTION eca__history
 RETURNS SETOF  eca_history_result AS
 $$
      WITH arap AS (
-       select  invnumber, curr, ar.transdate, entity_credit_account, id,
+       select  invnumber, ar.curr, ar.transdate, entity_credit_account, id,
                    person_id, notes
              FROM ar
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
@@ -108,10 +108,10 @@ $$
                   and l.description = 'AR'
             where $16 = 2 and $13 = 'i'
        GROUP BY 1, 2, 3, 4, 5, 6, 7
-                  having (($17 and sum(acc_trans.amount) = 0)
-                      or ($18 and 0 <> sum(acc_trans.amount)))
+                  having (($17 and sum(acc_trans.amount_bc) = 0)
+                      or ($18 and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
-           select invnumber, curr, ap.transdate, entity_credit_account, id,
+           select invnumber, ap.curr, ap.transdate, entity_credit_account, id,
                   person_id, notes
              FROM ap
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
