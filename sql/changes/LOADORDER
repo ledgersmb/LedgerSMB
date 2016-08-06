@@ -38,3 +38,4 @@
 1.5/add_qty_to_pricematrix.sql
 #1.6 changes
 1.6/drop_chart.sql
+1.6/drop_arap_cols.sql
