@@ -36,8 +36,7 @@ Runs the report and displays it
 sub run_report{
     my ($request) = @_;
 
-    delete $request->{$_} for (qw(buttons rows _DBH options locale));
-    delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
+    _strip_specials($request);
     $request->{business_units} = [];
     for my $count (1 .. ($request->{bc_count} // 0)){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
@@ -72,6 +71,7 @@ sub generate_statement {
     use LedgerSMB::Entity::Credit_Account;
     use LedgerSMB::Entity::Location;
     use LedgerSMB::Entity::Contact;
+    _strip_specials($request);
 
     my $rtype = $request->{report_type}; # in case we need it later
     $request->{report_type} = 'detail'; # needed to generate statement
@@ -136,6 +136,12 @@ sub generate_statement {
         LedgerSMB::Scripts::reports::start_report($request);
     }
 
+}
+
+sub _strip_specials {
+    my $request = shift;
+    delete $request->{$_} for (qw(buttons rows _DBH options locale));
+    delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
 }
 
 =back
