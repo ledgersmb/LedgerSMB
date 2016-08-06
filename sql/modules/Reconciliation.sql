@@ -136,8 +136,9 @@ $$ This is a simple filter that prevents updating or deleting reconciliation
 reports that have already been approved.  To purge old reconciliations you must
 disable the block_change_when_approved trigger on cr_report.$$;
 
-
-CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date DEFAULT date_trunc('second', now()))
+DROP FUNCTION IF EXISTS reconciliation__get_cleared_balance(int);
+CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
+   in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
     SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
