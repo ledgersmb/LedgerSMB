@@ -111,7 +111,7 @@ sub generate_statement {
            contacts => \@contact_info
         };
         push @statements, $statement;
-        last if $request->{print_to} eq 'email';
+        last if $request->{media} eq 'email';
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
@@ -121,12 +121,12 @@ sub generate_statement {
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
-        method => $request->{print_to},
+        method => $request->{media},
         no_auto_output => 1,
     );
-    if ($request->{print_to} eq 'email'){
+    if ($request->{media} eq 'email'){
        #TODO -- mailer stuff
-    } elsif ($request->{print_to} eq 'screen'){
+    } elsif ($request->{media} eq 'screen'){
         $template->render({statements => \@statements});
         $template->output;
     } else {
