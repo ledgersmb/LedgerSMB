@@ -7,7 +7,10 @@ UI changes:
 * Full use of Dojo widgets (ErikH)
 * Compressed/compiled Dojo for better performance (JohnL)
 * Reports and screens can now be bookmarked (Chris T)
+
+Price Matrix Enhancements
 * Quantity discounts can be set in the pricematrix (Chris T)
+* Price matrix now filters on currency (Chris T)
 
 Template changes:
 * All document templates (including INCLUDEs) now in-database (Erik H, #854)
@@ -43,7 +46,6 @@ Quality assurance:
 
 Internationalization
 * Expansion of webbased translation support through Transifex (ErikH)
-
 
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann

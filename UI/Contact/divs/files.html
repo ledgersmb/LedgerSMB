@@ -18,7 +18,8 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
 <?lsmb 
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
-                  COL.href_base='file.pl?action=get&file_class=4&id=';
+            COL.href_base='file.pl?action=get&file_class=4&id=';
+            COL.href_target='_download';
          END;
   END;
   FOREACH ROW IN entity_files;
