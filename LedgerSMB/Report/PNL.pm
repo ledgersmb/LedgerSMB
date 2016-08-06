@@ -132,7 +132,7 @@ sub run_report {
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
               return { account_number => $line->{gifi},
-                       account_desc => $line->{gifi_description},
+                       account_description => $line->{gifi_description},
               };
        } :
        sub { my ($line) = @_; return $line; };

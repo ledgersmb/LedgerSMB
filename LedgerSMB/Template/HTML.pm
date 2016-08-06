@@ -86,6 +86,10 @@ sub preprocess {
         return $rawvars;
     } elsif ($type eq 'IO::File'){
         return undef;
+    } elsif ($type eq 'Apache2::RequestRec'){
+        # When running in mod_perl2, we might encounter an Apache2::RequestRec
+        # object; escaping its content is nonsense
+        return undef;
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );

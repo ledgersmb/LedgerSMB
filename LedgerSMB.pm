@@ -179,7 +179,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.4.30-dev';
+our $VERSION = '1.4.32-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -620,7 +620,7 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
-    die "exit";
+    die;
 }
 
 # To be replaced with a generic interface to an Error class
@@ -632,6 +632,7 @@ sub error {
 sub _error {
 
     my ( $self, $msg ) = @_;
+    return if $msg =~ /'?exit at /;
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         $self->{msg}    = $msg;
@@ -650,7 +651,7 @@ sub _error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        die "exit";
+        die;
     }
     else {
 

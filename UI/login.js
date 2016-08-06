@@ -19,7 +19,7 @@ function send_form() {
 	var action = document.login.action.value;
         // console.log(password, company, username);
         // alert('document.login.company.value='+document.login.company.value);
-	http.open("get", 'login.pl?action=authenticate&company='+company, true, username, password);
+	http.open("get", 'login.pl?action=authenticate&company='+encodeURIComponent(company), true, username, password);
         http.onreadystatechange = function(){
             if (http.readyState != 4){
                return true;
@@ -34,7 +34,7 @@ function send_form() {
                     e.style.visibility='hidden';
 	  	    return false;
 	    }
-	    document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
+	    document.location=document.login.action.value+".pl?action=login&company="+encodeURIComponent(document.login.company.value);
         };
  	http.send("");
 }
@@ -46,7 +46,7 @@ function check_auth() {
     var password = document.login.password.value;
     
     http.open("get", "login.pl?action=authenticate&company="
-        + document.login.company.value, false, 
+        + encodeURIComponent(document.login.company.value), false, 
 		username, password
     );
 }

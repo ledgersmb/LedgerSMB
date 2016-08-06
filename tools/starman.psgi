@@ -2,6 +2,9 @@
 
 package LedgerSMB::FCGI;
 
+no lib '.';
+use FindBin;
+use lib "$FindBin::Bin/..";
 use CGI::Emulate::PSGI;
 use FindBin;
 use LedgerSMB::PSGI;

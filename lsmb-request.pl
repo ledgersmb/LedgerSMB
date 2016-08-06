@@ -19,6 +19,8 @@ this software.
 =cut
 
 package LedgerSMB::Handler;
+use FindBin;
+use lib $FindBin::Bin;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
