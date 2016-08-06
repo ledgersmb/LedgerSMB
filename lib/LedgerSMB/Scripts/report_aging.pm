@@ -36,6 +36,7 @@ Runs the report and displays it
 sub run_report{
     my ($request) = @_;
 
+    delete $request->{$_} for (qw(buttons rows _DBH options locale));
     delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
     $request->{business_units} = [];
     for my $count (1 .. ($request->{bc_count} // 0)){
