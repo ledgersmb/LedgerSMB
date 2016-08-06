@@ -482,7 +482,7 @@ SELECT
 INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 
 INSERT INTO business_unit (id, class_id, control_code, description)
-SELECT id, 1, id, description
+SELECT id, 1, description, description
   FROM lsmb13.department;
 
 INSERT INTO business_unit
@@ -696,8 +696,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
-
-UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
 update defaults set value = 'yes' where setting_key = 'migration_ok';
 

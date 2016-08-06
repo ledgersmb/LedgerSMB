@@ -43,15 +43,15 @@ delete from account_link where description = 'CT_tax';
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
-SELECT name, 'V-' || vendornumber, 1, 
-       (select id from country 
+SELECT name, 'V-' || vendornumber, 1,
+       (select id from country
          where lower(short_name)  = lower(:default_country))
 FROM sl30.vendor
 GROUP BY name, vendornumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
-SELECT name, 'C-' || customernumber, 2, 
-       (select id from country 
+SELECT name, 'C-' || customernumber, 2,
+       (select id from country
          where lower(short_name)  =  lower(:default_country))
 FROM sl30.customer
 GROUP BY name, customernumber;
@@ -63,49 +63,49 @@ UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 --Entity Credit Account
 
 INSERT INTO entity_credit_account
-(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
+        cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl30.chart
-                                  where id = arap_accno_id) ,:ap)),   
-	(select id
-	   from account
-	   where accno = (select accno from sl30.chart
-	                   where id = payment_accno_id)),
-	 startdate, enddate, threshold, 1
+                                  where id = arap_accno_id) ,:ap)),
+        (select id
+           from account
+           where accno = (select accno from sl30.chart
+                           where id = payment_accno_id)),
+         startdate, enddate, threshold, 1
 FROM sl30.vendor WHERE entity_id IS NOT NULL;
 
-UPDATE sl30.vendor SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = vendornumber and entity_class = 1
+UPDATE sl30.vendor SET credit_id =
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
 INSERT INTO entity_credit_account
-(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
+        cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl30.chart
-                                  where id = arap_accno_id) ,:ar)), 
-	(select id
-	   from account
-	   where accno = (select accno from sl30.chart
-	                   where id = payment_accno_id)),
+                                  where id = arap_accno_id) ,:ar)),
+        (select id
+           from account
+           where accno = (select accno from sl30.chart
+                           where id = payment_accno_id)),
         startdate, enddate, threshold, 2
 FROM sl30.customer WHERE entity_id IS NOT NULL;
 
-UPDATE sl30.customer SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = customernumber and entity_class = 2
+UPDATE sl30.customer SET credit_id =
+        (SELECT id FROM entity_credit_account e
+        WHERE e.meta_number = customernumber and entity_class = 2
         and e.entity_id = customer.entity_id);
 
 --Company
 
 INSERT INTO company (entity_id, legal_name, tax_id)
-SELECT entity_id, name, max(taxnumber) FROM sl30.vendor 
+SELECT entity_id, name, max(taxnumber) FROM sl30.vendor
 WHERE entity_id IS NOT NULL AND entity_id IN (select id from entity) GROUP BY entity_id, name;
 
 UPDATE sl30.vendor SET company_id = (select id from company c where entity_id = vendor.entity_id);
@@ -118,68 +118,68 @@ UPDATE sl30.customer SET company_id = (select id from company c where entity_id 
 
 -- Contact
 
-insert into eca_to_contact (credit_id, contact_class_id, contact,description) 
+insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl30.vendor v 
-where v.company_id is not null and v.phone is not null 
-       and v.phone ~ '[[:alnum:]_]'::text 
+from sl30.vendor v
+where v.company_id is not null and v.phone is not null
+       and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
-select v.credit_id, 12, v.email, 
-       'email address: '||max(v.contact) as description 
-from sl30.vendor v 
-where v.company_id is not null and v.email is not null 
-       and v.email ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.email,
+       'email address: '||max(v.contact) as description
+from sl30.vendor v
+where v.company_id is not null and v.email is not null
+       and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
-from sl30.vendor v 
-where v.company_id is not null and v.cc is not null 
-      and v.cc ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
+from sl30.vendor v
+where v.company_id is not null and v.cc is not null
+      and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
-UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
-from sl30.vendor v 
-where v.company_id is not null and v.bcc is not null 
-       and v.bcc ~ '[[:alnum:]_]'::text 
+UNION
+select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
+from sl30.vendor v
+where v.company_id is not null and v.bcc is not null
+       and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
-    select v.credit_id, 9, v.fax, 'Fax number' as description 
-from sl30.vendor v 
-where v.company_id is not null and v.fax is not null 
-      and v.fax ~ '[[:alnum:]_]'::text 
+    select v.credit_id, 9, v.fax, 'Fax number' as description
+from sl30.vendor v
+where v.company_id is not null and v.fax is not null
+      and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
 
-insert into eca_to_contact (credit_id, contact_class_id, contact,description) 
+insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl30.customer v 
-where v.company_id is not null and v.phone is not null 
-       and v.phone ~ '[[:alnum:]_]'::text 
+from sl30.customer v
+where v.company_id is not null and v.phone is not null
+       and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
-select v.credit_id, 12, v.email, 
-       'email address: '||max(v.contact) as description 
-from sl30.customer v 
-where v.company_id is not null and v.email is not null 
-       and v.email ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.email,
+       'email address: '||max(v.contact) as description
+from sl30.customer v
+where v.company_id is not null and v.email is not null
+       and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
-from sl30.customer v 
-where v.company_id is not null and v.cc is not null 
-      and v.cc ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
+from sl30.customer v
+where v.company_id is not null and v.cc is not null
+      and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
-UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
-from sl30.customer v 
-where v.company_id is not null and v.bcc is not null 
-       and v.bcc ~ '[[:alnum:]_]'::text 
+UNION
+select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
+from sl30.customer v
+where v.company_id is not null and v.bcc is not null
+       and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
-    select v.credit_id, 9, v.fax, 'Fax number' as description 
-from sl30.customer v 
-where v.company_id is not null and v.fax is not null 
-      and v.fax ~ '[[:alnum:]_]'::text 
+    select v.credit_id, 9, v.fax, 'Fax number' as description
+from sl30.customer v
+where v.company_id is not null and v.fax is not null
+      and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
 
 
@@ -191,27 +191,27 @@ INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
     min(location_save(NULL,
 
-    case 
+    case
         when oa.address1 !~ '[[:alnum:]_]' then 'Null'
         when oa.address1 is null then 'Null'
-        else oa.address1 
+        else oa.address1
     end,
-    oa.address2, 
+    oa.address2,
     NULL,
-    case 
-        when oa.city !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.city is null then 'Null' 
-        else oa.city 
+    case
+        when oa.city !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.city is null then 'Null'
+        else oa.city
     end,
-    case 
-        when oa.state !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.state is null then 'Null' 
-        else oa.state 
+    case
+        when oa.state !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.state is null then 'Null'
+        else oa.state
     end,
-    case 
-        when oa.zipcode !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.zipcode is null then 'Null' 
-        else oa.zipcode 
+    case
+        when oa.zipcode !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.zipcode is null then 'Null'
+        else oa.zipcode
     end,
     coalesce(c.id, -1)
     ))
@@ -235,27 +235,27 @@ INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 2,
     min(location_save(NULL,
 
-    case 
+    case
         when oa.shiptoaddress1 !~ '[[:alnum:]_]' then 'Null'
         when oa.shiptoaddress1 is null then 'Null'
-        else oa.shiptoaddress1 
+        else oa.shiptoaddress1
     end,
-    oa.shiptoaddress2, 
+    oa.shiptoaddress2,
     NULL,
-    case 
-        when oa.shiptocity !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptocity is null then 'Null' 
-        else oa.shiptocity 
+    case
+        when oa.shiptocity !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptocity is null then 'Null'
+        else oa.shiptocity
     end,
-    case 
-        when oa.shiptostate !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptostate is null then 'Null' 
-        else oa.shiptostate 
+    case
+        when oa.shiptostate !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptostate is null then 'Null'
+        else oa.shiptostate
     end,
-    case 
-        when oa.shiptozipcode !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptozipcode is null then 'Null' 
-        else oa.shiptozipcode 
+    case
+        when oa.shiptozipcode !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptozipcode is null then 'Null'
+        else oa.shiptozipcode
     end,
     coalesce(c.id, -1)
     ))
@@ -274,15 +274,15 @@ JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
-SELECT 3, credit_id, notes, '' FROM sl30.vendor 
+SELECT 3, credit_id, notes, '' FROM sl30.vendor
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
 SELECT 3, credit_id, notes, '' FROM sl30.customer
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
-UPDATE entity SET country_id = 
-(select country_id FROM location l 
+UPDATE entity SET country_id =
+(select country_id FROM location l
    JOIN eca_to_location e2l ON l.id = e2l.location_id
         AND e2l.location_class = 1
    JOIN entity_credit_account eca ON e2l.credit_id = eca.id
@@ -290,7 +290,7 @@ UPDATE entity SET country_id =
         AND l.country_id > -1
   LIMIT 1)
 WHERE id IN
-(select eca.entity_id FROM location l 
+(select eca.entity_id FROM location l
    JOIN eca_to_location e2l ON l.id = e2l.location_id
         AND e2l.location_class = 1
    JOIN entity_credit_account eca ON e2l.credit_id = eca.id
@@ -307,10 +307,10 @@ select 'E-' || employeenumber, 3, name,
         (select id from country where lower(short_name) = lower(:default_country))
 FROM sl30.employee;
 
-UPDATE sl30.employee set entity_id = 
+UPDATE sl30.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
-INSERT INTO person (first_name, last_name, entity_id) 
+INSERT INTO person (first_name, last_name, entity_id)
 select name, name, entity_id FROM sl30.employee;
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
@@ -320,7 +320,7 @@ select name, name, entity_id FROM sl30.employee;
 --      WHERE login IS NOT NULL;
 
 -- No manager information in SL30
---INSERT 
+--INSERT
 --  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
 --       employeenumber, dob, manager_id)
 --SELECT entity_id, startdate, enddate, r.description, ssn, sales,
@@ -329,7 +329,7 @@ select name, name, entity_id FROM sl30.employee;
 --  FROM sl30.employee em
 --LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
 
-INSERT 
+INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, r.description, ssn, sales,
@@ -365,7 +365,7 @@ makemodel, assembly, alternate, rop, (select id
 drawing, microfiche, partsgroup_id, avgcost FROM sl30.parts;
 
 
-INSERT INTO makemodel (parts_id, make, model) 
+INSERT INTO makemodel (parts_id, make, model)
 SELECT parts_id, make, model FROM sl30.makemodel;
 
 /* TODO -- can't be solved this easily: a freshly created defaults
@@ -376,58 +376,96 @@ be migrated using queries, not just copied over.
 To watch out for: keys which are semantically the same, but have
 different names
 
-UPDATE defaults 
-   SET value = (select fldvalue from sl30.defaults src 
+UPDATE defaults
+   SET value = (select fldvalue from sl30.defaults src
                  WHERE src.fldname = defaults.setting_key)
  WHERE setting_key IN (select fldvalue FROM sl30.defaults
                         where );
 */
 /* May have to move this downward*/
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'company') WHERE setting_key = 'company_name';
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'address') WHERE setting_key = 'company_address';
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'fax') WHERE setting_key = 'company_fax';
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'tel') WHERE setting_key = 'company_phone';
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'businessnumber') WHERE setting_key = 'businessnumber';
-UPDATE defaults SET value = (SELECT fldvalue FROM sl30.defaults WHERE fldname = 'weightunit') WHERE setting_key = 'weightunit';
-UPDATE defaults SET value = (SELECT curr FROM sl30.curr WHERE rn=1) WHERE setting_key = 'curr';
-update defaults
-set value = (
-	select id from account
-	where account.accno in (
-	select accno from sl30.chart
-	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'inventory_accno_id' ))
-) WHERE setting_key = 'inventory_accno_id';
-update defaults
-set value = (
-	select id from account
-	where account.accno in (
-	select accno from sl30.chart
-	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'income_accno_id' ))
-) WHERE setting_key = 'income_accno_id';
-update defaults
-set value = (
-	select id from account
-	where account.accno in (
-	select accno from sl30.chart
-	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'expense_accno_id' ))
-) WHERE setting_key = 'expense_accno_id';
-update defaults
-set value = (
-	select id from account
-	where account.accno in (
-	select accno from sl30.chart
-	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxgain_accno_id' ))
-) WHERE setting_key = 'fxgain_accno_id';
-update defaults
-set value = (
-	select id from account
-	where account.accno in (
-	select accno from sl30.chart
-	where id = ( select cast(fldvalue as int) from sl30.defaults where fldname = 'fxloss_accno_id' ))
-) WHERE setting_key = 'fxloss_accno_id';
+
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_default(skey varchar(20),slname varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+    )
+    WHERE setting_key = skey AND value IS NULL;
+    INSERT INTO defaults (setting_key, value)
+        SELECT skey,fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+        AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = skey);
+END
+$$
+  LANGUAGE 'plpgsql';
+
+SELECT * FROM pg_temp.f_insert_default('company_name','company');
+SELECT * FROM pg_temp.f_insert_default('company_address','address');
+SELECT * FROM pg_temp.f_insert_default('company_fax','fax');
+SELECT * FROM pg_temp.f_insert_default('company_phone','tel');
+SELECT * FROM pg_temp.f_insert_default('audittrail','audittrail');
+SELECT * FROM pg_temp.f_insert_default('businessnumber','businessnumber');
+SELECT * FROM pg_temp.f_insert_default('decimal_places','precision');
+SELECT * FROM pg_temp.f_insert_default('weightunit','weightunit');
+-- Should we count the actual transferred entries instead?
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_count(slname varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+    )
+    WHERE setting_key = slname AND (value IS NULL OR value = '1');
+    INSERT INTO defaults (setting_key, value)
+        SELECT fldname,fldvalue FROM sl30.defaults AS sl30def
+        WHERE sl30def.fldname = slname
+        AND NOT EXISTS ( SELECT 1 FROM defaults WHERE setting_key = slname);
+END
+$$
+  LANGUAGE 'plpgsql';
+
+SELECT * FROM pg_temp.f_insert_count('customernumber');
+SELECT * FROM pg_temp.f_insert_count('employeenumber');
+SELECT * FROM pg_temp.f_insert_count('glnumber');
+SELECT * FROM pg_temp.f_insert_count('partnumber');
+SELECT * FROM pg_temp.f_insert_count('partnumber');
+SELECT * FROM pg_temp.f_insert_count('projectnumber');
+SELECT * FROM pg_temp.f_insert_count('rfqnumber');
+SELECT * FROM pg_temp.f_insert_count('sinumber');
+SELECT * FROM pg_temp.f_insert_count('sonumber');
+SELECT * FROM pg_temp.f_insert_count('sqnumber');
+SELECT * FROM pg_temp.f_insert_count('vendornumber');
+SELECT * FROM pg_temp.f_insert_count('vinumber');
+
+INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM sl30.curr WHERE rn=1;
+
+CREATE OR REPLACE FUNCTION pg_temp.f_insert_account(skey varchar(20)) RETURNS VOID AS
+$$
+BEGIN
+    UPDATE defaults SET value = (
+        SELECT id FROM account
+        WHERE account.accno IN (
+            SELECT accno FROM sl30.chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+    )
+    WHERE setting_key = skey AND value IS NULL;
+    INSERT INTO defaults (setting_key, value)
+        SELECT skey,id FROM account
+        WHERE account.accno IN (
+            SELECT accno FROM sl30.chart
+            WHERE id = ( SELECT CAST(fldvalue AS INT) FROM sl30.defaults WHERE fldname = skey ))
+        AND NOT EXISTS ( SELECT value FROM defaults WHERE setting_key = skey);
+END
+$$
+  LANGUAGE 'plpgsql';
+SELECT * FROM pg_temp.f_insert_account('inventory_accno_id');
+SELECT * FROM pg_temp.f_insert_account('income_accno_id');
+SELECT * FROM pg_temp.f_insert_account('expense_accno_id');
+SELECT * FROM pg_temp.f_insert_account('fxgain_accno_id');
+SELECT * FROM pg_temp.f_insert_account('fxloss_accno_id');
 -- = "sl30.cashovershort_accno_id" ?
 -- "earn_id" = ?
-
 
 INSERT INTO assembly (id, parts_id, qty, bom, adj)
 SELECT id, parts_id, qty, bom, adj  FROM sl30.assembly;
@@ -449,7 +487,7 @@ SELECT 1000+id, 2, projectnumber, description, startdate, enddate,
 
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
     SELECT gl.id, reference, description, transdate, p.id, gl.notes
-      FROM sl30.gl 
+      FROM sl30.gl
  LEFT JOIN sl30.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
 
@@ -457,43 +495,43 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
 ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
-insert into ar 
+insert into ar
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-	shipvia, language_code, ponumber, shippingpoint, 
-	on_hold, approved, reverse, terms, description)
-SELECT 
-	customer.credit_id,
-	(select entity_id from sl30.employee WHERE id = ar.employee_id),
-	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
-	intnotes,
-	shipvia, ar.language_code, ponumber, shippingpoint, 
-	onhold, approved, case when amount < 0 then true else false end,
-	ar.terms, description
+        id, invnumber, transdate, taxincluded, amount, netamount, paid,
+        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        shipvia, language_code, ponumber, shippingpoint,
+        on_hold, approved, reverse, terms, description)
+SELECT
+        customer.credit_id,
+        (select entity_id from sl30.employee WHERE id = ar.employee_id),
+        ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid,
+        datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
+        intnotes,
+        shipvia, ar.language_code, ponumber, shippingpoint,
+        onhold, approved, case when amount < 0 then true else false end,
+        ar.terms, description
 FROM sl30.ar JOIN sl30.customer ON (ar.customer_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
 ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
-insert into ap 
+insert into ap
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-        shipvia, language_code, ponumber, shippingpoint, 
-	on_hold, approved, reverse, terms, description)
-SELECT 
-	vendor.credit_id,
-	(select entity_id from sl30.employee 
-		WHERE id = ap.employee_id),
-	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
-	intnotes,
-	shipvia, ap.language_code, ponumber, shippingpoint, 
-	onhold, approved, case when amount < 0 then true else false end,
-	ap.terms, description
+        id, invnumber, transdate, taxincluded, amount, netamount, paid,
+        datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
+        shipvia, language_code, ponumber, shippingpoint,
+        on_hold, approved, reverse, terms, description)
+SELECT
+        vendor.credit_id,
+        (select entity_id from sl30.employee
+                WHERE id = ap.employee_id),
+        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid,
+        datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
+        intnotes,
+        shipvia, ap.language_code, ponumber, shippingpoint,
+        onhold, approved, case when amount < 0 then true else false end,
+        ap.terms, description
 FROM sl30.ap JOIN sl30.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
@@ -508,32 +546,32 @@ update sl30.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
 INSERT INTO acc_trans
-(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
-	memo, approved, cleared_on, voucher_id)
+(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction,
+        memo, approved, cleared_on, voucher_id)
 SELECT lsmb_entry_id, trans_id, (select id
                     from account
                    where accno = (select accno
                                     from sl30.chart
                                    where chart.id = acc_trans.chart_id)),
                                     amount, transdate, source,
-	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
-	memo, approved, cleared, vr_id
-	FROM sl30.acc_trans
-	WHERE chart_id IS NOT NULL AND trans_id IN (
-	    SELECT id FROM transactions);
+        CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
+        memo, approved, cleared, vr_id
+        FROM sl30.acc_trans
+        WHERE chart_id IS NOT NULL AND trans_id IN (
+            SELECT id FROM transactions);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
-  FROM acc_trans ac 
+  FROM acc_trans ac
   JOIN (SELECT id, department_id FROM sl30.ar UNION ALL
         SELECT id, department_id FROM sl30.ap UNION ALL
-        SELECT id, department_id FROM sl30.gl) gl ON gl.id = ac.trans_id 
+        SELECT id, department_id FROM sl30.gl) gl ON gl.id = ac.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 2, slac.project_id+1000
-  FROM acc_trans ac 
-  JOIN sl30.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id 
+  FROM acc_trans ac
+  JOIN sl30.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id
  WHERE project_id > 0;
 
 
@@ -547,14 +585,14 @@ SELECT ac.entry_id, 2, slac.project_id+1000
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id
-  FROM invoice inv 
+  FROM invoice inv
   JOIN (SELECT id, department_id FROM sl30.ar UNION ALL
         SELECT id, department_id FROM sl30.ap UNION ALL
         SELECT id, department_id FROM sl30.gl) gl ON gl.id = inv.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM sl30.invoice 
+SELECT id, 2, project_id + 1000 FROM sl30.invoice
  WHERE project_id > 0 and  project_id in (select id from sl30.project);
 
 
@@ -567,7 +605,7 @@ INSERT INTO partstax (parts_id, chart_id)
        JOIN account a ON chart.accno = a.accno;
 
 INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
-     SELECT a.id, t.rate, t.taxnumber, 
+     SELECT a.id, t.rate, t.taxnumber,
             coalesce(t.validto::timestamp, 'infinity'), 1, 1
        FROM sl30.tax t
        JOIN sl30.chart c ON (t.chart_id = c.id)
@@ -590,7 +628,7 @@ INSERT INTO eca_tax (eca_id, chart_id)
 
 
 
-INSERT 
+INSERT
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
        intnotes, shipvia, language_code, ponumber, terms,
@@ -599,7 +637,7 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
        shippingpoint, oe.notes, oe.curr, p.id, closed, quotation, quonumber,
        intnotes, shipvia, oe.language_code, ponumber, oe.terms,
        coalesce(c.credit_id, v.credit_id),
-       case 
+       case
            when c.id is not null and quotation is not true THEN 1
            WHEN v.id is not null and quotation is not true THEN 2
            when c.id is not null and quotation is true THEN 3
@@ -618,7 +656,7 @@ INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
        FROM sl30.orderitems;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
-SELECT oi.id, 1, oe.department_id 
+SELECT oi.id, 1, oe.department_id
   FROM orderitems oi
   JOIN sl30.oe ON oi.trans_id = oe.id AND department_id > 0;
 
@@ -681,9 +719,9 @@ INSERT INTO user_preference(id)
 
 INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
             recurring_interval, howmany, payment)
-     SELECT id, reference, startdate, nextdate, enddate, 
+     SELECT id, reference, startdate, nextdate, enddate,
             (repeat || ' ' || unit)::interval,
-            howmany, payment 
+            howmany, payment
        FROM sl30.recurring;
 
 INSERT INTO recurringemail SELECT * FROM sl30.recurringemail;
@@ -697,14 +735,14 @@ INSERT INTO jcitems(id, parts_id, description, qty, total, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             p.id, j.notes, j.project_id+1000, 1,
             CASE WHEN curr IS NOT NULL
-				 THEN curr
-				 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
-			END
+                                 THEN curr
+                                 ELSE (SELECT curr FROM sl30.curr WHERE rn=1)
+                        END
        FROM sl30.jcitems j
        JOIN sl30.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id
-	   LEFT JOIN sl30.project pr on (pr.id = j.project_id)
-	   LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
+           LEFT JOIN sl30.project pr on (pr.id = j.project_id)
+           LEFT JOIN sl30.customer c on (c.id = pr.customer_id);
 
 INSERT INTO parts_translation SELECT * FROM sl30.translation where trans_id in (select id from parts);
 
@@ -717,61 +755,61 @@ INSERT INTO partsgroup_translation SELECT * FROM sl30.translation where trans_id
 
 SELECT setval('id', max(id)) FROM transactions;
 
- SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
- SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
- SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
- SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
- SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
- SELECT setval('account_id_seq', max(id)) FROM account;
- SELECT setval('account_heading_id_seq', max(id)) FROM account_heading;
- SELECT setval('account_checkpoint_id_seq', max(id)) FROM account_checkpoint;
- SELECT setval('pricegroup_id_seq', max(id)) FROM pricegroup;
- SELECT setval('country_id_seq', max(id)) FROM country;
- SELECT setval('country_tax_form_id_seq', max(id)) FROM country_tax_form;
- SELECT setval('asset_dep_method_id_seq', max(id)) FROM asset_dep_method;
- SELECT setval('asset_class_id_seq', max(id)) FROM asset_class;
- SELECT setval('entity_class_id_seq', max(id)) FROM entity_class;
- SELECT setval('asset_item_id_seq', max(id)) FROM asset_item;
- SELECT setval('asset_disposal_method_id_seq', max(id)) FROM asset_disposal_method;
- SELECT setval('users_id_seq', max(id)) FROM users;
- SELECT setval('entity_id_seq', max(id)) FROM entity;
- SELECT setval('company_id_seq', max(id)) FROM company;
- SELECT setval('location_id_seq', max(id)) FROM location;
- SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
- SELECT setval('location_class_id_seq', max(id)) FROM location_class;
- SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
- SELECT setval('salutation_id_seq', max(id)) FROM salutation;
- SELECT setval('person_id_seq', max(id)) FROM person;
- SELECT setval('contact_class_id_seq', max(id)) FROM contact_class;
- SELECT setval('entity_credit_account_id_seq', max(id)) FROM entity_credit_account;
- SELECT setval('entity_bank_account_id_seq', max(id)) FROM entity_bank_account;
- SELECT setval('note_class_id_seq', max(id)) FROM note_class;
- SELECT setval('note_id_seq', max(id)) FROM note;
- SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
- SELECT setval('batch_id_seq', max(id)) FROM batch;
- SELECT setval('invoice_id_seq', max(id)) FROM invoice;
- SELECT setval('voucher_id_seq', max(id)) FROM voucher;
- SELECT setval('parts_id_seq', max(id)) FROM parts;
- SELECT setval('taxmodule_taxmodule_id_seq', max(taxmodule_id)) FROM taxmodule;
- SELECT setval('taxcategory_taxcategory_id_seq', max(taxcategory_id)) FROM taxcategory;
- SELECT setval('oe_id_seq', max(id)) FROM oe;
- SELECT setval('orderitems_id_seq', max(id)) FROM orderitems;
- SELECT setval('business_id_seq', max(id)) FROM business;
- SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
- SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
- SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
- SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
- SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
- SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
- SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
- SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
- SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
+SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
+SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
+SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
+SELECT setval('partscustomer_entry_id_seq', max(entry_id)) FROM partscustomer;
+SELECT setval('audittrail_entry_id_seq', max(entry_id)) FROM audittrail;
+SELECT setval('account_id_seq', max(id)) FROM account;
+SELECT setval('account_heading_id_seq', max(id)) FROM account_heading;
+SELECT setval('account_checkpoint_id_seq', max(id)) FROM account_checkpoint;
+SELECT setval('pricegroup_id_seq', max(id)) FROM pricegroup;
+SELECT setval('country_id_seq', max(id)) FROM country;
+SELECT setval('country_tax_form_id_seq', max(id)) FROM country_tax_form;
+SELECT setval('asset_dep_method_id_seq', max(id)) FROM asset_dep_method;
+SELECT setval('asset_class_id_seq', max(id)) FROM asset_class;
+SELECT setval('entity_class_id_seq', max(id)) FROM entity_class;
+SELECT setval('asset_item_id_seq', max(id)) FROM asset_item;
+SELECT setval('asset_disposal_method_id_seq', max(id)) FROM asset_disposal_method;
+SELECT setval('users_id_seq', max(id)) FROM users;
+SELECT setval('entity_id_seq', max(id)) FROM entity;
+SELECT setval('company_id_seq', max(id)) FROM company;
+SELECT setval('location_id_seq', max(id)) FROM location;
+SELECT setval('open_forms_id_seq', max(id)) FROM open_forms;
+SELECT setval('location_class_id_seq', max(id)) FROM location_class;
+SELECT setval('asset_report_id_seq', max(id)) FROM asset_report;
+SELECT setval('salutation_id_seq', max(id)) FROM salutation;
+SELECT setval('person_id_seq', max(id)) FROM person;
+SELECT setval('contact_class_id_seq', max(id)) FROM contact_class;
+SELECT setval('entity_credit_account_id_seq', max(id)) FROM entity_credit_account;
+SELECT setval('entity_bank_account_id_seq', max(id)) FROM entity_bank_account;
+SELECT setval('note_class_id_seq', max(id)) FROM note_class;
+SELECT setval('note_id_seq', max(id)) FROM note;
+SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
+SELECT setval('batch_id_seq', max(id)) FROM batch;
+SELECT setval('invoice_id_seq', max(id)) FROM invoice;
+SELECT setval('voucher_id_seq', max(id)) FROM voucher;
+SELECT setval('parts_id_seq', max(id)) FROM parts;
+SELECT setval('taxmodule_taxmodule_id_seq', max(taxmodule_id)) FROM taxmodule;
+SELECT setval('taxcategory_taxcategory_id_seq', max(taxcategory_id)) FROM taxcategory;
+SELECT setval('oe_id_seq', max(id)) FROM oe;
+SELECT setval('orderitems_id_seq', max(id)) FROM orderitems;
+SELECT setval('business_id_seq', max(id)) FROM business;
+SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
+SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
+SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
+SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
+SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
+SELECT setval('custom_field_catalog_field_id_seq', max(field_id)) FROM custom_field_catalog;
+SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
+SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
+SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
 -- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
- SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
- SELECT setval('payment_id_seq', max(id)) FROM payment;
- SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
- SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
- SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
+SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
+SELECT setval('payment_id_seq', max(id)) FROM payment;
+SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
+SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
+SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
