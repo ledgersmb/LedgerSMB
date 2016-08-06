@@ -99,12 +99,35 @@ CREATE OR REPLACE FUNCTION eca__history
  in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
-     SELECT eca.id, e.name, eca.meta_number, 
-            a.id as invoice_id, a.invnumber, a.curr::text, 
-            p.id AS parts_id, p.partnumber, 
-            i.description, 
-            i.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END, 
-            i.unit::text, i.sellprice, i.discount, 
+     WITH arap AS (
+       select  invnumber, curr, ar.transdate, entity_credit_account, id,
+                   person_id, notes
+             FROM ar
+             JOIN acc_trans ON ar.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AR'
+            where $16 = 2 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount) = 0)
+                      or ($18 and 0 <> sum(acc_trans.amount)))
+            UNION ALL
+           select invnumber, curr, ap.transdate, entity_credit_account, id,
+                  person_id, notes
+             FROM ap
+             JOIN acc_trans ON ap.id  = acc_trans.trans_id
+             JOIN account_link l ON acc_trans.chart_id = l.account_id
+                  and l.description = 'AP'
+            where $16 = 1 and $13 = 'i'
+       GROUP BY 1, 2, 3, 4, 5, 6, 7
+                  having (($17 and sum(acc_trans.amount) = 0) or
+                       ($18 and sum(acc_trans.amount) <> 0))
+     )
+     SELECT eca.id, e.name, eca.meta_number,
+            a.id as invoice_id, a.invnumber, a.curr::text,
+            p.id AS parts_id, p.partnumber,
+            i.description,
+            i.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END,
+            i.unit::text, i.sellprice, i.discount,
             i.deliverydate,
             i.serialnumber, 
             case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
@@ -116,32 +139,9 @@ $$
           select * from entity_credit_account WHERE $2 is null
           ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
-     JOIN (select  invnumber, curr, transdate, entity_credit_account, id,
-                   person_id, notes
-             FROM ar 
-            where $16 = 2 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
-            UNION 
-           select invnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-             FROM ap 
-            where $16 = 1 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
-           union 
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe 
-           where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o' 
-                  and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
-           union 
-           select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id, notes
-           from oe 
-           where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
-                  and quotation is not true)
-                  and (($17 and not closed) or ($18 and closed))
-           union 
+     JOIN (
+           SELECT * FROM arap
+           union
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
            from oe 
