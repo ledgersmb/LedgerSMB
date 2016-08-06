@@ -54,8 +54,8 @@ define([
                 }
             }, // startup
             _onKey: function(e) {
-                if (e.keyCode != keys.SPACE
-                    && e.keyCode != keys.ENTER) {
+                if (e.keyCode !== keys.SPACE
+                    && e.keyCode !== keys.ENTER) {
                     this.inherited(arguments);
                 }
             } // _onKey
