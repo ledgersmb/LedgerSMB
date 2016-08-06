@@ -36,9 +36,9 @@ Runs the report and displays it
 sub run_report{
     my ($request) = @_;
 
-    delete $request->{category} if ($request->{category} eq 'X');
+    delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
     $request->{business_units} = [];
-    for my $count (1 .. $request->{bc_count}){
+    for my $count (1 .. ($request->{bc_count} // 0)){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
