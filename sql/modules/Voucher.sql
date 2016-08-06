@@ -229,12 +229,12 @@ $$
                         b.control_code, b.default_date
                 HAVING
                         (in_amount_gt IS NULL OR
-                        sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
+                        sum(coalesce(ar.amount, ap.amount,
                                 al.amount))
                         >= in_amount_gt)
                         AND
                         (in_amount_lt IS NULL OR
-                        sum(coalesce(ar.amount - ar.paid, ap.amount - ap.paid,
+                        sum(coalesce(ar.amount, ap.amount,
                                 al.amount))
                         <= in_amount_lt)
                 ORDER BY b.control_code, b.description
@@ -429,24 +429,6 @@ BEGIN
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Batch not found';
         END IF;
-        update ar set paid = amount +
-                (select sum(amount) from acc_trans
-                join account_link a ON (acc_trans.chart_id = a.account_id)
-                where a.description = 'AR' AND trans_id = ar.id
-                        AND (voucher_id IS NULL OR voucher_id NOT IN
-                                (select id from voucher
-                                WHERE batch_id = in_batch_id)))
-        where id in (select trans_id from acc_trans where voucher_id IN
-                (select id from voucher where batch_id = in_batch_id));
-
-        update ap set paid = amount - (select sum(amount) from acc_trans
-                join account_link a ON (acc_trans.chart_id = a.account_id)
-                where a.description = 'AP' AND trans_id = ap.id
-                        AND (voucher_id IS NULL OR voucher_id NOT IN
-                                (select id from voucher
-                                WHERE batch_id = in_batch_id)))
-        where id in (select trans_id from acc_trans where voucher_id IN
-                (select id from voucher where batch_id = in_batch_id));
 
         DELETE FROM ac_tax_form WHERE entry_id IN
                (select entry_id from acc_trans where voucher_id in
@@ -508,22 +490,6 @@ BEGIN
                 DELETE FROM voucher WHERE id = voucher_row.id;
                 -- DELETE FROM transactions WHERE id = voucher_row.trans_id;
         ELSE
-                update ar set paid = amount +
-                        (select sum(amount) from acc_trans
-                        join account ON (acc_trans.chart_id = account.id)
-                        where link = 'AR' AND trans_id = ar.id
-                                AND (voucher_id IS NULL
-                                OR voucher_id <> voucher_row.id))
-                where id in (select trans_id from acc_trans
-                                where voucher_id = voucher_row.id);
-
-                update ap set paid = amount - (select sum(amount) from acc_trans
-                        join account ON (acc_trans.chart_id = account.id)
-                        where link = 'AP' AND trans_id = ap.id
-                                AND (voucher_id IS NULL
-                                OR voucher_id <> voucher_row.id))
-                where id in (select trans_id from acc_trans
-                                where voucher_id = voucher_row.id);
                 DELETE FROM ac_tax_form WHERE entry_id IN
                        (select entry_id from acc_trans
                          where voucher_id = voucher_row.id);
