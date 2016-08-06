@@ -24,7 +24,7 @@ define([
                   interceptClick: null,
                   report_request_error: function(err) {
                       var d = registry.byId("errorDialog");
-                      if (0 == err.response.status) {
+                      if (0 === err.response.status) {
                           d.set("content",
                                 "Could not connect to server");
                       } else {
@@ -111,16 +111,16 @@ define([
                       var contentPromise = null;
                       var self = this;
 
-                      if (arguments.length == 1
+                      if (arguments.length === 1
                           && lang.isObject(arguments[0])
                           && arguments[0]["content"] !== null) {
                           newContent = arguments[0]["content"];
                           delete (arguments[0])["content"];
-                      } else if (arguments.length == 1
+                      } else if (arguments.length === 1
                                  && lang.isString(arguments[0])) {
                           newContent = arguments[0];
                           contentOnly = true;
-                      } else if (arguments.length == 2
+                      } else if (arguments.length === 2
                                  && arguments[0] == "content") {
                           newContent = arguments[1];
                           contentOnly = true;
