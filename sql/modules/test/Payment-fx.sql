@@ -16,12 +16,6 @@ VALUES ('00001', 'testing AP', 'A', 'L', 'AP'),
        ('00003', 'testing cash', 'A', 'A', 'AP_paid');
 
 
-INSERT INTO exchangerate (transdate, curr, buy, sell)
-VALUES ('1901-01-01', 'XTS', 1.10, 1.10),
-       ('1901-01-02', 'XTS', 1.0, 1.0);
-
-
-
 -- TEST 1: payment_post() with fx rate 1.1
 
 INSERT INTO company (id, legal_name, entity_id) VALUES (-101, 'TEST', -101);
@@ -30,36 +24,45 @@ INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity
      VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000);
 
 
-INSERT INTO ap (id, transdate, amount, invnumber, curr, entity_credit_account)
-     VALUES (-11, '1901-01-01', 100, 'inv_test1', 'XTS', -101);
-INSERT INTO acc_trans (trans_id, transdate, amount, fx_transaction, approved, chart_id)
-     VALUES (-11, '1901-01-01', 100, 'f', 't', (select id from account where accno = '00001')),
-            (-11, '1901-01-01',  10, 't', 't', (select id from account where accno = '00001'));
+INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+     VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'XTS', -101);
+INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
+     VALUES (-11, '1901-01-01', 100, 'XTS', 110, 't', (select id from account where accno = '00001'));
 
 -- Pay the invoice in full
 SELECT * FROM
-  payment_post('1901-01-01', 1, -101, 'XTS', NULL,
+  payment_post('1901-01-01', 1, -101, 'XTS', 1.10, NULL,
      'This gl movement is a consequence of a payment transaction',
      ARRAY[(SELECT id FROM account WHERE accno = '00003')],
-     ARRAY[100], NULL, ARRAY['cash '], ARRAY[NULL],
+     ARRAY[110], NULL, ARRAY['cash '], ARRAY[NULL],
      ARRAY[-11], NULL, NULL, NULL, NULL, NULL, NULL, 't');
 --     ARRAY[-11], ARRAY[], ARRAY[], ARRAY[], ARRAY[], ARRAY[], NULL, 't');
+
+
+select sum(amount_bc)
+        from acc_trans
+       where trans_id = -11
+         and chart_id = (select id from account where accno = '00001');
+
+select sum(amount_tc)
+        from acc_trans
+       where trans_id = -11
+         and chart_id = (select id from account where accno = '00001');
 
 INSERT INTO test_result (test_name, success)
 VALUES
     ('Local currency marks fully paid',
-     (select sum(amount)
+     (select abs(sum(amount_bc))
         from acc_trans
        where trans_id = -11
          and chart_id = (select id from account where accno = '00001'))
-     = 0),
+     < 0.01),
     ('Foreign currency marks fully paid',
-     (select sum(amount)
+     (select abs(sum(amount_tc))
         from acc_trans
        where trans_id = -11
-         and chart_id = (select id from account where accno = '00001'
-         and not fx_transaction))
-     = 0);
+         and chart_id = (select id from account where accno = '00001'))
+     < 0.01);
 
 
 SELECT * FROM TEST_RESULT;
