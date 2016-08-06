@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-07-30 17:24+0000\n"
+"POT-Creation-Date: 2016-08-06 16:09+0000\n"
 "PO-Revision-Date: 2016-05-24 09:24+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "Acc_trans Sum"
 msgstr ""
 
-#: LedgerSMB.pm:752 LedgerSMB.pm:753 LedgerSMB/Scripts/configuration.pm:324
+#: LedgerSMB.pm:753 LedgerSMB.pm:754 LedgerSMB/Scripts/configuration.pm:324
 #: LedgerSMB/Scripts/setup.pm:795
 msgid "Access Denied"
 msgstr "Geen toegang"
@@ -348,7 +348,7 @@ msgstr "Aangroeibasis:"
 msgid "Accum. Depreciation"
 msgstr "Cum. Afschrijving"
 
-#: lsmb-request.pl:114
+#: lsmb-request.pl:115
 msgid "Action Not Defined: "
 msgstr "aktie niet gedefinieerd!"
 
@@ -1774,7 +1774,7 @@ msgstr "Bevestig bewerking"
 msgid "Confirm!"
 msgstr "Bevestig!"
 
-#: LedgerSMB.pm:758
+#: LedgerSMB.pm:759
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr "Conflicteert met bestaande gegevens. Misschien heeft u het al ingevoerd"
 
@@ -2785,7 +2785,7 @@ msgstr "Verwijderingsmethode"
 msgid "Disposal Report [_1] on date [_2]"
 msgstr "Verwijderingsrapport [_1] op datum [_2]"
 
-#: LedgerSMB.pm:755
+#: LedgerSMB.pm:756
 msgid "Division by 0 error"
 msgstr "Delen door 0 kan niet! Onmodelijk!"
 
@@ -3270,7 +3270,7 @@ msgstr "Fout in aanmaken backup bestand"
 msgid "Error creating batch.  Please try again."
 msgstr "Fout in aanmaken groep. Probeer opniew."
 
-#: LedgerSMB.pm:759
+#: LedgerSMB.pm:760
 msgid "Error from Function:"
 msgstr "Functionele fout"
 
@@ -4044,7 +4044,7 @@ msgstr ""
 "[_1] totdat er volledig is betaald. Voor geretourneerde items wordt 10% "
 "terugnamekosten in rekening gebracht."
 
-#: LedgerSMB.pm:751
+#: LedgerSMB.pm:752
 msgid "Internal Database Error"
 msgstr "Interne databasefout"
 
@@ -4069,7 +4069,7 @@ msgstr "Geen geldige rapportage basis"
 msgid "Invalid backup request"
 msgstr "Ongeldige backup verzoek"
 
-#: LedgerSMB.pm:754
+#: LedgerSMB.pm:755
 msgid "Invalid date/time entered"
 msgstr "Ongeldige datum/tijd ingevoerd"
 
@@ -4638,7 +4638,7 @@ msgstr "Uitgelogd door inactiviteit"
 msgid "Logging in.  Please wait."
 msgstr "Inloggen..."
 
-#: old-handler.pl:191 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:192 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Aanmelden"
 
@@ -4851,7 +4851,7 @@ msgstr "Maand(en)"
 msgid "Months"
 msgstr "Maanden"
 
-#: LedgerSMB.pm:767
+#: LedgerSMB.pm:768
 msgid "More information has been reported in the error logs"
 msgstr "Meer informatie is te zien in de \"error logs\""
 
@@ -5040,7 +5040,7 @@ msgstr "Geen belastingformulier geselecteerd"
 msgid "No unassigned amounts in Transactions"
 msgstr "Geen niet-toegewezen bedragen in transacties"
 
-#: lsmb-request.pl:83
+#: lsmb-request.pl:84
 msgid "No workflow script specified"
 msgstr "Geen proces voortgang script gespecificeerd"
 
@@ -6580,7 +6580,7 @@ msgstr "Noodzakelijk attribuut niet ingevoerd: [_1]"
 msgid "Required by"
 msgstr "Nodig voor"
 
-#: LedgerSMB.pm:756 LedgerSMB.pm:757
+#: LedgerSMB.pm:757 LedgerSMB.pm:758
 msgid "Required input not provided"
 msgstr "Niet voorzien van de benodigde input"
 
@@ -7669,7 +7669,7 @@ msgstr "Systeem"
 msgid "System Defaults"
 msgstr "Standaardinstellingen"
 
-#: old-handler.pl:177
+#: old-handler.pl:178
 msgid "System currently down for maintenance!"
 msgstr "Systeem momenteel niet beschikbaar vanwege onderhoud!"
 
@@ -8469,7 +8469,7 @@ msgstr "Type:"
 msgid "UPDATE"
 msgstr "Verversen"
 
-#: lsmb-request.pl:111
+#: lsmb-request.pl:112
 msgid "Unable to open script"
 msgstr "Kan script niet openen"
 
@@ -8757,7 +8757,7 @@ msgstr "Leverancier ontbreekt!"
 msgid "Vendor not on file!"
 msgstr "Leverancier bestaat niet!"
 
-#: old-handler.pl:235
+#: old-handler.pl:236
 msgid "Version"
 msgstr "Versie"
 
@@ -8917,7 +8917,7 @@ msgstr "jaren"
 msgid "Yes"
 msgstr "Ja"
 
-#: old-handler.pl:190
+#: old-handler.pl:191
 msgid "You are logged out!"
 msgstr "U bent afgemeld!"
 
@@ -8988,7 +8988,7 @@ msgstr "[_1]: Klant bestaat niet!"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverancier bestaat niet!"
 
-#: old-handler.pl:244
+#: old-handler.pl:245
 msgid "action not defined!"
 msgstr "aktie niet gedefinieerd!"
 
