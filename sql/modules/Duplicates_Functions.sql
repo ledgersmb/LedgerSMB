@@ -1,4 +1,4 @@
-\i sql/modules/test/Exempt_funcs.sql
+\i sql/modules/Exempt_funcs.sql.inc
 DO language plpgsql $$
     DECLARE f RECORD;
 BEGIN

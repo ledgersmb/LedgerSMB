@@ -1,7 +1,7 @@
 BEGIN;
 \i Base.sql
 -- Include the exempted functions in temporary table.
-\i Exempt_funcs.sql
+\i ../Exempt_funcs.sql.inc
 
 -- Set temporary table in pg_temp
 create table pg_temp.test_exempt_tables (tablename text, reason text);
