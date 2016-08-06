@@ -102,13 +102,15 @@ sub columns {
 
     {col_id => 'debit_balance',
        name => $self->Text('Debits'),
-       type => 'text',
+       type => 'href',
+  href_base => '',
       money => 1,
      pwidth => '2', },
 
     {col_id => 'credit_balance',
        name => $self->Text('Credits'),
-       type => 'text',
+       type => 'href',
+  href_base => '',
       money => 1,
      pwidth => '2', },
 
@@ -116,12 +118,6 @@ sub columns {
        name => $self->Text('Dropdowns'),
        type => 'text',
      pwidth => '3', },
-
-    {col_id => 'edit',
-       name => $self->Text('Edit'),
-       type => 'href',
-  href_base => '',
-  html_only => 1, },
 
     {col_id => 'delete',
        name => $self->Text('Delete'),
@@ -188,18 +184,18 @@ sub run_report{
         } else {
            $ct = 'A';
         }
-        $r->{edit} = '['.$self->Text('Edit').']';
         $r->{delete} = '['.$self->Text('Delete').']'
                   if !$r->{rowcount};
-        $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} .
+        $r->{accno_href_suffix} = 'account.pl?action=edit&id='.$r->{id} .
            "&charttype=$ct";
+        $r->{description_href_suffix} = $r->{accno_href_suffix};
         $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='
         . $r->{id} . "&charttype=$ct";
-        $r->{accno_href_suffix} =
+        $r->{credit_balance_href_suffix} =
                 'reports.pl?action=start_report&module_name=gl&report_name=gl' .
                 "&accno=$r->{accno}--$r->{description}"
                      unless $r->{is_heading};
-        $r->{description_href_suffix} = $r->{accno_href_suffix};
+        $r->{debit_balance_href_suffix} = $r->{credit_balance_href_suffix};
         $r->{html_class} = 'listheading' if $r->{is_heading};
         $r->{link} =~ s/:/\n/g if $r->{link};
     }
