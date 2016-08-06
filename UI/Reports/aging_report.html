@@ -35,7 +35,7 @@ IF request.action == 'select_all';
 END;
 
 FOREACH KEY IN report.keys();
-    IF KEY == 'rows' or KEY.keys();
+    IF KEY == 'rows';
        NEXT;
     ELSE;
         PROCESS input element_data = {
