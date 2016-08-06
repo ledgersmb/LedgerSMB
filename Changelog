@@ -5,6 +5,7 @@ Released 2014-09-15
 
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
+* Fixed starman on debian with latest fixes (Chris T)
 
 Changelog for 1.4.31
 * Fixed user with contact all privileges can't create contacts (Chris T #1219)
