@@ -103,7 +103,7 @@ define([
             }
             var myself = this;
             query("*", myself.domNode).forEach(function(dnode){
-                myself.TFRenderElement(dnode)
+                myself.TFRenderElement(dnode);
             });
             this.maxCols = this.cols;
             this.initOrient = this.orientation;
