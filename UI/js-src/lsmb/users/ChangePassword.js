@@ -125,7 +125,6 @@ define(["lsmb/TabularForm",
                             }
                           }
                       });
-                  });
           },
           setFeedback: function(success, message) {
                 if (success)
