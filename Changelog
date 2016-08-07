@@ -65,9 +65,11 @@ Changelog for 1.4.32
 * Fixed update on single payment interface resets paymnt amt (Erik H, #1916)
 * Fixed purchase history not grabbing correct paid status (Chris T, #2000)
 * Fixed Gifi PNL/Balance Sheet not displaying properly (Erik H, #1996)
+* Add role required to re-open year closing (Erik H)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.31
 * Fixed user with contact all privileges can't create contacts (Chris T #1219)
@@ -79,6 +81,7 @@ Changelog for 1.4.31
 # Fixed contact_all insufficient to create contacts (Chris T, #1219)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.4.30
 * Fix payment reversal of foreign-currency invoices (Erik H, #1716)
