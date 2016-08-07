@@ -1,6 +1,6 @@
-\i sql/modules/Exempt_funcs.sql.inc
-DO language plpgsql $$
-    DECLARE f RECORD;
+\i sql/modules/Exempt_funcs.sql.inc;
+DO $$
+DECLARE f record;
 BEGIN
 
     WITH function_list AS (
@@ -30,7 +30,4 @@ BEGIN
         UPDATE defaults SET value ='no' WHERE setting_key = 'module_load_ok';
         RAISE EXCEPTION 'Duplicate functions found: %',f;
     END IF;
-COMMIT;
-END;
-$$;
-
+END$$;
