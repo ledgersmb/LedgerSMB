@@ -9,9 +9,9 @@ define(['lsmb/TabularForm',
          'dijit/form/TextBox',
          'dijit/form/Button',
          'dijit/_Container'],
-       function(tabform, declare, _widgetbase, _templatemixin, 
+       function(tabform, declare, _widgetbase, _templatemixin,
                 _widget_parser, cp, registry, on, textbox, button, _container) {
-             return declare ('lsmb/users/ChangePassword', 
+             return declare ('lsmb/users/ChangePassword',
                              [_widgetbase, _templatemixin, _widget_parser],
                  {
                     templateString : '\
@@ -38,7 +38,7 @@ define(['lsmb/TabularForm',
                             "verify":       "Verify",
                             "change":       "Change Password",
                             'no-oldpw':     "No Old Password",
-                            "strength":     "Strength" 
+                            "strength":     "Strength"
                    },
                    lstrings : {},
                    text(to_translate){
