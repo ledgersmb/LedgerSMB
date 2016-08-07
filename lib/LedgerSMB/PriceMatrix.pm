@@ -109,9 +109,12 @@ sub price_matrix {
         }
         $qty = $form->{qtycache}->{$ref->{id}} || 0;
         my $qty2 = $form->{"qty_$form->{rowcount}"} || 1; # default qty
-        $pmh->execute( $form->{customer_id}, $ref->{id}, $form->{transdate}, $qty + $qty2, $form->{currency});
+        $pmh->execute( $form->{customer_id}, $ref->{id},
+                       $form->{transdate}, $qty + $qty2, $form->{currency})
+            or $form->dberror($pmh->errstr);
     } elsif ( $form->{vendor_id} ) {
-        $pmh->execute( $form->{vendor_id}, $ref->{id} );
+        $pmh->execute( $form->{vendor_id}, $ref->{id} )
+            or $form->dberror($pmh->errstr);
     } else {
         $form->error('Missing counter-party (customer or vendor)');
         return;
