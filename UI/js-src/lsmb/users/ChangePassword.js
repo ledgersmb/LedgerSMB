@@ -12,7 +12,7 @@ define(["lsmb/TabularForm",
          "dojo/request",
          "dijit/_Container"],
        function(tabform, declare, _widgetbase, _templatemixin,
-                _widget_parser, cp, registry, on, textbox, button, 
+                _widget_parser, cp, registry, on, textbox, button,
                 template, request, _container) {
              return declare ("lsmb/users/ChangePassword",
                              [_widgetbase, _templatemixin, _widget_parser],
@@ -95,7 +95,7 @@ define(["lsmb/TabularForm",
                   },
                   submit_form: function() {
                       var I = this;
-                      var r = request; 
+                      var r = request;
                       console.log("change_pw clicked");
                       var login = document.getElementById("username").value;
                       var old_password = I.oldpw.get("value");
@@ -135,5 +135,5 @@ define(["lsmb/TabularForm",
           }
        }
      );
-} 
+}
 );
