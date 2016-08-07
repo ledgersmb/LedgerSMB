@@ -1,9 +1,9 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/CheckBox'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/CheckBox"],
        function(declare, on, topic, CheckBox) {
-           return declare('lsmb/PublishCheckbox', [CheckBox], {
+           return declare("lsmb/PublishCheckbox", [CheckBox], {
                topic: "",
                publish: function(targetValue) {
                    topic.publish(this.topic, targetValue);
@@ -12,7 +12,7 @@ define(['dojo/_base/declare',
                    var self = this;
                    this.inherited(arguments);
                    this.own(
-                       on(this, 'change',
+                       on(this, "change",
                           function(targetValue) {
                               self.publish(targetValue);
                           })

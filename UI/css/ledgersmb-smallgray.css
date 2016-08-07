@@ -1,4 +1,5 @@
 /* stylesheet for ledger-smb */
+@import url(system/global.css);
 
 /* general stuff */
 A:link { color: blue; text-decoration: none; }

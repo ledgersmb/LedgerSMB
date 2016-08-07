@@ -1,12 +1,12 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/RadioButton'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/RadioButton"],
        function(declare, on, topic, RadioButton) {
-           return declare('lsmb/SubscribeRadioButton', [RadioButton], {
+           return declare("lsmb/SubscribeRadioButton", [RadioButton], {
                topic: "",
                update: function(targetValue) {
-                   this.set('checked', targetValue);
+                   this.set("checked", targetValue);
                },
                postCreate: function() {
                    var self = this;

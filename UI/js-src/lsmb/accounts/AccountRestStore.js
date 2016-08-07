@@ -1,13 +1,13 @@
 define([
-    'dojo/store/JsonRest',
-    'dojo/store/Observable',
-    'dojo/store/Memory',
-    'dojo/store/Cache',
-    'dojo/request',
-    'dojo/_base/array',
-    'dojo/_base/declare',
+    "dojo/store/JsonRest",
+    "dojo/store/Observable",
+    "dojo/store/Memory",
+    "dojo/store/Cache",
+    "dojo/request",
+    "dojo/_base/array",
+    "dojo/_base/declare",
     "dojo/Evented",
-    'dojo/request'
+    "dojo/request"
     ], function(
       JsonRest,
         Observable,
@@ -20,7 +20,7 @@ define([
       xhr
     ){
         var accountsRest =
-            declare('lsmb/accounts/AccountRestStore',[JsonRest],
+            declare("lsmb/accounts/AccountRestStore",[JsonRest],
                     {
                         get: function(id) {
                             var self = this;
@@ -41,8 +41,8 @@ define([
                         }
                     });
         var store = new Cache(new accountsRest({
-            idProperty: 'accno',
-            target: 'journal.pl?action=chart_json'
+            idProperty: "accno",
+            target: "journal.pl?action=chart_json"
         }), new Memory());
         return store;
     });

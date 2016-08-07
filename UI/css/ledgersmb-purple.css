@@ -1,4 +1,5 @@
 /* stylesheet for ledger-smb */
+@import url(system/global.css);
 
 /* general stuff */
 A:link { color: #a0522d; text-decoration: none; }
@@ -94,24 +95,24 @@ body.menu {
 
 .menuOut a {
   cursor: pointer;
-  margin: 0px;
+  margin: 0;
   background-color: #e6e6fa;
   font-size: 10px;
   color: #000084;
-  border: 0px solid #000000;
-  padding: 0px;
+  border: 0 solid #000000;
+  padding: 0;
   text-align: left;
   font-weight: bold;
 }
 
 .menuOver a {
   cursor: pointer;
-  margin: 0px;
+  margin: 0;
   background-color: #5a7d9b;
   font-size: 10px;
   color: #ffffff;
-  border: 0px solid #000000;
-  padding: 0px;
+  border: 0 solid #000000;
+  padding: 0;
   text-align: left;
   font-weight: bold;
 }

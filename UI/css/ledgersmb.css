@@ -1,4 +1,5 @@
 /* stylesheet for ledger-smb */
+@import url(system/global.css);
 
 td.money {
    text-align: right;
@@ -121,9 +122,9 @@ cornerlogo {
 }
 
 #top_menu {
-  margin: 0px;
-  padding: 0px;
-  -webkit-padding-start: 0px;
+  margin: 0;
+  padding: 0;
+  -webkit-padding-start: 0;
   list-style: none;
   background-image: none;
 }
@@ -136,14 +137,14 @@ cornerlogo {
 .menu_open {
 background-image: url('../images/up.gif');
 background-repeat: no-repeat;
-background-position: 0px 0px; 
+background-position: 0 0; 
 padding-left: 12px; 
 }
 
 .menu_closed {
 background-image: url('../images/down.gif');
 background-repeat: no-repeat;
-background-position: 0px 0px; 
+background-position: 0 0; 
 padding-left: 12px; 
 }
 
@@ -321,10 +322,10 @@ input[type=checkbox].remove:checked:before {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {
@@ -337,10 +338,10 @@ span.indicator {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {

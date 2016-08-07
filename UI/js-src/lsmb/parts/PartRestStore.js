@@ -1,12 +1,12 @@
 define([
-    'dojo/store/JsonRest',
-    'dojo/store/Observable',
-    'dojo/request',
-    'dojo/_base/array',
-    'dojo/_base/declare',
-    'dojo/Evented',
-    'dojo/request',
-    'dojo/io-query'
+    "dojo/store/JsonRest",
+    "dojo/store/Observable",
+    "dojo/request",
+    "dojo/_base/array",
+    "dojo/_base/declare",
+    "dojo/Evented",
+    "dojo/request",
+    "dojo/io-query"
     ], function(
         JsonRest,
         Observable,
@@ -17,9 +17,9 @@ define([
         xhr,
         io
     ){
-        console.log('creating store');
+        console.log("creating store");
         var partsRest =
-            declare('lsmb/parts/PartRestStore',[JsonRest],
+            declare("lsmb/parts/PartRestStore",[JsonRest],
                     {
                         get: function(id) {
                             var self = this;
@@ -43,15 +43,15 @@ define([
                                 query = io.objectToQuery(query);
                             }
                             if (options && options.type) {
-                                query = '&type=' + options.type + '&' + query
+                                query = "&type=" + options.type + "&" + query
                             }
                             return this.inherited(arguments, [query, options]);
                         }
                     });
         var store = new Observable(new partsRest({
-            idProperty: 'partnumber',
-            target: 'parts.pl?action=partslist_json'
+            idProperty: "partnumber",
+            target: "parts.pl?action=partslist_json"
         }));
-        console.log('done creating store');
+        console.log("done creating store");
         return store;
     });

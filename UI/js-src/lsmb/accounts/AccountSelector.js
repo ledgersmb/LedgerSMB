@@ -1,20 +1,20 @@
 define([
-    'dijit/form/FilteringSelect',
-    'dojo/_base/declare',
-    'lsmb/accounts/AccountRestStore'
+    "dijit/form/FilteringSelect",
+    "dojo/_base/declare",
+    "lsmb/accounts/AccountRestStore"
     ], function(
       Select,
       declare,
       store
       ){
-        var mySelect = new declare('lsmb/accounts/AccountSelector',[Select],{
+        var mySelect = new declare("lsmb/accounts/AccountSelector",[Select],{
           store:  store,
           queryExpr: "*${0}*",
-          style: 'width: 300px',
-//          query: {'charttype': 'A'},
-          highlightMatch: 'all',
-            searchAttr: 'label',
-            labelAttr: 'label',
+          style: "width: 300px",
+//          query: {"charttype": "A"},
+          highlightMatch: "all",
+            searchAttr: "label",
+            labelAttr: "label",
           autoComplete: false,
           initialValue:null,
           constructor:function(){
