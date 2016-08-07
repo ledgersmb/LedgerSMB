@@ -28,17 +28,16 @@ label {
     text-align: right;
     float: left;
     border-width: 1px;
-    margin: 0em;
+    margin: 0;
     padding-right: 0.5em;
     margin-top: 0.5em;
 }
 input {
     width: 14em;
-    margin: 0px;
+    margin: 0;
     text-align: left;
     float: left;
     border-width: 3px;
-    margin: 0em;
     margin-top: 0.5em;
 }
 

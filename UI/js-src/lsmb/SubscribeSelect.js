@@ -1,15 +1,15 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/Select'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/Select"],
        function(declare, on, topic, Select) {
-           return declare('lsmb/SubscribeSelect', [Select], {
+           return declare("lsmb/SubscribeSelect", [Select], {
                topic: "",
                topicMap: {},
                update: function(targetValue) {
                    var newValue = this.topicMap[targetValue];
                    if (newValue) {
-                       this.set('value', newValue);
+                       this.set("value", newValue);
                    }
                },
                postCreate: function() {

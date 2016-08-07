@@ -1,13 +1,13 @@
 
-require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
-         'dojo/_base/event', 'dojo/hash', 'dojo/topic', 'dojo/dom-class',
-         'dojo/domReady!'],
+require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
+         "dojo/_base/event", "dojo/hash", "dojo/topic", "dojo/dom-class",
+         "dojo/domReady!"],
         function(parser, query, on, registry, event, hash, topic, domClass) {
             parser.parse().then(function() {
                 // delay the option of triggering load_link() until
                 // the parser has run: before then, the maindiv widget
                 // doesn't exist!
-                var mainDiv = registry.byId('maindiv');
+                var mainDiv = registry.byId("maindiv");
 
                 // we need a centralized interceptClick function so
                 // the hash part we generate to make it unique, really *is*
@@ -22,10 +22,10 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                     if (dnode.target || ! dnode.href)
                         return;
 
-                    on(dnode, 'click', function(e) {
+                    on(dnode, "click", function(e) {
                         event.stop(e);
                         c++;
-                        hash(dnode.href + '#s' + c.toString(16));
+                        hash(dnode.href + "#s" + c.toString(16));
                     });
                 };
                 if (mainDiv != null) {
@@ -38,32 +38,32 @@ require(['dojo/parser', 'dojo/query', 'dojo/on', 'dijit/registry',
                     });
                 }
 
-                query('a.menu-terminus').forEach(interceptClick);
-                query('#console-container')
+                query("a.menu-terminus").forEach(interceptClick);
+                query("#console-container")
                     .forEach(function(node) {
-                        domClass.add(node, 'done-parsing');
+                        domClass.add(node, "done-parsing");
                     });
-                query('body')
+                query("body")
                     .forEach(function(node) {
-                        domClass.add(node, 'done-parsing');
+                        domClass.add(node, "done-parsing");
                     });
             });
         });
 
 
 require([
-    'dojo/on', 'dojo/query', 'dojo/dom-class', 'dojo/_base/event',
-    'dojo/domReady!'],
+    "dojo/on", "dojo/query", "dojo/dom-class", "dojo/_base/event",
+    "dojo/domReady!"],
         function (on, query, domclass, event) {
-            query('a.t-submenu').forEach(function(node){
-                on(node, 'click', function(e) {
+            query("a.t-submenu").forEach(function(node){
+                on(node, "click", function(e) {
                     event.stop(e);
                     var parent = node.parentNode;
-                    if (domclass.contains(parent, 'menu_closed')) {
-                        domclass.replace(parent, 'menu_open', 'menu_closed');
+                    if (domclass.contains(parent, "menu_closed")) {
+                        domclass.replace(parent, "menu_open", "menu_closed");
                     }
                     else {
-                        domclass.replace(parent, 'menu_closed', 'menu_open');
+                        domclass.replace(parent, "menu_closed", "menu_open");
                     }
                 });
             });

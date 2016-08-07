@@ -1,9 +1,9 @@
-define(['dojo/_base/declare',
-        'dojo/on',
-        'dojo/topic',
-        'dijit/form/Select'],
+define(["dojo/_base/declare",
+        "dojo/on",
+        "dojo/topic",
+        "dijit/form/Select"],
        function(declare, on, topic, Select) {
-           return declare('lsmb/PublishSelect', [Select], {
+           return declare("lsmb/PublishSelect", [Select], {
                topic: "",
                publish: function(targetValue) {
                    topic.publish(this.topic, targetValue);
@@ -12,7 +12,7 @@ define(['dojo/_base/declare',
                    var self = this;
                    this.inherited(arguments);
                    this.own(
-                       on(this, 'change',
+                       on(this, "change",
                           function(targetValue) {
                               self.publish(targetValue);
                           })

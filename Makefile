@@ -236,13 +236,13 @@ help:
 SHELL := /bin/bash
 HOMEDIR := ~/dojo_archive
 SHA := $(shell git ls-files -s UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit | sha1sum | cut -d' ' -f 1)
-ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar.xz
-TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar.xz
+ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
+TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dojo: $(ARCHIVE)
 	rm -rf UI/js/;
-	tar Jxf $(ARCHIVE)
+	tar xf $(ARCHIVE)
 	ls $(HOMEDIR)
 	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
 
@@ -259,7 +259,7 @@ ifeq ($(wildcard $(ARCHIVE)),)
 		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
 	#git checkout -- UI/js/README;
 	cd ../../..
-	tar Jcf $(TEMP) UI/js
+	tar cf $(TEMP) UI/js
 	mv $(TEMP) $(ARCHIVE)
 	rm $(FLAG)
 endif

@@ -3,11 +3,11 @@
  * Modified by ylavoie 2016-04-27 for amd
  */
 var copyOnlyMids = {
-//        'lsmb/package': 1
+//        "lsmb/package": 1
 };
 var miniExcludeMids = {
-//      'lsmb/README.md': 1,
-        'lsmb/package': 1
+//      "lsmb/README.md": 1,
+        "lsmb/package": 1
 };
 
 // jshint unused: false
@@ -24,12 +24,6 @@ var profile = (function(){
         mini: true,
         stripConsole: "warn",
         selectorEngine: "lite",
-        resourceTags: {
-            // tag all .js files as modules
-            amd: function(filename, mid) {
-                return /\.js$/.test(filename);
-            }
-        },
 
         defaultConfig: {
             hasCache:{

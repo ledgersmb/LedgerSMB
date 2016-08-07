@@ -8,26 +8,32 @@ define("lsmb/ComparisonSelectionBalance",
         "dojo/_base/array"
         ],
         function(ContentPane, declare, dom, topic, domStyle, registry, array) {
-            return declare('lsmb/ComparisonSelectionBalance', ContentPane, {
+            return declare("lsmb/ComparisonSelectionBalance", ContentPane, {
                 topic: "",
                 type: "",
                 comparisons: 0,
                 container: "",
                 _show: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,'display','block');
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","block");
+                    }
                 },
                 _hide: function(c) {
-                    if ( c && dom.byId(c)) domStyle.set(c,'display','none');
+                    if ( c && dom.byId(c)) {
+                        domStyle.set(c,"display","none");
+                    }
                 },
                 _interval: function(state) {
-                    ( state ? this._show : this._hide )(dom.byId('date_period_id'));
+                    ( state ? this._show : this._hide )(dom.byId("date_period_id"));
                     var _regid = registry.byId("interval");
                     _regid.set("required",state)
                           .set("disabled",!state);
-                    if ( state ) _regid.focus();
+                    if ( state ) {
+                        _regid.focus();
+                    }
                 },
                 _toggles: function(ids,l) {
-                    for ( i = 1 ; i <= 9 ; i++ ) {
+                    for ( var i = 1 ; i <= 9 ; i++ ) {
                         var _cdDom = dom.byId(ids + "_" + i);
                         var state = ( i <= this.comparisons && l );
                         registry.byId("to_date_" + i).set("required",state);
@@ -50,12 +56,12 @@ define("lsmb/ComparisonSelectionBalance",
                 },
                 update: function(targetValue) {
                     var _cDom = dom.byId(this.id);
-                    if ( targetValue == 'by_dates'   ) {
+                    if ( targetValue === "by_dates"   ) {
                         this.set("type",targetValue);
                         this._show(this.container);
                         this._hide("date_period_id");
                         this._toggles("comparison_dates",1);
-                    } else if ( targetValue == 'by_periods' ) {
+                    } else if ( targetValue === "by_periods" ) {
                         this.set("type",targetValue);
                         this._hide(this.container);
                         this._show("date_period_id");
@@ -63,7 +69,7 @@ define("lsmb/ComparisonSelectionBalance",
                     } else if ( targetValue >= 0 && targetValue <= 9 ) {
                         this.set("comparisons",targetValue);
                     }
-                    this._interval(this.get("comparisons") > 0 && this.get("type") == 'by_periods');
+                    this._interval(this.get("comparisons") > 0 && this.get("type") == "by_periods");
                 },
                 postCreate: function() {
                     var self = this;
@@ -92,7 +98,7 @@ define("lsmb/ComparisonSelectionBalance",
                         _selectedRadio = registry.byId("comparison_by_periods");
                     }
                     if ( _selectedRadio ) {
-                        _selectedRadio.set('checked', true);
+                        _selectedRadio.set("checked", true);
                         this.update(_selectedRadio.get("value"));      // Button should send message back
                     }
                     var _comparison_periods = registry.byId("comparison_periods");

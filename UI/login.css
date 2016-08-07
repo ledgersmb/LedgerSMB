@@ -24,7 +24,7 @@ div.label {
     text-align: right;
     float: left;
     border-width: 1px;
-    margin: 0em;
+    margin: 0;
     padding-right: 0.5em;
     margin-top: 0.5em;
 }
@@ -33,7 +33,7 @@ div.input {
     text-align: left;
     float: left;
     border-width: 3px;
-    margin: 0em;
+    margin: 0;
     margin-top: 0.5em;
 }
 img.logo {
