@@ -1,8 +1,8 @@
 define([
-    'dojo/store/Memory',
-    'dojo/store/Observable',
-    'dojo/request',
-    'dojo/_base/array',
+    "dojo/store/Memory",
+    "dojo/store/Observable",
+    "dojo/request",
+    "dojo/_base/array",
      "dojo/Evented"
     ], function(
       Memory,
@@ -12,17 +12,17 @@ define([
       Evented
       ){
     var store = new Observable(new Memory({
-      idProperty: 'text',
+      idProperty: "text",
       emitter:new Evented()
     }));
 
-    request.get('parts.pl?action=partslist_json',{
-        handleAs: 'json'
+    request.get("parts.pl?action=partslist_json",{
+        handleAs: "json"
     }).then(
         function (results) {
           array.forEach(results, function(item){
               item.text = item.partnumber;
-              item.label = item.partnumber + '--' + item.description;
+              item.label = item.partnumber + "--" + item.description;
             store.put(item);
           });
          store.emitter.emit("accountstore_loadcomplete",{bubbles: true,cancelable: false});

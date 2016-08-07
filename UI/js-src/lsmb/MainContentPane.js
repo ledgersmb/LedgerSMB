@@ -1,40 +1,40 @@
 define([
-    'dijit/layout/ContentPane',
-    'dojo/_base/declare',
-    'dojo/_base/event',
-    'dijit/registry',
-    'dojo/dom-style',
-    'dojo/_base/lang',
-    'dojo/promise/Promise',
-    'dojo/on',
-    'dojo/hash',
-    'dojo/promise/all',
-    'dojo/request/xhr',
-    'dojo/query',
-    'dojo/request/iframe',
-    'dojo/dom-class'
+    "dijit/layout/ContentPane",
+    "dojo/_base/declare",
+    "dojo/_base/event",
+    "dijit/registry",
+    "dojo/dom-style",
+    "dojo/_base/lang",
+    "dojo/promise/Promise",
+    "dojo/on",
+    "dojo/hash",
+    "dojo/promise/all",
+    "dojo/request/xhr",
+    "dojo/query",
+    "dojo/request/iframe",
+    "dojo/dom-class"
     ],
        function(ContentPane, declare, event, registry, style,
                 lang, Promise, on, hash, all, xhr, query, iframe,
                 domClass) {
-           return declare('lsmb/MainContentPane',
+           return declare("lsmb/MainContentPane",
                           [ContentPane],
               {
                   last_page: null,
                   interceptClick: null,
                   report_request_error: function(err) {
-                      var d = registry.byId('errorDialog');
-                      if (0 == err.response.status) {
-                          d.set('content',
-                                'Could not connect to server');
+                      var d = registry.byId("errorDialog");
+                      if (0 === err.response.status) {
+                          d.set("content",
+                                "Could not connect to server");
                       } else {
-                          d.set('content',err.response.data);
+                          d.set("content",err.response.data);
                       }
                       d.show();
                   },
                   report_error: function(content) {
-                      var d = registry.byId('errorDialog');
-                      d.set('content', content);
+                      var d = registry.byId("errorDialog");
+                      d.set("content", content);
                       d.show();
                   },
                   set_main_div: function(doc){
@@ -42,17 +42,17 @@ define([
                       var body = doc.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
 
                       if (! body) {
-                          this.report_error('Invalid server response: document lacks BODY tag');
+                          this.report_error("Invalid server response: document lacks BODY tag");
                           return;
                       }
-                      var newbody = body ? body[1] : '';
-                      return this.set('content', newbody)
+                      var newbody = body ? body[1] : "";
+                      return this.set("content", newbody)
                           .then(
                               function() {
                                   self.show_main_div();
                               },
                               function() {
-                                  self.report_error('Server return value invalid');
+                                  self.report_error("Server return value invalid");
                               });
                   },
                   load_form: function(url, options) {
@@ -95,15 +95,15 @@ define([
                   },
                   fade_main_div: function() {
                       // mention we're processing the request
-                      domClass.replace(this.domNode, 'parsing', 'done-parsing');
-                      style.set(this.domNode, 'opacity', "30%");
+                      domClass.replace(this.domNode, "parsing", "done-parsing");
+                      style.set(this.domNode, "opacity", "30%");
                   },
                   hide_main_div: function() {
-                      style.set(this.domNode, 'visibility', 'hidden');
+                      style.set(this.domNode, "visibility", "hidden");
                   },
                   show_main_div: function() {
-                      style.set(this.domNode, 'visibility', 'visible');
-                      domClass.replace(this.domNode, 'done-parsing', 'parsing');
+                      style.set(this.domNode, "visibility", "visible");
+                      domClass.replace(this.domNode, "done-parsing", "parsing");
                   },
                   set: function() {
                       var newContent = null;
@@ -111,27 +111,27 @@ define([
                       var contentPromise = null;
                       var self = this;
 
-                      if (arguments.length == 1
+                      if (arguments.length === 1
                           && lang.isObject(arguments[0])
-                          && arguments[0]['content'] !== null) {
-                          newContent = arguments[0]['content'];
-                          delete (arguments[0])['content'];
-                      } else if (arguments.length == 1
+                          && arguments[0]["content"] !== null) {
+                          newContent = arguments[0]["content"];
+                          delete (arguments[0])["content"];
+                      } else if (arguments.length === 1
                                  && lang.isString(arguments[0])) {
                           newContent = arguments[0];
                           contentOnly = true;
-                      } else if (arguments.length == 2
-                                 && arguments[0] == 'content') {
+                      } else if (arguments.length === 2
+                                 && arguments[0] == "content") {
                           newContent = arguments[1];
                           contentOnly = true;
                       }
 
                       if (newContent !== null) {
                           contentPromise =
-                              this.inherited('set',arguments,
-                                             ['content',newContent])
+                              this.inherited("set",arguments,
+                                             ["content",newContent])
                               .then(function() {
-                                  query('a', self.domNode)
+                                  query("a", self.domNode)
                                       .forEach(self.interceptClick);
                                   self.show_main_div();
                               });

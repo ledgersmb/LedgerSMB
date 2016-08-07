@@ -1,10 +1,10 @@
 define([
-    'dijit/form/FilteringSelect',
-    'dojo/_base/declare',
-    'dojo/aspect',
-    'dojo/topic',
-    'dojo/when',
-    'lsmb/parts/PartRestStore'
+    "dijit/form/FilteringSelect",
+    "dojo/_base/declare",
+    "dojo/aspect",
+    "dojo/topic",
+    "dojo/when",
+    "lsmb/parts/PartRestStore"
     ], function(
       Select,
         declare,
@@ -13,13 +13,13 @@ define([
         when,
         store
       ){
-        var mySelect = new declare('lsmb/parts/PartSelector',[Select],{
+        var mySelect = new declare("lsmb/parts/PartSelector",[Select],{
             store:  store,
             queryExpr: "*${0}*",
-            style: 'width: 15ex',
-            highlightMatch: 'all',
-            searchAttr: 'partnumber',
-            labelAttr: 'label',
+            style: "width: 15ex",
+            highlightMatch: "all",
+            searchAttr: "partnumber",
+            labelAttr: "label",
             autoComplete: false,
             initialValue: null,
             channel: null,
@@ -39,16 +39,16 @@ define([
                         topic.subscribe(
                             this.channel,
                             function(selected) {
-                                self.set('value',selected[self.searchAttr]);
+                                self.set("value",selected[self.searchAttr]);
                             }));
-                    this.on('change', function(newValue) {
+                    this.on("change", function(newValue) {
                         topic.publish(self.channel, self.item);
                     });
                 }
             }
         });
 
-        aspect.around(mySelect, '_announceOption', function(orig) {
+        aspect.around(mySelect, "_announceOption", function(orig) {
             return function (node) {
                 var savedSearchAttr = this.searchAttr;
                 this.searchAttr = this.labelAttr;

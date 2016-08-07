@@ -1,21 +1,21 @@
-define(['dojo/_base/declare',
-        'dojo/dom',
-        'dojo/dom-style',
-        'dojo/on',
-        'dijit/_WidgetBase'],
+define(["dojo/_base/declare",
+        "dojo/dom",
+        "dojo/dom-style",
+        "dojo/on",
+        "dijit/_WidgetBase"],
        function(declare, dom, style, on, _WidgetBase) {
-           return declare('lsmb/MaximizeMinimize', [_WidgetBase], {
-               state: 'min',
+           return declare("lsmb/MaximizeMinimize", [_WidgetBase], {
+               state: "min",
                stateData: {
                    "max": {
-                       nextState: 'min',
-                       imgURL: 'payments/img/up.gif',
-                       display: 'block'
+                       nextState: "min",
+                       imgURL: "payments/img/up.gif",
+                       display: "block"
                    },
                    "min": {
-                       nextState: 'max',
-                       imgURL: 'payments/img/down.gif',
-                       display: 'none'
+                       nextState: "max",
+                       imgURL: "payments/img/down.gif",
+                       display: "none"
                    }
                },
                mmNodeId: null,
@@ -24,7 +24,7 @@ define(['dojo/_base/declare',
                    this.domNode.src = nextStateData.imgURL;
                    this.state = state;
                    style.set(dom.byId(this.mmNodeId),
-                             'display',
+                             "display",
                              nextStateData.display);
                },
                toggle: function() {
@@ -36,7 +36,7 @@ define(['dojo/_base/declare',
                    this.inherited(arguments);
 
                    this.own(
-                       on(domNode, 'click', function(){self.toggle();})
+                       on(domNode, "click", function(){self.toggle();})
                    );
                    this.setState(this.state);
                }

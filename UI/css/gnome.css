@@ -5,6 +5,7 @@ Icons: http://download.gnome.org/sources/gnome-icon-theme
 Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo.it>; Josef Vyba­ral <cornelius@vybiral.info>; Hylke Bons <h.bons@student.rug.nl>; Ricardo Gonzalez <rick@jinlabs.com>; Lapo Calamandrei <calamandrei@gmail.com>; Rodney Dawes <dobey@novell.com>; Luca Ferretti <elle.uca@libero.it>; Tuomas Kuosmanen <tigert@gimp.org>; Andreas Nilsson <nisses.mail@home.se>; Jakub Steiner <jimmac@novell.com>
 This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.
 */
+@import url(system/global.css);
 
 /* general stuff */
 A:link { text-decoration: none; }
@@ -32,12 +33,12 @@ body {
 
 ul#top_menu {
  list-style-type:none;
- padding: 0px;
+ padding: 0;
 }
 
 ul.submenu {
  list-style-type:none;
- padding: 0px;
+ padding: 0;
  margin-top: 4px;
  margin-bottom: 4px;
  border: 1px solid #000;
@@ -216,21 +217,21 @@ body.admin {
 
 .menuOut a {
   cursor: pointer;
-  margin: 0px;
+  margin: 0;
   background-color: #eeeeee;
   font-size: 11px;
   color: #000084;
-  border: 0px solid #000000;
-  padding: 0px;
+  border: 0 solid #000000;
+  padding: 0;
   text-align: left;
 }
 
 .menuOver a {
-  margin: 0px;
+  margin: 0;
   background-color: transparent;
   font-size: 11px;
   color: #ffffff;
-  padding: 0px;
+  padding: 0;
   text-align: left;
 }
 
@@ -360,10 +361,10 @@ tr.warning {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {
@@ -376,10 +377,10 @@ span.indicator {
 /* ajax-specific styling */
 
 div.autocomplete {
-  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0; padding:0;
 }
 div.autocomplete ul {
-  list-style-type:none; margin:0px; padding:0px;
+  list-style-type:none; margin:0; padding:0;
 }
 div.autocomplete ul li.selected { background-color: #ccc;}
 div.autocomplete ul li {
