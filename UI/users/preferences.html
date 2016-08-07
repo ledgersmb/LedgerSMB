@@ -11,9 +11,20 @@
                name = "company"
                type = "hidden"
                value = user.company
-} ?>
+};
 
-<div data-dojo-type='lsmb/users/ChangePassword'></div>
+password_strings = 'title:' _ text("Change Password") _
+                   "old password:" _ text("Old Password") _
+                   "new password:" _ text("New password") _
+                   "verify:" _ text("Verify") _
+                   "change:" _ text("Change Password") _
+                   'no-oldpw:' _ text("No Old Password") _
+                   "strength:" _    text("Strength");
+?>
+<div>
+    <div data-dojo-type="dijit/layout/TabContainer" style="width: 100%; height: 500px;">
+        <div data-dojo-type="dijit/layout/ContentPane" title="Preferences"
+         data-dojo-props="selected:false">
  <form data-dojo-type="lsmb/Form" method="post" id="prefs" name="prefs" action="user.pl">
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for ')?><?lsmb user.login ?></th></tr>
@@ -32,47 +43,6 @@
         <tr valign="top">
           <td>
             <table>
-              <tbody>
-  <tr><th class="listtop" colspan="2"><?lsmb text('Change Password') ?></th></tr>
-              <tr>
-                <th align="right"><?lsmb text('Old Password') ?></th>
-                <td><?lsmb PROCESS input element_data = {
-                           type = "password"
-                           name = "old_password"
-                           size = 10
-                           required = 1
-                           value="" } ?></td>
-              </tr>
-              <tr>
-                <th align="right"><?lsmb text('Password') ?></th>
-                <td><?lsmb PROCESS input element_data = {
-                           type = "password"
-                           name = "new_password"
-                           size = 10
-                           required = 1
-                           value="" } ?></td>
-              </tr>
-              <tr>
-                <th align="right"><?lsmb text('Confirm') ?></th>
-                <td><?lsmb PROCESS input element_data = {
-                           type = "password"
-                           name = "confirm_password"
-                           required = 1
-                           size = 10 } ?></td>
-              </tr>
-  <tr>
-    <td colspan="2">
-      <button id="pwchange"
-              data-dojo-type="dijit/form/Button">
-        <span><?lsmb text('Change Password') ?></span>
-        <script type="dojo/on" data-dojo-event="click">
-          change_pw();
-        </script>
-      </button>
-      <script type="text/javascript" src="users/preferences.js"></script>
-    </td>
-  </tr>
-              </tbody>
               <tbody>
 
   <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
@@ -153,5 +123,12 @@
        value = "save_preferences"
        text = text('Save') } ?>
   </form>
+        </div>
+        <div data-dojo-type="dijit/layout/ContentPane" title="Password" data-dojo-props="selected:true">
+          <div data-dojo-type='lsmb/users/ChangePassword'
+               data-dojo-properties="lstrings:<?lsmb password_strings ?>"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

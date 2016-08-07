@@ -3,6 +3,7 @@
 td.money {
    text-align: right;
 }
+
 /* general stuff */
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
@@ -11,6 +12,12 @@ A:hover {
   background-color: transparent;
   text-decoration: underline;
 }
+
+#pwfeedback.success { background-color: lightgreen; }
+#pwfeedback.failure { background-color: pink; }
+#pw-strength.weak { background-color: pink; }
+#pw-strength.good { background-color: yellow; }
+#pw-strength.strong { background-color: lightgreen; }
 
 body {
   font-family: Arial, Verdana, Helvetica, sans-serif;

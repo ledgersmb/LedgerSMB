@@ -6,25 +6,27 @@ define(['lsmb/TabularForm',
          'dijit/layout/ContentPane',
          'dijit/registry',
          'dojo/on',
+         'dijit/form/TextBox',
+         'dijit/form/Button',
          'dijit/_Container'],
        function(tabform, declare, _widgetbase, _templatemixin, 
-                _widget_parser, cp, registry, on, _container) {
+                _widget_parser, cp, registry, on, textbox, button, _container) {
              return declare ('lsmb/users/ChangePassword', 
                              [_widgetbase, _templatemixin, _widget_parser],
                  {
                     templateString : '\
   <div>\
   <div id="pwtitle" width="100%" class="listheading"></div> \
-  <div id="pwfeedback" class="lsmb-feedback" data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="feedback">&nbsp;</div> \
+  <div id="pwfeedback" data-dojo-type="dijit/layout/ContentPane" data-dojo-attach-point="feedback">&nbsp;</div> \
   <div data-dojo-type="lsmb/TabularForm" id="pwcontainer" data-dojo-props="cols:1"> \
     <div class="input-line"> \
       <input id="old-pw" data-dojo-type="dijit/form/TextBox" type="password" pwType="old" data-dojo-attach-point="oldpw" /> \
     </div><div class="input-line"> \
       <div id="new-pw" data-dojo-type="dijit/form/TextBox" type="password" pwType="new" data-dojo-attach-point="newpw"></div> \
     </div><div class="input-line" id="pw-strength-container"> \
-        <div id="pw-strength" data-dojo-type="dijit/layout/ContentPane"><div id="pws-indicator" class="">0</div></div>\
+        <div id="pw-strength" data-dojo-type="dijit/layout/ContentPane">0</div>\
     </div><div class="input-line"> \
-      <div id="verify-pw" data-dojo-type="dijit/form/ValidationTextBox" type="password" pwType="verify" data-dojo-attach-point="verified"></div> \
+      <div id="verify-pw" data-dojo-type="dijit/form/TextBox" type="password" pwType="verify" data-dojo-attach-point="verified"></div> \
     </div><div class="input-line"> \
       <button data-dojo-type="dijit/form/Button" id="pw-change" data-dojo-attach-point="submitbutton"></button> \
     </div><div class="input-line"> \
@@ -92,16 +94,16 @@ define(['lsmb/TabularForm',
                    },
                    setStrengthClass: function() {
                         var score = this.scorePassword();
-                        var bgclass;
+                        var bgclass='';
                         if (score > 80)
                             bgclass = "strong";
                         else if (score > 60)
                             bgclass = "good";
                         else if (score >= 30)
                             bgclass = "weak";
-                        var elem = document.getElementById('pws-indicator');
-                        elem.class = bgclass;
-                        elem.innerHTML = score;
+                        var elem = registry.byId('pw-strength');
+                        elem.set('class', bgclass);
+                        elem.set('innerHTML', score);
 
                   },
                   submit_form: function() {
