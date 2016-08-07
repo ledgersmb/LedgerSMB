@@ -58,6 +58,16 @@ Released 2014-09-15
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
 * Fixed starman on debian with latest fixes (Chris T)
+* Fixed strange error at bottom of invoice screen on Starman (Chris T)
+* Fixed update of department id/control codes (Chris T, #1220)
+* Fixed pricematrix rewriting prices of posted invoices (Chris T, #1954)
+* Contacts with create contact permissions now can edit too (Chris T, #1255)
+* Fixed update on single payment interface resets paymnt amt (Erik H, #1916)
+* Fixed purchase history not grabbing correct paid status (Chris T, #2000)
+* Fixed Gifi PNL/Balance Sheet not displaying properly (Erik H, #1996)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.31
 * Fixed user with contact all privileges can't create contacts (Chris T #1219)
