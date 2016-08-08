@@ -794,7 +794,7 @@ sub post_invoice {
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
         $form->{description},   $form->{transdate},     $invamount,
-        $invnetamount,          
+        $invnetamount,
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
