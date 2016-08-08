@@ -16,9 +16,9 @@ my %english = (
   101 => 'One Hundred One',
   166 => 'One Hundred Sixty Six',
  1100 => 'One Thousand One Hundred',
- 1455 => 'One Thousand One Hundred and Fifty Five'
+ 1455 => 'One Thousand Four Hundred and Fifty Five'
 );
 
 my $en = LedgerSMB::Num2text->new('en');
 $en->init;
-is($en->num2text($_) , $english{$_}, "$_ -> $english{$_}, Plain") for keys %english;
+is($en->num2text($_, 1) , $english{$_}, "$_ -> $english{$_}, Plain") for keys %english;
