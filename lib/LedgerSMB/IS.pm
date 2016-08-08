@@ -1406,7 +1406,6 @@ sub post_invoice {
                amount = ?,
                netamount = ?,
                paid = ?,
-               datepaid = ?,
                duedate = ?,
                invoice = '1',
                shippingpoint = ?,
@@ -1434,7 +1433,7 @@ sub post_invoice {
         $form->{transdate} || 'now',
         $form->{customer_id},   $invamount,
         $invnetamount,          $form->{paid},
-        $form->{datepaid} || 'now',      $form->{duedate} || 'now',
+        $form->{duedate} || 'now',
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},
@@ -1492,7 +1491,7 @@ sub retrieve_invoice {
         #HV TODO drop entity_id from ar
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
-                      a.transdate, a.paid,
+                      a.transdate, 
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,

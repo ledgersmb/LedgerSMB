@@ -2286,7 +2286,7 @@ If $form->{id} is not set, check $form->{"$form->{vc}_id"}.  If neither is set,
 use $form->lastname_used to populate the details.  If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
 taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
-oldinvtotal, oldtotalpaid, employee_id, employee, language_code, ponumber,
+oldinvtotal, employee_id, employee, language_code, ponumber,
 reverse, printed, emailed, queued, recurring, exchangerate, and acc_trans
 attributes of $form with details about the transaction $form->{id}.  All of
 these attributes, save for acc_trans, are scalar; $form->{acc_trans} refers to
@@ -2394,10 +2394,10 @@ sub create_links {
         $query = qq|
             SELECT a.invnumber, a.transdate,
                 a.entity_credit_account AS entity_id,
-                a.datepaid, a.duedate, a.ordnumber,
+                a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-                a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
+                a.amount AS oldinvtotal, 
                 a.person_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
