@@ -11,12 +11,12 @@ my %english = (
    15 => 'Fifteen',
    30 => 'Thirty',
    39 => 'Thirty Nine',
-   48 => 'Fourty Eight',
+   48 => 'Forty Eight',
    57 => 'Fifty Seven',
   101 => 'One Hundred One',
   166 => 'One Hundred Sixty Six',
  1100 => 'One Thousand One Hundred',
- 1455 => 'One Thousand Four Hundred and Fifty Five'
+ 1455 => 'One Thousand Four Hundred Fifty Five'
 );
 
 my $en = LedgerSMB::Num2text->new('en');
