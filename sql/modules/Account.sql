@@ -721,16 +721,17 @@ ha(heading) AS (
 eca(account_id) AS (
     SELECT DISTINCT discount_account_id
       FROM entity_credit_account
-    UNION ALL
+    UNION
     SELECT DISTINCT ar_ap_account_id
       FROM entity_credit_account
-    UNION ALL
+    UNION
     SELECT DISTINCT cash_account_id
       FROM entity_credit_account
 ),
 ta(account_id) AS (
     SELECT chart_id
       FROM eca_tax
+  GROUP BY 1
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
        CASE WHEN sum(ac.amount) < 0 THEN sum(ac.amount) * -1
