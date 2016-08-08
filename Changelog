@@ -3,6 +3,9 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.33
+* Fixed issue with COA overview and tax accounts (Chris T, #2030)
+
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
 * Fixed starman on debian with latest fixes (Chris T)
