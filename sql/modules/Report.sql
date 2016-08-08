@@ -433,7 +433,7 @@ BEGIN
 
 FOR retval IN
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount, a.netamount, a.netamount - a.amount as tax,
+       a.invnumber, a.amount, a.netamount, a.amount - a.netamount as tax,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}' as business_units -- TODO
