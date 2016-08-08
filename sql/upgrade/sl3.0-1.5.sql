@@ -606,11 +606,19 @@ INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, ente
         FROM (
           SELECT chart_id,
                  cleared,fx_transaction,approved,transdate,pg_temp.last_day(transdate) as end_date,
-                 coalesce(cleared,transdate) as updated,
-                 CASE WHEN cleared IS NOT NULL THEN amount
-                 ELSE 0
-                 END AS amount
+                 coalesce(cleared,transdate) as updated, amount
           FROM sl30.acc_trans
+          WHERE (
+            cleared IS NOT NULL
+            AND chart_id IN (
+              SELECT DISTINCT chart_id FROM sl30.acc_trans ac
+              JOIN sl30.chart c ON ac.chart_id = c.id
+              WHERE ac.cleared IS NOT NULL
+              AND c.link ~ 'paid'
+            ) OR transdate > (
+              SELECT MAX(cleared) FROM sl30.acc_trans
+            )
+          )
         ) a
         JOIN sl30.chart s ON chart_id=s.id
         JOIN reconciliation__account_list() coa ON coa.accno=s.accno
@@ -621,23 +629,25 @@ INSERT INTO cr_report(chart_id, their_total,  submitted, end_date, updated, ente
 -- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
 -- Temp table will be dropped automatically at the end of the transaction.
 WITH cr_entry AS (
-    SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
     FROM sl30.acc_trans a
     JOIN sl30.chart s ON chart_id=s.id
     JOIN reconciliation__account_list() coa ON coa.accno=s.accno
-    JOIN public.cr_report cr ON s.id = a.chart_id
-    AND  date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
-    AND (date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE OR a.cleared IS NULL)
-    LEFT JOIN (
+    JOIN public.cr_report cr
+    ON s.id = a.chart_id
+    AND date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
+    AND date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE
+    AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM sl30.acc_trans))
+    JOIN (
         WITH types AS ( SELECT id,'AP' AS type FROM sl30.ap
                   UNION SELECT id,'AR'         FROM sl30.ar
                   UNION SELECT id,'GL'         FROM sl30.gl)
         SELECT DISTINCT ac.trans_id, types.type
         FROM sl30.acc_trans ac
-        LEFT JOIN types ON ac.trans_id = types.id
+        JOIN types ON ac.trans_id = types.id
         ORDER BY ac.trans_id
     ) n ON n.trans_id = a.trans_id
-    ORDER BY cr.id,n.type,a.source ASC NULLS LAST,a.amount
+    ORDER BY post_date,cr.id,n.type,a.source ASC NULLS LAST,a.amount
 )
 SELECT reconciliation__add_entry(id, source, type, cleared, amount) AS id, cr_entry.post_date, cr_entry.lsmb_entry_id
 INTO TEMPORARY _cr_report_line
@@ -645,14 +655,25 @@ FROM cr_entry;
 
 UPDATE cr_report_line cr SET post_date = cr1.post_date,
                              ledger_id = cr1.lsmb_entry_id,
-                             cleared = pg_temp.is_date(clear_time)
+                             cleared = pg_temp.is_date(clear_time),
+                             insert_time = date_trunc('second',cr1.post_date),
+                             our_balance = their_balance
 FROM (
   SELECT id,post_date,lsmb_entry_id
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
-UPDATE cr_report_line SET insert_time = post_date,
-                          our_balance = their_balance;
+-- Patch for suspect clear dates
+-- The UI should reflect this
+-- Unsubmit the suspect report to allow easy edition
+UPDATE cr_report SET submitted = false
+WHERE id IN (
+    SELECT DISTINCT report_id FROM cr_report_line
+    WHERE clear_time - post_date > 60
+);
+-- Approve valid reports.
+UPDATE cr_report SET approved = true
+WHERE submitted;
 
 -- Log out the Migrator
 DELETE FROM users
