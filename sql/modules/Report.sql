@@ -421,7 +421,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount, a.netamount, a.netamount - a.amount as tax,
+       a.invnumber, a.amount, a.netamount, a.amount - a.netamount as tax,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
