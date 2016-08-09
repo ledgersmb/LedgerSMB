@@ -1,4 +1,5 @@
-\i sql/modules/Exempt_funcs.sql.inc;
+\i sql/modules/Blacklisted.sql.inc
+\copy blacklisted_funcs FROM 'sql/modules/BLACKLISTED';
 DO $$
 DECLARE f record;
 BEGIN
@@ -13,8 +14,8 @@ BEGIN
         WHERE pg_catalog.pg_function_is_visible(p.oid)
               AND n.nspname <> 'pg_catalog'
               AND n.nspname <> 'information_schema'
-              AND p.proname NOT IN (
-                  SELECT funcname from pg_temp.test_exempt_funcs
+              AND p.proname IN (
+                  SELECT funcname from pg_temp.blacklisted_funcs
               )
         ORDER BY 1, 2, 4
     )
