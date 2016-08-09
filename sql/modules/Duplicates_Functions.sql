@@ -1,5 +1,5 @@
 \i sql/modules/Blacklisted.sql.inc
-\copy blacklisted_funcs FROM 'sql/modules/BLACKLISTED';
+\copy blacklisted_funcs FROM 'sql/modules/BLACKLIST';
 DO $$
 DECLARE f record;
 BEGIN
@@ -15,7 +15,7 @@ BEGIN
               AND n.nspname <> 'pg_catalog'
               AND n.nspname <> 'information_schema'
               AND p.proname IN (
-                  SELECT funcname from pg_temp.blacklisted_funcs
+                  SELECT funcname from blacklisted_funcs
               )
         ORDER BY 1, 2, 4
     )
