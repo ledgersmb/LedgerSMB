@@ -473,6 +473,7 @@ sub display_payments {
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
             $contact_to_pay += $invoice->[6];
+            $invoice->[7] = $invoice->[6]->to_db;
 
             my $fld = "payment_" . $invoice->[0];
             $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
