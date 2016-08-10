@@ -20,12 +20,5 @@
 		}; END ?>
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
-<?lsmb IF ENVARS.QUERY_STRING.defined;
-    text('If you would like to access this report again, please try this URL')
-?>:<br />
-<?lsmb url = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
-           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ form.company ?>
-<a href="<?lsmb url ?>"><?lsmb url ?></a>
-<?lsmb END ?>
 </body>
 </html>
