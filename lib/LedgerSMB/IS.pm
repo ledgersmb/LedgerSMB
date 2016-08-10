@@ -831,13 +831,6 @@ sub post_invoice {
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
      my $return_cid = 0;
-     if ($LedgerSMB::Sysconfig::return_accno and !$form->{void}){
-         my $rquery = "SELECT id FROM account WHERE accno = ?";
-         my $sth = $dbh->prepare($rquery);
-         $sth->execute($LedgerSMB::Sysconfig::return_accno);
-         ($return_cid) = $sth->fetchrow_array();
-         $sth->finish;
-     }
 
     my $i;
     my $item;

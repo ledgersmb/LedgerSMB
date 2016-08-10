@@ -178,6 +178,7 @@ Help on using this Makefile
   The following make targets are available
     - help         : This help text
     - dojo         : Builds the minified dojo blob we serve to clients
+    - blacklist    : Builds sql blacklist (required after adding functions)
     - submodules   : Initialises and updates our git submodules
     - test         : Runs tests
     - dist         : builds the release distribution archive
@@ -264,6 +265,11 @@ ifeq ($(wildcard $(ARCHIVE)),)
 	rm $(FLAG)
 endif
 
+# make blacklist
+blacklist:
+	perl tools/makeblacklist.pl
+
+# make pod
 #make submodules
 #   Initialises and updates our git submodules
 submodules:
@@ -275,7 +281,6 @@ dist: dojo
 	test -d $(DIST_DIR) || mkdir -p $(DIST_DIR)
 	find . | grep -vE '^.$$|/\.git|^\./UI/js-src/(dojo|dijit|util)/|\.uncompressed\.js$$|.js.map$$' | tar czf $(DIST_DIR)/ledgersmb-$(DIST_VER).tar.gz --transform 's,^./,ledgersmb/,' --no-recursion --files-from -
 
-# make pod
 # Genarate displayable documentation
 pod:
 	rm -rf UI/pod
