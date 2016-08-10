@@ -466,6 +466,7 @@ sub display_payments {
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
             $contact_to_pay += $invoice->[6];
+            $invoice->[7] = $invoice->[6]->to_db;
 
             my $fld = "payment_" . $invoice->[0];
             $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
@@ -477,10 +478,8 @@ sub display_payments {
 
             if ('display_payments' eq $request->{action}) {
                 $payment->{$fld} = $invoice->[6];
-                warn "initializing\n";
             }
             else {
-                warn "$fld: $payment->{$fld}\n";
                 $payment->{$fld} //= 0;
                 $payment->{$fld} =
                     LedgerSMB::PGNumber->from_input($payment->{"$fld"})
@@ -492,7 +491,10 @@ sub display_payments {
         }
             $_->{contact_total} = $contact_total;
             $_->{to_pay} = $contact_to_pay;
-            $payment->{grand_total} += $contact_total;
+        $payment->{grand_total} += $contact_total
+            if ($payment->{"id_$_->{contact_id}"}
+                or (defined $payment->{"paid_$_->{contact_id}"}
+                    and $payment->{"paid_$_->{contact_id}"} eq 'some'));
 
             my ($check_all) = LedgerSMB::Setting->get('check_payments');
             if ($payment->{account_class} == 1 and $check_all){
