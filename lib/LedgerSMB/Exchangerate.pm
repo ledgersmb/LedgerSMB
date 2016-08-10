@@ -12,21 +12,13 @@ funds, and projects.
 =cut
 
 package LedgerSMB::Exchangerate;
+
 use Moose;
+use LedgerSMB::MooseTypes;
 use LedgerSMB::PGObject;
 with 'LedgerSMB::PGObject';
 
-use Moose::Util::TypeConstraints;
-use LedgerSMB::PGNumber;
-use LedgerSMB::PGDate;
 
-coerce 'LedgerSMB::PGNumber',
-  from 'Num',
-    via { LedgerSMB::PGNumber->from_input($_) };
-
-coerce 'LedgerSMB::PGDate',
-  from 'Str',
-    via { LedgerSMB::PGDate->from_input($_) };
 
 =head1 PROPERTIES
 
@@ -57,7 +49,7 @@ Required. This is the first date that the rate is applicable (inclusive).
 
 =cut
 
-has 'valid_from' => (is => 'ro', isa => 'LedgerSMB::PGDate',
+has 'valid_from' => (is => 'ro', isa => 'LedgerSMB::Moose::Date',
    required => '1', coerce => 1);
 
 
@@ -82,7 +74,7 @@ Rate as foreign currency units per base currency unit.
 
 =cut
 
-has 'rate' => (is => 'rw', isa => 'LedgerSMB::PGNumber',
+has 'rate' => (is => 'rw', isa => 'LedgerSMB::Moose::Number',
                  coerce => 1);
 
 =back
