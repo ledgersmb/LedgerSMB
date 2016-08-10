@@ -886,6 +886,14 @@ SELECT lsmb__grant_perms('yearend_run', obj, ptype)
 SELECT lsmb__grant_perms('yearend_run', 'account_checkpoint_id_seq','ALL');
 SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
 
+SELECT lsmb__create_role('yearend_reopen');
+SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
+  FROM unnest(array['account_checkpoint'::text]) obj,
+       unnest(array['DELETE'::text]) ptype;
+SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
+  FROM unnest(array['yearend'::text]) obj,
+       unnest(array['UPDATE'::text]) ptype;
+
 SELECT lsmb__create_role('batch_list');
 SELECT lsmb__grant_role('batch_list', 'gl_reports');
 SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
