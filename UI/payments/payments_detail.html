@@ -331,7 +331,7 @@
                                                 </tr>
                                                 <?lsmb icount = 0 ?>
                                                 <?lsmb FOREACH i = r.invoices ?>
-                                                        <?lsmb # NEXT IF i.6 + 0 == 0 ?>
+                                                        <?lsmb # NEXT IF nothing to pay ?>
                                                         <?lsmb IF i.7 ?>
                                                                 <?lsmb icount = icount + 1 ?>
                                                                 <tr>
