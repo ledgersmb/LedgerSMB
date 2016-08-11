@@ -181,6 +181,7 @@ Help on using this Makefile
     - blacklist    : Builds sql blacklist (required after adding functions)
     - submodules   : Initialises and updates our git submodules
     - test         : Runs tests
+    - devtest      : Runs all tests including development/author tests
     - dist         : builds the release distribution archive
     - dependencies : Installs all dependencies including cpan ones. (except features)
                      Preferring system perl modules over cpan ones
@@ -412,6 +413,10 @@ postgres_user:
 
 test:
 	prove -Ilib t/*.t
+
+devtest:
+	prove -Ilib t/*.t
+	prove -Ilib xt/*.t
 
 ########
 # todo list

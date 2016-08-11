@@ -62,7 +62,7 @@ for my $directory (qw(
 ))
 {
     my ( $executor, @features ) =
-        Test::BDD::Cucumber::Loader->load('t/66-cucumber/' . $directory);
+        Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
     die "No features found" unless @features;
     $executor->add_extensions(@extensions);
     Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )
