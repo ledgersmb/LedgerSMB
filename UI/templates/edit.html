@@ -1,33 +1,33 @@
 <?lsmb INCLUDE "ui-header.html";
  PROCESS "elements.html" ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb template.template_name ?>.<?lsmb template.format ?><?lsmb
+<div class="listtop"><?lsmb to_edit.template_name ?>.<?lsmb to_edit.format ?><?lsmb
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
   <?lsmb PROCESS textarea element_data = {
-			class="template-body " _ template.format _ " editor" 
+			class="template-body " _ to_edit.format _ " editor" 
 			cols="80"
 			name="template"
 			rows="30" 
-		 text=UNESCAPE(content) } ?>
+		 text=UNESCAPE(to_edit.content) } ?>
   <br/>
 <?lsmb 
 PROCESS input element_data = {
     type = 'hidden'
     name = 'template_name'
-   value = template.template_name
+   value = to_edit.template_name
 };
 PROCESS input element_data = {
     type = 'hidden'
     name = "format"
-   value = template.format
+   value = to_edit.format
 };
 PROCESS select element_data = {
            name = 'language_code'
-        options = template.languages
+        options = to_edit.languages
   default_blank = 1
- default_values = [template.language_code]
+ default_values = [ to_edit.language_code]
       text_attr = 'description'
      value_attr = 'code'
 };
@@ -36,12 +36,6 @@ PROCESS button element_data = {
     name = 'action'
    value = 'save'
     text = text('Save')
-}; 
-PROCESS button element_data = {
-    type = 'submit'
-    name = 'action'
-   value = 'get'
-    text = text('Retrieve')
-} ?>
+};  ?>
 </body>
 </html>
