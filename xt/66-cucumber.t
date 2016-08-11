@@ -5,7 +5,6 @@ use warnings;
 use lib;
 use File::Find;
 
-
 use File::Spec;
 use Path::Class qw(file dir);
 use Module::Runtime qw(use_module module_notional_filename);
@@ -44,6 +43,7 @@ for my $ext (@extensions) {
     push @steps_directories, @steps;
 }
 
+
 $_->pre_execute for @extensions;
 
 my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
@@ -62,14 +62,14 @@ for my $directory (qw(
       11-ar
 ))
 {
-my ( $executor, @features ) =
+    my ( $executor, @features ) =
         Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
     die "No features found" unless @features;
 
-$executor->add_extensions(@extensions);
+    $executor->add_extensions(@extensions);
 
-Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )
-    for (@steps_directories);
+    Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )
+        for (@steps_directories);
 
     $executor->execute( $_, $harness, $tagspec ) for @features;
 }
