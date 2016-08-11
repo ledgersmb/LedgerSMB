@@ -413,6 +413,10 @@ postgres_user:
 test:
 	prove -Ilib t/*.t
 
+devtest:
+	prove -Ilib t/*.t
+	prove -Ilib xt/*.t
+
 ########
 # todo list
 ########
