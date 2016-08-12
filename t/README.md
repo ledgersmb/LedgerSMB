@@ -45,7 +45,7 @@ scripts are added, they must be listed in this script as well.
 ## 62-api.t
 
 Runs on the database non-destructively, by rolling back commits.
-Uses request hashes defined in t/data/62-request-data.
+Uses request hashes defined in xt/data/62-request-data.
 
 
 # ENVIRONMENT VARIABLES
