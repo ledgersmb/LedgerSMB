@@ -1,5 +1,5 @@
 INSERT INTO menu_node(id, parent, position, label)
-values (29, 158, 18, 'Payment'), -- printPayment.html
+values (29, 156, 18, 'Payment'), -- printPayment.html
        (30, 172, 18, 'Check Base'), -- check_base.tex
        (31, 172, 19, 'Multiple Checks'), -- check_multiple.tex
        (32, 172, 20, 'Envelope'), -- envelope
