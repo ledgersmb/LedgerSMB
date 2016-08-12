@@ -38,7 +38,7 @@ if (defined $ENV{LSMB_TEST_DB}){
         plan skip_all => 'Skipping, LSMB_TEST_DB environment variable not set.';
 }
 
-@test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
+@test_request_data = do { 'xt/data/62-request-data' } ; # Import test case hashes
 
 for (qw(        drafts     login      payment      
                 menu       contact
