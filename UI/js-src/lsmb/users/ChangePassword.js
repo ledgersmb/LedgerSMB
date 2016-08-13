@@ -16,7 +16,7 @@ define(["lsmb/TabularForm",
                 template, request, _container) {
              return declare("lsmb/users/ChangePassword",
                              [_widgetbase, _templatemixin, _widget_parser],
-                 { 
+                 {
                     templateString: template,
                    _lstrings: {
                             "title":        "Change Password",
@@ -124,7 +124,7 @@ define(["lsmb/TabularForm",
                             }
                           }
                       });
-          }, 
+          },
           setFeedback: function(success, message) {
                 if (success)
                      this.feedback.set("class", "success");
