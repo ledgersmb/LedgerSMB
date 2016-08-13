@@ -322,7 +322,7 @@ sub display_form
 		$a{approve} = 1;
 		$a{edit_and_save} = 1;
 		$a{update} = 1;
-		if (grep /__draft_edit$/, @{$form->{_roles}}){
+		if (grep /__draft_modify$/, @{$form->{_roles}}){
 		    $button{edit_and_save} = { 
 			ndx   => 4, 
 			key   => 'O', 
