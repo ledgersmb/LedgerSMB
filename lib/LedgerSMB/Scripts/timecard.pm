@@ -148,6 +148,10 @@ sub save {
     $request->{jctype} ||= 1;
     $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
     $request->{checkedin} = $request->{transdate};
+    die $request->{_locale}->text('Please submit a start/end time or a qty')
+        unless defined $request->{qty} 
+               or ($request->{checkedin} and $request->{checkedout});
+    
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
