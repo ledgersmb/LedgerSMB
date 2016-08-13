@@ -1415,31 +1415,13 @@ sub db_init {
 
     LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
 
-    # Roles tracking
-    $self->{_roles} = [];
-    my $query = "select rolname from pg_roles
-               where pg_has_role(rolname, 'USAGE')
-                     and rolname like
-                          coalesce((select value from defaults
-                                     where setting_key = 'role_prefix'),
-                                   'lsmb_' || current_database() || '__') || '%'";
-    my $sth = $dbh->prepare($query);
-    $sth->execute();
-    while (my @roles = $sth->fetchrow_array){
-        push @{$self->{_roles}}, $roles[0];
-    }
-
-    $sth = $self->{dbh}->prepare("
+    my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
-    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
     $LedgerSMB::App_State::DBName = $dbname;
-    # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
-    # -CT
 
     $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
@@ -1462,6 +1444,19 @@ sub db_init {
     $logger->trace("end");
 }
 
+=item $form->is_allowed_role($rolelist)
+
+Returns true if any roles are allowed, false otherwise.
+
+=cut
+
+sub is_allowed_role {
+    my ($self, $rolelist) = @_;
+    my $sth = $self->{dbh}->prepare('SELECT lsmb_is_allowed_role(?)');
+    $sth->execute($rolelist);
+    my ($access) = $sth->fetchrow_array;
+    return $access;
+}
 
 =item $form->dbquote($var);
 

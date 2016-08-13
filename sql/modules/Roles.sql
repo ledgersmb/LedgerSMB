@@ -40,6 +40,13 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION lsmb__is_allowed_role(in_rolelist text[])
+RETURNS BOOL LANGUAGE SQL AS
+$$
+select bool_and(pg_has_role(lsmb__role(r), 'USAGE'))
+  from unnest(in_rolelist) r;
+$$;
+
 CREATE OR REPLACE FUNCTION lsmb__grant_perms
 (in_role text, in_table text, in_perms text) RETURNS BOOL
 SECURITY INVOKER
