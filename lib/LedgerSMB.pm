@@ -471,7 +471,7 @@ sub call_procedure {
 sub is_allowed_role {
     my ($self, $args) = @_;
     my ($access) =  $self->call_procedure(
-         funcname => 'lsmb__is_allowed_role', args => [$args->{allowed_roles}]
+         procname => 'lsmb__is_allowed_role', args => [$args->{allowed_roles}]
     );
     return $access->{lsmb__is_allowed_role};
 }

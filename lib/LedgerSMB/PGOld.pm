@@ -111,7 +111,7 @@ none are.
 sub is_allowed_role {
     my ($self, $rolelist) = @_;
     my ($access) =  $self->call_procedure(
-         funcname => 'lsmb__is_allowed_role', args => [$rolelist]
+         procname => 'lsmb__is_allowed_role', args => [$rolelist]
     );
     return $access->{lsmb__is_allowed_role};
 }
