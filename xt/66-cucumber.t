@@ -57,6 +57,13 @@ my $tagspec = Test::BDD::Cucumber::Model::TagSpec->new(
     tags => [ not => 'wip' ],
     );
 
+use File::Find::Rule;
+
+my @dirs = sort File::Find::Rule->new
+    ->directory
+    ->maxdepth(1)
+    ->in('xt/66-cucumber');
+
 for my $directory (qw(
       01-basic
       11-ar
@@ -64,6 +71,15 @@ for my $directory (qw(
 {
     my ( $executor, @features ) =
         Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
+#for my $directory (@dirs)
+#{
+#    next if $directory !~ /xt\/66-cucumber\/\d{2}-.+$/;
+#    my @files = File::Find::Rule->file()->name('*.feature')->in($directory);
+#    next unless $#files;
+#    print STDERR "\nSub-directory: $directory\n";
+
+#    my ( $executor, @features ) =
+#        Test::BDD::Cucumber::Loader->load($directory);
     die "No features found" unless @features;
 
     $executor->add_extensions(@extensions);
