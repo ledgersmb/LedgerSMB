@@ -1452,8 +1452,8 @@ Returns true if any roles are allowed, false otherwise.
 
 sub is_allowed_role {
     my ($self, $rolelist) = @_;
-    my $sth = $self->{dbh}->prepare('SELECT lsmb_is_allowed_role(?)');
-    $sth->execute($rolelist);
+    my $sth = $self->{dbh}->prepare('SELECT lsmb__is_allowed_role(?)');
+    $sth->execute($rolelist) || die $DBI::errstr;
     my ($access) = $sth->fetchrow_array;
     return $access;
 }

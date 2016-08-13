@@ -965,12 +965,12 @@ sub form_footer {
                    ndx   => 3,
                    key   => 'O',
                    value => $locale->text('Post') };
-           if ($form->is_allowed_role(['draft_modify']){
+           if ($form->is_allowed_role(['draft_modify'])){
                $button{edit_and_save} = {
                    ndx   => 4,
                    key   => 'E',
                    value => $locale->text('Save Draft') };
-          }
+           }
            delete $button{post_as_new};
            delete $button{post};
         }
