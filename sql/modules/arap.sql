@@ -24,12 +24,19 @@ CREATE TYPE purchase_info AS (
     business_units text[]
 );
 
+DROP FUNCTION IF EXISTS ar_ap__transaction_search
+(in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
+ in_ordnumber text, in_ponumber text, in_source text, in_description text,
+ in_notes text, in_shipvia text, in_from_date date, in_to_date date,
+ in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
+ in_entity_class int);
+
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
  in_ordnumber text, in_ponumber text, in_source text, in_description text,
  in_notes text, in_shipvia text, in_from_date date, in_to_date date,
  in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
- in_entity_class int)
+ in_entity_class int, in_approved bool)
 RETURNS SETOF purchase_info AS
 $$
    SELECT gl.id, gl.invoice,
@@ -92,7 +99,8 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           AND (in_to_date IS NULL OR in_to_date >= gl.transdate)
           AND (in_on_hold IS NULL OR in_on_hold = gl.on_hold)
           AND (in_as_of IS NULL OR in_as_of >= ac.transdate)
-          AND gl.approved AND ac.approved
+          AND (in_approved is null 
+               OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount,
           gl.netamount, gl.curr, gl.datepaid, gl.duedate,
