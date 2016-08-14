@@ -189,7 +189,7 @@ sub add_vouchers {
             # incredibly bad form.
             # However, the code we are including is going to require it for now.
             # -- CT
-            require 'bin/bridge.pl';
+            require 'bin/bridge.pl'; ## no critic
             $form->{script} = $script;
             $form->{script} =~ s#^bin/##;
             lsmb_legacy::locale($locale);
