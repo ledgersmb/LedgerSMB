@@ -22,11 +22,15 @@ DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int);
 
+DROP FUNCTION IF EXISTS trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean);
 
 CREATE OR REPLACE FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
- in_all_accounts boolean)
+ in_all_accounts boolean, in_approved boolean)
 returns setof tb_row AS
 $$
 DECLARE
@@ -112,7 +116,10 @@ BEGIN
          JOIN (SELECT id, approved FROM ar UNION ALL
                SELECT id, approved FROM ap UNION ALL
                SELECT id, approved FROM gl) gl
-                   ON ac.approved and gl.approved and ac.trans_id = gl.id
+                   ON ac.trans_id = gl.id
+                     AND (in_approved is null
+                          OR (gl.approved = in_approved
+                             and (ac.approved OR in_approved is false)))
     LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
     LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
         WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval
@@ -174,7 +181,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
- in_all_accounts boolean) IS
+ in_all_accounts boolean, in_approved boolean) IS
 $$Returns a row for each account which has transactions or a starting or
 ending balance over the indicated period, except when in_all_accounts
 is true, in which case a record is returned for all accounts, even ones

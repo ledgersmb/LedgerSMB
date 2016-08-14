@@ -283,15 +283,27 @@ Full text search of description field of GL transaction
 
 has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
-=item approved
+=item is_approved string
 
-Unless false, only matches approved transactions.  When false, matches all
-transactions.  This is the one exception to the general rule that undef matches
-all.
+Y, N, All
 
 =cut
 
-has 'approved' => (is => 'rw', isa => 'Maybe[Bool]');
+has is_approved => (is => 'ro', isa => 'Str', required => 1);
+has approved => (is => 'ro', lazy => 1, builder => '_approved');
+
+my $_approval_map = {
+   Y => 1,
+   N => 0,
+  All => undef
+};
+
+sub _approved {
+    my $self = shift;
+    die 'Bad approval code: ' . $self->is_approved
+        unless exists $_approval_map->{$self->is_approved};
+    return $_approval_map->{$self->is_approved}
+}
 
 =item from_amount
 
@@ -337,6 +349,7 @@ sub run_report{
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);
+    $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__gl');
     for my $ref(@rows){
         if ($ref->{amount} < 0){
