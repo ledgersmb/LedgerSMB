@@ -294,7 +294,8 @@ FOR retval IN
                    OR (transdate >= in_from_date AND  in_to_date IS NULL)
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
-              AND (in_approved is false OR (g.approved AND ac.approved))
+              AND (in_approved is null OR 
+                     (in_approved = g.approved AND ac.approved is true))
               AND (in_from_amount IS NULL OR abs(ac.amount) >= in_from_amount)
               AND (in_to_amount IS NULL OR abs(ac.amount) <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
