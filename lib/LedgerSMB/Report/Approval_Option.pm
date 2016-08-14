@@ -1,9 +1,9 @@
-package LedgerSMB::Report::Approved_Option;
+package LedgerSMB::Report::Approval_Option;
 use Moose::Role;
 
 =head1 NAME
 
-LedgerSMB::Report::Approved_Option - Report interface for approval
+LedgerSMB::Report::Approval_Option - Report interface for approval
 
 =head1 SYNOPSIS
 
