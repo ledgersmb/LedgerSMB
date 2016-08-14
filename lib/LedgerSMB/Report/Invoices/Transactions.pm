@@ -183,6 +183,28 @@ invoices will be shown.
 has open => (is => 'ro', isa => 'Bool', required => 0);
 has closed => (is => 'ro', isa => 'Bool', required => 0);
 
+=item is_approved string
+
+Y, N, All
+
+=cut
+
+has is_approved => (is => 'ro', isa => 'Str', required => 1);
+has approved => (is => 'ro', lazy => 1, builder => '_approved');
+
+my $_approval_map = {
+   Y => 1,
+   N => 0,
+  All => undef
+};
+
+sub _approved {
+    my $self = shift;
+    die 'Bad approval code: ' . $self->is_approved
+        unless exists $_approval_map->{$self->is_approved};
+    return $_approval_map->{$self->is_approved}
+}
+
 
 =back
 
@@ -339,9 +361,11 @@ This runs the report and sets the $report->rows.
 
 =cut
 
+
 sub run_report {
     my $self = shift;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
+    warn $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){
         my $script;
