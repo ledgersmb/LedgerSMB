@@ -126,35 +126,40 @@
                              type="radio"
                              value="X"
                              checked = "checked"
-                             } ?>&nbsp;<?lsmb text('All') ?>
+                             } ?>&nbsp;<?lsmb text('All') ?></td>
+                      <td align="left">
                       <?lsmb PROCESS input element_data = {
                              name="category"
                              id="category-asset"
                              class="radio"
                              type="radio"
                              value="A"
-                             } ?>&nbsp;<?lsmb text('Asset') ?>
+                             } ?>&nbsp;<?lsmb text('Asset') ?></td>
+                      <td align="left">
                       <?lsmb PROCESS input element_data = {
                              name="category"
                              id="category-liability"
                              class="radio"
                              type="radio"
                              value="L"
-                             } ?>&nbsp;<?lsmb text('Liability') ?>
+                             } ?>&nbsp;<?lsmb text('Liability') ?></td>
+                      <td align="left">
                       <?lsmb PROCESS input element_data = {
                              name="category"
                              id="category-equity"
                              class="radio"
                              type="radio"
                              value="Q"
-                             } ?>&nbsp;<?lsmb text('Equity') ?>
+                             } ?>&nbsp;<?lsmb text('Equity') ?></td><td>
+                      <td align="left">
                       <?lsmb PROCESS input element_data = {
                              name="category"
                              id="category-income"
                              class="radio"
                              type="radio"
                              value="I"
-                             } ?>&nbsp;<?lsmb text('Income') ?>
+                             } ?>&nbsp;<?lsmb text('Income') ?></td><td>
+                      <td align="left">
                       <?lsmb PROCESS input element_data = {
                              name="category"
                              id="category-expense"
@@ -164,9 +169,25 @@
                              } ?>&nbsp;<?lsmb text('Expense') ?>
                     </td>
                   </tr>
+      <tr>
+        <td><?lsmb PROCESS input element_data = {
+                    name = 'is_approved'
+                    type = 'radio'
+                   value = 'Y' 
+                 checked = 'CHECKED'
+        }; ?>&nbsp;<?lsmb text('Approved'); ?></td><td>
+        <?lsmb PROCESS input element_data = {
+                    name = 'is_approved'
+                    type = 'radio'
+                   value = 'N' 
+        }; ?>&nbsp;<?lsmb text('Unpproved'); ?></td><td>
+        <?lsmb PROCESS input element_data = {
+                    name = 'is_approved'
+                    type = 'radio'
+                   value = 'All'
+        }; ?>&nbsp;<?lsmb text('All'); ?>
+      </tr>
 
-                  <tr>
-                    <table>
                       <tr>
                         <td nowrap><?lsmb PROCESS input element_data = {
                                           name="col_id"
