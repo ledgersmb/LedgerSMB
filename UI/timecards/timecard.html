@@ -102,9 +102,8 @@ END; ?>
 <tr><th><?lsmb text('Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
        name = 'qty'
-      value = qty
+      value = defined(qty) ? qty : 0
        type = text
-   required = 1
       class = 'qty'
        size = 16 } ?></td>
 </td>
