@@ -527,7 +527,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
-         WHERE in_entity_class = 2 
+         WHERE in_entity_class = 2
                and in_approved is null or (in_approved = approved)
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,

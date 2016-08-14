@@ -99,7 +99,7 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           AND (in_to_date IS NULL OR in_to_date >= gl.transdate)
           AND (in_on_hold IS NULL OR in_on_hold = gl.on_hold)
           AND (in_as_of IS NULL OR in_as_of >= ac.transdate)
-          AND (in_approved is null 
+          AND (in_approved is null
                OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount,
