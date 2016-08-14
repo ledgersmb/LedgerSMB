@@ -116,9 +116,9 @@ BEGIN
          JOIN (SELECT id, approved FROM ar UNION ALL
                SELECT id, approved FROM ap UNION ALL
                SELECT id, approved FROM gl) gl
-                   ON ac.trans_id = gl.id 
-                     AND (in_approved is null 
-                          OR (gl.approved = in_approved 
+                   ON ac.trans_id = gl.id
+                     AND (in_approved is null
+                          OR (gl.approved = in_approved
                              and (ac.approved OR in_approved is false)))
     LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
     LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
