@@ -26,7 +26,7 @@ searching for and reporting financial transactions.
 package LedgerSMB::Report::GL;
 use Moose;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
@@ -283,27 +283,6 @@ Full text search of description field of GL transaction
 
 has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
-=item is_approved string
-
-Y, N, All
-
-=cut
-
-has is_approved => (is => 'ro', isa => 'Str', required => 1);
-has approved => (is => 'ro', lazy => 1, builder => '_approved');
-
-my $_approval_map = {
-   Y => 1,
-   N => 0,
-  All => undef
-};
-
-sub _approved {
-    my $self = shift;
-    die 'Bad approval code: ' . $self->is_approved
-        unless exists $_approval_map->{$self->is_approved};
-    return $_approval_map->{$self->is_approved}
-}
 
 =item from_amount
 
