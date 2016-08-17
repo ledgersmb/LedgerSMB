@@ -1286,16 +1286,9 @@ sub update {
     # rather than the newly selected one in the form
     # check_name() sets $form->{vendor_id} or $form->{customer_id}
     # and updates $form->{oldvendor} or $form->{oldcustomer}
-
-    # After a draft is saved create_links has the side effect
-    # of overriding with the saved version.  So we have to skip
-    # in that case.
     #
-    # There are some caveats here, but I think they are more minor than
-    # the current status quo.  After a draft is saved, it is treated as semi-
-    # formalized and so default accounts don't change if you change the
-    # customer or vendor.
-    &create_links unless $form->{id};
+    # Removed the create_links call because it breaks draft editing.
+
     &display_form;
 
 }
