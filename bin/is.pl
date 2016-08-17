@@ -1106,8 +1106,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
 
-    &invoice_links;
-
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
 
 
