@@ -1053,13 +1053,13 @@ sub e_mail {
     {
         delete $form->{$_}; # reset to defaults
     }
-    
+
     $form->{subject} = $loale->text(
-           'Attached [1] for [2] [3]', 
+           'Attached [1] for [2] [3]',
            $form->{formname}, $doctype, $docnum
     );
     $form->{bcc} .= ', ' . $cc->{default_bcc} if $cc->{default_bcc};
-    
+
 
     $form->{subject} = $locale->text(
            'Attached document for [_1] [_2]',
