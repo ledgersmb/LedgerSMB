@@ -1021,7 +1021,7 @@ sub create_form {
 }
 
 sub e_mail {
-
+    LedgerSMB::Company_Config->initialize();
     my %hiddens;
     my $cc = $LedgerSMB::App_State::Company_Config;
 
@@ -1060,6 +1060,16 @@ sub e_mail {
     );
     $form->{bcc} .= ', ' . $cc->{default_bcc} if $cc->{default_bcc};
     
+
+    $form->{subject} = $locale->text(
+           'Attached document for [_1] [_2]',
+           $doctype, $docnum
+    );
+    my @bcclist;
+    push @bcclist, $form->{bcc} if $form->{bcc};
+    push @bcclist, $cc->{default_email_bcc} if $cc->{default_email_bcc};
+    $form->{bcc} = join(', ', @bcclist);
+
 
     $hiddens{$_} = $form->{$_} for keys %$form;
 
