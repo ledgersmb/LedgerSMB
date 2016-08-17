@@ -1287,7 +1287,9 @@ sub update {
     # check_name() sets $form->{vendor_id} or $form->{customer_id}
     # and updates $form->{oldvendor} or $form->{oldcustomer}
     #
-    # Removed the create_links call because it breaks draft editing.
+    # For 1.5, we are just skipping create_links if the id exists
+    # for 1.6 we will probably remove it
+    &create_links unless $form->{id}; 
 
     &display_form;
 
