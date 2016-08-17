@@ -3,7 +3,7 @@
 
 requires 'perl', '5.10.1';
 
-requires 'App::LedgerSMB::Admin', '0.04';
+requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
