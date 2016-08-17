@@ -1289,7 +1289,7 @@ sub update {
     #
     # For 1.5, we are just skipping create_links if the id exists
     # for 1.6 we will probably remove it
-    &create_links unless $form->{id}; 
+    &create_links unless $form->{id};
 
     &display_form;
 
