@@ -2460,7 +2460,7 @@ sub create_links {
                17 => 'bcc' );
     $sth = $dbh->prepare($query);
     my $max_class = ($billing) ? 17 : 14;
-    $sth->execute( $self->{entity_credit_account}, $max_class, 
+    $sth->execute( $self->{entity_credit_account}, $max_class,
                    $self->{entity_id}, $max_class)
                    || $self->dberror( $query );
 
