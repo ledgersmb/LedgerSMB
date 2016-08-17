@@ -1,6 +1,11 @@
 
-DIST_VER=$(shell git log | head -1 | sed -e 's/commit \(.......\).*/\1/')
+DIST_VER=$(shell utils/release/build-id)
 DIST_DIR=/tmp
+ifeq ($$TRAVIS,'true')
+DIST_DEPS=cached_dojo
+else
+DIST_DEPS=dojo
+endif
 
 .DEFAULT_GOAL := help
 
@@ -178,6 +183,8 @@ Help on using this Makefile
   The following make targets are available
     - help         : This help text
     - dojo         : Builds the minified dojo blob we serve to clients
+    - cached_dojo  : Uses the cached minified dojo, or builds one
+    - dojo_archive : Builds a cached minified dojo archive
     - blacklist    : Builds sql blacklist (required after adding functions)
     - submodules   : Initialises and updates our git submodules
     - test         : Runs tests
@@ -237,34 +244,33 @@ help:
 #   builds dojo for production/release
 SHELL := /bin/bash
 HOMEDIR := ~/dojo_archive
-SHA := $(shell git ls-files -s UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit | sha1sum | cut -d' ' -f 1)
+SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit | sha1sum | cut -d' ' -f 1)
 ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
-dojo: $(ARCHIVE)
+dojo:
 	rm -rf UI/js/;
-	tar xf $(ARCHIVE)
-	ls $(HOMEDIR)
-	@echo "\n\nDon't forget to set ledgersmb.conf dojo_built=1\n";
-
-$(HOMEDIR):
-	mkdir -p $(HOMEDIR)
-
-$(ARCHIVE): $(HOMEDIR)
-    #TODO: Protect for concurrent invocations
-
-ifeq ($(wildcard $(ARCHIVE)),)
-	touch $(FLAG)
 	cd UI/js-src/lsmb/ \
 		&& ../util/buildscripts/build.sh --profile lsmb.profile.js \
 		| egrep -v 'warn\(224\).*A plugin dependency was encountered but there was no build-time plugin resolver. module: (dojo/request;|dojo/request/node;|dojo/request/registry;|dijit/Fieldset;|dijit/RadioMenuItem;|dijit/Tree;|dijit/form/_RadioButtonMixin;)';
-	#git checkout -- UI/js/README;
 	cd ../../..
+
+
+dojo_archive: dojo
+    #TODO: Protect for concurrent invocations
+	mkdir -p $(HOMEDIR)
+	touch $(FLAG)
 	tar cf $(TEMP) UI/js
 	mv $(TEMP) $(ARCHIVE)
 	rm $(FLAG)
+
+cached_dojo:
+ifeq ($(wildcard $(ARCHIVE)),)
+	$(MAKE) dojo_archive
 endif
+	tar xf $(ARCHIVE)
+
 
 # make blacklist
 blacklist:
