@@ -1023,10 +1023,22 @@ sub create_form {
 sub e_mail {
 
     my %hiddens;
+    my $cc = $LedgerSMB::App_State::Company_Config;
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
     }
+    my $doctype;
+    my $docnum;
+    if ( defined $form->{invnumber} ){
+        $doctype = $locale->text('Invoice');
+        $docnum = $form->{invnumber};
+    } elsif ( defined $form->{ordnumber} ){
+        $doctype = $locale->text('Order');
+        $docnum = $form->{ordnumber};
+    }
+    $doctype = $locale->text('Invoice') if defined $form->{invnumber};
+    $doctype //= $locale->text('Order') if defined $form->{ordnumber};
     $form->{oldlanguage_code} = $form->{language_code};
 
     $form->{oldmedia} = $form->{media};
@@ -1039,8 +1051,15 @@ sub e_mail {
         qw(subject message sendmode format language_code action nextsub)
       )
     {
-        delete $form->{$_};
+        delete $form->{$_}; # reset to defaults
     }
+    
+    $form->{subject} = $loale->text(
+           'Attached [1] for [2] [3]', 
+           $form->{formname}, $doctype, $docnum
+    );
+    $form->{bcc} .= ', ' . $cc->{default_bcc} if $cc->{default_bcc};
+    
 
     $hiddens{$_} = $form->{$_} for keys %$form;
 
