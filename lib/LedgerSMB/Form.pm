@@ -2448,7 +2448,10 @@ sub create_links {
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
-                      ORDER BY class_id DESC;|;
+                UNION
+                SELECT * FROM entity__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC|;
     my %id_map = ( 12 => 'email',
                13 => 'cc',
                14 => 'bcc',
@@ -2456,8 +2459,10 @@ sub create_links {
                16 => 'cc',
                17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $self->{entity_id},
-                   $billing ? 17 : 14) || $self->dberror( $query );
+    my $max_class = ($billing) ? 17 : 14;
+    $sth->execute( $self->{entity_credit_account}, $max_class, 
+                   $self->{entity_id}, $max_class)
+                   || $self->dberror( $query );
 
     my $ctype;
     my $billing_email = 0;
