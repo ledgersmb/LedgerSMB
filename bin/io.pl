@@ -1023,9 +1023,6 @@ sub create_form {
 sub e_mail {
 
     my %hiddens;
-    if ( $myconfig{role} !~ /(admin|manager)/ ) {
-      #  $hiddens{bcc} = $form->{bcc};
-    }
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
