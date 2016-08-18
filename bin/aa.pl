@@ -1286,9 +1286,11 @@ sub update {
     # rather than the newly selected one in the form
     # check_name() sets $form->{vendor_id} or $form->{customer_id}
     # and updates $form->{oldvendor} or $form->{oldcustomer}
+    #
+    # For 1.5, we are just skipping create_links if the id exists
+    # for 1.6 we will probably remove it
+    &create_links unless $form->{id};
 
-    #tshvr4 should be revised!
-    &create_links;
     &display_form;
 
 }
