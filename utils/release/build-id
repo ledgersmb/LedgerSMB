@@ -6,7 +6,7 @@ then
 else
     git_id=-undef
 fi
-version_id=`grep lib/LedgerSMB.pm | sed -e "s/.*['\"]\(.*\)['\"].*/\1/"`
+version_id=`grep '$VERSION =' lib/LedgerSMB.pm | sed -e "s/.*['\"]\(.*\)['\"].*/\1/"`
 
 echo "$version_id$git_id"
 
