@@ -304,6 +304,8 @@ sub prepare_invoice {
 
 sub form_header {
     $form->{nextsub} = 'update';
+    $form->{ARAP} = 'AR';
+    $form->generate_selects(\%myconfig) unless $form->{selectAR};
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -1336,6 +1338,7 @@ sub update {
             }
         }
     }
+    $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();
 }
