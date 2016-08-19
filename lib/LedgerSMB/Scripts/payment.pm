@@ -1574,6 +1574,7 @@ if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
 @overpayments = $Payment->get_available_overpayment_amount();
 
 for my $ref (0 .. $#overpayments) {
+    no warnings 'uninitialized';
        push @ui_overpayments, {     id               =>  $overpayments[$ref]->{chart_id},
                                     accno          =>  $overpayments[$ref]->{accno},
                                     description    =>  $overpayments[$ref]->{description},
