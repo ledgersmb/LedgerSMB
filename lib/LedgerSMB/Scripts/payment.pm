@@ -944,7 +944,8 @@ sub payment2 {
     # Got to build the account selection box first.
     @overpayment_account = $Payment->list_overpayment_accounting();
     # Now we build the structure for the UI
-    for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
+    $request->{overpayment_qty} //= 1;
+    for my $i (1 .. $request->{overpayment_qty}) {
         if (!$request->{"overpayment_checkbox_$i"}) {
             if ( $request->{"overpayment_topay_$i"} ) {
                 # Now we split the account selected options
