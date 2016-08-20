@@ -24,6 +24,7 @@ use strict;
 use warnings;
 
 use Locale::Country;
+use LedgerSMB;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
@@ -36,7 +37,8 @@ use LedgerSMB::Setting;
 use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
-my $MINOR_VERSION = '1.5';
+$LedgerSMB::VERSION =~ /(\d+\.\d+)./;
+my $MINOR_VERSION = $1;
 
 =item no_db
 
@@ -154,6 +156,11 @@ sub get_dispatch_table {
       { appname => 'ledgersmb',
         version => '1.5',
         message => $request->{_locale}->text("LedgerSMB 1.5 db found."),
+        operation => $request->{_locale}->text('Rebuild/Upgrade?'),
+        next_action => 'rebuild_modules' },
+      { appname => 'ledgersmb',
+        version => '1.6',
+        message => $request->{_locale}->text("LedgerSMB 1.6 db found."),
         operation => $request->{_locale}->text('Rebuild/Upgrade?'),
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
