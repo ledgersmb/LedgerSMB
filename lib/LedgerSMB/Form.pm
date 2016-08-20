@@ -181,8 +181,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.5.0-dev";
-    $self->{dbversion} = "1.5.0-dev";
+    $self->{version}   = "1.6.0-dev";
+    $self->{dbversion} = "1.6.0-dev";
 
     bless $self, $type;
 
@@ -709,7 +709,7 @@ sub _redirect {
         return;
     }
     $form->error(
-        $form->_locale->text(
+        LedgerSMB::App_State::Locale->text(
             "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 
@@ -2086,8 +2086,8 @@ sub all_taxaccounts {
         # rebuild tax rates
         $query = qq|SELECT t.rate, t.taxnumber
                       FROM tax t
-                      JOIN chart c ON (c.id = t.chart_id)
-                     WHERE c.accno = ?
+                      JOIN account a ON (a.id = t.chart_id)
+                     WHERE a.accno = ?
                     $where
                   ORDER BY accno, validto|;
 
@@ -2281,7 +2281,7 @@ If $form->{id} is not set, check $form->{"$form->{vc}_id"}.  If neither is set,
 use $form->lastname_used to populate the details.  If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
 taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
-oldinvtotal, oldtotalpaid, employee_id, employee, language_code, ponumber,
+oldinvtotal, employee_id, employee, language_code, ponumber,
 reverse, printed, emailed, queued, recurring, exchangerate, and acc_trans
 attributes of $form with details about the transaction $form->{id}.  All of
 these attributes, save for acc_trans, are scalar; $form->{acc_trans} refers to
@@ -2336,14 +2336,15 @@ sub create_links {
     }
 
     # now get the account numbers
-    $query = qq|SELECT a.accno, a.description, a.link
-                  FROM chart a
-                  JOIN account ON a.id = account.id AND NOT account.obsolete
-                 WHERE (link LIKE ?) OR account.tax
+    $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
+                  FROM account a
+                  JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
+                 WHERE (l.description LIKE ?) OR a.tax
                        AND (a.id in (select acc_trans.chart_id
                                        FROM acc_trans
                                       WHERE trans_id = coalesce(?, -1))
-                           OR NOT account.obsolete)
+                           OR NOT a.obsolete)
+              GROUP BY a.accno, a.description
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
@@ -2355,10 +2356,9 @@ sub create_links {
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         my $link = $ref->{link};
 
-        $link .= ($link ? ":" : "") . "${module}_tax"
-            if $tax_accounts{$ref->{accno}};
+        push(@$link,"${module}_tax") if $tax_accounts{$ref->{accno}};
 
-        foreach my $key ( split /:/, $link ) {
+        foreach my $key ( @$link ) {
 
             if ( $key =~ /$module/ ) {
 
@@ -2389,10 +2389,10 @@ sub create_links {
         $query = qq|
             SELECT a.invnumber, a.transdate,
                 a.entity_credit_account AS entity_id,
-                a.datepaid, a.duedate, a.ordnumber,
+                a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-                a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
+                a.amount AS oldinvtotal, 
                 a.person_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
@@ -2448,7 +2448,10 @@ sub create_links {
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
-                      ORDER BY class_id DESC;|;
+                UNION
+                SELECT * FROM entity__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC|;
     my %id_map = ( 12 => 'email',
                13 => 'cc',
                14 => 'bcc',
@@ -2456,8 +2459,10 @@ sub create_links {
                16 => 'cc',
                17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $self->{entity_id},
-                   $billing ? 17 : 14) || $self->dberror( $query );
+    my $max_class = ($billing) ? 17 : 14;
+    $sth->execute( $self->{entity_credit_account}, $max_class,
+                   $self->{entity_id}, $max_class)
+                   || $self->dberror( $query );
 
     my $ctype;
     my $billing_email = 0;
@@ -2485,7 +2490,7 @@ sub create_links {
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
             FROM acc_trans a
-            JOIN chart c ON (c.id = a.chart_id)
+            JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
             WHERE a.trans_id = ?
                 AND a.fx_transaction = '0'

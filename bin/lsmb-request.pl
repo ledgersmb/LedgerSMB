@@ -58,6 +58,9 @@ sub request_instantiate {
     $logger->trace("\$request=".Data::Dumper::Dumper($request));
 
     $request->{action} = '__default' if (!$request->{action});
+    print 'Set-Cookie: '
+        . $request->{"request.download-cookie"} . '=downloaded' . "\n"
+        if $request->{"request.download-cookie"};
 
     return $request;
 }

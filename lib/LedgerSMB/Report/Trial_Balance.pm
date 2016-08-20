@@ -26,7 +26,7 @@ package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use LedgerSMB::App_State;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 
 =head1 DESCRIPTION
 
@@ -223,6 +223,7 @@ Runs the trial balance report.
 sub run_report {
     my ($self) = @_;
     $self->manual_totals('1');
+    $self->approved;
     my @rawrows = $self->call_dbmethod(funcname => 'trial_balance__generate');
     my $total_debits;
     my $total_credits;

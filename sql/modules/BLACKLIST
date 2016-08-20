@@ -2,7 +2,6 @@ _entity_location_save
 account__all_headings
 account__delete
 account__delete_translation
-account__get_by_accno
 account__get_by_link_desc
 account__get_from_accno
 account__get_taxes

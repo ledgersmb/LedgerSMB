@@ -346,6 +346,7 @@ sub render {
     # in latex
     my $replace_hnames = sub {
         my $lines = shift;
+        return unless $lines;
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
         return [map { { %$_, %{shift @newlines} } } @$lines ];
     };

@@ -276,7 +276,7 @@ sub transaction {
         # retrieve individual rows
         $query = qq|SELECT ac.*, c.accno, c.description
                       FROM acc_trans ac
-                      JOIN chart c ON (ac.chart_id = c.id and c.charttype = 'A')
+                      JOIN account c ON (ac.chart_id = c.id)
                      WHERE ac.trans_id = ?
                   ORDER BY ac.entry_id|;
 

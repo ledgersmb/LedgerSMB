@@ -13,7 +13,7 @@ LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 
 use strict;
 use warnings;
-our $VERSION = '1.5';
+our $VERSION = '1.6';
 
 # Preloads
 use LedgerSMB;

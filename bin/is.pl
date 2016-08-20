@@ -304,6 +304,8 @@ sub prepare_invoice {
 
 sub form_header {
     $form->{nextsub} = 'update';
+    $form->{ARAP} = 'AR';
+    $form->generate_selects(\%myconfig) unless $form->{selectAR};
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -1106,8 +1108,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
 
-    &invoice_links;
-
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
 
 
@@ -1338,6 +1338,7 @@ sub update {
             }
         }
     }
+    $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();
 }
