@@ -358,12 +358,6 @@ sub print_transaction {
 sub vendor_details { IR->vendor_details( \%myconfig, \%$form ) }
 sub customer_details { IS->customer_details( \%myconfig, \%$form ) }
 
-sub payment_selected {
-
-    &{"print_$form->{formname}"}( $form->{oldform}, $form->{ndx} );
-
-}
-
 sub print_and_post {
 
     $form->error( $locale->text('Select postscript or PDF!') )
