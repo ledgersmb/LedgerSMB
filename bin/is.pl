@@ -315,6 +315,8 @@ sub prepare_invoice {
 
 sub form_header {
     $form->{nextsub} = 'update';
+    $form->{ARAP} = 'AR';
+    $form->generate_selects(\%myconfig) unless $form->{selectAR};
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -628,7 +630,7 @@ sub form_header {
                        ndx   => 3,
                        key   => 'O',
                        value => $locale->text('Post') };
-                   if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                   if ($form->is_allowed_role(['draft_modify'])){
                        $button{edit_and_save} = {
                            ndx   => 4,
                            key   => 'E',
@@ -1132,8 +1134,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
 sub update {
 
-    &invoice_links;
-
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
 
 
@@ -1337,6 +1337,7 @@ sub update {
             }
         }
     }
+    $form->generate_selects(\%myconfig);
     $form->{rowcount}--;
     display_form();
 }

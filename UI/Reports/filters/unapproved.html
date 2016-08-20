@@ -33,10 +33,10 @@ END;
       action="<?lsmb script ?>"
       method="get">
 <div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
-<div class="tabular col-1">
+<div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 <div class="input" id="batch_class_div">
         <?lsmb INCLUDE select element_data = {
-                label = text('Transaction Type') # '
+                title = text('Transaction Type') # '
                 options = batch_classes
                 value_attr = "value"
                 text_attr = "text"
@@ -49,7 +49,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
 
 <div class="input" id="entered_by_div">
         <?lsmb INCLUDE select element_data = {
-                label = text('Created By') # '
+                title = text('Created By') # '
                 options = users
                 value_attr = "entity_id"
                 text_attr = "username"
@@ -62,14 +62,14 @@ Commenting this section out.  Does not seem to be used by API. -CT
           name="approved"
           id="approved-1"
           value="1"
-          label= text("Approved")
+          title = text("Approved")
           type="radio"
    };
    INCLUDE input element_data = {
           name="approved"
           id="approved-0"
           value="0"
-          label= text("Unapproved")
+          title = text("Unapproved")
           type="radio"
           checked="CHECKED"
    }; ?>
@@ -77,7 +77,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
 <?lsmb END ?>
 <div class="input" id="reference_div">
         <?lsmb INCLUDE input element_data = {
-                label = text('Reference') #'
+                title = text('Reference') #'
                 size = 20
                 value = reference
                 name = "reference"
@@ -85,7 +85,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
         </div>
 <div class="input" id="amounts_div">
         <?lsmb INCLUDE input element_data = {
-                label = "Minimum Value"
+                title = "Minimum Value"
                 name = "amount_gt"
                 class = "numeric"
                 size = 20
@@ -93,7 +93,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
                 type = "text"
         } ?>
         <?lsmb INCLUDE input element_data = {
-                label = "Maximum Value"
+                title = "Maximum Value"
                 name = "amount_lt"
                 value = amount_lt
                 size = 20
