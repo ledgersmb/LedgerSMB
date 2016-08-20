@@ -981,7 +981,7 @@ SELECT lsmb__grant_menu('taxes_set', 130, 'allow');
 
 SELECT lsmb__create_role('account_create');
 SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
-  FROM unnest(array['chart'::text, 'account', 'cr_coa_to_account',
+  FROM unnest(array['account'::text, 'cr_coa_to_account',
                     'account_heading', 'account_link',
                     'account_translation', 'account_heading_translation']) obj;
 
@@ -1168,7 +1168,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'ALL')
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['user_listable'::text, 'language',
                     'menu_node', 'menu_attribute', 'menu_acl',
-                    'chart', 'gifi', 'country', 'taxmodule',
+                    'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
                     'business', 'exchangerate', 'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;

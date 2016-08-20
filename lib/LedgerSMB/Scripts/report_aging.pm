@@ -38,7 +38,7 @@ sub run_report{
 
     _strip_specials($request);
     $request->{business_units} = [];
-    for my $count (1 .. $request->{bc_count}){
+    for my $count (1 .. ($request->{bc_count} // 0)){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
