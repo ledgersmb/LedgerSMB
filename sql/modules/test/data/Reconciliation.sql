@@ -12,15 +12,15 @@ INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-201, -201, 'T-11112', 1, -1000);
 
 
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-200, '-2000', '10', '10', '0', -200, '1000-01-01', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-201, '-2001', '10', '10', '0', -200, '1000-01-03', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-204, '-2002', '10', '10', '0', -200, '1000-01-01', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-205, '-2003', '10', '10', '0', -200, '1000-01-03', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-200, '-2000', '10', '10', -200, '1000-01-01', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-201, '-2001', '10', '10', -200, '1000-01-03', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-204, '-2002', '10', '10', -200, '1000-01-01', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-205, '-2003', '10', '10', -200, '1000-01-03', 'USD');
 
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-206, '-2004', '10', '10', '0', -201, '1000-01-01', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-207, '-2005', '10', '10', '0', -201, '1000-01-03', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-208, '-2006', '10', '10', '0', -201, '1000-01-01', 'USD');
-INSERT INTO ar (id, invnumber, amount, netamount, paid, entity_credit_account, transdate, curr) values (-209, '-2007', '10', '10', '0', -201, '1000-01-03', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount,  entity_credit_account, transdate, curr) values (-206, '-2004', '10', '10', -201, '1000-01-01', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-207, '-2005', '10', '10', -201, '1000-01-03', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-208, '-2006', '10', '10', -201, '1000-01-01', 'USD');
+INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-209, '-2007', '10', '10', -201, '1000-01-03', 'USD');
 
 INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
@@ -30,7 +30,7 @@ INSERT INTO gl (id, reference, transdate, approved) values (-212, 'Cleared gl tr
 INSERT INTO gl (id, reference, transdate, approved) values (-213, 'Unapproved gl trans', '1000-01-03', false);
 INSERT INTO gl (id, reference, transdate, approved) values (-214, 'gl trans, unapproved lines', '1000-01-03', false);
 
-CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM chart WHERE accno = $1; $$ language sql;
+CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM account WHERE accno = $1; $$ language sql;
 
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source) values (-200, test_get_account_id('-11111'), '1000-01-01', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, source, cleared, approved) values (-200, test_get_account_id('-11111'), '1000-01-01', -10, '1', true, false);

@@ -9,11 +9,22 @@ values (currval('users_id_seq'),  now(), md5('test2'));
 insert into session (session_id, users_id, token, last_used)
 values (-200, -200, md5(random()::text), now());
 
+WITH a (accno, description, category) as (
+ values ('00001'::text, 'testing AP'::text, 'L'::text ),
+       ('00002', 'testing AP cost', 'E'),
+       ('00003', 'testing cash', 'A')
+)
+INSERT INTO account (accno, description, category, heading)
+SELECT a.accno, a.description, a.category, h.id
+FROM account_heading h
+JOIN a ON h.accno = '000000000000000000000';
 
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00001', 'testing AP', 'A', 'L', 'AP'),
-       ('00002', 'testing AP cost', 'A', 'E', 'AP_amount'),
-       ('00003', 'testing cash', 'A', 'A', 'AP_paid');
+INSERT INTO account_link (account_id, description)
+SELECT id, 'AP' FROM account WHERE accno = '00001'
+UNION
+SELECT id, 'AP_amount' FROM account WHERE accno = '00002'
+UNION
+SELECT id, 'AP_paid' FROM account WHERE accno = '00003';
 
 
 INSERT INTO exchangerate (transdate, curr, buy, sell)

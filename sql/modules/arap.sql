@@ -16,7 +16,6 @@ CREATE TYPE purchase_info AS (
     amount_paid numeric,
     tax numeric,
     currency char(3),
-    date_paid date,
     due_date date,
     notes text,
     shipping_point text,
@@ -45,18 +44,18 @@ $$
           gl.amount - sum(CASE WHEN l.description IN ('AR', 'AP')
                                THEN ac.amount ELSE 0
                            END),
-          gl.amount - gl.netamount, gl.curr, gl.datepaid, gl.duedate,
+          gl.amount - gl.netamount, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia,
           compound_array(bua.business_units || bui.business_units)
      FROM (select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount,
-                  netamount, curr, datepaid, entity_credit_account, on_hold,
+                  netamount, curr, entity_credit_account, on_hold,
                   approved
              FROM ar WHERE in_entity_class = 2
             UNION
            select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount,
-                  netamount, curr, datepaid, entity_credit_account, on_hold,
+                  netamount, curr, entity_credit_account, on_hold,
                   approved
              FROM ap WHERE in_entity_class = 1) gl
      JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
@@ -103,11 +102,17 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
                OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount,
-          gl.netamount, gl.curr, gl.datepaid, gl.duedate,
+          gl.netamount, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
    HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
 $$ LANGUAGE SQL;
 
+DROP FUNCTION IF EXISTS ar_ap__transaction_search_summary
+(in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
+ in_ordnumber text, in_ponumber text, in_source text, in_description text,
+ in_notes text, in_shipvia text, in_from_date date, in_to_date date,
+ in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
+ in_entity_class int);
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
  in_ordnumber text, in_ponumber text, in_source text, in_description text,
@@ -118,7 +123,7 @@ RETURNS SETOF purchase_info AS
 $$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount),
-              sum(amount_paid), sum(tax), currency, null::date, null::date,
+              sum(amount_paid), sum(tax), currency, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
               (in_account_id, in_name_part, in_meta_number, in_invnumber,

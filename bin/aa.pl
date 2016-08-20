@@ -1281,16 +1281,6 @@ sub update {
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 
-    # This must be done after check_name()
-    # otherwise it will operate on the old vendor/customer id
-    # rather than the newly selected one in the form
-    # check_name() sets $form->{vendor_id} or $form->{customer_id}
-    # and updates $form->{oldvendor} or $form->{oldcustomer}
-    #
-    # For 1.5, we are just skipping create_links if the id exists
-    # for 1.6 we will probably remove it
-    &create_links unless $form->{id};
-
     &display_form;
 
 }

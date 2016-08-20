@@ -831,13 +831,6 @@ sub post_invoice {
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
      my $return_cid = 0;
-     if ($LedgerSMB::Sysconfig::return_accno and !$form->{void}){
-         my $rquery = "SELECT id FROM account WHERE accno = ?";
-         my $sth = $dbh->prepare($rquery);
-         $sth->execute($LedgerSMB::Sysconfig::return_accno);
-         ($return_cid) = $sth->fetchrow_array();
-         $sth->finish;
-     }
 
     my $i;
     my $item;
@@ -1405,8 +1398,6 @@ sub post_invoice {
                entity_credit_account = ?,
                amount = ?,
                netamount = ?,
-               paid = ?,
-               datepaid = ?,
                duedate = ?,
                invoice = '1',
                shippingpoint = ?,
@@ -1433,8 +1424,8 @@ sub post_invoice {
         $form->{quonumber},     $form->{description},
         $form->{transdate} || 'now',
         $form->{customer_id},   $invamount,
-        $invnetamount,          $form->{paid},
-        $form->{datepaid} || 'now',      $form->{duedate} || 'now',
+        $invnetamount,
+        $form->{duedate} || 'now',
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
         $form->{intnotes},      $form->{taxincluded},
@@ -1492,7 +1483,7 @@ sub retrieve_invoice {
         #HV TODO drop entity_id from ar
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
-                      a.transdate, a.paid,
+                      a.transdate,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,

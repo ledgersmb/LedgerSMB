@@ -38,34 +38,34 @@ VALUES (currval('id'), 1, currval('batch_id_seq'));
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Payment Batch created', (SELECT batch_create('test2', 'test2', 'ap', now()::date)) IS NOT NULL;
-INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
-VALUES ('test_show2', -101, true, 100000, 100000, 'USD', now()::date, 0);
+INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+VALUES ('test_show2', -101, true, 100000, 100000, 'USD', now()::date);
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '100000', currval('id'), (select id from chart where accno = '00001'));
+VALUES (true, now()::date, '100000', currval('id'), (select id from account where accno = '00001'));
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '-100000', currval('id'), (select id from chart where accno = '00002'));
+VALUES (true, now()::date, '-100000', currval('id'), (select id from account where accno = '00002'));
 
-INSERT INTO ap (id, invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
-VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'USD', now()::date, 0);
-
-INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '1000000', -300, (select id from chart where accno = '00001'));
+INSERT INTO ap (id, invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'USD', now()::date);
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '-1000000', -300, (select id from chart where accno = '00002'));
+VALUES (true, now()::date, '1000000', -300, (select id from account where accno = '00001'));
+
+INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+VALUES (true, now()::date, '-1000000', -300, (select id from account where accno = '00002'));
 
 update transactions set locked_by = -200 where id = -300;
 
-INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate, paid)
-values ('test_show', -101, false, '1', '1', 'USD', now()::date, 0);
+INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+values ('test_show', -101, false, '1', '1', 'USD', now()::date);
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '1', currval('id'), (select id from chart where accno = '00001'));
+VALUES (true, now()::date, '1', currval('id'), (select id from account where accno = '00001'));
 
 INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-VALUES (true, now()::date, '-1', currval('id'), (select id from chart where accno = '00002'));
+VALUES (true, now()::date, '-1', currval('id'), (select id from account where accno = '00002'));
 
 INSERT INTO voucher (trans_id, batch_class, batch_id)
 VALUES (currval('id'), 1, currval('batch_id_seq'));
@@ -115,12 +115,12 @@ values (currval('batch_id_seq')::int, 4, -100, currval('id')::int);
 INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
         transdate, source)
 values (currval('id')::int,
-        (select id from chart where accno = '00003'), -100, true, '1', now(),
+        (select id from account where accno = '00003'), -100, true, '1', now(),
         '_test_src1');
 INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
         transdate, source)
 values (currval('id')::int,
-        (select id from chart where accno = '00001'), -100, true, '-1', now(),
+        (select id from account where accno = '00001'), -100, true, '-1', now(),
         '_test_src1');
 
 SELECT * FROM TEST_RESULT;

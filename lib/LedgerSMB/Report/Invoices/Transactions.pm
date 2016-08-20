@@ -13,7 +13,7 @@ LedgerSMB
 package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 
 =head1 DESCRIPTION
 
@@ -182,29 +182,6 @@ invoices will be shown.
 
 has open => (is => 'ro', isa => 'Bool', required => 0);
 has closed => (is => 'ro', isa => 'Bool', required => 0);
-
-=item is_approved string
-
-Y, N, All
-
-=cut
-
-has is_approved => (is => 'ro', isa => 'Str', required => 1);
-has approved => (is => 'ro', lazy => 1, builder => '_approved');
-
-my $_approval_map = {
-   Y => 1,
-   N => 0,
-  All => undef
-};
-
-sub _approved {
-    my $self = shift;
-    die 'Bad approval code: ' . $self->is_approved
-        unless exists $_approval_map->{$self->is_approved};
-    return $_approval_map->{$self->is_approved}
-}
-
 
 =back
 
