@@ -1,7 +1,8 @@
 use Test::More;
 use strict;
 use DBI;
-    
+use LedgerSMB::Sysconfig;
+
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 6;
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
