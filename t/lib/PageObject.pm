@@ -5,7 +5,6 @@ use warnings;
 
 use Carp;
 use Module::Runtime qw(use_module);
-use MIME::Base64;
 
 use Moose;
 extends 'Weasel::Element';
@@ -46,8 +45,6 @@ sub field_types { return {}; }
 sub url { croak "Abstract method 'PageObject::url' called"; }
 
 
-<<<<<<< HEAD
-=======
 my %img_num = ();
 
 sub _save_screenshot {
@@ -84,8 +81,6 @@ sub CallStack {
             }
     )->as_string(); # like carp
 }
-
->>>>>>> 925ffa2... Use UTF8 for get_source
 sub wait_for_page {
     my ($self, $ref) = @_;
 
@@ -93,6 +88,7 @@ sub wait_for_page {
         sub {
 
             if ($ref) {
+                $self->session->_save_screenshot("find","stale");
                 local $@;
                 # if there's a reference element,
                 # wait for it to go stale (raise an exception)
@@ -100,11 +96,16 @@ sub wait_for_page {
                     $ref->tag_name;
                     1;
                 };
-                return 1 if defined $@;
+                return defined $@;
             }
             else {
-                $self->session->page
+                $self->_save_screenshot("find","pre");
+#                $count++;
+#                CallStack() if $count > 1;
+                my $css = $self->session->page
                     ->find('body.done-parsing', scheme => 'css');
+                $self->_save_screenshot("find","post");
+                return defined $css;
             }
         });
 }
