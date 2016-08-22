@@ -10,6 +10,8 @@ use Path::Class qw(file dir);
 use Module::Runtime qw(use_module module_notional_filename);
 use YAML::Syck;
 
+use LedgerSMB::Sysconfig;
+
 use Test::More;
 use Test::BDD::Cucumber::Loader;
 use Test::BDD::Cucumber::Harness::TestBuilder;

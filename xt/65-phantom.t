@@ -11,6 +11,7 @@ use Test::More;
 
     my $driver = new Selenium::Remote::Driver(
                           'port' => 4422,
+                          'browser_name' => 'phantomjs',
                           )
     || die "Unable to connect to PhantomJS";
     $driver->set_implicit_wait_timeout(30000); # 30s
