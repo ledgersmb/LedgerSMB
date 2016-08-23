@@ -24,7 +24,7 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject';
+requires 'PGObject', '1.402.9';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role', '1.12.1';
 requires 'PGObject::Type::BigFloat';
