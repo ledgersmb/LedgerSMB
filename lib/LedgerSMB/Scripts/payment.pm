@@ -1362,6 +1362,7 @@ my @ui_selected_inv;
 my $exchangerate;
 my $ui_exchangerate;
 my @selected_checkboxes;
+my %seen_invoices;
 my $ui_to_use_subtotal = 0;
 my $ui_avble_subtotal = 0;
 my @hiddens;
@@ -1505,15 +1506,16 @@ while ($Payment->{"entity_id_$count"})
                discount        => $Payment->{"discount_$count"},
                            selected_accno     => {id        => $ovp_chart_id,
                                                     ovp_accno => $ovp_selected_accno},
-                           amount             => $Payment->{"amount_$count"}};
+                           amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
   }
   $count++;
 }
 
 
 #lets search which available invoice do we have for the selected entity
-if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
+if (($Payment->{"new_entity_id"} != $Payment->{"entity_credit_id"})&& !$Payment->{"new_checkbox"})
 {
+  $request->{entity_credit_id} = $Payment->{"new_entity_id"};
   #lets create an object who has the entity_credit_id of the selected entity
   $Selected_entity = LedgerSMB::DBObject::Payment->new({'base' => $Payment});
   $Selected_entity->{"invnumber"} = $Selected_entity->{new_invoice} ;
@@ -1564,7 +1566,7 @@ if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
                  discount          => "$avble_invoices[$ref]->{discount}",
                  selected_accno    => {    id       => $ovp_chart_id,
                                         ovp_accno => $ovp_selected_accno},
-                 amount        => $Selected_entity->{"new_amount"}}
+                 amount        => $Selected_entity->{"new_amount"}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
     }
   }
 }
@@ -1622,6 +1624,7 @@ my $template =    LedgerSMB::Template->new(
           path     => 'UI/payments',
           template => 'use_overpayment2',
           format => 'HTML' );
+
 
 $template->render($ui);
 }

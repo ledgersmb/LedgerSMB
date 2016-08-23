@@ -292,14 +292,14 @@ class="lsmb <?lsmb dojo_theme ?>">
                                   item.value = item.value _ '--' _ item.name _ '--' _ item.vc_discount_accno ;
                                   IF item.id == entity_credit_id ;
                                     selected_value = item.value ;
-              END ;
+              END ; vc_list.unshift({});
             END  ?>
           <?lsmb PROCESS select element_data = {
                                 name = 'new_entity_id'
                                 value_attr = 'value'
                                 text_attr = 'name'
                                 options = vc_list
-                                default_values = [ selected_value ] } ?>
+                                default_values = [ request.new_entity_id ] } ?>
    </td>
    <td align="center">N/A</td>
    <td align="center">N/A</td>
