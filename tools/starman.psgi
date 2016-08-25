@@ -42,6 +42,11 @@ my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();
 
 builder {
+
+    enable 'Redirect', url_patterns => [
+        '^/?$' => ['/login.pl',302]
+    ];
+
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
 

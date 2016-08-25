@@ -35,6 +35,7 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
+requires 'Plack::Middleware::Redirect';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
