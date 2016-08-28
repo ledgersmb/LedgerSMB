@@ -83,19 +83,32 @@ sub create_database {
         if scalar(@elements) != 3;
 
     # Confirm database creation
+    $self->_save_screenshot('button Yes','create_database');
+warn '*button';
     $page->find('*button', text => "Yes")->click;
 
+warn '#setup-select-coa.done-parsing';
     $page->find('#setup-select-coa.done-parsing', scheme => 'css');
+warn '*labeled';
     $page->find('*labeled', text => "Country Code")
         ->find_option($param{"Country code"})
         ->click;
+warn 'button Next';
+    $self->_save_screenshot('button Next','create_database');
+warn '*button';
     $page->find('*button', text => "Next")->click;
 
+warn '*labeled';
     $page->find('*labeled', text => "Chart of accounts");
+warn '#setup-select-coa.done-parsing';
     $page->find('#setup-select-coa.done-parsing', scheme => 'css');
+warn '*labeled';
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
+warn 'button Next2';
+    $self->_save_screenshot('button Next2','create_database');
+warn '*button';
     $page->find('*button', text => "Next")->click;
 
     # assert we're on the "Load Templates" page now
@@ -106,6 +119,7 @@ sub create_database {
     $page->find('*labeled', text => 'Templates')
         ->find_option($param{"Templates"})
         ->click;
+    $self->_save_screenshot('button Load Templates','create_database');
 
     my $btn = $page->find('*button', text => "Load Templates");
     $btn->click;
