@@ -96,7 +96,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
-    requires 'Weasel', '0.06';
-    requires 'Weasel::Driver::Selenium2', 0.02;
+    requires 'Weasel', '0.07';
+    requires 'Weasel::Driver::Selenium2', 0.03;
     requires 'Weasel::Widgets::Dojo';
 };
