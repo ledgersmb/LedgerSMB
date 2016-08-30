@@ -38,11 +38,9 @@ sub login {
     my $company = $args{company};
     my $next_page = $args{next_page} // '*setup-admin';
 
-    $self->find('*labeled', text => 'Super-user login')->click;
     do {
         my $element =
             $self->find('*labeled', text => $_->{label});
-        $element->click;
         $element->send_keys($_->{value});
         $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
     } for ({ label => "Super-user login",
