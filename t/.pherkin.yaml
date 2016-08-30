@@ -9,11 +9,16 @@ default:
          default_session: selenium
          screenshots_dir: screens
          screenshot_events:
-           pre-step: 0
-           post-step: 0
+           pre-find: 1
+           post-find: 1
+           pre-step: 1
+           post-step: 1
+           pre-scenario: 1
+           post-scenario: 1
+           dump-html: 1
          sessions:
            selenium:
-             base_url: http://localhost:5000
+             base_url: ${LSMB_BASE_URL}
              page_class: PageObject::Root
              driver:
                 drv_name: Weasel::Driver::Selenium2
@@ -21,6 +26,7 @@ default:
                 window_size:  1024x1280
                 caps:
                   port: 4422
+                  browser_name: ${BROWSER}
       Pherkin::Extension::PageObject:
          dummy: 1
 

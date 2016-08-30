@@ -1,5 +1,6 @@
 use Test::More;
 use strict;
+use LedgerSMB::Sysconfig;
 
 if (!defined $ENV{LSMB_TEST_DB}){
         plan skip_all => 'Skipping all.  Told not to test db.';

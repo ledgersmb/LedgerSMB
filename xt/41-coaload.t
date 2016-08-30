@@ -1,6 +1,7 @@
 use Test::More;
 use strict;
 use warnings;
+use LedgerSMB::Sysconfig;
 
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
 plan skip_all => (join ', ', @missing) . ' not set' if @missing;

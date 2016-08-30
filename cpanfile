@@ -35,6 +35,7 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
+requires 'Plack::Middleware::Redirect';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
@@ -96,7 +97,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
-    requires 'Weasel', '0.04';
-    requires 'Weasel::Driver::Selenium2';
+    requires 'Weasel', '0.07';
+    requires 'Weasel::Driver::Selenium2', 0.03;
     requires 'Weasel::Widgets::Dojo';
 };

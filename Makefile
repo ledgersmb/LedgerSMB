@@ -396,7 +396,7 @@ fbsd_feature_OpenOffice:
 #   make cpan
 #       installs any remaining perl dependancies using cpanm
 cpan:
-	cpanm --quiet --notest --with-feature=starman --installdeps .
+	cpanm --sudo --quiet --notest --with-feature=starman --installdeps .
 
 
 #   make feature_PDF

@@ -10,6 +10,8 @@ use Path::Class qw(file dir);
 use Module::Runtime qw(use_module module_notional_filename);
 use YAML::Syck;
 
+use LedgerSMB::Sysconfig;
+
 use Test::More;
 use Test::BDD::Cucumber::Loader;
 use Test::BDD::Cucumber::Harness::TestBuilder;
@@ -56,6 +58,14 @@ my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
 my $tagspec = Test::BDD::Cucumber::Model::TagSpec->new(
     tags => [ not => 'wip' ],
     );
+
+use File::Find::Rule;
+
+my @dirs = sort File::Find::Rule->new
+    ->directory
+    ->maxdepth(1)
+    ->in('xt/66-cucumber');
+
 for my $directory (qw(
       01-basic
       11-ar
@@ -63,14 +73,24 @@ for my $directory (qw(
 {
     my ( $executor, @features ) =
         Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
+#for my $directory (@dirs)
+#{
+#    next if $directory !~ /xt\/66-cucumber\/\d{2}-.+$/;
+#    my @files = File::Find::Rule->file()->name('*.feature')->in($directory);
+#    next unless $#files;
+#    print STDERR "\nSub-directory: $directory\n";
+
+#    my ( $executor, @features ) =
+#        Test::BDD::Cucumber::Loader->load($directory);
     die "No features found" unless @features;
+
     $executor->add_extensions(@extensions);
+
     Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )
         for (@steps_directories);
 
     $executor->execute( $_, $harness, $tagspec ) for @features;
 }
-
 
 $_->post_execute for @extensions;
 
