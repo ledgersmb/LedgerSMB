@@ -106,7 +106,7 @@ on 'develop' => sub {
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
-    requires 'Test::BDD::Cucumber', '0.50';
+    requires 'Test::BDD::Cucumber', '0.51';
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
