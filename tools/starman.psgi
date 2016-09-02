@@ -44,7 +44,7 @@ my $new_app = LedgerSMB::PSGI::new_app();
 builder {
 
     enable 'Redirect', url_patterns => [
-        '^/?$' => ['/login.pl',302]
+        qr/^\/?$/ => ['/login.pl',302]
     ];
 
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
