@@ -19,6 +19,7 @@ use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
+use Plack::Middleware::Redirect;
 # Optimization
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
