@@ -74,17 +74,7 @@ The tax rate as a fractional number.
 has rate        => (isa => 'LedgerSMB::Moose::Number',
                     is => 'ro', coerce => 1);
 
-=item chart
-
-###TODO: document the difference between 'chart' and 'account'??
-
-=cut
-
-has chart       => (isa => 'Str', is => 'ro');
-
 =item account
-
-###TODO: document the difference between 'chart' and 'account'??
 
 =cut
 

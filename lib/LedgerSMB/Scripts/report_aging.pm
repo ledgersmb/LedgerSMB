@@ -38,7 +38,7 @@ sub run_report{
 
     _strip_specials($request);
     $request->{business_units} = [];
-    for my $count (1 .. $request->{bc_count}){
+    for my $count (1 .. ($request->{bc_count} // 0)){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
@@ -115,8 +115,8 @@ sub generate_statement {
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
-    my $path = LedgerSMB::Setting->get('templates');
     my $template = LedgerSMB::Template->new(
+        path => 'DB',
         locale => $LedgerSMB::App_Date::Locale,
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO

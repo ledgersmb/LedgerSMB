@@ -3,7 +3,7 @@
 
 requires 'perl', '5.10.1';
 
-requires 'App::LedgerSMB::Admin', '0.04';
+requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
@@ -24,7 +24,7 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject';
+requires 'PGObject', '1.402.9';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role', '1.12.1';
 requires 'PGObject::Type::BigFloat';
@@ -35,6 +35,7 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
+requires 'Plack::Middleware::Redirect';
 requires 'Template', '2.14';
 requires 'Text::CSV';
 requires 'Template::Parser';
@@ -97,7 +98,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
-    requires 'Weasel', '0.04';
-    requires 'Weasel::Driver::Selenium2';
+    requires 'Weasel', '0.08';
+    requires 'Weasel::Driver::Selenium2', 0.02;
     requires 'Weasel::Widgets::Dojo';
 };

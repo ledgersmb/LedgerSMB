@@ -3,7 +3,7 @@ define([
     "dojo/_base/event",
     "dojo/dom-attr",
     "dijit/form/Button",
-    "dojo/request/iframe",
+    "lsmb/iframe",
     "dojo/dom-form",
     "dijit/registry"
 ],

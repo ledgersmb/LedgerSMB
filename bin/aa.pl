@@ -975,12 +975,12 @@ sub form_footer {
                    ndx   => 3,
                    key   => 'O',
                    value => $locale->text('Post') };
-           if (grep /^lsmb_$form->{company}__draft_edit$/, @{$form->{_roles}}){
+           if ($form->is_allowed_role(['draft_modify'])){
                $button{edit_and_save} = {
                    ndx   => 4,
                    key   => 'E',
                    value => $locale->text('Save Draft') };
-          }
+           }
            delete $button{post_as_new};
            delete $button{post};
         }
@@ -1271,14 +1271,6 @@ sub update {
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 
-    # This must be done after check_name()
-    # otherwise it will operate on the old vendor/customer id
-    # rather than the newly selected one in the form
-    # check_name() sets $form->{vendor_id} or $form->{customer_id}
-    # and updates $form->{oldvendor} or $form->{oldcustomer}
-
-    #tshvr4 should be revised!
-    &create_links;
     &display_form;
 
 }

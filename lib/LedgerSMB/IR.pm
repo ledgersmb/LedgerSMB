@@ -562,8 +562,6 @@ sub post_invoice {
              amount_tc = ?,
              netamount_bc = ?,
              netamount_tc = ?,
-             paid_deprecated = ?,
-               datepaid = ?,
                duedate = ?,
                invoice = '1',
                shippingpoint = ?,
@@ -585,7 +583,6 @@ sub post_invoice {
         $form->{description},   $form->{transdate},     $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
-        $form->{paid},          $form->{datepaid},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
@@ -1012,22 +1009,21 @@ sub item_links {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-           SELECT accno, description, link
-             FROM chart
-                WHERE link LIKE '%IC%'
+           SELECT accno, description, as_array(l.description) as link
+             FROM account a
+             JOIN account_link l ON a.id = l.account-id
+            WHERE l.description like 'IC%'
          ORDER BY accno|;
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        foreach my $key ( split( /:/, $ref->{link} ) ) {
-            if ( $key =~ /IC/ ) {
-                push @{ $form->{IC_links}{$key} },
+        foreach my $key ( @{$ref->{link}} ) {
+            push @{ $form->{IC_links}{$key} },
                   {
                     accno       => $ref->{accno},
                     description => $ref->{description}
                   };
-            }
         }
     }
 

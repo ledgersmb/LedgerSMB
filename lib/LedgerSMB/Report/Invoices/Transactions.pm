@@ -13,7 +13,7 @@ LedgerSMB
 package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 
 =head1 DESCRIPTION
 
@@ -183,7 +183,6 @@ invoices will be shown.
 has open => (is => 'ro', isa => 'Bool', required => 0);
 has closed => (is => 'ro', isa => 'Bool', required => 0);
 
-
 =back
 
 =head1 INTERNLS
@@ -339,9 +338,11 @@ This runs the report and sets the $report->rows.
 
 =cut
 
+
 sub run_report {
     my $self = shift;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
+    $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){
         my $script;

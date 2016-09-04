@@ -14,11 +14,11 @@ define(["lsmb/TabularForm",
        function(tabform, declare, _widgetbase, _templatemixin,
                 _widget_parser, cp, registry, on, textbox, button,
                 template, request, _container) {
-             return declare ("lsmb/users/ChangePassword",
+             return declare("lsmb/users/ChangePassword",
                              [_widgetbase, _templatemixin, _widget_parser],
                  {
-                    templateString : template,
-                   _lstrings : {
+                    templateString: template,
+                   _lstrings: {
                             "title":        "Change Password",
                             "old password": "Old Password",
                             "new password": "New password",
@@ -27,8 +27,8 @@ define(["lsmb/TabularForm",
                             "no-oldpw":     "No Old Password",
                             "strength":     "Strength"
                    },
-                   lstrings : {},
-                   text(to_translate){
+                   lstrings: {},
+                   text: function(to_translate){
                        if (undefined === this.lstrings[to_translate])
                           return to_translate;
                        return this.lstrings[to_translate];
@@ -105,15 +105,14 @@ define(["lsmb/TabularForm",
                            return I.setFeedback(0, I.text("Password Required"));
                       if (new_password !== confirm_pass)
                            return I.setFeedback(0, I.text("Confirmation did not match"));
-                      r("user.pl",
-                           {
+                      r("user.pl", {
                               "data": {
                                 "action": "change_password",
                                 "old_password": old_password,
                                 "new_password": new_password,
                                 "confirm_password": confirm_pass
-                          },
-                         "method": "POST",
+                              },
+                              "method": "POST"
                      }).then(function(response){
                         I.setFeedback(1, I.text("Password Changed"));
                      }).otherwise(function(err) {

@@ -2,7 +2,6 @@ _entity_location_save
 account__all_headings
 account__delete
 account__delete_translation
-account__get_by_accno
 account__get_by_link_desc
 account__get_from_accno
 account__get_taxes
@@ -173,6 +172,7 @@ location_list_country
 lsmb__create_role
 lsmb__grant_exec
 lsmb__grant_role
+lsmb__is_allowed_role
 lsmb__max_date
 lsmb__min_date
 lsmb__role

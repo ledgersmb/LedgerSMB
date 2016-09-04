@@ -5,11 +5,13 @@ PROCESS input element_data = {
     type = 'hidden'
     name = 'template_name'
    value = template_name
+      id = 'template_name' _ hiddenrun
 };
 PROCESS input element_data = {
     type = 'hidden'
     name = "format"
    value = format
+      id = "format" _ hiddenrun
 };
 END
  ?>
@@ -17,7 +19,7 @@ END
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post"
       enctype="multipart/form-data">
 <?lsmb
-PROCESS HIDDENS;
+PROCESS HIDDENS hiddenrun = 0;
 PROCESS select element_data = {
            name = 'language_code'
              id = 'language_code_upload'
@@ -47,7 +49,8 @@ PROCESS button element_data = {
 <div class="template_body"><pre><?lsmb content ?></pre></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="get">
 <?lsmb 
-PROCESS HIDDENS;
+
+PROCESS HIDDENS hiddenrun = 1;
 PROCESS select element_data = {
            name = 'language_code'
         options = languages
