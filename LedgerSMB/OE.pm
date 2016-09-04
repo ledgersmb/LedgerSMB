@@ -66,7 +66,7 @@ sub get_files {
 
 }
 
-=get_type 
+=item get_type
 
 Sets the type field for an existing order or quotation
 
