@@ -22,11 +22,15 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
                     if (dnode.target || ! dnode.href)
                         return;
 
+                    var href = dnode.href + "#s";
                     on(dnode, "click", function(e) {
                         event.stop(e);
                         c++;
-                        hash(dnode.href + "#s" + c.toString(16));
+                        hash(href + c.toString(16));
                     });
+                    var l = window.location;
+                    dnode.href = l.origin + l.pathname
+                        + l.search + "#" + dnode.href;
                 };
                 if (mainDiv != null) {
                     mainDiv.interceptClick = interceptClick;

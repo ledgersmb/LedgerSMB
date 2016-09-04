@@ -709,7 +709,7 @@ sub _redirect {
         return;
     }
     $form->error(
-        $form->_locale->text(
+        LedgerSMB::App_State::Locale->text(
             "[_1]:[_2]:[_3]: Invalid Redirect", __FILE__, __LINE__, $script)
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 
@@ -1417,31 +1417,13 @@ sub db_init {
 
     LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
 
-    # Roles tracking
-    $self->{_roles} = [];
-    my $query = "select rolname from pg_roles
-               where pg_has_role(rolname, 'USAGE')
-                     and rolname like
-                          coalesce((select value from defaults
-                                     where setting_key = 'role_prefix'),
-                                   'lsmb_' || current_database() || '__') || '%'";
-    my $sth = $dbh->prepare($query);
-    $sth->execute();
-    while (my @roles = $sth->fetchrow_array){
-        push @{$self->{_roles}}, $roles[0];
-    }
-
-    $sth = $self->{dbh}->prepare("
+    my $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
-    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
-    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
     $LedgerSMB::App_State::DBName = $dbname;
-    # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
-    # -CT
 
     $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults
@@ -1464,6 +1446,19 @@ sub db_init {
     $logger->trace("end");
 }
 
+=item $form->is_allowed_role($rolelist)
+
+Returns true if any roles are allowed, false otherwise.
+
+=cut
+
+sub is_allowed_role {
+    my ($self, $rolelist) = @_;
+    my $sth = $self->{dbh}->prepare('SELECT lsmb__is_allowed_role(?)');
+    $sth->execute($rolelist) || die $DBI::errstr;
+    my ($access) = $sth->fetchrow_array;
+    return $access;
+}
 
 =item $form->dbquote($var);
 
@@ -2305,7 +2300,10 @@ sub create_links {
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
-                      ORDER BY class_id DESC;|;
+                UNION
+                SELECT * FROM entity__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC|;
     my %id_map = ( 12 => 'email',
                13 => 'cc',
                14 => 'bcc',
@@ -2313,8 +2311,10 @@ sub create_links {
                16 => 'cc',
                17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $self->{entity_id},
-                   $billing ? 17 : 14) || $self->dberror( $query );
+    my $max_class = ($billing) ? 17 : 14;
+    $sth->execute( $self->{entity_credit_account}, $max_class,
+                   $self->{entity_id}, $max_class)
+                   || $self->dberror( $query );
 
     my $ctype;
     my $billing_email = 0;

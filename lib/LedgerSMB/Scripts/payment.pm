@@ -940,7 +940,8 @@ sub payment2 {
     # Got to build the account selection box first.
     @overpayment_account = $Payment->list_overpayment_accounting();
     # Now we build the structure for the UI
-    for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
+    $request->{overpayment_qty} //= 1;
+    for my $i (1 .. $request->{overpayment_qty}) {
    if (!$request->{"overpayment_checkbox_$i"}) {
      if ( $request->{"overpayment_topay_$i"} ) {
      # Now we split the account selected options
@@ -1147,9 +1148,9 @@ for my $ref (0 .. $#array_options) {
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
      my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( LedgerSMB::PGNumber($sign * $array_options[$ref]->{due_fx})->from_input->bround($LedgerSMB::Company_Config::decimal_places)
+     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
             <
-          LedgerSMB::PGNumber($sign * $request_topay_fx_bigfloat)->from_input->bround($LedgerSMB::Company_Config::decimal_places)
+          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
          $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;

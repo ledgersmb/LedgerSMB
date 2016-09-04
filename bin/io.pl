@@ -1010,15 +1010,24 @@ sub create_form {
 }
 
 sub e_mail {
-
+    LedgerSMB::Company_Config->initialize();
     my %hiddens;
-    if ( $myconfig{role} !~ /(admin|manager)/ ) {
-      #  $hiddens{bcc} = $form->{bcc};
-    }
+    my $cc = $LedgerSMB::App_State::Company_Config;
 
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
     }
+    my $doctype;
+    my $docnum;
+    if ( defined $form->{invnumber} ){
+        $doctype = $locale->text('Invoice');
+        $docnum = $form->{invnumber};
+    } elsif ( defined $form->{ordnumber} ){
+        $doctype = $locale->text('Order');
+        $docnum = $form->{ordnumber};
+    }
+    $doctype = $locale->text('Invoice') if defined $form->{invnumber};
+    $doctype //= $locale->text('Order') if defined $form->{ordnumber};
     $form->{oldlanguage_code} = $form->{language_code};
 
     $form->{oldmedia} = $form->{media};
@@ -1031,8 +1040,18 @@ sub e_mail {
         qw(subject message sendmode format language_code action nextsub)
       )
     {
-        delete $form->{$_};
+        delete $form->{$_}; # reset to defaults
     }
+
+    $form->{subject} = $locale->text(
+           'Attached document for [_1] [_2]',
+           $doctype, $docnum
+    );
+    my @bcclist;
+    push @bcclist, $form->{bcc} if $form->{bcc};
+    push @bcclist, $cc->{default_email_bcc} if $cc->{default_email_bcc};
+    $form->{bcc} = join(', ', @bcclist);
+
 
     $hiddens{$_} = $form->{$_} for keys %$form;
 

@@ -189,16 +189,19 @@ sub add_vouchers {
             # incredibly bad form.
             # However, the code we are including is going to require it for now.
             # -- CT
-            { no strict; no warnings 'redefine'; do $script; }
+            require 'bin/bridge.pl'; ## no critic
+            $form->{script} = $script;
+            $form->{script} =~ s#^bin/##;
             lsmb_legacy::locale($locale);
             lsmb_legacy::form($form);
+            { no strict; no warnings 'redefine'; do $script; }
             $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 
             exit;
         }
+    } else {
+        $vouchers_dispatch->{$request->{batch_type}}{function}($request);
     }
-
-    $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
 =item list_batches

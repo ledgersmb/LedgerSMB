@@ -3,7 +3,7 @@
 
 requires 'perl', '5.10.1';
 
-requires 'App::LedgerSMB::Admin', '0.04';
+requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Simple';
@@ -24,7 +24,7 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject';
+requires 'PGObject', '1.402.9';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role', '1.12.1';
 requires 'PGObject::Type::BigFloat';

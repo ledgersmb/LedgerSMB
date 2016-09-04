@@ -83,6 +83,7 @@ LedgerSMB::Report::Invoices::Transactions for expected properties.
 
 sub  invoice_search{
     my ($request) = @_;
+    $request->{is_approved} //= 'Y'; # backwards-compatibility to 1.4
     # the line below is needed because we are using trinary boolean logic
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';

@@ -470,15 +470,10 @@ sub call_procedure {
 # Keeping this here due to common requirements
 sub is_allowed_role {
     my ($self, $args) = @_;
-    my @roles = @{$args->{allowed_roles}};
-    for my $role (@roles){
-        $self->{_role_prefix} = "lsmb_$self->{company}__" unless defined $self->{_role_prefix};
-        my @roleset = grep m/^$self->{_role_prefix}$role$/, @{$self->{_roles}};
-        if (scalar @roleset){
-            return 1;
-        }
-    }
-    return 0;
+    my ($access) =  $self->call_procedure(
+         procname => 'lsmb__is_allowed_role', args => [$args->{allowed_roles}]
+    );
+    return $access->{lsmb__is_allowed_role};
 }
 
 sub finalize_request {
@@ -571,20 +566,6 @@ sub _db_init {
         push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
           $ref->{field_def};
     }
-
-    # Adding role list to self
-    $self->{_roles} = [];
-    $query = "select rolname from pg_roles
-               where pg_has_role(SESSION_USER, 'USAGE')";
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute();
-    while (my @roles = $sth->fetchrow_array){
-        push @{$self->{_roles}}, $roles[0];
-    }
-
-    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
-    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
-    # @{$self->{_roles}} will eventually go away. --CT
 
     $sth->finish();
     $logger->debug("end");

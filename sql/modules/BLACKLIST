@@ -173,6 +173,7 @@ location_list_country
 lsmb__create_role
 lsmb__grant_exec
 lsmb__grant_role
+lsmb__is_allowed_role
 lsmb__max_date
 lsmb__min_date
 lsmb__role

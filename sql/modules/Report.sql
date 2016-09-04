@@ -291,11 +291,10 @@ FOR retval IN
                    OR (transdate >= in_from_date AND  in_to_date IS NULL)
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
-              AND (in_approved is false OR (g.approved AND ac.approved))
-              AND (in_from_amount IS NULL
-                   OR abs(ac.amount_bc) >= in_from_amount)
-              AND (in_to_amount IS NULL
-                   OR abs(ac.amount_bc) <= in_to_amount)
+              AND (in_approved is null OR
+                     (in_approved = g.approved AND (ac.approved or in_approved is false)))
+              AND (in_from_amount IS NULL OR abs(ac.amount_bc) >= in_from_amount)
+              AND (in_to_amount IS NULL OR abs(ac.amount_bc) <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
@@ -502,13 +501,20 @@ SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
 
 $$;
 
+DROP FUNCTION IF EXISTS report__aa_transactions
+(in_entity_class int, in_account_id int, in_entity_name text,
+ in_meta_number text,
+ in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
+ in_ponumber text, in_source text, in_description text, in_notes text,
+ in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
+ in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool);
 CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_entity_name text,
  in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text,
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
- in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool)
+ in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool, in_approved bool)
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
@@ -525,14 +531,16 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
-         WHERE in_entity_class = 2 and approved
+         WHERE in_entity_class = 2
+               and in_approved is null or (in_approved = approved)
          UNION
         SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
                notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap
-         WHERE in_entity_class = 1 and approved) a
+         WHERE in_entity_class = 1
+               and in_approved is null or (in_approved = approved)) a
   LEFT
   JOIN (select sum(amount_bc) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment

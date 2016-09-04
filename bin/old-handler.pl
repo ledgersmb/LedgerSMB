@@ -87,6 +87,10 @@ $form = new Form;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
+print 'Set-Cookie: "'
+    . $form->{"request.download-cookie"} . '"="downloaded"' . "\n"
+    if $form->{"request.download-cookie"};
+
 # name of this script
 my $script;
 if ($ENV{GATEWAY_INTERFACE} =~ /^CGI/){
