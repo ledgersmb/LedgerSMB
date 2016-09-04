@@ -50,7 +50,7 @@ table.form th.centered, th.centered {
 }
 
 table.criteria td {
-  text-align: right;
+  text-align: left;
 }
 
 #company_info, #version_info, #login_info {

@@ -84,14 +84,14 @@ $$
                 FROM voucher v
                 JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
-                JOIN chart c ON (a.chart_id = c.id)
+                JOIN account_link l ON (a.chart_id = l.account_id)
                 JOIN ap ON (ap.id = a.trans_id)
                 JOIN entity_credit_account cr
                         ON (ap.entity_credit_account = cr.id)
                 JOIN company co ON (cr.entity_id = co.entity_id)
                 WHERE v.batch_id = in_batch_id
                         AND a.voucher_id = v.id
-                        AND (bc.class like 'payment%' AND c.link = 'AP')
+                        AND (bc.class like 'payment%' AND l.description = 'AP')
                 GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
@@ -107,14 +107,14 @@ $$
                 FROM voucher v
                 JOIN acc_trans a ON (v.id = a.voucher_id)
                 JOIN batch_class bc ON (bc.id = v.batch_class)
-                JOIN chart c ON (a.chart_id = c.id)
+                JOIN account_link l ON (a.chart_id = l.account_id)
                 JOIN ar ON (ar.id = a.trans_id)
                 JOIN entity_credit_account cr
                         ON (ar.entity_credit_account = cr.id)
                 JOIN company co ON (cr.entity_id = co.entity_id)
                 WHERE v.batch_id = in_batch_id
                         AND a.voucher_id = v.id
-                        AND (bc.class like 'receipt%' AND c.link = 'AR')
+                        AND (bc.class like 'receipt%' AND l.description = 'AR')
                 GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
                         a.memo, v.batch_id, v.trans_id, a.transdate, bc.class
                 UNION ALL
@@ -191,9 +191,9 @@ $$
                                      ELSE 0
                                 END) AS transaction_total,
                         sum(
-                                CASE WHEN alc.link = 'AR' AND vc.id IN (6, 7)
+                                CASE WHEN alc.description = 'AR' AND vc.id IN (6, 7)
                                      THEN al.amount_bc
-                                     WHEN alc.link = 'AP' AND vc.id IN (3, 4)
+                                     WHEN alc.description = 'AP' AND vc.id IN (3, 4)
                                      THEN al.amount_bc * -1
                                      ELSE 0
                                 END
@@ -210,7 +210,7 @@ $$
                         ((vc.id = 5 AND v.trans_id = al.trans_id) OR
                                 (vc.id IN (3, 4, 6, 7)
                                         AND al.voucher_id = v.id))
-                LEFT JOIN chart alc ON (al.chart_id = alc.id)
+                LEFT JOIN account_link alc ON (al.chart_id = alc.account_id)
                 WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
                         (b.description LIKE
                                 '%' || in_description || '%' OR
@@ -431,8 +431,9 @@ BEGIN
         END IF;
         update ar set paid_deprecated = amount_bc +
                 (select sum(amount_bc) from acc_trans
-                join chart ON (acc_trans.chart_id = chart.id)
-                where link = 'AR' AND trans_id = ar.id
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AR' AND trans_id = ar.id
                         AND (voucher_id IS NULL OR voucher_id NOT IN
                                 (select id from voucher
                                 WHERE batch_id = in_batch_id)))
@@ -441,8 +442,9 @@ BEGIN
 
         update ap set paid_deprecated = amount_bc -
      (select sum(amount_bc) from acc_trans
-                join chart ON (acc_trans.chart_id = chart.id)
-                where link = 'AP' AND trans_id = ap.id
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AP' AND trans_id = ap.id
                         AND (voucher_id IS NULL OR voucher_id NOT IN
                                 (select id from voucher
                                 WHERE batch_id = in_batch_id)))
@@ -511,8 +513,9 @@ BEGIN
         ELSE
                 update ar set paid_deprecated = amount_bc +
                         (select sum(amount_bc) from acc_trans
-                        join chart ON (acc_trans.chart_id = chart.id)
-                        where link = 'AR' AND trans_id = ar.id
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AR' AND trans_id = ar.id
                                 AND (voucher_id IS NULL
                                 OR voucher_id <> voucher_row.id))
                 where id in (select trans_id from acc_trans
@@ -520,8 +523,9 @@ BEGIN
 
                 update ap set paid_deprecated = amount_bc -
         (select sum(amount_bc) from acc_trans
-                        join chart ON (acc_trans.chart_id = chart.id)
-                        where link = 'AP' AND trans_id = ap.id
+                join account ON (acc_trans.chart_id = account.id)
+                join account_link ON (account.id = account_link.account_id)
+                where account_link.description = 'AP' AND trans_id = ar.id
                                 AND (voucher_id IS NULL
                                 OR voucher_id <> voucher_row.id))
                 where id in (select trans_id from acc_trans

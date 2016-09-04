@@ -940,12 +940,13 @@ sub payment2 {
     # Got to build the account selection box first.
     @overpayment_account = $Payment->list_overpayment_accounting();
     # Now we build the structure for the UI
-    for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
-   if (!$request->{"overpayment_checkbox_$i"}) {
-     if ( $request->{"overpayment_topay_$i"} ) {
-     # Now we split the account selected options
-     my ($id, $accno, $description) = split(/--/, $request->{"overpayment_account_$i"});
-     my ($cashid, $cashaccno, $cashdescription  ) = split(/--/, $request->{"overpayment_cash_account_$i"});
+    $request->{overpayment_qty} //= 1;
+    for my $i (1 .. $request->{overpayment_qty}) {
+        if (!$request->{"overpayment_checkbox_$i"}) {
+            if ( $request->{"overpayment_topay_$i"} ) {
+                # Now we split the account selected options
+                my ($id, $accno, $description) = split(/--/, $request->{"overpayment_account_$i"});
+                my ($cashid, $cashaccno, $cashdescription  ) = split(/--/, $request->{"overpayment_cash_account_$i"});
 
                 push @overpayment, {
                     amount  => $request->{"overpayment_topay_$i"},
@@ -1147,9 +1148,9 @@ for my $ref (0 .. $#array_options) {
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
      my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
-     if ( LedgerSMB::PGNumber($sign * $array_options[$ref]->{due_fx})->from_input->bround($LedgerSMB::Company_Config::decimal_places)
+     if ( $sign * LedgerSMB::PGNumber->from_input($array_options[$ref]->{due_fx})->bround($LedgerSMB::Company_Config::decimal_places)
             <
-          LedgerSMB::PGNumber($sign * $request_topay_fx_bigfloat)->from_input->bround($LedgerSMB::Company_Config::decimal_places)
+          $sign * LedgerSMB::PGNumber->from_input($request_topay_fx_bigfloat)->bround($LedgerSMB::Company_Config::decimal_places)
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
          $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;
@@ -1359,6 +1360,7 @@ my @ui_selected_inv;
 my $exchangerate;
 my $ui_exchangerate;
 my @selected_checkboxes;
+my %seen_invoices;
 my $ui_to_use_subtotal = 0;
 my $ui_avble_subtotal = 0;
 my @hiddens;
@@ -1499,15 +1501,16 @@ while ($Payment->{"entity_id_$count"})
                discount        => $Payment->{"discount_$count"},
                            selected_accno     => {id        => $ovp_chart_id,
                                                     ovp_accno => $ovp_selected_accno},
-                           amount             => $Payment->{"amount_$count"}};
+                           amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
   }
   $count++;
 }
 
 
 #lets search which available invoice do we have for the selected entity
-if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
+if (($Payment->{"new_entity_id"} != $Payment->{"entity_credit_id"})&& !$Payment->{"new_checkbox"})
 {
+  $request->{entity_credit_id} = $Payment->{"new_entity_id"};
   #lets create an object who has the entity_credit_id of the selected entity
   $Selected_entity = LedgerSMB::DBObject::Payment->new({'base' => $Payment});
   $Selected_entity->{"invnumber"} = $Selected_entity->{new_invoice} ;
@@ -1558,7 +1561,7 @@ if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
                  discount          => "$avble_invoices[$ref]->{discount}",
                  selected_accno    => {    id       => $ovp_chart_id,
                                         ovp_accno => $ovp_selected_accno},
-                 amount        => $Selected_entity->{"new_amount"}}
+                 amount        => $Selected_entity->{"new_amount"}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
     }
   }
 }
@@ -1568,6 +1571,7 @@ if ($Payment->{"new_entity_id"} && !$Payment->{"new_checkbox"})
 @overpayments = $Payment->get_available_overpayment_amount();
 
 for my $ref (0 .. $#overpayments) {
+    no warnings 'uninitialized';
        push @ui_overpayments, {     id               =>  $overpayments[$ref]->{chart_id},
                                     accno          =>  $overpayments[$ref]->{accno},
                                     description    =>  $overpayments[$ref]->{description},
@@ -1615,6 +1619,7 @@ my $template =    LedgerSMB::Template->new(
           path     => 'UI/payments',
           template => 'use_overpayment2',
           format => 'HTML' );
+
 
 $template->render($ui);
 }

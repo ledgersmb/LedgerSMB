@@ -266,10 +266,8 @@ sub get_info {
                 $retval->{version} = '1.3dev';
            } elsif ($ref->{value} =~ /^1\.3\.999/ or $ref->{value} =~ /^1.4/){
                 $retval->{version} = "1.4";
-           } elsif ($ref->{value} =~ /^1\.3/){
-                $retval->{version} = '1.3';
-           } elsif ($ref->{value} =~ /^1\.5\./){
-                $retval->{version} = '1.5';
+           } elsif ($ref->{value} =~ /^(1\.\d+)/){
+                $retval->{version} = $1;
            }
            $dbh->rollback();
            return $retval;

@@ -134,11 +134,6 @@ def 'db_autoupdate',
     default => undef,
     doc => qq||;
 
-def 'return_accno',
-    section => 'main',
-    default => undef,
-    doc => qq||;
-
 def 'cache_templates',
     section => 'main',
     default => 0,

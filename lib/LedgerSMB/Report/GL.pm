@@ -26,7 +26,7 @@ searching for and reporting financial transactions.
 package LedgerSMB::Report::GL;
 use Moose;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
+with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
@@ -283,15 +283,6 @@ Full text search of description field of GL transaction
 
 has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
-=item approved
-
-Unless false, only matches approved transactions.  When false, matches all
-transactions.  This is the one exception to the general rule that undef matches
-all.
-
-=cut
-
-has 'approved' => (is => 'rw', isa => 'Maybe[Bool]');
 
 =item from_amount
 
@@ -337,6 +328,7 @@ sub run_report{
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);
+    $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__gl');
     for my $ref(@rows){
         if ($ref->{amount} < 0){

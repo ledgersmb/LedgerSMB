@@ -7,6 +7,7 @@ UI changes:
 * Full use of Dojo widgets (ErikH)
 * Compressed/compiled Dojo for better performance (JohnL)
 * Reports and screens can now be bookmarked (Chris T)
+* Optionally can add unapproved trans. to some reports (Chris T)
 
 Price Matrix Enhancements
 * Quantity discounts can be set in the pricematrix (Chris T)

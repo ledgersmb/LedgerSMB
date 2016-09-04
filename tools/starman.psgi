@@ -1,7 +1,12 @@
 #!/usr/bin/plackup
 
+
+
 BEGIN {
- if ( $ENV{'LSMB_WORKINGDIR'} && -f "$ENV{'LSMB_WORKINGDIR'}/lib/LedgerSMB.pm" ) { chdir $ENV{'LSMB_WORKINGDIR'}; }
+    if ( $ENV{'LSMB_WORKINGDIR'}
+         && -f "$ENV{'LSMB_WORKINGDIR'}/lib/LedgerSMB.pm" ) {
+        chdir $ENV{'LSMB_WORKINGDIR'};
+    }
 }
 
 package LedgerSMB::FCGI;
@@ -9,17 +14,23 @@ package LedgerSMB::FCGI;
 use FindBin;
 use lib $FindBin::Bin . "/../lib";
 use CGI::Emulate::PSGI;
+use LedgerSMB;
 use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
+use Plack::Middleware::Redirect;
 # Optimization
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 
-require Plack::Middleware::Pod if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
+require Plack::Middleware::Pod
+    if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
 
-die 'Cannot verify version of libraries, may be including out of date modules?' unless $LedgerSMB::PSGI::VERSION == '1.5';
+my $path = $INC{"LedgerSMB.pm"};
+my $version = $LedgerSMB::VERSION;
+die "Library verification failed (found $version from '$path', expected 1.6)"
+    unless $version =~ /^1\.6\./;
 
 # # Lets report to the console what type of dojo we are running with
 if ( $LedgerSMB::Sysconfig::dojo_built) {
@@ -32,6 +43,11 @@ my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();
 
 builder {
+
+    enable 'Redirect', url_patterns => [
+        qr/^\/?$/ => ['/login.pl',302]
+    ];
+
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
 

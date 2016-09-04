@@ -205,12 +205,15 @@ RETURNS BOOL
 LANGUAGE SQL AS
 $$
 
-    SELECT eoy_reopen_books(end_date)
-      FROM (SELECT end_date
+  WITH eoy_dates AS (
+      SELECT end_date
               FROM account_checkpoint
              WHERE end_date >= $1
-             GROUP BY end_date) eoy_dates
-  ORDER BY end_date;
+             GROUP BY end_date
+    ORDER BY end_date DESC
+    )
+    SELECT eoy_reopen_books(end_date)
+      FROM eoy_dates;
 
 SELECT CASE WHEN (SELECT count(*) > 0 from account_checkpoint
                    where end_date = $1 - 1)

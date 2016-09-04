@@ -96,7 +96,7 @@ sub edit {
         template => 'edit',
         format   => 'HTML'
     )->render({ request => $request,
-                template => $dbtemp });
+                to_edit => $dbtemp });
 }
 
 =head2 save($request)

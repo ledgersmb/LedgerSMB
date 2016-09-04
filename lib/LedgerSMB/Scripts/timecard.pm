@@ -147,6 +147,10 @@ sub save {
     $request->{jctype} ||= 1;
     $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
     $request->{checkedin} = $request->{transdate};
+    die $request->{_locale}->text('Please submit a start/end time or a qty')
+        unless defined $request->{qty}
+               or ($request->{checkedin} and $request->{checkedout});
+    $request->{qty} //= _get_qty($request->{checkedin}, $request->{checkedout});
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
@@ -154,6 +158,13 @@ sub save {
     $request->{templates} = ['timecard'];
     @{$request->{printers}} = %LedgerSMB::Sysconfig::printer; # List context
     display($request);
+}
+
+sub _get_qty {
+    my ($checkedin, $checkedout) = @_;
+    my $when_in = LedgerSMB::PGDate->from_input($checkedin);
+    my $when_out = LedgerSMB::PGDate->from_input($checkedout);
+    return ($when_in->epoch - $when_out->epoch) / 3600;
 }
 
 =item save_week

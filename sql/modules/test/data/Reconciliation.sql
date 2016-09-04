@@ -54,7 +54,7 @@ values (-213, 'Unapproved gl trans', '1000-01-03', false);
 INSERT INTO gl (id, reference, transdate, approved)
 values (-214, 'gl trans, unapproved lines', '1000-01-03', false);
 
-CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM chart WHERE accno = $1; $$ language sql;
+CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM account WHERE accno = $1; $$ language sql;
 
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-200, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10, '1');
