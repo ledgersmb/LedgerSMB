@@ -22,8 +22,10 @@ mapped from is_approved
 
 =cut
 
-has is_approved => (is => 'ro', isa => 'Str', required => 1);
-has approved => (is => 'ro', lazy => 1, builder => '_approved');
+has is_approved => (is => 'ro', isa => 'Str',
+                    default => 'Y');
+has approved => (is => 'ro', lazy => 1,
+                 builder => '_approved');
 
 my $_approval_map = {
    Y => 1,
