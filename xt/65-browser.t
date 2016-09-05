@@ -1,12 +1,18 @@
 #!perl
 
+use strict;
+use warnings;
+
 use Test::More;
 use YAML::Syck;
 
-my @missing = grep { ! $ENV{$_} } @reqenv;
-
-plan skip_all => join (' and ', @missing) . ' not set'
-    if @missing;
+# If we choose to depend on environment variables,
+# uncomment the next lines and initialize reqenv with their names
+#my @reqenv = qw();
+#my @missing = grep { ! $ENV{$_} } @reqenv;
+#
+#plan skip_all => join (' and ', @missing) . ' not set'
+#    if @missing;
 
 plan tests => 2;
 require Selenium::Remote::Driver;
