@@ -18,7 +18,7 @@ plan tests => 2;
 require Selenium::Remote::Driver;
 
 my $config_data_whole = LoadFile('t/.pherkin.yaml');
-my $selenium = $config_data_whole->{default}->{extensions}->{Pherkin::Extension::Weasel}->{sessions}->{selenium};
+my $selenium = $config_data_whole->{default}->{extensions}->{"Pherkin::Extension::Weasel"}->{sessions}->{selenium};
 
 my $browser = $selenium->{driver}->{caps}->{browser_name} =~ /\$\{([^\}]+)\}/
           ? $ENV{$1} // "phantomjs"
