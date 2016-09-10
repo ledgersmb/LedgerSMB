@@ -19,6 +19,7 @@ use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;
 use Plack::App::File;
+use Plack::Middleware::Redirect;
 # Optimization
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
@@ -42,6 +43,11 @@ my $old_app = LedgerSMB::PSGI::old_app();
 my $new_app = LedgerSMB::PSGI::new_app();
 
 builder {
+
+    enable 'Redirect', url_patterns => [
+        qr/^\/?$/ => ['/login.pl',302]
+    ];
+
     enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
         'ConditionalGET';
 
