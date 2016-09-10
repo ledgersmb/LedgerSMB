@@ -295,7 +295,7 @@ sub display_form
         $a{approve} = 1;
         $a{edit_and_save} = 1;
         $a{update} = 1;
-        if ($form->is_allowed_role(['draft_modify']));
+        if ($form->is_allowed_role(['draft_modify'])){
             $button{edit_and_save} = {
             ndx   => 4,
             key   => 'O',
