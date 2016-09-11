@@ -1,7 +1,7 @@
 #!perl
 
 
-requires 'perl', '5.10.1';
+requires 'perl', '5.14.0';
 
 requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
