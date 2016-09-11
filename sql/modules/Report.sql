@@ -529,14 +529,14 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2
-               and in_approved is null or (in_approved = approved)
+               and (in_approved is null or (in_approved = approved))
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap
          WHERE in_entity_class = 1
-               and in_approved is null or (in_approved = approved)) a
+               and (in_approved is null or (in_approved = approved))) a
   LEFT
   JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
