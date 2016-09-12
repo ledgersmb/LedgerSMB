@@ -68,7 +68,8 @@ sub wait_for_content {
                     #  it's not out of scope yet...
                     $gone = 0;
                 };
-                return 0 if ! $gone;
+                $old_content = undef if $gone;
+                return 0;
             }
             my $elem = $self->session->page->find('#maindiv.done-parsing',
                                                   scheme => 'css');
