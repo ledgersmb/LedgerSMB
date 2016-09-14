@@ -56,9 +56,22 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.34
+* Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.33
 * Fixed issue with COA overview and tax accounts (Chris T, #2030)
 * Fixed issue with outstanding reversing amount and total (Chris T, #2031)
+* Fixed "save draft" buttons not showing (Chris T, #994)
+* Fixed error reopening books across multiple closings (Chris T #2025)
+* Fixed moose error in timecard with qty mising (Chris T, #2048)
+
+Chris T is Chris Travers
+
 
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
