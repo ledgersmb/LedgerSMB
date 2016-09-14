@@ -1,5 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' titlebar = text("Balance Sheet")
-	   include_script = ['UI/Reports/filters/dynamic_report_fields.js'];
+           include_script = ['UI/Reports/filters/dynamic_report_fields.js'];
        PROCESS 'elements.html';
        PROCESS 'report_base.html'; ?>
 <body onLoad="init_balance_sheet()" class="<?lsmb dojo_theme ?>">
@@ -41,7 +41,7 @@ HIERARCHY_SETUP = earn_id;
 IF HIERARCHY_SETUP;
     full_checked = 'CHECKED';
     full_disabled = undef;
-    legacy_checked = 'undef';
+    legacy_checked = undef;
 ELSE;
     full_disabled = 'DISABLED';
     full_checked = undef;
@@ -100,7 +100,7 @@ END;
 PROCESS input element_data={
     type = 'radio',
     name = 'comparison_type',
-	  id = 'comparison_by_periods',
+          id = 'comparison_by_periods',
    value = 'by_periods',
    label = text('Periods'),
  checked = YES,
@@ -133,18 +133,18 @@ PROCESS date_period_div;
        <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="inputrow">
        <?lsmb FOREACH c IN [1 .. 9]; ?>
-	  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
-	     <?lsmb
-		PROCESS input element_data = {
-			   label = text('Through date') #'
-			    name = 'to_date_' _ c
-			   value = to_date
-			   class = 'date'
-			    size = 12
-		};
-	     ?>
-	  </div>
-	<?lsmb END ?>
+          <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+             <?lsmb
+                PROCESS input element_data = {
+                           label = text('Through date') #'
+                            name = 'to_date_' _ c
+                           value = to_date
+                           class = 'date'
+                            size = 12
+                };
+             ?>
+          </div>
+        <?lsmb END ?>
        </div>
    </div>
 </div>
