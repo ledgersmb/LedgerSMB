@@ -1135,10 +1135,10 @@ sub update {
                     $form->{"${_}_base"} = 0;
                 }
                 for ( split / /, $form->{"taxaccounts_$i"} ) {
-                    $form->{"${_}_base"} += $amount;
+                    $form->{"${_}_base"} //= LedgerSMB::PGNumber->from_db(0);
+                    $form->{"${_}_base"} += $amount if $amount;
                 }
-
-                $form->{creditremaining} -= $amount;
+                $form->{creditremaining} -= $amount if $amount;
 
                 for (qw(sellprice listprice)) {
                     $form->{"${_}_$i"} =
