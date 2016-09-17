@@ -116,6 +116,7 @@ sub _calc_taxes {
             $form->{"sellprice_$i"} -= $amount / $form->{"qty_$i"};
         }
         else {
+            $tax //= LedgerSMB::PGNumber->from_db(0);
             $tax += $amount =
               Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
             $fxtax +=
