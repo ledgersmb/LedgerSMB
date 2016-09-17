@@ -131,7 +131,8 @@ sub price_matrix {
             $ref->{sellprice} = $sellprice;
             if ($mref->{qty} > ($form->{qtycache}->{$ref->{id}} // 0)){
                 for my $i (1 .. $form->{rowcount}){
-                    $form->{"sellprice_$i"} = $sellprice;
+                    $form->{"sellprice_$i"} = $sellprice if $ref->{id} == $form->{"id_$i"};
+                    $form->{"sellprice_$form->{rowcount}"} = $sellprice if $form->{rowcount};
                 }
             }
        } elsif ($form->{vendor_id}){
