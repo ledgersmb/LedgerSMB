@@ -56,13 +56,15 @@ my $harness = Test::BDD::Cucumber::Harness::TestBuilder->new(
 my $tagspec = Test::BDD::Cucumber::Model::TagSpec->new(
     tags => [ not => 'wip' ],
     );
+
 for my $directory (qw(
-      01-basic
-      11-ar
+      xt
+      xt/66-cucumber/01-basic
+      xt/66-cucumber/11-ar
 ))
 {
     my ( $executor, @features ) =
-        Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
+        Test::BDD::Cucumber::Loader->load($directory);
     die "No features found" unless @features;
     $executor->add_extensions(@extensions);
     Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )

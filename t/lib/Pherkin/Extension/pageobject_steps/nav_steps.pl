@@ -20,6 +20,13 @@ my %pages = (
     "edit user"           => "PageObject::Setup::EditUser",
     );
 
+When qr/I navigate to the application root/, sub {
+    my $module = "PageObject::App::Login";
+
+    use_module($module);
+    S->{page} = $module->open(S->{ext_wsl})->verify;
+};
+
 When qr/I navigate to the (.*) page/, sub {
     my $page = $1;
     die "Unknown page '$page'"
