@@ -186,7 +186,9 @@
                     };
                 ?>
                 <div id='date_period_id' >
-                    <?lsmb PROCESS date_period_type_div; ?>
+                    <?lsmb PROCESS date_period_type_div
+                                   required = true
+                    ; ?>
                 </div>
                 <?lsmb
                     PROCESS business_classes;
