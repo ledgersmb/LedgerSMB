@@ -89,7 +89,6 @@ feature 'xls', "Microsoft Excel" =>
         requires 'Spreadsheet::WriteExcel';
         requires 'Excel::Writer::XLSX';
 };
-
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
@@ -106,6 +105,7 @@ on 'develop' => sub {
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
+    requires 'Test::ParallelSubtest';
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
