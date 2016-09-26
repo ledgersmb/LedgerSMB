@@ -27,4 +27,3 @@ default:
                   browser_name: ${BROWSER}
       Pherkin::Extension::PageObject:
          dummy: 1
-
