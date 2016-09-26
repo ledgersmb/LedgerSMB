@@ -1,6 +1,7 @@
 # run on GCE build as per suggested:
 # https://github.com/travis-ci/travis-ci/issues/3251#issuecomment-219675294
 sudo: required
+dist: trusty
 language: perl
 env:
   global:
