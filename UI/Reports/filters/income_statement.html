@@ -187,6 +187,7 @@
                 ?>
                 <div id='date_period_id' >
                     <?lsmb PROCESS date_period_type_div
+                                      label = text('Period type')
                                    required = true
                     ; ?>
                 </div>
@@ -196,12 +197,12 @@
                 <div class="input_row">
                     <?lsmb INCLUDE date_from_date_div
                                  required = 'true'
-                        "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'
+                        "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot from date!') _ '''"'
                     ; ?>
                     <div id="comparison_dates_to">
                        <?lsmb INCLUDE date_to_date_div
                                  required = 'false'
-                        "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'
+                        "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot to date!') _ '''"'
                     ; ?>
                     </div>
                 </div>
@@ -217,12 +218,12 @@
                         <?lsmb INCLUDE date_from_date_div
                                         label = text('From')
                                      required = 'false'
-                            "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'
+                            "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot from date!') _ '''"'
                                        SUFFIX = '_' _ c; ?>
                         <?lsmb INCLUDE date_to_date_div
                                         label = text('To')
                                      required = 'false'
-                            "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'
+                            "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot to date!') _ '''"'
                                        SUFFIX = '_' _ c; ?>
                       </div>
                    <?lsmb END ?>
