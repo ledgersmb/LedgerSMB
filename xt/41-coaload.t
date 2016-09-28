@@ -5,7 +5,7 @@ use warnings;
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
 plan skip_all => (join ', ', @missing) . ' not set' if @missing;
 
-open FILES, '<', 'xt/data/41-coaload.t';
+open FILES, '<', 'xt/data/41-coaload-LOADORDER';
 my @files = grep { /^[^#]/ } <FILES>;
 close FILES;
 
