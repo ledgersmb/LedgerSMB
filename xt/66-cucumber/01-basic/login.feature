@@ -8,11 +8,10 @@ Background:
   Given a user named "Admin" with a password "a6m1n"
 
 
-Feature: Test redirection
-
 Scenario: Redirecting / to /login.pl
   When I navigate to the application root
   Then I should see the application login page
+
 
 Scenario: Viewing setup.pl
   When I navigate to the setup login page
