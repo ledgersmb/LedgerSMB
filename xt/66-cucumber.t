@@ -58,13 +58,12 @@ my $tagspec = Test::BDD::Cucumber::Model::TagSpec->new(
     );
 
 for my $directory (qw(
-      xt
-      xt/66-cucumber/01-basic
-      xt/66-cucumber/11-ar
+      01-basic
+      11-ar
 ))
 {
     my ( $executor, @features ) =
-        Test::BDD::Cucumber::Loader->load($directory);
+        Test::BDD::Cucumber::Loader->load('xt/66-cucumber/' . $directory);
     die "No features found" unless @features;
     $executor->add_extensions(@extensions);
     Test::BDD::Cucumber::Loader->load_steps( $executor, $_ )
