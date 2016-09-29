@@ -1,4 +1,4 @@
 [Modules::ProhibitEvilModules]
-modules = Carp::Always Data::Dumper
+modules = Carp::Always Data::Dumper Data::Printer
     [CodeLayout::ProhibitHardTabs]
     allow_leading_tabs = 0
