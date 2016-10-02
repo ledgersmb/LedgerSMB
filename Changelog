@@ -60,6 +60,7 @@ Released 2014-09-15
 Changelog for 1.4.34
 * Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
 * Fixed PNL hierarchies both selected (Erik H, #2147)
+* Fixed error at bottom of invoice, under Starman (Erik H)
 
 Erik H is Erik Huelsmann
 
