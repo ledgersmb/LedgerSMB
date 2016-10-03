@@ -90,6 +90,15 @@ sub new_app {
        });
 }
 
+
+=item psgi_app
+
+Implements a PSGI application for the purpose of calling the entry-points
+in LedgerSMB::Scripts::*.
+
+=cut
+
+
 sub psgi_app {
     my $env = shift;
 
@@ -105,6 +114,7 @@ sub psgi_app {
         ( map { $_ => $env->{$_} }
           grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
     };
+    # End of CGI::Emulate::PSGI
 
     local %ENV = ( %ENV, %$environment );
     my $uri = $env->{REQUEST_URI};
@@ -180,8 +190,6 @@ sub psgi_app {
     push @$headers, ( 'Set-Cookie' =>
                       $request->{'request.download-cookie'} . '=downloaded' )
         if $request->{'request.download-cookie'};
-    print "Status: $status\n";
-    print "Headers: " . Data::Dumper::Dumper($headers) . "\n";
     return [ $status, $headers, $body ];
 }
 

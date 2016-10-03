@@ -118,6 +118,19 @@ no output file is created, the output is held in $self->{output}.
 
 Currently email and server-side printing are not supported.
 
+=item render_to_psgi( $variables, extra_headers => \@headers)
+
+Like C<render>, but instead of printing to STDOUT, returns
+a PSGI return value triplet (status, headers and body).
+
+Note that the only guarantee here is that the triplet can
+be used as a PSGI return value which means that the body
+is *not* restricted to being an array of strings.
+
+When C<extra_headers> is specified, these are included in
+the headers part of returned triplet.
+
+
 =item output
 
 This function outputs the rendered file in an appropriate manner.
@@ -372,21 +385,6 @@ sub render {
     return $post;
 }
 
-
-=item render_to_psgi( $variables, extra_headers => \@headers)
-
-Like C<render>, but instead of printing to STDOUT, returns
-a PSGI return value triplet (status, headers and body).
-
-Note that the only guarantee here is that the triplet can
-be used as a PSGI return value which means that the body
-is *not* restricted to being an array of strings.
-
-When C<extra_headers> is specified, these are included in
-the headers part of returned triplet.
-
-
-=cut
 
 sub render_to_psgi {
     my $self = shift @_;
