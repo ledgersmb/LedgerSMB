@@ -15,6 +15,7 @@ use FindBin;
 use lib $FindBin::Bin . "/../lib";
 use CGI::Emulate::PSGI;
 use LedgerSMB;
+use LedgerSMB::Auth;
 use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
 use Plack::Builder;

@@ -52,7 +52,14 @@ sub __default {
     my ($request) = @_;
 
     if ($request->{cookie} && $request->{cookie} ne 'Login') {
-        $request->_db_init();
+        if (! $request->_db_init()) {
+            LedgerSMB::Auth::credential_prompt;
+        }
+        if (! $request->verify_session()) {
+            $request->_get_password("Session expired");
+        }
+        print "Set-Cookie: $request->{_new_session_cookie_value}\n"
+            if $request->{_new_session_cookie_value};
         $request->initialize_with_db();
         LedgerSMB::Scripts::menu::root_doc($request);
         return;
@@ -97,7 +104,9 @@ sub authenticate {
         if (!$request->{company}){
              $request->{company} = $LedgerSMB::Sysconfig::default_db;
         }
-        $request->_db_init;
+        if (! $request->_db_init) {
+            LedgerSMB::Auth::credential_prompt;
+        }
     }
     my $path = $ENV{SCRIPT_NAME};
     $path =~ s|[^/]*$||;

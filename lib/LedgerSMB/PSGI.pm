@@ -155,7 +155,22 @@ sub psgi_app {
 
             if (!$no_db
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
-                $request->_db_init();
+                if (! $request->_db_init()) {
+                    ($status, $headers, $body) =
+                        ( 401,
+                          [ 'Content-Type' => 'text/plain; charset=utf-8',
+                            'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
+                          [ 'Please enter your credentials' ]
+                        );
+                    return; # exit 'try' scope
+                }
+                if (! $request->verify_session()) {
+                    ($status, $headers, $body) =
+                        ( 303, # Found, GET other
+                          [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
+                          [] );
+                    return; # exit 'try' scope
+                }
                 $request->initialize_with_db();
             }
         }
@@ -175,21 +190,26 @@ sub psgi_app {
         eval {
             LedgerSMB::App_State->cleanup();
         };
-        return [ 500,
-                 [ 'Content-Type' => 'text/html; charset=utf-8' ],
-                 [ qq|<html>
+        if ($error !~ /^Died at/) {
+            ($status, $headers, $body) =
+                 ( 500,
+                   [ 'Content-Type' => 'text/html; charset=utf-8' ],
+                   [ qq|<html>
 <body><h2 class="error">Error!</h2> <p><b>$_</b></p>
 <p>dbversion: $request->{dbversion}, company: $request->{company}</p>
 </body>
 </html>
 | ]
-            ]
-            unless $error =~ /^Died at/;
+                 );
+             }
     };
 
     push @$headers, ( 'Set-Cookie' =>
                       $request->{'request.download-cookie'} . '=downloaded' )
         if $request->{'request.download-cookie'};
+    push @$headers, ( 'Set-Cookie' =>
+                      $request->{_new_session_cookie_value} )
+        if $request->{_new_session_cookie_value};
     return [ $status, $headers, $body ];
 }
 
