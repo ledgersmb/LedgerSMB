@@ -280,7 +280,7 @@ sub defaults_screen{
         user => $LedgerSMB::App_State::User,
         locale => $request->{_locale},
         template => 'Configuration/settings');
-    $template->render({
+    return $template->render_to_psgi({
         form => $request,
         # hiddens => \%hiddens,
         selects => \%selects,
@@ -310,11 +310,11 @@ sub sequence_screen {
         }
     ++$count;
     }
-    LedgerSMB::Template->new_UI(
+    return LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User,
         locale => $locale,
-        template => 'Configuration/sequence')->render($request);
-
+        template => 'Configuration/sequence')
+        ->render_to_psgi($request);
 }
 
 =item save_defaults
@@ -342,7 +342,7 @@ sub save_defaults {
         $request->{$skey} =~ s/--.*$// if $skey =~ /accno_id/;
         $setting_handle->set($skey, $request->{$skey});
     }
-    defaults_screen($request);
+    return defaults_screen($request);
 }
 
 =item save_sequences

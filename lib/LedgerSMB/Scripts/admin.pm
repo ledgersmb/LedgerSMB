@@ -73,15 +73,14 @@ sub list_sessions {
         ++$rowcount;
     }
     $admin->{title} = $request->{_locale}->text('Active Sessions');
-    $template->render({
-    form    => $admin,
-    columns => $columns,
-    heading => $column_heading,
-        rows    => $rows,
-    buttons => [],
-    hiddens => [],
+    return $template->render_to_psgi({
+       form    => $admin,
+       columns => $columns,
+       heading => $column_heading,
+       rows    => $rows,
+       buttons => [],
+       hiddens => [],
     });
-
 }
 
 =item delete_session
@@ -94,7 +93,7 @@ sub delete_session {
     my ($request) = @_;
     my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     $admin->delete_session();
-    list_sessions($request);
+    return list_sessions($request);
 }
 
 =back
