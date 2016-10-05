@@ -79,7 +79,7 @@ in LedgerSMB::Scripts::*
 
 sub new_app {
    return CGI::Emulate::PSGI->handler(
-        sub {
+       sub {
            my $uri = $ENV{REQUEST_URI};
            local $ENV{SCRIPT_NAME} = $uri;
            my $script = $uri;
@@ -103,7 +103,8 @@ sub psgi_app {
     my $env = shift;
 
     # Taken from CGI::Emulate::PSGI
-    no warnings;
+    #no warnings;
+    local *STDIN = $env->{'psgi.input'};
     my $environment = {
         GATEWAY_INTERFACE => 'CGI/1.1',
         HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
@@ -117,15 +118,13 @@ sub psgi_app {
     # End of CGI::Emulate::PSGI
 
     local %ENV = ( %ENV, %$environment );
-    my $uri = $env->{REQUEST_URI};
-    local $ENV{SCRIPT_NAME} = $uri;
 
     my $request = LedgerSMB->new();
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
 
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*)\.pl(\?.*)?$/;
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\\?]*)\.pl$/;
     my $script = "LedgerSMB::Scripts::$1";
     $request->{_script_handle} = $script;
 
