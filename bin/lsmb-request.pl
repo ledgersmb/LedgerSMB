@@ -93,7 +93,14 @@ sub call_script {
     }
 
     if (! ($no_db || $script->can('no_db'))) {
-        $request->_db_init();
+        if (! $request->_db_init) {
+            LedgerSMB::Auth::credential_prompt;
+        }
+        if (! $request->verify_session()) {
+            $request->_get_password("Session expired");
+        }
+        print "Set-Cookie: $request->{_new_session_cookie_value}\n"
+            if $request->{_new_session_cookie_value};
         $request->initialize_with_db();
     }
 

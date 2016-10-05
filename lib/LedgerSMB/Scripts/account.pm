@@ -41,7 +41,7 @@ sub new {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Add Account');
     $request->{charttype} = 'A';
-    _display_account_screen($request);
+    return _display_account_screen($request);
 }
 
 =item edit
@@ -68,7 +68,7 @@ sub edit {
     }
     $acc->{title} = $request->{_locale}->text('Edit Account');
     $acc->{_locale} = $request->{_locale};
-    _display_account_screen($acc);
+    return _display_account_screen($acc);
 }
 
 =item save
@@ -100,7 +100,7 @@ sub save {
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
     $account->save;
-    edit($account);
+    return edit($account);
 }
 
 =item update_translations
@@ -121,7 +121,7 @@ sub update_translations {
     }
 
     $account->save_translations;
-    edit($account);
+    return edit($account);
 }
 
 =item save_as_new
@@ -133,7 +133,7 @@ Saves as a new account.  Deletes the id field and then calls save()
 sub save_as_new {
     my ($request) = @_;
     $request->{id} = undef;
-    save($request);
+    return save($request);
 }
 
 # copied from AM.pm.  To be refactored.
@@ -197,13 +197,12 @@ sub _display_account_screen {
         format => 'HTML',
         path   => 'UI',
         template => 'accounts/edit');
-    $template->render({
+    return $template->render_to_psgi({
         form => $form,
         checked => $checked,
         buttons => $buttons,
         hiddens => $hiddens,
     });
-
 }
 
 =item yearend_info
@@ -223,8 +222,8 @@ sub yearend_info {
         locale => $request->{_locale},
         template => 'accounts/yearend'
     );
-    $template->render({ request => $request,
-                        eoy => $eoy});
+    return $template->render_to_psgi({ request => $request,
+                                       eoy => $eoy});
 }
 
 =item post_yearend
@@ -248,8 +247,7 @@ sub post_yearend {
         locale => $request->{_locale},
         template => 'accounts/yearend_complete'
     );
-    $template->render($eoy);
-
+    return $template->render_to_psgi($eoy);
 }
 
 =item close_period
@@ -267,7 +265,7 @@ sub close_period {
     my $eoy = LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->checkpoint_only;
     delete $request->{period_close_date};
-    yearend_info($request);
+    return yearend_info($request);
 }
 
 
@@ -282,7 +280,7 @@ sub reopen_books {
     my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->reopen_books;
     delete $request->{reopen_date};
-    yearend_info($request);
+    return yearend_info($request);
 }
 
 =back
