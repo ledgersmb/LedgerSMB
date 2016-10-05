@@ -68,7 +68,8 @@ builder {
              'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
              'is.pl', 'oe.pl', 'pe.pl');
 
-    mount "/account.pl" => $psgi_app;
+    mount "/$_" => $psgi_app
+          for ('account.pl', 'login.pl', 'menu.pl');
 
     mount "/$_" => $new_app
         for  (@LedgerSMB::Sysconfig::newscripts);
