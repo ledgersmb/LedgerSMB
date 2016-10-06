@@ -70,7 +70,8 @@ builder {
 
     mount "/$_" => $psgi_app
           for ('account.pl', 'admin.pl', 'configuration.pl',
-               'file.pl', 'login.pl', 'menu.pl', 'parts.pl');
+               'file.pl', 'login.pl', 'menu.pl', 'parts.pl', 'payroll.pl',
+               );
 
     mount "/$_" => $new_app
         for  (@LedgerSMB::Sysconfig::newscripts);
