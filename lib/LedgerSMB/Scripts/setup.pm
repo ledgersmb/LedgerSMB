@@ -386,11 +386,11 @@ sub run_backup {
        $backupfile = $database->backup;
        $mimetype   = 'application/octet-stream';
     } else {
-        die $request->{_locale}->text('Invalid backup request'));
+        die $request->{_locale}->text('Invalid backup request');
     }
 
     $backupfile or
-        die $request->{_locale}->text('Error creating backup file'));
+        die $request->{_locale}->text('Error creating backup file');
 
     if ($request->{backup_type} eq 'email'){
         # suppress warning of single usage of $LedgerSMB::Sysconfig::...
@@ -428,7 +428,7 @@ sub run_backup {
                         "attachment; filename=\"$attachment_name\"" ],
                  $bak ];  # return the file-handle
      } else {
-        die $request->{_locale}->text("Don't know what to do with backup"));
+        die $request->{_locale}->text("Don't know what to do with backup");
     }
 }
 
