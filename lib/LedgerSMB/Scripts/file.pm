@@ -34,7 +34,6 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
-use CGI::Simple;
 
 our $fileclassmap = {
    1   => 'LedgerSMB::File::Transaction',
@@ -53,22 +52,22 @@ sub get {
     $file->file_class($request->{file_class});
     $file->get();
 
-    my $cgi = CGI::Simple->new();
     $file->get_mime_type;
     if ($file->mime_type_text eq 'text/x-uri'){
-        print $cgi->redirect($file->content);
-        return 0;
+        return [ 303,  # Found
+                 [ 'Location' => $file->content ],
+                 [] ];
     }
-    binmode (STDOUT, ':bytes');
 
-    print $cgi->header(
-          -type       => $file->get_mime_type,
-          -status     => '200',
-          -charset    => 'utf-8',
-          -attachment => $file->file_name,
-    );
-    print $file->content;
+    my $mime_type = $file->get_mime_type;
+    $mime_type .= '; charset=utf-8'
+        if $mime_type =~ /^text\//;
 
+    return [ 200,
+             [ 'Content-Type' => $mime_type,
+               'Content-Disposition' =>
+                   'attachment; filename="' . $file->file_name . '"' ],
+             [ $file->content ] ];
 }
 
 =item show_attachment_screen
@@ -87,7 +86,7 @@ sub show_attachment_screen {
         template => 'attachment_screen',
         format   => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item attach_file
@@ -121,15 +120,17 @@ sub attach_file {
     }
     $request->{content} = $file->content;
     $file->attach;
-    my $cgi = CGI::Simple->new;
-    print $cgi->redirect($request->{callback});
+
+    return [ 303,  # Found
+             [ 'Location' => $request->{callback} ],
+             [ ] ];
 }
 
 =back
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
+Copyright (C) 2011-2016 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 
