@@ -241,7 +241,7 @@ sub render_to_psgi {
 sub _render {
     my ($self, $request) = @_;
     my $template;
-    my %args = { @_ };
+    my %args = ( @_ );
 
 
     my $testref = $self->rows;
