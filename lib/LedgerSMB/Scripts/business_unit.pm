@@ -44,7 +44,7 @@ sub list_classes {
         template => 'list_classes',
         format => 'HTML'
     );
-    $template->render({request => $request});
+    return $template->render_to_psgi({request => $request});
 }
 
 =item add
@@ -66,7 +66,7 @@ sub add {
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
-    _display($request);
+    return _display($request);
 }
 
 =item edit
@@ -83,7 +83,7 @@ sub edit {
     my $bu = $b_unit->get($request->{id});
     @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
 
-    _display($bu);
+    return _display($bu);
 }
 
 sub _display {
@@ -95,7 +95,7 @@ sub _display {
         template => 'edit',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 
 }
 
@@ -129,7 +129,8 @@ If set, excludes those which are not associated with customers/vendors.
 
 sub list {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::Business_Unit->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::Business_Unit->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item delete
@@ -145,7 +146,7 @@ sub delete {
     my ($request) = @_;
     my $unit = LedgerSMB::Business_Unit->new(%$request);
     $unit->delete;
-    list($request);
+    return list($request);
 }
 
 =item delete_class
@@ -160,7 +161,7 @@ sub delete_class {
     my ($request) = @_;
     my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
     $bu_class->delete;
-    list_classes($request);
+    return list_classes($request);
 }
 
 =item save
@@ -186,7 +187,7 @@ sub save {
     my $unit = LedgerSMB::Business_Unit->new(%$request);
     $unit->save;
     $request->{message} = $request->{_locale}->text("Added id [_1]", $unit->id);
-    add($request);
+    return add($request);
 }
 
 =item save_class
@@ -214,7 +215,7 @@ sub save_class {
     my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
     $bu_class->modules($modlist);
     $bu_class->save;
-    list_classes($request);
+    return list_classes($request);
 }
 
 =back
