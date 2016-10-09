@@ -391,7 +391,7 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
 }
 
 sub check_permissions {
-    use English -no_match_vars;
+    use English qw(-no_match_vars);
 
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
 
