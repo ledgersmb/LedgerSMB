@@ -393,6 +393,8 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
 sub check_permissions {
     use English;
 
+    my $tempdir = LedgerSMB::Sysconfig::tempdir();
+
     sub die_pretty {
         my $dieHeader = '==============================================================================';
         my $msg = "== " . join("\n== ",@_);
