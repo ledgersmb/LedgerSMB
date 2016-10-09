@@ -218,6 +218,10 @@ if(!(-d "$tempdir")){
      }
 }
 
+if (! defined $EUID) {
+    my $EUID = $>;
+}
+
 if(!(-d "$tempdir")){
     die("$tempdir wasn't created. Does UID $EUID have access to $tempdir's parent?");
 }
