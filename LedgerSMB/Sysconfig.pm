@@ -219,7 +219,7 @@ if(!(-d "$tempdir")){
 }
 
 sub check_permissions {
-    use English;
+    use English qw(-no_match_vars);
 
     sub die_pretty {
         my $dieHeader = '==============================================================================';
