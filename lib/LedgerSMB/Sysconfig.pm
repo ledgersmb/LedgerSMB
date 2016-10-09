@@ -390,4 +390,42 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
      }
 }
 
+sub check_permissions {
+    use English qw(-no_match_vars);
+
+    my $tempdir = LedgerSMB::Sysconfig::tempdir();
+
+    sub die_pretty {
+        my $dieHeader = '==============================================================================';
+        my $msg = "== " . join("\n== ",@_);
+        die("$dieHeader\n$msg\n$dieHeader\n "); # trailing "<space>" prevents the location hint from being lost when pushing it to a newline
+    }
+
+    if(!(-d "$tempdir")){
+        die_pretty( "$tempdir wasn't created.",
+                    "Does UID $EUID have access to $tempdir\'s parent?"
+        );
+    }
+
+    if(!(-r "$tempdir")){
+        die_pretty(" $tempdir can't be read from.",
+                    "Does UID $EUID have read permission?"
+        );
+    }
+
+    if(!(-w "$tempdir")){
+        die_pretty( "$tempdir can't be written to.",
+                    "Does UID $EUID have write permission?"
+        );
+    }
+
+    if(!(-x "$tempdir")){
+        die_pretty( "$tempdir can't be listed.",
+                    "Does UID $EUID have execute permission?"
+        );
+    }
+}
+
+check_permissions;
+
 1;
