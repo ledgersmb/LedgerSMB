@@ -218,4 +218,22 @@ if(!(-d "$tempdir")){
      }
 }
 
+if(!(-d "$tempdir")){
+    die("$tempdir wasn't created. Does UID $EUID have access to $tempdir's parent?");
+}
+
+if(!(-r "$tempdir")){
+    die("$tempdir can't be read from. Does UID $EUID have read permission?");
+}
+
+if(!(-w "$tempdir")){
+    die("$tempdir can't be written to. Does UID $EUID have write permission?");
+}
+
+if(!(-x "$tempdir")){
+    die("$tempdir can't be listed. Does UID $EUID have execute permission?");
+}
+
+
+
 1;
