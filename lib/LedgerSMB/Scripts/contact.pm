@@ -869,8 +869,6 @@ sub save_pricelist {
 
     my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
     my @lines;
-    my $redirect_to_selection = 0;
-    my $psearch;
 
     # Search and populate
     if (defined $request->{"int_partnumber_tfoot_$count"}
@@ -905,13 +903,7 @@ sub save_pricelist {
 
     $pricelist->save(\@lines);
 
-    # Return to UI
-    if (!$redirect_to_selection){
-        get_pricelist($request);
-    } else {
-        $request->{search_redirect} = 'pricelist_search_handle';
-        $psearch->render($request);
-   }
+    return get_pricelist($request);
 }
 
 
