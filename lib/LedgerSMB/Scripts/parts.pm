@@ -55,10 +55,10 @@ sub partslist_json {
         map { $_->{label} = $_->{partnumber} . '--' . $_->{description}; $_ }
         @$items;
     my $json = LedgerSMB::REST_Format::json->to_output($items);
-    my $cgi = CGI::Simple->new();
-    binmode STDOUT, ':raw';
-    print $cgi->header('application/json;charset=UTF-8', '200 Success');
-    $cgi->put($json);
+
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=utf-8' ],
+             [ $json ] ];
 }
 
 1;
