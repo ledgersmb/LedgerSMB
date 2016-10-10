@@ -34,7 +34,8 @@ Lists the templates.
 
 sub list {
     my ($request) = @_;
-    LedgerSMB::Report::Listing::Templates->new(%$request)->render($request);
+    return LedgerSMB::Report::Listing::Templates->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =head2 display($request)
@@ -54,13 +55,13 @@ sub display {
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
-    LedgerSMB::Template->new(
+    return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/templates',
         template => 'preview',
         format   => 'HTML'
-    )->render({ request => $request,
+    )->render_to_psgi({ request => $request,
                 template => $dbtemp,
                 %$dbtemp });
 }
@@ -89,14 +90,14 @@ sub edit {
     $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
 
-    LedgerSMB::Template->new(
+    return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/templates',
         template => 'edit',
         format   => 'HTML'
-    )->render({ request => $request,
-                to_edit => $dbtemp });
+    )->render_to_psgi({ request => $request,
+                        to_edit => $dbtemp });
 }
 
 =head2 save($request)
@@ -109,7 +110,7 @@ sub save {
     my ($request) = @_;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
-    display($request);
+    return display($request);
 }
 
 =head2 upload($request)
@@ -134,12 +135,12 @@ sub upload {
     $request->{template} = $fdata;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
-    display($request);
+    return display($request);
 }
 
 =head1 COPYRIGHT
 
-Copyright (C) 2014 The LedgerSMB Core Team.
+Copyright (C) 2014-2016 The LedgerSMB Core Team.
 
 This file may be re-used under the terms of the GNU General Public License
 version 2 or at your option any later version.  Please see the included

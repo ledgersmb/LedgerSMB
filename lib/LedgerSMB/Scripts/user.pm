@@ -49,18 +49,18 @@ sub preference_screen {
     $user->get_option_data;
 
     my $template = LedgerSMB::Template->new(
-            user     => $user,
-            locale   => $request->{_locale},
-            path     => 'UI/users',
-            template => 'preferences',
+        user     => $user,
+        locale   => $request->{_locale},
+        path     => 'UI/users',
+        template => 'preferences',
         format   => 'HTML'
     );
 
     my $creds = LedgerSMB::Auth::get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
-    $template->render({ request => $request,
-                        user => $user });
+    return $template->render_to_psgi({ request => $request,
+                                       user => $user });
 }
 
 =item save_preferences
@@ -82,7 +82,7 @@ sub save_preferences {
         $user->change_my_password;
     }
     $user = $user->save_preferences;
-    preference_screen($request, $user);
+    return preference_screen($request, $user);
 }
 
 =item change_password
@@ -98,7 +98,7 @@ sub change_password {
     if ($user->{confirm_password}){
         $user->change_my_password;
     }
-    preference_screen($request, $user);
+    return preference_screen($request, $user);
 }
 
 =back
