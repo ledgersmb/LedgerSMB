@@ -70,8 +70,10 @@ builder {
 
     mount "/$_" => $psgi_app
           for ('account.pl', 'admin.pl', 'asset.pl', 'budget_reports.pl',
-               'business_unit.pl', 'configuration.pl',
-               'file.pl', 'login.pl', 'menu.pl', 'parts.pl', 'payroll.pl',
+               'business_unit.pl', 'configuration.pl', 'contact_reports.pl',
+               'file.pl', 'inv_reports.pl', 'journal.pl', 'login.pl',
+               'lreports_co.pl', 'menu.pl',
+               'parts.pl', 'payroll.pl', 'pnl.pl',
                'setup.pl', 'template.pl', 'user.pl' );
 
     mount "/$_" => $new_app

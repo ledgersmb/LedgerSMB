@@ -34,7 +34,7 @@ sub search{
 
     my $report = LedgerSMB::Report::Contact::Search->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item history
@@ -48,7 +48,7 @@ sub history {
 
     my $report = LedgerSMB::Report::Contact::History->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =back
