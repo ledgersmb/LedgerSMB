@@ -55,7 +55,7 @@ sub start_report {
     @{$request->{employees}} =  $request->call_procedure(
         funcname => 'employee__all_salespeople'
     );
-    LedgerSMB::Scripts::reports::start_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item invoices_outstanding
@@ -71,7 +71,7 @@ sub invoices_outstanding {
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item invoice_search
@@ -88,7 +88,7 @@ sub  invoice_search{
     # which does not work well with Moose
     delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Transactions->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =back
