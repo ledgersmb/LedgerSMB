@@ -69,7 +69,8 @@ builder {
              'is.pl', 'oe.pl', 'pe.pl');
 
     mount "/$_" => $psgi_app
-          for ('account.pl', 'admin.pl', 'configuration.pl',
+          for ('account.pl', 'admin.pl', 'asset.pl', 'budget_reports.pl',
+               'business_unit.pl', 'configuration.pl',
                'file.pl', 'login.pl', 'menu.pl', 'parts.pl', 'payroll.pl',
                'setup.pl', 'template.pl', 'user.pl' );
 
