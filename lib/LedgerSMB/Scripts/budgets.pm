@@ -40,7 +40,7 @@ sub new_budget {
     my ($request) = @_;
     $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->from_input($request);
-    _render_screen($budget);
+    return _render_screen($budget);
 }
 
 
@@ -141,7 +141,7 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
-    $template->render($budget);
+    return $template->render_to_psgi($budget);
 }
 
 =item update
@@ -162,7 +162,7 @@ sub update {
 
     }
     $request->{rowcount} = scalar @{$request->{display_rows}} + 1;
-    new_budget(@_);
+    return new_budget(@_);
 }
 
 =item view_budget
@@ -190,7 +190,7 @@ sub view_budget {
         $row->{account_id} = "$account->{accno}--$account->{description}";
         push @{$budget->{display_rows}}, $row;
     }
-    _render_screen($budget);
+    return _render_screen($budget);
 }
 
 =item save
@@ -203,7 +203,7 @@ sub save {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->from_input($request);
     $budget->save();
-    view_budget($budget);
+    return view_budget($budget);
 }
 
 =item approve
@@ -215,7 +215,7 @@ sub approve {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->approve;
-    view_budget($request);
+    return view_budget($request);
 }
 
 =item reject
@@ -227,7 +227,7 @@ sub reject {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->reject;
-    begin_search($request);
+    return begin_search($request);
 }
 
 =item obsolete
@@ -239,7 +239,7 @@ sub obsolete {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->obsolete;
-    view_budget($request);
+    return view_budget($request);
 }
 
 =item add_note
@@ -251,7 +251,7 @@ sub add_note {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->save_note($request->{subject}, $request->{note});
-    view_budget($request);
+    return view_budget($request);
 }
 
 =item begin_search
@@ -264,7 +264,7 @@ sub begin_search{
     $request->{module_name} = 'gl';
     $request->{report_name} = 'budget_search';
     use LedgerSMB::Scripts::reports;
-    LedgerSMB::Scripts::reports::start_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =back

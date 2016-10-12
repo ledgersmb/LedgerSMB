@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 203;
 use File::Find;
 
 my @on_disk;
@@ -89,7 +89,7 @@ my @modules =
           'LedgerSMB::File::Transaction',
           'LedgerSMB::Inventory::Adjust',
           'LedgerSMB::Inventory::Adjust_Line',
-          'LedgerSMB::Part',
+          'LedgerSMB::old_code', 'LedgerSMB::Part',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
           'LedgerSMB::REST_Format::json',

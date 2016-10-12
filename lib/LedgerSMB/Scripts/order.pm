@@ -18,10 +18,10 @@ package LedgerSMB::Scripts::order;
 use strict;
 use warnings;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
-use LedgerSMB::Form; # for dispatching to old code
+
+use LedgerSMB::old_code qw(dispatch);
 
 =head1 ROUTINES
 
@@ -48,7 +48,7 @@ Search type can be one of
 
 sub get_criteria {
     my ($request) = @_;
-    my $locale = $LedgerSMB::App_State::Locale;
+    my $locale = $request->{_locale};
     $request->{entity_class} = $request->{oe_class_id} % 2 + 1;
     $request->{report_name} = 'orders';
     $request->{open} = 1 if $request->{search_type} ne 'search';
@@ -83,7 +83,7 @@ sub get_criteria {
             $request->{title} = $locale->text('Search Requests for Quotation');
         }
     }
-    LedgerSMB::Scripts::reports::start_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item search
@@ -107,7 +107,7 @@ sub search {
     my $report = LedgerSMB::Report::Orders->new(%$request);
     if ($request->{search_type} eq 'combine'){
         $report->buttons([{
-            text => $LedgerSMB::App_State::Locale->text('Combine'),
+            text => $request->{_locale}->text('Combine'),
             type => 'submit',
            class => 'submit',
             name => 'action',
@@ -115,14 +115,14 @@ sub search {
         }]);
     } elsif ($request->{search_type} eq 'generate'){
         $report->buttons([{
-            text => $LedgerSMB::App_State::Locale->text('Generate'),
+            text => $request->{_locale}->text('Generate'),
             type => 'submit',
            class => 'submit',
             name => 'action',
            value => 'generate',
         }]);
     }
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item combine
@@ -140,7 +140,7 @@ sub combine {
     }
     $request->call_procedure(funcname => 'order__combine', args => [\@ids]);
     $request->{search_type} = 'combine';
-    get_criteria($request);
+    return get_criteria($request);
 }
 
 =item generate
@@ -153,19 +153,7 @@ callback.
 sub generate {
     my ($request) = @_;
 
-    if (my $cpid = fork()) {
-        wait;
-    }
-    else {
-        my $form = new Form;
-        for my $k (keys %$request){
-            $form->{$k} = $request->{$k};
-        }
-        { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
-        my $locale = $LedgerSMB::App_State::Locale;
-        lsmb_legacy::generate_purchase_orders($form, $locale);
-        exit;
-    }
+    return dispatch('oe.pl', 'generate_purchase_orders', $request);
 }
 
 =back

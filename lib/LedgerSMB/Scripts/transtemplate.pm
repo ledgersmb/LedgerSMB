@@ -17,6 +17,8 @@ use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Report::Listings::TemplateTrans;
 use LedgerSMB::Template;
 
+use LedgerSMB::old_code qw(dispatch);
+
 our $VERSION = '0.1';
 
 =head1 ROUTINES
@@ -29,64 +31,37 @@ Views the transaction template.  Requires that id be set.
 
 =cut
 
+sub _run_update {
+    my ($transtemplate, $journal_type) = @_;
+
+    convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
+    $lsmb_legacy::form->{title} = 'Add';
+
+    lsmb_legacy::update();
+}
+
 sub view {
     my $request = shift @_;
-    use LedgerSMB::Form;
     our $template_dispatch =
     {
-        '1'         => {script => 'bin/gl.pl',
-                       function => sub {$lsmb_legacy::form->{title} = 'Add';
-                                        lsmb_legacy::update()}},
-        '2'         => {script => 'bin/ar.pl',
-                       function => sub {$lsmb_legacy::form->{title} = 'Add';
-                                        lsmb_legacy::update()}},
-        '3'         => {script => 'bin/ap.pl',
-                       function => sub {$lsmb_legacy::form->{title} = 'Add';
-                                        lsmb_legacy::update()}},
+        '1' => {script => 'gl.pl', function => \&_run_update },
+        '2' => {script => 'ar.pl', function => \&_run_update },
+        '3' => {script => 'ap.pl', function => \&_run_update },
     };
 
     my $transtemplate =
         LedgerSMB::DBObject::TransTemplate->new({base => $request});
     $transtemplate->get;
     my $journal_type = $transtemplate->{journal};
-    my $script = $template_dispatch->{$journal_type}->{script};
+    my $entry = $template_dispatch->{$journal_type};
+    my $script = $entry->{script};
     die "No dispatch entry for type $transtemplate->{$journal_type}"
         unless $script;
-    if ($script =~ /^bin/){
-        if (my $cpid = fork()) {
-            wait;
-            return;
-        }
-        else {
-            # I hate this old code!
-            $lsmb_legacy::form = new Form;
-            $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
-            $lsmb_legacy::form->{dbh} = $request->{dbh};
-            $lsmb_legacy::locale = $request->{_locale};
-            %lsmb_legacy::myconfig = ();
-            %lsmb_legacy::myconfig = %{$request->{_user}};
-            $lsmb_legacy::form->{stylesheet} =
-                $lsmb_legacy::myconfig{stylesheet};
-            $lsmb_legacy::form->{script} = $script;
-            $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
-            delete $lsmb_legacy::form->{id};
 
-            convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
-            {
-                no strict;
-                no warnings 'redefine';
-
-                do $script;
-            }
-            $template_dispatch->{$journal_type}->{function}($lsmb_legacy::form);
-
-            exit;
-        }
-    } elsif ($script =~ /scripts/) {
-        die "No provision for dispatching to scripts in /scripts";
-    }
-
-
+    return dispatch($script, $entry->{function},
+                    { %$request, script => $script },
+                    # $entry->{function}'s arguments:
+                    $transtemplate, $journal_type);
 }
 
 =item convert_to_form
@@ -142,7 +117,8 @@ Lists all transaction templates
 
 sub list {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::TemplateTrans->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item delete
@@ -160,7 +136,8 @@ sub delete {
             if $request->{"row_select_$row"};
         delete $request->{"row_select_$row"};
     }
-    LedgerSMB::Report::Listings::TemplateTrans->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::TemplateTrans->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =back

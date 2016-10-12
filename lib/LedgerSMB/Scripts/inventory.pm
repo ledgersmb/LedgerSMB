@@ -45,7 +45,7 @@ sub begin_adjust {
     path => 'UI/inventory',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item enter_adjust
@@ -63,7 +63,7 @@ sub enter_adjust {
     path => 'UI/inventory',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 
@@ -91,7 +91,7 @@ sub adjustment_next {
         - $request->{"counted_$i"};
     }
     ++$request->{rowcount};
-    enter_adjust($request);
+    return enter_adjust($request);
 }
 
 =item adjustment_save
@@ -106,7 +106,7 @@ sub adjustment_save {
     my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
     $adjustment->lines_from_form($request);
     $adjustment->save;
-    begin_adjust($request);
+    return begin_adjust($request);
 }
 
 =item adjustment_list
@@ -116,7 +116,7 @@ sub adjustment_save {
 sub adjustment_list {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Inventory::Adjustments->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item adjustment_approve
@@ -128,7 +128,7 @@ sub adjustment_approve {
     my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
     $adjust->approve;
     $request->{report_name} = 'list_inventory_counts';
-    LedgerSMB::Scripts::report::begin_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item adjustment_delete
@@ -142,7 +142,7 @@ sub adjustment_delete {
     my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
     $adjust->delete;
     $request->{report_name} = 'list_inventory_counts';
-    LedgerSMB::Scripts::report::begin_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 1;

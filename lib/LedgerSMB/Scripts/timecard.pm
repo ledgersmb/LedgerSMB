@@ -51,13 +51,13 @@ This begins the timecard workflow.  The following may be set as a default:
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
-    LedgerSMB::Template->new(
+    return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/timecards',
         template => 'entry_filter',
         format   => 'HTML'
-    )->render($request);
+    )->render_to_psgi($request);
 }
 
 =item display
@@ -93,8 +93,7 @@ sub display {
          template => 'timecard',
          format   => 'HTML'
      );
-     $template->render($request);
-
+     return $template->render_to_psgi($request);
 }
 
 =item timecard_screen
@@ -132,7 +131,7 @@ sub timecard_screen {
              template => 'timecard-week',
              format   => 'HTML'
          );
-         $template->render($request);
+         return $template->render_to_psgi($request);
     }
 }
 
@@ -158,7 +157,7 @@ sub save {
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
     @{$request->{printers}} = %LedgerSMB::Sysconfig::printer; # List context
-    display($request);
+    return display($request);
 }
 
 sub _get_qty {
@@ -196,7 +195,7 @@ sub save_week {
             $timecard->save;
         }
     }
-    new($request);
+    return new($request);
 }
 
 =item print
@@ -214,13 +213,13 @@ sub print {
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},
         template => 'timecard',
-  no_auto_output => 1,
+        no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
     $template->render($request);
     $template->output(%$request);
     return if lc($request->{media}) eq 'screen';
-    display($request);
+    return display($request);
 }
 
 =item timecard_report
