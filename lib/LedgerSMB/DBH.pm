@@ -35,8 +35,7 @@ Sets up and manages the db connection.  This returns a DBI database handle.
 Returns a connection authenticated with $username and $password.  If $username
 is not sent, then these are taken from LedgerSMB::Auth::get_credentials.
 
-Note:  if get_credentials returns a username of 'logout', then this will return
-control there to prompt for credentials again.
+Returns undef on connection failure or lack of credentials.
 
 =cut
 
@@ -44,12 +43,10 @@ sub connect {
     my ($package, $company, $username, $password) = @_;
     if (!$username){
         my $creds = LedgerSMB::Auth::get_credentials;
-        LedgerSMB::Auth::credential_prompt()
-            if $creds->{login} && $creds->{login} eq 'logout';
         $username = $creds->{login};
         $password = $creds->{password};
     }
-    return undef unless $username;
+    return undef unless $username && $username ne 'logout';
     my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
            { PrintError => 0, AutoCommit => 0,
              pg_enable_utf8 => 1, pg_server_prepare => 0 })
