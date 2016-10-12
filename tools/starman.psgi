@@ -18,6 +18,7 @@ use LedgerSMB;
 use LedgerSMB::Auth;
 use LedgerSMB::PSGI;
 use LedgerSMB::Sysconfig;
+use Log::Log4perl;
 use Plack::Builder;
 use Plack::App::File;
 use Plack::Middleware::Redirect;
@@ -43,6 +44,8 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
 my $old_app = LedgerSMB::PSGI::old_app();
 my $psgi_app = \&LedgerSMB::PSGI::psgi_app;
 
+
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 builder {
 

@@ -26,8 +26,6 @@ use LedgerSMB::Inventory::Adjust_Line;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
 
-#require 'lsmb-request.pl';
-
 =over
 
 =item begin_adjust
