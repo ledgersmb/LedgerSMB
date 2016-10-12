@@ -69,28 +69,6 @@ sub old_app {
 }
 
 
-=item new_app
-
-Returns a 'PSGI app' which handles requests for the 'new code' entry points
-in LedgerSMB::Scripts::*
-
-=cut
-
-
-sub new_app {
-   return CGI::Emulate::PSGI->handler(
-       sub {
-           my $uri = $ENV{REQUEST_URI};
-           local $ENV{SCRIPT_NAME} = $uri;
-           my $script = $uri;
-           $ENV{SCRIPT_NAME} =~ s/\?.*//;
-           $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
-
-           _run_new($script);
-       });
-}
-
-
 =item psgi_app
 
 Implements a PSGI application for the purpose of calling the entry-points
@@ -218,23 +196,6 @@ sub _run_old {
     } else {
        do 'bin/old-handler.pl';
        exit;
-    }
-}
-
-sub _run_new {
-    my ($script) = @_;
-    if (-f 'bin/lsmb-request.pl'){
-        try {
-            do 'bin/lsmb-request.pl';
-        }
-        catch {
-            # simple 'die' statements are request terminations
-            # so we don't want to cause a 500 ISE to be returned
-            die $_
-                unless $_ =~ /^Died at/;
-        }
-    } else {
-        die 'something is wrong, cannot find lsmb-request.pl';
     }
 }
 

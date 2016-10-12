@@ -41,7 +41,6 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
 }
 
 my $old_app = LedgerSMB::PSGI::old_app();
-my $new_app = LedgerSMB::PSGI::new_app();
 my $psgi_app = \&LedgerSMB::PSGI::psgi_app;
 
 
@@ -68,10 +67,7 @@ builder {
              'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
              'is.pl', 'oe.pl', 'pe.pl');
 
-    mount "/$_" => $new_app
-        for ('report_aging.pl', 'timecard.pl', 'payment.pl');
-
-    mount "/$_" => $psgi_app
+     mount "/$_" => $psgi_app
         for  (@LedgerSMB::Sysconfig::newscripts);
 
     mount '/stop.pl' => sub { exit; }
