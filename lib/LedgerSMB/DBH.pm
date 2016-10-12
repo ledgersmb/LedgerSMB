@@ -35,7 +35,7 @@ Sets up and manages the db connection.  This returns a DBI database handle.
 Returns a connection authenticated with $username and $password.  If $username
 is not sent, then these are taken from LedgerSMB::Auth::get_credentials.
 
-Note:  if get_credentials returns a username of 'logoud', then this will return
+Note:  if get_credentials returns a username of 'logout', then this will return
 control there to prompt for credentials again.
 
 =cut

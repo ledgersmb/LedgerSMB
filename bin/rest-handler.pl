@@ -167,7 +167,6 @@ $LedgerSMB::App_State::Locale = $locale;
 $LedgerSMB::App_State::User = {numberformat => '1000.00',
                                  dateformat => 'YYYY-MM-DD'};
 
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 $logger->debug("Begin");
 
