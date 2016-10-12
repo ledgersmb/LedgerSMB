@@ -263,7 +263,7 @@ sub add_comparison{
 }
 
 
-before 'render' => sub {
+before '_render' => sub {
     my ($self) = @_;
 
     $self->sorted_row_ids($self->rheads->sort);
