@@ -68,17 +68,10 @@ builder {
              'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
              'is.pl', 'oe.pl', 'pe.pl');
 
-    mount "/$_" => $psgi_app
-          for ('account.pl', 'admin.pl', 'asset.pl', 'budgets.pl',
-               'budget_reports.pl', 'business_unit.pl', 'configuration.pl',
-               'contact_reports.pl', 'drafts.pl', 'file.pl', 'goods.pl',
-               'inv_reports.pl', 'inventory.pl', 'invoice.pl', 'journal.pl',
-               'login.pl', 'lreports_co.pl', 'menu.pl',
-               'parts.pl', 'payroll.pl', 'pnl.pl', 'recon.pl', 'reports.pl',
-               'setup.pl', 'template.pl', 'taxform.pl', 'trial_balance.pl',
-               'user.pl' );
-
     mount "/$_" => $new_app
+        for ('report_aging.pl', 'timecard.pl', 'payment.pl');
+
+    mount "/$_" => $psgi_app
         for  (@LedgerSMB::Sysconfig::newscripts);
 
     mount '/stop.pl' => sub { exit; }
