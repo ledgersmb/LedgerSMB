@@ -205,7 +205,8 @@ END ?>
     <?lsmb END ?>
     <?lsmb END -?>
     <tr class="subtotal">
-        <th colspan=6><?lsmb text('Total') ?></th>
+        <th><?lsmb text('Total') ?></th>
+        <th colspan=5><?lsmb total_cleared_credits-total_cleared_debits ?></th>
         <td class="money"><?lsmb total_cleared_debits ?></td>
         <td class="money"><?lsmb total_cleared_credits ?></td>
     </tr>
