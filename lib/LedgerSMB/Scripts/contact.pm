@@ -16,6 +16,9 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 package LedgerSMB::Scripts::contact;
 
+use strict;
+use warnings;
+
 use LedgerSMB::Part;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
@@ -35,9 +38,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Setting;
 use Try::Tiny;
 
-use strict;
-use warnings;
-use Try::Tiny;
+use LedgerSMB::old_code;
 
 #Plugins
 opendir(my $dh, 'lib/LedgerSMB/Entity/Plugins')
@@ -89,7 +90,7 @@ sub get_by_cc {
             $person = $entity;
         }
     }
-    _main_screen($request, $company, $person);
+    return _main_screen($request, $company, $person);
 }
 
 
@@ -122,7 +123,7 @@ sub get {
             $person = $entity;
         }
     }
-    _main_screen($request, $company, $person);
+    return _main_screen($request, $company, $person);
 }
 
 
@@ -325,7 +326,7 @@ sub _main_screen {
     my $roles;
     $roles = $user->list_roles if $user;
 
-    $template->render({
+    return $template->render_to_psgi({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
              entity_class => $entity_class,
@@ -393,7 +394,7 @@ sub save_employee {
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
     $request->{target_div} = 'employee_div';
     $employee->save;
-    _main_screen($request, undef, $employee);
+    return _main_screen($request, undef, $employee);
 }
 
 =item generate_control_code
@@ -414,7 +415,7 @@ sub generate_control_code {
     $person = $request if $request->{entity_id} and $request->{first_name};
     ($person, $company) = ($request, $request)
         unless $person or $company;
-    _main_screen($request, $company, $person);
+    return _main_screen($request, $company, $person);
 }
 
 =item dispatch_legacy
@@ -451,21 +452,22 @@ sub dispatch_legacy {
     } else {
        $request->error($request->{_locale}->text('Unsupported account type'));
     }
-    our $dispatch =
+
+    my $dispatch =
     {
-        add_transaction  => {script => "bin/$aa.pl",
+        add_transaction  => {script => "$aa.pl",
                                data => {"${cv}_id" => $request->{credit_id}},
                             },
-        add_invoice      => {script => "bin/$inv.pl",
+        add_invoice      => {script => "$inv.pl",
                                data => {"${cv}_id" => $request->{credit_id}},
                             },
-        add_order        => {script => 'bin/oe.pl',
+        add_order        => {script => 'oe.pl',
                                data => {"${cv}_id" => $request->{credit_id},
                                             type   => $otype,
                                                vc  => $cv,
                                        },
                             },
-        rfq              => {script => 'bin/oe.pl',
+        rfq              => {script => 'oe.pl',
                                data => {"${cv}_id" => $request->{credit_id},
                                             type   => $qtype,
                                                vc  => $cv,
@@ -474,34 +476,13 @@ sub dispatch_legacy {
 
     };
 
-    # set up environment for call to legacy code
-    our $form = new Form;
-    our %myconfig = ();
-    our $locale = $request->{_locale};
-    %myconfig = %{$request->{_user}};
-    $form->{stylesheet} = $myconfig{stylesheet};
-
-    for (keys %{$dispatch->{$request->{action}}->{data}}){
-        $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
-    }
-
-    if (my $cpid = fork()) {
-        wait;
-    }
-    else {
-        my $script = $dispatch->{$request->{action}}{script};
-        $form->{script} = $script;
-        $form->{action} = 'add';
-        $form->{dbh} = $request->{dbh};
-        $form->{script} =~ s|.*/||;
-        { no strict; no warnings 'redefine'; do $script; }
-        { no warnings;
-          # Suppress 'only referenced once' warnings
-          $lsmb_legacy::form = $form;
-          $lsmb_legacy::locale = $locale; }
-        "lsmb_legacy"->can($form->{action})->();
-        exit;
-    }
+    my $entry = $dispatch->{$request->{action}};
+    return dispatch($entry->{script},
+                    'add',
+                    { %{$entry->{data}},
+                      script => $entry->{script},
+                      action => 'add',
+                      dbh => $request->{dbh} });
 }
 
 =item add_transaction
@@ -512,7 +493,7 @@ Dispatches to the Add (AR or AP as appropriate) transaction screen.
 
 sub add_transaction {
     my $request = shift @_;
-    dispatch_legacy($request);
+    return dispatch_legacy($request);
 }
 
 =item add_invoice
@@ -523,7 +504,7 @@ Dispatches to the (sales or vendor, as appropriate) invoice screen.
 
 sub add_invoice {
     my $request = shift @_;
-    dispatch_legacy($request);
+    return dispatch_legacy($request);
 }
 
 =item add_order
@@ -534,7 +515,7 @@ Dispatches to the sales/purchase order screen.
 
 sub add_order {
     my $request = shift @_;
-    dispatch_legacy($request);
+    return dispatch_legacy($request);
 }
 
 =item rfq
@@ -545,7 +526,7 @@ Dispatches to the quotation/rfq screen
 
 sub rfq {
     my $request = shift @_;
-    dispatch_legacy($request);
+    return dispatch_legacy($request);
 }
 
 =item add
@@ -557,7 +538,7 @@ This method creates a blank screen for entering a company's information.
 sub add {
     my ($request) = @_;
     $request->{target_div} = 'company_div';
-    _main_screen($request, $request);
+    return _main_screen($request, $request);
 }
 
 =item save_company
@@ -578,7 +559,7 @@ sub save_company {
     $request->{name} ||= $request->{legal_name};
     my $company = LedgerSMB::Entity::Company->new(%$request);
     $request->{target_div} = 'credit_div';
-    _main_screen($request, $company->save);
+    return _main_screen($request, $company->save);
 }
 
 =item save_person
@@ -639,7 +620,7 @@ sub save_credit {
         $credit = $credit->save();
         $request->{meta_number} = $credit->{meta_number};
     }
-    get($request);
+    return get($request);
 }
 
 =item save_credit_new($request)
@@ -652,7 +633,7 @@ This inserts a new credit account.
 sub save_credit_new {
     my ($request) = @_;
     delete $request->{id};
-    save_credit($request);
+    return save_credit($request);
 }
 
 =item save_location
@@ -676,7 +657,7 @@ sub save_location {
     # Assumption alert!  Assuming additional addresses share a city, state
     # and country more often than not -- CT
     delete $request->{"$_"} for (qw(line_one line_two line_three mail_code));
-    get($request);
+    return get($request);
 
 }
 
@@ -690,7 +671,7 @@ overwriting existing locations.
 sub save_new_location {
     my ($request) = @_;
     delete $request->{location_id};
-    save_location($request);
+    return save_location($request);
 }
 
 =item edit
@@ -700,7 +681,7 @@ This is a synonym of get() which is preferred to use for editing operations.
 =cut
 
 sub edit {
-    get (@_);
+    return get (@_);
 }
 
 =item delete_location
@@ -722,7 +703,7 @@ sub delete_location {
 
     $request->{target_div} = 'address_div';
     $request->{credit_id}=$credit_id;
-    get($request);
+    return get($request);
 }
 
 =item save_contact
@@ -744,7 +725,7 @@ sub save_contact {
     $request->{target_div} = 'contact_info_div';
     delete $request->{description};
     delete $request->{contact};
-    get($request);
+    return get($request);
 }
 
 =item save_contact_new
@@ -758,7 +739,7 @@ sub save_contact_new {
     delete $request->{contact_id};
     delete $request->{old_contact};
 
-    save_contact($request);
+    return save_contact($request);
 }
 
 =item delete_contact
@@ -772,7 +753,7 @@ sub delete_contact {
     my ($request) = @_;
     LedgerSMB::Entity::Contact::delete($request);
     $request->{target_div} = 'contact_info_div';
-    get($request);
+    return get($request);
 }
 
 =item delete_bank_account
@@ -790,7 +771,7 @@ sub delete_bank_account{
     my ($request) = @_;
     LedgerSMB::Entity::Bank->get($request->{id})->delete;
     $request->{target_div} = 'bank_act_div';
-    get($request);
+    return get($request);
 }
 
 =item save_bank_account
@@ -804,7 +785,7 @@ sub save_bank_account {
     my $bank = LedgerSMB::Entity::Bank->new(%$request);
     $bank->save;
     $request->{target_div} = 'bank_act_div';
-    get($request);
+    return get($request);
 }
 
 =item save_notes($request)
@@ -818,7 +799,7 @@ sub save_notes {
     my ($request) = @_;
     my $note = LedgerSMB::Entity::Note->new(%$request);
     $note->save;
-    get($request);
+    return get($request);
 }
 
 =item get_pricelist
@@ -842,7 +823,7 @@ sub get_pricelist {
                 format => uc($request->{format} || 'HTML'),
                 locale => $request->{_locale},
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 
@@ -858,15 +839,12 @@ and the description is a full text search.
 
 sub save_pricelist {
     my ($request) = @_;
-    use LedgerSMB::App_State;
     use LedgerSMB::DBObject::Pricelist;
 
     my $count = $request->{rowcount_pricematrix};
 
     my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
     my @lines;
-    my $redirect_to_selection = 0;
-    my $psearch;
 
     # Search and populate
     if (defined $request->{"int_partnumber_tfoot_$count"}
@@ -901,13 +879,7 @@ sub save_pricelist {
 
     $pricelist->save(\@lines);
 
-    # Return to UI
-    if (!$redirect_to_selection){
-        get_pricelist($request);
-    } else {
-        $request->{search_redirect} = 'pricelist_search_handle';
-        $psearch->render($request);
-   }
+    return get_pricelist($request);
 }
 
 
@@ -924,7 +896,7 @@ sub delete_pricelist {
     $pricelist->delete;
 
     # Return to UI
-    get_pricelist($request);
+    return get_pricelist($request);
 }
 
 =item create_user
@@ -953,7 +925,7 @@ sub create_user {
            $request->{pls_import} = 1;
        }
     }
-    get($request);
+    return get($request);
 }
 
 =item reset_password
@@ -969,7 +941,7 @@ sub reset_password {
        my $user = LedgerSMB::Entity::User->new(%$request);
        $user->reset_password($request->{password});
     }
-    get($request);
+    return get($request);
 }
 
 =item save_roles
@@ -992,7 +964,7 @@ sub save_roles {
        }
        $user->save_roles($roles);
     }
-    get($request);
+    return get($request);
 }
 
 =back

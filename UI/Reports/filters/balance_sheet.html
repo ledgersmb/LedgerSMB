@@ -41,7 +41,7 @@
         IF HIERARCHY_SETUP;
             full_checked = 'CHECKED';
             full_disabled = undef;
-            legacy_checked = 'undef';
+            legacy_checked = undef;
         ELSE;
             full_disabled = 'DISABLED';
             full_checked = undef;
@@ -132,7 +132,9 @@
             };
             ?>
             <div id='date_period_id' >
-                <?lsmb PROCESS date_period_type_div; ?>
+                <?lsmb PROCESS date_period_type_div
+                       label = text('Period type')
+                               required = true; ?>
             </div>
             <div>
                <div class="input_row" data-dojo-type="lsmb/ComparisonSelectionBalance"

@@ -1,11 +1,12 @@
 #!perl
 
 
-requires 'perl', '5.10.1';
+requires 'perl', '5.14.0';
 
 requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
+requires 'CGI::Parse::PSGI';
 requires 'CGI::Simple';
 requires 'CGI::Simple::Standard';
 requires 'Config::IniFiles';
@@ -86,6 +87,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'File::Util';
+    requires 'HTML::Lint';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
@@ -98,7 +100,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
-    requires 'Weasel', '0.08';
-    requires 'Weasel::Driver::Selenium2', 0.02;
+    requires 'Weasel', '0.09';
+    requires 'Weasel::Driver::Selenium2', '0.04';
     requires 'Weasel::Widgets::Dojo';
 };

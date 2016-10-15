@@ -48,7 +48,7 @@ sub search {
     my $request = shift @_;
     $request->{search_type} = 'drafts';
     $request->{report_name} = 'unapproved';
-    LedgerSMB::Scripts::reports::start_report($request);
+    return LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item approve
@@ -81,7 +81,7 @@ sub approve {
              $draft->approve;
         }
     }
-    search($request);
+    return search($request);
 }
 
 
@@ -114,7 +114,7 @@ sub delete {
              $draft->delete;
         }
     }
-    search($request);
+    return search($request);
 }
 
 =item list_drafts
@@ -142,7 +142,7 @@ sub list_drafts {
     my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
     $request->open_form;
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 

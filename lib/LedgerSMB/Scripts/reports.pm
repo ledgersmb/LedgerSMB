@@ -114,7 +114,8 @@ sub start_report {
         template => $request->{report_name},
         format => 'HTML'
     );
-    $template->render($request); # request not used for script;
+    return $template->render_to_psgi($request);
+                                 # request not used for script;
                                  # forms submit to other URLs than back to here
 }
 
@@ -127,7 +128,7 @@ Lists the business types.  No inputs expected or used.
 sub list_business_types {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item list_gifi
@@ -138,7 +139,8 @@ List the gifi entries.  No inputs expected or used.
 
 sub list_gifi {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::GIFI->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::GIFI->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item list_warehouse
@@ -148,7 +150,8 @@ List the warehouse entries.  No inputs expected or used.
 =cut
 
 sub list_warehouse {
-    LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})->render($_[0]);
+    return LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})
+        ->render_to_psgi($_[0]);
 }
 
 =item list_language
@@ -159,7 +162,8 @@ List language entries.  No inputs expected or used.
 
 sub list_language {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::Language->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::Language->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item list_sic
@@ -170,7 +174,8 @@ Lists sic codes
 
 sub list_sic {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::SIC->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::SIC->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item generate_balance_sheet
@@ -202,7 +207,7 @@ sub generate_balance_sheet {
         $comparison->run_report;
         $report->add_comparison($comparison);
     }
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item search_overpayments
@@ -217,7 +222,8 @@ sub search_overpayments {
     $hiddens->{$_} = $request->{$_} for qw(batch_id currency exchangerate
                                         post_date batch_class account_class);
     $request->{hiddens} = $hiddens;
-    LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::Overpayments->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item reverse_overpayment
@@ -237,7 +243,7 @@ sub reverse_overpayment {
         LedgerSMB::DBObject::Payment->overpayment_reverse($args);
     }
     $request->{report_name} = 'overpayments';
-    start_report($request);
+    return start_report($request);
 }
 
 

@@ -23,7 +23,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 ## Server
 
- * Perl 5.10+
+ * Perl 5.14+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 
@@ -147,8 +147,8 @@ local   all                            postgres                         peer
 local   all                            all                              peer
 host    all                            postgres        127.0.0.1/32     reject
 host    all                            postgres        ::1/128          reject
-host    postgres,template0             lsmb_admin      127.0.0.1/32     md5
-host    postgres,template0             lsmb_admin      ::1/128          md5
+host    postgres,template0             lsmb_dbadmin    127.0.0.1/32     md5
+host    postgres,template0             lsmb_dbadmin    ::1/128          md5
 host    postgres,template0,template1   all             127.0.0.1/32     reject
 host    postgres,template0,template1   all             ::1/128          reject
 host    all                            all             127.0.0.1/32     md5

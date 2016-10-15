@@ -103,6 +103,10 @@ Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST
 
 This zeroes out the App_State.
 
+=item verify_session()
+
+This verifies the validity of the session cookie.
+
 =item initialize_with_db
 
 This function sets up the db handle for the request
@@ -266,24 +270,57 @@ sub close_form {
     return $vars[0]->{form_close};
 }
 
+sub verify_session {
+    my ($self) = @_;
+
+    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
+       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
+            $logger->error("Session did not check");
+            return 0;
+       }
+       $logger->debug("session_check completed OK");
+    }
+    return 1;
+}
 
 sub initialize_with_db {
     my ($self) = @_;
 
+    my $sth = $self->{dbh}->prepare("
+            SELECT value FROM defaults
+             WHERE setting_key = 'role_prefix'");
+    $sth->execute;
+
+
+    ($self->{_role_prefix}) = $sth->fetchrow_array;
+
+    $sth = $self->{dbh}->prepare('SELECT check_expiration()');
+    $sth->execute;
+    ($self->{warn_expire}) = $sth->fetchrow_array;
+
+    if ($self->{warn_expire}){
+        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
+        $sth->execute;
+        ($self->{pw_expires})  = $sth->fetchrow_array;
+    }
+
+
+    my $query = "SELECT t.extends,
+            coalesce (t.table_name, 'custom_' || extends)
+            || ':' || f.field_name as field_def
+        FROM custom_table_catalog t
+        JOIN custom_field_catalog f USING (table_id)";
+    $sth = $self->{dbh}->prepare($query);
+    $sth->execute;
+    my $ref;
+    $self->{custom_db_fields} = {};
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
+          $ref->{field_def};
+    }
+
     LedgerSMB::Company_Config::initialize($self);
 
-    #TODO move before _db_init to avoid _db_init with invalid session?
-    #  Can't do that:  Company_Config has to pull company data from the db --CT
-    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
-       #check for valid session unless this is an inital authentication
-       #request -- CT
-       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-            $logger->error("Session did not check");
-            $self->_get_password("Session Expired");
-            die;
-       }
-       $logger->debug("session_check completed OK");
-    }
     $self->get_user_info;
 
     $self->{_locale} =
@@ -307,12 +344,9 @@ sub get_user_info {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    if ($self->{sessionexpired}){
-        my $q = new CGI::Simple;
-        print $q->redirect('login.pl?action=logout&reason=timeout');
-    } else {
-        LedgerSMB::Auth::credential_prompt();
-    }
+
+    my $q = new CGI::Simple;
+    print $q->redirect('login.pl?action=logout&reason=timeout');
 }
 
 
@@ -522,53 +556,11 @@ sub _db_init {
     }
     if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
         $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
-            || LedgerSMB::Auth::credential_prompt;
+            || return 0;
     }
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
-    return if $self->{company} eq 'postgres';
-
-    try {
-        LedgerSMB::DBH->require_version($VERSION);
-    } catch {
-        $self->_error($_, 521);
-    };
-
-    my $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults
-             WHERE setting_key = 'role_prefix'");
-    $sth->execute;
-
-
-    ($self->{_role_prefix}) = $sth->fetchrow_array;
-
-    $sth = $self->{dbh}->prepare('SELECT check_expiration()');
-    $sth->execute;
-    ($self->{warn_expire}) = $sth->fetchrow_array;
-
-    if ($self->{warn_expire}){
-        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
-        $sth->execute;
-        ($self->{pw_expires})  = $sth->fetchrow_array;
-    }
-
-
-    my $query = "SELECT t.extends,
-            coalesce (t.table_name, 'custom_' || extends)
-            || ':' || f.field_name as field_def
-        FROM custom_table_catalog t
-        JOIN custom_field_catalog f USING (table_id)";
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute;
-    my $ref;
-    $self->{custom_db_fields} = {};
-    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
-          $ref->{field_def};
-    }
-
-    $sth->finish();
-    $logger->debug("end");
+    return 1;
 }
 
 #private, for db connection errors

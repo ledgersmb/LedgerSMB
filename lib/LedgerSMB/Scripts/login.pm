@@ -52,10 +52,19 @@ sub __default {
     my ($request) = @_;
 
     if ($request->{cookie} && $request->{cookie} ne 'Login') {
-        $request->_db_init();
+        if (! $request->_db_init()) {
+            return [ 401,
+                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+                       'Content-Type' => 'text/plain; charset=utf-8' ],
+                     [ 'Please provide your credentials.' ]];
+        }
+        if (! $request->verify_session()) {
+            return [ 303,
+                     [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
+                     [ '<html><body><h1>Session expired</h1></body></html>' ] ];
+        }
         $request->initialize_with_db();
-        LedgerSMB::Scripts::menu::root_doc($request);
-        return;
+        return LedgerSMB::Scripts::menu::root_doc($request);
     }
 
     my $secure = '';
@@ -68,7 +77,8 @@ sub __default {
     if ($ENV{SERVER_PORT} == 443){
         $secure = ' Secure;';
     }
-    print qq|Set-Cookie: $cookie_name=Login; path=$path;$secure\n|;
+    $request->{_new_session_cookie_value} =
+        qq|$cookie_name=Login; path=$path;$secure|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new(
@@ -78,7 +88,7 @@ sub __default {
         template => 'login',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item authenticate
@@ -97,38 +107,41 @@ sub authenticate {
         if (!$request->{company}){
              $request->{company} = $LedgerSMB::Sysconfig::default_db;
         }
-        $request->_db_init;
+        if (! $request->_db_init) {
+            return [ 401,
+                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+                       'Content-Type' => 'text/plain; charset=utf-8' ],
+                     [ 'Please provide your credentials.' ]];
+        }
     }
     my $path = $ENV{SCRIPT_NAME};
     $path =~ s|[^/]*$||;
 
-    # if ($request->{dbh} && $request->{next}) {
-
-    #     print "Content-Type: text/html\n";
-    #     print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-    #     print "Status: 302 Found\n";
-    #     print "Location: ".$path.$request->{next}."\n";
-    #     print "\n";
-    #     $request->finalize_request();
-    # }
-    # els
     if ($request->{dbh} and !$request->{log_out}){
 
-        print "Content-Type: text/plain\n";
-        LedgerSMB::Session::check($request->{cookie}, $request)
-             unless $request->{dbonly};
-        print "Status: 200 Success\n\nSuccess\n";
+        if (!$request->{dbonly}
+            && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
+            return [ 401,
+                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+                       'Content-Type' => 'text/plain; charset=utf-8' ],
+                     [ 'Please provide your credentials.' ] ];
+        }
+        return [ 200,
+                 [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+                 [ 'Success' ] ];
     }
     else {
-        if (($request->{_auth_error} ) && ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i)){
-            print "Status: 454 Database Does Not Exist\n\n";
-            print "No message here";
+        if (($request->{_auth_error} )
+            && ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i)) {
+            return [ '454 Database Does Not Exist',
+                     [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+                     [ 'Database does not exist' ] ];
         } else {
-            print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
-            print "Status: 401 Unauthorized\n\n";
-            print "Please enter your credentials.\n";
+            return [ 401,
+                     [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+                       'Content-Type' => 'text/plain; charset=utf-8' ],
+                     [ 'Please enter your credentials.' ] ];
         }
-        $request->finalize_request();
     }
 }
 
@@ -145,7 +158,7 @@ sub login {
         __default($request);
     }
     require LedgerSMB::Scripts::menu;
-    LedgerSMB::Scripts::menu::root_doc($request);
+    return LedgerSMB::Scripts::menu::root_doc($request);
 }
 
 =item logout
@@ -172,12 +185,12 @@ sub logout {
         template => 'logout',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item logout_js
 
-This is a stup for a js logout feature.  It allows javascript to log out by
+This is a stub for a js logout feature.  It allows javascript to log out by
 requiring only bogus credentials (logout:logout).
 
 =cut
@@ -185,10 +198,13 @@ requiring only bogus credentials (logout:logout).
 sub logout_js {
     my $request = shift @_;
     my $creds = LedgerSMB::Auth::get_credentials();
-    LedgerSMB::Auth::credential_prompt
-        unless ($creds->{password} eq 'logout')
-               and ($creds->{login} eq 'logout');
-    logout($request);
+    return [ 401,
+             [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
+               'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ 'Please enter your credentials.' ] ]
+                 unless (($creds->{password} eq 'logout')
+                         and ($creds->{login} eq 'logout'));
+    return logout($request);
 }
 
 

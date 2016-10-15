@@ -40,12 +40,12 @@ to the drilldown_menu.  Otherwise, it routes to expanding_menu.
 sub __default {
     my ($request) = @_;
     if ($request->{new}){
-        root_doc($request);
+        return root_doc($request);
     }
     if ($request->{menubar}){
-        drilldown_menu($request);
+        return drilldown_menu($request);
     } else {
-        expanding_menu($request);
+        return expanding_menu($request);
     }
 }
 
@@ -80,13 +80,13 @@ sub root_doc {
     }
 
     $template = LedgerSMB::Template->new(
-            user =>$request->{_user},
-            locale => $request->{_locale},
-            path => 'UI',
-            template => 'main',
-         format => 'HTML'
+        user =>$request->{_user},
+        locale => $request->{_locale},
+        path => 'UI',
+        template => 'main',
+        format => 'HTML'
     );
-    $template->render($menu);
+    return $template->render_to_psgi($menu);
 }
 
 =pod
@@ -128,7 +128,7 @@ sub expanding_menu {
          template => 'expanding',
          format => 'HTML',
     );
-    $template->render($menu);
+    return $template->render_to_psgi($menu);
 }
 
 =pod
@@ -154,13 +154,13 @@ sub drilldown_menu {
 
     $menu->generate_section;
     my $template = LedgerSMB::Template->new(
-         user => $request->{_user},
-         locale => $request->{_locale},
-         path => 'UI/menu',
-         template => 'drilldown',
-         format => 'HTML',
+        user => $request->{_user},
+        locale => $request->{_locale},
+        path => 'UI/menu',
+        template => 'drilldown',
+        format => 'HTML',
     );
-    $template->render($menu);
+    return $template->render_to_psgi($menu);
 }
 
 =pod

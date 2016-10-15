@@ -156,10 +156,10 @@ END; ?>
 IF id;
     PROCESS button element_data = {
    name = 'action'
-   type = 'submit'
   class = 'submit'
    text = text('Print')
-  value = 'print'
+   value = 'print'
+   "data-dojo-type" = "lsmb/PrintButton"
    };
 ELSE;
    PROCESS button element_data = {

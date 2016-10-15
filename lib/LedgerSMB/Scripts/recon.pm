@@ -39,7 +39,7 @@ report_id.
 sub display_report {
     my ($request) = @_;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
-    _display_report($recon, $request);
+    return _display_report($recon, $request);
 }
 
 =item search($self, $request, $user)
@@ -74,7 +74,7 @@ sub update_recon_set {
     $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total};
     $recon->save() if !$recon->{submitted};
     $recon->update();
-    _display_report($recon, $request);
+    return _display_report($recon, $request);
 }
 
 =item select_all_recons
@@ -90,8 +90,7 @@ sub select_all_recons {
         $request->{"cleared_$id"} = $id;
         ++ $i;
     }
-    update_recon_set($request);
-
+    return update_recon_set($request);
 }
 
 =item reject
@@ -104,7 +103,7 @@ sub reject {
     my ($request) = @_;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     $recon->reject;
-    search($request);
+    return search($request);
 }
 
 =item submit_recon_set
@@ -123,8 +122,7 @@ sub submit_recon_set {
             locale => $request->{_locale},
             format => 'HTML',
             path=>"UI");
-    return $template->render($recon);
-
+    return $template->render_to_psgi($recon);
 }
 
 =item save_recon_set
@@ -154,7 +152,7 @@ Displays the search results
 sub get_results {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item search
@@ -174,7 +172,7 @@ sub search {
     @{$recon->{recon_accounts}} = $recon->get_accounts();
     unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
     $recon->{report_name} = 'reconciliation_search';
-    LedgerSMB::Scripts::reports::start_report($recon);
+    return LedgerSMB::Scripts::reports::start_report($recon);
 }
 
 
@@ -285,7 +283,7 @@ sub _display_report {
     $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
                              - ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
     $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
-    return $template->render($recon);
+    return $template->render_to_psgi($recon);
 }
 
 
@@ -331,9 +329,9 @@ sub new_report {
                 format=>'HTML',
                 path=>"UI"
             );
-            return $template->render($recon);
+            return $template->render_to_psgi($recon);
         }
-        _display_report($recon, $request);
+        return _display_report($recon, $request);
     }
     else {
 
@@ -346,10 +344,8 @@ sub new_report {
             format => 'HTML',
             path=>"UI"
         );
-        return $template->render($recon);
+        return $template->render_to_psgi($recon);
     }
-    return undef;
-
 }
 
 =item delete_report($request)
@@ -415,7 +411,7 @@ sub approve {
                 locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
-                        )->render($recon);
+                        )->render_to_psgi($recon);
     }
     else {
         return _display_report($request, $request);
@@ -446,15 +442,14 @@ sub pending {
         path=>"UI"
     );
     if ($request->type() eq "POST") {
-        return $template->render(
+        return $template->render_to_psgi(
             {
                 pending=>$recon->get_pending($request->{year}."-".$request->{month})
             }
         );
     }
     else {
-
-        return $template->render();
+        return $template->render_to_psgi();
     }
 }
 
@@ -472,7 +467,7 @@ sub __default {
         format=>'HTML',
         path=>"UI"
     );
-    return $template->render(
+    return $template->render_to_psgi(
         {
             reports=>$recon->get_report_list()
         }

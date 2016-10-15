@@ -273,15 +273,18 @@ END # BLOCK -?>
 <?lsmb END #BLOCK -?>
 
 <?lsmb- BLOCK date_period_type_div ?>
+    <?lsmb
+        IF !label.defined();    label    = text('Period type');      END;
+    ?>
         <div class="input_row">
           <div class="input_group">
-              <label><?lsmb text('Period type') ?></label>
               <?lsmb
                 all_periods.values.sort('order');
                 all_periods.unshift({}); # Add empty item at beginning of the list
                 INCLUDE select element_data = {
                     name = "interval"
                       id = "interval"
+                   label = label
                  options = all_periods
               };
               ?>

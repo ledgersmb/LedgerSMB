@@ -31,7 +31,7 @@ sub search {
     LedgerSMB::Report::Budget::Search->prepare_criteria($request);
     my $report = LedgerSMB::Report::Budget::Search->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item variance_report
@@ -46,7 +46,7 @@ sub variance_report {
     my $id = $request->{id};
     my $report = LedgerSMB::Report::Budget::Variance->for_budget_id($id);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =back

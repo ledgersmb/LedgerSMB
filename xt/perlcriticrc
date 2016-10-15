@@ -1,5 +1,5 @@
 [Modules::ProhibitEvilModules]
-modules = Carp::Always Data::Dumper
+modules = Carp::Always Data::Dumper Data::Printer
 
 [Modules::ProhibitExcessMainComplexity]
 # Sysconfig.pm needs to be simplified, because it has McCabe = 21

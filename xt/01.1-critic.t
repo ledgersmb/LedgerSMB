@@ -47,7 +47,7 @@ my @on_disk_oldcode =
 plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
 &test_files(Perl::Critic->new(
-                -profile => 't/perlcriticrc',
+                -profile => 'xt/perlcriticrc',
                 -severity => 5,
                 -theme => '',
                 -exclude => [ 'BuiltinFunctions',
@@ -76,7 +76,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
             \@on_disk);
 
 &test_files(Perl::Critic->new(
-                -profile => 't/perlcriticrc',
+                -profile => 'xt/perlcriticrc',
                 -severity => 5,
                 -theme => '',
                 -exclude => [ 'BuiltinFunctions',

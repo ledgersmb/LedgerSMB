@@ -24,7 +24,6 @@ define("lsmb/ComparisonSelectionBalance",
                     }
                 },
                 _interval: function(state) {
-                    ( state ? this._show : this._hide )(dom.byId("date_period_id"));
                     var _regid = registry.byId("interval");
                     _regid.set("required",state)
                           .set("disabled",!state);
@@ -69,7 +68,7 @@ define("lsmb/ComparisonSelectionBalance",
                     } else if ( targetValue >= 0 && targetValue <= 9 ) {
                         this.set("comparisons",targetValue);
                     }
-                    this._interval(this.get("comparisons") > 0 && this.get("type") == "by_periods");
+                    this._interval(this.get("comparisons") >= 0 && this.get("type") == "by_periods");
                 },
                 postCreate: function() {
                     var self = this;

@@ -218,8 +218,30 @@ This takes no arguments and simply renders the report as is.
 =cut
 
 sub render {
+    my $self = shift;
+    my $request = shift;
+
+    $self->_render($request, renderer => 'render');
+}
+
+=item render_to_psgi
+
+As C<render>, but returns a psgi triplet, instead of printing the result
+to standard output.
+
+=cut
+
+sub render_to_psgi {
+    my $self = shift;
+    my $request = shift;
+
+    return $self->_render($request, renderer => 'render_to_psgi');
+}
+
+sub _render {
     my ($self, $request) = @_;
     my $template;
+    my %args = ( @_ );
 
 
     my $testref = $self->rows;
@@ -333,14 +355,6 @@ sub render {
         }
     }
 
-    $template = LedgerSMB::Template->new(
-        user => $LedgerSMB::App_State::User,
-        locale => $self->locale,
-        path => 'UI',
-        template => $template,
-        output_file => $name,
-        format => uc($request->{format} || 'HTML'),
-    );
     # needed to get aroud escaping of header line names
     # i.e. ignore_yearends -> ignore\_yearends
     # in latex
@@ -350,7 +364,17 @@ sub render {
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
         return [map { { %$_, %{shift @newlines} } } @$lines ];
     };
-    $template->render({report => $self,
+    $template = LedgerSMB::Template->new(
+        user => $LedgerSMB::App_State::User,
+        locale => $self->locale,
+        path => 'UI',
+        template => $template,
+        output_file => $name,
+        format => uc($request->{format} || 'HTML'),
+    );
+    my $render = $template->can($args{renderer});
+    return &$render($template,
+                      {report => $self,
                  company_name => LedgerSMB::Setting->get('company_name'),
               company_address => LedgerSMB::Setting->get('company_address'),
                       request => $request,

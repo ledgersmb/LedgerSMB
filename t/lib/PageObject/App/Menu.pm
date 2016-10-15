@@ -91,6 +91,10 @@ sub click_menu {
     my $ul = '';
 
     my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
+    if (!defined $tgt_class || $tgt_class eq '') {
+        die join(' > ', @$path) . ' not implemented';
+        return undef;
+    }
     # make sure the widget is registered before resolving the Weasel widget
     use_module($tgt_class);
 
