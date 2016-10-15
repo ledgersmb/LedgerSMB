@@ -233,11 +233,7 @@ $$ language sql;
 
 --  SELECT currval('id') INTO ap_id;--NOT "id"!
 
-<<<<<<< HEAD
---  INSERT INTO acc_trans(trans_id,transdate,chart_id,amount,approved) values(ap_id,transdate,in_ap_liablility_chartid,amount_total,approved);
-=======
 --  INSERT INTO acc_trans(trans_id,transdate,chart_id,amount_bc,approved) values(ap_id,transdate,in_ap_liablility_chartid,amount_total,approved);
->>>>>>> lsmb/1.5-mc
 
 --  FOR out_count IN array_lower(in_memo, 1) .. array_upper(in_memo, 1)
 --  LOOP
