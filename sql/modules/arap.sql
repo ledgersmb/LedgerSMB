@@ -103,7 +103,7 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
                OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount_bc,
-          gl.netamount_bc, gl.curr, gl.datepaid, gl.duedate,
+          gl.netamount_bc, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
    HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
 $$ LANGUAGE SQL;
@@ -118,7 +118,7 @@ RETURNS SETOF purchase_info AS
 $$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount_bc),
-              sum(amount_paid), sum(tax), currency, null::date, null::date,
+              sum(amount_paid), sum(tax), currency, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
               (in_account_id, in_name_part, in_meta_number, in_invnumber,
@@ -233,7 +233,11 @@ $$ language sql;
 
 --  SELECT currval('id') INTO ap_id;--NOT "id"!
 
+<<<<<<< HEAD
 --  INSERT INTO acc_trans(trans_id,transdate,chart_id,amount,approved) values(ap_id,transdate,in_ap_liablility_chartid,amount_total,approved);
+=======
+--  INSERT INTO acc_trans(trans_id,transdate,chart_id,amount_bc,approved) values(ap_id,transdate,in_ap_liablility_chartid,amount_total,approved);
+>>>>>>> lsmb/1.5-mc
 
 --  FOR out_count IN array_lower(in_memo, 1) .. array_upper(in_memo, 1)
 --  LOOP
