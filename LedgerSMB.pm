@@ -179,7 +179,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.4.34-dev';
+our $VERSION = '1.4.35-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -296,7 +296,7 @@ sub new {
     #HV  why not trying _db_init also in case of login authenticate? quid logout-function?
     if ($self->{script} eq 'login.pl' &&
         ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
-		|| !$self->{action} || ($self->{action} eq 'logout_js'))){
+                || !$self->{action} || ($self->{action} eq 'logout_js'))){
         return $self;
     }
     if ($self->{script} eq 'setup.pl'){
@@ -538,6 +538,7 @@ sub call_procedure {
     $schema = $dbh->quote_identifier($schema);
     
     for my $arg ( @call_args ) {
+        local ($@);
         if (eval { $arg->can('to_db') }){
            $arg = $arg->to_db;
         }
@@ -587,7 +588,7 @@ sub call_procedure {
     my @types = @{$sth->{TYPE}};
     my @names = @{$sth->{NAME_lc}};
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-	for (0 .. $#names){
+        for (0 .. $#names){
             #   numeric            float4/real
             if ($types[$_] == 3 or $types[$_] == 2) {
                 $ref->{$names[$_]} ||=0;
@@ -703,10 +704,10 @@ sub _db_init {
 
 
     my $query = "SELECT t.extends, 
-			coalesce (t.table_name, 'custom_' || extends) 
-			|| ':' || f.field_name as field_def
-		FROM custom_table_catalog t
-		JOIN custom_field_catalog f USING (table_id)";
+                        coalesce (t.table_name, 'custom_' || extends) 
+                        || ':' || f.field_name as field_def
+                FROM custom_table_catalog t
+                JOIN custom_field_catalog f USING (table_id)";
     $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;

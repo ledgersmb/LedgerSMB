@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-08-20 12:54+0000\n"
-"PO-Revision-Date: 2016-06-26 00:00+0000\n"
+"POT-Creation-Date: 2016-10-15 11:01+0000\n"
+"PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/fr_CA/)\n"
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Acc_trans Sum"
 msgstr ""
 
-#: LedgerSMB.pm:753 LedgerSMB.pm:754 LedgerSMB/Scripts/configuration.pm:324
+#: LedgerSMB.pm:754 LedgerSMB.pm:755 LedgerSMB/Scripts/configuration.pm:324
 #: LedgerSMB/Scripts/setup.pm:795
 msgid "Access Denied"
 msgstr "Accès refusé"
@@ -1767,7 +1767,7 @@ msgstr ""
 msgid "Confirm!"
 msgstr "Confirmer!"
 
-#: LedgerSMB.pm:759
+#: LedgerSMB.pm:760
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
@@ -2777,7 +2777,7 @@ msgstr ""
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
-#: LedgerSMB.pm:756
+#: LedgerSMB.pm:757
 msgid "Division by 0 error"
 msgstr ""
 
@@ -3260,7 +3260,7 @@ msgstr ""
 msgid "Error creating batch.  Please try again."
 msgstr ""
 
-#: LedgerSMB.pm:760
+#: LedgerSMB.pm:761
 msgid "Error from Function:"
 msgstr ""
 
@@ -4031,7 +4031,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: LedgerSMB.pm:752
+#: LedgerSMB.pm:753
 msgid "Internal Database Error"
 msgstr ""
 
@@ -4056,7 +4056,7 @@ msgstr ""
 msgid "Invalid backup request"
 msgstr ""
 
-#: LedgerSMB.pm:755
+#: LedgerSMB.pm:756
 msgid "Invalid date/time entered"
 msgstr ""
 
@@ -4827,7 +4827,7 @@ msgstr "Mois"
 msgid "Months"
 msgstr "Mois"
 
-#: LedgerSMB.pm:768
+#: LedgerSMB.pm:769
 msgid "More information has been reported in the error logs"
 msgstr ""
 
@@ -6549,7 +6549,7 @@ msgstr ""
 msgid "Required by"
 msgstr "Requis pour"
 
-#: LedgerSMB.pm:757 LedgerSMB.pm:758
+#: LedgerSMB.pm:758 LedgerSMB.pm:759
 msgid "Required input not provided"
 msgstr ""
 

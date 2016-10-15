@@ -3,6 +3,16 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.34
+* Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
+* Fixed PNL hierarchies both selected (Erik H, #2147)
+* Fixed error at bottom of invoice, under Starman (Erik H)
+* Add test and hard fail with error if tempdir permissions aren't sane. (David G)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.33
 * Fixed issue with COA overview and tax accounts (Chris T, #2030)
 * Fixed issue with outstanding reversing amount and total (Chris T, #2031)
