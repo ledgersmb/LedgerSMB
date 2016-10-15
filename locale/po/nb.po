@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-08-20 12:54+0000\n"
-"PO-Revision-Date: 2016-05-24 09:24+0000\n"
+"POT-Creation-Date: 2016-10-15 11:01+0000\n"
+"PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/nb/)\n"
@@ -205,7 +205,7 @@ msgstr "Skrinlagt"
 msgid "Acc_trans Sum"
 msgstr "Akkumulert Sum"
 
-#: LedgerSMB.pm:753 LedgerSMB.pm:754 LedgerSMB/Scripts/configuration.pm:324
+#: LedgerSMB.pm:754 LedgerSMB.pm:755 LedgerSMB/Scripts/configuration.pm:324
 #: LedgerSMB/Scripts/setup.pm:795
 msgid "Access Denied"
 msgstr "Nektet Adgang"
@@ -1771,7 +1771,7 @@ msgstr "Bekreft handling"
 msgid "Confirm!"
 msgstr "Bekreft!"
 
-#: LedgerSMB.pm:759
+#: LedgerSMB.pm:760
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr "Konflikt med eksisterende data, kanskje ar det lagt inn før?"
 
@@ -2781,7 +2781,7 @@ msgstr "Deponert Metode"
 msgid "Disposal Report [_1] on date [_2]"
 msgstr "Deponert Rapport [_1] på dato [_2]"
 
-#: LedgerSMB.pm:756
+#: LedgerSMB.pm:757
 msgid "Division by 0 error"
 msgstr "Feil, dividert på 0"
 
@@ -3266,7 +3266,7 @@ msgstr "Feil ved kreering av backup fil"
 msgid "Error creating batch.  Please try again."
 msgstr "Feil ved kreering av Gruppe fil. Prøv igjen."
 
-#: LedgerSMB.pm:760
+#: LedgerSMB.pm:761
 msgid "Error from Function:"
 msgstr "Feil fra Funksjon "
 
@@ -4037,7 +4037,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: LedgerSMB.pm:752
+#: LedgerSMB.pm:753
 msgid "Internal Database Error"
 msgstr "Intern Database Error"
 
@@ -4062,7 +4062,7 @@ msgstr "Invalid Rapport Grunnlag"
 msgid "Invalid backup request"
 msgstr "Invalid backup forespørsel"
 
-#: LedgerSMB.pm:755
+#: LedgerSMB.pm:756
 msgid "Invalid date/time entered"
 msgstr "Invalid Dato/Tid lagt inn"
 
@@ -4840,7 +4840,7 @@ msgstr "Måned(er)"
 msgid "Months"
 msgstr "Måneder"
 
-#: LedgerSMB.pm:768
+#: LedgerSMB.pm:769
 msgid "More information has been reported in the error logs"
 msgstr "Mere informasjon finnes i error loggene"
 
@@ -6564,7 +6564,7 @@ msgstr "Nødvendig egenskap ikke satt inn: [_1]"
 msgid "Required by"
 msgstr "Leveringsdato"
 
-#: LedgerSMB.pm:757 LedgerSMB.pm:758
+#: LedgerSMB.pm:758 LedgerSMB.pm:759
 msgid "Required input not provided"
 msgstr "Obligatorisk inntasting ikke utført"
 

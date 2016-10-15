@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-08-20 12:54+0000\n"
-"PO-Revision-Date: 2016-05-24 09:23+0000\n"
+"POT-Creation-Date: 2016-10-15 11:01+0000\n"
+"PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/hu/)\n"
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Acc_trans Sum"
 msgstr ""
 
-#: LedgerSMB.pm:753 LedgerSMB.pm:754 LedgerSMB/Scripts/configuration.pm:324
+#: LedgerSMB.pm:754 LedgerSMB.pm:755 LedgerSMB/Scripts/configuration.pm:324
 #: LedgerSMB/Scripts/setup.pm:795
 msgid "Access Denied"
 msgstr "Hozzáférés megtagadva"
@@ -1765,7 +1765,7 @@ msgstr "Erősítse meg a műveletet"
 msgid "Confirm!"
 msgstr "Erősítse meg!"
 
-#: LedgerSMB.pm:759
+#: LedgerSMB.pm:760
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr "Meglévő adattal való ütközés. Elképzelhető, hogy már megadta korábban?"
 
@@ -2775,7 +2775,7 @@ msgstr "Selejtezés módja"
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
-#: LedgerSMB.pm:756
+#: LedgerSMB.pm:757
 msgid "Division by 0 error"
 msgstr "Nullával osztás probléma"
 
@@ -3259,7 +3259,7 @@ msgstr "Hiba történt a biztonsági mentés fájl létrehozása során"
 msgid "Error creating batch.  Please try again."
 msgstr "Hiba történt a köteg létrehozásakor. Kérem próbálja újra."
 
-#: LedgerSMB.pm:760
+#: LedgerSMB.pm:761
 msgid "Error from Function:"
 msgstr "Hiba a funkcióban:"
 
@@ -4030,7 +4030,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: LedgerSMB.pm:752
+#: LedgerSMB.pm:753
 msgid "Internal Database Error"
 msgstr "Belső adatbázis hiba"
 
@@ -4055,7 +4055,7 @@ msgstr "Valótlan jelentés alap"
 msgid "Invalid backup request"
 msgstr "Érvénytelen biztonsági mentés kérés"
 
-#: LedgerSMB.pm:755
+#: LedgerSMB.pm:756
 msgid "Invalid date/time entered"
 msgstr "Érvénytelen dátum/idő lett megadva"
 
@@ -4828,7 +4828,7 @@ msgstr "Hónap"
 msgid "Months"
 msgstr "Hónapok"
 
-#: LedgerSMB.pm:768
+#: LedgerSMB.pm:769
 msgid "More information has been reported in the error logs"
 msgstr "További információk találhatók a hibanaplóban"
 
@@ -6557,7 +6557,7 @@ msgstr ""
 msgid "Required by"
 msgstr "Kért kiszállítás"
 
-#: LedgerSMB.pm:757 LedgerSMB.pm:758
+#: LedgerSMB.pm:758 LedgerSMB.pm:759
 msgid "Required input not provided"
 msgstr "Nincs megadva elegendő adat"
 
