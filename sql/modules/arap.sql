@@ -102,7 +102,7 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           AND (in_approved is null
                OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
-          gl.duedate, e.name, eca.meta_number, gl.amount_bc,
+          gl.datepaid, gl.duedate, e.name, eca.meta_number, gl.amount_bc,
           gl.netamount_bc, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
    HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
