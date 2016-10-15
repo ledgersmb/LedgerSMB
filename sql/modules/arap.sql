@@ -118,7 +118,7 @@ RETURNS SETOF purchase_info AS
 $$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount_bc),
-              sum(amount_paid), sum(tax), currency, null::date,
+              sum(amount_paid), sum(tax), currency, null::date, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
               (in_account_id, in_name_part, in_meta_number, in_invnumber,
