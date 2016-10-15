@@ -45,26 +45,39 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-		if ( $request->{comparison_type} eq 'by_periods' && $request->{interval} ne 'none') {
-			# to_date = from_date + 1 period - 1 day
-			my $date = LedgerSMB::Report::Hierarchical::_date_interval(LedgerSMB::Report::Hierarchical::_date_interval($request->{from_date},$request->{interval}),'day',-1);
-			$request->{"to_date"} = $date->to_output;
-		}
+        if ( $request->{comparison_type} eq 'by_periods'
+             && $request->{interval} ne 'none') {
+            if (! $request->{from_date} && $request->{from_month}) {
+                #this is a copy/pasto from LedgerSMB::Report::Hierarchical
+                $request->{from_date} =
+                    $request->{from_year} . '-' . $request->{from_month} . '-01';
+                delete $request->{from_year};
+                delete $request->{from_month};
+            }
+
+            # to_date = from_date + 1 period - 1 day
+            my $date =
+                LedgerSMB::Report::Hierarchical::_date_interval(
+                    LedgerSMB::Report::Hierarchical::_date_interval($request->{from_date},
+                                                                    $request->{interval}),
+                    'day',-1);
+            $request->{"to_date"} = $date->to_output;
+        }
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             column_path_prefix => [ 0 ]);
         $rpt->run_report;
-		$rpt->init_comparisons($request);
-		my $counts = $request->{comparison_periods} || 0;
-		warn $counts;
+        $rpt->init_comparisons($request);
+        my $counts = $request->{comparison_periods} || 0;
         for my $c_per (1 .. $counts) {
             my $found = 0;
-			for (qw(from_month from_year from_date to_date interval)){
-				$request->{$_} = $request->{"${_}_$c_per"};
-				delete $request->{$_} unless defined $request->{$_};
-				$found = 1 if defined $request->{$_} and $_ ne 'interval';
-			}
-			next unless $found;
+            for (qw(from_month from_year from_date to_date interval)){
+                delete $request->{$_};
+                $request->{$_} = $request->{"${_}_$c_per"}
+                    if exists $request->{"${_}_$c_per"};
+                $found = 1 if defined $request->{$_} and $_ ne 'interval';
+            }
+            next unless $found;
             my $comparison =
                 LedgerSMB::Report::PNL::Income_Statement->new(
                     %$request,

@@ -1,6 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' titlebar = text("Income Statement")
-		include_script = ['UI/Reports/filters/dynamic_report_fields.js']
-		include_stylesheet = [ "UI/Reports/filter.css" ];
+                include_script = ['UI/Reports/filters/dynamic_report_fields.js']
+                include_stylesheet = [ "UI/Reports/filter.css" ];
        PROCESS 'elements.html';
        PROCESS 'report_base.html'; ?>
 <body onLoad="init_income_statement()" class="<?lsmb dojo_theme ?>">
@@ -46,18 +46,18 @@ PROCESS input element_data={
 <?lsmb
 PROCESS select element_data = {
      options = [
-	 {
-	     label="All",
-	     id="all",
-	 },
-	 {
-	     label="Last Only",
-	     id="last"
-	 },
-	 {
-	     label="None",
-	     id="none",
-	 }
+         {
+             label="All",
+             id="all",
+         },
+         {
+             label="Last Only",
+             id="last"
+         },
+         {
+             label="None",
+             id="none",
+         }
      ],
      default_values = [report.ignore_yearend],
      name = 'ignore_yearend',
@@ -92,7 +92,7 @@ HIERARCHY_SETUP = earn_id;
 IF HIERARCHY_SETUP;
     full_checked = 'CHECKED';
     full_disabled = undef;
-    legacy_checked = 'undef';
+    legacy_checked = undef;
 ELSE;
     full_disabled = 'DISABLED';
     full_checked = undef;
@@ -139,36 +139,36 @@ default_values = [USER.language]
 
 <div class="subsection">
 <div class="labelledinput">
-	<div class="label">
-		<?lsmb text('Comparison selection by') ?>
-	</div>
-	<div class="input_group">
-		<?lsmb
-		IF comparison_type != 'by_dates';
-		  YES="CHECKED";
-		  NO=undef;
-		ELSE;
-		  NO="CHECKED";
-		  YES=undef;
-		END;
-		PROCESS input element_data={
-			type = 'radio',
-			name = 'comparison_type',
-			  id = 'comparison_by_periods',
-		   value = 'by_periods',
-		   label = text('Periods'),
-		 checked = YES,
-		};
-		PROCESS input element_data={
-			type = 'radio',
-			name = 'comparison_type',
-			  id = 'comparison_by_dates',
-		   value = 'by_dates',
-		   label = text('Dates'),
-		 checked = NO
-		};
-		?>
-	</div>
+        <div class="label">
+                <?lsmb text('Comparison selection by') ?>
+        </div>
+        <div class="input_group">
+                <?lsmb
+                IF comparison_type != 'by_dates';
+                  YES="CHECKED";
+                  NO=undef;
+                ELSE;
+                  NO="CHECKED";
+                  YES=undef;
+                END;
+                PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                          id = 'comparison_by_periods',
+                   value = 'by_periods',
+                   label = text('Periods'),
+                 checked = YES,
+                };
+                PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                          id = 'comparison_by_dates',
+                   value = 'by_dates',
+                   label = text('Dates'),
+                 checked = NO
+                };
+                ?>
+        </div>
 </div>
 
 <div class="input_row"><?lsmb
@@ -198,12 +198,12 @@ PROCESS date_from_date_div;
    <div id="comparison_dates" style="display:none">
        <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="input_row">
-		   <?lsmb FOREACH c IN [1 .. 9]; ?>
-			  <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
-					  <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
-					  <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
-			  </div>
-		   <?lsmb END ?>
+                   <?lsmb FOREACH c IN [1 .. 9]; ?>
+                          <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+                                          <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
+                                          <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
+                          </div>
+                   <?lsmb END ?>
        </div>
    </div>
 </div>
