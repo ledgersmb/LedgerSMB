@@ -45,18 +45,18 @@ $$
           gl.amount_bc - sum(CASE WHEN l.description IN ('AR', 'AP')
                                THEN ac.amount_bc ELSE 0
                            END),
-          gl.amount_bc - gl.netamount_bc, gl.curr, gl.duedate,
+          gl.amount_bc - gl.netamount_bc, gl.curr, gl.datepaid, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia,
           compound_array(bua.business_units || bui.business_units)
      FROM (select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
+                  netamount_bc, curr, datepaid, entity_credit_account, on_hold,
                   approved
              FROM ar WHERE in_entity_class = 2
             UNION
            select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
+                  netamount_bc, curr, datepaid, entity_credit_account, on_hold,
                   approved
              FROM ap WHERE in_entity_class = 1) gl
      JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
@@ -102,7 +102,7 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           AND (in_approved is null
                OR (gl.approved = in_approved AND ac.approved = in_approved))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
-          gl.duedate, e.name, eca.meta_number, gl.amount_bc,
+          gl.datepaid, gl.duedate, e.name, eca.meta_number, gl.amount_bc,
           gl.netamount_bc, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
    HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
@@ -118,7 +118,7 @@ RETURNS SETOF purchase_info AS
 $$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount_bc),
-              sum(amount_paid), sum(tax), currency, null::date,
+              sum(amount_paid), sum(tax), currency, null::date, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
               (in_account_id, in_name_part, in_meta_number, in_invnumber,
