@@ -184,8 +184,8 @@ def 'templates',
     default => 'templates',
     doc => qq||;
 
-our $cache_template_dir =
-    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
+our $cache_template_subdir = "lsmb_templates"; # this is a subdir of $tempdir and shouldn't have a leading slash
+
 # Backup path
 our $backuppath = LedgerSMB::Sysconfig::tempdir();
 
