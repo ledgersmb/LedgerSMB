@@ -125,7 +125,7 @@ sub save_gifi {
 
     my $dbh = $form->{dbh};
 
-    $form->{accno} =~ s/( |')//g;
+    $form->{accno} =~ s/( |')//g; # kludge to fix syntax highlighting broken by single single quote on a line '
 
     foreach my $item (qw(accno description)) {
         $form->{$item} =~ s/-(-+)/-/g;
