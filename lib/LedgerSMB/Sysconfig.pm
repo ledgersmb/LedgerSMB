@@ -386,7 +386,7 @@ our $log4perl_config = qq(
 
 
 # Postfix tempdir with $EUID
-LedgerSMB::Sysconfig::tempdir() = LedgerSMB::Sysconfig::tempdir() . "-$EUID";
+${tempdir} = LedgerSMB::Sysconfig::tempdir() . "-$EUID";
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
