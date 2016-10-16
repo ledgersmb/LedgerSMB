@@ -10,6 +10,8 @@ use Cwd;
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
+use English qw(-no_match_vars);
+
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
@@ -161,7 +163,7 @@ def 'fs_cssdir',
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} || '/tmp' },
+    default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
     envvar => 'HOME',
     doc => qq||;
 
@@ -377,6 +379,9 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
+
+# Postfix tempdir with $EUID
+LedgerSMB::Sysconfig::tempdir() = LedgerSMB::Sysconfig::tempdir() . "-$EUID"
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
