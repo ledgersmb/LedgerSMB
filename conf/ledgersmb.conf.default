@@ -70,6 +70,10 @@ templates  = templates
 # images base directory
 images  = UI/images
 
+# location we write backup files to on the server
+backupdir = /tmp/ledgersmb-backups
+
+
 localepath = locale/po
 
 [programs]

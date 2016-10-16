@@ -170,6 +170,12 @@ def 'tempdir',
     envvar => 'HOME',
     doc => qq||;
 
+# Backup files stored at"
+def 'backupdir',
+    section => 'paths',
+    default => sub { $ENV{BACKUP} || "/tmp/ledgersmb-backups" },
+    doc => qq||;
+
 # Path to the translation files
 def 'localepath',
     section => 'paths',
@@ -190,9 +196,6 @@ def 'templates',
     doc => qq||;
 
 our $cache_template_subdir = "lsmb_templates"; # this is a subdir of $tempdir and shouldn't have a leading slash
-
-# Backup path
-our $backuppath = LedgerSMB::Sysconfig::tempdir();
 
 
 ### SECTION  ---   mail
