@@ -42,6 +42,8 @@ keys in %args can be:
 
 =item envvar
 
+=item suffix
+
 =back
 
 =cut
@@ -52,6 +54,7 @@ sub def {
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
+    my $suffix = $args{suffix};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
@@ -60,6 +63,9 @@ sub def {
     {
         no strict 'refs';
         ${$name} = $cfg->val($sec, $key, $default);
+        if defined( $suffix) {
+            ${$name} = "${$name}$suffix";
+        }
         $ENV{$envvar} = $cfg->val($sec, $key, $default)
             if $envvar && defined $cfg->val($sec, $key, $default);
 
@@ -165,6 +171,7 @@ def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
     envvar => 'HOME',
+    suffix => "-$EUID",
     doc => qq||;
 
 # Backup files stored at"
@@ -379,9 +386,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 
-
-# Postfix tempdir with $EUID
-${tempdir} = LedgerSMB::Sysconfig::tempdir() . "-$EUID";
 
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
