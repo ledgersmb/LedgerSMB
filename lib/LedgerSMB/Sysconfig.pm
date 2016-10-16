@@ -63,7 +63,7 @@ sub def {
     {
         no strict 'refs';
         ${$name} = $cfg->val($sec, $key, $default);
-        if defined( $suffix) {
+        if (defined $suffix) {
             ${$name} = "${$name}$suffix";
         }
         $ENV{$envvar} = $cfg->val($sec, $key, $default)
