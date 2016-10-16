@@ -118,6 +118,19 @@ no output file is created, the output is held in $self->{output}.
 
 Currently email and server-side printing are not supported.
 
+=item render_to_psgi( $variables, extra_headers => \@headers)
+
+Like C<render>, but instead of printing to STDOUT, returns
+a PSGI return value triplet (status, headers and body).
+
+Note that the only guarantee here is that the triplet can
+be used as a PSGI return value which means that the body
+is *not* restricted to being an array of strings.
+
+When C<extra_headers> is specified, these are included in
+the headers part of returned triplet.
+
+
 =item output
 
 This function outputs the rendered file in an appropriate manner.
@@ -165,7 +178,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub available_formats {
     my @retval = ('HTML', 'TXT');
-    local ($@); # pre-5.14, do not die() in this block
+    local ($@);
     if (eval {require LedgerSMB::Template::LaTeX}){
         push @retval, 'PDF', 'PS';
     }
@@ -279,7 +292,7 @@ sub _preprocess {
     }
 }
 
-sub render {
+sub _render {
     my $self = shift;
     my $vars = shift;
     $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
@@ -319,9 +332,6 @@ sub render {
     }
     my $format = "LedgerSMB::Template::$self->{format}";
 
-#    if ($self->{myconfig}){
-#            $self->_preprocess($vars);
-#    }
     eval "require $format";
     if ($@) {
         die $@;
@@ -353,7 +363,15 @@ sub render {
 
     $format->can('process')->($self, $cleanvars);
     my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
-    #$logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
+    return $post;
+}
+
+sub render {
+    my $self = shift @_;
+    my $vars = shift @_;
+
+    my $post = $self->_render($vars);
+
     if (!$self->{'noauto'}) {
         # Clean up
         $logger->debug("before self output");
@@ -363,7 +381,46 @@ sub render {
             unlink($self->{rendered});
         }
     }
+
     return $post;
+}
+
+
+sub render_to_psgi {
+    my $self = shift @_;
+    my $vars = shift @_;
+    my %args = ( @_ );
+
+    $self->{outputfile} = undef;
+    $self->_render($vars);
+
+    my $charset = '';
+    $charset = '; charset=utf-8'
+        if $self->{mimetype} =~ m!^text/!;
+
+    # $self->{mimetype} set by format
+    my $headers = [
+        'Content-Type' => "$self->{mimetype}$charset",
+        (@{$args{extra_headers} // []})
+        ];
+
+    push @$headers, (
+        'Cache-Control' =>
+          'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, false',
+        'Pragma' => 'no-cache'
+    ) if ($LedgerSMB::App_State::DBH && LedgerSMB::Setting->get('disable_back'));
+
+    my $body;
+    if ($self->{output}) {
+        $body = [ $self->{output} ];
+    }
+    elsif ($self->{rendered}) {
+        open($body, '<' . $self->{rendered});
+        # as we don't support Windows anyway: unlinking an open file works!
+        unlink $self->{rendered};
+    }
+
+    return [ 200, $headers, $body ];
 }
 
 sub escape {

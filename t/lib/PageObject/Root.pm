@@ -38,7 +38,8 @@ sub wait_for_body {
                     #  it's not out of scope yet...
                     $gone = 0;
                 };
-                return $gone;
+                $old_body = undef if $gone;
+                return 0; # Not done yet
             }
             else {
                 return $self->find('body.done-parsing', scheme => 'css') ? 1 : 0;

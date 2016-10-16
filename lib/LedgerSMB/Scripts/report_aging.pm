@@ -44,7 +44,7 @@ sub run_report{
     }
     my $report = LedgerSMB::Report::Aging->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 
@@ -55,7 +55,7 @@ Runs a report again, selecting all items
 =cut
 
 sub select_all {
-    run_report(@_);
+    return run_report(@_);
 }
 
 =item generate_statement
@@ -127,13 +127,16 @@ sub generate_statement {
     if ($request->{media} eq 'email'){
        #TODO -- mailer stuff
     } elsif ($request->{media} eq 'screen'){
-        $template->render({statements => \@statements});
-        $template->output;
+        return $template->render_to_psgi({statements => \@statements},
+                  extra_headers => [
+                     'Content-Disposition' =>
+                           'attachment; filename="aging-report.'
+                                 . lc($request->{print_format}) . '"' ]);
     } else {
         $template->render({statements => \@statements});
         $request->{module_name}='gl';
         $request->{report_type}='aging';
-        LedgerSMB::Scripts::reports::start_report($request);
+        return LedgerSMB::Scripts::reports::start_report($request);
     }
 
 }

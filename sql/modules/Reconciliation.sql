@@ -150,7 +150,8 @@ $$
           ) g ON g.id = ac.trans_id
     WHERE c.id = $1 AND cleared
       AND ac.approved IS true
-                GROUP BY c.id, c.category;
+      AND ac.transdate <= in_report_date
+    GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date) IS

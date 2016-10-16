@@ -60,7 +60,7 @@ sub __default {
         template => 'credentials',
           format => 'HTML',
     );
-    $template->render($request);
+    $template->render_to_psgi($request);
 }
 
 sub _get_database {
@@ -237,7 +237,7 @@ sub login {
         template => 'confirm_operation',
         format => 'HTML',
     );
-    $template->render($request);
+    $template->render_to_psgi($request);
 }
 
 =item sanity_checks
@@ -270,7 +270,7 @@ sub list_databases {
             template => 'list_databases',
         format => 'HTML',
     );
-    $template->render($request);
+    $template->render_to_psgi($request);
 }
 
 =item list_users
@@ -292,7 +292,7 @@ sub list_users {
         template => 'list_users',
         format => 'HTML',
     );
-    $template->render($request);
+    $template->render_to_psgi($request);
 }
 
 =item copy_db
@@ -350,7 +350,7 @@ sub _begin_backup {
             template => 'begin_backup',
             format => 'HTML',
     );
-    $template->render($request);
+    $template->render_to_psgi($request);
 };
 
 
@@ -386,10 +386,11 @@ sub run_backup {
        $backupfile = $database->backup;
        $mimetype   = 'application/octet-stream';
     } else {
-        $request->error($request->{_locale}->text('Invalid backup request'));
+        die $request->{_locale}->text('Invalid backup request');
     }
 
-    $backupfile or $request->error($request->{_locale}->text('Error creating backup file'));
+    $backupfile or
+        die $request->{_locale}->text('Error creating backup file');
 
     if ($request->{backup_type} eq 'email'){
         # suppress warning of single usage of $LedgerSMB::Sysconfig::...
@@ -414,27 +415,21 @@ sub run_backup {
             template => 'complete',
             format => 'HTML',
         );
-        $template->render($request);
-    } elsif ($request->{backup_type} eq 'browser'){
-        binmode(STDOUT, ':bytes');
-        open BAK, '<', $backupfile;
-        my $cgi = CGI::Simple->new();
-        $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
-        print $cgi->header(
-          -type       => $mimetype,
-          -status     => '200',
-          -charset    => 'utf-8',
-          -attachment => 'ledgersmb-backup-' . time . ".sqlc",
-        );
-        my $data;
-        while (read(BAK, $data, 1024 * 1024)){ # Read 1MB at a time
-            print $data;
-        }
-        unlink $backupfile;
-    } else {
-        $request->error($request->{_locale}->text("Don't know what to do with backup"));
-    }
+        return $template->render_to_psgi($request);
+    } elsif ($request->{backup_type} eq 'browser') {
+        my $bak;
+        open $bak, '<', $backupfile;
+        unlink $backupfile; # remove the file after it gets closed
 
+        my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
+        return [ 200,
+                 [ 'Content-Type' => $mimetype,
+                   'Content-Disposition' =>
+                        "attachment; filename=\"$attachment_name\"" ],
+                 $bak ];  # return the file-handle
+     } else {
+        die $request->{_locale}->text("Don't know what to do with backup");
+    }
 }
 
 =item revert_migration
@@ -463,7 +458,7 @@ sub revert_migration {
         format => 'HTML',
            );
 
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item _get_template_directories
@@ -498,11 +493,11 @@ so that further workflow can be aborted.
 sub template_screen {
     my ($request) = @_;
     $request->{template_dirs} = _get_template_directories();
-    LedgerSMB::Template->new(
+    return LedgerSMB::Template->new(
            path => 'UI/setup',
            template => 'template_info',
            format => 'HTML',
-    )->render($request);
+    )->render_to_psgi($request);
 }
 
 =item load_templates
@@ -525,6 +520,7 @@ sub load_templates {
        $dbtemp->save;
     }
     return _render_new_user($request) unless $request->{only_templates};
+
     return complete($request);
 }
 
@@ -580,8 +576,8 @@ sub applicable_for_upgrade {
     my ($info, $upgrade) = @_;
 
     foreach my $check (@{$info_applicable_for_upgrade{$info}}) {
-    return 1
-        if $check eq $upgrade;
+        return 1
+            if $check eq $upgrade;
     }
 
     return 0;
@@ -625,8 +621,8 @@ sub upgrade_info {
 
     my $retval = 0;
     foreach my $key (keys %info_applicable_for_upgrade) {
-    $retval++
-        if applicable_for_upgrade($key, $upgrade_type);
+        $retval++
+            if applicable_for_upgrade($key, $upgrade_type);
     }
     return $retval;
 }
@@ -670,27 +666,26 @@ sub upgrade {
         }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
-        or die "Failed to execute pre-migration check " . $check->name;
+            or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             _failed_check($request, $check, $sth, @selectable_values);
-             return;
+             return _failed_check($request, $check, $sth, @selectable_values);
         }
-    $sth->finish();
+        $sth->finish();
     }
 
     if (upgrade_info($request) > 0) {
-    my $template = LedgerSMB::Template->new(
+        my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'upgrade_info',
             format => 'HTML',
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
-        $template->render($request);
+        return $template->render_to_psgi($request);
     } else {
         $request->{dbh}->rollback();
 
-        __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
+        return __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
     }
 
 }
@@ -743,7 +738,7 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
-    $template->render({
+    $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $header,
@@ -794,7 +789,7 @@ sub fix_tests{
     $sthu->finish();
     $sthi->finish();
     $request->{dbh}->commit;
-    upgrade($request);
+    return upgrade($request);
 }
 
 =item create_db
@@ -822,14 +817,13 @@ sub create_db {
             template => 'confirm_operation',
             format => 'HTML',
         );
-        $template->render($request);
-
-        return;
+        return $template->render_to_psgi($request);
     }
+
     $rc=$database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
-    select_coa($request);
+    return select_coa($request);
 }
 
 =item select_coa
@@ -850,7 +844,7 @@ sub select_coa {
     my ($request) = @_;
     { no warnings 'uninitialized'; # silence warnings if this is missing
       if ($request->{coa_lc} =~ /\.\./){
-         $request->error($request->{_locale}->text('Access Denied'));
+          die $request->{_locale}->text('Access Denied');
       }
     }
     if ($request->{coa_lc}){
@@ -861,8 +855,7 @@ sub select_coa {
                country => $request->{coa_lc},
                chart => $request->{chart} });
 
-           template_screen($request);
-           return;
+           return template_screen($request);
         } else {
             opendir(CHART, "sql/coa/$request->{coa_lc}/chart");
             @{$request->{charts}} =
@@ -886,7 +879,7 @@ sub select_coa {
             template => 'select_coa',
         format => 'HTML',
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 
@@ -904,7 +897,7 @@ button facilitates that scenario.
 sub skip_coa {
     my ($request) = @_;
 
-    template_screen($request);
+    return template_screen($request);
 }
 
 
@@ -958,7 +951,7 @@ sub _render_new_user {
         format => 'HTML',
            );
 
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 
@@ -991,7 +984,6 @@ sub save_user {
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
-           $duplicate = 1;
            $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
             );
@@ -1014,13 +1006,12 @@ sub save_user {
                 template => 'new_user',
                 format => 'HTML',
            );
-           $template->render($request);
-           return;
+           $duplicate = $template->render_to_psgi($request);
        } else {
            die $_;
        }
     };
-    return if $duplicate;
+    return $duplicate if $duplicate;
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
@@ -1040,7 +1031,7 @@ sub save_user {
    }
    $request->{dbh}->commit;
 
-   rebuild_modules($request);
+   return rebuild_modules($request);
 }
 
 
@@ -1142,14 +1133,14 @@ sub run_upgrade {
                    "$dbinfo->{version}-$MINOR_VERSION");
 
     if ($v ne '1.2'){
-    $request->{only_templates} = 1;
+        $request->{only_templates} = 1;
     }
     my $templates = LedgerSMB::Setting->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
-       load_templates($request);
+       return load_templates($request);
     } else {
-       template_screen($request);
+       return template_screen($request);
     }
 }
 
@@ -1170,7 +1161,7 @@ sub run_sl28_migration {
     process_and_run_upgrade_script($request, $database, "sl28",
                    "sl2.8-$MINOR_VERSION");
 
-    create_initial_user($request);
+    return create_initial_user($request);
 }
 
 =item run_sl30_migration
@@ -1190,7 +1181,7 @@ sub run_sl30_migration {
     process_and_run_upgrade_script($request, $database, "sl30",
                                    "sl3.0-$MINOR_VERSION");
 
-    create_initial_user($request);
+    return create_initial_user($request);
 }
 
 
@@ -1220,7 +1211,7 @@ sub create_initial_user {
                    template => 'new_user',
                    format => 'HTML',
      );
-     $template->render($request);
+     return $template->render_to_psgi($request);
 }
 
 =item edit_user_roles
@@ -1261,7 +1252,7 @@ sub edit_user_roles {
                           roles => $all_roles,
             };
 
-    $template->render($template_data);
+    return $template->render_to_psgi($template_data);
 }
 
 =item save_user_roles
@@ -1280,7 +1271,7 @@ sub save_user_roles {
     }
     $admin->save_roles($roles);
 
-    edit_user_roles($request);
+    return edit_user_roles($request);
 }
 
 
@@ -1297,7 +1288,7 @@ sub reset_password {
 
     $request->{password} = '';
 
-    edit_user_roles($request);
+    return edit_user_roles($request);
 }
 
 
@@ -1308,7 +1299,7 @@ Cancels work.  Returns to login screen.
 
 =cut
 sub cancel{
-    __default(@_);
+    return __default(@_);
 }
 
 =item rebuild_modules
@@ -1329,7 +1320,7 @@ sub rebuild_modules {
     $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die "Upgrade failed.";
-    complete($request);
+    return complete($request);
 }
 
 =item complete
@@ -1348,7 +1339,7 @@ sub complete {
             template => 'complete',
             format => 'HTML',
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 

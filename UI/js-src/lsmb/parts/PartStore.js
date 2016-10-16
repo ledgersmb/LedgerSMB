@@ -16,7 +16,7 @@ define([
       emitter:new Evented()
     }));
 
-    request.get("parts.pl?action=partslist_json",{
+    request.get("parts.pl?action=partslist_json&",{
         handleAs: "json"
     }).then(
         function (results) {

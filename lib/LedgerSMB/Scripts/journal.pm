@@ -21,7 +21,6 @@ use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
 use LedgerSMB::REST_Format::json;
-use CGI::Simple;
 use strict;
 use warnings;
 
@@ -50,10 +49,9 @@ sub chart_json {
         map { $_->{label} = $_->{accno} . '--' . $_->{description}; $_ }
         @results;
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
-    my $cgi = CGI::Simple->new();
-    binmode STDOUT, ':raw';
-    print $cgi->header('application/json;charset=UTF-8', '200 Success');
-    $cgi->put($json);
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             [ $json ] ];
 }
 
 =item chart_of_accounts
@@ -74,7 +72,7 @@ sub chart_of_accounts {
     }
     my $report = LedgerSMB::Report::COA->new(%$request);
     $report->run_report();
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item delete_account
@@ -91,7 +89,7 @@ sub delete_account {
     use LedgerSMB::DBObject::Account;
     my $account =  LedgerSMB::DBObject::Account->new({base => $request});
     $account->delete;
-    chart_of_accounts($request);
+    return chart_of_accounts($request);
 }
 
 =item search
@@ -109,7 +107,7 @@ sub search {
                if $request->{"business_unit_$count"};
     }
     #tshvr4 trying to mix in period from_month from_year interval
-    LedgerSMB::Report::GL->new(%$request)->render($request);
+    return LedgerSMB::Report::GL->new(%$request)->render_to_psgi($request);
 }
 
 =item search_purchases
@@ -128,7 +126,7 @@ sub search_purchases {
     }
     my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =back

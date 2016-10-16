@@ -97,25 +97,22 @@ sub check {
             else {
                 $secure = '';
             }
-            print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure\n|;
+            $form->{_new_session_cookie_value} =
+                qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
             return 1;
-
         }
         else {
-
             return 0;
         }
-
     }
     else {
-
         #cookie is not valid
         #delete the cookie in the browser
-            if ($ENV{SERVER_PORT} == 443){
-                 $secure = ' Secure;';
-            }
-            destroy($form);
-            LedgerSMB::Auth::credential_prompt;
+        if ($ENV{SERVER_PORT} == 443){
+            $secure = ' Secure;';
+        }
+        destroy($form);
+        return 0;
     }
 }
 
@@ -217,7 +214,8 @@ sub create {
     else {
         $secure = '';
     }
-    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure\n|;
+    $lsmb->{_new_session_cookie_value} =
+        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
     $lsmb->{LedgerSMB} = $newCookieValue;
 }
 
@@ -253,7 +251,8 @@ sub destroy {
     if ($ENV{SERVER_PORT} == 443){
          $secure = ' Secure;';
     }
-    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path;$secure\n|;
+    $form->{_new_session_cookie_value} =
+        qq|${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path;$secure|;
     $dbh->commit; # called before anything else on the page, make sure the
                   # session is really gone.  -CT
 }

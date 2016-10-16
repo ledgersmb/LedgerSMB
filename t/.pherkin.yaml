@@ -9,13 +9,10 @@ default:
          default_session: selenium
          screenshots_dir: screens
          screenshot_events:
-           pre-find: 0
-           post-find: 0
            pre-step: 0
            post-step: 0
            pre-scenario: 0
            post-scenario: 0
-           dump-html: 0
          sessions:
            selenium:
              base_url: ${LSMB_BASE_URL}
@@ -26,7 +23,7 @@ default:
                 window_size:  1024x1280
                 caps:
                   port: 4422
+                  remote_server_addr: ${REMOTE_SERVER_ADDR}
                   browser_name: ${BROWSER}
       Pherkin::Extension::PageObject:
          dummy: 1
-

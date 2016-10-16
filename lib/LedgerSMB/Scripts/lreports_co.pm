@@ -40,7 +40,7 @@ sub start_caja_diaria {
         template => 'filter_cd',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item start_bm
@@ -58,7 +58,7 @@ sub start_bm {
         template => 'filter_bm',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item run_caja_diaria
@@ -71,7 +71,7 @@ sub run_caja_diaria {
     my ($request) = @_;
     my $report = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item run_bm
@@ -84,7 +84,7 @@ sub run_bm {
     my ($request) = @_;
     my $report = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
     $report->run_report;
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =back

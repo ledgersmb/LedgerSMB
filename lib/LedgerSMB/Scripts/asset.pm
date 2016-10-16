@@ -51,7 +51,7 @@ sub begin_depreciation_all {
         template => 'begin_depreciation_all',
         format => 'HTML'
     );
-    $template->render({ request => $request });
+    return $template->render_to_psgi({ request => $request });
 }
 
 =item depreciate_all
@@ -83,8 +83,7 @@ sub depreciate_all {
         template => 'info',
         format => 'HTML'
     );
-    $template->render({ request => $request });
-
+    return $template->render_to_psgi({ request => $request });
 }
 
 =item asset_category_screen
@@ -114,8 +113,8 @@ sub asset_category_screen {
         template => 'edit_class',
         format => 'HTML'
     );
-    $template->render({ request => $request,
-                        asset_class => $ac });
+    return $template->render_to_psgi({ request => $request,
+                                       asset_class => $ac });
 }
 
 =item asset_category_save
@@ -130,7 +129,7 @@ sub asset_category_save {
     my ($request) = @_;
     my $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
     $ac->save;
-    asset_category_screen($request, $ac);
+    return asset_category_screen($request, $ac);
 }
 
 =item asset_category_search
@@ -150,8 +149,8 @@ sub asset_category_search {
     );
     my $ac = LedgerSMB::DBObject::Asset_Class->new();
     $ac->get_metadata;
-    $template->render({ request => $request,
-                        asset_class => $ac });
+    return $template->render_to_psgi({ request => $request,
+                                       asset_class => $ac });
 }
 
 =item asset_category_results
@@ -162,7 +161,8 @@ Displays a list of all asset classes.  No inputs required.
 
 sub asset_category_results {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::Asset_Class->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::Asset_Class->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item edit_asset_class
@@ -175,7 +175,7 @@ sub edit_asset_class {
    my ($request) = @_;
    my $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
    $ac->get_asset_class;
-   asset_category_screen($request,$ac);
+   return asset_category_screen($request,$ac);
 }
 
 =item asset_edit
@@ -189,7 +189,7 @@ sub asset_edit {
     my $asset = LedgerSMB::DBObject::Asset->new({base => $request});
     $asset->get();
     $asset->get_metadata();
-    asset_screen($asset);
+    return asset_screen($asset);
 }
 
 =item asset_screen
@@ -218,8 +218,8 @@ sub asset_screen {
         template => 'edit_asset',
         format => 'HTML'
     );
-    $template->render({ request => $request,
-                        asset => $asset });
+    return $template->render_to_psgi({ request => $request,
+                                       asset => $asset });
 }
 
 =item asset_search
@@ -246,8 +246,8 @@ sub asset_search {
         template => 'search_asset',
         format => 'HTML'
     );
-    $template->render({ request => $request,
-                        asset => $asset });
+    return $template->render_to_psgi({ request => $request,
+                                       asset => $asset });
 }
 
 =item asset_results
@@ -261,7 +261,8 @@ be set.
 
 sub asset_results {
     my ($request) = @_;
-    LedgerSMB::Report::Listings::Asset->new(%$request)->render($request);
+    return LedgerSMB::Report::Listings::Asset->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =item asset_save
@@ -292,7 +293,7 @@ sub asset_save {
                   copy  => 'list',
                   merge => ['stylesheet'],
     });
-    asset_screen($request,$newasset);
+    return asset_screen($request,$newasset);
 }
 
 =item new_report
@@ -314,8 +315,8 @@ sub new_report {
         template => 'begin_report',
         format => 'HTML'
     );
-    $template->render({ request => $request,
-                        report => $report });
+    return $template->render_to_psgi({ request => $request,
+                                       report => $report });
 }
 
 =item report_init
@@ -332,7 +333,7 @@ sub report_init {
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->generate;
-    display_report($request, $report);
+    return display_report($request, $report);
 }
 
 =item report_save
@@ -358,7 +359,7 @@ sub report_save{
              base => $request,
              copy => 'base'
     );
-    new_report($request);
+    return new_report($request);
 }
 
 =item report_get
@@ -371,7 +372,7 @@ sub report_get {
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    display_report($request, $report);
+    return display_report($request, $report);
 }
 
 =item display_report
@@ -472,7 +473,8 @@ sub display_report {
         template => 'form-dynatable',
         format => 'HTML'
     );
-    $template->render({ form => $request,
+    return $template->render_to_psgi({
+                        form => $request,
                      columns => $cols,
                      heading => $heading,
                         rows => $rows,
@@ -504,8 +506,8 @@ sub search_reports {
         template => 'begin_approval',
         format => 'HTML'
     );
-    $template->render({ request => $request,
-                        asset_report => $ar });
+    return $template->render_to_psgi({ request => $request,
+                                       asset_report => $ar });
 }
 
 =item report_results
@@ -594,7 +596,7 @@ sub report_results {
         template => 'form-dynatable',
         format => 'HTML'
     );
-    $template->render({
+    return $template->render_to_psgi({
          form    => $ar,
          heading => $header,
          rows    => $rows,
@@ -617,11 +619,9 @@ sub report_details {
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
     if ($report->{report_class} == 2) {
-      disposal_details($report);
-      return;
+      return disposal_details($report);
     } elsif ($report->{report_class} == 4) {
-      partial_disposal_details($report);
-      return;
+      return partial_disposal_details($report);
     }
     my @cols = qw(tag start_depreciation purchase_value method_short_name
                  usable_life basis prior_through prior_dep dep_this_time
@@ -665,7 +665,8 @@ sub report_details {
                    value => 'approve'
                    },
     ];
-    $template->render({form => $report,
+    return $template->render_to_psgi({
+                       form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
@@ -733,7 +734,8 @@ sub partial_disposal_details {
                    value => 'approve'
                    },
     ];
-    $template->render({form => $report,
+    return $template->render_to_psgi({
+                       form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
@@ -782,7 +784,7 @@ sub disposal_details {
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
-          request => $request,
+        request => $request,
         user => $request->{_user},
         locale => $request->{_locale},
         path => 'UI',
@@ -797,7 +799,8 @@ sub disposal_details {
                    value => 'approve'
                    },
     ];
-    $template->render({form => $report,
+    return $template->render_to_psgi({
+                       form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
@@ -814,7 +817,7 @@ report_details_approve.
 =cut
 
 sub disposal_details_approve {
-    report_details_approve(@_);
+    return report_details_approve(@_);
 }
 
 =item report_details_approve
@@ -832,7 +835,7 @@ sub report_details_approve {
     my ($request) = @_;
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->approve;
-    search_reports($request);
+    return search_reports($request);
 }
 
 =item report_results_approve
@@ -858,7 +861,7 @@ sub report_results_approve {
             $approved->approve;
         }
     }
-   search_reports($request);
+   return search_reports($request);
 
 }
 
@@ -874,7 +877,7 @@ No inputs required or used.
 sub display_nbv {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item begin_import
@@ -894,7 +897,7 @@ sub begin_import {
         template => 'import_asset',
         format => 'HTML'
     );
-    $template->render($request);
+    return $template->render_to_psgi($request);
 }
 
 =item run_import
@@ -990,7 +993,7 @@ sub run_import {
         $ai->import_asset;
     }
     $request->{info} = $request->{_locale}->text('File Imported');
-    begin_import($request);
+    return begin_import($request);
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT

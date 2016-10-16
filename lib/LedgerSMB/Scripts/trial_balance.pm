@@ -49,7 +49,8 @@ sub run {
                                  keys %$request];
     delete $request->{business_units}
            unless scalar @{$request->{business_units}};
-    LedgerSMB::Report::Trial_Balance->new(%$request)->render($request);
+    return LedgerSMB::Report::Trial_Balance->new(%$request)
+        ->render_to_psgi($request);
 }
 
 =back

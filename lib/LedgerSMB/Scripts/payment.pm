@@ -95,8 +95,8 @@ sub payments {
         format   => 'HTML',
     );
 
-    $template->render({ request => $request,
-                        payment => $payment });
+    return $template->render_to_psgi({ request => $request,
+                                       payment => $payment });
 }
 
 =item get_search_criteria
@@ -122,7 +122,7 @@ sub get_search_criteria {
     }
     @{$payment->{currencies}} = $payment->get_open_currencies();
     $payment->{report_name} = 'payments';
-    LedgerSMB::Scripts::reports::start_report($payment);
+    return LedgerSMB::Scripts::reports::start_report($payment);
 }
 
 =item pre_bulk_post_report
@@ -222,7 +222,7 @@ sub pre_bulk_post_report {
         class => 'submit',
     }];
     $request->{action} = "p";
-    $template->render({
+    return $template->render_to_psgi({
         form => $request,
         hiddens => $request,
         columns => $cols,
@@ -237,13 +237,13 @@ sub pre_bulk_post_report {
 
 sub p_payments_bulk_post {
     my ($request) = @_;
-    pre_bulk_post_report(@_);
+    return pre_bulk_post_report(@_);
 }
 
 # wrapper around post_payments_bulk munged for dynatable.
 
 sub post_payments_bulk_p {
-    post_payments_bulk(@_);
+    return post_payments_bulk(@_);
 }
 
 =item get_search_results
@@ -281,7 +281,7 @@ sub get_search_results {
     exchangerate => $request->{exchangerate},
    date_reversed => $request->{date_reversed},
     };
-    $report->render($request);
+    return $report->render_to_psgi($request);
 }
 
 =item reverse_payments
@@ -306,7 +306,7 @@ sub reverse_payments {
            $payment->reverse;
         }
     }
-    get_search_criteria($payment);
+    return get_search_criteria($payment);
 }
 
 =item post_payments_bulk
@@ -332,7 +332,7 @@ sub post_payments_bulk {
         return display_payments($request);
     }
 
-    payments($request);
+    return payments($request);
 }
 
 =item print
@@ -422,8 +422,7 @@ sub print {
         $template->render($payment);
         $template->output(%$payment);
         $request->{action} = 'update_payments';
-        display_payments(@_);
-
+        return display_payments(@_);
     } else {
 
     }
@@ -437,7 +436,7 @@ Displays the bulk payment screen with current data
 =cut
 
 sub update_payments {
-    display_payments(@_);
+    return display_payments(@_);
 }
 
 =item display_payments
@@ -529,8 +528,8 @@ sub display_payments {
         template => 'payments_detail',
         format   => 'HTML',
     );
-    $template->render({ request => $request,
-                        payment => $payment });
+    return $template->render_to_psgi({ request => $request,
+                                       payment => $payment });
 }
 
 =item payment
@@ -599,14 +598,14 @@ my $select = {
   }
 };
 
-    my $template;
+ my $template;
      $template = LedgerSMB::Template->new(
      user     => $request->{_user},
      locale   => $request->{_locale},
      path     => 'UI/payments',
      template => 'payment1',
      format   => 'HTML' );
-     $template->render($select);# And finally, Lets print the screen :)
+     return $template->render_to_psgi($select);
 }
 
 
@@ -625,10 +624,10 @@ my ($request)    = @_;
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
 my @array_options = $dbPayment->get_entity_credit_account();
 if ($#array_options == -1) {
-   &payment($request);
+    return &payment($request);
 } elsif ($#array_options == 0) {
    $request->{'vendor-customer'} = $array_options[0]->{id}.'--'.$array_options[0]->{name};
-   &payment2($request);
+   return &payment2($request);
 } else {
    # Lets call upon the template system
    my @company_options;
@@ -671,7 +670,7 @@ if ($#array_options == -1) {
      path     => 'UI/payments',
      template => 'payment1_5',
      format   => 'HTML' );
-    $template->render($select);
+    return $template->render_to_psgi($select);
  }
 
 }
@@ -1060,12 +1059,12 @@ sub payment2 {
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
       unless defined $select->{selected_account};
     my $template = LedgerSMB::Template->new(
-  user     => $request->{_user},
-  locale   => $request->{_locale},
-  path     => 'UI/payments',
-  template => 'payment2',
-  format => 'HTML' );
-  $template->render($select);
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payments',
+        template => 'payment2',
+        format => 'HTML' );
+    return $template->render_to_psgi($select);
 }
 
 =item post_payment
@@ -1173,8 +1172,8 @@ for my $ref (0 .. $#array_options) {
 }
 # Check if there is an unhandled overpayment and run payment2 as needed
 if ($unhandled_overpayment) {
-&payment2($request);
-return 0;
+    $request->{payment_id} = 0;
+    return payment2($request);
 }
 #
 # Now we need the overpayment information.
@@ -1219,10 +1218,13 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
 # Ok, passing the control to postgresql and hoping for the best...
 
     $Payment->post_payment();
-    if ($request->{continue_to_calling_sub}){ return $Payment->{payment_id} ;}
+    if ($request->{continue_to_calling_sub}) {
+        $request->{payment_id} = $Payment->{payment_id};
+        return;
+    }
     else {
-    # Our work here is done, ask for more payments.
-    &payment($request);
+        # Our work here is done, ask for more payments.
+        return payment($request);
     }
 }
 
@@ -1269,7 +1271,7 @@ sub print_payment {
       path     => $Payment->{templates_path},
       template => 'printPayment',
       format => 'HTML' );
-  $template->render($select);
+  return $template->render_to_psgi($select); ###TODO: psgi-render-to-attachment
 }
 
 =item post_and_print_payment
@@ -1285,7 +1287,7 @@ $request->{continue_to_calling_sub} = 1;
 $request->{payment_id} = &post_payment($request);
 my $locale       = $request->{_locale};
 my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-&print_payment($Payment);
+return print_payment($Payment);
 }
 
 =item use_overpayment
@@ -1334,7 +1336,7 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'use_overpayment1',
   format => 'HTML' );
-$template->render($ui);
+return $template->render_to_psgi($ui);
 }
 
 
@@ -1621,7 +1623,7 @@ my $template =    LedgerSMB::Template->new(
           format => 'HTML' );
 
 
-$template->render($ui);
+return $template->render_to_psgi($ui);
 }
 
 =item post_overpayment
@@ -1705,8 +1707,7 @@ while ($request->{"entity_id_$count"})
 
   #if the amount to be paid is bigger than the amount of the invoice, just call the update method and it will manage it
   if($request->{"warning"}){
-    &use_overpayment2($request);
-    return 0;
+    return use_overpayment2($request);
   }
 
   #lets fill our entity_list by it's entity ID
@@ -1860,7 +1861,7 @@ for my $key (keys %entity_list)
   $entity_list{"$key"}->post_payment();
 }
 
-&use_overpayment($request);
+return use_overpayment($request);
 
 }
 

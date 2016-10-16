@@ -59,7 +59,8 @@ sub wait_for_page {
                     $ref->tag_name;
                     1;
                 };
-                return 1 if defined $@;
+                $ref = undef if !defined $@;
+                return 0;
             }
             else {
                 $self->session->page
