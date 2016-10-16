@@ -1028,9 +1028,9 @@ sub check_template_name {
     if ( $test =~ /^(.:)*?\/|:|\.\.\// ) {
         $form->error("Directory transversal not allowed.");
     }
-    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backuppath}\// ) {
+    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backupdir}\// ) {
         $form->error(
-"Not allowed to access ${LedgerSMB::Sysconfig::backuppath}/ with this method"
+"Not allowed to access ${LedgerSMB::Sysconfig::backupdir}/ with this method"
         );
     }
     my $whitelisted = 0;
