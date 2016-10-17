@@ -1,15 +1,22 @@
 BEGIN;
 
+DROP FUNCTION IF EXISTS reconciliation__submit_set(int, int[]);
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(
-        in_report_id int, in_line_ids int[]) RETURNS bool AS
+        in_report_id int, in_line_ids int[], in_end_date date
+      ) RETURNS bool AS
 $$
 BEGIN
         UPDATE cr_report set submitted = true where id = in_report_id;
-        PERFORM reconciliation__save_set(in_report_id, in_line_ids);
+        PERFORM reconciliation__save_set(in_report_id, in_line_ids, in_end_date);
 
         RETURN FOUND;
 END;
 $$ LANGUAGE PLPGSQL;
+COMMENT ON FUNCTION reconciliation__submit_set(
+        in_report_id int, in_line_ids int[], in_end_date date) IS
+$$Submits a reconciliation report for approval.
+in_line_ids is used to specify which report lines are cleared, finalizing the report.
+in_end_date is used to specify the clearing date. Defaults to now.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__check(in_end_date date, in_chart_id int)
 RETURNS SETOF defaults
@@ -42,25 +49,22 @@ $$ SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
 
-COMMENT ON FUNCTION reconciliation__submit_set(
-        in_report_id int, in_line_ids int[]) IS
-$$Submits a reconciliation report for approval.
-in_line_ids is used to specify which report lines are cleared, finalizing the
-report.$$;
+DROP FUNCTION IF EXISTS reconciliation__save_set(int, int[]);
 
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
-        in_report_id int, in_line_ids int[]) RETURNS bool AS
+        in_report_id int, in_line_ids int[], in_end_date date
+      ) RETURNS bool AS
 $$
         UPDATE cr_report_line SET cleared = false
         WHERE report_id = in_report_id;
 
-        UPDATE cr_report_line SET cleared = true
+        UPDATE cr_report_line SET cleared = true, clear_time = in_end_date
         WHERE report_id = in_report_id AND id = ANY(in_line_ids)
         RETURNING TRUE;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION reconciliation__save_set(
-        in_report_id int, in_line_ids int[]) IS
+        in_report_id int, in_line_ids int[], in_end_date date) IS
 $$Sets which lines of the report are cleared.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__delete_my_report(in_report_id int)
@@ -141,17 +145,19 @@ CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
    in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    SELECT DISTINCT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
+        JOIN cr_report_line crl ON (crl.ledger_id = ac.entry_id)
     JOIN (      SELECT id FROM ar WHERE approved
           UNION SELECT id FROM ap WHERE approved
           UNION SELECT id FROM gl WHERE approved
           ) g ON g.id = ac.trans_id
-    WHERE c.id = $1 AND cleared
-      AND ac.approved IS true
-      AND ac.transdate <= $2
-      AND (cleared_on is null or cleared_on <= $2) -- Required for historical reports
+    WHERE c.id = $1
+-- cleared confirmed and date is prior the report
+      AND (crl.cleared and crl.clear_time is not null and crl.clear_time <= date_trunc('MONTH',CAST($2 AS TIMESTAMP)))
+      AND ac.approved
+      AND ac.transdate <= date_trunc('MONTH',CAST($2 AS TIMESTAMP))
     GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 
@@ -577,19 +583,13 @@ $$
                         IN ('A', 'E') THEN sum(a.amount) * -1
                 ELSE sum(a.amount) END
         FROM acc_trans a
-        JOIN (
-                SELECT id FROM ar
-                WHERE approved is true
-                UNION
-                SELECT id FROM ap
-                WHERE approved is true
-                UNION
-                SELECT id FROM gl
-                WHERE approved is true
-        ) gl ON a.trans_id = gl.id
-        WHERE a.approved IS TRUE
-                AND a.chart_id = in_account_id
-                AND a.transdate <= in_date;
+        JOIN (        SELECT id FROM ar WHERE approved
+                UNION SELECT id FROM ap WHERE approved
+                UNION SELECT id FROM gl WHERE approved
+        ) gl ON gl.id = a.trans_id
+        WHERE a.approved
+          AND a.chart_id = in_account_id
+          AND a.transdate <= in_date;
 
 $$ language sql;
 
