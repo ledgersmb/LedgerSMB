@@ -61,6 +61,7 @@ sub def {
 
     $docs{$sec}->{$key} = $args{doc};
     {
+        ## no critic (strict);
         no strict 'refs';
         ${$name} = $cfg->val($sec, $key, $default);
         if (defined $suffix) {
