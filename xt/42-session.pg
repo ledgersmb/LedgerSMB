@@ -1,0 +1,121 @@
+BEGIN;
+
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(20);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+    \i sql/modules/test/data/Reconciliation.sql
+
+    -- Validate required tables
+
+    SELECT has_table('session');
+    SELECT has_table('open_forms');
+
+    -- Validate required view
+
+--    SELECT has_view('recon_payee');
+
+    -- Validate required triggers
+
+--    SELECT has_trigger('cr_report','block_change_when_approved');
+
+    -- Validate required functions
+
+    SELECT has_function('check_expiration');
+    SELECT has_function('form_check');
+    SELECT has_function('form_close');
+    SELECT has_function('form_open');
+    SELECT has_function('session_check');
+    SELECT has_function('unlock_all');
+    SELECT has_function('unlock');
+
+    -- Run tests
+
+    PREPARE test AS SELECT count(*) = 1 FROM defaults WHERE setting_key = 'timeout';
+    SELECT results_eq('test',ARRAY[true],'timeout set');
+    DEALLOCATE test;
+
+    INSERT INTO session (users_id, last_used, token)
+                SELECT  currval('users_id_seq'),
+                        now() - coalesce((select value from defaults where setting_key = 'timeout')::interval,
+                                 '90 minutes'::interval) - '1 minute'::interval,
+                        md5('test2');
+
+    INSERT INTO session (users_id, last_used, token)
+                SELECT currval('users_id_seq'),
+                now() - coalesce((select value from defaults where setting_key = 'timeout')::interval,
+                         '2 days'::interval),
+                md5('test3');
+
+    INSERT INTO session (users_id, last_used, token)
+    SELECT currval('users_id_seq'), now(), md5('test1');
+
+    PREPARE test AS SELECT count(*) > 0 FROM transactions;
+    SELECT results_eq('test',ARRAY[true],'records exist in transactions table');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT unlock(max(id)) IS FALSE FROM transactions;
+    SELECT results_eq('test',ARRAY[true],'unlock record fails when record is not locked');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT lock_record(max(id), currval('session_session_id_seq')::int)
+                    FROM transactions WHERE locked_by IS NULL;
+    SELECT results_eq('test',ARRAY[true],'lock record');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT unlock(max(id))
+                    FROM transactions WHERE locked_by = currval('session_session_id_seq')::int;
+    SELECT results_eq('test',ARRAY[true],'unlock record');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT bool_and(lock_record(id, currval('session_session_id_seq')::int))
+                    FROM transactions WHERE locked_by IS NULL;
+    SELECT results_eq('test',ARRAY[true],'lock all record');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT unlock_all();
+    SELECT results_eq('test',ARRAY[true],'unlock all record');
+    DEALLOCATE test;
+
+    INSERT INTO session (session_id, token, users_id)
+      values (nextval('session_session_id_seq')::int,
+              md5('test1'),
+              (select id from users where username = SESSION_USER));
+
+    PREPARE test AS SELECT t.token IS NOT NULL -- we're getting a NEW token now
+                    FROM session_check(
+                            currval('session_session_id_seq')::int,
+                            md5('test1')
+                    ) t ;
+    SELECT results_eq('test',ARRAY[true],'session1 retrieved');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT form_open(currval('session_session_id_seq')::int) > 0;
+    SELECT results_eq('test',ARRAY[true],'Form_open on correct syntax');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT form_close(currval('session_session_id_seq')::int + 1, -1::int) is false;
+    SELECT results_eq('test',ARRAY[true],'Form_close on correct syntax');
+    DEALLOCATE test;
+
+--    PREPARE test AS SELECT form_close(currval('session_session_id_seq')::int, currval('open_forms_id_seq')::int);
+--    SELECT results_eq('test',ARRAY[true],'Form_close fails on bad values');
+--    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 0
+                    FROM session
+                    WHERE token = md5('test2')
+                    AND users_id = currval('users_id_seq');
+    SELECT results_eq('test',ARRAY[true],'session 2 removed');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
