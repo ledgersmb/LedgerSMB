@@ -125,7 +125,7 @@ sub save_gifi {
 
     my $dbh = $form->{dbh};
 
-    $form->{accno} =~ s/( |')//g;
+    $form->{accno} =~ s/( |')//g; # kludge to fix syntax highlighting broken by single single quote on a line '
 
     foreach my $item (qw(accno description)) {
         $form->{$item} =~ s/-(-+)/-/g;
@@ -1028,9 +1028,9 @@ sub check_template_name {
     if ( $test =~ /^(.:)*?\/|:|\.\.\// ) {
         $form->error("Directory transversal not allowed.");
     }
-    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backuppath}\// ) {
+    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backupdir}\// ) {
         $form->error(
-"Not allowed to access ${LedgerSMB::Sysconfig::backuppath}/ with this method"
+"Not allowed to access ${LedgerSMB::Sysconfig::backupdir}/ with this method"
         );
     }
     my $whitelisted = 0;
