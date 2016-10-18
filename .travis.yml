@@ -23,7 +23,7 @@ matrix:
         sauce_connect: true
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.5-pgtap
       env:
         - TEST_SAUCE=1
     - perl: '5.22'
@@ -31,7 +31,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.4-pgtap
       env:
         - COVERAGE=1
     - perl: '5.20'
@@ -39,7 +39,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.4-pgtap
       env:
         - COA_TESTING=1
     - perl: '5.18'
@@ -47,7 +47,7 @@ matrix:
         postgresql: "9.3"
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.3-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.16'
@@ -55,7 +55,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.14'
@@ -63,7 +63,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx pgtap
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
 
