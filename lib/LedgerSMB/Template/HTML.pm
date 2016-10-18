@@ -182,7 +182,7 @@ sub process {
         };
         if ($LedgerSMB::Sysconfig::cache_templates){
             $arghash->{COMPILE_EXT} = '.lttc';
-            $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::cache_template_dir;
+            $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::tempdir . "/" . $LedgerSMB::Sysconfig::cache_template_subdir;
         }
 
     $template = Template->new(
