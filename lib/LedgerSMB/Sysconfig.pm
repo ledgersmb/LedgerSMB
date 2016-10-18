@@ -10,6 +10,8 @@ use Cwd;
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
+use English qw(-no_match_vars);
+
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
 
@@ -40,6 +42,8 @@ keys in %args can be:
 
 =item envvar
 
+=item suffix
+
 =back
 
 =cut
@@ -50,14 +54,19 @@ sub def {
     my $key = $args{key} // $name;
     my $default = $args{default};
     my $envvar = $args{envvar};
+    my $suffix = $args{suffix};
 
     $default = $default->()
         if ref $default && ref $default eq 'CODE';
 
     $docs{$sec}->{$key} = $args{doc};
     {
+        ## no critic (strict);
         no strict 'refs';
         ${$name} = $cfg->val($sec, $key, $default);
+        if (defined $suffix) {
+            ${$name} = "${$name}$suffix";
+        }
         $ENV{$envvar} = $cfg->val($sec, $key, $default)
             if $envvar && defined $cfg->val($sec, $key, $default);
 
@@ -166,8 +175,15 @@ def 'fs_cssdir',
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} || '/tmp' },
+    default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
     envvar => 'HOME',
+    suffix => "-$EUID",
+    doc => qq||;
+
+# Backup files stored at"
+def 'backupdir',
+    section => 'paths',
+    default => sub { $ENV{BACKUP} || "/tmp/ledgersmb-backups" },
     doc => qq||;
 
 # Path to the translation files
@@ -189,10 +205,7 @@ def 'templates',
     default => 'templates',
     doc => qq||;
 
-our $cache_template_dir =
-    LedgerSMB::Sysconfig::tempdir() . "/lsmb_templates";
-# Backup path
-our $backuppath = LedgerSMB::Sysconfig::tempdir();
+our $cache_template_subdir = "lsmb_templates"; # this is a subdir of $tempdir and shouldn't have a leading slash
 
 
 ### SECTION  ---   mail
