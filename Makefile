@@ -354,7 +354,7 @@ deb_feature_OpenOffice:
 	$(APT_GET) $(DEB_feature_OpenOffice)
 #   make deb_feature_pgtab
 #       Installs deb package for generating pgTap
-deb_feature_OpenOffice:
+deb_feature_PGTAP:
 	$(APT_GET) $(DEB_feature_PGTAP)
 
 
