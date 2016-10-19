@@ -1,0 +1,98 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(4);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+--    SELECT has_function('business_type__list');
+
+    -- Set specific data
+
+COPY gl(id, transdate, approved) FROM stdin DELIMITER '|';
+-1000|1900-01-01|TRUE
+-1001|1900-01-03|TRUE
+\.
+
+COPY acc_trans(trans_id,chart_id,amount,transdate,approved,entry_id) FROM stdin DELIMITER '|';
+-1000|-1000|100.00|1900-01-01|TRUE|-1000
+-1001|-1000|100.00|1900-01-03|TRUE|-1001
+\.
+
+    -- Run tests
+
+    PREPARE test AS SELECT 
+        running_balance = 100
+     FROM report__gl(NULL, -- reference
+                     (select accno from account where id = -1000),
+                     NULL, NULL, -- category, source
+                     NULL, NULL, -- memo, description
+                     '1899-12-31'::date, -- from_date
+                     '1900-01-01'::date, -- to_date
+                     NULL, -- approved
+                     NULL, NULL, -- from_amount, to_amount
+                     NULL -- business_units
+                     );
+    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (with pre-posting start-date)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        running_balance = 100
+     FROM report__gl(NULL, -- reference
+                     (select accno from account where id = -1000),
+                     NULL, NULL, -- category, source
+                     NULL, NULL, -- memo, description
+                     NULL, -- from_date
+                     '1900-01-01'::date, -- to_date
+                     NULL, -- approved
+                     NULL, NULL, -- from_amount, to_amount
+                     NULL -- business_units
+                     );
+    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (NULL start-date)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        running_balance = 100
+     FROM report__gl(NULL, -- reference
+                     (select accno from account where id = -1000),
+                     NULL, NULL, -- category, source
+                     NULL, NULL, -- memo, description
+                     '1900-01-01'::date, -- from_date
+                     '1900-01-02'::date, -- to_date
+                     NULL, -- approved
+                     NULL, NULL, -- from_amount, to_amount
+                     NULL -- business_units
+                     );
+    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (start-date matches transdate)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        running_balance = 200
+     FROM report__gl(NULL, -- reference
+                     (select accno from account where id = -1000),
+                     NULL, NULL, -- category, source
+                     NULL, NULL, -- memo, description
+                     '1900-01-02'::date, -- from_date
+                     '1900-01-03'::date, -- to_date
+                     NULL, -- approved
+                     NULL, NULL, -- from_amount, to_amount
+                     NULL -- business_units
+                     );
+    SELECT results_eq('test',ARRAY[true],'end-dates-match balance = 200');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
