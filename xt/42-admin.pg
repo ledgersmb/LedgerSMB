@@ -1,0 +1,28 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(1);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    --SELECT has_table('');
+
+    -- Validate required functions
+
+    --SELECT has_function('');
+
+    -- Run tests
+
+    SELECT ok(true,'no admin tests yet!');
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
