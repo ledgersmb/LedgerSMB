@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(18);
+    SELECT plan(19);
 
     -- Add data
 
@@ -60,9 +60,9 @@ BEGIN;
     DELETE FROM account_checkpoint;
     DELETE FROM yearend;
 
-    insert into test_result (success, test_name)
-    select eoy_close_books('1520-05-01', 'test', 'test', '-1002'),
-    'Close books succeeded';
+    PREPARE test as SELECT eoy_close_books('1520-05-01', 'test', 'test', '-1002');
+    SELECT results_eq('test',ARRAY[true],'Close books succeeded');
+    DEALLOCATE test;
 
     PREPARE test as SELECT amount = 10000
                     FROM account_checkpoint 
