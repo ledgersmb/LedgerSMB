@@ -1,0 +1,88 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(18);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('acc_trans');
+    SELECT has_table('gl');
+
+    -- Validate required functions
+
+    SELECT has_function('account__obtain_balance');
+    SELECT has_function('account__obtain_starting_balance');
+    SELECT has_function('eoy_close_books');
+    SELECT has_function('eoy_create_checkpoint');
+    SELECT has_function('eoy_earnings_accounts');
+    SELECT has_function('eoy__latest_checkpoint');
+    SELECT has_function('eoy__reopen_books_at');
+    SELECT has_function('eoy_reopen_books');
+    SELECT has_function('eoy_zero_accounts');
+
+    -- Set specific data
+
+    INSERT INTO gl (id, reference, description, transdate, approved)
+    values (-1000, 'test', 'test', '1520-01-01', true); -- way in the future.
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
+    values (-1000, '-1000', '1520-01-01', '10000', true);
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
+    values (-1000, '-1001', '1520-01-01', '-10000', true);
+
+    INSERT INTO gl (id, reference, description, transdate, approved)
+    values (-1001, 'test', 'test2', '1520-06-01', true); -- way in the future.
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
+    values (-1001, '-1000', '1520-06-01', '10000', true);
+    INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved)
+    values (-1001, '-1001', '1520-06-01', '-10000', true);
+
+    -- Run tests
+
+    PREPARE test AS SELECT account__obtain_balance('1519-12-31'::date, -1000) = 0;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (before any transaction)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT account__obtain_balance('1520-01-01'::date, -1000) = 10000;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after first transaction)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT account__obtain_balance('1520-06-01'::date, -1000) = 20000;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after second transaction)');
+    DEALLOCATE test;
+
+    DELETE FROM account_checkpoint;
+    DELETE FROM yearend;
+
+    insert into test_result (success, test_name)
+    select eoy_close_books('1520-05-01', 'test', 'test', '-1002'),
+    'Close books succeeded';
+
+    PREPARE test as SELECT amount = 10000
+                    FROM account_checkpoint 
+                    WHERE end_date = '1520-05-01' AND account_id = -1000;
+    SELECT results_eq('test',ARRAY[true],'Account checkpoint added');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT account__obtain_balance('1520-05-01'::date, -1000) = 10000;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (on checkpoint)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT account__obtain_balance('1520-05-02'::date, -1000) = 10000;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after checkpoint; no transactions)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT account__obtain_balance('1520-06-01'::date, -1000) = 20000;
+    SELECT results_eq('test',ARRAY[true],'account__obtain_balance (after checkpoint and transaction)');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
