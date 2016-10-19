@@ -1,0 +1,147 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(26);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('voucher');
+
+    -- Validate required functions
+
+    SELECT has_function('batch_create');
+    SELECT has_function('batch_delete');
+    SELECT has_function('batch_get_class_id');
+    SELECT has_function('batch_get_users');
+    SELECT has_function('batch_list_classes');
+    SELECT has_function('batch__lock_for_update');
+    SELECT has_function('batch__lock');
+    SELECT has_function('batch__search');
+    SELECT has_function('batch_post');
+    SELECT has_function('batch_search_mini');
+    SELECT has_function('batch_search_empty');
+    SELECT has_function('batch__unlock');
+    SELECT has_function('voucher__delete');
+    SELECT has_function('voucher_get_batch');
+    SELECT has_function('voucher__list');
+
+    -- Set specific data
+
+    PREPARE test AS SELECT 
+            batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'Batch Created');
+    DEALLOCATE test;
+
+    INSERT INTO entity (id, name, entity_class, control_code, country_id)
+    values (-3, 'Test', 1, 'test', 242);
+    INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id)
+    values (-3, -1, 'Test', 1, -1000);
+
+    INSERT INTO entity_employee(entity_id) values (-3);
+
+    INSERT INTO account(id, accno, description, category, heading, contra)
+    values (-5, '-21111', 'Testing AP', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
+
+    INSERT INTO country_tax_form(country_id, form_name, id) values (232, 'TEST', '-101');
+
+    INSERT INTO account_link(account_id, description) values (-5, 'AP');
+
+    INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
+    VALUES (-5, 'test1', '1000', 'USD', false, -1);
+
+    INSERT INTO acc_trans(trans_id, chart_id, amount, approved)
+    values (-5, test_get_account_id('-21111'), 1000, true);
+
+    INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
+    VALUES (-6, 'test1', '1000', 'USD', false, -1);
+
+    INSERT INTO acc_trans(trans_id, chart_id, amount, approved, entry_id)
+    values (-6, test_get_account_id('-21111'), 1000, true, -1);
+
+    INSERT INTO voucher(id, trans_id, batch_id, batch_class)
+    values (-6, -6, currval('batch_id_seq'), 1);
+
+    INSERT INTO ac_tax_form (entry_id, reportable)
+    values (-1, false);
+
+    INSERT INTO ap (id, invnumber, amount, curr, approved, entity_credit_account)
+    VALUES (-7, 'test1', '1000', 'USD', false, -1);
+
+    INSERT INTO acc_trans(trans_id, chart_id, amount, approved, entry_id)
+    values (-7, test_get_account_id('-21111'), 1000, true, -2);
+
+    INSERT INTO ac_tax_form (entry_id, reportable)
+    values (-2, false);
+
+    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+    values (-1, -5, currval('batch_id_seq'), 1);
+    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+    values (-2, -5, currval('batch_id_seq'), 3);
+    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
+    values (-3, -5, currval('batch_id_seq'), 3);
+
+    -- Run tests
+
+    PREPARE test AS SELECT count(*)=2
+                    FROM voucher__list( currval('batch_id_seq')::int);
+    SELECT results_eq('test',ARRAY[true],'Voucher Seach finds Payable Vouchers');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) > 1
+                    FROM voucher where trans_id = -5 and batch_class = 3;
+    SELECT results_eq('test',ARRAY[true],'partial payment support');
+    DEALLOCATE test;
+
+    -- Adding the test for empty batch sproc
+
+    PREPARE test AS SELECT batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 
+                                        'ap', '2008-01-01')
+                    IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'creating batch 2');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+      FROM batch_search_empty(1,                        -- Batch class ID
+                              'EMPTY BATCH TEST',       -- Batch description
+                              -100,                       -- Entity ID
+                              NULL::numeric,            -- Amount greater than
+                              NULL::numeric,            -- Amount less than
+                              'f'::bool                 -- Approved
+    );
+    SELECT results_eq('test',ARRAY[true],'Empty Batch Detected');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT voucher__delete(-6) = 1;
+    SELECT results_eq('test',ARRAY[true],'Delete voucher with tax_form');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) > 0
+    FROM ac_tax_form;
+    SELECT results_eq('test',ARRAY[true],'not all tax form lines deleted');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 0
+    FROM ap WHERE id = -6;
+    SELECT results_eq('test',ARRAY[true],'DELETED voucher does not exist');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT batch_delete(currval('batch_id_seq')::int) = 1;
+    SELECT results_eq('test',ARRAY[true],'Delete batch');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 0
+    FROM batch where id = currval('batch_id_seq');
+    SELECT results_eq('test',ARRAY[true],'Batch is deleted');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
