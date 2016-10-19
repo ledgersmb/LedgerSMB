@@ -59,23 +59,29 @@ BEGIN;
 
     -- Prepare specific data
 
-    CREATE OR REPLACE FUNCTION test_account_link_description(d text, s boolean, c boolean)
-    RETURNS void AS $$
+    CREATE OR REPLACE FUNCTION test_account_link_description(
+                    d text, s boolean, c boolean)
+    RETURNS BOOLEAN AS $$
     BEGIN
-       INSERT INTO account_link_description(description, summary, custom) VALUES (d, s, c);
-       SELECT is( description, d, 'Should have decription') FROM account_link_description WHERE description = d;
-       SELECT is( summary, s, 'Should have summary')        FROM account_link_description WHERE summary = s;
-       SELECT is( custom, c, 'Should have custom')          FROM account_link_description WHERE custom = c;
+       INSERT INTO account_link_description(description, summary, custom)
+                   VALUES (d, s, c);
+       SELECT results_eq( 
+            'SELECT description = ''' || d || ''' AND summary = ' || s ||
+             ' AND custom = ' || c || ' AND count(*) = 1
+               FROM account_link_description WHERE description = ''' || d || '''
+               GROUP BY description',
+            ARRAY[true],'Account link description for ' || d);
+       RETURN TRUE;
     END $$ LANGUAGE plpgsql;
 
-    PERFORM test_account_link_description('AR_paid1', false, true);
-    PERFORM test_account_link_description('AP_paid1', false, true);
-    PERFORM test_account_link_description('AR_p', false, true);
-    PERFORM test_account_link_description('AP_p', false, true);
-    PERFORM test_account_link_description('AR_overp', false, true);
-    PERFORM test_account_link_description('AP_overpayment1', false, true);
-    PERFORM test_account_link_description('AP_overp', false, true);
-    PERFORM test_account_link_description('AR_overpayment1', false, true);
+    SELECT test_account_link_description('AR_paid1', false, true);
+    SELECT test_account_link_description('AP_paid1', false, true);
+    SELECT test_account_link_description('AR_p', false, true);
+    SELECT test_account_link_description('AP_p', false, true);
+    SELECT test_account_link_description('AR_overp', false, true);
+    SELECT test_account_link_description('AP_overpayment1', false, true);
+    SELECT test_account_link_description('AP_overp', false, true);
+    SELECT test_account_link_description('AR_overpayment1', false, true);
 
     SELECT account__save (null, accno, description, category::char(1),
                 null, null, false, false,
