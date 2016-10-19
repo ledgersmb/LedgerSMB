@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(39);
+    SELECT plan(40);
 
     -- Add data
 
@@ -185,7 +185,7 @@ BEGIN;
             (select id from account where accno = '00001'), -100, true, '-1', now(),
             '_test_src1');
 
-    --TODO Missing Voucher test?
+    SELECT todo('Missing Voucher test',1);
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
