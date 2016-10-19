@@ -1,0 +1,64 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(36);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('defaults');
+    SELECT has_table('entity_employee');
+    SELECT has_table('lsmb_group_grants');
+    SELECT has_table('lsmb_group');
+    SELECT has_table('session');
+    SELECT has_table('user_preference');
+    SELECT has_table('users');
+
+    -- Validate required views
+
+    SELECT has_view('user_listable');
+
+    -- Validate required functions
+
+    SELECT has_function('admin__add_function_to_group');
+    SELECT has_function('admin__add_group_to_role');
+    SELECT has_function('admin__add_user_to_role');
+    SELECT has_function('admin__create_group');
+    SELECT has_function('admin__delete_group');
+    SELECT has_function('admin__delete_user');
+    SELECT has_function('admin__drop_session');
+    SELECT has_function('admin__get_roles_for_user_by_entity');
+    SELECT has_function('admin__get_roles_for_user');
+    SELECT has_function('admin__get_roles');
+    SELECT has_function('admin__get_user_by_entity');
+    SELECT has_function('admin__get_user');
+    SELECT has_function('admin__is_group');
+    SELECT has_function('admin__is_user');
+    SELECT has_function('admin__list_group_grants');
+    SELECT has_function('admin__list_sessions');
+    SELECT has_function('admin__remove_function_from_group');
+    SELECT has_function('admin__remove_group_from_role');
+    SELECT has_function('admin__remove_user_from_role');
+    SELECT has_function('admin__save_user');
+    SELECT has_function('admin__search_users');
+    SELECT has_function('user__change_password');
+    SELECT has_function('user__check_my_expiration');
+    SELECT has_function('user__expires_soon');
+    SELECT has_function('user__get_all_users');
+    SELECT has_function('user__get_preferences');
+    SELECT has_function('user__save_preferences');
+
+    -- Run tests
+
+    SELECT ok(true,'No specific admin tests yet!');
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
