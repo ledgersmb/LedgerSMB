@@ -1,0 +1,155 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(60);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+    SELECT has_table('company');
+    SELECT has_table('person_to_company');
+
+    -- Validate required functions
+
+    SELECT has_function('account__all_headings');
+    SELECT has_function('company__get_all_accounts');
+    SELECT has_function('company_get_billing_info');
+    SELECT has_function('company__get_by_cc');
+    SELECT has_function('company__get');
+    SELECT has_function('company__next_id');
+    SELECT has_function('company__save');
+    SELECT has_function('contact_class__list');
+    SELECT has_function('contact__search');
+    SELECT has_function('eca__delete_contact');
+    SELECT has_function('eca__delete_location');
+    SELECT has_function('eca__delete_pricematrix');
+    SELECT has_function('eca__delete_pricematrix');
+    SELECT has_function('eca__get_by_meta_number');
+    SELECT has_function('eca__get_pricematrix_by_pricegroup');
+    SELECT has_function('eca__get_pricematrix');
+    SELECT has_function('eca__get_taxes');
+    SELECT has_function('eca__history');
+    SELECT has_function('eca__history_summary');
+    SELECT has_function('eca__list_contacts');
+    SELECT has_function('eca__list_locations');
+    SELECT has_function('eca__list_notes');
+    SELECT has_function('eca__save');
+    SELECT has_function('eca__save_contact');
+    SELECT has_function('eca__save_notes');
+    SELECT has_function('eca__save_pricematrix');
+    SELECT has_function('eca__set_taxes');
+    SELECT has_function('entity_credit_get_id');
+    SELECT has_function('entity_credit_get_id_by_meta_number');
+    SELECT has_function('entity_credit__get');
+    SELECT has_function('entity__delete_contact');
+    SELECT has_function('entity__delete_location');
+    SELECT has_function('entity__list_bank_account');
+    SELECT has_function('entity__list_contacts');
+    SELECT has_function('entity__list_credit');
+    SELECT has_function('entity__list_locations');
+    SELECT has_function('entity__list_notes');
+    SELECT has_function('entity__location_save');
+    SELECT has_function('entity__save_bank_account');
+    SELECT has_function('entity__save_contact');
+    SELECT has_function('entity__save_notes');
+    SELECT has_function('list_taxforms');
+    SELECT has_function('pricegroup__list');
+    SELECT has_function('pricelist__delete');
+    SELECT has_function('pricelist__save');
+    SELECT has_function('sic__list');
+
+    -- Run tests
+
+    PREPARE test AS SELECT 
+        company__save ('TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 
+                        232, 'st-123', 'ubi-123-456-789')
+                IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'Saving Company');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
+                0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD',
+                now()::date, now()::date,
+                0, -1000, NULL, NULL, NULL, NULL)
+        IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'Saving Credit Acct');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+                NULL, 2, 'Test', 'Test',
+                NULL, 'Test', 'Test', '12345', 25, NULL)
+        IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'eca_location_save');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+                NULL, 1, 'Test2', 'Test',
+                '', 'Test', 'Test123', '12345', 25, NULL) =
+        eca__location_save(currval('entity_credit_account_id_seq')::int, 
+                NULL, 3, 'Test2', 'Test',
+                '', 'Test', 'Test123', '12345', 25, NULL);
+    SELECT results_eq('test',ARRAY[true],'eca_location_save returns same id with same args and no in_location_id');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 3
+        FROM eca__list_locations(currval('entity_credit_account_id_seq')::int);
+    SELECT results_eq('test',ARRAY[true],'list_locations');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+        eca__save_contact(currval('entity_credit_account_id_seq')::int,
+                1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'saving eca contact');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+        FROM eca__list_contacts(currval('entity_credit_account_id_seq')::int)
+        WHERE contact = 'test_c';
+    SELECT results_eq('test',ARRAY[true],'Contact found correctly');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+    FROM company_get_billing_info((select max(id) from entity_credit_account))
+    WHERE control_code is not null;
+        SELECT results_eq('test',ARRAY[true],'Company_get_billing_info working');
+        DEALLOCATE test;
+
+    -- Note tests --
+
+    PREPARE test AS SELECT 
+       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) is not null;
+    SELECT results_eq('test',ARRAY[true],'entity__save_notes');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+       CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
+       FROM entity_note
+       WHERE id = currval('note_id_seq');
+    SELECT results_eq('test',ARRAY[true],'entity__save_note subject record');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+           eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) is not null;
+    SELECT results_eq('test',ARRAY[true],'eca_save_notes');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT 
+           CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
+           FROM eca_note
+           WHERE id = currval('note_id_seq');
+    SELECT results_eq('test',ARRAY[true],'eca__save_notes subject record');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
