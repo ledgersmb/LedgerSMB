@@ -1,0 +1,125 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+
+    -- Plan the tests.
+
+    SELECT plan(10);
+
+    -- Add data
+
+    \i sql/modules/test/Base.sql
+
+    -- Validate required tables
+
+--    SELECT has_table('business');
+
+    -- Validate required functions
+
+--    SELECT has_function('business_type__list');
+
+    -- Set specific data
+
+    INSERT INTO entity (id, entity_class, name, country_id)
+    VALUES (-1000, 1, '__TEST', 243);
+
+    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
+    VALUES (-1000, '_testv', 1, -1000, -1000);
+    INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
+    VALUES (-1001, '_testc', 2, -1000, -1000);
+    SELECT account__save
+           (NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
+           false);
+    SELECT account__save
+           (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false,
+           false);
+    INSERT INTO ap (invnumber, entity_credit_account, amount, netamount,
+            approved, curr)
+    select '_TEST AP', -1000, '100', '100', FALSE, 'USD';
+
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00001';
+    INSERT INTO ac_tax_form (entry_id, reportable)
+    VALUES (currval('acc_trans_entry_id_seq')::int, true);
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00002';
+    INSERT INTO ac_tax_form (entry_id, reportable)
+    VALUES (currval('acc_trans_entry_id_seq')::int, false);
+
+    INSERT INTO ar (invnumber, entity_credit_account, amount, netamount,
+            approved, curr)
+    select '_TEST AR', -1001, '100', '100', FALSE, 'USD';
+
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00001';
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00002';
+
+    INSERT INTO gl (reference, description, approved)
+    VALUES ('_TEST GL', 'Testing GL Drafts', false);
+
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '-100', TRUE FROM account WHERE accno = '00001';
+    INSERT INTO acc_trans (chart_id, trans_id, amount, approved)
+    SELECT id, currval('id'), '100', TRUE FROM account WHERE accno = '00002';
+
+    -- Run tests
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('ap',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST AP';
+    SELECT results_eq('test',ARRAY[true],'"ap" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('AP',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST AP';
+    SELECT results_eq('test',ARRAY[true],'"AP" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT draft_delete(id)
+                    FROM draft__search('AP',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST AP';
+    SELECT results_eq('test',ARRAY[true],'"AP" delete successful (w/1099)');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('ar',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST AR';
+    SELECT results_eq('test',ARRAY[true],'"ar" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('AR',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST AR';
+    SELECT results_eq('test',ARRAY[true],'"AR" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('gl',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST GL';
+    SELECT results_eq('test',ARRAY[true],'"gl" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 1
+                    FROM draft__search('GL',  NULL, NULL, NULL, NULL, NULL)
+                    WHERE reference = '_TEST GL';
+    SELECT results_eq('test',ARRAY[true],'"GL" search successful');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT draft_delete(currval('id')::int);
+    SELECT results_eq('test',ARRAY[true],'gl draft deletion');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 0 from gl where id = currval('id');
+    SELECT results_eq('test',ARRAY[true],'gl table cleanup');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*) = 0 from acc_trans where trans_id = currval('id');
+    SELECT results_eq('test',ARRAY[true],'acc_trans table cleanup');
+    DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
