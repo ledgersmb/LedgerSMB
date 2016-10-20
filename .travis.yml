@@ -23,7 +23,7 @@ matrix:
         sauce_connect: true
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.5-pgtap
       env:
         - TEST_SAUCE=1
     - perl: '5.22'
@@ -31,7 +31,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.4-pgtap
       env:
         - COVERAGE=1
     - perl: '5.20'
@@ -39,7 +39,7 @@ matrix:
         postgresql: "9.4"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.4-pgtap
       env:
         - COA_TESTING=1
     - perl: '5.18'
@@ -47,7 +47,7 @@ matrix:
         postgresql: "9.3"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.3-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.16'
@@ -55,7 +55,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
     - perl: '5.14'
@@ -63,7 +63,7 @@ matrix:
         postgresql: "9.2"
         apt:
           packages:
-            - nginx
+            - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
 
@@ -116,7 +116,15 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove t/ xt/
+  - export RELEASE_TESTING=1 && 
+           PGUSER=postgres PGPASSWORD=test
+           LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000"
+    prove --source Perl
+          --ext=.t --ext=.pg
+          --source pgTAP   --pgtap-option dbname=lsmb13installtest
+                           --pgtap-option username=postgres
+                           --pgtap-option suffix=.pg
+          t/ xt/
 
 after_success:
   - >
@@ -126,4 +134,3 @@ after_success:
        echo "" ;
     fi
   - coverage-report
-

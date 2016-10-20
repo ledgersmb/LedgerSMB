@@ -25,6 +25,7 @@ DEB_feature_PDF := libtemplate-plugin-latex-perl libtex-encode-perl
 DEB_feature_PDF := texlive-latex-recommended
 DEB_feature_PDF_utf8 := texlive-xetex
 DEB_feature_OpenOffice := libopenoffice-oodoc-perl
+DEB_feature_PGTAP := pgtap
 
 # Core packages provided by Fedora 24
 RHEL_essential := perl-devel perl-CPAN perl-App-cpanminus
@@ -152,6 +153,7 @@ ifeq ($(OSTYPE),DEBIAN)
 OS_feature_PDF        := deb_feature_PDF
 OS_feature_PDF_utf8   := deb_feature_PDF_utf8
 OS_feature_OpenOffice := deb_feature_OpenOffice
+OS_feature_PGTAP      := deb_feature_PGTAP
 endif
 ifeq ($(OSTYPE),REDHAT)
 OS_feature_PDF        := rhel_feature_PDF
@@ -350,6 +352,10 @@ deb_feature_PDF_utf8: deb_feature_PDF
 #       Installs deb package for generating OpenOffice output
 deb_feature_OpenOffice:
 	$(APT_GET) $(DEB_feature_OpenOffice)
+#   make deb_feature_pgtab
+#       Installs deb package for generating pgTap
+deb_feature_PGTAP:
+	$(APT_GET) $(DEB_feature_PGTAP)
 
 
 
