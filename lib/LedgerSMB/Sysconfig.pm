@@ -21,7 +21,7 @@ if (-r $cfg_file) {
     $cfg = Config::IniFiles->new( -file => $cfg_file ) || die @Config::IniFiles::errors;
 }
 else {
-    warn "No configuration file; running with default settings";
+    warn "No configuration file; running with default settings\n";
     $cfg = Config::IniFiles->new();
 }
 
