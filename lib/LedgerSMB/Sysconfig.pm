@@ -19,6 +19,8 @@ binmode STDERR, ':utf8';
 
 each $line_* is a string that will be output on a separate line:
 
+=over
+
 =item line_1
 
 =item line_2
