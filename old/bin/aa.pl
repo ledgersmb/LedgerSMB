@@ -51,13 +51,13 @@ use LedgerSMB::Company_Config;
 
 use Data::Dumper;
 
-require 'bin/bridge.pl'; # needed for voucher dispatches
+require 'old/bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
-if ( -f "bin/custom/aa.pl" ) {
-    eval { require "bin/custom/aa.pl"; };
+if ( -f "old/bin/custom/aa.pl" ) {
+    eval { require "old/bin/custom/aa.pl"; };
 }
-if ( -f "bin/custom/$form->{login}_aa.pl" ) {
-    eval { require "bin/custom/$form->{login}_aa.pl"; };
+if ( -f "old/bin/custom/$form->{login}_aa.pl" ) {
+    eval { require "old/bin/custom/$form->{login}_aa.pl"; };
 }
 
 my $is_update;

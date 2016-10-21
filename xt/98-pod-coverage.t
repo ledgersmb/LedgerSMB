@@ -40,7 +40,7 @@ find(\&collect, 'lib/LedgerSMB.pm', 'lib/LedgerSMB/');
 
 # only check new code; we're scaling down on old code anyway
 @on_disk =
-    grep { ! m#^bin/# }
+    grep { ! m#^old/bin/# }
     grep { ! m#^lib/LedgerSMB/..\.pm# }
     grep { ! m#^lib/LedgerSMB/Form\.pm# }
     grep { ! m#^lib/LedgerSMB/Auth/# }

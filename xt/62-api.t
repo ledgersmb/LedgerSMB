@@ -150,10 +150,10 @@ package old_code_test;
 our $form;
 
 sub _load_script {
-        do "bin/arapprn.pl";
-        do "bin/arap.pl";
-        do "bin/io.pl";
-        do "bin/$1[0]";
+        do "old/bin/arapprn.pl";
+        do "old/bin/arap.pl";
+        do "old/bin/io.pl";
+        do "old/bin/$1[0]";
 }
 
 package LedgerSMB;

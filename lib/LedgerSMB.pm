@@ -392,15 +392,15 @@ sub _set_path {
 
     $self->{path} = "" unless defined $self->{path};
 
-    if ( $self->{path} eq "bin/lynx" ) {
+    if ( $self->{path} eq "old/bin/lynx" ) {
         $self->{menubar} = 1;
 
         # Applying the path is deprecated.  Use menubar instead.  CT.
         $self->{lynx} = 1;
-        $self->{path} = "bin/lynx";
+        $self->{path} = "old/bin/lynx";
     }
     else {
-        $self->{path} = "bin/mozilla";
+        $self->{path} = "old/bin/mozilla";
     }
 }
 

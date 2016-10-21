@@ -44,7 +44,7 @@ package lsmb_legacy;
 use LedgerSMB::IC;
 use LedgerSMB::Tax;
 
-require "bin/io.pl";
+require "old/bin/io.pl";
 
 1;
 

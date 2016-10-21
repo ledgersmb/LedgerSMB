@@ -1044,7 +1044,7 @@ sub edit_recurring {
     }
 
     $form->{script} = "$form->{module}.pl";
-    do "bin/$form->{script}";
+    do "old/bin/$form->{script}";
 
     &{ $links{ $form->{module} } };
 
@@ -1123,7 +1123,7 @@ sub process_transactions {
                         $form->{module} = "ap";
                         $invfld         = "vinumber";
                     }
-                    do "bin/$form->{script}";
+                    do "old/bin/$form->{script}";
 
                     if ( $pt->{invoice} ) {
                         &invoice_links;
@@ -1279,7 +1279,7 @@ sub process_transactions {
                         $ordfld       = "ponumber";
                         $flabel       = $locale->text('Purchase Order');
                     }
-                    require "bin/$form->{script}";
+                    require "old/bin/$form->{script}";
 
                     &order_links;
                     &prepare_order;

@@ -82,7 +82,7 @@ sub dispatch {
             # Note that we're only loading this code *after* the fork,
             # so, we're only ever "polluting" the namespaces of the
             # child Perl process which we'll ditch right after.
-            do "bin/$script";
+            do "old/bin/$script";
         }
         if (ref $entrypoint eq "CODE") {
             $entrypoint->(@_);

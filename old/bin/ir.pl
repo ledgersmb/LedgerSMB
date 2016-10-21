@@ -46,9 +46,9 @@ use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Setting;
 
-require 'bin/bridge.pl'; # needed for voucher dispatches
-require "bin/io.pl";
-require "bin/arap.pl";
+require 'old/bin/bridge.pl'; # needed for voucher dispatches
+require "old/bin/io.pl";
+require "old/bin/arap.pl";
 
 1;
 
