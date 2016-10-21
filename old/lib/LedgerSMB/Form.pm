@@ -95,7 +95,6 @@ run through unescape to undo any URI encoding.
 
 The version and dbversion attributes are set to hardcoded values; action,
 nextsub, path, script, and login are filtered to remove some dangerous values.
-Both menubar and lynx are set if path matches lynx.
 
 $form->error may be called to deny access on some attribute values.
 
@@ -176,18 +175,10 @@ sub new {
             if ! $self->{company};
     }
 
-    $self->{menubar} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
-
-    #menubar will be deprecated, replaced with below
-    $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
-
     $self->{version}   = "1.6.0-dev";
     $self->{dbversion} = "1.6.0-dev";
 
     bless $self, $type;
-
-    if ( !defined $self->{path} or $self->{path} ne 'old/bin/lynx' ) { $self->{path} = 'old/bin/mozilla'; }
-    #if ( $self->{path} ne 'old/bin/lynx' ) { $self->{path} = 'old/bin/mozilla'; }
 
     if ( ( $self->{script} )
         and not List::Util::first { $_ eq $self->{script} }

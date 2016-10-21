@@ -113,7 +113,7 @@ sub add {
         $form->{reverse} = 0;
     }
     $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     &invoice_links;

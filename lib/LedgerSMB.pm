@@ -387,23 +387,6 @@ sub _set_script_name {
                    . "\$self->{action} = $self->{action}");
 }
 
-sub _set_path {
-    my ($self) = @_;
-
-    $self->{path} = "" unless defined $self->{path};
-
-    if ( $self->{path} eq "old/bin/lynx" ) {
-        $self->{menubar} = 1;
-
-        # Applying the path is deprecated.  Use menubar instead.  CT.
-        $self->{lynx} = 1;
-        $self->{path} = "old/bin/lynx";
-    }
-    else {
-        $self->{path} = "old/bin/mozilla";
-    }
-}
-
 
 sub _process_argstr {
     my ($self, $argstr) = @_;

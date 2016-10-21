@@ -147,7 +147,7 @@ sub add {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add&transfer=$form->{transfer}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&transfer=$form->{transfer}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     if (!$form->{rowcount}){
@@ -214,7 +214,6 @@ sub display_form
     our %hiddens = (
     'direction' => $form->{direction},
     'oldsort' => $form->{oldsort},
-    'path' => $form->{path},
     'login' => $form->{login},
     'session_id' => $form->{session_id},
     'batch_id' => $form->{batch_id},

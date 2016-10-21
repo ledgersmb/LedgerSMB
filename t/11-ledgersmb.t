@@ -27,24 +27,24 @@ plan tests => 56;
 
 
 sub redirect {
-	print "redirected\n";
+        print "redirected\n";
 }
 
 sub lsmb_error_func {
-	print $_[0];
+        print $_[0];
 }
 
-##line	subroutine
-##108	new
-##235	redirect
-##254	format_amount
-##364	parse_amount
-##408	round_amount
-##423	call_procedure
-##454	date_to_number
-##490	db_init
-##522	redo_rows
-##547	merge
+##line  subroutine
+##108   new
+##235   redirect
+##254   format_amount
+##364   parse_amount
+##408   round_amount
+##423   call_procedure
+##454   date_to_number
+##490   db_init
+##522   redo_rows
+##547   merge
 
 
 $lsmb = LedgerSMB->new();
@@ -95,49 +95,32 @@ ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
 ok(defined $lsmb->{action}, 'new: blank, action defined');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
-ok(defined $lsmb->{path}, 'new: blank, path defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
-
-$lsmb = LedgerSMB->new('path=old/bin/lynx');
-#$lsmb = LedgerSMB->new();
-#$lsmb->{path} = "old/bin/lynx";
-ok(defined $lsmb, 'new: lynx, defined');
-isa_ok($lsmb, 'LedgerSMB', 'new: lynx, correct type');
-ok(defined $lsmb->{action}, 'new: lynx, action defined');
-ok(defined $lsmb->{dbversion}, 'new: lynx, dbversion defined');
-ok(defined $lsmb->{path}, 'new: lynx, path defined');
-is($lsmb->{path}, 'old/bin/lynx', 'new: lynx, path carried through');
-ok(defined $lsmb->{lynx}, 'new: lynx, lynx defined');
-is($lsmb->{lynx}, 1, 'new: lynx, lynx enabled');
-ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
-is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
-ok(defined $lsmb->{version}, 'new: lynx, version defined');
-
 
 # $lsmb->call_procedure checks
 SKIP: {
-	skip 'Skipping call_procedure tests, no db specified', 5
-		if !defined $ENV{PGDATABASE};
-	$lsmb = LedgerSMB->new();
-	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
-		undef, undef, {AutoCommit => 0 });
+        skip 'Skipping call_procedure tests, no db specified', 5
+                if !defined $ENV{PGDATABASE};
+        $lsmb = LedgerSMB->new();
+        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
+                undef, undef, {AutoCommit => 0 });
         LedgerSMB::App_State::set_DBH($lsmb->{dbh});
-	@r = $lsmb->call_procedure('procname' => 'character_length',
-		'args' => ['month'], 'schema'=>"pg_catalog");
-	is($#r, 0, 'call_procedure: correct return length (one row)');
-	is($r[0]->{'character_length'}, 5,
-		'call_procedure: single arg, non-numeric return');
+        @r = $lsmb->call_procedure('procname' => 'character_length',
+                'args' => ['month'], 'schema'=>"pg_catalog");
+        is($#r, 0, 'call_procedure: correct return length (one row)');
+        is($r[0]->{'character_length'}, 5,
+                'call_procedure: single arg, non-numeric return');
 
-	@r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0], 'schema' => 'pg_catalog');
-	is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
-		'call_procedure: two args, numeric return');
+        @r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0], 'schema' => 'pg_catalog');
+        is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
+                'call_procedure: two args, numeric return');
 
-	@r = $lsmb->call_procedure('procname' => 'pi', 'args' => [], 'schema'=>'pg_catalog');
-	like($r[0]->{'pi'}, qr/^3.14/,
-		'call_procedure: empty arg list, non-numeric return');
-	@r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
-	like($r[0]->{'pi'}, qr/^3.14/,
-		'call_procedure: no args, non-numeric return');
+        @r = $lsmb->call_procedure('procname' => 'pi', 'args' => [], 'schema'=>'pg_catalog');
+        like($r[0]->{'pi'}, qr/^3.14/,
+                'call_procedure: empty arg list, non-numeric return');
+        @r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
+        like($r[0]->{'pi'}, qr/^3.14/,
+                'call_procedure: no args, non-numeric return');
     $lsmb->{dbh}->rollback();
     $lsmb->{dbh}->disconnect;
 }
@@ -148,19 +131,16 @@ $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pea
 ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
 is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
 is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
-like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: left existing key');
 
 $lsmb = LedgerSMB->new();
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
 is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
-like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: No key, left existing key');
 
 $lsmb = LedgerSMB->new();
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
-like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
 
