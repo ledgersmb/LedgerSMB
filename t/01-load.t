@@ -15,7 +15,7 @@ sub collect {
     $module =~ s#\.pm$##g;
     push @on_disk, $module
 }
-find(\&collect, 'lib/LedgerSMB/');
+find(\&collect, 'lib/LedgerSMB/', 'old/lib/LedgerSMB/');
 
 
 my @exception_modules =
