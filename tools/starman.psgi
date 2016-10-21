@@ -12,7 +12,8 @@ BEGIN {
 package LedgerSMB::FCGI;
 
 use FindBin;
-use lib $FindBin::Bin . "/../lib";
+use lib $FindBin::Bin . '/../lib';
+use lib $FindBin::Bin . '/../old/lib';
 use CGI::Emulate::PSGI;
 use LedgerSMB;
 use LedgerSMB::Auth;

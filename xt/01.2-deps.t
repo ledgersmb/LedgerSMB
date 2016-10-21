@@ -39,7 +39,7 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'lib/', 'bin/');
+find(\&collect, 'lib/', 'bin/', 'old/lib/', 'old/bin/');
 
 push @on_disk, 'tools/starman.psgi';
 
