@@ -98,15 +98,15 @@ ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{path}, 'new: blank, path defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
-$lsmb = LedgerSMB->new('path=bin/lynx');
+$lsmb = LedgerSMB->new('path=old/bin/lynx');
 #$lsmb = LedgerSMB->new();
-#$lsmb->{path} = "bin/lynx";
+#$lsmb->{path} = "old/bin/lynx";
 ok(defined $lsmb, 'new: lynx, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: lynx, correct type');
 ok(defined $lsmb->{action}, 'new: lynx, action defined');
 ok(defined $lsmb->{dbversion}, 'new: lynx, dbversion defined');
 ok(defined $lsmb->{path}, 'new: lynx, path defined');
-is($lsmb->{path}, 'bin/lynx', 'new: lynx, path carried through');
+is($lsmb->{path}, 'old/bin/lynx', 'new: lynx, path carried through');
 ok(defined $lsmb->{lynx}, 'new: lynx, lynx defined');
 is($lsmb->{lynx}, 1, 'new: lynx, lynx enabled');
 ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
@@ -148,19 +148,19 @@ $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pea
 ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
 is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
 is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
-like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: left existing key');
+like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: left existing key');
 
 $lsmb = LedgerSMB->new();
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
 is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
-like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: No key, left existing key');
+like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: No key, left existing key');
 
 $lsmb = LedgerSMB->new();
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
-like($lsmb->{path}, qr#bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
+like($lsmb->{path}, qr#old/bin/(lynx|mozilla)#, 'merge: Index 1, left existing key');
 

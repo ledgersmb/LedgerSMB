@@ -158,7 +158,7 @@ $form = new Form;
 
 $form->{header} = 1;
 @r = trap{$form->hide_form('path')};
-is($trap->stdout, "<input type=\"hidden\" name=\"path\" value=\"bin/mozilla\" />\n",
+is($trap->stdout, "<input type=\"hidden\" name=\"path\" value=\"old/bin/mozilla\" />\n",
 	'hide_form: path');
 ok($form->{header}, 'hide_form: header flag not cleared');
 

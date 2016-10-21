@@ -47,13 +47,13 @@ Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
 sub rest_app {
    return CGI::Emulate::PSGI->handler(
      sub {
-       do 'bin/rest-handler.pl';
+       do 'old/bin/rest-handler.pl';
     });
 }
 
 =item old_app
 
-Returns a 'PSGI app' which handles requests for the 'old-code' scripts in bin/
+Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bin/
 
 =cut
 
@@ -194,7 +194,7 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-       do 'bin/old-handler.pl';
+       do 'old/bin/old-handler.pl';
        exit;
     }
 }

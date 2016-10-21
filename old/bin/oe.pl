@@ -50,8 +50,8 @@ use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
 
-require "bin/arap.pl";
-require "bin/io.pl";
+require "old/bin/arap.pl";
+require "old/bin/io.pl";
 
 1;
 
@@ -1437,16 +1437,16 @@ sub invoice {
     $form->{charset} = 'UTF-8';
     $locale->encoding('UTF-8');
 
-    require "bin/$form->{script}";
+    require "old/bin/$form->{script}";
 
     # customized scripts
-    if ( -f "bin/custom/$form->{script}" ) {
-        eval { require "bin/custom/$form->{script}"; };
+    if ( -f "old/bin/custom/$form->{script}" ) {
+        eval { require "old/bin/custom/$form->{script}"; };
     }
 
     # customized scripts for login
-    if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
-        eval { require "bin/custom/$form->{login}_$form->{script}"; };
+    if ( -f "old/bin/custom/$form->{login}_$form->{script}" ) {
+        eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
     }
 
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
@@ -1965,7 +1965,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="ser
     $form->print_button( \%button, 'done' );
 
     if ( $form->{lynx} ) {
-        require "bin/menu.pl";
+        require "old/bin/menu.pl";
         &menubar;
     }
 
@@ -2081,7 +2081,7 @@ sub search_transfer {
 |;
 
     if ( $form->{lynx} ) {
-        require "bin/menu.pl";
+        require "old/bin/menu.pl";
         &menubar;
     }
 
@@ -2265,7 +2265,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
       . qq|</button>|;
 
     if ( $form->{lynx} ) {
-        require "bin/menu.pl";
+        require "old/bin/menu.pl";
         &menubar;
     }
 
@@ -2532,7 +2532,7 @@ qq|<td><input name="ndx_$i" id="ndx_$i" class=checkbox type=checkbox data-dojo-t
       . qq|</button>|;
 
     if ( $form->{lynx} ) {
-        require "bin/menu.pl";
+        require "old/bin/menu.pl";
         &menubar;
     }
 
@@ -2589,7 +2589,7 @@ sub select_vendor {
 |;
 
     if ( $form->{lynx} ) {
-        require "bin/menu.pl";
+        require "old/bin/menu.pl";
         &menubar;
     }
 

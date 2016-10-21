@@ -186,8 +186,8 @@ sub new {
 
     bless $self, $type;
 
-    if ( !defined $self->{path} or $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
-    #if ( $self->{path} ne 'bin/lynx' ) { $self->{path} = 'bin/mozilla'; }
+    if ( !defined $self->{path} or $self->{path} ne 'old/bin/lynx' ) { $self->{path} = 'old/bin/mozilla'; }
+    #if ( $self->{path} ne 'old/bin/lynx' ) { $self->{path} = 'old/bin/mozilla'; }
 
     if ( ( $self->{script} )
         and not List::Util::first { $_ eq $self->{script} }
@@ -734,7 +734,7 @@ sub _redirect {
         $form->db_init( \%myconfig );
     }
 
-    require "bin/$script";
+    require "old/bin/$script";
     no strict 'refs';
     &{ "lsmb_legacy::$form->{action}" };
 
@@ -1941,7 +1941,7 @@ sub all_vc {
     if ($self->{id}) {
     ### fixme: the segment below assumes that the form ID is a
     # credit account id, which it isn't necessarily (maybe never?)
-    # when called from bin/oe.pl, it's an order id.
+    # when called from old/bin/oe.pl, it's an order id.
         $query = qq|
         SELECT ec.id, e.name
           FROM entity e

@@ -52,8 +52,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Company_Config;
 
-require 'bin/bridge.pl'; # needed for voucher dispatches
-require "bin/arap.pl";
+require 'old/bin/bridge.pl'; # needed for voucher dispatches
+require "old/bin/arap.pl";
 
 $form->{login} = 'test';
 1;

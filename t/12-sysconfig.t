@@ -28,7 +28,7 @@ is $LedgerSMB::Sysconfig::no_db_str, 'database2',
 like $ENV{PATH}, '/foo$/', 'appends config path correctly';
 
 for my $script (@LedgerSMB::Sysconfig::scripts) {
-    ok(-f '../../bin/' . $script, "Whitelisted oldcode script $script exists");
+    ok(-f '../../old/bin/' . $script, "Whitelisted oldcode script $script exists");
 }
 
 for my $script (@LedgerSMB::Sysconfig::newscripts) {

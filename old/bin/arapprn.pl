@@ -44,15 +44,15 @@ use Try::Tiny;
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;
 
-require 'bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
-require 'bin/printer.pl';# centralizing print options display
+require 'old/bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
+require 'old/bin/printer.pl';# centralizing print options display
 
 # any custom scripts for this one
-if ( -f "bin/custom/arapprn.pl" ) {
-    eval { require "bin/custom/arapprn.pl"; };
+if ( -f "old/bin/custom/arapprn.pl" ) {
+    eval { require "old/bin/custom/arapprn.pl"; };
 }
-if ( -f "bin/custom/$form->{login}_arapprn.pl" ) {
-    eval { require "bin/custom/$form->{login}_arapprn.pl"; };
+if ( -f "old/bin/custom/$form->{login}_arapprn.pl" ) {
+    eval { require "old/bin/custom/$form->{login}_arapprn.pl"; };
 }
 
 1;

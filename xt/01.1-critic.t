@@ -30,13 +30,13 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'lib/', 'bin/', 'old/');
+find(\&collect, 'lib/', 'old/bin/', 'old/');
 
 my @on_disk_oldcode =
-    grep { m#^bin/# || m#^lib/# } @on_disk;
+    grep { m#^old/bin/# || m#^lib/# } @on_disk;
 
 @on_disk =
-    grep { ! m#^bin/# }
+    grep { ! m#^old/bin/# }
     grep { ! m#^old/# }
     grep { ! m#^lib/LedgerSMB/Auth/# }
     @on_disk;

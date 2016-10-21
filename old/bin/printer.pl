@@ -44,7 +44,7 @@ sub print_options {
         options => [],
         };
 
-    # SC: Option values extracted from other bin/ scripts
+    # SC: Option values extracted from other old/bin/ scripts
     if ($form->{type} eq 'invoice') {
     push @{$options{formname}{options}}, {
         text => $locale->text('Invoice'),
