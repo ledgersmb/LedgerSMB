@@ -213,7 +213,6 @@ sub new {
 
     $self->_set_default_locale();
     $self->_set_action();
-    $self->_set_path();
     $self->_set_script_name();
     $self->_process_cookies();
 
