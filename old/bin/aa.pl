@@ -121,7 +121,7 @@ sub add {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
     if ($form->{type} eq "credit_note"){
         $form->{reverse} = 1;

@@ -68,7 +68,7 @@ sub add {
     $form->{title} = $locale->maketext($label);
 
     $form->{callback} =
-"$form->{script}?action=add&item=$form->{item}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&item=$form->{item}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     $form->{orphaned} = 1;
@@ -1293,7 +1293,6 @@ sub assembly_row {
         </tr>
 |;
 
-    $spc = ( $form->{path} =~ /lynx/ ) ? "." : " ";
     $numrows-- if $form->{project_id};
 
     for $i ( 1 .. $numrows ) {
@@ -1440,7 +1439,7 @@ sub edit_assemblyitem {
       : $form->{"assembly_$i"};
 
     $form->{callback} =
-qq|$form->{script}?action=edit&id=$form->{"id_$i"}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
+qq|$form->{script}?action=edit&id=$form->{"id_$i"}&login=$form->{login}&sessionid=$form->{sessionid}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
 
     $form->redirect;
 
@@ -2066,11 +2065,11 @@ sub list_assemblies {
     IC->retrieve_assemblies( \%myconfig, \%$form );
 
     $callback =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
+"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
 
     $form->sort_order();
     $href =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
+"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&login=$form->{login}&sessionid=$form->{sessionid}&checkinventory=$form->{checkinventory}";
 
     if ( $form->{partnumber} ) {
         $callback .= "&partnumber=" . $form->escape( $form->{partnumber}, 1 );
@@ -2145,7 +2144,7 @@ sub list_assemblies {
         }
 
         $column_data{partnumber} =
-"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
+"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
 
         $column_data{description} =
           qq|<td width=50%>$ref->{description}&nbsp;</td>|;

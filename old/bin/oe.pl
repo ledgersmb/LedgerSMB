@@ -77,7 +77,7 @@ sub add {
     }
 
     $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     $form->{rowcount} = 0;
@@ -1964,11 +1964,6 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="ser
 
     $form->print_button( \%button, 'done' );
 
-    if ( $form->{lynx} ) {
-        require "old/bin/menu.pl";
-        &menubar;
-    }
-
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|
@@ -2079,11 +2074,6 @@ sub search_transfer {
     print qq|
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "old/bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 
@@ -2263,11 +2253,6 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
 <button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="action" value="transfer">|
       . $locale->text('Transfer')
       . qq|</button>|;
-
-    if ( $form->{lynx} ) {
-        require "old/bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 </form>
@@ -2531,11 +2516,6 @@ qq|<td><input name="ndx_$i" id="ndx_$i" class=checkbox type=checkbox data-dojo-t
       . $locale->text('Select Vendor')
       . qq|</button>|;
 
-    if ( $form->{lynx} ) {
-        require "old/bin/menu.pl";
-        &menubar;
-    }
-
     print qq|
 </form>
 
@@ -2587,11 +2567,6 @@ sub select_vendor {
 
 </form>
 |;
-
-    if ( $form->{lynx} ) {
-        require "old/bin/menu.pl";
-        &menubar;
-    }
 
     print qq|
 

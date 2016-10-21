@@ -66,10 +66,8 @@ builder {
     mount '/rest/' => LedgerSMB::PSGI::rest_app();
 
     # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
-    mount "/$_" => $old_app
-        for ('aa.pl', 'am.pl', 'ap.pl',
-             'ar.pl', 'gl.pl', 'ic.pl', 'ir.pl',
-             'is.pl', 'oe.pl', 'pe.pl');
+    mount "/$_.pl" => $old_app
+        for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
      mount "/$_" => $psgi_app
         for  (@LedgerSMB::Sysconfig::newscripts);
