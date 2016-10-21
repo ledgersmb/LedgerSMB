@@ -141,4 +141,3 @@ is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
 
-done_testing;
