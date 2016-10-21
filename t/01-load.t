@@ -10,7 +10,7 @@ sub collect {
     return if $File::Find::name !~ m/\.pm$/;
 
     my $module = $File::Find::name;
-    $module =! s#^old/##g;
+    $module =~ s#^old/##g;
     $module =~ s#^lib/##g;
     $module =~ s#/#::#g;
     $module =~ s#\.pm$##g;
