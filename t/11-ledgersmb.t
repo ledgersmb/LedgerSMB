@@ -8,7 +8,7 @@ $ENV{LANG} = 'LANG=en_US.UTF8';
 $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
 
-use Test::More;
+use Test::More 'no_plan';
 use Test::Exception;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
@@ -21,9 +21,6 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
 my $lsmb;
-plan tests => 56;
-
-
 
 
 sub redirect {
@@ -144,3 +141,4 @@ is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
 
+done_testing;
