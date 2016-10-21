@@ -11,7 +11,6 @@ INSERT INTO entity (id, control_code, name, entity_class, country_id) values (-2
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-201, -200, 'T-11111', 1, -1000);
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) values (-201, -201, 'T-11112', 1, -1000);
 
-
 INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-200, '-2000', '10', '10', -200, '1000-01-01', 'USD');
 INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-201, '-2001', '10', '10', -200, '1000-01-03', 'USD');
 INSERT INTO ar (id, invnumber, amount, netamount, entity_credit_account, transdate, curr) values (-204, '-2002', '10', '10', -200, '1000-01-01', 'USD');

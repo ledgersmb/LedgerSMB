@@ -361,7 +361,7 @@ sub get {
 
     @{$self->{report_lines}} = $self->call_dbmethod(
         funcname=>'reconciliation__report_details_payee',
-        orderby => [ ( $self->{line_order} // 'scn' ) ]
+#        orderby => [ ( $self->{line_order} // 'scn' ) ]
     );
     my $db_report_days;
     @{$db_report_days} = $self->call_dbmethod(
