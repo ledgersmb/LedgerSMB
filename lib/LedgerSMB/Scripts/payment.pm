@@ -922,7 +922,8 @@ sub payment2 {
                 },#END HASH
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
-                    value => $request->{"topay_fx_$invoice_id"} // "$topay_fx_value"
+                    value => $request->{"topay_fx_$invoice_id"} //
+                        LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output
                 }#END HASH
             };# END PUSH
 
