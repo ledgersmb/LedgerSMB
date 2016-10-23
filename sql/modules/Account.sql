@@ -592,7 +592,9 @@ RETURNS void AS $BODY$
        v_chart_id int;
     BEGIN
         -- Check for existence of the account already
-        PERFORM * FROM cr_coa_to_account WHERE account = in_accno;
+        PERFORM * FROM cr_coa_to_account cr
+        JOIN account a ON cr.chart_id = a.id
+        WHERE accno = in_accno;
 
         IF NOT FOUND THEN
            -- This is a new account. Insert the relevant data.
