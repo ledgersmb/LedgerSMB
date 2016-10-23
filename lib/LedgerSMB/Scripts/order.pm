@@ -145,7 +145,7 @@ sub combine {
 
 =item generate
 
-This is just a dispatch handle currently to bin/oe's generate_purchase_orders
+This is just a dispatch handle currently to old/bin/oe's generate_purchase_orders
 callback.
 
 =cut

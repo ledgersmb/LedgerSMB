@@ -30,8 +30,7 @@ our $VERSION = '1.0';
 =item __default
 
 This pseudomethod is used to trap menu clicks that come back through the file
-and route to the appropriate function.  If $request->{menubar} is set, it routes
-to the drilldown_menu.  Otherwise, it routes to expanding_menu.
+and route to the appropriate function.  It routes to expanding_menu.
 
 =back
 
@@ -42,11 +41,7 @@ sub __default {
     if ($request->{new}){
         return root_doc($request);
     }
-    if ($request->{menubar}){
-        return drilldown_menu($request);
-    } else {
-        return expanding_menu($request);
-    }
+    return expanding_menu($request);
 }
 
 =pod
@@ -55,8 +50,7 @@ sub __default {
 
 =item root_doc
 
-If $request->{menubar} is set, this creates a drilldown menu.  Otherwise, it
-creates the root document.
+Creates the root document.
 
 =back
 
@@ -131,39 +125,6 @@ sub expanding_menu {
     return $template->render_to_psgi($menu);
 }
 
-=pod
-
-=over
-
-=item drilldown_menu
-
-This function creates a single cross section of the menu.  Currently this is
-most useful for generating menus for small screen devices or devices where a
-limited number of options are necessary (screen readers, text-only browsers and
-the like).
-
-=back
-
-=cut
-
-sub drilldown_menu {
-    my ($request) = @_;
-    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-
-    $menu->{parent_id} ||= 0;
-
-    $menu->generate_section;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/menu',
-        template => 'drilldown',
-        format => 'HTML',
-    );
-    return $template->render_to_psgi($menu);
-}
-
-=pod
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 

@@ -221,7 +221,7 @@ sub add_business {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add_business&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add_business&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     my %hiddens;
@@ -302,7 +302,7 @@ sub add_sic {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add_sic&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add_sic&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     my %hiddens;
@@ -390,7 +390,7 @@ sub add_language {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add_language&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add_language&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     my %hiddens;
@@ -573,7 +573,6 @@ sub display_taxes {
 
     $form->{title} = $locale->text('Taxes');
     my %hiddens = (
-        path => $form->{path},
         login => $form->{login},
         sessionid => $form->{sessionid},
         type => 'taxes',
@@ -716,7 +715,7 @@ sub add_warehouse {
     $form->{title} = "Add";
 
     $form->{callback} =
-"$form->{script}?action=add_warehouse&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add_warehouse&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     my %hiddens;
@@ -913,7 +912,7 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
@@ -935,7 +934,7 @@ sub recurring_transactions {
 
             $column_data{id} = {
                 text => $ref->{id},
-                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1|,
+                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&type=$type&readonly=1|,
                 };
 
             $column_data{repeat} = $repeat;
@@ -972,7 +971,6 @@ sub recurring_transactions {
         }
     }
 
-    $hiddens{path} = $form->{path};
     $hiddens{login} = $form->{login};
     $hiddens{sessionid} = $form->{sessionid};
     $hiddens{lastndx} = $k;
@@ -1017,7 +1015,7 @@ sub edit_recurring {
     );
 
     $form->{callback} =
-"$form->{script}?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+"$form->{script}?action=recurring_transactions&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->{type} = "transaction";
 
@@ -1044,7 +1042,7 @@ sub edit_recurring {
     }
 
     $form->{script} = "$form->{module}.pl";
-    do "bin/$form->{script}";
+    do "old/bin/$form->{script}";
 
     &{ $links{ $form->{module} } };
 
@@ -1123,7 +1121,7 @@ sub process_transactions {
                         $form->{module} = "ap";
                         $invfld         = "vinumber";
                     }
-                    do "bin/$form->{script}";
+                    do "old/bin/$form->{script}";
 
                     if ( $pt->{invoice} ) {
                         &invoice_links;
@@ -1279,7 +1277,7 @@ sub process_transactions {
                         $ordfld       = "ponumber";
                         $flabel       = $locale->text('Purchase Order');
                     }
-                    require "bin/$form->{script}";
+                    require "old/bin/$form->{script}";
 
                     &order_links;
                     &prepare_order;
@@ -1385,7 +1383,7 @@ sub process_transactions {
     }
 
     $form->{callback} =
-"am.pl?action=recurring_transactions&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&header=1";
+"am.pl?action=recurring_transactions&login=$form->{login}&sessionid=$form->{sessionid}&header=1";
     $form->redirect;
 
 }
@@ -1424,7 +1422,7 @@ sub print_recurring {
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
+            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
 
             $form->info( " ..... " . $locale->text('done') );
         }
@@ -1472,7 +1470,7 @@ sub email_recurring {
             $form->error( $locale->text('Invalid redirect') )
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
+            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
             $ok = !( $form->_redirect() );
 
             if ($ok) {
@@ -1527,7 +1525,7 @@ sub add_taxform {
     $form->{title} = $locale->text("Add");
 
     $form->{callback} =
-"$form->{script}?action=add_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add_taxform&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     $form->info("Add Country Tax forms is Under Construction");
@@ -1540,7 +1538,7 @@ sub search_taxform {
     $form->{title} = "Edit";
 
     $form->{callback} =
-"$form->{script}?action=search_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=search_taxform&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     $form->info("Search Country Tax forms is Under Construction");

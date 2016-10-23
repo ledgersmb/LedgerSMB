@@ -48,13 +48,13 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
-require "bin/printer.pl";
+require "old/bin/printer.pl";
 # any custom scripts for this one
-if ( -f "bin/custom/io.pl" ) {
-    eval { require "bin/custom/io.pl"; };
+if ( -f "old/bin/custom/io.pl" ) {
+    eval { require "old/bin/custom/io.pl"; };
 }
-if ( -f "bin/custom/$form->{login}_io.pl" ) {
-    eval { require "bin/custom/$form->{login}_io.pl"; };
+if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
+    eval { require "old/bin/custom/$form->{login}_io.pl"; };
 }
 
 1;
@@ -986,7 +986,7 @@ sub create_form {
     $form->{rowcount}-- if $form->{rowcount};
     $form->{rowcount} = 0 if !$form->{"$form->{vc}_id"};
 
-    do "bin/$form->{script}";
+    do "old/bin/$form->{script}";
 
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
 

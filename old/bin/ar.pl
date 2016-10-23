@@ -14,18 +14,13 @@
 # maintainers, and copyright holders, see the CONTRIBUTORS file.
 #
 # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
-# Copyright (C) 2000
+# Copyright (c) 2000
 #
 #  Author: DWS Systems Inc.
 #     Web: http://www.sql-ledger.org
 #
 #  Contributors:
 #
-#
-#  Author: DWS Systems Inc.
-#     Web: http://www.ledgersmb.org/
-#
-#  Contributors:
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,20 +36,20 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 #
-# Accounts Payable
+# Accounts Receivable
 #
 #======================================================================
 
 package lsmb_legacy;
 use LedgerSMB::PE;
-use LedgerSMB::IR;
+use LedgerSMB::IS;
 
-require "bin/arap.pl";
-require "bin/arapprn.pl";
-require "bin/aa.pl";
+require "old/bin/arap.pl";
+require "old/bin/arapprn.pl";
+require "old/bin/aa.pl";
 
-$form->{vc}   = 'vendor';
-$form->{ARAP} = 'AP';
+$form->{vc}   = 'customer';
+$form->{ARAP} = 'AR';
 
 1;
 

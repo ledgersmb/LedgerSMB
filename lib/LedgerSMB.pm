@@ -213,7 +213,6 @@ sub new {
 
     $self->_set_default_locale();
     $self->_set_action();
-    $self->_set_path();
     $self->_set_script_name();
     $self->_process_cookies();
 
@@ -385,23 +384,6 @@ sub _set_script_name {
     }
     $logger->debug("\$self->{script} = $self->{script} "
                    . "\$self->{action} = $self->{action}");
-}
-
-sub _set_path {
-    my ($self) = @_;
-
-    $self->{path} = "" unless defined $self->{path};
-
-    if ( $self->{path} eq "bin/lynx" ) {
-        $self->{menubar} = 1;
-
-        # Applying the path is deprecated.  Use menubar instead.  CT.
-        $self->{lynx} = 1;
-        $self->{path} = "bin/lynx";
-    }
-    else {
-        $self->{path} = "bin/mozilla";
-    }
 }
 
 

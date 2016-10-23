@@ -40,9 +40,9 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #######################################################################
 #
-# this script is the frontend called from bin/$terminal/$script
+# this script is the frontend called from old/bin/$terminal/$script
 # all the accounting modules are linked to this script which in
-# turn execute the same script in bin/$terminal/
+# turn execute the same script in old/bin/$terminal/
 #
 #######################################################################
 
@@ -141,17 +141,17 @@ try {
 
     $LedgerSMB::App_State::Locale = $locale;
     # pull in the main code
-    $logger->trace("requiring bin/$form->{script}");
-    require "bin/$form->{script}";
+    $logger->trace("requiring old/bin/$form->{script}");
+    require "old/bin/$form->{script}";
 
     # customized scripts
-    if ( -f "bin/custom/$form->{script}" ) {
-        eval { require "bin/custom/$form->{script}"; };
+    if ( -f "old/bin/custom/$form->{script}" ) {
+        eval { require "old/bin/custom/$form->{script}"; };
     }
 
     # customized scripts for login
-    if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
-        eval { require "bin/custom/$form->{login}_$form->{script}"; };
+    if ( -f "old/bin/custom/$form->{login}_$form->{script}" ) {
+        eval { require "old/bin/custom/$form->{login}_$form->{script}"; };
     }
 
     if ( $form->{action} ) {
@@ -183,7 +183,7 @@ try {
     LedgerSMB::_error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
 };
 
-$logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
+$logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
 1;
 

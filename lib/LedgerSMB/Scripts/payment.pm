@@ -891,7 +891,7 @@ sub payment2 {
   $uri_module='??';
  }
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
+            my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&login='.$request->{login};
             my $invoice_id = $invoice->{invoice_id};
             push @invoice_data, {
                 invoice => {
@@ -918,7 +918,8 @@ sub payment2 {
                                                      },#END HASH
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
-                    value => $request->{"topay_fx_$invoice_id"} // "$topay_fx_value"
+                    value => $request->{"topay_fx_$invoice_id"} //
+                        LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output
                                                  }#END HASH
                            };# END PUSH
 
@@ -1487,7 +1488,7 @@ while ($Payment->{"entity_id_$count"})
     }
     #lets make the href for the invoice
     my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-    $uri .= '.pl?action=edit&id='.$Payment->{"invoice_id_$count"}.'&path=bin/mozilla&login='.$request->{login};
+    $uri .= '.pl?action=edit&id='.$Payment->{"invoice_id_$count"}.'&login='.$request->{login};
 
     push @ui_selected_inv, { invoice          => { number => $Payment->{"invnumber_$count"},
                                                         id     => $Payment->{"invoice_id_$count"},
@@ -1548,7 +1549,7 @@ if (($Payment->{"new_entity_id"} != $Payment->{"entity_credit_id"})&& !$Payment-
 
       #lets make the href for the invoice
       my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-      $uri .= '.pl?action=edit&id='.$avble_invoices[$ref]->{invoice_id}.'&path=bin/mozilla&login='.$request->{login};
+      $uri .= '.pl?action=edit&id='.$avble_invoices[$ref]->{invoice_id}.'&login='.$request->{login};
 
       push @ui_avble_invoices, { invoice       => { number => $avble_invoices[$ref]->{invnumber},
                                                         id     => $avble_invoices[$ref]->{invoice_id},

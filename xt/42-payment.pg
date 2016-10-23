@@ -4,7 +4,11 @@ BEGIN;
 
     -- Plan the tests.
 
+<<<<<<< HEAD
     SELECT plan(36);
+=======
+    SELECT plan(39);
+>>>>>>> lsmb/master
 
     -- Add data
 
@@ -20,6 +24,11 @@ BEGIN;
 
     -- Validate required functions
 
+<<<<<<< HEAD
+=======
+    SELECT has_function('business_type__list');
+    SELECT has_function('currency_get_exchangerate');
+>>>>>>> lsmb/master
     SELECT has_function('overpayment__reverse');
     SELECT has_function('payment_bulk_post');
     SELECT has_function('payment_gather_header_info');
@@ -42,6 +51,10 @@ BEGIN;
     SELECT has_function('payment__reverse');
     SELECT has_function('payment__search');
     SELECT has_function('payments_get_open_currencies');
+<<<<<<< HEAD
+=======
+    SELECT has_function('payments_set_exchangerate');
+>>>>>>> lsmb/master
     SELECT has_function('payment_type__get_label');
     SELECT has_function('payment_type__list');
 
@@ -75,11 +88,20 @@ BEGIN;
 
     INSERT INTO business (id, description)
     values (-101, 'test');
+<<<<<<< HEAD
     INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id)
     values (-101, 'TEST1', 100000, -101, 1, -101, -1000);
 
     INSERT INTO ap (invnumber, entity_credit_account, approved, amount_bc, netamount_bc, curr, amount_tc, netamount_tc)
     values ('test_hide', -101, false, '1', '1', 'XTS', 1, 1);
+=======
+
+    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id)
+    values (-101, 'TEST1', 100000, -101, 1, -101, -1000);
+
+    INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr)
+    values ('test_hide', -101, false, '1', '1', 'USD');
+>>>>>>> lsmb/master
 
     INSERT INTO voucher (trans_id, batch_class, batch_id)
     VALUES (currval('id'), 1, currval('batch_id_seq'));
@@ -89,6 +111,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Payment Batch created');
     DEALLOCATE test;
 
+<<<<<<< HEAD
     INSERT INTO ap (invnumber, entity_credit_account, approved,
                     amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     transdate, paid_deprecated)
@@ -137,6 +160,36 @@ BEGIN;
                            trans_id, chart_id)
     VALUES (true, now()::date, '-1', 'XTS', -1,
             currval('id'), (select id from account where accno = '00002'));
+=======
+    INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+    VALUES ('test_show2', -101, true, 100000, 100000, 'USD', now()::date);
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '100000', currval('id'), (select id from account where accno = '00001'));
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '-100000', currval('id'), (select id from account where accno = '00002'));
+
+    INSERT INTO ap (id, invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+    VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'USD', now()::date);
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '1000000', -300, (select id from account where accno = '00001'));
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '-1000000', -300, (select id from account where accno = '00002'));
+
+    update transactions set locked_by = -200 where id = -300;
+
+    INSERT INTO ap (invnumber, entity_credit_account, approved, amount, netamount, curr, transdate)
+    values ('test_show', -101, false, '1', '1', 'USD', now()::date);
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '1', currval('id'), (select id from account where accno = '00001'));
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+    VALUES (true, now()::date, '-1', currval('id'), (select id from account where accno = '00002'));
+>>>>>>> lsmb/master
 
     INSERT INTO voucher (trans_id, batch_class, batch_id)
     VALUES (currval('id'), 1, currval('batch_id_seq'));
@@ -149,7 +202,11 @@ BEGIN;
     PREPARE test AS SELECT test_convert_array(invoices) LIKE '%::test_show::%'
                     FROM (
                             SELECT invoices
+<<<<<<< HEAD
                             FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL, 
+=======
+                            FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, 
+>>>>>>> lsmb/master
                                 NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
                     ) p;
     SELECT results_eq('test',ARRAY[true],'Batch Voucher In Payment Selection');
@@ -158,7 +215,11 @@ BEGIN;
     PREPARE test AS SELECT test_convert_array(invoices) LIKE '%::test_show3::%'
                     FROM (
                             SELECT invoices
+<<<<<<< HEAD
                             FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL, 
+=======
+                            FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, 
+>>>>>>> lsmb/master
                                 NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
                     ) p;
     SELECT results_eq('test',ARRAY[true],'Locked Invoice In Payment Selection');
@@ -167,7 +228,11 @@ BEGIN;
     PREPARE test AS SELECT test_convert_array(invoices) LIKE '%::test_show2::%'
                     FROM (
                         SELECT invoices 
+<<<<<<< HEAD
                         FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL, 
+=======
+                        FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, 
+>>>>>>> lsmb/master
                             NULL, NULL, '00001', 'TEST1')
                     ) p;
     SELECT results_eq('test',ARRAY[true],'Threshold met');
@@ -176,20 +241,29 @@ BEGIN;
     PREPARE test AS SELECT test_convert_array(invoices) NOT LIKE '%::test_hide::%'
                     FROM (
                         SELECT invoices 
+<<<<<<< HEAD
                         FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL, 
+=======
+                        FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, 
+>>>>>>> lsmb/master
                             NULL, currval('batch_id_seq')::int, '00001', 'TEST1')
                     ) p;
     SELECT results_eq('test',ARRAY[true],'Non-Batch Voucher Not In Payment Selection');
     DEALLOCATE test;
 
     PREPARE test AS SELECT total_due < 1000000
+<<<<<<< HEAD
                     FROM payment_get_all_contact_invoices(1, NULL, 'XTS', NULL, 
+=======
+                    FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, 
+>>>>>>> lsmb/master
                         NULL, currval('batch_id_seq')::int, '00001', 'TEST1');
     SELECT results_eq('test',ARRAY[true],'Locked Invoice not in total');
     DEALLOCATE test;
 
     INSERT INTO voucher(batch_id, batch_class, id, trans_id)
     values (currval('batch_id_seq')::int, 4, -100, currval('id')::int);
+<<<<<<< HEAD
     INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount_bc,
            curr, amount_tc, transdate, source)
     values (currval('id')::int,
@@ -200,6 +274,18 @@ BEGIN;
     values (currval('id')::int,
             (select id from account where accno = '00001'), -100, true, '-1', 'XTS', 1,
             now(), '_test_src1');
+=======
+    INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
+            transdate, source)
+    values (currval('id')::int,
+            (select id from account where accno = '00003'), -100, true, '1', now(),
+            '_test_src1');
+    INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
+            transdate, source)
+    values (currval('id')::int,
+            (select id from account where accno = '00001'), -100, true, '-1', now(),
+            '_test_src1');
+>>>>>>> lsmb/master
 
     SELECT todo('Missing Voucher test',1);
     
