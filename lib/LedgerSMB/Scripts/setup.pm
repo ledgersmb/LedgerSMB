@@ -371,7 +371,7 @@ sub run_backup {
        my $date = "$t[5]-$t[4]-$t[3]";
 
        $backupfile = $database->backup_globals(
-                      tempdir => $LedgerSMB::Sysconfig::backuppath,
+                      tempdir => $LedgerSMB::Sysconfig::backupdir,
                          file => "roles_${date}.sql"
        );
        $mimetype   = 'text/x-sql';
