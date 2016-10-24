@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(39);
+    SELECT plan(37);
 
     -- Add data
 
@@ -21,7 +21,6 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('business_type__list');
-    SELECT has_function('currency_get_exchangerate');
     SELECT has_function('overpayment__reverse');
     SELECT has_function('payment_bulk_post');
     SELECT has_function('payment_gather_header_info');
@@ -44,7 +43,6 @@ BEGIN;
     SELECT has_function('payment__reverse');
     SELECT has_function('payment__search');
     SELECT has_function('payments_get_open_currencies');
-    SELECT has_function('payments_set_exchangerate');
     SELECT has_function('payment_type__get_label');
     SELECT has_function('payment_type__list');
 
