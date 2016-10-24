@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(36);
+    SELECT plan(37);
 
     -- Add data
 
@@ -20,6 +20,7 @@ BEGIN;
 
     -- Validate required functions
 
+    SELECT has_function('business_type__list');
     SELECT has_function('overpayment__reverse');
     SELECT has_function('payment_bulk_post');
     SELECT has_function('payment_gather_header_info');
@@ -94,28 +95,28 @@ BEGIN;
                     transdate, paid_deprecated)
     VALUES ('test_show2', -101, true, 100000, 100000, 'XTS',
             100000, 100000, now()::date, 0);
-    
+
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr, amount_tc,
                            trans_id, chart_id)
     VALUES (true, now()::date, '100000', 'XTS', '100000',
             currval('id'), (select id from account where accno = '00001'));
-    
+
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr, amount_tc,
                            trans_id, chart_id)
     VALUES (true, now()::date, '-100000', 'XTS', '-100000', currval('id'),
             (select id from account where accno = '00002'));
-    
+
     INSERT INTO ap (id, invnumber, entity_credit_account, approved,
                     amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     transdate, paid_deprecated)
     VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'XTS',
             1000000, 1000000, now()::date, 0);
-    
+
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr, amount_tc,
                            trans_id, chart_id)
     VALUES (true, now()::date, '1000000', 'XTS', '1000000',
            -300, (select id from account where accno = '00001'));
-    
+
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr, amount_tc,
                            trans_id, chart_id)
     VALUES (true, now()::date, '-1000000', 'XTS', '-1000000',
@@ -202,7 +203,7 @@ BEGIN;
             now(), '_test_src1');
 
     SELECT todo('Missing Voucher test',1);
-    
+
     -- Finish the tests and clean up.
     SELECT * FROM finish();
 

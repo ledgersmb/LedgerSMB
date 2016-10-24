@@ -30,7 +30,7 @@ sub add {
 
     # construct callback
     $form->{callback} =
-"$form->{script}?action=add&type=$form->{type}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
+"$form->{script}?action=add&type=$form->{type}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
     &{"prepare_$form->{type}"};
@@ -341,7 +341,7 @@ sub list_translations {
     $title = $form->escape( $form->{title}, 1 );
 
     $callback =
-"$form->{script}?action=list_translations&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&translation=$form->{translation}&number=$form->{number}&title=$title";
+"$form->{script}?action=list_translations&login=$form->{login}&sessionid=$form->{sessionid}&translation=$form->{translation}&number=$form->{number}&title=$title";
 
     if ( $form->{"$form->{number}"} ) {
         $callback .= qq|&$form->{number}=$form->{"$form->{number}"}|;
@@ -435,7 +435,7 @@ sub list_translations {
         for (@column_index) { $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>" }
 
         $column_data{description} =
-"<td><a href=$form->{script}?action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}&nbsp;</a></td>";
+"<td><a href=$form->{script}?action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback>$ref->{description}&nbsp;</a></td>";
 
         $i++;
         $i %= 2;

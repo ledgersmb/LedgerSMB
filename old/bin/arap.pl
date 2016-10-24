@@ -42,11 +42,11 @@ package lsmb_legacy;
 use LedgerSMB::AA;
 
 # any custom scripts for this one
-if ( -f "bin/custom/arap.pl" ) {
-    eval { require "bin/custom/arap.pl"; };
+if ( -f "old/bin/custom/arap.pl" ) {
+    eval { require "old/bin/custom/arap.pl"; };
 }
-if ( -f "bin/custom/$form->{login}_arap.pl" ) {
-    eval { require "bin/custom/$form->{login}_arap.pl"; };
+if ( -f "old/bin/custom/$form->{login}_arap.pl" ) {
+    eval { require "old/bin/custom/$form->{login}_arap.pl"; };
 }
 
 1;

@@ -82,7 +82,7 @@ BEGIN;
                          and chart_id = (select id from account where accno = '00001');
     SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
     DEALLOCATE test;
-    
+
     --TODO: 0.01? Ain't that dependent of the country
     PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
                         from acc_trans

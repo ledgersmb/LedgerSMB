@@ -832,6 +832,8 @@ BEGIN;
     PREPARE test AS SELECT allocated = -75
                     FROM invoice WHERE id = -5204;
 --    TODO: Fix, Bad syntax and no id = -5204
+
+    SELECT todo('Fix, Bad syntax and no id = -5204',1);
 --    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated);
     DEALLOCATE test;
 
