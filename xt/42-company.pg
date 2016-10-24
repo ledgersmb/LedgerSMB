@@ -75,11 +75,7 @@ BEGIN;
 
     PREPARE test AS SELECT 
         eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
-<<<<<<< HEAD
                 0, 0, 0, 'test-123', NULL, NULL, NULL, 'XTS',
-=======
-                0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD',
->>>>>>> lsmb/master
                 now()::date, now()::date,
                 0, -1000, NULL, NULL, NULL, NULL)
         IS NOT NULL;
