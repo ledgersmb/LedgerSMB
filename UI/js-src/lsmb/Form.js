@@ -51,6 +51,10 @@ define([
                           options["method"] = method;
                           if ("multipart/form-data" == this.domNode.enctype) {
                               options["data"] = new FormData(this.domNode);
+                              // FF doesn't add the clicked button
+                              // Chrome does, but adding again still works
+                              options["data"].append('action',
+                                                     this.clickedAction);
                           } else {
                               // old code (Form.pm) wants x-www-urlencoded
                               options["data"] = "action="+this.clickedAction
