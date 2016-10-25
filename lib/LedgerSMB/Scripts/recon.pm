@@ -458,27 +458,6 @@ sub pending {
     }
 }
 
-sub __default {
-
-    my ($request) = @_;
-
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-    my $template;
-
-    $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'reconciliation/list',
-        locale => $request->{_locale},
-        format=>'HTML',
-        path=>"UI"
-    );
-    return $template->render(
-        {
-            reports=>$recon->get_report_list()
-        }
-    );
-}
-
 ###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/recon.pl" };
 1;
