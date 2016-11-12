@@ -22,8 +22,7 @@ ELSE ;
 END ;
 ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
-<div class="financial-statement <?lsmb hierarchy ?>">
-<div id="PNL"> <!-- Also used in balance sheet! -->
+<div id="PNL" class="financial-statement <?lsmb hierarchy ?>"> <!-- Also used in balance sheet! -->
 <h1><?lsmb name ?></h1>
 <div class="company-name"><?lsmb company_name ?></div>
 <div class="company-address"><?lsmb company_address ?></div>
@@ -99,6 +98,5 @@ END; -?><?lsmb report.rheads.ids.$row.props.account_description ?></th>
        href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
 </div>
 <?lsmb END ?>
-</div>
 </body>
 </html>
