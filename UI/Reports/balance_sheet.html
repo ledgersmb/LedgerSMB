@@ -21,8 +21,7 @@ ELSE ;
 END ;
  ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
-<div class="financial-statement <?lsmb hierarchy ?>">
-<div id="PNL" class="balance-sheet"> <!-- TODO: Find better name!! -->
+<div id="PNL" class="financial-statement <?lsmb hierarchy ?> balance-sheet">  <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
 
 <div class="company-name"><?lsmb company_name ?></div>
@@ -120,6 +119,5 @@ END ;
        href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
 </div>
 <?lsmb END ?>
-</div>
 </body>
 </html>
