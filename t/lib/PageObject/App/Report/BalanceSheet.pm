@@ -11,7 +11,7 @@ extends 'PageObject';
 
 __PACKAGE__->self_register(
               'reports-balance-sheet',
-              './/div[@id="PNL" and @class="balance-sheet"]',
+              './/div[@id="PNL" and contains(@class,"balance-sheet")]',
               tag_name => 'div',
               classes => ['balance-sheet'],
               attributes => {
