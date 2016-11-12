@@ -21,6 +21,7 @@ ELSE ;
 END ;
  ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
+<div class="financial-statement <?lsmb hierarchy ?>">
 <div id="PNL" class="balance-sheet"> <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
 
@@ -44,7 +45,7 @@ END ;
    END;
 ?>
 </colgroup>
-  <thead>
+  <tbody>
     <tr class="report-head">
       <th colspan="<?lsmb max_path_depth ?>"
           style="font-weight:bold"> </th>
@@ -52,8 +53,6 @@ END ;
       <th><?lsmb report.cheads.ids.$col.props.description ?></th>
       <?lsmb END -?>
     </tr>
-  </thead>
-  <tbody>
 <?lsmb FOREACH row IN report.sorted_row_ids ;
    path_depth = report.rheads.ids.$row.path.size;
    path_prefix_len = path_depth - 1;
@@ -121,5 +120,6 @@ END ;
        href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
 </div>
 <?lsmb END ?>
+</div>
 </body>
 </html>
