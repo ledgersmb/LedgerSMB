@@ -390,7 +390,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                    my $selected = "";
                    if ($bu->{id} eq $form->{"b_unit_$cls->{id}_$i"}){
-                       $selected = "SELECTED='SELECTED'";
+                       $selected = "selected='selected'";
                    }
                    $column_data{"b_unit_$cls->{id}"} .= qq|
                        <option value="$bu->{id}" $selected >
@@ -470,9 +470,9 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="
             $form->hide_form("${_}_$i");
         }
 
-        $form->{selectprojectnumber} =~ s/ selected//;
+        $form->{selectprojectnumber} =~ s/ selected="selected"//;
         $form->{selectprojectnumber} =~
-          s/(<option value="\Q$form->{"projectnumber_$i"}\E")/$1 selected/;
+          s/(<option value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
 
         $project = qq|
                 <b>$projectnumber</b>
