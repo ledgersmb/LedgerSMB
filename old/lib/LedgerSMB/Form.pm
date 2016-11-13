@@ -1285,14 +1285,18 @@ sub generate_selects {
     # customers/vendors
      if ($form->{vc}) {
           if ( $form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} } ) {
-                $form->{"select$form->{vc}"} = "";
-                for ( @{ $form->{"all_$form->{vc}"} } ) {
-                     my $value = "$_->{name}--$_->{id}";
-                     my $selected = ($form->{$form->{vc}} eq $value) ?
-                          ' selected="selected"' : "";
-                     $form->{"select$form->{vc}"} .=
-                          qq|<option value="$value"$selected>$_->{name}</option>\n|;
-                }
+              $form->{"select$form->{vc}"} = "";
+              my $vc = $form->{vc};
+              my $search_value = $form->{$vc};
+              $search_value .= qq|--$form->{"${vc}_id"}|
+                  unless $search_value =~ /--/;
+              for ( @{ $form->{"all_$form->{vc}"} } ) {
+                  my $value = "$_->{name}--$_->{id}";
+                  my $selected = ($search_value eq $value) ?
+                      ' selected="selected"' : "";
+                  $form->{"select$form->{vc}"} .=
+                      qq|<option value="$value"$selected>$_->{name}</option>\n|;
+              }
           }
      }
 
@@ -1929,21 +1933,21 @@ sub all_vc {
 
     $sth->finish;
 
-    if ($self->{id}) {
-    ### fixme: the segment below assumes that the form ID is a
-    # credit account id, which it isn't necessarily (maybe never?)
-    # when called from old/bin/oe.pl, it's an order id.
-        $query = qq|
-        SELECT ec.id, e.name
-          FROM entity e
-          JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-         WHERE ec.id = (select entity_credit_account FROM $table
-                WHERE id = ?)
-        ORDER BY name|;
-        $sth = $self->{dbh}->prepare($query);
-        $sth->execute($self->{id});
-        ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
-    }
+    # if ($self->{id}) {
+    # ### fixme: the segment below assumes that the form ID is a
+    # # credit account id, which it isn't necessarily (maybe never?)
+    # # when called from old/bin/oe.pl, it's an order id.
+    #     $query = qq|
+    #     SELECT ec.id, e.name
+    #       FROM entity e
+    #       JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+    #      WHERE ec.id = (select entity_credit_account FROM $table
+    #             WHERE id = ?)
+    #     ORDER BY name|;
+    #     $sth = $self->{dbh}->prepare($query);
+    #     $sth->execute($self->{id});
+    #     ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
+    # }
 
     if ( $count < $myconfig->{vclimit} ) {
 
@@ -2374,7 +2378,6 @@ sub create_links {
     $vc = 'vendor' unless $vc eq 'customer';
     my $seq = ( $vc eq 'customer' ) ? 'a.setting_sequence'
                                     : 'NULL as setting_sequence';
-
     if ( $self->{id} ) {
 
         $query = qq|
@@ -3782,7 +3785,7 @@ sub sequence_dropdown{
     for my $seq (@sequences){
         my $selected = '';
         my $label = $seq->label;
-        $selected = "SELECTED='SELECTED'"
+        $selected = "selected='selected'"
             if $self->{setting_sequence} eq $label;
         $retval .= qq|<option value='$label' $selected>$label</option>\n|;
     }
