@@ -11,12 +11,12 @@ define([
           _formattedValue: null,
           constructor: function(params, srcNodeRef) {
             this._formattedValue = srcNodeRef.value;
-            this.inherited(parameters);
+            this.inherited(arguments);
           },
           postMixInProperties: function() {
             this.inherited(arguments);
             if (this._formattedValue &&
-                (! this.value || ! isoDate.test(this.value)) {
+                (! this.value || ! isoDate.test(this.value))) {
               /* This code purely compensates for the fact that most LedgerSMB
                  server code sends the date according to the user's selected
                  preference, instead of in ISO format, which the widget
