@@ -22,8 +22,8 @@
   <th><?lsmb text('Reconciliation Date:') ?></th><td><?lsmb end_date ?></td>
 </tr>
 <tr>
- <th><?lsmb text('Beginning Statement Balance:') ?></th>
- <td><?lsmb beginning_balance ?></td>
+  <th><?lsmb text('Beginning Statement Balance:') ?></th>
+  <td><?lsmb beginning_balance ?></td>
 </tr>
 <?lsmb IF ! approved ?>
 <tr>
@@ -35,21 +35,13 @@
     size = "15",
     value = their_total
     } ?>
-    <?lsmb IF submit_allowed != 0 ?>
-      &nbsp;<span class="no-submit">(<?lsmb submit_allowed ?>)</span>
-    <?lsmb END ?>
  </td>
+  <?lsmb IF out_of_balance != '0.00' ?>
+    <th><?lsmb text('Variance:') ?></th>
+    <td><?lsmb out_of_balance ?></td>
+  <?lsmb END ?>
 </tr>
-<tr>
-  <th><?lsmb text('Variance:') ?></th>
-  <td><?lsmb out_of_balance ?></td>
-</tr>
-<tr class="spacer"><th>&nbsp;</th><td>&nbsp;</td></tr>
 <?lsmb END ?>
-<tr>
-  <th><?lsmb text('Ending Statement Balance:') ?></th>
-  <td><?lsmb their_total ?></td>
-</tr>
 <?lsmb IF ! approved ?>
 <tr>
   <th><?lsmb text('Less Outstanding Checks:') ?></th>
@@ -101,11 +93,11 @@
             <?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
             <?lsmb END -?>
     <?lsmb IF row.cleared == 'checked' ?>
-    <?lsmb INCLUDE input element_data = {
-        type = "hidden",
-        name = "id_$i",
-        value = row.id
-    } ?>
+        <?lsmb INCLUDE input element_data = {
+            type = "hidden",
+            name = "id_$i",
+            value = row.id
+        } ?>
         <tr class="record">
             <td><?lsmb INCLUDE input element_data = {
             type = "checkbox"
@@ -262,7 +254,8 @@
     name = "report_id",
     type = "hidden",
     value = report_id,
-} ?><?lsmb IF NOT submitted ?>
+} ?>
+<?lsmb IF NOT submitted ?>
 <?lsmb INCLUDE select element_data = {
     name = "line_order",
     label = text('Order By'), #'
@@ -294,7 +287,7 @@
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
-    disabled = submit_allowed == 0 ? 'false' : 'true',
+    disabled = out_of_balance == '0.00' ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
@@ -303,7 +296,7 @@
     name = "action",
     text = text('Approve'),
     value = 'approve',
-    disabled = submit_allowed == 0 ? 'false' : 'true',
+    disabled = out_of_balance == '0.00' ? 'false' : 'true',
     class = "submit"
 };
 INCLUDE button element_data = {
