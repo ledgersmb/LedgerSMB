@@ -48,9 +48,10 @@
   }
 
   # date
+  USER.dojo_dateformat = USER.dateformat.replace('mm','MM');
   date_defaults = {
     "data-dojo-type" = 'lsmb/DateTextBox',
-    'data-dojo-props' = "constraints: {datePattern: '$USER.dateformat'},placeholder: '$USER.dateformat'"
+    'data-dojo-props' = "constraints: {datePattern: '$USER.dojo_dateformat'},placeholder: '$USER.dateformat'"
   }
 
   # textarea
