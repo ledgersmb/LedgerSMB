@@ -136,7 +136,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test', Array[11], 'Correct number of transactions 1');
+    SELECT results_eq('test', Array[13], 'Correct number of transactions 1');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
@@ -149,7 +149,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'Correct number of report lines');
+    SELECT results_eq('test',ARRAY[13],'Correct number of report lines');
     DEALLOCATE test;
 
     PREPARE test AS SELECT SUM(crl.our_balance) - cr.their_total
@@ -160,14 +160,24 @@ BEGIN;
     SELECT results_eq('test',ARRAY[-20::numeric],'Report not balanced (should not be submittable)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int),:report_end1);
-    SELECT throws_ok(
-        'test',
-        'P0001',
-        'Unbalanced report by -20.0000000000000000',
-        'We should get a unique violation for an unbalanced report'
-    );
+    PREPARE test AS WITH rows AS (
+                        UPDATE cr_report_line SET cleared = 't', clear_time = '1501-02-03'
+                        WHERE report_id = currval('cr_report_id_seq')::int
+                        RETURNING 1
+                    )
+                    SELECT count(*)::int
+                    FROM rows;
+    SELECT results_eq('test',ARRAY[13],'Clear transactions');
     DEALLOCATE test;
+
+--    PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int) from cr_report_line where report_id = currval('cr_report_id_seq')::int),:report_end1);
+--    SELECT throws_ok(
+--        'test',
+--        'P0001',
+--        'Unbalanced report by -20.00',
+--        'We should get a unique violation for an unbalanced report'
+--    );
+--    DEALLOCATE test;
 
     PREPARE test AS WITH rows AS (
                         UPDATE cr_report
@@ -186,13 +196,12 @@ BEGIN;
         'We should not get a unique violation for an unbalanced report on submit'
     );
     DEALLOCATE test;
-
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int);
     SELECT results_eq('test',ARRAY[1],'1 Report Approved');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11111'));
-    SELECT results_eq('test',ARRAY[110.],'1 Cleared balance post-approval is 110');
+    SELECT results_eq('test',ARRAY[130.],'1 Cleared balance post-approval is 130');
     DEALLOCATE test;
 
     PREPARE test as SELECT count(*)::int
@@ -200,7 +209,7 @@ BEGIN;
                       JOIN account a ON (acc_trans.chart_id = a.id)
                       WHERE a.accno = '-11111'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[5],'1 Transactions closed');
+    SELECT results_eq('test',ARRAY[3],'1 Transactions closed');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 120, :report_end2, false);
@@ -215,7 +224,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'Correct number of transactions 2');
+    SELECT results_eq('test',ARRAY[13],'Correct number of transactions 2');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 130);
@@ -225,7 +234,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'Correct number of transactions 3');
+    SELECT results_eq('test',ARRAY[13],'Correct number of transactions 3');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
@@ -238,7 +247,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'1 Correct number of report lines');
+    SELECT results_eq('test',ARRAY[13],'1 Correct number of report lines');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, '{}',:report_end2);
@@ -279,7 +288,7 @@ BEGIN;
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'Correct number of transactions 4');
+    SELECT results_eq('test',ARRAY[13],'Correct number of transactions 4');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(
@@ -317,11 +326,11 @@ BEGIN;
                       JOIN account a ON (acc_trans.chart_id = a.id)
                       WHERE accno = '-11112'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[5],'Transactions closed');
+    SELECT results_eq('test',ARRAY[3],'Transactions closed');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'));
-    SELECT results_eq('test',ARRAY[-110.],'Cleared balance post-approval is 110');
+    SELECT results_eq('test',ARRAY[-130.],'Cleared balance post-approval is 130');
     DEALLOCATE test;
 
     -- Finish the tests and clean up.
