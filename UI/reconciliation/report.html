@@ -39,8 +39,8 @@ END ?>
   <th><?lsmb text('Reconciliation Date:') ?></th><td><?lsmb end_date ?></td>
 </tr>
 <tr>
- <th><?lsmb text('Beginning Statement Balance:') ?></th>
- <td><?lsmb beginning_balance ?></td>
+  <th><?lsmb text('Beginning Statement Balance:') ?></th>
+  <td><?lsmb beginning_balance ?></td>
 </tr>
 <?lsmb IF ! approved ?>
 <tr>
@@ -54,8 +54,8 @@ END ?>
     } ?>
  </td>
   <?lsmb IF !submit_enabled ?>
-  <th><?lsmb text('Variance:') ?></th>
-  <td><?lsmb out_of_balance ?></td>
+    <th><?lsmb text('Variance:') ?></th>
+    <td><?lsmb out_of_balance ?></td>
   <?lsmb END ?>
 </tr>
 <?lsmb END ?>
@@ -119,11 +119,11 @@ END ?>
             <?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
             <?lsmb END -?>
     <?lsmb IF row.cleared == 'checked' ?>
-    <?lsmb INCLUDE input element_data = {
-        type = "hidden",
-        name = "id_$i",
-        value = row.id
-    } ?>
+        <?lsmb INCLUDE input element_data = {
+            type = "hidden",
+            name = "id_$i",
+            value = row.id
+        } ?>
         <tr class="record">
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
@@ -336,7 +336,7 @@ END ?>
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
-    disabled = submit_enabled && !check.unapproved_reports ? 'false' : 'true',
+    disabled = out_of_balance == '0.00' ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
