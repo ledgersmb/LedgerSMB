@@ -31,7 +31,7 @@ define([
                     return this.inherited(arguments);
                 }
                 return locale.parse(value,
-                                    { datePattern: "yyyy-MM-dd" });
+                                    { datePattern: "yyyy-MM-dd", selector: "date" });
             }
         });
     }
