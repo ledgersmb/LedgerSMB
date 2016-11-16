@@ -21,7 +21,6 @@ use Moose;
 with 'LedgerSMB::PGObject';
 use File::MimeInfo;
 use Log::Log4perl;
-binmode STDIN, ':bytes';
 
 =item  attached_by_id
 
