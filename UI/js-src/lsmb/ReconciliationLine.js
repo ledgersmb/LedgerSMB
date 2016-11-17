@@ -6,7 +6,7 @@ define("lsmb/ReconciliationLine",
         "dijit/form/CheckBox"],
        function(declare, on, registry, domClass, CheckBox) {
            return declare("lsmb/ReconciliationLine", [CheckBox], {
-               publish: function(targetValue) {
+               _display: function(targetValue) {
                    var id = this.id.replace("cleared-","recon-line-");
                    if ( ! id ) return;
                    if (targetValue) {
@@ -24,7 +24,7 @@ define("lsmb/ReconciliationLine",
                    this.own(
                        on(this, "change",
                           function(targetValue) {
-                              self.publish(targetValue);
+                              self._display(targetValue);
                           })
                    );
                }
