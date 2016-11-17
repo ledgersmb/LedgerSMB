@@ -1,5 +1,9 @@
 BEGIN;
 
+-- PostgreSQL booleans can have 3 values, TRUE, FALSE or NULL
+-- Care has to be taken to handle the NULL values, specially when testing for FALSE
+-- A NULL value will answer FALSE for both 'IF a IS TRUE' and 'IF a IS FALSE'
+
 DROP FUNCTION IF EXISTS reconciliation__submit_set(int, int[]);
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(
         in_report_id int, in_line_ids int[], in_end_date date
@@ -17,7 +21,7 @@ BEGIN
         FROM cr_report_line crl
         JOIN cr_report cr ON cr.id = crl.report_id
         WHERE cr.id = in_report_id
-        AND crl.cleared
+        AND crl.cleared IS TRUE
         AND crl.clear_time IS NOT NULL
         GROUP BY cr.their_total;
 
@@ -44,16 +48,16 @@ LANGUAGE SQL AS
 $$
 WITH unapproved_tx as (
      SELECT 'unapproved_transactions'::text, count(*)::text
-       FROM (SELECT          id::text FROM ar        WHERE NOT approved AND transdate < $1
-      UNION  SELECT          id::text FROM ap        WHERE NOT approved AND transdate < $1
-      UNION  SELECT          id::text FROM gl        WHERE NOT approved AND transdate < $1
-      UNION  SELECT DISTINCT source   FROM acc_trans WHERE NOT approved AND transdate < $1 AND chart_id = $2
+       FROM (SELECT          id::text FROM ar        WHERE approved IS FALSE AND transdate < $1
+      UNION  SELECT          id::text FROM ap        WHERE approved IS FALSE AND transdate < $1
+      UNION  SELECT          id::text FROM gl        WHERE approved IS FALSE AND transdate < $1
+      UNION  SELECT DISTINCT source   FROM acc_trans WHERE approved IS FALSE AND transdate < $1 AND chart_id = $2
             ) tx
 ),
      unapproved_cr as (
      SELECT 'unapproved_reports'::text, count(*)::text
        FROM cr_report
-      WHERE end_date < $1 AND NOT approved AND chart_id = $2
+      WHERE end_date < $1 AND approved IS NOT TRUE AND chart_id = $2
 )
 SELECT * FROM unapproved_tx
 UNION SELECT * FROM unapproved_cr;
@@ -63,7 +67,7 @@ CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
 RETURNS bool language sql as $$
      UPDATE cr_report set submitted = false
       WHERE id = in_report_id
-            AND NOT approved
+            AND approved IS NOT TRUE
      RETURNING true;
 $$ SECURITY DEFINER;
 
@@ -94,11 +98,11 @@ $$
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
                               WHERE entered_username = SESSION_USER
-                                    AND NOT submitted
-                                    and NOT approved);
+                                    AND submitted IS NOT TRUE
+                                    and approved IS NOT TRUE);
     DELETE FROM cr_report
      WHERE id = in_report_id AND entered_username = SESSION_USER
-           AND NOT submitted AND NOT approved
+           AND submitted IS NOT TRUE AND approved IS NOT TRUE
     RETURNING TRUE;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
@@ -120,9 +124,9 @@ $$
     DELETE FROM cr_report_line
      WHERE report_id = in_report_id
            AND report_id IN (SELECT id FROM cr_report
-                              WHERE NOT approved);
+                              WHERE approved IS NOT TRUE);
     DELETE FROM cr_report
-     WHERE id = in_report_id AND NOT approved
+     WHERE id = in_report_id AND approved IS NOT TRUE
     RETURNING TRUE;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
@@ -139,7 +143,7 @@ CREATE OR REPLACE FUNCTION cr_report_block_changing_approved()
 RETURNS TRIGGER AS
 $$
 BEGIN
-   IF OLD.approved THEN
+   IF OLD.approved IS TRUE THEN
        RAISE EXCEPTION 'Report is approved.  Cannot change!';
    END IF;
    IF TG_OP = 'DELETE' THEN
@@ -168,12 +172,12 @@ $$
     SELECT sum(ac.amount) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
         FROM account c
         JOIN acc_trans ac ON (ac.chart_id = c.id)
-    JOIN (      SELECT id FROM ar WHERE approved
-          UNION SELECT id FROM ap WHERE approved
-          UNION SELECT id FROM gl WHERE approved
+    JOIN (      SELECT id FROM ar WHERE approved IS TRUE
+          UNION SELECT id FROM ap WHERE approved IS TRUE
+          UNION SELECT id FROM gl WHERE approved IS TRUE
           ) g ON g.id = ac.trans_id
-    WHERE c.id = $1 AND cleared AND (cleared_on is null OR cleared_on <= in_report_date) -- cleared confirmed and date is prior the report
-      AND ac.approved
+    WHERE c.id = $1 AND cleared IS TRUE AND (cleared_on IS NULL OR cleared_on <= in_report_date) -- cleared confirmed and date is prior the report
+      AND ac.approved IS TRUE
       AND ac.transdate <= in_report_date
     GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
@@ -231,9 +235,9 @@ CREATE OR REPLACE FUNCTION reconciliation__report_approve (in_report_id INT) ret
                 LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
                            AND ((rl.ledger_id = ac.entry_id
                                 AND ac.voucher_id IS NULL)
-                                OR (rl.voucher_id = ac.voucher_id)) and rl.cleared)
-                WHERE (NOT ac.cleared OR ac.cleared_on IS NULL)
-                  AND ac.chart_id = (select chart_id from cr_report where id = in_report_id)
+                                OR (rl.voucher_id = ac.voucher_id)) and rl.cleared IS TRUE)
+                WHERE (ac.cleared IS FALSE OR ac.cleared_on IS NULL)
+                  AND ac.chart_id = (SELECT chart_id FROM cr_report WHERE id = in_report_id)
                 GROUP BY gl.ref, ac.source, ac.transdate,
                         ac.memo, ac.voucher_id, gl.table, ac.entry_id
                 HAVING count(rl.report_id) > 0) a
@@ -468,12 +472,6 @@ $$
         WHERE id = in_report_id;
 
         -- We should make sure that a specific transaction is not in many reports
-        DELETE FROM cr_report_line
-        WHERE report_id = in_report_id
-        AND report_id IN (SELECT id FROM cr_report
-                          WHERE entered_username = CURRENT_USER
-                                AND NOT submitted
-                                AND NOT approved);
         INSERT INTO cr_report_line (report_id, scn, their_balance,
                 our_balance, "user", voucher_id, ledger_id, post_date)
         SELECT in_report_id,
@@ -481,11 +479,11 @@ $$
                     THEN gl.ref
                     ELSE ac.source END,
                0,
-               sum(amount / CASE WHEN NOT t_recon_fx OR gl.table = 'gl'
+               sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
                                  THEN 1
-                                 WHEN t_recon_fx and gl.table = 'ap'
+                                 WHEN t_recon_fx IS TRUE AND gl.table = 'ap'
                                  THEN ex.sell
-                                 WHEN t_recon_fx and gl.table = 'ar'
+                                 WHEN t_recon_fx IS TRUE AND gl.table = 'ar'
                                  THEN ex.buy
                             END) AS amount,
                 (SELECT entity_id FROM users
@@ -495,15 +493,15 @@ $$
         JOIN transactions t ON ac.trans_id = t.id
         JOIN (SELECT id, entity_credit_account::text as ref, curr,
                      transdate, 'ar' as table
-                FROM ar WHERE approved
+                FROM ar WHERE approved IS TRUE
               UNION
               SELECT id, entity_credit_account::text, curr,
                      transdate, 'ap' as table
-                FROM ap WHERE approved
+                FROM ap WHERE approved IS TRUE
               UNION
               SELECT id, reference, '',
                      transdate, 'gl' as table
-                FROM gl WHERE approved
+                FROM gl WHERE approved IS TRUE
              ) gl ON (gl.table = t.table_name AND gl.id = t.id)
         LEFT JOIN cr_report_line rl
              ON  (rl.report_id = in_report_id
@@ -512,12 +510,12 @@ $$
                    OR ac.voucher_id = rl.voucher_id))
         LEFT JOIN cr_report r ON r.id = in_report_id
         LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
-        WHERE (NOT ac.cleared OR ac.cleared_on IS NULL)
-          AND ac.approved
+        WHERE (ac.cleared IS FALSE OR ac.cleared_on IS NULL)
+          AND ac.approved IS TRUE
           AND ac.chart_id = t_chart_id
           AND ac.transdate <= t_end_date
-          AND (( NOT t_recon_fx AND NOT ac.fx_transaction)
-               OR (  t_recon_fx AND (gl.table <> 'gl' OR ac.fx_transaction)))
+          AND ((    t_recon_fx IS NOT TRUE AND ac.fx_transaction IS NOT TRUE)
+               OR ( t_recon_fx IS TRUE     AND (gl.table <> 'gl' OR ac.fx_transaction IS TRUE)))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table,
                 case when gl.table = 'gl' then gl.id else 1 end, ac.entry_id
@@ -564,7 +562,7 @@ $$
       AND (in_account_id   IS NULL OR in_account_id = chart_id)
       AND (in_submitted    IS NULL OR in_submitted = submitted)
       AND (in_approved     IS NULL OR in_approved = approved)
-      AND NOT r.deleted
+      AND r.deleted IS FALSE
    ORDER BY c.accno, end_date, their_total
 $$ language sql;
 
@@ -606,11 +604,11 @@ $$
                     IN ('A', 'E') THEN sum(a.amount) * -1
             ELSE sum(a.amount) END
     FROM acc_trans a
-    JOIN (        SELECT id FROM ar WHERE approved
-            UNION SELECT id FROM ap WHERE approved
-            UNION SELECT id FROM gl WHERE approved
+    JOIN (        SELECT id FROM ar WHERE approved IS TRUE
+            UNION SELECT id FROM ap WHERE approved IS TRUE
+            UNION SELECT id FROM gl WHERE approved IS TRUE
     ) gl ON gl.id = a.trans_id
-    WHERE a.approved
+    WHERE a.approved IS TRUE
       AND a.chart_id = in_account_id
       AND a.transdate <= in_date;
 
