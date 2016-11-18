@@ -6,6 +6,7 @@ define(["dojo/_base/declare",
            return declare("lsmb/PublishToggleButton", [ToggleButton], {
                publish: function(targetValue) {
                    topic.publish(this.topic, targetValue);
+                   this.set("iconClass", targetValue ? "dijitTreeIcon dijitFolderOpened" : "dijitTreeIcon dijitFolderClosed");
                },
                postCreate: function() {
                    var self = this;
