@@ -53,7 +53,7 @@ END ?>
     value = their_total
     } ?>
  </td>
-  <?lsmb IF their_total != our_total ?>
+  <?lsmb IF !submit_enabled ?>
     <th><?lsmb text('Variance:') ?></th>
     <td><?lsmb out_of_balance ?></td>
   <?lsmb END ?>
@@ -333,7 +333,7 @@ END ?>
     name = "action",
     text = text('Submit'),
     value = 'submit_recon_set',
-    disabled = their_total == our_total && !check.unapproved_reports ? 'false' : 'true',
+    disabled = submit_enabled && !check.unapproved_reports ? 'false' : 'true',
     class = "submit"
 } ?>
 <?lsmb END ?>
@@ -342,7 +342,7 @@ END ?>
     name = "action",
     text = text('Approve'),
     value = 'approve',
-    disabled = their_total == our_total ? 'false' : 'true',
+    disabled = submit_enabled ? 'false' : 'true',
     class = "submit"
 };
 INCLUDE button element_data = {

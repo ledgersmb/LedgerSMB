@@ -265,6 +265,7 @@ sub _display_report {
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
+    $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
 
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
       for my $bal_type (qw/ credits debits/) {
