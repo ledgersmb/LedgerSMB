@@ -51,8 +51,6 @@ use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Template::DBProvider;
 
 my $binmode = ':utf8';
-binmode STDOUT, $binmode;
-binmode STDERR, $binmode;
 
 sub get_template {
     my $name = shift;

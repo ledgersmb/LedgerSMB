@@ -61,8 +61,6 @@ use LedgerSMB::Template::DBProvider;
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
-binmode STDOUT, ':bytes';
-binmode STDERR, ':bytes';
 
 # SC: The ODS handlers need these vars in common
 my $ods;

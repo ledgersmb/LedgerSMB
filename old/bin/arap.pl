@@ -425,10 +425,10 @@ sub schedule {
         foreach $item ( keys %formname ) {
 
             $checked = ( $p{$item}{format} ) ? "checked" : "";
-            $selectformat =~ s/ selected//;
+            $selectformat =~ s/ selected="selected"//;
             $p{$item}{format} ||= "pdf";
             $selectformat =~
-              s/(<option value="\Q$p{$item}{format}\E")/$1 selected/;
+              s/(<option value="\Q$p{$item}{format}\E")/$1 selected="selected"/;
 
             $email .= qq|
         <tr>
@@ -493,16 +493,16 @@ sub schedule {
         $selectformat =~ s/<option.*html//;
         foreach $item ( keys %formname ) {
 
-            $selectprinter =~ s/ selected//;
+            $selectprinter =~ s/ selected="selected"//;
             $selectprinter =~
-              s/(<option value="\Q$p{$item}{printer}\E")/$1 selected/;
+              s/(<option value="\Q$p{$item}{printer}\E")/$1 selected="selected"/;
 
             $checked = ( $p{$item}{formname} ) ? "checked" : "";
 
-            $selectformat =~ s/ selected//;
+            $selectformat =~ s/ selected="selected"//;
             $p{$item}{format} ||= "postscript";
             $selectformat =~
-              s/(<option value="\Q$p{$item}{format}\E")/$1 selected/;
+              s/(<option value="\Q$p{$item}{format}\E")/$1 selected="selected"/;
 
             $print .= qq|
         <tr>
@@ -525,7 +525,7 @@ sub schedule {
 
     $selectrepeat = "";
     for ( 1 .. 31 ) { $selectrepeat .= qq|<option value="$_">$_\n| }
-    $selectrepeat =~ s/(<option value="$form->{recurringrepeat}")/$1 selected/;
+    $selectrepeat =~ s/(<option value="$form->{recurringrepeat}")/$1 selected="selected"/;
 
     $selectunit = qq|<option value="days">| . $locale->text('Day(s)') . qq|
   <option value="weeks">| . $locale->text('Week(s)') . qq|
@@ -533,7 +533,7 @@ sub schedule {
   <option value="years">| . $locale->text('Year(s)');
 
     if ( $form->{recurringunit} ) {
-        $selectunit =~ s/(<option value="$form->{recurringunit}")/$1 selected/;
+        $selectunit =~ s/(<option value="$form->{recurringunit}")/$1 selected="selected"/;
     }
 
     if ( $form->{ $form->{vc} } ) {

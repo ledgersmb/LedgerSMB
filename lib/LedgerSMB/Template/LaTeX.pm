@@ -83,10 +83,7 @@ $TeX::Encode::charmap::CHAR_MAP_RE = '[' . join('', map { quotemeta($_) } sort {
 
 
 
-#my $binmode = ':utf8';
 my $binmode = ':raw';
-binmode STDOUT, $binmode;
-binmode STDERR, $binmode;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 

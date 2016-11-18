@@ -484,6 +484,10 @@ ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, id, description
   FROM sl30.department;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 1
+   AND EXISTS (select 1 from sl30.department);
 
 INSERT INTO business_unit (id, class_id, control_code, description,
        start_date, end_date, credit_id)
@@ -492,6 +496,10 @@ SELECT 1000+id, 2, projectnumber, description, startdate, enddate,
           from sl30.customer c
          where c.id = p.customer_id)
   FROM sl30.project p;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 2
+   AND EXISTS (select 1 from sl30.project);
 
 
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
