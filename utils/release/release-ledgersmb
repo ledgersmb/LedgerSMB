@@ -165,6 +165,7 @@ commit_versiontag() {
 
 create_versiontarball() {
    (cd "$our_workspace/$checkout_dir" && \
+    $git checkout "$release_version" && \
     $make dist DIST_DIR=../ DIST_VER=$release_version ) \
    || fail "Failed to create release archive!"
 }

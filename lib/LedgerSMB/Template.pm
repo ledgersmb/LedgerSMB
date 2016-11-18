@@ -456,10 +456,6 @@ sub output {
     } else {
         $self->_http_output_file;
     }
-    binmode (STDOUT, ':utf8'); # Reset binmode *after* sending file to
-                               # email, printer, or screen.  For screen
-                               # this should have no effect.  For printer
-                               # or email, this should fix bug 884. --CT
 }
 
 sub _http_output {
@@ -511,6 +507,8 @@ sub _http_output {
     }
     binmode STDOUT, $self->{binmode};
     print $data;
+    # change global resource back asap
+    binmode (STDOUT, ':utf8');
     $logger->trace("end print to STDOUT");
 }
 

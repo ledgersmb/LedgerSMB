@@ -56,8 +56,6 @@ my $date = sprintf('%04d%02d%02d', $dt->year, $dt->month, $dt->day);
 my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 
 my $binmode = ':utf8';
-binmode STDOUT, $binmode;
-binmode STDERR, $binmode;
 
 sub get_extension {
     my ($parent) = shift;

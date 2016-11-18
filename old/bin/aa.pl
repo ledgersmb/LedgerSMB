@@ -161,11 +161,9 @@ sub edit {
     }
 
     &display_form;
-
 }
 
 sub display_form {
-     $form->generate_selects(\%myconfig);
     my $invnumber = "sinumber";
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
@@ -176,6 +174,7 @@ sub display_form {
     $form->close_form;
     $form->open_form;
     AA->get_files($form, $locale);
+    $form->generate_selects(\%myconfig);
     &form_header;
     &form_footer;
 
@@ -198,6 +197,7 @@ sub create_links {
                                  billing => $form->{vc} eq 'customer'
                                       && $form->{type} eq 'invoice')
           unless defined $form->{"$form->{ARAP}_links"};
+
 
     $duedate     = $form->{duedate};
     $crdate     = $form->{crdate};
@@ -360,6 +360,7 @@ sub create_links {
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
     delete $form->{selectcurrency};
+    #$form->generate_selects(\%myconfig);
 }
 
 sub form_header {
@@ -725,7 +726,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                       for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                          my $selected = '';
                          if ($form->{"b_unit_$cls->{id}_$i"} eq $bu->{id}){
-                            $selected = "SELECTED='SELECTED'";
+                            $selected = 'selected="selected"';
                          }
                          print qq|  <option value="$bu->{id}" $selected>
                                         $bu->{control_code}
@@ -853,7 +854,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};
         $form->{"select$form->{ARAP}_paid_$i"} =~
-s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected>$form->{"$form->{ARAP}_paid_$i"}/;
+s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected="selected">$form->{"$form->{ARAP}_paid_$i"}/;
 
         # format amounts
         $form->{"paid_$i"} =
@@ -1183,7 +1184,6 @@ sub update {
     $form->open_form() unless $form->check_form();
     $is_update = 1;
     if ( !$display ) {
-
         $form->{invtotal} = 0;
 
         $form->{exchangerate} =
@@ -1271,6 +1271,7 @@ sub update {
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 
+    $form->generate_selects(\%myconfig);
     &display_form;
 
 }

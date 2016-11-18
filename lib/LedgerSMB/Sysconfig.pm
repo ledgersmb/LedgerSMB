@@ -12,9 +12,6 @@ use Config::IniFiles;
 use DBI qw(:sql_types);
 use English qw(-no_match_vars);
 
-binmode STDOUT, ':utf8';
-binmode STDERR, ':utf8';
-
 =head2 die_pretty $line_1, $line_2, $line_N;
 
 each $line_* is a string that will be output on a separate line:
