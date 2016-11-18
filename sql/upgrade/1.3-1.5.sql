@@ -494,12 +494,20 @@ INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, description, description
   FROM lsmb13.department;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 1
+   AND EXISTS (select 1 from lsmb13.department);
 
 INSERT INTO business_unit
        (id, class_id, control_code, description, start_date, end_date,
        credit_id)
 SELECT id + 1000, 2, projectnumber, description, startdate, enddate,
         credit_id from lsmb13.project;
+UPDATE business_unit_class
+   SET active = t
+ WHERE id = 2
+   AND EXISTS (select 1 from lsmb13.project);
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
