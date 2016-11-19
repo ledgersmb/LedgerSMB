@@ -67,7 +67,10 @@ sub _get_database {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
-    LedgerSMB::Auth->http_error('401')
+    return [ 401,
+             [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
+               'Content-Type' => 'text/text; charset=UTF-8' ],
+             [ 'Please enter your credentials' ] ]
         if ! defined $creds->{password};
 
     return LedgerSMB::Database->new(

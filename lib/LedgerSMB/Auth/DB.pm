@@ -57,17 +57,6 @@ sub get_credentials {
 
 }
 
-=item credential_prompt
-
-Sends a 401 error to the browser popping up browser credential prompt.
-
-=cut
-
-sub credential_prompt{
-    my ($suffix) = @_;
-    LedgerSMB::Auth->http_error(401, $suffix);#tshvr4
-}
-
 =back
 
 =head1 COPYRIGHT
