@@ -88,7 +88,7 @@ END ?>
 </div>
 <?lsmb END ?>
 <?lsmb i = 1 ?>
-<table border=0 id="cleared-table">
+<table border=0 id="cleared-table"">
     <tr class="listtop">
         <th colspan="10"><?lsmb INCLUDE input element_data = {
         type = "toggle"
@@ -96,7 +96,7 @@ END ?>
         label = text('Cleared Transactions')
         checked = b_cleared_table
         "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "iconClass:'dijitCheckBoxIcon',topic:'ui/reconciliation/report/b_cleared_table'"
+        "data-dojo-props" = "topic:'ui/reconciliation/report/b_cleared_table'"
         }
         ?></th>
     </tr>
@@ -180,7 +180,7 @@ END ?>
         label = text('Mismatched Transactions (From Upload)')
         checked = b_mismatch_table
         "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "iconClass:'dijitCheckBoxIcon',topic:'ui/reconciliation/report/b_mismatch_table'"
+        "data-dojo-props" = "topic:'ui/reconciliation/report/b_mismatch_table'"
         }
         ?></th>
     </tr>
@@ -242,7 +242,7 @@ END ?>
         label = text('Outstanding Transactions')
         checked = b_outstanding_table
         "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "iconClass:'dijitCheckBoxIcon',topic:'ui/reconciliation/report/b_outstanding_table'"
+        "data-dojo-props" = "topic:'ui/reconciliation/report/b_outstanding_table'"
         }
         ?></th>
     </tr>
@@ -261,14 +261,17 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class="record" id=<?lsmb "recon-line-$row.id" ?>>
+        <tr class="record" id=<?lsmb "recon-line-$row.id" ?>
+            data-dojo-type = "lsmb/ReconciliationLine"
+            data-dojo-props = "topic:'ui/reconciliation/report/cleared_$row.id'">
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
             name = "cleared_$row.id"
             value = row.id
             checked = row.cleared
-            "data-dojo-type"  = "lsmb/ReconciliationLine"
+            "data-dojo-type" = "lsmb/PublishCheckBox"
+            "data-dojo-props" = "topic:'ui/reconciliation/report/cleared_$row.id'"
             };
             END ?></td>
             <td><?lsmb row.scn ?> </td>

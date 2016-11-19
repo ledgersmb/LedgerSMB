@@ -1,11 +1,12 @@
 define("lsmb/ReconciliationLine",
        ["dojo/_base/declare",
         "dojo/on",
-        "dijit/registry",
         "dojo/dom-class",
-        "dijit/form/CheckBox"],
-       function(declare, on, registry, domClass, CheckBox) {
-           return declare("lsmb/ReconciliationLine", [CheckBox], {
+        "dijit/_WidgetBase",
+        "dijit/_Container",
+        "lsmb/SubscribeCheckBox"],
+       function(declare, on, domClass,  _WidgetBase, _Container, subscribedCheckBox) {
+           return declare("lsmb/ReconciliationLine", [_WidgetBase, _Container], {
                _display: function(targetValue) {
                    var id = this.id.replace("cleared-","recon-line-");
                    if ( ! id ) return;
