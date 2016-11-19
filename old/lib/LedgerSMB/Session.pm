@@ -25,6 +25,74 @@ use warnings;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
+
+=item http_error
+
+Send an http error to the browser.
+
+=cut
+
+sub http_error {
+    #my ($errcode, $msg_plus) = @_;
+    my ($unknown,$errcode, $msg_plus) = @_;#tshvr4 called as LedgerSMB::Auth->http_error('401');
+    $msg_plus = '' if not defined $msg_plus;
+    my $cgi = CGI::Simple->new();
+
+    my $err = {
+    '500' => {status  => '500 Internal Server Error',
+          message => 'An error occurred. Information on this error has been logged.',
+                  others  => {}},
+        '403' => {status  => '403 Forbidden',
+                  message => 'You are not allowed to access the specified resource.',
+                  others  => {}},
+        '401' => {status  => '401 Unauthorized',
+                  message => 'Please enter your credentials',
+                  others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}
+                 },
+        '404' => {status  => '404 Resource not Found',
+                  message => "The following resource was not found, $msg_plus",
+                 },
+        '454' => {status  => '454 Database Does Not Exist',
+                  message => 'Database Does Not Exist' },
+    };
+    # Ordinarily I would use $cgi->header to generate the headers
+    # but this doesn't seem to be working.  Although it is generally desirable
+    # to create the headers using the package, I think we should print them
+    # manually.  -CT
+    if ($errcode eq '401'){
+        if ($msg_plus eq 'setup'){
+           $err->{'401'}->{others}->{'WWW-Authenticate'}
+                = "Basic realm=\"LedgerSMB-$msg_plus\"";
+        }
+        print $cgi->header(
+           -type               => 'text/text',
+           -status             => $err->{'401'}->{status},
+           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
+        );
+    } else {
+        print $cgi->header(
+           -type   => 'text/text',
+           -status => $err->{$errcode}->{status},
+        );
+    }
+    print $err->{$errcode}->{message};
+    die;
+}
+
+
+=item credential_prompt
+
+Sends a 401 error to the browser popping up browser credential prompt.
+
+=cut
+
+sub credential_prompt{
+    my ($suffix) = @_;
+    LedgerSMB::Auth->http_error(401, $suffix);#tshvr4
+}
+
+
+
 =item check
 
 Checks to see if a session exists based on current logged in credentials.
