@@ -71,7 +71,7 @@ END ?>
 <?lsmb END ?>
 </table>
 <br />
-<?lsmb IF ! approved ?>
+<?lsmb IF ! approved and !submitted?>
     <div id="csv-file">
         <label for="file_upload"><?lsmb text('CSV File:') ?></label>
         <?lsmb PROCESS input element_data = {
