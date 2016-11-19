@@ -176,8 +176,7 @@ sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
     if (!$request->{database}){
-        list_databases($request);
-        return;
+        return list_databases($request);
     }
     my $database = _get_database($request);
     my $server_info = $database->server_version;
@@ -270,7 +269,7 @@ sub list_databases {
             template => 'list_databases',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item list_users
