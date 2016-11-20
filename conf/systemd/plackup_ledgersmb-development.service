@@ -1,0 +1,92 @@
+# Place this in /etc/systemd/system/plackup-ledgersmb-development.service
+# systemctl enable plackup-ledgersmb-development
+# service start plackup-ledgersmb-development
+
+[Unit]
+Description=LedgerSMB Plack Development
+After=network.target
+
+[Service]
+WorkingDirectory=WORKING_DIR
+
+#If you do not want a log file, comment this and remove the access_log option below
+Environment=LOG=/var/log/plack/plackup_ledgersmb-development.log
+
+# In case you installed dependencies into a 'local::lib'
+# make sure you set the PERL5LIB environment variable
+#Environment=PERL5LIB=/path/to/local-lib/lib/perl5
+
+# Be sure to set a user and group below
+# which don't have write access to the directories
+# holding the LedgerSMB sources
+User=ledgersmb
+Group=ledgersmb
+
+# Use -R to monitor files changes and restart the server
+# The list below is exhaustive, change it to suit your needs
+ExecStart=/usr/bin/plackup           \
+     -I lib                          \
+    --listen localhost:5001          \
+    --workers 1                      \
+    --access-log $LOG                \
+    --server HTTP::Server::PSGI      \
+    -E development                   \
+    -R "., \
+        bin, \
+        lib, \
+        lib/LedgerSMB, \
+        lib/LedgerSMB/Auth, \
+        lib/LedgerSMB/Database, \
+        lib/LedgerSMB/DBObject, \
+        lib/LedgerSMB/Entity, \
+        lib/LedgerSMB/Entity/Payroll, \
+        lib/LedgerSMB/Entity/Person, \
+        lib/LedgerSMB/File, \
+        lib/LedgerSMB/Inventory, \
+        lib/LedgerSMB/Payroll, \
+        lib/LedgerSMB/Reconciliation, \
+        lib/LedgerSMB/Report, \
+        lib/LedgerSMB/Report/Assets, \
+        lib/LedgerSMB/Report/Budget, \
+        lib/LedgerSMB/Report/co, \
+        lib/LedgerSMB/Report/Contact, \
+        lib/LedgerSMB/Report/File, \
+        lib/LedgerSMB/Report/Inventory, \
+        lib/LedgerSMB/Report/Invoices, \
+        lib/LedgerSMB/Report/Listings, \
+        lib/LedgerSMB/Report/Payroll, \
+        lib/LedgerSMB/Report/PNL, \
+        lib/LedgerSMB/Report/Reconciliation, \
+        lib/LedgerSMB/Report/Taxform, \
+        lib/LedgerSMB/Report/Unapproved, \
+        lib/LedgerSMB/Request, \
+        lib/LedgerSMB/REST_Class, \
+        lib/LedgerSMB/REST_Format, \
+        lib/LedgerSMB/RESTXML/Document, \
+        lib/LedgerSMB/Scripts, \
+        lib/LedgerSMB/Scripts/employee, \
+        lib/LedgerSMB/Setting, \
+        lib/LedgerSMB/Taxes, \
+        lib/LedgerSMB/Template, \
+        lib/LedgerSMB/Timecard, \
+        lib/LedgerSMB/X12, \
+        t, \
+        t/66-cucumber, \
+        t/data, \
+        t/var, \
+        t/lib, \
+        t/lib/LedgerSMB, \
+        t/lib/PageObject, \
+        t/lib/Pherkin, \
+        t/lib/Pherkin/Extension, \
+        t/lib/Selenium,
+        tools/starman-development.psgi" \
+    tools/starman-development.psgi
+#
+# Take note that the -R switch monitors the psgi configuration file too, so
+# the above line duplication really isn't and is required.
+#
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
