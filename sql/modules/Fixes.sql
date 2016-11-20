@@ -381,3 +381,10 @@ ALTER TABLE recurring DROP COLUMN unit;
 
 END;
 
+BEGIN;
+
+SELECT pgcatalog.setval('', (SELECT MAX(id) FROM business_unit_class), true);
+
+END;
+
+
