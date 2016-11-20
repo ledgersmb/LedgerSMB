@@ -87,6 +87,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 on 'develop' => sub {
     requires 'File::Util';
     requires 'HTML::Lint';
+    requires 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
