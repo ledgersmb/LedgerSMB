@@ -84,7 +84,8 @@ ExecStart=/usr/bin/plackup           \
     tools/starman-development.psgi
 #
 # Take note that the -R switch monitors the psgi configuration file too, so
-# the above line duplication really isn't and is required.
+# we need to refer to the file twice, one for monitoring and one for plackup
+# selection of the PSGI file to use on startup.
 #
 Restart=always
 
