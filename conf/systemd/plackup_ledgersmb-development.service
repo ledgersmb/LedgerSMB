@@ -24,6 +24,8 @@ Group=ledgersmb
 
 # Use -R to monitor files changes and restart the server
 # The list below is exhaustive, change it to suit your needs
+# Make sure that Linux::Inotify2 is included in your Perl environment, file
+# monitoring is a performance killer otherwise.
 ExecStart=/usr/bin/plackup           \
      -I lib                          \
     --listen localhost:5001          \
