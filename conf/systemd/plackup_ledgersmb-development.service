@@ -71,10 +71,7 @@ ExecStart=/usr/bin/plackup           \
         lib/LedgerSMB/Template, \
         lib/LedgerSMB/Timecard, \
         lib/LedgerSMB/X12, \
-        t, \
         t/66-cucumber, \
-        t/data, \
-        t/var, \
         t/lib, \
         t/lib/LedgerSMB, \
         t/lib/PageObject, \
