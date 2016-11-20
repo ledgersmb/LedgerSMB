@@ -170,6 +170,7 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
 SELECT setting__set(setting_key, value) FROM lsmb13.defaults
  where not setting_key = 'version';
+UPDATE lsmb13.batch SET locked_by = NULL;
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
 ALTER TABLE ar DISABLE TRIGGER ar_track_global_sequence;
