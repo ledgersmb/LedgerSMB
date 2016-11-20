@@ -22,7 +22,7 @@ Environment=LOG=/var/log/plack/plackup_ledgersmb-development.log
 User=ledgersmb
 Group=ledgersmb
 
-# Use -R to monitor files changes and restart the server
+# Use --Reload to monitor files changes and restart the server
 # The list below is exhaustive, change it to suit your needs
 # Make sure that Linux::Inotify2 is included in your Perl environment, file
 # monitoring is a performance killer otherwise.
@@ -32,10 +32,9 @@ ExecStart=/usr/bin/plackup           \
     --workers 1                      \
     --access-log $LOG                \
     --server HTTP::Server::PSGI      \
-    -E development                   \
-    -R "., \
-        bin, \
-        lib, \
+    --env development                \
+    --reload
+    --Reload "., \
         lib/LedgerSMB, \
         lib/LedgerSMB/Auth, \
         lib/LedgerSMB/Database, \
@@ -81,13 +80,11 @@ ExecStart=/usr/bin/plackup           \
         t/lib/PageObject, \
         t/lib/Pherkin, \
         t/lib/Pherkin/Extension, \
-        t/lib/Selenium,
-        tools/starman-development.psgi" \
+        t/lib/Selenium" \
     tools/starman-development.psgi
 #
-# Take note that the -R switch monitors the psgi configuration file too, so
-# we need to refer to the file twice, one for monitoring and one for plackup
-# selection of the PSGI file to use on startup.
+# Take note that the --reload and --Reload switches monitors different
+# directories, so we need both.
 #
 Restart=always
 
