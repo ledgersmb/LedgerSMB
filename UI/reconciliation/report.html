@@ -3,10 +3,61 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb IF check.unapproved_transactions 
-?><div class="warning"><?lsmb text('There are unapproved transactions before the end date of this report.') ?></div>
-<?lsmb END; IF check.unapproved_reports
-?><div class="warning"><?lsmb text('There are unapproved reconciliations before the end date of this report.') ?></div>
+<?lsmb IF check.unapproved_transactions;
+    b_unapproved_transactions = "checked" ?>
+<table class="warning" border=0 id="unapproved-transactions">
+    <tr class="listtop">
+        <th colspan="10"><?lsmb INCLUDE input element_data = {
+        type = "toggle"
+        name = "b_unapproved_transactions"
+        label = text('There are unapproved transactions before the end date of this report.')
+        checked = b_unapproved_transactions
+        "data-dojo-type" = "lsmb/PublishToggleButton"
+        "data-dojo-props" = "topic:'ui/reconciliation/report/b_unapproved_transactions'"
+        }
+        ?></th>
+    </tr>
+    <tr class="listheading" id="heading-unapproved-transactions">
+        <th><?lsmb text('ID') ?></th>
+        <th><?lsmb text('Table') ?></th>
+        <th><?lsmb text('Invoice') ?></th>
+        <th><?lsmb text('Posted Date') ?></th>
+        <th><?lsmb text('Amount') ?></th>
+        <th><?lsmb text('Description') ?></th>
+        <script>
+            require(["dojo/topic","dojo/query","dojo/domReady!"],
+            function(topic,query){
+               function update(targetValue) {
+                    query("#heading-unapproved-transactions").style("display", targetValue ? "" : "none");
+                }
+                try{
+                    topic.subscribe("ui/reconciliation/report/b_unapproved_transactions",
+                        function(targetValue) {
+                            update(targetValue);
+                        });
+                }catch(e){
+                    alert("error in subscribe"+e);
+                }
+            });
+        </script>
+    </tr>
+    <?lsmb FOREACH row = unapproved_tx ?>
+        <tr class="record">
+            <?lsmb IF row.id ?>
+                <td><a href="<?lsmb row.table.lower ?>.pl?action=edit&amp;id=<?lsmb row.id?>"><?lsmb row.id ?></a></td>
+            <?lsmb ELSE ?>
+                <td><?lsmb row.id ?> </td>
+            <?lsmb END ?>
+            <td><?lsmb row.table ?> </td>
+            <td><?lsmb row.invnumber ?> </td>
+            <td><?lsmb row.transdate ?></td>
+            <td><?lsmb row.amount ?> </td>
+            <td><?lsmb row.description ?></td>
+        </tr>
+    <?lsmb END -?>
+</table>
+<?lsmb END; IF check.unapproved_reports ?>
+<div class="warning"><?lsmb text('There are unapproved reconciliations before the end date of this report.') ?></div>
 <?lsmb END ?>
 <?lsmb IF ! defined(b_cleared_table);
     b_cleared_table = 'checked';

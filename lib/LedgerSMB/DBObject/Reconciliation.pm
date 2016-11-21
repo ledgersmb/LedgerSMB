@@ -152,6 +152,23 @@ sub unapproved_checks {
     $self->{check} = { map { $_->{setting_key} => $_->{value} } $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
 
+=item get_unapproved_tx
+
+Get unapproved
+
+ * transactions (generally, since these could change)
+ * payments against the account
+ * reconciliation reports
+
+Sets $self->{unapproved_tx} with the name of the test and the number of failures
+
+=cut
+
+sub get_unapproved_tx {
+    my $self = shift @_;
+    @{$self->{unapproved_tx}} = $self->call_dbmethod(funcname=>'reconciliation__get_unapproved_tx');
+}
+
 =item approve($self,$reportid)
 
 Approves the pending report $reportid.
@@ -321,6 +338,10 @@ Also populates
 =item report_lines
 
 a list of report lines
+
+=item unapproved_tx
+
+a list of unapproved transactions
 
 =item account_info
 
