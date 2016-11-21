@@ -29,7 +29,43 @@ WITH unapproved_tx as (
       WHERE end_date < $1 AND approved IS NOT TRUE AND chart_id = $2
 )
 SELECT * FROM unapproved_tx
-UNION SELECT * FROM unapproved_cr;
+UNION SELECT * FROM unapproved_cr
+$$;
+
+DROP TYPE IF EXISTS recon_unapproved_tx CASCADE;
+
+CREATE TYPE recon_unapproved_tx AS (
+    id text,
+    "table" text,
+    invnumber text,
+    transdate DATE,
+    amount NUMERIC,
+    description text
+);
+
+CREATE OR REPLACE FUNCTION reconciliation__get_unapproved_tx(in_end_date date, in_chart_id int)
+RETURNS SETOF recon_unapproved_tx
+LANGUAGE SQL AS
+$$
+    SELECT id::text, "table", invnumber, transdate, amount, description FROM (
+        SELECT * FROM (
+               SELECT       id, 'AR' AS table, ar.invnumber, ar.transdate, ar.amount, ar.description, ar.approved FROM ar
+        UNION  SELECT       id, 'AP' AS table, ap.invnumber, ap.transdate, ap.amount, ap.description, ap.approved FROM ap
+        UNION  SELECT       id, 'GL' AS table, gl.reference, gl.transdate, a1.amount, gl.description, gl.approved FROM gl
+                 JOIN acc_trans a1 on gl.id=a1.trans_id
+                  AND  chart_id = in_chart_id
+        ) xx
+        WHERE id IN (
+            SELECT trans_id
+              FROM acc_trans
+             WHERE cleared IS FALSE
+               AND chart_id = in_chart_id
+        )
+        OR approved IS FALSE
+        ) xx
+    WHERE transdate < in_end_date
+      AND approved IS FALSE
+    ORDER BY "table", transdate, id;
 $$;
 
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
