@@ -4,6 +4,17 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.35
+* Fixed release process; 1.4.32+ included '-dev' in tar version (Erik H)
+* Fix 'existing account' check when saving account configuration (Yves L)
+* Add 'make clean' Makefile target (Erik H, #1828)
+* Fix failing upgrades from 1.3 due to 'locked_by' not NULL (Erik H, #2241)
+* Fix inability to add new business unit class (Erik H, #1023)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.4.34
 * Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
 * Fixed PNL hierarchies both selected (Erik H, #2147)
