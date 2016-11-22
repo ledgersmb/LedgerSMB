@@ -263,7 +263,7 @@ tr.record {
 	background-color: pink;
 }
 
-tr,div .warning {
+tr.warning,div.warning {
 	background-color: yellow;
         color: black;
 }
