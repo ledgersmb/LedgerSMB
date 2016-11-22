@@ -423,7 +423,7 @@ sub check_permissions {
     use English qw(-no_match_vars);
 
     if($EUID == 0){
-        die_pretty( "Running LedgerSMB as root is a security problem",
+        die_pretty( "Running a Web Service as root is a security problem",
                     "If you are starting LedgerSMB as a system service",
                     "please make sure that you drop privlidges as per README.md",
                     "and the example files in conf/",
