@@ -6,7 +6,7 @@
 <?lsmb IF check.unapproved_transactions;
     b_unapproved_transactions = "checked" ?>
 <table class="warning" border=0 id="unapproved-transactions">
-    <tr class="listtop">
+    <tr class="listtop warning">
         <th colspan="10"><?lsmb INCLUDE input element_data = {
         type = "toggle"
         name = "b_unapproved_transactions"
