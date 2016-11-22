@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-15 11:01+0000\n"
+"POT-Creation-Date: 2016-11-22 19:42+0000\n"
 "PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Malay (Malaysia) (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -94,11 +94,11 @@ msgstr ""
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
-#: sql/Pg-database.sql:2851
+#: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr "AP"
 
-#: sql/Pg-database.sql:2800
+#: sql/Pg-database.sql:2803
 msgid "AP Aging"
 msgstr "Penuaan AP"
 
@@ -123,7 +123,7 @@ msgstr "AP Memberangsangkan"
 #: templates/xedemo/ap_transaction.html:4
 #: templates/xedemo/ap_transaction.html:18
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:324
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+#: sql/Pg-database.sql:2952 sql/Pg-database.sql:2965
 msgid "AP Transaction"
 msgstr "Transakai AP"
 
@@ -131,7 +131,7 @@ msgstr "Transakai AP"
 msgid "AP Transactions"
 msgstr "Transaksi Ap"
 
-#: sql/Pg-database.sql:2914
+#: sql/Pg-database.sql:2917
 msgid "AP Voucher"
 msgstr "Baucer AP"
 
@@ -141,11 +141,11 @@ msgstr ""
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
-#: sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr "AR"
 
-#: sql/Pg-database.sql:2797
+#: sql/Pg-database.sql:2800
 msgid "AR Aging"
 msgstr "penuaan AR"
 
@@ -169,8 +169,8 @@ msgstr "AR Memberangsangkan"
 #: templates/demo_with_images/ar_transaction.tex:33
 #: templates/xedemo/ar_transaction.html:4
 #: templates/xedemo/ar_transaction.html:18
-#: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
+#: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2951
+#: sql/Pg-database.sql:2964
 msgid "AR Transaction"
 msgstr "Transaksi AR"
 
@@ -178,7 +178,7 @@ msgstr "Transaksi AR"
 msgid "AR Transactions"
 msgstr "Transaksi AR"
 
-#: sql/Pg-database.sql:2913
+#: sql/Pg-database.sql:2916
 msgid "AR Voucher"
 msgstr "Baucer AR"
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "AR/AP/GL Amount"
 msgstr "Amaun AR/AP/GL"
 
-#: sql/Pg-database.sql:3789
+#: sql/Pg-database.sql:3792
 msgid "Abandonment"
 msgstr ""
 
@@ -394,11 +394,11 @@ msgstr ""
 msgid "Add Account"
 msgstr "Tambah akaun"
 
-#: sql/Pg-database.sql:2793
+#: sql/Pg-database.sql:2796
 msgid "Add Accounts"
 msgstr "Tambah Akaun"
 
-#: bin/ic.pl:65 sql/Pg-database.sql:2868
+#: bin/ic.pl:65 sql/Pg-database.sql:2871
 msgid "Add Assembly"
 msgstr "Tambah Pemasangan "
 
@@ -410,23 +410,23 @@ msgstr "Tambah Aset"
 msgid "Add Asset Class"
 msgstr "Tambah Kelas Aset"
 
-#: sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2893
 msgid "Add Assets"
 msgstr "Tambah aset"
 
-#: sql/Pg-database.sql:2915
+#: sql/Pg-database.sql:2918
 msgid "Add Budget"
 msgstr "Tambah bajet"
 
-#: bin/am.pl:281 sql/Pg-database.sql:2842
+#: bin/am.pl:281 sql/Pg-database.sql:2845
 msgid "Add Business"
 msgstr "Tambah Bisnes"
 
-#: sql/Pg-database.sql:2888
+#: sql/Pg-database.sql:2891
 msgid "Add Class"
 msgstr "Tambah kelas"
 
-#: sql/Pg-database.sql:2789
+#: sql/Pg-database.sql:2792
 msgid "Add Contact"
 msgstr "Tambah Kenalan"
 
@@ -455,7 +455,7 @@ msgid "Add Debit Note"
 msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:40
-#: sql/Pg-database.sql:2810
+#: sql/Pg-database.sql:2813
 msgid "Add Employee"
 msgstr "Tambah Pekerja"
 
@@ -463,11 +463,11 @@ msgstr "Tambah Pekerja"
 msgid "Add Exchange Rate"
 msgstr "Tambah kadar pertukaran"
 
-#: bin/am.pl:158 sql/Pg-database.sql:2909
+#: bin/am.pl:158 sql/Pg-database.sql:2912
 msgid "Add GIFI"
 msgstr "Tambah GIFI"
 
-#: bin/pe.pl:108 sql/Pg-database.sql:2935
+#: bin/pe.pl:108 sql/Pg-database.sql:2938
 msgid "Add Group"
 msgstr "Tambah Kumpulan"
 
@@ -475,7 +475,7 @@ msgstr "Tambah Kumpulan"
 msgid "Add Labor/Overhead"
 msgstr ""
 
-#: bin/am.pl:457 sql/Pg-database.sql:2844
+#: bin/am.pl:457 sql/Pg-database.sql:2847
 msgid "Add Language"
 msgstr "Tambah Bahasa"
 
@@ -487,15 +487,15 @@ msgstr ""
 msgid "Add Note"
 msgstr ""
 
-#: sql/Pg-database.sql:2934
+#: sql/Pg-database.sql:2937
 msgid "Add Overhead"
 msgstr ""
 
-#: bin/ic.pl:63 sql/Pg-database.sql:2866
+#: bin/ic.pl:63 sql/Pg-database.sql:2869
 msgid "Add Part"
 msgstr "Tambah Bahagian"
 
-#: bin/pe.pl:197 sql/Pg-database.sql:2936
+#: bin/pe.pl:197 sql/Pg-database.sql:2939
 msgid "Add Pricegroup"
 msgstr "Tambah Kumpulan Harga"
 
@@ -515,11 +515,11 @@ msgstr ""
 msgid "Add Request for Quotation"
 msgstr "Tambah Permintaan untuk Sebut Harga"
 
-#: sql/Pg-database.sql:2978
+#: sql/Pg-database.sql:2981
 msgid "Add Return"
 msgstr ""
 
-#: bin/am.pl:368 sql/Pg-database.sql:2846
+#: bin/am.pl:368 sql/Pg-database.sql:2849
 msgid "Add SIC"
 msgstr "Tambah SIC"
 
@@ -531,11 +531,11 @@ msgstr "Tambah Jualan Invois"
 msgid "Add Sales Order"
 msgstr "Tambah Pesanan Jualan"
 
-#: bin/ic.pl:64 sql/Pg-database.sql:2867
+#: bin/ic.pl:64 sql/Pg-database.sql:2870
 msgid "Add Service"
 msgstr "Tambah Perkhidmatan"
 
-#: sql/Pg-database.sql:2874
+#: sql/Pg-database.sql:2877
 msgid "Add Tax Form"
 msgstr "Tambah Borang Cukai"
 
@@ -543,7 +543,7 @@ msgstr "Tambah Borang Cukai"
 msgid "Add TaxForm"
 msgstr ""
 
-#: sql/Pg-database.sql:2833
+#: sql/Pg-database.sql:2836
 msgid "Add Timecard"
 msgstr "Tambah Kad Masa "
 
@@ -551,7 +551,7 @@ msgstr "Tambah Kad Masa "
 msgid "Add To List"
 msgstr ""
 
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:2799 sql/Pg-database.sql:2802
 msgid "Add Transaction"
 msgstr "Tambah Transaksi"
 
@@ -576,7 +576,7 @@ msgstr "Penambahan Invois Pembekal"
 msgid "Add Vendor Return"
 msgstr ""
 
-#: bin/am.pl:787 sql/Pg-database.sql:2840
+#: bin/am.pl:787 sql/Pg-database.sql:2843
 msgid "Add Warehouse"
 msgstr "Tambah Gudang"
 
@@ -812,11 +812,11 @@ msgstr ""
 msgid "Amount/Rate"
 msgstr ""
 
-#: sql/Pg-database.sql:3758
+#: sql/Pg-database.sql:3761
 msgid "Annual Straight Line Daily"
 msgstr ""
 
-#: sql/Pg-database.sql:3766
+#: sql/Pg-database.sql:3769
 msgid "Annual Straight Line Monthly"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgid "Assemblies restocked!"
 msgstr "Pemasangan diisi semula"
 
 #: UI/accounts/edit.html:201 UI/Reports/filters/gl.html:127
-#: sql/Pg-database.sql:3827
+#: sql/Pg-database.sql:3830
 msgid "Asset"
 msgstr "Aset"
 
@@ -924,7 +924,7 @@ msgstr ""
 msgid "Asset Class:"
 msgstr "Mengelasan Aset"
 
-#: sql/Pg-database.sql:2886
+#: sql/Pg-database.sql:2889
 msgid "Asset Classes"
 msgstr "Kelas aset"
 
@@ -950,7 +950,7 @@ msgstr "Tanda Aset"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:214 LedgerSMB/Report/Balance_Sheet.pm:216
 #: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2890
 msgid "Assets"
 msgstr "Aset"
 
@@ -1159,7 +1159,7 @@ msgstr ""
 
 #: UI/Reports/balance_sheet.html:26 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:1
-#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2837
+#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2840
 msgid "Balance Sheet"
 msgstr "Helaian Kira-kira"
 
@@ -1253,7 +1253,7 @@ msgstr ""
 msgid "Batch Type"
 msgstr "Jenis Kumpulan"
 
-#: sql/Pg-database.sql:2787
+#: sql/Pg-database.sql:2790
 msgid "Batches"
 msgstr "Kelompok"
 
@@ -1313,7 +1313,7 @@ msgstr "Tong"
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
-#: sql/Pg-database.sql:2955 sql/Pg-database.sql:2968
+#: sql/Pg-database.sql:2958 sql/Pg-database.sql:2971
 msgid "Bin List"
 msgstr "Senarai Bin"
 
@@ -1333,7 +1333,7 @@ msgstr ""
 msgid "Break"
 msgstr "Membatalkan"
 
-#: sql/Pg-database.sql:2146
+#: sql/Pg-database.sql:2149
 msgid "Budget"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgstr "Keputusan Carian Bajet"
 msgid "Budget Variance Report"
 msgstr "Laporan Bajet Varian"
 
-#: sql/Pg-database.sql:2917
+#: sql/Pg-database.sql:2920
 msgid "Budgets"
 msgstr "Bajet"
 
@@ -1543,7 +1543,7 @@ msgstr "Pemasangan tidak boleh diisi semula"
 msgid "Card ID"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2852
+#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2855
 msgid "Cash"
 msgstr "Tunai"
 
@@ -1579,11 +1579,11 @@ msgstr ""
 msgid "Chart ID"
 msgstr "Carta ID"
 
-#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2792
+#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2795
 msgid "Chart of Accounts"
 msgstr "Carta Akaun"
 
-#: sql/Pg-database.sql:2970
+#: sql/Pg-database.sql:2973
 msgid "Check"
 msgstr "Semak"
 
@@ -1682,7 +1682,7 @@ msgstr "kod hilang"
 msgid "Cold Lead"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:107 sql/Pg-database.sql:2865
+#: LedgerSMB/Scripts/order.pm:107 sql/Pg-database.sql:2868
 msgid "Combine"
 msgstr "Gabung"
 
@@ -1819,7 +1819,7 @@ msgstr "Carian Hubungan"
 msgid "Contact Total (if paying \"some\")"
 msgstr ""
 
-#: sql/Pg-database.sql:2853
+#: sql/Pg-database.sql:2856
 msgid "Contacts"
 msgstr "Kenalan"
 
@@ -2023,7 +2023,7 @@ msgstr "Akaun Kredit"
 msgid "Credit Balance"
 msgstr ""
 
-#: bin/am.pl:1504 sql/Pg-database.sql:2906
+#: bin/am.pl:1504 sql/Pg-database.sql:2909
 msgid "Credit Invoice"
 msgstr "Invois kredit"
 
@@ -2037,7 +2037,7 @@ msgstr "Had Kredit"
 msgid "Credit Limit:"
 msgstr ""
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:2908
 msgid "Credit Note"
 msgstr "Nota kredit"
 
@@ -2120,7 +2120,7 @@ msgstr "Pelanggan"
 msgid "Customer Account"
 msgstr "Akaun Pelanggan"
 
-#: sql/Pg-database.sql:2790
+#: sql/Pg-database.sql:2793
 msgid "Customer History"
 msgstr "Rekod Pelanggan"
 
@@ -2370,11 +2370,11 @@ msgstr "Debit"
 msgid "Debit Balance"
 msgstr ""
 
-#: bin/am.pl:1505 sql/Pg-database.sql:2902
+#: bin/am.pl:1505 sql/Pg-database.sql:2905
 msgid "Debit Invoice"
 msgstr "Invois debit"
 
-#: sql/Pg-database.sql:2901
+#: sql/Pg-database.sql:2904
 msgid "Debit Note"
 msgstr "Nota debit"
 
@@ -2462,7 +2462,7 @@ msgstr "Tetapan Utama yang dilaporkan"
 msgid "Default amount"
 msgstr ""
 
-#: sql/Pg-database.sql:2839
+#: sql/Pg-database.sql:2842
 msgid "Defaults"
 msgstr "Asal"
 
@@ -2550,7 +2550,7 @@ msgstr "Jabatan"
 msgid "Departments"
 msgstr ""
 
-#: sql/Pg-database.sql:2893
+#: sql/Pg-database.sql:2896
 msgid "Depreciate"
 msgstr "Penyusutan"
 
@@ -2563,7 +2563,7 @@ msgid "Depreciate Through"
 msgstr "Melalui Penyusutan"
 
 #: LedgerSMB/Scripts/asset.pm:570 UI/accounts/edit.html:448
-#: sql/Pg-database.sql:2897
+#: sql/Pg-database.sql:2900
 msgid "Depreciation"
 msgstr "Susut Nilai"
 
@@ -2681,8 +2681,8 @@ msgstr "susut nilai berjaya"
 #: UI/Reports/filters/search_goods.html:19
 #: UI/Reports/filters/search_goods.html:200
 #: UI/rp-search-generate_tax_report.html:150 UI/timecards/timecard.html:43
-#: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2831
-#: sql/Pg-database.sql:2836
+#: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2834
+#: sql/Pg-database.sql:2839
 msgid "Description"
 msgstr "Penerangan"
 
@@ -2760,8 +2760,8 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:572 sql/Pg-database.sql:2895
-#: sql/Pg-database.sql:2898
+#: LedgerSMB/Scripts/asset.pm:572 sql/Pg-database.sql:2898
+#: sql/Pg-database.sql:2901
 msgid "Disposal"
 msgstr "Pembuangan"
 
@@ -2825,7 +2825,7 @@ msgstr "Carian Draf"
 msgid "Draft Type"
 msgstr "Jenis Draf"
 
-#: sql/Pg-database.sql:2872
+#: sql/Pg-database.sql:2875
 msgid "Drafts"
 msgstr "Draf"
 
@@ -3126,7 +3126,7 @@ msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
-#: UI/lib/report_base.html:267 sql/Pg-database.sql:2809
+#: UI/lib/report_base.html:267 sql/Pg-database.sql:2812
 msgid "Employees"
 msgstr "Pekerjaan"
 
@@ -3172,7 +3172,7 @@ msgstr "Tamat"
 msgid "Enforce transaction reversal for all dates"
 msgstr ""
 
-#: UI/inventory/adjustment_entry.html:11 sql/Pg-database.sql:2786
+#: UI/inventory/adjustment_entry.html:11 sql/Pg-database.sql:2789
 msgid "Enter Inventory"
 msgstr "Masukan inventori"
 
@@ -3547,7 +3547,7 @@ msgstr ""
 msgid "Fixed Asset"
 msgstr ""
 
-#: UI/accounts/edit.html:433 sql/Pg-database.sql:2927
+#: UI/accounts/edit.html:433 sql/Pg-database.sql:2930
 msgid "Fixed Assets"
 msgstr "Aset tetap"
 
@@ -3653,7 +3653,7 @@ msgstr "Permintaan penuh"
 #: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/income_statement.html:72
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
-#: sql/Pg-database.sql:2855
+#: sql/Pg-database.sql:2858
 msgid "GIFI"
 msgstr "GIFI"
 
@@ -3699,7 +3699,7 @@ msgstr ""
 msgid "Gapless AR"
 msgstr ""
 
-#: sql/Pg-database.sql:2922
+#: sql/Pg-database.sql:2925
 msgid "General Journal"
 msgstr "Jurnal umum"
 
@@ -3712,8 +3712,8 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:115 UI/Reports/aging_report.html:99
-#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2781
-#: sql/Pg-database.sql:2819
+#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2784
+#: sql/Pg-database.sql:2822
 msgid "Generate"
 msgstr "Hasilkan"
 
@@ -3753,7 +3753,7 @@ msgstr ""
 msgid "Goods & Services"
 msgstr ""
 
-#: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2923
+#: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2926
 msgid "Goods and Services"
 msgstr "Barangan dan Servis"
 
@@ -3795,11 +3795,11 @@ msgstr "Kumpulan disimpan"
 msgid "Gtalk"
 msgstr ""
 
-#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2918
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2921
 msgid "HR"
 msgstr "HR"
 
-#: sql/Pg-database.sql:2876
+#: sql/Pg-database.sql:2879
 msgid "HTML Templates"
 msgstr "Template HTML"
 
@@ -3898,32 +3898,32 @@ msgstr "Imej untuk templat"
 
 #: UI/Admin/edit_user.html:54 UI/Contact/divs/user.html:52
 #: UI/setup/edit_user.html:57 UI/setup/new_user.html:34
-#: sql/Pg-database.sql:2782 sql/Pg-database.sql:2892 sql/Pg-database.sql:2907
-#: sql/Pg-database.sql:2912
+#: sql/Pg-database.sql:2785 sql/Pg-database.sql:2895 sql/Pg-database.sql:2910
+#: sql/Pg-database.sql:2915
 msgid "Import"
 msgstr "Import"
 
-#: sql/Pg-database.sql:2785
+#: sql/Pg-database.sql:2788
 msgid "Import AP Batch"
 msgstr "Import kumpulan AP"
 
-#: sql/Pg-database.sql:2784
+#: sql/Pg-database.sql:2787
 msgid "Import AR Batch"
 msgstr "Import kumpulan AR"
 
-#: sql/Pg-database.sql:2899 sql/Pg-database.sql:2903
+#: sql/Pg-database.sql:2902 sql/Pg-database.sql:2906
 msgid "Import Batch"
 msgstr "Import kumpulan"
 
-#: sql/Pg-database.sql:2854
+#: sql/Pg-database.sql:2857
 msgid "Import Chart"
 msgstr "Carta Kemasukan"
 
-#: sql/Pg-database.sql:2911
+#: sql/Pg-database.sql:2914
 msgid "Import GIFI"
 msgstr "Import GIFI"
 
-#: sql/Pg-database.sql:2779
+#: sql/Pg-database.sql:2782
 msgid "Import Inventory"
 msgstr ""
 
@@ -3999,7 +3999,7 @@ msgstr "Kelas Pendapatan"
 #: LedgerSMB/Report/PNL/Income_Statement.pm:76
 #: UI/Reports/filters/income_statement.html:1
 #: UI/Reports/filters/income_statement.html:7 UI/Reports/PNL.tex:28
-#: sql/Pg-database.sql:2864
+#: sql/Pg-database.sql:2867
 msgid "Income Statement"
 msgstr "Penyata Pendapatan"
 
@@ -4072,11 +4072,11 @@ msgstr "peralihan yang tidak sah"
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr "Baki kenyataan tidak sah. Petunjuk: Sila masukkan nombor"
 
-#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84 sql/Pg-database.sql:2945
+#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84 sql/Pg-database.sql:2948
 msgid "Inventory"
 msgstr "inventori"
 
-#: UI/Reports/filters/inventory_activity.html:6 sql/Pg-database.sql:2783
+#: UI/Reports/filters/inventory_activity.html:6 sql/Pg-database.sql:2786
 msgid "Inventory Activity"
 msgstr ""
 
@@ -4100,7 +4100,7 @@ msgstr ""
 msgid "Inventory Adjustments"
 msgstr "Inventori Pelarasan"
 
-#: sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2949
 msgid "Inventory and COGS"
 msgstr ""
 
@@ -4137,7 +4137,7 @@ msgstr "Inventori di hantar"
 #: templates/xedemo/invoice.html:12 templates/xedemo/invoice.tex:111
 #: templates/xedemo/printPayment.html:41
 #: UI/rp-search-generate_tax_report.html:119 sql/Pg-database.sql:1070
-#: sql/Pg-database.sql:2848 sql/Pg-database.sql:2947
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2950
 msgid "Invoice"
 msgstr "Invois"
 
@@ -4236,7 +4236,7 @@ msgstr ""
 msgid "Invoice Total"
 msgstr ""
 
-#: sql/Pg-database.sql:2795 sql/Pg-database.sql:2798
+#: sql/Pg-database.sql:2798 sql/Pg-database.sql:2801
 msgid "Invoice Vouchers"
 msgstr "invois Baucer"
 
@@ -4353,7 +4353,7 @@ msgstr ""
 msgid "Job/Project #"
 msgstr ""
 
-#: sql/Pg-database.sql:1072 sql/Pg-database.sql:2830
+#: sql/Pg-database.sql:1072 sql/Pg-database.sql:2833
 msgid "Journal Entry"
 msgstr "jurnal kedatangan"
 
@@ -4383,7 +4383,7 @@ msgstr "Jun"
 msgid "Key Ratios"
 msgstr ""
 
-#: sql/Pg-database.sql:2875
+#: sql/Pg-database.sql:2878
 msgid "LaTeX Templates"
 msgstr "Template LaTeX"
 
@@ -4415,7 +4415,7 @@ msgstr ""
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:251
 #: UI/Reports/filters/balance_sheet.html:78
 #: UI/Reports/filters/income_statement.html:130 UI/users/preferences.html:76
-#: sql/Pg-database.sql:2878
+#: sql/Pg-database.sql:2881
 msgid "Language"
 msgstr "Bahasa"
 
@@ -4483,7 +4483,7 @@ msgstr ""
 msgid "Less Outstanding Checks:"
 msgstr ""
 
-#: sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
+#: sql/Pg-database.sql:2963 sql/Pg-database.sql:2978
 msgid "Letterhead"
 msgstr "Tajuk Surat"
 
@@ -4520,19 +4520,19 @@ msgstr "Akaun Pautan"
 msgid "List"
 msgstr "Senarai"
 
-#: sql/Pg-database.sql:2843
+#: sql/Pg-database.sql:2846
 msgid "List Businesses"
 msgstr "Senarai Perniagaan"
 
-#: sql/Pg-database.sql:2889
+#: sql/Pg-database.sql:2892
 msgid "List Classes"
 msgstr "Senarai kelas"
 
-#: sql/Pg-database.sql:2910
+#: sql/Pg-database.sql:2913
 msgid "List GIFI"
 msgstr "Senarai GIFI"
 
-#: sql/Pg-database.sql:2845
+#: sql/Pg-database.sql:2848
 msgid "List Languages"
 msgstr "senarai Bahasa"
 
@@ -4545,11 +4545,11 @@ msgstr ""
 msgid "List Price"
 msgstr "Senarai harga"
 
-#: sql/Pg-database.sql:2847
+#: sql/Pg-database.sql:2850
 msgid "List SIC"
 msgstr "Senarai SIC"
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2886
 msgid "List Tax Forms"
 msgstr "Senarai borang cukai"
 
@@ -4565,7 +4565,7 @@ msgstr ""
 msgid "List Users"
 msgstr ""
 
-#: sql/Pg-database.sql:2841
+#: sql/Pg-database.sql:2844
 msgid "List Warehouse"
 msgstr "Senarai Gudang"
 
@@ -4622,7 +4622,7 @@ msgstr "Daftar masuk"
 msgid "Login?"
 msgstr ""
 
-#: sql/Pg-database.sql:2928
+#: sql/Pg-database.sql:2931
 msgid "Logout"
 msgstr "Log keluar"
 
@@ -4871,7 +4871,7 @@ msgstr "Nama"
 msgid "Name:"
 msgstr ""
 
-#: LedgerSMB/Report/Assets/Net_Book_Value.pm:134 sql/Pg-database.sql:2894
+#: LedgerSMB/Report/Assets/Net_Book_Value.pm:134 sql/Pg-database.sql:2897
 msgid "Net Book Value"
 msgstr "Nilai buku bersih"
 
@@ -4901,7 +4901,7 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-#: sql/Pg-database.sql:2929
+#: sql/Pg-database.sql:2932
 msgid "New Window"
 msgstr "Tetingkap baru"
 
@@ -5359,7 +5359,7 @@ msgstr "Tarikh Pesanan"
 msgid "Order Date missing!"
 msgstr "Tarikh Pesanan Hilang!"
 
-#: sql/Pg-database.sql:2919
+#: sql/Pg-database.sql:2922
 msgid "Order Entry"
 msgstr "Entri pesanan"
 
@@ -5436,8 +5436,8 @@ msgstr ""
 msgid "Out of balance transaction!"
 msgstr "Kehabisan Baki Transaksi"
 
-#: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2932
-#: sql/Pg-database.sql:2933
+#: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2935
+#: sql/Pg-database.sql:2936
 msgid "Outstanding"
 msgstr ""
 
@@ -5509,8 +5509,8 @@ msgstr "SIMPAN dan Cetak"
 #: templates/demo_with_images/packing_list.html:18
 #: templates/demo_with_images/packing_list.tex:81
 #: templates/xedemo/packing_list.html:4 templates/xedemo/packing_list.html:18
-#: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2950
-#: sql/Pg-database.sql:2963
+#: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2953
+#: sql/Pg-database.sql:2966
 msgid "Packing List"
 msgstr "Senarai Bungkusan"
 
@@ -5598,7 +5598,7 @@ msgstr ""
 msgid "Parts Groups"
 msgstr ""
 
-#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2832
+#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2835
 msgid "Partsgroup"
 msgstr ""
 
@@ -5647,7 +5647,7 @@ msgstr ""
 #: LedgerSMB/Scripts/payment.pm:1062 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:298 UI/accounts/edit.html:340
 #: UI/Contact/divs/credit.html:192 UI/payments/payments_detail.html:217
-#: sql/Pg-database.sql:2803
+#: sql/Pg-database.sql:2806
 msgid "Payment"
 msgstr "Pembayaran"
 
@@ -5715,7 +5715,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:126 templates/xedemo/invoice.html:237
 #: templates/xedemo/invoice.tex:198 UI/orders/order.html:243
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:14
-#: sql/Pg-database.sql:2807 sql/Pg-database.sql:2870
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2873
 msgid "Payments"
 msgstr "Bayaran"
 
@@ -5773,8 +5773,8 @@ msgstr "Fizikal"
 #: templates/demo_with_images/pick_list.html:18
 #: templates/demo_with_images/pick_list.tex:74
 #: templates/xedemo/pick_list.html:4 templates/xedemo/pick_list.html:18
-#: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2951
-#: sql/Pg-database.sql:2964
+#: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2954
+#: sql/Pg-database.sql:2967
 msgid "Pick List"
 msgstr "Senarai Pilihan"
 
@@ -5901,7 +5901,7 @@ msgstr ""
 msgid "Postscript"
 msgstr "Postscript"
 
-#: sql/Pg-database.sql:2930
+#: sql/Pg-database.sql:2933
 msgid "Preferences"
 msgstr "Keutamaan"
 
@@ -6035,8 +6035,8 @@ msgstr "Proses Transaksi"
 #: templates/demo_with_images/product_receipt.html:18
 #: templates/demo_with_images/product_receipt.tex:100
 #: templates/xedemo/product_receipt.html:4
-#: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2976
-#: sql/Pg-database.sql:2977
+#: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2979
+#: sql/Pg-database.sql:2980
 msgid "Product Receipt"
 msgstr "Resit produk"
 
@@ -6107,8 +6107,8 @@ msgstr "Rekod Pembelian"
 #: templates/xedemo/purchase_order.html:4
 #: templates/xedemo/purchase_order.html:18
 #: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:342
-#: sql/Pg-database.sql:1939 sql/Pg-database.sql:2813 sql/Pg-database.sql:2954
-#: sql/Pg-database.sql:2967
+#: sql/Pg-database.sql:1939 sql/Pg-database.sql:2816 sql/Pg-database.sql:2957
+#: sql/Pg-database.sql:2970
 msgid "Purchase Order"
 msgstr "Beli Pesanan"
 
@@ -6117,8 +6117,8 @@ msgid "Purchase Order Number"
 msgstr ""
 
 #: bin/am.pl:881 LedgerSMB/Report/Orders.pm:190 LedgerSMB/Report/Orders.pm:290
-#: UI/Reports/filters/search_goods.html:162 sql/Pg-database.sql:2816
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2821
+#: UI/Reports/filters/search_goods.html:162 sql/Pg-database.sql:2819
+#: sql/Pg-database.sql:2821 sql/Pg-database.sql:2824
 msgid "Purchase Orders"
 msgstr "Beli Pesanan"
 
@@ -6212,7 +6212,7 @@ msgstr "Suku"
 #: templates/xedemo/sales_quotation.html:4
 #: templates/xedemo/sales_quotation.html:17
 #: templates/xedemo/sales_quotation.tex:70 sql/Pg-database.sql:1940
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2957 sql/Pg-database.sql:2972
+#: sql/Pg-database.sql:2828 sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
 msgid "Quotation"
 msgstr "Sebut Harga"
 
@@ -6244,15 +6244,15 @@ msgstr "Sebut Harga dipadam!"
 
 #: LedgerSMB/Report/Orders.pm:193 LedgerSMB/Report/Orders.pm:292
 #: UI/Reports/filters/purchase_history.html:189
-#: UI/Reports/filters/search_goods.html:146 sql/Pg-database.sql:2828
-#: sql/Pg-database.sql:2921
+#: UI/Reports/filters/search_goods.html:146 sql/Pg-database.sql:2831
+#: sql/Pg-database.sql:2924
 msgid "Quotations"
 msgstr "Sebutan Harga"
 
 #: bin/io.pl:1400 bin/oe.pl:295 bin/oe.pl:755 bin/oe.pl:953
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:351
-#: sql/Pg-database.sql:1941 sql/Pg-database.sql:2826 sql/Pg-database.sql:2958
-#: sql/Pg-database.sql:2973
+#: sql/Pg-database.sql:1941 sql/Pg-database.sql:2829 sql/Pg-database.sql:2961
+#: sql/Pg-database.sql:2976
 msgid "RFQ"
 msgstr "RFQ"
 
@@ -6270,7 +6270,7 @@ msgid "RFQ Number"
 msgstr "Nombor RFQ"
 
 #: LedgerSMB/Report/Orders.pm:196 LedgerSMB/Report/Orders.pm:294
-#: UI/Reports/filters/search_goods.html:169 sql/Pg-database.sql:2829
+#: UI/Reports/filters/search_goods.html:169 sql/Pg-database.sql:2832
 msgid "RFQs"
 msgstr "RFQs"
 
@@ -6305,8 +6305,8 @@ msgstr ""
 msgid "Recd"
 msgstr "Terima"
 
-#: LedgerSMB/Scripts/payment.pm:1062 sql/Pg-database.sql:2802
-#: sql/Pg-database.sql:2971
+#: LedgerSMB/Scripts/payment.pm:1062 sql/Pg-database.sql:2805
+#: sql/Pg-database.sql:2974
 msgid "Receipt"
 msgstr "Resit"
 
@@ -6318,8 +6318,8 @@ msgstr ""
 msgid "Receipt Results"
 msgstr "Hasil Resit"
 
-#: UI/payments/payment1.html:19 sql/Pg-database.sql:2806
-#: sql/Pg-database.sql:2884
+#: UI/payments/payment1.html:19 sql/Pg-database.sql:2809
+#: sql/Pg-database.sql:2887
 msgid "Receipts"
 msgstr "Resit"
 
@@ -6331,7 +6331,7 @@ msgstr ""
 msgid "Receivables"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:72 sql/Pg-database.sql:2823
+#: LedgerSMB/Scripts/order.pm:72 sql/Pg-database.sql:2826
 msgid "Receive"
 msgstr "Diterima"
 
@@ -6351,7 +6351,7 @@ msgstr ""
 msgid "Reconcile as FX"
 msgstr ""
 
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2861 sql/Pg-database.sql:2873
+#: sql/Pg-database.sql:2811 sql/Pg-database.sql:2864 sql/Pg-database.sql:2876
 msgid "Reconciliation"
 msgstr ""
 
@@ -6379,7 +6379,7 @@ msgstr ""
 msgid "Recurring Transaction for [_1]"
 msgstr ""
 
-#: bin/am.pl:835 UI/am-list-recurring.html:8 sql/Pg-database.sql:2925
+#: bin/am.pl:835 UI/am-list-recurring.html:8 sql/Pg-database.sql:2928
 msgid "Recurring Transactions"
 msgstr "Perulangan Input Transaksi"
 
@@ -6481,13 +6481,13 @@ msgstr ""
 msgid "Reporting Basis"
 msgstr "Laporan Asas"
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2883
 msgid "Reporting Units"
 msgstr "Unit yang dilaporkan"
 
-#: sql/Pg-database.sql:2814 sql/Pg-database.sql:2827 sql/Pg-database.sql:2856
-#: sql/Pg-database.sql:2860 sql/Pg-database.sql:2885 sql/Pg-database.sql:2896
-#: sql/Pg-database.sql:2924 sql/Pg-database.sql:2939 sql/Pg-database.sql:2980
+#: sql/Pg-database.sql:2817 sql/Pg-database.sql:2830 sql/Pg-database.sql:2859
+#: sql/Pg-database.sql:2863 sql/Pg-database.sql:2888 sql/Pg-database.sql:2899
+#: sql/Pg-database.sql:2927 sql/Pg-database.sql:2942 sql/Pg-database.sql:2983
 msgid "Reports"
 msgstr "Laporan"
 
@@ -6592,15 +6592,15 @@ msgstr ""
 msgid "Reverse"
 msgstr ""
 
-#: sql/Pg-database.sql:2944
+#: sql/Pg-database.sql:2947
 msgid "Reverse AR Overpay"
 msgstr "Lebihan pembayaran AR"
 
-#: sql/Pg-database.sql:2943
+#: sql/Pg-database.sql:2946
 msgid "Reverse Overpay"
 msgstr "Lebihan pembayaran semula"
 
-#: sql/Pg-database.sql:2871
+#: sql/Pg-database.sql:2874
 msgid "Reverse Payment"
 msgstr "Pembayaran Balik"
 
@@ -6608,7 +6608,7 @@ msgstr "Pembayaran Balik"
 msgid "Reverse Payments"
 msgstr "Pembayaran Balik"
 
-#: sql/Pg-database.sql:2942
+#: sql/Pg-database.sql:2945
 msgid "Reverse Receipts"
 msgstr "Pembatalan Resit"
 
@@ -6624,7 +6624,7 @@ msgstr ""
 msgid "Run Report"
 msgstr ""
 
-#: UI/Contact/divs/company.html:110 sql/Pg-database.sql:2877
+#: UI/Contact/divs/company.html:110 sql/Pg-database.sql:2880
 msgid "SIC"
 msgstr "SIC"
 
@@ -6652,7 +6652,7 @@ msgstr ""
 msgid "Salary"
 msgstr ""
 
-#: sql/Pg-database.sql:3791
+#: sql/Pg-database.sql:3794
 msgid "Sale"
 msgstr ""
 
@@ -6661,7 +6661,7 @@ msgstr ""
 msgid "Sales"
 msgstr "Jualan"
 
-#: bin/is.pl:1097 bin/oe.pl:740 bin/oe.pl:950 sql/Pg-database.sql:2904
+#: bin/is.pl:1097 bin/oe.pl:740 bin/oe.pl:950 sql/Pg-database.sql:2907
 msgid "Sales Invoice"
 msgstr "Jualan Invois"
 
@@ -6678,7 +6678,7 @@ msgstr "jualan invois/nombor urus niaga AR"
 #: templates/demo_with_images/sales_order.tex:99
 #: templates/xedemo/sales_order.html:4 templates/xedemo/sales_order.html:18
 #: templates/xedemo/sales_order.tex:99 sql/Pg-database.sql:1938
-#: sql/Pg-database.sql:2812 sql/Pg-database.sql:2952 sql/Pg-database.sql:2965
+#: sql/Pg-database.sql:2815 sql/Pg-database.sql:2955 sql/Pg-database.sql:2968
 msgid "Sales Order"
 msgstr "Pesanan Jualan"
 
@@ -6687,8 +6687,8 @@ msgid "Sales Order Number"
 msgstr "Nombor pesanan jualan"
 
 #: bin/am.pl:880 LedgerSMB/Report/Orders.pm:187 LedgerSMB/Report/Orders.pm:288
-#: UI/Reports/filters/search_goods.html:139 sql/Pg-database.sql:2815
-#: sql/Pg-database.sql:2817 sql/Pg-database.sql:2820 sql/Pg-database.sql:2834
+#: UI/Reports/filters/search_goods.html:139 sql/Pg-database.sql:2818
+#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2823 sql/Pg-database.sql:2837
 msgid "Sales Orders"
 msgstr "Pesanan Jualan"
 
@@ -6862,9 +6862,9 @@ msgstr "Skrin"
 #: UI/Reports/filters/search_partsgroups.html:18
 #: UI/Reports/filters/search_pricegroups.html:18
 #: UI/Reports/filters/timecards.html:42 UI/Reports/filters/unapproved.html:107
-#: sql/Pg-database.sql:2780 sql/Pg-database.sql:2788 sql/Pg-database.sql:2801
-#: sql/Pg-database.sql:2811 sql/Pg-database.sql:2869 sql/Pg-database.sql:2916
-#: sql/Pg-database.sql:2979
+#: sql/Pg-database.sql:2783 sql/Pg-database.sql:2791 sql/Pg-database.sql:2804
+#: sql/Pg-database.sql:2814 sql/Pg-database.sql:2872 sql/Pg-database.sql:2919
+#: sql/Pg-database.sql:2982
 msgid "Search"
 msgstr "Cari"
 
@@ -6888,7 +6888,7 @@ msgstr ""
 msgid "Search Asset Class"
 msgstr ""
 
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2894
 msgid "Search Assets"
 msgstr "Carian aset"
 
@@ -6900,7 +6900,7 @@ msgstr ""
 msgid "Search Goods and Services"
 msgstr ""
 
-#: sql/Pg-database.sql:2777
+#: sql/Pg-database.sql:2780
 msgid "Search Groups"
 msgstr "Carian kumpulan"
 
@@ -6920,7 +6920,7 @@ msgstr ""
 msgid "Search Price Groups"
 msgstr ""
 
-#: sql/Pg-database.sql:2778
+#: sql/Pg-database.sql:2781
 msgid "Search Pricegroups"
 msgstr "Carian kumpulan harga"
 
@@ -6952,7 +6952,7 @@ msgstr "Mencari pesanan jualan"
 msgid "Search Unapproved Transactions"
 msgstr ""
 
-#: sql/Pg-database.sql:2908
+#: sql/Pg-database.sql:2911
 msgid "Search and GL"
 msgstr "Carian dan GL"
 
@@ -7062,7 +7062,7 @@ msgstr "September"
 msgid "Sequence"
 msgstr ""
 
-#: UI/Configuration/sequence.html:6 sql/Pg-database.sql:2941
+#: UI/Configuration/sequence.html:6 sql/Pg-database.sql:2944
 msgid "Sequences"
 msgstr "Turutan"
 
@@ -7115,7 +7115,7 @@ msgstr "Sesi Masa berakhir"
 msgid "Session expired!"
 msgstr ""
 
-#: sql/Pg-database.sql:2882
+#: sql/Pg-database.sql:2885
 msgid "Sessions"
 msgstr "Sesi"
 
@@ -7152,7 +7152,7 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
 #: templates/xedemo/packing_list.html:124 templates/xedemo/pick_list.html:114
-#: sql/Pg-database.sql:2822
+#: sql/Pg-database.sql:2825
 msgid "Ship"
 msgstr "Hantar"
 
@@ -7257,7 +7257,7 @@ msgid "Ship_Via"
 msgstr "Hantar Melalui"
 
 #: LedgerSMB/Entity/Location.pm:113 UI/Contact/divs/address.html:40
-#: sql/Pg-database.sql:676 sql/Pg-database.sql:2920
+#: sql/Pg-database.sql:676 sql/Pg-database.sql:2923
 msgid "Shipping"
 msgstr "Penghantaran"
 
@@ -7339,7 +7339,7 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: sql/Pg-database.sql:2483
+#: sql/Pg-database.sql:2486
 msgid "Simple"
 msgstr ""
 
@@ -7496,8 +7496,8 @@ msgstr ""
 #: templates/demo_with_images/statement.html:19
 #: templates/demo_with_images/statement.tex:29
 #: templates/xedemo/statement.html:4 templates/xedemo/statement.html:19
-#: templates/xedemo/statement.tex:29 sql/Pg-database.sql:2956
-#: sql/Pg-database.sql:2969
+#: templates/xedemo/statement.tex:29 sql/Pg-database.sql:2959
+#: sql/Pg-database.sql:2972
 msgid "Statement"
 msgstr "Kenyataan"
 
@@ -7522,7 +7522,7 @@ msgstr ""
 msgid "Stock"
 msgstr "Stok"
 
-#: bin/ic.pl:2022 bin/ic.pl:2134 sql/Pg-database.sql:2937
+#: bin/ic.pl:2022 bin/ic.pl:2134 sql/Pg-database.sql:2940
 msgid "Stock Assembly"
 msgstr "Himpunan Stok "
 
@@ -7630,7 +7630,7 @@ msgstr ""
 msgid "Swaps debits and credits to match bank statements"
 msgstr ""
 
-#: sql/Pg-database.sql:2931
+#: sql/Pg-database.sql:2934
 msgid "System"
 msgstr "Sistem"
 
@@ -7703,7 +7703,7 @@ msgstr ""
 msgid "Tax Form Reports"
 msgstr ""
 
-#: sql/Pg-database.sql:2926
+#: sql/Pg-database.sql:2929
 msgid "Tax Forms"
 msgstr "Borang cukai"
 
@@ -7759,7 +7759,7 @@ msgstr "BorangCukai"
 msgid "Taxable"
 msgstr ""
 
-#: bin/am.pl:584 UI/Contact/divs/credit.html:263 sql/Pg-database.sql:2838
+#: bin/am.pl:584 UI/Contact/divs/credit.html:263 sql/Pg-database.sql:2841
 msgid "Taxes"
 msgstr "Cukai"
 
@@ -8090,7 +8090,7 @@ msgstr ""
 msgid "Time or Materials Card"
 msgstr ""
 
-#: sql/Pg-database.sql:2959 sql/Pg-database.sql:2974
+#: sql/Pg-database.sql:2962 sql/Pg-database.sql:2977
 msgid "Timecard"
 msgstr ""
 
@@ -8098,7 +8098,7 @@ msgstr ""
 msgid "Timecard Criteria"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2940
+#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2943
 msgid "Timecards"
 msgstr ""
 
@@ -8191,7 +8191,7 @@ msgstr ""
 msgid "Too many links on summary account!"
 msgstr "Terlalu banyak sambungan dalam ringkasan akaun"
 
-#: sql/Pg-database.sql:2794
+#: sql/Pg-database.sql:2797
 msgid "Top-level"
 msgstr "Tahap Tertinggi"
 
@@ -8283,7 +8283,7 @@ msgstr "Diskaun Perniagaan "
 msgid "Transaction"
 msgstr "Transaksi"
 
-#: sql/Pg-database.sql:2849
+#: sql/Pg-database.sql:2852
 msgid "Transaction Approval"
 msgstr "Transaksi Diterima"
 
@@ -8310,8 +8310,8 @@ msgstr ""
 msgid "Transactions"
 msgstr ""
 
-#: bin/oe.pl:2300 bin/oe.pl:2416 sql/Pg-database.sql:2824
-#: sql/Pg-database.sql:2859
+#: bin/oe.pl:2300 bin/oe.pl:2416 sql/Pg-database.sql:2827
+#: sql/Pg-database.sql:2862
 msgid "Transfer"
 msgstr "Hantar"
 
@@ -8339,7 +8339,7 @@ msgstr "Terjemahan dipadam"
 msgid "Translation not on file!"
 msgstr ""
 
-#: sql/Pg-database.sql:2835 sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2838 sql/Pg-database.sql:2941
 msgid "Translations"
 msgstr "Terjemahan"
 
@@ -8347,7 +8347,7 @@ msgstr "Terjemahan"
 msgid "Translations saved!"
 msgstr "Terjemahan disimpan"
 
-#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2863
+#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2866
 msgid "Trial Balance"
 msgstr "Baki Percubaan"
 
@@ -8420,7 +8420,7 @@ msgstr ""
 msgid "Type"
 msgstr "Jenis"
 
-#: UI/am-business-form.html:12 sql/Pg-database.sql:2879
+#: UI/am-business-form.html:12 sql/Pg-database.sql:2882
 msgid "Type of Business"
 msgstr "Jenis Bisnes"
 
@@ -8575,11 +8575,11 @@ msgstr ""
 msgid "Usable Life"
 msgstr "Kehidupan yang Boleh Digunakan"
 
-#: sql/Pg-database.sql:2805
+#: sql/Pg-database.sql:2808
 msgid "Use AR Overpayment"
 msgstr "Menggunakan Bayaran Lebih AR"
 
-#: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2804
+#: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2807
 msgid "Use Overpayment"
 msgstr "Menggunakan Bayaran Lebih"
 
@@ -8670,12 +8670,12 @@ msgstr "Pembekal"
 msgid "Vendor Account"
 msgstr "Akaun Pembekal"
 
-#: sql/Pg-database.sql:2791
+#: sql/Pg-database.sql:2794
 msgid "Vendor History"
 msgstr "Rekod Pembekal"
 
 #: bin/oe.pl:748 bin/oe.pl:951 t/data/04-complex_template.html:334
-#: UI/Contact/divs/credit.html:333 sql/Pg-database.sql:2900
+#: UI/Contact/divs/credit.html:333 sql/Pg-database.sql:2903
 msgid "Vendor Invoice"
 msgstr "Pembekal Senarai Bekalan"
 
@@ -8737,7 +8737,7 @@ msgstr "Batal"
 msgid "Voucher List"
 msgstr "Senarai Baucer"
 
-#: sql/Pg-database.sql:2857 sql/Pg-database.sql:2858 sql/Pg-database.sql:2981
+#: sql/Pg-database.sql:2860 sql/Pg-database.sql:2861 sql/Pg-database.sql:2984
 msgid "Vouchers"
 msgstr "Baucer"
 
@@ -8765,7 +8765,7 @@ msgstr "Gaji/Potongan"
 msgid "Warehouse"
 msgstr "Gudang"
 
-#: LedgerSMB/Report/Listings/Warehouse.pm:57 sql/Pg-database.sql:2881
+#: LedgerSMB/Report/Listings/Warehouse.pm:57 sql/Pg-database.sql:2884
 msgid "Warehouses"
 msgstr "Gudang-gudang"
 
@@ -8819,7 +8819,7 @@ msgstr "Apakah jenis item ini?"
 msgid "Where shall we send the backup?"
 msgstr ""
 
-#: sql/Pg-database.sql:3762
+#: sql/Pg-database.sql:3765
 msgid "Whole Month Straight Line"
 msgstr ""
 
@@ -8834,7 +8834,7 @@ msgstr ""
 #: templates/demo/work_order.html:4 templates/demo/work_order.html:18
 #: templates/demo/work_order.tex:109 templates/xedemo/work_order.html:4
 #: templates/xedemo/work_order.html:18 templates/xedemo/work_order.tex:109
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2966
+#: sql/Pg-database.sql:2956 sql/Pg-database.sql:2969
 msgid "Work Order"
 msgstr "Pesanan Kerja"
 
@@ -8854,7 +8854,7 @@ msgstr ""
 msgid "Year"
 msgstr "Tahun"
 
-#: sql/Pg-database.sql:2862
+#: sql/Pg-database.sql:2865
 msgid "Year End"
 msgstr "Akhir Tahun"
 
@@ -8994,11 +8994,11 @@ msgstr "padam"
 msgid "deposit"
 msgstr "deposit"
 
-#: sql/Pg-database.sql:3836
+#: sql/Pg-database.sql:3839
 msgid "depreciation"
 msgstr ""
 
-#: sql/Pg-database.sql:3837
+#: sql/Pg-database.sql:3840
 msgid "disposal"
 msgstr ""
 
@@ -9018,15 +9018,15 @@ msgstr "gagal"
 msgid "fr"
 msgstr ""
 
-#: sql/Pg-database.sql:3838
+#: sql/Pg-database.sql:3841
 msgid "import"
 msgstr ""
 
-#: sql/Pg-database.sql:3763
+#: sql/Pg-database.sql:3766
 msgid "in months"
 msgstr ""
 
-#: sql/Pg-database.sql:3758 sql/Pg-database.sql:3766
+#: sql/Pg-database.sql:3761 sql/Pg-database.sql:3769
 msgid "in years"
 msgstr ""
 
@@ -9058,7 +9058,7 @@ msgstr ""
 msgid "other"
 msgstr "lain-lain"
 
-#: sql/Pg-database.sql:3839
+#: sql/Pg-database.sql:3842
 msgid "partial disposal"
 msgstr ""
 
@@ -9066,7 +9066,7 @@ msgstr ""
 msgid "permalink"
 msgstr ""
 
-#: sql/Pg-database.sql:3728
+#: sql/Pg-database.sql:3731
 msgid "production"
 msgstr ""
 
@@ -9086,7 +9086,7 @@ msgstr ""
 msgid "subtotal"
 msgstr ""
 
-#: sql/Pg-database.sql:3727
+#: sql/Pg-database.sql:3730
 msgid "time"
 msgstr ""
 
