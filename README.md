@@ -205,6 +205,12 @@ haven't been correctly initialised.
 ## Running Starman
 
 With the above steps completed, the system is ready to run the web server:
+NOTE: DO NOT run starman (or any web service) as root, this is considered
+      a serious security issue, and as such LedgerSMB doesn't support it.
+      Instead, if you need to start LedgerSMB from a root process, drop
+      privlidges to a user that doesn't have write access to the LedgerSMB Directories first.
+      Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
+      Do not use the starman --user= mechanism, it currently drops privlidges too late.
 
 ```bash
  $ starman --port 5762 tools/starman.psgi
