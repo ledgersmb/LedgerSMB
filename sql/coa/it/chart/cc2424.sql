@@ -4,7 +4,7 @@ begin;
 --
 -- Update from: Ferruccio Zamuner <nonsolosoft@diff.org>
 -- 23 novembre 2016
--- 
+--
 -- Ho aggiunto i conti IVA per le aliquote 21% (in vigore dal 17 settmbre 2011 al 30 settembre 2013)
 -- e quella al 22% (in vigore da 1 ottobre 2013).
 -- Premetto che non so ancora nulla di GIFI.
