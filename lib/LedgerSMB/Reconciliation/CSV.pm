@@ -13,6 +13,7 @@ LedgerSMB::Reconciliation::CSV - A framework for fixed-width format file handlin
 # Parsers are defined in CSV/parser_type.
 
 package LedgerSMB::Reconciliation::CSV;
+use LedgerSMB::Reconciliation::ISO20022;
 
 use strict;
 use warnings;
@@ -35,7 +36,7 @@ for my $format (readdir(DCSV)){
 
 =head2 $self->load_file($fieldname)
 
-Accesses the $self->{_request} attribute to acquire CSV content from $fieldname
+Accesses the $self->{_request} attribute to acquire CSV content from $fieldname.
 
 =cut
 
@@ -55,6 +56,8 @@ sub load_file {
 Processes the input reconciliation file by calling the function
 $self->parse_<account_id>() with the parsed content of the CSV file.
 
+For now, does SEPA detection here, though that needs to be refactored.
+
 =cut
 
 sub process {
@@ -63,7 +66,12 @@ sub process {
     # thoroughly implementation-dependent, so depends on helper-functions
     my ($recon, $fldname) = @_;
     my $contents = $self->load_file($fldname);
-
+    if (LedgerSMB::Reconciliation::ISO20022->is_camt053($contents)){
+        @{$self->{entries}} = 
+            LedgerSMB::Reconciliation::ISO20022->process_xml($contents);
+        $self->{file_upload} = 1;
+        return $self->{entries};
+    }
     my $func = "parse_${LedgerSMB::App_State::DBName}_$recon->{chart_id}";
     if ($self->can($func)){
        my @entries = $self->can($func)->($self,$contents);
