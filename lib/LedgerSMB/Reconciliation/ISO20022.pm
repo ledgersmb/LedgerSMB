@@ -25,7 +25,7 @@ Processes an ISO 20022 file for recon.
 =cut
 
 sub process_xml {
-    my ($self, $contents) = @_;
+    my ($self, $recon, $contents) = @_;
     my $struct = XMLin($contents);
     my @elements =
            map { my $sign = (lc($_->{CdtDbtInd}) eq 'crdt') ? -1 : 1;

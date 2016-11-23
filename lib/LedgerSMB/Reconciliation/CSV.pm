@@ -68,7 +68,7 @@ sub process {
     my $contents = $self->load_file($fldname);
     if (LedgerSMB::Reconciliation::ISO20022->is_camt053($contents)){
         @{$self->{entries}} = 
-            LedgerSMB::Reconciliation::ISO20022->process_xml($contents);
+            LedgerSMB::Reconciliation::ISO20022->process_xml($recon, $contents);
         $self->{file_upload} = 1;
         return $self->{entries};
     }
