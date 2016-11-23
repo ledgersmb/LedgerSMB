@@ -1,7 +1,6 @@
 package LedgerSMB::Reconciliation::ISO20022;
 use strict;
 use warnings;
-use 5.010;
 
 use XML::Simple;
 
