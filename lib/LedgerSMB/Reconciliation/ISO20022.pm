@@ -1,9 +1,8 @@
+package LedgerSMB::Reconciliation::ISO20022;
 use strict;
 use warnings;
 use 5.010;
 
-package LedgerSMB::Reconciliation::ISO20022;
-use Data::Dumper;
 use XML::Simple;
 
 =head2 is_camt053
@@ -29,9 +28,9 @@ sub process_xml {
     my $struct = XMLin($contents);
     my @elements =
            map { my $sign = (lc($_->{CdtDbtInd}) eq 'crdt') ? -1 : 1;
-              { amount => $_->{Amt}->{content} * $sign, 
-                cleared_date => $_->{BookgDt}->{Dt}, 
-                scn => $_->{AcctSvcrRef}, 
+              { amount => $_->{Amt}->{content} * $sign,
+                cleared_date => $_->{BookgDt}->{Dt},
+                scn => $_->{AcctSvcrRef},
                 type => "20022 xml, $_->{Amt}->{Ccy}" }
            } @{$struct->{BkToCstmrStmt}->{Stmt}->{Ntry}};
     return @elements;
