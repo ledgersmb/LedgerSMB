@@ -2,6 +2,13 @@ begin;
 --
 -- Chart of Accounts for Italy
 --
+-- Update from: Ferruccio Zamuner <nonsolosoft@diff.org>
+-- 23 novembre 2016
+--
+-- Ho aggiunto i conti IVA per le aliquote 21% (in vigore dal 17 settmbre 2011 al 30 settembre 2013)
+-- e quella al 22% (in vigore da 1 ottobre 2013).
+-- Premetto che non so ancora nulla di GIFI.
+--
 -- From: Daniele Giacomini <daniele@swlibero.org>
 -- 13 ottobre  2003
 -- 05 novembre 2003
@@ -67,6 +74,8 @@ SELECT account_heading_save(NULL,'112000','CREDITI DIVERSI', NULL);
 SELECT account__save(NULL,'112001','IVA nostro credito  4%','A','1.C.II.5', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'112002','IVA nostro credito 10%','A','1.C.II.5', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'112004','IVA nostro credito 20%','A','1.C.II.5', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'112005','IVA nostro credito 21%','A','1.C.II.5', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'112006','IVA nostro credito 22%','A','1.C.II.5', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'112062','Erario c/acconto IVA','A','1.C.II.5', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'112063','Credito per IVA','A','1.C.II.5', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'112071','Personale c/acconti','A','1.C.II.5', NULL, false, false, string_to_array('', ':'), false, false);
@@ -109,6 +118,8 @@ SELECT account_heading_save(NULL,'226000','DEBITI TRIBUTARI', NULL);
 SELECT account__save(NULL,'226001','IVA nostro debito  4%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'226002','IVA nostro debito 10%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'226004','IVA nostro debito 20%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'226005','IVA nostro debito 21%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'226006','IVA nostro debito 22%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'226062','Debito per IVA','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'226065','Erario c/ritenute da versarare','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'226066','Altri debiti verso l''erario','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
@@ -251,10 +262,14 @@ SELECT account__save(NULL,'970001','Conto del risultato economico','I','3.E.23',
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112001'), 0.04);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112002'), 0.1);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112004'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112005'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112006'), 0.22);
 
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226001'), 0.04);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226002'), 0.1);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226004'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226005'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226006'), 0.22);
 
 --
 -- update defaults
