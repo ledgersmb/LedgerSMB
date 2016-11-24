@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 203;
 use File::Find;
 
 my @on_disk;
@@ -94,6 +94,7 @@ my @modules =
           'LedgerSMB::REST_Format::json',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
+          'LedgerSMB::FileFormats::ISO20022::CAMT053',
           'LedgerSMB::Report::Axis',
           'LedgerSMB::Report::File', 'LedgerSMB::Report::GL',
           'LedgerSMB::Report::Orders', 'LedgerSMB::Report::Timecards',
