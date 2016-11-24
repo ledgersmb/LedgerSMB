@@ -89,7 +89,7 @@ Returns a flattened list with the following elements:
 
 sub _decide_crdt {
     my ($code) = @_;
-    die "bad debit/credit code: $code" 
+    die "bad debit/credit code: $code"
           unless lc($code) =~ /^(crdt|dbit)$/;
     my $ret = 'credit' if lc($code) eq 'crdt';
     return $ret // 'debit';
