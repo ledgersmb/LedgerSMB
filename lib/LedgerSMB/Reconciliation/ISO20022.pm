@@ -1,4 +1,5 @@
 package LedgerSMB::Reconciliation::ISO20022;
+use LedgerSMB::FileFormats::ISO20022::CAMT053;
 use strict;
 use warnings;
 
@@ -12,8 +13,7 @@ Returns true if the content is detected to be an ISO 20022 file
 
 sub is_camt053 {
     my ($self, $content) = @_;
-    return unless $content;
-    return $content =~ /xmlns="urn\:iso\:std\:iso\:20022\:tech\:xsd\:camt\.053\.001\.02"/;
+    return LedgerSMB::FileFormats::ISO20022::CAMT053->new($content);
 }
 
 =head2 process_xml
@@ -24,14 +24,16 @@ Processes an ISO 20022 file for recon.
 
 sub process_xml {
     my ($self, $contents) = @_;
-    my $struct = XMLin($contents);
+    my $camt053 = $self->is_camt053($contents);
+    return unless $camt053;
+ 
     my @elements =
-           map { my $sign = (lc($_->{CdtDbtInd}) eq 'crdt') ? -1 : 1;
-              { amount => $_->{Amt}->{content} * $sign,
-                cleared_date => $_->{BookgDt}->{Dt},
-                scn => $_->{AcctSvcrRef},
-                type => "20022 xml, $_->{Amt}->{Ccy}" }
-           } @{$struct->{BkToCstmrStmt}->{Stmt}->{Ntry}};
+           map { my $sign = (lc($_->{credit_debit}) eq 'credit') ? -1 : 1;
+              { amount => $_->{amount} * $sign, # note signs reverse
+                cleared_date => $_->{booking_date},
+                scn => $_->{acc_id} // $_->{entry_id},
+                type => "camt053 xml, $_->{currency}" }
+           } $camt053->lineitems_simple;
     return @elements;
 }
 
