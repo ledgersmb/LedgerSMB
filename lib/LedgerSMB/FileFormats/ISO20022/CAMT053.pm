@@ -18,18 +18,26 @@ This module provides basic management functions for CAMT053 files for LedgerSMB
 
 The constructor returns UNDEF if the file is not a CAMT053 docuent.
 
-=head2 CONSTRUCTOR
+=head1 CONSTRUCTOR
 
 you can pass in any specification of XML used by XML::Simple's XMLin mthod.
 
 Specifically you can pass in a file name, an undef (always returns undef), or an
 IO::Handle object.
 
-The constructor is caalled a
+=head2 new($spec)
 
-    LedgerSMB::FileFormats::ISO20022::CAMT053->new($spec)
+Examples of constructor usage:
+
+    LedgerSMB::FileFormats::ISO20022::CAMT053->new($filename);
+    LedgerSMB::FileFormats::ISO20022::CAMT053->new($filecontents);
+
+Please note:  XML fragments are NOT SUPPORTED.  The XML tag MUST be a part of
+the contents or else the constructor will abort and return undef.
 
 =cut
+
+=
 
 sub new{
     my ($class, $spec) = @_;
