@@ -37,8 +37,6 @@ the contents or else the constructor will abort and return undef.
 
 =cut
 
-=
-
 sub new{
     my ($class, $spec) = @_;
     return unless defined $spec;
