@@ -26,7 +26,7 @@ sub process_xml {
     my ($self, $recon, $contents) = @_;
     my $camt053 = $self->is_camt053($contents);
     return unless $camt053;
- 
+
     my @elements =
            map { my $sign = (lc($_->{credit_debit}) eq 'credit') ? -1 : 1;
               { amount => $_->{amount} * $sign, # note signs reverse
