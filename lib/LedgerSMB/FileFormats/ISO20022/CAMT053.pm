@@ -93,7 +93,7 @@ Returns a flattened list with the following elements:
 
 =cut
 
-sub _decide_crdt {
+sub _decode_crdt {
     my ($code) = @_;
     die "bad debit/credit code: $code"
           unless lc($code) =~ /^(crdt|dbit)$/;
@@ -107,7 +107,6 @@ sub lineitems_simple {
         {
              entry_id          => $_->{NtryRef},
              acc_id            => $_->{AcctSvcrRef},
-             counterparty_name => $_->{NtryDtls}->{TxDtls}->{RltdPties}->{Dbtr}->{Nm},
              amount            => $_->{Amt}->{content},
              currency          => $_->{Amt}->{Ccy},
              booked_date       => $_->{BookgDt}->{Dt},
