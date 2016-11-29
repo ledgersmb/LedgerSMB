@@ -798,7 +798,6 @@ sub fix_tests{
     );
 
     for my $count (1 .. $request->{count}){
-        warn $count;
         my $id = $request->{"id_$count"};
                 $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
