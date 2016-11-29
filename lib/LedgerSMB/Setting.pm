@@ -56,6 +56,7 @@ your software.
 
 package LedgerSMB::Setting;
 use LedgerSMB::App_State;
+use Try::Tiny;
 use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
@@ -67,12 +68,18 @@ sub get {
     my $self = shift;
     my ($key) = @_;
     $key = $self->{key} unless $key;
-    my ($hashref) = __PACKAGE__->call_procedure(
+    my $hashref;
+    try {
+    ($hashref) = __PACKAGE__->call_procedure(
                                              dbh => LedgerSMB::App_State::DBH(),
                                         funcname => 'setting_get',
                                             args => [$key]) ;
-    $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
-    return $hashref->{value};
+    };
+    if (defined($hashref)) {
+        $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
+        return $hashref->{value};
+    }
+    return undef;
 }
 
 sub increment {
