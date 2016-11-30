@@ -412,10 +412,13 @@ sub render_to_psgi {
 
     my $body;
     if ($self->{output}) {
-        $body = [ $self->{output} ];
+        $body = $self->{output};
+        utf8::encode($body)
+            if utf8::is_utf8($body);
+        $body = [ $body ];
     }
     elsif ($self->{rendered}) {
-        open($body, '<' . $self->{rendered});
+        open($body, '<:raw', $self->{rendered});
         # as we don't support Windows anyway: unlinking an open file works!
         unlink $self->{rendered};
     }
