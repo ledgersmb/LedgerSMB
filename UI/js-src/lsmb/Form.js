@@ -52,7 +52,6 @@ define([
                           if ("multipart/form-data" == this.domNode.enctype) {
                               options["data"] = new FormData(this.domNode);
                               // FF doesn't add the clicked button
-                              // Chrome does, but adding again still works
                               options["data"].append('action',
                                                      this.clickedAction);
                           } else {
