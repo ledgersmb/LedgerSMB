@@ -513,7 +513,7 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
 insert into ar
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount, 
+        id, invnumber, transdate, taxincluded, amount, netamount,
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -534,7 +534,7 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
 insert into ap
 (entity_credit_account, person_id,
-        id, invnumber, transdate, taxincluded, amount, netamount, 
+        id, invnumber, transdate, taxincluded, amount, netamount,
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -542,7 +542,7 @@ SELECT
         vendor.credit_id,
         (select entity_id from sl30.employee
                 WHERE id = ap.employee_id),
-        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, 
+        ap.id, invnumber, transdate, ap.taxincluded, amount, netamount,
         duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
         intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
