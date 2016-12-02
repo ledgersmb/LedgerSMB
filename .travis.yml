@@ -26,6 +26,7 @@ matrix:
             - nginx postgresql-9.5-pgtap
       env:
         - TEST_SAUCE=1
+        - DOJO_BUILT=0
     - perl: '5.22'
       addons:
         postgresql: "9.4"
@@ -66,7 +67,6 @@ matrix:
             - nginx postgresql-9.2-pgtap
       env:
         - DB_TESTING=1
-
 
 before_cache:
   - mkdir -p $HOME/dojo_archive
@@ -118,6 +118,7 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
+  - if [ "{DOJO_BUILT}" != "" ]; then sed -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   - export RELEASE_TESTING=1 && 
            PGUSER=postgres PGPASSWORD=test
            LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000"
