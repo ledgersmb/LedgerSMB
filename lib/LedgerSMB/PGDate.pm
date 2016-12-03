@@ -166,7 +166,12 @@ different formats and handle construction differently.
 
 =head1 METHODS
 
-=over new
+=over
+
+=item new
+
+Returns an empty date object when the input is an empty string; otherwise
+defers object creation to the superclass.
 
 =cut
 
@@ -186,8 +191,6 @@ sub new {
     return $class->SUPER::new(@args);
 }
 
-
-=over
 
 =item add_interval(string $interval, optional integer $n)
 
