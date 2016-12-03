@@ -166,6 +166,27 @@ different formats and handle construction differently.
 
 =head1 METHODS
 
+=over new
+
+=cut
+
+sub new {
+    my $class = shift;
+    my @args = @_;
+
+    if (! @args) {
+        my $self = {};
+        bless $self, $class;
+
+        $self->is_date(0);
+        $self->is_time(0);
+
+        return $self;
+    }
+    return $class->SUPER::new(@args);
+}
+
+
 =over
 
 =item add_interval(string $interval, optional integer $n)
