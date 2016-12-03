@@ -30,6 +30,7 @@ sub run {
     my ($self, %options) = @_;
 
     $self->find('*labeled', text => 'Through date')->send_keys($options{date});
+    $self->find('*labeled', text => 'Period type' )->find_option($options{period})->click;
     $self->find('*button', text => 'Generate')->click;
     $self->session->page->body->maindiv->wait_for_content;
 }
