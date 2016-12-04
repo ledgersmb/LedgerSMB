@@ -42,7 +42,6 @@ END ?>
   <th><?lsmb text('Beginning Statement Balance:') ?></th>
   <td><?lsmb beginning_balance ?></td>
 </tr>
-<?lsmb IF ! approved ?>
 <tr>
  <th><?lsmb text('Ending Statement Balance:') ?></th>
  <td><?lsmb INCLUDE input element_data = {
@@ -53,12 +52,13 @@ END ?>
     value = their_total
     } ?>
  </td>
+<?lsmb IF ! approved ?>
   <?lsmb IF !submit_enabled ?>
     <th><?lsmb text('Variance:') ?></th>
     <td><?lsmb out_of_balance ?></td>
   <?lsmb END ?>
-</tr>
 <?lsmb END ?>
+</tr>
 <?lsmb IF ! approved ?>
 <tr>
   <th><?lsmb text('Less Outstanding Checks:') ?></th>
