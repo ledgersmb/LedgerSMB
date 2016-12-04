@@ -122,6 +122,7 @@ before_script:
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
   - cp conf/ledgersmb.conf.default ledgersmb.conf
+  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
@@ -131,7 +132,6 @@ before_script:
   - sleep 5  # give starman a chance to start
   - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
-  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
 
 script:
   - RELEASE_TESTING=1
