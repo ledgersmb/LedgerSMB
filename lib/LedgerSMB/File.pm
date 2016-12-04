@@ -17,10 +17,21 @@ to provide functionality for specific types of file attachments.
 
 
 package LedgerSMB::File;
+
+use strict;
+use warnings;
+
 use Moose;
 with 'LedgerSMB::PGObject';
+
 use File::MimeInfo;
 use Log::Log4perl;
+use PGObject::Type::ByteString;
+
+use LedgerSMB::MooseTypes;
+
+
+PGObject::Type::ByteString->register();
 
 =item  attached_by_id
 
@@ -44,11 +55,17 @@ Timestamp of attachment point.
 
 =item content
 
-This stores the binary content of the file.
+This stores a reference to the binary content of the file.
+
+Note: Important difference with the 1.4 series is that before
+  1.5.0 this attribute stored the actual content instead of a
+  string reference.
 
 =cut
 
-has content => (is => 'rw', isa => 'Any');
+has content => (is => 'rw', isa => 'LedgerSMB::Moose::FileContent',
+                coerce => 1);
+
 
 =item mime_type_id
 
@@ -211,7 +228,7 @@ Retrieves a file.  ID and file_class properties must be set.
 
 =cut
 
-sub get{
+sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'file__get');
     $self->{$_} = $ref->{$_} for keys %$ref;
