@@ -42,13 +42,14 @@ requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
+requires "XML::Simple";
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
 
 feature 'rest', "RESTful Web Service XML support" =>
     sub {
-        requires "XML::Simple";
+        # no dependencies which aren't already required above
 };
 
 feature 'starman', "Standalone Server w/Starman" =>
