@@ -91,7 +91,7 @@ END # BLOCK -?>
     </tr>
 <?lsmb END # BLOCK -?>
 <?lsmb- BLOCK _date_block ?>
-    <?lsmb PROCESS input element_data = {
+    <?lsmb INCLUDE input element_data = {
            type = "text"
           label = label
           class = "date"
@@ -110,7 +110,7 @@ END # BLOCK -?>
     ?>
       <th align="right"><?lsmb label ?></th>
       <td>
-        <?lsmb PROCESS _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
       </td>
 <?lsmb END # BLOCK ?>
 
@@ -122,7 +122,7 @@ END # BLOCK -?>
     ?>
       <th align="right"><?lsmb label ?></th>
       <td>
-        <?lsmb PROCESS _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
       </td>
 <?lsmb END # BLOCK ?>
 
@@ -189,8 +189,8 @@ END # BLOCK -?>
 
 <?lsmb- BLOCK date_row ?>
         <tr>
-          <?lsmb PROCESS date_from_date required=required SUFFIX=SUFFIX ?>
-          <?lsmb PROCESS date_to_date   required=required SUFFIX=SUFFIX ?>
+          <?lsmb INCLUDE date_from_date required=required SUFFIX=SUFFIX ?>
+          <?lsmb INCLUDE date_to_date   required=required SUFFIX=SUFFIX ?>
         </tr>
     <tr>
           <?lsmb PROCESS date_period ?>
@@ -204,7 +204,7 @@ END # BLOCK -?>
         IF !required.defined(); required = 'false';           END;
     ?>
     <div class="input_group">
-        <?lsmb PROCESS _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
     </div>
 <?lsmb END #BLOCK -?>
 
@@ -215,7 +215,7 @@ END # BLOCK -?>
         IF !required.defined(); required = 'false';         END;
     ?>
     <div class="input_group">
-        <?lsmb PROCESS _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE _date_block label=label name=name required=required SUFFIX=SUFFIX ?>
     </div>
 <?lsmb END #BLOCK ?>
 
@@ -278,7 +278,7 @@ END # BLOCK -?>
               <?lsmb
                 all_periods.values.sort('order');
                 all_periods.unshift({}); # Add empty item at beginning of the list
-                PROCESS select element_data = {
+                INCLUDE select element_data = {
                     name = "interval"
                       id = "interval"
                  options = all_periods
@@ -291,8 +291,8 @@ END # BLOCK -?>
 
 <?lsmb- BLOCK date_row_div ?>
         <div class="input_row">
-        <?lsmb PROCESS date_from_date_div required=required SUFFIX=SUFFIX ?>
-        <?lsmb PROCESS date_to_date_div   required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE date_from_date_div required=required SUFFIX=SUFFIX ?>
+        <?lsmb INCLUDE date_to_date_div   required=required SUFFIX=SUFFIX ?>
     </div>
         <div class="input_row">
         <?lsmb PROCESS date_period_div ?>
