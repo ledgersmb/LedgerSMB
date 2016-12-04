@@ -29,6 +29,7 @@ requires 'PGObject::Simple', '2.0.0';
 requires 'PGObject::Simple::Role', '1.13.2';
 requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime', '1.0.4';
+requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';

@@ -5,8 +5,14 @@ LedgerSMB::MooseTypes - Moose subtypes and coercions for LedgerSMB
 =cut
 
 package LedgerSMB::MooseTypes;
+
+use strict;
+use warnings;
+
 use Moose;
 use Moose::Util::TypeConstraints;
+
+use PGObject::Type::ByteString;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 
@@ -43,7 +49,7 @@ subtype 'LedgerSMB::Moose::Date', as 'Maybe[LedgerSMB::PGDate]';
 =head3 Coercions
 
 The only coercion provided is from a string, and it calls the PGDate class's
-from_input method.  A second coercian is provided for
+from_input method.  A second coercion is provided for
 Maybe[LedgerSMB::Moose::Date].
 
 =cut
@@ -54,7 +60,7 @@ coerce 'LedgerSMB::Moose::Date'
 
 =head2 LedgerSMB::Moose::Number
 
-This wraps the LedgerSMB::PGNumber class for automagic handling if i18n and
+This wraps the LedgerSMB::PGNumber class for automagic handling of i18n and
 number formats.
 
 =cut
@@ -73,5 +79,31 @@ Maybe[LedgerSMB::Moose::Number]
 coerce 'LedgerSMB::Moose::Number',
   from 'Str',
    via { LedgerSMB::PGNumber->from_input($_) };
+
+
+=head2 LedgerSMB::Moose::FileContent
+
+Wraps a reference to a UTF-8 encoded string in a PGObject::Type::ByteString
+for serialization through PGObject.
+
+=cut
+
+subtype 'LedgerSMB::Moose::FileContent', as 'PGObject::Type::ByteString';
+
+=head3 Coercions
+
+Two coercions are supplied. One for a string, the other for a
+scalar reference to a string.
+
+=cut
+
+coerce 'LedgerSMB::Moose::FileContent',
+  from 'Str',
+  via { PGObject::Type::ByteString->new($_) };
+
+coerce 'LedgerSMB::Moose::FileContent',
+  from 'ScalarRef[Str]',
+  via { PGObject::Type::ByteString->new($_) };
+
 
 1;
