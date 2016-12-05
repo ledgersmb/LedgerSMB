@@ -116,13 +116,17 @@ sub submit_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     $recon->submit();
-    my $template = LedgerSMB::Template->new(
-            user => $request->{_user},
-            template => 'reconciliation/submitted',
-            locale => $request->{_locale},
-            format => 'HTML',
-            path=>"UI");
-    return $template->render_to_psgi($recon);
+    my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    if ( !$can_approve ) {
+        my $template = LedgerSMB::Template->new(
+                user => $request->{_user},
+                template => 'reconciliation/submitted',
+                locale => $request->{_locale},
+                format => 'HTML',
+                path=>"UI");
+        return $template->render_to_psgi($recon);
+    }
+    return _display_report($recon, $request);
 }
 
 =item save_recon_set
