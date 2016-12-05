@@ -22,6 +22,7 @@ use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use Plack::Builder;
 use Plack::App::File;
+use Plack::Middleware::Log4perl;
 use Plack::Middleware::Redirect;
 # Optimization
 use Plack::Middleware::ConditionalGET;
@@ -45,10 +46,15 @@ if ( $LedgerSMB::Sysconfig::dojo_built) {
 my $old_app = LedgerSMB::PSGI::old_app();
 my $psgi_app = \&LedgerSMB::PSGI::psgi_app;
 
+# Use our own Log4perl configuration
+use Log::Log4perl;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 builder {
+
+    enable 'Log4perl';  # Make Log4Perl available globally for PSGI through $env->{psgix.logger}
 
     enable 'Redirect', url_patterns => [
         qr/^\/?$/ => ['/login.pl',302]
