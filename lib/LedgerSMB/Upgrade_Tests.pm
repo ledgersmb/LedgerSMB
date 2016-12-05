@@ -429,6 +429,25 @@ push @tests, __PACKAGE__->new(
 );
 
 
+# They should be multiple selected from account_link_description(description)
+push @tests, __PACKAGE__->new(
+   test_query => "select distinct accno from chart
+                   where link is null or link = ''
+                   and charttype = 'A'",
+ display_name => $locale->text('Link unset in "chart" table'),
+         name => 'missing_links_in_accno',
+ display_cols => [ 'accno', 'link' ],
+        table => 'chart',
+       column => 'link',
+    id_column => 'accno',
+     id_where => "(link IS NULL or link = '') AND accno",
+ instructions => $locale->text("Please add the missing links"),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+);
+
+
 
 #=pod
 

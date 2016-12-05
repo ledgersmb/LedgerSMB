@@ -1466,6 +1466,7 @@ CREATE TABLE acc_trans (
   entry_id SERIAL PRIMARY KEY
 );
 
+-- Drop this, no longer used
 ALTER TABLE cr_report ADD FOREIGN KEY (max_ac_id) REFERENCES acc_trans(entry_id);
 
 COMMENT ON TABLE acc_trans IS
