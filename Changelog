@@ -57,6 +57,13 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.36
+* Overpayments incorrectly not reduced when applied (Erik H, #2346)
+* Fix number formatting/processing in batch payment/receipt (Erik H, #2350)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.35
 * Fixed release process; 1.4.32+ included '-dev' in tar version (Erik H)
 * Fix 'existing account' check when saving account configuration (Yves L)
