@@ -3,10 +3,11 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb IF check.unapproved_transactions
-?><div class="warning"><a href="drafts.pl?action=list_drafts&amp;to_date=<?lsmb end_date ?>"><?lsmb text('There are unapproved transactions before the end date of this report.') ?></a></div>
+<?lsmb IF check.unapproved_transactions 
+?><div class="warning"><?lsmb text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
+?></div>
 <?lsmb END; IF check.unapproved_reports
-?><div class="warning"><a href="recon.pl?action=get_results&amp;to_date=<?lsmb end_date ?>&amp;approved=0"><?lsmb text('There are unapproved reconciliations before the end date of this report.') ?></a></div>
+?><div class="warning"><?lsmb text('There are [_1] unapproved reconciliations before the end date of this report.',check.unapproved_reports) ?></div>
 <?lsmb END ?>
 <?lsmb IF ! defined(b_cleared_table);
     b_cleared_table = 'checked';
