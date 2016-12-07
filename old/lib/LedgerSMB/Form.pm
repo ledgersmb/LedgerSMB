@@ -80,7 +80,7 @@ use open ':utf8';
 use base qw(LedgerSMB::Request);
 use utf8;
 
-use Data::Dumper;
+use LWP::Simple;
 
 
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
@@ -1552,6 +1552,11 @@ sub update_exchangerate {
         @queryargs = ($sell);
     }
 
+    if (!$set) {
+        $set = "buy = ?";
+        $buy = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
+        @queryargs = ($buy);
+    }
     if ( !$set ) {
         $self->error("Exchange rate missing!");
     }
@@ -1610,6 +1615,8 @@ $dbh is not used, favouring $self->{dbh}.
 
 =cut
 
+# TODO: Consider using http://currencies.apps.grandtrunk.net/getrate/2015-10-01/USD/CAD
+
 sub get_exchangerate {
 
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
@@ -1624,10 +1631,12 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-    $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
+        if (!$exchangerate) {
+            $exchangerate = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
+        }
+        $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
-
     $exchangerate;
 }
 
