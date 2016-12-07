@@ -170,7 +170,8 @@ sub pre_bulk_post_report {
                    };
             for my $invrow (1 .. $request->{"invoice_count_$cid"}){
                  my $inv_id = $request->{"invoice_${cid}_$invrow"};
-                 $ref->{amount} += $request->{"payment_$inv_id"};
+                 $ref->{amount} +=
+                    LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
              }
              # If vendor, this is debit-normal so multiply by -1
              if ($request->{account_class} == 1){ # vendor
