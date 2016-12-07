@@ -19,7 +19,7 @@ Original copyright notice below.
 # Copyright (c) 2007
 #
 #  Author: David Mora R
-# 	   Christian Ceballos B
+#          Christian Ceballos B
 #
 #
 #
@@ -50,6 +50,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use strict;
@@ -167,9 +168,9 @@ sub pre_bulk_post_report {
             for my $invrow (1 .. $request->{"invoice_count_$cid"}){
                 my $inv_id = $request->{"invoice_${cid}_$invrow"};
                 if ($request->{"paid_$cid"} eq 'all'){
-                    $ref->{amount} += $request->{"payment_$inv_id"};
+                    $ref->{amount} += LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
                 } else {
-                    $ref->{amount} += $request->{"net_$inv_id"};
+                    $ref->{amount} += LedgerSMB::PGNumber->from_input($request->{"net_$inv_id"});
                 }
              }
              # If vendor, this is debit-normal so multiply by -1
@@ -414,7 +415,7 @@ sub print {
         $template = LedgerSMB::Template->new(
             user => $payment->{_user}, template => 'check_multiple',
             format => uc $payment->{'format'},
-	    no_auto_output => 1,
+            no_auto_output => 1,
             output_args => $payment,
         );
             $template->render($payment);
@@ -509,8 +510,8 @@ sub display_payments {
                                                   money  => 1);
     }
     $payment->{grand_total} = $payment->format_amount(
-			amount =>  $payment->{grand_total},
-			money  => 1);
+                        amount =>  $payment->{grand_total},
+                        money  => 1);
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'),
              value => 'screen'});
@@ -586,7 +587,7 @@ sub payment {
         interval_radios => $date->{radioOptions},
         amountfrom => {
             name => 'amountfrom',
-	},
+        },
         amountto => {
             name => 'amountto',
         },
@@ -843,7 +844,7 @@ sub payment2 {
                 value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
                 text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
                                           #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
-	    };
+            };
         } else {
             @currency_options = {
                 name => 'exrate'
@@ -1332,7 +1333,7 @@ sub print_payment {
     my $header = @{$Payment->{header_info}}[0];
     my @rows   = @{$Payment->{line_info}};
     ###############################################################################
-    # 			    FIRST CODE SECTION
+    #                       FIRST CODE SECTION
     #
     # THE FOLLOWING LINES OF CODE ADD SOME EXTRA PROCESSING TO THE DATA THAT
     # WILL BE  AVAILIBLE ON THE UI,
@@ -1512,7 +1513,7 @@ sub use_overpayment2 {
                 );
         if ($exchangerate) {
             $ui_exchangerate = {
-	        id => 'exrate',
+                id => 'exrate',
                 name => 'exrate',
                 value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
                 text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
@@ -1520,7 +1521,7 @@ sub use_overpayment2 {
             };
         } else {
             $ui_exchangerate = {
-	        id => 'exrate',
+                id => 'exrate',
                 name => 'exrate'
             };
         }
@@ -1601,7 +1602,7 @@ sub use_overpayment2 {
             $uri .= '.pl?action=edit&id='.$Payment->{"invoice_id_$count"}.'&path=bin/mozilla&login='.$request->{login};
 
             push @ui_selected_inv, {
-                invoice	=> {
+                invoice => {
                     number => $Payment->{"invnumber_$count"},
                     id     => $Payment->{"invoice_id_$count"},
                     href   => $uri
@@ -1708,7 +1709,7 @@ sub use_overpayment2 {
     # We start with our data selection called ui
     my $ui = {
         exrate => $ui_exchangerate,
-	datepaid => {
+        datepaid => {
             name => 'datepaid',
             value => $Payment->{"datepaid"}? $Payment->{"datepaid"} : $Payment->{"current_date"},
             size => '10'
