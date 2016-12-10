@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-22 19:42+0000\n"
+"POT-Creation-Date: 2016-12-10 08:13+0000\n"
 "PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
@@ -263,7 +263,7 @@ msgstr "Rekeningnummer"
 #: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:92
 #: LedgerSMB/Report/Taxform/Detail.pm:82 LedgerSMB/Report/Taxform/Detail.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
-#: LedgerSMB/Scripts/payment.pm:147 t/data/04-complex_template.html:558
+#: LedgerSMB/Scripts/payment.pm:148 t/data/04-complex_template.html:558
 #: UI/accounts/edit.html:26 UI/accounts/edit.html:120
 #: UI/Contact/divs/bank_act.html:18 UI/payments/use_overpayment2.html:116
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
@@ -281,7 +281,7 @@ msgstr "Rekeningnummer Einde"
 msgid "Account Number Start"
 msgstr "Rekeningnummer Begin"
 
-#: LedgerSMB/Scripts/payment.pm:148
+#: LedgerSMB/Scripts/payment.pm:149
 msgid "Account Title"
 msgstr "Rekeningtitel"
 
@@ -783,7 +783,7 @@ msgid "Amount Budgetted"
 msgstr "Gebudgetteerd Bedrag"
 
 #: bin/aa.pl:1729 LedgerSMB/Report/Invoices/Outstanding.pm:238
-#: LedgerSMB/Scripts/payment.pm:811 LedgerSMB/Scripts/payment.pm:820
+#: LedgerSMB/Scripts/payment.pm:812 LedgerSMB/Scripts/payment.pm:821
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -831,15 +831,15 @@ msgstr "Lineaire afschrijving, per maand"
 msgid "Any"
 msgstr "Elk(e)"
 
-#: LedgerSMB/Scripts/payment.pm:1253
+#: LedgerSMB/Scripts/payment.pm:1254
 msgid "Applied discount"
 msgstr "Toegepaste korting"
 
-#: LedgerSMB/Scripts/payment.pm:1843 LedgerSMB/Scripts/payment.pm:1922
+#: LedgerSMB/Scripts/payment.pm:1844 LedgerSMB/Scripts/payment.pm:1923
 msgid "Applied discount by an overpayment"
 msgstr "Korting bij een vooruitbetaling"
 
-#: LedgerSMB/Scripts/payment.pm:809
+#: LedgerSMB/Scripts/payment.pm:810
 msgid "Apply Disc"
 msgstr "Toepassen korting"
 
@@ -1837,8 +1837,8 @@ msgstr "Inhoud"
 #: bin/aa.pl:1832 bin/arap.pl:269 bin/arapprn.pl:423 bin/ic.pl:967
 #: bin/ic.pl:1789 bin/ic.pl:2072 bin/ic.pl:2226 bin/io.pl:681 bin/io.pl:887
 #: bin/io.pl:1327 bin/oe.pl:1659 bin/oe.pl:2226 bin/oe.pl:2737 bin/pe.pl:339
-#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:605
-#: LedgerSMB/Scripts/payment.pm:694 LedgerSMB/Scripts/payment.pm:1429
+#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:606
+#: LedgerSMB/Scripts/payment.pm:695 LedgerSMB/Scripts/payment.pm:1430
 #: UI/am-audit-control.html:44 UI/asset/begin_approval.html:66
 #: UI/asset/begin_depreciation_all.html:25 UI/asset/begin_report.html:58
 #: UI/Contact/divs/credit.html:376 UI/create_batch.html:39
@@ -2049,7 +2049,7 @@ msgid "Credit Note"
 msgstr "Creditmemo"
 
 #: LedgerSMB/Report/COA.pm:111 LedgerSMB/Report/GL.pm:116
-#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:153
+#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:154
 #: UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr "Credit"
@@ -2174,7 +2174,7 @@ msgstr "Geb. datum"
 msgid "DOB:"
 msgstr "Geb. dat."
 
-#: bin/aa.pl:1374 LedgerSMB/Scripts/payment.pm:331
+#: bin/aa.pl:1374 LedgerSMB/Scripts/payment.pm:332
 msgid "Data not saved.  Please try again."
 msgstr "Gegevens niet opgeslagen Probeer opnieuw"
 
@@ -2224,7 +2224,7 @@ msgstr "Dataset"
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:102
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:526
-#: LedgerSMB/Scripts/payment.pm:149 LedgerSMB/Scripts/payment.pm:805
+#: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Scripts/payment.pm:806
 #: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
 #: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
 #: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
@@ -2386,7 +2386,7 @@ msgid "Debit Note"
 msgstr "Debetmemo"
 
 #: LedgerSMB/Report/COA.pm:105 LedgerSMB/Report/GL.pm:110
-#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:153
 #: UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr "Debet"
@@ -2745,7 +2745,7 @@ msgstr "Korting"
 msgid "Disc %"
 msgstr "Kort. %"
 
-#: LedgerSMB/Scripts/payment.pm:808 UI/accounts/edit.html:318
+#: LedgerSMB/Scripts/payment.pm:809 UI/accounts/edit.html:318
 #: UI/accounts/edit.html:358 UI/am-business-form.html:16
 #: UI/Contact/divs/credit.html:153 UI/payments/payments_detail.html:313
 #: UI/Reports/filters/purchase_history.html:301
@@ -3300,7 +3300,7 @@ msgstr "Wissel"
 
 #: bin/aa.pl:486 bin/ir.pl:417 bin/is.pl:410 bin/oe.pl:410 bin/oe.pl:418
 #: bin/oe.pl:1645 LedgerSMB/Report/Contact/History.pm:116
-#: LedgerSMB/Scripts/payment.pm:819 UI/orders/order.html:54
+#: LedgerSMB/Scripts/payment.pm:820 UI/orders/order.html:54
 #: UI/payments/payment2.html:123 UI/payments/payments_detail.html:149
 #: UI/payments/payments_detail.html:158 UI/payments/use_overpayment2.html:93
 #: UI/Reports/filters/payments.html:110
@@ -3311,7 +3311,7 @@ msgstr "Wisselkoers"
 msgid "Exchange rate for payment missing!"
 msgstr "Wisselkoers voor betaling ontbreekt!"
 
-#: LedgerSMB/Scripts/payment.pm:1163
+#: LedgerSMB/Scripts/payment.pm:1164
 msgid "Exchange rate hasn't been defined"
 msgstr "Wisselkoers is niet gedefinieerd"
 
@@ -4148,7 +4148,7 @@ msgstr "Voorraad overgeheveld!"
 #: LedgerSMB/Report/Aging.pm:103 LedgerSMB/Report/Inventory/Search.pm:278
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
-#: LedgerSMB/Scripts/payment.pm:804 templates/demo/invoice.html:12
+#: LedgerSMB/Scripts/payment.pm:805 templates/demo/invoice.html:12
 #: templates/demo/invoice.tex:112 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:12
 #: templates/demo_with_images/invoice.tex:112
@@ -4753,8 +4753,8 @@ msgid "May "
 msgstr "mei "
 
 #: bin/aa.pl:889 bin/ir.pl:754 bin/ir.pl:930 bin/is.pl:854 bin/is.pl:1017
-#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:151
-#: LedgerSMB/Scripts/payment.pm:810 templates/demo/ap_transaction.html:195
+#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Scripts/payment.pm:811 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:119
 #: UI/orders/order.html:248 UI/payments/payment2.html:237
@@ -5020,7 +5020,7 @@ msgstr "Geen taal"
 msgid "No open Projects!"
 msgstr "Geen open projecten!"
 
-#: LedgerSMB/Scripts/payment.pm:1292
+#: LedgerSMB/Scripts/payment.pm:1293
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Geen vooruitbetalings rekening geselecteerd  Een aanmaken?"
 
@@ -5555,7 +5555,7 @@ msgstr "Nummer ontbreekt op de pakbon!"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:233
 #: LedgerSMB/Report/Invoices/Transactions.pm:280
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
-#: LedgerSMB/Scripts/payment.pm:807 templates/demo/invoice.html:184
+#: LedgerSMB/Scripts/payment.pm:808 templates/demo/invoice.html:184
 #: templates/demo/invoice.tex:165 templates/demo_with_images/invoice.html:184
 #: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
 #: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:312
@@ -5654,7 +5654,7 @@ msgstr "Wachtwoorden moeten gelijk zijn."
 msgid "Pay From"
 msgstr "Betalen van"
 
-#: LedgerSMB/Scripts/payment.pm:146 UI/Contact/divs/credit.html:89
+#: LedgerSMB/Scripts/payment.pm:147 UI/Contact/divs/credit.html:89
 #: UI/payments/payments_filter.html:140
 msgid "Pay To"
 msgstr "Betalen aan"
@@ -5673,7 +5673,7 @@ msgstr "Betaalbaar"
 msgid "Payables"
 msgstr "Betalingen"
 
-#: LedgerSMB/Scripts/payment.pm:1062 t/data/04-complex_template.html:282
+#: LedgerSMB/Scripts/payment.pm:1063 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:298 UI/accounts/edit.html:340
 #: UI/Contact/divs/credit.html:192 UI/payments/payments_detail.html:217
 #: sql/Pg-database.sql:2806
@@ -6341,7 +6341,7 @@ msgstr "Heropen boeken"
 msgid "Recd"
 msgstr "Ontvangen"
 
-#: LedgerSMB/Scripts/payment.pm:1062 sql/Pg-database.sql:2805
+#: LedgerSMB/Scripts/payment.pm:1063 sql/Pg-database.sql:2805
 #: sql/Pg-database.sql:2974
 msgid "Receipt"
 msgstr "Ontvangstbewijs"
@@ -6375,7 +6375,7 @@ msgstr "Ontvangen"
 msgid "Receive Merchandise"
 msgstr "Goederen ontvangen"
 
-#: LedgerSMB/Scripts/payment.pm:875
+#: LedgerSMB/Scripts/payment.pm:876
 msgid "Received"
 msgstr "Ontvangen"
 
@@ -6803,7 +6803,7 @@ msgstr "Opslaan"
 msgid "Save As New"
 msgstr "Opslaan als Nieuw"
 
-#: LedgerSMB/Scripts/payment.pm:219
+#: LedgerSMB/Scripts/payment.pm:220
 msgid "Save Batch"
 msgstr "Groep opslaan"
 
@@ -6882,7 +6882,7 @@ msgstr "Inplannen"
 msgid "Scheduled"
 msgstr "Ingepland"
 
-#: bin/arapprn.pl:475 bin/io.pl:1469 LedgerSMB/Scripts/payment.pm:516
+#: bin/arapprn.pl:475 bin/io.pl:1469 LedgerSMB/Scripts/payment.pm:517
 #: LedgerSMB/Template.pm:305 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Scherm"
@@ -7418,7 +7418,7 @@ msgstr "Sorteer op"
 #: bin/aa.pl:888 bin/aa.pl:1590 bin/ir.pl:929 bin/is.pl:1016
 #: LedgerSMB/Report/Budget/Search.pm:127 LedgerSMB/Report/GL.pm:122
 #: LedgerSMB/Report/GL.pm:215 LedgerSMB/Report/Inventory/Adj_Details.pm:75
-#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:151
 #: LedgerSMB/Scripts/recon.pm:221 templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:249
 #: templates/demo/printPayment.html:50
@@ -7990,15 +7990,15 @@ msgstr "Bedankt voor uw aankoop!"
 msgid "The amount of"
 msgstr "Het bedrag van"
 
-#: LedgerSMB/Scripts/payment.pm:1590 LedgerSMB/Scripts/payment.pm:1598
+#: LedgerSMB/Scripts/payment.pm:1591 LedgerSMB/Scripts/payment.pm:1599
 msgid "The amount of the invoice number"
 msgstr "Het bedrag van factuurnummer"
 
-#: LedgerSMB/Scripts/payment.pm:1856
+#: LedgerSMB/Scripts/payment.pm:1857
 msgid "The amount to be pay from the accno"
 msgstr "Het bedrag dat moet worden betaald van rekeningnummer"
 
-#: LedgerSMB/Scripts/payment.pm:1824
+#: LedgerSMB/Scripts/payment.pm:1825
 msgid "The amount to be pay of the invoice number"
 msgstr "Het bedrag dat moet worden betaald voor Factuurnummer"
 
@@ -8067,11 +8067,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dit document is goedgekeurd door"
 
-#: LedgerSMB/Scripts/payment.pm:1179
+#: LedgerSMB/Scripts/payment.pm:1180
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr "Deze journaalboeking is een gevolg van een betalingstransactie"
 
-#: LedgerSMB/Scripts/payment.pm:1909
+#: LedgerSMB/Scripts/payment.pm:1910
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr "Deze journaalboeking is het gevolg van vooruitbetaling transactie"
 
@@ -8207,7 +8207,7 @@ msgstr "Naar e-mail adres"
 msgid "To my browser"
 msgstr "Naar mijn browser"
 
-#: LedgerSMB/Scripts/payment.pm:869
+#: LedgerSMB/Scripts/payment.pm:870
 msgid "To pay"
 msgstr "Betalen"
 
@@ -8244,8 +8244,8 @@ msgstr "Hoogste Niveau"
 #: LedgerSMB/Report/Invoices/Outstanding.pm:228
 #: LedgerSMB/Report/Invoices/Transactions.pm:277
 #: LedgerSMB/Report/Taxform/Detail.pm:98 LedgerSMB/Report/Taxform/Summary.pm:96
-#: LedgerSMB/Scripts/asset.pm:531 LedgerSMB/Scripts/payment.pm:198
-#: LedgerSMB/Scripts/payment.pm:806 templates/demo/ap_transaction.html:126
+#: LedgerSMB/Scripts/asset.pm:531 LedgerSMB/Scripts/payment.pm:199
+#: LedgerSMB/Scripts/payment.pm:807 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:166
@@ -8629,7 +8629,7 @@ msgstr "Gebruik voorschot"
 msgid "Use Shipto"
 msgstr "Gebruik verzendadres"
 
-#: LedgerSMB/Scripts/payment.pm:1733
+#: LedgerSMB/Scripts/payment.pm:1734
 msgid "Use overpayment/prepayment"
 msgstr "Gebruik meerbetaling/vooruitbetaling"
 
@@ -9074,19 +9074,19 @@ msgstr "in maanden"
 msgid "in years"
 msgstr "in jaren"
 
-#: LedgerSMB/Scripts/payment.pm:1858
+#: LedgerSMB/Scripts/payment.pm:1859
 msgid "is bigger than the amount available"
 msgstr "Saldo is ontoereikend"
 
-#: LedgerSMB/Scripts/payment.pm:1598
+#: LedgerSMB/Scripts/payment.pm:1599
 msgid "is lesser than 0"
 msgstr "Is minder dan 0"
 
-#: LedgerSMB/Scripts/payment.pm:1590
+#: LedgerSMB/Scripts/payment.pm:1591
 msgid "is lesser than the amount to be paid"
 msgstr "het bedrag is minder dan uiteindelijk moet worden betaald"
 
-#: LedgerSMB/Scripts/payment.pm:1824
+#: LedgerSMB/Scripts/payment.pm:1825
 msgid "is null"
 msgstr "is nihiel"
 
@@ -9142,8 +9142,8 @@ msgstr "keer"
 msgid "unexpected error!"
 msgstr "onverwachte fout!"
 
-#: LedgerSMB/Scripts/payment.pm:1867 LedgerSMB/Scripts/payment.pm:1883
-#: LedgerSMB/Scripts/payment.pm:1936 LedgerSMB/Scripts/payment.pm:1952
+#: LedgerSMB/Scripts/payment.pm:1868 LedgerSMB/Scripts/payment.pm:1884
+#: LedgerSMB/Scripts/payment.pm:1937 LedgerSMB/Scripts/payment.pm:1953
 msgid "use of an overpayment"
 msgstr "Gebruik van een vooruitbetaling"
 
