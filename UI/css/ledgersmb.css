@@ -5,6 +5,22 @@ td.money {
    text-align: right;
 }
 
+td.date {
+   white-space: nowrap!important;
+}
+
+td.check {
+    text-align: center;
+}
+
+div#title {
+    font-size: large;
+}
+
+th.header {
+    text-align: center;
+}
+
 /* general stuff */
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
@@ -51,6 +67,10 @@ table.form th.centered, th.centered {
 
 table.criteria td {
   text-align: left;
+}
+
+table.warning {
+    border: 0;
 }
 
 #company_info, #version_info, #login_info {
