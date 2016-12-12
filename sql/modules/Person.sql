@@ -14,6 +14,16 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION person__get_my_entity_id() IS
 $$ Returns the entity_id of the current, logged in user.$$;
 
+CREATE OR REPLACE FUNCTION person__get_my_id() RETURNS INT AS
+$$
+        SELECT p.id from person p
+        JOIN users u ON u.entity_id = p.entity_id
+        WHERE username = SESSION_USER;
+$$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION person__get_my_id() IS
+$$ Returns the person id of the current, logged in user.$$;
+
 CREATE OR REPLACE FUNCTION person__list_languages()
 RETURNS SETOF language AS
 $$ SELECT * FROM language ORDER BY code ASC $$ language sql;
