@@ -54,7 +54,7 @@ INSERT INTO jcitems
 VALUES
 (in_business_unit_id, in_parts_id, in_description, in_qty, in_allocated,
   in_sellprice, in_fxsellprice, in_serialnumber, in_checkedin, in_checkedout,
-  coalesce(in_person_id, person__get_my_entity_id()), in_notes, in_total,
+  coalesce(in_person_id, person__get_my_id()), in_notes, in_total,
   in_non_billable, in_jctype, in_curr);
 
 SELECT * INTO retval FROM jcitems WHERE id = currval('jcitems_id_seq')::int;
