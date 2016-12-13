@@ -277,7 +277,7 @@ sub from_input{
     bless $dt, __PACKAGE__;
     $dt->is_date(1);
     $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Define time
-    $dt->is_tz(($input && $input =~ /\:\d\d[\+\-]\d+/) ? 1 : 0); Define TZ
+    $dt->is_tz(($input && $input =~ /\:\d\d[\+\-]\d+/) ? 1 : 0); # Define TZ
     return $dt;
 }
 
