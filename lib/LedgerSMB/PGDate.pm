@@ -87,8 +87,8 @@ our $formats = {
 # Since we only match a limited set of patterns, below is what I
 # had expected DateTime::Format::Strptime would have done.
 my $regexes = {
-    'ISO8601' =>    [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)(\s+\d\d:\d\d:\d\d([\+\-]\d\d(:?\d\d)?)?)?$/,
-                        fields => [ 'year', 'month', 'day' ] },
+    'ISO8601' =>    [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)(\s+(\d\d):(\d\d):(\d\d)([\+\-]\d\d(:?\d\d)?)?)?$/,
+                        fields => [ 'year', 'month', 'day', 'hour', 'minute', 'second', 'time_zone' ] },
                     ],
     'YYYY-MM-DD' => [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)$/,
                         fields => [ 'year', 'month', 'day' ] },
@@ -249,7 +249,7 @@ sub from_input{
     for my $fmt (@fmts, @{$regexes->{'YYYY-MM-DD'}}, @{$regexes->{'ISO8601'}} ) {
         my ($success, %args);
         if ($input =~ $fmt->{regex}) {
-            @args{@{$fmt->{fields}}} = ($1, $2, $3);
+            @args{@{$fmt->{fields}}} = ($1, $2, $3, $5, $6, $7, $8);
             $success = 1;
         }
         if ($fmt->{short_year}) {

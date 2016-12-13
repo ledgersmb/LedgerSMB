@@ -335,5 +335,5 @@ is(LedgerSMB::PGDate->from_input(undef)->to_output, '',
    'round-tripping "undef" returns an empty string (for easy concatenation)');
 is(LedgerSMB::PGDate->from_input('2016-01-01')->to_output, '2016-01-01',
    'round-tripping valid ISO-8601 date returns that date');
-is(LedgerSMB::PGDate->from_input('2016-01-01 00:00:00-05')->to_output, '2016-01-01 00:00:00-0500',
+is(LedgerSMB::PGDate->from_input('2016-01-01 01:23:45-06')->to_output, '2016-01-01 01:23:45-0600',
    'round-tripping valid ISO-8601 date+tz returns that date with normalized tz');
