@@ -36,7 +36,7 @@ UPDATE jcitems
        serialnumber = in_serialnumber,
        checkedin = in_checkedin,
        checkedout = in_checkedout,
-       person_id = coalesce(in_person_id, person__get_my_entity_id()),
+       person_id = coalesce(in_person_id, person__get_my_id()),
        notes = in_notes,
        total = in_total,
        non_billable = in_non_billable
@@ -54,7 +54,7 @@ INSERT INTO jcitems
 VALUES
 (in_business_unit_id, in_parts_id, in_description, in_qty, in_allocated,
   in_sellprice, in_fxsellprice, in_serialnumber, in_checkedin, in_checkedout,
-  coalesce(in_person_id, person__get_my_entity_id()), in_notes, in_total,
+  coalesce(in_person_id, person__get_my_id()), in_notes, in_total,
   in_non_billable, in_jctype, in_curr);
 
 SELECT * INTO retval FROM jcitems WHERE id = currval('jcitems_id_seq')::int;
@@ -118,7 +118,7 @@ $$
 WITH RECURSIVE bu_tree (id, path) AS (
      SELECT id, id::text AS path, control_code, description
        FROM business_unit
-      WHERE id = any($1) OR ($1 = '{}' OR $1 IS NULL and parent_id IS NULL)
+      WHERE id = any(in_business_units) OR (in_business_units = '{}' OR in_business_units IS NULL and parent_id IS NULL)
       UNION
      SELECT bu.id, bu_tree.path || ',' || bu.id, bu.control_code, bu.description
        FROM business_unit bu
@@ -134,17 +134,19 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
   FROM jcitems j
   JOIN parts p ON p.id = j.parts_id
-  JOIN entity_employee ee ON ee.entity_id = j.person_id
+  JOIN person pr ON pr.id = j.person_id
+  JOIN entity_employee ee ON ee.entity_id = pr.entity_id
   JOIN entity e ON ee.entity_id = e.id
   LEFT JOIN bu_tree bu ON bu.id = j.business_unit_id
- WHERE (p.partnumber = $2 OR $2 IS NULL)
-       AND (ee.entity_id = $3 OR $3 IS NULL)
-       AND (j.checkedin::date <= $4 OR $4 IS NULL)
-       AND (j.checkedin::date >= $5 OR $5 IS NULL)
-       AND (((j.qty > j.allocated or j.allocated is null)  AND $6)
-            OR (j.qty <= j.allocated AND $7))
-       AND (j.jctype = $8 OR $8 is null)
-       AND (bu.path IS NOT NULL OR $1 = '{}' OR $1 IS NULL)
+ WHERE (p.partnumber = in_partnumber OR in_partnumber IS NULL)
+       AND (j.person_id = in_person_id OR in_person_id IS NULL)
+       AND (j.checkedin::date >= in_date_from OR in_date_from IS NULL)
+       AND (j.checkedin::date <= in_date_to OR in_date_to IS NULL)
+       AND (((j.qty > j.allocated or j.allocated is null)  AND in_open)
+            OR (j.qty <= j.allocated AND in_closed))
+       AND (j.jctype = in_jctype OR in_jctype is null)
+       AND (bu.path IS NOT NULL OR in_business_units = '{}' OR in_business_units IS NULL)
+  ORDER BY j.checkedin, bu.description, p.partnumber, e.name
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)

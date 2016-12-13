@@ -201,6 +201,7 @@ periods_get
 person__get
 person__get_by_cc
 person__get_my_entity_id
+person__get_my_id
 person__list_bank_account
 person__list_contacts
 person__list_languages
