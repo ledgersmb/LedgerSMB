@@ -64,6 +64,18 @@ RETURN retval;
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION timecard__delete(in_id int)
+RETURNS bool
+LANGUAGE SQL AS
+$$
+    WITH a AS (
+        DELETE FROM jcitems j
+        WHERE j.id = in_id
+          AND j.qty > j.allocated OR j.allocated IS NULL -- What about non_billable?
+        RETURNING 1)
+    SELECT COUNT(*) > 0;
+$$;
+
 CREATE OR REPLACE FUNCTION timecard__bu_class(in_id int)
 returns business_unit_class LANGUAGE SQL AS
 $$
