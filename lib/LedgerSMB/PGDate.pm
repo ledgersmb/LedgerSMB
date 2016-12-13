@@ -87,7 +87,7 @@ our $formats = {
 # Since we only match a limited set of patterns, below is what I
 # had expected DateTime::Format::Strptime would have done.
 my $regexes = {
-    'YYYY-MM-DD' => [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)$/,
+    'YYYY-MM-DD' => [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)\s?/,
                         fields => [ 'year', 'month', 'day' ] },
                     ],
     'DD-MM-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
@@ -185,6 +185,7 @@ sub new {
 
         $self->is_date(0);
         $self->is_time(0);
+        $self->is_tz(0);
 
         return $self;
     }
@@ -260,7 +261,9 @@ sub from_input{
                 $args{year} += $century;
             }
         }
-
+        if ( $input =~ /\:\d\d([\+\-])(\d+)/) {
+            $args{time_zone} = $1.substr($2.'000',0,4);
+        }
         $dt = __PACKAGE__->new(%args)
             if $success;
 
@@ -271,6 +274,7 @@ sub from_input{
     bless $dt, __PACKAGE__;
     $dt->is_date(1);
     $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Define time
+    $dt->is_tz(($input && $input =~ /\:\d\d[\+\-]\d+/) ? 1 : 0); Define TZ
     return $dt;
 }
 
@@ -294,14 +298,18 @@ sub to_output {
     $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
 
     $fmt .= ' %T' if $self->is_time();
+    $fmt .= '%z' if $self->is_tz();
     $fmt =~ s/^\s+//;
-
+#use Data::Printer;
+#warn p($self);
+#warn $fmt;
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
               locale => 'en_US',
             on_error => 'croak',
     );
     my $date = $formatter->format_datetime($self);
+#warn $date;
     if ($date =~ /\:/ and not $self->is_time()) { die "to_output"; }
     return $date;
 }
