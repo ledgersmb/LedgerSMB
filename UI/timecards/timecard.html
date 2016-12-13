@@ -17,6 +17,42 @@ END; ?>
 <tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
     </th>
 </tr>
+<tr>
+    <div class="input_row" id="timecard_type_radios">
+    <?lsmb
+        PROCESS input element_data={
+           value = 'by_time' 
+              id = 'timecard_by_time' 
+            name = 'timecard_type',
+           label = text('Time') 
+            type = "radio"
+         checked = jctype.is_timecard ? "checked" : undef
+            "data-dojo-type" = "lsmb/PublishRadioButton"
+           "data-dojo-props" = "topic:'ui/timecard/timecard-type'"
+        };
+        PROCESS input element_data={
+           value = 'by_materials' 
+              id = 'timecard_by_materials' 
+            name = 'timecard_materials',
+           label = text('Materials') 
+            type = "radio"
+         checked = jctype.is_service ? "checked" : undef
+            "data-dojo-type" = "lsmb/PublishRadioButton"
+           "data-dojo-props" = "topic:'ui/timecard/timecard-type'"
+        };
+        PROCESS input element_data={
+           value = 'by_overhead' 
+              id = 'timecard_by_overhead' 
+            name = 'timecard_overhead',
+           label = text('Overhead') 
+            type = "radio"
+         checked = jctype.is_overhead ? "checked" : undef
+            "data-dojo-type" = "lsmb/PublishRadioButton"
+           "data-dojo-props" = "topic:'ui/timecard/timecard-type'"
+        };
+        ?>
+    </div>
+</tr>
 <tr id="business_unit">
   <th><?lsmb text('Entered For') ?></th>
   <td><?lsmb
@@ -154,6 +190,23 @@ PROCESS print_options;
 END; ?>
 <?lsmb 
 IF id;
+    PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Edit')
+   value = 'edit'
+   };
+    IF qty > allocated || !allocated;
+        PROCESS button element_data = {
+       name = 'action'
+       type = 'submit'
+      class = 'submit'
+       text = text('Delete')
+       value = 'delete'
+       type = 'submit'
+       };
+   END;
     PROCESS button element_data = {
    name = 'action'
   class = 'submit'
