@@ -898,6 +898,7 @@ sub payment2 {
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
             my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&login='.$request->{login};
             my $invoice_id = $invoice->{invoice_id};
+            my $invoice_amt = $invoice->{amount};
             push @invoice_data, {
                 invoice => {
                     number => $invoice->{invnumber},
@@ -905,7 +906,7 @@ sub payment2 {
                     href   => $uri
                 },
                 invoice_date      => "$invoice->{invoice_date}",
-                amount            => $invoice->{amount}->to_output,
+                amount            => $invoice_amt ? $invoice_amt->to_output() : '',
                 due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
                 paid              => $paid_formatted,
                 discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
@@ -924,7 +925,9 @@ sub payment2 {
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
                     value => $request->{"topay_fx_$invoice_id"} //
-                        LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output
+                        ( $topay_fx_value ?
+                          LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output()
+                          : ''),
                 }#END HASH
             };# END PUSH
 
