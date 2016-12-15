@@ -742,8 +742,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         if($form->{"calctax_$item"} && $is_update){
             $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
-            $form->{invtotal} += $form->{"tax_$item"};
         }
+        $form->{invtotal} += $form->{"tax_$item"};
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -752,7 +752,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
                      size=10 value=$form->{"tax_$item"} /></td>
-      <td align=right><input data-dojo-type="dijit/form/TextBox" id="calctax_$item" name="calctax_$item"
+      <td align=right><input id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}
                             title="Calculate automatically"></td>
@@ -1230,10 +1230,10 @@ sub update {
 
     for (@taxaccounts) {
         $form->{"tax_$_"} =
-          $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+            $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+        $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
-    @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
 
     $j = 1;
     for $i ( 1 .. $form->{paidaccounts} ) {
