@@ -70,10 +70,6 @@ sub update {
     my $beginning_balance = $self->{beginning_balance} // 0;
     my $total_cleared_credits = $self->{total_cleared_credits} // 0;
     my $total_cleared_debits = $self->{total_cleared_debits} // 0;
-    $self->{submit_allowed} =
-        abs(($their_total - $beginning_balance)
-            - ($total_cleared_credits - $total_cleared_debits))
-        >= 0.001;
 }
 
 sub _pre_save {
@@ -206,7 +202,6 @@ sub new_report {
 
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
-
 
     return ($report_id,
             ###TODO-ISSUE-UNDECLARED-ENTRIES $entries
@@ -379,7 +374,7 @@ sub get {
     $self->{account_info} = $ref;
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
                                 args => { chart_id => $ref->{id},
-                                          report_date => $self->{end_date}->clone->add_interval('month',-1) });
+                                          report_date => $self->{end_date} });
 
     my $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;

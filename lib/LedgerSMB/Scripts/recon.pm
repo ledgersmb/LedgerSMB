@@ -91,7 +91,6 @@ sub select_all_recons {
         ++ $i;
     }
     update_recon_set($request);
-
 }
 
 =item reject
@@ -124,7 +123,6 @@ sub submit_recon_set {
             format => 'HTML',
             path=>"UI");
     return $template->render($recon);
-
 }
 
 =item save_recon_set
@@ -282,9 +280,6 @@ sub _display_report {
         $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
-    $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
-                             - ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
-    $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
     return $template->render($recon);
 }
 
@@ -349,7 +344,6 @@ sub new_report {
         return $template->render($recon);
     }
     return undef;
-
 }
 
 =item delete_report($request)
@@ -453,7 +447,6 @@ sub pending {
         );
     }
     else {
-
         return $template->render();
     }
 }
