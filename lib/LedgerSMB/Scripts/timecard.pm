@@ -15,6 +15,9 @@ process of work, from professional services to payroll and manufacturing.
 =cut
 
 package LedgerSMB::Scripts::timecard;
+use strict;
+use warnings;
+
 use LedgerSMB::Template;
 use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;
@@ -24,9 +27,17 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Setting;
 use DateTime;
-use strict;
-use warnings;
+use DateTime::TimeZone;
 
+use Data::Printer class => {
+        expand => 1,
+        colored => 1,
+        sort_keys => 1,
+        show_methods => 'none',
+        filters => {
+            'LedgerSMB::PGNumber' => sub { $_[0]->to_sort }
+        }
+};
 
 =head1 ROUTINES
 
@@ -69,31 +80,29 @@ defaults.
 
 sub display {
     my ($request) = @_;
-    $request->{non_billable} ||= 0;
+    $request->{non_billable} //= 0;
     if ($request->{in_hour} and $request->{in_min}) {
         my $request->{min_used} =
             ($request->{in_hour} * 60) + $request->{in_min} -
             ($request->{out_hour} * 60) - $request->{out_min};
         $request->{qty} = $request->{min_used}/60 - $request->{non_billable};
-    } else { # Default to current date and time
-        my $now = DateTime->now;
-        $request->{in_hour} = $now->hour unless defined $request->{in_hour};
-        $request->{in_min} = $now->minute unless defined $request->{in_min};
     }
     @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
-          $request->{bu_class_id}, undef, 0, $request->{transdate}
+        $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
     my $curr = LedgerSMB::Setting->get('curr');
     @{$request->{currencies}} = split /:/, $curr;
+    $_ = {id => $_, text => $_} for @{$request->{currencies}};
     $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
-     my $template = LedgerSMB::Template->new(
-         user     => $request->{_user},
-         locale   => $request->{_locale},
-         path     => 'UI/timecards',
-         template => 'timecard',
-         format   => 'HTML'
-     );
-     return $template->render_to_psgi($request);
+    warn p($request);
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/timecards',
+        template => 'timecard',
+        format   => 'HTML'
+    );
+    return $template->render_to_psgi($request);
 }
 
 =item timecard_screen
@@ -198,6 +207,27 @@ sub save_week {
     return new($request);
 }
 
+=item edit
+
+=cut
+
+sub edit {
+    my ($request) = @_;
+    my $tcard = LedgerSMB::Timecard->get($request->{id});
+    $tcard->{transdate} = LedgerSMB::PGDate->from_db(
+              $tcard->checkedin->to_db,
+             'date');
+    $tcard->{transdate}->is_time(0);
+    my ($part) = $tcard->call_procedure(
+         funcname => 'part__get_by_id', args => [$tcard->parts_id]
+    );
+    $tcard->{partnumber} = $part->{partnumber};
+    $tcard->{qty} //= 0;
+    $tcard->{non_billable} //= 0;
+    $tcard->{in_edit} = 1;
+    return display($tcard);
+}
+
 =item print
 
 =cut
@@ -273,6 +303,7 @@ sub get {
     $tcard->{partnumber} = $part->{partnumber};
     $tcard->{qty} //= 0;
     $tcard->{non_billable} //= 0;
+    $tcard->{in_edit} = 0;
     return display($tcard);
 }
 
