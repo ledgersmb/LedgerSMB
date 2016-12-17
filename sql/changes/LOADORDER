@@ -27,6 +27,7 @@
 !1.4/account-translations.sql
 1.4/drop-je-functions.sql
 !1.4/templatetrans.sql
+1.4/business_unit_class_id_seq-fix.sql
 # multi currency changes
 1.5/multi-currency-schema.sql
 1.5/multi-currency-menu.sql

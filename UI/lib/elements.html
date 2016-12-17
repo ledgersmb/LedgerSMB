@@ -72,6 +72,13 @@
     "data-dojo-type" = "dijit/form/Select"
   }
 
+  #toggle
+  toggle_defaults = {
+    type = 'submit',
+    "data-dojo-type"  = "dijit/form/ToggleButton"
+    "data-dojo-props" = "iconClass:'dijitCheckBoxIcon'"
+  }
+
 ?>
 
 <?lsmb # INPUT ELEMENT ?>
@@ -101,9 +108,12 @@
               CASE ['checkbox'];
                 input_type_keys = input_keys.merge(['checked']);
                 input_defaults = checkbox_defaults;
+              CASE ['toggle'];
+                input_type_keys = input_keys.merge(['checked']);
+                input_defaults = toggle_defaults;
               CASE ['radio'];
                 input_type_keys = input_keys.merge(['checked']);
-            input_defaults = radiobutton_defaults;
+                input_defaults = radiobutton_defaults;
               CASE ['password'];
                 input_type_keys = input_keys;
                 input_defaults = password_defaults;
@@ -111,19 +121,19 @@
                 input_type_keys = input_keys;
                 input_defaults = date_defaults;
               CASE 'text';
-            IF 'date' == element_data.class;
-                input_type_keys = input_keys;
-                input_defaults = date_defaults;
-            ELSE;
-                input_type_keys = input_keys.merge(['maxlength', 'readonly']);
-                input_defaults = text_defaults;
-            END;
+                IF 'date' == element_data.class;
+                    input_type_keys = input_keys;
+                    input_defaults = date_defaults;
+                ELSE;
+                    input_type_keys = input_keys.merge(['maxlength', 'readonly']);
+                    input_defaults = text_defaults;
+                END;
               CASE 'currency';
-            input_type_keys = input_keys;
-            input_defaults = currency_defaults;
+                input_type_keys = input_keys;
+                input_defaults = currency_defaults;
               CASE 'monetary';
-            input_type_keys = input_keys;
-            input_defaults = monetary_defaults;
+                input_type_keys = input_keys;
+                input_defaults = monetary_defaults;
               CASE;
                 input_type_keys = input_keys;
             END;
@@ -282,6 +292,28 @@
   <?lsmb END ?>
 <?lsmb END ?>
 
+<?lsmb # BUTTON ELEMENT ?>
+<?lsmb BLOCK toggle ?>
+  <?lsmb IF element_data  # Only process element if one exists. ?>
+        <?lsmb
+            element_type = 'toggle';
+            PROCESS auto_id;
+          ?>
+          <?lsmb PROCESS attributes  # Process regular attributes.
+            attribute_data=element_data
+            attribute_defaults = toggle_defaults
+            element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
+                 'showLabel', 'label',
+                 'tabindex', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to toggles.
+          ?>
+          <?lsmb PROCESS custom_attributes  # Process custom attributes.
+            custom_attribute_data=element_data.attributes
+          ?>
+          <?lsmb PROCESS auto_label  # Process element label. ?>
+          <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
+  <?lsmb END ?>
+<?lsmb END ?>
+
 <?lsmb # LABEL ELEMENT ?>
 <?lsmb BLOCK label ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
@@ -332,7 +364,7 @@
   <?lsmb UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. ?>
     <?lsmb element_id = "" ?>
     <?lsmb  # Label id's default to [for]-label.
-      IF element_type == 'label' AND element_data.defined('for');
+      IF element_type == 'label' AND (element_data.defined('for') OR element_type == 'toggle');
         element_id = element_data.for _ "-label";
       ELSIF ((element_type == 'input' AND element_data.type == 'radio') OR element_type == 'button') AND element_data.defined('name') AND element_data.defined('value');
         element_id = element_data.name _ "-" _ element_data.value;  # radios and buttons get name-value for uniqueness.

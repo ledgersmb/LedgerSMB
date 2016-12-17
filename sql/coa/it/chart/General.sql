@@ -4,7 +4,11 @@ begin;
 --
 -- From: Luca Venturini <luca@yepa.com>
 -- 9 Oct 2001
+--      Ferruccio Zamuner <nonsolosoft@diff.org>
+-- 23 Nov 2016
 --
+-- ('20161123 IVA su acquisti diventa Iva su acquisti/vendite (22%) dal 1 ottobre 2013
+-- ('20161123 IVA su acquisti diventa Iva su acquisti/vendite (21%) dal 17 settembre 2011 fino al 30 settembre 2013
 -- ('2001101'5 Conto ('6470005' diventa tassa (negativa)
 -- ('2001102'5 IVA su acquisti diventa Iva su acq. (20%)
 -- ('2001102'5 Introdotto un conto per ogni aliquota IVA
@@ -81,8 +85,12 @@ SELECT account__save(NULL,'6480003','IVA su acquisti (4%)','L','', NULL, false, 
 SELECT account__save(NULL,'6480004','IVA su acquisti (10%)','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'6480005','IVA su acquisti (20%)','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'6480006','IVA a credito su acquisti U.E.','L','', NULL, false, false, string_to_array('AP_tax', ':'), false, false);
-SELECT account__save(NULL,'6480010','IVA su fatture emesse','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
+SELECT account__save(NULL,'6480007','IVA su acquisti (21%)','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'6480008','IVA su acquisti (22%)','L','', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
+SELECT account__save(NULL,'6480010','IVA su fatture emesse (20%)','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
 SELECT account__save(NULL,'6480011','IVA a debito su acquisti U.E.','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
+SELECT account__save(NULL,'6480012','IVA su fatture emesse (21%)','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
+SELECT account__save(NULL,'6480013','IVA su fatture emesse (22%)','L','', NULL, false, false, string_to_array('AR_tax', ':'), false, false);
 SELECT account__save(NULL,'6480015','IVA su corrispettivi','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480020','IVA versata','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480025','IVA acconto','L','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -169,8 +177,16 @@ INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480004'), 0.1);
 --IVA Acquisti 20%
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480005'), 0.2);
---IVA Fatture Emesse
+--IVA Acquisti 21%
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480007'), 0.21);
+--IVA Acquisti 22%
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480008'), 0.22);
+--IVA Fatture Emesse 20%
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480010'), 0.2);
+--IVA Fatture Emesse 21%
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480012'), 0.21);
+--IVA Fatture Emesse 22%
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480013'), 0.22);
 --IVA su corrispettivi
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480015'), 0.2);
 --

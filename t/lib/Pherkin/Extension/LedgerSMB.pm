@@ -277,7 +277,6 @@ INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
                            $line->{amount_tc} // $line->{amount_bc})
             or die "Failed to insert 'acc_trans' table row: " . $line_sth->errstr;
     }
-    $self->admin_dbh->commit;
 }
 
 1;

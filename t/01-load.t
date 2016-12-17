@@ -98,6 +98,8 @@ my @modules =
           'LedgerSMB::Payroll::Income_Type',
           'LedgerSMB::REST_Format::json',
           'LedgerSMB::Reconciliation::CSV',
+          'LedgerSMB::Reconciliation::ISO20022',
+          'LedgerSMB::FileFormats::ISO20022::CAMT053',
           'LedgerSMB::Report::Axis',
           'LedgerSMB::Report::File', 'LedgerSMB::Report::GL',
           'LedgerSMB::Report::Orders', 'LedgerSMB::Report::Timecards',
