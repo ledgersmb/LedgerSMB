@@ -478,11 +478,10 @@ $$
                 AND ac.approved IS TRUE
                 AND ac.chart_id = t_chart_id
                 AND ac.transdate <= t_end_date
-                AND ((t_recon_fx is not true
-                        and ac.fx_transaction is not true)
-                    OR (t_recon_fx is true
-                        AND (gl.table <> 'gl' OR ac.fx_transaction
-                                              IS TRUE)))
+                AND (t_recon_fx is not true
+                     OR (t_recon_fx is true
+                         AND (gl.table <> 'gl'
+                              OR ac.fx_transaction IS TRUE)))
                 AND (ac.entry_id > coalesce(r.max_ac_id, 0))
         GROUP BY gl.ref, ac.source, ac.transdate,
                 ac.memo, ac.voucher_id, gl.table,
