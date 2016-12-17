@@ -12,6 +12,20 @@ define([
           constructor: function(params, srcNodeRef) {
   // this is a workaround for https://github.com/ledgersmb/LedgerSMB/issues/2270
             this._formattedValue = srcNodeRef.value;
+
+            /* Provide default 'old code' doesn't include in its templates */
+            if (! params.constraints) {
+               params.constraints = { };
+            }
+            if (! params.constraints.datePattern) {
+              params.constraints.datePattern =
+                lsmbConfig.dateformat.replace(/mm/,"MM");
+            }
+            if (! params.placeholder) {
+               params.placeholder = lsmbConfig.dateformat;
+            }
+            // end of 'old code' support block
+
             this.inherited(arguments);
           },
           postMixInProperties: function() {

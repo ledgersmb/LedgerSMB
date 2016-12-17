@@ -23,4 +23,3 @@ default:
                   port: 4422
       Pherkin::Extension::PageObject:
          dummy: 1
-
