@@ -191,12 +191,12 @@ sub create_links {
         $form->{vc}   = 'customer';
     }
 
-     $form->create_links( module => $form->{ARAP},
-                                 myconfig => \%myconfig,
-                                 vc => $form->{vc},
-                                 billing => $form->{vc} eq 'customer'
-                                      && $form->{type} eq 'invoice')
-          unless defined $form->{"$form->{ARAP}_links"};
+    $form->create_links( module => $form->{ARAP},
+                         myconfig => \%myconfig,
+                         vc => $form->{vc},
+                         billing => $form->{vc} eq 'customer'
+                         && $form->{type} eq 'invoice')
+        unless $form->{"$form->{ARAP}_links"};
 
 
     $duedate     = $form->{duedate};
@@ -332,8 +332,6 @@ sub create_links {
     # check if calculated is equal to stored
     # taxincluded can't be calculated
     # this works only if all taxes are checked
-
-    @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
 
     if ( !$form->{oldinvtotal} ) { # first round loading (or amount was 0)
         for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
@@ -739,11 +737,6 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     }
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
-
-        if($form->{"calctax_$item"} && $is_update){
-            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
-            $form->{invtotal} += $form->{"tax_$item"};
-        }
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -752,7 +745,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
                      size=10 value=$form->{"tax_$item"} /></td>
-      <td align=right><input data-dojo-type="dijit/form/TextBox" id="calctax_$item" name="calctax_$item"
+      <td align=right><input id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}
                             title="Calculate automatically"></td>
@@ -1173,67 +1166,74 @@ sub update {
     my $display = shift;
     $form->open_form() unless $form->check_form();
     $is_update = 1;
-    if ( !$display ) {
-        $form->{invtotal} = 0;
 
-        $form->{exchangerate} =
+    $form->{invtotal} = 0;
+
+    $form->{exchangerate} =
           $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
-        @flds =
+    @flds =
           ( "amount", "$form->{ARAP}_amount", "projectnumber", "description","taxformcheck" );
-        $count = 0;
-        @a     = ();
-        for $i ( 1 .. $form->{rowcount} ) {
-            $form->{"amount_$i"} =
-              $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
-            if ( $form->{"amount_$i"} ) {
-                push @a, {};
-                $j = $#a;
+    $count = 0;
+    @a     = ();
+    for $i ( 1 .. $form->{rowcount} ) {
+        $form->{"amount_$i"} =
+            $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
+        if ( $form->{"amount_$i"} ) {
+            push @a, {};
+            $j = $#a;
 
-                for (@flds) { $a[$j]->{$_} = $form->{"${_}_$i"} }
-                $count++;
-            }
+            for (@flds) { $a[$j]->{$_} = $form->{"${_}_$i"} }
+            $count++;
         }
+    }
 
-        $form->redo_rows( \@flds, \@a, $count, $form->{rowcount} );
-        $form->{rowcount} = $count + 1;
+    $form->redo_rows( \@flds, \@a, $count, $form->{rowcount} );
+    $form->{rowcount} = $count + 1;
 
-        for ( 1 .. $form->{rowcount} ) {
-            $form->{invtotal} += $form->{"amount_$_"};
-        }
+    for ( 1 .. $form->{rowcount} ) {
+        $form->{invtotal} += $form->{"amount_$_"};
+    }
 
-        $form->{exchangerate} = $exchangerate
-          if (
+    $form->{exchangerate} = $exchangerate
+        if (
             $form->{forex} = (
                 $exchangerate = $form->check_exchangerate(
                     \%myconfig, $form->{currency}, $form->{transdate},
                     ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
                 )
             )
-          );
+        );
 
-        if ( $newname = &check_name( $form->{vc} ) ) {
-            $form->{notes} = $form->{intnotes} unless $form->{id};
-            &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} );
-        }
-        if ( $form->{transdate} ne $form->{oldtransdate} ) {
-            $form->{duedate} =
-              $form->current_date( \%myconfig, $form->{transdate},
-                $form->{terms} * 1 );
-            $form->{oldtransdate} = $form->{transdate};
-            $newproj =
-              &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
-              if !$newname;
-        }
-    }#!$display
+    if ( $newname = &check_name( $form->{vc} ) ) {
+        $form->{notes} = $form->{intnotes} unless $form->{id};
+        &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} );
+    }
+    if ( $form->{transdate} ne $form->{oldtransdate} ) {
+        $form->{duedate} =
+            $form->current_date( \%myconfig, $form->{transdate},
+                                 $form->{terms} * 1 );
+        $form->{oldtransdate} = $form->{transdate};
+        $newproj =
+            &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
+            if !$newname;
+    }
+
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
         $form->{"tax_$_"} =
-          $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+            $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+        $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
-    @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
+    my $tax_base = $form->{invtotal};
+    foreach $item ( split / /, $form->{taxaccounts} ) {
+        if($form->{"calctax_$item"} && $is_update){
+            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+        }
+        $form->{invtotal} += $form->{"tax_$item"};
+    }
 
     $j = 1;
     for $i ( 1 .. $form->{paidaccounts} ) {
@@ -1346,7 +1346,7 @@ sub post {
     # if oldname ne name redo form
     ($name) = split /--/, $form->{ $form->{vc} };
     if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}|
-        and $form->{"old$form->{vc}"} ne $name) {
+         and $form->{"old$form->{vc}"} ne $name) {
         &update;
         $form->finalize_request();
     }
@@ -1362,21 +1362,16 @@ sub post {
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
-       $form->update_status( \%myconfig );
-       if ( $form->{printandpost} ) {
-           &{"print_$form->{formname}"}( $old_form, 1 );
+        $form->update_status( \%myconfig );
+        if ( $form->{printandpost} ) {
+            &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
         if(defined($form->{batch_id}) and $form->{batch_id}
-           and ($form->{callback} !~ /vouchers/))
-    {
+           and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
-    }
-        if ($form->{separate_duties}){
-            $form->{rowcount} = 0;
-            edit();
         }
-        else { edit(); }
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
