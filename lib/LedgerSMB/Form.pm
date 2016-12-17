@@ -2392,6 +2392,7 @@ sub create_links {
         $query = qq|
             SELECT a.invnumber, a.transdate,
                 a.entity_credit_account AS entity_id,
+                a.entity_credit_account AS ${vc}_id,
                 a.datepaid, a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
@@ -2414,7 +2415,6 @@ sub create_links {
             WHERE a.id = ? AND c.entity_class =
                 (select id FROM entity_class
                 WHERE class ilike ?)|;
-
         $sth = $dbh->prepare($query);
         $sth->execute( $self->{id}, $self->{vc} ) || $self->dberror($query);
 
