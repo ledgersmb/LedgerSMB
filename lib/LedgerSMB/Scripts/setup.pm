@@ -67,20 +67,26 @@ sub _get_database {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
-    LedgerSMB::Auth->http_error('401')
+    return [ 401,
+             [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
+               'Content-Type' => 'text/text; charset=UTF-8' ],
+             [ 'Please enter your credentials' ] ]
         if ! defined $creds->{password};
 
-    return LedgerSMB::Database->new(
+    return (undef,
+            LedgerSMB::Database->new(
                 username => $creds->{login},
                 password => $creds->{password},
                   dbname => $request->{database},
-    );
+    ));
 }
 
 
 sub _init_db {
     my ($request) = @_;
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     local $@;
     $request->{dbh} = eval {
         $database->connect({PrintError => 0, AutoCommit => 0 })
@@ -176,10 +182,11 @@ sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
     if (!$request->{database}){
-        list_databases($request);
-        return;
+        return list_databases($request);
     }
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     my $server_info = $database->server_version;
 
     my $version_info = $database->get_info();
@@ -259,7 +266,9 @@ Lists all databases as hyperlinks to continue operations.
 
 sub list_databases {
     my ($request) = @_;
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     my @results = $database->list_dbs;
     $request->{dbs} = [];
     for my $r (@results){
@@ -270,7 +279,7 @@ sub list_databases {
             template => 'list_databases',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item list_users
@@ -303,7 +312,9 @@ Copies db to the name of $request->{new_name}
 
 sub copy_db {
     my ($request) = @_;
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
@@ -364,7 +375,8 @@ sub run_backup {
     use LedgerSMB::Company_Config;
 
     my $request = shift @_;
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
 
     my $backupfile;
     my $mimetype;
@@ -438,7 +450,9 @@ sub run_backup {
 
 sub revert_migration {
     my ($request) = @_;
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     my $dbh = $database->connect({PrintError => 0, AutoCommit => 0});
     my $sth = $dbh->prepare(qq(
          SELECT value
@@ -802,7 +816,9 @@ sub create_db {
     my ($request) = @_;
     my $rc=0;
 
-    my $database = _get_database($request);
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
     my $version_info = $database->get_info;
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} ne 'does not exist') {
@@ -849,7 +865,8 @@ sub select_coa {
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
-           my $database = _get_database($request);
+            my ($reauth, $database) = _get_database($request);
+            return $reauth if $reauth;
 
            $database->load_coa( {
                country => $request->{coa_lc},

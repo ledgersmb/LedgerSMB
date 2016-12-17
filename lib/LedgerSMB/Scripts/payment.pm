@@ -170,7 +170,8 @@ sub pre_bulk_post_report {
                    };
             for my $invrow (1 .. $request->{"invoice_count_$cid"}){
                  my $inv_id = $request->{"invoice_${cid}_$invrow"};
-                     $ref->{amount} += $request->{"payment_$inv_id"};
+                 $ref->{amount} +=
+                    LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
              }
              # If vendor, this is debit-normal so multiply by -1
              if ($request->{account_class} == 1){ # vendor
@@ -893,6 +894,7 @@ sub payment2 {
             #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
             my $uri =$uri_module.'.pl?action=edit&id='.$invoice->{invoice_id}.'&login='.$request->{login};
             my $invoice_id = $invoice->{invoice_id};
+            my $invoice_amt = $invoice->{amount};
             push @invoice_data, {
                 invoice => {
                     number => $invoice->{invnumber},
@@ -900,7 +902,7 @@ sub payment2 {
                                             href   => $uri
                                            },
                 invoice_date      => "$invoice->{invoice_date}",
-                amount            => $invoice->{amount}->to_output,
+                amount            => $invoice_amt ? $invoice_amt->to_output() : '',
                 due               => $request->{"optional_discount_$invoice_id"}?  $invoice->{due} : $invoice->{due} + $invoice->{discount},
                                paid              => $paid_formatted,
                 discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
@@ -919,7 +921,9 @@ sub payment2 {
                 topay_fx          =>  {
                     name  => "topay_fx_$invoice_id",
                     value => $request->{"topay_fx_$invoice_id"} //
-                        LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output
+                        ( $topay_fx_value ?
+                          LedgerSMB::PGNumber->from_input($topay_fx_value)->to_output()
+                          : ''),
                                                  }#END HASH
                            };# END PUSH
 

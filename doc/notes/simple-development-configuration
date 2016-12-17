@@ -1,0 +1,58 @@
+                                                -*- mode: text -*-
+
+A simple configuration to ease development
+
+
+Contents
+========
+
+ * Systemd service
+ * PSGI start file
+
+Systemd service
+===============
+
+A systemd example configuration is provided in conf/systemd/, under the 
+name plackup_ledgersmb-development.service. Place it in /etc/systemd/system
+and edit to fit your setup.
+
+The file is very commented but a few key points are worth mentionning.
+
+First, in order to be able to use the Plack Interactive Debugger, we need
+to run a non-forking server. This slows down the whole application, so use
+that only on a development setup. The service is set with HTTP::Server::PSGI
+as server and plackup instead of starman.
+
+Second, development often involves frequent source updates and restarts, so
+we monitor lots of source directories and the server restarts itself when
+changes are done to any file in those directories. Simply add to the list
+if some are missing.
+
+Last, the systemd service uses an alternate PSGI file, which is based on
+LedgerSMB standard file, but edited to add Development tools. Even though
+it doesn't use starman, we chose to name it starman-development.psgi to
+show the link with starman.psgi.
+
+PSGI start file
+===============
+
+The development startup is in tools and is a great place to experiment
+with Plack middlewares. There a lots of them and they provide interesting
+possibilities.
+
+Two were selected to help development.
+
+First, Plack::InteractiveDebugger. This middleware dumps a nicely formatted
+stack trace on a die and allows variable and parameter inspection at any
+place in the stack. It lacks the feature of a full IDE, break points and 
+single steps for example, but nevertheless can speed up finding bugs cause.
+
+Second, the Debug panels. Plack allows a serie of panels to ease debugging.
+Uncomment the panel section and you will find a big button on your application
+screen on the right side, which toggles display of enabled panels.
+Check for Plack::Middleware::Debug on the net and your will find lots of 
+really interesting ones in http://search.cpan.org/dist/Plack-Middleware-Debug/
+
+A great panel is Profiler::NYTProf, which allows profiling of the application.
+It is a performance killer but will show very detailed views of where time is
+spent in the application.

@@ -25,11 +25,12 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '1.402.9';
-requires 'PGObject::Simple';
-requires 'PGObject::Simple::Role', '1.12.1';
+requires 'PGObject', '1.403.2';
+requires 'PGObject::Simple', '2.0.0';
+requires 'PGObject::Simple::Role', '1.13.2';
 requires 'PGObject::Type::BigFloat';
-requires 'PGObject::Type::DateTime', '1.0.3';
+requires 'PGObject::Type::DateTime', '1.0.4';
+requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';
@@ -42,13 +43,14 @@ requires 'Text::CSV';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
+requires "XML::Simple";
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
 
 feature 'rest', "RESTful Web Service XML support" =>
     sub {
-        requires "XML::Simple";
+        # no dependencies which aren't already required above
 };
 
 feature 'starman', "Standalone Server w/Starman" =>
@@ -88,6 +90,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 on 'develop' => sub {
     requires 'File::Util';
     requires 'HTML::Lint';
+    requires 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';

@@ -67,8 +67,8 @@ our $formats = {
     'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
     'DD/MM/YYYY' => ['%d/%m/%Y', '%D'],
     'MM-DD-YYYY' => ['%m-%d-%Y', '%m-%d-%y'],
-    'MM/DD/YYYY' => ['%d/%m/%Y', '%d/%m/%y'],
-    'MM.DD.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
+    'MM/DD/YYYY' => ['%m/%d/%Y', '%m/%d/%y'],
+    'MM.DD.YYYY' => ['%m.%d.%Y', '%m.%d.%y'],
       'YYYYMMDD' => ['%Y%m%d'],
         'YYMMDD' => ['%y%m%d'],
       'DDMMYYYY' => ['%d%m%Y'],
@@ -76,6 +76,77 @@ our $formats = {
       'MMDDYYYY' => ['%m%d%Y'],
         'MMDDYY' => ['%m%d%y'],
      'DDmonYYYY' => ['%d%b%Y', '%d%b%y']
+};
+
+
+# Originally, we used DateTime::Format::Strptime for the tasks of
+# formatting as well as parsing.  However, the parser turns out
+# (as of version 1.67 of DateTime::Format::Strptime), to match
+# 2016-11-30 when requested to match 'dd-mm-yy'; worse, it matches
+# it into 2030-11-16.
+# Since we only match a limited set of patterns, below is what I
+# had expected DateTime::Format::Strptime would have done.
+my $regexes = {
+    'YYYY-MM-DD' => [ { regex => qr/^(\d{4,4})\-(\d\d)\-(\d\d)$/,
+                        fields => [ 'year', 'month', 'day' ] },
+                    ],
+    'DD-MM-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
+                        fields => [ 'day', 'month', 'year' ] },
+                      { regex => qr/^(\d\d)\-(\d\d)\-(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'day', 'month', 'year' ] },
+                    ],
+    'DD.MM.YYYY' => [ { regex => qr/^(\d\d)\.(\d\d)\.(\d{4,4})$/,
+                        fields => [ 'day', 'month', 'year' ] },
+                      { regex => qr/^(\d\d)\.(\d\d)\.(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'day', 'month', 'year' ] },
+                    ],
+    'DD/MM/YYYY' => [ { regex => qr/^(\d\d)\/(\d\d)\/(\d{4,4})$/,
+                        fields => [ 'month', 'day', 'year' ] },
+                      { regex => qr/^(\d\d)\/(\d\d)\/(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
+    'MM-DD-YYYY' => [ { regex => qr/^(\d\d)\-(\d\d)\-(\d{4,4})$/,
+                        fields => [ 'month', 'day', 'year' ] },
+                      { regex => qr/^(\d\d)\-(\d\d)\-(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
+    'MM.DD.YYYY' => [ { regex => qr/^(\d\d)\.(\d\d)\.(\d{4,4})$/,
+                        fields => [ 'month', 'day', 'year' ] },
+                      { regex => qr/^(\d\d)\.(\d\d)\.(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
+    'MM/DD/YYYY' => [ { regex => qr/^(\d\d)\/(\d\d)\/(\d{4,4})$/,
+                        fields => [ 'month', 'day', 'year' ] },
+                      { regex => qr/^(\d\d)\/(\d\d)\/(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
+      'YYYYMMDD' => [ { regex => qr/^(\d{4,4})(\d\d)(\d\d)$/,
+                        fields => [ 'year', 'month', 'day' ] },
+                    ],
+        'YYMMDD' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'year', 'month', 'day' ] },
+                    ],
+      'DDMMYYYY' => [ { regex => qr/^(\d\d)(\d\d)(\d{4,4})$/,
+                        fields => [ 'day', 'month', 'year' ] },
+                    ],
+        'DDMMYY' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'day', 'month', 'year' ] },
+                    ],
+      'MMDDYYYY' => [ { regex => qr/^(\d\d)(\d\d)(\d{4,4})$/,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
+        'MMDDYY' => [ { regex => qr/^(\d\d)(\d\d)(\d\d)$/,
+                        short_year => 1,
+                        fields => [ 'month', 'day', 'year' ] },
+                    ],
 };
 
 =back
@@ -96,6 +167,30 @@ different formats and handle construction differently.
 =head1 METHODS
 
 =over
+
+=item new
+
+Returns an empty date object when the input is an empty string; otherwise
+defers object creation to the superclass.
+
+=cut
+
+sub new {
+    my $class = shift;
+    my @args = @_;
+
+    if (! @args) {
+        my $self = {};
+        bless $self, $class;
+
+        $self->is_date(0);
+        $self->is_time(0);
+
+        return $self;
+    }
+    return $class->SUPER::new(@args);
+}
+
 
 =item add_interval(string $interval, optional integer $n)
 
@@ -127,16 +222,9 @@ sub add_interval {
     return $self;
 }
 
-=item from_input($string date, optional $has_time)
+=item from_input($string date)
 
 Parses this from an input string according to the user's dateformat
-
-Input parsing iterates through formats specified for the format string.  If
-$has_time is set and true, or if it is not defined then ' %T' is added to the
-end of the format string.  Similarly, if $has_time is undef or set and false,
-the format is used as is.  This allows the calling scripts to specify either
-that the string includes a time portion or that it does not, and allows this
-module to handle the parsing.
 
 =cut
 
@@ -146,11 +234,43 @@ sub from_input{
         local $@;
         return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
     }
-    my $dt = $self->from_db($input);
-    die "Bad date" if $input && not $dt->is_date;
-    die "Bad time" if $input && $input =~ /\:/ and not $dt->is_time();
+    return __PACKAGE__->new()
+        if ! $input; # matches undefined as well as ''
+
+    my $dt;
+    my @fmts;
+    @fmts = @{$regexes->{uc($LedgerSMB::App_State::User->{dateformat})}}
+       if defined $LedgerSMB::App_State::User->{dateformat};
+
+    for my $fmt (@fmts, @{$regexes->{'YYYY-MM-DD'}} ) {
+        my ($success, %args);
+        if ($input =~ $fmt->{regex}) {
+            @args{@{$fmt->{fields}}} = ($1, $2, $3);
+            $success = 1;
+        }
+        if ($fmt->{short_year}) {
+            my $year = DateTime->today()->year();
+            my $short_year = $year % 100;
+            my $century = $year - $short_year;
+
+            if ($args{year} > ($short_year+20)) {
+                $args{year} += ($century-1);
+            }
+            else {
+                $args{year} += $century;
+            }
+        }
+
+        $dt = __PACKAGE__->new(%args)
+            if $success;
+
+        last if $success;
+    }
+
+    die "Bad date ($input)" if $input && ! $dt;
     bless $dt, __PACKAGE__;
-    $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Redefine time. Why?
+    $dt->is_date(1);
+    $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Define time
     return $dt;
 }
 

@@ -116,13 +116,17 @@ sub submit_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     $recon->submit();
-    my $template = LedgerSMB::Template->new(
-            user => $request->{_user},
-            template => 'reconciliation/submitted',
-            locale => $request->{_locale},
-            format => 'HTML',
-            path=>"UI");
-    return $template->render_to_psgi($recon);
+    my $can_approve = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
+    if ( !$can_approve ) {
+        my $template = LedgerSMB::Template->new(
+                user => $request->{_user},
+                template => 'reconciliation/submitted',
+                locale => $request->{_locale},
+                format => 'HTML',
+                path=>"UI");
+        return $template->render_to_psgi($recon);
+    }
+    return _display_report($recon, $request);
 }
 
 =item save_recon_set
@@ -265,6 +269,7 @@ sub _display_report {
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
+    $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
 
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
       for my $bal_type (qw/ credits debits/) {
@@ -280,9 +285,6 @@ sub _display_report {
         $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
-    $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
-                             - ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
-    $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
     return $template->render_to_psgi($recon);
 }
 

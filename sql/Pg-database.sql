@@ -2067,6 +2067,9 @@ VALUES (1, 'Department', '0', '10'),
        (6, 'Vendor', '0', '60'),
        (7, 'Lot',  '0', 50);
 
+SELECT pg_catalog.setval('business_unit_class_id_seq', 7, true);
+
+
 CREATE TABLE bu_class_to_module (
    bu_class_id int references business_unit_class(id),
    module_id int references lsmb_module(id),

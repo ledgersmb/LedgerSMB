@@ -60,7 +60,7 @@ package Form;
 use strict;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Auth;
+use LedgerSMB::Session;
 use List::Util qw(first);
 use Time::Local;
 use Cwd;
@@ -1395,12 +1395,12 @@ sub db_init {
     my $dbname = $self->{company};
     $self->{dbh} = LedgerSMB::App_State::DBH;
     $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company});
-    LedgerSMB::Auth::credential_prompt unless $self->{dbh};
+    LedgerSMB::Session::credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
 
     if ($ENV{GATEWAY_INTERFACE} and !$ENV{LSMB_NOHEAD}) {
         if (! LedgerSMB::Session::check( $self->{cookie}, $self)) {
-            LedgerSMB::Auth::credential_prompt;
+            LedgerSMB::Session::credential_prompt;
         }
     }
 
