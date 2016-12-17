@@ -67,8 +67,7 @@ sub get {
           -charset    => 'utf-8',
           -attachment => $file->file_name,
     );
-    print $file->content;
-
+    print ${$file->content};
 }
 
 =item show_attachment_screen
@@ -116,10 +115,10 @@ sub attach_file {
         $file->file_name($fnames[0]);
         $file->get_mime_type;
         my $fh = $request->{_request}->upload('upload_data');
+        binmode $fh, ':raw';
         my $fdata = join ("", <$fh>);
         $file->content($fdata);
     }
-    $request->{content} = $file->content;
     $file->attach;
     my $cgi = CGI::Simple->new;
     print $cgi->redirect($request->{callback});
