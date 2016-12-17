@@ -334,6 +334,7 @@ sub create_links {
     # this works only if all taxes are checked
 
     if ( !$form->{oldinvtotal} ) { # first round loading (or amount was 0)
+        my @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
         for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
     }
 
