@@ -1373,17 +1373,16 @@ sub post {
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
-       $form->update_status( \%myconfig );
-       if ( $form->{printandpost} ) {
-           &{"print_$form->{formname}"}( $old_form, 1 );
+        $form->update_status( \%myconfig );
+        if ( $form->{printandpost} ) {
+            &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
         if(defined($form->{batch_id}) and $form->{batch_id}
-           and ($form->{callback} !~ /vouchers/))
-    {
+           and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
-    }
-       display_form();
+        }
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
