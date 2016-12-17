@@ -157,6 +157,7 @@ ALTER TABLE gl ENABLE TRIGGER ALL;
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
 SELECT setting__set(setting_key, value) FROM lsmb13.defaults
  where not setting_key = 'version';
+UPDATE lsmb13.batch SET locked_by = NULL;
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
 ALTER TABLE ar DISABLE TRIGGER ALL;
@@ -290,7 +291,7 @@ SELECT
 ALTER TABLE ap ENABLE TRIGGER ALL;
 
 INSERT INTO transactions (id, table_name, locked_by)
-SELECT id, table_name, locked_by FROM lsmb13.transactions;
+SELECT id, table_name, NULL FROM lsmb13.transactions;
 
 INSERT INTO transactions (id, table_name)
 SELECT id, 'ar' FROM ar WHERE id not in (select id from transactions);
