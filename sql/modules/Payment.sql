@@ -857,7 +857,7 @@ BEGIN
 
        IF (in_ovp_payment_id IS NOT NULL
            AND in_ovp_payment_id[out_count] IS NOT NULL) THEN
-         -- do something with an overpayment, but WHAT?? (EH20150705)
+         -- mark this transaction as a payment stemming from an overpayment
          INSERT INTO payment_links
            VALUES (in_ovp_payment_id[out_count],
                    currval('acc_trans_entry_id_seq'), 0);

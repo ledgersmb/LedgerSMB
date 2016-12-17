@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-10-15 11:01+0000\n"
+"POT-Creation-Date: 2016-12-10 08:24+0000\n"
 "PO-Revision-Date: 2016-08-21 08:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: English (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -94,11 +94,11 @@ msgstr ""
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
-#: sql/Pg-database.sql:2851
+#: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr ""
 
-#: sql/Pg-database.sql:2800
+#: sql/Pg-database.sql:2803
 msgid "AP Aging"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 #: templates/xedemo/ap_transaction.html:4
 #: templates/xedemo/ap_transaction.html:18
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:324
-#: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
+#: sql/Pg-database.sql:2952 sql/Pg-database.sql:2965
 msgid "AP Transaction"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "AP Transactions"
 msgstr ""
 
-#: sql/Pg-database.sql:2914
+#: sql/Pg-database.sql:2917
 msgid "AP Voucher"
 msgstr ""
 
@@ -141,11 +141,11 @@ msgstr ""
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
-#: sql/Pg-database.sql:2850
+#: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr ""
 
-#: sql/Pg-database.sql:2797
+#: sql/Pg-database.sql:2800
 msgid "AR Aging"
 msgstr ""
 
@@ -169,8 +169,8 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.tex:33
 #: templates/xedemo/ar_transaction.html:4
 #: templates/xedemo/ar_transaction.html:18
-#: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2948
-#: sql/Pg-database.sql:2961
+#: templates/xedemo/ar_transaction.tex:33 sql/Pg-database.sql:2951
+#: sql/Pg-database.sql:2964
 msgid "AR Transaction"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 msgid "AR Transactions"
 msgstr ""
 
-#: sql/Pg-database.sql:2913
+#: sql/Pg-database.sql:2916
 msgid "AR Voucher"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "AR/AP/GL Amount"
 msgstr ""
 
-#: sql/Pg-database.sql:3789
+#: sql/Pg-database.sql:3792
 msgid "Abandonment"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Payments.pm:191 LedgerSMB/Report/PNL/ECA.pm:92
 #: LedgerSMB/Report/Taxform/Detail.pm:82 LedgerSMB/Report/Taxform/Detail.pm:111
 #: LedgerSMB/Report/Taxform/Summary.pm:79 LedgerSMB/Report/Trial_Balance.pm:154
-#: LedgerSMB/Scripts/payment.pm:147 t/data/04-complex_template.html:558
+#: LedgerSMB/Scripts/payment.pm:148 t/data/04-complex_template.html:558
 #: UI/accounts/edit.html:26 UI/accounts/edit.html:120
 #: UI/Contact/divs/bank_act.html:18 UI/payments/use_overpayment2.html:116
 #: UI/Reports/co/filter_bm.html:78 UI/Reports/co/filter_cd.html:62
@@ -274,7 +274,7 @@ msgstr ""
 msgid "Account Number Start"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:148
+#: LedgerSMB/Scripts/payment.pm:149
 msgid "Account Title"
 msgstr ""
 
@@ -394,11 +394,11 @@ msgstr ""
 msgid "Add Account"
 msgstr ""
 
-#: sql/Pg-database.sql:2793
+#: sql/Pg-database.sql:2796
 msgid "Add Accounts"
 msgstr ""
 
-#: bin/ic.pl:65 sql/Pg-database.sql:2868
+#: bin/ic.pl:65 sql/Pg-database.sql:2871
 msgid "Add Assembly"
 msgstr ""
 
@@ -410,23 +410,23 @@ msgstr ""
 msgid "Add Asset Class"
 msgstr ""
 
-#: sql/Pg-database.sql:2890
+#: sql/Pg-database.sql:2893
 msgid "Add Assets"
 msgstr ""
 
-#: sql/Pg-database.sql:2915
+#: sql/Pg-database.sql:2918
 msgid "Add Budget"
 msgstr ""
 
-#: bin/am.pl:281 sql/Pg-database.sql:2842
+#: bin/am.pl:281 sql/Pg-database.sql:2845
 msgid "Add Business"
 msgstr ""
 
-#: sql/Pg-database.sql:2888
+#: sql/Pg-database.sql:2891
 msgid "Add Class"
 msgstr ""
 
-#: sql/Pg-database.sql:2789
+#: sql/Pg-database.sql:2792
 msgid "Add Contact"
 msgstr ""
 
@@ -455,7 +455,7 @@ msgid "Add Debit Note"
 msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:40
-#: sql/Pg-database.sql:2810
+#: sql/Pg-database.sql:2813
 msgid "Add Employee"
 msgstr ""
 
@@ -463,11 +463,11 @@ msgstr ""
 msgid "Add Exchange Rate"
 msgstr ""
 
-#: bin/am.pl:158 sql/Pg-database.sql:2909
+#: bin/am.pl:158 sql/Pg-database.sql:2912
 msgid "Add GIFI"
 msgstr ""
 
-#: bin/pe.pl:108 sql/Pg-database.sql:2935
+#: bin/pe.pl:108 sql/Pg-database.sql:2938
 msgid "Add Group"
 msgstr ""
 
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Add Labor/Overhead"
 msgstr "Add Labour/Overhead"
 
-#: bin/am.pl:457 sql/Pg-database.sql:2844
+#: bin/am.pl:457 sql/Pg-database.sql:2847
 msgid "Add Language"
 msgstr ""
 
@@ -487,15 +487,15 @@ msgstr ""
 msgid "Add Note"
 msgstr ""
 
-#: sql/Pg-database.sql:2934
+#: sql/Pg-database.sql:2937
 msgid "Add Overhead"
 msgstr ""
 
-#: bin/ic.pl:63 sql/Pg-database.sql:2866
+#: bin/ic.pl:63 sql/Pg-database.sql:2869
 msgid "Add Part"
 msgstr ""
 
-#: bin/pe.pl:197 sql/Pg-database.sql:2936
+#: bin/pe.pl:197 sql/Pg-database.sql:2939
 msgid "Add Pricegroup"
 msgstr ""
 
@@ -515,11 +515,11 @@ msgstr ""
 msgid "Add Request for Quotation"
 msgstr ""
 
-#: sql/Pg-database.sql:2978
+#: sql/Pg-database.sql:2981
 msgid "Add Return"
 msgstr ""
 
-#: bin/am.pl:368 sql/Pg-database.sql:2846
+#: bin/am.pl:368 sql/Pg-database.sql:2849
 msgid "Add SIC"
 msgstr ""
 
@@ -531,11 +531,11 @@ msgstr ""
 msgid "Add Sales Order"
 msgstr ""
 
-#: bin/ic.pl:64 sql/Pg-database.sql:2867
+#: bin/ic.pl:64 sql/Pg-database.sql:2870
 msgid "Add Service"
 msgstr ""
 
-#: sql/Pg-database.sql:2874
+#: sql/Pg-database.sql:2877
 msgid "Add Tax Form"
 msgstr ""
 
@@ -543,7 +543,7 @@ msgstr ""
 msgid "Add TaxForm"
 msgstr ""
 
-#: sql/Pg-database.sql:2833
+#: sql/Pg-database.sql:2836
 msgid "Add Timecard"
 msgstr ""
 
@@ -551,7 +551,7 @@ msgstr ""
 msgid "Add To List"
 msgstr ""
 
-#: sql/Pg-database.sql:2796 sql/Pg-database.sql:2799
+#: sql/Pg-database.sql:2799 sql/Pg-database.sql:2802
 msgid "Add Transaction"
 msgstr ""
 
@@ -576,7 +576,7 @@ msgstr ""
 msgid "Add Vendor Return"
 msgstr ""
 
-#: bin/am.pl:787 sql/Pg-database.sql:2840
+#: bin/am.pl:787 sql/Pg-database.sql:2843
 msgid "Add Warehouse"
 msgstr ""
 
@@ -776,7 +776,7 @@ msgid "Amount Budgetted"
 msgstr ""
 
 #: bin/aa.pl:1729 LedgerSMB/Report/Invoices/Outstanding.pm:238
-#: LedgerSMB/Scripts/payment.pm:811 LedgerSMB/Scripts/payment.pm:820
+#: LedgerSMB/Scripts/payment.pm:812 LedgerSMB/Scripts/payment.pm:821
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -812,11 +812,11 @@ msgstr ""
 msgid "Amount/Rate"
 msgstr ""
 
-#: sql/Pg-database.sql:3758
+#: sql/Pg-database.sql:3761
 msgid "Annual Straight Line Daily"
 msgstr ""
 
-#: sql/Pg-database.sql:3766
+#: sql/Pg-database.sql:3769
 msgid "Annual Straight Line Monthly"
 msgstr ""
 
@@ -824,15 +824,15 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1253
+#: LedgerSMB/Scripts/payment.pm:1254
 msgid "Applied discount"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1843 LedgerSMB/Scripts/payment.pm:1922
+#: LedgerSMB/Scripts/payment.pm:1844 LedgerSMB/Scripts/payment.pm:1923
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:809
+#: LedgerSMB/Scripts/payment.pm:810
 msgid "Apply Disc"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgid "Assemblies restocked!"
 msgstr ""
 
 #: UI/accounts/edit.html:201 UI/Reports/filters/gl.html:127
-#: sql/Pg-database.sql:3827
+#: sql/Pg-database.sql:3830
 msgid "Asset"
 msgstr ""
 
@@ -924,7 +924,7 @@ msgstr ""
 msgid "Asset Class:"
 msgstr ""
 
-#: sql/Pg-database.sql:2886
+#: sql/Pg-database.sql:2889
 msgid "Asset Classes"
 msgstr ""
 
@@ -950,7 +950,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Balance_Sheet.pm:214 LedgerSMB/Report/Balance_Sheet.pm:216
 #: LedgerSMB/Report/PNL.pm:190 LedgerSMB/Report/PNL.pm:192
-#: sql/Pg-database.sql:2887
+#: sql/Pg-database.sql:2890
 msgid "Assets"
 msgstr ""
 
@@ -1159,7 +1159,7 @@ msgstr ""
 
 #: UI/Reports/balance_sheet.html:26 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:1
-#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2837
+#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2840
 msgid "Balance Sheet"
 msgstr ""
 
@@ -1253,7 +1253,7 @@ msgstr ""
 msgid "Batch Type"
 msgstr ""
 
-#: sql/Pg-database.sql:2787
+#: sql/Pg-database.sql:2790
 msgid "Batches"
 msgstr ""
 
@@ -1313,7 +1313,7 @@ msgstr ""
 #: templates/demo_with_images/bin_list.html:18
 #: templates/demo_with_images/bin_list.tex:74 templates/xedemo/bin_list.html:4
 #: templates/xedemo/bin_list.html:18 templates/xedemo/bin_list.tex:74
-#: sql/Pg-database.sql:2955 sql/Pg-database.sql:2968
+#: sql/Pg-database.sql:2958 sql/Pg-database.sql:2971
 msgid "Bin List"
 msgstr ""
 
@@ -1333,7 +1333,7 @@ msgstr ""
 msgid "Break"
 msgstr ""
 
-#: sql/Pg-database.sql:2146
+#: sql/Pg-database.sql:2149
 msgid "Budget"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgstr ""
 msgid "Budget Variance Report"
 msgstr ""
 
-#: sql/Pg-database.sql:2917
+#: sql/Pg-database.sql:2920
 msgid "Budgets"
 msgstr ""
 
@@ -1541,7 +1541,7 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2852
+#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2855
 msgid "Cash"
 msgstr ""
 
@@ -1577,11 +1577,11 @@ msgstr ""
 msgid "Chart ID"
 msgstr ""
 
-#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2792
+#: LedgerSMB/Report/COA.pm:143 sql/Pg-database.sql:2795
 msgid "Chart of Accounts"
 msgstr ""
 
-#: sql/Pg-database.sql:2970
+#: sql/Pg-database.sql:2973
 msgid "Check"
 msgstr "Cheque"
 
@@ -1680,7 +1680,7 @@ msgstr ""
 msgid "Cold Lead"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:107 sql/Pg-database.sql:2865
+#: LedgerSMB/Scripts/order.pm:107 sql/Pg-database.sql:2868
 msgid "Combine"
 msgstr ""
 
@@ -1817,7 +1817,7 @@ msgstr ""
 msgid "Contact Total (if paying \"some\")"
 msgstr ""
 
-#: sql/Pg-database.sql:2853
+#: sql/Pg-database.sql:2856
 msgid "Contacts"
 msgstr ""
 
@@ -1828,8 +1828,8 @@ msgstr ""
 #: bin/aa.pl:1832 bin/arap.pl:269 bin/arapprn.pl:423 bin/ic.pl:967
 #: bin/ic.pl:1789 bin/ic.pl:2072 bin/ic.pl:2226 bin/io.pl:681 bin/io.pl:887
 #: bin/io.pl:1327 bin/oe.pl:1659 bin/oe.pl:2226 bin/oe.pl:2737 bin/pe.pl:339
-#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:605
-#: LedgerSMB/Scripts/payment.pm:694 LedgerSMB/Scripts/payment.pm:1429
+#: bin/pe.pl:768 bin/pe.pl:938 bin/pe.pl:1215 LedgerSMB/Scripts/payment.pm:606
+#: LedgerSMB/Scripts/payment.pm:695 LedgerSMB/Scripts/payment.pm:1430
 #: UI/am-audit-control.html:44 UI/asset/begin_approval.html:66
 #: UI/asset/begin_depreciation_all.html:25 UI/asset/begin_report.html:58
 #: UI/Contact/divs/credit.html:376 UI/create_batch.html:39
@@ -2021,7 +2021,7 @@ msgstr ""
 msgid "Credit Balance"
 msgstr ""
 
-#: bin/am.pl:1504 sql/Pg-database.sql:2906
+#: bin/am.pl:1504 sql/Pg-database.sql:2909
 msgid "Credit Invoice"
 msgstr ""
 
@@ -2035,12 +2035,12 @@ msgstr ""
 msgid "Credit Limit:"
 msgstr ""
 
-#: sql/Pg-database.sql:2905
+#: sql/Pg-database.sql:2908
 msgid "Credit Note"
 msgstr ""
 
 #: LedgerSMB/Report/COA.pm:111 LedgerSMB/Report/GL.pm:116
-#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:153
+#: LedgerSMB/Report/Trial_Balance.pm:184 LedgerSMB/Scripts/payment.pm:154
 #: UI/Reports/co/filter_cd.html:91
 msgid "Credits"
 msgstr ""
@@ -2118,7 +2118,7 @@ msgstr ""
 msgid "Customer Account"
 msgstr ""
 
-#: sql/Pg-database.sql:2790
+#: sql/Pg-database.sql:2793
 msgid "Customer History"
 msgstr ""
 
@@ -2165,7 +2165,7 @@ msgstr ""
 msgid "DOB:"
 msgstr ""
 
-#: bin/aa.pl:1374 LedgerSMB/Scripts/payment.pm:331
+#: bin/aa.pl:1374 LedgerSMB/Scripts/payment.pm:332
 msgid "Data not saved.  Please try again."
 msgstr ""
 
@@ -2215,7 +2215,7 @@ msgstr ""
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:102
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
 #: LedgerSMB/Report/Unapproved/Drafts.pm:89 LedgerSMB/Scripts/asset.pm:526
-#: LedgerSMB/Scripts/payment.pm:149 LedgerSMB/Scripts/payment.pm:805
+#: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Scripts/payment.pm:806
 #: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
 #: templates/demo/ap_transaction.tex:60 templates/demo/ap_transaction.tex:111
 #: templates/demo/ar_transaction.html:72 templates/demo/ar_transaction.html:191
@@ -2368,16 +2368,16 @@ msgstr ""
 msgid "Debit Balance"
 msgstr ""
 
-#: bin/am.pl:1505 sql/Pg-database.sql:2902
+#: bin/am.pl:1505 sql/Pg-database.sql:2905
 msgid "Debit Invoice"
 msgstr ""
 
-#: sql/Pg-database.sql:2901
+#: sql/Pg-database.sql:2904
 msgid "Debit Note"
 msgstr ""
 
 #: LedgerSMB/Report/COA.pm:105 LedgerSMB/Report/GL.pm:110
-#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Report/Trial_Balance.pm:178 LedgerSMB/Scripts/payment.pm:153
 #: UI/Reports/co/filter_cd.html:83
 msgid "Debits"
 msgstr ""
@@ -2460,7 +2460,7 @@ msgstr ""
 msgid "Default amount"
 msgstr ""
 
-#: sql/Pg-database.sql:2839
+#: sql/Pg-database.sql:2842
 msgid "Defaults"
 msgstr ""
 
@@ -2548,7 +2548,7 @@ msgstr ""
 msgid "Departments"
 msgstr ""
 
-#: sql/Pg-database.sql:2893
+#: sql/Pg-database.sql:2896
 msgid "Depreciate"
 msgstr ""
 
@@ -2561,7 +2561,7 @@ msgid "Depreciate Through"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:570 UI/accounts/edit.html:448
-#: sql/Pg-database.sql:2897
+#: sql/Pg-database.sql:2900
 msgid "Depreciation"
 msgstr ""
 
@@ -2679,8 +2679,8 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:19
 #: UI/Reports/filters/search_goods.html:200
 #: UI/rp-search-generate_tax_report.html:150 UI/timecards/timecard.html:43
-#: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2831
-#: sql/Pg-database.sql:2836
+#: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2834
+#: sql/Pg-database.sql:2839
 msgid "Description"
 msgstr ""
 
@@ -2735,7 +2735,7 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:808 UI/accounts/edit.html:318
+#: LedgerSMB/Scripts/payment.pm:809 UI/accounts/edit.html:318
 #: UI/accounts/edit.html:358 UI/am-business-form.html:16
 #: UI/Contact/divs/credit.html:153 UI/payments/payments_detail.html:313
 #: UI/Reports/filters/purchase_history.html:301
@@ -2758,8 +2758,8 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:572 sql/Pg-database.sql:2895
-#: sql/Pg-database.sql:2898
+#: LedgerSMB/Scripts/asset.pm:572 sql/Pg-database.sql:2898
+#: sql/Pg-database.sql:2901
 msgid "Disposal"
 msgstr ""
 
@@ -2823,7 +2823,7 @@ msgstr ""
 msgid "Draft Type"
 msgstr ""
 
-#: sql/Pg-database.sql:2872
+#: sql/Pg-database.sql:2875
 msgid "Drafts"
 msgstr ""
 
@@ -3124,7 +3124,7 @@ msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
-#: UI/lib/report_base.html:267 sql/Pg-database.sql:2809
+#: UI/lib/report_base.html:267 sql/Pg-database.sql:2812
 msgid "Employees"
 msgstr ""
 
@@ -3170,7 +3170,7 @@ msgstr ""
 msgid "Enforce transaction reversal for all dates"
 msgstr ""
 
-#: UI/inventory/adjustment_entry.html:11 sql/Pg-database.sql:2786
+#: UI/inventory/adjustment_entry.html:11 sql/Pg-database.sql:2789
 msgid "Enter Inventory"
 msgstr ""
 
@@ -3288,7 +3288,7 @@ msgstr ""
 
 #: bin/aa.pl:486 bin/ir.pl:417 bin/is.pl:410 bin/oe.pl:410 bin/oe.pl:418
 #: bin/oe.pl:1645 LedgerSMB/Report/Contact/History.pm:116
-#: LedgerSMB/Scripts/payment.pm:819 UI/orders/order.html:54
+#: LedgerSMB/Scripts/payment.pm:820 UI/orders/order.html:54
 #: UI/payments/payment2.html:123 UI/payments/payments_detail.html:149
 #: UI/payments/payments_detail.html:158 UI/payments/use_overpayment2.html:93
 #: UI/Reports/filters/payments.html:110
@@ -3299,7 +3299,7 @@ msgstr ""
 msgid "Exchange rate for payment missing!"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1163
+#: LedgerSMB/Scripts/payment.pm:1164
 msgid "Exchange rate hasn't been defined"
 msgstr ""
 
@@ -3545,7 +3545,7 @@ msgstr ""
 msgid "Fixed Asset"
 msgstr ""
 
-#: UI/accounts/edit.html:433 sql/Pg-database.sql:2927
+#: UI/accounts/edit.html:433 sql/Pg-database.sql:2930
 msgid "Fixed Assets"
 msgstr ""
 
@@ -3651,7 +3651,7 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:241
 #: UI/Reports/filters/income_statement.html:72
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
-#: sql/Pg-database.sql:2855
+#: sql/Pg-database.sql:2858
 msgid "GIFI"
 msgstr ""
 
@@ -3697,7 +3697,7 @@ msgstr ""
 msgid "Gapless AR"
 msgstr ""
 
-#: sql/Pg-database.sql:2922
+#: sql/Pg-database.sql:2925
 msgid "General Journal"
 msgstr ""
 
@@ -3710,8 +3710,8 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:115 UI/Reports/aging_report.html:99
-#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2781
-#: sql/Pg-database.sql:2819
+#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2784
+#: sql/Pg-database.sql:2822
 msgid "Generate"
 msgstr ""
 
@@ -3751,7 +3751,7 @@ msgstr ""
 msgid "Goods & Services"
 msgstr ""
 
-#: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2923
+#: LedgerSMB/Report/Inventory/Search.pm:325 sql/Pg-database.sql:2926
 msgid "Goods and Services"
 msgstr ""
 
@@ -3793,11 +3793,11 @@ msgstr ""
 msgid "Gtalk"
 msgstr ""
 
-#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2918
+#: t/data/04-complex_template.html:25 sql/Pg-database.sql:2921
 msgid "HR"
 msgstr ""
 
-#: sql/Pg-database.sql:2876
+#: sql/Pg-database.sql:2879
 msgid "HTML Templates"
 msgstr ""
 
@@ -3896,32 +3896,32 @@ msgstr ""
 
 #: UI/Admin/edit_user.html:54 UI/Contact/divs/user.html:52
 #: UI/setup/edit_user.html:57 UI/setup/new_user.html:34
-#: sql/Pg-database.sql:2782 sql/Pg-database.sql:2892 sql/Pg-database.sql:2907
-#: sql/Pg-database.sql:2912
+#: sql/Pg-database.sql:2785 sql/Pg-database.sql:2895 sql/Pg-database.sql:2910
+#: sql/Pg-database.sql:2915
 msgid "Import"
 msgstr ""
 
-#: sql/Pg-database.sql:2785
+#: sql/Pg-database.sql:2788
 msgid "Import AP Batch"
 msgstr ""
 
-#: sql/Pg-database.sql:2784
+#: sql/Pg-database.sql:2787
 msgid "Import AR Batch"
 msgstr ""
 
-#: sql/Pg-database.sql:2899 sql/Pg-database.sql:2903
+#: sql/Pg-database.sql:2902 sql/Pg-database.sql:2906
 msgid "Import Batch"
 msgstr ""
 
-#: sql/Pg-database.sql:2854
+#: sql/Pg-database.sql:2857
 msgid "Import Chart"
 msgstr ""
 
-#: sql/Pg-database.sql:2911
+#: sql/Pg-database.sql:2914
 msgid "Import GIFI"
 msgstr ""
 
-#: sql/Pg-database.sql:2779
+#: sql/Pg-database.sql:2782
 msgid "Import Inventory"
 msgstr ""
 
@@ -3997,7 +3997,7 @@ msgstr ""
 #: LedgerSMB/Report/PNL/Income_Statement.pm:76
 #: UI/Reports/filters/income_statement.html:1
 #: UI/Reports/filters/income_statement.html:7 UI/Reports/PNL.tex:28
-#: sql/Pg-database.sql:2864
+#: sql/Pg-database.sql:2867
 msgid "Income Statement"
 msgstr ""
 
@@ -4070,11 +4070,11 @@ msgstr ""
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
-#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84 sql/Pg-database.sql:2945
+#: bin/ic.pl:520 LedgerSMB/Scripts/configuration.pm:84 sql/Pg-database.sql:2948
 msgid "Inventory"
 msgstr ""
 
-#: UI/Reports/filters/inventory_activity.html:6 sql/Pg-database.sql:2783
+#: UI/Reports/filters/inventory_activity.html:6 sql/Pg-database.sql:2786
 msgid "Inventory Activity"
 msgstr ""
 
@@ -4098,7 +4098,7 @@ msgstr ""
 msgid "Inventory Adjustments"
 msgstr ""
 
-#: sql/Pg-database.sql:2946
+#: sql/Pg-database.sql:2949
 msgid "Inventory and COGS"
 msgstr ""
 
@@ -4127,7 +4127,7 @@ msgstr ""
 #: LedgerSMB/Report/Aging.pm:103 LedgerSMB/Report/Inventory/Search.pm:278
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: LedgerSMB/Report/Invoices/Transactions.pm:268
-#: LedgerSMB/Scripts/payment.pm:804 templates/demo/invoice.html:12
+#: LedgerSMB/Scripts/payment.pm:805 templates/demo/invoice.html:12
 #: templates/demo/invoice.tex:112 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:12
 #: templates/demo_with_images/invoice.tex:112
@@ -4135,7 +4135,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:12 templates/xedemo/invoice.tex:111
 #: templates/xedemo/printPayment.html:41
 #: UI/rp-search-generate_tax_report.html:119 sql/Pg-database.sql:1070
-#: sql/Pg-database.sql:2848 sql/Pg-database.sql:2947
+#: sql/Pg-database.sql:2851 sql/Pg-database.sql:2950
 msgid "Invoice"
 msgstr ""
 
@@ -4234,7 +4234,7 @@ msgstr ""
 msgid "Invoice Total"
 msgstr ""
 
-#: sql/Pg-database.sql:2795 sql/Pg-database.sql:2798
+#: sql/Pg-database.sql:2798 sql/Pg-database.sql:2801
 msgid "Invoice Vouchers"
 msgstr ""
 
@@ -4351,7 +4351,7 @@ msgstr ""
 msgid "Job/Project #"
 msgstr ""
 
-#: sql/Pg-database.sql:1072 sql/Pg-database.sql:2830
+#: sql/Pg-database.sql:1072 sql/Pg-database.sql:2833
 msgid "Journal Entry"
 msgstr ""
 
@@ -4381,7 +4381,7 @@ msgstr ""
 msgid "Key Ratios"
 msgstr ""
 
-#: sql/Pg-database.sql:2875
+#: sql/Pg-database.sql:2878
 msgid "LaTeX Templates"
 msgstr ""
 
@@ -4413,7 +4413,7 @@ msgstr ""
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:251
 #: UI/Reports/filters/balance_sheet.html:78
 #: UI/Reports/filters/income_statement.html:130 UI/users/preferences.html:76
-#: sql/Pg-database.sql:2878
+#: sql/Pg-database.sql:2881
 msgid "Language"
 msgstr ""
 
@@ -4481,7 +4481,7 @@ msgstr ""
 msgid "Less Outstanding Checks:"
 msgstr ""
 
-#: sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
+#: sql/Pg-database.sql:2963 sql/Pg-database.sql:2978
 msgid "Letterhead"
 msgstr ""
 
@@ -4518,19 +4518,19 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: sql/Pg-database.sql:2843
+#: sql/Pg-database.sql:2846
 msgid "List Businesses"
 msgstr ""
 
-#: sql/Pg-database.sql:2889
+#: sql/Pg-database.sql:2892
 msgid "List Classes"
 msgstr ""
 
-#: sql/Pg-database.sql:2910
+#: sql/Pg-database.sql:2913
 msgid "List GIFI"
 msgstr ""
 
-#: sql/Pg-database.sql:2845
+#: sql/Pg-database.sql:2848
 msgid "List Languages"
 msgstr ""
 
@@ -4543,11 +4543,11 @@ msgstr ""
 msgid "List Price"
 msgstr ""
 
-#: sql/Pg-database.sql:2847
+#: sql/Pg-database.sql:2850
 msgid "List SIC"
 msgstr ""
 
-#: sql/Pg-database.sql:2883
+#: sql/Pg-database.sql:2886
 msgid "List Tax Forms"
 msgstr ""
 
@@ -4563,7 +4563,7 @@ msgstr ""
 msgid "List Users"
 msgstr ""
 
-#: sql/Pg-database.sql:2841
+#: sql/Pg-database.sql:2844
 msgid "List Warehouse"
 msgstr ""
 
@@ -4620,7 +4620,7 @@ msgstr ""
 msgid "Login?"
 msgstr ""
 
-#: sql/Pg-database.sql:2928
+#: sql/Pg-database.sql:2931
 msgid "Logout"
 msgstr ""
 
@@ -4725,8 +4725,8 @@ msgid "May "
 msgstr ""
 
 #: bin/aa.pl:889 bin/ir.pl:754 bin/ir.pl:930 bin/is.pl:854 bin/is.pl:1017
-#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:151
-#: LedgerSMB/Scripts/payment.pm:810 templates/demo/ap_transaction.html:195
+#: LedgerSMB/Report/GL.pm:127 LedgerSMB/Scripts/payment.pm:152
+#: LedgerSMB/Scripts/payment.pm:811 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:119
 #: UI/orders/order.html:248 UI/payments/payment2.html:237
@@ -4869,7 +4869,7 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: LedgerSMB/Report/Assets/Net_Book_Value.pm:134 sql/Pg-database.sql:2894
+#: LedgerSMB/Report/Assets/Net_Book_Value.pm:134 sql/Pg-database.sql:2897
 msgid "Net Book Value"
 msgstr ""
 
@@ -4899,7 +4899,7 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-#: sql/Pg-database.sql:2929
+#: sql/Pg-database.sql:2932
 msgid "New Window"
 msgstr ""
 
@@ -4990,7 +4990,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1292
+#: LedgerSMB/Scripts/payment.pm:1293
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -5355,7 +5355,7 @@ msgstr ""
 msgid "Order Date missing!"
 msgstr ""
 
-#: sql/Pg-database.sql:2919
+#: sql/Pg-database.sql:2922
 msgid "Order Entry"
 msgstr ""
 
@@ -5432,8 +5432,8 @@ msgstr ""
 msgid "Out of balance transaction!"
 msgstr ""
 
-#: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2932
-#: sql/Pg-database.sql:2933
+#: UI/rc-reconciliation.html:71 sql/Pg-database.sql:2935
+#: sql/Pg-database.sql:2936
 msgid "Outstanding"
 msgstr ""
 
@@ -5505,8 +5505,8 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:18
 #: templates/demo_with_images/packing_list.tex:81
 #: templates/xedemo/packing_list.html:4 templates/xedemo/packing_list.html:18
-#: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2950
-#: sql/Pg-database.sql:2963
+#: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2953
+#: sql/Pg-database.sql:2966
 msgid "Packing List"
 msgstr ""
 
@@ -5522,7 +5522,7 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:233
 #: LedgerSMB/Report/Invoices/Transactions.pm:280
 #: LedgerSMB/Report/Listings/Overpayments.pm:140
-#: LedgerSMB/Scripts/payment.pm:807 templates/demo/invoice.html:184
+#: LedgerSMB/Scripts/payment.pm:808 templates/demo/invoice.html:184
 #: templates/demo/invoice.tex:165 templates/demo_with_images/invoice.html:184
 #: templates/demo_with_images/invoice.tex:164 templates/xedemo/invoice.html:184
 #: templates/xedemo/invoice.tex:163 UI/payments/payments_detail.html:312
@@ -5594,7 +5594,7 @@ msgstr ""
 msgid "Parts Groups"
 msgstr ""
 
-#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2832
+#: LedgerSMB/Report/Inventory/Search.pm:274 sql/Pg-database.sql:2835
 msgid "Partsgroup"
 msgstr ""
 
@@ -5621,7 +5621,7 @@ msgstr ""
 msgid "Pay From"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:146 UI/Contact/divs/credit.html:89
+#: LedgerSMB/Scripts/payment.pm:147 UI/Contact/divs/credit.html:89
 #: UI/payments/payments_filter.html:140
 msgid "Pay To"
 msgstr ""
@@ -5640,10 +5640,10 @@ msgstr ""
 msgid "Payables"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1062 t/data/04-complex_template.html:282
+#: LedgerSMB/Scripts/payment.pm:1063 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:298 UI/accounts/edit.html:340
 #: UI/Contact/divs/credit.html:192 UI/payments/payments_detail.html:217
-#: sql/Pg-database.sql:2803
+#: sql/Pg-database.sql:2806
 msgid "Payment"
 msgstr ""
 
@@ -5711,7 +5711,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:126 templates/xedemo/invoice.html:237
 #: templates/xedemo/invoice.tex:198 UI/orders/order.html:243
 #: UI/payments/payment1.html:20 UI/payments/payments_detail.html:14
-#: sql/Pg-database.sql:2807 sql/Pg-database.sql:2870
+#: sql/Pg-database.sql:2810 sql/Pg-database.sql:2873
 msgid "Payments"
 msgstr ""
 
@@ -5768,8 +5768,8 @@ msgstr ""
 #: templates/demo_with_images/pick_list.html:18
 #: templates/demo_with_images/pick_list.tex:74
 #: templates/xedemo/pick_list.html:4 templates/xedemo/pick_list.html:18
-#: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2951
-#: sql/Pg-database.sql:2964
+#: templates/xedemo/pick_list.tex:74 sql/Pg-database.sql:2954
+#: sql/Pg-database.sql:2967
 msgid "Pick List"
 msgstr ""
 
@@ -5896,7 +5896,7 @@ msgstr ""
 msgid "Postscript"
 msgstr ""
 
-#: sql/Pg-database.sql:2930
+#: sql/Pg-database.sql:2933
 msgid "Preferences"
 msgstr ""
 
@@ -6030,8 +6030,8 @@ msgstr ""
 #: templates/demo_with_images/product_receipt.html:18
 #: templates/demo_with_images/product_receipt.tex:100
 #: templates/xedemo/product_receipt.html:4
-#: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2976
-#: sql/Pg-database.sql:2977
+#: templates/xedemo/product_receipt.tex:100 sql/Pg-database.sql:2979
+#: sql/Pg-database.sql:2980
 msgid "Product Receipt"
 msgstr ""
 
@@ -6102,8 +6102,8 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:4
 #: templates/xedemo/purchase_order.html:18
 #: templates/xedemo/purchase_order.tex:100 UI/Contact/divs/credit.html:342
-#: sql/Pg-database.sql:1939 sql/Pg-database.sql:2813 sql/Pg-database.sql:2954
-#: sql/Pg-database.sql:2967
+#: sql/Pg-database.sql:1939 sql/Pg-database.sql:2816 sql/Pg-database.sql:2957
+#: sql/Pg-database.sql:2970
 msgid "Purchase Order"
 msgstr ""
 
@@ -6112,8 +6112,8 @@ msgid "Purchase Order Number"
 msgstr ""
 
 #: bin/am.pl:881 LedgerSMB/Report/Orders.pm:190 LedgerSMB/Report/Orders.pm:290
-#: UI/Reports/filters/search_goods.html:162 sql/Pg-database.sql:2816
-#: sql/Pg-database.sql:2818 sql/Pg-database.sql:2821
+#: UI/Reports/filters/search_goods.html:162 sql/Pg-database.sql:2819
+#: sql/Pg-database.sql:2821 sql/Pg-database.sql:2824
 msgid "Purchase Orders"
 msgstr ""
 
@@ -6207,7 +6207,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:4
 #: templates/xedemo/sales_quotation.html:17
 #: templates/xedemo/sales_quotation.tex:70 sql/Pg-database.sql:1940
-#: sql/Pg-database.sql:2825 sql/Pg-database.sql:2957 sql/Pg-database.sql:2972
+#: sql/Pg-database.sql:2828 sql/Pg-database.sql:2960 sql/Pg-database.sql:2975
 msgid "Quotation"
 msgstr ""
 
@@ -6239,15 +6239,15 @@ msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:193 LedgerSMB/Report/Orders.pm:292
 #: UI/Reports/filters/purchase_history.html:189
-#: UI/Reports/filters/search_goods.html:146 sql/Pg-database.sql:2828
-#: sql/Pg-database.sql:2921
+#: UI/Reports/filters/search_goods.html:146 sql/Pg-database.sql:2831
+#: sql/Pg-database.sql:2924
 msgid "Quotations"
 msgstr ""
 
 #: bin/io.pl:1400 bin/oe.pl:295 bin/oe.pl:755 bin/oe.pl:953
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:351
-#: sql/Pg-database.sql:1941 sql/Pg-database.sql:2826 sql/Pg-database.sql:2958
-#: sql/Pg-database.sql:2973
+#: sql/Pg-database.sql:1941 sql/Pg-database.sql:2829 sql/Pg-database.sql:2961
+#: sql/Pg-database.sql:2976
 msgid "RFQ"
 msgstr ""
 
@@ -6265,7 +6265,7 @@ msgid "RFQ Number"
 msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:196 LedgerSMB/Report/Orders.pm:294
-#: UI/Reports/filters/search_goods.html:169 sql/Pg-database.sql:2829
+#: UI/Reports/filters/search_goods.html:169 sql/Pg-database.sql:2832
 msgid "RFQs"
 msgstr ""
 
@@ -6300,8 +6300,8 @@ msgstr ""
 msgid "Recd"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1062 sql/Pg-database.sql:2802
-#: sql/Pg-database.sql:2971
+#: LedgerSMB/Scripts/payment.pm:1063 sql/Pg-database.sql:2805
+#: sql/Pg-database.sql:2974
 msgid "Receipt"
 msgstr ""
 
@@ -6313,8 +6313,8 @@ msgstr ""
 msgid "Receipt Results"
 msgstr ""
 
-#: UI/payments/payment1.html:19 sql/Pg-database.sql:2806
-#: sql/Pg-database.sql:2884
+#: UI/payments/payment1.html:19 sql/Pg-database.sql:2809
+#: sql/Pg-database.sql:2887
 msgid "Receipts"
 msgstr ""
 
@@ -6326,7 +6326,7 @@ msgstr ""
 msgid "Receivables"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:72 sql/Pg-database.sql:2823
+#: LedgerSMB/Scripts/order.pm:72 sql/Pg-database.sql:2826
 msgid "Receive"
 msgstr ""
 
@@ -6334,7 +6334,7 @@ msgstr ""
 msgid "Receive Merchandise"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:875
+#: LedgerSMB/Scripts/payment.pm:876
 msgid "Received"
 msgstr ""
 
@@ -6346,7 +6346,7 @@ msgstr ""
 msgid "Reconcile as FX"
 msgstr ""
 
-#: sql/Pg-database.sql:2808 sql/Pg-database.sql:2861 sql/Pg-database.sql:2873
+#: sql/Pg-database.sql:2811 sql/Pg-database.sql:2864 sql/Pg-database.sql:2876
 msgid "Reconciliation"
 msgstr ""
 
@@ -6374,7 +6374,7 @@ msgstr ""
 msgid "Recurring Transaction for [_1]"
 msgstr ""
 
-#: bin/am.pl:835 UI/am-list-recurring.html:8 sql/Pg-database.sql:2925
+#: bin/am.pl:835 UI/am-list-recurring.html:8 sql/Pg-database.sql:2928
 msgid "Recurring Transactions"
 msgstr ""
 
@@ -6476,13 +6476,13 @@ msgstr ""
 msgid "Reporting Basis"
 msgstr ""
 
-#: sql/Pg-database.sql:2880
+#: sql/Pg-database.sql:2883
 msgid "Reporting Units"
 msgstr ""
 
-#: sql/Pg-database.sql:2814 sql/Pg-database.sql:2827 sql/Pg-database.sql:2856
-#: sql/Pg-database.sql:2860 sql/Pg-database.sql:2885 sql/Pg-database.sql:2896
-#: sql/Pg-database.sql:2924 sql/Pg-database.sql:2939 sql/Pg-database.sql:2980
+#: sql/Pg-database.sql:2817 sql/Pg-database.sql:2830 sql/Pg-database.sql:2859
+#: sql/Pg-database.sql:2863 sql/Pg-database.sql:2888 sql/Pg-database.sql:2899
+#: sql/Pg-database.sql:2927 sql/Pg-database.sql:2942 sql/Pg-database.sql:2983
 msgid "Reports"
 msgstr ""
 
@@ -6587,15 +6587,15 @@ msgstr ""
 msgid "Reverse"
 msgstr ""
 
-#: sql/Pg-database.sql:2944
+#: sql/Pg-database.sql:2947
 msgid "Reverse AR Overpay"
 msgstr ""
 
-#: sql/Pg-database.sql:2943
+#: sql/Pg-database.sql:2946
 msgid "Reverse Overpay"
 msgstr ""
 
-#: sql/Pg-database.sql:2871
+#: sql/Pg-database.sql:2874
 msgid "Reverse Payment"
 msgstr ""
 
@@ -6603,7 +6603,7 @@ msgstr ""
 msgid "Reverse Payments"
 msgstr ""
 
-#: sql/Pg-database.sql:2942
+#: sql/Pg-database.sql:2945
 msgid "Reverse Receipts"
 msgstr ""
 
@@ -6619,7 +6619,7 @@ msgstr ""
 msgid "Run Report"
 msgstr ""
 
-#: UI/Contact/divs/company.html:110 sql/Pg-database.sql:2877
+#: UI/Contact/divs/company.html:110 sql/Pg-database.sql:2880
 msgid "SIC"
 msgstr ""
 
@@ -6647,7 +6647,7 @@ msgstr "SIN"
 msgid "Salary"
 msgstr ""
 
-#: sql/Pg-database.sql:3791
+#: sql/Pg-database.sql:3794
 msgid "Sale"
 msgstr ""
 
@@ -6656,7 +6656,7 @@ msgstr ""
 msgid "Sales"
 msgstr ""
 
-#: bin/is.pl:1097 bin/oe.pl:740 bin/oe.pl:950 sql/Pg-database.sql:2904
+#: bin/is.pl:1097 bin/oe.pl:740 bin/oe.pl:950 sql/Pg-database.sql:2907
 msgid "Sales Invoice"
 msgstr ""
 
@@ -6673,7 +6673,7 @@ msgstr ""
 #: templates/demo_with_images/sales_order.tex:99
 #: templates/xedemo/sales_order.html:4 templates/xedemo/sales_order.html:18
 #: templates/xedemo/sales_order.tex:99 sql/Pg-database.sql:1938
-#: sql/Pg-database.sql:2812 sql/Pg-database.sql:2952 sql/Pg-database.sql:2965
+#: sql/Pg-database.sql:2815 sql/Pg-database.sql:2955 sql/Pg-database.sql:2968
 msgid "Sales Order"
 msgstr ""
 
@@ -6682,8 +6682,8 @@ msgid "Sales Order Number"
 msgstr ""
 
 #: bin/am.pl:880 LedgerSMB/Report/Orders.pm:187 LedgerSMB/Report/Orders.pm:288
-#: UI/Reports/filters/search_goods.html:139 sql/Pg-database.sql:2815
-#: sql/Pg-database.sql:2817 sql/Pg-database.sql:2820 sql/Pg-database.sql:2834
+#: UI/Reports/filters/search_goods.html:139 sql/Pg-database.sql:2818
+#: sql/Pg-database.sql:2820 sql/Pg-database.sql:2823 sql/Pg-database.sql:2837
 msgid "Sales Orders"
 msgstr ""
 
@@ -6762,7 +6762,7 @@ msgstr ""
 msgid "Save As New"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:219
+#: LedgerSMB/Scripts/payment.pm:220
 msgid "Save Batch"
 msgstr ""
 
@@ -6841,7 +6841,7 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: bin/arapprn.pl:475 bin/io.pl:1469 LedgerSMB/Scripts/payment.pm:516
+#: bin/arapprn.pl:475 bin/io.pl:1469 LedgerSMB/Scripts/payment.pm:517
 #: LedgerSMB/Template.pm:305 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr ""
@@ -6857,9 +6857,9 @@ msgstr ""
 #: UI/Reports/filters/search_partsgroups.html:18
 #: UI/Reports/filters/search_pricegroups.html:18
 #: UI/Reports/filters/timecards.html:42 UI/Reports/filters/unapproved.html:107
-#: sql/Pg-database.sql:2780 sql/Pg-database.sql:2788 sql/Pg-database.sql:2801
-#: sql/Pg-database.sql:2811 sql/Pg-database.sql:2869 sql/Pg-database.sql:2916
-#: sql/Pg-database.sql:2979
+#: sql/Pg-database.sql:2783 sql/Pg-database.sql:2791 sql/Pg-database.sql:2804
+#: sql/Pg-database.sql:2814 sql/Pg-database.sql:2872 sql/Pg-database.sql:2919
+#: sql/Pg-database.sql:2982
 msgid "Search"
 msgstr ""
 
@@ -6883,7 +6883,7 @@ msgstr ""
 msgid "Search Asset Class"
 msgstr ""
 
-#: sql/Pg-database.sql:2891
+#: sql/Pg-database.sql:2894
 msgid "Search Assets"
 msgstr ""
 
@@ -6895,7 +6895,7 @@ msgstr ""
 msgid "Search Goods and Services"
 msgstr ""
 
-#: sql/Pg-database.sql:2777
+#: sql/Pg-database.sql:2780
 msgid "Search Groups"
 msgstr ""
 
@@ -6915,7 +6915,7 @@ msgstr ""
 msgid "Search Price Groups"
 msgstr ""
 
-#: sql/Pg-database.sql:2778
+#: sql/Pg-database.sql:2781
 msgid "Search Pricegroups"
 msgstr ""
 
@@ -6947,7 +6947,7 @@ msgstr ""
 msgid "Search Unapproved Transactions"
 msgstr ""
 
-#: sql/Pg-database.sql:2908
+#: sql/Pg-database.sql:2911
 msgid "Search and GL"
 msgstr ""
 
@@ -7057,7 +7057,7 @@ msgstr ""
 msgid "Sequence"
 msgstr ""
 
-#: UI/Configuration/sequence.html:6 sql/Pg-database.sql:2941
+#: UI/Configuration/sequence.html:6 sql/Pg-database.sql:2944
 msgid "Sequences"
 msgstr ""
 
@@ -7110,7 +7110,7 @@ msgstr ""
 msgid "Session expired!"
 msgstr ""
 
-#: sql/Pg-database.sql:2882
+#: sql/Pg-database.sql:2885
 msgid "Sessions"
 msgstr ""
 
@@ -7147,7 +7147,7 @@ msgstr ""
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
 #: templates/xedemo/packing_list.html:124 templates/xedemo/pick_list.html:114
-#: sql/Pg-database.sql:2822
+#: sql/Pg-database.sql:2825
 msgid "Ship"
 msgstr ""
 
@@ -7252,7 +7252,7 @@ msgid "Ship_Via"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:113 UI/Contact/divs/address.html:40
-#: sql/Pg-database.sql:676 sql/Pg-database.sql:2920
+#: sql/Pg-database.sql:676 sql/Pg-database.sql:2923
 msgid "Shipping"
 msgstr ""
 
@@ -7334,7 +7334,7 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: sql/Pg-database.sql:2483
+#: sql/Pg-database.sql:2486
 msgid "Simple"
 msgstr ""
 
@@ -7377,7 +7377,7 @@ msgstr ""
 #: bin/aa.pl:888 bin/aa.pl:1590 bin/ir.pl:929 bin/is.pl:1016
 #: LedgerSMB/Report/Budget/Search.pm:127 LedgerSMB/Report/GL.pm:122
 #: LedgerSMB/Report/GL.pm:215 LedgerSMB/Report/Inventory/Adj_Details.pm:75
-#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Report/Invoices/Payments.pm:141 LedgerSMB/Scripts/payment.pm:151
 #: LedgerSMB/Scripts/recon.pm:221 templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:249
 #: templates/demo/printPayment.html:50
@@ -7491,8 +7491,8 @@ msgstr ""
 #: templates/demo_with_images/statement.html:19
 #: templates/demo_with_images/statement.tex:29
 #: templates/xedemo/statement.html:4 templates/xedemo/statement.html:19
-#: templates/xedemo/statement.tex:29 sql/Pg-database.sql:2956
-#: sql/Pg-database.sql:2969
+#: templates/xedemo/statement.tex:29 sql/Pg-database.sql:2959
+#: sql/Pg-database.sql:2972
 msgid "Statement"
 msgstr ""
 
@@ -7517,7 +7517,7 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: bin/ic.pl:2022 bin/ic.pl:2134 sql/Pg-database.sql:2937
+#: bin/ic.pl:2022 bin/ic.pl:2134 sql/Pg-database.sql:2940
 msgid "Stock Assembly"
 msgstr ""
 
@@ -7625,7 +7625,7 @@ msgstr ""
 msgid "Swaps debits and credits to match bank statements"
 msgstr ""
 
-#: sql/Pg-database.sql:2931
+#: sql/Pg-database.sql:2934
 msgid "System"
 msgstr ""
 
@@ -7698,7 +7698,7 @@ msgstr ""
 msgid "Tax Form Reports"
 msgstr ""
 
-#: sql/Pg-database.sql:2926
+#: sql/Pg-database.sql:2929
 msgid "Tax Forms"
 msgstr ""
 
@@ -7754,7 +7754,7 @@ msgstr ""
 msgid "Taxable"
 msgstr ""
 
-#: bin/am.pl:584 UI/Contact/divs/credit.html:263 sql/Pg-database.sql:2838
+#: bin/am.pl:584 UI/Contact/divs/credit.html:263 sql/Pg-database.sql:2841
 msgid "Taxes"
 msgstr ""
 
@@ -7948,15 +7948,15 @@ msgstr ""
 msgid "The amount of"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1590 LedgerSMB/Scripts/payment.pm:1598
+#: LedgerSMB/Scripts/payment.pm:1591 LedgerSMB/Scripts/payment.pm:1599
 msgid "The amount of the invoice number"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1856
+#: LedgerSMB/Scripts/payment.pm:1857
 msgid "The amount to be pay from the accno"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1824
+#: LedgerSMB/Scripts/payment.pm:1825
 msgid "The amount to be pay of the invoice number"
 msgstr ""
 
@@ -8020,11 +8020,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1179
+#: LedgerSMB/Scripts/payment.pm:1180
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1909
+#: LedgerSMB/Scripts/payment.pm:1910
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -8085,7 +8085,7 @@ msgstr ""
 msgid "Time or Materials Card"
 msgstr ""
 
-#: sql/Pg-database.sql:2959 sql/Pg-database.sql:2974
+#: sql/Pg-database.sql:2962 sql/Pg-database.sql:2977
 msgid "Timecard"
 msgstr ""
 
@@ -8093,7 +8093,7 @@ msgstr ""
 msgid "Timecard Criteria"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2940
+#: LedgerSMB/Report/Timecards.pm:173 sql/Pg-database.sql:2943
 msgid "Timecards"
 msgstr ""
 
@@ -8160,7 +8160,7 @@ msgstr ""
 msgid "To my browser"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:869
+#: LedgerSMB/Scripts/payment.pm:870
 msgid "To pay"
 msgstr ""
 
@@ -8186,7 +8186,7 @@ msgstr ""
 msgid "Too many links on summary account!"
 msgstr ""
 
-#: sql/Pg-database.sql:2794
+#: sql/Pg-database.sql:2797
 msgid "Top-level"
 msgstr ""
 
@@ -8197,8 +8197,8 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:228
 #: LedgerSMB/Report/Invoices/Transactions.pm:277
 #: LedgerSMB/Report/Taxform/Detail.pm:98 LedgerSMB/Report/Taxform/Summary.pm:96
-#: LedgerSMB/Scripts/asset.pm:531 LedgerSMB/Scripts/payment.pm:198
-#: LedgerSMB/Scripts/payment.pm:806 templates/demo/ap_transaction.html:126
+#: LedgerSMB/Scripts/asset.pm:531 LedgerSMB/Scripts/payment.pm:199
+#: LedgerSMB/Scripts/payment.pm:807 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:166
@@ -8278,7 +8278,7 @@ msgstr ""
 msgid "Transaction"
 msgstr ""
 
-#: sql/Pg-database.sql:2849
+#: sql/Pg-database.sql:2852
 msgid "Transaction Approval"
 msgstr ""
 
@@ -8305,8 +8305,8 @@ msgstr ""
 msgid "Transactions"
 msgstr ""
 
-#: bin/oe.pl:2300 bin/oe.pl:2416 sql/Pg-database.sql:2824
-#: sql/Pg-database.sql:2859
+#: bin/oe.pl:2300 bin/oe.pl:2416 sql/Pg-database.sql:2827
+#: sql/Pg-database.sql:2862
 msgid "Transfer"
 msgstr ""
 
@@ -8334,7 +8334,7 @@ msgstr ""
 msgid "Translation not on file!"
 msgstr ""
 
-#: sql/Pg-database.sql:2835 sql/Pg-database.sql:2938
+#: sql/Pg-database.sql:2838 sql/Pg-database.sql:2941
 msgid "Translations"
 msgstr ""
 
@@ -8342,7 +8342,7 @@ msgstr ""
 msgid "Translations saved!"
 msgstr ""
 
-#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2863
+#: LedgerSMB/Report/Trial_Balance.pm:141 sql/Pg-database.sql:2866
 msgid "Trial Balance"
 msgstr ""
 
@@ -8415,7 +8415,7 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: UI/am-business-form.html:12 sql/Pg-database.sql:2879
+#: UI/am-business-form.html:12 sql/Pg-database.sql:2882
 msgid "Type of Business"
 msgstr ""
 
@@ -8570,11 +8570,11 @@ msgstr ""
 msgid "Usable Life"
 msgstr ""
 
-#: sql/Pg-database.sql:2805
+#: sql/Pg-database.sql:2808
 msgid "Use AR Overpayment"
 msgstr ""
 
-#: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2804
+#: UI/payments/use_overpayment1.html:9 sql/Pg-database.sql:2807
 msgid "Use Overpayment"
 msgstr ""
 
@@ -8582,7 +8582,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1733
+#: LedgerSMB/Scripts/payment.pm:1734
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -8665,12 +8665,12 @@ msgstr ""
 msgid "Vendor Account"
 msgstr ""
 
-#: sql/Pg-database.sql:2791
+#: sql/Pg-database.sql:2794
 msgid "Vendor History"
 msgstr ""
 
 #: bin/oe.pl:748 bin/oe.pl:951 t/data/04-complex_template.html:334
-#: UI/Contact/divs/credit.html:333 sql/Pg-database.sql:2900
+#: UI/Contact/divs/credit.html:333 sql/Pg-database.sql:2903
 msgid "Vendor Invoice"
 msgstr ""
 
@@ -8732,7 +8732,7 @@ msgstr ""
 msgid "Voucher List"
 msgstr ""
 
-#: sql/Pg-database.sql:2857 sql/Pg-database.sql:2858 sql/Pg-database.sql:2981
+#: sql/Pg-database.sql:2860 sql/Pg-database.sql:2861 sql/Pg-database.sql:2984
 msgid "Vouchers"
 msgstr ""
 
@@ -8760,7 +8760,7 @@ msgstr ""
 msgid "Warehouse"
 msgstr ""
 
-#: LedgerSMB/Report/Listings/Warehouse.pm:57 sql/Pg-database.sql:2881
+#: LedgerSMB/Report/Listings/Warehouse.pm:57 sql/Pg-database.sql:2884
 msgid "Warehouses"
 msgstr ""
 
@@ -8814,7 +8814,7 @@ msgstr ""
 msgid "Where shall we send the backup?"
 msgstr ""
 
-#: sql/Pg-database.sql:3762
+#: sql/Pg-database.sql:3765
 msgid "Whole Month Straight Line"
 msgstr ""
 
@@ -8829,7 +8829,7 @@ msgstr ""
 #: templates/demo/work_order.html:4 templates/demo/work_order.html:18
 #: templates/demo/work_order.tex:109 templates/xedemo/work_order.html:4
 #: templates/xedemo/work_order.html:18 templates/xedemo/work_order.tex:109
-#: sql/Pg-database.sql:2953 sql/Pg-database.sql:2966
+#: sql/Pg-database.sql:2956 sql/Pg-database.sql:2969
 msgid "Work Order"
 msgstr ""
 
@@ -8849,7 +8849,7 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#: sql/Pg-database.sql:2862
+#: sql/Pg-database.sql:2865
 msgid "Year End"
 msgstr ""
 
@@ -8989,11 +8989,11 @@ msgstr ""
 msgid "deposit"
 msgstr ""
 
-#: sql/Pg-database.sql:3836
+#: sql/Pg-database.sql:3839
 msgid "depreciation"
 msgstr ""
 
-#: sql/Pg-database.sql:3837
+#: sql/Pg-database.sql:3840
 msgid "disposal"
 msgstr ""
 
@@ -9013,31 +9013,31 @@ msgstr ""
 msgid "fr"
 msgstr ""
 
-#: sql/Pg-database.sql:3838
+#: sql/Pg-database.sql:3841
 msgid "import"
 msgstr ""
 
-#: sql/Pg-database.sql:3763
+#: sql/Pg-database.sql:3766
 msgid "in months"
 msgstr ""
 
-#: sql/Pg-database.sql:3758 sql/Pg-database.sql:3766
+#: sql/Pg-database.sql:3761 sql/Pg-database.sql:3769
 msgid "in years"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1858
+#: LedgerSMB/Scripts/payment.pm:1859
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1598
+#: LedgerSMB/Scripts/payment.pm:1599
 msgid "is lesser than 0"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1590
+#: LedgerSMB/Scripts/payment.pm:1591
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1824
+#: LedgerSMB/Scripts/payment.pm:1825
 msgid "is null"
 msgstr ""
 
@@ -9053,7 +9053,7 @@ msgstr ""
 msgid "other"
 msgstr ""
 
-#: sql/Pg-database.sql:3839
+#: sql/Pg-database.sql:3842
 msgid "partial disposal"
 msgstr ""
 
@@ -9061,7 +9061,7 @@ msgstr ""
 msgid "permalink"
 msgstr ""
 
-#: sql/Pg-database.sql:3728
+#: sql/Pg-database.sql:3731
 msgid "production"
 msgstr ""
 
@@ -9081,7 +9081,7 @@ msgstr ""
 msgid "subtotal"
 msgstr ""
 
-#: sql/Pg-database.sql:3727
+#: sql/Pg-database.sql:3730
 msgid "time"
 msgstr ""
 
@@ -9093,8 +9093,8 @@ msgstr ""
 msgid "unexpected error!"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1867 LedgerSMB/Scripts/payment.pm:1883
-#: LedgerSMB/Scripts/payment.pm:1936 LedgerSMB/Scripts/payment.pm:1952
+#: LedgerSMB/Scripts/payment.pm:1868 LedgerSMB/Scripts/payment.pm:1884
+#: LedgerSMB/Scripts/payment.pm:1937 LedgerSMB/Scripts/payment.pm:1953
 msgid "use of an overpayment"
 msgstr ""
 
