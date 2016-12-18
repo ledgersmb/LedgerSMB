@@ -71,7 +71,7 @@ $$
     WITH a AS (
         DELETE FROM jcitems j
         WHERE j.id = in_id
-          AND j.qty > j.allocated OR j.allocated IS NULL -- What about non_billable?
+          AND j.allocated IS NULL
         RETURNING 1)
     SELECT COUNT(*) > 0;
 $$;
