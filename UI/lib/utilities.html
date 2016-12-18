@@ -15,14 +15,17 @@ PROCESS select element_data = {
 };
 END; 
 
-IF languages.defined;
-languages.push({});
-PROCESS select element_data = {
-           name = "language"
-        options = languages
- default_values = [language]
-};
+IF !languages.defined;
+    languages.push({});
 END;
+PROCESS select element_data = {
+         label = text('Language')
+          name = 'language'
+       options = languages
+     text_attr = 'description'
+    value_attr = 'code'
+default_values = [USER.language]
+};
 
 IF ! formats.defined;
    formats = [];

@@ -166,34 +166,27 @@ maxlength = 2 } ?>
        INCLUDE select element_data = {
               name = 'curr'
            options = currencies
-        value_attr = id
     default_values = [curr]
        }; ?>
 <tr><th><?lsmb text('Allocated') ?></th>
     <td><?lsmb allocated ?></td>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
-    <td colspan=3><?lsmb PROCESS textarea element_data = {
-                                                         name="notes"
-                                                         rows=2
-                                                         cols=46
-                                                         wrap="soft"
-                                                         text=notes } ?>
+    <td colspan=3>
+        <?lsmb PROCESS textarea element_data = {
+                     name = "notes"
+                     rows = 2
+                     cols = 46
+                     wrap = "soft"
+                     text = notes } ?>
     </td>
 </tr>
 </table>
 <?lsmb IF id; 
-formats = [];
-FOR F IN LIST_FORMATS();
-   IF F == 'HTML' or F == 'PDF';
-      formats.push({text = F, id = F});
-   END;
-END;
-
-PROCESS print_options; 
+    PROCESS print_options; 
 END; ?>
 <?lsmb 
-IF id;
+IF id && !in_edit;
     PROCESS button element_data = {
        name = 'action'
        type = 'submit'
@@ -201,6 +194,23 @@ IF id;
        text = text('Edit')
        value = 'edit'
     };
+ELSE;
+   PROCESS button element_data = {
+       name = 'action'
+       type = 'submit'
+      class = 'submit'
+       text = text('Save')
+      value = 'save'
+   };
+END;
+IF id;
+    PROCESS button element_data = {
+       name = 'action'
+      class = 'submit'
+       text = text('Print')
+       value = 'print'
+       "data-dojo-type" = "lsmb/PrintButton"
+   };
 END;
 IF id && (!allocated || qty > allocated);
     PROCESS button element_data = {
@@ -211,23 +221,6 @@ IF id && (!allocated || qty > allocated);
        value = 'delete'
        type = 'submit'
     };
-END;
-IF id;
-    PROCESS button element_data = {
-       name = 'action'
-      class = 'submit'
-       text = text('Print')
-       value = 'print'
-       "data-dojo-type" = "lsmb/PrintButton"
-   };
-ELSE;
-   PROCESS button element_data = {
-       name = 'action'
-       type = 'submit'
-      class = 'submit'
-       text = text('Save')
-      value = 'save'
-   };
 END;
 ?>
 </form>
