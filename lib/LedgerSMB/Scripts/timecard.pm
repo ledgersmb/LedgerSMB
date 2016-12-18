@@ -65,8 +65,8 @@ sub new {
     return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'entry_filter',
+        path     => 'UI',
+        template => 'timecards/entry_filter',
         format   => 'HTML'
     )->render_to_psgi($request);
 }
@@ -80,7 +80,10 @@ defaults.
 
 sub display {
     my ($request) = @_;
+    $request->{jctype} //= 1;
+    $request->{qty} //= 0;
     $request->{non_billable} //= 0;
+    $request->{in_edit} = 0;
     if ($request->{in_hour} and $request->{in_min}) {
         my $request->{min_used} =
             ($request->{in_hour} * 60) + $request->{in_min} -
@@ -92,14 +95,13 @@ sub display {
     );
     my $curr = LedgerSMB::Setting->get('curr');
     @{$request->{currencies}} = split /:/, $curr;
-    $_ = {id => $_, text => $_} for @{$request->{currencies}};
-    $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
-    warn p($request);
+    $_ = {value => $_, text => $_} for @{$request->{currencies}};
+    $request->{total} = $request->{qty} + $request->{non_billable};
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'timecard',
+        path     => 'UI',
+        template => 'timecards/timecard',
         format   => 'HTML'
     );
     return $template->render_to_psgi($request);
@@ -136,8 +138,8 @@ sub timecard_screen {
          my $template = LedgerSMB::Template->new(
              user     => $request->{_user},
              locale   => $request->{_locale},
-             path     => 'UI/timecards',
-             template => 'timecard-week',
+             path     => 'UI',
+             template => 'timecards/timecard-week',
              format   => 'HTML'
          );
          return $template->render_to_psgi($request);
@@ -207,27 +209,6 @@ sub save_week {
     return new($request);
 }
 
-=item edit
-
-=cut
-
-sub edit {
-    my ($request) = @_;
-    my $tcard = LedgerSMB::Timecard->get($request->{id});
-    $tcard->{transdate} = LedgerSMB::PGDate->from_db(
-              $tcard->checkedin->to_db,
-             'date');
-    $tcard->{transdate}->is_time(0);
-    my ($part) = $tcard->call_procedure(
-         funcname => 'part__get_by_id', args => [$tcard->parts_id]
-    );
-    $tcard->{partnumber} = $part->{partnumber};
-    $tcard->{qty} //= 0;
-    $tcard->{non_billable} //= 0;
-    $tcard->{in_edit} = 1;
-    return display($tcard);
-}
-
 =item print
 
 =cut
@@ -290,7 +271,7 @@ This routine retrieves a timecard and sends it to the display.
 
 =cut
 
-sub get {
+sub _get {
     my ($request) = @_;
     my $tcard = LedgerSMB::Timecard->get($request->{id});
     $tcard->{transdate} = LedgerSMB::PGDate->from_db(
@@ -301,10 +282,36 @@ sub get {
          funcname => 'part__get_by_id', args => [$tcard->parts_id]
     );
     $tcard->{partnumber} = $part->{partnumber};
-    $tcard->{qty} //= 0;
-    $tcard->{non_billable} //= 0;
+    return $tcard;
+}
+
+sub get {
+    my ($request) = @_;
+    my $tcard = _get($request);
     $tcard->{in_edit} = 0;
     return display($tcard);
+}
+
+=item edit
+
+=cut
+
+sub edit {
+    my ($request) = @_;
+    my $tcard = _get($request);
+    $tcard->{in_edit} = 1;
+    return display($tcard);
+}
+
+=item delete
+
+=cut
+
+sub delete {
+    my ($request) = @_;
+    my $count = LedgerSMB::Timecard->delete($request->{id});
+    delete($request->{id});
+    timecard_report();
 }
 
 

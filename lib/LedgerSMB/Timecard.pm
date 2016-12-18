@@ -238,6 +238,18 @@ sub save {
     $self->id($ref->{id});
 }
 
+=item delete()
+
+Deletes the current timecard to the database.
+
+=cut
+
+sub delete {
+    my ($self, $id) = @_;
+    my ($retval) = __PACKAGE__->call_procedure(
+         funcname => 'timecard__delete', args => [$id]);
+}
+
 =item find_part({is_timecard bool, is_service bool, partnumber text})
 
 Returns a list of parts matching the criteria requested

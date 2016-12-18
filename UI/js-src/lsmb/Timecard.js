@@ -20,9 +20,10 @@ define("lsmb/Timecard",
                                                : 'none');
                },
                _display: function(s) {
-                   dom.byId('in-time').style = 'display:'+s;
+                   var widget = dom.byId('in-time');
+                   if ( widget) widget.style = 'display:'+s;
                },
-               _toggleWidgets: function(state) {
+               _disableWidgets: function(state) {
                    var widgets = registry.findWidgets(dom.byId('tableTimecard'));
                    if (widgets) array.forEach(widgets, function(widget, index) {
                        widget.set('disabled', state);
@@ -35,21 +36,22 @@ define("lsmb/Timecard",
                         function(targetValue) {
                             self.update(targetValue);
                         });
-                   var in_edit = dom.byId('in-edit');
-                   self._toggleWidgets(!in_edit.value);
+                   var in_id = dom.byId('id').value;
+                   var in_edit = Number(dom.byId('in-edit').value);
+                   self._disableWidgets(in_id != '' && in_edit===0);
                    var date = new Date();
                    var transdate = dom.byId('in-transdate');
-                   if (transdate.innerText == '') {
+                   if (transdate && transdate.innerText == '') {
                        var ymd = x = dojo.date.locale.format(date, {datePattern: date.placeholder, selector: "date"});;
                        domAttr.set(transdate,'value',ymd);
                    }
                    var in_hour = dom.byId('in-hour');
-                   if (in_hour.innerText == '') {
+                   if (in_hour && in_hour.innerText == '') {
                        var h = '00'+date.getHours().toString();
                        domAttr.set(in_hour,'value',h.slice(-2));
                    }
                    var in_min = dom.byId('in-min');
-                   if (in_min.innerText == '') {
+                   if (in_min && in_min.innerText == '') {
                        var m = '00'+date.getMinutes().toString();
                        domAttr.set(in_min,'value',m.slice(-2));
                    }

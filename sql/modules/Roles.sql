@@ -905,6 +905,7 @@ SELECT lsmb__grant_menu('timecard_add', node_id, 'allow')
 SELECT lsmb__grant_perms('timecard_add', 'jcitems_id_seq', 'ALL');
 SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'INSERT');
 SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'UPDATE');
+SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'DELETE');
 
 SELECT lsmb__create_role('timecard_list');
 SELECT lsmb__grant_role('timecard_list', 'contact_read');
