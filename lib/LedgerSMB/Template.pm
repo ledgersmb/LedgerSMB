@@ -149,6 +149,11 @@ Apply locale settings to column headings and add sort urls if necessary.
 Escapes a scalar string if the format supports such escaping and returns the
 sanitized version.
 
+=item my $arghash = get_template_args($extension)
+
+Returns a hash with the default arguments for the Template and the
+desired file extention
+
 =back
 
 =head1 Copyright 2007, The LedgerSMB Core Team
@@ -161,8 +166,8 @@ your software.
 
 package LedgerSMB::Template;
 
-use warnings;
 use strict;
+use warnings;
 use Carp;
 
 use LedgerSMB::App_State;
@@ -270,26 +275,105 @@ sub _valid_language {
 }
 
 sub _preprocess {
-    my ($self, $vars) = @_;
-    return unless $self->{myconfig};
-    use LedgerSMB;
-    my $type = ref($vars);
+    my ($rawvars, $escape) = @_;
+    return undef unless defined $rawvars;
 
-    if ($type eq 'SCALAR' || !$type){
-        return;
-    }
-    if ($type eq 'ARRAY'){
-        for (@$vars){
-            if (ref($_)){
-                $self->_preprocess($_);
-            }
+    { # pre-5.14 compatibility block
+      # Really? -YL
+        local ($@); # pre-5.14, do not die() in this block
+        if (eval {$rawvars->can('to_output')}){
+            $rawvars = $rawvars->to_output;
         }
     }
-    else {
-        for my $key (keys %$vars){
-            $self->_preprocess($vars->{$key});
+
+    use LedgerSMB;
+    my $type = ref $rawvars;
+    return $rawvars if $type =~ /^LedgerSMB::Locale/;
+
+    my $vars;
+    if ( $type eq 'ARRAY' ) {
+        $vars = [];
+        for (@{$rawvars}) {
+            push @{$vars}, _preprocess( $_, $escape );
+        }
+    } elsif (!$type) {
+        return defined($escape) ? &$escape($rawvars) : $rawvars;
+    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+        return defined($escape) ? &$escape($$rawvars) : $$rawvars;
+    } elsif ($type eq 'CODE'){ # a code reference makes no sense
+        return $rawvars;
+    } elsif ($type eq 'IO::File'){
+        return undef;
+    } elsif ($type eq 'Apache2::RequestRec'){
+        # When running in mod_perl2, we might encounter an Apache2::RequestRec
+        # object; escaping its content is nonsense
+        return undef;
+    } else { # Hashes and objects
+        $vars = {};
+        for ( keys %{$rawvars} ) {
+            $vars->{_preprocess($_, $escape)} = _preprocess( $rawvars->{$_}, $escape );
         }
     }
+    return $vars;
+}
+
+sub get_template_source {
+    my $self = shift;
+    my $get_template = shift;
+
+    my $source;
+    if ($self->{include_path} eq 'DB'){
+        $source = $self->{template};
+    } elsif (ref $self->{template} eq 'SCALAR') {
+        $source = $self->{template};
+    } elsif (ref $self->{template} eq 'ARRAY') {
+        $source = join "\n", @{$self->{template}};
+    } else {
+        $source = $get_template->($self->{template});
+    }
+    return $source;
+}
+
+sub get_template_args {
+    my $self = shift;
+    my $extension = shift;
+    my $binmode = shift;
+
+    my %additional_options = ();
+    if ($self->{include_path} eq 'DB'){
+        $additional_options{INCLUDE_PATH} = [];
+        $additional_options{LOAD_TEMPLATES} =
+            [ LedgerSMB::Template::DBProvider->new(
+                  {
+                      format => $extension,
+                      language_code => $self->{language},
+                      PARSER => Template::Parser->new({
+                         START_TAG => quotemeta('<?lsmb'),
+                         END_TAG => quotemeta('?>'),
+                      }),
+                  }) ];
+    }
+    my $paths = [$self->{include_path},'templates/demo','UI/lib'];
+    unshift @$paths, $self->{include_path_lang}
+        if defined $self->{include_path_lang};
+    my $arghash = {
+        INCLUDE_PATH => $paths,
+        ENCODING => 'utf8',
+        START_TAG => quotemeta('<?lsmb'),
+        END_TAG => quotemeta('?>'),
+        DELIMITER => ';',
+        TRIM => 1,
+        DEBUG => ($self->{debug})? 'dirs': undef,
+        DEBUG_FORMAT => '',
+        (%additional_options)
+    };
+
+    if ($LedgerSMB::Sysconfig::cache_templates){
+        $arghash->{COMPILE_EXT} = '.lttc';
+        $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::tempdir . "/" . $LedgerSMB::Sysconfig::cache_template_subdir;
+    }
+    $self->{binmode} = $binmode;
+    return $arghash;
 }
 
 sub _render {
@@ -362,6 +446,7 @@ sub _render {
     };
 
     $format->can('process')->($self, $cleanvars);
+    # Will return undef if postprocessing if disabled -YL
     my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
     return $post;
 }
@@ -384,7 +469,6 @@ sub render {
 
     return $post;
 }
-
 
 sub render_to_psgi {
     my $self = shift @_;
@@ -416,6 +500,11 @@ sub render_to_psgi {
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
+        push @$headers,
+            ( 'Content-Disposition' =>
+                  'attachment; filename="Report.' . 
+                                lc($self->{format}) . '"'
+            ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{rendered}) {
         open($body, '<:raw', $self->{rendered});
