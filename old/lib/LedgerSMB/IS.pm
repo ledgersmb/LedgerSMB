@@ -1168,19 +1168,24 @@ sub post_invoice {
         for $taccno (split / /, $form->{taxaccounts}){
             my $taxamount;
             my $taxbasis;
+            my $taxrate;
             my $fx = $form->{exchangerate} || 1;
             $taxamount = $form->parse_amount($myconfig,
                                              $form->{"mt_amount_$taccno"});
             $taxbasis = $form->parse_amount($myconfig,
-                                           $form->{"mt_basis_$taccno"});
+                                            $form->{"mt_basis_$taccno"});
+            $taxrate = $form->parse_amount($myconfig,
+                                           $form->{"mt_rate_$taccno"});
             my $fx_taxamount = $taxamount * $fx;
             my $fx_taxbasis = $taxbasis * $fx;
             $form->{receivables} -= $fx_taxamount;
             $invamount += $fx_taxamount;
             $ac_sth->execute($taccno, $form->{id}, $fx_taxamount,
                              $form->{"mt_ref_$taccno"},
-                             $form->{"mt_desc_$taccno"});
-            $tax_sth->execute($fx_taxbasis, $form->{"mt_rate_$taccno"});
+                             $form->{"mt_desc_$taccno"})
+                || $form->dberror();
+            $tax_sth->execute($fx_taxbasis, $taxrate)
+                || $form->dberror();
         }
         $ac_sth->finish;
         $tax_sth->finish;
