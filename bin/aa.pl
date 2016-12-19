@@ -1382,6 +1382,7 @@ sub post {
            and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
         }
+        $form->{rowcount} = 0;
         edit();
     }
     else {
