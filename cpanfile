@@ -38,6 +38,7 @@ requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Plack::Middleware::Redirect';
+requires 'Switch';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
@@ -82,6 +83,11 @@ feature 'openoffice', "OpenOffice.org output" =>
         requires "XML::Twig";
         requires "OpenOffice::OODoc";
         requires 'OpenOffice::OODoc::Styles';
+};
+
+feature 'xls', "Microsoft Excel" =>
+    sub {
+        requires 'Spreadsheet::WriteExcel';
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps
