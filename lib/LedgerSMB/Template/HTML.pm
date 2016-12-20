@@ -78,8 +78,6 @@ sub escape {
 sub process {
     my $parent = shift;
     my $cleanvars = shift;
-    my $template;
-    my $tempdir;
 
     $parent->{binmode} = $binmode;
 
@@ -107,7 +105,7 @@ sub process {
     } else {
         $output = \$parent->{output};
     }
-    my $arghash = $parent->get_template_args($extension,$binmode);
+    my $arghash = $parent->get_template_args($extension,$binmode,1);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source(\&get_template),

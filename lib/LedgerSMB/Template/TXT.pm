@@ -73,51 +73,8 @@ sub get_template {
 }
 
 sub preprocess {
-    # I wonder how much of this can be concentrated in the main template
-    # module? --CT
     my $rawvars = shift;
-    my $vars;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        if (eval {$rawvars->can('to_output')}){
-            $rawvars = $rawvars->to_output;
-        }
-    }
-    my $type = ref $rawvars;
-
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
-    return unless defined $rawvars;
-    if ( $type eq 'ARRAY' ) {
-        $vars = [];
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    } elsif (!$type) {
-        return escape($rawvars);
-    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return escape($$rawvars);
-    } elsif ($type eq 'CODE'){ # a code reference makes no sense
-        return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } elsif ($type eq 'Apache2::RequestRec'){
-        # When running in mod_perl2, we might encounter an Apache2::RequestRec
-        # object; escaping its content is nonsense
-        return undef;
-    } else { # Hashes and objects
-        $vars = {};
-        for ( keys %{$rawvars} ) {
-            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
-        }
-    }
-
-    return $vars;
-}
-
-sub escape {
-    my $vars = shift @_;
-    return undef unless defined $vars;
-    return $vars;
+    return LedgerSMB::Template::_preprocess($rawvars);
 }
 
 sub process {
