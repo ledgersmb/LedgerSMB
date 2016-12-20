@@ -79,9 +79,6 @@ sub process {
     my $parent = shift;
     my $cleanvars = shift;
     my $template;
-    my $output = '';
-    my $source;
-    my %additional_options = ();
     my $tempdir;
 
     $parent->{binmode} = $binmode;
