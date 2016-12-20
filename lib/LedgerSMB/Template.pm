@@ -149,6 +149,10 @@ Apply locale settings to column headings and add sort urls if necessary.
 Escapes a scalar string if the format supports such escaping and returns the
 sanitized version.
 
+=item my $source = get_template_source($get_template)
+
+Returns the Template source when common or call a specialized getter if not
+
 =item my $arghash = get_template_args($extension)
 
 Returns a hash with the default arguments for the Template and the
@@ -323,8 +327,10 @@ sub get_template_source {
         $source = $self->{template};
     } elsif (ref $self->{template} eq 'ARRAY') {
         $source = join "\n", @{$self->{template}};
-    } else {
+    } elsif (defined $get_template) {
         $source = $get_template->($self->{template});
+    } else {
+        $source = undef;
     }
     return $source;
 }
