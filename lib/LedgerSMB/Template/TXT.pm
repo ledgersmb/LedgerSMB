@@ -117,7 +117,6 @@ sub preprocess {
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
     return $vars;
 }
 
