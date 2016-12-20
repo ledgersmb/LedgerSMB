@@ -278,14 +278,9 @@ sub _preprocess {
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
-    { # pre-5.14 compatibility block
-      # Really? -YL
-        local ($@); # pre-5.14, do not die() in this block
-        if (eval {$rawvars->can('to_output')}){
-            $rawvars = $rawvars->to_output;
-        }
+    if (eval {$rawvars->can('to_output')}){
+        $rawvars = $rawvars->to_output;
     }
-
     use LedgerSMB;
     my $type = ref $rawvars;
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
@@ -503,7 +498,7 @@ sub render_to_psgi {
         $body = [ $body ];
         push @$headers,
             ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' . 
+                  'attachment; filename="Report.' .
                                 lc($self->{format}) . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
