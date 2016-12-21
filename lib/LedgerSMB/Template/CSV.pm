@@ -44,7 +44,6 @@ use strict;
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Template::DBProvider;
 
 my $binmode = ':utf8';
 my $extension = 'csv';

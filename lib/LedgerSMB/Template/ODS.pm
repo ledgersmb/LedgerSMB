@@ -132,20 +132,20 @@ my @line_width = ('none', '0.018cm solid', '0.035cm solid',
     );
 
 sub _worksheet_handler {
-        $sheetnum += 1;
+    $sheetnum += 1;
     $rowcount = -1;
     $currcol = 0;
     my $rows = $_->{att}->{rows};
     my $columns = $_->{att}->{columns};
     $rows ||= 1000;
     $columns ||= 52;
-        $maxrows = $rows;
-        $maxcols = $columns;
+    $maxrows = $rows;
+    $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
-                $sheetname = $_->{att}->{name};
+        $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
     }
@@ -157,7 +157,7 @@ sub _row_handler {
 }
 
 sub _cell_handler {
-        $ods->expandTable($sheetname, $maxrows, $maxcols);
+    $ods->expandTable($sheetname, $maxrows, $maxcols);
     my $cell = $ods->getCell($sheetname, $rowcount, $currcol);
 
     if (@style_stack and $celltype{$style_stack[0][0]}) {

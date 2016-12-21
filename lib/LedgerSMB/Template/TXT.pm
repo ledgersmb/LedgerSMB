@@ -47,7 +47,6 @@ use warnings;
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Template::DBProvider;
 use DateTime;
 
 # The following are for EDI only

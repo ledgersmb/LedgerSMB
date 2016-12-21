@@ -57,7 +57,6 @@ use strict;
 use Template::Latex;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Template::DBProvider;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
