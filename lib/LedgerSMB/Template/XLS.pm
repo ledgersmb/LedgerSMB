@@ -122,16 +122,14 @@ sub _format_handler {
     $_->set_att(type => 'format', format => { %properties });
 }
 
-=pod
 # Not yet implemented
-sub _named_format {
-    my ($name, $t, $format) = @_;
-#warn "_named_format:" . p($format);
-    $format->{att}{$name} = 1;
-    &_format_handler($t, $format);
-    $format->set_att(type => 'named_format');
-}
-=cut
+#sub _named_format {
+#    my ($name, $t, $format) = @_;
+##warn "_named_format:" . p($format);
+#    $format->{att}{$name} = 1;
+#    &_format_handler($t, $format);
+#    $format->set_att(type => 'named_format');
+#}
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
