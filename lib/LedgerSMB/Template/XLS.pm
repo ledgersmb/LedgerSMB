@@ -172,30 +172,22 @@ sub _xls_process {
     $workbook->close;
 }
 
-use Switch;
-
 sub handle_subtree {
     my ($tree,$format) = @_;
     my @children = $tree->children;
     foreach my $child (@children) {
         my $att = $child->{att};
-        switch ($att->{type}) {
-            case 'worksheet' {
+        if ($att->{type} eq 'worksheet') {
                 $worksheet = $workbook->add_worksheet($att->{name});
                 handle_subtree($child);
-            }
-            case 'cell' {
+        } elsif ($att->{type} eq 'cell') {
                 $worksheet->write($att->{row},$att->{col},$att->{text},$format);
-            }
-            case 'format' {
+        } elsif ($att->{type} eq 'format') {
                 my $format = $workbook->add_format(%{$att->{format}});
                 handle_subtree($child,$format);
-            }
-            case 'row' {
+        } elsif ($att->{type} eq 'row') {
                 handle_subtree($child,$format);
-            }
-            else { warn p($child); }
-        }
+        } else { warn p($child); }
         $child->purge;
     }
 }
