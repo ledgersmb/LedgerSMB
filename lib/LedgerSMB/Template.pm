@@ -182,6 +182,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
+use LedgerSMB::Template::XLS;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -213,7 +214,7 @@ sub new {
     $self->{debug} = $args{debug};
     $self->{binmode} = undef;
     $self->{outputfile} =
-        "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
+        "${LedgerSMB::Sysconfig::tempdir}/${LedgerSMB::Sysconfig::cache_template_subdir}/UI/$args{output_file}" if
         $args{output_file};
     $self->{include_path} = $args{path};
     $self->{locale} = $args{locale};

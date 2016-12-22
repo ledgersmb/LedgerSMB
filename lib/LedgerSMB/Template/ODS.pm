@@ -829,10 +829,16 @@ sub process {
     my $parent = shift;
     my $cleanvars = shift;
     my $output = '';
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
 
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
-
+    if ($parent->{outputfile}) {
+        if (ref $parent->{outputfile}){
+            $output = $parent->{outputfile};
+        } else {
+            $output = "$parent->{outputfile}.$extension";
+        }
+    } else {
+        $output = \$parent->{output};
+    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(

@@ -130,11 +130,9 @@ sub process {
     if ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
-    my $output = "$parent->{outputfile}.$format"
-        unless ref $parent->{outputfile};
-    $output ||= $parent->{outputfile};
-
     my $arghash = $parent->get_template_args($extension,$binmode);
+    my $output = "$parent->{outputfile}";
+    $output ~= s/$extension/$format/;
     $arghash->{LATEX_FORMAT} = $format;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
