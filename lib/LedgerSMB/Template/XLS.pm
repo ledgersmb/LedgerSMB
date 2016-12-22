@@ -149,13 +149,11 @@ sub _xls_process {
             cell => \&_cell_handler,
             formula => \&_formula_handler,
             format => \&_format_handler,
-=pod
-            bold => sub { &_named_format('bold', @_) },
-            hidden => sub { &_named_format('hidden', @_) },
-            italic => sub { &_named_format('italic', @_) },
-            shadow => sub { &_named_format('shadow', @_) },
-            strikeout => sub { &_named_format('strikeout', @_) },
-=cut
+#            bold => sub { &_named_format('bold', @_) },
+#            hidden => sub { &_named_format('hidden', @_) },
+#            italic => sub { &_named_format('italic', @_) },
+#            shadow => sub { &_named_format('shadow', @_) },
+#            strikeout => sub { &_named_format('strikeout', @_) },
             },
         twig_handlers => {
             format => \&_format_cleanup_handler,
@@ -178,16 +176,18 @@ sub handle_subtree {
     foreach my $child (@children) {
         my $att = $child->{att};
         if ($att->{type} eq 'worksheet') {
-                $worksheet = $workbook->add_worksheet($att->{name});
-                handle_subtree($child);
+            $worksheet = $workbook->add_worksheet($att->{name});
+            handle_subtree($child);
         } elsif ($att->{type} eq 'cell') {
-                $worksheet->write($att->{row},$att->{col},$att->{text},$format);
+            $worksheet->write($att->{row},$att->{col},$att->{text},$format);
         } elsif ($att->{type} eq 'format') {
-                my $format = $workbook->add_format(%{$att->{format}});
-                handle_subtree($child,$format);
+            my $format = $workbook->add_format(%{$att->{format}});
+            handle_subtree($child,$format);
         } elsif ($att->{type} eq 'row') {
-                handle_subtree($child,$format);
-        } else { warn p($child); }
+            handle_subtree($child,$format);
+        } else {
+            warn p($child);
+        }
         $child->purge;
     }
 }

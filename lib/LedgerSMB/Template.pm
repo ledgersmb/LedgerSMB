@@ -214,7 +214,7 @@ sub new {
     $self->{debug} = $args{debug};
     $self->{binmode} = undef;
     $self->{outputfile} =
-        "${LedgerSMB::Sysconfig::tempdir}/${LedgerSMB::Sysconfig::cache_template_subdir}/UI/$args{output_file}" if
+        "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
         $args{output_file};
     $self->{include_path} = $args{path};
     $self->{locale} = $args{locale};
