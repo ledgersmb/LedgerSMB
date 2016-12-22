@@ -163,26 +163,26 @@ sub _xls_process {
             }
         );
     $parser->parse($template);
-    handle_subtree($parser->root);
+    _handle_subtree($parser->root);
     #$parser->purge;
     $workbook->close;
 }
 
-sub handle_subtree {
+sub _handle_subtree {
     my ($tree,$format) = @_;
     my @children = $tree->children;
     foreach my $child (@children) {
         my $att = $child->{att};
         if ($att->{type} eq 'worksheet') {
             $worksheet = $workbook->add_worksheet($att->{name});
-            handle_subtree($child);
+            _handle_subtree($child);
         } elsif ($att->{type} eq 'cell') {
             $worksheet->write($att->{row},$att->{col},$att->{text},$format);
         } elsif ($att->{type} eq 'format') {
             my $format = $workbook->add_format(%{$att->{format}});
-            handle_subtree($child,$format);
+            _handle_subtree($child,$format);
         } elsif ($att->{type} eq 'row') {
-            handle_subtree($child,$format);
+            _handle_subtree($child,$format);
         } else {
             warn p($child);
         }
