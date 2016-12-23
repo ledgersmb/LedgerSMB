@@ -220,6 +220,7 @@ Approves the single batch on the details screen.  Batch_id must be set.
 
 sub single_batch_approve {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->post;
@@ -237,6 +238,7 @@ Deletes the single batch on the details screen.  Batch_id must be set.
 
 sub single_batch_delete {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->delete;
@@ -254,6 +256,7 @@ Unlocks the single batch on the details screen.  Batch_id must be set.
 
 sub single_batch_unlock {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->unlock;
@@ -273,6 +276,7 @@ Deletes selected vouchers.
 
 sub batch_voucher_delete {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         for my $count (1 .. $request->{rowcount_}){
@@ -292,6 +296,7 @@ Approves all selected batches.
 
 sub batch_approve {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if (!$request->close_form){
         list_batches($request);
     }
@@ -315,6 +320,7 @@ Unlocks selected batches
 
 sub batch_unlock {
     my ($request) = @_;
+    delete $request->{language}; # only applicable for printing of batches
     my $batch = LedgerSMB::Batch->new(base => $request);
     if ($request->{batch_id}){
        $batch->unlock($request->{batch_id});
@@ -338,6 +344,7 @@ Deletes selected batches
 
 sub batch_delete {
     my ($request)  = @_;
+    delete $request->{language}; # only applicable for printing of batches
     if (!$request->close_form){
         return list_batches($request);
     }

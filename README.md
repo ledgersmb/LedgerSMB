@@ -213,7 +213,7 @@ NOTE: DO NOT run starman (or any web service) as root, this is considered
       Do not use the starman --user= mechanism, it currently drops privlidges too late.
 
 ```bash
- $ starman --port 5762 tools/starman.psgi
+ $ starman -I lib/ -I old/lib/ --port 5762 tools/starman.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
 Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
