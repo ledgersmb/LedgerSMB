@@ -283,6 +283,7 @@ sub _preprocess {
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
+    local ($@);
     if (eval {$rawvars->can('to_output')}){
         $rawvars = $rawvars->to_output;
     }

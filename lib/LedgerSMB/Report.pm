@@ -248,6 +248,7 @@ sub _render {
     $self->run_report($request) if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
+    local ($@);
     eval {$template = $self->template};
     $template ||= 'Reports/display_report';
 
