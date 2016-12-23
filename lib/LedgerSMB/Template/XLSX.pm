@@ -5,7 +5,7 @@ LedgerSMB::Template::XLSX - Template support module for LedgerSMB
 
 =head1 SYNOPSIS
 
-Microsoft Spreadsheet XML output.
+Microsoft Spreadsheet XLSX output.
 
 =head1 METHODS
 
@@ -190,7 +190,7 @@ sub _handle_subtree {
 
 sub get_template {
     my $name = shift;
-    return "${name}.${extension}t";
+    return "${name}.xlst";
 }
 
 sub preprocess {

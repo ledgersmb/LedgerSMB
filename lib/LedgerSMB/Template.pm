@@ -190,16 +190,16 @@ sub available_formats {
     local ($@);
     if (eval {require LedgerSMB::Template::LaTeX}){
         push @retval, 'PDF', 'PS';
-    }
+    } { warn $@ if $@; }
     if (eval {require LedgerSMB::Template::XLS}){
         push @retval, 'XLS';
-    }
+    } { warn $@ if $@; }
     if (eval {require LedgerSMB::Template::XLSX}){
         push @retval, 'XLSX';
-    }
+    } else { warn $@ if $@; }
     if (eval {require LedgerSMB::Template::ODS}){
         push @retval, 'ODS';
-    }
+    } { warn $@ if $@; }
     return \@retval;
 }
 
@@ -236,7 +236,7 @@ sub new {
         $self->{format} = 'LaTeX';
         $self->{format_args}{filetype} = 'ps';
     } elsif (lc $self->{format} eq 'xlsx'){
-        $self->{format} = 'XML';
+        $self->{format} = 'XLSX';
         $self->{format_args}{filetype} = 'xlsx';
     } elsif (lc $self->{format} eq 'XML'){
         $self->{format} = 'XML';
