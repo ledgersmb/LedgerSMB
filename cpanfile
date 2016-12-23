@@ -87,6 +87,7 @@ feature 'openoffice', "OpenOffice.org output" =>
 feature 'xls', "Microsoft Excel" =>
     sub {
         requires 'Spreadsheet::WriteExcel';
+        requires 'Excel::Writer::XLSX';
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps

@@ -182,7 +182,6 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
-use LedgerSMB::Template::XLS;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -194,6 +193,9 @@ sub available_formats {
     }
     if (eval {require LedgerSMB::Template::XLS}){
         push @retval, 'XLS';
+    }
+    if (eval {require LedgerSMB::Template::XLSX}){
+        push @retval, 'XLSX';
     }
     if (eval {require LedgerSMB::Template::ODS}){
         push @retval, 'ODS';

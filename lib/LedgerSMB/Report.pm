@@ -95,7 +95,7 @@ has 'rows' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
 =item format
 
 This is the format, and must be one used by LedgerSMB::Template.  Options
-expected for 1.4 out of the box include csv, pdf, ps, xls, and ods.  Other
+expected for 1.4 out of the box include csv, pdf, ps, xls, xlsx and ods.  Other
 formats could be supported in the future.  If undefined, defaults html.
 
 =cut

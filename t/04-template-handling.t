@@ -212,6 +212,25 @@ SKIP: {
         'Template, render (XLS): removing testfile');
     ok(!-e "t/var/04-template-output-$$.xls",
         'Template, render (XLS): testfile removed');
+
+    $template = undef;
+    $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'XLSX',
+        'template' => '04-template', 'no_auto_output' => 1);
+    ok(defined $template,
+        'Template, new (XLSX): Object creation with format and template');
+    isa_ok($template, 'LedgerSMB::Template',
+        'Template, new (XLSX): Object creation with format and template');
+    is($template->{include_path}, 't/data',
+        'Template, new (XLSX): Object creation with format and template');
+    is($template->render({'login' => 'foo\&bar'}),
+        "t/var/04-template-output-$$.xlsx",
+        'Template, render (XLSX): Simple Postscript template, default filename');
+    ok(-e "t/var/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
+    is(unlink("t/var/04-template-output-$$.xlsx"), 1,
+        'Template, render (XLSX): removing testfile');
+    ok(!-e "t/var/04-template-output-$$.xlsx",
+        'Template, render (XLSX): testfile removed');
+
 }
 
 $template = undef;

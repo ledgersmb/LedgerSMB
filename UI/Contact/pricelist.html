@@ -110,6 +110,12 @@ IF FORMATS.grep('XLS').size()
      ?>">[<?lsmb text('XLS') ?>]</a>
 <?lsmb END;
 
+IF FORMATS.grep('XLSX').size() 
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLSX&credit_id=<?lsmb 
+             credit_id ?>&entity_id=<?lsmb entity_id 
+     ?>">[<?lsmb text('XLSX') ?>]</a>
+<?lsmb END;
+
 IF FORMATS.grep('ODS').size() 
 ?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
