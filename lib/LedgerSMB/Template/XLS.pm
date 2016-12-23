@@ -52,11 +52,9 @@ use strict;
 use warnings;
 
 use Template;
-use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use CGI::Simple::Standard qw(:html);
 use LedgerSMB::Sysconfig;
-use Data::Dumper;  ## no critic
 use Spreadsheet::WriteExcel;
 
 my $binmode = undef;
@@ -197,14 +195,7 @@ sub get_template {
 
 sub preprocess {
     my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
-
-sub escape {
-    my $vars = shift @_;
-    return undef unless defined $vars;
-    $vars = escapeHTML($vars);
-    return $vars;
+    return LedgerSMB::Template::_preprocess($rawvars);
 }
 
 sub process {
