@@ -15,7 +15,7 @@ PROCESS input element_data = {
 };
 END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
-<table id="tableTimecard">
+<table id="tableTimecard"><tbody>
 <tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
     </th>
 </tr>
@@ -181,7 +181,7 @@ maxlength = 2 } ?>
                      text = notes } ?>
     </td>
 </tr>
-</table>
+</tbody></table>
 <?lsmb IF id; 
     PROCESS print_options; 
 END; ?>
