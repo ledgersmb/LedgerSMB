@@ -74,6 +74,7 @@ on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
  * PostgreSQL client libraries
+ * PostgreSQL server
  * Either:
    * PostgreSQL development package (so cpanm can compile DBD::Pg)
      (RedHat: postgresql-devel, Debian: libpq-dev)
@@ -91,6 +92,16 @@ Then, some of the features listed below have system requirements as well:
    * ImageMagick
 
 ## Perl module dependencies
+
+This section depends on [a working local::lib installation](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+as well as an installed `cpanm` executable. Both should be available from
+your distribution's package repository (Debian calls them `liblocal-lib-perl`
+and `cpanminus` respectively). In case `local::lib` is installed from the
+the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+is still to be executed.
+
+`cpanm` depends on the `make` command being available; depending on which dependencies
+are being installed, `gcc` may be required as well.
 
 To install the Perl module dependencies, run:
 
@@ -213,7 +224,7 @@ NOTE: DO NOT run starman (or any web service) as root, this is considered
       Do not use the starman --user= mechanism, it currently drops privlidges too late.
 
 ```bash
- $ starman -I lib --port 5762 tools/starman.psgi
+ $ starman -I lib --listen localhost:5762 tools/starman.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
 Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
