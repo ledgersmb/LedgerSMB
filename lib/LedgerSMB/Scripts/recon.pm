@@ -283,7 +283,7 @@ sub _display_report {
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
     $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
-                             - ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
+                             + ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
     $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
     return $template->render($recon);
 }
