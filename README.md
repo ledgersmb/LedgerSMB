@@ -151,13 +151,13 @@ While it's possible to use LedgerSMB with the standard ```postgres``` user,
 it's good practice to create a separate 'LedgerSMB database administrator':
 
 ```plain
-$ sudo su - postgres -c 'createuser --no-superuser --createdb --login
-          --createrole --pwprompt lsmb_dbadmin'
+$ sudo -u postgres createuser --no-superuser --createdb --login \
+          --createrole --pwprompt lsmb_dbadmin
 Enter password for new role: ****
 Enter it again: ****
 ```
 
-The ```pg_hba.conf``` file should have at least these lines in it:
+The ```pg_hba.conf``` file should have at least these lines in it (order of the entries matters):
 
 ```plain
 local   all                            postgres                         peer
@@ -171,6 +171,9 @@ host    postgres,template0,template1   all             ::1/128          reject
 host    all                            all             127.0.0.1/32     md5
 host    all                            all             ::1/128          md5
 ```
+
+ > Note: `pg_hba.conf` can be found in `/etc/postgresql/<version>/main/` on Debian
+ >  and in `/var/lib/pgsql/data/` on RedHat/Fedora
 
 After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 (or without 'sudo' by running the commands as root user):
@@ -186,38 +189,13 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 For most systems, all that's required in this step is:
 
 ```bash
- $ cp conf/ledgersmb.conf.default ledgersmb.conf
+ $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
 ```
 
- > Note: the default search location for `ledgersmb.conf`
- > is in the root directory of the project where Starman
- > will be started; when the `LSMB_CONFIG_FILE` environment
- > variable is set, its path will be taken from that variable
- >
- > e.g.
- > `LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf`
-
-## Build optimized JavaScript widgets (aka "build Dojo")
-
-Note: **Skip this step for from-tarball installs** The tarrball already contains
-  the "compiled" JavaScript sources.
-
-
-This step requires either ```node``` (NodeJS) or ```java``` to be installed
-and in all cases ```make```.
-
-```sh
- $ make dojo
-```
-
-Builds the required content for the ```UI/js/``` directory from the content
-in the ```UI/js-src/``` directory.  Note that this step fails when submodules
-haven't been correctly initialised.
-
- > Note: In case correct building of the dojo assets isn't working,
- > it is possible (at the expense of performance/speed) to run without
- > preprocessed dojo assets by setting `dojo_built = 0` in the `[debug]`
- > section of the `ledgersmb.conf` configuration file.
+ > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
+ > page load times of some pages.  However, creating a built dojo
+ > adds considerable complexity to these instructions; please consult
+ > the extensive setup instructions to build dojo.
 
 ## Running Starman
 
