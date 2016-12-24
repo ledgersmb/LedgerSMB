@@ -131,10 +131,7 @@ specifying ```--with-feature=<feature>```:
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
-Those who don't want to install the dependencies globally should
-investigate [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/)
-to create an "overlay" over the system packages in a separate
-directory.
+cpanm will by default use [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/) so that dependencies are not installed into the global perl installation.
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 contain a list of distribution provided packages to reduce the CPAN
