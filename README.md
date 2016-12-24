@@ -23,7 +23,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 ## Server
 
- * Perl 5.14+
+ * Perl 5.10+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 
@@ -74,10 +74,10 @@ on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
  * PostgreSQL client libraries
- * Either:
-   * PostgreSQL development package (so cpanm can compile DBD::Pg)
-     (RedHat: postgresql-devel, Debian: libpq-dev)
-   * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
+ * PostgreSQL server
+ * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
+   This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
+   in RedHat/Fedora
 
 Then, some of the features listed below have system requirements as well:
 
@@ -91,6 +91,23 @@ Then, some of the features listed below have system requirements as well:
    * ImageMagick
 
 ## Perl module dependencies
+
+This section depends on [a working local::lib installation](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+as well as an installed `cpanm` executable. Both should be available from
+your distribution's package repository (Debian calls them `liblocal-lib-perl`
+and `cpanminus` respectively). In case `local::lib` is installed from the
+the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+is still to be executed:
+
+```bash
+ $ echo 'eval "$(perl -I$HOME/foo/lib/perl5 -Mlocal::lib=$HOME/foo)"' >>~/.bashrc
+```
+
+In order for the command above to take effect, please log out and log in again.
+
+
+`cpanm` depends on the `make` command being available; depending on which dependencies
+are being installed, `gcc` may be required as well.
 
 To install the Perl module dependencies, run:
 
@@ -114,10 +131,7 @@ specifying ```--with-feature=<feature>```:
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
-Those who don't want to install the dependencies globally should
-investigate [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/)
-to create an "overlay" over the system packages in a separate
-directory.
+cpanm will by default use [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/) so that dependencies are not installed into the global perl installation.
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 contain a list of distribution provided packages to reduce the CPAN
@@ -134,13 +148,13 @@ While it's possible to use LedgerSMB with the standard ```postgres``` user,
 it's good practice to create a separate 'LedgerSMB database administrator':
 
 ```plain
-$ sudo su - postgres -c 'createuser --no-superuser --createdb --login
-          --createrole --pwprompt lsmb_dbadmin'
+$ sudo -u postgres createuser --no-superuser --createdb --login \
+          --createrole --pwprompt lsmb_dbadmin
 Enter password for new role: ****
 Enter it again: ****
 ```
 
-The ```pg_hba.conf``` file should have at least these lines in it:
+The ```pg_hba.conf``` file should have at least these lines in it (order of the entries matters):
 
 ```plain
 local   all                            postgres                         peer
@@ -154,6 +168,9 @@ host    postgres,template0,template1   all             ::1/128          reject
 host    all                            all             127.0.0.1/32     md5
 host    all                            all             ::1/128          md5
 ```
+
+ > Note: `pg_hba.conf` can be found in `/etc/postgresql/<version>/main/` on Debian
+ >  and in `/var/lib/pgsql/data/` on RedHat/Fedora
 
 After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 (or without 'sudo' by running the commands as root user):
@@ -169,51 +186,27 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 For most systems, all that's required in this step is:
 
 ```bash
- $ cp conf/ledgersmb.conf.default ledgersmb.conf
+ $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
 ```
 
- > Note: the default search location for `ledgersmb.conf`
- > is in the root directory of the project where Starman
- > will be started; when the `LSMB_CONFIG_FILE` environment
- > variable is set, its path will be taken from that variable
- >
- > e.g.
- > `LSMB_CONFIG_FILE=/etc/ledgersmb/ledgersmb.conf`
-
-## Build optimized JavaScript widgets (aka "build Dojo")
-
-Note: **Skip this step for from-tarball installs** The tarrball already contains
-  the "compiled" JavaScript sources.
-
-
-This step requires either ```node``` (NodeJS) or ```java``` to be installed
-and in all cases ```make```.
-
-```sh
- $ make dojo
-```
-
-Builds the required content for the ```UI/js/``` directory from the content
-in the ```UI/js-src/``` directory.  Note that this step fails when submodules
-haven't been correctly initialised.
-
- > Note: In case correct building of the dojo assets isn't working,
- > it is possible (at the expense of performance/speed) to run without
- > preprocessed dojo assets by setting `dojo_built = 0` in the `[debug]`
- > section of the `ledgersmb.conf` configuration file.
+ > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
+ > page load times of some pages.  However, creating a built dojo
+ > adds considerable complexity to these instructions; please consult
+ > the extensive setup instructions to build dojo.
 
 ## Running Starman
 
 With the above steps completed, the system is ready to run the web server:
-NOTE: DO NOT run starman (or any web service) as root, this is considered
-      a serious security issue, and as such LedgerSMB doesn't support it.
-      Instead, if you need to start LedgerSMB from a root process, drop
-      privlidges to a user that doesn't have write access to the LedgerSMB Directories first.
-      Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
-      Do not use the starman --user= mechanism, it currently drops privlidges too late.
+
+ > NOTE: DO NOT run starman (or any web service) as root, this is considered
+ >     a serious security issue, and as such LedgerSMB doesn't support it.
+ >     Instead, if you need to start LedgerSMB from a root process, drop
+ >     privlidges to a user that doesn't have write access to the LedgerSMB Directories first.
+ >     Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
+ >     Do not use the starman --user= mechanism, it currently drops privlidges too late.
 
 ```bash
- $ starman --port 5762 tools/starman.psgi
+ $ starman -I lib -I old/lib --listen localhost:5762 tools/starman.psgi
 2016/05/12-02:14:57 Starman::Server (type Net::Server::PreFork) starting! pid(xxxx)
 Resolved [*]:5762 to [::]:5762, IPv6
 Not including resolved host [0.0.0.0] IPv4 because it will be handled by [::] IPv6
@@ -221,16 +214,12 @@ Binding to TCP port 5762 on host :: with IPv6
 Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 ```
 
+
 ## Environment Variables
 
 We support the following
-- PERL5LIB        : Optional (but recommended)
-     - should be configured before any LedgerSMB related process is executed (including starman/plack)
-     - This should have the normal system entries, but also the LedgerSMB install dir should be prepended or appended depending on if the system is dedicated to LedgerSMB (prepend) or used for other things (append)
-     - An example would be
-    ```
-    PERL5LIB='/home/foo/perl5/lib/perl5:/home/foo/perl5/lib/perl5:/usr/local/ledgersmb/'
-    ```
+- PERL5LIB        : Required for most installations (if local::lib has been used)
+     - should be already be configured as part of [Section Perl module dpendencies](#perl-module-dependencies)
 - LSMB_WORKINGDIR : Optional
      - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
@@ -243,7 +232,8 @@ We support the following
 ## Next steps
 
 The system is installed and should be available for evaluation through
-http://localhost:5762/setup.pl and http://localhost:5762/login.pl.
+- http://localhost:5762/setup.pl    # creation and privileged management of company databases
+- http://localhost:5762/login.pl    # Normal login for the application
 
 The system is ready for [preparation for first
 use](http://ledgersmb.org/topic/preparing/preparing-ledgersmb-15-first-use).
