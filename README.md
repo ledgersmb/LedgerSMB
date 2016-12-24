@@ -75,10 +75,9 @@ page on CPAN.
 
  * PostgreSQL client libraries
  * PostgreSQL server
- * Either:
-   * PostgreSQL development package (so cpanm can compile DBD::Pg)
-     (RedHat: postgresql-devel, Debian: libpq-dev)
-   * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)
+ * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
+   This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
+   in RedHat/Fedora
 
 Then, some of the features listed below have system requirements as well:
 
@@ -98,7 +97,14 @@ as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
 and `cpanminus` respectively). In case `local::lib` is installed from the
 the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
-is still to be executed.
+is still to be executed:
+
+```bash
+ $ echo 'eval "$(perl -I$HOME/foo/lib/perl5 -Mlocal::lib=$HOME/foo)"' >>~/.bashrc
+```
+
+In order for the command above to take effect, please log out and log in again.
+
 
 `cpanm` depends on the `make` command being available; depending on which dependencies
 are being installed, `gcc` may be required as well.
