@@ -24,6 +24,7 @@ ExecStart=/usr/bin/plackup                     \
     -s FCGI                                    \
     --listen localhost:3244                    \
     -I lib                                     \
+    -I old/lib/                                \
     tools/starman.psgi
 Restart=always
 

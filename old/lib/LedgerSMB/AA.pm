@@ -122,6 +122,7 @@ sub post_transaction {
     my $amount;
     my $diff        = 0;
 
+
     my %tax = ();
     my $accno;
     # add taxes
@@ -216,6 +217,7 @@ sub post_transaction {
        $fxinvnetamount += $_->{amount_tc};
    }
     my $invamount = $invnetamount + $tax;
+    $form->{invtotal} = $invnetamount;
 
     # adjust paidaccounts if there is no date in the last row
     $form->{paidaccounts}--
