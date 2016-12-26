@@ -190,16 +190,16 @@ sub available_formats {
     local ($@);
     if (eval {require LedgerSMB::Template::LaTeX}){
         push @retval, 'PDF', 'PS';
-    } { warn $@ if $@; }
+    } else { $logger->debug($@) if $@; }
     if (eval {require LedgerSMB::Template::XLS}){
         push @retval, 'XLS';
-    } { warn $@ if $@; }
+    } else { $logger->debug($@) if $@; }
     if (eval {require LedgerSMB::Template::XLSX}){
         push @retval, 'XLSX';
-    } else { warn $@ if $@; }
+    } else { $logger->debug($@) if $@; }
     if (eval {require LedgerSMB::Template::ODS}){
         push @retval, 'ODS';
-    } { warn $@ if $@; }
+    } else { $logger->debug($@) if $@; }
     return \@retval;
 }
 
