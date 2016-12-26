@@ -263,8 +263,9 @@ tr.record {
 	background-color: pink;
 }
 
-tr.warning {
+tr.warning,div.warning {
 	background-color: yellow;
+        color: black;
 }
 
 span.no-submit {

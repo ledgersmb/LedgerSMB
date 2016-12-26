@@ -341,8 +341,9 @@ tr.record {
 	background-color: pink;
 }
 
-tr.warning {
+div.warning,tr.warning {
 	background-color: yellow;
+        color: black;
 }
 /* media stuff */
 
