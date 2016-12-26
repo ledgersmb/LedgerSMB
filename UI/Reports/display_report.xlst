@@ -1,4 +1,4 @@
-<?lsmb PROCESS "dynatable.xslt" 
+<?lsmb PROCESS "dynatable.xlst" 
 
 HEADS 2;
 
