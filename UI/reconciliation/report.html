@@ -124,7 +124,7 @@ END ?>
             name = "id_$i",
             value = row.id
         } ?>
-        <tr class="record">
+        <tr class=<?lsmb row.suspect ? "suspect" : "record"?>>
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
@@ -205,7 +205,7 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class="warning">        
+        <tr class=<?lsmb row.suspect ? "suspect" : "warning"?>>
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
@@ -262,7 +262,7 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class="record" id=<?lsmb "recon-line-$row.id" ?>
+        <tr class=<?lsmb row.suspect ? "suspect" : "record"?> id=<?lsmb "recon-line-$row.id" ?>
             data-dojo-type = "lsmb/ReconciliationLine"
             data-dojo-props = "topic:'ui/reconciliation/report/cleared_$row.id'">
             <td><?lsmb IF !approved and !submitted;
