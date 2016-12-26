@@ -14,24 +14,25 @@ LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 use strict;
 use warnings;
 
-# Preloads
 use LedgerSMB;
-use LedgerSMB::Form;
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
-use LedgerSMB::Template::HTML;
-use LedgerSMB::Locale;
-use LedgerSMB::File;
-use LedgerSMB::Scripts::login;
-use LedgerSMB::PGObject;
-use Try::Tiny;
+use LedgerSMB::App_State;
 
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
-# use Carp::Always;
+use Try::Tiny;
+
+# To build the URL space
+use Plack::Builder;
+use Plack::App::File;
+use Plack::Middleware::Redirect;
+use Plack::Middleware::ConditionalGET;
+use Plack::Builder::Conditionals;
+
 
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
+
+# Some old code depends on this variable having been defined
 $ENV{GATEWAY_INTERFACE}="cgi/1.1";
 
 =head1 FUNCTIONS
@@ -198,6 +199,53 @@ sub _run_old {
        exit;
     }
 }
+
+=item setup_url_space(development => $boolean, coverage => $boolean)
+
+Sets up the URL space for the PSGI app, pointing various URLs at the
+appropriate PSGI handlers/apps.
+
+=cut
+
+sub setup_url_space {
+    my %args = @_;
+    my $coverage = $args{coverage};
+    my $development = $args{development};
+    my $old_app = old_app();
+    my $psgi_app = \&psgi_app;
+
+    builder {
+        enable 'Redirect', url_patterns => [
+            qr/^\/?$/ => ['/login.pl',302]
+            ];
+
+        enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
+            'ConditionalGET';
+
+        enable 'Plack::Middleware::Pod',
+             path => qr{^/pod/},
+             root => './',
+             pod_view => 'Pod::POM::View::HTMl' # the default
+                 if $development;
+
+        mount '/rest/' => rest_app();
+
+        # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
+        mount "/$_.pl" => $old_app
+            for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
+
+        mount "/$_" => $psgi_app
+            for  (@LedgerSMB::Sysconfig::newscripts);
+
+        mount '/stop.pl' => sub { exit; }
+            if $coverage;
+
+        mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
+    };
+}
+
+
+
 
 =back
 
