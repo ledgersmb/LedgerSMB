@@ -84,6 +84,12 @@ feature 'openoffice', "OpenOffice.org output" =>
         requires 'OpenOffice::OODoc::Styles';
 };
 
+feature 'xls', "Microsoft Excel" =>
+    sub {
+        requires 'Spreadsheet::WriteExcel';
+        requires 'Excel::Writer::XLSX';
+};
+
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
