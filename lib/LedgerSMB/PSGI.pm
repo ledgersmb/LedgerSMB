@@ -77,6 +77,22 @@ in LedgerSMB::Scripts::*.
 
 =cut
 
+sub _internal_server_error {
+    my ($msg, $title, $company, $dbversion) = @_;
+
+    $title //= 'Error!';
+    my @body_lines = [ '<html><body>',
+                       qq|<h2 class="error">Error!</h2>|,
+                       "<p><b>$msg</b></p>" ];
+    push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
+        if $company || $dbversion;
+
+    push @body_lines, '</body></html>';
+
+    return [ 500,
+             [ 'Content-Type' => 'text/html; charset=UTF-8' ],
+             \@body_lines ];
+}
 
 sub psgi_app {
     my $env = shift;
@@ -107,23 +123,14 @@ sub psgi_app {
     my $script = "LedgerSMB::Scripts::$1";
     $request->{_script_handle} = $script;
 
-    return [ 500,
-             [ 'Content-Type' => 'text/html' ],
-             [ '<html><body><h1>No workflow script specified!</h1></body></html>' ]
-        ]
-                 unless $script;
+    return _internal_server_error('No workflow script specified!')
+        unless $script;
 
-    return [ 500,
-             [ 'Content-Type' => 'text/html; charset=utf-8' ],
-             [ "<html><body><h1>Unable to open script $script : $! : $@</h1></body></html>" ]
-        ]
+    return _internal_server_error("Unable to open script $script : $! : $@")
         unless use_module($script);
 
     my $action = $script->can($request->{action});
-    return [ 500,
-             [ 'Content-Type' => 'text/html; charset=utf-8' ],
-             [ "<html><body><h1>Action Not Defined: $request->{action}</h1></body></html>" ]
-        ]
+    return _internal_server_error("Action Not Defined: $request->{action}")
         unless $action;
 
     my ($status, $headers, $body);
@@ -165,21 +172,13 @@ sub psgi_app {
             $LedgerSMB::App_State::DBH->rollback
                 if ($LedgerSMB::App_State::DBH && $_ eq 'Died');
         };
-        eval {
-            LedgerSMB::App_State->cleanup();
-        };
+        eval { LedgerSMB::App_State->cleanup(); };
         if ($error !~ /^Died at/) {
             ($status, $headers, $body) =
-                 ( 500,
-                   [ 'Content-Type' => 'text/html; charset=utf-8' ],
-                   [ qq|<html>
-<body><h2 class="error">Error!</h2> <p><b>$_</b></p>
-<p>dbversion: $request->{dbversion}, company: $request->{company}</p>
-</body>
-</html>
-| ]
-                 );
-             }
+                @{_internal_server_error($_, 'Error!',
+                                         $request->{dbversion},
+                                         $request->{company})};
+        }
     };
 
     push @$headers, ( 'Set-Cookie' =>
