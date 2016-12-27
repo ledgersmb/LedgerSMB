@@ -29,16 +29,6 @@ use LedgerSMB::Setting;
 use DateTime;
 use DateTime::TimeZone;
 
-use Data::Printer class => {
-        expand => 1,
-        colored => 1,
-        sort_keys => 1,
-        show_methods => 'none',
-        filters => {
-            'LedgerSMB::PGNumber' => sub { $_[0]->to_sort }
-        }
-};
-
 =head1 ROUTINES
 
 =over
@@ -80,10 +70,17 @@ defaults.
 
 sub display {
     my ($request) = @_;
-    $request->{jctype} //= 1;
     $request->{qty} //= 0;
     $request->{non_billable} //= 0;
-    $request->{in_edit} = 0;
+    $request->{in_edit} //= 0;
+    if (defined $request->{checkedin} and $request->{checkedin}->is_time) {
+        $request->{in_hour} = $request->{checkedin}->{hour};
+        $request->{in_min} = $request->{checkedin}->{min};
+    }
+    if (defined $request->{checkedout} and $request->{checkedout}->is_time) {
+        $request->{out_hour} = $request->{checkedout}->{hour};
+        $request->{out_min} = $request->{checkedout}->{min};
+    }
     if ($request->{in_hour} and $request->{in_min}) {
         my $request->{min_used} =
             ($request->{in_hour} * 60) + $request->{in_min} -
@@ -155,7 +152,10 @@ sub save {
     $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
            $request->{partnumber}
     );
-    $request->{jctype} ||= 1;
+    $request->{jctype} = $request->{timecard_type} eq 'by_time'      ? 1
+                       : $request->{timecard_type} eq 'by_materials' ? 2
+                       : $request->{timecard_type} eq 'by_overhead'  ? 3
+                       : 0;
     $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
     $request->{checkedin} = $request->{transdate};
     die $request->{_locale}->text('Please submit a start/end time or a qty')
@@ -200,7 +200,10 @@ sub save_week {
             $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
                      $hash->{partnumber}
             );
-            $hash->{jctype} ||= 1;
+            $hash->{jctype} = $request->{timecard_type} eq 'by_time'      ? 1
+                            : $request->{timecard_type} eq 'by_materials' ? 2
+                            : $request->{timecard_type} eq 'by_overhead'  ? 3
+                            : 0;
             $hash->{total} = $hash->{qty} + $hash->{non_chargeable};
             my $timecard = LedgerSMB::Timecard->new(%$hash);
             $timecard->save;
