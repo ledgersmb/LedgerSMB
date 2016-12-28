@@ -913,12 +913,6 @@ sub form_footer {
                                   {text=> $locale->text('Transaction'), value => 'transaction'},
                                 ]
                    };
-        print_select($form, $formname);
-        print_select($form, $printops->{lang});
-        print_select($form, $printops->{format});
-        print_select($form, $printops->{media});
-
-        print "<br>";
         my $hold_text;
 
         if ($form->{on_hold}) {
@@ -998,6 +992,15 @@ sub form_footer {
             }
             delete $button{'update'} unless $is_draft;
         }
+
+        if (defined $button{'print'}) {
+            # Don't show the print selectors, if there's no "Print" button
+            print_select($form, $formname);
+            print_select($form, $printops->{lang});
+            print_select($form, $printops->{format});
+            print_select($form, $printops->{media});
+        }
+        print "<br>";
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
