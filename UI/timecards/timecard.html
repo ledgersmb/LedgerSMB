@@ -191,6 +191,13 @@ IF id && !in_edit;
        name = 'action'
        type = 'submit'
       class = 'submit'
+       text = text('New')
+       value = 'new'
+    };
+    PROCESS button element_data = {
+       name = 'action'
+       type = 'submit'
+      class = 'submit'
        text = text('Edit')
        value = 'edit'
     };
