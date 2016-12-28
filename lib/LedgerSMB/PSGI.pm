@@ -77,7 +77,6 @@ in LedgerSMB::Scripts::*.
 
 =cut
 
-use Data::Printer;
 sub _internal_server_error {
     my ($msg, $title, $company, $dbversion) = @_;
 
