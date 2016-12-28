@@ -124,7 +124,8 @@ CREATE TYPE timecard_report_line AS (
    parts_id int,
    sellprice numeric,
    non_billable numeric,
-   jctype int
+   jctype int,
+   notes text
 );
 
 CREATE OR REPLACE FUNCTION timecard__report
@@ -151,7 +152,7 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        p.partnumber, bu.control_code as business_unit_code,
        bu.description AS businessunit_description,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice,
-       j.non_billable, j.jctype
+       j.non_billable, j.jctype, j.notes
   FROM jcitems j
   JOIN parts p ON p.id = j.parts_id
   JOIN person pr ON pr.id = j.person_id
