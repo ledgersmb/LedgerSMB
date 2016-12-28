@@ -81,14 +81,15 @@ sub _internal_server_error {
     my ($msg, $title, $company, $dbversion) = @_;
 
     $title //= 'Error!';
-    my @body_lines = [ '<html><body>',
+    my @body_lines = ( '<html><body>',
                        qq|<h2 class="error">Error!</h2>|,
-                       "<p><b>$msg</b></p>" ];
+                       "<p><b>$msg</b></p>" );
     push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
         if $company || $dbversion;
 
     push @body_lines, '</body></html>';
 
+    warn p(@body_lines);
     return [ 500,
              [ 'Content-Type' => 'text/html; charset=UTF-8' ],
              \@body_lines ];

@@ -34,13 +34,12 @@ Send an http error to the browser.
 
 sub http_error {
     #my ($errcode, $msg_plus) = @_;
-    my ($unknown,$errcode, $msg_plus) = @_;#tshvr4 called as LedgerSMB::Auth->http_error('401');
-    $msg_plus = '' if not defined $msg_plus;
-    my $cgi = CGI::Simple->new();
+    my ($unknown, $errcode) = @_;   #Called as LedgerSMB::Session->http_error('401');
+    my $msg_plus = shift // '';     #Optional parameter
 
     my $err = {
-    '500' => {status  => '500 Internal Server Error',
-          message => 'An error occurred. Information on this error has been logged.',
+        '500' => {status  => '500 Internal Server Error',
+                  message => 'An error occurred. Information on this error has been logged.',
                   others  => {}},
         '403' => {status  => '403 Forbidden',
                   message => 'You are not allowed to access the specified resource.',
@@ -55,28 +54,18 @@ sub http_error {
         '454' => {status  => '454 Database Does Not Exist',
                   message => 'Database Does Not Exist' },
     };
-    # Ordinarily I would use $cgi->header to generate the headers
-    # but this doesn't seem to be working.  Although it is generally desirable
-    # to create the headers using the package, I think we should print them
-    # manually.  -CT
+    my @headers = ('Content-Type' => 'text/plain');
     if ($errcode eq '401'){
         if ($msg_plus eq 'setup'){
-           $err->{'401'}->{others}->{'WWW-Authenticate'}
-                = "Basic realm=\"LedgerSMB-$msg_plus\"";
+           $err->{$errcode}->{others} = {'WWW-Authenticate' => "Basic realm=\"LedgerSMB-$msg_plus\""};
         }
-        print $cgi->header(
-           -type               => 'text/text',
-           -status             => $err->{'401'}->{status},
-           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
-        );
-    } else {
-        print $cgi->header(
-           -type   => 'text/text',
-           -status => $err->{$errcode}->{status},
-        );
     }
-    print $err->{$errcode}->{message};
-    die;
+    push @headers, $err->{$errcode}->{others}
+        if defined $err->{$errcode}->{others};
+    return [ $errcode,
+             \@headers,
+             [ $err->{$errcode}->{message} // "Unknown http error" ]
+           ];
 }
 
 
@@ -88,7 +77,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    LedgerSMB::Auth->http_error(401, $suffix);#tshvr4
+    LedgerSMB::Session->http_error(401, $suffix);#tshvr4
 }
 
 
@@ -234,7 +223,7 @@ sub create {
     my ( $userID ) = $fetchUserID->fetchrow_array;
     unless($userID) {
         $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        LedgerSMB::Auth->http_error('401');#tshvr4
+        LedgerSMB::Session->http_error('401');#tshvr4
         return;#tshvr4?
     }
 
@@ -260,7 +249,7 @@ sub create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken )
-      || LedgerSMB::Auth->http_error('401');#tshvr4
+      || LedgerSMB::Session->http_error('401');#tshvr4
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator

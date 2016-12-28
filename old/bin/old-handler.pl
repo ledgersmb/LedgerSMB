@@ -77,7 +77,7 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
-use LedgerSMB::Session;
+#use LedgerSMB::Session;    #YL Not used anymore here?
 use LedgerSMB::App_State;
 use Data::Dumper;
 
