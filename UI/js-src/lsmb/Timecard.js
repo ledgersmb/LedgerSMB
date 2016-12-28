@@ -1,17 +1,12 @@
 define("lsmb/Timecard",
        ["dojo/_base/declare",
         "dojo/topic",
-        "dojo/date",
-        "dojo/date/locale",
-        "dojo/dom-attr",
         "dojo/dom",
         "dijit/registry",
-        "dojo/query",
         "dojo/_base/array",
-        "lsmb/Form",
-        "dijit/_Container"],
-       function(declare, topic, date, locale, domAttr, dom, registry, query, array, Form, _Container) {
-           return declare("lsmb/Timecard", [Form, _Container], {
+        "lsmb/Form"],
+       function(declare, topic, dom, registry, array, Form) {
+           return declare("lsmb/Timecard", Form, {
                update: function(targetValue) {
                    this.set("checked", true);
                    this._display(( targetValue == 'by_time' ||
@@ -40,14 +35,6 @@ define("lsmb/Timecard",
                    var in_id = dom.byId('id').value;
                    var in_edit = Number(dom.byId('in-edit').value);
                    self._disableWidgets(in_id != '' && in_edit===0);
-
-                   var date = new Date();
-
-                   var transdate = dom.byId('in-transdate');
-                   if (transdate && transdate.innerText == '') {
-                       var ymd = x = dojo.date.locale.format(date, {datePattern: date.placeholder, selector: "date"});;
-                       domAttr.set(transdate,'value',ymd);
-                   }
                }
            });
        });
