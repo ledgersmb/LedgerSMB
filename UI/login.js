@@ -48,7 +48,9 @@ function send_form() {
                                 })).show();
                 } else {
                     (new Dialog({ title: "Error",
-                                  content: "Unknown error preventing login",
+                                  content: defined(err.response.text)
+                                           ? err.response.text
+                                           : "Unknown error preventing login",
                                   style: "width: 300px",
                                 })).show();
                 }
