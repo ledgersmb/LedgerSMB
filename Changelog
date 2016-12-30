@@ -4,6 +4,16 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.37
+* Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
+* Outstanding report (AR/AP) does not include taxes (Erik H, #2437)
+* Contact screen does not honor Default Country from Defaults (Erik H, #2349)
+* UI switches language after "Post Batch" (Erik H, #1640)
+* Incorrect address on Aging statement (Erik H, #1245)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.36
 * Overpayments incorrectly not reduced when applied (Erik H, #2346)
 * Fix number formatting/processing in batch payment/receipt (Erik H, #2350)
