@@ -167,7 +167,7 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
             OR (j.qty <= j.allocated AND in_closed))
        AND (j.jctype = in_jctype OR in_jctype is null)
        AND (bu.path IS NOT NULL OR in_business_units = '{}' OR in_business_units IS NULL)
-  ORDER BY j.checkedin, bu.description, p.partnumber, e.name
+  ORDER BY j.checkedin, j.jctype, bu.description, p.partnumber, e.name
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)
