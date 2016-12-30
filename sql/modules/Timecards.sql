@@ -30,7 +30,8 @@ DECLARE retval jcitems;
 BEGIN
 
 UPDATE jcitems
-   SET parts_id = in_parts_id,
+   SET business_unit_id = in_business_unit_id,
+       parts_id = in_parts_id,
        description = in_description,
        qty = in_qty,
        allocated = in_allocated,
