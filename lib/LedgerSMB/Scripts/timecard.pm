@@ -92,8 +92,20 @@ sub display {
     );
     my $curr = LedgerSMB::Setting->get('curr');
     @{$request->{currencies}} = split /:/, $curr;
+    $request->{defaultcurr} = @{$request->{currencies}}[0];
     $_ = {value => $_, text => $_} for @{$request->{currencies}};
+    $request->{unitprice} = (
+           LedgerSMB::Timecard->get_part_discountedprice(
+                                $request->{business_unit_id},
+                                $request->{parts_id},
+                                $request->{transdate},
+                                $request->{qty},
+                                $request->{curr})
+        // LedgerSMB::Timecard->get_part_sellprice($request->{partnumber})
+    );
     $request->{total} = $request->{qty} + $request->{non_billable};
+    $request->{sellprice} = $request->{unitprice} * $request->{qty}
+        if $request->{unitprice} && $request->{qty};
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -156,14 +168,21 @@ sub save {
                        : $request->{timecard_type} eq 'by_materials' ? 2
                        : $request->{timecard_type} eq 'by_overhead'  ? 3
                        : 0;
-    $request->{total} = ($request->{qty}//0) + ($request->{non_chargeable}//0);
-    $request->{checkedin} = $request->{transdate};
+    $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
     die $request->{_locale}->text('Please submit a start/end time or a qty')
         unless defined $request->{qty}
                or ($request->{checkedin} and $request->{checkedout});
     $request->{qty} //= _get_qty($request->{checkedin}, $request->{checkedout});
+    $request->{checkedin} = $request->{transdate}
+        if !$request->{checkedin};
+    $request->{checkedout} = $request->{checkedin}
+        if !$request->{checkedout} and $request->{total};
+    $request->{sellprice} = $request->{unitprice}
+        if !$request->{sellprice} and $request->{total};
+    $request->{fxsellprice} //= $request->{sellprice};
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
+    $request->{in_edit} = 0;
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
@@ -200,11 +219,13 @@ sub save_week {
             $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
                      $hash->{partnumber}
             );
-            $hash->{jctype} = $request->{timecard_type} eq 'by_time'      ? 1
-                            : $request->{timecard_type} eq 'by_materials' ? 2
-                            : $request->{timecard_type} eq 'by_overhead'  ? 3
+            $hash->{jctype} = $hash->{timecard_type} eq 'by_time'      ? 1
+                            : $hash->{timecard_type} eq 'by_materials' ? 2
+                            : $hash->{timecard_type} eq 'by_overhead'  ? 3
                             : 0;
             $hash->{total} = $hash->{qty} + $hash->{non_chargeable};
+            $hash->{sellprice} = $hash->{unitprice} * $hash->{qty}
+                if $hash->{sellprice} && $hash->{unitprice};
             my $timecard = LedgerSMB::Timecard->new(%$hash);
             $timecard->save;
         }
@@ -281,10 +302,12 @@ sub _get {
               $tcard->checkedin->to_db,
              'date');
     $tcard->{transdate}->is_time(0);
+    $tcard->{transdate}->is_tz(0);
     my ($part) = $tcard->call_procedure(
          funcname => 'part__get_by_id', args => [$tcard->parts_id]
     );
     $tcard->{partnumber} = $part->{partnumber};
+    $tcard->{unitprice} = $part->{sellprice};
     return $tcard;
 }
 
@@ -317,6 +340,15 @@ sub delete {
     timecard_report();
 }
 
+=item refresh
+
+=cut
+
+sub refresh {
+    my ($request) = @_;
+    my $tcard = _get($request);
+    return display($tcard);
+}
 
 =back
 
