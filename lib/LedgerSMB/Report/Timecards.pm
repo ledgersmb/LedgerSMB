@@ -96,6 +96,10 @@ sub columns {
        name => $self->Text('Week Starting'),
        type => 'text',
      pwidth => '2', },
+    {col_id => 'jctype',
+       name => $self->Text('Type'),
+       type => 'text',
+     pwidth => '4', },
     {col_id => 'business_unit_code',
        name => $self->Text('Project/Department Number'),
        type => 'text',
@@ -188,6 +192,10 @@ sub run_report {
     for my $row (@rows){
         $row->{"day$row->{weekday}"} = $row->{qty};
         $row->{"row_id"} = $row->{id};
+        $row->{jctype} = $row->{jctype} eq '1' ? $self->Text("Time")
+                       : $row->{jctype} eq '2' ? $self->Text("Materials")
+                       : $row->{jctype} eq '3' ? $self->Text("Overhead")
+                       : "$row->{jctype}?";
     }
     $self->rows(\@rows);
 }
