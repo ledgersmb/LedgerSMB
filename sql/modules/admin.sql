@@ -184,6 +184,12 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
     begin
         select * into a_user from admin__get_user(in_user_id);
 
+        IF a_user.username != CURRENT_USER THEN
+            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE THEN
+               RAISE EXCEPTION 'User % querying permissions for %, not authorised', CURRENT_USER, a_user.username;
+            END IF;
+        END IF;
+
         FOR u_role IN
         select r.rolname
         from
@@ -222,6 +228,12 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
         a_user users;
     begin
         select * into a_user from admin__get_user_by_entity(in_entity_id);
+
+        IF a_user.username != CURRENT_USER THEN
+            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE THEN
+               RAISE EXCEPTION 'User % querying permissions for %, not authorised', CURRENT_USER, a_user.username;
+            END IF;
+        END IF;
 
         FOR u_role IN
         select r.rolname

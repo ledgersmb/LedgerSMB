@@ -1068,14 +1068,20 @@ SELECT lsmb__grant_role('users_manage', 'contact_create');
 SELECT lsmb__grant_role('users_manage', 'contact_class_employee');
 SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');
-SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
-SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user_by_entity(int)');
 SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
 SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
 SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
 SELECT lsmb__grant_menu('users_manage', 222, 'allow');SELECT lsmb__grant_menu('users_manage', 48, 'allow');
 SELECT lsmb__grant_menu('users_manage', 48, 'allow');
 SELECT lsmb__grant_menu('users_manage', 49, 'allow');
+
+-- These two routines manage their own access!
+-- because users must be able to query their own roles!
+-- Note however, danger lies ahead: they are security definer functions!
+SELECT lsmb__grant_exec('base_user', 'admin__get_roles_for_user(int)');
+SELECT lsmb__grant_exec('base_user', 'admin__get_roles_for_user_by_entity(int)');
+
+
 
 SELECT lsmb__create_role('system_admin');
 SELECT lsmb__grant_role('system_admin', rname)
