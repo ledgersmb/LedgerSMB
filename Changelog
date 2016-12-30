@@ -11,6 +11,11 @@ Released 2016-12-24
 Changelog for 1.5.1
 
 * Adjust tools/patch-release-upgrade.pl for interface changes in 1.5 (Erik H)
+* Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
+* Outstanding report (AR/AP) does not include taxes (Erik H, #2437)
+* Contact screen does not honor Default Country from Defaults (Erik H, #2349)
+* UI switches language after "Post Batch" (Erik H, #1640)
+* Incorrect address on Aging statement (Erik H, #1245)
 
 Erik H is Erik Huelsmann
 
