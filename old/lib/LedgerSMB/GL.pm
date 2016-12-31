@@ -372,7 +372,9 @@ sub get_all_acc_dep_pro
     $sth->finish;
 
 
-    # get projects
+   # get projects
+   my $transdate = $form->{transdate};
+   $transdate = undef if !$transdate;
     $form->all_business_units( $form->{transdate} );
 
 }
