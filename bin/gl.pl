@@ -165,7 +165,10 @@ sub display_form
     $form->{separate_duties}
         = $LedgerSMB::Company_Config::settings->{separate_duties};
     #Add General Ledger Transaction
-    $form->all_business_units($form->{transdate}, undef, 'GL');
+
+    # filter out '' transdates
+    my $transdate = ($form->{transdate}) ? $from->{transdate} : undef;
+    $form->all_business_units($transdate, undef, 'GL');
     @{$form->{sequences}} = LedgerSMB::Setting::Sequence->list('glnumber')
          unless $form->{id};
     $form->close_form;

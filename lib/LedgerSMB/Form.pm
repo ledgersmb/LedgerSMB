@@ -2175,16 +2175,17 @@ sub all_business_units {
     my $class_sth = $dbh->prepare(
                 q|SELECT * FROM business_unit__list_classes('1', ?)|
     );
-    $class_sth->execute($module_name);
+    $class_sth->execute($module_name)
+        || $self->dberror(q|SELECT * FROM business_unit__list_classes('1', ?)|);
 
     my $bu_sth    = $dbh->prepare(
-                q|SELECT *
-                    FROM business_unit__list_by_class(?, ?, ?, 'false')|
+                q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|
     );
 
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
         push @{$self->{bu_class}}, $classref;
-        $bu_sth->execute($classref->{id}, $transdate, $credit_id);
+        $bu_sth->execute($classref->{id}, $transdate, $credit_id)
+            || $self->dberror(q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|);
         $self->{b_units}->{$classref->{id}} = [];
         while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
            push @{$self->{b_units}->{$classref->{id}}}, $buref;
