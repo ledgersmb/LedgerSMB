@@ -18,6 +18,7 @@ Changelog for 1.5.1
 * Database error when clicking 'Preferences' menu (Erik H, #2370)
 * Can't open Template Transaction (Erik H, #2369)
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
 
 Erik H is Erik Huelsmann
 
