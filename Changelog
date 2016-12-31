@@ -16,6 +16,8 @@ Changelog for 1.5.1
 * Contact screen does not honor Default Country from Defaults (Erik H, #2349)
 * UI switches language after "Post Batch" (Erik H, #1640)
 * Incorrect address on Aging statement (Erik H, #1245)
+* Database error when clicking 'Preferences' menu (Erik H, #2370)
+* Can't open Template Transaction (Erik H, #2369)
 
 Erik H is Erik Huelsmann
 
