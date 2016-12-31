@@ -78,6 +78,7 @@ Changelog for 1.4.37
 * Contact screen does not honor Default Country from Defaults (Erik H, #2349)
 * UI switches language after "Post Batch" (Erik H, #1640)
 * Incorrect address on Aging statement (Erik H, #1245)
+* Print selects (printer, ...) shown even without Print button (Erik H, #2376)
 
 Erik H is Erik Huelsmann
 
