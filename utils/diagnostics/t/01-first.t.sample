@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "this to the user: your username is $USER"
+echo "this to the log: this test was run as user $USER" 1>&5
