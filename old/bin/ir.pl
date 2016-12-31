@@ -920,11 +920,13 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
                      options => [
                                   {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
                                 ]
-                   };
-    print_select($form, $formname);
-    print_select($form, $printops->{lang});
-    print_select($form, $printops->{format});
-    print_select($form, $printops->{media});
+    };
+    if ($button{print}) {
+        print_select($form, $formname);
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
+    }
   print qq|
   </td></tr>
   <tr>
