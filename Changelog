@@ -12,6 +12,7 @@ Changelog for 1.5.1
 * Database error when clicking 'Preferences' menu (Erik H, #2370)
 * Can't open Template Transaction (Erik H, #2369)
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
 
 Erik H is Erik Huelsmann
 
@@ -80,6 +81,7 @@ Changelog for 1.4.37
 * UI switches language after "Post Batch" (Erik H, #1640)
 * Incorrect address on Aging statement (Erik H, #1245)
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
 
 Erik H is Erik Huelsmann
 
