@@ -23,6 +23,8 @@ Changelog for 1.5.1
 * Can't open Template Transaction (Erik H, #2369)
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
 * Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
+* 'year' dropdown in 'General Journal > Search' always empty (Erik H, #2278)
+* Can't import Timecard due to 'undefined action "run_import"' (Erik H, #2462)
 
 Erik H is Erik Huelsmann
 
