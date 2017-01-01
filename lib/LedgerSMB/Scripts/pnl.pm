@@ -39,6 +39,13 @@ use warnings;
 sub generate_income_statement {
     my ($request) = @_;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
+
+    $request->{business_units} = [];
+    for my $count (1 .. $request->{bc_count}){
+         push @{$request->{business_units}}, $request->{"business_unit_$count"}
+               if $request->{"business_unit_$count"};
+    }
+
     my $rpt;
     $request->{pnl_type} = '' unless defined $request->{pnl_type};
     if ($request->{pnl_type} eq 'invoice'){
