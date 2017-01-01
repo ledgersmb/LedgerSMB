@@ -12,21 +12,24 @@ data.
 =cut
 
 package LedgerSMB::Scripts::import_csv;
-use Moose;
-use LedgerSMB::Template;
-use LedgerSMB::Form;
 use strict;
 
-my $default_currency = 'USD';
+use Moose;
+
+use LedgerSMB::Template;
+use LedgerSMB::Form;
+use LedgerSMB::Setting;
+
+my $default_currency = 'USD'; #LedgerSMB::Setting->get('curr');
 our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
                  'invnumber', 'transdate'],
    ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',
                  'invnumber', 'transdate'],
-   timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
-                 'description', 'qty', 'noncharge', 'sellprice', 'allocated',
-                'notes'],
+   timecard =>  ['employee', 'business_unit_id', 'transdate', 'partnumber',
+                 'description', 'qty', 'non_billable', 'sellprice', 'allocated',
+                'notes', 'jctype','curr'],
    inventory => ['partnumber', 'onhand', 'purchase_price'],
    inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
 };
@@ -470,6 +473,7 @@ This displays the begin data entry screen.
 
 =cut
 
+use Data::Printer;
 sub begin_import {
     my ($request) = @_;
     my $template_file =
@@ -503,6 +507,8 @@ data in $request and processes it according to the dispatch tables.
 
 sub run_import {
     my ($request) = @_;
+warn p($request);
+
     my @entries = parse_file($request);
     my $headers = shift @entries;
     if (ref($preprocess->{$request->{type}}) eq 'CODE'){
