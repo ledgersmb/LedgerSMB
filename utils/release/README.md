@@ -42,6 +42,7 @@ release-notifications.sh
 ============================
 bash-functions.sh
 ============================
+    NOTE: This library has been moved to utils/lib/
     A library of functions that are common to most of the scripts
     One Environment Variable MUST be set before sourcing this file.
     eg:
