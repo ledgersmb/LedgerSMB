@@ -42,4 +42,5 @@
 1.5/template_menu.sql
 1.5/template_menu2.sql
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
-
+1.5/issue-2278-modify-acc_trans-index.sql
+#1.6 changes
