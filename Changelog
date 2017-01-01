@@ -32,6 +32,8 @@ Changelog for 1.5.1
 * Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
 * 'year' dropdown in 'General Journal > Search' always empty (Erik H, #2278)
 * Can't import Timecard due to 'undefined action "run_import"' (Erik H, #2462)
+* Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
+* 'System > Reporting units' doesn't show module checkmarks (Erik H, #2470)
 
 Erik H is Erik Huelsmann
 
