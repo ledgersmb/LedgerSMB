@@ -491,7 +491,7 @@ sub begin_import {
     # $request->{page_id} =~ s/_/-/;
     # $request->{page_id} .= '-import';
     $request->{page_id} = 'batch-import';
-    return $template->render_to_psgi($request);
+    return $template->render_to_psgi({ request => $request });
 }
 
 =head2 run_import
