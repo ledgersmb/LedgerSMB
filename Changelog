@@ -84,6 +84,7 @@ Changelog for 1.4.37
 * Incorrect address on Aging statement (Erik H, #1245)
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
 * Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
+* Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
 
 Erik H is Erik Huelsmann
 
