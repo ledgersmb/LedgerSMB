@@ -62,6 +62,14 @@ has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
 
 has incl_accnos => (is => 'ro', isa => 'Bool');
 
+=item business_units
+
+Array of business unit id's
+
+=cut
+
+has 'business_units' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
+
 =back
 
 =head1 CONSTANT REPORT-RELATED FUNCTIONS
