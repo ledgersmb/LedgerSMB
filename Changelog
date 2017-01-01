@@ -5,6 +5,13 @@ Forthcoming
 Performance
 * Remove CGI::Emulate::PSGI wrapper for 'new code' (Erik H/Yves L)
 
+Code cleanup
+* Removed code duplication in
+  - Template handling framework (Yves L)
+
+Quality assurance
+* Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
+
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
 
