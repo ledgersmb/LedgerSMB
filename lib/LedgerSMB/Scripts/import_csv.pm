@@ -15,6 +15,7 @@ package LedgerSMB::Scripts::import_csv;
 use strict;
 
 use Moose;
+use List::MoreUtils qw{ any };
 
 use LedgerSMB::Template;
 use LedgerSMB::Form;
@@ -355,14 +356,24 @@ sub _process_sic {
 sub _process_timecard {
     use LedgerSMB::Timecard;
     my ($request, $entries) = @_;
-    my $myconfig = {};
-    my $jc = {};
+    my @floats = qw {qty non_billable sellprice allocated};
     for my $entry (@$entries) {
+        my $jc = {};
         my $counter = 0;
         for my $col (@{$cols->{timecard}}){
+            if ($request->{sep} eq ";" &&
+                any { $_ eq $col } @floats) {
+                $entry->[$counter] =~ s/,/./;
+                $entry->[$counter] = 0 if $entry->[$counter] eq "";
+            }
             $jc->{$col} = $entry->[$counter];
             ++$counter;
         }
+        $jc->{parts_id} = LedgerSMB::Timecard::get_part_id(undef,$jc->{partnumber});
+        $jc->{total} = $jc->{qty} + $jc->{non_billable}
+            if !$jc->{total};
+        $jc->{checkedin} = $jc->{transdate} if !$jc->{checkedin};
+        $jc->{checkedout} = $jc->{transdate} if !$jc->{checkedout};
         LedgerSMB::Timecard->new(%$jc)->save;
     }
 }
@@ -431,32 +442,41 @@ our $process = {
     inventory_multi => \&_process_inventory_multi,
 };
 
-=head2 parse_file
+=head2 _parse_file
 
 This parses a file, and returns a the csv in tabular format.
 
 =cut
 
-sub parse_file {
+sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->{_request}->upload('import_file');
     my $contents = join("\n", <$handle>);
+    my $sep = "";
+    my $n = @{$cols->{$self->{type}}}-1; # 1 separator less than fields
 
     $self->{import_entries} = [];
     for my $line (split /(\r\n|\r|\n)/, $contents){
-        next if ($line !~ /,/);
+        if ( $sep eq "" ) {
+            if    ($n == (() = $line =~  /,/g)) { $sep =  "," }
+            elsif ($n == (() = $line =~  /;/g)) { $sep =  ";" }
+            elsif ($n == (() = $line =~ /\t/g)) { $sep = "\t" }
+            else  { die "Unrecognized file format" }
+            $self->{sep} = $sep;
+        }
+        next if ($line !~ /$sep/);
         my @fields;
         $line =~ s/[^"]"",/"/g;
         while ($line ne '') {
             if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//
+                $line =~ s/"(.*?)"($sep|$)//
                     || $self->error($self->{_locale}->text('Invalid file'));
                 my $field = $1;
                 $field =~ s/\s*$//;
                 push @fields, $field;
             } else {
-                $line =~ s/([^,]*),?//;
+                $line =~ s/([^$sep]*)$sep?//;
                 my $field = $1;
                 $field =~ s/\s*$//;
                 push @fields, $field;
@@ -473,7 +493,6 @@ This displays the begin data entry screen.
 
 =cut
 
-use Data::Printer;
 sub begin_import {
     my ($request) = @_;
     my $template_file =
@@ -507,9 +526,8 @@ data in $request and processes it according to the dispatch tables.
 
 sub run_import {
     my ($request) = @_;
-warn p($request);
 
-    my @entries = parse_file($request);
+    my @entries = _parse_file($request);
     my $headers = shift @entries;
     if (ref($preprocess->{$request->{type}}) eq 'CODE'){
         $preprocess->{$request->{type}}($request, \@entries, $headers);
