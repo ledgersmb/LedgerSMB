@@ -14,6 +14,10 @@ define("lsmb/Reconciliation",
                postCreate: function() {
                    var self = this;
                    this.inherited(arguments);
+                   topic.subscribe("ui/reconciliation/report/b_unapproved_transactions",
+                        function(targetValue) {
+                            self.update(targetValue,"#unapproved-transactions");
+                        });
                    topic.subscribe("ui/reconciliation/report/b_cleared_table",
                         function(targetValue) {
                             self.update(targetValue,"#cleared-table");
