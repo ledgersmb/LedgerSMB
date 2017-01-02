@@ -33,7 +33,7 @@ define("lsmb/Timecard",
                        domattr.set('total','value',v);
                        domattr.set('qty','value',v);
                    } else if (topic == 'part') {
-                       dom.byId("action_refresh").click(); 
+                       dom.byId("action_refresh").click();
                    } else if (topic == 'unitprice') {
                    } else if (topic == 'qty') {
                        if (dom.byId('qty').value != targetValue) {
@@ -60,7 +60,7 @@ define("lsmb/Timecard",
                },
                _update_save: function(targetValue) {
                    dijit.byId("action_save").setAttribute('disabled', false);
-                   dom.byId("action_refresh").click(); 
+                   dom.byId("action_refresh").click();
                },
                _display: function(s) {
                    var widget = dom.byId('in-time');
@@ -77,7 +77,7 @@ define("lsmb/Timecard",
                    var fxrate = dom.byId('fxrate');
                    // We should provide a similar REST to cache results and fetch
                    // only if not available.
-                   xhr.get("http://currencies.apps.grandtrunk.net/getrate/" 
+                   xhr.get("http://currencies.apps.grandtrunk.net/getrate/"
                                 + this.transdate + "/" + this.curr
                                 + "/" + this.defaultcurr, {
                                     headers: {
