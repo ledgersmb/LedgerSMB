@@ -17,6 +17,7 @@ Changelog for 1.5.1
 * Can't import Timecard due to 'undefined action "run_import"' (Erik H, #2462)
 * Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
 * 'System > Reporting units' doesn't show module checkmarks (Erik H, #2470)
+* Languages not sorted by description (but by code instead) (Erik H, #1118)
 
 Erik H is Erik Huelsmann
 
