@@ -13,6 +13,7 @@ requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
 requires 'DateTime';
+requires 'DateTime::TimeZone';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTTP::Exception'; # YLA
