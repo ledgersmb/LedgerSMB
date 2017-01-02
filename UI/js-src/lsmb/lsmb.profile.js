@@ -107,8 +107,8 @@ var profile = (function(){
                     "lsmb/SubscribeNumberTextBox",
                     "lsmb/SubscribeSelect",
                     "lsmb/SubscribeShowHide",
-                    "lsmb/TabularForm"
-                    "lsmb/Timecard",
+                    "lsmb/TabularForm",
+                    "lsmb/Timecard"
                 ]
             }
         },
