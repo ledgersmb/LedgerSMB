@@ -13,6 +13,7 @@ Changelog for 1.4.37
 * Print selects (printer, ...) shown even without Print button (Erik H, #2376)
 * Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
 * Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
+* Languages not sorted by description (but by code instead) (Erik H, #1118)
 
 Erik H is Erik Huelsmann
 
