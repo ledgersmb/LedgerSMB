@@ -2869,6 +2869,8 @@ sub update_status {
 
     $sth->finish;
 
+    return unless $self->{printed} || $self->{emailed} || $spoolfile;
+
     my $printed = ( $self->{printed} =~ /$self->{formname}/ ) ? "1" : "0";
     my $emailed = ( $self->{emailed} =~ /$self->{formname}/ ) ? "1" : "0";
 
