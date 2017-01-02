@@ -27,6 +27,7 @@ transactions.
 package LedgerSMB::Report::Unapproved::Drafts;
 use Moose;
 extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
