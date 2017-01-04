@@ -1813,7 +1813,7 @@ sub get_name {
 
     # SC: Check for valid table/view name.  Other values will cause SQL errors.
     if ($table !~ /^(vendor|customer|employee)$/i) {
-        $self->error('Invalid name source "$table"');
+        $self->error('Invalid name source');
     }
     # Company name is stored in $self->{vendor} or $self->{customer}
     if ($self->{"${table}number"} eq ''){
