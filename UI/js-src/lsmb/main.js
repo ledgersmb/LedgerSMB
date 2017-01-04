@@ -32,7 +32,7 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
                     });
                     var l = window.location;
                     dnode.href = l.origin + l.pathname
-                        + l.search + "#" + dnode.href;
+                        + l.search + "#" + dnode.href.substring(l.origin.length);
                 };
                 if (mainDiv != null) {
                     mainDiv.interceptClick = interceptClick;
