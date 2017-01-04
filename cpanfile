@@ -34,6 +34,7 @@ requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';
+requires 'Plack::App::Proxy';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA

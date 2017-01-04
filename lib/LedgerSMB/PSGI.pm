@@ -27,7 +27,7 @@ use Plack::App::File;
 use Plack::Middleware::Redirect;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
-
+use Plack::App::Proxy;
 
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -226,6 +226,8 @@ sub setup_url_space {
              root => './',
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
+
+        mount '/getrate' => Plack::App::Proxy->new(remote => 'http://currencies.apps.grandtrunk.net/getrate')->to_app;
 
         mount '/rest/' => rest_app();
 
