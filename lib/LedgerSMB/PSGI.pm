@@ -99,24 +99,29 @@ sub _internal_server_error {
              \@body_lines ];
 }
 
+sub _set_environment {
+    my $env = shift;
+    #To keep LedgerSMB->new happy for now
+    my $environment = {
+        GATEWAY_INTERFACE => 'CGI/1.1',
+        HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
+        SERVER_SOFTWARE => "CGI-Emulate-PSGI",           # Not anymore
+        REMOTE_ADDR     => '127.0.0.1',                  # Default value
+        REMOTE_HOST     => 'localhost',                  # Default value
+        REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
+        ( map { $_ => $env->{$_} }                       # Override defaults
+          grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
+    };
+    return $environment;
+}
+
 sub psgi_app {
     my $env = shift;
     # Taken from CGI::Emulate::PSGI
     #no warnings;
     local *STDIN = $env->{'psgi.input'};
-    my $environment = {                                 # Ain't this for old only?
-        GATEWAY_INTERFACE => 'CGI/1.1',
-        HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",           # Not anymore
-        REMOTE_ADDR     => '127.0.0.1',                  # That may not be true
-        REMOTE_HOST     => 'localhost',                  # That either
-        REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }                       # Why removing this?
-          grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
-    };
-    # End of CGI::Emulate::PSGI
 
-    local %ENV = ( %ENV, %$environment );
+    local %ENV = ( %ENV, %{_set_environment($env)} );
 
     my $request = LedgerSMB->new();
     $request->{action} ||= '__default';
@@ -208,15 +213,63 @@ sub _run_old {
     }
 }
 
-sub _fxrate_app {
+=item fxrate_app
+
+Implements a PSGI application for the purpose of getting FX rates, either cached
+or through a proxied remote server.
+
+=cut
+
+sub fxrate_app {
     my $env = shift;
     my $session = $env->{'psgix.session'};
+    my ($status, $headers, $body) = 
+                        ( 401,
+                          [ 'Content-Type' => 'text/plain; charset=utf-8'],
+                          ['No valid session']
+    );
     if ( $session && $session->{valid}) {
-        Plack::App::Proxy->new(
-            remote => 'http://currencies.apps.grandtrunk.net/getrate')->to_app->($env)
+        local %ENV = ( %ENV, %{_set_environment($env)} );
+
+        my $request = LedgerSMB->new();
+        # What is the proper way to get the following?
+        my @url = split('&',$env->{PATH_INFO});
+        foreach my $u (@url) {
+            my @opt = split('=',$u);
+            $request->{$opt[0]} = $opt[1];
+        }
+        $request->_db_init;
+        my @params = split('/',$url[0]);
+        my $date = LedgerSMB::PGDate->from_input($params[1]);
+        if ( $date && $date->is_date && 4 == @params && $request->{company}) {
+            # Get buy rate
+            my ($fxrate) = $request->call_procedure(
+                            funcname => 'currency_get_exchangerate',
+                            args => [$params[2],$date,2]);
+            if ( $fxrate->{currency_get_exchangerate} ) {
+                $status = 200;
+                $body = [$fxrate->{currency_get_exchangerate}]
+            } else {
+                my $url = '/getrate'
+                        . '/' . $date->to_output('yyyy-mm-dd')
+                        . '/' . $params[2]
+                        . '/' . $params[3];
+                $env->{QUERY_STRING} = undef;
+                $env->{REQUEST_URI} = $url;
+                $env->{HTTP_REFERER} = $env->{'psgi.url_scheme'}
+                                     . '://'
+                                     . $env->{HTTP_HOST} . $url;
+                $env->{'plack.proxy.url'} = 'http://currencies.apps.grandtrunk.net'
+                                          . $url;
+                return Plack::App::Proxy->new->to_app->($env)
+            }
+        } else {
+            $status = 400;
+        }
     } else {
-        [401, [], []];
+        $status = 401;
     }
+    return [ $status, $headers, $body ];
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
@@ -249,8 +302,8 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        mount '/getrate' => _fxrate_app();
-        mount '/rest/' => rest_app();
+        mount '/getrate/' => \&fxrate_app;
+        mount '/rest/' => \&rest_app;
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => $old_app
