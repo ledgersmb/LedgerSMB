@@ -19,6 +19,7 @@ requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
+requires 'LWP::Simple';
 requires 'MIME::Lite';
 requires 'Moose';
 requires 'Moose::Role';
@@ -39,6 +40,9 @@ requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
 requires 'Plack::Middleware::Redirect';
+requires 'Plack::Middleware::Session';
+requires 'Plack::Session';
+requires 'Plack::Session::State::Cookie';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
