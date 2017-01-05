@@ -208,7 +208,7 @@ sub _run_old {
     }
 }
 
-sub fxrate_app {
+sub _fxrate_app {
     my $env = shift;
     my $session = $env->{'psgix.session'};
     if ( $session && $session->{valid}) {
@@ -249,7 +249,7 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        mount '/getrate' => fxrate_app();
+        mount '/getrate' => _fxrate_app();
         mount '/rest/' => rest_app();
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
