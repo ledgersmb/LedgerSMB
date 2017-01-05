@@ -29,6 +29,11 @@ use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 use Plack::App::Proxy;
 
+# Session cache
+use Plack::Middleware::Session;
+use Plack::Session;
+use Plack::Session::State::Cookie;
+
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
@@ -96,18 +101,17 @@ sub _internal_server_error {
 
 sub psgi_app {
     my $env = shift;
-
     # Taken from CGI::Emulate::PSGI
     #no warnings;
     local *STDIN = $env->{'psgi.input'};
-    my $environment = {
+    my $environment = {                                 # Ain't this for old only?
         GATEWAY_INTERFACE => 'CGI/1.1',
         HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-        REMOTE_ADDR     => '127.0.0.1',
-        REMOTE_HOST     => 'localhost',
+        SERVER_SOFTWARE => "CGI-Emulate-PSGI",           # Not anymore
+        REMOTE_ADDR     => '127.0.0.1',                  # That may not be true
+        REMOTE_HOST     => 'localhost',                  # That either
         REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }
+        ( map { $_ => $env->{$_} }                       # Why removing this?
           grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
     };
     # End of CGI::Emulate::PSGI
@@ -133,6 +137,7 @@ sub psgi_app {
     return _internal_server_error("Action Not Defined: $request->{action}")
         unless $action;
 
+    my $session = Plack::Request->new($env)->session;
     my ($status, $headers, $body);
     try {
         if (! $script->can('no_db')) {
@@ -141,6 +146,7 @@ sub psgi_app {
             if (!$no_db
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
                 if (! $request->_db_init()) {
+                    $session->{valid} = 0;
                     ($status, $headers, $body) =
                         ( 401,
                           [ 'Content-Type' => 'text/plain; charset=utf-8',
@@ -150,11 +156,14 @@ sub psgi_app {
                     return; # exit 'try' scope
                 }
                 if (! $request->verify_session()) {
+                    $session->{valid} = 0;
                     ($status, $headers, $body) =
                         ( 303, # Found, GET other
                           [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
                           [] );
                     return; # exit 'try' scope
+                } else {
+                    $session->{valid} = 1;
                 }
                 $request->initialize_with_db();
             }
@@ -199,6 +208,17 @@ sub _run_old {
     }
 }
 
+sub fxrate_app {
+    my $env = shift;
+    my $session = $env->{'psgix.session'};
+    if ( $session && $session->{valid}) {
+        Plack::App::Proxy->new(
+            remote => 'http://currencies.apps.grandtrunk.net/getrate')->to_app->($env)
+    } else {
+        [401, [], []];
+    }
+}
+
 =item setup_url_space(development => $boolean, coverage => $boolean)
 
 Sets up the URL space for the PSGI app, pointing various URLs at the
@@ -214,9 +234,11 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     builder {
+        enable 'Session';
+
         enable 'Redirect', url_patterns => [
-            qr/^\/?$/ => ['/login.pl',302]
-            ];
+                qr/^\/?$/ => ['/login.pl',302]
+             ];
 
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
@@ -227,8 +249,7 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        mount '/getrate' => Plack::App::Proxy->new(remote => 'http://currencies.apps.grandtrunk.net/getrate')->to_app;
-
+        mount '/getrate' => fxrate_app();
         mount '/rest/' => rest_app();
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
