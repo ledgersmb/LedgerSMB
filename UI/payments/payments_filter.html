@@ -170,15 +170,16 @@
 
 
 
-
+<?lsmb IF payment.account_class == 1 ?>
 <div class = "inputgroup">
 <?lsmb PROCESS input element_data = {
         type = "text"
         size = "20"
         name = "source_start"
         label = text('Start Source Numbering At:')
-} # '?>
+} # ?>
 </div>
+<?lsmb END ?>
 <div>
 <?lsmb PROCESS button element_data = {
         type = "submit"
