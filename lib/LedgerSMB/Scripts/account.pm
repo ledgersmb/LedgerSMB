@@ -66,6 +66,7 @@ sub edit {
     if (!$acc){  # This should never happen.  Any occurance of this is a bug.
          $request->error($request->{_locale}->text('Bug: No such account'));
     }
+    $acc->{charttype} = $request->{charttype};
     $acc->{title} = $request->{_locale}->text('Edit Account');
     $acc->{_locale} = $request->{_locale};
     return _display_account_screen($acc);
