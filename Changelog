@@ -24,6 +24,7 @@ Changelog for 1.5.1
 * Don't open a new window when clicking 'Return to login' (Erik H, #2496)
 * Don't show an error on session expiry (Erik H, #2502)
 * Editing account heading shows 'Account' tab (Erik H, #2507)
+* Cash > Voucher > Receipt doesn't preserve Source (Erik H, #2487)
 
 Erik H is Erik Huelsmann
 John L is John Locke
