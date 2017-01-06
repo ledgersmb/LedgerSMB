@@ -40,6 +40,7 @@ Changelog for 1.5.1
 * Template menus should refer to 'template_name' (Erik H/John L, #2497)
 * Don't open a new window when clicking 'Return to login' (Erik H, #2496)
 * Don't show an error on session expiry (Erik H, #2502)
+* Editing account heading shows 'Account' tab (Erik H, #2507)
 
 Erik H is Erik Huelsmann
 John L is John Locke
