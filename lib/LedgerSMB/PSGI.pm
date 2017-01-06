@@ -163,8 +163,8 @@ sub psgi_app {
         if ( defined $action ) {
             ($status, $headers, $body) = @{&$action($request)};
         } else {
-            ($status, $headers, $body) = 
-                      (500, 
+            ($status, $headers, $body) =
+                      (500,
                        ['text/html'],
                        ['Action routine not defined, please file a bug'] );
         }
