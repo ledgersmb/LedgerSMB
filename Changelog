@@ -36,8 +36,13 @@ Changelog for 1.5.1
 * 'System > Reporting units' doesn't show module checkmarks (Erik H, #2470)
 * Languages not sorted by description (but by code instead) (Erik H, #1118)
 * 'Print' button appears to work only once per browser session (Erik H, #2083)
+* Can't override 'Subject' when sending invoice (Erik H, #2488)
+* Template menus should refer to 'template_name' (Erik H/John L, #2497)
+* Don't open a new window when clicking 'Return to login' (Erik H, #2496)
+* Don't show an error on session expiry (Erik H, #2502)
 
 Erik H is Erik Huelsmann
+John L is John Locke
 
 
 Changelog for 1.5.0
