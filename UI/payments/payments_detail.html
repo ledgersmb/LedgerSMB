@@ -55,7 +55,7 @@
         type = "hidden"
         name = "source_start"
         value = payment.source_start
- }; source = payment.source_start - 1; # must increment ?>
+        } ?>
  <?lsmb INCLUDE input element_data = {
         type = "hidden"
         name = "approved"
@@ -249,7 +249,7 @@
                       "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
                                         } ?>
                                         <?lsmb r.econtrol_code ?> --
-                                        <?lsmb r.account_number ?> -- <?lsmb r.eca_description ?><?lsmb IF r.selected; source = source + 1; END;?>
+                                        <?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
                                 </td>
                                 <td class="entity_name">
                                         <span class="<?lsmb
@@ -297,8 +297,8 @@
                                 <td rowspan = 2>
                                         <?lsmb INCLUDE input element_data = {
                                                 name  = "source_$r.contact_id"
-                  id    = "source_$r.contact_id"
-                                                value = (r.selected) ? source : ''
+                                                id    = "source_$r.contact_id"
+                                                value = r.source
                                                 type  = "text"
                                                 size  = "20"
                                                 label = text('Source')
