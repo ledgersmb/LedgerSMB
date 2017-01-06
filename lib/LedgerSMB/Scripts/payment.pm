@@ -462,6 +462,7 @@ sub display_payments {
         $payment->{exchangerate} = undef;
     }
     $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
+    my $source = $request->{source_start};
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
         my $contact_to_pay = 0;
@@ -509,6 +510,15 @@ sub display_payments {
             $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
         }
 
+        if ($payment->{account_class} == 1
+            && $request->{"id_$_->{contact_id}"}) {
+            # AP && selected
+            $_->{source} = $source;
+            $source++;
+        }
+        if ($payment->{account_class} == 2) {
+            $_->{source} = $request->{"source_$_->{contact_id}"};
+        }
         $_->{total_due} = $_->{total_due}->to_output(money  => 1);
         $_->{contact_total} = $_->{contact_total}->to_output(money  => 1);
         $_->{to_pay} = $_->{to_pay}->to_output(money  => 1);
