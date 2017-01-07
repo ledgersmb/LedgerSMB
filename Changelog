@@ -25,6 +25,7 @@ Changelog for 1.5.1
 * Don't show an error on session expiry (Erik H, #2502)
 * Editing account heading shows 'Account' tab (Erik H, #2507)
 * Cash > Voucher > Receipt doesn't preserve Source (Erik H, #2487)
+* When saving a business unit, return to the edit screen (Erik H, #1024)
 
 Erik H is Erik Huelsmann
 John L is John Locke
