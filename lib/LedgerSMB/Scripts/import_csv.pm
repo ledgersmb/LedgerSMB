@@ -13,6 +13,7 @@ data.
 
 package LedgerSMB::Scripts::import_csv;
 use strict;
+use warnings;
 
 use List::MoreUtils qw{ any };
 
