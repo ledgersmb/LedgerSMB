@@ -18,18 +18,18 @@
 <form data-dojo-type="lsmb/Form" id="businessunit-edit" action="business_unit.pl" name="businessunit-edit" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
-	type = "hidden"
-	name = "id"
-	value = id
+        type = "hidden"
+        name = "id"
+        value = id
 } ?>
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
-	type = "text"
-	class = "control_code"
-	name = "control_code"
-	value = control_code
-	label = text('Control Code') #'
-	size = 16
+        type = "text"
+        class = "control_code"
+        name = "control_code"
+        value = control_code
+        label = text('Control Code') #'
+        size = 16
 };
 IF sequences;
    PROCESS select element_data = {
@@ -54,17 +54,17 @@ default_blank = 1
 </div>
 <div class="inputrow" id="daterow">
 <?lsmb PROCESS input element_data = {
-	name = "start_date"
-	class = "date"
-	label = text("Start Date") #"
+        name = "start_date"
+        class = "date"
+        label = text("Start Date") #"
          type = "text"
         value = start_date
          size = 12
 } ?>
 <?lsmb PROCESS input element_data = {
-	name = "end_date"
-	class = "date"
-	label = text("End Date") #"
+        name = "end_date"
+        class = "date"
+        label = text("End Date") #"
          type = "text"
         value = end_date
          size = 12
@@ -72,34 +72,46 @@ default_blank = 1
 </div>
 <div class="inputrow" id="descrow">
 <?lsmb PROCESS input element_data = {
-	label = text("Description:")
-	name = "description"
-	class = "description"
-	value = description
-	type = "text"
+        label = text("Description:")
+        name = "description"
+        class = "description"
+        value = description
+        type = "text"
 } ?>
 </div>
 <div class="inputrow" id="customer_row">
 <span class="inputgroup" id="startdepgroup">
 <?lsmb PROCESS input element_data = {
-	label = text("Customer")
-	name = "customer"
-	value = customer
-	type = "text"
-	size = 12
+        label = text("Customer")
+        name = "customer"
+        value = customer
+        type = "text"
+        size = 12
         class = "search customer"
 } ?>
 </span>
 </div>
+<?lsmb IF mode == 'edit'; ?>
 <div class="inputrow" id="buttonrow">
 <?lsmb PROCESS button element_data = {
-	text = text("Save")
-	type = "submit"
-	class = "submit"
-	name = "action"
-	value = "save"
+        text = text("Save")
+        type = "submit"
+        class = "submit"
+        name = "action"
+        value = "save"
 } ?>
 </div>
+<?lsmb ELSE ?>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+        text = text("Save")
+        type = "submit"
+        class = "submit"
+        name = "action"
+        value = "save_new"
+} ?>
+</div>
+<?lsmb END ?>
 <?lsmb PROCESS input element_data = {
      type = "hidden"
      name = "class_id"
