@@ -19,6 +19,9 @@ SystemName="${USER}_${HOSTNAME}"
 TarBall="$tempdir/$SystemName-$TimeStamp.tgz"
 
 cd "$installdir"
+
+source "$libdir/bash-functions.sh"
+
 shopt -s globstar
 
 CleanTempDirs() {
@@ -82,8 +85,20 @@ RunAllTests() {
 
 CreateTarBall() {
     tar -czf "$TarBall" --exclude='.lock' --directory "$tempdir/" .
-    tar -tvf /tmp/lsmb-diag.*/*.tgz
+#    tar -tvf /tmp/lsmb-diag.*/*.tgz
 }
+
+# =============================================
+# == Support Functions for Test Scripts
+# =============================================
+Log() {
+    echo -e "$@" 1>&5
+}
+export Log
+
+
+# =============================================
+# =============================================
 
 CleanTempDirs
 CollectTests
