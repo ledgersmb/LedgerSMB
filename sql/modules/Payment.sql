@@ -1147,7 +1147,7 @@ BEGIN
                           AND ch.id IN (select account_id
                                           FROM account_link
                                            WHERE description IN('AR_paid',
-                                                                'AP_paid')))))
+                                                                'AP_paid')))
                         AND (in_currency IS NULL OR in_currency = arap.curr)
                         AND (c.id = in_credit_id OR in_credit_id IS NULL)
                         AND (a.transdate >= in_from_date
