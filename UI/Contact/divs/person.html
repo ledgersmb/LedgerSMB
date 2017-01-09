@@ -119,7 +119,7 @@
        <?lsmb 
                 person_country_id = person.country_id;
                 IF !person_country_id; 
-                          person_country_id = default_country_id;
+                          person_country_id = default_country;
                 END;
 		INCLUDE select element_data = {
                         id = 'person-country-id'

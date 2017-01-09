@@ -4,6 +4,21 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 
+Changelog for 1.4.37
+* Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
+* Outstanding report (AR/AP) does not include taxes (Erik H, #2437)
+* Contact screen does not honor Default Country from Defaults (Erik H, #2349)
+* UI switches language after "Post Batch" (Erik H, #1640)
+* Incorrect address on Aging statement (Erik H, #1245)
+* Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
+* Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
+* Languages not sorted by description (but by code instead) (Erik H, #1118)
+* When saving a business unit, return to the edit screen (Erik H, #1024)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.36
 * Overpayments incorrectly not reduced when applied (Erik H, #2346)
 * Fix number formatting/processing in batch payment/receipt (Erik H, #2350)

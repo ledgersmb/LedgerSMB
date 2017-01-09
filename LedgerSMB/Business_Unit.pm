@@ -139,6 +139,7 @@ sub save {
     my ($ref) = $self->exec_method({funcname => 'business_unit__save'});
     $self->prepare_dbhash($ref);
     $self = $self->new($ref);
+    return $self;
 }   
 
 =item list ($date, $class_id, $credit_id, $strict, $active_on)
