@@ -6,7 +6,7 @@ INCLUDE 'ui-header.html'
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
-<?lsmb IF ! form.id OR form.charttype == 'H'; ?>
+<?lsmb IF !form.id OR form.charttype == 'H'; ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF form.charttype == 'H'; ?>
      data-dojo-props="selected:true"
@@ -85,7 +85,7 @@ INCLUDE 'ui-header.html'
 </div>
 </div>
 <?lsmb END ?>
-<? IF !form.id OR form.charttype == 'A' ?>
+<?lsmb IF !form.id OR form.charttype == 'A' ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF form.charttype == 'A'; ?>
      data-dojo-props="selected:true"
@@ -473,7 +473,7 @@ INCLUDE 'ui-header.html'
 </form>
 </div>
 </div>
-<?lsmb #END ?>
+<?lsmb END ?>
 <?lsmb IF form.id ?>
 <div data-dojo-type="dijit/layout/ContentPane"
      title="<?lsmb text('Translations') ?>" id="TranslationPane">

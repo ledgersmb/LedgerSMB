@@ -138,6 +138,7 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit__save');
     $self = $self->new($ref);
+    return $self;
 }
 
 =item list ($date, $class_id, $credit_id, $strict, $active_on)

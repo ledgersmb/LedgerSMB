@@ -77,7 +77,6 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
-use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
 
@@ -86,8 +85,8 @@ $form = new Form;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
-print 'Set-Cookie: "'
-    . $form->{"request.download-cookie"} . '"="downloaded"' . "\n"
+print 'Set-Cookie: '
+    . $form->{"request.download-cookie"} . '=downloaded' . "\n"
     if $form->{"request.download-cookie"};
 
 # name of this script

@@ -2,8 +2,8 @@
       include_stylesheet = ["business_units/list_classes.css"]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body class="lsmb <?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb title ?></div>
+<body class="lsmb <?lsmb request.dojo_theme ?>">
+<div class="listtop"><?lsmb request.title ?></div>
 <div id="business_units">
 <div class="table">
 <!-- headings -->
@@ -63,12 +63,10 @@
 </div>
   <?lsmb FOREACH m IN request.modules ?>
     <div class="td"><?lsmb
-    checked = undef;
+    checked = '';
     FOREACH mm IN c.modules;
        IF mm.id == m.id;
           checked = 'checked';
-       ELSE;
-          checked = '';
        END;
     END;
     PROCESS input element_data = {

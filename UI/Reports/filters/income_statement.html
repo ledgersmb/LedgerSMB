@@ -141,6 +141,7 @@
         ?>
         </div>
 
+        <?lsmb PROCESS business_classes_div ?>
         <div class="subsection">
             <div class="label">
                 <?lsmb text('Comparison selection by') ?>
@@ -191,9 +192,6 @@
                                    required = true
                     ; ?>
                 </div>
-                <?lsmb
-                    PROCESS business_classes;
-                ?>
                 <div class="input_row">
                     <?lsmb INCLUDE date_from_date_div
                                  required = 'true'

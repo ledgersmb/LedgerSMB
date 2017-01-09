@@ -88,7 +88,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    LedgerSMB::Auth->http_error(401, $suffix);#tshvr4
+    http_error(401, $suffix);#tshvr4
 }
 
 
@@ -108,7 +108,7 @@ sub check {
     $path =~ s|[^/]*$||;
     my $secure;
    if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
-        return create($form);
+        return _create($form);
     }
     my $timeout;
 
@@ -184,14 +184,14 @@ sub check {
     }
 }
 
-=item create
+=item _create
 
 Creates a new session, sets $lsmb->{session_id} to that session, sets cookies,
 etc.
 
 =cut
 
-sub create {
+sub _create {
     my ($lsmb) = @_;
     my $path = ($ENV{SCRIPT_NAME});
     my $secure;
@@ -205,7 +205,6 @@ sub create {
 
 
     if ( !$ENV{GATEWAY_INTERFACE} ) {
-
         #don't create cookies or sessions for CLI use
         return 1;
     }
@@ -234,8 +233,7 @@ sub create {
     my ( $userID ) = $fetchUserID->fetchrow_array;
     unless($userID) {
         $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        LedgerSMB::Auth->http_error('401');#tshvr4
-        return;#tshvr4?
+        return;
     }
 
 # this is assuming that the login is safe, which might be a bad assumption
@@ -260,7 +258,7 @@ sub create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken )
-      || LedgerSMB::Auth->http_error('401');#tshvr4
+        || return;
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator

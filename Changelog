@@ -1,8 +1,56 @@
                                                         -*- fundamental -*-
+Changelog for 1.6 Series
+Forthcoming
+
+Performance
+* Remove CGI::Emulate::PSGI wrapper for 'new code' (Erik H/Yves L)
+
+Code cleanup
+* Removed code duplication in
+  - Template handling framework (Yves L)
+
+Quality assurance
+* Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.5 Series
 Released 2016-12-24
 
-UI changes:
+Changelog for 1.5.1
+* Adjust tools/patch-release-upgrade.pl for interface changes in 1.5 (Erik H)
+* Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
+* Outstanding report (AR/AP) does not include taxes (Erik H, #2437)
+* Contact screen does not honor Default Country from Defaults (Erik H, #2349)
+* UI switches language after "Post Batch" (Erik H, #1640)
+* Incorrect address on Aging statement (Erik H, #1245)
+* Database error when clicking 'Preferences' menu (Erik H, #2370)
+* Can't open Template Transaction (Erik H, #2369)
+* Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
+* 'year' dropdown in 'General Journal > Search' always empty (Erik H, #2278)
+* Can't import Timecard due to 'undefined action "run_import"' (Erik H, #2462)
+* Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
+* 'System > Reporting units' doesn't show module checkmarks (Erik H, #2470)
+* Languages not sorted by description (but by code instead) (Erik H, #1118)
+* 'Print' button appears to work only once per browser session (Erik H, #2083)
+* Can't override 'Subject' when sending invoice (Erik H, #2488)
+* Template menus should refer to 'template_name' (Erik H/John L, #2497)
+* Don't open a new window when clicking 'Return to login' (Erik H, #2496)
+* Don't show an error on session expiry (Erik H, #2502)
+* Editing account heading shows 'Account' tab (Erik H, #2507)
+* Cash > Voucher > Receipt doesn't preserve Source (Erik H, #2487)
+* When saving a business unit, return to the edit screen (Erik H, #1024)
+
+Erik H is Erik Huelsmann
+John L is John Locke
+
+
+Changelog for 1.5.0
+
+UI changes
 * LedgerSMB now frameless (ChrisT)
 * Full use of Dojo widgets (ErikH)
 * Compressed/compiled Dojo for better performance (JohnL)
@@ -13,13 +61,13 @@ Price Matrix Enhancements
 * Quantity discounts can be set in the pricematrix (Chris T)
 * Price matrix now filters on currency (Chris T)
 
-Template changes:
+Template changes
 * All document templates (including INCLUDEs) now in-database (Erik H, #854)
 * 1.4's <?lsmb LETTERHEAD ?> now <?lsmb INCLUDE letterhead ?>
 * 1.3's INCLUDE extensions dropped;
     <?lsmb INCLUDE letterhead.tex ?> -> <?lsmb INCLUDE letterhead ?>
 
-Code Cleanup:
+Code Cleanup
 * Relying on Plack for webserver integration; stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
 * Removed dead code (coveralls.io used for identification) (ErikH)
@@ -29,11 +77,11 @@ Code Cleanup:
 * Removed unused saved trial balance components (ChrisT, GH 775)
 * Source tree restructuring: libraries in lib/, docroot in UI/ (ErikH)
 
-API Enhancements:
+API Enhancements
 * Moved a great deal of code into PGObject framework on CPAN (ChrisT)
 * Session handling committed before main action (Chris T, GH 943)
 
-Quality assurance:
+Quality assurance
 * Verification of pre-defined Chart of Accounts files (ChrisT)
 * Assurance of completeness of 'use'-tested source files (ErikH)
 * Extended 'use'-tests to cover full set of source files (ErikH)
@@ -55,6 +103,21 @@ JohnL is John Locke
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+
+Changelog for 1.4.37
+* Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
+* Outstanding report (AR/AP) does not include taxes (Erik H, #2437)
+* Contact screen does not honor Default Country from Defaults (Erik H, #2349)
+* UI switches language after "Post Batch" (Erik H, #1640)
+* Incorrect address on Aging statement (Erik H, #1245)
+* Print selects (printer, ...) shown even without Print button (Erik H, #2376)
+* Cash->Voucher->Reverse doesn't filter by account (Erik H, #1401)
+* Filtering PNL by reporting unit (dep't) fails (Erik H, #2469)
+* Languages not sorted by description (but by code instead) (Erik H, #1118)
+* When saving a business unit, return to the edit screen (Erik H, #1024)
+
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.36

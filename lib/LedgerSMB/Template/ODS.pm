@@ -28,6 +28,10 @@ Processes the template for text.
 
 Returns the output filename.
 
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
@@ -47,20 +51,22 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
-use Data::Dumper;  ## no critic
-use CGI::Simple::Standard qw(:html);
 use Template;
 use Template::Parser;
+use LedgerSMB::Template::TTI18N;
+use LedgerSMB::Template::DBProvider;
+use CGI::Simple::Standard qw(:html);
+use LedgerSMB::Sysconfig;
+use Data::Dumper;  ## no critic
 use XML::Twig;
+use Digest::MD5 qw(md5_hex);
 use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
-use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Template::DBProvider;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
+my $extension = 'ods';
 
 # SC: The ODS handlers need these vars in common
 my $ods;
@@ -126,20 +132,20 @@ my @line_width = ('none', '0.018cm solid', '0.035cm solid',
     );
 
 sub _worksheet_handler {
-        $sheetnum += 1;
+    $sheetnum += 1;
     $rowcount = -1;
     $currcol = 0;
     my $rows = $_->{att}->{rows};
     my $columns = $_->{att}->{columns};
     $rows ||= 1000;
     $columns ||= 52;
-        $maxrows = $rows;
-        $maxcols = $columns;
+    $maxrows = $rows;
+    $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
-                $sheetname = $_->{att}->{name};
+        $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
     }
@@ -151,7 +157,7 @@ sub _row_handler {
 }
 
 sub _cell_handler {
-        $ods->expandTable($sheetname, $maxrows, $maxcols);
+    $ods->expandTable($sheetname, $maxrows, $maxcols);
     my $cell = $ods->getCell($sheetname, $rowcount, $currcol);
 
     if (@style_stack and $celltype{$style_stack[0][0]}) {
@@ -805,99 +811,58 @@ sub _ods_process {
 
 sub get_template {
     my $name = shift;
-    return "${name}.odst";
+    return "${name}.${extension}t";
 }
 
 sub preprocess {
     my $rawvars = shift;
-    my $vars;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        if (eval {$rawvars->can('to_output')}){
-            $rawvars = $rawvars->to_output;
-        }
-    }
-    my $type = ref $rawvars;
-
-    #XXX fix escaping function
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
-    return unless defined $rawvars;
-    if ( $type eq 'ARRAY' ) {
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    } elsif (!$type) {
-        return escapeHTML($rawvars);
-    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return escapeHTML($$rawvars);
-    } else { # Hashes and objects
-        for ( keys %{$rawvars} ) {
-            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
-        }
-    }
-
-    return $vars;
+    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
 }
 
+sub escape {
+    my $vars = shift @_;
+    return undef unless defined $vars;
+    $vars = escapeHTML($vars);
+    return $vars;
+}
 sub process {
     my $parent = shift;
     my $cleanvars = shift;
-    my $template;
-    my $source;
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
     my $output = '';
-    my %additional_options = ();
 
-    $parent->{binmode} = $binmode;
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
-
-    if ($parent->{include_path} eq 'DB'){
-        $source = $parent->{template};
-        $additional_options{INCLUDE_PATH} = [];
-        $additional_options{LOAD_TEMPLATES} =
-            [ LedgerSMB::Template::DBProvider->new(
-                  {
-                      format => 'ods',
-                      language_code => $parent->{language},
-                      PARSER => Template::Parser->new({
-                         START_TAG => quotemeta('<?lsmb'),
-                         END_TAG => quotemeta('?>'),
-                      }),
-                  }) ];
-    } elsif (ref $parent->{template} eq 'SCALAR') {
-        $source = $parent->{template};
-    } elsif (ref $parent->{template} eq 'ARRAY') {
-        $source = join "\n", @{$parent->{template}};
+    if ($parent->{outputfile}) {
+        if (ref $parent->{outputfile}){
+            $output = $parent->{outputfile};
+        } else {
+            $output = "$parent->{outputfile}.$extension";
+        }
     } else {
-        $source = get_template($parent->{template});
+        $output = \$parent->{output};
     }
-    $template = Template->new({
-        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
-        START_TAG => quotemeta('<?lsmb'),
-        END_TAG => quotemeta('?>'),
-        DELIMITER => ';',
-        DEBUG => ($parent->{debug})? 'dirs': undef,
-        DEBUG_FORMAT => '',
-        (%additional_options)
-        }) || die Template->error();
-
-    if (not $template->process(
-        $source,
-        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-            'escape' => \&preprocess},
-        \$output, binmode => ':utf8')) {
-        die $template->error();
+    my $arghash = $parent->get_template_args($extension,$binmode);
+    my $template = Template->new($arghash) || die Template->error();
+    unless ($template->process(
+                $parent->get_template_source(\&get_template),
+                {
+                    %$cleanvars,
+                    %$LedgerSMB::Template::TTI18N::ttfuncs,
+                    'escape' => \&preprocess
+                },
+                \$output,
+                {binmode => ':utf8'})
+    ){
+        my $err = $template->error();
+        die "Template error: $err" if $err;
     }
-    &_ods_process("$parent->{outputfile}.ods", $output);
+    &_ods_process("$parent->{outputfile}.$extension", $output);
 
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.ods";
+    $parent->{rendered} = "$parent->{outputfile}.$extension";
     return $parent->{rendered};
 }
 
 1;
-

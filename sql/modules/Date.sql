@@ -4,21 +4,27 @@ BEGIN;
 
 -- Docstrings already added to this file.
 
-DROP FUNCTION IF EXISTS date_get_all_years();
 CREATE OR REPLACE FUNCTION date_get_all_years() returns setof INT AS
 $$
+WITH RECURSIVE max_dates AS (
+    SELECT max(transdate) AS max_date
+      FROM acc_trans
+    WHERE transdate IS NOT NULL
 
-WITH RECURSIVE max_dates AS ( -- max dates in each year
-    SELECT (SELECT transdate as raw_date FROM acc_trans order by transdate desc limit 1)
-    UNION ALL
-    SELECT (SELECT transdate FROM acc_trans a WHERE  date_trunc('year', m.raw_date::timestamp)::date > a.transdate
-            ORDER BY transdate desc limit 1)
-      FROM max_dates m
-     WHERE m.raw_date is not null
-)
-SELECT extract('year' from raw_date)::int
- FROM max_dates where raw_date is not null;
+ UNION ALL
+    SELECT (SELECT max(transdate)
+              FROM acc_trans
+                   -- the index acc_trans_transdate_year_idx uses the
+                   -- date_part function with the exact syntax and capitals
+                   -- below; changing the 'YEAR' capitals will stop the
+                   -- query optimizer from using the index
+             WHERE date_part('YEAR', transdate) < date_part('YEAR', max_date))
+      FROM max_dates
+     WHERE max_date IS NOT NULL)
 
+SELECT date_part('YEAR', max_date)::int
+  FROM max_dates
+ WHERE max_date IS NOT NULL;
 $$ language sql;
 
 COMMENT ON FUNCTION date_get_all_years() IS
