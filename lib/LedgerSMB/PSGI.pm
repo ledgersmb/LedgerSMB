@@ -27,6 +27,10 @@ use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 
+# Session cache
+use Plack::Middleware::Session;
+use Plack::Session;
+use Plack::Session::State::Cookie;
 
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -93,25 +97,36 @@ sub _internal_server_error {
              \@body_lines ];
 }
 
-sub psgi_app {
+sub _set_environment {
     my $env = shift;
 
-    # Taken from CGI::Emulate::PSGI
-    #no warnings;
-    local *STDIN = $env->{'psgi.input'};
+    #To keep LedgerSMB->new happy for now
     my $environment = {
         GATEWAY_INTERFACE => 'CGI/1.1',
         HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-        REMOTE_ADDR     => '127.0.0.1',
-        REMOTE_HOST     => 'localhost',
+        SERVER_SOFTWARE => "HTTP::Server::PSGI",
+        REMOTE_ADDR     => '127.0.0.1',                  # Default value
+        REMOTE_HOST     => 'localhost',                  # Default value
         REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }
+        ( map { $_ => $env->{$_} }                       # Override defaults
           grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
     };
-    # End of CGI::Emulate::PSGI
+    return $environment;
+}
 
-    local %ENV = ( %ENV, %$environment );
+use Data::Printer caller_info => 3,
+  filters => {
+    'LedgerSMB::PGNumber' => sub { $_[0]->to_output },
+    'LedgerSMB::PGDate'   => sub { $_[0]->to_output }
+};
+
+sub psgi_app {
+    my $env = shift;
+    # Taken from CGI::Emulate::PSGI
+    #no warnings;
+    local *STDIN = $env->{'psgi.input'};
+
+    local %ENV = ( %ENV, %{_set_environment($env)} );
 
     my $request = LedgerSMB->new();
     $request->{action} ||= '__default';
@@ -160,10 +175,13 @@ sub psgi_app {
         }
 
         $LedgerSMB::App_State::DBH = $request->{dbh};
-        ($status, $headers, $body) = @{&$action($request)};
+        my $result = &$action($request,$env);
 
         $request->{dbh}->commit if defined $request->{dbh};
         LedgerSMB::App_State->cleanup();
+        if ( ref($result) eq 'ARRAY' ) {
+            ($status, $headers, $body) = @{$result};
+        } else { return $result;}
     }
     catch {
         my $error = $_;
@@ -213,6 +231,7 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     builder {
+
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
@@ -222,7 +241,7 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        mount '/rest/' => rest_app();
+        mount '/rest/' => \&rest_app;
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => $old_app

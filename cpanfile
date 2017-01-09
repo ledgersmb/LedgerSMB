@@ -21,6 +21,7 @@ requires 'JSON';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
+requires 'LWP::Simple';
 requires 'MIME::Lite';
 requires 'Moose';
 requires 'Moose::Role';
@@ -36,9 +37,13 @@ requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';
+requires 'Plack::App::Proxy';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
+requires 'Plack::Middleware::Redirect';
+requires 'Plack::Middleware::Session';
+requires 'Plack::Response';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
