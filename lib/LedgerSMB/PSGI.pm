@@ -99,7 +99,6 @@ sub _internal_server_error {
 
 sub _set_environment {
     my $env = shift;
-
     #To keep LedgerSMB->new happy for now
     my $environment = {
         GATEWAY_INTERFACE => 'CGI/1.1',
@@ -148,6 +147,7 @@ sub psgi_app {
         unless $action;
 
     my ($status, $headers, $body);
+    my $result;
     try {
         if (! $script->can('no_db')) {
             my $no_db = $script->can('no_db_actions');
@@ -175,13 +175,12 @@ sub psgi_app {
         }
 
         $LedgerSMB::App_State::DBH = $request->{dbh};
-        my $result = &$action($request,$env);
-
-        $request->{dbh}->commit if defined $request->{dbh};
-        LedgerSMB::App_State->cleanup();
+        $result = &$action($request,$env);
         if ( ref($result) eq 'ARRAY' ) {
             ($status, $headers, $body) = @{$result};
-        } else { return $result;}
+        }
+        $request->{dbh}->commit if defined $request->{dbh};
+        LedgerSMB::App_State->cleanup();
     }
     catch {
         my $error = $_;
@@ -197,6 +196,8 @@ sub psgi_app {
                                          $request->{company})};
         }
     };
+    return $result
+        if ( $result && ref($result) ne 'ARRAY' );
 
     push @$headers, ( 'Set-Cookie' =>
                       $request->{'request.download-cookie'} . '=downloaded' )
@@ -231,6 +232,7 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     builder {
+
 
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
