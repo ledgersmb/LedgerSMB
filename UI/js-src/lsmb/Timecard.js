@@ -5,10 +5,11 @@ define("lsmb/Timecard",
         "dojo/dom-attr",
         "dijit/registry",
         "dojo/_base/array",
+        "dojo/io-query",
         "dojo/request/xhr",
         "dojo/json",
         "lsmb/Form"],
-       function(declare, topic, dom, domattr, registry, array, xhr, json, Form) {
+       function(declare, topic, dom, domattr, registry, array, query, xhr, json, Form) {
            return declare("lsmb/Timecard", Form, {
                defaultcurr: "",
                curr: "",
@@ -33,7 +34,7 @@ define("lsmb/Timecard",
                        domattr.set('total','value',v);
                        domattr.set('qty','value',v);
                    } else if (topic == 'part') {
-                       dom.byId("action_refresh").click();
+                       this._refresh_screen();
                    } else if (topic == 'unitprice') {
                    } else if (topic == 'qty') {
                        if (dom.byId('qty').value != targetValue) {
@@ -43,7 +44,7 @@ define("lsmb/Timecard",
                            domattr.set('out-min','value','');
                            domattr.set('total','value','');
                        }
-                   } else if (topic == 'curr') {
+                   } else if (topic == 'curr' || topis == 'date') {
                        this.defaultcurr = dom.byId('defaultcurr').value;
                        this.curr = targetValue;
                        this.transdate = dom.byId('transdate').value;
@@ -52,15 +53,20 @@ define("lsmb/Timecard",
                        } else {
                            domattr.set('fxrate','value','');
                        }
+                       this._refresh_screen();
                    }
                    domattr.set('sellprice','value',dom.byId('qty').value
                                                  * dom.byId('unitprice').value);
                    domattr.set('fxsellprice','value',dom.byId('sellprice').value
                                                    * dom.byId('fxrate').value);
                },
+               _refresh_screen: function () {
+                   this.clickedAction = "refresh";
+                   this.submit();
+               },
                _update_save: function(targetValue) {
                    dijit.byId("action_save").setAttribute('disabled', false);
-                   dom.byId("action_refresh").click();
+                   dom.byId("action_refresh").click(); 
                },
                _display: function(s) {
                    var widget = dom.byId('in-time');
@@ -73,35 +79,27 @@ define("lsmb/Timecard",
                    });
                },
                _getFXRate: function() {
-                   // Look up the node we'll stick the text under.
+                   var get = query.queryToObject(decodeURIComponent(dojo.doc.location.search.slice(1)));
                    var fxrate = dom.byId('fxrate');
-                   // We should provide a similar REST to cache results and fetch
-                   // only if not available.
-                   xhr.get("http://currencies.apps.grandtrunk.net/getrate/"
-                                + this.transdate + "/" + this.curr
-                                + "/" + this.defaultcurr, {
-                                    headers: {
-                                        'X-Requested-With': null,
-                                        'Content-Type': 'text/plain'
-                                    },
-                                    preventCache: true
-                   }).then(function(data){
-                       var fx = json.stringify(data, true);
-                       fxrate.innerHTML = fx;
-                       domattr.set('fxsellprice','value',dom.byId('sellprice').value * fx);
+                   xhr("/getrate.pl?action=getrate"
+                                   + "&date=" + this.transdate
+                                   + "&curr=" + this.curr
+                                   + "&company=" + get.company
+                   ).then(function(data){
+                       data = parseFloat(data);
+                       domattr.set('fxrate','value',data);
+                       var sellprice = domattr.get('sellprice','value');
+                       domattr.set('fxsellprice','value',sellprice * data);
                    }, function(error){
-                       fxrate.innerHTML = "An unexpected error occurred: " + error.message;
+                       domattr.set('fxrate','value',"Error: " + error.message);
                        domattr.set('fxsellprice','value','');
-                   }, function(evt){
-                       // Handle a progress event from the request if the
-                       // browser supports XHR2
                    });
                },
                startup: function() {
                    var self = this;
                    this.inherited(arguments);
 
-                   var topics = ['type','clocked','qty','curr','unitprice','part'];
+                   var topics = ['type','clocked','qty','curr','unitprice','part','date'];
                    topics.forEach(function(_topic) {
                        topic.subscribe(self.topic+_topic,
                             function(targetValue) {
@@ -109,6 +107,11 @@ define("lsmb/Timecard",
                             }
                        );
                    });
+                   topic.subscribe("channel:'/timecard/part-select/day'",
+                        function(targetValue) {
+                            self.update(targetValue,'part');
+                        }
+                   );
                    var in_id = dom.byId('id').value;
                    var in_edit = Number(dom.byId('in-edit').value);
 
