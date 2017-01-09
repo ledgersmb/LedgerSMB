@@ -491,7 +491,7 @@ sub begin_import {
     # $request->{page_id} =~ s/_/-/;
     # $request->{page_id} .= '-import';
     $request->{page_id} = 'batch-import';
-    $template->render($request);
+    $template->render({ request => $request });
 }
 
 =head2 run_import

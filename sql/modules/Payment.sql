@@ -1083,22 +1083,21 @@ $$
                 JOIN entity e ON (c.entity_id = e.id)
                 LEFT JOIN voucher v ON (v.id = a.voucher_id)
                 LEFT JOIN batch b ON (b.id = v.batch_id)
-                WHERE (ch.accno = in_cash_accno OR ch.id IN (select account_id
-                                                               FROM account_link
-                                                              WHERE description
-                                                                    IN(
-                                                                     'AR_paid',
-                                                                     'AP_paid'
-                                                                    )))
-                        AND (in_currency IS NULL OR in_currency = arap.curr)
-                        AND (c.id = in_credit_id OR in_credit_id IS NULL)
-                        AND (a.transdate >= in_from_date
-                                OR in_from_date IS NULL)
-                        AND (a.transdate <= in_to_date OR in_to_date IS NULL)
-                        AND (source = in_source OR in_source IS NULL)
-                        AND arap.approved AND a.approved
-                        AND (c.meta_number = in_meta_number
-                                OR in_meta_number IS NULL)
+                WHERE ((ch.accno = in_cash_accno
+                        OR (in_cash_accno IS NULL
+                            AND ch.id IN (select account_id
+                                            FROM account_link
+                                           WHERE description IN('AR_paid',
+                                                                'AP_paid')))))
+                      AND (in_currency IS NULL OR in_currency = arap.curr)
+                      AND (c.id = in_credit_id OR in_credit_id IS NULL)
+                      AND (a.transdate >= in_from_date
+                              OR in_from_date IS NULL)
+                      AND (a.transdate <= in_to_date OR in_to_date IS NULL)
+                      AND (source = in_source OR in_source IS NULL)
+                      AND arap.approved AND a.approved
+                      AND (c.meta_number = in_meta_number
+                              OR in_meta_number IS NULL)
                 GROUP BY c.meta_number, c.id, e.name, a.transdate,
                         a.source, a.memo, b.id, b.control_code, b.description,
                         voucher_id

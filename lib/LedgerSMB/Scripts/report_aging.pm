@@ -98,6 +98,11 @@ sub generate_statement {
                         credit_id => $credit_act->{id},
                        only_class => 1}
         );
+        ($location) = LedgerSMB::Entity::Location->get_active(
+             $request, {entity_id => $entity_id,
+                        credit_id => $credit_act->{id}
+                       }
+            ) unless defined $location; # select any address if no billing
         my @contact_info = LedgerSMB::Entity::Contact->list(
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );

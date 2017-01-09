@@ -15,7 +15,7 @@ if (agt.indexOf("opera") != -1){
    alert("<?lsmb text('Opera detected.  To complete this logout, please close your browser window or clear private/authentication information') ?>");
 }
 if (agt.indexOf("msie") == -1) {
-	var xhre = new XMLHttpRequest() ;
+        var xhre = new XMLHttpRequest();
         xhre.open("GET",'login.pl?action=logout_js',true,"logout","logout");
         xhre.send("");
 }
@@ -27,7 +27,7 @@ if (agt.indexOf("msie") == -1) {
           ELSE;
             text('Logout Successful');
           END; ?></h1>
-<p><a href="login.pl" target='top'><?lsmb text('Return to the login screen.') ?></a>
+<p><a target="_top" href="login.pl"><?lsmb text('Return to the login screen.') ?></a>
 <form data-dojo-type="lsmb/Form" id='submitform' action="login.pl" method="post">
 <?lsmb PROCESS input element_data = {
        type = "hidden"
