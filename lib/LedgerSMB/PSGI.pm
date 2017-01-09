@@ -27,7 +27,12 @@ use Plack::App::File;
 use Plack::Middleware::Redirect;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
+use Plack::App::Proxy;
 
+# Session cache
+use Plack::Middleware::Session;
+use Plack::Session;
+use Plack::Session::State::Cookie;
 
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -94,25 +99,29 @@ sub _internal_server_error {
              \@body_lines ];
 }
 
-sub psgi_app {
+sub _set_environment {
     my $env = shift;
-
-    # Taken from CGI::Emulate::PSGI
-    #no warnings;
-    local *STDIN = $env->{'psgi.input'};
+    #To keep LedgerSMB->new happy for now
     my $environment = {
         GATEWAY_INTERFACE => 'CGI/1.1',
         HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-        REMOTE_ADDR     => '127.0.0.1',
-        REMOTE_HOST     => 'localhost',
+        SERVER_SOFTWARE => "CGI-Emulate-PSGI",           # Not anymore
+        REMOTE_ADDR     => '127.0.0.1',                  # Default value
+        REMOTE_HOST     => 'localhost',                  # Default value
         REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }
+        ( map { $_ => $env->{$_} }                       # Override defaults
           grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
     };
-    # End of CGI::Emulate::PSGI
+    return $environment;
+}
 
-    local %ENV = ( %ENV, %$environment );
+sub psgi_app {
+    my $env = shift;
+    # Taken from CGI::Emulate::PSGI
+    #no warnings;
+    local *STDIN = $env->{'psgi.input'};
+
+    local %ENV = ( %ENV, %{_set_environment($env)} );
 
     my $request = LedgerSMB->new();
     $request->{action} ||= '__default';
@@ -133,6 +142,7 @@ sub psgi_app {
     return _internal_server_error("Action Not Defined: $request->{action}")
         unless $action;
 
+    my $session = Plack::Request->new($env)->session;
     my ($status, $headers, $body);
     try {
         if (! $script->can('no_db')) {
@@ -141,6 +151,7 @@ sub psgi_app {
             if (!$no_db
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
                 if (! $request->_db_init()) {
+                    $session->{valid} = 0;
                     ($status, $headers, $body) =
                         ( 401,
                           [ 'Content-Type' => 'text/plain; charset=utf-8',
@@ -150,11 +161,14 @@ sub psgi_app {
                     return; # exit 'try' scope
                 }
                 if (! $request->verify_session()) {
+                    $session->{valid} = 0;
                     ($status, $headers, $body) =
                         ( 303, # Found, GET other
                           [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
                           [] );
                     return; # exit 'try' scope
+                } else {
+                    $session->{valid} = 1;
                 }
                 $request->initialize_with_db();
             }
@@ -199,6 +213,65 @@ sub _run_old {
     }
 }
 
+=item fxrate_app
+
+Implements a PSGI application for the purpose of getting FX rates, either cached
+or through a proxied remote server.
+
+=cut
+
+sub fxrate_app {
+    my $env = shift;
+    my $session = $env->{'psgix.session'};
+    my ($status, $headers, $body) = 
+                        ( 401,
+                          [ 'Content-Type' => 'text/plain; charset=utf-8'],
+                          ['No valid session']
+    );
+    if ( $session && $session->{valid}) {
+        local %ENV = ( %ENV, %{_set_environment($env)} );
+
+        my $request = LedgerSMB->new();
+        # What is the proper way to get the following?
+        my @url = split('&',$env->{PATH_INFO});
+        foreach my $u (@url) {
+            my @opt = split('=',$u);
+            $request->{$opt[0]} = $opt[1];
+        }
+        $request->_db_init;
+        my @params = split('/',$url[0]);
+        my $date = LedgerSMB::PGDate->from_input($params[1]);
+        if ( $date && $date->is_date && 4 == @params && $request->{company}) {
+            # Get buy rate
+            my ($fxrate) = $request->call_procedure(
+                            funcname => 'currency_get_exchangerate',
+                            args => [$params[2],$date,2]);
+            if ( $fxrate->{currency_get_exchangerate} ) {
+                $status = 200;
+                $body = [$fxrate->{currency_get_exchangerate}]
+            } else {
+                my $url = '/getrate'
+                        . '/' . $date->to_output('yyyy-mm-dd')
+                        . '/' . $params[2]
+                        . '/' . $params[3];
+                $env->{QUERY_STRING} = undef;
+                $env->{REQUEST_URI} = $url;
+                $env->{HTTP_REFERER} = $env->{'psgi.url_scheme'}
+                                     . '://'
+                                     . $env->{HTTP_HOST} . $url;
+                $env->{'plack.proxy.url'} = 'http://currencies.apps.grandtrunk.net'
+                                          . $url;
+                return Plack::App::Proxy->new->to_app->($env)
+            }
+        } else {
+            $status = 400;
+        }
+    } else {
+        $status = 401;
+    }
+    return [ $status, $headers, $body ];
+}
+
 =item setup_url_space(development => $boolean, coverage => $boolean)
 
 Sets up the URL space for the PSGI app, pointing various URLs at the
@@ -214,9 +287,11 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     builder {
+        enable 'Session';
+
         enable 'Redirect', url_patterns => [
-            qr/^\/?$/ => ['/login.pl',302]
-            ];
+                qr/^\/?$/ => ['/login.pl',302]
+             ];
 
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
@@ -227,7 +302,8 @@ sub setup_url_space {
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
 
-        mount '/rest/' => rest_app();
+        mount '/getrate/' => \&fxrate_app;
+        mount '/rest/' => \&rest_app;
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => $old_app
