@@ -49,6 +49,12 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
+use Data::Printer caller_info => 3, deparse => 1,
+  filters => {
+    'LedgerSMB::PGNumber' => sub { $_[0]->to_output },
+    'LedgerSMB::PGDate'   => sub { $_[0]->to_output }
+};
+
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
@@ -346,8 +352,9 @@ sub delete {
 
 sub refresh {
     my ($request) = @_;
-    my $tcard = _get($request);
-    return display($tcard);
+    return display($request);
+#    my $tcard = _get($request);
+#    return display($tcard);
 }
 
 =back
