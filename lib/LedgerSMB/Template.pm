@@ -292,7 +292,7 @@ sub render {
         default_currency =>
             (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
-    } if $vars->{DBNAME};
+    } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
     $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
     my @stdformats = ();
     for (qw(HTML PDF PS)){

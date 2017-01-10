@@ -1360,7 +1360,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.5.0
+version|1.5.2-dev
 closedto|\N
 revtrans|1
 ponumber|1
@@ -4991,8 +4991,6 @@ COMMENT ON VIEW cash_impact IS
 $$ This view is used by cash basis reports to determine the fraction of a
 transaction to be counted.$$;
 
--- helpful to keeping the selection of all years fast
-create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
 
 CREATE TABLE template ( -- not for UI templates
     id serial not null unique,

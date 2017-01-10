@@ -12,7 +12,7 @@
                   class = 'business_unit'
               } ?></td>
         </tr>
-        <?lsmb END; # FOREACH BUC;
+        <?lsmb END; # FOREACH BUC
         PROCESS input element_data = {
              type = 'hidden'
              name = 'bc_count'
@@ -20,8 +20,9 @@
         };
 END # BLOCK -?>
 
-<?lsmb BLOCK business_classes_div ?>
-    <?lsmb FOREACH BUC IN bu_classes ?>
+<?lsmb- BLOCK business_classes_div;
+    FOREACH BUC IN bu_classes;
+        b_units.${BUC.id}.unshift({}) ?>
         <div class="inputrow"><div class="inputgroup">
                   <?lsmb PROCESS select element_data = {
                            name = 'business_unit_' _ loop.count
@@ -33,8 +34,13 @@ END # BLOCK -?>
                           label = text(BUC.label)
                       } ?>
         </div></div>
-    <?lsmb END # FOREACH BUC ?>
-<?lsmb END # BLOCK ?>
+        <?lsmb END; # FOREACH BUC
+               PROCESS input element_data = {
+               type = 'hidden'
+               name = 'bc_count'
+               value = bu_classes.size
+               };
+END # BLOCK -?>
 
 <?lsmb- BLOCK entity_class ?>
       <tr>

@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
+use LedgerSMB;
 use LedgerSMB::Database;
 
 my $user;
@@ -31,13 +32,15 @@ sub rebuild_modules {
     my $database = LedgerSMB::Database->new(
         {
             username => $ENV{PGUSER},
-            company_name => $ENV{PGDATABASE},
+            dbname => $ENV{PGDATABASE},
             password => $ENV{PGPASSWORD},
         })
         or die "No database connection.";
 
+    $database->apply_changes()
+        or die "Upgrading database schema failed.";
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
-        or die "Upgrade failed.";
+        or die "Upgrading modules failed.";
     
     return 1;
 };
