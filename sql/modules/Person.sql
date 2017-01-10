@@ -16,9 +16,11 @@ $$ Returns the entity_id of the current, logged in user.$$;
 
 CREATE OR REPLACE FUNCTION person__list_languages() 
 RETURNS SETOF language AS
-$$ SELECT * FROM language ORDER BY code ASC $$ language sql;
+$$ SELECT * FROM language ORDER BY description ASC $$ language sql;
+
 COMMENT ON FUNCTION person__list_languages() IS
 $$ Returns a list of languages ordered by code$$;
+
 
 DROP TYPE IF EXISTS person_entity CASCADE;
 

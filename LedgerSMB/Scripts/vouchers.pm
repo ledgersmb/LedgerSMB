@@ -385,6 +385,7 @@ Adds overpayment reversal vouchers to a batch
 
 sub reverse_overpayment {
     my ($request) = @_;
+    delete $request->{language}; # remove language; setting meant for printing
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->get;
     my $a_class;

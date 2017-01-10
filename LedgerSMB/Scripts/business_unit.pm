@@ -61,9 +61,11 @@ sub add {
           LedgerSMB::Setting::Sequence->list('projectnumber') 
           unless $request->{id};
     $request->{control_code} = '';
+    $request->{description} = '';
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
+    $request->{mode} = 'add';
     _display($request); 
 }
 
@@ -80,6 +82,7 @@ sub edit {
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $bu = $b_unit->get($request->{id});
     @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
+    $bu->{mode} = 'edit';
     
     _display($bu);
 }
@@ -161,6 +164,20 @@ sub delete_class {
     list_classes($request);
 }
 
+
+=item save_new
+
+Saves a new unit and returns to the add entry screen
+
+=cut
+
+sub save_new {
+    my ($request) = @_;
+    my $unit = _save($request);
+    $request->{message} = $request->{_locale}->text("Added id [_1]", $unit->id);
+    add($request);
+}
+
 =item save
 
 Saves the existing unit.  Standard properties of 
@@ -170,6 +187,14 @@ LedgerSMB::Business_Unit must be set for $request.
 
 sub save {
     my ($request) = @_;
+    my $unit = _save($request);
+    $request->{message} = $request->{_locale}->text("Saved id [_1]", $unit->id);
+    edit($request);
+}
+
+sub _save {
+    my ($request) = @_;
+
     if ($request->{sequence}){
        $request->{control_code} = 
            LedgerSMB::Setting::Sequence->increment($request->{sequence}, 
@@ -182,9 +207,12 @@ sub save {
     $request->{end_date} = LedgerSMB::PGDate->from_input($request->{end_date}, 0)
                               if defined $request->{end_date};
     my $unit = LedgerSMB::Business_Unit->new(%$request);
-    $unit->save;
-    add($request);
+    $unit = $unit->save;
+
+    return $unit;
 }
+
+
 
 =item save_class
 
