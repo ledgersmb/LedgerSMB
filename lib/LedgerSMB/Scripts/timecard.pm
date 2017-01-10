@@ -4,7 +4,7 @@ LedgerSMB::Scripts::timecard - LedgerSMB workflow routines for timecards.
 
 =head1 SYNPOSIS
 
- LedgerSMB::Scripts::timecard::display($request)
+ LedgerSMB::Scripts::timecard::display({ request => $request })
 
 =head1 DESCRIPTION
 
@@ -54,10 +54,10 @@ sub new {
     return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'timecards/entry_filter',
+        path     => 'UI/timecards',
+        template => 'entry_filter',
         format   => 'HTML'
-    )->render_to_psgi($request);
+    )->render_to_psgi({ request => $request });
 }
 
 =item display
@@ -105,14 +105,13 @@ sub display {
     $request->{total} = $request->{qty} + $request->{non_billable};
     $request->{sellprice} = $request->{unitprice} * $request->{qty}
         if $request->{unitprice} && $request->{qty};
-    my $template = LedgerSMB::Template->new(
+    return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI',
         template => 'timecards/timecard',
         format   => 'HTML'
-    );
-    return $template->render_to_psgi($request);
+    )->render_to_psgi({ request => $request });
 }
 
 =item timecard_screen
@@ -143,14 +142,13 @@ sub timecard_screen {
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
-         my $template = LedgerSMB::Template->new(
+         return LedgerSMB::Template->new(
              user     => $request->{_user},
              locale   => $request->{_locale},
              path     => 'UI',
              template => 'timecards/timecard-week',
              format   => 'HTML'
-         );
-         return $template->render_to_psgi($request);
+         )->render_to_psgi({ request => $request });
     }
 }
 
@@ -160,13 +158,6 @@ sub timecard_screen {
 
 sub save {
     my ($request) = @_;
-    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-           $request->{partnumber}
-    );
-    $request->{jctype} = $request->{timecard_type} eq 'by_time'      ? 1
-                       : $request->{timecard_type} eq 'by_materials' ? 2
-                       : $request->{timecard_type} eq 'by_overhead'  ? 3
-                       : 0;
     $request->{total} = ($request->{qty}//0) + ($request->{non_billable}//0);
     die $request->{_locale}->text('Please submit a start/end time or a qty')
         unless defined $request->{qty}
@@ -215,13 +206,6 @@ sub save_week {
                  for (qw(business_unit_id partnumber description qty curr
                                  non_billable));
             $hash->{non_billable} ||= 0;
-            $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-                     $hash->{partnumber}
-            );
-            $hash->{jctype} = $hash->{timecard_type} eq 'by_time'      ? 1
-                            : $hash->{timecard_type} eq 'by_materials' ? 2
-                            : $hash->{timecard_type} eq 'by_overhead'  ? 3
-                            : 0;
             $hash->{total} = $hash->{qty} + $hash->{non_chargeable};
             $hash->{sellprice} = $hash->{unitprice} * $hash->{qty}
                 if $hash->{sellprice} && $hash->{unitprice};
@@ -238,9 +222,6 @@ sub save_week {
 
 sub print {
     my ($request) = @_;
-    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-           $request->{partnumber}
-    );
     my $timecard = LedgerSMB::Timecard->new(%$request);
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
@@ -274,7 +255,7 @@ This generates a report of timecards.
 sub timecard_report{
     my ($request) = @_;
     my $report = LedgerSMB::Report::Timecards->new(%$request);
-    return $report->render_to_psgi($request);
+    return $report->render_to_psgi({ request => $request });
 }
 
 =item generate_order
@@ -286,32 +267,43 @@ This routine generates an order based on timecards
 sub generate_order {
     my ($request) = @_;
     # TODO after beta 1
+    # Generate Sell Orders handled through menu
+    #TODO: Generate Purchase orders
 }
 
-=item get
+=item _get
 
 This routine retrieves a timecard and sends it to the display.
 
 =cut
 
+sub _get_jctype {
+    my ($request) = @_;
+    return $request->{timecard_type} eq 'by_time'      ? 1
+         : $request->{timecard_type} eq 'by_materials' ? 2
+         : $request->{timecard_type} eq 'by_overhead'  ? 3
+         : undef;
+}
+
 sub _get {
     my ($request) = @_;
+    $request->{jctype} = _get_jctype($request);
     my $tcard = LedgerSMB::Timecard->get($request->{id});
     $tcard->{transdate} = LedgerSMB::PGDate->from_db(
               $tcard->checkedin->to_db,
              'date');
     $tcard->{transdate}->is_time(0);
-    my ($part) = $tcard->call_procedure(
-         funcname => 'part__get_by_id', args => [$tcard->parts_id]
-    );
-    $tcard->{partnumber} = $part->{partnumber};
-    $tcard->{unitprice} = $part->{sellprice};
+    $tcard->{unitprice} = $tcard->{sellprice};
     return $tcard;
 }
 
 sub get {
     my ($request) = @_;
     my $tcard = _get($request);
+    my ($part) = $tcard->call_procedure(
+         funcname => 'part__get_by_id', args => [$tcard->parts_id]
+    );
+    $tcard->{partnumber} = $part->{partnumber};
     $tcard->{in_edit} = 0;
     return display($tcard);
 }
@@ -344,8 +336,8 @@ sub delete {
 
 sub refresh {
     my ($request) = @_;
-    my $tcard = _get($request);
-    return display($tcard);
+    $request->{jctype} = _get_jctype($request);
+    return display($request);
 }
 
 =back

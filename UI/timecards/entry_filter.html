@@ -6,11 +6,12 @@
 <form data-dojo-type="lsmb/Form" method="post" action="timecard.pl" title = "<?lsmb text('Timecard Criteria') ?>">
 <div class="listtop"><?lsmb text('Timecard Criteria') ?></div>
 <div class="tabular col-1">
-<div><?lsmb IF employees;
+<div><?lsmb IF request.employees;
           # Setting this to a conditional so that employee list can be
           # populated by add-on workflows.  Our standard ones will be set up
           # only to enter the timecards of the current user. --CT
-          PROCESS employee element_name="person_id" label=text('Employee'); 
+          # Fix same in utilities.html and report_base.html. --YL
+          PROCESS request.employee element_name="person_id" label=text('Employee'); 
        END ?>
 </div>
 <div>

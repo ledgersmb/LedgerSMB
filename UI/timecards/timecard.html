@@ -7,11 +7,13 @@
 <form data-dojo-type="lsmb/Timecard" action="timecard.pl" method="post"
       data-dojo-props="topic:'/timecard/'"
 >
-<?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr'];
+<?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr',
+                      'bu_class_id'];
 PROCESS input element_data = {
     type = 'hidden'
-    name = hidden
-   value = $hidden
+   class = 'hidden'
+    name = "$hidden"
+   value = request.$hidden
 };
 END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
@@ -28,7 +30,7 @@ END; ?>
             name  = 'timecard_type',
            label  = text('Time') 
             type  = "radio"
-         checked  = jctype == 1 ? "checked" : undef
+         checked  = request.jctype == 1 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
 "data-dojo-props" = "topic:'/timecard/type'"
         };
@@ -38,7 +40,7 @@ END; ?>
             name  = 'timecard_type',
            label  = text('Materials') 
             type  = "radio"
-         checked  = jctype == 2 ? "checked" : undef
+         checked  = request.jctype == 2 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
 "data-dojo-props" = "topic:'/timecard/type'"
         };
@@ -48,7 +50,7 @@ END; ?>
             name  = 'timecard_type',
            label  = text('Overhead') 
             type  = "radio"
-         checked  = jctype == 3 ? "checked" : undef
+         checked  = request.jctype == 3 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
 "data-dojo-props" = "topic:'/timecard/type'"
         };
@@ -58,27 +60,29 @@ END; ?>
 <tr id="business_unit">
   <th><?lsmb text('Entered For') ?></th>
   <td><?lsmb
-        FOREACH bu IN b_units;
+        FOREACH bu IN request.b_units;
             bu.text = bu.control_code _ ' -- ' _ bu.description;
         END;
         PROCESS select element_data = {
                        name = "business_unit_id"
-             default_values = [business_unit_id]
-                    options = b_units
+             default_values = [request.business_unit_id]
+                    options = request.b_units
                   text_attr = 'text'
                  value_attr = 'id'
+                   required = 1
            "data-dojo-type" = "lsmb/PublishSelect"
-          "data-dojo-props" = "topic:'/timecard/part'"
+          "data-dojo-props" = "topic:'/timecard/unit'"
        } ?></td>
-<tr><th><?lsmb  text('Partnumber') ?></th>
+<tr><th><?lsmb text('Partnumber') ?></th>
   <td>
     <input data-dojo-type="lsmb/parts/PartSelector"
            data-dojo-props="required:false,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
            name="partnumber"
            id="partnumber"
            size="32"
-           value="<?lsmb partnumber ?>"
+           value="<?lsmb request.partnumber ?>"
            accesskey="p"
+           required="required"
            title="[p]"
            class="control-code" />
     </td>
@@ -90,22 +94,22 @@ END; ?>
          name="description"
          id="description"
          style="width:100%"
-         class="description"><?lsmb description ?></div>
+         class="description"><?lsmb request.description ?></div>
     </td>
 </tr>
 <tr><th><?lsmb text('Date Worked') ?></th>
     <td><?lsmb PROCESS input element_data = {
                  id = 'transdate'
                name = 'transdate'
-              value = transdate
+              value = request.transdate
                type = 'text',
                size = '15',
               class = 'date'
-  "data-dojo-props" = "topic:'/timecard/'"
+  "data-dojo-props" = "topic:'/timecard/date'"
         } ?>
      </td>
 </tr>
-<?lsmb IF jctype == 1 OR jctype == 3 ?>
+<?lsmb IF request.jctype == 1 OR request.jctype == 3 ?>
 <tr id='in-time'>
 <th><?lsmb text('Time In') ?></th>
 <td><?lsmb PROCESS input element_data = {
@@ -113,7 +117,7 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/clocked'"
              name = 'in_hour'
                id = 'in-hour'
-            value = in_hour
+            value = request.in_hour
              type = 'text'
             class = 'time-part'
              size = 3
@@ -123,7 +127,7 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/clocked'"
              name = 'in_min'
                id = 'in-min'
-            value = in_min
+            value = request.in_min
              type = 'text'
             class = 'time-part'
              size = 3
@@ -135,7 +139,7 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/clocked'"
              name = 'out_hour'
                id = 'out-hour'
-            value = out_hour
+            value = request.out_hour
              type = 'text'
             class = 'time-part'
              size = 3
@@ -145,7 +149,7 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/clocked'"
              name = 'out_min'
                id = 'out-min'
-            value = out_min
+            value = request.out_min
              type = 'text'
             class = 'time-part'
              size = 3
@@ -153,7 +157,7 @@ END; ?>
  </td> 
 </tr>
 <tr><th><?lsmb text('Clocked') ?></th>
-    <td id=total><?lsmb total ?></td>
+    <td id=total><?lsmb request.total ?></td>
 </tr>
 <?lsmb END # if is_service or is_timecard ?>
 <tr><th><?lsmb text('Chargeable') ?></th>
@@ -162,7 +166,7 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/qty'"
                id = 'qty'
              name = 'qty'
-            value = qty
+            value = request.qty
              type = 'text'
             class = 'qty'
              size = 16 } ?></td>
@@ -170,7 +174,7 @@ END; ?>
 <tr><th><?lsmb text('Non-Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
        name = 'non_billable'
-      value = non_billable
+      value = request.non_billable
        type = 'text'
       class = 'qty'
        size = 16 } ?></td>
@@ -180,8 +184,8 @@ END; ?>
        INCLUDE select element_data = {
                 id = 'curr'
               name = 'curr'
-           options = currencies
-    default_values = [curr]
+           options = request.currencies
+    default_values = [request.curr]
   "data-dojo-type" = "lsmb/PublishSelect"
  "data-dojo-props" = "topic:'/timecard/curr'"
        }; ?>
@@ -189,7 +193,7 @@ END; ?>
     <td><?lsmb PROCESS input element_data = {
          id = 'unitprice'
        name = 'unitprice'
-      value = unitprice
+      value = request.unitprice
        type = 'text'
       class = 'qty'
   "data-dojo-type" = "lsmb/PublishNumberTextBox"
@@ -199,19 +203,22 @@ END; ?>
 <tr><th><?lsmb text('FX rate') ?></th>
     <td><?lsmb PROCESS input element_data = {
        name = 'fxrate'
-      value = fxrate
+      value = request.fxrate
        type = 'text'
       class = 'qty'
+   disabled = request.curr == request.defaultcurr
+  "data-dojo-type" = "lsmb/PublishNumberTextBox"
+ "data-dojo-props" = "topic:'/timecard/fxrate'"
        size = 16 } ?></td>
 </td>
 <tr><th><?lsmb text('Sell Price') ?></th>
-    <td id=sellprice><?lsmb sellprice ?></td>
+    <td id=sellprice><?lsmb request.sellprice ?></td>
 </tr>
 <tr><th><?lsmb text('FX Sell Price') ?></th>
-    <td id=fxsellprice><?lsmb fxsellprice ?></td>
+    <td id=fxsellprice><?lsmb request.fxsellprice ?></td>
 </tr>
 <tr><th><?lsmb text('Allocated') ?></th>
-    <td><?lsmb allocated ?></td>
+    <td><?lsmb request.allocated ?></td>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
     <td colspan=3>
@@ -220,15 +227,14 @@ END; ?>
                      rows = 2
                      cols = 46
                      wrap = "soft"
-                     text = notes } ?>
+                     text = request.notes } ?>
     </td>
 </tr>
 </tbody></table>
-<?lsmb IF id; 
+<?lsmb IF request.id; 
     PROCESS print_options; 
-END; ?>
-<?lsmb 
-IF id && !in_edit;
+END;
+IF request.id && !request.in_edit;
     PROCESS button element_data = {
        name = 'action'
        type = 'submit'
@@ -251,23 +257,11 @@ ELSE;
       class = 'submit'
        text = text('Save')
       value = 'save'
-   disabled =  jctype < 1 OR jctype > 3
+   disabled =  request.jctype < 1 OR request.jctype > 3
    }; ?>
-<div style="display:none">
-<?lsmb
-    PROCESS button element_data = {
-         id = 'action_refresh'
-       name = 'action'
-       type = 'refresh'
-      class = 'submit'
-       text = text('Refresh')
-       value = 'refresh'
-    };
-?>
-</div>
 <?lsmb
 END;
-IF id;
+IF request.id;
     PROCESS button element_data = {
        name = 'action'
       class = 'submit'
@@ -276,7 +270,7 @@ IF id;
        "data-dojo-type" = "lsmb/PrintButton"
    };
 END;
-IF id && (!allocated || qty > allocated);
+IF request.id && (!request.allocated || request.qty > request.allocated);
     PROCESS button element_data = {
        name = 'action'
        type = 'submit'

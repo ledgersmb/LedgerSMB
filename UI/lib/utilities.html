@@ -76,7 +76,7 @@ END;
 PROCESS select element_data = {
            label = label
             name = element_name
-         options = bu_class_list
+         options = request.bu_class_list
   default_values = [$element_name]
            class = 'bu-class'
        text_attr = text_attr 
@@ -92,7 +92,7 @@ END;
 
 PROCESS select element_data = {
             name = element_name
-         options = b_unit_list
+         options = request.b_unit_list
   default_values = [$element_name]
            class = 'b-unit'
            label = label

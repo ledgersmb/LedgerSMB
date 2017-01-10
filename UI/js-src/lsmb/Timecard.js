@@ -5,11 +5,12 @@ define("lsmb/Timecard",
         "dojo/dom-attr",
         "dijit/registry",
         "dojo/_base/array",
+        "dojo/io-query",
         "dojo/request/xhr",
-        "dojo/json",
         "lsmb/Form"],
-       function(declare, topic, dom, domattr, registry, array, xhr, json, Form) {
+       function(declare, topic, dom, domattr, registry, array, query, xhr, Form) {
            return declare("lsmb/Timecard", Form, {
+               topic: null,
                defaultcurr: "",
                curr: "",
                transdate: "",
@@ -21,7 +22,7 @@ define("lsmb/Timecard",
                                        targetValue == 'by_overhead' ) ? ''
                                                                       : 'none');
                        dijit.byId("action_save").setAttribute('disabled', false);
-                       return;
+                       this._refresh_screen();
                    } else if (topic == 'clocked') {
                        var inh = dom.byId('in-hour').value;
                        var inm = dom.byId('in-min').value;
@@ -31,10 +32,12 @@ define("lsmb/Timecard",
                        var _out = parseInt(outh) * 60.0 + parseInt(outm);
                        var v = ( inh && inm && outh && outm && _out > _in ) ? (_out-_in)/60.0 : '';
                        domattr.set('total','value',v);
+                       // Should we prevent event bubbling?
                        domattr.set('qty','value',v);
-                   } else if (topic == 'part') {
-                       dom.byId("action_refresh").click();
+                   } else if (topic == 'part-select/day' || topic == 'fxrate') {
+                       this._refresh_screen();
                    } else if (topic == 'unitprice') {
+                       // Nothing special to do
                    } else if (topic == 'qty') {
                        if (dom.byId('qty').value != targetValue) {
                            domattr.set('in-hour','value','');
@@ -43,27 +46,44 @@ define("lsmb/Timecard",
                            domattr.set('out-min','value','');
                            domattr.set('total','value','');
                        }
-                   } else if (topic == 'curr') {
-                       this.defaultcurr = dom.byId('defaultcurr').value;
+                   } else if (topic == 'curr' || topis == 'date') {
                        this.curr = targetValue;
                        this.transdate = dom.byId('transdate').value;
-                       if (this.curr != this.defaultcurr) {
-                           this._getFXRate();
-                       } else {
+                       if (this.curr == this.defaultcurr) {
                            domattr.set('fxrate','value','');
                        }
                    }
-                   domattr.set('sellprice','value',dom.byId('qty').value
-                                                 * dom.byId('unitprice').value);
-                   domattr.set('fxsellprice','value',dom.byId('sellprice').value
-                                                   * dom.byId('fxrate').value);
+                   var qty = this._number_parse(dom.byId('qty').value);
+                   var unitprice = this._number_parse(dom.byId('unitprice').value);
+                   var fxrate = this._number_parse(dom.byId('fxrate').value);
+                   var sellprice = this._currency_format(qty * unitprice);
+                   dom.byId('sellprice').innerHTML = sellprice;
+                   if (this.curr == this.defaultcurr) {
+                       dom.byId('fxsellprice').innerHTML = '';
+                   } else {
+                       var fxsellprice = this._currency_format(qty * unitprice * fxrate);
+                       dom.byId('fxsellprice').innerHTML = fxsellprice;
+                   }
                },
-               _update_save: function(targetValue) {
-                   dijit.byId("action_save").setAttribute('disabled', false);
-                   dom.byId("action_refresh").click();
+               _number_parse: function (n) {
+                   return parseFloat(n)
+               },
+               _currency_parse: function (n) {
+                   return parseFloat(n)
+               },
+               _currency_format(n) {
+                  return n
+               },
+               _refresh_screen: function () {
+                   if ( this.domNode ) {
+                       this.clickedAction = "refresh";
+                       this.submit();
+                   }
                },
                _display: function(s) {
                    var widget = dom.byId('in-time');
+                   if ( widget) widget.style = 'display:'+s;
+                   var widget = dom.byId('total');
                    if ( widget) widget.style = 'display:'+s;
                },
                _disableWidgets: function(state) {
@@ -72,36 +92,11 @@ define("lsmb/Timecard",
                        widget.set('disabled', state);
                    });
                },
-               _getFXRate: function() {
-                   // Look up the node we'll stick the text under.
-                   var fxrate = dom.byId('fxrate');
-                   // We should provide a similar REST to cache results and fetch
-                   // only if not available.
-                   xhr.get("http://currencies.apps.grandtrunk.net/getrate/"
-                                + this.transdate + "/" + this.curr
-                                + "/" + this.defaultcurr, {
-                                    headers: {
-                                        'X-Requested-With': null,
-                                        'Content-Type': 'text/plain'
-                                    },
-                                    preventCache: true
-                   }).then(function(data){
-                       var fx = json.stringify(data, true);
-                       fxrate.innerHTML = fx;
-                       domattr.set('fxsellprice','value',dom.byId('sellprice').value * fx);
-                   }, function(error){
-                       fxrate.innerHTML = "An unexpected error occurred: " + error.message;
-                       domattr.set('fxsellprice','value','');
-                   }, function(evt){
-                       // Handle a progress event from the request if the
-                       // browser supports XHR2
-                   });
-               },
                startup: function() {
                    var self = this;
                    this.inherited(arguments);
 
-                   var topics = ['type','clocked','qty','curr','unitprice','part'];
+                   var topics = ['type','clocked','qty','curr','unitprice','fxrate','unit','date','part-select/day'];
                    topics.forEach(function(_topic) {
                        topic.subscribe(self.topic+_topic,
                             function(targetValue) {
@@ -113,7 +108,8 @@ define("lsmb/Timecard",
                    var in_edit = Number(dom.byId('in-edit').value);
 
                    self.transdate = dom.byId('transdate').value;
-                   self.defaultcurr = dom.byId('curr').value;
+                   self.curr = dom.byId('curr').value;
+                   self.defaultcurr = dom.byId('defaultcurr').value;
                    self._disableWidgets(in_id != '' && in_edit===0);
                }
            });
