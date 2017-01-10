@@ -29,9 +29,13 @@ like.
 =cut
 
 package LedgerSMB::Timecard;
+use strict;
+use warnings;
+
 use Moose;
 with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
+use LedgerSMB::Setting;
 
 
 =head1 PROPERTIES
@@ -62,13 +66,33 @@ The business unit class id.
 
 has bu_class_id => (isa => 'Int', is => 'ro', required => 0);
 
+=item partnumber int
+
+This is the part utilized (labor/overhead or service for time)
+
+=cut
+
+has partnumber => (isa => 'Str', is => 'rw', required => '1',
+                   trigger => \&_update_parts_id
+);
+
+sub _update_parts_id {
+    my ($self, $new, $old) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'inventory__get_item_by_partnumber',
+                        args => [$self->partnumber]
+    );
+    $self->{parts_id} = $ref->{id};
+}
 =item parts_id int
 
 This is the id of the part utilized (labor/overhead or service for time)
 
 =cut
 
-has parts_id => (isa => 'Int', is => 'ro', required => '1');
+has parts_id => (isa => 'Int', is => 'ro', required => '1',
+                 lazy => '1', default => 0
+);
 
 =item description text
 
@@ -105,8 +129,19 @@ This is the sell price in the master currency.
 =cut
 
 has sellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-             required => '0', coerce => 1);
+             required => '0', coerce => 1,
+             builder => '_build_sellprice'
+);
 
+sub _build_sellprice {
+    my $self = shift;
+    $self->{sellprice} = $self->get_part_discountedprice(
+                                           $self->{business_unit_id},
+                                           $self->{parts_id},
+                                           $self->{transdate},
+                                           $self->{qty},
+                                           $self->{curr}) // 0;
+}
 
 =item fxsellprice numeric
 
@@ -186,7 +221,17 @@ has jctype => (is => 'ro', isa => 'Int', required => 0);
 
 =cut
 
-has curr => (is => 'ro', isa => 'Str', required => 1);
+has curr => (is => 'ro', isa => 'Str', required => 1, 
+             builder => '_build_curr', lazy => '1'
+             #TODO trigger => _trigger_curr # Update FX
+             );
+
+sub _build_curr {
+    my $self = shift;
+    warn p($self);
+    my $dbh = $self->_get_dbh;
+    $self->{curr} = LedgerSMB::Setting->get($self,'curr');
+}
 
 =back
 
@@ -207,7 +252,11 @@ sub get {
     my ($buclass) = __PACKAGE__->call_procedure(
          funcname => 'timecard__bu_class', args => [$id]);
 
+    my ($part) = __PACKAGE__->call_procedure(
+         funcname => 'part__get_by_id', args => [$retval->{parts_id}]
+    );
     $retval->{bu_class_id} = $buclass->{id};
+    $retval->{partnumber} = $part->{partnumber};
     return __PACKAGE__->new(%$retval);
 }
 

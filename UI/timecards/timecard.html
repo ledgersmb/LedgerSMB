@@ -9,8 +9,9 @@
 >
 <?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr'];
 PROCESS input element_data = {
-    type = 'hidden'
-    name = hidden
+    type = "hidden"
+   class = "hidden"
+    name = "$hidden"
    value = $hidden
 };
 END; ?>
@@ -68,9 +69,9 @@ END; ?>
                   text_attr = 'text'
                  value_attr = 'id'
            "data-dojo-type" = "lsmb/PublishSelect"
-          "data-dojo-props" = "topic:'/timecard/part'"
+          "data-dojo-props" = "topic:'/timecard/unit'"
        } ?></td>
-<tr><th><?lsmb  text('Partnumber') ?></th>
+<tr><th><?lsmb text('Partnumber') ?></th>
   <td>
     <input data-dojo-type="lsmb/parts/PartSelector"
            data-dojo-props="required:false,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
@@ -101,7 +102,7 @@ END; ?>
                type = 'text',
                size = '15',
               class = 'date'
-  "data-dojo-props" = "topic:'/timecard/'"
+  "data-dojo-props" = "topic:'/timecard/date'"
         } ?>
      </td>
 </tr>
@@ -226,8 +227,7 @@ END; ?>
 </tbody></table>
 <?lsmb IF id; 
     PROCESS print_options; 
-END; ?>
-<?lsmb 
+END;
 IF id && !in_edit;
     PROCESS button element_data = {
        name = 'action'
@@ -253,18 +253,6 @@ ELSE;
       value = 'save'
    disabled =  jctype < 1 OR jctype > 3
    }; ?>
-<div style="display:none">
-<?lsmb
-    PROCESS button element_data = {
-         id = 'action_refresh'
-       name = 'action'
-       type = 'refresh'
-      class = 'submit'
-       text = text('Refresh')
-       value = 'refresh'
-    };
-?>
-</div>
 <?lsmb
 END;
 IF id;

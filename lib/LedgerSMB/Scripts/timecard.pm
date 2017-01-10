@@ -48,14 +48,20 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
+use Data::Printer caller_info => 3,
+  filters => {
+    'LedgerSMB::PGNumber' => sub { $_[0]->to_output },
+    'LedgerSMB::PGDate'   => sub { $_[0]->to_output }
+};
+
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
     return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'timecards/entry_filter',
+        path     => 'UI/timecards',
+        template => 'entry_filter',
         format   => 'HTML'
     )->render_to_psgi($request);
 }
@@ -105,14 +111,14 @@ sub display {
     $request->{total} = $request->{qty} + $request->{non_billable};
     $request->{sellprice} = $request->{unitprice} * $request->{qty}
         if $request->{unitprice} && $request->{qty};
-    my $template = LedgerSMB::Template->new(
+    warn p($request);
+    return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI',
         template => 'timecards/timecard',
         format   => 'HTML'
-    );
-    return $template->render_to_psgi($request);
+    )->render_to_psgi($request);
 }
 
 =item timecard_screen
@@ -143,14 +149,13 @@ sub timecard_screen {
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
-         my $template = LedgerSMB::Template->new(
+         return LedgerSMB::Template->new(
              user     => $request->{_user},
              locale   => $request->{_locale},
              path     => 'UI',
              template => 'timecards/timecard-week',
              format   => 'HTML'
-         );
-         return $template->render_to_psgi($request);
+         )->render_to_psgi($request);
     }
 }
 
@@ -160,9 +165,6 @@ sub timecard_screen {
 
 sub save {
     my ($request) = @_;
-    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-           $request->{partnumber}
-    );
     $request->{jctype} = $request->{timecard_type} eq 'by_time'      ? 1
                        : $request->{timecard_type} eq 'by_materials' ? 2
                        : $request->{timecard_type} eq 'by_overhead'  ? 3
@@ -215,9 +217,6 @@ sub save_week {
                  for (qw(business_unit_id partnumber description qty curr
                                  non_billable));
             $hash->{non_billable} ||= 0;
-            $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-                     $hash->{partnumber}
-            );
             $hash->{jctype} = $hash->{timecard_type} eq 'by_time'      ? 1
                             : $hash->{timecard_type} eq 'by_materials' ? 2
                             : $hash->{timecard_type} eq 'by_overhead'  ? 3
@@ -238,9 +237,6 @@ sub save_week {
 
 sub print {
     my ($request) = @_;
-    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
-           $request->{partnumber}
-    );
     my $timecard = LedgerSMB::Timecard->new(%$request);
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
@@ -286,6 +282,8 @@ This routine generates an order based on timecards
 sub generate_order {
     my ($request) = @_;
     # TODO after beta 1
+    # Generate Sell Orders handled through menu
+    #TODO: Generate Purchase orders
 }
 
 =item get
@@ -301,17 +299,17 @@ sub _get {
               $tcard->checkedin->to_db,
              'date');
     $tcard->{transdate}->is_time(0);
-    my ($part) = $tcard->call_procedure(
-         funcname => 'part__get_by_id', args => [$tcard->parts_id]
-    );
-    $tcard->{partnumber} = $part->{partnumber};
-    $tcard->{unitprice} = $part->{sellprice};
+    $tcard->{unitprice} = $tcard->{sellprice};
     return $tcard;
 }
 
 sub get {
     my ($request) = @_;
     my $tcard = _get($request);
+    my ($part) = $tcard->call_procedure(
+         funcname => 'part__get_by_id', args => [$tcard->parts_id]
+    );
+    $tcard->{partnumber} = $part->{partnumber};
     $tcard->{in_edit} = 0;
     return display($tcard);
 }
