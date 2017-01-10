@@ -7,10 +7,13 @@ define("lsmb/Timecard",
         "dojo/_base/array",
         "dojo/io-query",
         "dojo/request/xhr",
-        "dojo/json",
+        "dojo/number",
+        "dojo/_base/kernel",
+        "dojo/currency",
         "lsmb/Form"],
-       function(declare, topic, dom, domattr, registry, array, query, xhr, json, Form) {
+       function(declare, topic, dom, domattr, registry, array, query, xhr, number, kernel, currency, Form) {
            return declare("lsmb/Timecard", Form, {
+               topic: null,
                defaultcurr: "",
                curr: "",
                transdate: "",
@@ -33,7 +36,7 @@ define("lsmb/Timecard",
                        var v = ( inh && inm && outh && outm && _out > _in ) ? (_out-_in)/60.0 : '';
                        domattr.set('total','value',v);
                        domattr.set('qty','value',v);
-                   } else if (topic == 'part') {
+                   } else if (topic == 'part' || topic == 'fxrate') {
                        this._refresh_screen();
                    } else if (topic == 'unitprice') {
                    } else if (topic == 'qty') {
@@ -53,20 +56,29 @@ define("lsmb/Timecard",
                        } else {
                            domattr.set('fxrate','value','');
                        }
-                       this._refresh_screen();
                    }
-                   domattr.set('sellprice','value',dom.byId('qty').value
-                                                 * dom.byId('unitprice').value);
-                   domattr.set('fxsellprice','value',dom.byId('sellprice').value
-                                                   * dom.byId('fxrate').value);
+                   var qty = this._number_parse(dom.byId('qty').value);
+                   var unitprice = this._number_parse(dom.byId('unitprice').value);
+                   var fxrate = this._number_parse(dom.byId('fxrate').value);
+                   var sellprice = this._currency_format(qty * unitprice);
+                   var fxsellprice = this._currency_format(qty * unitprice * fxrate);
+                   dom.byId('sellprice').innerHTML = sellprice;
+                   dom.byId('fxsellprice').innerHTML = fxsellprice;
+               },
+               _number_parse: function (n) {
+                   return number.parse(n, { locale: kernel.locale })
+               },
+               _currency_parse: function (n) {
+                   return currency.parse(n, { currency: this.defaultcurr })
+               },
+               _currency_format(n) {
+                  return currency.format(n, { currency: this.defaultcurr});
                },
                _refresh_screen: function () {
-                   this.clickedAction = "refresh";
-                   this.submit();
-               },
-               _update_save: function(targetValue) {
-                   dijit.byId("action_save").setAttribute('disabled', false);
-                   dom.byId("action_refresh").click(); 
+                   if ( this.domNode ) {
+                       this.clickedAction = "refresh";
+                       this.submit();
+                   }
                },
                _display: function(s) {
                    var widget = dom.byId('in-time');
@@ -79,6 +91,7 @@ define("lsmb/Timecard",
                    });
                },
                _getFXRate: function() {
+                   var self = this;
                    var get = query.queryToObject(decodeURIComponent(dojo.doc.location.search.slice(1)));
                    var fxrate = dom.byId('fxrate');
                    xhr("/getrate.pl?action=getrate"
@@ -86,32 +99,34 @@ define("lsmb/Timecard",
                                    + "&curr=" + this.curr
                                    + "&company=" + get.company
                    ).then(function(data){
-                       data = parseFloat(data);
+                       data = self._number_parse(data);
                        domattr.set('fxrate','value',data);
-                       var sellprice = domattr.get('sellprice','value');
-                       domattr.set('fxsellprice','value',sellprice * data);
+                       var sellprice = self._currency_parse(dom.byId('sellprice').innerHTML);
+                       dom.byId('fxsellprice').innerHTML = self._currency_format(sellprice * data);
                    }, function(error){
                        domattr.set('fxrate','value',"Error: " + error.message);
-                       domattr.set('fxsellprice','value','');
+                       dom.byId('fxsellprice').innerHTML = 'N/A';
                    });
                },
                startup: function() {
                    var self = this;
                    this.inherited(arguments);
 
-                   var topics = ['type','clocked','qty','curr','unitprice','part','date'];
-                   topics.forEach(function(_topic) {
-                       topic.subscribe(self.topic+_topic,
+                   if (this.topic) {
+                       var topics = ['type','clocked','qty','curr','unitprice','fxrate','part','date'];
+                       topics.forEach(function(_topic) {
+                           topic.subscribe(self.topic+_topic,
+                                function(targetValue) {
+                                    self.update(targetValue,_topic);
+                                }
+                           )
+                       });
+                       topic.subscribe(self.topic+"part-select/day",
                             function(targetValue) {
-                                self.update(targetValue,_topic);
+                                self.update(targetValue,'part');
                             }
-                       );
-                   });
-                   topic.subscribe("channel:'/timecard/part-select/day'",
-                        function(targetValue) {
-                            self.update(targetValue,'part');
-                        }
-                   );
+                       )
+                   }
                    var in_id = dom.byId('id').value;
                    var in_edit = Number(dom.byId('in-edit').value);
 

@@ -68,7 +68,7 @@ END; ?>
                   text_attr = 'text'
                  value_attr = 'id'
            "data-dojo-type" = "lsmb/PublishSelect"
-          "data-dojo-props" = "topic:'/timecard/part'"
+          "data-dojo-props" = "topic:'/timecard/unit'"
        } ?></td>
 <tr><th><?lsmb  text('Partnumber') ?></th>
   <td>
@@ -202,6 +202,8 @@ END; ?>
       value = fxrate
        type = 'text'
       class = 'qty'
+  "data-dojo-type" = "lsmb/PublishNumberTextBox"
+ "data-dojo-props" = "topic:'/timecard/fxrate'"
        size = 16 } ?></td>
 </td>
 <tr><th><?lsmb text('Sell Price') ?></th>
