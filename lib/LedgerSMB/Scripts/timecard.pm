@@ -301,7 +301,6 @@ sub _get {
               $tcard->checkedin->to_db,
              'date');
     $tcard->{transdate}->is_time(0);
-    $tcard->{transdate}->is_tz(0);
     my ($part) = $tcard->call_procedure(
          funcname => 'part__get_by_id', args => [$tcard->parts_id]
     );
