@@ -27,7 +27,6 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Setting;
 use DateTime;
-use DateTime::TimeZone;
 
 =head1 ROUTINES
 
