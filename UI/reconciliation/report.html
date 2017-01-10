@@ -4,9 +4,10 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb IF check.unapproved_transactions 
-?><div class="warning"><?lsmb text('There are unapproved transactions before the end date of this report.') ?></div>
+?><div class="warning"><a href="drafts.pl?action=list_drafts&amp;to_date=<?lsmb end_date ?>"><?lsmb text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
+?></a></div>
 <?lsmb END; IF check.unapproved_reports
-?><div class="warning"><?lsmb text('There are unapproved reconciliations before the end date of this report.') ?></div>
+?><div class="warning"><a href="recon.pl?action=get_results&amp;to_date=<?lsmb end_date ?>&amp;approved=0"><?lsmb text('There are [_1] unapproved reconciliations before the end date of this report.',check.unapproved_reports) ?></a></div>
 <?lsmb END ?>
 <?lsmb IF ! defined(b_cleared_table);
     b_cleared_table = 'checked';
@@ -42,7 +43,6 @@ END ?>
   <th><?lsmb text('Beginning Statement Balance:') ?></th>
   <td><?lsmb beginning_balance ?></td>
 </tr>
-<?lsmb IF ! approved ?>
 <tr>
  <th><?lsmb text('Ending Statement Balance:') ?></th>
  <td><?lsmb INCLUDE input element_data = {
@@ -53,12 +53,13 @@ END ?>
     value = their_total
     } ?>
  </td>
+<?lsmb IF ! approved ?>
   <?lsmb IF !submit_enabled ?>
     <th><?lsmb text('Variance:') ?></th>
     <td><?lsmb out_of_balance ?></td>
   <?lsmb END ?>
-</tr>
 <?lsmb END ?>
+</tr>
 <?lsmb IF ! approved ?>
 <tr>
   <th><?lsmb text('Less Outstanding Checks:') ?></th>
@@ -71,7 +72,7 @@ END ?>
 <?lsmb END ?>
 </table>
 <br />
-<?lsmb IF ! approved ?>
+<?lsmb IF ! approved and !submitted?>
     <div id="csv-file">
         <label for="file_upload"><?lsmb text('CSV File:') ?></label>
         <?lsmb PROCESS input element_data = {
@@ -124,7 +125,7 @@ END ?>
             name = "id_$i",
             value = row.id
         } ?>
-        <tr class="record">
+        <tr class=<?lsmb row.suspect ? "suspect" : "record"?>>
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
@@ -167,7 +168,8 @@ END ?>
     <?lsmb END ?>
     <?lsmb END -?>
     <tr class="subtotal">
-        <th colspan=6><?lsmb text('Total') ?></th>
+        <th><?lsmb text('Total') ?></th>
+        <th colspan=5><?lsmb total_cleared_credits-total_cleared_debits ?></th>
         <td><?lsmb total_cleared_debits ?></td>
         <td><?lsmb total_cleared_credits ?></td>
     </tr>
@@ -204,7 +206,7 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class="warning">        
+        <tr class=<?lsmb row.suspect ? "suspect" : "warning"?>>
             <td><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
@@ -261,7 +263,7 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class="record" id=<?lsmb "recon-line-$row.id" ?>
+        <tr class=<?lsmb row.suspect ? "suspect" : "record"?> id=<?lsmb "recon-line-$row.id" ?>
             data-dojo-type = "lsmb/ReconciliationLine"
             data-dojo-props = "topic:'ui/reconciliation/report/cleared_$row.id'">
             <td><?lsmb IF !approved and !submitted;

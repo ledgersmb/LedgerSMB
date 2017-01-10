@@ -43,81 +43,41 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::HTML;
 
-use warnings;
 use strict;
+use warnings;
 
-use CGI::Simple::Standard qw(:html);
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
+use CGI::Simple::Standard qw(:html);
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
-use LedgerSMB::Template::DBProvider;
 
 my $binmode = ':utf8';
+my $extension = 'html';
 
 sub get_template {
     my $name = shift;
-    return "${name}.html";
+    return "${name}.$extension";
 }
 
 sub preprocess {
     my $rawvars = shift;
-    my $vars;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        if (eval {$rawvars->can('to_output')}){
-            $rawvars = $rawvars->to_output;
-        }
-    }
-    my $type = ref $rawvars;
-
-    return $rawvars if $type =~ /^LedgerSMB::Locale/;
-    return unless defined $rawvars;
-    if ( $type eq 'ARRAY' ) {
-        $vars = [];
-        for (@{$rawvars}) {
-            push @{$vars}, preprocess( $_ );
-        }
-    } elsif (!$type) {
-        return escape($rawvars);
-    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return escape($$rawvars);
-    } elsif ($type eq 'CODE'){
-        return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } elsif ($type eq 'Apache2::RequestRec'){
-        # When running in mod_perl2, we might encounter an Apache2::RequestRec
-        # object; escaping its content is nonsense
-        return undef;
-    } else { # Hashes and objects
-        $vars = {};
-        for ( keys %{$rawvars} ) {
-            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
-        }
-    }
-
-    return $vars;
+    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
 }
 
 sub escape {
     my $vars = shift @_;
-    if (defined $vars){
-        $vars = escapeHTML($vars);
-        return $vars;
-    }
-    return undef;
+    return undef unless defined $vars;
+    $vars = escapeHTML($vars);
+    return $vars;
 }
 
 sub process {
     my $parent = shift;
     my $cleanvars = shift;
-    my $template;
-    my $output;
-    my $source;
-    my %additional_options = ();
+
     $parent->{binmode} = $binmode;
 
     my $dojo_theme;
@@ -132,74 +92,39 @@ sub process {
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
     $cleanvars->{dojo_theme} ||= $dojo_theme;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
-        $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
+    $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
 
+    my $output = '';
     if ($parent->{outputfile}) {
-            if (ref $parent->{outputfile}){
-        $output = $parent->{outputfile};
-            } else {
-        $output = "$parent->{outputfile}.html";
-            }
+        if (ref $parent->{outputfile}){
+            $output = $parent->{outputfile};
+        } else {
+            $output = "$parent->{outputfile}.$extension";
+        }
     } else {
         $output = \$parent->{output};
     }
-    if ($parent->{include_path} eq 'DB'){
-        $source = $parent->{template};
-        $additional_options{INCLUDE_PATH} = [];
-        $additional_options{LOAD_TEMPLATES} =
-            [ LedgerSMB::Template::DBProvider->new(
-                  {
-                      format => 'html',
-                      language_code => $parent->{language},
-                      PARSER => Template::Parser->new({
-                         START_TAG => quotemeta('<?lsmb'),
-                         END_TAG => quotemeta('?>'),
-                      }),
-                  }) ];
-    } elsif (ref $parent->{template} eq 'SCALAR') {
-        $source = $parent->{template};
-    } elsif (ref $parent->{template} eq 'ARRAY') {
-        $source = join "\n", @{$parent->{template}};
-    } else {
-        $source = get_template($parent->{template});
-    }
-        my $tempdir;
-        my $paths = [$parent->{include_path},'templates/demo','UI/lib'];
-        unshift @$paths, $parent->{include_path_lang}
-            if defined $parent->{include_path_lang};
-        my $arghash = {
-        INCLUDE_PATH => $paths,
-                ENCODING => 'utf8',
-        START_TAG => quotemeta('<?lsmb'),
-        END_TAG => quotemeta('?>'),
-        DELIMITER => ';',
-        TRIM => 1,
-        DEBUG => ($parent->{debug})? 'dirs': undef,
-        DEBUG_FORMAT => '',
-        (%additional_options)
-        };
-        if ($LedgerSMB::Sysconfig::cache_templates){
-            $arghash->{COMPILE_EXT} = '.lttc';
-            $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::tempdir . "/" . $LedgerSMB::Sysconfig::cache_template_subdir;
-        }
-
-    $template = Template->new(
-                    $arghash
-        ) || die Template->error();
+    my $arghash = $parent->get_template_args($extension,$binmode,1);
+    my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-        $source,
-        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-            'escape' => \&preprocess},
-        $output, {binmode => ':utf8'})){
+                $parent->get_template_source(\&get_template),
+                {
+                    %$cleanvars,
+                    %$LedgerSMB::Template::TTI18N::ttfuncs,
+                    'escape' => \&preprocess
+                },
+                $output,
+                {binmode => $binmode})
+    ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    $parent->{mimetype} = 'text/html';
+    $parent->{mimetype} = 'text/' . $extension;
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.html" if $parent->{outputfile};
+    $parent->{rendered} = "$parent->{outputfile}.$extension" if $parent->{outputfile};
     return $parent->{rendered};
 }
 

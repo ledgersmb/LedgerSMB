@@ -1044,10 +1044,6 @@ sub e_mail {
         delete $form->{$_}; # reset to defaults
     }
 
-    $form->{subject} = $loale->text(
-           'Attached [1] for [2] [3]',
-           $form->{formname}, $doctype, $docnum
-    );
     $form->{bcc} .= ', ' . $cc->{default_bcc} if $cc->{default_bcc};
 
 
@@ -1063,10 +1059,11 @@ sub e_mail {
 
     $hiddens{$_} = $form->{$_} for keys %$form;
 
-    delete $hiddens{email};
-    delete $hiddens{cc};
-    delete $hiddens{bcc};
-    delete $hiddens{message};
+    delete $hiddens{$_}
+       for (qw(email cc bcc message subject message
+               format sendmode language_code read_receipt
+               groupprojectnumber grouppartsgroup
+               sortby));
 
     $hiddens{nextsub} = 'send_email';
 

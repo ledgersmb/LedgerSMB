@@ -17,6 +17,7 @@ requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTTP::Exception'; # YLA
 requires 'JSON';
+requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'MIME::Lite';
@@ -83,6 +84,12 @@ feature 'openoffice', "OpenOffice.org output" =>
         requires "XML::Twig";
         requires "OpenOffice::OODoc";
         requires 'OpenOffice::OODoc::Styles';
+};
+
+feature 'xls', "Microsoft Excel" =>
+    sub {
+        requires 'Spreadsheet::WriteExcel';
+        requires 'Excel::Writer::XLSX';
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps

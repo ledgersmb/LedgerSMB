@@ -12,21 +12,24 @@ data.
 =cut
 
 package LedgerSMB::Scripts::import_csv;
-use Moose;
+use strict;
+use warnings;
+
+use List::MoreUtils qw{ any };
+
 use LedgerSMB::Template;
 use LedgerSMB::Form;
-use strict;
+use LedgerSMB::Setting;
 
-my $default_currency = 'USD';
 our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
                  'invnumber', 'transdate'],
    ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',
                  'invnumber', 'transdate'],
-   timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
-                 'description', 'qty', 'noncharge', 'sellprice', 'allocated',
-                'notes'],
+   timecard =>  ['employee', 'business_unit_id', 'transdate', 'partnumber',
+                 'description', 'qty', 'non_billable', 'sellprice', 'allocated',
+                'notes', 'jctype', 'curr'],
    inventory => ['partnumber', 'onhand', 'purchase_price'],
    inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
 };
@@ -125,6 +128,7 @@ sub _aa_multi {
     for my $ref (@$entries){
         my $form = Form->new();
         $form->{dbh} = $request->{dbh};
+        my $default_currency = LedgerSMB::Setting->get('curr');
         $form->{rowcount} = 1;
         $form->{ARAP} = uc($arap);
         $form->{batch_id} = $batch->{id};
@@ -352,14 +356,23 @@ sub _process_sic {
 sub _process_timecard {
     use LedgerSMB::Timecard;
     my ($request, $entries) = @_;
-    my $myconfig = {};
-    my $jc = {};
+    my @floats = qw {qty non_billable sellprice allocated};
     for my $entry (@$entries) {
+        my $jc = {};
         my $counter = 0;
         for my $col (@{$cols->{timecard}}){
+            if ($request->{sep} eq ";" &&
+                any { $_ eq $col } @floats) {
+                $entry->[$counter] =~ s/,/./;
+                $entry->[$counter] = 0 if $entry->[$counter] eq "";
+            }
             $jc->{$col} = $entry->[$counter];
             ++$counter;
         }
+        $jc->{total} = $jc->{qty} + $jc->{non_billable}
+            if !$jc->{total};
+        $jc->{checkedin} = $jc->{transdate} if !$jc->{checkedin};
+        $jc->{checkedout} = $jc->{transdate} if !$jc->{checkedout};
         LedgerSMB::Timecard->new(%$jc)->save;
     }
 }
@@ -428,32 +441,41 @@ our $process = {
     inventory_multi => \&_process_inventory_multi,
 };
 
-=head2 parse_file
+=head2 _parse_file
 
 This parses a file, and returns a the csv in tabular format.
 
 =cut
 
-sub parse_file {
+sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->{_request}->upload('import_file');
     my $contents = join("\n", <$handle>);
+    my $sep = "";
+    my $n = @{$cols->{$self->{type}}}-1; # 1 separator less than fields
 
     $self->{import_entries} = [];
     for my $line (split /(\r\n|\r|\n)/, $contents){
-        next if ($line !~ /,/);
+        if ( $sep eq "" ) {
+            if    ($n == (() = $line =~  /,/g)) { $sep =  "," }
+            elsif ($n == (() = $line =~  /;/g)) { $sep =  ";" }
+            elsif ($n == (() = $line =~ /\t/g)) { $sep = "\t" }
+            else  { die "Unrecognized file format" }
+            $self->{sep} = $sep;
+        }
+        next if ($line !~ /$sep/);
         my @fields;
         $line =~ s/[^"]"",/"/g;
         while ($line ne '') {
             if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//
+                $line =~ s/"(.*?)"($sep|$)//
                     || $self->error($self->{_locale}->text('Invalid file'));
                 my $field = $1;
                 $field =~ s/\s*$//;
                 push @fields, $field;
             } else {
-                $line =~ s/([^,]*),?//;
+                $line =~ s/([^$sep]*)$sep?//;
                 my $field = $1;
                 $field =~ s/\s*$//;
                 push @fields, $field;
@@ -491,7 +513,7 @@ sub begin_import {
     # $request->{page_id} =~ s/_/-/;
     # $request->{page_id} .= '-import';
     $request->{page_id} = 'batch-import';
-    return $template->render_to_psgi($request);
+    return $template->render_to_psgi({ request => $request });
 }
 
 =head2 run_import
@@ -503,7 +525,8 @@ data in $request and processes it according to the dispatch tables.
 
 sub run_import {
     my ($request) = @_;
-    my @entries = parse_file($request);
+
+    my @entries = _parse_file($request);
     my $headers = shift @entries;
     if (ref($preprocess->{$request->{type}}) eq 'CODE'){
         $preprocess->{$request->{type}}($request, \@entries, $headers);

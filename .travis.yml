@@ -107,7 +107,7 @@ before_install:
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
 
 install:
-  - cpanm --quiet --notest --with-develop --with-feature=edi --installdeps .
+  - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
   - cpan-install --coverage
 
 before_script:

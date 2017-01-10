@@ -257,6 +257,10 @@ tr.record {
 	background-color: pink;
 }
 
+tr.suspect {
+	background-color: red;
+}
+
 tr.warning {
 	background-color: yellow;
 }

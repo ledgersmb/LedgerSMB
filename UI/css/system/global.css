@@ -11,6 +11,24 @@ div.input {
 div.date {
     width: 13ex;
 }
+
+div.warning {
+    float: right;
+    width: 60%;
+    margin-right: 10%;
+    box-sizing: border-box;
+    padding-top: 1em;
+    padding-bottom:1em;
+    padding-left: 5em;
+    padding-right: 5em;
+    text-align: center;
+    border: 3px solid #f22;
+    background: #f81;
+    color: black;
+    border-radius: 6px;
+    border-shadow: #eee 6px 6px 4px;
+}
+
 html, body {
     height: 100%;
     margin: 0;
