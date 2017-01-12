@@ -207,7 +207,7 @@ END; ?>
       value = request.unitprice
        type = 'currency'
       class = 'qty'
-  "data-dojo-type" = "lsmb/parts/PartDiscountedPrice"
+  "data-dojo-type" = "lsmb/parts/PartSellprice"
  "data-dojo-props" = "channel:'/timecard/part-select/day',constraints:{fractional:true,min:0}"
        size = 16 } ?></td>
 </tr>
@@ -226,7 +226,7 @@ END; ?>
     <td><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
        name = 'sellprice'
-   readonly = 'true'
+   disabled = "disabled"
       class = 'qty readonly'
       value = request.sellprice
        type = 'text'
@@ -236,8 +236,8 @@ END; ?>
     <td><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
        name = 'fxsellprice'
-   readonly = 'true'
-      class = 'qty readonly'
+   readonly = 'readonly'
+      class = 'qty'
       value = request.fxsellprice
        type = 'text'
        size = 16 } ?></td>
