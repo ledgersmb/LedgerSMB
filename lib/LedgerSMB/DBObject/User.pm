@@ -160,6 +160,11 @@ sub get_option_data {
             push @{$self->{printers}}, {printer => $item};
         }
     }
+
+    $self->{timesheetframe} = [];
+    push @{$self->{timesheetframe}}, {frame => 'Day'};
+    push @{$self->{timesheetframe}}, {frame => 'Week'};
+
     my ($pw_expiration) = $self->call_dbmethod(
             funcname => 'user__check_my_expiration');
     $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
@@ -289,6 +294,7 @@ sub remove {
 #             'printer',
 #             'dateformat',
 #             'numberformat'
+#             'timesheetframe'
 #         ]
 #     );
 # }

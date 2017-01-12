@@ -644,12 +644,14 @@ create or replace function admin__get_roles () returns setof pg_roles as $$
         ORDER BY rolname ASC
 $$ language sql;
 
+drop function if exists user__save_preferences(text,text,text,text,text);
 create or replace function user__save_preferences(
         in_dateformat text,
         in_numberformat text,
         in_language text,
         in_stylesheet text,
-        in_printer text
+        in_printer text,
+        in_timesheetframe text
 ) returns bool as
 $$
 BEGIN
@@ -658,7 +660,8 @@ BEGIN
         numberformat = in_numberformat,
         language = in_language,
         stylesheet = in_stylesheet,
-        printer = in_printer
+        printer = in_printer,
+        timesheetframe = in_timesheetframe
     WHERE id = (select id from users where username = SESSION_USER);
     RETURN FOUND;
 END;
@@ -669,7 +672,8 @@ COMMENT ON function user__save_preferences(
         in_numberformat text,
         in_language text,
         in_stylesheet text,
-        in_printer text
+        in_printer text,
+        in_timesheetframe text
 ) IS
 $$ Saves user preferences.  Returns true if successful, false if no preferences
 were found to update.$$;
