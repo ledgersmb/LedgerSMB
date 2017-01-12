@@ -11,11 +11,11 @@
           # populated by add-on workflows.  Our standard ones will be set up
           # only to enter the timecards of the current user. --CT
           # Fix same in utilities.html and report_base.html. --YL
-          PROCESS request.employee element_name="person_id" label=text('Employee'); 
+          PROCESS request.employee element_name="person_id" label=text('Employee');
        END ?>
 </div>
 <div>
-<?lsmb PROCESS business_unit_class label=text('Recording time for') _ ':' #' 
+<?lsmb PROCESS business_unit_class label=text('Recording time for') _ ':' #'
        text_attr="label" value_attr="id" ?>
 </div>
 <div >
@@ -23,7 +23,7 @@
             name = 'num_days'
          options = [{text = text('Day'),  value = 1},
                     {text = text('Week'), value = 7}]
-  default_values = [7],
+  default_values = [request.num_days],
            label = text('Time Frame') #'
            class = 'timeframe'
        };

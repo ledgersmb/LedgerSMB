@@ -48,11 +48,13 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
-use Data::Printer;
-
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
+    my $tf = $request->{_user}->{timesheetframe};
+    $request->{num_days} = $tf eq 'Week' ? 7
+                         : $tf eq 'Day'  ? 1
+                         : 0;
     return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
