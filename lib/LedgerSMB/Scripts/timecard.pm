@@ -333,16 +333,6 @@ sub delete {
     timecard_report();
 }
 
-=item refresh
-
-=cut
-
-sub refresh {
-    my ($request) = @_;
-    $request->{jctype} = _get_jctype($request);
-    return display($request);
-}
-
 =back
 
 =head1 SEE ALSO
