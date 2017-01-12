@@ -14,6 +14,7 @@ define("lsmb/Timecard",
                defaultcurr: "",
                curr: "",
                transdate: "",
+               decimal_places: 7,
                // We should stop event bubbling while updating - YL
                update: function(targetValue,topic) {
                    if (topic == 'type'){
@@ -30,10 +31,11 @@ define("lsmb/Timecard",
                        var outm = dom.byId('out-min').value;
                        var _in = parseInt(inh) * 60.0 + parseInt(inm);
                        var _out = parseInt(outh) * 60.0 + parseInt(outm);
-                       var v = ( inh && inm && outh && outm && _out > _in ) ? (_out-_in)/60.0 : '';
-                       domattr.set('total','value',v);
+                       var v = ( inh && inm && outh && outm && _out > _in )
+                             ? this._number_format((_out-_in)/60.0, this.decimal_places) : '';
                        // Should we prevent event bubbling?
                        domattr.set('qty','value',v);
+                       dom.byId('total').innerHTML = this._number_format(v,this.decimal_places);
                    } else if (topic == 'part-select/day' || topic == 'fxrate') {
                        this._refresh_screen();
                    } else if (topic == 'unitprice') {
@@ -57,12 +59,14 @@ define("lsmb/Timecard",
                    var unitprice = this._number_parse(dom.byId('unitprice').value);
                    var fxrate = this._number_parse(dom.byId('fxrate').value);
                    var sellprice = this._currency_format(qty * unitprice);
-                   dom.byId('sellprice').innerHTML = sellprice;
+                   domattr.set('sellprice','value',sellprice);
                    if (this.curr == this.defaultcurr) {
-                       dom.byId('fxsellprice').innerHTML = '';
+                       domattr.set('sellprice','value','');
                    } else {
-                       var fxsellprice = this._currency_format(qty * unitprice * fxrate);
-                       dom.byId('fxsellprice').innerHTML = fxsellprice;
+                       var fxsellprice = this._currency_format(
+                                    qty * unitprice * fxrate,
+                                    this.decimal_places);
+                       domattr.set('fxsellprice','value',fxsellprice);
                    }
                },
                _number_parse: function (n) {
@@ -71,7 +75,10 @@ define("lsmb/Timecard",
                _currency_parse: function (n) {
                    return parseFloat(n)
                },
-               _currency_format(n) {
+               _number_format(n,p) {
+                  return n
+               },
+               _currency_format(n,p) {
                   return n
                },
                _refresh_screen: function () {

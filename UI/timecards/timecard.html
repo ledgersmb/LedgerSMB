@@ -8,7 +8,7 @@
       data-dojo-props="topic:'/timecard/'"
 >
 <?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr',
-                      'bu_class_id'];
+                      'bu_class_id', 'partnumber'];
 PROCESS input element_data = {
     type = 'hidden'
    class = 'hidden'
@@ -18,37 +18,37 @@ PROCESS input element_data = {
 END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
 <table id="tableTimecard"><tbody>
-<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
+<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> :
     </th>
 </tr>
 <tr>
     <td colspan=2 class="input_row" id="timecard_type_radios">
     <?lsmb
         PROCESS input element_data={
-           value  = 'by_time' 
-              id  = 'timecard_by_time' 
+           value  = 'by_time'
+              id  = 'timecard_by_time'
             name  = 'timecard_type',
-           label  = text('Time') 
+           label  = text('Time')
             type  = "radio"
          checked  = request.jctype == 1 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
 "data-dojo-props" = "topic:'/timecard/type'"
         };
         PROCESS input element_data={
-           value  = 'by_materials' 
-              id  = 'timecard_by_materials' 
+           value  = 'by_materials'
+              id  = 'timecard_by_materials'
             name  = 'timecard_type',
-           label  = text('Materials') 
+           label  = text('Materials')
             type  = "radio"
          checked  = request.jctype == 2 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
 "data-dojo-props" = "topic:'/timecard/type'"
         };
         PROCESS input element_data={
-           value  = 'by_overhead' 
-              id  = 'timecard_by_overhead' 
+           value  = 'by_overhead'
+              id  = 'timecard_by_overhead'
             name  = 'timecard_type',
-           label  = text('Overhead') 
+           label  = text('Overhead')
             type  = "radio"
          checked  = request.jctype == 3 ? "checked" : undef
 "data-dojo-type"  = "lsmb/PublishRadioButton"
@@ -73,6 +73,7 @@ END; ?>
            "data-dojo-type" = "lsmb/PublishSelect"
           "data-dojo-props" = "topic:'/timecard/unit'"
        } ?></td>
+</tr>
 <tr><th><?lsmb text('Partnumber') ?></th>
   <td>
     <input data-dojo-type="lsmb/parts/PartSelector"
@@ -88,7 +89,7 @@ END; ?>
     </td>
 </tr>
 <tr><th><?lsmb text('Description') ?></th>
-  <td>
+  <td colspan="3">
     <div data-dojo-type="lsmb/parts/PartDescription"
          data-dojo-props="channel:'/timecard/part-select/day'"
          name="description"
@@ -102,7 +103,7 @@ END; ?>
                  id = 'transdate'
                name = 'transdate'
               value = request.transdate
-               type = 'text',
+               type = 'date',
                size = '15',
               class = 'date'
   "data-dojo-props" = "topic:'/timecard/date'"
@@ -110,60 +111,67 @@ END; ?>
      </td>
 </tr>
 <?lsmb IF request.jctype == 1 OR request.jctype == 3 ?>
-<tr id='in-time'>
-<th><?lsmb text('Time In') ?></th>
-<td><?lsmb PROCESS input element_data = {
- "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/clocked'"
-             name = 'in_hour'
-               id = 'in-hour'
-            value = request.in_hour
-             type = 'text'
-            class = 'time-part'
-             size = 3
-        maxlength = 2 } ?> : 
-    <?lsmb PROCESS input element_data = {
- "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/clocked'"
-             name = 'in_min'
-               id = 'in-min'
-            value = request.in_min
-             type = 'text'
-            class = 'time-part'
-             size = 3
-      maxlength = 2 } ?>
- </td> 
-<th><?lsmb text('Time Out') ?></th>
-<td><?lsmb PROCESS input element_data = {
- "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/clocked'"
-             name = 'out_hour'
-               id = 'out-hour'
-            value = request.out_hour
-             type = 'text'
-            class = 'time-part'
-             size = 3
-        maxlength = 2 } ?> : 
-    <?lsmb PROCESS input element_data = {
- "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/clocked'"
-             name = 'out_min'
-               id = 'out-min'
-            value = request.out_min
-             type = 'text'
-            class = 'time-part'
-             size = 3
-        maxlength = 2 } ?>
- </td> 
-</tr>
-<tr><th><?lsmb text('Clocked') ?></th>
-    <td id=total><?lsmb request.total ?></td>
-</tr>
+    <tr id='in-time'>
+        <th><?lsmb text('Time In') ?></th>
+        <td><?lsmb PROCESS input element_data = {
+         "data-dojo-type" = "lsmb/PublishNumberTextBox"
+        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
+                     name = 'in_hour'
+                       id = 'in-hour'
+                    value = request.in_hour
+                     type = 'text'
+                    class = 'time-part'
+                     size = 3
+                maxlength = 2 } ?> :
+            <?lsmb PROCESS input element_data = {
+         "data-dojo-type" = "lsmb/PublishNumberTextBox"
+        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
+                     name = 'in_min'
+                       id = 'in-min'
+                    value = request.in_min
+                     type = 'text'
+                    class = 'time-part'
+                     size = 3
+              maxlength = 2 } ?>
+         </td>
+        <th><?lsmb text('Time Out') ?></th>
+        <td><?lsmb PROCESS input element_data = {
+         "data-dojo-type" = "lsmb/PublishNumberTextBox"
+        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
+                     name = 'out_hour'
+                       id = 'out-hour'
+                    value = request.out_hour
+                     type = 'text'
+                    class = 'time-part'
+                     size = 3
+                maxlength = 2 } ?> :
+            <?lsmb PROCESS input element_data = {
+         "data-dojo-type" = "lsmb/PublishNumberTextBox"
+        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
+                     name = 'out_min'
+                       id = 'out-min'
+                    value = request.out_min
+                     type = 'text'
+                    class = 'time-part'
+                     size = 3
+                maxlength = 2 } ?>
+         </td>
+    </tr>
+    <tr><th><?lsmb text('Clocked') ?></th>
+        <td><?lsmb PROCESS input element_data = {
+     "data-dojo-type" = "dijit/form/NumberTextBox"
+           name = 'total'
+       readonly = 'true'
+          class = 'readonly'
+          value = request.total
+           type = 'text'
+           size = 16 } ?></td>
+    </tr>
 <?lsmb END # if is_service or is_timecard ?>
 <tr><th><?lsmb text('Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/qty'"
+"data-dojo-props" = "topic:'/timecard/qty',constraints:{min:0}"
                id = 'qty'
              name = 'qty'
             value = request.qty
@@ -173,6 +181,8 @@ END; ?>
 </td>
 <tr><th><?lsmb text('Non-Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
+ "data-dojo-type" = "dijit/form/NumberTextBox"
+"data-dojo-props" = "constraints:{min:0}"
        name = 'non_billable'
       value = request.non_billable
        type = 'text'
@@ -188,18 +198,19 @@ END; ?>
     default_values = [request.curr]
   "data-dojo-type" = "lsmb/PublishSelect"
  "data-dojo-props" = "topic:'/timecard/curr'"
-       }; ?>
+       }; ?></td>
+</tr>
 <tr><th><?lsmb text('Unit price') ?></th>
     <td><?lsmb PROCESS input element_data = {
          id = 'unitprice'
        name = 'unitprice'
       value = request.unitprice
-       type = 'text'
+       type = 'currency'
       class = 'qty'
-  "data-dojo-type" = "lsmb/PublishNumberTextBox"
- "data-dojo-props" = "topic:'/timecard/unitprice'"
+  "data-dojo-type" = "lsmb/parts/PartDiscountedPrice"
+ "data-dojo-props" = "channel:'/timecard/part-select/day',constraints:{fractional:true,min:0}"
        size = 16 } ?></td>
-</td>
+</tr>
 <tr><th><?lsmb text('FX rate') ?></th>
     <td><?lsmb PROCESS input element_data = {
        name = 'fxrate'
@@ -208,17 +219,38 @@ END; ?>
       class = 'qty'
    disabled = request.curr == request.defaultcurr
   "data-dojo-type" = "lsmb/PublishNumberTextBox"
- "data-dojo-props" = "topic:'/timecard/fxrate'"
+ "data-dojo-props" = "topic:'/timecard/fxrate',constraints:{fractional:true,min:0}"
        size = 16 } ?></td>
 </td>
 <tr><th><?lsmb text('Sell Price') ?></th>
-    <td id=sellprice><?lsmb request.sellprice ?></td>
+    <td><?lsmb PROCESS input element_data = {
+ "data-dojo-type" = "dijit/form/CurrencyTextBox"
+       name = 'sellprice'
+   readonly = 'true'
+      class = 'readonly'
+      value = request.sellprice
+       type = 'text'
+       size = 16 } ?></td>
 </tr>
 <tr><th><?lsmb text('FX Sell Price') ?></th>
-    <td id=fxsellprice><?lsmb request.fxsellprice ?></td>
+    <td><?lsmb PROCESS input element_data = {
+ "data-dojo-type" = "dijit/form/CurrencyTextBox"
+       name = 'fxsellprice'
+   readonly = 'true'
+      class = 'readonly'
+      value = request.fxsellprice
+       type = 'text'
+       size = 16 } ?></td>
 </tr>
 <tr><th><?lsmb text('Allocated') ?></th>
-    <td><?lsmb request.allocated ?></td>
+    <td><?lsmb PROCESS input element_data = {
+ "data-dojo-type" = "dijit/form/NumberTextBox"
+       name = 'allocated'
+   readonly = 'true'
+      class = 'readonly'
+      value = request.allocated
+       type = 'text'
+       size = 16 } ?></td>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
     <td colspan=3>
@@ -231,8 +263,8 @@ END; ?>
     </td>
 </tr>
 </tbody></table>
-<?lsmb IF request.id; 
-    PROCESS print_options; 
+<?lsmb IF request.id;
+    PROCESS print_options;
 END;
 IF request.id && !request.in_edit;
     PROCESS button element_data = {

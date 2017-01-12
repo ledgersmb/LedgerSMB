@@ -48,6 +48,8 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
+use Data::Printer;
+
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
@@ -69,9 +71,9 @@ defaults.
 
 sub display {
     my ($request) = @_;
-    $request->{qty} //= 0;
-    $request->{non_billable} //= 0;
-    $request->{in_edit} //= 0;
+#    $request->{qty} //= 0;
+#    $request->{non_billable} //= 0;
+    $request->{in_edit} ||= 0;
     if (defined $request->{checkedin} and $request->{checkedin}->is_time) {
         $request->{in_hour} = $request->{checkedin}->{hour};
         $request->{in_min} = $request->{checkedin}->{min};
@@ -99,7 +101,7 @@ sub display {
                                 $request->{parts_id},
                                 $request->{transdate},
                                 $request->{qty},
-                                $request->{curr})
+                                $request->{curr})   # Why the currency? YL
         // LedgerSMB::Timecard->get_part_sellprice($request->{partnumber})
     );
     $request->{total} = $request->{qty} + $request->{non_billable};
@@ -108,8 +110,8 @@ sub display {
     return LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'timecards/timecard',
+        path     => 'UI/timecards',
+        template => 'timecard',
         format   => 'HTML'
     )->render_to_psgi({ request => $request });
 }
@@ -145,9 +147,10 @@ sub timecard_screen {
          return LedgerSMB::Template->new(
              user     => $request->{_user},
              locale   => $request->{_locale},
-             path     => 'UI',
-             template => 'timecards/timecard-week',
-             format   => 'HTML'
+             path     => 'UI/timecards',
+             template => 'timecard-week',
+             format   => 'HTML',
+             debug    => 1
          )->render_to_psgi({ request => $request });
     }
 }
