@@ -205,6 +205,8 @@ END; ?>
          id = 'unitprice'
        name = 'unitprice'
       value = request.unitprice
+  attributes = { style = "text-align:right"}
+   readonly = 'readonly'
        type = 'currency'
       class = 'qty'
   "data-dojo-type" = "lsmb/parts/PartSellprice"
@@ -217,7 +219,8 @@ END; ?>
       value = request.fxrate
        type = 'text'
       class = 'qty'
-   disabled = request.curr == request.defaultcurr
+  attributes = { style = "text-align:right"}
+   disabled = (request.curr == request.defaultcurr) ? 'disabled' : undef
   "data-dojo-type" = "lsmb/PublishNumberTextBox"
  "data-dojo-props" = "topic:'/timecard/fxrate',constraints:{fractional:true,min:0}"
        size = 16 } ?></td>
@@ -226,8 +229,9 @@ END; ?>
     <td><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
        name = 'sellprice'
-   disabled = "disabled"
-      class = 'qty readonly'
+   readonly = 'readonly'
+  attributes = { style = "text-align:right"}
+      class = 'qty'
       value = request.sellprice
        type = 'text'
        size = 16 } ?></td>
@@ -237,6 +241,7 @@ END; ?>
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
        name = 'fxsellprice'
    readonly = 'readonly'
+  attributes = { style = "text-align:right"}
       class = 'qty'
       value = request.fxsellprice
        type = 'text'
@@ -246,8 +251,9 @@ END; ?>
     <td><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/NumberTextBox"
        name = 'allocated'
-   readonly = 'true'
-      class = 'qty readonly'
+   readonly = 'readonly'
+  attributes = { style = "text-align:right"}
+      class = 'qty'
       value = request.allocated
        type = 'text'
        size = 16 } ?></td>

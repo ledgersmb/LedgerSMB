@@ -5,10 +5,11 @@ define("lsmb/Timecard",
         "dojo/dom-attr",
         "dijit/registry",
         "dojo/_base/array",
+        "dojo/number",
         "dojo/io-query",
         "dojo/request/xhr",
         "lsmb/Form"],
-       function(declare, topic, dom, domattr, registry, array, query, xhr, Form) {
+       function(declare, topic, dom, domattr, registry, array, number, query, xhr, Form) {
            return declare("lsmb/Timecard", Form, {
                topic: null,
                defaultcurr: "",
@@ -48,7 +49,7 @@ define("lsmb/Timecard",
                            domattr.set('out-min','value','');
                            domattr.set('total','value','');
                        }
-                   } else if (topic == 'curr' || topis == 'date') {
+                   } else if (topic == 'curr' || topic == 'date') {
                        this.curr = targetValue;
                        this.transdate = dom.byId('transdate').value;
                        if (this.curr == this.defaultcurr) {
@@ -76,16 +77,20 @@ define("lsmb/Timecard",
                    return parseFloat(n)
                },
                _number_format(n,p) {
-                  return n
+                  return number.format(n, {
+                      places: p,
+                      locale: 'us-us'
+                    })
                },
                _currency_format(n,p) {
-                  return n
+//                  return n
+                  return number.format(n, {
+                      places: p,
+                      locale: 'us-us'
+                    })
                },
                _refresh_screen: function () {
-                   if ( this.domNode ) {
-                       this.clickedAction = "refresh";
-                       this.submit();
-                   }
+                   // Nothing currently
                },
                _display: function(s) {
                    var widget = dom.byId('in-time');

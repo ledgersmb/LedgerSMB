@@ -396,6 +396,6 @@ span.indicator {
    text-decoration: none;
 }
 
-.readonly {
-  background-color: lightgrey;
+.dijitTextBoxReadOnly {
+  background-color: rgb(240,240,240)!important;
 }
