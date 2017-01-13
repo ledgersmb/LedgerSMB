@@ -276,7 +276,7 @@ sub generate_order {
     #TODO: Generate Purchase orders
 }
 
-=item _get
+=item get
 
 This routine retrieves a timecard and sends it to the display.
 
