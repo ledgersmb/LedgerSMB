@@ -109,7 +109,7 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\textbf{\MakeUppercase{<?lsmb text('Invoice') ?>}}
+\textbf{\MakeUppercase{<?lsmb IF reverse; text('Credit'); END ?><?lsmb text('Invoice') ?>}}
 \hfill
 
 \vspace{1cm}
