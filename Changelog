@@ -2,6 +2,14 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.2
+* Redirect '/' to '/login.pl' in Starman (Erik H, #2520)
+* Description field too big on GL and invoice screens (Erik H, #2264)
+* Remove spurious space in Apache2 example config (Erik H, #2534)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.1
 * Adjust tools/patch-release-upgrade.pl for interface changes in 1.5 (Erik H)
 * Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
