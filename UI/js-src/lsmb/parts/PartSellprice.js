@@ -1,24 +1,26 @@
 define([
     "dijit/form/ComboBox",
-    "dijit/form/Textarea",
+    "dijit/form/CurrencyTextBox",
     "dijit/form/_AutoCompleterMixin",
     "dijit/form/_ComboBoxMenu",
     "dojo/_base/declare",
     "dojo/topic",
     "dojo/keys",
     "lsmb/parts/PartStore",
+    "dojo/number",
     "dojo/text!./templates/DropDownTextarea.html"
     ], function(
         ComboBox,
-        Textarea,
+        CurrencyTextBox,
         _AutoCompleterMixin,
         _ComboBoxMenu,
       declare,
         topic,
         keys,
-        store
+        store,
+        number
       ){
-        return declare("lsmb/parts/PartsSellprice",[Textarea, _AutoCompleterMixin], {
+        return declare("lsmb/parts/PartsSellprice",[CurrencyTextBox, _AutoCompleterMixin], {
             channel: null,
             height: null,
             store:  store,
@@ -36,12 +38,15 @@ define([
                         topic.subscribe(
                             this.channel,
                             function(selected) {
-                                self.set("value",selected[self.searchAttr]);
+                                var s = selected[self.searchAttr];
+                                s = number.parse(s, {locale: self.constraints.locale});
+                                self.set("value",self.format( s, { currency: self.constraints.currency } ));
                             }));
                     this.on("change",
                             function(newValue) {
-                                if (self.item) {
-                                    topic.publish(self.channel, self.item);
+                                if ( newValue ) {
+                                    var item = { sellprice: newValue };
+                                    topic.publish(self.channel,item);
                                 }
                             });
                 }

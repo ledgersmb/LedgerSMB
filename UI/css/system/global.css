@@ -426,6 +426,52 @@ html, body {
     width: auto;
 }
 
+/*********** timecards *************/
+
+div.timecard-description {
+    width: 80%!important;   /* Why? YL */
+}
+
+.timecard-section {
+
+}
+
+.timecard-sub-section {
+
+}
+
+label.timecard-qty, label.timecard-control-code, label.timecard-description,
+label.timecard-date, label.timecard-time-part, label.timecard-curr,
+label.timecard-notes, label.timecard-business-unit {
+    display: inline-block;
+    min-width: 8em;
+}
+
+div#clock-time {
+    display: inline-flex
+}
+
+label#in-hour-label, label#out-hour-label {
+    min-width: 5em;
+}
+
+div#in-time, div#out-time {
+    width: 15em
+}
+
+div.timecard-qty {
+    text-align: right;
+}
+
+input#sellprice, input#fxsellprice, input#unitprice {
+    text-align: right;
+}
+
+div#widget_in-hour, div#widget_in-min,
+div#widget_out-hour, div#widget_out-min {
+    width: 2em;
+}
+
 @media print {
   .export-links {
      display: none;

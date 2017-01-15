@@ -1,14 +1,28 @@
-<?lsmb INCLUDE 'ui-header.html';
-       PROCESS 'elements.html';
+<?lsmb INCLUDE "ui-header.html"
+       include_stylesheet = ["css/system/timecard.css"];
+       PROCESS "elements.html";
        PROCESS 'report_base.html';
        PROCESS 'utilities.html';
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Timecard" action="timecard.pl" method="post"
       data-dojo-props="topic:'/timecard/'"
+      data-dojo-event="validate"
 >
-<?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr',
-                      'bu_class_id', 'partnumber'];
+<script type="dojo/on" data-dojo-event="change">
+    console.dir(this);
+/*
+    if(this.validate()){
+        return confirm('Form is valid, press OK to submit');
+    }else{
+        alert('Form contains invalid data.  Please correct first');
+        return false;
+    }
+    return true;
+*/
+</script>
+<?lsmb FOR hidden IN ['id', 'parts_id', 'in_edit', 'defaultcurr', 'locale',
+                      'bu_class_id', 'partnumber', 'language1', 'decimal_places'];
 PROCESS input element_data = {
     type = 'hidden'
    class = 'hidden'
@@ -17,12 +31,10 @@ PROCESS input element_data = {
 };
 END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
-<table id="tableTimecard"><tbody>
-<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> :
-    </th>
-</tr>
-<tr>
-    <td colspan=2 class="input_row" id="timecard_type_radios">
+<div id="formValue" name="formValue"></div>
+<div id="tableTimecard">
+<div class="listtop"><?lsmb text('Category') ?> :</div>
+<div class="input_row" id="timecard_type_radios">
     <?lsmb
         PROCESS input element_data={
            value  = 'by_time'
@@ -55,220 +67,219 @@ END; ?>
 "data-dojo-props" = "topic:'/timecard/type'"
         };
         ?>
-    </td>
-</tr>
-<tr id="business_unit">
-  <th><?lsmb text('Entered For') ?></th>
-  <td><?lsmb
+</div>
+<div class="listtop"><?lsmb text('Object') ?> :</div>
+<div id="business_unit">
+  <?lsmb
         FOREACH bu IN request.b_units;
             bu.text = bu.control_code _ ' -- ' _ bu.description;
         END;
         PROCESS select element_data = {
                        name = "business_unit_id"
+                      label = text('Entered For')
+                      class = 'timecard-business-unit'
              default_values = [request.business_unit_id]
                     options = request.b_units
                   text_attr = 'text'
                  value_attr = 'id'
-                   required = 1
+                   required = 'required'
            "data-dojo-type" = "lsmb/PublishSelect"
           "data-dojo-props" = "topic:'/timecard/unit'"
-       } ?></td>
-</tr>
-<tr><th><?lsmb text('Partnumber') ?></th>
-  <td>
+       } ?>
+</div>
+<div>
+    <label for="partnumber" class="timecard-control-code"><?lsmb text('Partnumber') ?></label>
     <input data-dojo-type="lsmb/parts/PartSelector"
-           data-dojo-props="required:false,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
+           data-dojo-props="required:true,channel:'/timecard/part-select/day',fetchProperties:{type:'sales'}"
            name="partnumber"
            id="partnumber"
            size="32"
            value="<?lsmb request.partnumber ?>"
            accesskey="p"
-           required="required"
            title="[p]"
-           class="control-code" />
-    </td>
-</tr>
-<tr><th><?lsmb text('Description') ?></th>
-  <td colspan="3">
+           class="timecard-control-code" />
+
+</div>
+<div><label for="description" class="timecard-description"><?lsmb text('Description') ?></label>
     <div data-dojo-type="lsmb/parts/PartDescription"
          data-dojo-props="channel:'/timecard/part-select/day'"
          name="description"
          id="description"
-         style="width:100%"
-         class="description"><?lsmb request.description ?></div>
-    </td>
-</tr>
-<tr><th><?lsmb text('Date Worked') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+         class="timecard-description"><?lsmb request.description ?></div>
+
+</div>
+<div class="listtop"><?lsmb text('Time') ?> :</div>
+<div><?lsmb PROCESS input element_data = {
                  id = 'transdate'
                name = 'transdate'
+              label = text('Date Worked')
               value = request.transdate
                type = 'date',
                size = '15',
-              class = 'date'
+              class = 'timecard-date'
   "data-dojo-props" = "topic:'/timecard/date'"
         } ?>
-     </td>
-</tr>
-<?lsmb IF request.jctype == 1 OR request.jctype == 3 ?>
-    <tr id='in-time'>
-        <th><?lsmb text('Time In') ?></th>
-        <td><?lsmb PROCESS input element_data = {
-         "data-dojo-type" = "lsmb/PublishNumberTextBox"
-        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
-                     name = 'in_hour'
-                       id = 'in-hour'
-                    value = request.in_hour
-                     type = 'text'
-                    class = 'time-part'
-                     size = 3
-                maxlength = 2 } ?> :
-            <?lsmb PROCESS input element_data = {
-         "data-dojo-type" = "lsmb/PublishNumberTextBox"
-        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
-                     name = 'in_min'
-                       id = 'in-min'
-                    value = request.in_min
-                     type = 'text'
-                    class = 'time-part'
-                     size = 3
-              maxlength = 2 } ?>
-         </td>
-        <th><?lsmb text('Time Out') ?></th>
-        <td><?lsmb PROCESS input element_data = {
-         "data-dojo-type" = "lsmb/PublishNumberTextBox"
-        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
-                     name = 'out_hour'
-                       id = 'out-hour'
-                    value = request.out_hour
-                     type = 'text'
-                    class = 'time-part'
-                     size = 3
-                maxlength = 2 } ?> :
-            <?lsmb PROCESS input element_data = {
-         "data-dojo-type" = "lsmb/PublishNumberTextBox"
-        "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
-                     name = 'out_min'
-                       id = 'out-min'
-                    value = request.out_min
-                     type = 'text'
-                    class = 'time-part'
-                     size = 3
-                maxlength = 2 } ?>
-         </td>
-    </tr>
-    <tr><th><?lsmb text('Clocked') ?></th>
-        <td><?lsmb PROCESS input element_data = {
-     "data-dojo-type" = "dijit/form/NumberTextBox"
-           name = 'total'
-       readonly = 'true'
-          class = 'readonly'
-          value = request.total
-           type = 'text'
-           size = 16 } ?></td>
-    </tr>
-<?lsmb END # if is_service or is_timecard ?>
-<tr><th><?lsmb text('Chargeable') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+</div>
+<div id='clock-time'>
+    <div id='in-time'><?lsmb PROCESS input element_data = {
+     "data-dojo-type" = "lsmb/PublishNumberTextBox"
+    "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
+                 name = 'in_hour'
+                   id = 'in-hour'
+                label = text('Time In')
+                value = request.in_hour
+                 type = 'text'
+                class = 'timecard-time-part'
+                 size = 3
+            maxlength = 2 } ?> :
+        <?lsmb PROCESS input element_data = {
+     "data-dojo-type" = "lsmb/PublishNumberTextBox"
+    "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
+                 name = 'in_min'
+                   id = 'in-min'
+                value = request.in_min
+                 type = 'text'
+                class = 'timecard-time-part'
+                 size = 3
+          maxlength = 2 } ?></div>
+    <div id='out-time'><?lsmb PROCESS input element_data = {
+     "data-dojo-type" = "lsmb/PublishNumberTextBox"
+    "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:23,places:0}"
+                 name = 'out_hour'
+                   id = 'out-hour'
+                label = text('Time Out')
+                value = request.out_hour
+                 type = 'text'
+                class = 'timecard-time-part'
+                 size = 3
+            maxlength = 2 } ?> :
+        <?lsmb PROCESS input element_data = {
+     "data-dojo-type" = "lsmb/PublishNumberTextBox"
+    "data-dojo-props" = "topic:'/timecard/clocked',constraints:{min:0,max:59,places:0}"
+                 name = 'out_min'
+                   id = 'out-min'
+                value = request.out_min
+                 type = 'text'
+                class = 'timecard-time-part'
+                 size = 3
+            maxlength = 2 } ?></div>
+</div>
+<div><?lsmb PROCESS input element_data = {
+ "data-dojo-type" = "dijit/form/NumberTextBox"
+"data-dojo-props" = "constraints:{locale:'${request.locale}'}"
+       name = 'total'
+   readonly = 'readonly'
+      label = text('Clocked')
+      class = 'timecard-qty'
+      value = request.total
+       type = 'text'
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "lsmb/PublishNumberTextBox"
-"data-dojo-props" = "topic:'/timecard/qty',constraints:{min:0}"
+"data-dojo-props" = "topic:'/timecard/qty',constraints:{min:0,locale:'${request.locale}'}"
                id = 'qty'
              name = 'qty'
+            label = text('Chargeable')
             value = request.qty
              type = 'text'
-            class = 'qty'
-             size = 16 } ?></td>
-</td>
-<tr><th><?lsmb text('Non-Chargeable') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+            class = 'timecard-qty'
+             size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/NumberTextBox"
-"data-dojo-props" = "constraints:{min:0}"
-       name = 'non_billable'
+"data-dojo-props" = "constraints:{min:0,locale:'${request.locale}'}"
+       name = 'non-billable'
+      label = text('Non-Chargeable')
       value = request.non_billable
        type = 'text'
-      class = 'qty'
-       size = 16 } ?></td>
-</tr>
-<tr><th><?lsmb text('Currency') ?></th>
-    <td><?lsmb
+      class = 'timecard-qty'
+       size = 16 } ?>
+</div>
+<div class="listtop"><?lsmb text('Cost') ?> :</div>
+<div><?lsmb
        INCLUDE select element_data = {
                 id = 'curr'
               name = 'curr'
+             label = text('Currency')
+             class = 'timecard-curr'
            options = request.currencies
     default_values = [request.curr]
   "data-dojo-type" = "lsmb/PublishSelect"
  "data-dojo-props" = "topic:'/timecard/curr'"
-       }; ?></td>
-</tr>
-<tr><th><?lsmb text('Unit price') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+       }; ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
          id = 'unitprice'
        name = 'unitprice'
+      label = text('Unit price')
       value = request.unitprice
   attributes = { style = "text-align:right"}
    readonly = 'readonly'
        type = 'currency'
-      class = 'qty'
+      class = 'timecard-qty'
   "data-dojo-type" = "lsmb/parts/PartSellprice"
- "data-dojo-props" = "channel:'/timecard/part-select/day',constraints:{fractional:true,min:0}"
-       size = 16 } ?></td>
-</tr>
-<tr><th><?lsmb text('FX rate') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+ "data-dojo-props" = "channel:'/timecard/part-select/day',constraints:{fractional:true,min:0,locale:'${request.locale}',currency:'${request.defaultcurr}'}"
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
        name = 'fxrate'
+      label = text('FX rate')
       value = request.fxrate
+   readonly = 'readonly'
        type = 'text'
-      class = 'qty'
+      class = 'timecard-qty'
   attributes = { style = "text-align:right"}
-   disabled = (request.curr == request.defaultcurr) ? 'disabled' : undef
   "data-dojo-type" = "lsmb/PublishNumberTextBox"
  "data-dojo-props" = "topic:'/timecard/fxrate',constraints:{fractional:true,min:0}"
-       size = 16 } ?></td>
-</td>
-<tr><th><?lsmb text('Sell Price') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
+ "data-dojo-props" = "constraints:{required:false,fractional:true,min:0,locale:'${request.locale}'}"
        name = 'sellprice'
+      label = text('Sell Price')
    readonly = 'readonly'
   attributes = { style = "text-align:right"}
-      class = 'qty'
+      class = 'timecard-qty'
       value = request.sellprice
        type = 'text'
-       size = 16 } ?></td>
-</tr>
-<tr><th><?lsmb text('FX Sell Price') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/CurrencyTextBox"
+ "data-dojo-props" = "constraints:{required:false,fractional:true,min:0,locale:'${request.locale}',currency:'${request.defaultcurr}'}"
        name = 'fxsellprice'
+      label = text('FX Sell Price')
    readonly = 'readonly'
   attributes = { style = "text-align:right"}
-      class = 'qty'
+      class = 'timecard-qty'
       value = request.fxsellprice
        type = 'text'
-       size = 16 } ?></td>
-</tr>
-<tr><th><?lsmb text('Allocated') ?></th>
-    <td><?lsmb PROCESS input element_data = {
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS input element_data = {
  "data-dojo-type" = "dijit/form/NumberTextBox"
        name = 'allocated'
+      label = text('Allocated')
    readonly = 'readonly'
   attributes = { style = "text-align:right"}
-      class = 'qty'
+      class = 'timecard-qty'
       value = request.allocated
        type = 'text'
-       size = 16 } ?></td>
-</tr>
-<tr><th align><?lsmb text('Notes') ?></th>
-    <td colspan=3>
-        <?lsmb PROCESS textarea element_data = {
+       size = 16 } ?>
+</div>
+<div><?lsmb PROCESS textarea element_data = {
                      name = "notes"
+                    class = "timecard-notes"
+                    label = text('Notes')
                      rows = 2
                      cols = 46
                      wrap = "soft"
                      text = request.notes } ?>
-    </td>
-</tr>
-</tbody></table>
+
+</div>
+</div>
 <?lsmb IF request.id;
     PROCESS print_options;
 END;

@@ -9,7 +9,7 @@ td.money {
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
 A:active { text-decoration: underline; }
-A:hover { 
+A:hover {
   background-color: transparent;
   text-decoration: underline;
 }
@@ -144,15 +144,15 @@ cornerlogo {
 .menu_open {
 background-image: url('../images/up.gif');
 background-repeat: no-repeat;
-background-position: 0 0; 
-padding-left: 12px; 
+background-position: 0 0;
+padding-left: 12px;
 }
 
 .menu_closed {
 background-image: url('../images/down.gif');
 background-repeat: no-repeat;
-background-position: 0 0; 
-padding-left: 12px; 
+background-position: 0 0;
+padding-left: 12px;
 }
 
 
@@ -291,18 +291,18 @@ td.cleared-past {
 
 input[type=checkbox].remove::before {
     display: inline-block;
-    content: ' X '; 
+    content: ' X ';
     width: 12px;
     text-align: center;
     background: white;
-    color: white; 
+    color: white;
 }
-input[type=checkbox].remove:checked:before { 
-    background:red; 
+input[type=checkbox].remove:checked:before {
+    background:red;
 }
 
 /* Theming controls based on transaction status */
-/* disabled for now to speed release 
+/* disabled for now to speed release
 #statusdiv.new input {
 }
 
@@ -364,7 +364,7 @@ span.indicator {
 
 .financial-statement h1, .financial-statement h2 {
    text-align: center;
-}   
+}
 
 .financial-statement table {
    margin-left: auto;

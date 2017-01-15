@@ -48,6 +48,7 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
+use Data::Printer;
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
@@ -55,12 +56,10 @@ sub new {
     $request->{num_days} = $tf eq 'Week' ? 7
                          : $tf eq 'Day'  ? 1
                          : 0;
-    return LedgerSMB::Template->new(
+    return LedgerSMB::Template->new_UI(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'entry_filter',
-        format   => 'HTML'
+        template => 'timecards/entry_filter',
     )->render_to_psgi({ request => $request });
 }
 
@@ -73,9 +72,13 @@ defaults.
 
 sub display {
     my ($request) = @_;
-#    $request->{qty} //= 0;
-#    $request->{non_billable} //= 0;
+    $request->{qty} ||= 0;
+    $request->{non_billable} ||= 0;
     $request->{in_edit} ||= 0;
+    $request->{language1} = $request->{_user}->{language};
+    $request->{locale} = lc($request->{language1});
+    $request->{locale} =~ s/_/-/;
+    $request->{decimal_places} = LedgerSMB::Setting->get('decimal_places');
     if (defined $request->{checkedin} and $request->{checkedin}->is_time) {
         $request->{in_hour} = $request->{checkedin}->{hour};
         $request->{in_min} = $request->{checkedin}->{min};
@@ -109,13 +112,15 @@ sub display {
     $request->{total} = $request->{qty} + $request->{non_billable};
     $request->{sellprice} = $request->{unitprice} * $request->{qty}
         if $request->{unitprice} && $request->{qty};
-    return LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new_UI(
         user     => $request->{_user},
         locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'timecard',
-        format   => 'HTML'
-    )->render_to_psgi({ request => $request });
+        template => 'timecards/timecard',
+        debug    => 1
+    );
+warn p($request);
+warn p($template);
+    return $template->render_to_psgi({ request => $request });
 }
 
 =item timecard_screen
@@ -146,13 +151,10 @@ sub timecard_screen {
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
-         return LedgerSMB::Template->new(
+         return LedgerSMB::Template->new_UI(
              user     => $request->{_user},
              locale   => $request->{_locale},
-             path     => 'UI/timecards',
-             template => 'timecard-week',
-             format   => 'HTML',
-             debug    => 1
+             template => 'timecardstimecard-week'
          )->render_to_psgi({ request => $request });
     }
 }
