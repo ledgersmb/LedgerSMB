@@ -184,6 +184,8 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
     begin
         select * into a_user from admin__get_user(in_user_id);
 
+        -- this function used to be security definer, but that hides the true
+        -- CURRENT_USER, returning the DEFINER instead of the caller
         IF a_user.username != CURRENT_USER THEN
             -- super users and application users match the first criterion
             -- db owners and db owner group members match the second criterion
@@ -221,7 +223,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
         RETURN;
     end;
 
-$$ language 'plpgsql' SECURITY DEFINER;
+$$ language 'plpgsql';
 
 REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_entity_id INT) from PUBLIC;
 
@@ -246,6 +248,8 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
     begin
         select * into a_user from admin__get_user_by_entity(in_entity_id);
 
+        -- this function used to be security definer, but that hides the true
+        -- CURRENT_USER, returning the DEFINER instead of the caller
         IF a_user.username != CURRENT_USER THEN
             -- super users and application users match the first criterion
             -- db owners and db owner group members match the second criterion
@@ -283,7 +287,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
         RETURN;
     end;
 
-$$ language 'plpgsql' SECURITY DEFINER;
+$$ language 'plpgsql';
 
 REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) from PUBLIC;
 
