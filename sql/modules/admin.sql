@@ -185,7 +185,14 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
         select * into a_user from admin__get_user(in_user_id);
 
         IF a_user.username != CURRENT_USER THEN
-            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE THEN
+            -- super users and application users match the first criterion
+            -- db owners and db owner group members match the second criterion
+            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE
+               AND pg_has_role((select rolname
+                                 from pg_database db inner join pg_roles rol
+                                   on db.datdba = rol.oid
+                                where db.datname = current_database()),
+                               'USAGE') IS FALSE THEN
                RAISE EXCEPTION 'User % querying permissions for %, not authorised', CURRENT_USER, a_user.username;
             END IF;
         END IF;
@@ -219,7 +226,17 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_entity_id INT) from PUBLIC;
 
 COMMENT ON FUNCTION admin__get_roles_for_user(in_user_id INT) IS
-$$ Returns a set of roles that  a user is a part of.$$;
+$$Returns a set of roles that  a user is a part of.
+
+Note: this function can only be used by
+ - super users
+ - database admins (setup.pl users):
+   - database owners
+   - database users (roles) which were granted the database owner role
+ - application users:
+   - application admins (users with 'manage_users' role)
+   - application users (roles) which query their own roles
+$$;
 
 CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) returns setof text as $$
 
@@ -230,7 +247,14 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
         select * into a_user from admin__get_user_by_entity(in_entity_id);
 
         IF a_user.username != CURRENT_USER THEN
-            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE THEN
+            -- super users and application users match the first criterion
+            -- db owners and db owner group members match the second criterion
+            IF pg_has_role(lsmb__role('users_manage'), 'USAGE') IS FALSE
+               AND pg_has_role((select rolname
+                                 from pg_database db inner join pg_roles rol
+                                   on db.datdba = rol.oid
+                                where db.datname = current_database()),
+                               'USAGE') IS FALSE THEN
                RAISE EXCEPTION 'User % querying permissions for %, not authorised', CURRENT_USER, a_user.username;
             END IF;
         END IF;
@@ -264,7 +288,17 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) from PUBLIC;
 
 COMMENT ON FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) IS
-$$ Returns a set of roles that  a user is a part of.$$;
+$$Returns a set of roles that  a user is a part of.
+
+Note: this function can only be used by
+ - super users
+ - database admins (setup.pl users):
+   - database owners
+   - database users (roles) which were granted the database owner role
+ - application users:
+   - application admins (users with 'manage_users' role)
+   - application users (roles) which query their own roles
+$$;
 
 
 CREATE OR REPLACE FUNCTION user__check_my_expiration()
@@ -321,7 +355,7 @@ END;
 $$ language plpgsql security definer;
 
 COMMENT ON FUNCTION user__change_password(in_new_password text) IS
-$$ Alloes a user to change his or her own password.  The password is set to
+$$ Allows a user to change his or her own password.  The password is set to
 expire setting_get('password_duration') days after the password change.$$;
 
 DROP FUNCTION IF EXISTS admin__save_user(int, int, text, text, bool);
