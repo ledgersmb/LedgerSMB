@@ -48,7 +48,6 @@ This begins the timecard workflow.  The following may be set as a default:
 
 =cut
 
-use Data::Printer;
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
@@ -118,8 +117,6 @@ sub display {
         template => 'timecards/timecard',
         debug    => 1
     );
-warn p($request);
-warn p($template);
     return $template->render_to_psgi({ request => $request });
 }
 
