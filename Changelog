@@ -7,6 +7,7 @@ Changelog for 1.5.2
 * Description field too big on GL and invoice screens (Erik H, #2264)
 * Remove spurious space in Apache2 example config (Erik H, #2534)
 * Credit invoice edit screen looks exactly like regular screen (Erik H, #2550)
+* setup.pl admin can't reset user password [regresses 1.5.1] (Erik H, #2555)
 
 Erik H is Erik Huelsmann
 
