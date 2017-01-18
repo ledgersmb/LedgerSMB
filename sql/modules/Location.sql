@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- VERSION 1.3.0
 
 BEGIN;

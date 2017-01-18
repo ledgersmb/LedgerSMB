@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 CREATE OR REPLACE FUNCTION invoice__start_ap
 (in_invnumber text, in_transdate date, in_taxincluded bool,
