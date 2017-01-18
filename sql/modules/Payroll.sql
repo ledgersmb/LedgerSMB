@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 -- WAGE FUNCTIONS
 CREATE OR REPLACE FUNCTION wage__list_for_entity(in_entity_id int)

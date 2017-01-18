@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION pricematrix__for_vendor(in_credit_id int, in_parts_id int)
