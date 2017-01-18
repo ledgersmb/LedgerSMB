@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- Beginnings of a budget module, released under the GPL v2 or later.
 -- Copyright 2011 The LedgerSMB Core Team
 --

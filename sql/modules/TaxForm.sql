@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 DROP FUNCTION IF EXISTS tax_form__save(in_id int, in_country_id int,
