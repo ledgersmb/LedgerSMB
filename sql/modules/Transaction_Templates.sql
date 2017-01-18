@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- Many of these will have to be rewritten to work with 1.4
 
 BEGIN;

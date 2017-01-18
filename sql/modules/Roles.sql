@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 DELETE FROM menu_acl WHERE node_id in (206, 210);

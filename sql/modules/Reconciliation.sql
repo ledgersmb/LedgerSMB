@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(

@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- Unused currently and untested.  This is expected to be a basis for 1.4 work
 -- not recommended for current usage.  Not documenting yet.  --CT
 BEGIN;

@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- COGS routines for LedgerSMB 1.4.
 -- This file is licensed under the terms of the GNU General Public License
 -- Version 2 or at your option any later version.

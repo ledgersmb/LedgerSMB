@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION payment_type__list() RETURNS SETOF payment_type AS
