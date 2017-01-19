@@ -204,7 +204,7 @@ Returns a list of all accounts.
 
 sub list {
     my $self = shift @_;
-    @{$self->{account_list}} =  $self->exec_method(funcname => 'chart__list_all');
+    @{$self->{account_list}} =  $self->exec_method(funcname => 'chart_list_all');
     return @{$self->{account_list}};
 }
 
