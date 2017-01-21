@@ -57,10 +57,10 @@ To get the latest development version:
  $ git submodule update --init --recursive
 ```
 
-To get the released version 1.4.22, the commands look like:
+To get the released version 1.5.1, the commands look like:
 
 ```
- $ git clone -b 1.4.22 https://github.com/ledgersmb/LedgerSMB.git
+ $ git clone -b 1.5.1 https://github.com/ledgersmb/LedgerSMB.git
  $ cd LedgerSMB
  $ git submodule update --init --recursive
 ```
@@ -269,7 +269,7 @@ as well as in the Transifex project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2016 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2017 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
