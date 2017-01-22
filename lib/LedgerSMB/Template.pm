@@ -182,6 +182,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
+use File::Spec;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -374,9 +375,14 @@ sub get_template_args {
         (%additional_options)
     };
 
-    if ($LedgerSMB::Sysconfig::cache_templates){
+    if ($LedgerSMB::Sysconfig::cache_templates
+        && $self->{include_path} ne 'DB') {
+       # don't cache compiled database-retrieved templates
+       # they will vary between databases
         $arghash->{COMPILE_EXT} = '.lttc';
-        $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::tempdir . "/" . $LedgerSMB::Sysconfig::cache_template_subdir;
+        $arghash->{COMPILE_DIR} =
+           File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
+                                $LedgerSMB::Sysconfig::tempdir );
     }
     $self->{binmode} = $binmode;
     return $arghash;
