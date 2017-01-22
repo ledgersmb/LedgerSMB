@@ -246,7 +246,7 @@ help:
 #   builds dojo for production/release
 SHELL := /bin/bash
 HOMEDIR := ~/dojo_archive
-SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit -exec sha1sum {} + 2>&1 | sha1sum | cut -d' ' -f 1)
+SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit -exec sha1sum {} + 2>&1 | sort | sha1sum | cut -d' ' -f 1)
 ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
