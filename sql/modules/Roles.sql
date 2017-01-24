@@ -1184,8 +1184,16 @@ BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE
-   IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW; -- is superuser
+   -- super user and database owner (group members)
+   -- don't need access enforcement
+   IF pg_has_role((select rolname
+                     from pg_database db inner join pg_roles rol
+                       on db.datdba = rol.oid
+                    where db.datname = current_database()),
+                  'USAGE') IS TRUE THEN
+      RETURN NEW;
    END IF;
+
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
    IF pg_has_role(SESSION_USER,
                   lsmb__role('contact_class_'
