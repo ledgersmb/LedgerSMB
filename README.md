@@ -42,12 +42,12 @@ a wide range of mobile browsers.
 
 The instructions below are for getting started quickly; the [project's
 site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
-for production installs.
+for **production** installs.
 
 ## Check out the sources from GitHub
 
-Note: **Skip this step for from-tarball installs**
-Installation from release tarballs is preferred over installation from GitHub.
+**Skip this step for from-tarball installs**
+(Installation from release tarballs is preferred over installation from GitHub.)
 
 To get the latest development version:
 
@@ -183,7 +183,14 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 
 ## Configure LedgerSMB
 
-For most systems, all that's required in this step is:
+### From-tarball installs
+(Installation from tarball is highly preferred over installation from GitHub for production installs.)
+
+```bash
+ $ cp conf/ledgersmb.conf.default ledgersmb.conf
+```
+
+### From-GitHub installs
 
 ```bash
  $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
@@ -192,7 +199,8 @@ For most systems, all that's required in this step is:
  > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
  > page load times of some pages.  However, creating a built dojo
  > adds considerable complexity to these instructions; please consult
- > the extensive setup instructions to build dojo.
+ > [the extensive setup instructions](https://ledgersmb.org/topic/installing-ledgersmb-15-github)
+ > to build dojo.
 
 ## Running Starman
 
