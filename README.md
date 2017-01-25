@@ -92,22 +92,10 @@ Then, some of the features listed below have system requirements as well:
 
 ## Perl module dependencies
 
-This section depends on [a working local::lib installation](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+This section depends on [a working local::lib installation](https://ledgersmb.org/content/setting-perls-locallib-ledgersmb-why-and-how)
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
-and `cpanminus` respectively). In case `local::lib` is installed from the
-the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
-is still to be executed:
-
-```bash
- $ echo 'eval "$(perl -I$HOME/foo/lib/perl5 -Mlocal::lib=$HOME/foo)"' >>~/.bashrc
-```
-
-In order for the command above to take effect, please log out and log in again.
-
-
-`cpanm` depends on the `make` command being available; depending on which dependencies
-are being installed, `gcc` may be required as well.
+and `cpanminus` respectively). `cpanm` depends on the `make` command being available.
 
 To install the Perl module dependencies, run:
 
@@ -131,11 +119,12 @@ specifying ```--with-feature=<feature>```:
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
-cpanm will by default use [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/) so that dependencies are not installed into the global perl installation.
+When not installing as root or through `sudo`, `cpanm` will install unfulfilled
+library dependencies into a location which can be used with `local::lib`. 
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
-contain a list of distribution provided packages to reduce the CPAN
-installation.
+contain a list of distribution provided packages to reduce the
+number of dependencies installed from CPAN.
 
 **NOTES**
 
@@ -225,9 +214,10 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 
 ## Environment Variables
 
+All regular Perl environment variables can be used. In particular, it's important to make sure
+`PERL5LIB` is set correctly when setting up `local::lib` for the first time.
+
 We support the following
-- PERL5LIB        : Required for most installations (if local::lib has been used)
-     - should be already be configured as part of [Section Perl module dpendencies](#perl-module-dependencies)
 - LSMB_WORKINGDIR : Optional
      - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
