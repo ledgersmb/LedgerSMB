@@ -46,7 +46,7 @@ for **production** installs.
 
 ## Check out the sources from GitHub
 
-**Skip this step for from-tarball installs**
+__***Skip this step for from-tarball installs***__
 (Installation from release tarballs is preferred over installation from GitHub.)
 
 To get the latest development version:
