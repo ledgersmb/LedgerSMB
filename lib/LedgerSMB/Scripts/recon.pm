@@ -268,12 +268,20 @@ sub _display_report {
                                     + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
 
+    # Ignore small differences
+    $recon->{out_of_balance}->bfround(LedgerSMB::Setting->get('decimal_places') * -1) ;
+
     for my $amt_name (qw/ mismatch_our_ mismatch_their_ total_cleared_ total_uncleared_ /) {
       for my $bal_type (qw/ credits debits/) {
          $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
       }
     }
     $recon->{their_total} = $recon->{their_total} * $neg_factor;
+
+    # The logic here is back-to-front.
+    # The submit button is enabled when $recon->{submit_allowed} == 0
+    # This has already been addressed in master for 1.6
+    $recon->{submit_allowed} = $recon->{out_of_balance};
 
     for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total /) {
       $recon->{"$field"} = $recon->{"$field"}->to_output(money=>1);
@@ -282,9 +290,7 @@ sub _display_report {
         $recon->{"$field"} ||= LedgerSMB::PGNumber->from_db(0);
         $recon->{"$field"} = $recon->{"$field"}->to_output(money => 1);
     }
-    $recon->{submit_allowed} = ( $recon->{their_total}           - $recon->{beginning_balance})
-                             + ( $recon->{total_cleared_credits} - $recon->{total_cleared_debits});
-    $recon->{submit_allowed} = int($recon->{submit_allowed}*100)/100;
+
     return $template->render($recon);
 }
 
