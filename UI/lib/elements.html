@@ -419,6 +419,6 @@
 
 <?lsmb BLOCK tooltip; ?>
   <?lsmb IF element_data && element_data.id.defined() && element_data.msg.defined(); ?>
-    <div data-dojo-type="dijit/Tooltip" connectId=<?lsmb element_data.id ?> ><?lsmb element_data.msg ?></div>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:<?lsmb element_data.id ?>" ><?lsmb element_data.msg ?></div>
   <?lsmb END ?>
 <?lsmb END ?>
