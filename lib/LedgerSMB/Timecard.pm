@@ -226,6 +226,43 @@ sub get_part_id {
     return $ref->{id};
 }
 
+=item get_part_sellprice($partnumber)
+
+Returns the part sellprice for the given partnumber
+
+=cut
+
+sub get_part_sellprice {
+    my ($self, $partnumber) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'inventory__get_item_by_partnumber',
+                        args => [$partnumber]
+    );
+    return $ref->{sellprice};
+}
+
+=item get_part_discountedprice($partnumber,$qty)
+
+Returns the part discounted sellprice for the given partnumber
+
+=cut
+
+sub get_part_discountedprice {
+    my ($self, $business_unit_id, $parts_id, $transdate, $qty, $curr) = @_;
+    my ($bu) = __PACKAGE__->call_procedure(
+                    funcname => 'business_unit__get',
+                        args => [$business_unit_id]
+    );
+    return undef if not $bu;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'pricematrix__for_customer',
+                        args => [$bu->{credit_id}, $parts_id, $transdate,
+                                 $qty, $curr]
+    );
+    return undef if not $ref;
+    return $ref->{sellprice};
+}
+
 =item save()
 
 Saves the current timecard to the database, sets id.
@@ -236,6 +273,18 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'timecard__save');
     $self->id($ref->{id});
+}
+
+=item delete()
+
+Deletes the current timecard to the database.
+
+=cut
+
+sub delete {
+    my ($self, $id) = @_;
+    my ($retval) = __PACKAGE__->call_procedure(
+         funcname => 'timecard__delete', args => [$id]);
 }
 
 =item find_part({is_timecard bool, is_service bool, partnumber text})
