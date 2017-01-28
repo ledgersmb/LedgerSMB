@@ -400,7 +400,8 @@ sub _render {
     $vars->{SETTINGS} = {
         default_currency =>
             (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
-        decimal_places => $LedgerSMB::Company_Config::decimal_places,
+        decimal_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+        decimal_pattern => '0.' . '0' x $LedgerSMB::Company_Config::settings->{decimal_places},
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
     $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
     my @stdformats = ();

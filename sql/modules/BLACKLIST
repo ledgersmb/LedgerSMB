@@ -256,6 +256,7 @@ template__list
 template__save
 timecard__allocate
 timecard__bu_class
+timecard__delete
 timecard__get
 timecard_type__get
 timecard_type__list

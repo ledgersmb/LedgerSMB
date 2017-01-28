@@ -2329,12 +2329,15 @@ CREATE TABLE user_preference (
     stylesheet text default 'ledgersmb.css' not null,
     printer text,
     dateformat text default 'yyyy-mm-dd' not null,
-    numberformat text default '1000.00' not null
+    numberformat text default '1000.00' not null,
+    timesheetframe text default 'Week' not null
 );
 
 -- user_preference is here due to a dependency on language.code
 COMMENT ON TABLE user_preference IS
-$$ This table sets the basic preferences for formats, languages, printers, and user-selected stylesheets.$$;
+$$ This table sets the basic preferences for formats, languages, printers, user-selected stylesheets and
+timesheet time daily or weekly frame
+.$$;
 
 CREATE TABLE recurring (
   id int not null references transactions(id) unique,

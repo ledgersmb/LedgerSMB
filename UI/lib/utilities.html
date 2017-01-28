@@ -15,14 +15,17 @@ PROCESS select element_data = {
 };
 END; 
 
-IF languages.defined;
-languages.push({});
-PROCESS select element_data = {
-           name = "language"
-        options = languages
- default_values = [language]
-};
+IF !languages.defined;
+    languages.push({});
 END;
+PROCESS select element_data = {
+         label = text('Language')
+          name = 'language'
+       options = languages
+     text_attr = 'description'
+    value_attr = 'code'
+default_values = [USER.language]
+};
 
 IF ! formats.defined;
    formats = [];
@@ -73,7 +76,7 @@ END;
 PROCESS select element_data = {
            label = label
             name = element_name
-         options = bu_class_list
+         options = request.bu_class_list
   default_values = [$element_name]
            class = 'bu-class'
        text_attr = text_attr 
@@ -89,7 +92,7 @@ END;
 
 PROCESS select element_data = {
             name = element_name
-         options = b_unit_list
+         options = request.b_unit_list
   default_values = [$element_name]
            class = 'b-unit'
            label = label

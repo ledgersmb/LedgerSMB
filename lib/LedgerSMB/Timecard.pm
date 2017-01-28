@@ -29,10 +29,13 @@ like.
 =cut
 
 package LedgerSMB::Timecard;
+use strict;
+use warnings;
+
 use Moose;
 with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
-
+use LedgerSMB::Setting;
 
 =head1 PROPERTIES
 
@@ -44,7 +47,7 @@ This is the internal id of the timecard.  Not set before saving
 
 =cut
 
-has 'id' => (isa => 'Int', is => 'rw', required => '0');
+has 'id' => (isa => 'Int', is => 'rw', required => '1');
 
 =item business_unit_id int
 
@@ -60,15 +63,44 @@ The business unit class id.
 
 =cut
 
-has bu_class_id => (isa => 'Int', is => 'ro', required => 0);
+has bu_class_id => (isa => 'Int', is => 'ro', required => 1,
+                    lazy => '1', builder => '_build_class_id'
+);
 
+sub _build_class_id {
+    my ($self) = @_;
+    my ($buclass) = __PACKAGE__->call_procedure(
+         funcname => 'timecard__bu_class', args => [$self->{id}]);
+    $self->{bu_class_id} = $buclass->{id};
+}
+
+=item partnumber int
+
+This is the part utilized (labor/overhead or service for time)
+
+=cut
+
+has partnumber => (isa => 'Str', is => 'rw', required => '1',
+                   trigger => \&_update_parts_id
+);
+
+sub _update_parts_id {
+    my ($self, $new, $old) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'inventory__get_item_by_partnumber',
+                        args => [$self->partnumber]
+    );
+    $self->{parts_id} = $ref->{id};
+}
 =item parts_id int
 
 This is the id of the part utilized (labor/overhead or service for time)
 
 =cut
 
-has parts_id => (isa => 'Int', is => 'ro', required => '1');
+has parts_id => (isa => 'Int', is => 'ro', required => '1',
+                 lazy => '1', default => 0
+);
 
 =item description text
 
@@ -86,7 +118,7 @@ Quantity consumed
 =cut
 
 has qty => (isa => 'LedgerSMB::Moose::Number', is => 'ro', required => '1',
-         coerce => 1);
+         coerce => 1, default => 0);
 
 
 =item allocated numeric
@@ -105,8 +137,19 @@ This is the sell price in the master currency.
 =cut
 
 has sellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-             required => '0', coerce => 1);
+             required => '0', coerce => 1,
+             builder => '_build_sellprice'
+);
 
+sub _build_sellprice {
+    my $self = shift;
+    $self->{sellprice} = $self->get_part_discountedprice(
+                                           $self->{business_unit_id},
+                                           $self->{parts_id},
+                                           $self->{transdate},
+                                           $self->{qty},
+                                           $self->{curr}) // 0;
+}
 
 =item fxsellprice numeric
 
@@ -172,7 +215,7 @@ has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
 =cut
 
 has non_billable => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-               required => 1,  coerce => 1);
+               required => 1,  coerce => 1, default => 0);
 
 =item jctype int
 
@@ -180,13 +223,22 @@ This is the ID of the LedgerSMB::Timecard::Type that the timecard is of.
 
 =cut
 
-has jctype => (is => 'ro', isa => 'Int', required => 0);
+has jctype => (is => 'ro', isa => 'Int', required => 1);
 
 =item curr str
 
 =cut
 
-has curr => (is => 'ro', isa => 'Str', required => 1);
+has curr => (is => 'ro', isa => 'Str', required => 1,
+             builder => '_build_curr', lazy => '1'
+             #TODO trigger => _trigger_curr # Update FX
+             );
+
+sub _build_curr {
+    my $self = shift;
+    my $dbh = $self->_get_dbh;
+    $self->{curr} = LedgerSMB::Setting->get($self,'curr');
+}
 
 =back
 
@@ -204,10 +256,10 @@ sub get {
     my ($self, $id) = @_;
     my ($retval) = __PACKAGE__->call_procedure(
          funcname => 'timecard__get', args => [$id]);
-    my ($buclass) = __PACKAGE__->call_procedure(
-         funcname => 'timecard__bu_class', args => [$id]);
-
-    $retval->{bu_class_id} = $buclass->{id};
+    my ($part) = __PACKAGE__->call_procedure(
+         funcname => 'part__get_by_id', args => [$retval->{parts_id}]
+    );
+    $retval->{partnumber} = $part->{partnumber};
     return __PACKAGE__->new(%$retval);
 }
 
@@ -226,6 +278,43 @@ sub get_part_id {
     return $ref->{id};
 }
 
+=item get_part_sellprice($partnumber)
+
+Returns the part sellprice for the given partnumber
+
+=cut
+
+sub get_part_sellprice {
+    my ($self, $partnumber) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'inventory__get_item_by_partnumber',
+                        args => [$partnumber]
+    );
+    return $ref->{sellprice};
+}
+
+=item get_part_discountedprice($partnumber,$qty)
+
+Returns the part discounted sellprice for the given partnumber
+
+=cut
+
+sub get_part_discountedprice {
+    my ($self, $business_unit_id, $parts_id, $transdate, $qty, $curr) = @_;
+    my ($bu) = __PACKAGE__->call_procedure(
+                    funcname => 'business_unit__get',
+                        args => [$business_unit_id]
+    );
+    return undef if not $bu;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    funcname => 'pricematrix__for_customer',
+                        args => [$bu->{credit_id}, $parts_id, $transdate,
+                                 $qty, $curr]
+    );
+    return undef if not $ref;
+    return $ref->{sellprice};
+}
+
 =item save()
 
 Saves the current timecard to the database, sets id.
@@ -236,6 +325,18 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'timecard__save');
     $self->id($ref->{id});
+}
+
+=item delete()
+
+Deletes the current timecard to the database.
+
+=cut
+
+sub delete {
+    my ($self, $id) = @_;
+    my ($retval) = __PACKAGE__->call_procedure(
+         funcname => 'timecard__delete', args => [$id]);
 }
 
 =item find_part({is_timecard bool, is_service bool, partnumber text})
