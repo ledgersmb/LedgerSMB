@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <?lsmb BLOCK print_options ?>
 <div class="print-options"><?lsmb
 
@@ -13,7 +14,7 @@ PROCESS select element_data = {
         options = templates
  default_values = [template]
 };
-END; 
+END;
 
 IF languages.defined;
 languages.push({});
@@ -59,11 +60,11 @@ PROCESS select element_data = {
   default_values = [$element_name]
            class = 'employees'
            label = label
-       text_attr = text_attr 
+       text_attr = text_attr
       value_attr = value_attr
 };
 
-END; 
+END;
 
 BLOCK business_unit_class;
 IF !element_name;
@@ -76,7 +77,7 @@ PROCESS select element_data = {
          options = bu_class_list
   default_values = [$element_name]
            class = 'bu-class'
-       text_attr = text_attr 
+       text_attr = text_attr
       value_attr = value_attr
 };
 
@@ -93,7 +94,7 @@ PROCESS select element_data = {
   default_values = [$element_name]
            class = 'b-unit'
            label = label
-       text_attr = text_attr 
+       text_attr = text_attr
       value_attr = value_attr
 };
 
