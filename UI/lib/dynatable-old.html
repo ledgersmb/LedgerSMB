@@ -38,6 +38,7 @@
     <?lsmb ELSE; row.text; END ?>
   </th>
 </tr>
+<tr>
   <?lsmb NEXT; END ?>
   <?lsmb FOREACH column IN columns ?>
   <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
