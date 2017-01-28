@@ -12,7 +12,9 @@ my @on_disk = ();
 my $is_todo = '';
 
 sub collect {
-    return if $File::Find::name !~ m/\.html$/ || $File::Find::name =~ m/\/pod\//;
+    return if $File::Find::name !~ m/\.html$/
+           || $File::Find::name =~ m/\/pod\//
+           || $File::Find::name =~ m(/js(-src)?/(dijit|dojo|util)/);
 
     my $module = $File::Find::name;
     push @on_disk, $module
@@ -24,24 +26,16 @@ sub content_test {
     my $ui_header_used = 0;
     $ui_header_used = 1 if $filename =~ m/UI\/lib\//;
 
-    my ($fh, @tab_lines, @trailing_space_lines);
+    my ($fh, @tab_lines, @trailing_space_lines, $text);
+    $text = '';
     open $fh, "<$filename";
     while (<$fh>) {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
         $ui_header_used = 1 if /ui-header\.html/;
+        $text .= $_;
     }
     close $fh;
-
-TODO: {
-    local $TODO = 'LedgerSMB HTML files is still under development';
-    $is_todo = Test::More->builder->todo;
-    ok((! @tab_lines) && (! @trailing_space_lines),
-        "Source critique for '$filename'");
-    diag("Line# with tabs: " . (join ', ', @tab_lines))
-        if @tab_lines;
-    diag("Line# with trailing space(s): " . (join ', ', @trailing_space_lines))
-        if @trailing_space_lines;
 
     my $lint = HTML::Lint->new;
     $lint->only_types(); # Get all
@@ -53,6 +47,7 @@ TODO: {
                    'data-dojo-id',
                    'data-dojo-mixins',
                    'data-dojo-obj',
+                   'data-dojo-properties',
                    'data-dojo-props',
                    'data-dojo-textdir',
                    'data-dojo-type',
@@ -79,28 +74,31 @@ TODO: {
     HTML::Lint::HTML4::add_attribute( 'tr', 'role' );
     HTML::Lint::HTML4::add_attribute( 'td', 'role' );
 
-    # Add our attributes
-    HTML::Lint::HTML4::add_attribute( 'form', 'lsmb/form' );
+    $text =~ s#<\?lsmb\s*(.*?)\s*\?>##gs;
+    $text =~ s#\$\{[^\}]+\}##gs;
+TODO: {
+    local $TODO = "$filename: HTML check is still under development";
+    $is_todo = Test::More->builder->todo;
 
-#    # Add the HTML 5 <lsmb> tag.
-#    HTML::Lint::HTML4::add_tag( '\?lsmb' );
-#    HTML::Lint::HTML4::add_attribute( 'canvas', $_ ) for qw( height width );
-
-
-    $lint->parse_file($filename);
+    $lint->parse($text);
+    $lint->eof;
 
     my $error_count = $lint->errors;
 
     foreach my $error ( $lint->errors ) {
-        fail $error->as_string
-            if ( $error->as_string !~ m/(<\/?title>|<\?lsmb.+\?>)/ # m/(Unknown attribute|<\/?title>|<\?lsmb.+\?>)/
-               && ! ((  $error->as_string =~ m/<(head|html|body)> tag is required/ 
-                     || $error->as_string =~ m/<\/html> with no opening/ )
-                    && $ui_header_used )
-                );
+        if ( $error->as_string !~ m/(<\/?title>|<\?lsmb.+\?>)/ # m/(Unknown attribute|<\/?title>|<\?lsmb.+\?>)/
+           && ! ((  $error->as_string =~ m/<(head|html|body)> tag is required/
+                 || $error->as_string =~ m/<\/(html|body)> with no opening/ )
+                && $ui_header_used )
+            ) {
+            fail $error->as_string;
+        } else {
+            $error_count--;
+        }
     }
+    ok((! @tab_lines) && (! @trailing_space_lines) && $error_count == 0 || $is_todo,
+        "Source critique for '$filename'");
   }
-  ok( $is_todo, '01-html-checks' );
 }
 
 content_test($_) for @on_disk;

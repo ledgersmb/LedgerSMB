@@ -20,7 +20,7 @@ columns.unshift({
 <form data-dojo-type="lsmb/Form" name="search" action="<?lsmb request.script ?>" method="post">
 <?lsmb-
 
-PROCESS dynatable 
+PROCESS dynatable
         attributes = {
            class = 'search'
               id = 'search'
@@ -42,7 +42,7 @@ FOREACH RKEY IN request.keys();
            name = RKEY
            type = "hidden"
           value = request.$RKEY
-    }; 
+    };
 
 END;
 

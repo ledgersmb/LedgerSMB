@@ -22,7 +22,7 @@ PROCESS 'elements.html';
            name = 'save_' _ count
           value = 1
      } ?></td>
- <td><?lsmb 
+ <td><?lsmb
      checked = undefined;
      IF seq.accept_input; checked = 'CHECKED'; END;
      PROCESS input element_data = {
@@ -66,19 +66,19 @@ PROCESS 'elements.html';
 <tr>
  <td><?lsmb PROCESS input element_data = {
            type = 'checkbox'
-           name = 'save_' _ count 
+           name = 'save_' _ count
           value = 1
         checked = 'CHECKED'
      } ?></td>
- <td><?lsmb 
+ <td><?lsmb
      PROCESS input element_data = {
            type = 'checkbox'
-           name = 'accept_input_' _ count 
+           name = 'accept_input_' _ count
           value = 1
      } ?></td>
  <td><?lsmb PROCESS input element_data = {
            type = 'text'
-           name = 'label_' _ count 
+           name = 'label_' _ count
            size = 10
           class = 'control_code'
      } ?> </td>

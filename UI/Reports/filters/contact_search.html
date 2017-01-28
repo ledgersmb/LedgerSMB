@@ -1,9 +1,9 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html;
        PROCESS report_base.html;
-?> 
+?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb 
+<?lsmb
 IF !account_class;
    title = text('Contact Search'); #'
 ELSIF account_class == 1;

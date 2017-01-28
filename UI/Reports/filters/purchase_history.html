@@ -1,116 +1,116 @@
-<?lsmb INCLUDE "ui-header.html" 
+<?lsmb INCLUDE "ui-header.html"
        stylesheet = stylesheet
        # include_stylesheet = ['Contact/history.css'] ?>
 <?lsmb PROCESS 'elements.html';
        PROCESS 'report_base.html'; ?>
- 
-<body class="lsmb <?lsmb dojo_theme ?>"> 
- 
+
+<body class="lsmb <?lsmb dojo_theme ?>">
+
 <form data-dojo-type="lsmb/Form" method="get" action="contact_reports.pl">
-<table width=100%> 
-  <tr> 
-   <th class=listtop><?lsmb text('Purchase History') ?></th> 
-  </tr> 
-  <tr height="5"></tr> 
-  <tr valign=top> 
-    <td> 
-      <table> 
-	<tr valign=top> 
-	  <td> 
-	    <table> 
+<table width=100%>
+  <tr>
+   <th class=listtop><?lsmb text('Purchase History') ?></th>
+  </tr>
+  <tr height="5"></tr>
+  <tr valign=top>
+    <td>
+      <table>
+        <tr valign=top>
+          <td>
+            <table>
               <?lsmb PROCESS entity_class ?>
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Company Name') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+              <tr>
+                <th align=right nowrap><?lsmb text('Company Name') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                            size = 32,
                            name = "name_part",
                            type = "text"
-                    } ?></td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Contact Info') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                    } ?></td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('Contact Info') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                            size = 32
                            name = "contact_info"
                            type = "text"
-                     } ?></td> 
-	      </tr> 
- 	  <th align=right nowrap>Salesperson</th> 
-	  <td><?lsmb INCLUDE input element_data = {
+                     } ?></td>
+              </tr>
+          <th align=right nowrap>Salesperson</th>
+          <td><?lsmb INCLUDE input element_data = {
                            size = 32
                            name = "salesperson"
                            type = "text"
-              } ?></td> 
- 
-	      </tr> <!--
-	      <tr> 
-		<th align=right nowrap>Notes</th> 
-		<td colspan=3><textarea name=notes rows=3 cols=32></textarea></td> 
-	      </tr>  -->
-	    </table> 
-	  </td> 
- 
-	  <td> 
-	    <table> 
-	      <tr> 
+              } ?></td>
+
+              </tr> <!--
+              <tr>
+                <th align=right nowrap>Notes</th>
+                <td colspan=3><textarea name=notes rows=3 cols=32></textarea></td>
+              </tr>  -->
+            </table>
+          </td>
+
+          <td>
+            <table>
+              <tr>
                 <?lsmb IF account_class == 1;
                           number_desc = text('Vendor Number'); #'
                        ELSE;
                           number_desc = text('Customer Number'); #'
                        END;
                  ?>
-		<th align=right nowrap><?lsmb number_desc ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                <th align=right nowrap><?lsmb number_desc ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "meta_number",
                          size = "32",
                          type = "text"
-                    } ?></td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Address') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                    } ?></td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('Address') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "address_line",
                          size = "32",
                          type = "text"
-                    } ?> </td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('City') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                    } ?> </td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('City') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "city",
                          size = "32",
                          type = "text"
-                    } ?></td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('State/Province') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                    } ?></td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('State/Province') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "state",
                          size = "32",
                          type = "text"
-                    } ?></td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Zip/Postal Code') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+                    } ?></td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('Zip/Postal Code') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "zip",
                          size = "10",
                          type = "text"
-                    } ?></td> 
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Country') ?></th> 
-		<td><?lsmb country_list.unshift({});
+                    } ?></td>
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('Country') ?></th>
+                <td><?lsmb country_list.unshift({});
                      INCLUDE select element_data = {
                          name = "country_id",
                          text_attr = 'name',
                          value_attr = 'id',
                          options = country_list,
                     } ?></td>
-	      </tr> 
-	      <tr> 
-		<th align=right nowrap><?lsmb text('Startdate') ?></th> 
-		<td><?lsmb INCLUDE input element_data = {
+              </tr>
+              <tr>
+                <th align=right nowrap><?lsmb text('Startdate') ?></th>
+                <td><?lsmb INCLUDE input element_data = {
                          name = "startdate_from",
                          size = "11",
                          type = "text",
@@ -124,20 +124,20 @@
                          type = "text",
                          class = "date",
                          title = user.dateformat,
-                         label = text('To') 
+                         label = text('To')
                   } ?></td>
                    </tr>
- 
-		    <tr> 
-		      <th><?lsmb text('Transaction Date') ?></th> 
-		      <td> <?lsmb
+
+                    <tr>
+                      <th><?lsmb text('Transaction Date') ?></th>
+                      <td> <?lsmb
                      INCLUDE input element_data = {
                          name = "from_date",
                          size = "11",
                          type = "text",
                          class = "date",
                          title = user.dateformat,
-                         label = text('From') 
+                         label = text('From')
                   } ;
                      INCLUDE input element_data = {
                          name = "to_date",
@@ -145,25 +145,25 @@
                          type = "text",
                          class = "date",
                          title = user.dateformat,
-                         label = text('To') 
+                         label = text('To')
                   } ?></td>
-		    </tr> 
-	    </table> 
-	  </td> 
-	</tr> 
-      </table> 
-    </td> 
-  </tr> 
- 
-  <tr> 
-    <td> 
-      <table class="criteria"> 
-	<tr> 
-	  <th align="right" nowrap rowspan="9">
-               <?lsmb text('Include in Report') ?></th> 
+                    </tr>
+            </table>
+          </td>
         </tr>
-		    <tr> 
-		      <td>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <table class="criteria">
+        <tr>
+          <th align="right" nowrap rowspan="9">
+               <?lsmb text('Include in Report') ?></th>
+        </tr>
+                    <tr>
+                      <td>
                          <?lsmb INCLUDE input element_data = {
                                 checked = 'CHECKED',
                                 name    = 'type',
@@ -171,30 +171,30 @@
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'i'
-                                label   = text('Invoices'), 
+                                label   = text('Invoices'),
                          } ?></td>
-		    <td> 
+                    <td>
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
                                 id      = 'type-o',
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'o'
-                                label   = text('Orders'), 
+                                label   = text('Orders'),
                          } ?></td>
-                    <td> 
+                    <td>
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
                                 id      = 'type-q',
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'q'
-                                label   = text('Quotations'), 
+                                label   = text('Quotations'),
                          } ?></td>
 
-		    </tr> 
-		    <tr> 
-		      <td> 
+                    </tr>
+                    <tr>
+                      <td>
                       <?lsmb
                       INCLUDE input element_data = {
                               type = 'checkbox',
@@ -213,10 +213,10 @@
                               class = 'checkbox',
                               checked = 'CHECKED'
                       }; ?>
-		      </td> 
-		    </tr> 
-	      <tr> 
-		<td><?lsmb
+                      </td>
+                    </tr>
+              <tr>
+                <td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Summary'),
                              name  = 'is_summary',
@@ -226,7 +226,7 @@
                              class = 'radio',
                            checked = 'CHECKED'
                     } ?></td>
-		<td><?lsmb
+                <td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Detail'),
                              name  = 'is_summary',
@@ -235,10 +235,10 @@
                              value = '0',
                              class = 'radio',
                     } ?></td>
-	      </tr> 
+              </tr>
               <tr><td colspan=3><hr /></td></tr>
-	      <tr> 
-		<td><?lsmb
+              <tr>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_partnumber',
@@ -247,108 +247,108 @@
                               class = 'checkbox',
                               checked = 'CHECKED'
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_description',
                               value = '1',
-                              label = text('Description'), 
+                              label = text('Description'),
                               class = 'checkbox',
                               checked = 'CHECKED'
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_sellprice',
                               value = '1',
-                              label = text('Sell Price'), #' 
+                              label = text('Sell Price'), #'
                               class = 'checkbox',
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_curr',
                               value = '1',
-                              label = text('Currency'), 
+                              label = text('Currency'),
                               class = 'checkbox',
                       }; ?>
-		</td> 
-	      </tr> 
-	      <tr> 
-		<td><?lsmb
+                </td>
+              </tr>
+              <tr>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_qty',
                               value = '1',
-                              label = text('Qty'), 
+                              label = text('Qty'),
                               class = 'checkbox',
                             checked = 'CHECKED'
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_unit',
                               value = '1',
-                              label = text('Unit'), 
+                              label = text('Unit'),
                               class = 'checkbox',
                             checked = 'CHECKED'
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_discount',
                               value = '1',
-                              label = text('Discount'), 
+                              label = text('Discount'),
                               class = 'checkbox',
                       }; ?>
-		</td> 
-	      <tr> 
-	      </tr> 
-		<td><?lsmb
+                </td>
+              <tr>
+              </tr>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_deliverydate',
                               value = '1',
-                              label = text('Delivery Date'), #' 
+                              label = text('Delivery Date'), #'
                               class = 'checkbox',
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_projectnumber',
                               value = '1',
-                              label = text('Project Number'), #' 
+                              label = text('Project Number'), #'
                               class = 'checkbox',
                       }; ?>
-		</td> 
-		<td><?lsmb
+                </td>
+                <td><?lsmb
                        INCLUDE input element_data = {
                               type = 'checkbox',
                               name = 'l_serialnumber',
                               value = '1',
-                              label = text('Serial Number'), #' 
+                              label = text('Serial Number'), #'
                               class = 'checkbox',
                       }; ?>
-		</td> 
-	      </tr> 
- 
-      </table> 
-    </td> 
-  </tr> 
- 
-  <tr> 
-    <td><hr size=3 noshade></td> 
-  </tr> 
-</table> 
- 
- 
-<br> 
+                </td>
+              </tr>
+
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
+</table>
+
+
+<br>
 <?lsmb INCLUDE button element_data = {
        text = text('Continue'),
        value = 'history',
@@ -356,7 +356,7 @@
        class = 'submit',
        name = 'action'
 } ?>
-</form> 
- 
-</body> 
-</html> 
+</form>
+
+</body>
+</html>

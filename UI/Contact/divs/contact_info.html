@@ -38,38 +38,38 @@ PROCESS dynatable
         } ?>
         <?lsmb PROCESS input element_data = {
                 type="hidden"
-                name="entity_id" 
+                name="entity_id"
                 value=entity_id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="credit_id" 
+                type="hidden"
+                name="credit_id"
                 value=credit_act.id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="old_class_id" 
+                type="hidden"
+                name="old_class_id"
                 value=request.class_id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="old_contact" 
+                type="hidden"
+                name="old_contact"
                 value=request.contact
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="contact_id" 
+                type="hidden"
+                name="contact_id"
                 value=request.contact_id
         } ?>
         <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
         <div>
-           
+
              <?lsmb IF credit_act.id;
                     IF request.for_credit;
                        attach_to = 3;
                     ELSE;
                        attach_to = 1;
-                    END; 
+                    END;
                        INCLUDE select element_data = {
                           name            = "attach_to"
                           id              = 'attach-contact-to'
@@ -89,7 +89,7 @@ PROCESS dynatable
                         label = "_none_"
                         text_attr = "class"
                         value_attr = "id"
-                        default_values = [request.class_id]             
+                        default_values = [request.class_id]
                         options = contact_class_list
                 } ?>
         </div>
@@ -121,7 +121,7 @@ PROCESS dynatable
                 text =  text('Save Contact'),
                 class = "submit"
                 } #' ?>
-        <?lsmb IF request.contact.defined ?> 
+        <?lsmb IF request.contact.defined ?>
         <?lsmb PROCESS button element_data = {
                 name = "action",
                 value = "save_contact_new",
@@ -131,6 +131,6 @@ PROCESS dynatable
         <?lsmb END # IF old_contact.defined ?>
         </div>
         </form>
-        
+
 </div>
 
