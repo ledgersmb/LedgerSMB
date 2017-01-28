@@ -4,15 +4,15 @@ width="<?lsmb attributes.width ?>">
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>
-   <?lsmb- FOREACH COL IN columns; 
+   <?lsmb- FOREACH COL IN columns;
    IF COL.type != 'hidden'; -?>
    <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
 
-IF attributes.order_url 
+IF attributes.order_url
 ?> <a href="<?lsmb order_url ?>&order_by=<?lsmb COL.col_id ?>"><?lsmb
 END;
 COL.name;
-IF attributes.order_url 
+IF attributes.order_url
 ?></a><?lsmb
 END; ?>
    </th>
@@ -38,13 +38,13 @@ END; ?>
           IF TYPE == 'hidden';
       NAME = PFX _ COL.col_id _ '_' _ ROW.row_id; ?>
       <?lsmb PROCESS input element_data = {
-                                 type="hidden" 
+                                 type="hidden"
              name=NAME
              value=ROW.${COL.col_id} } ?>
       <?lsmb- ELSE - ?>
       <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
           <?lsmb- IF TYPE == 'input_text' -?>
-          <?lsmb 
+          <?lsmb
                  PROCESS input element_data = {
                                           id=COL.col_id _ '-' _ ROWCOUNT
                                           type="text"
@@ -55,10 +55,10 @@ END; ?>
          <?lsmb- ELSIF TYPE == 'checkbox';
                    IF ROW.${COL.col_id};
                       CHECKED = "checked";
-                   ELSE; 
+                   ELSE;
                       CHECKED = '';
                    END;
-                   ?> 
+                   ?>
          <?lsmb PROCESS input element_data = {
                           id=COL.col_id _ '-' _ ROWCOUNT
                           type="checkbox"
@@ -66,7 +66,7 @@ END; ?>
                           class=COL.class
                           value=ROW.row_id
                           checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'radio' ?> 
+         <?lsmb- ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
                                          id=COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
@@ -74,7 +74,7 @@ END; ?>
                                          class=COL.class
                                          value=ROW.row_id
                 checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'href'; 
+         <?lsmb- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF ROW.$HREF_SFX;
                       HREF = COL.href_base _ ROW.$HREF_SFX;
@@ -89,8 +89,8 @@ END; ?>
                                          NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
                                          ROW.${COL.col_id} ?>
          <?lsmb PROCESS input element_data = {
-                                         type="hidden" 
-                                         name=NAME 
+                                         type="hidden"
+                                         name=NAME
                                          value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
@@ -110,7 +110,7 @@ END; ?>
                                  COL_ID = COL.col_id;
                                  IF tfoot.coltypes.$COL_ID;
                                     TYPE = tfoot.coltypes.$COL_ID;
-                                 ELSE; 
+                                 ELSE;
                                     TYPE = COL.type;
                                  END;
                                  DOJO = tfoot.dojo_type.$COL_ID;
@@ -123,12 +123,12 @@ END; ?>
        IF TYPE == 'hidden';
        NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -?>
        <?lsmb PROCESS input element_data = {
-                                  type="hidden" 
+                                  type="hidden"
               name=NAME
               value=ROW.${COL.col_id} } ?>
      <?lsmb- ELSE ?>
      <td class="<?lsmb COL.col_id ?>">
-       <?lsmb 
+       <?lsmb
           IF TYPE == 'input_text' -?>
        <?lsmb PROCESS input element_data = {
                                   id=COL.col_id _ '-' _ ROWCOUNT
@@ -140,10 +140,10 @@ END; ?>
          <?lsmb- ELSIF TYPE == 'checkbox';
                    IF ROW.${COL.name};
                       CHECKED = "checked";
-                   ELSE; 
+                   ELSE;
                       CHECKED = '';
                    END;
-                   ?> 
+                   ?>
           <?lsmb PROCESS input element_data = {
                                           id=COL.col_id _ '-' _ ROWCOUNT
                                           type="checkbox"
@@ -151,7 +151,7 @@ END; ?>
                                           class=COL.class
                                           value=ROW.row_id
                                           checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'radio' ?> 
+         <?lsmb- ELSIF TYPE == 'radio' ?>
          <?lsmb PROCESS input element_data = {
                                          id=COL.col_id _ '-' _ ROWCOUNT
                                          type="radio"
@@ -159,7 +159,7 @@ END; ?>
                                          class=COL.class
                                          value=ROW.row_id
                 checked=CHECKED } ?>
-         <?lsmb- ELSIF TYPE == 'href'; 
+         <?lsmb- ELSIF TYPE == 'href';
                    HREF_SFX = COL.col_id _ "_href_suffix";
                    IF row.$HREF_SFX;
                       HREF = COL.href_base _ ROW.$HREF_SFX;
@@ -171,8 +171,8 @@ END; ?>
                                          NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT;
                                          ROW.${COL.col_id} ?>
          <?lsmb PROCESS input element_data = {
-                                         type="hidden" 
-                                         name=NAME 
+                                         type="hidden"
+                                         name=NAME
                                          value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>

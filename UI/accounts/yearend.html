@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
-<?lsmb PROCESS elements.html ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
   <form data-dojo-type="lsmb/Form"
         id="gl-yearend"
@@ -48,7 +48,7 @@
         </tr>
         <tr>
           <th align="right"><label for="retention-acc-id"><?lsmb text('Retained Earnings') ?></label></th>
-          <?lsmb FOREACH opt = eoy.earnings_accounts; 
+          <?lsmb FOREACH opt = eoy.earnings_accounts;
                      opt.text = opt.accno _ '--' _ opt.description;
                            END -?>
           <td><?lsmb PROCESS select element_data={
@@ -117,12 +117,12 @@
           </tr>
         </table>
       </div>
- 
+
 
     <div id="reopen"
            title="<?lsmb text('Re-open Books') ?>"
            data-dojo-type="dijit/layout/ContentPane" >
-      
+
         <table width="100%">
           <tr><td>
               <table width="100%">
@@ -159,6 +159,5 @@
       </div>
     </div>
   </form>
-  
 </body>
 </html>

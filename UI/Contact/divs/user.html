@@ -4,8 +4,8 @@
      data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF request.target_div == 'user_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
-	<div class="listtop">
-            <?lsmb 
+        <div class="listtop">
+            <?lsmb
                IF request.pls_import;
                        text('Duplicate User Found: Importing User');
                        action = 'save_user';
@@ -17,10 +17,10 @@
                       action = 'save_user';
                 END ?>
         </div>
-    
+
     <form data-dojo-type="lsmb/Form" method="POST" action="<?lsmb request.script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
+        <input type="hidden" name="id" value="<?lsmb user.id ?>" />
         <table>
 
             <?lsmb IF user.username and not request.pls_import ?>
@@ -35,7 +35,7 @@
                     } ?>
                 </td>
             </tr>
-            
+
             <?lsmb ELSE ?>
             <tr>
                 <td><?lsmb text('Username') ?></td>
@@ -57,14 +57,14 @@
             <?lsmb IF (request.pls_import == 1) OR !user.username ?>
             <tr>
                 <td><?lsmb text('Import') ?></td>
-                <?lsmb 
+                <?lsmb
                   IF request.pls_import;
                       importc1 = 'CHECKED';
                       importc0 = '';
                   ELSE;
                       importc1 = '';
                       importc0 = 'CHECKED';
-                  END; ?> 
+                  END; ?>
                 <td><div class="input_line"><div overflow="auto" class="input_group">
                   <?lsmb INCLUDE input element_data = {
                            title = 'Yes'
@@ -93,7 +93,7 @@
                         class = 'submit'
                         value = 'reset_password'
                 };
-           ELSE; 
+           ELSE;
                 PROCESS button element_data  = {
                          text = text('Add User') #'
                          name = 'action'
@@ -110,7 +110,7 @@
     ?>
     </form>
     <?lsmb IF user.entity_id and not request.pls_import?>
-        <hr /> 
+        <hr />
         <form data-dojo-type="lsmb/Form" name="groups" method="POST" action="<?lsmb request.script ?>">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
@@ -125,7 +125,7 @@
                 };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-           
+
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -135,7 +135,7 @@
                 <tr>
                 <?lsmb END ?>
                     <td>
-                        <?lsmb rolcheck = undef; 
+                        <?lsmb rolcheck = undef;
                            IF user.role_list.grep(role.rolname).size;
                               rolcheck = "checked";
                            END ?>
@@ -152,7 +152,7 @@
                 <?lsmb END ?>
                 </tr>
             </table>
-        
+
             <table>
                 <tr>
                     <td><?lsmb PROCESS button element_data = {
@@ -163,7 +163,7 @@
                     } ?></td>
                 </tr>
             </table>
-        </form>   
+        </form>
 <?lsmb END ?>
 </div>
 <?lsmb END ?>

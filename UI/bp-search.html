@@ -1,4 +1,4 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
@@ -8,31 +8,31 @@
   <tr>
     <td>
       <table>
-	<tr>
-	  <th align="right"><?lsmb text(label.${form.type}.name) ?></th>
+        <tr>
+          <th align="right"><?lsmb text(label.${form.type}.name) ?></th>
 <?lsmb IF name.type == 'input' ?>
-	  <td colspan="3"><?lsmb PROCESS input element_data=name.data ?></td>
+          <td colspan="3"><?lsmb PROCESS input element_data=name.data ?></td>
 <?lsmb ELSE ?>
-	  <td colspan="3"><?lsmb PROCESS select element_data=name.data ?></td>
+          <td colspan="3"><?lsmb PROCESS select element_data=name.data ?></td>
 <?lsmb END ?>
-	</tr>
+        </tr>
 <?lsmb FOREACH num IN ['invnumber', 'ordnumber', 'quonumber'];
   IF label.${form.type}.${num}.defined ?>
-	<tr>
-	  <th align="right" nowrap="nowrap"><?lsmb label.${form.type}.${num}.label ?></th>
-	  <td colspan="3"><?lsmb PROCESS input element_data={size => 20, name => label.${form.type}.${num}.name} ?></td>
-	</tr>
+        <tr>
+          <th align="right" nowrap="nowrap"><?lsmb label.${form.type}.${num}.label ?></th>
+          <td colspan="3"><?lsmb PROCESS input element_data={size => 20, name => label.${form.type}.${num}.name} ?></td>
+        </tr>
 <?lsmb END; END ?>
-	<tr>
-	  <th align="right" nowrap="nowrap"><?lsmb text('From') ?></th>
-	  <td><?lsmb PROCESS input element_data={class="date", name => "transdatefrom", size => "11", title=> user.dateformat} ?></td>
-	  <th align="right" nowrap="nowrap"><?lsmb text('To') ?></th>
-	  <td><?lsmb PROCESS input element_data={class="date", name => "transdateto", size => "11", title=> user.dateformat} ?></td>
-	</tr>
+        <tr>
+          <th align="right" nowrap="nowrap"><?lsmb text('From') ?></th>
+          <td><?lsmb PROCESS input element_data={class="date", name => "transdatefrom", size => "11", title=> user.dateformat} ?></td>
+          <th align="right" nowrap="nowrap"><?lsmb text('To') ?></th>
+          <td><?lsmb PROCESS input element_data={class="date", name => "transdateto", size => "11", title=> user.dateformat} ?></td>
+        </tr>
 <?lsmb IF form.all_years.defined ?>
         <tr>
-	<th align="right"><?lsmb text('Period') ?></th>
-	<td colspan="3">
+        <th align="right"><?lsmb text('Period') ?></th>
+        <td colspan="3">
   <?lsmb
   PROCESS select element_data=form.selectaccountingmonth;
   PROCESS select element_data=form.selectaccountingyear;
@@ -50,7 +50,7 @@
     name => 'interval', type => 'radio', value => '12', label => text('Year'),
     };
 ?>
-	</td>
+        </td>
       </tr>
 <?lsmb END ?>
       </table>
@@ -63,11 +63,11 @@
 
 <br />
 <?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
-		}; END ?>
+        PROCESS input element_data={
+                type => 'hidden',
+                name => hidden,
+                value => hiddens.item(hidden)
+                }; END ?>
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
 </body>

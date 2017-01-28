@@ -3,9 +3,9 @@
      data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF request.target_div == 'files_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
-<?lsmb callback="contact.pl?action=get&entity_class=" _ 
+<?lsmb callback="contact.pl?action=get&entity_class=" _
                 credit_act.entity_class _ "&entity_id=" _ entity_id _
-                "&credit_id=" _ credit_act.id; 
+                "&credit_id=" _ credit_act.id;
 columns = [{ col_id = 'file_name', name = text('File name'), #'
                type = 'href', href_base="file.pl&action=get"}
            { col_id = 'mime_type', name = text('File Type'), #'
@@ -15,7 +15,7 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
            { col_id = 'uploaded_by_name', name = text('Attached By'), #'
                type = 'text'}]; ?>
 <div class="listtop"><?lsmb text('Files attached to Entity') ?></div>
-<?lsmb 
+<?lsmb
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
             COL.href_base='file.pl?action=get&file_class=4&id=';
@@ -33,7 +33,7 @@ INCLUDE dynatable
 ?>
 <?lsmb IF credit_act.id ?>
 <div class="listtop"><?lsmb text('Files attached to Credit Account') ?></div>
-<?lsmb 
+<?lsmb
   FOREACH COL IN columns;
          IF COL.col_id == 'file_name';
                   COL.href_base='file.pl?action=get&file_class=5&id=';
@@ -49,7 +49,7 @@ INCLUDE dynatable
       tbody = {rows = eca_files };
 END;
 ?>
-<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb entity_id 
+<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb entity_id
          ?>&file_class=4&callback=<?lsmb tt_url(callback) ?>"
 >[<?lsmb text('Attach to Entity') ?>]</a>
 <?lsmb IF credit_act.id ?>

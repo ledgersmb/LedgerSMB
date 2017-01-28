@@ -9,8 +9,8 @@
         <!-- CT:  Strings for locales:
         <?lsmb text('Filtering Receipts') ?>
         <?lsmb text('Filtering Payments') ?> -->
-        <?lsmb IF payment.account_class == 1 ?><?lsmb t = 'Payments' 
-        ?><?lsmb ELSE ?><?lsmb t = 'Receipts' 
+        <?lsmb IF payment.account_class == 1 ?><?lsmb t = 'Payments'
+        ?><?lsmb ELSE ?><?lsmb t = 'Receipts'
         ?><?lsmb END ?>
         <?lsmb text("Filtering $t") ?>
 </div>
@@ -18,7 +18,7 @@
       <?lsmb # action set explicitly,
              # because this file renders from vouchers.pl ?>
       action="payment.pl">
-        
+
 <?lsmb PROCESS input element_data={
         value = payment.account_class
         type = "hidden"
@@ -135,8 +135,8 @@
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
-        
-      <?lsmb 
+
+      <?lsmb
           IF payment.account_class == 1; pay_label = text('Pay From');#'
           ELSIF payment.account_class == 2; pay_label = text('Pay To'); #'
           END;
@@ -147,12 +147,12 @@
                 value_attr = "accno"
                 text_attr = "text"
                 label = pay_label _ ':'
-        } ?> 
+        } ?>
 
 <?lsmb IF payment.payment_types ?>
 
 <div id = "payments-filter-payment_types" class="inputpayment">
-  
+
  <?lsmb PROCESS select element_data = {
                 name = "payment_type_id"
                 default_values = []
@@ -160,7 +160,7 @@
                 value_attr = "id"
                 text_attr = "label"
                 label = text('Payment Type:') #'
-        } ?> 
+        } ?>
 
 
 </div>

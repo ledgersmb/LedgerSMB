@@ -1,8 +1,8 @@
 <?lsmb INCLUDE "ui-header.html"
-	titlebar = text('Create Batch') # '
+        titlebar = text('Create Batch') # '
         stylesheet = stylesheet
         include_stylesheet = [
-		"css/scripts/create_batch.css"
+                "css/scripts/create_batch.css"
         ];
        PROCESS elements.html;
        PROCESS dynatable.html;
@@ -16,9 +16,9 @@
   </div>
   <div class="value">
     <?lsmb PROCESS input element_data = {
-	   name = "batch_number"
-	   type = "text"
-	   value = batch.batch_number } ?>
+           name = "batch_number"
+           type = "text"
+           value = batch.batch_number } ?>
   </div>
 <div class="labelledinput">
   <div class="label">
@@ -26,9 +26,9 @@
   </div>
   <div class="inputgroup">
     <?lsmb PROCESS input element_data = {
-	   name = "description"
-	   type = "text"
-	   value = batch.batch_number } ?>
+           name = "description"
+           type = "text"
+           value = batch.batch_number } ?>
   </div>
 </div>
 <div class="labelledinput">
@@ -37,9 +37,9 @@
   </div>
   <div class="inputgroup">
      <?lsmb PROCESS input element_data = {
-	    type = "date"
-	    class = "date"
-	    name = "batch_date" 
+            type = "date"
+            class = "date"
+            name = "batch_date"
             value = batch.batch_date } ?>
   </div>
 </div>
@@ -51,7 +51,7 @@
        name = "action"
        text = text('Continue') } ?>
 </div>
-<?lsmb 
+<?lsmb
 hidden_url_base = '';
 FOREACH item = batch.hidden;
   IF item.value;
@@ -65,13 +65,13 @@ FOREACH item = batch.hidden;
 <?lsmb END ?>
 </form>
 <div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
-<?lsmb 
+<?lsmb
 
 FOREACH row IN batch.search_results;
      row.row_id = row.id _ "&post_date=" _ row.default_date;
 END;
 
-PROCESS dynatable 
+PROCESS dynatable
                attributes = {id = 'batch_list'}
                tbody = {rows = batch.search_results}
                columns = [

@@ -18,20 +18,20 @@
   <tr>
     <td>
       <table>
-	  <th align="right"><?lsmb text('From') ?></th>
-	  <td><?lsmb PROCESS input element_data = {
+          <th align="right"><?lsmb text('From') ?></th>
+          <td><?lsmb PROCESS input element_data = {
                class="date"
                name="date_from"
                size="11"
                title=datestyle } ?></td>
-	  <th align="right"><?lsmb text('To') ?></th>
-	  <td><?lsmb PROCESS input element_data = {
+          <th align="right"><?lsmb text('To') ?></th>
+          <td><?lsmb PROCESS input element_data = {
                  class="date"
                  name="date_to"
                  size="11"
                  title=datestyle } ?></td>
-	</tr>
-	<td colspan="5">
+        </tr>
+        <td colspan="5">
         <?lsmb PROCESS select element_data = {
                name = "month"
                options = accountingmonths
@@ -39,35 +39,35 @@
                value_attr = "id"
         } ?>
 
-	<?lsmb PROCESS select element_data = {
+        <?lsmb PROCESS select element_data = {
                name="year"
                options = all_years
                text_attr = "year"
                value_attr = "year"
         } ?>
-	<?lsmb PROCESS input element_data = {
+        <?lsmb PROCESS input element_data = {
                name="interval"
                class="radio"
                type="radio"
                value="0"
                checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
-	<?lsmb PROCESS input element_data = {
+        <?lsmb PROCESS input element_data = {
                name="interval"
                class="radio"
                type="radio"
                value="1" } ?>&nbsp;<?lsmb text('Month') ?>
-	<?lsmb PROCESS input element_data = {
+        <?lsmb PROCESS input element_data = {
                name="interval"
                class="radio"
                type="radio"
                value="3" } ?>&nbsp;<?lsmb text('Quarter') ?>
-	<input name=interval class=radio type=radio value=12>&nbsp;Year
-	</td>
+        <input name=interval class=radio type=radio value=12>&nbsp;Year
+        </td>
       </tr>
-	  <th align="right"><?lsmb text('Include in Report') ?></th>
+          <th align="right"><?lsmb text('Include in Report') ?></th>
 
-	  <td colspan="5">
-	    <table>
+          <td colspan="5">
+            <table>
                     <tr>
                       <td nowrap><?lsmb PROCESS input element_data = {
                                         name="col_accno"
@@ -113,8 +113,8 @@
                                      checked = 'checked'
                               } ?> <?lsmb text('balance') ?></td>
                   </tr>
-	    </table>
-	</tr>
+            </table>
+        </tr>
 
       </table>
     </td>

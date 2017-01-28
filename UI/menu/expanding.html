@@ -19,14 +19,14 @@
                                         ?>menu_open<?lsmb ELSIF item.menu
                                         ?>menu_closed<?lsmb
                                         ELSE ?>menu_item<?lsmb END ?>">
-                        <a href="<?lsmb IF item.module ?><?lsmb item.module 
-                                ?>?login=<?lsmb login 
-                                ?>&amp;<?lsmb FOREACH arg IN item.args 
-                                ?><?lsmb arg 
-                                ?>&amp;<?lsmb END 
-                                ?><?lsmb IF item.menu 
+                        <a href="<?lsmb IF item.module ?><?lsmb item.module
+                                ?>?login=<?lsmb login
+                                ?>&amp;<?lsmb FOREACH arg IN item.args
+                                ?><?lsmb arg
+                                ?>&amp;<?lsmb END
+                                ?><?lsmb IF item.menu
                                         ?>id=<?lsmb item.id
-                                        ?>&amp;open=<?lsmb open 
+                                        ?>&amp;open=<?lsmb open
                                 ?><?lsmb END; END ?>"
                                 <?lsmb IF item.module && (item.module != 'menu.pl') &&
                                         ('login.pl' != item.module) ?>
@@ -38,7 +38,7 @@
                                 id="a_<?lsmb- item.id -?>"
                                 class="<?lsmb IF item.label == 'New Window';
                                                    'menu-new-window';
-                                              ELSIF item.module; 
+                                              ELSIF item.module;
                                                    'menu-terminus';
                                               ELSE; 't-submenu'; END ?>"
                                 ><?lsmb text(item.label) ?></a>
