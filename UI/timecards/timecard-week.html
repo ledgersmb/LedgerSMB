@@ -2,7 +2,7 @@
 PROCESS "elements.html" ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Form" action="timecard.pl" method="post">
-<?lsmb 
+<?lsmb
 PROCESS input element_data = {
     type = "hidden"
     name = "rowcount"
@@ -75,8 +75,8 @@ END;
      } ?>
     </div>
     <div id='curr-lbl'><?lsmb text('Currency') ?></div>
-    <div id='curr-input'><?lsmb 
-        currencies2 = [];  
+    <div id='curr-input'><?lsmb
+        currencies2 = [];
         FOREACH curr IN currencies;
            currencies2.push({text = curr, value = curr });
         END;
@@ -85,7 +85,7 @@ END;
                    name = "curr_$suffix"
                 options = currencies2
          default_values = [${"curr_$suffix"}]
-       }; ?>
+       }; ?></div>
   <div><?lsmb  text('Partnumber') ?></div>
   <div>
     <input data-dojo-type="lsmb/parts/PartSelector"

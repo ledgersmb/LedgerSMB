@@ -20,22 +20,22 @@
    value = id
 }; ?>
 <div class="labelledinput">
-<br>
-<div id = "taxform-countries" class="inputcountry">
+    <br>
+    <div id = "taxform-countries" class="inputcountry">
 
-<?lsmb IF countries ?>
-<?lsmb IF !country_id; country_id = default_country; END ?>
- <?lsmb PROCESS select element_data = {
-                name = "country_id"
-                default_values = [country_id]
-                options = countries
-                value_attr = "id"
-                text_attr = "name"
-                label = text('Country:')
-        } ?>
+    <?lsmb IF countries ?>
+        <?lsmb IF !country_id; country_id = default_country; END ?>
+        <?lsmb PROCESS select element_data = {
+                        name = "country_id"
+                        default_values = [country_id]
+                        options = countries
+                        value_attr = "id"
+                        text_attr = "name"
+                        label = text('Country:')
+                } ?>
+    <?lsmb END ?>
 
-<?lsmb END ?>
-
+    </div>
 </div>
 
 <div class="labelledinput">
