@@ -34,20 +34,26 @@ DECLARE retval jcitems;
 BEGIN
 
 UPDATE jcitems
-   SET description = in_description,
+   SET business_unit_id = in_business_unit_id,
+       parts_id = in_parts_id,
+       description = in_description,
        qty = in_qty,
        allocated = in_allocated,
+       sellprice = in_sellprice,
+       fxsellprice = in_fxsellprice,
        serialnumber = in_serialnumber,
        checkedin = in_checkedin,
        checkedout = in_checkedout,
        person_id = coalesce(in_person_id, person__get_my_id()),
        notes = in_notes,
        total = in_total,
-       non_billable = in_non_billable
+       non_billable = in_non_billable,
+       curr = in_curr,
+       jctype = in_jctype
  WHERE id = in_id;
 
 IF FOUND THEN
-  SELECT * INTO retval WHERE id = in_id;
+  SELECT * FROM jcitems INTO retval WHERE id = in_id;
   return retval;
 END IF;
 
@@ -66,6 +72,18 @@ SELECT * INTO retval FROM jcitems WHERE id = currval('jcitems_id_seq')::int;
 RETURN retval;
 
 END;
+$$;
+
+CREATE OR REPLACE FUNCTION timecard__delete(in_id int)
+RETURNS bool
+LANGUAGE SQL AS
+$$
+    WITH a AS (
+        DELETE FROM jcitems j
+        WHERE j.id = in_id
+          AND j.allocated IS NULL
+        RETURNING 1)
+    SELECT COUNT(*) > 0;
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__bu_class(in_id int)
@@ -109,7 +127,10 @@ CREATE TYPE timecard_report_line AS (
    employeenumber text,
    employee text,
    parts_id int,
-   sellprice numeric
+   sellprice numeric,
+   non_billable numeric,
+   jctype int,
+   notes text
 );
 
 CREATE OR REPLACE FUNCTION timecard__report
@@ -135,7 +156,8 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        date_trunc('week', j.checkedin)::date as weekstarting,
        p.partnumber, bu.control_code as business_unit_code,
        bu.description AS businessunit_description,
-       ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
+       ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice,
+       j.non_billable, j.jctype, j.notes
   FROM jcitems j
   JOIN parts p ON p.id = j.parts_id
   JOIN person pr ON pr.id = j.person_id
@@ -150,7 +172,7 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
             OR (j.qty <= j.allocated AND in_closed))
        AND (j.jctype = in_jctype OR in_jctype is null)
        AND (bu.path IS NOT NULL OR in_business_units = '{}' OR in_business_units IS NULL)
-  ORDER BY j.checkedin, bu.description, p.partnumber, e.name
+  ORDER BY j.checkedin, j.jctype, bu.description, p.partnumber, e.name
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)
