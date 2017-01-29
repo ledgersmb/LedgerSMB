@@ -102,6 +102,9 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.39
+* Fixed searching for approved batches (Chris T, #2592)
+
 Changelog for 1.4.38
 * Printed credit invoice indistinguishible from regular invoice (Erik H, #2546)
 * Credit invoice edit screen looks like regular invoice screen (Erik H, #2550)
