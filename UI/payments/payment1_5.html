@@ -20,7 +20,7 @@
 <?lsmb type.type = "hidden"; INCLUDE input element_data=type -?>
 <table width="100%">
   <tr id="top-bar" class="listtop">
-    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb  text('Choose a company') ?></th>
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb  text('Choose a company') ?></label></th>
   </tr>
 </table>
 <table width="100%">
@@ -36,6 +36,7 @@
             value=item.id _ '--' _ item.name } ?>
      </td>
      <td align="center"><?lsmb item.name -?>  </td>
+   </tr>
   <?lsmb END -?>
 </table>
 
