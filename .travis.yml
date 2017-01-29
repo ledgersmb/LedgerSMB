@@ -126,9 +126,9 @@ before_script:
   - sleep 5  # give starman a chance to start
   - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
+  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
 
 script:
-  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   - export RELEASE_TESTING=1 && 
            PGUSER=postgres PGPASSWORD=test
            LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000"
