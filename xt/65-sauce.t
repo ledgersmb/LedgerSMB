@@ -24,9 +24,9 @@ if (@missing) {
                           );
     $driver->get('http://localhost:5000/login.pl');
 
-    ok($driver->find_element_by_name('password'), 'got a password');
+    ok($driver->find_element('password', 'name'), 'got a password');
 
     $driver->get('http://localhost:5000/setup.pl');
 
-    ok($driver->find_element_by_name('s_passwd'), 'got a password');
+    ok($driver->find_element('s_passwd', 'name'), 'got a password');
 }
