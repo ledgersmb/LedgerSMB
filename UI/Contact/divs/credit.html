@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <div id="credit_div"
      title="<?lsmb text('Credit Accounts') ?>"
      data-dojo-type="dijit/layout/ContentPane"
@@ -382,7 +383,7 @@ PROCESS dynatable
     </form>
 <?lsmb IF credit_act.id ?>
 <div class="listtop"><?lsmb text('Profit and Loss') ?></div>
-<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET"?>
+<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET">
 <div class="inputrow">
 <?lsmb
 PROCESS 'report_base.html';

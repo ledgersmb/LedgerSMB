@@ -98,7 +98,7 @@ class="lsmb <?lsmb dojo_theme ?>">
      <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
      <?lsmb  IF default_curr != curr # Only process element if one exists. ?>
      <tr id="exrate_row">
-      <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+      <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
       <td id="exrate_column">
        <?lsmb  IF exrate.value -?>
        <?lsmb  exrate.text -?>
@@ -152,7 +152,7 @@ class="lsmb <?lsmb dojo_theme ?>">
    <th class="listheading"><?lsmb text('Vendor') -?>/<?lsmb text('Customer') -?></th>
    <th class="listheading"><?lsmb text('Invoice date') -?></th>
    <th class="listheading"><?lsmb text('Invoice due') -?></th>
-   <th class="listheading"><?lsmb text('Overpayment Account') ?>
+   <th class="listheading"><?lsmb text('Overpayment Account') ?></th>
    <th class="listheading"><?lsmb text('Amount to be used') -?></th>
    <th class="listheading">X</th>
   </tr>
@@ -340,7 +340,7 @@ class="lsmb <?lsmb dojo_theme ?>">
  <hr />
  <table id="footer" width="100%">
   <tr id="footer_row">
-   <td valing="top" id="button_column">
+   <td valign="top" id="button_column">
    <?lsmb update.accesskey   = "U";
         update.title       = "UPDATE ALT+U";
         update.name        = "action";

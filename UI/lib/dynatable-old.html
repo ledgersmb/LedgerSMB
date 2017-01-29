@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <?lsmb BLOCK dynatable ?>
 <table width="100%">
   <tr>
@@ -7,7 +8,7 @@
   <?lsmb IF options.defined ?>
     <td><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
   <?lsmb ELSE ?>
-    <td colspan="<?lsmb columns.size ?>"></td></tr>
+    <td colspan="<?lsmb columns.size ?>"></td>
   <?lsmb END ?>
   </tr>
   <tr class="listheading">
@@ -38,6 +39,7 @@
     <?lsmb ELSE; row.text; END ?>
   </th>
 </tr>
+<tr>
   <?lsmb NEXT; END ?>
   <?lsmb FOREACH column IN columns ?>
   <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>

@@ -43,15 +43,13 @@
 <?lsmb ELSE ?>
     <tr class="listrow<?lsmb row.i ?>">
     <?lsmb FOREACH column IN columns ?>
-        <?lsmb IF column == 'balance' ?>
-   <td align="right">
-        <?lsmb ELSIF column == 'debit' ?>
-   <td align="right">
-        <?lsmb ELSIF column == 'credit' ?>
-   <td align="right">
-        <?lsmb ELSE ?>
-   <td>
-        <?lsmb END ?>
+        <?lsmb _align='';
+            IF column == 'balance'
+            OR column == 'debit'
+            OR column == 'credit';
+                align='right';
+            END; ?>
+   <td align=<?lsmb _align ?>>
         <?lsmb IF column == 'accno'; FOREACH link IN row.accno ?>
    <a href="<?lsmb link.href ?>"><?lsmb link.text ?></a>
         <?lsmb END; ELSIF row.$column.href ?>
