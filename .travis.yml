@@ -31,8 +31,8 @@ matrix:
         apt:
           packages:
             - nginx
-      env:
-        - TEST_SAUCE=1
+      # env:  Sauce Labs testing disabled until Selenium-Remote-Driver#302 fixed
+      #   - TEST_SAUCE=1
     - perl: '5.20'
       addons:
         postgresql: "9.4"
