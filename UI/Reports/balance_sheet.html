@@ -84,7 +84,7 @@ END ;
 <?lsmb ELSE -?>
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
 <?lsmb report.rheads.ids.$row.props.account_number ?> - <?lsmb END; -?>
-<?lsmb report.rheads.ids.$row.props.account_desc ?></th>
+<th><?lsmb report.rheads.ids.$row.props.account_desc ?></th>
 <?lsmb FOREACH col IN report.sorted_col_ids -?>
   <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
