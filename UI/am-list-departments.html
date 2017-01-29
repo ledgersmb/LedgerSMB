@@ -32,7 +32,7 @@
   END -?>
 <tr class="<?lsmb c ?>">
   <?lsmb FOREACH column IN columns ?>
-  <td class="<?lsmb c ?>" align=<?lsmb (column == 'cost' || column == 'profit') ? "center" : column == 'discount' ? "right" : "" ?>>
+  <td class="<?lsmb c ?>" align=<?lsmb (column == 'cost' || column == 'profit') ? '"center"' : column == 'discount' ? '"right"' : '""' ?>>
     <?lsmb IF row.$column.href ?>
     <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
     <?lsmb ELSE; row.$column; END ?>
