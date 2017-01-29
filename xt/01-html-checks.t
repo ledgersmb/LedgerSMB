@@ -45,6 +45,7 @@ sub content_test {
         push @trailing_space_lines, ($.) if / $/;
         $ui_header_used = 1 if /ui-header\.html/;
         $is_snippet = 1 if /<?lsmb# HTML Snippet.*?>/;
+        $is_snippet = 1 if /<!-- HTML Snippet.*-->/;
         $text .= $_;
     }
     close $fh;
