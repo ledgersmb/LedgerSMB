@@ -234,7 +234,7 @@ BEGIN
 				in_description IS NULL) AND
 			(in_created_by_eid = b.created_by OR
 				in_created_by_eid IS NULL) AND
-			((in_approved = false OR in_approved IS NULL AND
+			(((in_approved = false OR in_approved IS NULL) AND
 				approved_on IS NULL) OR
 				(in_approved = true AND approved_on IS NOT NULL)
 			) 
