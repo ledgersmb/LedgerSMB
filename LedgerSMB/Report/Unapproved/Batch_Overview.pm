@@ -216,6 +216,14 @@ The amount of the draft must be less than this for it to show up.
 
 has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
 
+=item approved
+
+Bool:  if approved show only approved batches.  If not, show unapproved
+
+=cut
+
+has approved => (is => 'rw', 'isa' => 'Maybe[Bool]');
+
 =back
 
 =head1 METHODS
