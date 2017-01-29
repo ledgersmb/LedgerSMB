@@ -35,13 +35,13 @@
                            type = "text"
                      } ?></td>
               </tr>
-          <th align=right nowrap>Salesperson</th>
-          <td><?lsmb INCLUDE input element_data = {
-                           size = 32
-                           name = "salesperson"
-                           type = "text"
-              } ?></td>
-
+              <tr>
+                  <th align=right nowrap>Salesperson</th>
+                  <td><?lsmb INCLUDE input element_data = {
+                                   size = 32
+                                   name = "salesperson"
+                                   type = "text"
+                      } ?></td>
               </tr> <!--
               <tr>
                 <th align=right nowrap>Notes</th>
@@ -126,11 +126,10 @@
                          title = user.dateformat,
                          label = text('To')
                   } ?></td>
-                   </tr>
-
-                    <tr>
-                      <th><?lsmb text('Transaction Date') ?></th>
-                      <td> <?lsmb
+               </tr>
+              <tr>
+                  <th><?lsmb text('Transaction Date') ?></th>
+                  <td> <?lsmb
                      INCLUDE input element_data = {
                          name = "from_date",
                          size = "11",
@@ -147,7 +146,7 @@
                          title = user.dateformat,
                          label = text('To')
                   } ?></td>
-                    </tr>
+              </tr>
             </table>
           </td>
         </tr>
