@@ -6,7 +6,7 @@ PROCESS elements.html ?>
         method="post"
         action="<?lsmb form.script ?>">
     <table width="100%"><col width="25%" align="right"><col><col>
-      <tr><th colspan="2" class="listtop"><?lsmb text('System Defaults') ?></th>
+      <tr><th colspan="2" class="listtop"><?lsmb text('System Defaults') ?></th></tr>
         <?lsmb FOREACH GROUP IN default_settings ?>
       <tr><th colspan="2" class="listheading"><?lsmb GROUP.title ?></th></tr>
       <?lsmb FOREACH ITEM IN GROUP.items ?>

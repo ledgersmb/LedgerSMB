@@ -28,44 +28,43 @@ TRIAL_BALANCE_TYPES = [
               <table>
                 <?lsmb PROCESS business_classes ?>
                 <?lsmb PROCESS date_row ?>
-                <tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <?lsmb PROCESS input element_data = {
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <?lsmb PROCESS input element_data = {
                        label = text('All accounts')
                        name  = 'all_accounts'
                        type  = 'checkbox'
                    }
-            ?>
-          </td>
-        </tr>
-      <tr>
-        <td><?lsmb PROCESS input element_data = {
-                    name = 'is_approved'
-                    type = 'radio'
-                   value = 'Y'
-                   label = text('Approved')
-                 checked = 'CHECKED'
-        }; ?>
-        <?lsmb PROCESS input element_data = {
-                    name = 'is_approved'
-                    type = 'radio'
-                   value = 'N'
-                   label = text('Unapproved')
-        }; ?>
-        <?lsmb PROCESS input element_data = {
-                    name = 'is_approved'
-                    type = 'radio'
-                   value = 'All'
-                   label = text('All')
-        }; ?></td>
-      </tr>
-        <tr>
-          <td>
-            <table>
+              ?>
+            </td>
+          </tr>
+          <tr>
+            <td><?lsmb PROCESS input element_data = {
+                        name = 'is_approved'
+                        type = 'radio'
+                       value = 'Y'
+                       label = text('Approved')
+                     checked = 'CHECKED'
+            }; ?>
+            <?lsmb PROCESS input element_data = {
+                        name = 'is_approved'
+                        type = 'radio'
+                       value = 'N'
+                       label = text('Unapproved')
+            }; ?>
+            <?lsmb PROCESS input element_data = {
+                        name = 'is_approved'
+                        type = 'radio'
+                       value = 'All'
+                       label = text('All')
+            }; ?></td>
+          </tr>
+          <tr>
+            <td>
+              <table>
                 <tr>
                   <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
                   <td><?lsmb PROCESS select element_data = {
@@ -109,7 +108,7 @@ TRIAL_BALANCE_TYPES = [
             </td>
           </tr>
           <tr><td><hr size="3" noshade="noshade" /></td></tr>
-      </table>
+        </table>
       <table width="100%">
           <?lsmb # Add in the list of accounts here.?>
           <?lsmb FOR heading IN headings?>

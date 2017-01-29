@@ -14,7 +14,7 @@ PROCESS input element_data = {
 END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
 <table>
-<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
+<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> :
     </th>
 </tr>
 <tr id="business_unit">
@@ -30,6 +30,7 @@ END; ?>
                   text_attr = 'text'
                  value_attr = 'id'
        } ?></td>
+</tr>
 <tr><th><?lsmb  text('Partnumber') ?></th>
   <td>
     <input data-dojo-type="lsmb/parts/PartSelector"
@@ -72,7 +73,7 @@ END; ?>
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?> : 
+  maxlength = 2 } ?> :
     <?lsmb PROCESS input element_data = {
        name = 'in_min'
       value = in_min
@@ -80,7 +81,7 @@ END; ?>
       class = 'time-part'
        size = 3
   maxlength = 2 } ?>
- </td> 
+ </td>
 <th><?lsmb text('Time Out') ?></th>
 <td><?lsmb PROCESS input element_data = {
        name = 'out_hour'
@@ -88,7 +89,7 @@ END; ?>
        type = 'text'
       class = 'time-part'
        size = 3
-  maxlength = 2 } ?> : 
+  maxlength = 2 } ?> :
     <?lsmb PROCESS input element_data = {
        name = 'out_min'
       value = out_min
@@ -96,7 +97,7 @@ END; ?>
       class = 'time-part'
        size = 3
   maxlength = 2 } ?>
- </td> 
+ </td>
 </tr>
 <tr><th><?lsmb text('Clocked') ?></th>
     <td><?lsmb total ?></td>
@@ -109,7 +110,7 @@ END; ?>
        type = 'text'
       class = 'qty'
        size = 16 } ?></td>
-</td>
+</tr>
 <tr><th><?lsmb text('Non-Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
        name = 'non_billable'
@@ -120,7 +121,7 @@ END; ?>
 </tr>
 <tr><th><?lsmb text('Currency') ?></th>
     <td><?lsmb
-        currencies2 = [];  
+        currencies2 = [];
         FOREACH curr IN currencies;
            currencies2.push({text = curr, value = curr });
         END;
@@ -128,7 +129,7 @@ END; ?>
            name = "curr"
         options = currencies2
  default_values = [curr]
-       }; ?>
+       }; ?></td></tr>
 <tr><th><?lsmb text('Allocated') ?></th>
     <td><?lsmb allocated ?></td>
 </tr>
@@ -142,7 +143,7 @@ END; ?>
     </td>
 </tr>
 </table>
-<?lsmb IF id; 
+<?lsmb IF id;
 formats = [];
 FOR F IN LIST_FORMATS();
    IF F == 'HTML' or F == 'PDF';
@@ -150,9 +151,9 @@ FOR F IN LIST_FORMATS();
    END;
 END;
 
-PROCESS print_options; 
+PROCESS print_options;
 END; ?>
-<?lsmb 
+<?lsmb
 IF id;
     PROCESS button element_data = {
    name = 'action'
