@@ -18,7 +18,7 @@ var profile = (function(){
         releaseDir: "../../js",
         releaseName: "",
         action: "release",
-        layerOptimize: "uglify.keeplines",
+        layerOptimize: "uglify",
         optimize: "uglify",
         cssOptimize: "comments",
         mini: true,
