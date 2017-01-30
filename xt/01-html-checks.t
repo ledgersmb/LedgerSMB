@@ -46,7 +46,7 @@ sub content_test {
         $ui_header_used = 1 if /ui-header\.html/;
         $is_snippet = 1 if /<?lsmb# HTML Snippet.*?>/;
         $is_snippet = 1 if /<!-- HTML Snippet.*-->/;
-        $is_snippet = 1 if $filename =~ /js-src\/lsmb\/templates/;
+        $is_snippet = 1 if $filename =~ /js-src\/lsmb.*\/templates/;
         $text .= $_;
     }
     close $fh;
