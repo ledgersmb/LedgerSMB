@@ -144,7 +144,7 @@ script:
             --source pgTAP   --pgtap-option dbname=lsmb13installtest
                              --pgtap-option username=postgres
                              --pgtap-option suffix=.pg
-            --source Feature --feature-option suffix=.feature
+            --source Feature --feature-option extensions=.feature
                              --feature-option tags=~@wip
             t/ xt/
 
