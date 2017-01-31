@@ -114,6 +114,7 @@ before_install:
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
+  - cpanm git://github.com/pjlsergeant/test-bdd-cucumber-perl.git@tap-source
   - cpan-install --coverage
 
 before_script:
