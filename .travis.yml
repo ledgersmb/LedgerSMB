@@ -140,7 +140,7 @@ script:
     LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest
     LSMB_BASE_URL="http://127.0.0.1:5000"
       prove -r --source Perl
-            --ext=.t --ext=.pg
+            --ext=.t --ext=.pg --ext=.feature
             --source pgTAP   --pgtap-option dbname=lsmb13installtest
                              --pgtap-option username=postgres
                              --pgtap-option suffix=.pg
