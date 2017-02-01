@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 -- First a couple of notes about this file and what will probably change in the
 -- future.
 --

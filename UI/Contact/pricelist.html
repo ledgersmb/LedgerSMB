@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS 'elements.html' ?>
 <?lsmb PROCESS 'dynatable.html' ?>
-<!-- 
+<!--
 
 The overall structure here is imagined to be a list of individual price
 listings followed by the listings for the pricegroup.  The reason for including
@@ -14,8 +14,8 @@ checking a price deal for a customer.
 <?lsmb account_class = entity_class ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Pricelist') ?> <?lsmb pricematrix.length ?></div>
-<?lsmb 
-    columns = [ 
+<?lsmb
+    columns = [
               { col_id = 'parts_id',
                   type = 'hidden' },
               { col_id = 'int_partnumber'
@@ -53,7 +53,6 @@ checking a price deal for a customer.
                      name = text('Min Qty') #'
                      type = 'input_text'},
          );
-                        
      END;
      columns.push({col_id = 'currency',
                      name = text('Currency'),
@@ -61,7 +60,7 @@ checking a price deal for a customer.
                   {col_id = 'delete',
                      name = '&nbsp;',
                      type = 'href',
-                href_base = script _ '?action=delete_pricelist&credit_id=' 
+                href_base = script _ '?action=delete_pricelist&credit_id='
                             _ id _ '&entry_id=' }
      );
      FOREACH pm IN pricematrix;
@@ -70,22 +69,22 @@ checking a price deal for a customer.
      END ?>
 <form data-dojo-type="lsmb/Form" name="pricematrix" action="<?lsmb script ?>" method="post">
  <?lsmb PROCESS input element_data = {
-	type="hidden"
-	name="entity_class"
-	value=account_class } ?>
+        type="hidden"
+        name="entity_class"
+        value=account_class } ?>
  <?lsmb PROCESS input element_data = {
-	type="hidden"
-	name="credit_id"
-	value=credit_id } ?>
+        type="hidden"
+        name="credit_id"
+        value=credit_id } ?>
  <?lsmb PROCESS input element_data = {
-	type="hidden"
-	name="entity_id"
-	value=entity_id } ?><?lsmb
+        type="hidden"
+        name="entity_id"
+        value=entity_id } ?><?lsmb
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
          tfoot = { coltypes = { int_partnumber = 'input_text',
-                                   description = 'text', 
+                                   description = 'text',
                               },
                   dojo_type = { int_partnumber = "lsmb/parts/PartSelector" },
                    rows = [{}]} ?>
@@ -99,30 +98,30 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
+IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb
+             credit_id ?>&entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb END;
 
-IF FORMATS.grep('XLS').size() 
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLS&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
+IF FORMATS.grep('XLS').size()
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLS&credit_id=<?lsmb
+             credit_id ?>&entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('XLS') ?>]</a>
 <?lsmb END;
 
-IF FORMATS.grep('XLSX').size() 
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLSX&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
+IF FORMATS.grep('XLSX').size()
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=XLSX&credit_id=<?lsmb
+             credit_id ?>&entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('XLSX') ?>]</a>
 <?lsmb END;
 
-IF FORMATS.grep('ODS').size() 
-?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
+IF FORMATS.grep('ODS').size()
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb
+             credit_id ?>&entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('ODS') ?>]</a>
 <?lsmb END ?>
- <a href="<?lsmb request.script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
+ <a href="<?lsmb request.script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb
+             credit_id ?>&entity_id=<?lsmb entity_id
      ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable

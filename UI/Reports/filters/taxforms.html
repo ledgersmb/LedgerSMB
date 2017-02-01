@@ -1,7 +1,7 @@
 <!--
 * tax form select box (optional)
 * date range boxes
-* optional vendor text box 
+* optional vendor text box
 -->
 <?lsmb INCLUDE 'ui-header.html' ;
        PROCESS 'elements.html';
@@ -25,46 +25,44 @@
     <td>
       <table>
         <tr>
-	<th align="right"><?lsmb text('Form') ?></th>
-	<td colspan="6">
+        <th align="right"><?lsmb text('Form') ?></th>
+        <td colspan="6">
         <?lsmb PROCESS select element_data = {
                name = "tax_form_id"
                options = forms
                text_attr = "form_name"
                value_attr = "id"
         } ?>
-
-	</tr>
-	
-      </tr>
-	<tr>
-	  <th align="right"><?lsmb text('Vendor Number') ?></th>
-	  <td colspan="6"><?lsmb INCLUDE input element_data = {
-	                  name = "meta_number"
-	                  size = '35'
+        </td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Vendor Number') ?></th>
+          <td colspan="6"><?lsmb INCLUDE input element_data = {
+                          name = "meta_number"
+                          size = '35'
            } ?></td>
-	</tr>
-  </tr>
-  <?lsmb PROCESS date_row ?> 
+        </tr>
+        <?lsmb PROCESS date_row ?>
       </table>
     </td>
+  </tr>
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
 </table>
 
-<?lsmb PROCESS input element_data = { 
-       type="hidden" 
-       name="login" 
+<?lsmb PROCESS input element_data = {
+       type="hidden"
+       name="login"
        value=login
 } ?>
 
 <br>
 <?lsmb PROCESS button element_data = {
        text = text('Continue')
-       class="submit" 
-       type="submit" 
-       name="action" 
+       class="submit"
+       type="submit"
+       name="action"
        value="generate_report"
 } ?>
 </form>

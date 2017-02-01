@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' 
-      include_stylesheet = ["businbusiness_unit/filter.css"] 
+<?lsmb INCLUDE 'ui-header.html'
+      include_stylesheet = ["businbusiness_unit/filter.css"]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
@@ -12,41 +12,40 @@
 } ?>
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
-	type = "text"
-	class = "control_code"
-	name = "tag"
-	value = tag
-	label = text('Control Code') #'
-	size = 32
+        type = "text"
+        class = "control_code"
+        name = "tag"
+        value = tag
+        label = text('Control Code') #'
+        size = 32
 } ?>
-</div>
 </div>
 <div class="inputrow" id="descrow">
 <?lsmb PROCESS input element_data = {
-	label = text("Description:")
-	name = "description"
-	class = "description"
-	value = description
-	type = "text"
+        label = text("Description:")
+        name = "description"
+        class = "description"
+        value = description
+        type = "text"
 } ?>
 </div>
 <div class="inputrow" id="daterow">
 <?lsmb PROCESS input element_data = {
-	label = text("Active On") #"
-	name = "active_on"
-	class = "date"
-	value = active_on
-	type = "text"
-	size = 12
+        label = text("Active On") #"
+        name = "active_on"
+        class = "date"
+        value = active_on
+        type = "text"
+        size = 12
 } ?>
 </div>
 <div class="inputrow" id="buttonrow">
 <?lsmb PROCESS button element_data = {
-	text = text("Search")
-	type = "submit"
-	class = "submit"
-	name = "action"
-	value = "asset_results"
+        text = text("Search")
+        type = "submit"
+        class = "submit"
+        name = "action"
+        value = "asset_results"
 } ?>
 </div>
 </form>

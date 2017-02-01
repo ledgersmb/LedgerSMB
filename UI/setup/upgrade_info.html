@@ -1,4 +1,4 @@
-<?lsmb INCLUDE "ui-header.html" 
+<?lsmb INCLUDE "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
@@ -75,12 +75,13 @@ your database is in an inconsistent state and needs to be fixed first.
   copy all data from the 1.2 tables into the 1.3 tables.
 </p>
 <?lsmb INCLUDE button element_data = {
-    text = text('Upgrade') 
+    text = text('Upgrade')
     name = 'action'
    value = upgrade_action
     type = 'submit'
    class = 'submit'
 } ?>
+</div>
 </div>
 </form>
 </div>

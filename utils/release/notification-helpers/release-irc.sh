@@ -28,7 +28,7 @@
 
 ConfigFile=~/.lsmb-release
 
-libFile=` readlink -f ./bash-functions.sh`
+libFile=` readlink -f ../lib/bash-functions.sh`
 [[ -f $libFile ]] && { [[ -r $libFile ]] && source $libFile; } || {
     printf "\n\n\n";
     printf "=====================================================================\n";

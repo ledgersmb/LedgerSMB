@@ -221,7 +221,10 @@ def 'templates',
     default => 'templates',
     doc => qq||;
 
-our $cache_template_subdir = "lsmb_templates"; # this is a subdir of $tempdir and shouldn't have a leading slash
+def 'templates_cache',
+    section => 'paths',
+    default => 'lsmb_templates',
+    doc => qq|this is a subdir of tempdir, unless it's an absolute path|;
 
 
 ### SECTION  ---   mail
@@ -415,7 +418,6 @@ if(!(-d LedgerSMB::Sysconfig::tempdir())){
          $rc = system("mkdir " . LedgerSMB::Sysconfig::tempdir());
      } else {
          $rc=system("mkdir -p " . LedgerSMB::Sysconfig::tempdir());
-     #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
      }
 }
 

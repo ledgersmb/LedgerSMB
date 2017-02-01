@@ -42,12 +42,12 @@ a wide range of mobile browsers.
 
 The instructions below are for getting started quickly; the [project's
 site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
-for production installs.
+for **production** installs.
 
 ## Check out the sources from GitHub
 
-Note: **Skip this step for from-tarball installs**
-Installation from release tarballs is preferred over installation from GitHub.
+__***Skip this step for from-tarball installs***__
+(Installation from release tarballs is preferred over installation from GitHub.)
 
 To get the latest development version:
 
@@ -57,10 +57,10 @@ To get the latest development version:
  $ git submodule update --init --recursive
 ```
 
-To get the released version 1.4.22, the commands look like:
+To get the released version 1.5.1, the commands look like:
 
 ```
- $ git clone -b 1.4.22 https://github.com/ledgersmb/LedgerSMB.git
+ $ git clone -b 1.5.1 https://github.com/ledgersmb/LedgerSMB.git
  $ cd LedgerSMB
  $ git submodule update --init --recursive
 ```
@@ -92,22 +92,10 @@ Then, some of the features listed below have system requirements as well:
 
 ## Perl module dependencies
 
-This section depends on [a working local::lib installation](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
+This section depends on [a working local::lib installation](https://ledgersmb.org/content/setting-perls-locallib-ledgersmb-why-and-how)
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
-and `cpanminus` respectively). In case `local::lib` is installed from the
-the distro repository, step (4) in the [installation instructions](https://metacpan.org/pod/local::lib#The-bootstrapping-technique)
-is still to be executed:
-
-```bash
- $ echo 'eval "$(perl -I$HOME/foo/lib/perl5 -Mlocal::lib=$HOME/foo)"' >>~/.bashrc
-```
-
-In order for the command above to take effect, please log out and log in again.
-
-
-`cpanm` depends on the `make` command being available; depending on which dependencies
-are being installed, `gcc` may be required as well.
+and `cpanminus` respectively). `cpanm` depends on the `make` command being available.
 
 To install the Perl module dependencies, run:
 
@@ -131,11 +119,12 @@ specifying ```--with-feature=<feature>```:
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
 
-cpanm will by default use [local::lib](http://search.cpan.org/~haarg/local-lib-2.000019/) so that dependencies are not installed into the global perl installation.
+When not installing as root or through `sudo`, `cpanm` will install unfulfilled
+library dependencies into a location which can be used with `local::lib`. 
 
 The [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
-contain a list of distribution provided packages to reduce the CPAN
-installation.
+contain a list of distribution provided packages to reduce the
+number of dependencies installed from CPAN.
 
 **NOTES**
 
@@ -183,7 +172,14 @@ After editing the ```pg_hba.conf``` file, reload the PostgreSQL server
 
 ## Configure LedgerSMB
 
-For most systems, all that's required in this step is:
+### From-tarball installs
+(Installation from tarball is highly preferred over installation from GitHub for production installs.)
+
+```bash
+ $ cp conf/ledgersmb.conf.default ledgersmb.conf
+```
+
+### From-GitHub installs
 
 ```bash
  $ cp conf/ledgersmb.conf.unbuilt-dojo ledgersmb.conf
@@ -192,7 +188,8 @@ For most systems, all that's required in this step is:
  > Note: Using 'built dojo' instead of 'unbuilt dojo' will greatly improve
  > page load times of some pages.  However, creating a built dojo
  > adds considerable complexity to these instructions; please consult
- > the extensive setup instructions to build dojo.
+ > [the extensive setup instructions](https://ledgersmb.org/topic/installing-ledgersmb-15-github)
+ > to build dojo.
 
 ## Running Starman
 
@@ -217,9 +214,10 @@ Setting gid to "1000 1000 24 25 27 29 30 44 46 108 111 121 1000"
 
 ## Environment Variables
 
+All regular Perl environment variables can be used. In particular, it's important to make sure
+`PERL5LIB` is set correctly when setting up `local::lib` for the first time.
+
 We support the following
-- PERL5LIB        : Required for most installations (if local::lib has been used)
-     - should be already be configured as part of [Section Perl module dpendencies](#perl-module-dependencies)
 - LSMB_WORKINGDIR : Optional
      - Causes a chdir to the specified directory as the first thing done in starman.psgi
      - If not set the current dir is used.
@@ -269,7 +267,7 @@ as well as in the Transifex project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2016 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2017 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 

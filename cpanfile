@@ -38,7 +38,6 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Middleware::ConditionalGET'; # YLA
 requires 'Plack::Builder::Conditionals'; # YLA
-requires 'Plack::Middleware::Redirect';
 requires 'Template', '2.14';
 requires 'Text::CSV';
 requires 'Template::Parser';
@@ -96,7 +95,9 @@ feature 'xls', "Microsoft Excel" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'File::Util';
-    requires 'HTML::Lint';
+    requires 'HTML::Lint::Pluggable';
+    requires 'HTML::Lint::Pluggable::HTML5';
+    requires 'HTML::Lint::Pluggable::WhiteList';
     requires 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';

@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION batch__lock_for_update (in_batch_id integer)
@@ -217,10 +221,9 @@ $$
                                 in_description IS NULL) AND
                         (in_created_by_eid = b.created_by OR
                                 in_created_by_eid IS NULL) AND
-                        ((in_approved = false OR in_approved IS NULL AND
-                                approved_on IS NULL) OR
-                                (in_approved = true AND approved_on IS NOT NULL)
-                        )
+                        (((in_approved = false OR in_approved IS NULL)
+                          AND approved_on IS NULL)
+                         OR (in_approved = true AND approved_on IS NOT NULL))
                         and (in_date_from IS NULL
                                 or b.default_date >= in_date_from)
                         and (in_date_to IS NULL

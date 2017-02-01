@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <div id="bank_act_div"
      title="<?lsmb text('Bank Accounts') ?>"
      data-dojo-type="dijit/layout/ContentPane"
@@ -13,12 +14,12 @@ FOREACH ba IN bank_account;
     ba.delete_href_suffix=ba.id _ '&action=delete_bank_account';
     ba.delete = '[' _ text('Delete') _ ']';
 END;
-PROCESS dynatable 
+PROCESS dynatable
    attributes = { id = 'bank_account_list', width = '100%' }
    tbody = {rows = bank_account}
    columns = [
      { col_id='bic', type='text', name=text('BIC/SWIFT Code') } #'
-     { col_id='iban', type='href', href_base=href_base, 
+     { col_id='iban', type='href', href_base=href_base,
          name=text('Account Number')}#'
      { col_id='remark', type='text', name=text('Remark') }
      { col_id='delete', type='href', href_base=href_base, name=' ' }
@@ -32,36 +33,36 @@ PROCESS dynatable
                 value = form_id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="entity_id" 
+                type="hidden"
+                name="entity_id"
                 value=entity_id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="credit_id" 
+                type="hidden"
+                name="credit_id"
                 value=credit_id
         } ?>
         <?lsmb PROCESS input element_data = {
-                type="hidden" 
-                name="bank_account_id" 
+                type="hidden"
+                name="bank_account_id"
                 value=request.id
         } ?>
         <div>
         <?lsmb INCLUDE input element_data = {
-                type="text" 
+                type="text"
                 title = text('BIC/SWIFT Code')
                 label = "_none_"
-                name="bic" 
+                name="bic"
                 value=request.bic
                 size=20
         } #' ?>
         </div>
         <div>
         <?lsmb PROCESS input element_data = {
-                type="text" 
+                type="text"
                 title = text('Bank Account')
                 label = "_none_"
-                name="iban" 
+                name="iban"
                 value=request.iban
                 size=20
                 required = 'true'
@@ -69,20 +70,20 @@ PROCESS dynatable
         </div>
         <div>
         <?lsmb PROCESS input element_data = {
-                type="text" 
+                type="text"
                 title = text('Remark')
                 label = "_none_"
-                name="remark" 
+                name="remark"
                 value=request.remark
                 size=30
         } # ?>
         </div>
 </div>
         <div><?lsmb PROCESS button element_data = {
-                name="action" 
+                name="action"
                 value="save_bank_account"
                 class="submit"
-                text = text('Save') 
+                text = text('Save')
                 } ?>
         </div>
 </form>

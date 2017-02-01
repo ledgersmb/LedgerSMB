@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
-<?lsmb PROCESS elements.html ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
 <table width="100%">
@@ -10,7 +10,7 @@
       <table>
         <tr>
           <th align="right"><?lsmb text('Code') ?></th>
-	  <td><?lsmb PROCESS input element_data={name => 'code', size => 10, value => form.code} ?></td>
+          <td><?lsmb PROCESS input element_data={name => 'code', size => 10, value => form.code} ?></td>
         </tr>
         <tr>
           <th align="right"><?lsmb text('Description') ?></th>
@@ -22,11 +22,11 @@
   <tr><td colspan="2"><hr size="3" noshade="noshade" /></td></tr>
 </table>
 <?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
-		}; END ?>
+        PROCESS input element_data={
+                type => 'hidden',
+                name => hidden,
+                value => hiddens.item(hidden)
+                }; END ?>
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
 </body>

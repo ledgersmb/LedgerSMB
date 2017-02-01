@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 begin;
 
 --Journal entry stored procedures for LedgerSMB

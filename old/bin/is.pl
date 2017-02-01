@@ -124,6 +124,9 @@ sub add {
 
 sub edit {
 
+    &invoice_links;
+    &prepare_invoice;
+
     if ($form->{is_return}){
         $form->{title} = $locale->text('Edit Customer Return');
         $form->{subtype} = 'credit_invoice';
@@ -133,8 +136,6 @@ sub edit {
     } else {
         $form->{title} = $locale->text('Edit Sales Invoice');
     }
-    &invoice_links;
-    &prepare_invoice;
     &display_form;
 
 }

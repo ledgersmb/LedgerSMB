@@ -6,13 +6,13 @@
  END; ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
   <?lsmb PROCESS textarea element_data = {
-			class="template-body " _ to_edit.format _ " editor" 
-			cols="80"
-			name="template"
-			rows="30" 
-		 text=UNESCAPE(to_edit.content) } ?>
+                        class="template-body " _ to_edit.format _ " editor"
+                        cols="80"
+                        name="template"
+                        rows="30"
+                 text=UNESCAPE(to_edit.content) } ?>
   <br/>
-<?lsmb 
+<?lsmb
 PROCESS input element_data = {
     type = 'hidden'
     name = 'template_name'

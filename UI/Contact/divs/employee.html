@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <div id="employee_div"
      title="<?lsmb text('Employee') ?>"
      data-dojo-type="dijit/layout/ContentPane"
@@ -7,23 +8,23 @@
 <form data-dojo-type="lsmb/Form" name="hr" action="<?lsmb request.script ?>" method="post">
 <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:3">
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "target_div"
-		value = 'hr_div'
-	} ?>
+                type = "hidden"
+                name = "target_div"
+                value = 'hr_div'
+        } ?>
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "form_id"
-		value = form_id
-	} ?>
+                type = "hidden"
+                name = "form_id"
+                value = form_id
+        } ?>
 <?lsmb PROCESS input element_data = {
                 type = "hidden"
                 name = "entity_id"
                value = entity_id
-} ?>	
+} ?>
 <div class="input_line">
 <div class="input_group g1">
-     <?lsmb 
+     <?lsmb
         PROCESS select element_data = {
                   title = text('Salutation')
                   label = "_none_"
@@ -40,35 +41,35 @@
 <div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
 <div class="input_group g1">
 <?lsmb PROCESS input element_data = {
-	title = text('First Name') #'
-	label = "_none_"
-	name = "first_name"
-	value = employee.first_name
-	type = "text"
-	size = 20
+        title = text('First Name') #'
+        label = "_none_"
+        name = "first_name"
+        value = employee.first_name
+        type = "text"
+        size = 20
    required = 'true'
 } ?>
 </div>
 <div class="input_group g2">
 <?lsmb PROCESS input element_data = {
-	title = text('Middle Name') #'
-	label = "_none_"
-	name = "middle_name"
-	value = employee.middle_name
-	type = "text"
-	size = 20
+        title = text('Middle Name') #'
+        label = "_none_"
+        name = "middle_name"
+        value = employee.middle_name
+        type = "text"
+        size = 20
 } ?>
 </div>
 </div>
 <div class="input_line" id='person_name2_div'>
 <div class="input_group g1">
 <?lsmb PROCESS input element_data = {
-	title = text('Last Name') #'
-	label = "_none_"
-	name = "last_name"
-	value = employee.last_name
-	type = "text"
-	size = 20
+        title = text('Last Name') #'
+        label = "_none_"
+        name = "last_name"
+        value = employee.last_name
+        type = "text"
+        size = 20
    required = 'true'
 } ?>
 </div>
@@ -76,26 +77,26 @@
 problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="input_group g2">
 <?lsmb PROCESS input element_data = {
-	title = text('Job Title')
-	label = "_none_"
-	name = "role"
-	value = employee.role
-	type = "text"
-	size = 20
+        title = text('Job Title')
+        label = "_none_"
+        name = "role"
+        value = employee.role
+        type = "text"
+        size = 20
 } # ' ?>
 </div>
 </div>
 <div class="input_line" id="person-role-div">
 <div class="input_group g1">
-<?lsmb 
+<?lsmb
 IF employee.sales; checked = "CHECKED"; ELSE; checked = undef; END;
 PROCESS input element_data = {
-	title = text('Sales')
-	label = "_none_"
-	value = 1
-	type = "checkbox"
-	checked = checked
-	name = "sales"
+        title = text('Sales')
+        label = "_none_"
+        value = 1
+        type = "checkbox"
+        checked = checked
+        name = "sales"
 } ?>
 </div>
 <div class="input_group g2">
@@ -114,27 +115,27 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
 <div class="input_line" id="person-country-div">
 <div class="input_group solo">
        <?lsmb country_list.unshift({}) ?>
-		<?lsmb INCLUDE select element_data = {
-			text_attr = "name"
-			value_attr = "id"
-			default_values = [employee.country_id]
-			options = country_list
-			name = "country_id"
+                <?lsmb INCLUDE select element_data = {
+                        text_attr = "name"
+                        value_attr = "id"
+                        default_values = [employee.country_id]
+                        options = country_list
+                        name = "country_id"
                         required = 'true'
-			title = text('Country') 
-			label = "_none_"
-	} ?> 
+                        title = text('Country')
+                        label = "_none_"
+        } ?>
 </div>
 </div>
 <div id="employee_div" class="input_line">
 <div class="input_group g1">
 <?lsmb PROCESS input element_data = {
-	title = text('Employee Number') #'
-	label = "_none_"
-	value = employee.employeenumber
-	name = "employeenumber"
-	type = "text"
-	size = 20
+        title = text('Employee Number') #'
+        label = "_none_"
+        value = employee.employeenumber
+        name = "employeenumber"
+        type = "text"
+        size = 20
    required = 'true'
 }  ?>
 </div>
@@ -147,7 +148,7 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
 default_values = [employee.manager_id]
      text_attr = 'label'
     value_attr = 'id'
-} ?> 
+} ?>
 </div>
 <div class="input_group g3">
 <?lsmb PROCESS input element_data = {
@@ -165,58 +166,58 @@ default_values = [employee.manager_id]
 <div class="input_line" id="hr_dates_div">
 <div class="input_group g1">
 <?lsmb PROCESS input element_data = {
-	title = text('DOB')
-	label = "_none_"
-	name = "dob"
-	value = employee.dob
-	type = "text"
-	class = "date"
-	size = 10
+        title = text('DOB')
+        label = "_none_"
+        name = "dob"
+        value = employee.dob
+        type = "text"
+        class = "date"
+        size = 10
       required = 'true'
 }  ?>
 </div>
 <div class="input_group g2">
 <?lsmb PROCESS input element_data = {
-	title = text('Start Date')
-	label = "_none_"
-	name = "start_date"
-	value = employee.start_date
-	type = "text"
-	class = "date"
-	size = 10
+        title = text('Start Date')
+        label = "_none_"
+        name = "start_date"
+        value = employee.start_date
+        type = "text"
+        class = "date"
+        size = 10
 } # '  ?>
 </div>
 <div class="input_group g3">
 <?lsmb PROCESS input element_data = {
-	title = text('End Date')
-	label = "_none_"
-	name = "end_date"
-	value = employee.end_date
-	class = "date"
-	type = "text"
-	size = 10
+        title = text('End Date')
+        label = "_none_"
+        name = "end_date"
+        value = employee.end_date
+        class = "date"
+        type = "text"
+        size = 10
 } # ' ?>
 </div>
 </div>
 </div>
 <div>
 <?lsmb PROCESS button element_data = {
-	text = text('Save')
-	class = "submit"
-	type = "submit"
+        text = text('Save')
+        class = "submit"
+        type = "submit"
         name = 'action'
-	value = "save_employee"
+        value = "save_employee"
 } ?>
-<?lsmb 
+<?lsmb
 IF manage_users and entity_id;
    IF user_id ?>
        <a href="admin.pl?action=edit_user&user_id=<?lsmb user_id ?>"
-       >[<?lsmb text('Edit User') ?>]</a><?lsmb 
+       >[<?lsmb text('Edit User') ?>]</a><?lsmb
    ELSE ?>
-       <a href="admin.pl?action=new_user&first_name=<?lsmb tt_url(first_name) 
-                ?>&last_name=<?lsmb tt_url(last_name) 
-                ?>&employeenumber=<?lsmb tt_url(employeenumber) 
-                ?>&country_id=<?lsmb tt_url(country_id) 
+       <a href="admin.pl?action=new_user&first_name=<?lsmb tt_url(first_name)
+                ?>&last_name=<?lsmb tt_url(last_name)
+                ?>&employeenumber=<?lsmb tt_url(employeenumber)
+                ?>&country_id=<?lsmb tt_url(country_id)
                 ?>&entity_id=<?lsmb tt_url(entity_id) ?>"
        >[<?lsmb text('Add User') ?>]</a><?lsmb
    END;

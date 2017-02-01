@@ -1,6 +1,6 @@
 <?lsmb INCLUDE "ui-header.html";
    subtotal_inv = 0  ?>
-<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'payments/img/down.gif','payments/img/up.gif') " 
+<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'payments/img/down.gif','payments/img/up.gif') "
 class="lsmb <?lsmb dojo_theme ?>">
  <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="<?lsmb script ?>">
 
@@ -11,7 +11,7 @@ class="lsmb <?lsmb dojo_theme ?>">
     <th id="top_bar_header" class="listtop">
         <?lsmb header.text ?>
     </th>
-    
+
   </tr>
  </table>
  <table width="100%" id="info_table">
@@ -27,7 +27,7 @@ class="lsmb <?lsmb dojo_theme ?>">
        <?lsmb END -?>
       </th>
        <td id="vc_column">
-        <?lsmb vc_entity_info.legal_name -?>                    
+        <?lsmb vc_entity_info.legal_name -?>
        </td>
      </tr>
      <tr id="vc_location_row">
@@ -37,7 +37,7 @@ class="lsmb <?lsmb dojo_theme ?>">
        <td id="vc_location_column">
         <table id="cv_location_table">
         <?lsmb IF vc_entity_info.street1 -?>
-          <tr>       
+          <tr>
             <td><?lsmb vc_entity_info.street1 -?></td>
           </tr>
         <?lsmb END -?>
@@ -49,22 +49,22 @@ class="lsmb <?lsmb dojo_theme ?>">
         <?lsmb IF vc_entity_info.street3 -?>
           <tr>
             <td><?lsmb vc_entity_info.street3 -?></td>
-          </tr> 
+          </tr>
         <?lsmb END -?>
         <?lsmb IF vc_entity_info.city -?>
           <tr>
             <td><?lsmb vc_entity_info.city -?></td>
-          </tr> 
+          </tr>
         <?lsmb END -?>
         <?lsmb IF vc_entity_info.state -?>
           <tr>
             <td><?lsmb vc_entity_info.state -?></td>
-          </tr> 
+          </tr>
         <?lsmb END -?>
         <?lsmb IF vc_entity_info.country -?>
           <tr>
             <td><?lsmb vc_entity_info.country -?></td>
-          </tr> 
+          </tr>
         <?lsmb END -?>
         </table>
        </td>
@@ -98,9 +98,9 @@ class="lsmb <?lsmb dojo_theme ?>">
      <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
      <?lsmb  IF default_curr != curr # Only process element if one exists. ?>
      <tr id="exrate_row">
-      <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+      <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
       <td id="exrate_column">
-       <?lsmb  IF exrate.value -?>        
+       <?lsmb  IF exrate.value -?>
        <?lsmb  exrate.text -?>
        <?lsmb  exrate.type='hidden'; INCLUDE input element_data=exrate -?>
        <?lsmb  END -?>
@@ -152,7 +152,7 @@ class="lsmb <?lsmb dojo_theme ?>">
    <th class="listheading"><?lsmb text('Vendor') -?>/<?lsmb text('Customer') -?></th>
    <th class="listheading"><?lsmb text('Invoice date') -?></th>
    <th class="listheading"><?lsmb text('Invoice due') -?></th>
-   <th class="listheading"><?lsmb text('Overpayment Account') ?>
+   <th class="listheading"><?lsmb text('Overpayment Account') ?></th>
    <th class="listheading"><?lsmb text('Amount to be used') -?></th>
    <th class="listheading">X</th>
   </tr>
@@ -221,7 +221,7 @@ class="lsmb <?lsmb dojo_theme ?>">
   <?lsmb END -?>
   <?lsmb FOREACH data IN avble_invoices; # Loop through selected entity invoices
          IF not data.amount; data.amount = 0; END; -?>
-  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>   
+  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
   <tr class="<?lsmb alterning_style ?>">
    <td align="center"> <a href="<?lsmb data.invoice.href ?>"><?lsmb data.invoice.number ?></a>
     <?lsmb PROCESS input element_data = {
@@ -254,7 +254,7 @@ class="lsmb <?lsmb dojo_theme ?>">
                           type="hidden"
                           id="due_$i"
                           name="due_$i"
-                          value=data.due } ?>    
+                          value=data.due } ?>
    </td>
    <?lsmb IF data.repeated_invoice == 'true' -?>
     <td align="center"> &nbsp; </td>
@@ -277,7 +277,7 @@ class="lsmb <?lsmb dojo_theme ?>">
    <td align="center">
           <?lsmb PROCESS input element_data = {
                                 type="checkbox"
-                                name="checkbox_$i" } ?></td>   
+                                name="checkbox_$i" } ?></td>
   </tr>
   <?lsmb END -?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
@@ -310,7 +310,7 @@ class="lsmb <?lsmb dojo_theme ?>">
                                 options = overpayments
                                 value_attr = 'id'
                                 text_attr = 'accno' } ?>
-   </td>        
+   </td>
    <td align="center">
     <?lsmb PROCESS input element_data = {
                           name="new_amount"
@@ -334,13 +334,13 @@ class="lsmb <?lsmb dojo_theme ?>">
                                 value=subtotal_inv } ?>
    </th>
    <th class="listsubtotal" align="center">&nbsp;</th>
-  </tr> 
- 
- </table>   
+  </tr>
+
+ </table>
  <hr />
  <table id="footer" width="100%">
   <tr id="footer_row">
-   <td valing="top" id="button_column">
+   <td valign="top" id="button_column">
    <?lsmb update.accesskey   = "U";
         update.title       = "UPDATE ALT+U";
         update.name        = "action";
@@ -351,7 +351,7 @@ class="lsmb <?lsmb dojo_theme ?>">
         post.title        = "POST ALT+P";
         post.name         = "action";
         post.value        = "post_overpayment";
-        post.text         = text("POST"); 
+        post.text         = text("POST");
         INCLUDE button element_data=post -?>
    <?lsmb post_and_print.accesskey = "R";
         post_and_print.title     = "POST AND PRINT ALT+R";
@@ -364,7 +364,7 @@ class="lsmb <?lsmb dojo_theme ?>">
    <?lsmb FOREACH element_data IN selectedcheckboxes  ?>
    <?lsmb # We should use a cipher here, to avoid XSS
            element_data.type  ='hidden';
-           element_data.value ='checked'; 
+           element_data.value ='checked';
            INCLUDE input element_data ?>
    <?lsmb END ?>
    </td>
@@ -377,9 +377,9 @@ class="lsmb <?lsmb dojo_theme ?>">
                                 readonly="true"
                                 style="transparent;"
                                 text=warning } ?>
-   <?lsmb END -?>  
+   <?lsmb END -?>
    </td>
-  </tr>           
+  </tr>
  </table>
  <?lsmb FOREACH item IN hiddens -?>
    <?lsmb INCLUDE input element_data=item ?>

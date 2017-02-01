@@ -1,10 +1,10 @@
-<?lsmb INCLUDE 'ui-header.html' 
+<?lsmb INCLUDE 'ui-header.html'
         stylesheet=form.stylesheet ?>
-<?lsmb PROCESS elements.html ?> 
+<?lsmb PROCESS elements.html ?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
 
-<?lsmb INCLUDE OPEN_STATUS_DIV 
+<?lsmb INCLUDE OPEN_STATUS_DIV
              id=form.id approved = form.approved action=form.action ?>
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
 <table width="100%">
@@ -17,7 +17,7 @@
       <table>
         <tr>
           <th align="right"><?lsmb text('Reference') ?></th>
-          <td>     
+          <td>
                <?lsmb INCLUDE input element_data = {
                         name = "reference",
                         value = form.reference,
@@ -34,9 +34,9 @@
                  options = form.sequences
                text_attr = 'label'
               value_attr = 'label'
-                 }; 
+                 };
              END; ?>
-         </td>          
+         </td>
           <th align="right"><?lsmb text('Date') ?></th>
           <td>
               <?lsmb INCLUDE input element_data = {
@@ -51,7 +51,7 @@
         </tr>
         <tr>
           <th align="right"><?lsmb text('Description') ?></th>
-          <td colspan="3"> 
+          <td colspan="3">
                         <?lsmb IF form.colrowdesc ==1 ?>
                               <?lsmb INCLUDE textarea element_data={
                                                         name = "description"
@@ -59,7 +59,7 @@
                                                         cols = form.colsdesc
                                                         text = form.description
                                                         id = "des_1"
-                                                                    } 
+                                                                    }
                                ?>
                         <?lsmb ELSE ?>
                                   <?lsmb INCLUDE textarea element_data = {
@@ -69,7 +69,7 @@
                                                       size = "50",
                                                       class = 'description'
                                                       id = "des_1"
-                                                                      } 
+                                                                      }
                                    ?>
 
                         <?lsmb END ?>
@@ -85,7 +85,7 @@
                                                         cols = form.colsnotes
                                                         text = form.notes
                                                         id = "not_1"
-                                                            } 
+                                                            }
                                ?>
                         <?lsmb ELSE ?>
                                   <?lsmb INCLUDE textarea element_data = {
@@ -94,7 +94,7 @@
                                                       size = "50",
                                                       class = 'notes'
                                                       id = "not_1"
-                                                          } 
+                                                          }
                                    ?>
 
                         <?lsmb END ?>
@@ -102,7 +102,6 @@
 
           </td>
         </tr>
-<<<<<<< HEAD
         <tr>
           <th align="right"><?lsmb text('FX') ?></th>
           <td colspan="3">
@@ -115,15 +114,12 @@
                    checked=form.fx_transaction } ?>
           </td>
         </tr>
-=======
->>>>>>> lsmb/master
       </table>
     </td>
  </tr>
 
 <tr>
     <td>
-<<<<<<< HEAD
       <table width="100%" id="transaction-table"
              <?lsmb IF form.fx_transaction ?>
              class="fx-transaction"
@@ -131,9 +127,6 @@
              class="no-fx-transaction"
              <?lsmb END ?>
              >
-=======
-      <table width="100%">
->>>>>>> lsmb/master
           <tr class="listheading">
           <th class="listheading"><?lsmb text('Account') ?></th>
           <th class="listheading"><?lsmb text('FX') ?></th>
@@ -150,16 +143,12 @@
                <?lsmb END ?>
           <?lsmb END ?>
         </tr>
-<<<<<<< HEAD
           <?lsmb
         curr = [];
         FOREACH c IN form.currencies;
            curr.push({ text = c, value = c });
         END;
-        FOREACH displayrow IN displayrows ?> 
-=======
-        <?lsmb FOREACH displayrow IN displayrows ?> 
->>>>>>> lsmb/master
+        FOREACH displayrow IN displayrows ?>
         <tr>
                 <?lsmb INDEX=displayrow.index ?>
                   <td>
@@ -174,48 +163,26 @@
                                                                          class = 'AccountBox'
                                                                          'data-dojo-type' = 'lsmb/accounts/AccountSelector'
                             'data-dojo-props' = 'required: false'
-                              } ?> 
-                           
+                              } ?>
+
                           <?lsmb ELSE ?>
-                              
+
                                       <?lsmb PROCESS label element_data = {
                                         text = displayrow.accno
                                         align = 'right'
                                         id = "acc_$INDEX"
                                       } ?>
-                              
 
-                        <?lsmb END ?> 
-          
+
+                        <?lsmb END ?>
+
                  </td>
-              
+
                       <td>
 
-<<<<<<< HEAD
-=======
-                            <?lsmb IF  displayrow.fx_transactionset == 1 ?>
-                                           <?lsmb PROCESS input element_data = {
-                                              value = 1
-                                              type = "checkbox"
-                                              checked = "true"
-                                              name = "fx_transaction_$INDEX"
-                                              id = "fxt_$INDEX"
-                                              } ?>
-                            <?lsmb ELSE ?>
-                                           <?lsmb PROCESS input element_data = {
-                                              value = 1
-                                              type = "checkbox"
-                                              checked = ""
-                                              name = "fx_transaction_$INDEX"
-                                              id = "fxt_$INDEX"
-                                              } ?>
-                            <?lsmb END ?>
-                            
-
->>>>>>> lsmb/master
                       </td>
-                
-                  
+
+
                   <td>
                           <?lsmb PROCESS input element_data = {
                                   value = displayrow.debit
@@ -225,7 +192,7 @@
                                   accesskey = displayrow.index
                                   id = "deb_$INDEX"
                                               }  ?>
-                  
+
                    </td>
 
                   <td>
@@ -236,7 +203,7 @@
                                   size = 12
                                   id = "cre_$INDEX"
                                       }  ?>
-                  
+
                    </td>
 
                     <td>
@@ -246,9 +213,9 @@
                                   type = "text"
                                   size = 10
                                   id = "sou_$INDEX"
-                                     
+
                            }  ?>
-                  
+
                    </td>
 
                     <td>
@@ -258,10 +225,10 @@
                                   size = 30
                                   id = "mem_$INDEX"
                                      }  ?>
-                  
+
                    </td>
                   <?lsmb IF form.projectset == 1 ?>
-                   <td> 
+                   <td>
 
                         <?lsmb IF displayrow.projectset == 1 ?>
                                         <?lsmb PROCESS label element_data = {
@@ -269,7 +236,7 @@
                                               align = 'right'
                                               id = "pro_$INDEX"
                                      } ?>
-                                                
+
 
                         <?lsmb ELSE ?>
                                 <?lsmb INCLUDE select element_data = {
@@ -277,9 +244,9 @@
                                         value_attr = "projectstyle"
                                         default_values = []
                                         options = form.all_project
-                                        name = "projectnumber_$INDEX"                             
+                                        name = "projectnumber_$INDEX"
                                         id = "pro_$INDEX"
-                                     } ?>               
+                                     } ?>
 
                         <?lsmb END ?>
 
@@ -288,7 +255,7 @@
                    <?lsmb FOREACH cls IN form.bu_class ?>
                       <?lsmb IF form.b_units.${cls.id} ?>
                    <td>
-                       
+
                        <?lsmb clsid = cls.id;
                               bucid = "b_unit_$clsid";
                               burow = "${bucid}_$INDEX";
@@ -305,7 +272,6 @@
                   <?lsmb END ?>
 
         </tr>
-<<<<<<< HEAD
      <tr class="fx-row">
        <td><!-- account cell is empty --></td>
        <td><?lsmb PROCESS select element_data = {
@@ -314,39 +280,35 @@
                   default_values = [displayrow.curr]
                   } ?></td>
 
-                  <td>
-                          <?lsmb PROCESS input element_data = {
-                                  value = displayrow.debit_fx
-                                  name = "debit_fx_$INDEX"
-                                  type = "currency"
+       <td>
+         <?lsmb PROCESS input element_data = {
+                        value = displayrow.debit_fx
+                        name = "debit_fx_$INDEX"
+                        type = "currency"
                                   size = 12
                                   accesskey = displayrow.index
                                   id = "deb_fx_$INDEX"
                                               }  ?>
-                  
-                   </td>
+       </td>
 
-                  <td>
-                          <?lsmb PROCESS input element_data = {
+       <td>
+         <?lsmb PROCESS input element_data = {
                                   value = displayrow.credit_fx
                                   name = "credit_fx_$INDEX"
                                   type = "currency"
                                   size = 12
                                   id = "cre_fx_$INDEX"
                                       }  ?>
-                  
-                   </td>
+       </td>
      </tr>
-=======
->>>>>>> lsmb/master
-        <?lsmb END ?>
+     <?lsmb END ?>
         <tr class="listtotal">
           <th>&nbsp;</th>
              <th class="listheading">&nbsp;</th>
           <th class="listtotal debitsubtotal" align="right">
                         <?lsmb form.totaldebit ?>
           </th>
-          
+
           <th class="listtotal creditsubtotal" align="right">
                         <?lsmb form.totalcredit ?>
           </th>
@@ -383,6 +345,7 @@
 <table width="100%">
 <tr class="listtop">
 <th colspan="4"><?lsmb text('Attached and Linked Files') ?></th>
+</tr>
 <tr class="listheading">
 <th><?lsmb text('File name') ?></th>
 <th><?lsmb text('File type') ?></th>
@@ -391,12 +354,12 @@
 </tr>
 <?lsmb FOREACH file IN form.files ?>
 <tr>
-<td><a href="file.pl?action=get&file_class=1&ref_key=<?lsmb form.id 
+<td><a href="file.pl?action=get&file_class=1&ref_key=<?lsmb form.id
             ?>&id=<?lsmb file.id ?>" target="_download"
-            ><?lsmb file.file_name ?></a></td> 
-<td><?lsmb file.mime_type ?></td> 
-<td><?lsmb file.uploaded_at ?></td> 
-<td><?lsmb file.uploaded_by_name ?></td> 
+            ><?lsmb file.file_name ?></a></td>
+<td><?lsmb file.mime_type ?></td>
+<td><?lsmb file.uploaded_at ?></td>
+<td><?lsmb file.uploaded_by_name ?></td>
 </tr>
 <?lsmb END ?>
 </table>
@@ -409,8 +372,8 @@
 <th><?lsmb text('Attached at') ?></th>
 <th><?lsmb text('Attached by') ?></th>
 </tr>
-<?lsmb 
-FOREACH link IN form.file_links; 
+<?lsmb
+FOREACH link IN form.file_links;
         aclass="&nbsp;";
         IF link.src_class() == 1;
             aclass="Transaction";
@@ -418,17 +381,17 @@ FOREACH link IN form.file_links;
             aclass="Order";
         END; ?>
 <tr>
-<td><?lsmb file.file_name ?></td> 
-<td><?lsmb file.mime_type ?></td> 
-<td><?lsmb aclass ?></td> 
-<td><?lsmb file.reference() ?></td> 
-<td><?lsmb file.attached_at() ?></td> 
-<td><?lsmb file.attached_by() ?></td> 
+<td><?lsmb file.file_name ?></td>
+<td><?lsmb file.mime_type ?></td>
+<td><?lsmb aclass ?></td>
+<td><?lsmb file.reference() ?></td>
+<td><?lsmb file.attached_at() ?></td>
+<td><?lsmb file.attached_by() ?></td>
 </tr>
 <?lsmb END # FOREACH ?>
 </table>
 <?lsmb callback = "gl.pl?action=edit&id=" _ form.id -?>
-<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb form.id 
+<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb form.id
    ?>&file_class=1&callback=<?lsmb tt_url(callback) ?>">[<?lsmb text('Attach') ?>]</a>
 <?lsmb END # IF for<?lsmb INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved ?>
 </form>
