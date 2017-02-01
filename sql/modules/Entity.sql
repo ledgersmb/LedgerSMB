@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 --
 
 -- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General

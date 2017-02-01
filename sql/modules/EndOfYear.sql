@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION eoy__latest_checkpoint() RETURNS account_checkpoint

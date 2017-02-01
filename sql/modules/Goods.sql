@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 CREATE OR REPLACE FUNCTION part__get_by_id(in_id int) returns parts

@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 \i sql/modules/Blacklisted.sql.inc
 \copy blacklisted_funcs FROM 'sql/modules/BLACKLIST';
 DO $$

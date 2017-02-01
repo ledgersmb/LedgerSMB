@@ -55,6 +55,21 @@ builder {
     mount '/stop.pl' => sub { exit; }
         if $ENV{COVERAGE};
 
+    enable sub {
+        my $app = shift;
+
+        return sub {
+            my $env = shift;
+
+            return [ 302,
+                     [ Location => '/login.pl' ],
+                     [ '' ] ]
+                         if $env->{PATH_INFO} eq '/';
+
+            return $app->($env);
+        }
+    };
+
     mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
 };
 
