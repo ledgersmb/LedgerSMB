@@ -109,7 +109,12 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{1cm}
 
-\textbf{\MakeUppercase{<?lsmb text('Invoice') ?>}}
+\textbf{\MakeUppercase{<?lsmb
+    IF reverse;
+       text('Credit Invoice');
+    ELSE;
+       text('Invoice');
+    END; ?>}}
 \hfill
 
 \vspace{1cm}
@@ -153,7 +158,8 @@ Fax: <?lsmb shiptofax ?>
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
 <?lsmb END ?>
-\hline \hline
+ \hline \hline
+<?lsmb IF tax ?>
 \multicolumn{8}{r|}{<?lsmb text('Subtotal') ?>} & <?lsmb subtotal ?> \\*
 <?lsmb FOREACH tax ?>
 <?lsmb lc = loop.count - 1 ?>
@@ -161,13 +167,15 @@ Fax: <?lsmb shiptofax ?>
                     ?>  on <?lsmb taxbase.${lc} ?> }
  & <?lsmb tax.${lc} ?> \\*
 <?lsmb END ?>
-<?lsmb IF paid ?>
-\multicolumn{8}{r|}{ <?lsmb text('Paid') ?> } & - <?lsmb paid ?> \\*
 <?lsmb END ?>
-<?lsmb IF total ?>
+\hline \hline
+\multicolumn{8}{r|}{<?lsmb text('Total') ?>} & <?lsmb invtotal ?> \\*
+
+<?lsmb IF paymentdate.0 ?>
+\multicolumn{8}{r|}{ <?lsmb text('Paid') ?> } & - <?lsmb paid ?> \\*
   \hline
   \hline
-\multicolumn{8}{r|}{<?lsmb text('Balance Due') ?>} & <?lsmb total ?>\\
+\multicolumn{8}{r|}{<?lsmb text('Balance') ?>} & <?lsmb total ?>\\
 <?lsmb END ?>
 
 \end{longtable}
@@ -194,7 +202,7 @@ Fax: <?lsmb shiptofax ?>
 
 \vfill
 
-<?lsmb IF paid_1 ?>
+<?lsmb IF paymentdate.0 ?>
 \begin{tabularx}{10cm}{@{}lXlr@{}}
   \textbf{<?lsmb text('Payments') ?>} & & & \\
   \hline
