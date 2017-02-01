@@ -121,11 +121,11 @@
 <tr>
     <td>
       <table width="100%" id="transaction-table"
-             <?lsmb IF form.fx_transaction ?>
-             class="fx-transaction"
-             <?lsmb ELSE ?>
-             class="no-fx-transaction"
-             <?lsmb END ?>
+             <?lsmb IF form.fx_transaction ;
+                    'class="fx-transaction"' ;
+                    ELSE ;
+                    'class="no-fx-transaction"' ;
+                    END -?>
              >
           <tr class="listheading">
           <th class="listheading"><?lsmb text('Account') ?></th>

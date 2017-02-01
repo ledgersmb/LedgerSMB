@@ -13,8 +13,8 @@
       action="<?lsmb form.script ?>"
       enctype="multipart/form-data">
   <?lsmb FOREACH hidden IN hiddens.keys;
-	        PROCESS input element_data={
-		        type => 'hidden',
+                PROCESS input element_data={
+                        type => 'hidden',
               name => hidden,
               value => hiddens.item(hidden)
            };
@@ -41,13 +41,13 @@
          value=form.valid_from
          } ?>
   <?lsmb PROCESS button element_data={
-			text = text('Update'),
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="list_exchangerates" 
-			accesskey="U" 
-			title="Update [Alt-U]"
+                        text = text('Update'),
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="list_exchangerates"
+                        accesskey="U"
+                        title="Update [Alt-U]"
          } ?>
 
   <br />
@@ -57,21 +57,21 @@
          } ?>
 
     <?lsmb PROCESS button element_data={
-			text = text('Add'),
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="save_exchangerate" 
-			accesskey="S" 
-			title="Save [Alt-S]"
+                        text = text('Add'),
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="save_exchangerate"
+                        accesskey="S"
+                        title="Save [Alt-S]"
          } ?>
-         
+
   <?lsmb FOREACH button IN buttons;
             PROCESS button element_data=button;
          END ?>
 
   <hr />
-  
+
   <?lsmb PROCESS input element_data = {
          name = "import_file"
          type = "file"
@@ -80,13 +80,13 @@
          } ?>
 
   <?lsmb PROCESS button element_data={
-			text = text('Upload'),
-			class="submit" 
-			type="submit" 
-			name="action" 
-			value="upload_exchangerates" 
-			accesskey="U" 
-			title="Upload [Alt-U]"
+                        text = text('Upload'),
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="upload_exchangerates"
+                        accesskey="U"
+                        title="Upload [Alt-U]"
          } ?>
 
 </form>
