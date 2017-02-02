@@ -20,12 +20,12 @@ matrix:
     - perl: '5.24'
       addons:
         postgresql: '9.6'
-        # sauce_connect: true
+        sauce_connect: true
         apt:
           packages:
             - nginx postgresql-9.6-pgtap
-      # env: SAUCE testing disabled until Selenium-Remote-Driver fixes #302
-      #   - TEST_SAUCE=1
+      env: SAUCE testing disabled until Selenium-Remote-Driver fixes #302
+        - TEST_SAUCE=1
     - perl: '5.24'
       addons:
         postgresql: '9.5'
@@ -34,7 +34,7 @@ matrix:
           packages:
             - nginx postgresql-9.5-pgtap
       env:
-        # - TEST_SAUCE=1
+        - TEST_SAUCE=1
         - DOJO_BUILT=0
     - perl: '5.22'
       addons:
