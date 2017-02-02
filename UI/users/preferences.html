@@ -1,6 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html'
-?> 
-<?lsmb PROCESS elements.html ?> 
+?>
+<?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb INCLUDE input element_data = {
                name = "username"
@@ -29,7 +29,7 @@ password_strings = 'title:"' _ text("Change Password") _
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for ')?><?lsmb user.login ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
-          <?lsmb text('Preferences Saved') ?>
+          <?lsmb text('Preferences Saved') ?></th>
   </tr><?lsmb END # if action ?>
   <tr><th class="info">
           <!-- don't translate password_expires as it's essentially a generated string with numbers and untranslatable -->
@@ -45,7 +45,9 @@ password_strings = 'title:"' _ text("Change Password") _
             <table>
               <tbody>
 
-  <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
+              <tr>
+                <th class="listtop" colspan="2"><?lsmb text('Settings') ?></th>
+              </tr>
               <tr>
                 <th align="right"><?lsmb text('Date Format') ?></th>
                 <td><?lsmb PROCESS select element_data={
@@ -58,7 +60,7 @@ password_strings = 'title:"' _ text("Change Password") _
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Number Format') ?></th>
-                <td><?lsmb PROCESS select element_data={ 
+                <td><?lsmb PROCESS select element_data={
                       name = 'numberformat',
                       options = user.numberformats,
                       default_values = [ user.prefs.numberformat ],
@@ -87,24 +89,22 @@ password_strings = 'title:"' _ text("Change Password") _
                       value_attr = 'file'
                      } ?></td>
               </tr>
-<?lsmb IF printers.defined ?> 
+<?lsmb IF printers.defined ?>
               <tr>
                 <th align="right"><?lsmb text('Printer') ?></th>
                 <td><?lsmb PROCESS select element_data={
                      name = 'printer'
                      options = user.printers
-                     default_values = [ user.prefs.printer] 
+                     default_values = [ user.prefs.printer]
                      text_attr = 'printer'
                      value_attr = 'printer'
                      }?></td>
               </tr>
               <?lsmb END ?>
-<tr>
-  <td colspan="2">
-  </td>
-  </tr>
-  </form>
-</tbody>
+              <tr>
+                <td colspan="2"></td>
+              </tr>
+              </tbody>
             </table>
           </td>
         </tr>

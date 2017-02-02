@@ -2,6 +2,7 @@ default:
    includes:
       - t/lib
       - lib
+      - old/lib
    extensions:
       Pherkin::Extension::LedgerSMB:
          db_name: postgres

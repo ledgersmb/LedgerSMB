@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
-<?lsmb PROCESS elements.html ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
 
@@ -24,8 +24,8 @@
         </tr>
 <?lsmb FOREACH transaction_type IN transactions ?>
         <tr>
-	  <th class="listheading" colspan="<?lsmb columns.size ?>"><?lsmb transaction_type.title ?></th>
-	</tr>
+          <th class="listheading" colspan="<?lsmb columns.size ?>"><?lsmb transaction_type.title ?></th>
+        </tr>
   <?lsmb FOREACH transaction IN transaction_type.transactions ?>
       <tr class="listrow<?lsmb transaction.i ?>">
     <?lsmb FOREACH column IN columns ?>
@@ -44,7 +44,6 @@
       </tr>
   <?lsmb END ?>
 <?lsmb END ?>
-        </tr>
       </table>
     </td>
   </tr>
@@ -54,13 +53,12 @@
 </table>
 
 <?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type => 'hidden',
-		name => hidden,
-		value => hiddens.item(hidden)
-		}; END;
+        PROCESS input element_data={
+                type => 'hidden',
+                name => hidden,
+                value => hiddens.item(hidden)
+                }; END;
 PROCESS button element_data={name => 'action', value => 'process_transactions' text => text('Process Transactions')} ?>
 </form>
-  
 </body>
 </html>

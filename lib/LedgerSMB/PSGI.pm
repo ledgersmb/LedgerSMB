@@ -24,7 +24,6 @@ use Try::Tiny;
 # To build the URL space
 use Plack::Builder;
 use Plack::App::File;
-use Plack::Middleware::Redirect;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 
@@ -214,10 +213,6 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     builder {
-        enable 'Redirect', url_patterns => [
-            qr/^\/?$/ => ['/login.pl',302]
-            ];
-
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
@@ -238,6 +233,21 @@ sub setup_url_space {
 
         mount '/stop.pl' => sub { exit; }
             if $coverage;
+
+        enable sub {
+            my $app = shift;
+
+            return sub {
+                my $env = shift;
+
+                return [ 302,
+                         [ Location => '/login.pl' ],
+                         [ '' ] ]
+                             if $env->{PATH_INFO} eq '/';
+
+                return $app->($env);
+            }
+        };
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };

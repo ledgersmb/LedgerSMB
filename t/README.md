@@ -13,7 +13,7 @@ To run the '66' tests, the following works with the right PostgreSQL,
 PhantomJS and Starman configurations:
 
 ```sh
- $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL=http://localhos:5000 prove
+ $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL=http://localhost:5000 prove
 ```
 
 Note that the '66' tests may be run at a much smaller granularity

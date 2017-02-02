@@ -1,3 +1,4 @@
+<?lsmb# HTML Snippet, for import only ?>
 <div id="notes_div"
      title="<?lsmb text('Notes') ?>"
      data-dojo-type="dijit/layout/ContentPane"
@@ -6,25 +7,25 @@
 <div class="listtop"><?lsmb text('Notes') ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "target_div"
-		value = 'notes_div'
-	} ?>
+                type = "hidden"
+                name = "target_div"
+                value = 'notes_div'
+        } ?>
 <?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "form_id"
-		value = form_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="entity_id" 
-		value=entity_id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="credit_id" 
-		value=credit_act.id
-	} ?>
+                type = "hidden"
+                name = "form_id"
+                value = form_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden"
+                name="entity_id"
+                value=entity_id
+        } ?>
+        <?lsmb PROCESS input element_data = {
+                type="hidden"
+                name="credit_id"
+                value=credit_act.id
+        } ?>
 <div data-dojo-type="lsmb/TabularForm" data-dojo-props="cols:1">
 <div class="input">
    <?lsmb PROCESS input element_data = {
@@ -34,19 +35,19 @@
       value = subject
       type = "text"
       size = "20"
-	} ?>
+        } ?>
 </div>
 <div class="input">
-<?lsmb 
+<?lsmb
 IF credit_act.id;
     PROCESS select element_data = {
-			name = "note_class"
-			default_values = [note_class]
-			options = attach_level_options
-			title = text("Note Class") #"
-			label = "_none_"
-			value_attr = "value"
-	};
+                        name = "note_class"
+                        default_values = [note_class]
+                        options = attach_level_options
+                        title = text("Note Class") #"
+                        label = "_none_"
+                        value_attr = "value"
+        };
 ELSE;
     PROCESS input element_data = {
           type = "hidden"
@@ -57,20 +58,20 @@ ELSE;
 END; ?>
 </div>
 <div class="input"><?lsmb PROCESS textarea element_data = {
-	title = text('Notes')
-	label = "_none_"
-	name = 'note'
+        title = text('Notes')
+        label = "_none_"
+        name = 'note'
          required = 'true'
           id = 'note_entry_note'
 } ?></div></div>
 <div class="input">
 <?lsmb PROCESS button element_data = {
-	text = text('Save')
-	class = 'submit'
-	name = 'action'
-	value = 'save_notes'
+        text = text('Save')
+        class = 'submit'
+        name = 'action'
+        value = 'save_notes'
 } ?>
-
+</div>
 </form>
 <?lsmb FOREACH n = notes ?>
 <div class="note<?lsmb IF n.note_class == 3; ' eca_note'; END ?>">

@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' 
-      include_stylesheet = ["business_unit/edit.css"] 
+<?lsmb INCLUDE 'ui-header.html'
+      include_stylesheet = ["business_unit/edit.css"]
       stylesheet = USER.stylesheet
 ?>
 <?lsmb PROCESS 'elements.html' ?>
@@ -9,8 +9,8 @@
 <?lsmb END ?>
 <div id="business_units">
 <div class="listtop">
-   <?lsmb 
-   IF id; 
+   <?lsmb
+   IF id;
       text('Edit Reporting Unit');
    ELSE;
       text('Add Reporting Unit');

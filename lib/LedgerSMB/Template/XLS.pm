@@ -203,8 +203,7 @@ sub process {
     my $cleanvars = shift;
 
     my $output = '';
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir . "/"
-                . $LedgerSMB::Sysconfig::cache_template_subdir . "/UI";
+    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
     $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
     my $arghash = $parent->get_template_args($extension,$binmode);

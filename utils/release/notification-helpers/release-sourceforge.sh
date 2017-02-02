@@ -38,7 +38,7 @@ export release_version="${2:-${release_version:-unknown}}"
         exit 1;
     fi
 
-libFile=` readlink -f ./bash-functions.sh`
+libFile=` readlink -f ../lib/bash-functions.sh`
 [[ -f $libFile ]] && { [[ -r $libFile ]] && source $libFile; } || {
     printf "\n\n\n";
     printf "=====================================================================\n";

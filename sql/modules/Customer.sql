@@ -1,4 +1,8 @@
 
+set client_min_messages = 'warning';
+
+
+
 begin;
 
 CREATE OR REPLACE FUNCTION customer_location_save (

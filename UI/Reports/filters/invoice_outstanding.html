@@ -6,7 +6,7 @@
            NAME = text('Vendor');
            META_NUMBER = text('Vendor Number'); #'
        ELSIF entity_class == 2;
-           TITLE = text('AR Outstanding'); #' 
+           TITLE = text('AR Outstanding'); #'
            NAME = text('Customer');
            META_NUMBER = text('Customer Number'); #'
        END;
@@ -28,7 +28,7 @@
 } ?>
 <div class="listtop"><?lsmb TITLE ?></div>
 <table class="form">
-<tr id="account-row"> 
+<tr id="account-row">
   <th><?lsmb text('Account') ?></th>
   <td><?lsmb PROCESS select element_data = {
              name = 'account_id',
@@ -87,7 +87,7 @@
          type = 'radio'
          name = 'on_hold'
            id = 'on_hold-active'
-   
+
         value = '0'
      };
      PROCESS input element_data = {
@@ -110,7 +110,7 @@
                     name = 'is_detailed'
                       id = 'is_detailed-0'
                     type = 'radio'
-                   value = '0' 
+                   value = '0'
                  checked = 'CHECKED'
                    label = text('Summary')
         } ?></td>
@@ -118,7 +118,7 @@
                     name = 'is_detailed'
                       id = 'is_detailed-1'
                     type = 'radio'
-                   value = '1' 
+                   value = '1'
                    label = text('Details')
         } ?></td>
       </tr>
@@ -126,32 +126,32 @@
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_running_number'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('No.')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_id'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('ID')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_invnumber'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Invoice Number') #'
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_ordnumber'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Order Number') #'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_ponumber'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('PO Number') #'
         } ?></td>
       </tr>
@@ -159,33 +159,33 @@
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_transdate'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Invoice Date') #'
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_business_units'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Business Units') #'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_entity_name'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = NAME
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_salesperson'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Salesperson')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_manager'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Manager')
         } ?></td>
       </tr>
@@ -193,34 +193,34 @@
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_netamount'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Amount')
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_tax'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Tax')
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_amount'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Total')
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_curr'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Currency')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_last_payment'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Date Paid') #'
         } ?></td>
       </tr>
@@ -228,33 +228,33 @@
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_paid'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Paid')
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_duedate'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Due Date') #'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_due'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Amount Due') #'
                  checked = 'CHECKED'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_notes'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Notes')
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_till'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Till')
         } ?></td>
       </tr>
@@ -262,22 +262,21 @@
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_shipping_point'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Shipping Point') #'
         } ?></td>
         <td><?lsmb PROCESS input element_data = {
                     name = 'col_ship_via'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Ship Via') #'
         } ?></td>
-      
       </tr>
       <tr>
         <td><?lsmb PROCESS input element_data = {
                     name = 'subtotal'
                     type = 'checkbox'
-                   value = '1' 
+                   value = '1'
                    label = text('Subtotal')
         } ?></td>
 

@@ -1,9 +1,9 @@
 <?lsmb
  INCLUDE 'ui-header.html'
         stylesheet = USER.stylesheet
-	include_stylesheet = [
-		'Contact/contact.css'
-	] 
+        include_stylesheet = [
+                'Contact/contact.css'
+        ]
 ?>
 <?lsmb PROCESS 'elements.html';
 PROCESS "dynatable.html"  ?>
@@ -13,10 +13,10 @@ PROCESS "dynatable.html"  ?>
 
 <body class="lsmb <?lsmb dojo_theme ?>">
 
-    <?lsmb IF name ?> 
+    <?lsmb IF name ?>
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>
-    <?lsmb IF meta_number ?> 
+    <?lsmb IF meta_number ?>
 <div class="pageheading"><?lsmb text('Account') ?>: <?lsmb meta_number ?></div>
     <?lsmb END ?>
 <?lsmb notice = line_one ?>
@@ -37,10 +37,10 @@ PROCESS "dynatable.html"  ?>
 -->
 </div>
 <div id="contact_tabs" data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
-  <?lsmb FOREACH ITEM IN DIVS; 
+  <?lsmb FOREACH ITEM IN DIVS;
       INCLUDEDIV = "divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
-  END 
+  END
   ?>
   <?lsmb FOREACH ITEM IN PLUGINS;
       INCLUDEDIV = "plugins/" _ ITEM;

@@ -1,9 +1,10 @@
-<div id="wage_div" 
+<?lsmb# HTML Snippet, for import only ?>
+<div id="wage_div"
      title='<?lsmb text("Wages and Deductions") ?>'
      data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF request.target_div == 'wage_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
-<?lsmb 
+<?lsmb
 columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
            { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
 
@@ -25,16 +26,16 @@ PROCESS dynatable
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
-			            id = 'wage_type_id'
+                     id = 'wage_type_id'
 } ?></td>
 <td><?lsmb PROCESS input element_data = {
               name = 'rate'
              value = rate
              class = 'number'
               type = 'text'
-			       id = 'wage_rate'
+                id = 'wage_rate'
 } ?></td>
-<?lsmb PROCESS input element_data = { 
+<?lsmb PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id
@@ -54,7 +55,7 @@ PROCESS dynatable
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
-			            id = 'deduction_type_id'
+                     id = 'deduction_type_id'
 } ?></td>
 <td><?lsmb PROCESS input element_data = {
               name = 'rate'
@@ -63,7 +64,7 @@ PROCESS dynatable
               type = 'text'
                 id = 'deduction_rate'
 } ?></td>
-<?lsmb PROCESS input element_data = { 
+<?lsmb PROCESS input element_data = {
           name = 'entity_id'
           type = 'hidden'
          value = entity_id

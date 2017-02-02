@@ -458,6 +458,7 @@ sub apply_changes {
         PrintError=>0,
         AutoCommit => 0,
         pg_server_prepare => 0});
+    $dbh->do("set client_min_messages = 'warning'");
     my $loadorder =
         LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);

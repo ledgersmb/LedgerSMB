@@ -93,10 +93,10 @@
             <div class="input_row" id="comparison_type_radios">
             <?lsmb
                 PROCESS input element_data={
-                   value = 'by_periods' 
-                      id = 'comparison_by_periods' 
+                   value = 'by_periods'
+                      id = 'comparison_by_periods'
                     name = 'comparison_type',
-                   label = text('Periods') 
+                   label = text('Periods')
                     type = "radio"
                  checked = (comparison_type == 'by_periods') ? "checked" : undef
                     "data-dojo-type" = "lsmb/PublishRadioButton"
@@ -130,7 +130,7 @@
                                                invalidMessage:'Please enter a numeric value.',
                                                rangeMessage:'Invalid number of periods.'"
             };
-            ?>
+            ?></div>
             <div id='date_period_id' >
                 <?lsmb PROCESS date_period_type_div
                        label = text('Period type')
@@ -142,7 +142,7 @@
                     <h3><?lsmb text('Enter date ranges for comparison') ?></h3>
                     <?lsmb FOREACH c IN [1 .. 9]; ?>
                         <div id="comparison_dates_<?lsmb c ?>">
-                            <?lsmb PROCESS date_to_date_div 
+                            <?lsmb PROCESS date_to_date_div
                                     label = text('Through date') _ ' ' _ c
                                  required = 'false'
                         "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'

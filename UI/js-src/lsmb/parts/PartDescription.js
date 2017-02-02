@@ -1,6 +1,6 @@
 define([
     "dijit/form/ComboBox",
-    "dijit/form/Textarea",
+    "dijit/form/TextBox",
     //    "dijit/form/ComboBoxMixin",
     "dijit/_HasDropDown",
     "dijit/form/_AutoCompleterMixin",
@@ -28,13 +28,14 @@ define([
             height: null,
             store:  store,
             queryExpr: "*${0}*",
-            style: "width: 15ex",
             autoComplete: false,
+            innerStyle: "",
             highlightMatch: "all",
             searchAttr: "description",
             labelAttr: "label",
             templateString: template,
             dropDownClass: _ComboBoxMenu,
+            autoSizing: true,
             startup: function() {
                 var self = this;
                 this.inherited(arguments);
@@ -53,11 +54,29 @@ define([
                             });
                 }
             }, // startup
+            _autoSize: function() {
+                if (! this.autoSizing) return;
+                // setting to 'auto' first helps to shrink
+                // the height when possible.
+                this.textbox.style.height = "1em";
+                this.textbox.scrollTop = 0;
+                this.textbox.style.height =
+                    this.textbox.scrollHeight + "px";
+            }, // autoSize
+            _onInput: function() {
+                this.inherited(arguments);
+                this._autoSize();
+            }, // _onInput
             _onKey: function(e) {
                 if (e.keyCode !== keys.SPACE
                     && e.keyCode !== keys.ENTER) {
                     this.inherited(arguments);
                 }
-            } // _onKey
+                this._autoSize();
+            }, // _onKey
+            set: function() {
+                this.inherited(arguments);
+                this._autoSize();
+            } // set
         });
     });

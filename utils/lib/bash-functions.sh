@@ -209,8 +209,10 @@ TestKey() {
     }
 
     loadConfig() {
-        readarray -n500 -t -c1 -C _storeCFGinArray <$configFile;
+        if [[ -n $configFile ]]; then # allow the configfile to be not set. This means config file functions will fail, but that's up to the consumer
+            readarray -n500 -t -c1 -C _storeCFGinArray <$configFile;
     #    for L in "${cfgLines[@]}"; do echo "$((i++)): $L"; done
+        fi
     }
 
     dump_cfgValue_array() {

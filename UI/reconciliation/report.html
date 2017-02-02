@@ -1,9 +1,9 @@
-<?lsmb PROCESS 'ui-header.html' 
+<?lsmb PROCESS 'ui-header.html'
         include_stylesheet = ['reconciliation/report.css']
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<?lsmb IF check.unapproved_transactions 
+<?lsmb IF check.unapproved_transactions
 ?><div class="warning"><a href="drafts.pl?action=list_drafts&amp;to_date=<?lsmb end_date ?>"><?lsmb text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
 ?></a></div>
 <?lsmb END; IF check.unapproved_reports
@@ -85,7 +85,7 @@ END ?>
 
 <?lsmb IF error ?>
 <div style="border-color:red; border-width:1px; border-style:solid; margin:3px;" >
-    <?lsmb error ?>    
+    <?lsmb error ?>
 </div>
 <?lsmb END ?>
 <?lsmb i = 1 ?>
@@ -113,11 +113,11 @@ END ?>
         <th><?lsmb text('Their Debits') ?></th>
         <th><?lsmb text('Their Credits') ?></th>
     </tr>
-    
+
     <?lsmb FOREACH row = report_lines ?>
             <?lsmb IF (row.cleared) -?>
                            <?lsmb row.cleared = 'checked' -?>
-            <?lsmb ELSE ?> <?lsmb row.cleared = undef -?> 
+            <?lsmb ELSE ?> <?lsmb row.cleared = undef -?>
             <?lsmb END -?>
     <?lsmb IF row.cleared == 'checked' ?>
         <?lsmb INCLUDE input element_data = {
@@ -198,7 +198,7 @@ END ?>
         <th><?lsmb text('Their Debits') ?></th>
         <th><?lsmb text('Their Credits') ?></th>
     </tr>
-    
+
     <?lsmb FOREACH row = report_lines ?>
     <?lsmb IF row.err == 'mismatch' ?>
     <?lsmb INCLUDE input element_data = {

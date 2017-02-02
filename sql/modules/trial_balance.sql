@@ -1,3 +1,7 @@
+
+set client_min_messages = 'warning';
+
+
 BEGIN;
 
 DROP TYPE IF EXISTS tb_row CASCADE;

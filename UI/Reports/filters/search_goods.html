@@ -125,7 +125,7 @@ default_values = [partsgroup_id]
 <tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
 <tr>
   <th>&nbsp;</th>
-  <th class="centered" colspan="3"><?lsmb text('Items Found In') ?></td>
+  <td class="centered" colspan="3"><?lsmb text('Items Found In') ?></td>
 </tr>
 <?lsmb PROCESS date_row ?>
 <tr><th rowspan="2">&nbsp;</th>
@@ -136,7 +136,7 @@ default_values = [partsgroup_id]
        value = 1
        label = text('AR Invoices') #'
      } ?></td>
-  <td><?lsmb 
+  <td><?lsmb
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_so"
@@ -148,7 +148,7 @@ default_values = [partsgroup_id]
         type = "checkbox"
         name = "inc_quo"
        value = 1
-       label = text('Quotations') 
+       label = text('Quotations')
      } ?></td>
 </tr>
 <tr>
@@ -159,7 +159,7 @@ default_values = [partsgroup_id]
        value = 1
        label = text('AP Invoices') #'
      } ?></td>
-  <td><?lsmb 
+  <td><?lsmb
      PROCESS input element_data = {
         type = "checkbox"
         name = "inc_po"
@@ -171,13 +171,13 @@ default_values = [partsgroup_id]
         type = "checkbox"
         name = "inc_rfq"
        value = 1
-       label = text('RFQs') 
+       label = text('RFQs')
      } ?></td>
 </tr>
 <tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
 <tr>
   <th rowspan="2">&nbsp;</th>
-  <th class="centered" colspan="3"><?lsmb text('Include in Report') ?></td>
+  <td class="centered" colspan="3"><?lsmb text('Include in Report') ?></td>
 </tr>
 <tr><td colspan="4">
   <table>
@@ -202,7 +202,7 @@ default_values = [partsgroup_id]
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('Description') 
+          label = text('Description')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
@@ -210,7 +210,7 @@ default_values = [partsgroup_id]
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('On hand') 
+          label = text('On hand')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
@@ -218,7 +218,7 @@ default_values = [partsgroup_id]
            type = 'checkbox'
           value = '1'
         checked = 'CHECKED'
-          label = text('Unit') 
+          label = text('Unit')
        } ?></td>
     </tr>
     <tr><td>
@@ -278,21 +278,21 @@ default_values = [partsgroup_id]
            name = 'col_markup'
            type = 'checkbox'
           value = '1'
-          label = text('Markup') 
+          label = text('Markup')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
            name = 'col_bin'
            type = 'checkbox'
           value = '1'
-          label = text('Bin') 
+          label = text('Bin')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
            name = 'col_rop'
            type = 'checkbox'
           value = '1'
-          label = text('ROP') 
+          label = text('ROP')
        } ?></td>
     </tr>
     <tr><td>
@@ -314,21 +314,21 @@ default_values = [partsgroup_id]
            name = 'col_image'
            type = 'checkbox'
           value = '1'
-          label = text('Image') 
+          label = text('Image')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
            name = 'col_drawing'
            type = 'checkbox'
           value = '1'
-          label = text('Drawing') 
+          label = text('Drawing')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
            name = 'col_microfiche'
            type = 'checkbox'
           value = '1'
-          label = text('Microfiche') 
+          label = text('Microfiche')
        } ?></td>
     </tr>
     <tr><td>
@@ -350,14 +350,14 @@ default_values = [partsgroup_id]
            name = 'col_warehouse'
            type = 'checkbox'
           value = '1'
-          label = text('Warehouse') 
+          label = text('Warehouse')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
            name = 'col_curr'
            type = 'checkbox'
           value = '1'
-          label = text('Currency') 
+          label = text('Currency')
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
@@ -376,6 +376,7 @@ default_values = [partsgroup_id]
        } ?></td>
     </tr>
   </table>
+</td></tr>
 </table>
 <?lsmb PROCESS button element_data = {
    name = 'action'
