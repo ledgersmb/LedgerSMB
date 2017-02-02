@@ -329,7 +329,7 @@ sub get_by_meta_number {
                                           args => [$meta_number, 
                                                    $entity_class]);
     $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
-    return __PACKAGE__->new(%$ref);
+    return __PACKAGE__->new(%$ref, entity_class => $entity_class);
 }
 
 # Private methid _get_tax_ids

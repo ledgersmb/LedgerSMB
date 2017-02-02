@@ -3,6 +3,17 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.38
+* Printed credit invoice indistinguishible from regular invoice (Erik H, #2546)
+* Credit invoice edit screen looks like regular invoice screen (Erik H, #2550)
+* Failure to generate AR/AP aging report (Erik H, #2545)
+* Fix misnamed function in call (Chris T)
+* Invoice template: 'Paid' row shows even without payments (Erik H, #2569)
+* Invoice template: 'Payments' section always printed (Erik H, #2568)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.37
 * Outstanding report (AR/AP) not showing Due amount (Erik H, #2351)
