@@ -136,6 +136,10 @@ sub add {
 }
 
 sub edit {
+
+    &invoice_links;
+    &prepare_invoice;
+
     if ($form->{is_return}){
         $form->{title} = $locale->text('Edit Vendor Return');
         $form->{subtype} = 'debit_invoice';
@@ -145,10 +149,6 @@ sub edit {
     } else {
         $form->{title} = $locale->text('Edit Vendor Invoice');
     }
-
-
-    &invoice_links;
-    &prepare_invoice;
     &display_form;
 
 }

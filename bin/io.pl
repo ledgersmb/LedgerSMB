@@ -343,8 +343,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                             id="description_$i" name="description_$i"
                             $desc_disabled size=48
                             data-dojo-props="channel:'/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}"
-                            style="width:100%;"
-                            rows="1"
+                            style="width: 100%"
                             >$form->{"description_$i"}</div></td>|;
         }
 
