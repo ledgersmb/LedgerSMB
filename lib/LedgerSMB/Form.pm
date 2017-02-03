@@ -1623,7 +1623,7 @@ sub get_exchangerate {
 
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
 
-    my $exchangerate = 1;
+    my $exchangerate = LedgerSMB::PGNumber->from_db(1);
 
     if ($transdate) {
         my $query = qq|
@@ -1632,8 +1632,9 @@ sub get_exchangerate {
         my $sth = $self->{dbh}->prepare($query);
         $sth->execute( $curr, $transdate );
 
-        ($exchangerate) = $sth->fetchrow_array;
-    $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
+        my ($dbexchangerate) = $sth->fetchrow_array;
+        $exchangerate = LedgerSMB::PGNumber->from_db($dbexchangerate)
+               if defined $dbexchangerate;;
         $sth->finish;
     }
 
