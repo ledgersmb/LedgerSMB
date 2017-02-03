@@ -2,6 +2,9 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.3
+* Fixed warning if exchange rate does not exist yet (Chris T)
+
 Changelog for 1.5.2
 * Redirect '/' to '/login.pl' in Starman (Erik H, #2520)
 * Description field too big on GL and invoice screens (Erik H, #2264)
