@@ -79,7 +79,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    _http_error(401, $suffix);#tshvr4
+    _http_error(401, $suffix);
 }
 
 
