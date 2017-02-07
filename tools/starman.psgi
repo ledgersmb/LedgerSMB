@@ -7,6 +7,7 @@ BEGIN {
 package LedgerSMB::FCGI;
 
 use FindBin;
+use lib $FindBin::Bin; # required for 'old code'-"require"s
 use lib $FindBin::Bin . "/../lib";
 use CGI::Emulate::PSGI;
 use LedgerSMB::PSGI;
