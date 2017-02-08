@@ -53,6 +53,7 @@ define([
                                 }
                             });
                 }
+                this._autoSize();
             }, // startup
             _autoSize: function() {
                 if (! this.autoSizing) return;
