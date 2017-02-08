@@ -19,6 +19,7 @@ this software.
 =cut
 
 package LedgerSMB::Handler;
+no lib '.';
 use FindBin;
 use lib $FindBin::Bin;
 

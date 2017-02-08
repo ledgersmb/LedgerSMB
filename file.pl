@@ -1,7 +1,8 @@
 #!/usr/bin/perl 
+no lib '.';
 use FindBin;
 BEGIN {
-  lib->import($FindBin::Bin) unless $ENV{mod_perl}
+  unshift @INC, $FindBin::Bin unless $ENV{mod_perl}
 }
 
 
