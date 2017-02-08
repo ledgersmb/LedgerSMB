@@ -67,6 +67,7 @@ for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {
     }   
 }
 package lsmb_legacy;
+no lib '.';
 use FindBin;
 use lib $FindBin::Bin;
 use Digest::MD5;
