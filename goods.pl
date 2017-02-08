@@ -2,7 +2,8 @@
 no lib '.';
 use FindBin;
 BEGIN {
-  unshift @INC, $FindBin::Bin unless $ENV{mod_perl}
+  unshift @INC, $FindBin::Bin
+      unless grep(@INC, $FindBin::Bin) || $ENV{mod_perl}
 }
 
 
