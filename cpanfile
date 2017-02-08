@@ -101,7 +101,7 @@ on 'develop' => sub {
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
-    requires 'Test::BDD::Cucumber', '0.50';
+    requires 'Test::BDD::Cucumber', '0.51';
     requires 'Test::Exception';
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
