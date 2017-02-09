@@ -93,6 +93,7 @@ feature 'xls', "Microsoft Excel" =>
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
     requires 'File::Util';
+    requires 'HTML::Lint';
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
