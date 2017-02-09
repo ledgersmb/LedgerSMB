@@ -704,7 +704,7 @@ push @tests, __PACKAGE__->new(
 # There's no AP uniqueness requirement?
 push @tests, __PACKAGE__->new(
     test_query => "SELECT id, concat(invnumber,'-',row_number() over(partition by invnumber order by id)) AS invnumber,
-                          transdate, duedate, datepaid, ordnumber, quonumber, approved
+                          dcn, description, transdate, duedate, datepaid, ordnumber, quonumber, approved
                      FROM ap
                     WHERE invnumber IN (SELECT invnumber
                                           FROM ap
@@ -717,7 +717,7 @@ push @tests, __PACKAGE__->new(
                      'ordnumber', 'quonumber', 'approved'],
     column => 'invnumber',
  instructions => $locale->text(
-                   'Please review suggestions to make all AP invoice numbers unique'),
+                   'Contrary to SQL-ledger, LedgerSMB invoices numbers must be unique. Please review suggestions to make all AP invoice numbers unique. Conflicting entries are presented by pairs, with a suffix added to the invoice number'),
     table => 'ap',
     appname => 'sql-ledger',
     min_version => '2.7',
