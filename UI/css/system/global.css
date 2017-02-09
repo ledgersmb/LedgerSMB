@@ -450,6 +450,8 @@ html, body {
     padding: 0;
 }
 
-.claro textarea.dijitInputInner {
+.claro .dijitTextBox textarea.dijitInputInner {
     outline: none;
+    padding-top: 0;
+    padding-bottom: 0;
 }
