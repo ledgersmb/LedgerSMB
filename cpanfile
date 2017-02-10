@@ -95,6 +95,7 @@ on 'develop' => sub {
     requires 'App::Prove', '3.36';
     requires 'File::Util';
     requires 'HTML::Lint';
+    requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
