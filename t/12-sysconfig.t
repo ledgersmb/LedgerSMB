@@ -1,12 +1,15 @@
 #!perl
 
+use strict;
+use warnings;
+no warnings 'once';
+
 use Test::More;
 use English qw(-no_match_vars); # required to 'require Sysconfig'
 
 chdir 't/data';
 
 require '../../lib/LedgerSMB/Sysconfig.pm';
-
 
 plan tests => (11+scalar(@LedgerSMB::Sysconfig::scripts)
                +scalar(@LedgerSMB::Sysconfig::newscripts));

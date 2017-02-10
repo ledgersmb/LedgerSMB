@@ -5,6 +5,8 @@
 package LedgerSMB::Sysconfig;
 use strict;
 use warnings;
+no warnings 'once';
+no warnings 'redefine';
 use Cwd;
 
 use Config;
