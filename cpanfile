@@ -92,6 +92,7 @@ feature 'xls', "Microsoft Excel" =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
+    requires 'App::Prove', '3.36';
     requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Pluggable';
@@ -106,12 +107,13 @@ on 'develop' => sub {
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
+    requires 'Test::Harness', '3.36';
     requires 'Test::ParallelSubtest';
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP';
-    requires 'Weasel', '0.09';
-    requires 'Weasel::Driver::Selenium2', '0.04';
+    requires 'Weasel', '0.10';
+    requires 'Weasel::Driver::Selenium2', '0.05';
     requires 'Weasel::Widgets::Dojo';
 };
