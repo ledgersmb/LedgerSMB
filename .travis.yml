@@ -114,6 +114,7 @@ before_install:
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
+  - cpanm --quiet --notest https://efficito.com/perl/Test-BDD-Cucumber-0.51.tar.gz
   - cpan-install --coverage
 
 before_script:
