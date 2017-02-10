@@ -84,6 +84,7 @@ sub def {
     {
         ## no critic (strict);
         no strict 'refs';
+        no warnings 'redefine';
         ${$name} = $cfg->val($sec, $key, $default);
         if (defined $suffix) {
             ${$name} = "${$name}$suffix";
