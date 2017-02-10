@@ -2,6 +2,8 @@
 
 use Test::More;
 
+use English qw(-no_match_vars); # required to 'require Sysconfig'
+
 
 chdir 't/data';
 
