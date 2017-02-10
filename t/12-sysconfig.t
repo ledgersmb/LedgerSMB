@@ -1,7 +1,7 @@
 #!perl
 
 use Test::More;
-use English qw(-no_match_vars);
+
 
 chdir 't/data';
 
