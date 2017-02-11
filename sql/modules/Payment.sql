@@ -1213,7 +1213,7 @@ BEGIN
                         FROM ap WHERE in_entity_class = 1
                         ) arap ON (arap.entity_credit_account = c.id)
                 JOIN acc_trans a ON (arap.id = a.trans_id)
-                JOIN chart ch ON (ch.id = a.chart_id)
+                JOIN account ch ON (ch.id = a.chart_id)
                 JOIN entity e ON (c.entity_id = e.id)
                 LEFT JOIN voucher v ON (v.id = a.voucher_id)
                 LEFT JOIN batch b ON (b.id = v.batch_id)
