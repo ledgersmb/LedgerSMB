@@ -11,8 +11,8 @@ seq:
         - xt/44-templates.t
         - xt/62-api.t
         - xt/64-x12.t
-      - par: *.pg
-    - seq: *.feature
+      - par: xt/*.pg
+    - seq: **/*.feature
   - seq: xt/89-dropdb.t
   - seq:
     - par: **
