@@ -2,6 +2,18 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.3
+* Fix access to contact data for database admins (Erik H)
+* Fix Reconciliation Submit button not enabled (Nick P)
+* Fix Batch Search for approved transactions (Chris T)
+* Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
+* Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+
+Nick P is Nick Prater
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.2
 * Redirect '/' to '/login.pl' in Starman (Erik H, #2520)
 * Description field too big on GL and invoice screens (Erik H, #2264)
