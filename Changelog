@@ -25,6 +25,7 @@ Changelog for 1.5.3
 * Fix Batch Search for approved transactions (Chris T)
 * Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
 * Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+* Fix payment amounts in Cash->Reports->Receipts (Erik H, 2618)
 
 Nick P is Nick Prater
 Chris T is Chris Travers
