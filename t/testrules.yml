@@ -1,16 +1,14 @@
 ---
-par:
-  - seq:
-    - par: t/*
-    - seq: xt/40-dbsetup.t
-    - seq:
-      - par:
-        - seq: xt/41-coaload.t
-        - seq: xt/43-dbtest.t
-        - seq: xt/44-templates.t
-        - seq: xt/62-api.t
-        - seq: xt/64-x12.t
-        - seq:
-    - seq: xt/89-dropdb.t
-  - seq:
-    - par: **
+seq:
+  - par: t/*
+  - seq: xt/40-dbsetup.t
+  - par:
+    - seq: xt/41-coaload.t
+    - seq: xt/43-dbtest.t
+    - seq: xt/44-templates.t
+    - seq: xt/62-api.t
+    - seq: xt/64-x12.t
+    - par: *.pg
+    - par: *.feature
+  - seq: xt/89-dropdb.t
+  - par: **
