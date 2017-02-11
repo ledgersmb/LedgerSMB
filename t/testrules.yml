@@ -1,6 +1,7 @@
 ---
 seq:
-  par: t/*
+  seq:
+    par: t/*
   seq: xt/40-dbsetup.t
   seq:
     par:
@@ -12,4 +13,5 @@ seq:
     par: *.pg
     seq: *.feature
   seq: xt/89-dropdb.t
-  par: **
+  seq:
+    par: **
