@@ -1,6 +1,7 @@
 ---
 par:
   - seq:
+    - par: t/*
     - seq: xt/40-dbsetup.t
     - seq:
       - par:
@@ -10,5 +11,6 @@ par:
         - seq: xt/62-api.t
         - seq: xt/64-x12.t
         - seq:
-          - par: **
     - seq: xt/89-dropdb.t
+  - seq:
+    - par: **
