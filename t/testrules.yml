@@ -9,6 +9,6 @@ seq:
       - xt/62-api.t
       - xt/64-x12.t
   - par: xt/*.pg
-  - seq: **/*.feature
-  - par: **
+  - seq: **.feature
+#  - par: **
   - seq: xt/89-dropdb.t
