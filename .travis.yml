@@ -135,14 +135,13 @@ before_script:
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
 
 script:
-  - export RELEASE_TESTING=1 &&
-        PGUSER=postgres PGPASSWORD=test
-        LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest
-        LSMB_BASE_URL="http://127.0.0.1:5000"
-        HARNESS_RULESFILE="t/testrules.yml"
+  - RELEASE_TESTING=1
+     PGUSER=postgres PGPASSWORD=test
+     LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
+     LSMB_BASE_URL="http://127.0.0.1:5000"
     prove -j9 -r --source Perl
           --ext=.t --ext=.pg --ext=.feature
-          --source pgTAP   --pgtap-option dbname=lsmb13installtest
+          --source pgTAP   --pgtap-option dbname=lsmbinstalltest
                            --pgtap-option username=postgres
                            --pgtap-option suffix=.pg
           --source Feature --feature-option extensions=.feature
