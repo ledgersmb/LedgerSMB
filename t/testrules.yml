@@ -1,11 +1,13 @@
 ---
 par:
   - seq:
-    - par: t/*
+    - par:
+      - t/*
+      - xt/[0-3]*
     - seq: xt/40-dbsetup.t
     - par:
       - par:
-        - xt/*.t
+        - xt/[4-7]*.t
 #        - xt/41-coaload.t
 #        - xt/43-dbtest.t
 #        - xt/44-templates.t
