@@ -5,11 +5,12 @@ par:
     - seq: xt/40-dbsetup.t
     - par:
       - par:
-        - xt/41-coaload.t
-        - xt/43-dbtest.t
-        - xt/44-templates.t
-        - xt/62-api.t
-        - xt/64-x12.t
+         - xt/*.t
+#        - xt/41-coaload.t
+#        - xt/43-dbtest.t
+#        - xt/44-templates.t
+#        - xt/62-api.t
+#        - xt/64-x12.t
         - xt/*.pg
       - seq: **.feature
     - seq: xt/89-dropdb.t
