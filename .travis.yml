@@ -126,10 +126,10 @@ before_script:
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
-  - if [ "$DOJO_BUILT" != "" ]; then echo "changing default setup"; sed -i -e "s|#dojo_built.*|dojo_built=$DOJO_BUILT|" ledgersmb.conf ; fi
+  - if [ "$DOJO_BUILT" != "" ]; then sed -i -e "s|#dojo_built.*|dojo_built=$DOJO_BUILT|" ledgersmb.conf ; fi
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
   - sleep 5  # give starman a chance to start
-  - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
+  - if [ "$DOJO_BUILT" != "0" ]; then utils/test/Is_LSMB_running.sh; fi;  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
 
 script:
