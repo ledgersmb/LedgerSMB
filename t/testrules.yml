@@ -5,7 +5,7 @@ par:
     - seq: xt/40-dbsetup.t
     - par:
       - par:
-         - xt/*.t
+        - xt/*.t
 #        - xt/41-coaload.t
 #        - xt/43-dbtest.t
 #        - xt/44-templates.t
