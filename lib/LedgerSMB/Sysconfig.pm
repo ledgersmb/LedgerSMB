@@ -272,12 +272,14 @@ def 'db_host',
     key => 'host',
     section => 'database',
     envvar => 'PGHOST',
+    default => 'localhost',
     doc => '';
 
 def 'db_port',
     key => 'port',
     section => 'database',
     envvar => 'PGPORT',
+    default => '5432',
     doc => '';
 
 def 'default_db',
@@ -292,7 +294,7 @@ def 'db_namespace',
 
 def 'db_sslmode',
     section => 'database',
-    default => undef,
+    default => 'prefer',
     envvar => 'PGSSLMODE',
     doc => '';
 
