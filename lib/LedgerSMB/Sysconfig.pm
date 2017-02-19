@@ -124,7 +124,7 @@ sub def {
             ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
         }
 
-        ${$name} = $ENV{$envvar} if ( defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
+        ${$name} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
         $ENV{$envvar} = ${$name}                                # If an environment variable is associated Set it based on the current value (taken from the config file, default, or pre-existing env var.
             if $envvar && defined ${$name};
 
