@@ -212,8 +212,7 @@ def 'fs_cssdir',
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
-    envvar => 'TEMP',
+    default => sub { $ENV{TEMP} && "$ENV{TEMP}/ledgersmb" || '/tmp/ledgersmb' }, # We can't specify envvar=>'TEMP' as that would overwrite TEMP with anything set in ledgersmb.conf. Conversely we need to use TEMP as the prefix for the default
     suffix => "-$EUID",
     doc => qq||;
 
@@ -457,6 +456,9 @@ sub check_permissions {
 
 
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
+    # commit 6978b88 added this line to resolve issues if HOME isn't set
+    $ENV{HOME} = $tempdir;
+
 
     sub die_pretty {
         my $dieHeader = '==============================================================================';
