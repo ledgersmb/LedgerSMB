@@ -99,7 +99,7 @@ on 'develop' => sub {
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
-    requires 'Linux::Inotify2';
+    recommends 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
