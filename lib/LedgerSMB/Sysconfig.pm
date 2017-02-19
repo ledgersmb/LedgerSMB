@@ -83,7 +83,7 @@ The key name
 
 =item default
 
-default value if otherwise not specified (no env var and no config file entry
+default value if otherwise not specified (no env var and no config file entry)
 
 =item envvar
 
@@ -119,6 +119,7 @@ sub def {
     {
         ## no critic (strict);
         no strict 'refs';                               # needed as we use the contents of a variable as the main variable name
+        no warnings 'redefine';
         ${$name} = $cfg->val($sec, $key, $default);     # get the value of config key $section.$key.  If it doesn't exist use $default instead
         if (defined $suffix) {
             ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
