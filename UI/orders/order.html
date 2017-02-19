@@ -3,7 +3,7 @@
 
 <body id="sales-invoice-body" onload="document.forms[0].partnumber_1.focus()">
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb request.script ?>">
-  
+
   <?lsmb
     FOREACH hidden_element IN form_elements.hidden_elements;
       PROCESS input element_data=hidden_element;
@@ -115,7 +115,7 @@
     <th id="items-<?lsmb column_name ?>-header" class="listheading"><?lsmb form_elements.line_item_column_data.$column_name ?></th>
     <?lsmb END ?>
   </tr>
-  
+
 <?lsmb FOREACH line_item IN form_elements.line_items ?>
   <tr class="item-row">
     <?lsmb FOREACH column_name IN form_elements.line_item_columns ?>
@@ -179,7 +179,7 @@
   </tr>
   <?lsmb END ?>
 <?lsmb END ?>
-  
+
   <tr>
     <td colspan="9">
       <hr id="items-horizontal-rule" size="1" />
@@ -252,7 +252,7 @@
     <?lsmb END ?>
     <th id="payments-account-header"><?lsmb text('Account') ?></th>
   </tr>
-  
+
   <?lsmb FOREACH payment_item IN form_elements.payment_items ?>
   <tr>
     <td class="payments-datepaid">
@@ -295,7 +295,7 @@
 
 <div id="group-selectors-container">
   <label id="group-by-selectors-label" class="label"><?lsmb text('Group by') ?> -&gt;</label>
-  <?lsmb 
+  <?lsmb
                 FOREACH groupby IN form_elements.groupby;
                   PROCESS input element_data=groupby;
                 END;
@@ -304,11 +304,11 @@
 
 <div id="sort-selectors-container">
   <label id="sort-by-selectors-label" class="label"><?lsmb text('Sort by') ?> -&gt;</label>
-  <?lsmb 
+  <?lsmb
                 FOREACH sortby IN form_elements.sortby;
                   PROCESS input element_data=sortby;
                 END;
-  ?>  
+  ?>
 </div>
 
 <hr id="horizontal-rule" />

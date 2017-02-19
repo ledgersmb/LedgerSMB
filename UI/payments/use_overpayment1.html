@@ -6,7 +6,7 @@
   <?lsmb account_class.type = 'hidden'; account_class.id =  account_class.name; INCLUDE input element_data=account_class-?>
 <table width="100%">
   <tr id="top-bar" class="listtop">
-    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label"><?lsmb text('Use Overpayment') ?></th>
+    <th id="top-bar-header" class="listtop"><label id="top-bar-header-label"><?lsmb text('Use Overpayment') ?></label></th>
   </tr>
 </table>
 <br/>
@@ -32,10 +32,10 @@
       </td>
       <td id="vc-column" class="label-left">
         <?lsmb PROCESS select element_data = {
-					id="entity_credit_id"
-					name="entity_credit_id"
-					options=entities
-					text_attr='name' } ?>
+                                        id="entity_credit_id"
+                                        name="entity_credit_id"
+                                        options=entities
+                                        text_attr='name' } ?>
       </td>
     </tr>
     <tr id="curr-row" class="label-left">
@@ -44,9 +44,9 @@
       </td>
       <td id="curr-column" class="label-left">
         <?lsmb PROCESS select element_data = {
-					id="curr"
-					name="curr"
-					options=curr } ?>
+                                        id="curr"
+                                        name="curr"
+                                        options=curr } ?>
       </td>
     </tr>
   </table>

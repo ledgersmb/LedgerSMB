@@ -7,14 +7,14 @@ PROCESS elements.html ?>
   PROCESS input element_data = {
     type = "hidden"
     name = h
-    value = hiddens.$h 
+    value = hiddens.$h
   };
 END ?>
 <h4><?lsmb text('Saving over an existing document.  Continue?') ?></h4>
 <?lsmb PROCESS button element_data = {
-      name="action" 
-     class="submit" 
-      type="submit" 
+      name="action"
+     class="submit"
+      type="submit"
      value="save"
       text=text('Continue')
 } ?>

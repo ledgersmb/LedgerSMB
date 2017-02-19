@@ -92,10 +92,15 @@ before_install:
   - phantomjs --version
   - export PATH=$HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH
   - phantomjs --version
-  - if [ $(phantomjs --version) != '2.1.1' ]; then rm -rf $HOME/travis_phantomjs; mkdir -p $HOME/travis_phantomjs; fi
-  - if [ $(phantomjs --version) != '2.1.1' ]; then wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2; fi
-  - if [ $(phantomjs --version) != '2.1.1' ]; then tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs; hash -r; fi
-  - phantomjs --version
+  - if [ $(phantomjs --version) != '2.1.1' ];
+    then
+      rm -rf $HOME/travis_phantomjs ;
+      mkdir -p $HOME/travis_phantomjs ;
+      wget https://efficito.com/phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 ;
+      tar -xvf $HOME/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $HOME/travis_phantomjs ;
+      hash -r ;
+      phantomjs --version ;
+    fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl 2>/dev/null
@@ -105,6 +110,7 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
+  - npm install uglify-js
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
@@ -125,17 +131,21 @@ before_script:
   - sleep 5  # give starman a chance to start
   - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
+  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
 
 script:
-  - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
-  - export RELEASE_TESTING=1 && 
-           PGUSER=postgres PGPASSWORD=test
-           LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000"
-    prove --source Perl
-          --ext=.t --ext=.pg
-          --source pgTAP   --pgtap-option dbname=lsmb13installtest
+  - RELEASE_TESTING=1
+     PGUSER=postgres PGPASSWORD=test
+     LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
+     LSMB_BASE_URL="http://127.0.0.1:5000"
+     HARNESS_RULESFILE="t/testrules.yml"
+    prove -j9 -r --source Perl
+          --ext=.t --ext=.pg --ext=.feature
+          --source pgTAP   --pgtap-option dbname=lsmbinstalltest
                            --pgtap-option username=postgres
                            --pgtap-option suffix=.pg
+          --source Feature --feature-option extensions=.feature
+                           --feature-option tags=~@wip
           t/ xt/
 
 after_success:

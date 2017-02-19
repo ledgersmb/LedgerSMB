@@ -45,7 +45,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
    class = 'submit'
     text = text('Copy') #'
 }; ?>
-
+</div>
 <div id="user">
 <div><?lsmb text('Users') ?></div>
 <?lsmb INCLUDE button element_data = {
@@ -77,6 +77,7 @@ INCLUDE input element_data = {
    value = "1"
     type = "hidden"
 }; ?>
+</div>
 <?lsmb END ?>
 <?lsmb IF next_action != 'create_db' ?>
 <div id="others"><?lsmb text('Backup') ?></div>

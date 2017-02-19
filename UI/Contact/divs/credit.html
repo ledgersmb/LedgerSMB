@@ -1,10 +1,11 @@
+<?lsmb# HTML Snippet, for import only ?>
 <div id="credit_div"
      title="<?lsmb text('Credit Accounts') ?>"
      data-dojo-type="dijit/layout/ContentPane"
      <?lsmb IF request.target_div == 'credit_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
 <div class="listtop"><strong>Accounts</strong></div>
-<?lsmb 
+<?lsmb
 
 FOREACH cl IN credit_list;
    IF cl.entity_class == 1;
@@ -14,16 +15,16 @@ FOREACH cl IN credit_list;
         cl.account_class_title = text('Customer');
         cl.account_class_label = text('Customer');
    END;
-   cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
+   cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _
       '&amp;entity_id=' _ cl.entity_id _ '&amp;meta_number=' _ cl.meta_number _
       '&amp;target_div=credit_div';
 END;
 
-PROCESS dynatable 
+PROCESS dynatable
       attributes = {id = 'credit_accounts_list' }
-      columns = [ 
+      columns = [
         { col_id = 'account_class_label', type = 'text', name = text('Type') }
-        { col_id = 'meta_number', type = 'href', name = text("Number"), 
+        { col_id = 'meta_number', type = 'href', name = text("Number"),
           href_base = "$request.script?action=get&amp;" }
         { col_id = 'description', type = 'text', name = text("Description") }
         { col_id = 'creditlimit', type = 'text', name = text('Credit Limit') }
@@ -42,12 +43,12 @@ PROCESS dynatable
                 type = "hidden"
                 name = "entity_id"
                 value = entity_id
-        } ?>    
+        } ?>
         <?lsmb PROCESS input element_data = {
                 type = "hidden"
                 name = "id"
                 value = credit_act.id
-        } ?>    
+        } ?>
         <?lsmb ec = credit_act.entity_class;
               IF !ec;
                  ec=account_class;
@@ -55,11 +56,11 @@ PROCESS dynatable
                     ec=entity_class;
                  END;
               END;
-        ?>      
+        ?>
         <table>
         <tr class="eca_row">
         <td>
-        <?lsmb 
+        <?lsmb
 
         PROCESS select element_data = {
                    id = 'eca-entity-class-id'
@@ -72,11 +73,11 @@ PROCESS dynatable
                 title = text('Class')
         } ?></td>
 
-                
+
         <td>
         <?lsmb PROCESS input element_data = {
                 title = text("$entity_classname Number"), #fixme for i18n
-           label = text("$entity_classname Number"), 
+           label = text("$entity_classname Number"),
                 type= "text",
                 name = "meta_number",
                 value = credit_act.meta_number,
@@ -95,7 +96,7 @@ PROCESS dynatable
         <td colspan = "2">
         <?lsmb PROCESS input element_data = {
                 title = text('Pay To')
-                label = text('Pay To')      
+                label = text('Pay To')
                 type = "text"
                 size = "50"
                 name = "pay_to_name"
@@ -171,7 +172,7 @@ PROCESS dynatable
                         type = "text",
                         size = "3",
                         maxlength = 3
-                } ?>% / 
+                } ?>% /
                 <?lsmb INCLUDE input element_data = {
                         name = "discount_terms",
                         value = credit_act.discount_terms,
@@ -234,7 +235,7 @@ PROCESS dynatable
                         value_attr = "id"
                         title = text('Business Type') #'
                         label = text('Business Type') #'
-                        } ?> 
+                        } ?>
                 <?lsmb END ?>
           </td>
           <td><?lsmb IF pricegroups.size ?>
@@ -262,10 +263,10 @@ PROCESS dynatable
                         value_attr = "id"
                         title = text('Tax Form') #'
                         label = text('Tax Form') #'
-                        } ?> 
+                        } ?>
               <?lsmb END ?>
           </td>
-        <td> <?lsmb 
+        <td> <?lsmb
            IF NOT credit_act.language_code;
                 credit_act.language_code = default_language;
            END;
@@ -284,14 +285,14 @@ PROCESS dynatable
         </table>
         <div class="input_container" id="tax-credit-div">
         <div class="listtop"><?lsmb text('Taxes') ?></div>
-        <?lsmb FOR tx = all_taxes ?> 
+        <?lsmb FOR tx = all_taxes ?>
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
-        
-            <?lsmb checked = "";  
+
+            <?lsmb checked = "";
                    IF credit_act.tax_ids.grep("^${tx.id}$").size == 1;
                        checked = "CHECKED";
                    END;
-                   INCLUDE input label_pos=1 
+                   INCLUDE input label_pos=1
                            element_data = {
                            title = tx.accno _ '--' _ tx.description
                            label = tx.accno _ '--' _ tx.description
@@ -302,7 +303,7 @@ PROCESS dynatable
                    } ?></div>
         <?lsmb END # FOR tx ?>
         <div class="inputrow" id="taxincludedrow">
-            <?lsmb 
+            <?lsmb
 
                checked = '';
                IF credit_act.taxincluded;
@@ -316,76 +317,76 @@ PROCESS dynatable
                                checked = checked
                                   name = "taxincluded"
                                  value = '1'
-                            } 
-            ?> 
+                            }
+            ?>
          </div>
                 <?lsmb IF credit_act.id;
                 INCLUDE button element_data = {
                         text = text('Save Changes'), #'
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="save_credit" 
-                        accesskey="C" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="save_credit"
+                        accesskey="C"
                         title="Save Credit Account[Alt-C]"
                 };
                 END;
                 INCLUDE button element_data = {
                         text = text('Save New'), #'
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="save_credit_new"  
-                        title="Save Credit Account as New" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="save_credit_new"
+                        title="Save Credit Account as New"
                 };
                 IF credit_act.id;
                     INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_transaction" 
-                        accesskey="A" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_transaction"
+                        accesskey="A"
                         title="Transaction [Alt-A]"
                         text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
-                    }; 
-                    INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_invoice" 
-                        accesskey="I" 
-                        title="Invoice [Alt-I]"
-                        text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
                     };
                     INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="add_order" 
-                        accesskey="O" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_invoice"
+                        accesskey="I"
+                        title="Invoice [Alt-I]"
+                        text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice')
+                    };
+                    INCLUDE button element_data = {
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="add_order"
+                        accesskey="O"
                         title="Order [Alt-O]"
                         text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
                     };
                     INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="rfq" 
-                        accesskey="Q" 
+                        class="submit"
+                        type="submit"
+                        name="action"
+                        value="rfq"
+                        accesskey="Q"
                         title="Quotation [Alt-Q]"
                         text = (entity_class == 1) ? text('RFQ') : text('Quotation')
                     }; ?>
-                <a href="contact.pl?action=get_pricelist&amp;credit_id=<?lsmb 
+                <a href="contact.pl?action=get_pricelist&amp;credit_id=<?lsmb
                         credit_act.id ?>"><?lsmb text('Pricelist') ?></a>
                 <?lsmb END ?>
-        </div>  
+        </div>
     </form>
 <?lsmb IF credit_act.id ?>
 <div class="listtop"><?lsmb text('Profit and Loss') ?></div>
-<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET"?>
+<form data-dojo-type="lsmb/Form" action="pnl.pl" method="GET">
 <div class="inputrow">
 <?lsmb
-PROCESS 'report_base.html'; 
+PROCESS 'report_base.html';
 PROCESS input element_data = {
      type = "hidden"
      name = "id"
@@ -395,8 +396,8 @@ PROCESS input element_data = {
      type = "hidden"
      name = "pnl_type"
     value = "eca"
-}; 
-PROCESS date_row_div; 
+};
+PROCESS date_row_div;
 PROCESS button element_data = {
      text = text('Continue')
      type = 'submit'

@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html'
       stylesheet = stylesheet
-      include_stylesheet = ["asset/asset.css"] 
-      include_script = ["asset/asset.js"] 
+      include_stylesheet = ["asset/asset.css"]
+      include_script = ["asset/asset.js"]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
@@ -30,7 +30,7 @@
 <?lsmb PROCESS input element_data = {
      type = "text"
      class = "date"
-     label = text("Transaction Date") 
+     label = text("Transaction Date")
      name = "transdate"
      value = transdate
      size = 12
@@ -79,11 +79,11 @@
 </div>
 <div class="inputrow" id="buttonrow">
 <?lsmb PROCESS button element_data = {
-	text = text("Save")
-	type = "submit"
-	class = "submit"
-	name = "action"
-	value = "run_import"
+        text = text("Save")
+        type = "submit"
+        class = "submit"
+        name = "action"
+        value = "run_import"
 } ?>
 </div>
 </form>
