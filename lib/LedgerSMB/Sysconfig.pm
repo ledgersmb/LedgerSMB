@@ -213,7 +213,7 @@ def 'fs_cssdir',
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
-    envvar => 'HOME',
+    envvar => 'TEMP',
     suffix => "-$EUID",
     doc => qq||;
 
