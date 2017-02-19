@@ -298,7 +298,6 @@ def 'db_sslmode',
     envvar => 'PGSSLMODE',
     doc => '';
 
-
 ### SECTION  ---   debug
 
 def 'dojo_built',
