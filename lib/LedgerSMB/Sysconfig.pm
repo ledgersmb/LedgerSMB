@@ -30,19 +30,54 @@ our %docs;
 
 =head2 def $name, %args;
 
-keys in %args can be:
+A function to define config keys and set their values on initialisation.
+
+A value for the key will be sourced from the following with the first found having priority.
+
+=over
+
+=over
+
+=item - ENV VAR
+
+=item - Config File
+
+=item - Default
+
+=back
+
+=back
+
+=head2 keys in %args can be:
 
 =over
 
 =item section
 
+section name
+
 =item key
+
+The key name
 
 =item default
 
+default value if otherwise not specified (no env var and no config file entry
+
 =item envvar
 
+The name of an associated Environment Variable.
+If the EnvVar is set it will be used to override the config file
+Regardless, the EnvVar will be set based on the config file or coded default
+
 =item suffix
+
+If set specifies a suffix to be appended to any value provided via the config file, defaults, or ENV Var.
+If used, often this would be configured as '-$EUID' or '-$PID'
+
+=item doc
+
+A description of the use of this key. Should normally be a scalar.
 
 =back
 
@@ -62,13 +97,15 @@ sub def {
     $docs{$sec}->{$key} = $args{doc};
     {
         ## no critic (strict);
-        no strict 'refs';
-        ${$name} = $cfg->val($sec, $key, $default);
+        no strict 'refs';                               # needed as we use the contents of a variable as the main variable name
+        ${$name} = $cfg->val($sec, $key, $default);     # get the value of config key $section.$key.  If it doesn't exist use $default instead
         if (defined $suffix) {
-            ${$name} = "${$name}$suffix";
+            ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
         }
-        $ENV{$envvar} = $cfg->val($sec, $key, $default)
-            if $envvar && defined $cfg->val($sec, $key, $default);
+
+        ${$name} = $ENV{$envvar} if ( defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
+        $ENV{$envvar} = ${$name}                                # If an environment variable is associated Set it based on the current value (taken from the config file, default, or pre-existing env var.
+            if $envvar && defined ${$name};
 
         # create a functional interface
         *{$name} = sub {
