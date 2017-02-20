@@ -73,6 +73,12 @@ sub _get_database {
              [ 'Please enter your credentials' ] ]
         if ! defined $creds->{password};
 
+    return [ 454,
+             [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
+               'Content-Type' => 'text/text; charset=UTF-8' ],
+             [ "You can't access that database ($request->{database})" ] ]
+        if ( $request->{database} =~ /postgres|template0|template1/);
+
     return (undef,
             LedgerSMB::Database->new(
                 username => $creds->{login},
