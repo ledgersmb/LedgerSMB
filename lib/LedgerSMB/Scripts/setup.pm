@@ -528,9 +528,9 @@ sub load_templates {
     _init_db($request);
     my $dbh = $request->{dbh};
     opendir(DIR, $dir);
-    while (readdir(DIR)){
-       next unless -f "$dir/$_";
-       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
+    while (my $fname = readdir(DIR)){
+       next unless -f "$dir/$fname";
+       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$fname");
        $dbtemp->save;
     }
     return _render_new_user($request) unless $request->{only_templates};
