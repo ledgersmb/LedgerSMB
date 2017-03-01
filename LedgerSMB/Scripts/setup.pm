@@ -468,9 +468,9 @@ sub load_templates {
     my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
     my $dbh = _get_database($request)->dbh;
     opendir(DIR, $dir);
-    while (readdir(DIR)){
-       next unless -f "$dir/$_";
-       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
+    while (my $fname = readdir(DIR)){
+       next unless -f "$dir/$fname";
+       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$fname");
        $dbtemp->save;
     }
     return _render_new_user($request) unless $request->{only_templates};
