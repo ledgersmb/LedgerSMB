@@ -11,6 +11,12 @@ on debian systems it would be `/etc/systemd/system/`
 - starman-ledgersmb.service
 The recommended way to run the LedgerSMB service
 Starman preforks and preloads a number of workers and all code. This is know to be a performance gain over other ways of running perl web applications
+- plackup_ledgersmb-development.service
+A development profile that runs LedgerSMB directly under plackup instead of starman, it WILL be slower, as it neither preloads, nor preforks.
+It also monitors most files for changes allowing development without constant reloading of the service.
+If the appropriate dependencies are installed, it will also enable a debugger pane that can be accessed from your browser.
+- plackup_ledgersmb.service
+A legacy file that can be expected to be removed. __DON"T USE IT__
 - plack-fcgi-ledgersmb.service
 This file runs LedgerSMB under plack as an FCGI process, it's not tested as well as running under starman, and is believed to not perform as well either.
 
