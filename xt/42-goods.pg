@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(49);
+    SELECT plan(50);
 
 
    -- TABLE OF CONTENTS
@@ -116,7 +116,10 @@ BEGIN;
 
 
     -- patch up data that could/should have been there
-    INSERT INTO defaults VALUES ('curr', 'USD:CAD:EUR');
+    INSERT INTO defaults
+         VALUES ('curr', 'USD:CAD:EUR'),
+                ('inventory_ap_eca', '1'),
+                ('inventory_ar_eca', '2');
     UPDATE entity_credit_account
        SET ar_ap_account_id = -1002
      WHERE id = 1;
