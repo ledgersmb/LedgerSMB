@@ -22,7 +22,7 @@ BEGIN
     END IF;
 
     UPDATE parts SET onhand = onhand
-                              - (select t_mfg_lot.qty from mfg_lot_item
+                              - (select qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
      WHERE id in (select parts_id from mfg_lot_item
@@ -300,8 +300,11 @@ VALUES ($1, $2)
 RETURNING *;
 $$;
 
+
+DROP FUNCTION IF EXISTS inventory_adjust__approve(int);
+
 CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id int)
-RETURNS inventory_report_line language plpgsql as
+RETURNS inventory_report language plpgsql as
 $$
 DECLARE inv inventory_report;
         t_ar ar;
@@ -310,16 +313,16 @@ BEGIN
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
-INSERT INTO ar (entity_credit_account, invnumber, invoice, approved,
+INSERT INTO ar (entity_credit_account, invnumber, curr, invoice, approved,
                 amount, netamount, transdate)
-VALUES (setting__get('inventory_ar_eca'), setting_increment('sinumber'),
+VALUES ((setting_get('inventory_ar_eca')).value::int,
+        setting_increment('sinumber'), defaults_get_defaultcurrency(),
         't', 'f', 0, 0, inv.transdate);
 
 SELECT * INTO t_ar FROM ar WHERE id = currval('id');
 
 UPDATE inventory_report
-   set ar_trans_id = t_ar.id,
-       ar_invnumber = t_ar.invnumber
+   set ar_trans_id = t_ar.id
  WHERE id = in_id;
 
 INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
@@ -331,7 +334,8 @@ SELECT t_ar.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 1
 
 INSERT INTO ap (entity_credit_account, invnumber, invoice, approved, amount,
                 netamount, transdate)
-SELECT setting__get('inventory_ap_eca'), setting_increment('vinumber'),
+SELECT (setting_get('inventory_ap_eca')).value::int,
+       setting_increment('vinumber'),
        't', 'f', sum(l.variance * p.sellprice), sum(l.variance * p.sellprice),
        inv.transdate
   FROM parts p
@@ -341,12 +345,11 @@ SELECT setting__get('inventory_ap_eca'), setting_increment('vinumber'),
 SELECT * INTO t_ap FROM ap WHERE id = currval('id');
 
 UPDATE inventory_report
-   set ap_trans_id = t_ap.id,
-       ap_invnumber = t_ap.invnumber
+   set ap_trans_id = t_ap.id
  WHERE id = in_id;
 
 INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
-                    discount, transdate)
+                    discount)
 SELECT t_ap.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 0
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
@@ -360,13 +363,13 @@ SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost),
  WHERE l.adjust_id = in_id
  GROUP BY p.expense_accno_id
  UNION
-SELECT t_ap.id, eca.ar_ap_accno_id, sum(l.variance * -1 * p.lastcost),
+SELECT t_ap.id, eca.ar_ap_account_id, sum(l.variance * -1 * p.lastcost),
        inv.transdate, true
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
-  JOIN entity_credit_account eca on eca_id = t_ap.entity_credit_account
+  JOIN entity_credit_account eca on eca.id = t_ap.entity_credit_account
  WHERE l.adjust_id = in_id
- GROUP BY eca.ar_ap_accno_id;
+ GROUP BY eca.ar_ap_account_id;
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
@@ -402,7 +405,8 @@ RETURNS SETOF inventory_report language sql as $$
 SELECT * FROM inventory_report
  WHERE ($1 is null or transdate >= $1)
        AND ($2 IS NULL OR transdate <= $2)
-       AND ($3 IS NULL OR $3 = (ar_trans_id IS NULL AND ap_trans_id IS NULL));
+       AND ($3 IS NULL OR $3 = (ar_trans_id IS NOT NULL
+                                OR ap_trans_id IS NOT NULL));
 
 $$;
 
