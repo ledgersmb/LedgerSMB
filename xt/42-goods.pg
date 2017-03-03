@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(50);
+    SELECT plan(51);
 
 
    -- TABLE OF CONTENTS
@@ -12,6 +12,9 @@ BEGIN;
    --  1. VALIDATE REQUIRED TABLES
    --  2. VALIDATE REQUIRED FUNCTIONS
    --  3. VERIFY 'INVENTORY_ADJUST__APPROVE'
+   --    a. verify adjustment report
+   --    b. verify on-hand numbers (TODO)
+   --    c. verify 'invoice' lines (TODO)
    --  4. VERIFY 'INVENTORY_ADJUST__LIST'
    --  5. VERIFY 'ASSEMBLY__STOCK'
    --    a. stocking lacks inputs
@@ -21,7 +24,7 @@ BEGIN;
    --  6. VERIFY 'INVENTORY_ACTIVITY'
    --    a. Bought parts
    --    b. Sold parts
-   --    c. Stocking assemblies (TODO)
+   --    c. Stocking assemblies
 
 
     -- Add data
@@ -99,12 +102,14 @@ BEGIN;
       (-5, 'TS5', 'GOODS Test Series 5', -2101, -2102, -2104, -2103, false, 5),
       (-6, 'AS1', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 6),
       (-7, 'AS1a', 'GOODS Test Series 6',-2101, -2102, -2104, -2103, false, 7),
-      (-8, 'AS1b', 'GOODS Test Series 6',-2101, -2102, -2104, -2103, false, 8);
+      (-8, 'AS1b', 'GOODS Test Series 6',-2101, -2102, -2104, -2103, false, 8),
+      (-9, 'AS2', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 9);
 
 
     INSERT INTO assembly (id, parts_id, qty)
          VALUES (-6, -7, 3),
-                (-6, -8, 5);
+                (-6, -8, 5),
+                (-9, -1, 7);
 
     INSERT INTO entity (id, name, country_id, entity_class)
     VALUES (-1000, 'Test act', 232, 1);
@@ -128,7 +133,12 @@ BEGIN;
      WHERE id = 2;
 
 
-
+    UPDATE parts
+       SET onhand = 90
+      WHERE id = -1;
+    UPDATE parts
+       SET onhand = 80
+     WHERE id = -2;
 
     --
     -- Verify 'inventory_adjust__approve'
@@ -161,6 +171,13 @@ BEGIN;
                                        currval('id')::int)$$,
                               'inventory adjustment, adjustment transactions');
     DEALLOCATE test;
+
+    -- PREPARE test AS SELECT onhand FROM parts
+    --                  WHERE id IN (-1, -2) ORDER BY id DESC;
+    -- SELECT results_eq('test', ARRAY[100::numeric, 75::numeric],
+    --                   'inventory adjustment, approval updates on-hand numbers');
+    -- DEALLOCATE test;
+
 
     --
     -- Verify 'inventory_adjust__list'
@@ -235,15 +252,16 @@ BEGIN;
             VALUES (-1101, true, 'test1001', now() - '10 days'::interval,
                     -1000, 't');
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
-                 VALUES (-1101, -1101, -1, 100, 0, -3);
+                 VALUES (-1101, -1101, -1, -100, 0, 3);
 
 
     -- test interval no bounds
     PREPARE test AS SELECT *
                     FROM inventory__activity(NULL, NULL, 'TS1', NULL);
     SELECT results_eq('test', $$VALUES(-1::int, 'GOODS Test Series 1', 'TS1',
-                                     0::numeric, 0::numeric, -100::numeric,
-                                     300::numeric)$$,
+                                     0::numeric, 0::numeric, 100::numeric,
+                                     300::numeric,
+                                     0::numeric, 0::numeric)$$,
                       'ap inventory activity TS1, no interval');
     DEALLOCATE test;
 
@@ -252,8 +270,9 @@ BEGIN;
                     FROM inventory__activity((now() - '11 days'::interval)::date,
                                              NULL, 'TS1', NULL);
     SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
-                                     0::numeric, 0::numeric, -100::numeric,
-                                     300::numeric)$$,
+                                     0::numeric, 0::numeric, 100::numeric,
+                                     300::numeric,
+                                     0::numeric, 0::numeric)$$,
                       'ap inventory activity TS1, lower bound interval below');
     DEALLOCATE test;
 
@@ -271,8 +290,9 @@ BEGIN;
                                              (now() - '9 days'::interval)::date,
                                              'TS1', NULL);
     SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
-                                     0::numeric, 0::numeric, -100::numeric,
-                                     300::numeric)$$,
+                                     0::numeric, 0::numeric, 100::numeric,
+                                     300::numeric,
+                                     0::numeric, 0::numeric)$$,
                       'ap inventory activity TS1, upper bound interval above');
     DEALLOCATE test;
 
@@ -291,8 +311,9 @@ BEGIN;
                                              (now() - '9 days'::interval)::date,
                                              'TS1', NULL);
     SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
-                                     0::numeric, 0::numeric, -100::numeric,
-                                     300::numeric)$$,
+                                     0::numeric, 0::numeric, 100::numeric,
+                                     300::numeric,
+                                     0::numeric, 0::numeric)$$,
                       'ap inventory activity TS1, interval enclosing');
     DEALLOCATE test;
 
@@ -302,8 +323,9 @@ BEGIN;
                                              (now() - '10 days'::interval)::date,
                                              'TS1', NULL);
     SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
-                                     0::numeric, 0::numeric, -100::numeric,
-                                     300::numeric)$$,
+                                     0::numeric, 0::numeric, 100::numeric,
+                                     300::numeric,
+                                     0::numeric, 0::numeric)$$,
                       'ap inventory activity TS1, interval single day');
     DEALLOCATE test;
 
@@ -340,6 +362,7 @@ BEGIN;
                     FROM inventory__activity(NULL, NULL, 'TS2', NULL);
     SELECT results_eq('test', $$VALUES(-2::int, 'GOODS Test Series 2', 'TS2',
                                      100::numeric, -300::numeric,
+                                     0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
                       'ar inventory activity TS2, no interval');
     DEALLOCATE test;
@@ -350,6 +373,7 @@ BEGIN;
                                              NULL, 'TS2', NULL);
     SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
                                      100::numeric, -300::numeric,
+                                     0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
                       'ar inventory activity TS2, lower bound interval below');
     DEALLOCATE test;
@@ -369,6 +393,7 @@ BEGIN;
                                              'TS2', NULL);
     SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
                                      100::numeric, -300::numeric,
+                                     0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
                       'ar inventory activity TS2, upper bound interval above');
     DEALLOCATE test;
@@ -389,6 +414,7 @@ BEGIN;
                                              'TS2', NULL);
     SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
                                      100::numeric, -300::numeric,
+                                     0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
                       'ar inventory activity TS2, interval enclosing');
     DEALLOCATE test;
@@ -400,6 +426,7 @@ BEGIN;
                                              'TS2', NULL);
     SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
                                      100::numeric, -300::numeric,
+                                     0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
                       'ar inventory activity TS2, interval single day');
     DEALLOCATE test;
@@ -422,6 +449,25 @@ BEGIN;
     DEALLOCATE test;
 
 
+    --- Third test: stocked items should be on the inventory report
+
+    SELECT assembly__stock(-9, 3);
+
+    PREPARE test AS SELECT *
+                      FROM inventory__activity(now()::date, now()::date,
+                                               NULL, NULL)
+                     WHERE partnumber in ('AS2', 'TS1')
+                  ORDER BY partnumber;
+    SELECT results_eq('test', $$VALUES(-9, 'GOODS Test Series 6', 'AS2',
+                                           0::numeric, 0::numeric,
+                                           0::numeric, 0::numeric,
+                                           0::numeric, 3::numeric),
+                                      (-1, 'GOODS Test Series 1', 'TS1',
+                                           0::numeric, 0::numeric,
+                                           0::numeric, 0::numeric,
+                                           21::numeric, 0::numeric)$$,
+                      'assembly inventory activity AS2, assembled part');
+    DEALLOCATE test;
 
 
 ROLLBACK;

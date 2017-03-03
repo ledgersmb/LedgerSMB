@@ -189,8 +189,10 @@ CREATE TYPE inv_activity_line AS (
    partnumber text,
    sold numeric,
    revenue numeric,
-   receivable numeric,
-   payable numeric
+   purchased numeric,
+   cost numeric,
+   used numeric,
+   assembled numeric
 );
 
 CREATE OR REPLACE FUNCTION inventory__activity
@@ -200,16 +202,22 @@ $$
     SELECT p.id, p.description, p.partnumber,
            SUM(CASE WHEN transtype = 'ar' THEN i.qty ELSE 0 END) AS sold,
            SUM(CASE WHEN transtype = 'ar' THEN i.sellprice * i.qty ELSE 0 END)
-           AS receivable,
+           AS revenue,
            SUM(CASE WHEN transtype = 'ap' THEN i.qty * -1 ELSE 0 END)
-           AS payable,
+           AS purchased,
            SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0
-                END) AS expenses
+                END) AS cost,
+           SUM(CASE WHEN transtype = 'gl' AND i.qty > 0 THEN i.qty ELSE 0 END)
+           AS used,
+           SUM(CASE WHEN transtype = 'gl' AND i.qty < 0 then -1*i.qty ELSE 0 END)
+           AS assembled
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
       JOIN (select id, approved, transdate, 'ar' as transtype FROM ar
              UNION
-            SELECT id, approved, transdate, 'ap' as transdate FROM ap) a
+            SELECT id, approved, transdate, 'ap' as transtype FROM ap
+             UNION
+            SELECT id, approved, transdate, 'gl' as transtype FROM gl) a
             ON (a.id = i.trans_id AND a.approved)
      WHERE ($1 IS NULL OR a.transdate >= $1)
            AND ($2 IS NULL OR a.transdate <= $2)
