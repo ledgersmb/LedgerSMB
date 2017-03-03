@@ -105,12 +105,12 @@ sub columns {
      {col_id => 'cost',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Cost'), }
+        name => LedgerSMB::Report::text('Cost'), },
 
      {col_id => 'used',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Used'), }
+        name => LedgerSMB::Report::text('Used'), },
 
      {col_id => 'assembled',
         type => 'text',
