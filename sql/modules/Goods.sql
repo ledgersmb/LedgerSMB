@@ -379,6 +379,16 @@ SELECT t_ap.id, eca.ar_ap_account_id, sum(l.variance * -1 * p.lastcost),
  WHERE l.adjust_id = in_id
  GROUP BY eca.ar_ap_account_id;
 
+UPDATE parts p
+   SET onhand = onhand + (select variance
+                            from inventory_report_line l
+                           where p.id = l.parts_id
+                             and l.adjust_id = in_id)
+ WHERE id IN (select parts_id
+                from inventory_report_line
+               where adjust_id = in_id);
+
+
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
 RETURN inv;

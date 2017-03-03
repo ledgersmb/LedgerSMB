@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(51);
+    SELECT plan(52);
 
 
    -- TABLE OF CONTENTS
@@ -146,10 +146,12 @@ BEGIN;
 
     INSERT INTO inventory_report (transdate) VALUES (now()::date);
 
+    -- LedgerSMB::Inventory::Adjust_Line defines variance as:
+    --   counted - expected
     SELECT inventory_adjust__save_line(currval('inventory_report_id_seq')::int,
-                                -1, 100, 90, -10);
+                                -1, 100, 90, 10);
     SELECT inventory_adjust__save_line(currval('inventory_report_id_seq')::int,
-                                -2, 75, 80, 5);
+                                -2, 75, 80, -5);
 
     SELECT inventory_adjust__approve(currval('inventory_report_id_seq')::int);
 
@@ -157,10 +159,10 @@ BEGIN;
                             WHERE adjust_id = currval('inventory_report_id_seq');
     SELECT results_eq('test', $$VALUES(currval('inventory_report_id_seq')::int,
                                        -1::int, 100::numeric, 90::numeric,
-                                       -10::numeric),
+                                       10::numeric),
                                       (currval('inventory_report_id_seq')::int,
                                        -2::int, 75::numeric, 80::numeric,
-                                       5::numeric)$$,
+                                       -5::numeric)$$,
                               'inventory adjustment, save adjustment lines');
     DEALLOCATE test;
 
@@ -172,11 +174,11 @@ BEGIN;
                               'inventory adjustment, adjustment transactions');
     DEALLOCATE test;
 
-    -- PREPARE test AS SELECT onhand FROM parts
-    --                  WHERE id IN (-1, -2) ORDER BY id DESC;
-    -- SELECT results_eq('test', ARRAY[100::numeric, 75::numeric],
-    --                   'inventory adjustment, approval updates on-hand numbers');
-    -- DEALLOCATE test;
+    PREPARE test AS SELECT onhand FROM parts
+                     WHERE id IN (-1, -2) ORDER BY id DESC;
+    SELECT results_eq('test', ARRAY[100::numeric, 75::numeric],
+                      'inventory adjustment, approval updates on-hand numbers');
+    DEALLOCATE test;
 
 
     --
