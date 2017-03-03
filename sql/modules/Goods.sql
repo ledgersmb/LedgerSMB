@@ -244,21 +244,6 @@ DROP VIEW IF EXISTS order_sum CASCADE;
 
 -- since we are dealing with physical counts care must be taken with the
 -- approval process during inventory counting.
-CREATE VIEW invoice_sum AS
-SELECT a.transdate, sum(i.qty) as qty, i.parts_id
-  FROM invoice i
-  JOIN (select id, transdate from ar WHERE APPROVED
-         union
-        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id = a.id
- GROUP BY a.transdate, i.parts_id;
-
-CREATE VIEW order_sum AS
-SELECT oe.transdate,
-       sum(oi.ship * case when oe_class_id = 1 THEN 1 ELSE -1 END) as qty,
-       oi.parts_id
-  FROM orderitems oi
-  JOIN oe ON oe.closed is false and oe_class_id in (1, 2)
- GROUP BY oe.transdate, oi.parts_id;
 
 CREATE OR REPLACE FUNCTION inventory__search_part
 (in_parts_id int, in_partnumber text, in_counted_date date)
@@ -269,6 +254,22 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
       UNION ALL
      SELECT ac.a_id, a.parts_id, ac.qty * a.qty
        FROM assembly a JOIN assembly_comp ac ON a.parts_id = ac.parts_id
+)
+WITH invoice_sum AS (
+SELECT a.transdate, sum(i.qty) as qty, i.parts_id
+  FROM invoice i
+  JOIN (select id, transdate from ar WHERE APPROVED
+         union
+        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id = a.id
+ GROUP BY a.transdate, i.parts_id
+),
+order_sum AS (
+SELECT oe.transdate,
+       sum(oi.ship * case when oe_class_id = 1 THEN 1 ELSE -1 END) as qty,
+       oi.parts_id
+  FROM orderitems oi
+  JOIN oe ON oe.closed is false and oe_class_id in (1, 2)
+ GROUP BY oe.transdate, oi.parts_id
 )
      SELECT p.id, p.partnumber,
             sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty )
