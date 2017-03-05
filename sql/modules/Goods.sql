@@ -254,8 +254,8 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
       UNION ALL
      SELECT ac.a_id, a.parts_id, ac.qty * a.qty
        FROM assembly a JOIN assembly_comp ac ON a.parts_id = ac.parts_id
-)
-WITH invoice_sum AS (
+),
+invoice_sum AS (
 SELECT a.transdate, sum(i.qty) as qty, i.parts_id
   FROM invoice i
   JOIN (select id, transdate from ar WHERE APPROVED
