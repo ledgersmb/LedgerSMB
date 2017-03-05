@@ -272,7 +272,7 @@ SELECT oe.transdate,
  GROUP BY oe.transdate, oi.parts_id
 )
      SELECT p.id, p.partnumber,
-            sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty )
+            coalesce(sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty ),0)
        FROM parts p
   LEFT JOIN assembly_comp a ON a.a_id = p.id
   LEFT JOIN invoice_sum i ON i.parts_id = p.id OR a.parts_id = i.parts_id
