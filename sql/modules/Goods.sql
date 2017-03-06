@@ -166,8 +166,6 @@ LANGUAGE SQL STABLE AS $$
                                        WHERE parts_id = p.id)));
 $$;
 
-DROP FUNCTION IF EXISTS partsgroups__list_all();
-
 CREATE OR REPLACE FUNCTION partsgroup__search(in_pricegroup text)
 RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
   SELECT * FROM partsgroup
@@ -239,9 +237,6 @@ CREATE TYPE part_at_date AS (
 -- for now treating assemblies only as bundled deals not as manufactured
 -- items.  We need a good manufacturing solution. --CT
 
-DROP VIEW IF EXISTS invoice_sum CASCADE;
-DROP VIEW IF EXISTS order_sum CASCADE;
-
 -- since we are dealing with physical counts care must be taken with the
 -- approval process during inventory counting.
 
@@ -287,6 +282,30 @@ SELECT oe.transdate,
    GROUP BY p.id, p.partnumber;
 $$;
 
+CREATE OR REPLACE FUNCTION inventory_adjust__create(in_transdate date)
+RETURNS inventory_report
+AS
+$$
+        INSERT INTO inventory_report(transdate) values (in_transdate)
+        RETURNING *;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__search
+(in_from_date date, in_to_date date, in_partnumber text, in_source text)
+RETURNS SETOF inventory_report AS
+$$
+
+   SELECT r.id, r.transdate, r.source, r.trans_id
+     FROM inventory_report r
+     JOIN inventory_report_line l ON l.adjust_id = r.id
+     JOIN parts p ON l.parts_id = p.id
+    WHERE ($1 is null or $1 <= r.transdate) AND
+          ($2 is null OR $2 >= r.transdate) AND
+          ($3 IS NULL OR plainto_tsquery($3) @@ tsvector(p.partnumber)) AND
+          ($4 IS NULL OR source LIKE $4 || '%')
+ GROUP BY r.id, r.transdate, r.source, r.trans_id;
+$$ LANGUAGE SQL;
+
 CREATE OR REPLACE FUNCTION inventory_adjust__save_line
 (in_adjust_id int, in_parts_id int,
 in_counted numeric, in_expected numeric, in_variance numeric)
@@ -310,75 +329,48 @@ RETURNING *;
 $$;
 
 
-DROP FUNCTION IF EXISTS inventory_adjust__approve(int);
-
 CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id int)
 RETURNS inventory_report language plpgsql as
 $$
 DECLARE inv inventory_report;
-        t_ar ar;
-        t_ap ap;
+        t_trans_id int;
 BEGIN
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
-INSERT INTO ar (entity_credit_account, invnumber, curr, invoice, approved,
-                amount, netamount, transdate)
-VALUES ((setting_get('inventory_ar_eca')).value::int,
-        setting_increment('sinumber'), defaults_get_defaultcurrency(),
-        't', 'f', 0, 0, inv.transdate);
-
-SELECT * INTO t_ar FROM ar WHERE id = currval('id');
+INSERT INTO gl (description, transdate, reference, approved)
+        VALUES ('Transaction due to approval of inventory adjustment',
+                inv.transdate, 'invadj-' || in_id, true)
+    RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report
-   set ar_trans_id = t_ar.id
+   set trans_id = t_trans_id
  WHERE id = in_id;
 
-INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
-                    discount)
-SELECT t_ar.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 1
+-- When the count is lower than expected, we need to write-off
+-- some of our inventory. To do so, we post COGS to the expense
+-- account and reduce the inventory by the amount. There is no
+-- income associated with the transaction, so 'discount' == 100%
+--
+-- When the count is higher than expected, we need to increase
+-- some of our inventory. To do so, we stock at reverse COGS, taking
+-- the cost of the inventory increase out of COGS (to re-add on sale)
+INSERT INTO invoice (trans_id, parts_id, description, qty,
+                     sellprice, precision, discount)
+SELECT t_trans_id, p.id, p.description, l.variance * -1,
+       CASE WHEN l.variance > 0 THEN p.lastcost ELSE 0 END,
+       3, CASE WHEN l.variance > 0 THEN 1 ELSE 0 END
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
  WHERE l.adjust_id = in_id;
 
-INSERT INTO ap (entity_credit_account, invnumber, invoice, approved, amount,
-                netamount, transdate)
-SELECT (setting_get('inventory_ap_eca')).value::int,
-       setting_increment('vinumber'),
-       't', 'f', sum(l.variance * p.sellprice), sum(l.variance * p.sellprice),
-       inv.transdate
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id;
+PERFORM cogs__add_for_ar_line(id)
+   FROM invoice
+  WHERE qty > 0 AND trans_id = t_trans_id;
 
-SELECT * INTO t_ap FROM ap WHERE id = currval('id');
-
-UPDATE inventory_report
-   set ap_trans_id = t_ap.id
- WHERE id = in_id;
-
-INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
-                    discount)
-SELECT t_ap.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 0
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id;
-
-INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, approved)
-SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost),
-       inv.transdate, true
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id
- GROUP BY p.expense_accno_id
- UNION
-SELECT t_ap.id, eca.ar_ap_account_id, sum(l.variance * -1 * p.lastcost),
-       inv.transdate, true
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
-  JOIN entity_credit_account eca on eca.id = t_ap.entity_credit_account
- WHERE l.adjust_id = in_id
- GROUP BY eca.ar_ap_account_id;
+PERFORM cogs__add_for_ap_line(id)
+   FROM invoice
+  WHERE qty < 0 AND trans_id = t_trans_id;
 
 UPDATE parts p
    SET onhand = onhand + (select variance
@@ -405,7 +397,7 @@ BEGIN
 SELECT * INTO inv FROM inventory_report where id = in_id;
 IF NOT FOUND THEN
    RETURN FALSE;
-ELSIF inv.ap_trans_id IS NOT NULL OR inv.ar_trans_id IS NOT NULL THEN
+ELSIF inv.trans_id IS NOT NULL THEN
    RAISE EXCEPTION 'Set is Already Approved!';
 END IF;
 
@@ -424,8 +416,7 @@ RETURNS SETOF inventory_report language sql as $$
 SELECT * FROM inventory_report
  WHERE ($1 is null or transdate >= $1)
        AND ($2 IS NULL OR transdate <= $2)
-       AND ($3 IS NULL OR $3 = (ar_trans_id IS NOT NULL
-                                OR ap_trans_id IS NOT NULL));
+       AND ($3 IS NULL OR $3 = (trans_id IS NOT NULL));
 
 $$;
 

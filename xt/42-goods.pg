@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(52);
+    SELECT plan(53);
 
 
    -- TABLE OF CONTENTS
@@ -95,7 +95,7 @@ BEGIN;
            (id, partnumber, description, income_accno_id, expense_accno_id,
             inventory_accno_id, returns_accno_id, assembly, lastcost)
     VALUES
-      (-1, 'TS1', 'GOODS Test Series 1', -1101, -1102, -1104, -1103, false, 1),
+      (-1, 'TS1', 'GOODS Test Series 1', -1101, -1102, -1104, -1103, false, 1.5),
       (-2, 'TS2', 'GOODS Test Series 2', -2101, -2102, -2104, -2103, false, 2),
       (-3, 'TS3', 'GOODS Test Series 3', -3101, -3102, -3104, -3103, false, 3),
       (-4, 'TS4', 'GOODS Test Series 4', -4101, -4102, -4104, -4103, false, 4),
@@ -103,13 +103,14 @@ BEGIN;
       (-6, 'AS1', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 6),
       (-7, 'AS1a', 'GOODS Test Series 6',-2101, -2102, -2104, -2103, false, 7),
       (-8, 'AS1b', 'GOODS Test Series 6',-2101, -2102, -2104, -2103, false, 8),
-      (-9, 'AS2', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 9);
+      (-9, 'AS2', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 9),
+      (-10, 'AS2a', 'GOODS Test Series 6', -3101, -3102, -3104, -3103, true, 10);
 
 
     INSERT INTO assembly (id, parts_id, qty)
          VALUES (-6, -7, 3),
                 (-6, -8, 5),
-                (-9, -1, 7);
+                (-9, -10, 7);
 
     INSERT INTO entity (id, name, country_id, entity_class)
     VALUES (-1000, 'Test act', 232, 1);
@@ -122,16 +123,7 @@ BEGIN;
 
     -- patch up data that could/should have been there
     INSERT INTO defaults
-         VALUES ('curr', 'USD:CAD:EUR'),
-                ('inventory_ap_eca', '1'),
-                ('inventory_ar_eca', '2');
-    UPDATE entity_credit_account
-       SET ar_ap_account_id = -1002
-     WHERE id = 1;
-    UPDATE entity_credit_account
-       SET ar_ap_account_id = -1001
-     WHERE id = 2;
-
+         VALUES ('curr', 'USD:CAD:EUR');
 
     UPDATE parts
        SET onhand = 90
@@ -166,11 +158,10 @@ BEGIN;
                               'inventory adjustment, save adjustment lines');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT transdate, ar_trans_id, ap_trans_id
+    PREPARE test AS SELECT transdate, trans_id
                      FROM inventory_report
                     WHERE id = currval('inventory_report_id_seq');
-    SELECT results_eq('test', $$VALUES(now()::date, (currval('id')-1)::int,
-                                       currval('id')::int)$$,
+    SELECT results_eq('test', $$VALUES(now()::date, currval('id')::int)$$,
                               'inventory adjustment, adjustment transactions');
     DEALLOCATE test;
 
@@ -254,35 +245,35 @@ BEGIN;
             VALUES (-1101, true, 'test1001', now() - '10 days'::interval,
                     -1000, 't');
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
-                 VALUES (-1101, -1101, -1, -100, 0, 3);
+                 VALUES (-1101, -1101, -3, -100, 0, 3);
 
 
     -- test interval no bounds
     PREPARE test AS SELECT *
-                    FROM inventory__activity(NULL, NULL, 'TS1', NULL);
-    SELECT results_eq('test', $$VALUES(-1::int, 'GOODS Test Series 1', 'TS1',
+                    FROM inventory__activity(NULL, NULL, 'TS3', NULL);
+    SELECT results_eq('test', $$VALUES(-3::int, 'GOODS Test Series 3', 'TS3',
                                      0::numeric, 0::numeric, 100::numeric,
                                      300::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ap inventory activity TS1, no interval');
+                      'ap inventory activity TS3, no interval');
     DEALLOCATE test;
 
     -- test interval lower bound
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '11 days'::interval)::date,
-                                             NULL, 'TS1', NULL);
-    SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
+                                             NULL, 'TS3', NULL);
+    SELECT results_eq('test', $$VALUES(-3, 'GOODS Test Series 3', 'TS3',
                                      0::numeric, 0::numeric, 100::numeric,
                                      300::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ap inventory activity TS1, lower bound interval below');
+                      'ap inventory activity TS3, lower bound interval below');
     DEALLOCATE test;
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '9 days'::interval)::date,
-                                             NULL, 'TS1', NULL);
+                                             NULL, 'TS3', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ap inventory activity TS1, lower bound interval above');
+                      'ap inventory activity TS3, lower bound interval above');
     DEALLOCATE test;
 
 
@@ -290,62 +281,62 @@ BEGIN;
     PREPARE test AS SELECT *
                     FROM inventory__activity(NULL,
                                              (now() - '9 days'::interval)::date,
-                                             'TS1', NULL);
-    SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
+                                             'TS3', NULL);
+    SELECT results_eq('test', $$VALUES(-3, 'GOODS Test Series 3', 'TS3',
                                      0::numeric, 0::numeric, 100::numeric,
                                      300::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ap inventory activity TS1, upper bound interval above');
+                      'ap inventory activity TS3, upper bound interval above');
     DEALLOCATE test;
 
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity(NULL,
                                              (now() - '11 days'::interval)::date,
-                                             'TS1', NULL);
+                                             'TS3', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ap inventory activity TS1, upper bound interval below');
+                      'ap inventory activity TS3, upper bound interval below');
     DEALLOCATE test;
 
     -- test interval upper and lower bound
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '11 days'::interval)::date,
                                              (now() - '9 days'::interval)::date,
-                                             'TS1', NULL);
-    SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
+                                             'TS3', NULL);
+    SELECT results_eq('test', $$VALUES(-3, 'GOODS Test Series 3', 'TS3',
                                      0::numeric, 0::numeric, 100::numeric,
                                      300::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ap inventory activity TS1, interval enclosing');
+                      'ap inventory activity TS3, interval enclosing');
     DEALLOCATE test;
 
 
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '10 days'::interval)::date,
                                              (now() - '10 days'::interval)::date,
-                                             'TS1', NULL);
-    SELECT results_eq('test', $$VALUES(-1, 'GOODS Test Series 1', 'TS1',
+                                             'TS3', NULL);
+    SELECT results_eq('test', $$VALUES(-3, 'GOODS Test Series 3', 'TS3',
                                      0::numeric, 0::numeric, 100::numeric,
                                      300::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ap inventory activity TS1, interval single day');
+                      'ap inventory activity TS3, interval single day');
     DEALLOCATE test;
 
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '11 days'::interval)::date,
                                              (now() - '11 days'::interval)::date,
-                                             'TS1', NULL);
+                                             'TS3', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ap inventory activity TS1, interval upper bound below');
+                      'ap inventory activity TS3, interval upper bound below');
     DEALLOCATE test;
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '9 days'::interval)::date,
                                              (now() - '9 days'::interval)::date,
-                                             'TS1', NULL);
+                                             'TS3', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ap inventory activity TS1, interval lower bound above');
+                      'ap inventory activity TS3, interval lower bound above');
     DEALLOCATE test;
 
 
@@ -357,34 +348,34 @@ BEGIN;
             VALUES (-1201, true, 'test1001', now() - '10 days'::interval,
                     -2000, 't');
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
-                 VALUES (-1201, -1201, -2, 100, 0, -3);
+                 VALUES (-1201, -1201, -4, 100, 0, -3);
 
     -- test interval no bounds
     PREPARE test AS SELECT *
-                    FROM inventory__activity(NULL, NULL, 'TS2', NULL);
-    SELECT results_eq('test', $$VALUES(-2::int, 'GOODS Test Series 2', 'TS2',
+                    FROM inventory__activity(NULL, NULL, 'TS4', NULL);
+    SELECT results_eq('test', $$VALUES(-4::int, 'GOODS Test Series 4', 'TS4',
                                      100::numeric, -300::numeric,
                                      0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ar inventory activity TS2, no interval');
+                      'ar inventory activity TS4, no interval');
     DEALLOCATE test;
 
     -- test interval lower bound
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '11 days'::interval)::date,
-                                             NULL, 'TS2', NULL);
-    SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
+                                             NULL, 'TS4', NULL);
+    SELECT results_eq('test', $$VALUES(-4, 'GOODS Test Series 4', 'TS4',
                                      100::numeric, -300::numeric,
                                      0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ar inventory activity TS2, lower bound interval below');
+                      'ar inventory activity TS4, lower bound interval below');
     DEALLOCATE test;
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '9 days'::interval)::date,
-                                             NULL, 'TS2', NULL);
+                                             NULL, 'TS4', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ar inventory activity TS2, lower bound interval above');
+                      'ar inventory activity TS4, lower bound interval above');
     DEALLOCATE test;
 
 
@@ -392,29 +383,29 @@ BEGIN;
     PREPARE test AS SELECT *
                     FROM inventory__activity(NULL,
                                              (now() - '9 days'::interval)::date,
-                                             'TS2', NULL);
-    SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
+                                             'TS4', NULL);
+    SELECT results_eq('test', $$VALUES(-4, 'GOODS Test Series 4', 'TS4',
                                      100::numeric, -300::numeric,
                                      0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ar inventory activity TS2, upper bound interval above');
+                      'ar inventory activity TS4, upper bound interval above');
     DEALLOCATE test;
 
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity(NULL,
                                              (now() - '11 days'::interval)::date,
-                                             'TS2', NULL);
+                                             'TS4', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ar inventory activity TS2, upper bound interval below');
+                      'ar inventory activity TS4, upper bound interval below');
     DEALLOCATE test;
 
     -- test interval upper and lower bound
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '11 days'::interval)::date,
                                              (now() - '9 days'::interval)::date,
-                                             'TS2', NULL);
-    SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
+                                             'TS4', NULL);
+    SELECT results_eq('test', $$VALUES(-4, 'GOODS Test Series 4', 'TS4',
                                      100::numeric, -300::numeric,
                                      0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
@@ -425,51 +416,60 @@ BEGIN;
     PREPARE test AS SELECT *
                     FROM inventory__activity((now() - '10 days'::interval)::date,
                                              (now() - '10 days'::interval)::date,
-                                             'TS2', NULL);
-    SELECT results_eq('test', $$VALUES(-2, 'GOODS Test Series 2', 'TS2',
+                                             'TS4', NULL);
+    SELECT results_eq('test', $$VALUES(-4, 'GOODS Test Series 4', 'TS4',
                                      100::numeric, -300::numeric,
                                      0::numeric, 0::numeric,
                                      0::numeric, 0::numeric)$$,
-                      'ar inventory activity TS2, interval single day');
+                      'ar inventory activity TS4, interval single day');
     DEALLOCATE test;
 
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '11 days'::interval)::date,
                                              (now() - '11 days'::interval)::date,
-                                             'TS2', NULL);
+                                             'TS4', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ar inventory activity TS2, interval upper bound below');
+                      'ar inventory activity TS4, interval upper bound below');
     DEALLOCATE test;
 
     PREPARE test AS SELECT (count(*) = 0)
                     FROM inventory__activity((now() - '9 days'::interval)::date,
                                              (now() - '9 days'::interval)::date,
-                                             'TS2', NULL);
+                                             'TS4', NULL);
     SELECT results_eq('test', ARRAY[true],
-                      'ar inventory activity TS2, interval lower bound above');
+                      'ar inventory activity TS4, interval lower bound above');
     DEALLOCATE test;
 
 
     --- Third test: stocked items should be on the inventory report
+
+    INSERT INTO ap (id, invoice, invnumber, transdate,
+                    entity_credit_account, approved)
+            VALUES (-8101, true, 'test1001', now() - '17 days'::interval,
+                    -1000, 't');
+    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+                 VALUES (-8101, -8101, -10, -100, 0, -10);
+
 
     SELECT assembly__stock(-9, 3);
 
     PREPARE test AS SELECT *
                       FROM inventory__activity(now()::date, now()::date,
                                                NULL, NULL)
-                     WHERE partnumber in ('AS2', 'TS1')
+                     WHERE partnumber in ('AS2', 'AS2a')
                   ORDER BY partnumber;
     SELECT results_eq('test', $$VALUES(-9, 'GOODS Test Series 6', 'AS2',
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
                                            0::numeric, 3::numeric),
-                                      (-1, 'GOODS Test Series 1', 'TS1',
+                                      (-10, 'GOODS Test Series 6', 'AS2a',
                                            0::numeric, 0::numeric,
                                            0::numeric, 0::numeric,
                                            21::numeric, 0::numeric)$$,
                       'assembly inventory activity AS2, assembled part');
     DEALLOCATE test;
+
 
 
 ROLLBACK;
