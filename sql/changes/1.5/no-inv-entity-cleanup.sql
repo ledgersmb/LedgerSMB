@@ -22,6 +22,6 @@ DROP TYPE IF EXISTS inventory_adjustment_info CASCADE;
 DROP TYPE IF EXISTS inventory_adjustment_line CASCADE;
 
 -- Aggregates
-DROP FUNCTION IF EXISTS product(numeric, numeric);
 DROP AGGREGATE IF EXISTS product(numeric);
+DROP FUNCTION IF EXISTS product(numeric, numeric);
 

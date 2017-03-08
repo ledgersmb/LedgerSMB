@@ -31,9 +31,10 @@ BEGIN
     UPDATE parts SET onhand = onhand + t_mfg_lot.qty
      where id = t_mfg_lot.parts_id;
 
-    INSERT INTO gl (reference, description, transdate, approved)
+    INSERT INTO gl (reference, description, transdate, approved,
+                   trans_type_code)
     values ('mfg-' || $1::TEXT, 'Manufacturing lot',
-            now(), true);
+            now(), true, 'as');
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval('id')::int, parts_id, qty, 0
@@ -190,7 +191,8 @@ CREATE TYPE inv_activity_line AS (
    purchased numeric,
    cost numeric,
    used numeric,
-   assembled numeric
+   assembled numeric,
+   adjusted numeric
 );
 
 CREATE OR REPLACE FUNCTION inventory__activity
@@ -205,17 +207,20 @@ $$
            AS purchased,
            SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0
                 END) AS cost,
-           SUM(CASE WHEN transtype = 'gl' AND i.qty > 0 THEN i.qty ELSE 0 END)
+           SUM(CASE WHEN transtype = 'as' AND i.qty > 0 THEN i.qty ELSE 0 END)
            AS used,
-           SUM(CASE WHEN transtype = 'gl' AND i.qty < 0 then -1*i.qty ELSE 0 END)
-           AS assembled
+           SUM(CASE WHEN transtype = 'as' AND i.qty < 0 then -1*i.qty ELSE 0 END)
+           AS assembled,
+           SUM(CASE WHEN transtype = 'ia' THEN i.qty ELSE 0 END)
+           AS adjusted
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
       JOIN (select id, approved, transdate, 'ar' as transtype FROM ar
              UNION
             SELECT id, approved, transdate, 'ap' as transtype FROM ap
              UNION
-            SELECT id, approved, transdate, 'gl' as transtype FROM gl) a
+            SELECT id, approved, transdate, trans_type_code as transtype
+              FROM gl) a
             ON (a.id = i.trans_id AND a.approved)
      WHERE ($1 IS NULL OR a.transdate >= $1)
            AND ($2 IS NULL OR a.transdate <= $2)
@@ -329,6 +334,10 @@ RETURNING *;
 $$;
 
 
+-- 'inventory_ajdust__approve()' had its return type changed in 1.5.4
+DROP FUNCTION IF EXISTS inventory_adjust__approve(int);
+
+
 CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id int)
 RETURNS inventory_report language plpgsql as
 $$
@@ -338,9 +347,9 @@ BEGIN
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
-INSERT INTO gl (description, transdate, reference, approved)
+INSERT INTO gl (description, transdate, reference, approved, trans_type_code)
         VALUES ('Transaction due to approval of inventory adjustment',
-                inv.transdate, 'invadj-' || in_id, true)
+                inv.transdate, 'invadj-' || in_id, true, 'ia')
     RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report

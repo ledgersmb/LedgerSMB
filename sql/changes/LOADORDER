@@ -46,6 +46,7 @@
 1.5/template_menu3.sql
 1.5/no-inv-entity-cleanup.sql
 1.5/no-inv-entity-tables.sql
+1.5/gl-trans-type.sql
 #1.6 changes
 1.6/drop_chart.sql
 1.6/drop_arap_cols.sql

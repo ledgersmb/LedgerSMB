@@ -115,7 +115,12 @@ sub columns {
      {col_id => 'assembled',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Assembled'), }
+      name => LedgerSMB::Report::text('Assembled'), },
+
+     {col_id => 'adjusted',
+        type => 'text',
+       money => 1,
+      name => LedgerSMB::Report::text('Adjusted'), }
     ];
 }
 
