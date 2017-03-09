@@ -19,18 +19,29 @@ sub _constructor_parameter_sets {
                    ->discard,
               $rule->new);
     my @files = sort $rule->name("*.sql")->file->in("sql/coa");
-    my %tests = ();
+    my %tests = (); my $i = 1;
 
     # This should be instance_name => { new parameters },
     # but I failed to get the sqlfile installed in the structure
     for my $sqlfile (@files) {
-        $tests{$sqlfile} = { sqlfile => $sqlfile };
+        $tests{$i++} = { sqlfile => $sqlfile };
     }
     return %tests;
 }
 
+has 'test_data' => (
+    is => 'rw',
+    isa => 'COATest',
+);
+
+sub BUILD {
+    my $test = shift;
+    $test->test_data(COATest->new( @_ ));
+}
+
 # Runs at the start of each test class
 #sub test_startup {
+#    warn p @_;
 #    my $test = shift;
 #    $test->next::method; # optional to call parent test_startup
 #    # more startup
@@ -48,9 +59,9 @@ sub test_constructor {
 
     local $!;
 
-    my $sqlfile = $test->test_instance_name;
-    my $coatest = COATest->new( sqlfile => $sqlfile );
+    my $coatest = $test->{test_data};
     ok($coatest, "Cannot set new COATest");
+    my $sqlfile = $coatest->sqlfile;
 
     my $db = $coatest->test_db;
     $! = undef; # reset if drop failed

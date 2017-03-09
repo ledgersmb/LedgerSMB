@@ -27,3 +27,9 @@ my $test_suite = Test::Class::Moose::Runner->new(
 
 $test_suite->runtests;
 $test_suite->test_report;
+
+# Expected results until parallel works
+# Test classes:    1
+# Test instances:  45
+# Test methods:    45
+# Total tests run: 180
