@@ -89,6 +89,39 @@ has rows => (is => 'rw',
 
 =back
 
+=head1 CONSTRUCTORS
+
+=over
+
+=item new
+
+This constructor is the standard Moose constructor.
+
+=item get( key => { id => $id } )
+
+This constructor retrieves the adjustment with primary key C<id> equal to
+C<$id> from the database and returns a C<LedgerSMB::Inventory::Adjust>
+instance.
+
+=back
+
+=cut
+
+use Carp::Always;
+
+sub get {
+    my $class = shift;
+    my %args = @_;
+
+    my @dblines = __PACKAGE__->call_dbmethod( funcname => 'get_lines',
+                                                args => $args{key} );
+    my @lines = map { LedgerSMB::Inventory::Adjust_Line->new(%$_) } @dblines;
+
+    my ($values) = __PACKAGE__->call_dbmethod( funcname => 'get',
+                                               args => $args{key} );
+    return __PACKAGE__->new(%$values, rows => \@lines);
+}
+
 =head1 METHODS
 
 =over
