@@ -80,7 +80,7 @@ sub columns {
     return [
       {col_id => 'partnumber',
          type => 'href',
-    href_base => 'ic.pl?action=edit&id='.
+    href_base => 'ic.pl?action=edit&id=',
          name => LedgerSMB::Report::text('Part Number') },
       {col_id => 'description',
          type => 'text',
