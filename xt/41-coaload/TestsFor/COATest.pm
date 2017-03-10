@@ -8,25 +8,36 @@ use COATest;
 
 use File::Find::Rule;
 
+my $rule = File::Find::Rule->new;
+$rule->or($rule->new
+               ->directory
+               ->name(qr(gifi|sic))
+               ->prune
+               ->discard,
+          $rule->new);
+my @files = sort $rule->name("*.sql")->file->in("sql/coa"); # "sql/coa/ar/chart/General.sql"
+
+my %tests;
+
+for my $sqlfile (@files) {
+    my ($_1,$dir,$type,$name) = $sqlfile =~ qr(sql\/coa\/(([a-z]{2})\/)?(.+\/)?([^\/\.]+)\.sql$);
+    $dir //= '';
+    $tests{"x$dir"} = [] if (!defined($tests{"x$dir"}));
+    push @{$tests{"x$dir"}}, $sqlfile;
+}
+
 # sort, run everything in parallel but the ones for the same country, for they need the same database
 sub _constructor_parameter_sets {
     my $class = shift;
-    my $rule = File::Find::Rule->new;
-    $rule->or($rule->new
-                   ->directory
-                   ->name(qr(gifi|sic))
-                   ->prune
-                   ->discard,
-              $rule->new);
-    my @files = sort $rule->name("*.sql")->file->in("sql/coa");
-    my %tests = (); my $i = 1;
+    my ($_1,$dir) = $class =~ qr(TestsFor::COATest(::([a-z]{2}))?);
+    $dir //= '';
+    my %testcases = ();
+    my $i = 1;
 
-    # This should be instance_name => { new parameters },
-    # but I failed to get the sqlfile installed in the structure
-    for my $sqlfile (@files) {
-        $tests{$i++} = { sqlfile => $sqlfile };
+    for my $sqlfile (@{$tests{"x$dir"}}) {
+        $testcases{$i++} = { sqlfile => $sqlfile };
     }
-    return %tests;
+    return %testcases;
 }
 
 has 'test_data' => (
@@ -40,12 +51,14 @@ sub BUILD {
 }
 
 # Runs at the start of each test class
-#sub test_startup {
-#    warn p @_;
-#    my $test = shift;
-#    $test->next::method; # optional to call parent test_startup
-#    # more startup
-#}
+sub test_startup {
+    my $test = shift;
+    $test->next::method; # optional to call parent test_startup
+
+    my $db = $test->{test_data}->test_db;
+    system("dropdb '$db' 2>/dev/null");
+    system("createdb '$db' -T '$ENV{LSMB_NEW_DB}'");
+}
 
 # Runs at the start of each test method.
 #sub test_setup {
@@ -60,27 +73,23 @@ sub test_constructor {
     local $!;
 
     my $coatest = $test->{test_data};
-    ok($coatest, "Cannot set new COATest");
     my $sqlfile = $coatest->sqlfile;
-
     my $db = $coatest->test_db;
-    $! = undef; # reset if drop failed
 
-    system("dropdb '$db' 2>/dev/null");
-    system("createdb '$db' -T '$ENV{LSMB_NEW_DB}'");
-    ok(! $!, "DB created for $sqlfile testing");
+    my $returnstring = `psql '$db' -c "SELECT 1 FROM pg_database WHERE datname='$db'"`;
+    my $testval = grep { /^ +1$/ } split("\n", $returnstring);
+    ok($testval, "DB created for $sqlfile testing");
 
+    $! = undef; # reset if system failed
     system("psql $db -f $sqlfile");
     ok(! $!, "psql run file succeeded");
 
-    my $returnstring = `psql '$db' -c "SELECT COUNT(*), 'TESTRESULT' from account"`;
-    my $testval;
+    $returnstring = `psql '$db' -c "SELECT COUNT(*), 'TESTRESULT' from account"`;
     if ( $returnstring ) {
         $testval = grep { /TESTRESULT/ } split("\n", $returnstring);
         $testval =~ s/\D//g;
     }
     ok($testval, "Got rows back for account, for $sqlfile");
-    system("dropdb '$db'");
 }
 
 # teardown methods are run after every test method.
@@ -91,10 +100,11 @@ sub test_constructor {
 #}
 
 # Runs at the end of each test class.
-#sub test_shutdown {
-#     my $test = shift;
-#     # more teardown
-#     $test->next::method; # # optional to call parent test_shutdown
-#}
+sub test_shutdown {
+    my $test = shift;
+    my $db = $test->{test_data}->test_db;
+    system("dropdb '$db'");
+    $test->next::method; # # optional to call parent test_shutdown
+}
 
 1;
