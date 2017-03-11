@@ -140,40 +140,6 @@ sub add_line{
     $self->rows(\@lines);
 }
 
-=item lines_from_form
-
-This function flattens a form.  It loops from 1 to $hashref->{rowcount}, and
-for each item found, checks for parts_id_$_ and partnumber_$_.  If either is
-found and counted_$_ is found, it creates a new line with the indexed keys of
-parts_id, partnumber, counted, and expected.
-
-Note that expected is optional and if not defined gets calculated based on the
-date of the report.   This happens during the save process.
-
-This then appends the lines onto the current report's @rows in order to ensure
-that many different sources could be combined together in this way.
-
-=cut
-
-sub lines_from_form {
-    my ($self, $hashref) = @_;
-    my @lines;
-    for my $ln (1 .. $hashref->{rowcount}){
-        next
-          if $hashref->{"id_$ln"} eq 'new';
-        my $line = LedgerSMB::Inventory::Adjust_Line->new(
-          parts_id => $hashref->{"id_$ln"},
-         partnumber => $hashref->{"partnumber_$ln"},
-            counted => $hashref->{"counted_$ln"},
-           expected => $hashref->{"onhand_$ln"},
-           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
-        push @lines, $line;
-    }
-    my $rows = $self->rows;
-    push @$rows, @lines;
-    $self->rows($rows);
-}
-
 =item save
 
 This saves the report.  In the process we run every line through a variance

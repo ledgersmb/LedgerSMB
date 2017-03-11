@@ -99,10 +99,30 @@ invoices.
 
 =cut
 
+sub _lines_from_form {
+    my ($self, $adjustment, $hashref) = @_;
+    my @lines;
+    for my $ln (1 .. $hashref->{rowcount}){
+        next
+          if $hashref->{"id_$ln"} eq 'new';
+        my $line = LedgerSMB::Inventory::Adjust_Line->new(
+          parts_id => $hashref->{"id_$ln"},
+         partnumber => $hashref->{"partnumber_$ln"},
+            counted => $hashref->{"counted_$ln"},
+           expected => $hashref->{"onhand_$ln"},
+           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
+        push @lines, $line;
+    }
+    my $rows = $adjusment->rows;
+    push @$rows, @lines;
+    $adjustment->rows($rows);
+}
+
+
 sub adjustment_save {
     my ($request) = @_;
     my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
-    $adjustment->lines_from_form($request);
+    $self->_lines_from_form($adjustment, $request);
     $adjustment->save;
     return begin_adjust($request);
 }
