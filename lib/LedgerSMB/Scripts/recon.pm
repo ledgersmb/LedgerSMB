@@ -205,7 +205,7 @@ sub _display_report {
     my $contents = '';
     {
         local $/;
-        my $handle = $self->{_request}->upload('csv_file');
+        my $handle = $request->{_request}->upload('csv_file');
         $contents = <$handle>
             if defined $handle;
     }
