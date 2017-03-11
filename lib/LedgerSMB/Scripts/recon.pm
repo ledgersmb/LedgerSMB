@@ -201,7 +201,17 @@ sub _display_report {
     $request->close_form;
     $request->open_form;
     $recon->unapproved_checks;
-    $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
+
+    my $contents = '';
+    {
+        local $/;
+        my $handle = $self->{_request}->upload('csv_file');
+        $contents = <$handle>
+            if defined $handle;
+    }
+
+    $recon->add_entries($recon->import_file($contents))
+        if !$recon->{submitted};
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
     $recon->{form_id} = $request->{form_id};
