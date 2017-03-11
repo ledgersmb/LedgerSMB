@@ -113,7 +113,7 @@ sub _lines_from_form {
            variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
         push @lines, $line;
     }
-    my $rows = $adjusment->rows;
+    my $rows = $adjustment->rows;
     push @$rows, @lines;
     $adjustment->rows($rows);
 }
