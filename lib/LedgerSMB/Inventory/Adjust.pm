@@ -107,8 +107,6 @@ instance.
 
 =cut
 
-use Carp::Always;
-
 sub get {
     my $class = shift;
     my %args = @_;
