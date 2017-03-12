@@ -605,7 +605,7 @@ INSERT INTO asset_report_line SELECT * FROM lsmb13.asset_report_line;
 INSERT INTO asset_rl_to_disposal_method SELECT * FROM lsmb13.asset_rl_to_disposal_method;
 DELETE FROM mime_type;
 INSERT INTO mime_type SELECT * FROM lsmb13.mime_type;
-INSERT INTO file_base SELECT * FROM lsmb13.file_base;
+INSERT INTO file_base SELECT * FROM ONLY lsmb13.file_base;
 INSERT INTO file_transaction SELECT * FROM lsmb13.file_transaction;
 INSERT INTO file_order SELECT * FROM lsmb13.file_order;
 INSERT INTO file_secondary_attachment SELECT * FROM lsmb13.file_secondary_attachment;
@@ -643,7 +643,7 @@ INSERT INTO cr_report_line SELECT * FROM lsmb13.cr_report_line;
 INSERT INTO cr_coa_to_account SELECT * FROM lsmb13.cr_coa_to_account;
 
 SELECT setval('id', max(id)) FROM transactions;
-
+SELECT setval('id', max(id)) FROM file_base;
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
  SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;
