@@ -623,7 +623,7 @@ INSERT INTO asset_report_line SELECT * FROM lsmb13.asset_report_line;
 INSERT INTO asset_rl_to_disposal_method SELECT * FROM lsmb13.asset_rl_to_disposal_method;
 DELETE FROM mime_type;
 INSERT INTO mime_type SELECT * FROM lsmb13.mime_type;
-INSERT INTO file_base SELECT * FROM lsmb13.file_base;
+INSERT INTO file_base SELECT * FROM ONLY lsmb13.file_base;
 INSERT INTO file_transaction SELECT * FROM lsmb13.file_transaction;
 INSERT INTO file_order SELECT * FROM lsmb13.file_order;
 INSERT INTO file_secondary_attachment SELECT * FROM lsmb13.file_secondary_attachment;
@@ -693,6 +693,7 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('note_class_id_seq', max(id)) FROM note_class;
  SELECT setval('note_id_seq', max(id)) FROM note;
  SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
+ SELECT setval('file_batch_id_seq', max(id)) FROM file_base;
  SELECT setval('batch_id_seq', max(id)) FROM batch;
  SELECT setval('invoice_id_seq', max(id)) FROM invoice;
  SELECT setval('voucher_id_seq', max(id)) FROM voucher;
@@ -715,8 +716,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
-
-UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
 update defaults set value = 'yes' where setting_key = 'migration_ok';
 
