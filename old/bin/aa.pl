@@ -1195,7 +1195,9 @@ sub update {
     $form->{rowcount} = $count + 1;
 
     for ( 1 .. $form->{rowcount} ) {
-        $form->{invtotal} += $form->{"amount_$_"};
+        if ( defined $form->{"amount_$_"} ) {
+            $form->{invtotal} += $form->{"amount_$_"};
+        }
     }
 
     $form->{exchangerate} = $exchangerate
@@ -1238,7 +1240,8 @@ sub update {
         $form->{invtotal} += $form->{"tax_$item"};
     }
 
-    $j = 1;
+    my $j = 1;
+    my $totalpaid = LedgerSMB::PGNumber->bzero();
     for $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0 ) {
             for (qw(datepaid source memo cleared)) {
