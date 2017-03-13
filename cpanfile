@@ -90,29 +90,35 @@ feature 'xls', "Microsoft Excel" =>
         requires 'Spreadsheet::WriteExcel';
         requires 'Excel::Writer::XLSX';
 };
-
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
+    requires 'App::Prove', '3.36';
     requires 'File::Util';
+    requires 'HTML::Lint';
+    requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
-    requires 'Linux::Inotify2';
+    recommends 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
+    requires 'Parallel::ForkManager';
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
-    requires 'Test::BDD::Cucumber', '0.50';
+    requires 'Test::BDD::Cucumber', '0.52';
+    requires 'Test::Class::Moose';
+    requires 'Test::Class::Moose::Role';
+    requires 'Test::Class::Moose::Role::ParameterizedInstances';
     requires 'Test::Exception';
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
-    requires 'Test::BDD::Cucumber', '0.50';
+    requires 'Test::Harness', '3.36';
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP';
-    requires 'Weasel', '0.09';
-    requires 'Weasel::Driver::Selenium2', '0.04';
+    requires 'Weasel', '0.10';
+    requires 'Weasel::Driver::Selenium2', '0.05';
     requires 'Weasel::Widgets::Dojo';
 };

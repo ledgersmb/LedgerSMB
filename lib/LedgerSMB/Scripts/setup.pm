@@ -73,6 +73,14 @@ sub _get_database {
              [ 'Please enter your credentials' ] ]
         if ! defined $creds->{password};
 
+    # Ideally this regex should be configurable per instance, and possibly per admin user
+    # for now we simply use a fixed regex. It will cover many if not most use cases.
+    return [ 454,
+             [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
+               'Content-Type' => 'text/html; charset=UTF-8' ],
+             [ "<html><body><h1 align='center'>Access to the ($request->{database}) database is Forbidden!</h1></br><h4 align='center'><a href='/setup.pl?database=$request->{database}'>return to setup</a></h4></body></html>" ] ]
+        if ( $request->{database} && $request->{database} =~ /postgres|template0|template1/);
+
     return (undef,
             LedgerSMB::Database->new(
                 username => $creds->{login},
@@ -271,9 +279,11 @@ sub list_databases {
 
     my @results = $database->list_dbs;
     $request->{dbs} = [];
-    for my $r (@results){
-       push @{$request->{dbs}}, {row_id => $r, db => $r };
-    }
+    # Ideally we would extend DBAdmin->list_dbs to accept an argument containing a list of databases to exclude using a method similar to that shown at https://git.framasoft.org/framasoft/OCB/commit/7a6e94edd83e9e73e56d2d148e3238618
+    # also, we should add a new function DBAdmin->list_dbs_this_user which only returns db's the currently auth'd user has access to. Once again the framasoft.org link shows a method of doing this
+    # for now we simply use a fixed regex. It will cover many if not most use cases.
+    @{$request->{dbs}} = map {+{ row_id => $_, db  => $_ }} grep { ! m/^(postgres|template0|template1)$/ } @results ;
+
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'list_databases',
@@ -528,9 +538,9 @@ sub load_templates {
     _init_db($request);
     my $dbh = $request->{dbh};
     opendir(DIR, $dir);
-    while (readdir(DIR)){
-       next unless -f "$dir/$_";
-       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
+    while (my $fname = readdir(DIR)){
+       next unless -f "$dir/$fname";
+       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$fname");
        $dbtemp->save;
     }
     return _render_new_user($request) unless $request->{only_templates};
