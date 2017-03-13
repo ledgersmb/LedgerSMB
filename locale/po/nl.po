@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-22 10:07+0000\n"
-"PO-Revision-Date: 2017-01-09 08:58+0000\n"
+"POT-Creation-Date: 2017-03-13 20:25+0000\n"
+"PO-Revision-Date: 2017-01-23 09:56+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "nl/)\n"
@@ -100,7 +100,7 @@ msgid "AIM"
 msgstr "AIM"
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr "Crediteuren"
@@ -147,7 +147,7 @@ msgid "AP account"
 msgstr "Crediteurenrekening"
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:106
 #: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr "Debiteuren"
@@ -348,7 +348,7 @@ msgstr "Aangroeibasis:"
 msgid "Accum. Depreciation"
 msgstr "Cum. Afschrijving"
 
-#: lsmb-request.pl:115
+#: lsmb-request.pl:116
 msgid "Action Not Defined: "
 msgstr "aktie niet gedefinieerd!"
 
@@ -2162,7 +2162,7 @@ msgstr "Klant ontbreekt!"
 msgid "Customer not on file!"
 msgstr "Klant bestaat niet!"
 
-#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:110
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:110
 msgid "Customer/Vendor Accounts"
 msgstr "Klanten-/leveranciersrekeningen"
 
@@ -2194,15 +2194,15 @@ msgstr "Database"
 msgid "Database Host"
 msgstr "Databasecomputer"
 
-#: UI/setup/begin_backup.html:7 UI/setup/complete.html:11
-#: UI/setup/complete_migration_revert.html:11 UI/setup/confirm_operation.html:7
+#: UI/setup/begin_backup.html:7 UI/setup/complete.html:9
+#: UI/setup/complete_migration_revert.html:9 UI/setup/confirm_operation.html:7
 #: UI/setup/credentials.html:8 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:5
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
 msgstr "Databasebeheerscherm"
 
-#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
+#: UI/setup/complete.html:10 UI/setup/complete_migration_revert.html:10
 msgid "Database Operation Complete"
 msgstr "Databasetaak afgerond"
 
@@ -2483,7 +2483,7 @@ msgstr "Standaardinstellingen"
 #: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:90
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
 #: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
 #: UI/Contact/divs/address.html:48 UI/Contact/divs/bank_act.html:10
@@ -3689,7 +3689,7 @@ msgid "GIFI saved!"
 msgstr "GIFI opgeslagen!"
 
 #: bin/am.pl:879 UI/Reports/filters/unapproved.html:15
-#: UI/setup/complete.html:25 UI/setup/confirm_operation.html:107
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:107
 msgid "GL"
 msgstr "Memoriaal"
 
@@ -4384,7 +4384,7 @@ msgstr "Taak/Project #"
 msgid "Journal Entry"
 msgstr "Journaalboeking"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:108
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:108
 msgid "Journal Lines"
 msgstr "Journaalregels"
 
@@ -4498,7 +4498,7 @@ msgstr "Levertijd"
 msgid "LedgerSMB Accounting Menu"
 msgstr "LedgerSMB boekhoudmenu"
 
-#: UI/setup/complete.html:19 UI/setup/confirm_operation.html:101
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:101
 msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB database statistieken"
 
@@ -4641,7 +4641,7 @@ msgstr "Uitgelogd door inactiviteit"
 msgid "Logging in.  Please wait."
 msgstr "Inloggen..."
 
-#: old-handler.pl:192 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:193 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Aanmelden"
 
@@ -5043,7 +5043,7 @@ msgstr "Geen belastingformulier geselecteerd"
 msgid "No unassigned amounts in Transactions"
 msgstr "Geen niet-toegewezen bedragen in transacties"
 
-#: lsmb-request.pl:84
+#: lsmb-request.pl:85
 msgid "No workflow script specified"
 msgstr "Geen proces voortgang script gespecificeerd"
 
@@ -5430,7 +5430,7 @@ msgstr "Order/Factuur"
 msgid "Ordering"
 msgstr "Bestellen"
 
-#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:27
+#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:109
 msgid "Orders"
 msgstr "Orders"
@@ -5889,7 +5889,7 @@ msgstr ""
 
 #: bin/aa.pl:978 bin/aa.pl:1003 bin/aa.pl:1023 bin/gl.pl:280 bin/gl.pl:322
 #: bin/ir.pl:621 bin/ir.pl:655 bin/ir.pl:1030 bin/is.pl:681 bin/is.pl:719
-#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:238
+#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:246
 #: UI/payments/payment2.html:339
 msgid "Post"
 msgstr "Inboeken"
@@ -6611,7 +6611,7 @@ msgstr "Winstreserve"
 msgid "Retrieve"
 msgstr "Opzoeken"
 
-#: UI/setup/complete.html:14 UI/setup/complete_migration_revert.html:14
+#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
 msgid "Return to setup"
 msgstr "Keer terug naar setup"
 
@@ -6651,7 +6651,7 @@ msgstr "Terug Betalingen"
 msgid "Reverse Receipts"
 msgstr "Draai ontvangst terug"
 
-#: UI/setup/complete.html:20 UI/setup/confirm_operation.html:102
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:102
 msgid "Row counts"
 msgstr "Regelaantallen"
 
@@ -7501,7 +7501,7 @@ msgstr "Startdatum:"
 msgid "Start Source Numbering At:"
 msgstr "Start nummer:"
 
-#: UI/setup/complete.html:15
+#: UI/setup/complete.html:13
 msgid "Start Using LedgerSMB"
 msgstr "Start LedgerSMB"
 
@@ -7683,7 +7683,7 @@ msgstr "Systeem"
 msgid "System Defaults"
 msgstr "Standaardinstellingen"
 
-#: old-handler.pl:178
+#: old-handler.pl:179
 msgid "System currently down for maintenance!"
 msgstr "Systeem momenteel niet beschikbaar vanwege onderhoud!"
 
@@ -8057,11 +8057,11 @@ msgstr "Dertig"
 msgid "This Account"
 msgstr "Deze rekening"
 
-#: UI/setup/complete_migration_revert.html:13
+#: UI/setup/complete_migration_revert.html:11
 msgid "This database operation has completed successfully."
 msgstr "Deze database-taak is succesvol afgerond."
 
-#: UI/setup/complete.html:13
+#: UI/setup/complete.html:11
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
@@ -8357,7 +8357,7 @@ msgstr "Transactiedatums"
 msgid "Transaction Type"
 msgstr "Boekingtype"
 
-#: UI/setup/complete.html:29 UI/setup/confirm_operation.html:111
+#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:111
 msgid "Transactions"
 msgstr "Boekingen"
 
@@ -8484,7 +8484,7 @@ msgstr "Type:"
 msgid "UPDATE"
 msgstr "Verversen"
 
-#: lsmb-request.pl:112
+#: lsmb-request.pl:113
 msgid "Unable to open script"
 msgstr "Kan script niet openen"
 
@@ -8548,7 +8548,7 @@ msgstr "Eenheidsprijs"
 msgid "Unknown database found."
 msgstr "Onbekende database aangetroffen"
 
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:250
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 msgid "Unlock"
 msgstr "Ontgrendel"
 
@@ -8670,7 +8670,7 @@ msgstr "Gebruikersnaam"
 msgid "Username:"
 msgstr "Gebruikersnaam:"
 
-#: UI/setup/complete.html:30 UI/setup/confirm_operation.html:47
+#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:47
 #: UI/setup/confirm_operation.html:112
 msgid "Users"
 msgstr "Gebruikers"
@@ -8772,7 +8772,7 @@ msgstr "Leverancier ontbreekt!"
 msgid "Vendor not on file!"
 msgstr "Leverancier bestaat niet!"
 
-#: old-handler.pl:236
+#: old-handler.pl:237
 msgid "Version"
 msgstr "Versie"
 
@@ -8932,7 +8932,7 @@ msgstr "jaren"
 msgid "Yes"
 msgstr "Ja"
 
-#: old-handler.pl:191
+#: old-handler.pl:192
 msgid "You are logged out!"
 msgstr "U bent afgemeld!"
 
@@ -9005,7 +9005,7 @@ msgstr "[_1]: Klant bestaat niet!"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverancier bestaat niet!"
 
-#: old-handler.pl:245
+#: old-handler.pl:246
 msgid "action not defined!"
 msgstr "aktie niet gedefinieerd!"
 
@@ -9159,6 +9159,3 @@ msgstr "Gebruik van een vooruitbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Balance Due"
-#~ msgstr "Verschuldigd saldo"

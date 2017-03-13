@@ -3,6 +3,20 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.39
+* Fixed searching for approved batches (Chris T, #2592)
+* Don't cache per-company (from database) templates (Erik H, #2573)
+* Don't block database administrator access to Contacts (Erik H)
+* Compensate for the removal of '.' from @INC on newer Perl versions (Erik H)
+* Fix payments sometimes double-counted in Cash>Reports>Receipts (Erik H, #2618)
+* Remove reference to removed JS files, silencing logs (Chris T)
+* Fix bug reading templates directory (only seen on CentOS) (Chris T)
+* Fix attachments showing up twice after 1.3->1.4 migration (Erik H, #2659)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.38
 * Printed credit invoice indistinguishible from regular invoice (Erik H, #2546)
 * Credit invoice edit screen looks like regular invoice screen (Erik H, #2550)
