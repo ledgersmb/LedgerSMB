@@ -323,7 +323,6 @@ INSERT INTO acc_trans (
  cleared,
  fx_transaction,
  memo,
- invoice_id,
  approved,
  cleared_on,
  reconciled_on,
@@ -338,7 +337,6 @@ INSERT INTO acc_trans (
  cleared,
  fx_transaction,
  memo,
- invoice_id,
  approved,
  cleared_on,
  reconciled_on,
@@ -382,6 +380,9 @@ SELECT
  serialnumber,
  notes
   FROM lsmb13.invoice;
+
+UPDATE acc_trans ac
+   SET invoice_id = (select invoice_id from lsmb13.acc_trans a where a.entry_id = ac.entry_id);
 
 --INSERT INTO payment_map SELECT * FROM lsmb13.payment_map;
 INSERT INTO assembly SELECT * FROM lsmb13.assembly;
@@ -496,7 +497,7 @@ INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, description, description
   FROM lsmb13.department;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 1
    AND EXISTS (select 1 from lsmb13.department);
 
@@ -506,7 +507,7 @@ INSERT INTO business_unit
 SELECT id + 1000, 2, projectnumber, description, startdate, enddate,
         credit_id from lsmb13.project;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 2
    AND EXISTS (select 1 from lsmb13.project);
 
