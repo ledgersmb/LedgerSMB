@@ -19,12 +19,31 @@ Yves L is Yves Lavoie
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.4
+* Updated Dojo from 1.10.6 to 1.10.7 (Erik H)
+* Add missing defaults in ledgersmb.conf 'database' section (David G, #2632)
+* Add 2 missing RHEL dependencies to Makefile (David G)
+* Add conf/README.md describing the content of conf/ (David G)
+* Fixed bug in template processing only seen on CentOS (Chris T)
+* Transaction forgets payment account on Update (Nick P, #2580)
+* Updates to sample config and Makefile (Bill O)
+* Improved table reading experience for dynatable based reports (Erik H)
+* Fix file attachments shown twice after migration from 1.3 (Erik H, #2659)
+* Fix two issues in the 1.3->1.5 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+David G is David Godfrey
+Chris T is Chris Travers
+Nick P is Nick Prater
+Bill O is Bill Ott
+
+
 Changelog for 1.5.3
 * Fix access to contact data for database admins (Erik H)
 * Fix Reconciliation Submit button not enabled (Nick P)
 * Fix Batch Search for approved transactions (Chris T)
 * Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
-* Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+* Fix Invoice line item descriptions not visible until clicked (Erik H, #2607)
 * Fix payment amounts in Cash->Reports->Receipts (Erik H, 2618)
 
 Nick P is Nick Prater
