@@ -80,6 +80,12 @@ backupdir = /tmp/ledgersmb-backups
 
 localepath = locale/po
 
+# location where compiled templates are stored
+#
+# When relative, appended to the directory specified in the 'tempdir' variable
+#
+#templates_cache = lsmb_templates
+
 [programs]
 # program to use for file compression
 gzip       = gzip -S .gz

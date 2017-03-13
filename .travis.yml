@@ -128,8 +128,13 @@ before_script:
   - nginx -c /tmp/nginx.conf
 
 script:
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove t/*.t
-  - export RELEASE_TESTING=1 && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest LSMB_BASE_URL="http://127.0.0.1:5000" prove xt/*.t
+  - RELEASE_TESTING=1
+    PGUSER=postgres
+    PGPASSWORD=test
+    LSMB_TEST_DB=1
+    LSMB_NEW_DB=lsmb13installtest
+    LSMB_BASE_URL="http://127.0.0.1:5000"
+      prove t xt
 
 after_success:
   - >

@@ -848,7 +848,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->{"select$form->{ARAP}_paid_$i"} =
           $form->{"select$form->{ARAP}_paid"};
         $form->{"select$form->{ARAP}_paid_$i"} =~
-s/option>\Q$form->{"$form->{ARAP}_paid_$i"}\E/option selected="selected">$form->{"$form->{ARAP}_paid_$i"}/;
+          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/\1 selected="selected"/;
 
         # format amounts
         $form->{"paid_$i"} =

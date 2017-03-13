@@ -160,6 +160,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
+use File::Spec;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
