@@ -2,7 +2,7 @@
 
 # Simple script to prepare for release
 
-version="1.5.4-dev";
+version="1.5.4";
 build_d="../release";
 
 hg archive -t tgz $build_d/ledgersmb-${version}.tar.gz
