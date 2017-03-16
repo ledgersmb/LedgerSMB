@@ -1,7 +1,11 @@
+[![Build Status](https://api.travis-ci.org/ledgersmb/LedgerSMB.svg?branch=master)](https://travis-ci.org/ledgersmb/LedgerSMB)
+[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+[![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 
-# NAME
 
-LedgerSMB - Small and Medium business accounting and ERP
+# LedgerSMB
+
+Small and Medium business accounting and ERP
 
 # SYNOPSIS
 
