@@ -1,7 +1,7 @@
 [![Build Status](https://api.travis-ci.org/ledgersmb/LedgerSMB.svg?branch=master)](https://travis-ci.org/ledgersmb/LedgerSMB)
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
-
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
 
 # LedgerSMB
 
@@ -61,10 +61,10 @@ To get the latest development version:
  $ git submodule update --init --recursive
 ```
 
-To get the released version 1.5.3, the commands look like:
+To get the released version 1.5.5, the commands look like:
 
 ```
- $ git clone -b 1.5.3 https://github.com/ledgersmb/LedgerSMB.git
+ $ git clone -b 1.5.5 https://github.com/ledgersmb/LedgerSMB.git
  $ cd LedgerSMB
  $ git submodule update --init --recursive
 ```
