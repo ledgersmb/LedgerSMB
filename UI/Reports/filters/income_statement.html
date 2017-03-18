@@ -138,6 +138,11 @@ default_values = [USER.language]
 </div>
 
 <div class="subsection">
+  <?lsmb PROCESS business_classes;
+         ?>
+</div>
+
+<div class="subsection">
 <div class="labelledinput">
         <div class="label">
                 <?lsmb text('Comparison selection by') ?>
@@ -181,7 +186,6 @@ PROCESS input element_data = {
           size = '3'
 default_values = 0
 };
-PROCESS business_classes;
 ?>
 <div class="input_row"><?lsmb
 PROCESS date_from_date_div;
