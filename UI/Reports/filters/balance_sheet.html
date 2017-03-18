@@ -135,7 +135,7 @@ default_values = 0
        <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="inputrow">
        <?lsmb FOREACH c IN [1 .. 9]; ?>
-          <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+          <div id="comparison_dates_<?lsmb c ?>" style="display:none">
              <?lsmb
                 PROCESS input element_data = {
                            label = text('Through date') #'

@@ -199,7 +199,7 @@ PROCESS date_from_date_div;
        <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
        <div class="input_row">
                    <?lsmb FOREACH c IN [1 .. 9]; ?>
-                          <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
+                          <div id="comparison_dates_<?lsmb c ?>" style="display:none">
                                           <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
                                           <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
                           </div>
