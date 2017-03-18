@@ -145,11 +145,11 @@ default_values = [USER.language]
 <div class="subsection">
 <div class="labelledinput">
         <div class="label">
-                <?lsmb text('Comparison selection by') ?>
+                <?lsmb text('Period selection by') ?>
         </div>
         <div class="input_group">
                 <?lsmb
-                IF comparison_type != 'by_dates';
+                IF comparison_type == 'by_periods';
                   YES="CHECKED";
                   NO=undef;
                 ELSE;

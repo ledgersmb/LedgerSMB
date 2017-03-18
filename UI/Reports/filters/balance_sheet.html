@@ -85,9 +85,9 @@ default_values = [USER.language]
 ?>
 </div>
 <div class="subsection">
-<h3><?lsmb text('Comparison selection by') ?></h3>
+<h3><?lsmb text('Period selection') ?></h3>
 <?lsmb
-IF comparison_type != 'by_dates';
+IF comparison_type == 'by_periods';
   YES="CHECKED";
   NO=undef;
 ELSE;
