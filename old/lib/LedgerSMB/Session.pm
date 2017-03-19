@@ -22,19 +22,10 @@ use CGI::Simple;
 use strict;
 use warnings;
 
-
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
-
-=item http_error
-
-Send an http error to the browser.
-
-=cut
-
-sub http_error {
-    #my ($errcode, $msg_plus) = @_;
-    my ($unknown,$errcode, $msg_plus) = @_;#tshvr4 called as LedgerSMB::Auth->http_error('401');
+sub _http_error {
+    my ($errcode, $msg_plus) = @_;
     $msg_plus = '' if not defined $msg_plus;
     my $cgi = CGI::Simple->new();
 
@@ -88,7 +79,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    http_error(401, $suffix);#tshvr4
+    _http_error(401, $suffix);
 }
 
 
