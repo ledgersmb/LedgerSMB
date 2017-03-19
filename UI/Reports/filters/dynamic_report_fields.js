@@ -39,7 +39,6 @@ function _show_hide_details(type_id){
         e.style = type_id == "comparison_by_dates" ? "" : "display:none";
     } else {
         var c = document.getElementById('comparison-periods').value;
-        document.getElementById('comparison_periods_text').innerHTML = c;
 
         for ( i = 1 ; i <= 9 ; i++ ) {
             var ei_id = e_id + "_" + i;
