@@ -196,14 +196,27 @@ default_values = 0
 ?></legend>
 
   <div id="comparison_dates" style="display:none">
-    <div class="input_row">
-      <?lsmb FOREACH c IN [1 .. 9]; ?>
-      <div id="comparison_dates_<?lsmb c ?>" style="display:none">
-        <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
-        <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
+    <?lsmb FOREACH c IN [1 .. 9]; ?>
+    <div class="input_row" id="comparison_dates_<?lsmb c ?>" style="display:none">
+      <div class="input_group">
+        <?lsmb PROCESS input element_data = {
+               label=text('From')
+               class="date"
+               name="from_date_" _ c
+               id="from_date_" _ c
+               size="11"
+               title=datestyle } ?>
+
+        <?lsmb PROCESS input element_data = {
+               label=text('To')
+               class="date"
+               name="to_date_" _ c
+               id="to_date_" _ c
+               size="11"
+               title=datestyle } ?>
       </div>
-      <?lsmb END ?>
     </div>
+    <?lsmb END ?>
   </div>
 </fieldset>
 
