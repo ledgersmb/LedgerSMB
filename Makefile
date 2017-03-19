@@ -41,6 +41,7 @@ RHEL_perlmodules += perl-Log-Log4perl perl-MIME-Base64 perl-MIME-Lite perl-Math-
 RHEL_perlmodules += perl-Moose perl-Number-Format perl-Plack perl-Template-Toolkit
 RHEL_perlmodules += perl-namespace-autoclean perl-MooseX-NonMoose
 RHEL_perlmodules += perl-XML-Simple
+RHEL_perlmodules += perl-YAML perl-FCGI-ProcManager
 RHEL_feature_PDF := perl-TeX-Encode texlive
 RHEL_feature_PDF_utf8 := 
 RHEL_feature_OpenOffice := 
