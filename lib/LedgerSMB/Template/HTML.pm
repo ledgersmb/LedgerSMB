@@ -47,6 +47,7 @@ use warnings;
 use strict;
 
 use CGI::Simple::Standard qw(:html);
+use File::Spec;
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
@@ -180,9 +181,12 @@ sub process {
         DEBUG_FORMAT => '',
         (%additional_options)
         };
-        if ($LedgerSMB::Sysconfig::cache_templates){
+        if ($LedgerSMB::Sysconfig::cache_templates
+            && $parent->{include_path} ne 'DB'){
             $arghash->{COMPILE_EXT} = '.lttc';
-            $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::tempdir . "/" . $LedgerSMB::Sysconfig::cache_template_subdir;
+            $arghash->{COMPILE_DIR} =
+               File::Spec->rel2abs( $LedgerSMB::Sysconfig::templates_cache,
+                                    $LedgerSMB::Sysconfig::tempdir );
         }
 
     $template = Template->new(

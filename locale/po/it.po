@@ -3,9 +3,9 @@
 # Erik Huelsmann <ehuels@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.2\n"
+"Project-Id-Version: LedgerSMB 1.5.5-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-22 10:56+0000\n"
+"POT-Creation-Date: 2017-03-13 20:37+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -1629,7 +1629,7 @@ msgstr "City:"
 msgid "Class"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:215 UI/reconciliation/report.html:83
+#: lib/LedgerSMB/Scripts/recon.pm:218 UI/reconciliation/report.html:83
 #: UI/reconciliation/report.html:158
 msgid "Clear date"
 msgstr ""
@@ -2506,7 +2506,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:188
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:90
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:250
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:211
 #: lib/LedgerSMB/Scripts/account.pm:177 t/data/04-complex_template.html:510
 #: UI/business_units/list_classes.html:95 UI/Contact/divs/address.html:52
@@ -4111,7 +4111,7 @@ msgstr "File non valido"
 msgid "Invalid redirect"
 msgstr "Redirezione non valida"
 
-#: lib/LedgerSMB/Scripts/recon.pm:304
+#: lib/LedgerSMB/Scripts/recon.pm:321
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
@@ -5502,7 +5502,7 @@ msgstr "Generati ordini"
 msgid "Other Actions"
 msgstr "Altre azioni"
 
-#: lib/LedgerSMB/Scripts/recon.pm:218
+#: lib/LedgerSMB/Scripts/recon.pm:221
 msgid "Our Balance"
 msgstr "Nostro saldo"
 
@@ -5970,7 +5970,7 @@ msgstr ""
 
 #: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
-#: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: UI/payments/payment2.html:469
 msgid "Post"
 msgstr "Registra"
@@ -5979,7 +5979,7 @@ msgstr "Registra"
 msgid "Post Batch"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:217 UI/create_batch.html:84
+#: lib/LedgerSMB/Scripts/recon.pm:220 UI/create_batch.html:84
 msgid "Post Date"
 msgstr "Data registrazione"
 
@@ -7034,7 +7034,7 @@ msgid "Scheduled"
 msgstr ""
 
 #: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:529
-#: lib/LedgerSMB/Template.pm:309 UI/lib/utilities.html:44
+#: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Schermo"
 
@@ -7596,7 +7596,7 @@ msgstr "Ordina per"
 #: lib/LedgerSMB/Report/GL.pm:215
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:75
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
-#: lib/LedgerSMB/Scripts/payment.pm:155 lib/LedgerSMB/Scripts/recon.pm:216
+#: lib/LedgerSMB/Scripts/payment.pm:155 lib/LedgerSMB/Scripts/recon.pm:219
 #: templates/demo/ap_transaction.html:194
 #: templates/demo/ar_transaction.html:193 templates/demo/invoice.html:253
 #: templates/demo/printPayment.html:50
@@ -8191,7 +8191,7 @@ msgstr "La somma da pagare per la fattura numero"
 msgid "The following transactions have unassigned amounts"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:219
+#: lib/LedgerSMB/Scripts/recon.pm:222
 msgid "Their Balance"
 msgstr "Loro saldo"
 
@@ -8751,7 +8751,7 @@ msgstr ""
 msgid "Unknown database found."
 msgstr "Trovato database sconosciuto."
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:256
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:264
 msgid "Unlock"
 msgstr "Sblocca"
 

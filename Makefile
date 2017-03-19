@@ -39,6 +39,7 @@ RHEL_perlmodules += perl-Log-Log4perl perl-MIME-Base64 perl-MIME-Lite perl-Math-
 RHEL_perlmodules += perl-Moose perl-Number-Format perl-Plack perl-Template-Toolkit
 RHEL_perlmodules += perl-namespace-autoclean perl-MooseX-NonMoose
 RHEL_perlmodules += perl-XML-Simple
+RHEL_perlmodules += perl-YAML perl-FCGI-ProcManager
 RHEL_feature_PDF := perl-TeX-Encode texlive
 RHEL_feature_PDF_utf8 := 
 RHEL_feature_OpenOffice := 
@@ -246,7 +247,7 @@ help:
 #   builds dojo for production/release
 SHELL := /bin/bash
 HOMEDIR := ~/dojo_archive
-SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit | sha1sum | cut -d' ' -f 1)
+SHA := $(shell find UI/js-src/lsmb UI/js-src/dojo UI/js-src/dijit -exec sha1sum {} + 2>&1 | sort | sha1sum | cut -d' ' -f 1)
 ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
 TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
 FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
