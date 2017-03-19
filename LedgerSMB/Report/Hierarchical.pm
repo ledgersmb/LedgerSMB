@@ -264,6 +264,36 @@ sub add_comparison{
     my $row_path_prefix = $args{row_path_prefix} || [];
     my $col_path_prefix = $args{column_path_prefix} || [];
 
+
+    for my $orig_row_id (keys %{$compared->rheads->ids}) {
+        my $rprops = $compared->rheads->id_props($orig_row_id);
+        next if $rprops->{section_for};
+
+        my $row_id =
+            $self->rheads->map_path([
+                (@$row_path_prefix),
+                (@{$compared->rheads->ids->{$orig_row_id}->{path}}) ]);
+
+        $self->rheads->id_props($row_id,
+                                $compared->rheads->id_props($orig_row_id))
+            if ! defined $self->rheads->id_props($row_id);
+    }
+
+    for my $orig_col_id (keys %{$compared->cheads->ids}) {
+        my $cprops = $compared->cheads->id_props($orig_col_id);
+        next if $cprops->{section_for};
+
+        my $col_id =
+            $self->cheads->map_path([
+                (@$col_path_prefix),
+                (@{$compared->cheads->ids->{$orig_col_id}->{path}}) ]);
+
+        $self->cheads->id_props($col_id,
+                                $compared->cheads->id_props($orig_col_id))
+            if ! defined $self->cheads->id_props($col_id);
+    }
+
+
     for my $orig_row_id (keys %{$compared->rheads->ids}) {
         my $rprops = $compared->rheads->id_props($orig_row_id);
         next if $rprops->{section_for};
@@ -283,13 +313,6 @@ sub add_comparison{
             $self->cell_value($row_id, $col_id,
                               $compared->cells->{$orig_row_id}->{$orig_col_id})
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
-
-            $self->rheads->id_props($row_id,
-                                    $compared->rheads->id_props($orig_row_id))
-                if ! defined $self->rheads->id_props($row_id);
-            $self->cheads->id_props($col_id,
-                                    $compared->cheads->id_props($orig_col_id))
-                if ! defined $self->cheads->id_props($col_id);
         }
     }
 }
