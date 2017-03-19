@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 package LedgerSMB::Rest;
+no lib '.';
 use FindBin;
 use lib $FindBin::Bin;
 
@@ -144,9 +145,11 @@ see the included License.txt for details.
 
 package LedgerSMB::REST_Handler;
 
+no lib '.';
 use FindBin;
 BEGIN {
-  lib->import($FindBin::Bin) unless $ENV{mod_perl}
+  unshift @INC, $FindBin::Bin
+      unless grep(@INC, $FindBin::Bin) || $ENV{mod_perl}
 }
 
 use DBI;

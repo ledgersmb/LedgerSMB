@@ -2,14 +2,15 @@
 # Translators:
 # Arne Hanssen <arne.senja@gmail.com>, 2016
 # Copyright (c) 2001, 2004,2012
+# Ha Sorli <havard@sorli.no>, 2017
 # Stig Berg <stig@tmb.no>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-22 10:07+0000\n"
-"PO-Revision-Date: 2017-01-09 08:58+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"POT-Creation-Date: 2017-03-13 20:25+0000\n"
+"PO-Revision-Date: 2017-02-13 00:41+0000\n"
+"Last-Translator: Ha Sorli <havard@sorli.no>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/nb/)\n"
 "Language: nb\n"
@@ -49,7 +50,7 @@ msgstr "(=) Nedskrevet Verdi"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
 msgid "(Locked)"
-msgstr ""
+msgstr "(Låst)"
 
 #: LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -99,7 +100,7 @@ msgid "AIM"
 msgstr "Hensikt"
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr "Leverandør"
@@ -146,7 +147,7 @@ msgid "AP account"
 msgstr "Kredittkonto Leverandører"
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:106
 #: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr "Kunder"
@@ -347,7 +348,7 @@ msgstr "Kostnadsbase"
 msgid "Accum. Depreciation"
 msgstr "Akkumulert Nedskrivning"
 
-#: lsmb-request.pl:115
+#: lsmb-request.pl:116
 msgid "Action Not Defined: "
 msgstr "Ikke definert funksjon"
 
@@ -608,7 +609,7 @@ msgstr "Ny/Forandre Lønn"
 
 #: LedgerSMB/Scripts/business_unit.pm:178
 msgid "Added id [_1]"
-msgstr ""
+msgstr "Lagt til nr [_1]"
 
 #: bin/aa.pl:657 bin/arap.pl:175 bin/ic.pl:1700 bin/ir.pl:543 bin/is.pl:576
 #: bin/oe.pl:510 bin/pe.pl:687 UI/Contact/divs/address.html:81
@@ -1652,7 +1653,7 @@ msgstr "Brukt tid"
 
 #: UI/accounts/yearend.html:90
 msgid "Close As-Of"
-msgstr ""
+msgstr "Avslutt"
 
 #: UI/am-audit-control.html:19
 msgid "Close Books up to"
@@ -1748,12 +1749,12 @@ msgstr "Sammenlign med"
 #: UI/Reports/filters/balance_sheet.html:120
 #: UI/Reports/filters/income_statement.html:176
 msgid "Comparison Periods"
-msgstr ""
+msgstr "Sammenlign perioder"
 
 #: UI/Reports/filters/balance_sheet.html:88
 #: UI/Reports/filters/income_statement.html:143
 msgid "Comparison selection by"
-msgstr ""
+msgstr "Sammenlign utvalg "
 
 #: UI/payments/check_job.html:24
 msgid "Completed Successfully"
@@ -1821,7 +1822,7 @@ msgstr "Kontakt søk"
 
 #: UI/payments/payments_detail.html:413
 msgid "Contact Total (if paying \"some\")"
-msgstr ""
+msgstr "Kontakt totalt (hvis \"noe\" blir betalt)"
 
 #: sql/Pg-database.sql:2856
 msgid "Contacts"
@@ -1969,7 +1970,7 @@ msgstr "Land"
 
 #: UI/setup/credentials.html:61
 msgid "Create"
-msgstr ""
+msgstr "Opprett"
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -2159,7 +2160,7 @@ msgstr "Kunde mangler!"
 msgid "Customer not on file!"
 msgstr "Kunde mangler i databasen!"
 
-#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:110
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:110
 msgid "Customer/Vendor Accounts"
 msgstr "Kunde/Leverandør Kontoer"
 
@@ -2191,15 +2192,15 @@ msgstr "Database"
 msgid "Database Host"
 msgstr "Database-vert"
 
-#: UI/setup/begin_backup.html:7 UI/setup/complete.html:11
-#: UI/setup/complete_migration_revert.html:11 UI/setup/confirm_operation.html:7
+#: UI/setup/begin_backup.html:7 UI/setup/complete.html:9
+#: UI/setup/complete_migration_revert.html:9 UI/setup/confirm_operation.html:7
 #: UI/setup/credentials.html:8 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:5
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
 msgstr "Database Management Panel"
 
-#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
+#: UI/setup/complete.html:10 UI/setup/complete_migration_revert.html:10
 msgid "Database Operation Complete"
 msgstr "Database Operasjon Ferdig"
 
@@ -2209,7 +2210,7 @@ msgstr "Databasen eksisterer ikke"
 
 #: LedgerSMB/Scripts/setup.pm:757
 msgid "Database exists."
-msgstr ""
+msgstr "Databasen eksister."
 
 #: UI/am-company-logo.html:16
 msgid "Dataset"
@@ -2353,7 +2354,7 @@ msgstr "Dato: [_1]"
 #: UI/Reports/filters/balance_sheet.html:113
 #: UI/Reports/filters/income_statement.html:167
 msgid "Dates"
-msgstr ""
+msgstr "Datoer"
 
 #: bin/am.pl:822 UI/timecards/entry_filter.html:23
 msgid "Day"
@@ -2480,7 +2481,7 @@ msgstr "Standardinnstillinger"
 #: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:90
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
 #: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
 #: UI/Contact/divs/address.html:48 UI/Contact/divs/bank_act.html:10
@@ -3197,7 +3198,7 @@ msgstr "Legg inn ansattnummer hvor de mangler"
 #: UI/Reports/filters/balance_sheet.html:133
 #: UI/Reports/filters/income_statement.html:199
 msgid "Enter up to "
-msgstr ""
+msgstr "Lagt opp til"
 
 #: LedgerSMB/Report/Budget/Search.pm:88
 #: LedgerSMB/Report/Reconciliation/Summary.pm:152
@@ -3685,7 +3686,7 @@ msgid "GIFI saved!"
 msgstr "SRU lagret!"
 
 #: bin/am.pl:879 UI/Reports/filters/unapproved.html:15
-#: UI/setup/complete.html:25 UI/setup/confirm_operation.html:107
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:107
 msgid "GL"
 msgstr "Hovedbok"
 
@@ -4040,6 +4041,9 @@ msgid ""
 "from [_1] until paid in full. Items returned are subject to a 10% restocking "
 "charge."
 msgstr ""
+"Renter på forfalte beløpt blir belastet med 12% rente pr. år fra [_1] inntil "
+"fordringen er fullt betalt. Returnerte varer blir belastet med 10% i "
+"behandlings kostnader. "
 
 #: LedgerSMB.pm:753
 msgid "Internal Database Error"
@@ -4325,7 +4329,7 @@ msgstr "Artikkel Funnet i"
 #: templates/demo_with_images/packing_list.tex:21
 #: templates/xedemo/packing_list.tex:21
 msgid "Items returned are subject to a 10% restocking charge."
-msgstr ""
+msgstr "Returnerte varer blir belastet med 10% i behandlings kostnader. "
 
 #: templates/demo/invoice.html:285 templates/demo/packing_list.html:176
 #: templates/demo_with_images/invoice.html:288
@@ -4373,7 +4377,7 @@ msgstr "Jobb/Prosjekt #"
 msgid "Journal Entry"
 msgstr "Postering"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:108
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:108
 msgid "Journal Lines"
 msgstr "Protokoll Linjer"
 
@@ -4487,7 +4491,7 @@ msgstr "forsinkelsestid"
 msgid "LedgerSMB Accounting Menu"
 msgstr "LedgerSMB Regnskapsmeny"
 
-#: UI/setup/complete.html:19 UI/setup/confirm_operation.html:101
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:101
 msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB Databasestatistikk"
 
@@ -4630,13 +4634,13 @@ msgstr "Logget ut på grunn av ikke aktivitet"
 msgid "Logging in.  Please wait."
 msgstr "Logg inn. Vent litt"
 
-#: old-handler.pl:192 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:193 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Login"
 
 #: LedgerSMB/Scripts/setup.pm:759
 msgid "Login?"
-msgstr ""
+msgstr "Login?"
 
 #: sql/Pg-database.sql:2931
 msgid "Logout"
@@ -5028,9 +5032,9 @@ msgstr "Ingen MVA fra valgte"
 
 #: LedgerSMB/Upgrade_Tests.pm:328
 msgid "No unassigned amounts in Transactions"
-msgstr ""
+msgstr "Ingen ikke tilordnede beløp i transaksjoner"
 
-#: lsmb-request.pl:84
+#: lsmb-request.pl:85
 msgid "No workflow script specified"
 msgstr "Det er ikke angitt noe arbeidsflyt-script"
 
@@ -5282,7 +5286,7 @@ msgstr "Beløp i hand"
 
 #: UI/import_csv/import_inventory_csv.html:50
 msgid "Onhand delta"
-msgstr ""
+msgstr "Onhand delta"
 
 #: LedgerSMB/Scripts/configuration.pm:65
 msgid "Only Timeout Locks"
@@ -5416,7 +5420,7 @@ msgstr "Ordre/Faktura"
 msgid "Ordering"
 msgstr "Ordre"
 
-#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:27
+#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:109
 msgid "Orders"
 msgstr "Ordrer"
@@ -5765,7 +5769,7 @@ msgstr "Periode"
 #: UI/Reports/filters/balance_sheet.html:105
 #: UI/Reports/filters/income_statement.html:159
 msgid "Periods"
-msgstr ""
+msgstr "Perioder"
 
 #: LedgerSMB/Scripts/contact.pm:165 UI/Contact/divs/person.html:1
 msgid "Person"
@@ -5851,7 +5855,7 @@ msgstr "Velg leverandør med ubrukte overbetalinger"
 
 #: LedgerSMB/Scripts/timecard.pm:148
 msgid "Please submit a start/end time or a qty"
-msgstr ""
+msgstr "Vennligst sett en start / sluttid eller et antall"
 
 #: LedgerSMB/Upgrade_Tests.pm:373
 msgid "Please use the 1.2 UI to add the GIFI accounts"
@@ -5867,7 +5871,7 @@ msgstr "Bruk SQL-Ledger UI for å legge til SRU kontoer"
 
 #: bin/aa.pl:978 bin/aa.pl:1003 bin/aa.pl:1023 bin/gl.pl:280 bin/gl.pl:322
 #: bin/ir.pl:621 bin/ir.pl:655 bin/ir.pl:1030 bin/is.pl:681 bin/is.pl:719
-#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:238
+#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:246
 #: UI/payments/payment2.html:339
 msgid "Post"
 msgstr "Bokfør"
@@ -6574,7 +6578,7 @@ msgstr "Obligatorisk inntasting ikke utført"
 #: LedgerSMB/Report/Balance_Sheet.pm:92
 #: LedgerSMB/Report/PNL/Income_Statement.pm:103
 msgid "Required period type"
-msgstr ""
+msgstr "Krever type periode"
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
 msgid "Reset Password"
@@ -6589,7 +6593,7 @@ msgstr "Realisert overskudd"
 msgid "Retrieve"
 msgstr "Gjenopprette"
 
-#: UI/setup/complete.html:14 UI/setup/complete_migration_revert.html:14
+#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
 msgid "Return to setup"
 msgstr "Retturner til Oppsett"
 
@@ -6629,7 +6633,7 @@ msgstr "Omgjøre Betalinger"
 msgid "Reverse Receipts"
 msgstr "Omgjøre Kvitteringer"
 
-#: UI/setup/complete.html:20 UI/setup/confirm_operation.html:102
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:102
 msgid "Row counts"
 msgstr "Tellet Rader"
 
@@ -6849,7 +6853,7 @@ msgstr "Lagre som ny"
 
 #: LedgerSMB/Scripts/business_unit.pm:192
 msgid "Saved id [_1]"
-msgstr ""
+msgstr "Lagreet nr [_1]"
 
 #: bin/am.pl:1344
 msgid "Saving [_1] [_2]"
@@ -7478,7 +7482,7 @@ msgstr "Start Dato:"
 msgid "Start Source Numbering At:"
 msgstr "Start Kilde Nummerering med:"
 
-#: UI/setup/complete.html:15
+#: UI/setup/complete.html:13
 msgid "Start Using LedgerSMB"
 msgstr "Start å bruke LedgerSMB"
 
@@ -7660,7 +7664,7 @@ msgstr "System"
 msgid "System Defaults"
 msgstr "Systemets standardinnstillinger"
 
-#: old-handler.pl:178
+#: old-handler.pl:179
 msgid "System currently down for maintenance!"
 msgstr "Systemet er nede for vedlikehold"
 
@@ -7989,7 +7993,7 @@ msgstr "Beløpet betales for dette Fakuranummer"
 
 #: LedgerSMB/Upgrade_Tests.pm:332
 msgid "The following transactions have unassigned amounts"
-msgstr ""
+msgstr "Følgende transaksjoner har ikke tilordnede beløp"
 
 #: LedgerSMB/Scripts/recon.pm:224
 msgid "Their Balance"
@@ -8031,11 +8035,11 @@ msgstr "Tretti"
 msgid "This Account"
 msgstr "Denne kontoen"
 
-#: UI/setup/complete_migration_revert.html:13
+#: UI/setup/complete_migration_revert.html:11
 msgid "This database operation has completed successfully."
 msgstr "Denne database operasjonen har avsluttet med suksess "
 
-#: UI/setup/complete.html:13
+#: UI/setup/complete.html:11
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
@@ -8332,7 +8336,7 @@ msgstr "Posterings datoer"
 msgid "Transaction Type"
 msgstr "Overføringstype"
 
-#: UI/setup/complete.html:29 UI/setup/confirm_operation.html:111
+#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:111
 msgid "Transactions"
 msgstr "Postering"
 
@@ -8459,7 +8463,7 @@ msgstr "Type:"
 msgid "UPDATE"
 msgstr "OPPDATER"
 
-#: lsmb-request.pl:112
+#: lsmb-request.pl:113
 msgid "Unable to open script"
 msgstr "Kan ikke åpne skript"
 
@@ -8523,7 +8527,7 @@ msgstr "Enhets Pris"
 msgid "Unknown database found."
 msgstr "Ukjent database funnet"
 
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:250
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 msgid "Unlock"
 msgstr "Lås opp"
 
@@ -8645,7 +8649,7 @@ msgstr "Brukenavn"
 msgid "Username:"
 msgstr "Brukenavn:"
 
-#: UI/setup/complete.html:30 UI/setup/confirm_operation.html:47
+#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:47
 #: UI/setup/confirm_operation.html:112
 msgid "Users"
 msgstr "Brukere"
@@ -8747,7 +8751,7 @@ msgstr "Leverandør mangler!"
 msgid "Vendor not on file!"
 msgstr "Leverandør mangler i database!"
 
-#: old-handler.pl:236
+#: old-handler.pl:237
 msgid "Version"
 msgstr "Versjon"
 
@@ -8907,7 +8911,7 @@ msgstr "År"
 msgid "Yes"
 msgstr "Ja"
 
-#: old-handler.pl:191
+#: old-handler.pl:192
 msgid "You are logged out!"
 msgstr "Du er utlogget"
 
@@ -8980,7 +8984,7 @@ msgstr "[_1]: Kunde ikke i registret"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverandør ikke i registret"
 
-#: old-handler.pl:245
+#: old-handler.pl:246
 msgid "action not defined!"
 msgstr "Handling ikke definert"
 
@@ -9134,6 +9138,3 @@ msgstr "bruk en overbetaling"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr "zh_CN"
-
-#~ msgid "Balance Due"
-#~ msgstr "Balanse forfalt"

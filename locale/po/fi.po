@@ -1,13 +1,14 @@
 #
 # Translators:
 # Copyright (c) 2002, 2006
+# Juha Eerola <juhaeerola@outlook.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-22 10:07+0000\n"
-"PO-Revision-Date: 2017-01-09 08:58+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
+"POT-Creation-Date: 2017-03-13 20:25+0000\n"
+"PO-Revision-Date: 2017-02-07 19:30+0000\n"
+"Last-Translator: Juha Eerola <juhaeerola@outlook.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
 "fi/)\n"
 "Language: fi\n"
@@ -94,7 +95,7 @@ msgid "AIM"
 msgstr ""
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr "Ostoreskontra"
@@ -141,7 +142,7 @@ msgid "AP account"
 msgstr ""
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:106
 #: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr "Myyntireskontra"
@@ -309,7 +310,7 @@ msgstr ""
 #: UI/payments/payments_detail.html:135 UI/reconciliation/report.html:16
 #: UI/Reports/filters/reconciliation_search.html:48
 msgid "Account:"
-msgstr ""
+msgstr "Tili:"
 
 #: UI/lib/report_base.html:57 UI/rp-search.html:24
 msgid "Accounts"
@@ -342,7 +343,7 @@ msgstr ""
 msgid "Accum. Depreciation"
 msgstr ""
 
-#: lsmb-request.pl:115
+#: lsmb-request.pl:116
 msgid "Action Not Defined: "
 msgstr ""
 
@@ -397,7 +398,7 @@ msgstr "Lisää tili"
 
 #: sql/Pg-database.sql:2796
 msgid "Add Accounts"
-msgstr ""
+msgstr "Lisää tilejä"
 
 #: bin/ic.pl:65 sql/Pg-database.sql:2871
 msgid "Add Assembly"
@@ -429,7 +430,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2792
 msgid "Add Contact"
-msgstr ""
+msgstr "Lisää kontakti"
 
 #: bin/is.pl:104
 msgid "Add Credit Invoice"
@@ -614,22 +615,22 @@ msgstr "Osoite"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr ""
+msgstr "Osoite1"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "Osoite:"
 
 #: templates/demo/printPayment.html:26
 #: templates/demo_with_images/printPayment.html:26
 #: templates/xedemo/printPayment.html:26
 msgid "Address: [_1]"
-msgstr ""
+msgstr "Osoite: [_1]"
 
 #: LedgerSMB/Scripts/contact.pm:170 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:1
 msgid "Addresses"
-msgstr ""
+msgstr "Osoitteet"
 
 #: LedgerSMB/Scripts/asset.pm:771
 msgid "Adjusted Basis"
@@ -671,11 +672,11 @@ msgstr "Kaikki"
 
 #: bin/aa.pl:1786
 msgid "All Invoices"
-msgstr ""
+msgstr "Kaikki laskut"
 
 #: UI/Reports/filters/trial_balance.html:38
 msgid "All accounts"
-msgstr ""
+msgstr "Kaikki tilit"
 
 #: UI/Reports/co/filter_cd.html:15
 msgid "All fields are required"
@@ -851,19 +852,19 @@ msgstr ""
 #: LedgerSMB/Scripts/asset.pm:796 LedgerSMB/Scripts/budgets.pm:109
 #: UI/reconciliation/report.html:286
 msgid "Approve"
-msgstr ""
+msgstr "Hyväksy"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:143
 #: UI/asset/search_reports.html:60
 #: UI/Reports/filters/reconciliation_search.html:60
 #: UI/Reports/filters/unapproved.html:65
 msgid "Approved"
-msgstr ""
+msgstr "Hyväksytty"
 
 #: LedgerSMB/Report/Budget/Search.pm:92
 #: LedgerSMB/Report/Reconciliation/Summary.pm:155
 msgid "Approved By"
-msgstr ""
+msgstr "Hyväksyjä"
 
 #: LedgerSMB/Scripts/asset.pm:530
 msgid "Approved at"
@@ -1144,7 +1145,7 @@ msgstr "Varmuuskopio"
 
 #: UI/setup/confirm_operation.html:86
 msgid "Backup DB"
-msgstr ""
+msgstr "Varmuuskopioi tietokanta"
 
 #: UI/setup/confirm_operation.html:93
 msgid "Backup Roles"
@@ -1166,7 +1167,7 @@ msgstr "Taselaskelma"
 
 #: LedgerSMB/Report/Balance_Sheet.pm:304
 msgid "Balance sheet"
-msgstr ""
+msgstr "Tase"
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:119 UI/Reports/co/filter_bm.html:14
 msgid "Balance y Mayor"
@@ -1178,17 +1179,17 @@ msgstr ""
 
 #: UI/Contact/divs/bank_act.html:56
 msgid "Bank Account"
-msgstr ""
+msgstr "Pankkitili"
 
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
-msgstr ""
+msgstr "Pankkitili:"
 
 #: LedgerSMB/Scripts/contact.pm:172 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:1
 #: UI/Contact/divs/bank_act.html:2
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Pankkitilit"
 
 #: UI/ca-list-selector.html:37
 msgid "Bank Register Mode"
@@ -1196,7 +1197,7 @@ msgstr ""
 
 #: bin/ic.pl:994
 msgid "Bar Code"
-msgstr ""
+msgstr "Viivakoodi"
 
 #: bin/ir.pl:752 bin/is.pl:853 LedgerSMB/Report/Assets/Net_Book_Value.pm:92
 msgid "Basis"
@@ -1264,7 +1265,7 @@ msgstr "Näkymätön kopio"
 
 #: bin/arap.pl:795 bin/io.pl:1901
 msgid "Bcc: [_1]"
-msgstr ""
+msgstr "Piilokopio: [_1]"
 
 #: UI/reconciliation/report.html:26
 msgid "Beginning Statement Balance:"
@@ -1320,7 +1321,7 @@ msgstr "Varastopaikkalista"
 
 #: UI/Contact/divs/person.html:155
 msgid "Birthdate"
-msgstr ""
+msgstr "Syntymäaika"
 
 #: UI/accounts/yearend.html:122
 msgid "Books closed on"
@@ -1336,7 +1337,7 @@ msgstr "Katkaise"
 
 #: sql/Pg-database.sql:2149
 msgid "Budget"
-msgstr ""
+msgstr "Budjetti"
 
 #: LedgerSMB/Report/Budget/Variance.pm:113
 msgid "Budget Number"
@@ -1352,7 +1353,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2920
 msgid "Budgets"
-msgstr ""
+msgstr "Budjetit"
 
 #: LedgerSMB/Scripts/account.pm:66
 msgid "Bug: No such account"
@@ -1401,7 +1402,7 @@ msgstr "Yritys tallennettu"
 
 #: UI/payments/payments_detail.html:171
 msgid "Business:"
-msgstr ""
+msgstr "Yritys:"
 
 #: sql/Pg-database.sql:824
 msgid "CC"
@@ -1420,11 +1421,11 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:117 UI/Reports/display_report.html:71
 #: UI/Reports/PNL.html:98
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: UI/reconciliation/report.html:58 UI/reconciliation/upload.html:17
 msgid "CSV File:"
-msgstr ""
+msgstr "CSV tiedosto:"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:113 UI/Reports/co/filter_cd.html:14
 msgid "Caja Diaria"
@@ -1440,11 +1441,11 @@ msgstr ""
 
 #: bin/io.pl:2293
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
 #: LedgerSMB/Scripts/setup.pm:177
 msgid "Cancel?"
-msgstr ""
+msgstr "Peruuta?"
 
 #: bin/gl.pl:681
 msgid "Cannot Repost Transaction"
@@ -1560,11 +1561,11 @@ msgstr "Kopio"
 
 #: bin/arap.pl:794 bin/io.pl:1900
 msgid "Cc: [_1]"
-msgstr ""
+msgstr "Kopio: [_1]"
 
 #: sql/Pg-database.sql:812
 msgid "Cell Phone"
-msgstr ""
+msgstr "Matkapuhelin"
 
 #: UI/users/preferences.html:29
 msgid "Change Password"
@@ -1619,7 +1620,7 @@ msgstr "Kaupunki"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
-msgstr ""
+msgstr "Kaupunki:"
 
 #: UI/Contact/divs/company.html:65 UI/Contact/divs/credit.html:66
 #: UI/Contact/divs/person.html:62
@@ -1703,19 +1704,19 @@ msgstr "Yritys"
 
 #: LedgerSMB/Scripts/configuration.pm:26
 msgid "Company Address"
-msgstr ""
+msgstr "Yrityksen osoite"
 
 #: LedgerSMB/Scripts/configuration.pm:28
 msgid "Company Fax"
-msgstr ""
+msgstr "Yrityksen fax"
 
 #: LedgerSMB/Scripts/configuration.pm:21
 msgid "Company Information"
-msgstr ""
+msgstr "Yrityksen tiedot"
 
 #: LedgerSMB/Scripts/configuration.pm:41
 msgid "Company License Number"
-msgstr ""
+msgstr "Kaupparekisterinumero"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:147
 #: LedgerSMB/Scripts/configuration.pm:23
@@ -1725,11 +1726,11 @@ msgstr "Yrityksen nimi"
 
 #: LedgerSMB/Scripts/configuration.pm:27
 msgid "Company Phone"
-msgstr ""
+msgstr "Yrityksen puhelinnumero"
 
 #: LedgerSMB/Scripts/configuration.pm:39
 msgid "Company Sales Tax ID"
-msgstr ""
+msgstr "Alv-numero"
 
 #: UI/am-company-logo.html:7
 msgid "Company: [_1]"
@@ -1820,7 +1821,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2856
 msgid "Contacts"
-msgstr ""
+msgstr "Kontaktit"
 
 #: UI/budgetting/budget_entry.html:166 UI/budgetting/budget_entry.html:189
 msgid "Content"
@@ -1879,7 +1880,7 @@ msgstr "Kopiot"
 
 #: UI/setup/confirm_operation.html:43
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: bin/am.pl:174 bin/am.pl:190
 msgid "Copy to COA"
@@ -1887,11 +1888,11 @@ msgstr "Kopioi tilikarttaan"
 
 #: bin/aa.pl:1000 bin/gl.pl:294 bin/ir.pl:618 bin/is.pl:678
 msgid "Copy to New"
-msgstr ""
+msgstr "Kopioi uudeksi"
 
 #: UI/setup/confirm_operation.html:36
 msgid "Copy to New Name"
-msgstr ""
+msgstr "Kopioi uudelle nimelle"
 
 #: bin/ic.pl:1037 bin/ic.pl:1282 bin/oe.pl:2576
 msgid "Cost"
@@ -1952,15 +1953,15 @@ msgstr "Maa"
 
 #: UI/setup/select_coa.html:31
 msgid "Country Code"
-msgstr ""
+msgstr "Maakoodi"
 
 #: LedgerSMB/Report/Taxform/List.pm:52
 msgid "Country Name"
-msgstr ""
+msgstr "Maan nimi"
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:34
 msgid "Country:"
-msgstr ""
+msgstr "Maa:"
 
 #: UI/setup/credentials.html:61
 msgid "Create"
@@ -1972,7 +1973,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:153
 msgid "Create Database?"
-msgstr ""
+msgstr "Luo tietokanta?"
 
 #: UI/create_batch.html:11
 msgid "Create New Batch"
@@ -1988,7 +1989,7 @@ msgstr ""
 
 #: UI/setup/new_user.html:135
 msgid "Create User"
-msgstr ""
+msgstr "Luo käyttäjä"
 
 #: UI/asset/search_reports.html:47 UI/create_batch.html:66
 #: UI/Reports/filters/unapproved.html:52
@@ -2061,7 +2062,7 @@ msgstr "Valuutta"
 
 #: LedgerSMB/Scripts/configuration.pm:43
 msgid "Currencies (colon-separated)"
-msgstr ""
+msgstr "Valuutat (erotettu kaksoispisteellä)"
 
 #: bin/aa.pl:474 bin/aa.pl:1721 bin/ir.pl:404 bin/is.pl:398 bin/oe.pl:396
 #: bin/oe.pl:1637 LedgerSMB/Report/Contact/History.pm:72
@@ -2154,7 +2155,7 @@ msgstr "Asiakas puuttuu!"
 msgid "Customer not on file!"
 msgstr "Asiakas ei järjestelmässä!"
 
-#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:110
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:110
 msgid "Customer/Vendor Accounts"
 msgstr ""
 
@@ -2186,15 +2187,15 @@ msgstr "Tietokanta"
 msgid "Database Host"
 msgstr "Tietokannan osoite"
 
-#: UI/setup/begin_backup.html:7 UI/setup/complete.html:11
-#: UI/setup/complete_migration_revert.html:11 UI/setup/confirm_operation.html:7
+#: UI/setup/begin_backup.html:7 UI/setup/complete.html:9
+#: UI/setup/complete_migration_revert.html:9 UI/setup/confirm_operation.html:7
 #: UI/setup/credentials.html:8 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:5
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
 msgstr ""
 
-#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
+#: UI/setup/complete.html:10 UI/setup/complete_migration_revert.html:10
 msgid "Database Operation Complete"
 msgstr ""
 
@@ -2475,7 +2476,7 @@ msgstr "Oletukset"
 #: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:90
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
 #: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
 #: UI/Contact/divs/address.html:48 UI/Contact/divs/bank_act.html:10
@@ -2555,7 +2556,7 @@ msgstr "Osastot"
 
 #: sql/Pg-database.sql:2896
 msgid "Depreciate"
-msgstr ""
+msgstr "Poisto"
 
 #: UI/asset/begin_depreciation_all.html:5
 msgid "Depreciate All"
@@ -3340,7 +3341,7 @@ msgstr "Meno/Vastaavaa"
 #: LedgerSMB/Report/Balance_Sheet.pm:199 LedgerSMB/Report/Balance_Sheet.pm:201
 #: LedgerSMB/Report/PNL.pm:183 LedgerSMB/Report/PNL.pm:185
 msgid "Expenses"
-msgstr ""
+msgstr "Menot"
 
 #: bin/io.pl:241 templates/demo/invoice.html:142
 #: templates/demo/request_quotation.html:146
@@ -3375,7 +3376,7 @@ msgstr "Faksi"
 #: templates/xedemo/ar_transaction.html:53
 #: templates/xedemo/ar_transaction.tex:27 templates/xedemo/letterhead.tex:14
 msgid "Fax:"
-msgstr ""
+msgstr "Faksi:"
 
 #: templates/demo/ap_transaction.html:54 templates/demo/ar_transaction.tex:65
 #: templates/demo/bin_list.html:59 templates/demo/bin_list.html:92
@@ -3447,7 +3448,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:62 templates/xedemo/work_order.html:55
 #: templates/xedemo/work_order.html:83 templates/xedemo/work_order.tex:65
 msgid "Fax: [_1]"
-msgstr ""
+msgstr "Faksi: [_1]"
 
 #: templates/demo_with_images/work_order.tex:100
 #: templates/demo/work_order.tex:100 templates/xedemo/work_order.tex:100
@@ -3473,7 +3474,7 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:39
 msgid "File"
-msgstr ""
+msgstr "Tiedosto"
 
 #: LedgerSMB/Scripts/asset.pm:993
 msgid "File Imported"
@@ -3482,28 +3483,28 @@ msgstr ""
 #: LedgerSMB/Report/File/Incoming.pm:47 LedgerSMB/Report/File/Internal.pm:45
 #: LedgerSMB/Report/Listings/Templates.pm:50
 msgid "File Name"
-msgstr ""
+msgstr "Tiedoston nimi"
 
 #: UI/Contact/divs/files.html:7
 msgid "File Type"
-msgstr ""
+msgstr "Tiedoston tyyppi"
 
 #: bin/aa.pl:1084 bin/aa.pl:1104 bin/ic.pl:885 bin/ic.pl:904 bin/ir.pl:1051
 #: bin/ir.pl:1070 bin/is.pl:1145 bin/is.pl:1164 bin/oe.pl:967 bin/oe.pl:986
 #: UI/Contact/divs/files.html:5 UI/journal/journal_entry.html:319
 #: UI/journal/journal_entry.html:337
 msgid "File name"
-msgstr ""
+msgstr "Tiedoston nimi"
 
 #: bin/aa.pl:1085 bin/aa.pl:1105 bin/ic.pl:886 bin/ic.pl:905 bin/ir.pl:1052
 #: bin/ir.pl:1071 bin/is.pl:1146 bin/is.pl:1165 bin/oe.pl:968 bin/oe.pl:987
 #: UI/journal/journal_entry.html:320 UI/journal/journal_entry.html:338
 msgid "File type"
-msgstr ""
+msgstr "Tiedoston tyyppi"
 
 #: LedgerSMB/Scripts/contact.pm:174 UI/Contact/divs/files.html:1
 msgid "Files"
-msgstr ""
+msgstr "Tiedostot"
 
 #: UI/Contact/divs/files.html:30
 msgid "Files attached to Credit Account"
@@ -3532,7 +3533,7 @@ msgstr ""
 #: UI/Admin/edit_user.html:93 UI/Admin/user_search.html:21
 #: UI/Contact/divs/employee.html:37 UI/setup/new_user.html:68
 msgid "First Name"
-msgstr ""
+msgstr "Etunimi"
 
 #: UI/Reports/balance_sheet.html:96
 msgid "First column only"
@@ -3552,7 +3553,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:433 sql/Pg-database.sql:2930
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Käyttöomaisuus"
 
 #: bin/arap.pl:559
 msgid "For"
@@ -3647,7 +3648,7 @@ msgstr ""
 #: LedgerSMB/Scripts/setup.pm:892 LedgerSMB/Scripts/setup.pm:950
 #: LedgerSMB/Scripts/setup.pm:1155
 msgid "Full Permissions"
-msgstr ""
+msgstr "Täydet oikeudet"
 
 #: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
@@ -3678,7 +3679,7 @@ msgid "GIFI saved!"
 msgstr "GIFI tallennettu!"
 
 #: bin/am.pl:879 UI/Reports/filters/unapproved.html:15
-#: UI/setup/complete.html:25 UI/setup/confirm_operation.html:107
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:107
 msgid "GL"
 msgstr "Pääkirja"
 
@@ -4359,7 +4360,7 @@ msgstr ""
 msgid "Journal Entry"
 msgstr ""
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:108
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:108
 msgid "Journal Lines"
 msgstr ""
 
@@ -4473,7 +4474,7 @@ msgstr "Ennakkoaika"
 msgid "LedgerSMB Accounting Menu"
 msgstr ""
 
-#: UI/setup/complete.html:19 UI/setup/confirm_operation.html:101
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:101
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
@@ -4616,7 +4617,7 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: old-handler.pl:192 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:193 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Nimi"
 
@@ -5014,7 +5015,7 @@ msgstr ""
 msgid "No unassigned amounts in Transactions"
 msgstr ""
 
-#: lsmb-request.pl:84
+#: lsmb-request.pl:85
 msgid "No workflow script specified"
 msgstr ""
 
@@ -5398,7 +5399,7 @@ msgstr ""
 msgid "Ordering"
 msgstr ""
 
-#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:27
+#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:109
 msgid "Orders"
 msgstr ""
@@ -5849,7 +5850,7 @@ msgstr ""
 
 #: bin/aa.pl:978 bin/aa.pl:1003 bin/aa.pl:1023 bin/gl.pl:280 bin/gl.pl:322
 #: bin/ir.pl:621 bin/ir.pl:655 bin/ir.pl:1030 bin/is.pl:681 bin/is.pl:719
-#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:238
+#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:246
 #: UI/payments/payment2.html:339
 msgid "Post"
 msgstr "Kirjaa"
@@ -6398,7 +6399,7 @@ msgstr "Viite"
 
 #: bin/io.pl:1710
 msgid "Reference Number Missing"
-msgstr ""
+msgstr "Viitenumero puuttuu"
 
 #: sql/Pg-database.sql:547
 msgid "Referral"
@@ -6571,7 +6572,7 @@ msgstr "Käyttörahasto\\jakamaton voitto"
 msgid "Retrieve"
 msgstr ""
 
-#: UI/setup/complete.html:14 UI/setup/complete_migration_revert.html:14
+#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
 msgid "Return to setup"
 msgstr ""
 
@@ -6611,7 +6612,7 @@ msgstr ""
 msgid "Reverse Receipts"
 msgstr ""
 
-#: UI/setup/complete.html:20 UI/setup/confirm_operation.html:102
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:102
 msgid "Row counts"
 msgstr ""
 
@@ -7101,7 +7102,7 @@ msgstr "Sarjanumero"
 #: templates/demo_with_images/bin_list.html:149
 #: templates/xedemo/bin_list.html:149
 msgid "Serialnumber"
-msgstr ""
+msgstr "Sarjanumero"
 
 #: bin/io.pl:873
 msgid "Service"
@@ -7129,11 +7130,11 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:13
 msgid "Setting"
-msgstr ""
+msgstr "Asetus"
 
 #: UI/users/preferences.html:53
 msgid "Settings"
-msgstr ""
+msgstr "Asetukset"
 
 #: LedgerSMB/Num2text.pm:68
 msgid "Seven"
@@ -7460,7 +7461,7 @@ msgstr ""
 msgid "Start Source Numbering At:"
 msgstr ""
 
-#: UI/setup/complete.html:15
+#: UI/setup/complete.html:13
 msgid "Start Using LedgerSMB"
 msgstr ""
 
@@ -7642,7 +7643,7 @@ msgstr "Järjestelmä"
 msgid "System Defaults"
 msgstr "Järjestelmän oletukset"
 
-#: old-handler.pl:178
+#: old-handler.pl:179
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -8013,11 +8014,11 @@ msgstr ""
 msgid "This Account"
 msgstr ""
 
-#: UI/setup/complete_migration_revert.html:13
+#: UI/setup/complete_migration_revert.html:11
 msgid "This database operation has completed successfully."
 msgstr ""
 
-#: UI/setup/complete.html:13
+#: UI/setup/complete.html:11
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
@@ -8311,7 +8312,7 @@ msgstr "Vientipvm"
 msgid "Transaction Type"
 msgstr ""
 
-#: UI/setup/complete.html:29 UI/setup/confirm_operation.html:111
+#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:111
 msgid "Transactions"
 msgstr "Tapahtumat"
 
@@ -8438,7 +8439,7 @@ msgstr ""
 msgid "UPDATE"
 msgstr ""
 
-#: lsmb-request.pl:112
+#: lsmb-request.pl:113
 msgid "Unable to open script"
 msgstr ""
 
@@ -8502,7 +8503,7 @@ msgstr ""
 msgid "Unknown database found."
 msgstr ""
 
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:250
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 msgid "Unlock"
 msgstr ""
 
@@ -8624,7 +8625,7 @@ msgstr ""
 msgid "Username:"
 msgstr ""
 
-#: UI/setup/complete.html:30 UI/setup/confirm_operation.html:47
+#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:47
 #: UI/setup/confirm_operation.html:112
 msgid "Users"
 msgstr ""
@@ -8726,7 +8727,7 @@ msgstr "Toimittaja puuttuu!"
 msgid "Vendor not on file!"
 msgstr "Toimittajaa ei järjestelmässä!"
 
-#: old-handler.pl:236
+#: old-handler.pl:237
 msgid "Version"
 msgstr "Versio"
 
@@ -8886,7 +8887,7 @@ msgstr ""
 msgid "Yes"
 msgstr "Kyllä"
 
-#: old-handler.pl:191
+#: old-handler.pl:192
 msgid "You are logged out!"
 msgstr ""
 
@@ -8957,7 +8958,7 @@ msgstr ""
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
-#: old-handler.pl:245
+#: old-handler.pl:246
 msgid "action not defined!"
 msgstr ""
 

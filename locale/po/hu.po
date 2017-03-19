@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-01-22 10:07+0000\n"
-"PO-Revision-Date: 2017-01-09 08:58+0000\n"
+"POT-Creation-Date: 2017-03-13 20:25+0000\n"
+"PO-Revision-Date: 2017-01-23 09:56+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/hu/)\n"
@@ -93,7 +93,7 @@ msgid "AIM"
 msgstr ""
 
 #: bin/am.pl:878 UI/Reports/filters/unapproved.html:13
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:105
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:105
 #: sql/Pg-database.sql:2854
 msgid "AP"
 msgstr "Szállítók"
@@ -140,7 +140,7 @@ msgid "AP account"
 msgstr ""
 
 #: bin/am.pl:877 UI/Reports/filters/unapproved.html:14
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:106
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:106
 #: sql/Pg-database.sql:2853
 msgid "AR"
 msgstr "Vevők"
@@ -341,7 +341,7 @@ msgstr ""
 msgid "Accum. Depreciation"
 msgstr "Összesített értékcsökkenés"
 
-#: lsmb-request.pl:115
+#: lsmb-request.pl:116
 msgid "Action Not Defined: "
 msgstr "A művelet nincs meghatározva: "
 
@@ -2153,7 +2153,7 @@ msgstr "A vevő hiányzik!"
 msgid "Customer not on file!"
 msgstr "A vevő hiányzik az adatbázisból!"
 
-#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:110
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:110
 msgid "Customer/Vendor Accounts"
 msgstr "Vevő/Szállító számlák"
 
@@ -2185,15 +2185,15 @@ msgstr "Adatbázis"
 msgid "Database Host"
 msgstr "Adatbázis helye"
 
-#: UI/setup/begin_backup.html:7 UI/setup/complete.html:11
-#: UI/setup/complete_migration_revert.html:11 UI/setup/confirm_operation.html:7
+#: UI/setup/begin_backup.html:7 UI/setup/complete.html:9
+#: UI/setup/complete_migration_revert.html:9 UI/setup/confirm_operation.html:7
 #: UI/setup/credentials.html:8 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:5
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
 msgstr "Adatbáziskezelő konzol"
 
-#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
+#: UI/setup/complete.html:10 UI/setup/complete_migration_revert.html:10
 msgid "Database Operation Complete"
 msgstr "Adatbázis művelet végrehajtva"
 
@@ -2474,7 +2474,7 @@ msgstr "Alapbeállítások"
 #: LedgerSMB/Report/COA.pm:128 LedgerSMB/Report/COA.pm:193
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:122
 #: LedgerSMB/Report/Listings/TemplateTrans.pm:90
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 #: LedgerSMB/Report/Unapproved/Drafts.pm:211 LedgerSMB/Scripts/account.pm:159
 #: t/data/04-complex_template.html:510 UI/business_units/list_classes.html:89
 #: UI/Contact/divs/address.html:48 UI/Contact/divs/bank_act.html:10
@@ -3678,7 +3678,7 @@ msgid "GIFI saved!"
 msgstr "Gyűjtőkód elmentve!"
 
 #: bin/am.pl:879 UI/Reports/filters/unapproved.html:15
-#: UI/setup/complete.html:25 UI/setup/confirm_operation.html:107
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:107
 msgid "GL"
 msgstr "Vegyes Könyvelés"
 
@@ -4363,7 +4363,7 @@ msgstr "Feladat/Projekt #"
 msgid "Journal Entry"
 msgstr "Vegyes könyvelés"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:108
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:108
 msgid "Journal Lines"
 msgstr "Napló sorok"
 
@@ -4477,7 +4477,7 @@ msgstr "Átfutási idő"
 msgid "LedgerSMB Accounting Menu"
 msgstr ""
 
-#: UI/setup/complete.html:19 UI/setup/confirm_operation.html:101
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:101
 msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB adatbázis statisztika"
 
@@ -4620,7 +4620,7 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: old-handler.pl:192 UI/login.html:69 UI/setup/credentials.html:54
+#: old-handler.pl:193 UI/login.html:69 UI/setup/credentials.html:54
 msgid "Login"
 msgstr "Belépés"
 
@@ -5020,7 +5020,7 @@ msgstr ""
 msgid "No unassigned amounts in Transactions"
 msgstr ""
 
-#: lsmb-request.pl:84
+#: lsmb-request.pl:85
 msgid "No workflow script specified"
 msgstr "Nincs meghatározva munkafolyamat szkript"
 
@@ -5407,7 +5407,7 @@ msgstr ""
 msgid "Ordering"
 msgstr "Sorrend"
 
-#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:27
+#: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:109
 msgid "Orders"
 msgstr "Megrendelések"
@@ -5860,7 +5860,7 @@ msgstr ""
 
 #: bin/aa.pl:978 bin/aa.pl:1003 bin/aa.pl:1023 bin/gl.pl:280 bin/gl.pl:322
 #: bin/ir.pl:621 bin/ir.pl:655 bin/ir.pl:1030 bin/is.pl:681 bin/is.pl:719
-#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:238
+#: bin/is.pl:1122 LedgerSMB/Report/Unapproved/Batch_Overview.pm:246
 #: UI/payments/payment2.html:339
 msgid "Post"
 msgstr "Rögzítés"
@@ -6582,7 +6582,7 @@ msgstr "Adózás előtti eredmény"
 msgid "Retrieve"
 msgstr "Visszahoz"
 
-#: UI/setup/complete.html:14 UI/setup/complete_migration_revert.html:14
+#: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:12
 msgid "Return to setup"
 msgstr "Vissza a beállításokhoz"
 
@@ -6622,7 +6622,7 @@ msgstr "Fordított pénzmozgások"
 msgid "Reverse Receipts"
 msgstr "Fordított bevételek"
 
-#: UI/setup/complete.html:20 UI/setup/confirm_operation.html:102
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:102
 msgid "Row counts"
 msgstr "Sorok száma"
 
@@ -7471,7 +7471,7 @@ msgstr ""
 msgid "Start Source Numbering At:"
 msgstr "Bizonylatszám számozás kezdete:"
 
-#: UI/setup/complete.html:15
+#: UI/setup/complete.html:13
 msgid "Start Using LedgerSMB"
 msgstr "Kezdje használni a LedgerSMB-t"
 
@@ -7653,7 +7653,7 @@ msgstr "Rendszerműveletek"
 msgid "System Defaults"
 msgstr "Alapértelmezett rendszerbeállítások"
 
-#: old-handler.pl:178
+#: old-handler.pl:179
 msgid "System currently down for maintenance!"
 msgstr ""
 
@@ -8024,11 +8024,11 @@ msgstr "harminc"
 msgid "This Account"
 msgstr ""
 
-#: UI/setup/complete_migration_revert.html:13
+#: UI/setup/complete_migration_revert.html:11
 msgid "This database operation has completed successfully."
 msgstr ""
 
-#: UI/setup/complete.html:13
+#: UI/setup/complete.html:11
 msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
@@ -8323,7 +8323,7 @@ msgstr "Tranzakció dátumok"
 msgid "Transaction Type"
 msgstr "Tranzakció típusa"
 
-#: UI/setup/complete.html:29 UI/setup/confirm_operation.html:111
+#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:111
 msgid "Transactions"
 msgstr "Számlák"
 
@@ -8450,7 +8450,7 @@ msgstr ""
 msgid "UPDATE"
 msgstr "FRISSÍT"
 
-#: lsmb-request.pl:112
+#: lsmb-request.pl:113
 msgid "Unable to open script"
 msgstr "A szkript nem nyitható meg"
 
@@ -8514,7 +8514,7 @@ msgstr "Egységár"
 msgid "Unknown database found."
 msgstr "Ismeretlen adatbázist találtam."
 
-#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:250
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:258
 msgid "Unlock"
 msgstr ""
 
@@ -8636,7 +8636,7 @@ msgstr "Felhasználónév"
 msgid "Username:"
 msgstr "Felhasználónév:"
 
-#: UI/setup/complete.html:30 UI/setup/confirm_operation.html:47
+#: UI/setup/complete.html:28 UI/setup/confirm_operation.html:47
 #: UI/setup/confirm_operation.html:112
 msgid "Users"
 msgstr "Felhasználók"
@@ -8738,7 +8738,7 @@ msgstr "Hiányzik a szállító!"
 msgid "Vendor not on file!"
 msgstr "A szállító nincs az adatbázisban!"
 
-#: old-handler.pl:236
+#: old-handler.pl:237
 msgid "Version"
 msgstr "Verzió"
 
@@ -8898,7 +8898,7 @@ msgstr "Évek"
 msgid "Yes"
 msgstr "Igen"
 
-#: old-handler.pl:191
+#: old-handler.pl:192
 msgid "You are logged out!"
 msgstr "Ön sikeresen kijelentkezett a rendszerből!"
 
@@ -8969,7 +8969,7 @@ msgstr ""
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
-#: old-handler.pl:245
+#: old-handler.pl:246
 msgid "action not defined!"
 msgstr "művelet nincs meghatározva!"
 
@@ -9123,6 +9123,3 @@ msgstr "felhasznál egy túlfizetést"
 #: t/data/04-gettext.tex:8
 msgid "zh_CN"
 msgstr ""
-
-#~ msgid "Balance Due"
-#~ msgstr "Esedékes egyenleg"

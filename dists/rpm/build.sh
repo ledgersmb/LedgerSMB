@@ -2,7 +2,7 @@
 
 # One must run the source file build first.
 
-VERSION="1.4.38"
+VERSION="1.4.40-dev"
 hg archive -ttgz ~/ledgersmb.tar.gz
 
 # Remove Dojo
