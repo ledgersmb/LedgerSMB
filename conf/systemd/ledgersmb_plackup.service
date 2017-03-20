@@ -10,7 +10,7 @@ After=network.target
 WorkingDirectory=WORKING_DIR
 
 #If you do not want a log file, comment this and remove the access_log option below
-Environment=LOG=/var/log/plack/ledgersmb_plackup.log
+Environment=LOG=/var/log/ledgersmb/ledgersmb_plackup.log
 
 # In case you installed dependencies into a 'local::lib'
 # make sure you set the PERL5LIB environment variable
