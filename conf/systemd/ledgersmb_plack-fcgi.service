@@ -1,9 +1,9 @@
-# Place this in /etc/systemd/system/plack-fcgi-ledgersmb.service
-# systemctl enable starman-ledgersmb
-# service start starman-ledgersmb
+# Place this in /etc/systemd/system/ledgersmb_plack-fcgi.service
+# systemctl enable ledgersmb_plack-fcgi
+# service start ledgersmb_plack-fcgi
 
 [Unit]
-Description=Plack/FCGI LedgerSMB
+Description=LedgerSMB Plack/FCGI
 After=network.target
 
 [Service]

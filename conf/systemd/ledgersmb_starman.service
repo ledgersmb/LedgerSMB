@@ -1,9 +1,9 @@
-# Place this in /etc/systemd/system/starman-ledgersmb.service
-# systemctl enable starman-ledgersmb
-# service start starman-ledgersmb
+# Place this in /etc/systemd/system/ledgersmb_starman.service
+# systemctl enable ledgersmb_starman
+# service start ledgersmb_starman
 
 [Unit]
-Description=Starman LedgerSMB
+Description=LedgerSMB Starman
 After=network.target
 
 [Service]
