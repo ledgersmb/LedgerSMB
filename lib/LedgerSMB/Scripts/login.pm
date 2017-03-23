@@ -18,7 +18,7 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 
 package LedgerSMB::Scripts::login;
 
-use version 5.010_000;
+use version 'v5.10.0';
 
 use LedgerSMB::Locale;
 use LedgerSMB;
