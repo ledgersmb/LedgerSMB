@@ -12,6 +12,7 @@ define(["dojo/_base/declare",
            return declare("lsmb/reports/ComparisonSelector",
                           [_WidgetBase, _Container], {
                channel: '',
+               mode: "by-dates",
                postCreate: function() {
                    var self = this;
                    this.inherited(arguments);
@@ -20,10 +21,14 @@ define(["dojo/_base/declare",
                           function(action, value) {
                               var display = "";
 
-                              if (action === "changed-period-type"
-                                  && value === "by-dates")
-                                  display = self._comparison_periods
-                                     .get("value");
+                              if (action === "changed-period-type") {
+                                  self.mode = value;
+
+                                  if (value === "by-dates") {
+                                      display = self._comparison_periods
+                                          .get("value");
+                                  }
+                              }
                               self._update_display(display);
                           })
                    );
@@ -45,7 +50,7 @@ define(["dojo/_base/declare",
                _update_display: function(count) {
                    var self = this;
 
-                   if (count === "") {
+                   if (count === "" || this.mode === "by-periods") {
                        style.set(dom.byId("comparison_dates"),
                                  "display", "none");
                        return;
