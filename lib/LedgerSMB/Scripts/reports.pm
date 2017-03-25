@@ -196,8 +196,8 @@ sub generate_balance_sheet {
         %$request,
         column_path_prefix => [ 0 ]);
     $report->run_report;
-        $report->init_comparisons($request);
-        my $counts = $request->{comparison_periods};
+    $report->init_comparisons($request);
+    my $counts = $request->{comparison_periods};
     for my $count (1 .. $counts){
         next unless $request->{"to_date_$count"};
         $request->{to_date} = $request->{"to_date_$count"};
