@@ -13,7 +13,7 @@ Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
     my $date = $1;
 
     S->{ext_wsl}->page->body->menu->click_menu(['Reports', 'Balance Sheet']);
-    S->{ext_wsl}->page->body->maindiv->content->run(date => $date, period => 'Years');
+    S->{ext_wsl}->page->body->maindiv->content->run(date => $date);
 
     my @step_data =
         map { { accno => $_->{accno},
