@@ -229,29 +229,71 @@ html, body {
 
 /***** Reports ******/
 
-#reports label
-{ display: inline-block;
-        width: 170px;
-        text-align: right;
+#reports label,
+#reports .label,
+#balance-sheet-parameters label,
+#balance-sheet-parameters .label {
+    display: inline-block;
+    width: 170px;
+    text-align: right;
+    vertical-align: top;
 }
 
-#reports span.input_group
-{ display: block;
-        float: left;
-        width: 40%;
+#reports div.label,
+#balance-sheet-parameters div.label {
+    margin-top: 0.2em;
 }
 
-#reports div.input_row
-{
+#reports .input_group,
+#balance-sheet-parameters .input_group {
+    display: inline-block;
+}
+
+#reports .input_row,
+#balance-sheet-parameters .input_row {
    display: block;
-        width: 100%;
+   width: 100%;
+   margin-top: 0.2em;
+   margin-bottom: 1em;
    clear: both;
 }
+
+#reports .input_option,
+#balance-sheet-parameters .input_option {
+    clear: right;
+    margin-top: 0.2em;
+}
+
+#reports .input_option label,
+#balance-sheet-parameters .input_option label {
+    text-align: left;
+    left-margin: 1ex;
+}
+
+#reports fieldset,
+#balance-sheet-parameters fieldset {
+    border: 1px solid black;
+    margin: 0.5ex 1ex;
+    padding: 0.5ex 1ex;
+}
+
+#reports legend label#comparison-periods-label,
+#balance-sheet-parameters legend label#comparison-periods-label {
+    width: auto;
+    vertical-align: center;
+}
+
+
 
 #assets .invisible
 {
        display: none;
 }
+
+
+
+
+
 
 
 /***** PNL Report ******/
