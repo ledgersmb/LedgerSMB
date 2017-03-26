@@ -134,10 +134,8 @@ sub _init_comparison{
     my ($self, $request, $c_per) = @_;
     if ( $request->{comparison_type} eq 'by_periods' ) {
         my $ri = $request->{interval};
-        # from_date(i) = from_date - i * period
-        # to_date(i) = ( from_date(i) + 1 * period ) - 1 day
-        my $date = LedgerSMB::PGDate->from_input($request->{from_date})
-                                              ->add_interval($ri,-$c_per);    # Comparison are backward
+        # Comparison are backward
+        my $date = $self->date_from->add_interval($ri,-$c_per);
         $request->{"from_date_$c_per"} = $date->to_output;
         $request->{"to_date_$c_per"}   = $date->add_interval($ri)
                                               ->add_interval('day',-1)
@@ -194,24 +192,6 @@ TODO!!
 sub init_comparisons{
     my ($self, $request) = @_;
     if ( $request->{comparison_type} eq 'by_periods' ) {
-        if ( $request->{from_date} && $request->{interval} && $request->{interval} ne 'none') {
-            # to_date = (from_date + 1 period) - 1 day
-            my $ri = $request->{interval};
-            # Note: Transforms input string into PGDate
-            my $date = LedgerSMB::PGDate->from_input($request->{from_date});
-            $request->{to_date} = $date->add_interval($ri)
-                                       ->add_interval('day',-1)
-                                       ->to_output;
-        } elsif ( $request->{to_date} && $request->{interval} && $request->{interval} ne 'none' ) {
-            # from_date = (to_date + 1 day) - 1 period
-            my $ri = $request->{interval};
-            my $date = LedgerSMB::PGDate->from_input($request->{to_date});
-            $request->{from_date} = $date->add_interval('day')
-                                         ->add_interval($ri,-1)
-                                         ->to_output;
-        } else {
-            return;
-        }
         my $counts = $request->{comparison_periods};
         for my $c_per (1 .. $counts) {
             $self->_init_comparison($request, $c_per);
