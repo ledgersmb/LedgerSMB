@@ -162,6 +162,13 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.41
+* Fix 'Bad interval' error with PNL comparisons (Erik H, #2146)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.40
 * Fix name of the sequence being updated in the 1.3 migration script (Erik H)
 
