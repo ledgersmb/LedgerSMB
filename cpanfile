@@ -99,17 +99,20 @@ on 'develop' => sub {
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
-    requires 'Linux::Inotify2';
+    recommends 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
+    requires 'Parallel::ForkManager';
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
-    requires 'Test::BDD::Cucumber', '0.51';
+    requires 'Test::BDD::Cucumber', '0.52';
+    requires 'Test::Class::Moose';
+    requires 'Test::Class::Moose::Role';
+    requires 'Test::Class::Moose::Role::ParameterizedInstances';
     requires 'Test::Exception';
     requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
-    requires 'Test::ParallelSubtest';
     requires 'Perl::Critic';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';

@@ -51,19 +51,54 @@ our %docs;
 
 =head2 def $name, %args;
 
-keys in %args can be:
+A function to define config keys and set their values on initialisation.
+
+A value for the key will be sourced from the following with the first found having priority.
+
+=over
+
+=over
+
+=item - ENV VAR
+
+=item - Config File
+
+=item - Default
+
+=back
+
+=back
+
+=head2 keys in %args can be:
 
 =over
 
 =item section
 
+section name
+
 =item key
+
+The key name
 
 =item default
 
+default value if otherwise not specified (no env var and no config file entry)
+
 =item envvar
 
+The name of an associated Environment Variable.
+If the EnvVar is set it will be used to override the config file
+Regardless, the EnvVar will be set based on the config file or coded default
+
 =item suffix
+
+If set specifies a suffix to be appended to any value provided via the config file, defaults, or ENV Var.
+If used, often this would be configured as '-$EUID' or '-$PID'
+
+=item doc
+
+A description of the use of this key. Should normally be a scalar.
 
 =back
 
@@ -83,14 +118,16 @@ sub def {
     $docs{$sec}->{$key} = $args{doc};
     {
         ## no critic (strict);
-        no strict 'refs';
+        no strict 'refs';                               # needed as we use the contents of a variable as the main variable name
         no warnings 'redefine';
-        ${$name} = $cfg->val($sec, $key, $default);
+        ${$name} = $cfg->val($sec, $key, $default);     # get the value of config key $section.$key.  If it doesn't exist use $default instead
         if (defined $suffix) {
-            ${$name} = "${$name}$suffix";
+            ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
         }
-        $ENV{$envvar} = $cfg->val($sec, $key, $default)
-            if $envvar && defined $cfg->val($sec, $key, $default);
+
+        ${$name} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
+        $ENV{$envvar} = ${$name}                                # If an environment variable is associated Set it based on the current value (taken from the config file, default, or pre-existing env var.
+            if $envvar && defined ${$name};
 
         # create a functional interface
         *{$name} = sub {
@@ -192,8 +229,7 @@ def 'fs_cssdir',
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
-    default => sub { $ENV{TEMP} || '/tmp/ledgersmb' },
-    envvar => 'HOME',
+    default => sub { $ENV{TEMP} && "$ENV{TEMP}/ledgersmb" || '/tmp/ledgersmb' }, # We can't specify envvar=>'TEMP' as that would overwrite TEMP with anything set in ledgersmb.conf. Conversely we need to use TEMP as the prefix for the default
     suffix => "-$EUID",
     doc => qq||;
 
@@ -273,12 +309,14 @@ def 'db_host',
     key => 'host',
     section => 'database',
     envvar => 'PGHOST',
+    default => 'localhost',
     doc => '';
 
 def 'db_port',
     key => 'port',
     section => 'database',
     envvar => 'PGPORT',
+    default => '5432',
     doc => '';
 
 def 'default_db',
@@ -293,10 +331,9 @@ def 'db_namespace',
 
 def 'db_sslmode',
     section => 'database',
-    default => undef,
+    default => 'prefer',
     envvar => 'PGSSLMODE',
     doc => '';
-
 
 ### SECTION  ---   debug
 
@@ -438,6 +475,9 @@ sub check_permissions {
 
 
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
+    # commit 6978b88 added this line to resolve issues if HOME isn't set
+    $ENV{HOME} = $tempdir;
+
 
     if(!(-d "$tempdir")){
         die_pretty( "$tempdir wasn't created.",
