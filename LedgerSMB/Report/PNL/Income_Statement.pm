@@ -99,8 +99,6 @@ sub report_base {
     my ($self, $from_date, $to_date) = @_;
     die $self->Text('Invalid Reporting Basis')
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
-	die $self->Text('Required period type')
-		   if $self->comparison_periods and $self->interval eq 'none';
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->exec_method({funcname => $procname});
 }
