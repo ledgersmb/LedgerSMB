@@ -134,10 +134,8 @@ sub _init_comparison{
     my ($self, $request, $c_per) = @_;
     if ( $request->{comparison_type} eq 'by_periods' ) {
         my $ri = $request->{interval};
-        # from_date(i) = from_date - i * period
-        # to_date(i) = ( from_date(i) + 1 * period ) - 1 day
-        my $date = LedgerSMB::PGDate->from_input($request->{from_date})
-                                              ->add_interval($ri,-$c_per);    # Comparison are backward
+        # Comparison are backward
+        my $date = $self->date_from->add_interval($ri,-$c_per);
         $request->{"from_date_$c_per"} = $date->to_output;
         $request->{"to_date_$c_per"}   = $date->add_interval($ri)
                                               ->add_interval('day',-1)
@@ -194,24 +192,6 @@ TODO!!
 sub init_comparisons{
     my ($self, $request) = @_;
     if ( $request->{comparison_type} eq 'by_periods' ) {
-        if ( $request->{from_date} && $request->{interval} && $request->{interval} ne 'none') {
-            # to_date = (from_date + 1 period) - 1 day
-            my $ri = $request->{interval};
-            # Note: Transforms input string into PGDate
-            my $date = LedgerSMB::PGDate->from_input($request->{from_date});
-            $request->{to_date} = $date->add_interval($ri)
-                                       ->add_interval('day',-1)
-                                       ->to_output;
-        } elsif ( $request->{to_date} && $request->{interval} && $request->{interval} ne 'none' ) {
-            # from_date = (to_date + 1 day) - 1 period
-            my $ri = $request->{interval};
-            my $date = LedgerSMB::PGDate->from_input($request->{to_date});
-            $request->{from_date} = $date->add_interval('day')
-                                         ->add_interval($ri,-1)
-                                         ->to_output;
-        } else {
-            return;
-        }
         my $counts = $request->{comparison_periods};
         for my $c_per (1 .. $counts) {
             $self->_init_comparison($request, $c_per);
@@ -232,6 +212,36 @@ sub add_comparison{
     my $row_path_prefix = $args{row_path_prefix} || [];
     my $col_path_prefix = $args{column_path_prefix} || [];
 
+
+    for my $orig_row_id (keys %{$compared->rheads->ids}) {
+        my $rprops = $compared->rheads->id_props($orig_row_id);
+        next if $rprops->{section_for};
+
+        my $row_id =
+            $self->rheads->map_path([
+                (@$row_path_prefix),
+                (@{$compared->rheads->ids->{$orig_row_id}->{path}}) ]);
+
+        $self->rheads->id_props($row_id,
+                                $compared->rheads->id_props($orig_row_id))
+            if ! defined $self->rheads->id_props($row_id);
+    }
+
+    for my $orig_col_id (keys %{$compared->cheads->ids}) {
+        my $cprops = $compared->cheads->id_props($orig_col_id);
+        next if $cprops->{section_for};
+
+        my $col_id =
+            $self->cheads->map_path([
+                (@$col_path_prefix),
+                (@{$compared->cheads->ids->{$orig_col_id}->{path}}) ]);
+
+        $self->cheads->id_props($col_id,
+                                $compared->cheads->id_props($orig_col_id))
+            if ! defined $self->cheads->id_props($col_id);
+    }
+
+
     for my $orig_row_id (keys %{$compared->rheads->ids}) {
         my $rprops = $compared->rheads->id_props($orig_row_id);
         next if $rprops->{section_for};
@@ -251,13 +261,6 @@ sub add_comparison{
             $self->cell_value($row_id, $col_id,
                               $compared->cells->{$orig_row_id}->{$orig_col_id})
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
-
-            $self->rheads->id_props($row_id,
-                                    $compared->rheads->id_props($orig_row_id))
-                if ! defined $self->rheads->id_props($row_id);
-            $self->cheads->id_props($col_id,
-                                    $compared->cheads->id_props($orig_col_id))
-                if ! defined $self->cheads->id_props($col_id);
         }
     }
 }
