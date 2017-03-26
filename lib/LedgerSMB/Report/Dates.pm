@@ -119,6 +119,7 @@ sub _get_to_date {
        $date->add(years => 1);
     }
     $date->subtract(days => 1); # dates are inclusive
+    $date->is_time(0);
     return $date;
 }
 
@@ -134,6 +135,7 @@ sub _set_lazy_dates {
 before 'render' => sub {
               my ($self) = @_;
               # Set lazy attributes
+
               $self->_set_lazy_dates;
 };
 before 'run_report' => sub {
