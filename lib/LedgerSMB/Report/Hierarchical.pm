@@ -135,7 +135,7 @@ sub _init_comparison{
     if ( $request->{comparison_type} eq 'by_periods' ) {
         my $ri = $request->{interval};
         # Comparison are backward
-        my $date = $self->date_from->add_interval($ri,-$c_per);
+        my $date = $self->date_from->clone->add_interval($ri,-$c_per);
         $request->{"from_date_$c_per"} = $date->to_output;
         $request->{"to_date_$c_per"}   = $date->add_interval($ri)
                                               ->add_interval('day',-1)
