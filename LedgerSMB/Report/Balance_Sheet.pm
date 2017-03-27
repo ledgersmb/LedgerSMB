@@ -88,9 +88,6 @@ the balance sheet.
 sub run_report {
     my ($self) = @_;
 
-	die $self->Text('Required period type')
-		   if $self->comparison_periods and $self->interval eq 'none';
-
     my @lines = $self->exec_method(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);

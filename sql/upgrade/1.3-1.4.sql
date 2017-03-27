@@ -643,7 +643,7 @@ INSERT INTO cr_report_line SELECT * FROM lsmb13.cr_report_line;
 INSERT INTO cr_coa_to_account SELECT * FROM lsmb13.cr_coa_to_account;
 
 SELECT setval('id', max(id)) FROM transactions;
-SELECT setval('id', max(id)) FROM file_base;
+SELECT setval('file_base_id_seq', max(id)) FROM file_base;
  SELECT setval('acc_trans_entry_id_seq', max(entry_id)) FROM acc_trans;
  SELECT setval('partsvendor_entry_id_seq', max(entry_id)) FROM partsvendor;
  SELECT setval('inventory_entry_id_seq', max(entry_id)) FROM inventory;

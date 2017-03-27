@@ -1,18 +1,59 @@
-.label { display: block;
-	float: left;
-	width: 170px;	
+label, .label {
+    width: 170px;
+    display: inline-block;
+    text-align: right;
+    vertical-align: top;
 }
 
-.input_group { display: block;
-	float: left;
-	width: 40%;
+div.label {
+    margin-top: 0.2em;
+}
+
+.before-label {
+    text-align: right;
+    right-margin: 1ex;
+}
+
+.after-label,
+#basis-accrual-label,
+#basis-cash-label,
+#gifi-1-label,
+#gifi-0-label,
+#legacy-hierarchy-1-label,
+#legacy-hierarchy-0-label,
+#comparison_by_dates-label,
+#comparison_by_periods-label {
+    text-align: left;
+    left-margin: 1ex;
+}
+
+#comparison-periods-label {
+    width: auto;
+    vertical-align: center;
+}
+
+.input_group {
+    display: inline-block;
 }
 
 div.input_row {
-	overflow: auto;
-	width: 100%;
+        overflow: auto;
+        width: 100%;
+        margin-top: 0.2em;
+        margin-bottom: 1em;
+}
+
+div.input_option {
+    clear: right;
+    margin-top: 0.2em;
 }
 
 .subsection {
-	margin-top: 20px;
+        margin-top: 20px;
+}
+
+fieldset {
+    border: 1px solid black;
+    margin: 0.5ex 1ex;
+    padding: 0.5ex 1ex;
 }
