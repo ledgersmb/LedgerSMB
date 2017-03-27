@@ -3,9 +3,9 @@
 # Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.5-dev\n"
+"Project-Id-Version: LedgerSMB 1.5.5\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-03-13 20:37+0000\n"
+"POT-Creation-Date: 2017-03-14 14:03+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/ledgersmb/"
 "teams/58325/pt_BR/)\n"
