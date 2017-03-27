@@ -2,6 +2,27 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.3
+* Fix access to contact data for database admins (Erik H)
+* Fix Reconciliation Submit button not enabled (Nick P)
+* Fix Batch Search for approved transactions (Chris T)
+* Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
+* Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+
+Nick P is Nick Prater
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5 Series
+Released 2016-12-24
+
+Changelog for 1.5.5
+* Fix name of the sequence being updated in the 1.3 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.4
 * Updated Dojo from 1.10.6 to 1.10.7 (Erik H)
 * Add missing defaults in ledgersmb.conf 'database' section (David G, #2632)
@@ -133,6 +154,12 @@ JohnL is John Locke
 
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.40
+* Fix name of the sequence being updated in the 1.3 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.39
 * Fixed searching for approved batches (Chris T, #2592)

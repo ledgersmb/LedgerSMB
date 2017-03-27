@@ -694,7 +694,7 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('note_class_id_seq', max(id)) FROM note_class;
  SELECT setval('note_id_seq', max(id)) FROM note;
  SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
- SELECT setval('file_batch_id_seq', max(id)) FROM file_base;
+ SELECT setval('file_base_id_seq', max(id)) FROM file_base;
  SELECT setval('batch_id_seq', max(id)) FROM batch;
  SELECT setval('invoice_id_seq', max(id)) FROM invoice;
  SELECT setval('voucher_id_seq', max(id)) FROM voucher;
