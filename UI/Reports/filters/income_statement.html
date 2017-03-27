@@ -14,164 +14,176 @@ PROCESS input element_data = {
     value = pnl_type
 };
 ?></div>
-  
-<div class="input_row">
-  <div class="label">
-    <?lsmb text('Method') ?>
-  </div>
 
-  <div class="input_group">
-<?lsmb
-PROCESS input element_data={
-  name = 'basis',
-  type = 'radio',
-  value = 'accrual',
-  label = text('Accrual'),
-  checked = 'checked',
-  };
-PROCESS input element_data={
-  name = 'basis',
-  type = 'radio',
-  value = 'cash',
-  label = text('Cash'),
-  };
-?></div>
-</div>
-<div class="input_row">
-  <div class="label">
-    <?lsmb text('Ignore Year-ends') ?>
-  </div>
 
-  <div class="input_group">
-<?lsmb
-PROCESS select element_data = {
-     options = [
+<fieldset>
+  <legend><?lsmb text('Report type') ?></legend>
+  <div class="input_row">
+    <div class="label"><?lsmb text('Valuation') ?></div>
+    <div class="input_group">
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data={
+           name = 'basis',
+           type = 'radio',
+           value = 'accrual',
+           label = text('Accrual'),
+           checked = 'checked',
+           }
+           label_pos = 1 ;
+           ?>
+      </div>
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data={
+           name = 'basis',
+           type = 'radio',
+           value = 'cash',
+           label = text('Cash'),
+           }
+           label_pos = 1 ;
+           ?>
+      </div>
+    </div>
+  </div>
+  <div class="input_row">
+    <div class="label"><?lsmb text('GIFI') ?></div>
+    <div class="input_group">
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data = {
+           label = text('Regular')
+           name = 'gifi'
+           value = 0
+           type = 'radio'
+           checked = 'checked'
+           }
+           label_pos = 1 ;
+           ?>
+      </div>
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data = {
+           label = text('GIFI')
+           name = 'gifi'
+           value = 1
+           type = 'radio'
+           }
+           label_pos = 1 ;
+           ?>
+      </div>
+    </div>
+  </div>
+</fieldset>
+
+
+
+
+<fieldset>
+  <legend><?lsmb text('Period selection') ?></legend>
+  <div class="input_row">
+    <div class="label">
+      <?lsmb text('Select using') ?>
+    </div>
+    <div class="input_group">
+      <?lsmb
+                IF comparison_type == 'by_periods';
+                  YES="CHECKED";
+                  NO=undef;
+                ELSE;
+                  NO="CHECKED";
+                  YES=undef;
+         END; -?>
+      <div class="input_option">
+            <?lsmb    PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                          id = 'comparison_by_dates',
+                       value = 'by_dates',
+                       label = text('Dates'),
+                     checked = NO
+                      }
+                      label_pos = 1 ;
+                ?>
+      </div>
+      <div class="input_option">
+      <?lsmb
+                PROCESS input element_data={
+                        type = 'radio',
+                        name = 'comparison_type',
+                          id = 'comparison_by_periods',
+                       value = 'by_periods',
+                       label = text('Periods'),
+                     checked = YES,
+         } label_pos = 1 ;
+         ?></div>
+    </div>
+  </div>
+  <div class="input_row">
+    <div style="display:inline-block">
+    <div id="date_from_date_id">
+      <?lsmb label_pos = -1; # apparently, there's something leaky
+             PROCESS input element_data = {
+             label=text('From')
+             class="date"
+             name="from_date"
+             id="from_date"
+             size="11"
+             title=datestyle } ?>
+    </div>
+    </div>
+    <div style="display:inline-block">
+    <div id="date_to_date_id">
+      <?lsmb label_pos = -1; # apparently, there's something leaky
+             PROCESS input element_data = {
+             label=text('To')
+             class="date"
+             name="to_date"
+             id="to_date"
+             size="11"
+             title=datestyle } ?>
+    </div>
+    </div>
+  </div>
+  <div class="input_row" id="date_period_id">
+    <?lsmb PROCESS date_period_div; ?>
+  </div>
+  <div class="input_row">
+    <div class="label">
+      <?lsmb text('Ignore year-closing') ?>
+    </div>
+
+    <div class="input_group">
+      <?lsmb
+         PROCESS select element_data = {
+         options = [
          {
              label="All",
              id="all",
          },
          {
-             label="Last Only",
+             label="Last",
              id="last"
          },
          {
              label="None",
              id="none",
          }
-     ],
-     default_values = [report.ignore_yearend],
-     name = 'ignore_yearend',
-     text_attr = 'label',
-     value_attr = 'id',
-     }
-?></div>
-</div>
-<div class="input_row">
-<?lsmb
-PROCESS input element_data = {
-   label = text('GIFI')
-    name = 'gifi'
-   value = 1
-    type = 'checkbox'
-};
-?></div>
-<div class="input_row">
-<?lsmb
-PROCESS input element_data = {
-   label = text('Account numbers')    #'
-    name = 'incl_accnos'
-    type = 'checkbox'
-   value = 1
- checked = 'checked' # checked by default
-};
-?></div>
-<div class="input_row">
-<?lsmb text('Hierarchy type') ?>
-<?lsmb
-HIERARCHY_SETUP = earn_id;
-IF HIERARCHY_SETUP;
-    full_checked = 'CHECKED';
-    full_disabled = undef;
-    legacy_checked = undef;
-ELSE;
-    full_disabled = 'DISABLED';
-    full_checked = undef;
-    legacy_checked = 'CHECKED';
-END;
-PROCESS input element_data = {
-   label = text('Full')
-    type = 'radio'
-    name = 'legacy_hierarchy'
-   value = 0
-      id = 'legacy-hierarchy-0'
- checked = full_checked
-disabled = full_disabled
-};
-
-PROCESS input element_data = {
-   label = text('Account category')
-    type = 'radio'
-    name = 'legacy_hierarchy'
-   value = 1
-      id = 'legacy-hierarchy-1'
- checked = legacy_checked
-};
-?>
-</div>
-<?lsmb IF full_disabled ?>
-<div class="setupwarning" id="warning-hierarchy-not-setup">
-  <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
-</div>
-<?lsmb END ?>
-
-<div class="subsection">
-<?lsmb
-PROCESS select element_data = {
-         label = text('Language')
-          name = 'language'
-       options = languages
-     text_attr = 'description'
-    value_attr = 'code'
-default_values = [USER.language]
-}
-?>
+         ],
+         default_values = [report.ignore_yearend],
+         name = 'ignore_yearend',
+         text_attr = 'label',
+         value_attr = 'id',
+         }
+         ?>
+    </div>
+  </div>
 </div>
 
-<div class="subsection">
-<div class="labelledinput">
-        <div class="label">
-                <?lsmb text('Comparison selection by') ?>
-        </div>
-        <div class="input_group">
-                <?lsmb
-                IF comparison_type != 'by_dates';
-                  YES="CHECKED";
-                  NO=undef;
-                ELSE;
-                  NO="CHECKED";
-                  YES=undef;
-                END;
-                PROCESS input element_data={
-                        type = 'radio',
-                        name = 'comparison_type',
-                          id = 'comparison_by_periods',
-                   value = 'by_periods',
-                   label = text('Periods'),
-                 checked = YES,
-                };
-                PROCESS input element_data={
-                        type = 'radio',
-                        name = 'comparison_type',
-                          id = 'comparison_by_dates',
-                   value = 'by_dates',
-                   label = text('Dates'),
-                 checked = NO
-                };
-                ?>
-        </div>
-</div>
+</fieldset>
 
-<div class="input_row"><?lsmb
+<fieldset>
+  <legend><?lsmb
 PROCESS input element_data = {
          label = text('Comparison Periods')
           name = 'comparison_periods'
@@ -181,33 +193,117 @@ PROCESS input element_data = {
           size = '3'
 default_values = 0
 };
-PROCESS business_classes;
-?>
-<div class="input_row"><?lsmb
-PROCESS date_from_date_div;
-?>
-<div id="date_to_date_id">
-   <?lsmb PROCESS date_to_date_div; ?>
-</div>
-</div>
-<div id="date_period_id">
-   <?lsmb PROCESS date_period_div; ?>
-</div>
+?></legend>
 
-<div class="subsection">
-   <div id="comparison_dates" style="display:none">
-       <h3><?lsmb text('Enter up to ')?> <span id="comparison_periods_text"><?lsmb comparison_periods ?></span><?lsmb text(' date ranges for comparison') ?></h3>
-       <div class="input_row">
-                   <?lsmb FOREACH c IN [1 .. 9]; ?>
-                          <div id="comparison_dates_<?lsmb c ?>" style="<?lsmb c <= comparison_periods ? '' : 'display:none'?>">
-                                          <?lsmb PROCESS date_from_date_div SUFFIX='_' _ c; ?>
-                                          <?lsmb PROCESS date_to_date_div SUFFIX='_' _ c; ?>
-                          </div>
-                   <?lsmb END ?>
-       </div>
-   </div>
-</div>
-</div>
+  <div id="comparison_dates" style="display:none">
+    <?lsmb FOREACH c IN [1 .. 9]; ?>
+    <div class="input_row" id="comparison_dates_<?lsmb c ?>" style="display:none">
+      <div class="input_group">
+        <?lsmb PROCESS input element_data = {
+               label=text('From')
+               class="date"
+               name="from_date_" _ c
+               id="from_date_" _ c
+               size="11"
+               title=datestyle } ?>
+
+        <?lsmb PROCESS input element_data = {
+               label=text('To')
+               class="date"
+               name="to_date_" _ c
+               id="to_date_" _ c
+               size="11"
+               title=datestyle } ?>
+      </div>
+    </div>
+    <?lsmb END ?>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Report options</legend>
+  <div class="input_row">
+    <?lsmb
+       PROCESS input element_data = {
+       label = text('Account numbers')    #'
+       name = 'incl_accnos'
+       type = 'checkbox'
+       value = 1
+       checked = 'checked' # checked by default
+       };
+       ?>
+  </div>
+  <div class="input_row">
+    <div class="label">
+      <?lsmb text('Hierarchy type') ?>
+    </div>
+    <div class="input_group">
+      <?lsmb
+         HIERARCHY_SETUP = earn_id;
+         IF HIERARCHY_SETUP;
+         full_checked = 'CHECKED';
+         full_disabled = undef;
+         legacy_checked = undef;
+         ELSE;
+         full_disabled = 'DISABLED';
+         full_checked = undef;
+         legacy_checked = 'CHECKED';
+         END;
+         ?>
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data = {
+           label = text('Full')
+           type = 'radio'
+           name = 'legacy_hierarchy'
+           value = 0
+           id = 'legacy-hierarchy-0'
+           checked = full_checked
+           disabled = full_disabled
+           }
+           label_pos = 1;
+           ?>
+        <?lsmb IF full_disabled ?>
+        <span class="setupwarning" id="warning-hierarchy-not-setup">
+          <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
+        </span>
+        <?lsmb END ?>
+      </div>
+      <div class="input_option">
+        <?lsmb
+           PROCESS input element_data = {
+           label = text('Account category')
+           type = 'radio'
+           name = 'legacy_hierarchy'
+           value = 1
+           id = 'legacy-hierarchy-1'
+           checked = legacy_checked
+           }
+           label_pos = 1;
+           ?>
+      </div>
+    </div>
+  </div>
+  <div class="input_row">
+    <?lsmb
+       PROCESS select element_data = {
+       label = text('Language')
+       name = 'language'
+       options = languages
+       text_attr = 'description'
+       value_attr = 'code'
+       default_values = [USER.language]
+       } ?>
+  </div>
+</fieldset>
+
+
+<?lsmb IF bu_classes.size > 0; ?>
+<fieldset>
+  <legend><?lsmb text('Reporting unit filters') ?></legend>
+  <?lsmb PROCESS business_classes_div; ?>
+</fieldset>
+<?lsmb END ?>
 
 <div class="subsection">
 <?lsmb
@@ -218,7 +314,6 @@ PROCESS button element_data = {
     type = 'submit'
    class = 'submit'
 } ?>
-</div>
 </div>
 </form>
 </body>
