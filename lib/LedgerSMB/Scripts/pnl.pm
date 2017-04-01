@@ -55,15 +55,6 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-        if ( $request->{comparison_type} eq 'by_periods' && $request->{interval} ne 'none') {
-            # to_date = from_date + 1 period - 1 day
-            my $ri = $request->{interval};
-            # Note: Transforms input string into PGDate
-            $request->{to_date} = LedgerSMB::PGDate->from_input($request->{from_date})
-                                                        ->add_interval($ri)
-                                                        ->add_interval('day',-1)
-                                                        ->to_output;
-        }
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             column_path_prefix => [ 0 ]);
