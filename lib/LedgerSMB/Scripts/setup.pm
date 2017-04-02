@@ -180,7 +180,7 @@ sub get_dispatch_table {
       { appname => 'ledgersmb',
         version => undef,
         message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
-        operation => $request->{_locale}->text("Cancel."),
+        operation => $request->{_locale}->text("Cancel"),
         next_action => 'cancel' } );
 }
 
