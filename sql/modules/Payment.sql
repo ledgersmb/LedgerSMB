@@ -1236,16 +1236,25 @@ BEGIN
                         in_date_reversed, in_source, 'Reversing ' ||
                         COALESCE(in_source, ''),
                         case when in_batch_id is not null then false
-                        else true end, t_voucher_id),
-                 (pay_row.trans_id,
-                  case when pay_row.fxrate > t_rev_fx
-                       THEN t_fxloss_id ELSE t_fxgain_id END,
-                  pay_row.amount / t_paid_fx * (t_rev_fx - pay_row.fxrate),
-                  in_date_reversed, in_source, 'Reversing ' ||
-                                                COALESCE(in_source, ''),
-                   case when in_batch_id is not null then false
                         else true end, t_voucher_id);
 
+
+                IF  ABS(pay_row.amount / t_paid_fx
+                        * (t_rev_fx - pay_row.fxrate)) > 0.005 THEN
+                   INSERT INTO acc_trans (trans_id, chart_id, amount,
+                                          transdate, source, memo, approved,
+                                          voucher_id)
+                      VALUES
+                         (pay_row.trans_id,
+                          case when pay_row.fxrate > t_rev_fx
+                                  THEN t_fxloss_id ELSE t_fxgain_id END,
+                          pay_row.amount / t_paid_fx
+                              * (t_rev_fx - pay_row.fxrate),
+                          in_date_reversed, in_source,
+                          'Reversing ' || COALESCE(in_source, ''),
+                          case when in_batch_id is not null then false
+                               else true end, t_voucher_id);
+                END IF;
 
         END LOOP;
         RETURN 1;
