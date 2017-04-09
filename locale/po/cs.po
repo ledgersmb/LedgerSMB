@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-03-14 13:59+0000\n"
+"POT-Creation-Date: 2017-04-09 14:58+0000\n"
 "PO-Revision-Date: 2017-01-23 09:56+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/ledgersmb/ledgersmb/language/"
@@ -291,8 +291,8 @@ msgstr ""
 msgid "Account [_1] not found."
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:61
-#: UI/Reports/filters/income_statement.html:112
+#: UI/Reports/filters/balance_sheet.html:192
+#: UI/Reports/filters/income_statement.html:275
 msgid "Account category"
 msgstr ""
 
@@ -300,8 +300,8 @@ msgstr ""
 msgid "Account does not exist!"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:30
-#: UI/Reports/filters/income_statement.html:81
+#: UI/Reports/filters/balance_sheet.html:145
+#: UI/Reports/filters/income_statement.html:228
 msgid "Account numbers"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 msgid "Account:"
 msgstr ""
 
-#: UI/lib/report_base.html:57 UI/rp-search.html:24
+#: UI/lib/report_base.html:58 UI/rp-search.html:24
 msgid "Accounts"
 msgstr "Účty"
 
@@ -326,7 +326,7 @@ msgstr ""
 msgid "Accounts without heading"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:29
+#: UI/Reports/filters/income_statement.html:30
 #: UI/rp-search-generate_balance_sheet.html:64
 #: UI/rp-search-generate_income_statement.html:114
 #: UI/rp-search-generate_tax_report.html:92
@@ -900,6 +900,10 @@ msgstr "Opravdu chcete vymazat objednávku číslo"
 msgid "Are you sure you want to delete Quotation Number"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:90
+msgid "As per"
+msgstr ""
+
 #: bin/ic.pl:2249
 msgid "Assemblies restocked!"
 msgstr ""
@@ -952,7 +956,7 @@ msgstr ""
 msgid "Asset Tag"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:214 LedgerSMB/Report/Balance_Sheet.pm:216
+#: LedgerSMB/Report/Balance_Sheet.pm:211 LedgerSMB/Report/Balance_Sheet.pm:213
 #: LedgerSMB/Report/PNL.pm:198 LedgerSMB/Report/PNL.pm:200
 #: sql/Pg-database.sql:2890
 msgid "Assets"
@@ -1159,11 +1163,11 @@ msgstr ""
 
 #: UI/Reports/balance_sheet.html:26 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:1
-#: UI/Reports/filters/balance_sheet.html:6 sql/Pg-database.sql:2840
+#: UI/Reports/filters/balance_sheet.html:7 sql/Pg-database.sql:2840
 msgid "Balance Sheet"
 msgstr "Rozvaha"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:304
+#: LedgerSMB/Report/Balance_Sheet.pm:301
 msgid "Balance sheet"
 msgstr ""
 
@@ -1541,7 +1545,7 @@ msgstr ""
 msgid "Card ID"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:36 sql/Pg-database.sql:2855
+#: UI/Reports/filters/income_statement.html:42 sql/Pg-database.sql:2855
 msgid "Cash"
 msgstr ""
 
@@ -1739,14 +1743,9 @@ msgstr ""
 msgid "Compare to"
 msgstr "Porovnáno k"
 
-#: UI/Reports/filters/balance_sheet.html:120
-#: UI/Reports/filters/income_statement.html:176
+#: UI/Reports/filters/balance_sheet.html:106
+#: UI/Reports/filters/income_statement.html:188
 msgid "Comparison Periods"
-msgstr ""
-
-#: UI/Reports/filters/balance_sheet.html:88
-#: UI/Reports/filters/income_statement.html:143
-msgid "Comparison selection by"
 msgstr ""
 
 #: UI/payments/check_job.html:24
@@ -1836,8 +1835,8 @@ msgstr ""
 #: UI/get_password.html:45 UI/inventory/adjustment_setup.html:37
 #: UI/oe-save_warn.html:19 UI/payments/payments_filter.html:185
 #: UI/Reports/co/filter_bm.html:140 UI/Reports/co/filter_cd.html:115
-#: UI/Reports/filters/aging.html:148 UI/Reports/filters/gl.html:289
-#: UI/Reports/filters/income_statement.html:215
+#: UI/Reports/filters/aging.html:148 UI/Reports/filters/balance_sheet.html:221
+#: UI/Reports/filters/gl.html:289 UI/Reports/filters/income_statement.html:311
 #: UI/Reports/filters/inventory_activity.html:32
 #: UI/Reports/filters/invoice_outstanding.html:289
 #: UI/Reports/filters/invoice_search.html:380
@@ -2090,7 +2089,7 @@ msgstr "Měna"
 #: templates/demo/statement.tex:38 templates/demo_with_images/statement.html:64
 #: templates/demo_with_images/statement.tex:38
 #: templates/xedemo/statement.html:64 templates/xedemo/statement.tex:38
-#: UI/bp-search.html:40 UI/lib/report_base.html:137 UI/lib/report_base.html:216
+#: UI/bp-search.html:40 UI/lib/report_base.html:138 UI/lib/report_base.html:217
 #: UI/pos-receipts.html:38 UI/rc-reconciliation.html:40
 #: UI/Reports/co/filter_bm.html:53 UI/Reports/filters/aging.html:99
 #: UI/rp-search-generate_income_statement.html:33
@@ -2098,7 +2097,7 @@ msgstr "Měna"
 msgid "Current"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:249 LedgerSMB/Report/Balance_Sheet.pm:251
+#: LedgerSMB/Report/Balance_Sheet.pm:246 LedgerSMB/Report/Balance_Sheet.pm:248
 #: LedgerSMB/Report/PNL.pm:220 LedgerSMB/Report/PNL.pm:222
 #: LedgerSMB/Scripts/configuration.pm:81
 msgid "Current earnings"
@@ -2335,6 +2334,11 @@ msgstr ""
 msgid "Date received missing!"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:42
+#, fuzzy
+msgid "Date selection"
+msgstr "Popis"
+
 #: bin/aa.pl:1776 UI/payments/payment1.html:68
 #: UI/Reports/filters/contact_search.html:116
 msgid "Date to"
@@ -2344,8 +2348,8 @@ msgstr ""
 msgid "Date: [_1]"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:113
-#: UI/Reports/filters/income_statement.html:167
+#: UI/Reports/filters/balance_sheet.html:65
+#: UI/Reports/filters/income_statement.html:103
 msgid "Dates"
 msgstr ""
 
@@ -3128,7 +3132,7 @@ msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
-#: UI/lib/report_base.html:267 sql/Pg-database.sql:2812
+#: UI/lib/report_base.html:268 sql/Pg-database.sql:2812
 msgid "Employees"
 msgstr ""
 
@@ -3186,11 +3190,6 @@ msgstr ""
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:133
-#: UI/Reports/filters/income_statement.html:199
-msgid "Enter up to "
-msgstr ""
-
 #: LedgerSMB/Report/Budget/Search.pm:88
 #: LedgerSMB/Report/Reconciliation/Summary.pm:152
 msgid "Entered By"
@@ -3212,7 +3211,7 @@ msgstr ""
 msgid "Entity"
 msgstr ""
 
-#: UI/lib/report_base.html:41
+#: UI/lib/report_base.html:42
 msgid "Entity Class"
 msgstr ""
 
@@ -3236,13 +3235,13 @@ msgstr ""
 msgid "Envelope"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:240 LedgerSMB/Report/Balance_Sheet.pm:242
+#: LedgerSMB/Report/Balance_Sheet.pm:237 LedgerSMB/Report/Balance_Sheet.pm:239
 #: LedgerSMB/Report/PNL.pm:212 LedgerSMB/Report/PNL.pm:214
 #: UI/accounts/edit.html:203 UI/Reports/filters/gl.html:139
 msgid "Equity"
 msgstr "Vlastní jmění"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:222 LedgerSMB/Report/Balance_Sheet.pm:224
+#: LedgerSMB/Report/Balance_Sheet.pm:219 LedgerSMB/Report/Balance_Sheet.pm:221
 msgid "Equity & Liabilities"
 msgstr ""
 
@@ -3336,7 +3335,7 @@ msgstr ""
 msgid "Expense/Asset"
 msgstr "Náklad"
 
-#: LedgerSMB/Report/Balance_Sheet.pm:199 LedgerSMB/Report/Balance_Sheet.pm:201
+#: LedgerSMB/Report/Balance_Sheet.pm:196 LedgerSMB/Report/Balance_Sheet.pm:198
 #: LedgerSMB/Report/PNL.pm:183 LedgerSMB/Report/PNL.pm:185
 msgid "Expenses"
 msgstr ""
@@ -3599,10 +3598,12 @@ msgstr ""
 #: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
 #: templates/xedemo/bin_list.tex:35 UI/asset/begin_approval.html:23
 #: UI/asset/search_reports.html:25 UI/bp-search.html:27
-#: UI/ca-list-selector.html:31 UI/lib/report_base.html:95
-#: UI/lib/report_base.html:171 UI/pos-receipts.html:16
+#: UI/ca-list-selector.html:31 UI/lib/report_base.html:96
+#: UI/lib/report_base.html:172 UI/pos-receipts.html:16
 #: UI/rc-reconciliation.html:16 UI/Reports/co/filter_bm.html:21
 #: UI/Reports/co/filter_cd.html:39 UI/Reports/filters/contact_search.html:114
+#: UI/Reports/filters/income_statement.html:127
+#: UI/Reports/filters/income_statement.html:203
 #: UI/Reports/filters/purchase_history.html:119
 #: UI/Reports/filters/purchase_history.html:140
 #: UI/rp-search-generate_balance_sheet.html:19
@@ -3637,8 +3638,8 @@ msgstr ""
 msgid "From date"
 msgstr ""
 
-#: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:51
-#: UI/Reports/filters/income_statement.html:102
+#: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:173
+#: UI/Reports/filters/income_statement.html:256
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
 msgstr ""
@@ -3651,9 +3652,11 @@ msgstr ""
 #: LedgerSMB/Report/COA.pm:100 LedgerSMB/Report/GL.pm:157
 #: LedgerSMB/Report/Listings/GIFI.pm:45 LedgerSMB/Report/Listings/GIFI.pm:68
 #: LedgerSMB/Report/Trial_Balance.pm:166 UI/accounts/edit.html:181
-#: UI/am-gifi-form.html:12 UI/lib/report_base.html:72
-#: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:241
-#: UI/Reports/filters/income_statement.html:72
+#: UI/am-gifi-form.html:12 UI/lib/report_base.html:73
+#: UI/Reports/filters/balance_sheet.html:12
+#: UI/Reports/filters/balance_sheet.html:29 UI/Reports/filters/gl.html:241
+#: UI/Reports/filters/income_statement.html:50
+#: UI/Reports/filters/income_statement.html:67
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
 #: sql/Pg-database.sql:2858
 msgid "GIFI"
@@ -3714,8 +3717,7 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:115 UI/Reports/aging_report.html:99
-#: UI/Reports/filters/balance_sheet.html:153 sql/Pg-database.sql:2784
-#: sql/Pg-database.sql:2822
+#: sql/Pg-database.sql:2784 sql/Pg-database.sql:2822
 msgid "Generate"
 msgstr ""
 
@@ -3811,8 +3813,8 @@ msgstr "HTML šablony"
 msgid "Heading"
 msgstr "Nadpis"
 
-#: UI/Reports/filters/balance_sheet.html:38
-#: UI/Reports/filters/income_statement.html:89
+#: UI/Reports/filters/balance_sheet.html:155
+#: UI/Reports/filters/income_statement.html:238
 msgid "Hierarchy type"
 msgstr ""
 
@@ -3880,13 +3882,17 @@ msgstr ""
 msgid "If you would like to access this report again, please try this URL"
 msgstr ""
 
-#: UI/lib/report_base.html:80 UI/Reports/filters/income_statement.html:42
-#: UI/Reports/filters/trial_balance.html:49 UI/rp-search.html:44
+#: UI/lib/report_base.html:81 UI/Reports/filters/trial_balance.html:49
+#: UI/rp-search.html:44
 msgid "Ignore Year-ends"
 msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:219
 msgid "Ignore Yearends"
+msgstr ""
+
+#: UI/Reports/filters/income_statement.html:153
+msgid "Ignore year-closing"
 msgstr ""
 
 #: bin/ic.pl:501 LedgerSMB/Report/Inventory/Search.pm:258
@@ -3985,8 +3991,8 @@ msgstr ""
 msgid "Including partnumber"
 msgstr ""
 
-#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:206
-#: LedgerSMB/Report/Balance_Sheet.pm:208 LedgerSMB/Report/PNL.pm:191
+#: bin/ic.pl:525 bin/ic.pl:661 LedgerSMB/Report/Balance_Sheet.pm:203
+#: LedgerSMB/Report/Balance_Sheet.pm:205 LedgerSMB/Report/PNL.pm:191
 #: LedgerSMB/Report/PNL.pm:193 LedgerSMB/Scripts/configuration.pm:87
 #: UI/accounts/edit.html:205 UI/accounts/edit.html:288
 #: UI/accounts/edit.html:370 UI/accounts/edit.html:409
@@ -4414,8 +4420,8 @@ msgstr ""
 #: bin/ir.pl:389 bin/pe.pl:399 bin/pe.pl:577 LedgerSMB/Report/Aging.pm:96
 #: LedgerSMB/Report/Listings/Language.pm:68
 #: LedgerSMB/Report/Listings/Templates.pm:67 UI/Contact/divs/credit.html:251
-#: UI/Reports/filters/balance_sheet.html:78
-#: UI/Reports/filters/income_statement.html:130 UI/users/preferences.html:76
+#: UI/Reports/filters/balance_sheet.html:207
+#: UI/Reports/filters/income_statement.html:290 UI/users/preferences.html:76
 #: sql/Pg-database.sql:2881
 msgid "Language"
 msgstr "Jazyk"
@@ -4488,7 +4494,7 @@ msgstr ""
 msgid "Letterhead"
 msgstr ""
 
-#: LedgerSMB/Report/Balance_Sheet.pm:231 LedgerSMB/Report/Balance_Sheet.pm:233
+#: LedgerSMB/Report/Balance_Sheet.pm:228 LedgerSMB/Report/Balance_Sheet.pm:230
 #: LedgerSMB/Report/PNL.pm:205 LedgerSMB/Report/PNL.pm:207
 msgid "Liabilities"
 msgstr ""
@@ -4746,7 +4752,6 @@ msgid "Message: "
 msgstr ""
 
 #: LedgerSMB/Report/Assets/Net_Book_Value.pm:84
-#: UI/Reports/filters/income_statement.html:20
 #: UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
 #: UI/rp-search-generate_tax_report.html:86
@@ -4810,7 +4815,7 @@ msgid "Mon"
 msgstr ""
 
 #: bin/aa.pl:1661 bin/am.pl:824 bin/pe.pl:841 LedgerSMB/DBObject/Date.pm:82
-#: UI/bp-search.html:44 UI/lib/report_base.html:142 UI/lib/report_base.html:223
+#: UI/bp-search.html:44 UI/lib/report_base.html:143 UI/lib/report_base.html:224
 #: UI/pos-receipts.html:39 UI/rc-reconciliation.html:47
 #: UI/Reports/co/filter_bm.html:58
 #: UI/rp-search-generate_income_statement.html:40
@@ -5063,8 +5068,8 @@ msgstr ""
 msgid "Not Submitted"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:72
-#: UI/Reports/filters/income_statement.html:123
+#: UI/Reports/filters/balance_sheet.html:185
+#: UI/Reports/filters/income_statement.html:268
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 
@@ -5735,16 +5740,20 @@ msgid "Percent Remaining"
 msgstr ""
 
 #: bin/aa.pl:1654 bin/pe.pl:834 UI/bp-search.html:34
-#: UI/ca-list-selector.html:57 UI/lib/report_base.html:113
-#: UI/lib/report_base.html:192 UI/pos-receipts.html:34
+#: UI/ca-list-selector.html:57 UI/lib/report_base.html:114
+#: UI/lib/report_base.html:193 UI/pos-receipts.html:34
 #: UI/rc-reconciliation.html:32 UI/rp-search-generate_income_statement.html:25
 #: UI/rp-search-generate_income_statement.html:85
 #: UI/rp-search-generate_tax_report.html:21
 msgid "Period"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:105
-#: UI/Reports/filters/income_statement.html:159
+#: UI/Reports/filters/income_statement.html:83
+msgid "Period selection"
+msgstr ""
+
+#: UI/Reports/filters/balance_sheet.html:78
+#: UI/Reports/filters/income_statement.html:116
 msgid "Periods"
 msgstr ""
 
@@ -6192,7 +6201,7 @@ msgid "Quantity exceeds available units to stock!"
 msgstr ""
 
 #: bin/aa.pl:1663 bin/pe.pl:843 LedgerSMB/DBObject/Date.pm:88
-#: UI/bp-search.html:47 UI/lib/report_base.html:147 UI/lib/report_base.html:230
+#: UI/bp-search.html:47 UI/lib/report_base.html:148 UI/lib/report_base.html:231
 #: UI/pos-receipts.html:40 UI/rc-reconciliation.html:53
 #: UI/Reports/co/filter_bm.html:63
 #: UI/rp-search-generate_income_statement.html:46
@@ -6416,6 +6425,11 @@ msgstr ""
 msgid "Registration [_1]"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:17
+#: UI/Reports/filters/income_statement.html:55
+msgid "Regular"
+msgstr ""
+
 #: LedgerSMB/Scripts/budgets.pm:115 UI/reconciliation/report.html:292
 msgid "Reject"
 msgstr ""
@@ -6475,12 +6489,22 @@ msgstr "Výkaz za"
 msgid "Report in"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:10
+#: UI/Reports/filters/income_statement.html:20
+#, fuzzy
+msgid "Report type"
+msgstr "Výkaz za"
+
 #: LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
 msgstr ""
 
 #: sql/Pg-database.sql:2883
 msgid "Reporting Units"
+msgstr ""
+
+#: UI/Reports/filters/income_statement.html:303
+msgid "Reporting unit filters"
 msgstr ""
 
 #: sql/Pg-database.sql:2817 sql/Pg-database.sql:2830 sql/Pg-database.sql:2859
@@ -6550,11 +6574,6 @@ msgstr "Požadováno do"
 
 #: LedgerSMB.pm:758 LedgerSMB.pm:759
 msgid "Required input not provided"
-msgstr ""
-
-#: LedgerSMB/Report/Balance_Sheet.pm:92
-#: LedgerSMB/Report/PNL/Income_Statement.pm:103
-msgid "Required period type"
 msgstr ""
 
 #: UI/Contact/divs/user.html:81 UI/setup/edit_user.html:86
@@ -7023,6 +7042,11 @@ msgstr ""
 msgid "Select txt, postscript or PDF!"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:45
+#: UI/Reports/filters/income_statement.html:86
+msgid "Select using"
+msgstr ""
+
 #: LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
 msgstr ""
@@ -7429,7 +7453,7 @@ msgstr ""
 msgid "Special order items are subject to a 10\\% cancellation fee."
 msgstr ""
 
-#: UI/lib/report_base.html:64 UI/rp-search.html:30
+#: UI/lib/report_base.html:65 UI/rp-search.html:30
 msgid "Standard"
 msgstr "Standardní"
 
@@ -8048,8 +8072,7 @@ msgstr ""
 msgid "Threshold"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:11
-#: UI/Reports/filters/balance_sheet.html:139
+#: UI/Reports/filters/balance_sheet.html:122
 msgid "Through date"
 msgstr ""
 
@@ -8119,10 +8142,12 @@ msgstr ""
 #: templates/xedemo/request_quotation.tex:27
 #: templates/xedemo/sales_order.html:28 templates/xedemo/work_order.html:28
 #: UI/asset/begin_approval.html:31 UI/asset/search_reports.html:34
-#: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:104
-#: UI/lib/report_base.html:182 UI/pos-receipts.html:23
+#: UI/bp-search.html:29 UI/ca-list-selector.html:33 UI/lib/report_base.html:105
+#: UI/lib/report_base.html:183 UI/pos-receipts.html:23
 #: UI/rc-reconciliation.html:22 UI/Reports/co/filter_bm.html:27
 #: UI/Reports/co/filter_cd.html:45 UI/Reports/filters/aging.html:34
+#: UI/Reports/filters/income_statement.html:139
+#: UI/Reports/filters/income_statement.html:211
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8647,6 +8672,10 @@ msgstr ""
 msgid "Valid until"
 msgstr ""
 
+#: UI/Reports/filters/income_statement.html:22
+msgid "Valuation"
+msgstr ""
+
 #: LedgerSMB/Report/Budget/Variance.pm:91
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:99
 msgid "Variance"
@@ -8851,7 +8880,7 @@ msgid "Yahoo"
 msgstr ""
 
 #: bin/aa.pl:1665 bin/am.pl:828 bin/pe.pl:845 LedgerSMB/DBObject/Date.pm:93
-#: UI/bp-search.html:50 UI/lib/report_base.html:152 UI/lib/report_base.html:237
+#: UI/bp-search.html:50 UI/lib/report_base.html:153 UI/lib/report_base.html:238
 #: UI/pos-receipts.html:41 UI/rc-reconciliation.html:59
 #: UI/rp-search-generate_income_statement.html:52
 #: UI/rp-search-generate_tax_report.html:48
