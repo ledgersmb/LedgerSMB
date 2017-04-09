@@ -4,11 +4,12 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(39);
+    SELECT plan(43);
 
     -- Add data
 
     \i sql/modules/test/Base.sql
+    insert into defaults values ('curr', 'USD');
 
     -- Validate required tables
 
@@ -59,6 +60,7 @@ BEGIN;
     SELECT account__save(null, accno, description, category, null, null, false,
                         false, array[link], false, false)
       FROM (VALUES ('00001', 'testing', 'L', 'AP'),
+                   ('00001AP2', 'testing', 'L', 'AP'),
                    ('00002', 'testing2', 'E', 'AP_amount'),
                    ('00003', 'testing2', 'A', 'AP_paid')) f
                    (accno, description, category, link);
@@ -85,7 +87,8 @@ BEGIN;
     INSERT INTO entity_credit_account
                 (id, meta_number, threshold, entity_id, entity_class,
                  business_id, ar_ap_account_id)
-         values (-101, 'TEST1', 100000, -101, 1, -101, -1000);
+         values (-101, 'TEST1', 100000, -101, 1, -101,
+                 (select id from account where accno = '00001'));
 
     INSERT INTO ap (invnumber, entity_credit_account, approved,
                     amount, netamount, curr)
@@ -201,14 +204,80 @@ BEGIN;
                            transdate, source)
                    values (currval('id')::int,
                            (select id from account where accno = '00003'),
-                           -100, true, '1', now(), '_test_src1');
-    INSERT INTO acc_trans (trans_id, chart_id, voucher_id, approved, amount,
-                           transdate, source)
-                   values (currval('id')::int,
+                           -100, true, '1', now(), '_test_src1'),
+                          (currval('id')::int,
                            (select id from account where accno = '00001'),
                            -100, true, '-1', now(), '_test_src1');
 
-    SELECT todo('Missing Voucher test',1);
+    SELECT todo('Missing Voucher test',0);
+
+
+    -- Test payment reversal
+
+    -- Explicitly tests posting to a non-default (for the ECA) AP account
+    -- as a test for GitHub issue #2558
+
+    INSERT INTO ap (invnumber, entity_credit_account, approved,
+                    amount, netamount, curr, transdate)
+            values ('test_reverse', -101, true, '1', '1', 'USD', now()::date);
+
+    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
+                   VALUES (true, now()::date, '1', currval('id'),
+                           (select id from account where accno = '00001AP2')),
+                          (true, now()::date, '-1', currval('id'),
+                           (select id from account where accno = '00002'));
+
+
+    PREPARE test AS
+    SELECT amount::int, due::int
+      FROM payment_get_open_invoice(
+             1, -101, 'USD', null, null, null, null, 'test_reverse');
+    SELECT results_eq('test', $$VALUES (1::int, 1::int)$$,
+                      'Before payment, the open amount is 1');
+    DEALLOCATE test;
+
+
+    SELECT payment_post(now()::date, 1, -101, 'USD', 'notes', 'description',
+                        array[(select id from account where accno = '00003')],
+                        array[1]::numeric[], array[true]::bool[],
+                        array['pmt-rev-src1']::text[], NULL,
+                        array[currval('id')]::int[],
+                        -- overpayments section
+                        null, null, null, null, null, null,
+                        -- approved:
+                        true);
+
+    PREPARE test AS
+    SELECT count(*) = 0
+      FROM payment_get_open_invoice(
+             1, -101, 'USD', null, null, null, null, 'test_reverse');
+    SELECT results_eq('test', array[true],
+                      'After payment, the invoice is paid');
+    DEALLOCATE test;
+
+   SELECT payment__reverse('pmt-rev-src1', now()::date, -101, '00003',
+                           now()::date, 1, null, null, null, null);
+
+   PREPARE test AS
+   SELECT amount::int, due::int
+     FROM payment_get_open_invoice(
+            1, -101, 'USD', null, null, null, null, 'test_reverse');
+   SELECT results_eq('test', $$VALUES (1::int, 1::int)$$,
+                     'After reversal, paid amount reverts back to nil');
+   DEALLOCATE test;
+
+   PREPARE test AS
+   SELECT count(distinct act.id) = 1
+     FROM ap
+          JOIN acc_trans ac ON ap.id = ac.trans_id
+          JOIN account act ON ac.chart_id = act.id
+          JOIN account_link al ON al.account_id = act.id
+    WHERE ap.invnumber = 'test_reverse'
+          AND al.description = 'AP';
+    SELECT results_eq('test', array[true],
+                      'AP ');
+    DEALLOCATE test;
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
