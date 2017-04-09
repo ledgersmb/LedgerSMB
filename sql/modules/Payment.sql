@@ -1226,7 +1226,18 @@ BEGIN
                 t_voucher_inserted := FALSE;
         END IF;
         FOR pay_row IN
-                SELECT a.*, c.ar_ap_account_id, arap.curr, arap.fxrate
+                SELECT a.*,
+                       (select distinct chart_id
+                          from acc_trans ac
+                               join account at on ac.chart_id = at.id
+                               join account_link al on at.id = al.account_id
+                         where ((al.description = 'AP'
+                                   and in_account_class = 1)
+                                 or (al.description = 'AR'
+                                    and in_account_class = 2))
+                               and ac.trans_id = a.trans_id)
+                             as ar_ap_account_id,
+                       arap.curr, arap.fxrate
                 FROM acc_trans a
                 JOIN (select id, curr, entity_credit_account,
                              CASE WHEN curr = t_currs[1] THEN 1

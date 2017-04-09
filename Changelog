@@ -6,6 +6,9 @@ Released 2014-09-15
 
 Changelog for 1.4.41
 * Fix 'Bad interval' error with PNL comparisons (Erik H, #2146)
+* Refactor filter pages for income statement and balance sheet (Erik H)
+* Follow-up to earlier compensation for '.' missing from @INC (Erik H, #2275)
+* Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
 
 Erik H is Erik Huelsmann
 
