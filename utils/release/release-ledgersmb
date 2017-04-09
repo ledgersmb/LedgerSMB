@@ -4,6 +4,7 @@
 typeset -u tag_release
 
 URL="git@github.com:ledgersmb/LedgerSMB.git"
+URL_docker="git@github.com:ledgersmb/ledgersmb-docker.git"
 #URL=/home/ehuelsmann/releases/lsmb-repo-2
 branch="$1"
 release_version="$2"
@@ -68,7 +69,8 @@ verify_release_key() {
 
 setup_workspace() {
    our_workspace=$($mktemp -d)
-   trap "rm -rf '$our_workspace'" TERM EXIT
+   docker_workspace=$($mktemp -d)
+   trap "rm -rf '$our_workspace'; rm -rf '$docker_workspace'" TERM EXIT
 }
 
 populate_workspace() {
@@ -85,6 +87,12 @@ populate_workspace() {
    #cp $our_workspace/$checkout_dir/conf/ledgersmb.conf.default $our_workspace/$checkout_dir/ledgersmb.conf 2>/dev/null
 }
 
+populate_docker_workspace() {
+  ( cd $docker_workspace && \
+    $git clone --recursive --single-branch --branch "$branch" "$docker_URL" docker) \
+  || fail "Failed to check out branch '$branch' from '$docker_URL'!"
+}
+
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
@@ -93,6 +101,14 @@ update_translations() {
     $git add --all locale && git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
+}
+
+update_dockerfile() {
+   (cd "$docker_workspace/docker" && \
+    $sed -i -e "s/^ENV LSMB_VERSION .*\$/ENV LSMB_VERSION $release_version/" && \
+    $git commit -a -m "* Automatic Dockerfile update by release process" && \
+    $git tag "$release_version") \
+   || fail "Failed to update Dockerfile!"
 }
 
 detect_current_version() {
@@ -187,6 +203,12 @@ update_remote() {
    || fail "Failed to update the origin repository!"
 }
 
+update_docker_remote() {
+   (cd "$docker_workspace/docker" && \
+    $git push --tags origin "$branch" ) \
+   || fail "Failed to update remote docker repository!"
+}
+
 publish_files() {
    (cd "$our_workspace" && \
     echo "cd '$frs_prj_dir/$prj_sub_dir'
@@ -242,10 +264,12 @@ verify_dependencies
 verify_release_key
 setup_workspace
 populate_workspace
+populate_docker_workspace
 
 if [[ -z "$(cd "$our_workspace/$checkout_dir"; $git tag | grep -E "^$release_version$")" ]]
 then
   update_translations
+  update_dockerfile
   detect_current_version
   detect_versionpatch_files
   patch_version "$current_version" "$release_version"
@@ -272,6 +296,7 @@ fi
 if [[ "$tag_release" == "Y" ]]; then
    # if we don't have a release tag, be sure to discard it!
    update_remote
+   update_docker_remote
    prj_sub_dir="$frs_tagged_dir"
 else
    prj_sub_dir="$frs_untagged_dir"
