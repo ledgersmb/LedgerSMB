@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.6-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-03-14 14:03+0000\n"
+"POT-Creation-Date: 2017-04-09 15:04+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Chinese (China) (https://www.transifex.com/ledgersmb/"
 "teams/58325/zh_CN/)\n"
@@ -276,8 +276,8 @@ msgstr ""
 msgid "Account [_1] not found."
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:61
-#: UI/Reports/filters/income_statement.html:116
+#: UI/Reports/filters/balance_sheet.html:227
+#: UI/Reports/filters/income_statement.html:274
 msgid "Account category"
 msgstr ""
 
@@ -285,8 +285,8 @@ msgstr ""
 msgid "Account does not exist!"
 msgstr "不存在帐户"
 
-#: UI/Reports/filters/balance_sheet.html:30
-#: UI/Reports/filters/income_statement.html:85
+#: UI/Reports/filters/balance_sheet.html:180
+#: UI/Reports/filters/income_statement.html:227
 msgid "Account numbers"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgstr ""
 msgid "Accounts without heading"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:33
+#: UI/Reports/filters/income_statement.html:31
 #: UI/rp-search-generate_balance_sheet.html:64
 #: UI/rp-search-generate_income_statement.html:114
 #: UI/rp-search-generate_tax_report.html:92
@@ -890,6 +890,10 @@ msgstr "您是否确定要删除订单编号"
 #: bin/oe.pl:1308
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "您是否确定要删除报价单编号"
+
+#: UI/Reports/filters/balance_sheet.html:95
+msgid "As per"
+msgstr ""
 
 #: bin/ic.pl:2224
 msgid "Assemblies restocked!"
@@ -1538,7 +1542,7 @@ msgstr "不能常备的商品"
 msgid "Card ID"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:40 sql/Pg-database.sql:2853
+#: UI/Reports/filters/income_statement.html:43 sql/Pg-database.sql:2853
 msgid "Cash"
 msgstr "现金"
 
@@ -1759,13 +1763,17 @@ msgstr ""
 msgid "Compare to"
 msgstr "对照"
 
-#: UI/Reports/filters/balance_sheet.html:120
-#: UI/Reports/filters/income_statement.html:175
+#: UI/Reports/filters/balance_sheet.html:144
+#, fuzzy
+msgid "Comparison Dates"
+msgstr "报价单日期"
+
+#: UI/Reports/filters/balance_sheet.html:285
+#: UI/Reports/filters/income_statement.html:187
 msgid "Comparison Periods"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:91
-#: UI/Reports/filters/income_statement.html:147
+#: UI/Reports/filters/balance_sheet.html:256
 msgid "Comparison selection by"
 msgstr ""
 
@@ -1852,7 +1860,9 @@ msgstr ""
 #: UI/inventory/adjustment_setup.html:37 UI/oe-save_warn.html:19
 #: UI/payments/payments_filter.html:187 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
-#: UI/Reports/filters/gl.html:324 UI/Reports/filters/inventory_activity.html:32
+#: UI/Reports/filters/balance_sheet.html:322 UI/Reports/filters/gl.html:324
+#: UI/Reports/filters/income_statement.html:308
+#: UI/Reports/filters/inventory_activity.html:32
 #: UI/Reports/filters/invoice_outstanding.html:295
 #: UI/Reports/filters/invoice_search.html:404
 #: UI/Reports/filters/orders.html:203
@@ -2363,6 +2373,11 @@ msgstr ""
 msgid "Date received missing!"
 msgstr "未指明收款日期"
 
+#: UI/Reports/filters/balance_sheet.html:47
+#, fuzzy
+msgid "Date selection"
+msgstr "说明"
+
 #: bin/aa.pl:1702 UI/payments/payment1.html:73
 #: UI/Reports/filters/contact_search.html:123
 msgid "Date to"
@@ -2376,8 +2391,9 @@ msgstr ""
 msgid "Date: [_1]"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:109
-#: UI/Reports/filters/income_statement.html:165
+#: UI/Reports/filters/balance_sheet.html:70
+#: UI/Reports/filters/balance_sheet.html:274
+#: UI/Reports/filters/income_statement.html:102
 msgid "Dates"
 msgstr ""
 
@@ -3233,8 +3249,7 @@ msgstr ""
 msgid "Enter User"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:141
-#: UI/Reports/filters/income_statement.html:211
+#: UI/Reports/filters/balance_sheet.html:306
 msgid "Enter date ranges for comparison"
 msgstr ""
 
@@ -3652,7 +3667,8 @@ msgstr ""
 #: UI/lib/report_base.html:208 UI/rc-reconciliation.html:16
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:117
-#: UI/Reports/filters/income_statement.html:216
+#: UI/Reports/filters/income_statement.html:126
+#: UI/Reports/filters/income_statement.html:202
 #: UI/Reports/filters/purchase_history.html:119
 #: UI/Reports/filters/purchase_history.html:140
 #: UI/rp-search-generate_balance_sheet.html:19
@@ -3688,8 +3704,8 @@ msgstr "从仓库"
 msgid "From date"
 msgstr ""
 
-#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:51
-#: UI/Reports/filters/income_statement.html:106
+#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:208
+#: UI/Reports/filters/income_statement.html:255
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
 msgstr ""
@@ -3704,8 +3720,10 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:68
 #: lib/LedgerSMB/Report/Trial_Balance.pm:187 UI/accounts/edit.html:163
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:78
-#: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:276
-#: UI/Reports/filters/income_statement.html:76
+#: UI/Reports/filters/balance_sheet.html:15
+#: UI/Reports/filters/balance_sheet.html:32 UI/Reports/filters/gl.html:276
+#: UI/Reports/filters/income_statement.html:51
+#: UI/Reports/filters/income_statement.html:68
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
 #: sql/Pg-database.sql:2856
 msgid "GIFI"
@@ -3766,9 +3784,7 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:119 UI/Reports/aging_report.html:100
-#: UI/Reports/filters/balance_sheet.html:157
-#: UI/Reports/filters/income_statement.html:234 sql/Pg-database.sql:2782
-#: sql/Pg-database.sql:2820
+#: sql/Pg-database.sql:2782 sql/Pg-database.sql:2820
 msgid "Generate"
 msgstr "产生"
 
@@ -3864,8 +3880,8 @@ msgstr "HTML 表单"
 msgid "Heading"
 msgstr "标题, "
 
-#: UI/Reports/filters/balance_sheet.html:38
-#: UI/Reports/filters/income_statement.html:93
+#: UI/Reports/filters/balance_sheet.html:190
+#: UI/Reports/filters/income_statement.html:237
 msgid "Hierarchy type"
 msgstr ""
 
@@ -3931,9 +3947,13 @@ msgid "Identification"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:229 UI/lib/report_base.html:86
-#: UI/Reports/filters/income_statement.html:46
 #: UI/Reports/filters/trial_balance.html:70 UI/rp-search.html:44
 msgid "Ignore Year-ends"
+msgstr ""
+
+#: UI/Reports/filters/balance_sheet.html:109
+#: UI/Reports/filters/income_statement.html:152
+msgid "Ignore year-closing"
 msgstr ""
 
 #: bin/ic.pl:503 lib/LedgerSMB/Report/Inventory/Search.pm:258
@@ -4038,7 +4058,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:76
 #: UI/Reports/filters/income_statement.html:2
-#: UI/Reports/filters/income_statement.html:11 UI/Reports/PNL.tex:28
+#: UI/Reports/filters/income_statement.html:18 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2865
 msgid "Income Statement"
 msgstr "损益表"
@@ -4455,8 +4475,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Language.pm:68
 #: lib/LedgerSMB/Report/Listings/Templates.pm:67
 #: UI/Contact/divs/credit.html:273 UI/Contact/divs/credit.html:274
-#: UI/Reports/filters/balance_sheet.html:79
-#: UI/Reports/filters/income_statement.html:134 UI/users/preferences.html:70
+#: UI/Reports/filters/balance_sheet.html:242
+#: UI/Reports/filters/income_statement.html:289 UI/users/preferences.html:70
 #: sql/Pg-database.sql:2879
 msgid "Language"
 msgstr "语言"
@@ -4804,7 +4824,6 @@ msgid "Message: "
 msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:84
-#: UI/Reports/filters/income_statement.html:24
 #: UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
 #: UI/rp-search-generate_tax_report.html:86
@@ -5139,8 +5158,8 @@ msgstr ""
 msgid "Not Submitted"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:72
-#: UI/Reports/filters/income_statement.html:127
+#: UI/Reports/filters/balance_sheet.html:220
+#: UI/Reports/filters/income_statement.html:267
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 
@@ -5360,12 +5379,7 @@ msgstr ""
 msgid "Only for documentation"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:15
-#: UI/Reports/filters/balance_sheet.html:147
-#: UI/Reports/filters/income_statement.html:197
-#: UI/Reports/filters/income_statement.html:202
-#: UI/Reports/filters/income_statement.html:218
-#: UI/Reports/filters/income_statement.html:223
+#: UI/Reports/filters/balance_sheet.html:312
 msgid "Ooops! You forgot through date!"
 msgstr ""
 
@@ -5820,12 +5834,17 @@ msgstr ""
 msgid "Period"
 msgstr "时期"
 
+#: UI/Reports/filters/income_statement.html:82
+msgid "Period selection"
+msgstr ""
+
 #: UI/lib/report_base.html:291
 msgid "Period type"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:99
-#: UI/Reports/filters/income_statement.html:155
+#: UI/Reports/filters/balance_sheet.html:83
+#: UI/Reports/filters/balance_sheet.html:264
+#: UI/Reports/filters/income_statement.html:115
 msgid "Periods"
 msgstr ""
 
@@ -6588,6 +6607,11 @@ msgstr ""
 msgid "Registration [_1]"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:20
+#: UI/Reports/filters/income_statement.html:56
+msgid "Regular"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/budgets.pm:118 UI/reconciliation/report.html:301
 msgid "Reject"
 msgstr ""
@@ -6647,12 +6671,22 @@ msgstr "报表来源"
 msgid "Report in"
 msgstr ""
 
+#: UI/Reports/filters/balance_sheet.html:13
+#: UI/Reports/filters/income_statement.html:21
+#, fuzzy
+msgid "Report type"
+msgstr "报表来源"
+
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
 msgstr ""
 
 #: sql/Pg-database.sql:2881
 msgid "Reporting Units"
+msgstr ""
+
+#: UI/Reports/filters/income_statement.html:301
+msgid "Reporting unit filters"
 msgstr ""
 
 #: sql/Pg-database.sql:2815 sql/Pg-database.sql:2828 sql/Pg-database.sql:2857
@@ -7201,6 +7235,12 @@ msgstr "【◎Fix:◎于;◎於】附言或PDF中选一"
 #: bin/io.pl:1132
 msgid "Select txt, postscript or PDF!"
 msgstr ""
+
+#: UI/Reports/filters/balance_sheet.html:50
+#: UI/Reports/filters/income_statement.html:85
+#, fuzzy
+msgid "Select using"
+msgstr "选厂商"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
@@ -8263,8 +8303,8 @@ msgstr ""
 msgid "Threshold"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:13
-#: UI/Reports/filters/balance_sheet.html:145
+#: UI/Reports/filters/balance_sheet.html:160
+#: UI/Reports/filters/balance_sheet.html:310
 msgid "Through date"
 msgstr ""
 
@@ -8339,7 +8379,8 @@ msgstr ""
 #: UI/lib/report_base.html:219 UI/rc-reconciliation.html:22
 #: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
 #: UI/Reports/filters/aging.html:34
-#: UI/Reports/filters/income_statement.html:221
+#: UI/Reports/filters/income_statement.html:138
+#: UI/Reports/filters/income_statement.html:210
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8905,6 +8946,11 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:77
 msgid "Valid until"
 msgstr "有效至"
+
+#: UI/Reports/filters/income_statement.html:23
+#, fuzzy
+msgid "Valuation"
+msgstr "翻译"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
