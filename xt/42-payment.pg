@@ -109,10 +109,8 @@ BEGIN;
 
     INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
                    VALUES (true, now()::date, '100000', currval('id'),
-                           (select id from account where accno = '00001'));
-
-    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-                   VALUES (true, now()::date, '-100000', currval('id'),
+                           (select id from account where accno = '00001')),
+                          (true, now()::date, '-100000', currval('id'),
                            (select id from account where accno = '00002'));
 
     INSERT INTO ap (id, invnumber, entity_credit_account, approved,
@@ -122,10 +120,8 @@ BEGIN;
 
     INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
                    VALUES (true, now()::date, '1000000', -300,
-                           (select id from account where accno = '00001'));
-
-    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-                   VALUES (true, now()::date, '-1000000', -300,
+                           (select id from account where accno = '00001')),
+                          (true, now()::date, '-1000000', -300,
                            (select id from account where accno = '00002'));
 
     update transactions set locked_by = -200 where id = -300;
@@ -136,10 +132,8 @@ BEGIN;
 
     INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
                    VALUES (true, now()::date, '1', currval('id'),
-                           (select id from account where accno = '00001'));
-
-    INSERT INTO acc_trans (approved, transdate, amount, trans_id, chart_id)
-                   VALUES (true, now()::date, '-1', currval('id'),
+                           (select id from account where accno = '00001')),
+                          (true, now()::date, '-1', currval('id'),
                            (select id from account where accno = '00002'));
 
     INSERT INTO voucher (trans_id, batch_class, batch_id)
