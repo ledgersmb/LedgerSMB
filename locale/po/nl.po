@@ -3,9 +3,9 @@
 # Jos <j.verdoold@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.5\n"
+"Project-Id-Version: LedgerSMB 1.5.6\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-03-14 14:03+0000\n"
+"POT-Creation-Date: 2017-04-09 15:04+0000\n"
 "Last-Translator: Jos <j.verdoold@gmail.com>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -280,8 +280,8 @@ msgstr "Rekening [_1] niet gevonden"
 msgid "Account [_1] not found."
 msgstr "Rekening [_1] niet gevonden"
 
-#: UI/Reports/filters/balance_sheet.html:61
-#: UI/Reports/filters/income_statement.html:116
+#: UI/Reports/filters/balance_sheet.html:227
+#: UI/Reports/filters/income_statement.html:274
 msgid "Account category"
 msgstr "Rekeningcategorie"
 
@@ -289,8 +289,8 @@ msgstr "Rekeningcategorie"
 msgid "Account does not exist!"
 msgstr "Rekening bestaat niet!"
 
-#: UI/Reports/filters/balance_sheet.html:30
-#: UI/Reports/filters/income_statement.html:85
+#: UI/Reports/filters/balance_sheet.html:180
+#: UI/Reports/filters/income_statement.html:227
 msgid "Account numbers"
 msgstr "Rekeningnummers"
 
@@ -315,7 +315,7 @@ msgstr "Rekeningen tot"
 msgid "Accounts without heading"
 msgstr "Rekeningen zonder groep"
 
-#: UI/Reports/filters/income_statement.html:33
+#: UI/Reports/filters/income_statement.html:31
 #: UI/rp-search-generate_balance_sheet.html:64
 #: UI/rp-search-generate_income_statement.html:114
 #: UI/rp-search-generate_tax_report.html:92
@@ -895,6 +895,10 @@ msgstr "Weet u zeker dat u dit ordernummer wilt verwijderen?"
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "Weet u zeker dat u dit offertenummer wilt verwijderen?"
 
+#: UI/Reports/filters/balance_sheet.html:95
+msgid "As per"
+msgstr ""
+
 #: bin/ic.pl:2224
 msgid "Assemblies restocked!"
 msgstr "Assemblage Aangevuld!"
@@ -1023,7 +1027,7 @@ msgstr "Bijgevoegd door"
 
 #: bin/io.pl:1059
 msgid "Attached document for [_1] [_2]"
-msgstr ""
+msgstr "Document bijgevoegd voor [_1] [_2]"
 
 #: bin/printer.pl:119
 msgid "Attachment"
@@ -1544,7 +1548,7 @@ msgstr "Kan assemblages niet in voorraad nemen!"
 msgid "Card ID"
 msgstr "Kaart ID"
 
-#: UI/Reports/filters/income_statement.html:40 sql/Pg-database.sql:2853
+#: UI/Reports/filters/income_statement.html:43 sql/Pg-database.sql:2853
 msgid "Cash"
 msgstr "Kas"
 
@@ -1689,7 +1693,7 @@ msgstr "Afgesloten"
 
 #: UI/accounts/yearend.html:15
 msgid "Closing data"
-msgstr ""
+msgstr "Jaarafsluitinggegevens"
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:46
 #: lib/LedgerSMB/Report/Listings/SIC.pm:44 UI/am-language-form.html:12
@@ -1765,15 +1769,19 @@ msgstr "Bedrijf: [_1]"
 msgid "Compare to"
 msgstr "Vergelijk met"
 
-#: UI/Reports/filters/balance_sheet.html:120
-#: UI/Reports/filters/income_statement.html:175
+#: UI/Reports/filters/balance_sheet.html:144
+#, fuzzy
+msgid "Comparison Dates"
+msgstr "Vergelijking periode"
+
+#: UI/Reports/filters/balance_sheet.html:285
+#: UI/Reports/filters/income_statement.html:187
 msgid "Comparison Periods"
 msgstr "Vergelijking periode"
 
-#: UI/Reports/filters/balance_sheet.html:91
-#: UI/Reports/filters/income_statement.html:147
+#: UI/Reports/filters/balance_sheet.html:256
 msgid "Comparison selection by"
-msgstr ""
+msgstr "Vergelijken a.d.h.v."
 
 #: UI/payments/check_job.html:25
 msgid "Completed Successfully"
@@ -1858,7 +1866,9 @@ msgstr "Inhoud"
 #: UI/inventory/adjustment_setup.html:37 UI/oe-save_warn.html:19
 #: UI/payments/payments_filter.html:187 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
-#: UI/Reports/filters/gl.html:324 UI/Reports/filters/inventory_activity.html:32
+#: UI/Reports/filters/balance_sheet.html:322 UI/Reports/filters/gl.html:324
+#: UI/Reports/filters/income_statement.html:308
+#: UI/Reports/filters/inventory_activity.html:32
 #: UI/Reports/filters/invoice_outstanding.html:295
 #: UI/Reports/filters/invoice_search.html:404
 #: UI/Reports/filters/orders.html:203
@@ -2174,7 +2184,7 @@ msgstr "Klanten-/leveranciersrekeningen"
 
 #: lib/LedgerSMB/App_State.pm:254
 msgid "D"
-msgstr ""
+msgstr "D"
 
 #: lib/LedgerSMB/Scripts/asset.pm:769
 msgid "D M"
@@ -2372,6 +2382,11 @@ msgstr "Geboortedatum"
 msgid "Date received missing!"
 msgstr "Ontvangstdatum ontbreekt!"
 
+#: UI/Reports/filters/balance_sheet.html:47
+#, fuzzy
+msgid "Date selection"
+msgstr "Groep selectie"
+
 #: bin/aa.pl:1702 UI/payments/payment1.html:73
 #: UI/Reports/filters/contact_search.html:123
 msgid "Date to"
@@ -2379,14 +2394,15 @@ msgstr "Datum tot"
 
 #: UI/payments/payment2.html:104
 msgid "Date to register payment"
-msgstr ""
+msgstr "Datum van betaling"
 
 #: bin/arap.pl:801 bin/io.pl:1482
 msgid "Date: [_1]"
 msgstr "Datum: [_1]"
 
-#: UI/Reports/filters/balance_sheet.html:109
-#: UI/Reports/filters/income_statement.html:165
+#: UI/Reports/filters/balance_sheet.html:70
+#: UI/Reports/filters/balance_sheet.html:274
+#: UI/Reports/filters/income_statement.html:102
 msgid "Dates"
 msgstr "Data"
 
@@ -3245,8 +3261,7 @@ msgstr "Voer voorraad in"
 msgid "Enter User"
 msgstr "Voer gebruiker in"
 
-#: UI/Reports/filters/balance_sheet.html:141
-#: UI/Reports/filters/income_statement.html:211
+#: UI/Reports/filters/balance_sheet.html:306
 msgid "Enter date ranges for comparison"
 msgstr "Voer datumbereik in voor vergelijking"
 
@@ -3664,7 +3679,8 @@ msgstr "Vrij"
 #: UI/lib/report_base.html:208 UI/rc-reconciliation.html:16
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:117
-#: UI/Reports/filters/income_statement.html:216
+#: UI/Reports/filters/income_statement.html:126
+#: UI/Reports/filters/income_statement.html:202
 #: UI/Reports/filters/purchase_history.html:119
 #: UI/Reports/filters/purchase_history.html:140
 #: UI/rp-search-generate_balance_sheet.html:19
@@ -3700,8 +3716,8 @@ msgstr "Van magazijn"
 msgid "From date"
 msgstr "Vanaf datum"
 
-#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:51
-#: UI/Reports/filters/income_statement.html:106
+#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:208
+#: UI/Reports/filters/income_statement.html:255
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
 msgstr "Volledig"
@@ -3716,8 +3732,10 @@ msgstr "Systeem administrateur"
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:68
 #: lib/LedgerSMB/Report/Trial_Balance.pm:187 UI/accounts/edit.html:163
 #: UI/am-gifi-form.html:12 UI/lib/report_base.html:78
-#: UI/Reports/filters/balance_sheet.html:21 UI/Reports/filters/gl.html:276
-#: UI/Reports/filters/income_statement.html:76
+#: UI/Reports/filters/balance_sheet.html:15
+#: UI/Reports/filters/balance_sheet.html:32 UI/Reports/filters/gl.html:276
+#: UI/Reports/filters/income_statement.html:51
+#: UI/Reports/filters/income_statement.html:68
 #: UI/rp-search-generate_tax_report.html:76 UI/rp-search.html:37
 #: sql/Pg-database.sql:2856
 msgid "GIFI"
@@ -3778,9 +3796,7 @@ msgid "General Ledger Reports"
 msgstr "Grootboekrapportages"
 
 #: lib/LedgerSMB/Scripts/order.pm:119 UI/Reports/aging_report.html:100
-#: UI/Reports/filters/balance_sheet.html:157
-#: UI/Reports/filters/income_statement.html:234 sql/Pg-database.sql:2782
-#: sql/Pg-database.sql:2820
+#: sql/Pg-database.sql:2782 sql/Pg-database.sql:2820
 msgid "Generate"
 msgstr "Genereer"
 
@@ -3876,8 +3892,8 @@ msgstr "HTML-sjablonen"
 msgid "Heading"
 msgstr "Kopregel"
 
-#: UI/Reports/filters/balance_sheet.html:38
-#: UI/Reports/filters/income_statement.html:93
+#: UI/Reports/filters/balance_sheet.html:190
+#: UI/Reports/filters/income_statement.html:237
 msgid "Hierarchy type"
 msgstr "Hierarchietype"
 
@@ -3891,7 +3907,7 @@ msgstr "Thuistelefoon"
 
 #: sql/Pg-database.sql:548
 msgid "Hot Lead"
-msgstr ""
+msgstr "Kostprijs productie-serie rapportage"
 
 #: sql/Pg-database.sql:955
 msgid "Hourly"
@@ -3943,9 +3959,14 @@ msgid "Identification"
 msgstr "Identificatie"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:229 UI/lib/report_base.html:86
-#: UI/Reports/filters/income_statement.html:46
 #: UI/Reports/filters/trial_balance.html:70 UI/rp-search.html:44
 msgid "Ignore Year-ends"
+msgstr "Negeer jaarafsluitingen"
+
+#: UI/Reports/filters/balance_sheet.html:109
+#: UI/Reports/filters/income_statement.html:152
+#, fuzzy
+msgid "Ignore year-closing"
 msgstr "Negeer jaarafsluitingen"
 
 #: bin/ic.pl:503 lib/LedgerSMB/Report/Inventory/Search.pm:258
@@ -4050,7 +4071,7 @@ msgstr "Loonsoort"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:76
 #: UI/Reports/filters/income_statement.html:2
-#: UI/Reports/filters/income_statement.html:11 UI/Reports/PNL.tex:28
+#: UI/Reports/filters/income_statement.html:18 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2865
 msgid "Income Statement"
 msgstr "Resultatenrekening"
@@ -4479,8 +4500,8 @@ msgstr "Arbeid-/dienstcode"
 #: lib/LedgerSMB/Report/Listings/Language.pm:68
 #: lib/LedgerSMB/Report/Listings/Templates.pm:67
 #: UI/Contact/divs/credit.html:273 UI/Contact/divs/credit.html:274
-#: UI/Reports/filters/balance_sheet.html:79
-#: UI/Reports/filters/income_statement.html:134 UI/users/preferences.html:70
+#: UI/Reports/filters/balance_sheet.html:242
+#: UI/Reports/filters/income_statement.html:289 UI/users/preferences.html:70
 #: sql/Pg-database.sql:2879
 msgid "Language"
 msgstr "Taal"
@@ -4714,7 +4735,7 @@ msgstr "Verliesrekening"
 
 #: lib/LedgerSMB/App_State.pm:256
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: sql/Pg-database.sql:801
 msgid "MSN"
@@ -4792,7 +4813,7 @@ msgstr "Bruto marge"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128
 msgid "Max Invoices per Check Stub"
-msgstr ""
+msgstr "Max. facturen per cheque"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:126
 msgid "Max per dropdown"
@@ -4819,7 +4840,7 @@ msgstr "Memo"
 
 #: UI/payments/payment2.html:211
 msgid "Memo to help retrieval"
-msgstr ""
+msgstr "Memo voor terugzoeken"
 
 #: bin/io.pl:1487 UI/io-email.html:34 UI/rp-email.html:33
 msgid "Message"
@@ -4830,7 +4851,6 @@ msgid "Message: "
 msgstr "Boodschap: "
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:84
-#: UI/Reports/filters/income_statement.html:24
 #: UI/rp-search-generate_balance_sheet.html:58
 #: UI/rp-search-generate_income_statement.html:108
 #: UI/rp-search-generate_tax_report.html:86
@@ -4940,6 +4960,8 @@ msgid ""
 "Multiple tax rates with the same end date have been detected for a tax "
 "account;"
 msgstr ""
+"Meerdere belasting tarieven met dezelfde einddatum voor dezelfde "
+"belastinggrootboekrekening;"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:224
 msgid "Must have cash account in batch"
@@ -5002,7 +5024,7 @@ msgstr "Nieuw venster"
 
 #: UI/users/preferences.html:18
 msgid "New password"
-msgstr ""
+msgstr "Nieuw wachtwoord"
 
 #: bin/am.pl:843 UI/inventory/adjustment_entry.html:85
 #: UI/setup/select_coa.html:49
@@ -5069,7 +5091,7 @@ msgstr "Werknemer NUMMER (moet ingevuld worden!)"
 
 #: UI/users/preferences.html:21
 msgid "No Old Password"
-msgstr ""
+msgstr "Geen huidig wachtwoord"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1202
 msgid "No changes"
@@ -5167,8 +5189,8 @@ msgstr "Niet goedgekeurd"
 msgid "Not Submitted"
 msgstr "Niet ingediend"
 
-#: UI/Reports/filters/balance_sheet.html:72
-#: UI/Reports/filters/income_statement.html:127
+#: UI/Reports/filters/balance_sheet.html:220
+#: UI/Reports/filters/income_statement.html:267
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 "Configuratie niet geschikt voor hiërarchie rapportages; volg link voor "
@@ -5390,12 +5412,7 @@ msgstr "Alleen voor medewerkers"
 msgid "Only for documentation"
 msgstr "Alleen voor documentatie"
 
-#: UI/Reports/filters/balance_sheet.html:15
-#: UI/Reports/filters/balance_sheet.html:147
-#: UI/Reports/filters/income_statement.html:197
-#: UI/Reports/filters/income_statement.html:202
-#: UI/Reports/filters/income_statement.html:218
-#: UI/Reports/filters/income_statement.html:223
+#: UI/Reports/filters/balance_sheet.html:312
 msgid "Ooops! You forgot through date!"
 msgstr "Oeps! U bent de 'tot'-datum vergeten!"
 
@@ -5851,12 +5868,18 @@ msgstr "Resterend Percentage"
 msgid "Period"
 msgstr "Periode"
 
+#: UI/Reports/filters/income_statement.html:82
+#, fuzzy
+msgid "Period selection"
+msgstr "Vergelijken a.d.h.v."
+
 #: UI/lib/report_base.html:291
 msgid "Period type"
 msgstr "Periodetype"
 
-#: UI/Reports/filters/balance_sheet.html:99
-#: UI/Reports/filters/income_statement.html:155
+#: UI/Reports/filters/balance_sheet.html:83
+#: UI/Reports/filters/balance_sheet.html:264
+#: UI/Reports/filters/income_statement.html:115
 msgid "Periods"
 msgstr "Perioden"
 
@@ -5991,7 +6014,7 @@ msgstr "Kies een leverancier met beschikbaar overschotsaldo"
 
 #: lib/LedgerSMB/Scripts/timecard.pm:152
 msgid "Please submit a start/end time or a qty"
-msgstr ""
+msgstr "Vul een start/einddatum in of een hoeveelheid"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:388
 msgid "Please use the 1.2 UI to add the GIFI accounts"
@@ -6332,7 +6355,7 @@ msgstr "Gekocht"
 
 #: lib/LedgerSMB/App_State.pm:257
 msgid "Q"
-msgstr ""
+msgstr "K"
 
 #: bin/ic.pl:1259 bin/ic.pl:2100 bin/io.pl:239 bin/oe.pl:1855 bin/oe.pl:2147
 #: bin/pe.pl:1041 lib/LedgerSMB/Report/Contact/History.pm:87
@@ -6630,6 +6653,11 @@ msgstr "Registratie"
 msgid "Registration [_1]"
 msgstr "Registratie [_1]"
 
+#: UI/Reports/filters/balance_sheet.html:20
+#: UI/Reports/filters/income_statement.html:56
+msgid "Regular"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/budgets.pm:118 UI/reconciliation/report.html:301
 msgid "Reject"
 msgstr "Afwijzen"
@@ -6689,12 +6717,23 @@ msgstr "Rapport voor"
 msgid "Report in"
 msgstr "Rapporteer in"
 
+#: UI/Reports/filters/balance_sheet.html:13
+#: UI/Reports/filters/income_statement.html:21
+#, fuzzy
+msgid "Report type"
+msgstr "Rapportsoort"
+
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
 msgstr "Rapporterings Basis"
 
 #: sql/Pg-database.sql:2881
 msgid "Reporting Units"
+msgstr "Rapportage-eenheden"
+
+#: UI/Reports/filters/income_statement.html:301
+#, fuzzy
+msgid "Reporting unit filters"
 msgstr "Rapportage-eenheden"
 
 #: sql/Pg-database.sql:2815 sql/Pg-database.sql:2828 sql/Pg-database.sql:2857
@@ -7051,7 +7090,7 @@ msgstr "Opslaan als nieuw"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:194
 msgid "Saved id [_1]"
-msgstr ""
+msgstr "id [_1] opgeslagen"
 
 #: bin/am.pl:1320
 msgid "Saving [_1] [_2]"
@@ -7243,6 +7282,12 @@ msgstr "Kies postscript of PDF!"
 #: bin/io.pl:1132
 msgid "Select txt, postscript or PDF!"
 msgstr "Kiest txt, postscript of PDF!"
+
+#: UI/Reports/filters/balance_sheet.html:50
+#: UI/Reports/filters/income_statement.html:85
+#, fuzzy
+msgid "Select using"
+msgstr "Selectie"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
@@ -7786,7 +7831,7 @@ msgstr "Assemblagevoorraad"
 
 #: UI/users/preferences.html:22
 msgid "Strength"
-msgstr ""
+msgstr "Sterkte"
 
 #: UI/users/preferences.html:81
 msgid "Stylesheet"
@@ -8311,8 +8356,8 @@ msgstr "Drie"
 msgid "Threshold"
 msgstr "Grenswaarde"
 
-#: UI/Reports/filters/balance_sheet.html:13
-#: UI/Reports/filters/balance_sheet.html:145
+#: UI/Reports/filters/balance_sheet.html:160
+#: UI/Reports/filters/balance_sheet.html:310
 msgid "Through date"
 msgstr "Per datum"
 
@@ -8387,7 +8432,8 @@ msgstr "Keren"
 #: UI/lib/report_base.html:219 UI/rc-reconciliation.html:22
 #: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
 #: UI/Reports/filters/aging.html:34
-#: UI/Reports/filters/income_statement.html:221
+#: UI/Reports/filters/income_statement.html:138
+#: UI/Reports/filters/income_statement.html:210
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8806,7 +8852,7 @@ msgstr "Batch ontgrendelen"
 
 #: UI/Reports/filters/gl.html:184
 msgid "Unpproved"
-msgstr ""
+msgstr "Niet goedgekeurd"
 
 #: lib/LedgerSMB/Scripts/setup.pm:162
 msgid "Unsupported LedgerSMB version detected."
@@ -8956,6 +9002,11 @@ msgstr "Geldig tot"
 msgid "Valid until"
 msgstr "Geldig tot"
 
+#: UI/Reports/filters/income_statement.html:23
+#, fuzzy
+msgid "Valuation"
+msgstr "Titulatuur"
+
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
 msgid "Variance"
@@ -9038,7 +9089,7 @@ msgstr "Leverancier bestaat niet!"
 
 #: UI/users/preferences.html:19
 msgid "Verify"
-msgstr ""
+msgstr "Controleer"
 
 #: bin/old-handler.pl:167
 msgid "Version"
@@ -9062,7 +9113,7 @@ msgstr "Tegoed Bon"
 
 #: lib/LedgerSMB/App_State.pm:255
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: UI/Contact/divs/wage.html:2
 msgid "Wages and Deductions"
@@ -9144,7 +9195,7 @@ msgstr "Waarheen sturen wij de backup?"
 
 #: sql/Pg-database.sql:3763
 msgid "Whole Month Straight Line"
-msgstr ""
+msgstr "Maandelijks lineair"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:124
 msgid "Widgit Themes"
@@ -9175,7 +9226,7 @@ msgstr "XLS"
 
 #: lib/LedgerSMB/App_State.pm:258
 msgid "Y"
-msgstr ""
+msgstr "J"
 
 #: sql/Pg-database.sql:799
 msgid "Yahoo"
@@ -9216,7 +9267,7 @@ msgstr "Ja"
 
 #: UI/users/preferences.html:37
 msgid "Your password will expire in "
-msgstr ""
+msgstr "Wachtwoord verloopt in"
 
 #: t/data/04-complex_template.html:388
 msgid "ZIP/Post Code"
@@ -9305,7 +9356,7 @@ msgstr "Contante betaling"
 
 #: lib/LedgerSMB/DBObject/Payment.pm:477
 msgid "check"
-msgstr ""
+msgstr "cheque"
 
 #: bin/io.pl:1654
 msgid "city"
