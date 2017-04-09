@@ -146,7 +146,7 @@ BEGIN;
                  VALUES (currval('id'), 1, currval('batch_id_seq'));
 
     CREATE FUNCTION test_convert_array(anyarray) RETURNS text AS $$
-        SELECT array_to_string($1, ''::'');
+        SELECT array_to_string($1, '::');
     $$ LANGUAGE SQL;
 
     PREPARE test AS
