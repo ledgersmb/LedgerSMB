@@ -259,6 +259,8 @@ tr.record {
 
 tr.suspect {
 	background-color: red;
+        color: white;
+        font-weight: bold;
 }
 
 tr.warning {
