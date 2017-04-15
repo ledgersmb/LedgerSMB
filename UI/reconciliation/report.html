@@ -103,13 +103,49 @@ END ?>
     </tr>
     <tr class="listheading">
         <th class="header" rowspan="2" scope="rowgroup"></th>
-        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Transaction Type') ?></th>
-        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Cleared') ?></th>
-        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Source') ?></th>
-        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Posted') ?></th>
-        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Description') ?></th>
-        <th class="header" colspan="2"><?lsmb text('Ours') ?></th>
-        <th class="header" colspan="2"><?lsmb text('Theirs') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Transaction Type') ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup"
+                id="cleared_header_column">
+            <?lsmb text('Cleared') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                    id => 'cleared_header_column',
+                    position => ["above", "below", "after", "before"],
+                    msg => text("Date when the transaction was cleared at your bank") };
+            ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Source') ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup"
+                id="posted_header_column">
+            <?lsmb text('Posted') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                    id => 'posted_header_column',
+                    position => ["above", "below", "after", "before"],
+                    msg => text("Date when the transaction was posted in the ledger") };
+            ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Description') ?>
+        </th>
+        <th class="header" colspan="2" id="books_header_column">
+            <?lsmb text('Books') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                id => 'books_header_column',
+                position => ["above", "below", "after", "before"],
+                msg => text("Data from your ledger") };
+            ?>
+        </th>
+        <th class="header" colspan="2" id="bank_header_column">
+            <?lsmb text('Bank') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                id => 'bank_header_column',
+                position => ["above", "below", "after", "before"],
+                msg => text("Data from your bank statement") };
+            ?>
+        </th>
     </tr>
     <tr class="listheading">
         <th class="header"><?lsmb text('Debits') ?></th>
@@ -190,7 +226,7 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th class="header"><?lsmb text('') ?></th>
+        <th class="header"></th>
         <th class="header"><?lsmb text('Transaction Type') ?></th>
         <th class="header"><?lsmb text('Cleared') ?></th>
         <th class="header"><?lsmb text('Source') ?></th>
@@ -254,7 +290,7 @@ END ?>
     <tr class="listheading">
         <th class="header"><?lsmb text('Cleared') ?></th>
         <th class="header"><?lsmb text('Source') ?></th>
-        <th class="header"><?lsmb text('Posted Date') ?></th>
+        <th class="header"><?lsmb text('Posted') ?></th>
         <th class="header"><?lsmb text('Description') ?></th>
         <th class="header"><?lsmb text('Our Debits') ?></th>
         <th class="header"><?lsmb text('Our Credits') ?></th>
