@@ -102,16 +102,20 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th class="header"><?lsmb text('Cleared') ?></th>
-        <th class="header"><?lsmb text('Transaction Type') ?></th>
-        <th class="header"><?lsmb text('Clear date') ?></th>
-        <th class="header"><?lsmb text('Source') ?></th>
-        <th class="header"><?lsmb text('Posted Date') ?></th>
-        <th class="header"><?lsmb text('Description') ?></th>
-        <th class="header"><?lsmb text('Our Debits') ?></th>
-        <th class="header"><?lsmb text('Our Credits') ?></th>
-        <th class="header"><?lsmb text('Their Debits') ?></th>
-        <th class="header"><?lsmb text('Their Credits') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"></th>
+        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Transaction Type') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Cleared') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Source') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Posted') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"><?lsmb text('Description') ?></th>
+        <th class="header" colspan="2"><?lsmb text('Ours') ?></th>
+        <th class="header" colspan="2"><?lsmb text('Theirs') ?></th>
+    </tr>
+    <tr class="listheading">
+        <th class="header"><?lsmb text('Debits') ?></th>
+        <th class="header"><?lsmb text('Credits') ?></th>
+        <th class="header"><?lsmb text('Debits') ?></th>
+        <th class="header"><?lsmb text('Credits') ?></th>
     </tr>
 
     <?lsmb FOREACH row = report_lines ?>
@@ -186,11 +190,11 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th class="header"><?lsmb text('Cleared') ?></th>
+        <th class="header"><?lsmb text('') ?></th>
         <th class="header"><?lsmb text('Transaction Type') ?></th>
-        <th class="header"><?lsmb text('Clear date') ?></th>
+        <th class="header"><?lsmb text('Cleared') ?></th>
         <th class="header"><?lsmb text('Source') ?></th>
-        <th class="header"><?lsmb text('Posted Date') ?></th>
+        <th class="header"><?lsmb text('Posted') ?></th>
         <th class="header"><?lsmb text('Description') ?></th>
         <th class="header"><?lsmb text('Our Debits') ?></th>
         <th class="header"><?lsmb text('Our Credits') ?></th>
