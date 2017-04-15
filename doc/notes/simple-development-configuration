@@ -13,7 +13,7 @@ Systemd service
 ===============
 
 A systemd example configuration is provided in conf/systemd/, under the 
-name plackup_ledgersmb-development.service. Place it in /etc/systemd/system
+name ledgersmb-development_plackup.service. Place it in /etc/systemd/system
 and edit to fit your setup.
 
 The file is very commented but a few key points are worth mentionning.

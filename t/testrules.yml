@@ -1,0 +1,19 @@
+
+seq:
+  - seq:
+    - par:
+      - t/*
+      - xt/0*
+      - xt/1*
+      - xt/2*
+      - xt/3*
+  - seq: xt/40-dbsetup.t
+  - seq:
+    - par:
+      - xt/4*.t
+      - xt/5*.t
+      - xt/6*.t
+      - xt/7*.t
+      - xt/*.pg
+      - seq: **.feature
+  - seq: xt/89-dropdb.t

@@ -88,8 +88,6 @@ var profile = (function(){
             },
             "lsmb/main": {
                 include: [
-                    "lsmb/ComparisonSelectionBalance",
-                    "lsmb/ComparisonSelectionIncome",
                     "lsmb/DateTextBox",
                     "lsmb/Form",
                     "lsmb/Invoice",

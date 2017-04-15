@@ -268,8 +268,10 @@ tr.suspect {
         color: white;
         font-weight: bold;
 }
-tr.warning {
+
+tr,div .warning {
 	background-color: yellow;
+        color: black;
 }
 
 span.no-submit {
