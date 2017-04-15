@@ -265,10 +265,13 @@ tr.record {
 
 tr.suspect {
 	background-color: red;
+        color: white;
+        font-weight: bold;
 }
 
-tr.warning {
+tr,div .warning {
 	background-color: yellow;
+        color: black;
 }
 
 span.no-submit {
