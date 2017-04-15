@@ -85,7 +85,7 @@ END ?>
 
 <?lsmb IF error ?>
 <div style="border-color:red; border-width:1px; border-style:solid; margin:3px;" >
-    <?lsmb error ?>    
+    <?lsmb error ?>
 </div>
 <?lsmb END ?>
 <?lsmb i = 1 ?>
@@ -113,6 +113,7 @@ END ?>
         <th><?lsmb text('Their Debits') ?></th>
         <th><?lsmb text('Their Credits') ?></th>
     </tr>
+
     <?lsmb FOREACH row = report_lines ?>
             <?lsmb IF (row.cleared) -?>
                            <?lsmb row.cleared = 'checked' -?>
@@ -197,7 +198,7 @@ END ?>
         <th><?lsmb text('Their Debits') ?></th>
         <th><?lsmb text('Their Credits') ?></th>
     </tr>
-    
+
     <?lsmb FOREACH row = report_lines ?>
     <?lsmb IF row.err == 'mismatch' ?>
     <?lsmb INCLUDE input element_data = {
