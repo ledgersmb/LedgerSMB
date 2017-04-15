@@ -30,7 +30,7 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'lib/', 'old/bin/', 'old/');
+find(\&collect, 'lib/', 'old/');
 
 my @on_disk_oldcode =
     grep { m#^old/bin/# || m#^lib/# } @on_disk;
