@@ -1552,7 +1552,8 @@ sub update_exchangerate {
         @queryargs = ($sell);
     }
 
-    if (!$set) {
+    my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
+    if (!$set && $default_buyexchange) {
         $set = "buy = ?";
         $buy = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
         @queryargs = ($buy);
@@ -1632,7 +1633,9 @@ sub get_exchangerate {
 
         ($exchangerate) = $sth->fetchrow_array;
         if (!$exchangerate) {
-            $exchangerate = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
+            my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
+            $exchangerate = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}")
+                            if $default_buyexchange;
         }
         $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
@@ -2397,7 +2400,7 @@ sub create_links {
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-                a.amount AS oldinvtotal, 
+                a.amount AS oldinvtotal,
                 a.person_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
