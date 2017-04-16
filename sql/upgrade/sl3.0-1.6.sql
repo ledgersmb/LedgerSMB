@@ -409,14 +409,14 @@ END
 $$
   LANGUAGE 'plpgsql';
 
-SELECT * FROM pg_temp.f_insert_default('company_name','company');
-SELECT * FROM pg_temp.f_insert_default('company_address','address');
-SELECT * FROM pg_temp.f_insert_default('company_fax','fax');
-SELECT * FROM pg_temp.f_insert_default('company_phone','tel');
-SELECT * FROM pg_temp.f_insert_default('audittrail','audittrail');
-SELECT * FROM pg_temp.f_insert_default('businessnumber','businessnumber');
-SELECT * FROM pg_temp.f_insert_default('decimal_places','precision');
-SELECT * FROM pg_temp.f_insert_default('weightunit','weightunit');
+SELECT pg_temp.f_insert_default('company_name','company');
+SELECT pg_temp.f_insert_default('company_address','address');
+SELECT pg_temp.f_insert_default('company_fax','fax');
+SELECT pg_temp.f_insert_default('company_phone','tel');
+SELECT pg_temp.f_insert_default('audittrail','audittrail');
+SELECT pg_temp.f_insert_default('businessnumber','businessnumber');
+SELECT pg_temp.f_insert_default('decimal_places','precision');
+SELECT pg_temp.f_insert_default('weightunit','weightunit');
 -- Should we count the actual transferred entries instead?
 CREATE OR REPLACE FUNCTION pg_temp.f_insert_count(slname varchar(20)) RETURNS VOID AS
 $$
@@ -434,18 +434,18 @@ END
 $$
   LANGUAGE 'plpgsql';
 
-SELECT * FROM pg_temp.f_insert_count('customernumber');
-SELECT * FROM pg_temp.f_insert_count('employeenumber');
-SELECT * FROM pg_temp.f_insert_count('glnumber');
-SELECT * FROM pg_temp.f_insert_count('partnumber');
-SELECT * FROM pg_temp.f_insert_count('partnumber');
-SELECT * FROM pg_temp.f_insert_count('projectnumber');
-SELECT * FROM pg_temp.f_insert_count('rfqnumber');
-SELECT * FROM pg_temp.f_insert_count('sinumber');
-SELECT * FROM pg_temp.f_insert_count('sonumber');
-SELECT * FROM pg_temp.f_insert_count('sqnumber');
-SELECT * FROM pg_temp.f_insert_count('vendornumber');
-SELECT * FROM pg_temp.f_insert_count('vinumber');
+SELECT pg_temp.f_insert_count('customernumber');
+SELECT pg_temp.f_insert_count('employeenumber');
+SELECT pg_temp.f_insert_count('glnumber');
+SELECT pg_temp.f_insert_count('partnumber');
+SELECT pg_temp.f_insert_count('partnumber');
+SELECT pg_temp.f_insert_count('projectnumber');
+SELECT pg_temp.f_insert_count('rfqnumber');
+SELECT pg_temp.f_insert_count('sinumber');
+SELECT pg_temp.f_insert_count('sonumber');
+SELECT pg_temp.f_insert_count('sqnumber');
+SELECT pg_temp.f_insert_count('vendornumber');
+SELECT pg_temp.f_insert_count('vinumber');
 
 INSERT INTO defaults(setting_key,value) SELECT 'curr',curr FROM sl30.curr WHERE rn=1;
 
@@ -468,11 +468,12 @@ BEGIN
 END
 $$
   LANGUAGE 'plpgsql';
-SELECT * FROM pg_temp.f_insert_account('inventory_accno_id');
-SELECT * FROM pg_temp.f_insert_account('income_accno_id');
-SELECT * FROM pg_temp.f_insert_account('expense_accno_id');
-SELECT * FROM pg_temp.f_insert_account('fxgain_accno_id');
-SELECT * FROM pg_temp.f_insert_account('fxloss_accno_id');
+
+SELECT pg_temp.f_insert_account('inventory_accno_id');
+SELECT pg_temp.f_insert_account('income_accno_id');
+SELECT pg_temp.f_insert_account('expense_accno_id');
+SELECT pg_temp.f_insert_account('fxgain_accno_id');
+SELECT pg_temp.f_insert_account('fxloss_accno_id');
 -- = "sl30.cashovershort_accno_id" ?
 -- "earn_id" = ?
 
