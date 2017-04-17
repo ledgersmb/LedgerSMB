@@ -200,7 +200,6 @@ use_ok('LedgerSMB::Sysconfig')
     || BAIL_OUT('System Configuration could be loaded!');
 my @to_sort = map { rand() } 0 .. $#modules;
 @modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
-diag join ', ', @modules;
 for my $module (@modules) {
     use_ok($module);
 }
