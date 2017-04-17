@@ -34,6 +34,7 @@ my @cert_policies = qw(
     ValuesAndExpressions::ProhibitLeadingZeros
     Variables::ProhibitPerl4PackageNames
     Variables::ProtectPrivateVars
+    Variables::RequireLexicalLoopIterators
 );
 
 # The CERT recommended policies yet to be applied are listed below. Some
@@ -64,7 +65,6 @@ my @cert_policies = qw(
 #    ValuesAndExpressions::ProhibitMixedBooleanOperators
 #    Variables::ProhibitUnusedVariables
 #    Variables::RequireInitializationForLocalVars
-#    Variables::RequireLexicalLoopIterators     --explicitly excluded
 #    Variables::RequireLocalizedPunctuationVars
 
 # LedgerSMB enforces some other Perl::Critic policies
@@ -85,7 +85,6 @@ my @exclude_policies = qw(
     InputOutput::ProhibitBarewordFileHandles
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::ProhibitNoStrict
-    Variables::RequireLexicalLoopIterators
     Variables::ProhibitConditionalDeclarations
     InputOutput::RequireEncodingWithUTF8Layer
     BuiltinFunctions::ProhibitStringyEval
@@ -108,7 +107,6 @@ my @exclude_policies_oldcode = qw(
     TestingAndDebugging::RequireUseStrict
     TestingAndDebugging::RequireUseWarnings
     Variables::ProhibitConditionalDeclarations
-    Variables::RequireLexicalLoopIterators
 );
 
 
