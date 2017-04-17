@@ -207,15 +207,13 @@ sub login {
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
-    } else {
-        my $dispatch_entry;
-
-        foreach $dispatch_entry (get_dispatch_table($request)) {
+    }
+    else {
+        foreach my $dispatch_entry (get_dispatch_table($request)) {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                my $field;
-                foreach $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
 
@@ -1209,26 +1207,28 @@ sub run_sl30_migration {
 sub create_initial_user {
     my ($request) = @_;
 
-   my $database = _init_db($request) unless $request->{dbh};
-   @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
+    _init_db($request) unless $request->{dbh};
+    @{$request->{salutations}} = $request->call_procedure(
+        funcname => 'person__list_salutations'
+    );
 
-   @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
 
-   my $locale = $request->{_locale};
+    my $locale = $request->{_locale};
 
-   @{$request->{perm_sets}} = (
-       {id => '0', label => $locale->text('Manage Users')},
-       {id => '1', label => $locale->text('Full Permissions')},
-       {id => '-1', label => $locale->text('No changes')},
-   );
+    @{$request->{perm_sets}} = (
+        {id => '0', label => $locale->text('Manage Users')},
+        {id => '1', label => $locale->text('Full Permissions')},
+        {id => '-1', label => $locale->text('No changes')},
+    );
     my $template = LedgerSMB::Template->new(
-                   path => 'UI/setup',
-                   template => 'new_user',
-                   format => 'HTML',
-     );
-     return $template->render_to_psgi($request);
+        path => 'UI/setup',
+        template => 'new_user',
+        format => 'HTML',
+    );
+    return $template->render_to_psgi($request);
 }
 
 =item edit_user_roles
