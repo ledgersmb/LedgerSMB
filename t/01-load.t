@@ -198,6 +198,8 @@ ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
 
 use_ok('LedgerSMB::Sysconfig')
     || BAIL_OUT('System Configuration could be loaded!');
+my @to_sort = map { rand() } 0 .. $#modules;
+@modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
     use_ok($module);
 }
