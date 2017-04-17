@@ -4,6 +4,11 @@
 td.money {
    text-align: right;
 }
+
+th.date, td.date {
+   white-space: nowrap;
+}
+
 /* general stuff */
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
@@ -44,6 +49,10 @@ table.form th.centered, th.centered {
 
 table.criteria td {
   text-align: right;
+}
+
+table.warning {
+    border: 0;
 }
 
 #company_info, #version_info {
@@ -259,6 +268,8 @@ tr.record {
 
 tr.suspect {
 	background-color: red;
+        color: white;
+        font-weight: bold;
 }
 
 tr.warning {

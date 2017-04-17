@@ -180,7 +180,7 @@ sub get_dispatch_table {
       { appname => 'ledgersmb',
         version => undef,
         message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
-        operation => $request->{_locale}->text("Cancel."),
+        operation => $request->{_locale}->text("Cancel"),
         next_action => 'cancel' } );
 }
 
@@ -1051,8 +1051,7 @@ sub save_user {
     } elsif ($request->{perms} == 0) {
         $request->call_procedure(funcname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
-                                           "lsmb_$request->{database}__".
-                                            "users_manage",
+                                           'users_manage',
                                          ]
         );
    }
@@ -1128,7 +1127,7 @@ sub process_and_run_upgrade_script {
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
-    $dbh->do("SELECT admin__add_user_to_role(username, lsmb__role('base_user'))
+    $dbh->do("SELECT admin__add_user_to_role(username, 'base_user')
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;

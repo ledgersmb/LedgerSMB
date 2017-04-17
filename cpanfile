@@ -102,7 +102,6 @@ on 'develop' => sub {
     requires 'HTML::Lint::Pluggable::WhiteList';
     recommends 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
-    requires 'Parallel::ForkManager';
     requires 'Perl::Critic';
     requires 'Pherkin::Extension::Weasel', '0.02';
     requires 'Test::BDD::Cucumber', '0.52';

@@ -116,7 +116,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Balance y Mayor');
+    # Do not translate; it's the colombian name of a localized report
+    return 'Balance y Mayor';
 }
 
 =item header_lines

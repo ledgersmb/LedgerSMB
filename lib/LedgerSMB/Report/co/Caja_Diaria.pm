@@ -110,7 +110,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Caja Diaria');
+    return 'Caja Diaria';
 }
 
 =item header_lines

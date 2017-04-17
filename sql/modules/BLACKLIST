@@ -170,6 +170,7 @@ location__deactivate
 location_list_class
 location_list_country
 lsmb__create_role
+lsmb__global_role
 lsmb__grant_exec
 lsmb__grant_role
 lsmb__is_allowed_role

@@ -4,6 +4,8 @@
 typeset -u tag_release
 
 URL="git@github.com:ledgersmb/LedgerSMB.git"
+URL_docker="git@github.com:ledgersmb/ledgersmb-docker.git"
+GH_api="https://api.github.com/repos"
 #URL=/home/ehuelsmann/releases/lsmb-repo-2
 branch="$1"
 release_version="$2"
@@ -15,6 +17,15 @@ frs_prj_dir="/home/frs/project/l/le/ledger-smb/"
 frs_tagged_dir="Releases"
 frs_untagged_dir="Beta Releases"
 tag_release="Y"
+
+if [[ ! -f ~/.lsmb-github-releases ]]; then
+   fail "Missing configuration file ~/.lsmb-github-releases!"
+else
+   source ~/.lsmb-github-releases
+
+   [[ -n "$github_user" ]] || fail "variable 'github_user' not defined! please define in ~/.lsmb-github-releases"
+   [[ -n "$github_token" ]] || fail "variable 'github_token' not defined! please define in ~/.lsmb-github-releases"
+fi
 
 if [[ -n $(echo "$release_version" | grep -- "-") ]]; then
    echo "Version modifier detected (rc/beta/...).
@@ -58,6 +69,8 @@ verify_dependencies() {
    verify_dependency "make"
    verify_dependency "msgmerge"
    verify_dependency "msguniq"
+   verify_dependency "curl"
+   verify_dependency "jq"
 }
 
 verify_release_key() {
@@ -68,7 +81,8 @@ verify_release_key() {
 
 setup_workspace() {
    our_workspace=$($mktemp -d)
-   trap "rm -rf '$our_workspace'" TERM EXIT
+   docker_workspace=$($mktemp -d)
+   trap "rm -rf '$our_workspace'; rm -rf '$docker_workspace'" TERM EXIT
 }
 
 populate_workspace() {
@@ -85,6 +99,12 @@ populate_workspace() {
    #cp $our_workspace/$checkout_dir/conf/ledgersmb.conf.default $our_workspace/$checkout_dir/ledgersmb.conf 2>/dev/null
 }
 
+populate_docker_workspace() {
+  ( cd $docker_workspace && \
+    $git clone --recursive --single-branch --branch "$branch" "$docker_URL" docker) \
+  || fail "Failed to check out branch '$branch' from '$docker_URL'!"
+}
+
 update_translations() {
    (cd "$our_workspace/$checkout_dir" && \
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
@@ -93,6 +113,14 @@ update_translations() {
     $git add --all locale && git commit -m "* Automated release language update" \
     && $git push origin "$branch") \
    || fail "Failed to update branch ($branch) translations"
+}
+
+update_dockerfile() {
+   (cd "$docker_workspace/docker" && \
+    $sed -i -e "s/^ENV LSMB_VERSION .*\$/ENV LSMB_VERSION $release_version/" && \
+    $git commit -a -m "* Automatic Dockerfile update by release process" && \
+    $git tag "$release_version") \
+   || fail "Failed to update Dockerfile!"
 }
 
 detect_current_version() {
@@ -187,7 +215,13 @@ update_remote() {
    || fail "Failed to update the origin repository!"
 }
 
-publish_files() {
+update_docker_remote() {
+   (cd "$docker_workspace/docker" && \
+    $git push --tags origin "$branch" ) \
+   || fail "Failed to update remote docker repository!"
+}
+
+publish_files_sf() {
    (cd "$our_workspace" && \
     echo "cd '$frs_prj_dir/$prj_sub_dir'
 mkdir '$release_version'
@@ -196,6 +230,24 @@ put 'ledgersmb-$release_version.tar.gz.asc'
 put 'ledgersmb-$release_version.tar.gz'
 " | $sftp -b - "${sf_user}@frs.sourceforge.net") \
    || fail "Failed to upload files to sourceforge!"
+}
+
+publish_files_gh() {
+   gh_auth=-u "$github_user:$github_token"
+   (cd "$our_workspace" && \
+    $curl -X POST $gh_auth "$GH_api/ledgersmb/LedgerSMB/releases" \
+          -d "{'tag_name': '$release_version', 'draft': false, 'body': 'todo'}" \
+       > release_create_response)
+   || fail "Failed to create GitHub release!"
+   upload_url=$($jq -M -r '.upload_url' < $our_workspace/release_create_response | $sed -e 's/{.*//')
+   $curl -X POST -H 'Content-Type: text/plain' $gh_auth \
+         "$upload_url?name=ledgersmb-$release_version.tar.gz.asc" \
+         -T $our_workspace/ledgersmb-$release_version.tar.gz.asc \
+   || fail "Failed to upload signature file to GitHub!"
+   $curl -X POST -H 'Content-Type: application/x-tar' $gh_auth \
+         "$upload_url?name=ledgersmb-$release_version.tar.gz" \
+         -T $our_workspace/ledgersmb-$release_version.tar.gz \
+   || fail "Failed to upload tarball to GitHub!"
 }
 
 
@@ -242,10 +294,12 @@ verify_dependencies
 verify_release_key
 setup_workspace
 populate_workspace
+populate_docker_workspace
 
 if [[ -z "$(cd "$our_workspace/$checkout_dir"; $git tag | grep -E "^$release_version$")" ]]
 then
   update_translations
+  update_dockerfile
   detect_current_version
   detect_versionpatch_files
   patch_version "$current_version" "$release_version"
@@ -276,7 +330,10 @@ if [[ "$tag_release" == "Y" ]]; then
 else
    prj_sub_dir="$frs_untagged_dir"
 fi
-publish_files
+publish_files_sf
+publish_files_gh
+# only after we published to GH, update the docker files so they can download
+update_docker_remote
 
 extract_changelog
 extract_sha256sum
