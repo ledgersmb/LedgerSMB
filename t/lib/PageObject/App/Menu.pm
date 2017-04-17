@@ -6,6 +6,7 @@ use warnings;
 use Carp;
 use PageObject;
 use MIME::Base64;
+use Test::More;
 
 use Module::Runtime qw(use_module);
 
@@ -60,6 +61,7 @@ my %menu_path_pageobject_map = (
     "General Journal > Year End" => 'PageObject::App::Closing',
     # Time cards
     "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',
+    "Goods and Services > Search" => 'PageObject::App::Search::GoodsServices',
     "Goods and Services > Add Part" => 'PageObject::App::Parts::Part',
     "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
     "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
@@ -96,7 +98,8 @@ sub click_menu {
         return undef;
     }
     # make sure the widget is registered before resolving the Weasel widget
-    use_module($tgt_class);
+    ok(use_module($tgt_class),
+       "$tgt_class can be 'use'-d dynamically");
 
     do {
         $item = $item->find(".$ul/li[./a[text()='$_']]");
