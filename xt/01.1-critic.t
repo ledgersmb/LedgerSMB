@@ -14,7 +14,7 @@ my @on_disk;
 # https://gist.github.com/briandfoy/4525877
 # https://www.securecoding.cert.org/confluence/display/perl/SEI+CERT+Perl+Coding+Standard
 #
-# Currently our code violates some of the recommended  policies, so tests
+# Currently our code violates some of the recommended policies, so tests
 # are being added to this list as violations are fixed.
 my @cert_policies = qw(
     BuiltinFunctions::ProhibitUniversalCan
@@ -26,12 +26,11 @@ my @cert_policies = qw(
     Miscellanea::ProhibitFormats
     Modules::ProhibitEvilModules
     Modules::RequireEndWithOne
-    Policy::TestingAndDebugging::RequireUseStrict
-    Policy::TestingAndDebugging::RequireUseWarnings
     Subroutines::ProhibitReturnSort
     Subroutines::ProhibitSubroutinePrototypes
     TestingAndDebugging::ProhibitProlongedStrictureOverride
     TestingAndDebugging::RequireUseStrict
+    TestingAndDebugging::RequireUseWarnings
     ValuesAndExpressions::ProhibitLeadingZeros
     Variables::ProhibitPerl4PackageNames
     Variables::ProtectPrivateVars
