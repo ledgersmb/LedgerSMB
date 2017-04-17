@@ -32,7 +32,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 ## Server
 
- * Perl 5.10+
+ * Perl 5.14+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 
