@@ -59,17 +59,17 @@ sendEmail() {
         unset defaultRecipient;
     fi
 
-    if createEmail "${cfgValue[mail_AnnounceList]}"; then
+    if createEmail "${cfgValue[mail_AnnounceList]}, ${cfgValue[mail_UsersList]}, ${cfgValue[mail_DevelList]}"; then
         $MTA "$defaultRecipient" < /tmp/msg.txt
     fi
 
-    if createEmail "${cfgValue[mail_UsersList]}"; then
-        $MTA "$defaultRecipient" < /tmp/msg.txt
-    fi
+#    if createEmail "${cfgValue[mail_UsersList]}"; then
+#        $MTA "$defaultRecipient" < /tmp/msg.txt
+#    fi
 
-    if createEmail "${cfgValue[mail_DevelList]}"; then
-        $MTA "$defaultRecipient" < /tmp/msg.txt
-    fi
+#    if createEmail "${cfgValue[mail_DevelList]}"; then
+#        $MTA "$defaultRecipient" < /tmp/msg.txt
+#    fi
 }
 
 RunAllUpdates() {

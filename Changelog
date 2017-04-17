@@ -19,12 +19,47 @@ Yves L is Yves Lavoie
 Changelog for 1.5 Series
 Released 2016-12-24
 
+
+Changelog for 1.5.6
+* Fix syntax error in LaTeX templates for printed documents (Erik H)
+* Refactor filter pages for income statement and balance sheet (Erik H)
+* Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.5
+* Fix name of the sequence being updated in the 1.3 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.5.4
+* Updated Dojo from 1.10.6 to 1.10.7 (Erik H)
+* Add missing defaults in ledgersmb.conf 'database' section (David G, #2632)
+* Add 2 missing RHEL dependencies to Makefile (David G)
+* Add conf/README.md describing the content of conf/ (David G)
+* Fixed bug in template processing only seen on CentOS (Chris T)
+* Transaction forgets payment account on Update (Nick P, #2580)
+* Updates to sample config and Makefile (Bill O)
+* Improved table reading experience for dynatable based reports (Erik H)
+* Fix file attachments shown twice after migration from 1.3 (Erik H, #2659)
+* Fix two issues in the 1.3->1.5 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+David G is David Godfrey
+Chris T is Chris Travers
+Nick P is Nick Prater
+Bill O is Bill Ott
+
+
 Changelog for 1.5.3
 * Fix access to contact data for database admins (Erik H)
 * Fix Reconciliation Submit button not enabled (Nick P)
 * Fix Batch Search for approved transactions (Chris T)
 * Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
 * Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+* Fix Invoice line item descriptions not visible until clicked (Erik H, #2607)
 * Fix payment amounts in Cash->Reports->Receipts (Erik H, 2618)
 
 Nick P is Nick Prater
@@ -132,8 +167,35 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.41
+* Fix 'Bad interval' error with PNL comparisons (Erik H, #2146)
+* Refactor filter pages for income statement and balance sheet (Erik H)
+* Follow-up to earlier compensation for '.' missing from @INC (Erik H, #2275)
+* Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
+
+Erik H is Erik Huelsmann
+
+
+Changelog for 1.4.40
+* Fix name of the sequence being updated in the 1.3 migration script (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.39
 * Fixed searching for approved batches (Chris T, #2592)
+* Don't cache per-company (from database) templates (Erik H, #2573)
+* Don't block database administrator access to Contacts (Erik H)
+* Compensate for the removal of '.' from @INC on newer Perl versions (Erik H)
+* Fix payments sometimes double-counted in Cash>Reports>Receipts (Erik H, #2618)
+* Remove reference to removed JS files, silencing logs (Chris T)
+* Fix bug reading templates directory (only seen on CentOS) (Chris T)
+* Fix attachments showing up twice after 1.3->1.4 migration (Erik H, #2659)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.38
 * Printed credit invoice indistinguishible from regular invoice (Erik H, #2546)

@@ -323,7 +323,6 @@ INSERT INTO acc_trans (
  cleared,
  fx_transaction,
  memo,
- invoice_id,
  approved,
  cleared_on,
  reconciled_on,
@@ -338,7 +337,6 @@ INSERT INTO acc_trans (
  cleared,
  fx_transaction,
  memo,
- invoice_id,
  approved,
  cleared_on,
  reconciled_on,
@@ -382,6 +380,9 @@ SELECT
  serialnumber,
  notes
   FROM lsmb13.invoice;
+
+UPDATE acc_trans ac
+   SET invoice_id = (select invoice_id from lsmb13.acc_trans a where a.entry_id = ac.entry_id);
 
 --INSERT INTO payment_map SELECT * FROM lsmb13.payment_map;
 INSERT INTO assembly SELECT * FROM lsmb13.assembly;
@@ -496,7 +497,7 @@ INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, description, description
   FROM lsmb13.department;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 1
    AND EXISTS (select 1 from lsmb13.department);
 
@@ -506,7 +507,7 @@ INSERT INTO business_unit
 SELECT id + 1000, 2, projectnumber, description, startdate, enddate,
         credit_id from lsmb13.project;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 2
    AND EXISTS (select 1 from lsmb13.project);
 
@@ -623,7 +624,7 @@ INSERT INTO asset_report_line SELECT * FROM lsmb13.asset_report_line;
 INSERT INTO asset_rl_to_disposal_method SELECT * FROM lsmb13.asset_rl_to_disposal_method;
 DELETE FROM mime_type;
 INSERT INTO mime_type SELECT * FROM lsmb13.mime_type;
-INSERT INTO file_base SELECT * FROM lsmb13.file_base;
+INSERT INTO file_base SELECT * FROM ONLY lsmb13.file_base;
 INSERT INTO file_transaction SELECT * FROM lsmb13.file_transaction;
 INSERT INTO file_order SELECT * FROM lsmb13.file_order;
 INSERT INTO file_secondary_attachment SELECT * FROM lsmb13.file_secondary_attachment;
@@ -693,6 +694,7 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('note_class_id_seq', max(id)) FROM note_class;
  SELECT setval('note_id_seq', max(id)) FROM note;
  SELECT setval('batch_class_id_seq', max(id)) FROM batch_class;
+ SELECT setval('file_base_id_seq', max(id)) FROM file_base;
  SELECT setval('batch_id_seq', max(id)) FROM batch;
  SELECT setval('invoice_id_seq', max(id)) FROM invoice;
  SELECT setval('voucher_id_seq', max(id)) FROM voucher;
@@ -715,8 +717,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
-
-UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
 update defaults set value = 'yes' where setting_key = 'migration_ok';
 
