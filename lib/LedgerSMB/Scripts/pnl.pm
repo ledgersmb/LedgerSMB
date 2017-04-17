@@ -55,35 +55,20 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-        if ( $request->{comparison_type} eq 'by_periods' && $request->{interval} ne 'none') {
-            # to_date = from_date + 1 period - 1 day
-            my $ri = $request->{interval};
-            # Note: Transforms input string into PGDate
-            $request->{to_date} = LedgerSMB::PGDate->from_input($request->{from_date})
-                                                        ->add_interval($ri)
-                                                        ->add_interval('day',-1)
-                                                        ->to_output;
-        }
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             column_path_prefix => [ 0 ]);
         $rpt->run_report;
-        $rpt->init_comparisons($request);
-        my $counts = $request->{comparison_periods} || 0;
-        for my $c_per (1 .. $counts) {
-            my $found = 0;
-            for (qw(from_month from_year from_date to_date interval)){
-                $request->{$_} = $request->{"${_}_$c_per"};
-                delete $request->{$_} unless defined $request->{$_};
-                $found = 1 if defined $request->{$_} and $_ ne 'interval';
-            }
-            next unless $found;
-            my $comparison =
-                LedgerSMB::Report::PNL::Income_Statement->new(
-                    %$request,
-                    column_path_prefix => [ $c_per ]);
-            $comparison->run_report;
-            $rpt->add_comparison($comparison);
+
+        for my $key (qw(from_month from_year from_date to_date interval)) {
+            delete $request->{$_} for (grep { /^$key/ } keys %$request);
+        }
+
+        for my $cmp_dates (@{$rpt->comparisons}) {
+            my $cmp = LedgerSMB::Report::PNL::Income_Statement->new(
+                %$request, %$cmp_dates);
+            $cmp->run_report;
+            $rpt->add_comparison($cmp);
         }
     }
     return $rpt->render_to_psgi($request);

@@ -27,6 +27,12 @@ my @exception_modules =
      # Exclude because tested conditionally on XML::Twig way below
      'LedgerSMB::Template::ODS',
 
+     # Exclude because tested conditionally on Excel::Writer::XLSX
+     'LedgerSMB::Template::XLSX',
+
+     # Exclude because tested conditionally on Spreadsheet::WriteExcel
+     'LedgerSMB::Template::XLS',
+
      # Exclude because tested conditionally on XML::Simple way below
      'LedgerSMB::REST_Format::xml',
 
@@ -176,7 +182,6 @@ my @modules =
           'LedgerSMB::Template::Elements', 'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
-          'LedgerSMB::Template::XLS', 'LedgerSMB::Template::XLSX',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
@@ -251,4 +256,23 @@ SKIP: {
     }
 }
 
+SKIP: {
+    eval { require Excel::Writer::XLSX };
+
+    skip 'Excel::Writer::XLSX not installed', 1 if $@;
+    for ('LedgerSMB::Template::XLSX') {
+        use_ok($_);
+    }
+}
+
+SKIP: {
+    eval { require Spreadsheet::WriteExcel };
+
+    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
+    for ('LedgerSMB::Template::XLS') {
+        use_ok($_);
+    }
+}
+
 &done_testing();
+

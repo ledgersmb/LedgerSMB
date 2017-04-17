@@ -31,23 +31,6 @@ This is either 'cash' or 'accrual'
 
 has basis => (is => 'ro', isa =>'Str', required => 1);
 
-=item comparison_periods
-
-This is the number of periods to compare to
-
-=cut
-
-has comparison_periods => (is => 'ro', isa =>'Int',
-                required =>0, default => 1);
-
-=item comparison_type
-
-This is either by number of periods or by dates
-
-=cut
-
-has comparison_type => (is => 'ro', isa =>'Str', required => 1, default => "by_periods");
-
 =item ignore_yearend
 
 This is 'none', 'all', or 'last'

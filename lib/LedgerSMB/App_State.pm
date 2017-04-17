@@ -250,11 +250,16 @@ sub all_periods {
     my $periods = {
            # XXX That's asking for trouble below.  Need to update .po files
            # before changing however. --CT
-     'day'     => {long => $i18n->text('Days'),     short => $i18n->text('D'), order => 1 },
-     'week'    => {long => $i18n->text('Weeks'),    short => $i18n->text('W'), order => 2 },
-     'month'   => {long => $i18n->text('Months'),   short => $i18n->text('M'), order => 3 },
-     'quarter' => {long => $i18n->text('Quarters'), short => $i18n->text('Q'), order => 4 },
-     'year'    => {long => $i18n->text('Years'),    short => $i18n->text('Y'), order => 5 },
+     'day'     => { long => $i18n->text('Days'),
+                    short => $i18n->text('D'), order => 1 },
+     'week'    => { long => $i18n->text('Weeks'),
+                    short => $i18n->text('W'), order => 2 },
+     'month'   => { long => $i18n->text('Months'),
+                    short => $i18n->text('M'), order => 3 },
+     'quarter' => { long => $i18n->text('Quarters'),
+                    short => $i18n->text('Q'), order => 4 },
+     'year'    => { long => $i18n->text('Years'),
+                    short => $i18n->text('Y'), order => 5 },
     };
 
     my $for_dropdown = [];
