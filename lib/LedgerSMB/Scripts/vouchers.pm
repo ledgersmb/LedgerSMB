@@ -372,13 +372,13 @@ sub reverse_overpayment {
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->get;
     my $a_class;
-    for (1 .. $request->{rowcount_}){
-        my $id = $request->{"id_$_"};
+    for my $count (1 .. $request->{rowcount_}){
+        my $id = $request->{"id_$count"};
         $batch->call_procedure(funcname => 'overpayment__reverse',
            args => [$id, $batch->{post_date}, $batch->{id}, $a_class,
                  $request->{cash_accno}, $request->{exchangerate},
                  $request->{curr}]
-         ) if $id;
+        ) if $id;
     }
     return LedgerSMB::Scripts::reports::search_overpayments($request);
 }
