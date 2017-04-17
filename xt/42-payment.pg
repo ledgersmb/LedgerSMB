@@ -207,10 +207,10 @@ BEGIN;
                            amount_bc, curr, amount_tc, transdate, source)
                    values (currval('id')::int,
                            (select id from account where accno = '00003'),
-                           -100, 'XTS', -100, true, '1', now(), '_test_src1'),
+                           -100, true, '1', 'XTS', '1', now(), '_test_src1'),
                           (currval('id')::int,
                            (select id from account where accno = '00001'),
-                           -100, 'XTS', -100, true, '-1', now(), '_test_src1');
+                           -100, true, '-1', 'XTS', '-1', now(), '_test_src1');
 
     SELECT todo('Missing Voucher test',0);
 
@@ -242,7 +242,7 @@ BEGIN;
     DEALLOCATE test;
 
 
-    SELECT payment_post(now()::date, 1, -101, 'XTS', 'notes', 'description',
+    SELECT payment_post(now()::date, 1, -101, 'XTS', 1, 'notes', 'description',
                         array[(select id from account where accno = '00003')],
                         array[1]::numeric[], array[true]::bool[],
                         array['pmt-rev-src1']::text[], NULL,
