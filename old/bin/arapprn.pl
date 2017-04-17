@@ -149,7 +149,7 @@ sub print_transaction {
     @a = qw(name address1 address2 city state zipcode country);
 
     $form->{invtotal} = 0;
-    foreach $i ( 1 .. $form->{rowcount} - 1 ) {
+    foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
         ( $form->{tempaccno}, $form->{tempaccount} ) = split /--/,
           $form->{"$form->{ARAP}_amount_$i"};
         ( $form->{tempprojectnumber} ) = split /--/,
@@ -168,7 +168,7 @@ sub print_transaction {
           $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
 
     }
-    foreach $accno ( split / /, $form->{taxaccounts} ) {
+    foreach my $accno ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"tax_$accno"} ) {
             $form->format_string("${accno}_description");
 
@@ -196,7 +196,7 @@ sub print_transaction {
     $form->format_string(@a);
 
     $form->{paid} = 0;
-    for $i ( 1 .. $form->{paidaccounts} - 1 ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} - 1 ) {
 
         if ( $form->{"paid_$i"} ) {
             @a = ();
@@ -232,16 +232,16 @@ sub print_transaction {
     $form->{decimal}        = substr( $form->{decimal}, 0, 2 );
     $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
-    for (qw(invtotal subtotal paid total)) {
-        $form->{$_} = $form->format_amount( \%myconfig, $form->{$_}, 2 );
+    foreach my $field (qw(invtotal subtotal paid total)) {
+        $form->{$field} = $form->format_amount( \%myconfig, $form->{$field}, 2 );
     }
 
     ( $form->{employee} ) = split /--/, $form->{employee};
 
     if ( exists $form->{longformat} ) {
-        for (qw(duedate transdate crdate)) {
-            $form->{$_} =
-              $locale->date( \%myconfig, $form->{$_}, $form->{longformat} );
+        foreach my $field (qw(duedate transdate crdate)) {
+            $form->{$field} =
+              $locale->date( \%myconfig, $form->{$field}, $form->{longformat} );
         }
     }
 
@@ -328,20 +328,21 @@ sub print_transaction {
         for ( keys %$old_form ) { $form->{$_} = $old_form->{$_} }
 
         if ( !$form->{printandpost} ) {
-            for (qw(exchangerate creditlimit creditremaining)) {
-                $form->{$_} = $form->parse_amount( \%myconfig, $form->{$_} );
+            foreach my $field (qw(exchangerate creditlimit creditremaining)) {
+                $form->{$field} = $form->parse_amount( \%myconfig, $form->{$field} );
             }
 
-            for ( 1 .. $form->{rowcount} ) {
-                $form->{"amount_$_"} =
-                  $form->parse_amount( \%myconfig, $form->{"amount_$_"} );
-            }
-            for ( split / /, $form->{taxaccounts} ) {
-                $form->{"tax_$_"} =
-                  $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+            foreach my $i ( 1 .. $form->{rowcount} ) {
+                $form->{"amount_$i"} =
+                  $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
             }
 
-            for $i ( 1 .. $form->{paidaccounts} ) {
+            foreach my $account ( split / /, $form->{taxaccounts} ) {
+                $form->{"tax_$account"} =
+                  $form->parse_amount( \%myconfig, $form->{"tax_$account"} );
+            }
+
+            foreach my $i ( 1 .. $form->{paidaccounts} ) {
                 for (qw(paid exchangerate)) {
                     $form->{"${_}_$i"} =
                       $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );

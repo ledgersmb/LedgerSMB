@@ -242,11 +242,11 @@ sub create_links {
     $ml        = new LedgerSMB::PGNumber( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
 
 
-    foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
+    foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
 
         # if there is a value we have an old entry
-        for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+        foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
 
 
             if ( $key eq "$form->{ARAP}_paid" ) {
@@ -672,7 +672,7 @@ $form->open_status_div($status_div_id) . qq|
 
     # Display rows
 
-    for $i ( 1 .. $form->{rowcount} + $min_lines) {
+    foreach my $i ( 1 .. $form->{rowcount} + $min_lines) {
 
         # format amounts
         $form->{"amount_$i"} =
@@ -736,7 +736,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     }
      my $tax_base = $form->{invtotal};
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -826,7 +826,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
 
@@ -1179,7 +1179,7 @@ sub update {
           ( "amount", "$form->{ARAP}_amount", "projectnumber", "description","taxformcheck" );
     $count = 0;
     @a     = ();
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         $form->{"amount_$i"} =
             $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
         if ( $form->{"amount_$i"} ) {
@@ -1233,7 +1233,7 @@ sub update {
     }
 
     my $tax_base = $form->{invtotal};
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         if($form->{"calctax_$item"} && $is_update){
             $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
         }
@@ -1242,7 +1242,7 @@ sub update {
 
     my $j = 1;
     my $totalpaid = LedgerSMB::PGNumber->bzero();
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0 ) {
             for (qw(datepaid source memo cleared)) {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
@@ -1329,7 +1329,7 @@ sub post {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );
 
