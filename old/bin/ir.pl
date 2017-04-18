@@ -202,16 +202,16 @@ sub invoice_links {
     $form->{forex} = $form->{exchangerate};
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
-    foreach $key ( keys %{ $form->{AP_links} } ) {
+    foreach my $key ( keys %{ $form->{AP_links} } ) {
 
         $form->{"select$key"} = "";
-        foreach $ref ( @{ $form->{AP_links}{$key} } ) {
+        foreach my $ref ( @{ $form->{AP_links}{$key} } ) {
             $form->{"select$key"} .=
               "<option value=\"$ref->{accno}--$ref->{description}\">$ref->{accno}--$ref->{description}</option>\n";
         }
 
         if ( $key eq "AP_paid" ) {
-            for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+            foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AP_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
 
@@ -270,7 +270,7 @@ sub prepare_invoice {
             $form->{$_} = $form->quote( $form->{$_} );
         }
 
-        foreach $ref ( @{ $form->{invoice_details} } ) {
+        foreach my $ref ( @{ $form->{invoice_details} } ) {
             $i++;
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
 
@@ -674,7 +674,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                       <td>&nbsp</td>
                     </tr>|;
         }
-        foreach $item (keys %{$form->{taxes}}) {
+        foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
             if ($form->{manual_tax}){
                # Setting defaults from tax calculations
@@ -853,7 +853,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"selectAP_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"AP_paid_$form->{paidaccounts}"} = $1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
 
@@ -1073,7 +1073,7 @@ sub update {
     }
 
     $j = 1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0) {
             for (qw(datepaid source memo cleared)) {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
@@ -1285,7 +1285,7 @@ sub post {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         #if ( $form->{"paid_$i"} ) {
         if ( $form->{"paid_$i"} !=0.0 ) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );

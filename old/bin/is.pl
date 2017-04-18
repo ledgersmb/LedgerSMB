@@ -180,17 +180,17 @@ sub invoice_links {
     $form->{forex} = $form->{exchangerate};
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
-    foreach $key ( keys %{ $form->{AR_links} } ) {
+    foreach my $key ( keys %{ $form->{AR_links} } ) {
 
         $form->{"select$key"} = '';
-        foreach $ref ( @{ $form->{AR_links}{$key} } ) {
+        foreach my $ref ( @{ $form->{AR_links}{$key} } ) {
             $value = "$ref->{accno}--$ref->{description}";
             $selected = ($value eq $form->{$key}) ? " selected" : "";
             $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
         }
 
         if ( $key eq "AR_paid" ) {
-            for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+            foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AR_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
 
@@ -264,7 +264,7 @@ sub prepare_invoice {
             $form->{$_} = $form->quote( $form->{$_} );
         }
 
-        foreach $ref ( @{ $form->{invoice_details} } ) {
+        foreach my $ref ( @{ $form->{invoice_details} } ) {
             $i++;
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
 
@@ -555,7 +555,7 @@ sub form_header {
         qw(shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact shiptophone shiptofax shiptoemail message email subject cc bcc taxaccounts)
     );
 
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${item}_rate", "${item}_description",
             "${item}_taxnumber" );
     }
@@ -760,7 +760,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
                       <th align="center">|.$locale->text('Memo').qq|</th>
                     </tr>|;
         }
-        foreach $item (keys %{$form->{taxes}}) {
+        foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
             if ($form->{manual_tax}){
                # Setting defaults from tax calculations
@@ -932,7 +932,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"selectAR_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"AR_paid_$form->{paidaccounts}"} = $1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
 
@@ -1162,7 +1162,7 @@ sub update {
     }
 
     $j = 1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0 ) {
             for (qw(datepaid source memo cleared)) {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
@@ -1376,7 +1376,7 @@ sub post {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         delete $form->{"paid_$i"} if $form->{"paid_$i"} == 0;
         if ( $form->{"paid_$i"}) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );

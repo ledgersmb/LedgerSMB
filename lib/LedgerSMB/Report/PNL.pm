@@ -232,7 +232,7 @@ sub run_report {
     for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
         $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
     }
-    for $col_id (keys %{$self->cheads->ids}) {
+    for my $col_id (keys %{$self->cheads->ids}) {
         for my $row_id (keys %{$self->rheads->ids}) {
             my $value = $self->cells->{$row_id}->{$col_id};
 

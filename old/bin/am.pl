@@ -475,7 +475,7 @@ sub save_language {
             @templates = grep !/^(\.|\.\.)/, readdir TEMPLATEDIR;
             closedir TEMPLATEDIR;
 
-            foreach $file (@templates) {
+            foreach my $file (@templates) {
                 if ( -f "$myconfig{templates}/$file" ) {
                     open( TEMP, '<', "$myconfig{templates}/$file" )
                       or $form->error("$myconfig{templates}/$file : $!");
@@ -548,7 +548,7 @@ sub taxes {
     AM->taxes( \%myconfig, \%$form );
 
     $i = 0;
-    foreach $ref ( @{ $form->{taxrates} } ) {
+    foreach my $ref ( @{ $form->{taxrates} } ) {
         $i++;
         $form->{"minvalue_$i"} =
           $form->format_amount( \%myconfig, $ref->{minvalue}) || 0;
@@ -637,7 +637,7 @@ sub update {
 
     AM->taxes( \%myconfig, \%$form );
 
-    foreach $item (@a) {
+    foreach my $item (@a) {
         ( $accno, $i ) = split /_/, $item;
         push @t, $accno;
 
@@ -1344,7 +1344,7 @@ sub process_transactions {
                 $form->{transdate} = $pt->{nextdate};
 
                 $j = 0;
-                foreach $ref ( @{ $form->{GL} } ) {
+                foreach my $ref ( @{ $form->{GL} } ) {
                     $form->{"accno_$j"} = "$ref->{accno}--$ref->{description}";
 
                     $form->{"projectnumber_$j"} =
