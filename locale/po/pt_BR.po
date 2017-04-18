@@ -17,27 +17,27 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:163
 msgid "# Invoices"
-msgstr ""
+msgstr "# Faturas"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:112
 msgid "% Dep."
-msgstr ""
+msgstr "% Dep."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:96
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "(+) Valor Salvamento"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:104
 msgid "(-) Accum. Dep."
-msgstr ""
+msgstr "(-) Dep. Acum."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:108
 msgid "(=) NBV"
-msgstr ""
+msgstr "(=) VCL"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
 msgid "(Locked)"
-msgstr ""
+msgstr "(bloqueado)"
 
 #: lib/LedgerSMB/Report/Aging.pm:132 templates/demo/statement.html:65
 #: templates/demo_with_images/statement.html:65
@@ -66,6 +66,9 @@ msgid ""
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
+"Uma autorização de retorno deve ser obtida de [_1] antes das mercadorias serem devolvidas."
+"As devoluções devem ser enviadas pré-pagas e devidamente asseguradas. [_1] não será"
+"Responsável por danos durante o trânsito."
 
 #: sql/Pg-database.sql:798
 msgid "AIM"
@@ -83,11 +86,11 @@ msgstr "Contas a Pagar Vencidas"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:106
 msgid "AP Invoice"
-msgstr ""
+msgstr "Fatura a pagar"
 
 #: UI/Reports/filters/search_goods.html:160
 msgid "AP Invoices"
-msgstr ""
+msgstr "Faturas a pagar"
 
 #: bin/aa.pl:1544 lib/LedgerSMB/Report/Invoices/Outstanding.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:5
@@ -112,11 +115,11 @@ msgstr "Transações - Contas a Pagar"
 
 #: sql/Pg-database.sql:2912
 msgid "AP Voucher"
-msgstr ""
+msgstr "Voucher a pagar"
 
 #: UI/import_csv/import_inventory_csv.html:22
 msgid "AP account"
-msgstr ""
+msgstr "Conta a pagar"
 
 #: bin/am.pl:859 UI/Reports/filters/unapproved.html:14
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:109
@@ -130,11 +133,11 @@ msgstr "Contas a Receber Vencidas"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 msgid "AR Invoice"
-msgstr ""
+msgstr "Fatura a receber"
 
 #: UI/Reports/filters/search_goods.html:137
 msgid "AR Invoices"
-msgstr ""
+msgstr "Faturas a receber"
 
 #: bin/aa.pl:1543 lib/LedgerSMB/Report/Invoices/Outstanding.pm:302
 #: UI/Reports/filters/invoice_outstanding.html:9
@@ -159,20 +162,20 @@ msgstr "Transações - Contas a Receber"
 
 #: sql/Pg-database.sql:2911
 msgid "AR Voucher"
-msgstr ""
+msgstr "Voucher a receber"
 
 #: UI/import_csv/import_inventory_csv.html:13
 msgid "AR account"
-msgstr ""
+msgstr "Conta a receber"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:105
 msgid "AR/AP/GL Amount"
-msgstr ""
+msgstr "Montante APagar/AReceber/Razão"
 
 #: sql/Pg-database.sql:3787
 msgid "Abandonment"
-msgstr ""
+msgstr "Abandono"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:90
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:87
@@ -183,7 +186,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/configuration.pm:332
 #: lib/LedgerSMB/Scripts/setup.pm:839
 msgid "Access Denied"
-msgstr ""
+msgstr "Acesso não-permitido"
 
 #: bin/aa.pl:598 bin/aa.pl:662 bin/aa.pl:819 bin/aa.pl:1679 bin/ic.pl:1125
 #: bin/ir.pl:454 bin/ir.pl:842 bin/is.pl:467 bin/is.pl:919 bin/oe.pl:436
@@ -215,7 +218,7 @@ msgstr "Conta"
 #: lib/LedgerSMB/Report/Trial_Balance.pm:160
 #: UI/payments/use_overpayment2.html:124
 msgid "Account Description"
-msgstr ""
+msgstr "Descrição da conta"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:77
 msgid "Account Label"
@@ -228,7 +231,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:147
 msgid "Account No."
-msgstr ""
+msgstr "Núm. da conta"
 
 #: bin/ic.pl:1024 bin/ic.pl:1678 lib/LedgerSMB/Report/Budget/Search.pm:124
 #: lib/LedgerSMB/Report/Budget/Variance.pm:73 lib/LedgerSMB/Report/COA.pm:88
