@@ -44,7 +44,7 @@ builder {
     enable 'Debug',  panels => [
             qw(Parameters Environment Response Log4perl Session Timer Memory ModuleVersions PerlConfig),
               [ 'DBITrace', level => 2 ],
-              [ 'Profiler::NYTProf', exclude => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif)], minimal => 1 ],
+              [ 'Profiler::NYTProf', exclude => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif .*\.html)], minimal => 1 ],
 #           qw/Dancer::Settings Dancer::Logger Dancer::Version/
     ] if $ENV{PLACK_ENV} =~ "development";
 
