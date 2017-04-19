@@ -257,7 +257,6 @@ sub new {
         if (defined $self->{language}){
             if (!$self->_valid_language){
                 die 'Invalid language';
-                return undef;
             }
             $self->{include_path_lang} = "$self->{'include_path'}"
                     ."/$self->{language}";
