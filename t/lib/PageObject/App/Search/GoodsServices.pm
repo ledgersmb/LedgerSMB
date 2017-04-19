@@ -9,6 +9,8 @@ use PageObject::App::Search;
 use Moose;
 extends 'PageObject::App::Search';
 
+use PageObject::App::Search::ReportDynatable;
+
 __PACKAGE__->self_register(
               'search-goods',
               './/form[@id="search-goods"]',

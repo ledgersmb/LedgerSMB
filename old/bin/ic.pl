@@ -474,7 +474,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $onhand = qq|
           <tr>
         <th align="right" nowrap>| . $locale->text('On Hand') . qq|</th>
-        <th align=left nowrap class="plus$n">&nbsp;|
+        <th align=left nowrap class="plus$n" id="onhand">&nbsp;|
           . $form->format_amount( \%myconfig, $form->{onhand} )
           . qq|</th>
           </tr>
