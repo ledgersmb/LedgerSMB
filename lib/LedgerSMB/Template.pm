@@ -261,8 +261,9 @@ sub new {
             }
             $self->{include_path_lang} = "$self->{'include_path'}"
                     ."/$self->{language}";
-                        $self->{locale}
-                             = LedgerSMB::Locale->get_handle($self->{language});
+            $self->{locale} = LedgerSMB::Locale->get_handle(
+                $self->{language}
+            );
         }
     }
 
