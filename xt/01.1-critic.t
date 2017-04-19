@@ -20,6 +20,7 @@ my @cert_policies = qw(
     BuiltinFunctions::ProhibitUniversalCan
     ClassHierarchies::ProhibitExplicitISA
     ControlStructures::ProhibitMutatingListFunctions
+    ControlStructures::ProhibitUnreachableCode
     InputOutput::ProhibitInteractiveTest
     InputOutput::ProhibitOneArgSelect
     InputOutput::ProhibitTwoArgOpen
@@ -44,7 +45,6 @@ my @cert_policies = qw(
 #    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
 #    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
-#    ControlStructures::ProhibitUnreachableCode
 #    ErrorHandling::RequireCarping
 #    InputOutput::ProhibitBarewordFileHandles   --explicitly excluded
 #    InputOutput::RequireCheckedClose
