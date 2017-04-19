@@ -582,8 +582,6 @@ sub dberror{
        die $state_error->{$dbh->state}
            . "\n" .
           $locale->text('More information has been reported in the error logs');
-       $dbh->rollback;
-       die;
    }
    die $dbh->state . ":" . $dbh->errstr;
 }
