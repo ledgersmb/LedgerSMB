@@ -85,7 +85,6 @@ my @exclude_policies = qw(
     InputOutput::ProhibitBarewordFileHandles
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::ProhibitNoStrict
-    Variables::ProhibitConditionalDeclarations
     InputOutput::RequireEncodingWithUTF8Layer
     BuiltinFunctions::ProhibitStringyEval
 );
@@ -106,7 +105,6 @@ my @exclude_policies_oldcode = qw(
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::RequireUseStrict
     TestingAndDebugging::RequireUseWarnings
-    Variables::ProhibitConditionalDeclarations
 );
 
 
