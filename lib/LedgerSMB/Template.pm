@@ -458,9 +458,13 @@ sub _render {
     };
 
     $format->can('process')->($self, $cleanvars);
+
     # Will return undef if postprocessing if disabled -YL
-    my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
-    return $post;
+    if($self->{_no_postprocess}) {
+        return undef;
+    }
+
+    return $format->can('postprocess')->($self);
 }
 
 sub render {
