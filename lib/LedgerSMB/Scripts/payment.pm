@@ -705,7 +705,7 @@ sub payment2 {
     my $locale       = $request->{_locale};
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
     # VARIABLES
-    my ($project_id, $project_number, $project_name, $department_id, $department_name );
+    my ($project_id, $project_number, $project_name, $department_name );
     my @project;
     my @selected_checkboxes;
     my @department;
