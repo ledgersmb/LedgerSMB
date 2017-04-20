@@ -34,6 +34,7 @@ my @cert_policies = qw(
     TestingAndDebugging::RequireUseWarnings
     ValuesAndExpressions::ProhibitLeadingZeros
     Variables::ProhibitPerl4PackageNames
+    Variables::ProhibitUnusedVariables
     Variables::ProtectPrivateVars
     Variables::RequireLexicalLoopIterators
 );
@@ -63,7 +64,6 @@ my @cert_policies = qw(
 #    ValuesAndExpressions::ProhibitMagicNumbers
 #    ValuesAndExpressions::ProhibitMismatchedOperators
 #    ValuesAndExpressions::ProhibitMixedBooleanOperators
-#    Variables::ProhibitUnusedVariables
 #    Variables::RequireInitializationForLocalVars
 #    Variables::RequireLocalizedPunctuationVars
 
