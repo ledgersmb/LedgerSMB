@@ -30,18 +30,18 @@ BEGIN
                                     THEN ac.amount
                                     ELSE ac.amount * -1
                                     END),
-                                SUM(CASE WHEN ac.transdate >= in_date_from
+                                SUM(CASE WHEN ac.transdate >= in_datefrom
                                               AND ac.amount > 0
                                     THEN ac.amount
                                     ELSE 0 END),
-                                SUM(CASE WHEN ac.transdate >= in_date_from
+                                SUM(CASE WHEN ac.transdate >= in_datefrom
                                               AND ac.amount < 0
                                     THEN ac.amount
                                     ELSE 0 END) * -1,
-                                SUM(CASE WHEN ac.transdate >= in_date_from
-                                        AND c.charttype IN ('I')
+                                SUM(CASE WHEN ac.transdate >= in_datefrom
+                                              AND c.category IN ('I')
                                     THEN ac.amount
-                                    WHEN ac.transdate >= in_date_from
+                                    WHEN ac.transdate >= in_datefrom
                                               AND c.category IN ('I', 'L', 'Q')
                                     THEN ac.amount
                                     ELSE ac.amount * -1
@@ -54,7 +54,7 @@ BEGIN
                                         select id, approved FROM ar) g
                                         ON (g.id = ac.trans_id)
                                 JOIN account c ON (c.id = ac.chart_id)
-                                WHERE ac.transdate <= in_date_to
+                                WHERE ac.transdate <= in_dateto
                                         AND ac.approved AND g.approved
                                         AND (in_project_id IS NULL
                                                 OR in_project_id = ac.project_id)
