@@ -312,7 +312,6 @@ Loads the base schema definition file Pg-database.sql.
 
 sub load_base_schema {
     my ($self, $args) = @_;
-    my $success;
     my $log = loader_log_filename();
 
     $self->{source_dir} = './'

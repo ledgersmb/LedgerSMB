@@ -445,7 +445,7 @@ sub print_batch {
     $report->run_report;
 
     my @files =
-        map { my $contents;
+        map {
               my $entry = $print_dispatch{lc($_->{batch_class_id})};
 
               if ($entry) {

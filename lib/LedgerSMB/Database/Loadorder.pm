@@ -44,7 +44,6 @@ Returns a list of LedgerSMB::Database::Change objects
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
-    my $loadorder;
     local $!;
     local $@;
     open(LOAD, '<', $self->{_path}) or

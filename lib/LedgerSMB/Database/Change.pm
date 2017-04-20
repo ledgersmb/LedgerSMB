@@ -74,7 +74,6 @@ If $raw is set to a true value, we do not wrap in a transaction.
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
-        my $file;
         local $!;
         open(FILE, '<', $self->path) or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";

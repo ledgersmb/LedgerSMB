@@ -314,7 +314,6 @@ sub new_report {
 
     $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
     my $template;
-    my $return;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
     # This method detection makes debugging a bit harder.
     # Not sure I like it but won't refactor until 1.4..... --CT
