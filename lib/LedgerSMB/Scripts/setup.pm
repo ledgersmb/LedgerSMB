@@ -1019,7 +1019,6 @@ sub _render_new_user {
     # here in order to avoid creating objects just to get argument
     # mapping going. --CT
 
-
     _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
