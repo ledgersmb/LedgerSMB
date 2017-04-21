@@ -44,6 +44,7 @@
                  value = request.description
                  } ?>
         </div>
+        <?lsmb IF request.type == "gl" || request.type == "inventory"  ?>
         <div class="inputrow" id="daterow">
           <?lsmb PROCESS input element_data = {
                  type = "text"
@@ -55,6 +56,7 @@
                  size = 12
                  } ?>
         </div>
+        <?lsmb END; ?>
       </div>
       <div class="inputrow" id="filerow">
         <?lsmb PROCESS input element_data = {
