@@ -553,7 +553,7 @@ sub header {
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
-    my ( $stylesheet, $favicon, $charset );
+    my ( $stylesheet, $charset );
 
     my $dojo_theme = $self->{dojo_theme};
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
@@ -868,7 +868,6 @@ sub format_amount {
     my ( $self, $myconfig, $amount, $places, $dash ) = @_;
 
     $self = "" unless defined $self;
-    my $negative;
     $myconfig = {} unless defined $myconfig;
     $amount = "" unless defined $amount;
     $places = "0" unless defined $places;
@@ -1003,9 +1002,7 @@ sub format_string {
         txt => { '\n' => "\n", '\r' => "\r" },
     );
 
-    my $key;
-
-    foreach $key ( @{ $replace{order}{$format} } ) {
+    foreach my $key ( @{ $replace{order}{$format} } ) {
         for (@fields) { $self->{$_} =~ s/$key/$replace{$format}{$key}/g }
     }
 
@@ -1783,7 +1780,6 @@ $myconfig is unused.
 
 # this sub gets the id and name from $table
 sub get_name {
-
     my ( $self, $myconfig, $table, $transdate, $entity_class) = @_;
 
     if (!$entity_class){
@@ -1811,8 +1807,6 @@ sub get_name {
     if ($self->{"${table}number"} eq ''){
         $self->{"${table}number"} = $self->{$table};
     }
-
-    my $name = $self->like( lc $self->{$table} ) if $self->{$table};
 
     $self->{"${table}number"}=$self->like(lc $self->{"${table}number"}) if $self->{"${table}number"};#added % and % for searching key vendor/customer number.
 
@@ -2417,7 +2411,7 @@ sub create_links {
            $ref->{approved} = 0;
         }
 
-        foreach $key ( keys %$ref ) {
+        foreach my $key ( keys %$ref ) {
             $self->{$key} = $ref->{$key};
         }
 
@@ -2615,13 +2609,9 @@ sub lastname_used {
         $where = "quotation = '1'";
     }
     $where = "AND $where " if $where;
-    my $inv_notes;
-    # $inv_notes = "ct.invoice_notes," if $vc eq 'customer';
-    # $inv_notes apparently not implemented at present.  --CT
     my $query = qq|
         SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
             current_date + ct.terms AS duedate,
-            $inv_notes
             ct.curr AS currency
         FROM entity_credit_account ct
         JOIN entity ON (ct.entity_id = entity.id)
@@ -2740,7 +2730,7 @@ sub redo_rows {
     }
 
     # delete empty rows
-    for $i ( $count + 1 .. $numrows ) {
+    foreach my $i ( $count + 1 .. $numrows ) {
         for ( @{$flds} ) { delete $self->{"${_}_$i"} }
     }
 }
@@ -2912,7 +2902,7 @@ sub save_status {
 
         %queued = split / +/, $self->{queued};
 
-        foreach $formname ( keys %queued ) {
+        foreach my $formname ( keys %queued ) {
 
             $printed = ( $self->{printed} =~ /$formname/ ) ? "1" : "0";
             $emailed = ( $self->{emailed} =~ /$formname/ ) ? "1" : "0";
