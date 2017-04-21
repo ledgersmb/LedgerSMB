@@ -1005,16 +1005,16 @@ sub get_name {
 
     $sth->finish;
     $transdate = $dbh->quote( $form->{transdate} );
-    my $where = qq|AND (t.validto >= $transdate OR t.validto IS NULL)|
-      if $form->{transdate};
+    my $where = $form->{transdate}
+              ? qq|WHERE (t.validto >= $transdate OR t.validto IS NULL)|
+              : '';
 
     # get tax rates and description
     $query = qq|
            SELECT c.accno, c.description, t.rate, t.taxnumber
              FROM account c
              JOIN tax t ON (c.id = t.chart_id)
-            WHERE true
-                  $where
+            $where
          ORDER BY accno, validto|;
 
     $sth = $dbh->prepare($query);
