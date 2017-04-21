@@ -132,10 +132,10 @@ sub collect {
 find(\&collect, 'lib/', 'old/');
 
 my @on_disk_oldcode =
-    grep { m#^old/bin/# || m#^lib/# } @on_disk;
+    grep { m#^old/#  }
+    @on_disk;
 
 @on_disk =
-    grep { ! m#^old/bin/# }
     grep { ! m#^old/# }
     grep { ! m#^lib/LedgerSMB/Auth/# }
     @on_disk;
