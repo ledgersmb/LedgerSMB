@@ -338,6 +338,13 @@ def 'cache_templates',
     default => 0,
     doc => q{};
 
+### SECTION  ---   setup
+
+def 'country_dateformat',
+    section => 'setup',
+    default => 1,
+    doc => q{Date formats are inferred by country. Set to off to use ISO8601};
+
 ### SECTION  ---   paths
 
 def 'pathsep',

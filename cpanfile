@@ -20,7 +20,6 @@ requires 'JSON::MaybeXS';
 recommends 'Cpanel::JSON::XS';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
-requires 'Locale::Country::Multilingual'; # Date formats
 requires 'Log::Log4perl';
 requires 'LWP::Simple';
 requires 'MIME::Lite';

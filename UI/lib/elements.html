@@ -211,7 +211,7 @@
         <?lsmb value_attr = 'value' ?>
     <?lsmb END ?>
     <?lsmb IF element_data.defined('default_values') ?>
-            <?lsmb  # Undef items must be removed, or they choke in the options defaults check later.
+      <?lsmb # Undef items must be removed, or they choke in the options defaults check later.
         i = 0;
         FOREACH select_default IN element_data.default_values;
           UNLESS select_default.defined;
@@ -235,7 +235,8 @@
                 : select_defaults
             # Attributes that apply to selects and multiselect.
             element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
-            'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
+            'tabindex', 'required', 'data-dojo-type', 'data-dojo-props',
+            'labelAttr']
           ?>
           <?lsmb PROCESS custom_attributes  # Process custom attributes.
             custom_attribute_data=element_data.attributes

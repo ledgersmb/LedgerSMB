@@ -615,7 +615,6 @@ sub upgrade_info {
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
-
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
     @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
     unshift @{$request->{ar_accounts}}, {}
@@ -902,6 +901,7 @@ sub create_db {
 
     my $version_info = $database->get_info;
     $request->{login_name} = $version_info->{username};
+
     if ($version_info->{status} ne 'does not exist') {
         $request->{message} = $request->{_locale}->text(
             'Database exists.');
@@ -935,13 +935,12 @@ coa_lc not set:  Select the coa location code
 =cut
 
 sub select_coa {
-    use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
 
-      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
-          die $request->{_locale}->text('Access Denied');
-      }
+    if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
+        die $request->{_locale}->text('Access Denied');
+    }
 
     if ($request->{coa_lc}){
         if ($request->{chart}){
@@ -997,6 +996,27 @@ sub skip_coa {
 }
 
 
+=item _get_country_id
+
+Get the country id from country short name.
+
+This is only to set the original value of the date format. Changes to selected
+country will be handled by the UI
+
+=cut
+
+sub _get_country_id {
+    my ($request,$country) = @_;
+    die 'missing country' unless $country;
+    $country = uc($country);
+    $request->{country_id} = 0;
+    for (@{$request->{countries}}){
+        if ($_->{short_name} eq $country){
+           return $_->{id};
+        }
+    }
+}
+
 =item _render_new_user
 
 Renders the new user screen. Common functionality to both the
@@ -1019,30 +1039,36 @@ sub _render_new_user {
     # here in order to avoid creating objects just to get argument
     # mapping going. --CT
 
-    _init_db($request);
+    _init_db($request) unless $request->{dbh};
+
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
+        = $request->call_procedure(funcname => 'person__list_salutations' );
 
-    @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
-    for my $country (@{$request->{countries}}){
-        last unless defined $request->{coa_lc};
-        if (lc($request->{coa_lc}) eq lc($country->{short_name})){
-           $request->{country_id} = $country->{id};
-        }
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
+    if ( $request->{coa_lc} ) {
+        LedgerSMB::Setting->set('default_country',$request->{coa_lc});
     }
+    $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+    $request->{country_dateformat} = $LedgerSMB::Sysconfig::country_dateformat;
+
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (
         {id => '0', label => $locale->text('Manage Users')},
         {id => '1', label => $locale->text('Full Permissions')},
-        );
+        {id => '-1', label => $locale->text('No changes')},
+    );
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/new_user',
+        hiddens => { database           => $request->{database},
+                     country_id         => $request->{country_id}
+                   }
         );
 
     return $template->render_to_psgi($request);
@@ -1070,6 +1096,7 @@ sub save_user {
 
     $request->{control_code} = $request->{employeenumber};
     $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
+
     my $emp = LedgerSMB::Entity::Person::Employee->new(%$request);
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
@@ -1090,6 +1117,9 @@ sub save_user {
            @{$request->{countries}}
               = $request->call_procedure(funcname => 'location_list_country' );
 
+           $request->{country_id} = _get_country_id($request,LedgerSMB::Setting->get('default_country'));
+           $request->{country_dateformat} = $LedgerSMB::Sysconfig::country_dateformat;
+
            my $locale = $request->{_locale};
 
            @{$request->{perm_sets}} = (
@@ -1099,6 +1129,9 @@ sub save_user {
            my $template = LedgerSMB::Template->new_UI(
                $request,
                template => 'setup/new_user',
+               hiddens => { database           => $request->{database},
+                            country_id         => $request->{country_id}
+                          }
            );
            $duplicate = $template->render_to_psgi($request);
        } else {
@@ -1298,28 +1331,7 @@ sub run_sl30_migration {
 
 sub create_initial_user {
     my ($request) = @_;
-
-    _init_db($request) unless $request->{dbh};
-    @{$request->{salutations}} = $request->call_procedure(
-        funcname => 'person__list_salutations'
-    );
-
-    @{$request->{countries}} = $request->call_procedure(
-        funcname => 'location_list_country'
-    );
-
-    my $locale = $request->{_locale};
-
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        {id => '-1', label => $locale->text('No changes')},
-    );
-    my $template = LedgerSMB::Template->new_UI(
-        $request,
-        template => 'setup/new_user',
-    );
-    return $template->render_to_psgi($request);
+    return _render_new_user($request);
 }
 
 =item edit_user_roles
