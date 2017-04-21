@@ -354,7 +354,7 @@ sub save {
                 }
                 else {
 
-                    for $i ( 1 .. $form->{assembly_rows} - 1 ) {
+                    foreach my $i ( 1 .. $form->{assembly_rows} - 1 ) {
 
                         # update BOM, A only
                         for (qw(bom adj)) {
@@ -480,7 +480,7 @@ sub save {
             INSERT INTO makemodel (parts_id, make, model, barcode)
                  VALUES (?, ?, ?, ?)|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
-        for $i ( 1 .. $form->{makemodel_rows} ) {
+        foreach my $i ( 1 .. $form->{makemodel_rows} ) {
             if (   ( $form->{"make_$i"} ne "" )
                 || ( $form->{"model_$i"} ne "" ) )
             {
@@ -521,7 +521,7 @@ sub save {
                             (id, parts_id, qty, bom, adj)
                      VALUES (?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
-            for $i ( 1 .. $form->{assembly_rows} - 1) {
+            foreach my $i ( 1 .. $form->{assembly_rows} - 1) {
                 $form->{"qty_$i"} =
                   $form->parse_amount( $myconfig, $form->{"qty_$i"} );
                 if ( !$form->{"bom_$i"} ) {
@@ -548,7 +548,7 @@ sub save {
     if ( $form->{item} ne 'assembly' ) {
         $updparts{ $form->{id} } = 1;
 
-        for $i ( 1 .. $form->{vendor_rows} ) {
+        foreach my $i ( 1 .. $form->{vendor_rows} ) {
             if ( ( $form->{"vendor_$i"} ne "" )
                 && $form->{"lastcost_$i"} )
             {
@@ -577,7 +577,7 @@ sub save {
     }
 
     # add pricematrix
-    for $i ( 1 .. $form->{customer_rows} ) {
+    foreach my $i ( 1 .. $form->{customer_rows} ) {
 
         for (qw(pricebreak customerprice)) {
             $form->{"${_}_$i"} =
