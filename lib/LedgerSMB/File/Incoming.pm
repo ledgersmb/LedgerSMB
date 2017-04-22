@@ -53,4 +53,5 @@ your software.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

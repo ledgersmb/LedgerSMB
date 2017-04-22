@@ -106,4 +106,5 @@ coerce 'LedgerSMB::Moose::FileContent',
   via { PGObject::Type::ByteString->new($_) };
 
 
+__PACKAGE__->meta->make_immutable;
 1;
