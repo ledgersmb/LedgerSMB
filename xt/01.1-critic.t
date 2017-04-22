@@ -46,7 +46,6 @@ my @cert_policies = qw(
 #    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
 #    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
-#    ErrorHandling::RequireCarping
 #    InputOutput::ProhibitBarewordFileHandles   --explicitly excluded
 #    InputOutput::RequireCheckedClose
 #    InputOutput::RequireCheckedOpen
@@ -66,6 +65,14 @@ my @cert_policies = qw(
 #    ValuesAndExpressions::ProhibitMixedBooleanOperators
 #    Variables::RequireInitializationForLocalVars
 #    Variables::RequireLocalizedPunctuationVars
+
+# The following CERT recommended policies will not be enforced:
+#    ErrorHandling::RequireCarping
+#      As per ledgerSMB coding guidelines, calling "die" is the preferred
+#      way to signal an error. We can't stop die()ing, because that's how
+#      our error handling is implemented.  See:
+#      https://ledgersmb.org/community-guide/community-guide/development/coding-guidelines/perl-coding-guidelines
+#      https://matrix.to/#/!qyoLumPqusaXqFJNyK:matrix.org/$1492804519389522uYnup:matrix.org
 
 # LedgerSMB enforces some other Perl::Critic policies
 my @lsmb_policies = qw(
