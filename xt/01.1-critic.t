@@ -21,6 +21,7 @@ my @cert_policies = qw(
     ClassHierarchies::ProhibitExplicitISA
     ControlStructures::ProhibitMutatingListFunctions
     ControlStructures::ProhibitUnreachableCode
+    InputOutput::ProhibitBarewordFileHandles
     InputOutput::ProhibitInteractiveTest
     InputOutput::ProhibitOneArgSelect
     InputOutput::ProhibitTwoArgOpen
@@ -46,7 +47,6 @@ my @cert_policies = qw(
 #    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
 #    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
-#    InputOutput::ProhibitBarewordFileHandles   --explicitly excluded
 #    InputOutput::RequireCheckedClose
 #    InputOutput::RequireCheckedOpen
 #    InputOutput::RequireCheckedSyscalls
@@ -91,7 +91,6 @@ my @lsmb_policies = qw(
 my @exclude_policies = qw(
     Modules::RequireVersionVar
     Subroutines::ProhibitExplicitReturnUndef
-    InputOutput::ProhibitBarewordFileHandles
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::ProhibitNoStrict
     InputOutput::RequireEncodingWithUTF8Layer
@@ -99,7 +98,6 @@ my @exclude_policies = qw(
 );
 my @exclude_policies_oldcode = qw(
     BuiltinFunctions::ProhibitStringyEval
-    InputOutput::ProhibitBarewordFileHandles
     InputOutput::RequireEncodingWithUTF8Layer
     Modules::ProhibitConditionalUseStatements
     Modules::ProhibitEvilModules
