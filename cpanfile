@@ -89,6 +89,16 @@ feature 'xls', "Microsoft Excel" =>
         requires 'Spreadsheet::WriteExcel';
         requires 'Excel::Writer::XLSX';
 };
+
+feature 'debug', "Debug pane" =>
+    sub {
+        recommends 'Devel::NYTProf';	# No explicit require for debug pane, handled internaly
+        recommends 'Module::Versions';	# No explicit require for debug pane, handled internaly
+        recommends 'Plack::Middleware::Debug::Log4perl';		# Optional
+        recommends 'Plack::Middleware::Debug::Profiler::NYTProf';	# Optional
+        recommends 'Plack::Middleware::InteractiveDebugger';		# Optional
+};
+
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
