@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
 
 package LedgerSMB::Report::Listings::SIC;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

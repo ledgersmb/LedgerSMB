@@ -13,6 +13,7 @@ forms for LedgerSMB
 package LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::DBObject::TaxForm;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

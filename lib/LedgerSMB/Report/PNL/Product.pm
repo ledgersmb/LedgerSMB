@@ -21,6 +21,7 @@ real way to track revenue vs loss, for example with the case of resold services.
 
 package LedgerSMB::Report::PNL::Product;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';
 
 =head1 CRITERIA PROPERTIES

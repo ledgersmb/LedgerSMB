@@ -13,6 +13,7 @@ Details report for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Adj_Details;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::Report::Inventory::Search_Adj;
 extends 'LedgerSMB::Report';
 use LedgerSMB::Form;

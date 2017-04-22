@@ -30,6 +30,7 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
 
