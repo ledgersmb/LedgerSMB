@@ -16,6 +16,7 @@ and later.
 
 package LedgerSMB::Report::PNL;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 

@@ -10,6 +10,7 @@ LedgerSMB::Report::File::Incoming - Files for LSMB processes.
 
 package LedgerSMB::Report::File::Incoming;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::File', 'LedgerSMB::I18N';
 

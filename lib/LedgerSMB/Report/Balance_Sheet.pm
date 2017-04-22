@@ -17,6 +17,7 @@ translates data structures for the report.
 
 package LedgerSMB::Report::Balance_Sheet;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 

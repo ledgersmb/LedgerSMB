@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Reconciliation::Summary;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends "LedgerSMB::Report";
 with "LedgerSMB::Report::Dates";
