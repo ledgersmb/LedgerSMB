@@ -113,6 +113,7 @@ on 'develop' => sub {
     requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
     requires 'Perl::Critic';
+    requires 'Perl::Critic::Policy::Moose';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP';
