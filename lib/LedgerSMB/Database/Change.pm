@@ -75,11 +75,11 @@ sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
         local $!;
-        open(FILE, '<', $self->path) or
+        open my $fh, '<', $self->path or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
-        binmode FILE, ':utf8';
-        $self->{_content} = join '', <FILE>;
-        close FILE;
+        binmode $fh, ':utf8';
+        $self->{_content} = join '', <$fh>;
+        close $fh;
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);

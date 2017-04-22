@@ -583,11 +583,12 @@ sub _http_output {
     if (!defined $data and defined $self->{rendered}){
         $data = "";
         $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
-        open (DATA, '<', $self->{rendered});
-                binmode DATA, $self->{binmode};
-        while (my $line = <DATA>){
+        open(my $fh, '<', $self->{rendered});
+        binmode $fh, $self->{binmode};
+        while (my $line = <$fh>){
             $data .= $line;
         }
+        close $fh;
         $logger->trace("end DATA < self->{rendered}");
         unlink($self->{rendered}) or die 'Unable to delete output file';
     }
@@ -699,16 +700,17 @@ sub _lpr_output {
     }
     my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
-    open (LPR, '|-', $lpr);
+    open my $pipe, '|-', $lpr;
 
     # Output is not defined here.  In the future we should consider
     # changing this to use the system command and hit the file as an arg.
     #  -- CT
-    open (FILE, '<', "$self->{rendered}");
-    while (my $line = <FILE>){
-        print LPR $line;
+    open(my $file, '<', "$self->{rendered}");
+    while (my $line = <$file>){
+        print $pipe $line;
     }
-    close(LPR);
+    close($pipe);
+    close($file);
 }
 
 # apply locale settings to column headings and add sort urls if necessary.
