@@ -25,6 +25,7 @@ my @cert_policies = qw(
     InputOutput::ProhibitInteractiveTest
     InputOutput::ProhibitOneArgSelect
     InputOutput::ProhibitTwoArgOpen
+    InputOutput::RequireCheckedOpen
     Miscellanea::ProhibitFormats
     Modules::ProhibitEvilModules
     Modules::RequireEndWithOne
@@ -48,7 +49,6 @@ my @cert_policies = qw(
 #    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
 #    InputOutput::RequireCheckedClose
-#    InputOutput::RequireCheckedOpen
 #    InputOutput::RequireCheckedSyscalls
 #    Objects::ProhibitIndirectSyntax
 #    RegularExpressions::ProhibitCaptureWithoutTest

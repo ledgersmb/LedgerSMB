@@ -438,7 +438,8 @@ sub run_backup {
         return $template->render_to_psgi($request);
     } elsif ($request->{backup_type} eq 'browser') {
         my $bak;
-        open $bak, '<', $backupfile;
+        open $bak, '<', $backupfile
+            or die "Failed to open file";
         unlink $backupfile; # remove the file after it gets closed
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';

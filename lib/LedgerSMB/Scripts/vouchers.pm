@@ -466,7 +466,8 @@ sub print_batch {
 
        `$zipcmd`;
 
-       open my $zip, '<', "$dirname.zip";
+       open my $zip, '<', "$dirname.zip"
+           or die "Failed to open zip file";
        binmode $zip, ':bytes';
        unlink "$dirname.zip";
 
