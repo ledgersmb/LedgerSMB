@@ -163,9 +163,9 @@ sub parse {
     my $parser = $self->parser;
     if (!$self->is_message_file){
         $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
-        open TMPFILE, '>', $file;
-        print TMPFILE $self->message;
-        close TMPFILE;
+        open my $fh, '>', $file;
+        print $fh $self->message;
+        close $fh;
     } else {
         $file = $self->message;
     }
