@@ -45,6 +45,7 @@ my %menu_path_pageobject_map = (
     "AP > Reports > Outstanding" => '',
     "AP > Reports > AP Aging" => '',
     "AP > Reports > Customer History" => '',
+    "Transaction Approval > Inventory" => 'PageObject::App::Parts::AdjustSearchUnapproved',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
     "HR > Employees > Search" => 'PageObject::App::Search::Contact',
     "Order Entry > Sales Order" => "PageObject::App::Orders::Sales",
@@ -66,6 +67,7 @@ my %menu_path_pageobject_map = (
     "Goods and Services > Add Service" => 'PageObject::App::Parts::Service',
     "Goods and Services > Add Assembly" => 'PageObject::App::Parts::Assembly',
     "Goods and Services > Add Overhead" => 'PageObject::App::Parts::Overhead',
+    "Goods and Services > Enter Inventory" => 'PageObject::App::Parts::AdjustSetup',
     "System > Defaults" => 'PageObject::App::System::Defaults',
     "System > Taxes" => 'PageObject::App::System::Taxes',
     );
