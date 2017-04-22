@@ -80,7 +80,7 @@ use open ':utf8';
 use base qw(LedgerSMB::Request);
 use utf8;
 
-use Data::Dumper;
+use LWP::Simple;
 
 
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
@@ -1549,6 +1549,12 @@ sub update_exchangerate {
         @queryargs = ($sell);
     }
 
+    my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
+    if (!$set && $default_buyexchange) {
+        $set = "buy = ?";
+        $buy = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}");
+        @queryargs = ($buy);
+    }
     if ( !$set ) {
         $self->error("Exchange rate missing!");
     }
@@ -1607,6 +1613,8 @@ $dbh is not used, favouring $self->{dbh}.
 
 =cut
 
+# TODO: Consider using http://currencies.apps.grandtrunk.net/getrate/2015-10-01/USD/CAD
+
 sub get_exchangerate {
 
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
@@ -1621,10 +1629,14 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-    $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
+        if (!$exchangerate) {
+            my $default_buyexchange = LedgerSMB::Setting->get('default_buyexchange');
+            $exchangerate = get("http://currencies.apps.grandtrunk.net/getrate/$transdate/$curr/$self->{defaultcurrency}")
+                            if $default_buyexchange;
+        }
+        $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
-
     $exchangerate;
 }
 
@@ -2382,7 +2394,7 @@ sub create_links {
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-                a.amount AS oldinvtotal, 
+                a.amount AS oldinvtotal,
                 a.person_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,

@@ -20,6 +20,7 @@ requires 'JSON';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
+requires 'LWP::Simple';
 requires 'MIME::Lite';
 requires 'Moose';
 requires 'Moose::Role';
