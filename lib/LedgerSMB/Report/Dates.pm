@@ -10,6 +10,7 @@ LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
 
 package LedgerSMB::Report::Dates;
 use Moose::Role;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 
 =head1 DESCRIPTION

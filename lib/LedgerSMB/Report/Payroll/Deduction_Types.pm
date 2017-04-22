@@ -10,6 +10,7 @@ LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
 package LedgerSMB::Report::Payroll::Deduction_Types;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

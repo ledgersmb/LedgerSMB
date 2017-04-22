@@ -11,6 +11,7 @@ LedgerSMB::Report::Inventory::Pricegroups - Pricegroup search for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Pricegroups;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 

@@ -11,6 +11,7 @@ LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
 
 package LedgerSMB::Report::Invoices::Payments;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

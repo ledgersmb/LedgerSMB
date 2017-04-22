@@ -18,6 +18,7 @@ profit margins of specific invoices.
 
 package LedgerSMB::Report::PNL::Invoice;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';
 
 =head1 CRITERIA PROPERTIES

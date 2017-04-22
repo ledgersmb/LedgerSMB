@@ -29,6 +29,7 @@ supported by X12::Parser.
 
 package LedgerSMB::X12;
 use Moose;
+use namespace::autoclean;
 use X12::Parser;
 use LedgerSMB::Sysconfig;
 use DateTime;

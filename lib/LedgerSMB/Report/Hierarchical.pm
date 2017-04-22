@@ -14,6 +14,7 @@ This report class is an abstract class.
 
 package LedgerSMB::Report::Hierarchical;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Report::Axis;

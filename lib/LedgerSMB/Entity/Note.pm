@@ -21,6 +21,7 @@ level.
 
 package LedgerSMB::Entity::Note;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 

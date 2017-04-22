@@ -39,6 +39,7 @@ UI/reports/display_report template will be used.
 
 package LedgerSMB::Report;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 use LedgerSMB::Setting;
 

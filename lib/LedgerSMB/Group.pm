@@ -18,6 +18,7 @@ To retrieve a role from the db:
 
 package LedgerSMB::Group;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

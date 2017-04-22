@@ -17,6 +17,7 @@ To save a type
 
 package LedgerSMB::Payroll::Deduction_Type;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION

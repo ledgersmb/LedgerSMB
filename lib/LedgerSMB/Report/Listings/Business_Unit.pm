@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
 
 package LedgerSMB::Report::Listings::Business_Unit;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

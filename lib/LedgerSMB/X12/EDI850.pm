@@ -21,6 +21,7 @@ use LedgerSMB::Form;
 
 
 use Moose;
+use namespace::autoclean;
 use feature 'switch';
 extends 'LedgerSMB::X12';
 

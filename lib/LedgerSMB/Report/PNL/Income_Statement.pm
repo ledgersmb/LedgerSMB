@@ -15,6 +15,7 @@ This provides the income statement report for LedgerSMB on 1.4 and later.
 
 package LedgerSMB::Report::PNL::Income_Statement;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';
 
 =head1 CRITERIA PROPERTIES

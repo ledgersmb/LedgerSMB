@@ -25,6 +25,7 @@ methods only
 package LedgerSMB::File::Order;
 use strict;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =head1 METHODS
