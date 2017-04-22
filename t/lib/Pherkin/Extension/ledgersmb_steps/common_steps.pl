@@ -203,7 +203,7 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
     local $LedgerSMB::App_State::User = {
         numberformat => '1000.00'
     };
-#    use Carp::Always;
+
     my $part_props = S->{ext_lsmb}->admin_dbh->selectrow_hashref(
         qq|SELECT * FROM parts WHERE partnumber = ?|, undef, $part);
 
@@ -216,6 +216,7 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
         my $form = Form->new();
         $form->{dbh} = S->{ext_lsmb}->admin_dbh;
         $form->{rowcount} = 2;
+        $form->{transdate} = $trans->{transdate};
         $form->{qty_1} = $trans->{amount};
         $form->{sellprice_1} = $trans->{price} / $trans->{amount};
         $form->{linetotal_1} = $trans->{price};
