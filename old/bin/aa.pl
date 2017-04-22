@@ -1021,7 +1021,6 @@ sub form_footer {
 <th>| . $locale->text('Attached by') . qq|</th>
 </tr> |;
         foreach my $file (@{$form->{files}}){
-     use Data::Dumper;
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
