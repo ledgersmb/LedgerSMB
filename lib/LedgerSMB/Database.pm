@@ -351,8 +351,8 @@ sub load_modules {
     my $log = loader_log_filename();
 
     $self->{source_dir} ||= '';
-    open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
-    for my $mod (<LOADORDER>) {
+    open my $fh, '<', "$self->{source_dir}sql/modules/$loadorder";
+    for my $mod (<$fh>) {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
@@ -364,7 +364,7 @@ sub load_modules {
         );
 
     }
-    close (LOADORDER); ### return failure to execute the script?
+    close $fh; ### return failure to execute the script?
     return 1;
 }
 
