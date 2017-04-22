@@ -99,7 +99,6 @@ my @exclude_policies = qw(
 my @exclude_policies_oldcode = qw(
     BuiltinFunctions::ProhibitStringyEval
     InputOutput::RequireEncodingWithUTF8Layer
-    Modules::ProhibitEvilModules
     Modules::ProhibitExcessMainComplexity
     Modules::ProhibitMultiplePackages
     Modules::RequireBarewordIncludes
