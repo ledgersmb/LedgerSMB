@@ -79,14 +79,14 @@ sub adjustment_next {
     for my $i (1 .. $request->{rowcount}){
         if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
-        $request->{transdate}, $request->{"partnumber_$i"});
+                $request->{transdate}, $request->{"partnumber_$i"});
             $request->{"id_$i"} = $item->{id};
             $request->{"description_$i"} = $item->{description};
             $request->{"onhand_$i"} = $item->{onhand};
         }
         $request->{"counted_$i"} ||= 0;
-        $request->{"qty_$i"} = $request->{"onhand_$i"}
-        - $request->{"counted_$i"};
+        $request->{"qty_$i"} =
+            $request->{"onhand_$i"} - $request->{"counted_$i"};
     }
     ++$request->{rowcount};
     return enter_adjust($request);
