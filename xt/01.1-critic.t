@@ -80,6 +80,7 @@ my @lsmb_policies = qw(
     ProhibitHardTabs
     Modules
     Moose::RequireMakeImmutable
+    Moose::RequireCleanNamespace
     TestingAndDebugging
     ProhibitPuncutationVars
 );
