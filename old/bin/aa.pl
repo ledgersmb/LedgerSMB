@@ -49,8 +49,6 @@ use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Company_Config;
 
-use Data::Dumper;
-
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
 if ( -f "old/bin/custom/aa.pl" ) {

@@ -78,8 +78,6 @@ use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
 use LedgerSMB::App_State;
-use Data::Dumper;
-
 
 $form = new Form;
 use LedgerSMB;

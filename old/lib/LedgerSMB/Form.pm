@@ -80,9 +80,6 @@ use open ':utf8';
 use base qw(LedgerSMB::Request);
 use utf8;
 
-use Data::Dumper;
-
-
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 # To be later set in config, but also hardwired in Template::HTML --CT
