@@ -22,6 +22,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 use File::MimeInfo;

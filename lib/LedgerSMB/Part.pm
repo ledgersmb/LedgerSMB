@@ -13,6 +13,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

@@ -20,6 +20,7 @@ use LedgerSMB::Form;
 use feature 'switch';
 
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::X12';
 
 sub _config {

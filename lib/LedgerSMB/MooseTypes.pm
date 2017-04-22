@@ -10,6 +10,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 use Moose::Util::TypeConstraints;
 
 use PGObject::Type::ByteString;
