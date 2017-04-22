@@ -6,6 +6,7 @@ LedgerSMB::Template::DB - Template administration functions for LedgerSMB
 
 package LedgerSMB::Template::DB;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 use LedgerSMB::App_State;

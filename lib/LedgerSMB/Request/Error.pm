@@ -17,6 +17,7 @@ or
 package LedgerSMB::Request::Error;
 use LedgerSMB::App_State;
 use Moose;
+use namespace::autoclean;
 
 =head2 status (default 500)
 

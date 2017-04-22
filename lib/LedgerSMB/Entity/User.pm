@@ -6,6 +6,7 @@ LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
 package LedgerSMB::Entity::User;
 use Moose;
+use namespace::autoclean;
 use Try::Tiny;
 use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';

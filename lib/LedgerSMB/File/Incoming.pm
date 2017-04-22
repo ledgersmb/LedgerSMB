@@ -24,6 +24,7 @@ methods only
 
 package LedgerSMB::File::Incoming;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =head1 METHODS

@@ -19,6 +19,7 @@ leads etc.
 
 package LedgerSMB::Entity::Company;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Entity';
 use LedgerSMB::MooseTypes;
 

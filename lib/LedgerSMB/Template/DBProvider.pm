@@ -23,6 +23,7 @@ use Template::Provider;
 use PGObject::Type::DateTime;
 
 use Moose;
+use namespace::autoclean;
 use MooseX::NonMoose;
 extends 'Template::Provider';
 with 'LedgerSMB::PGObject';
