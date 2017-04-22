@@ -166,11 +166,14 @@ sub parse {
         open my $fh, '>', $file;
         print $fh $self->message;
         close $fh;
-    } else {
+    }
+    else {
         $file = $self->message;
     }
-    $parser->parsefile( file => $file,
-                        conf => $self->config_file);
+    $parser->parsefile(
+        file => $file,
+        conf => $self->config_file
+    );
     return $parser;
 }
 
@@ -199,11 +202,12 @@ Returns the test of a 997 document from the current document.
 
 sub write_997{
     my ($self, $form, $success) = @_;
-     my $status;
-    if ($success){
-       $status = 'A';
-    } else {
-       $status = 'R';
+    my $status;
+    if ($success) {
+        $status = 'A';
+    }
+    else {
+        $status = 'R';
     }
     my $sep = $self->parser->get_element_separator;
     my $seg = $self->parser->{_SEGMENT_SEPARATOR};
