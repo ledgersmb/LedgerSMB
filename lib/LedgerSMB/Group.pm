@@ -64,5 +64,6 @@ has roles => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;
 

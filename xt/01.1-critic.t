@@ -79,6 +79,7 @@ my @lsmb_policies = qw(
     ProhibitTrailingWhitespace
     ProhibitHardTabs
     Modules
+    Moose::RequireMakeImmutable
     TestingAndDebugging
     ProhibitPuncutationVars
 );
