@@ -17,6 +17,7 @@ my @on_disk;
 # Currently our code violates some of the recommended policies, so tests
 # are being added to this list as violations are fixed.
 my @cert_policies = qw(
+    BuiltinFunctions::ProhibitStringySplit
     BuiltinFunctions::ProhibitUniversalCan
     ClassHierarchies::ProhibitExplicitISA
     ControlStructures::ProhibitMutatingListFunctions
@@ -46,7 +47,6 @@ my @cert_policies = qw(
 # applied by the -severity option in use.
 #    BuiltinFunctions::ProhibitBooleanGrep
 #    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
-#    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
 #    InputOutput::RequireCheckedClose
 #    InputOutput::RequireCheckedSyscalls

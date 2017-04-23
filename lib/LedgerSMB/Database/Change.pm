@@ -111,7 +111,7 @@ sub sha {
     my $normalized = join "\n",
                      grep { /\S/ }
                      map { my $string = $_; $string =~ s/--.*//; $string }
-                     split("\n", $content);
+                     split /\n/, $content;
     $self->{_sha} = Digest::SHA::sha512_base64($normalized);
     return $self->{_sha};
 }

@@ -398,7 +398,7 @@ sub _process_argstr {
 
     # Some clients send the 'action' parameter twice;
     # see UI/js-src/Form.js::submit() for more
-    $params{action} = (split "\0", $params{action})[0]
+    $params{action} = (split /\0/, $params{action})[0]
         if defined $params{action};
 
     for my $p(keys %params){
