@@ -87,6 +87,7 @@ cache:
     - $HOME/dojo_archive
 
 before_install:
+  - utils/diagnostics/t/01-system-resources.t
   - source /opt/jdk_switcher/jdk_switcher.sh
   - jdk_switcher use oraclejdk8
   - phantomjs --version
@@ -132,6 +133,7 @@ before_script:
   - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
   - nginx -c /tmp/nginx.conf
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
+  - utils/diagnostics/t/01-system-resources.t
 
 script:
   - RELEASE_TESTING=1
@@ -156,3 +158,8 @@ after_success:
        echo "" ;
     fi
   - coverage-report
+  - utils/diagnostics/t/01-system-resources.t
+
+after_failure:
+  - utils/diagnostics/t/01-system-resources.t
+  - sudo dmesg
