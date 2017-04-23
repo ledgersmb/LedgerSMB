@@ -84,9 +84,10 @@ SkipEarly() {
 WaitForPlackup() {
     local -i seconds=0;
     local processrunning=false;
-    while (( i++ < 60 )); do # wait up to 60 seconds for plack or starman process to start
-        pgrep -f 'plackup' >/dev/null && { processrunning=true; break; }
-        pgrep -f 'starman.*8080' >/dev/null && { processrunning=true; break; }
+    local httpdrunning=false;
+    while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman process to start
+        pgrep -f 'plackup' >/dev/null && { processrunning=true; echo "plackup started after $i * 0.1 seconds"; break; }
+        pgrep -f 'starman.*8080' >/dev/null && { processrunning=true; echo "starman started after $i * 0.1 seconds"; break; }
         sleep 0.1;
     done
     if ! $processrunning; then
@@ -94,15 +95,24 @@ WaitForPlackup() {
         return 1;
     fi
     i=0;
-    while (( i++ < 60 )); do # wait up to 60 seconds for plack or starman server to respond to a curl
+    while (( i++ < 100 )); do # wait up to 10 seconds for plack or starman server to respond to a curl
         pgrep -f 'plackup' >/dev/null
-        curl --max-time 60 --connect-timeout 60 --fail --silent localhost:5001/setup.pl >/dev/null && { httpdrunning=true; break; }
+        curl --max-time 60 --connect-timeout 60 --fail --silent localhost:5001/setup.pl 2>&1 >/dev/null && {
+            httpdrunning=true;
+            echo "starman/plackup responded after $i * 0.1 seconds"; 
+            break;
+        } #|| echo -en "\r$i"
         sleep 0.1;
     done
+    if ! $httpdrunning; then
+        echo "The starman/plack httpd didn't respond before the timeout";
+        return 1;
+    fi
 }
 
 SkipEarly
-WaitForPlackup
+WaitForPlackup || exit $EX_NOHOST
+
 
 if curl --max-time 60 --connect-timeout 60 --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
