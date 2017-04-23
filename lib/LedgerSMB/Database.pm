@@ -351,8 +351,9 @@ sub load_modules {
     my $log = loader_log_filename();
 
     $self->{source_dir} ||= '';
-    open my $fh, '<', "$self->{source_dir}sql/modules/$loadorder"
-        or die "Failed to open file";
+    my $filename = "$self->{source_dir}sql/modules/$loadorder";
+    open my $fh, '<', $filename
+        or die "Failed to open $filename : $!";
 
     for my $mod (<$fh>) {
         chomp($mod);
