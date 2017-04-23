@@ -1,8 +1,10 @@
 #!/bin/bash
 
-Log() {
-    echo -e "$@" 1>&5
-}
+if ! declare -F Log >/dev/null; then # declare a local copy of the Log() function that only prints to screen
+    function Log() {
+        echo -e "$@"
+    }
+fi
 
 echo "Running $0 as $USER"
 
