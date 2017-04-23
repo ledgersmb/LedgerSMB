@@ -109,7 +109,8 @@ sub process {
         die "Template error: $err" if $err;
     }
     if ($output){
-        open my $fh, '>', $output;
+        open my $fh, '>', $output
+            or die "Failed to open output file $output : $!";
         print $fh $parent->{output};
         close $fh;
     }
