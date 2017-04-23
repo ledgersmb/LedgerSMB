@@ -253,11 +253,14 @@ sub get_for_template{
             $args->{file_class},
         ],
     );
-    if ( -d $LedgerSMB::Sysconfig::tempdir . '/' . $$){
-        die 'directory exists';
+
+    #TODO use File::Temp here and in cleanup for temp directory
+    my $dir = $LedgerSMB::Sysconfig::tempdir . '/' . $$;
+    if ( -d $dir){
+        die "Failed to create temporary directory $dir - it already exists : $!";
     }
-    mkdir $LedgerSMB::Sysconfig::tempdir . '/' . $$;
-    $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
+    mkdir $dir;
+    $self->file_path($dir);
 
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
