@@ -446,38 +446,45 @@ sub print_batch {
 
     my @files =
         map {
-              my $entry = $print_dispatch{lc($_->{batch_class_id})};
-
-              if ($entry) {
-                  dispatch($entry->{script},
-                           $entry->{entrypoint},
-                           { %$request },
-                           # entrypoint's arguments:
-                           $_, $request );
-                  return 1;
-              }
-              return ();
+            my $entry = $print_dispatch{lc($_->{batch_class_id})};
+            if ($entry) {
+                dispatch(
+                    $entry->{script},
+                    $entry->{entrypoint},
+                    { %$request },
+                    # entrypoint's arguments:
+                    $_,
+                    $request
+                );
+                return 1;
+            }
+            return ();
         }
         @{$report->rows};
 
     if (@files) {
-       my $zipcmd = $LedgerSMB::Sysconfig::zip;
-       $zipcmd =~ s/\%dir/$dirname/g;
+        my $zipcmd = $LedgerSMB::Sysconfig::zip;
+        $zipcmd =~ s/\%dir/$dirname/g;
+        `$zipcmd`;
 
-       `$zipcmd`;
+        open my $zip, '<', "$dirname.zip"
+            or die "Failed to open zip file";
+        binmode $zip, ':bytes';
+        unlink "$dirname.zip";
 
-       open my $zip, '<', "$dirname.zip"
-           or die "Failed to open zip file";
-       binmode $zip, ':bytes';
-       unlink "$dirname.zip";
-
-       # TODO: clean up the temp dir!!
-       return [ 200,
-                [ 'Content-Type' => 'application/zip',
-                  'Content-Disposition' => 'attachment; filename="batch-'
-                      . $request->{batch_id} . '.zip"' ],
-                $zip ];
-    } else {
+        # TODO: clean up the temp dir!!
+        return [
+            200,
+            [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' =>
+                    'attachment; filename="batch-'
+                    . $request->{batch_id} . '.zip"',
+            ],
+            $zip
+        ];
+    }
+    else {
         # TODO: clean up the temp dir!!
         return $report->render_to_psgi($request);
     }
