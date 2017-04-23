@@ -25,6 +25,8 @@ HasRecentlyRun() {
             rm /tmp/system-resources.t.hasrun
             return 1;
         fi
+    else
+        return 1; # It can't have been run as the flag file doesn't exist yet
     fi
 }
 
