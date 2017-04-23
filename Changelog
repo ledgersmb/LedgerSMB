@@ -2,6 +2,9 @@
 Changelog for 1.6 Series
 Forthcoming
 
+User experience
+* Removed the need for the ill-understood 'Inventory Entity' (Erik H)
+
 Performance
 * Remove CGI::Emulate::PSGI wrapper for 'new code' (Erik H/Yves L)
 
@@ -10,10 +13,12 @@ Code cleanup
   - Template handling framework (Yves L)
 * Remove unused variables and unreachable code (Nick P)
 * Removed assumptions about being a webapp from libraries (Erik H)
+* Rewrote inventory activity tracking and adjustments (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
 * Enforce numerous Perl::Critic policies (Nick P)
+* SQL & WebApp(BDD) tests for inventory tracking & adjustments (Erik H)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
