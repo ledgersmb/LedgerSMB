@@ -121,6 +121,7 @@ sub psgi_app {
     $LedgerSMB::App_State::Locale = $locale;
 
     $request->{_script_handle} = $module;
+    @{ $request->{languages} } = HTTP::AcceptLanguage->new($env->{HTTP_ACCEPT_LANGUAGE})->languages;
 
     return _internal_server_error('No workflow module specified!')
         unless $module;
