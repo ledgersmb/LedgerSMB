@@ -52,6 +52,7 @@ sub save {
     my $self = shift;
 
     $self->find('*button', text => 'Save')->click;
+    $self->session->page->body->maindiv->wait_for_content;
 }
 
 __PACKAGE__->meta->make_immutable;
