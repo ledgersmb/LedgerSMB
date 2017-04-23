@@ -780,21 +780,15 @@ sub save_warehouse {
 
     $form->isblank( "description", $locale->text('Description missing!') );
     AM->save_warehouse( \%myconfig, \%$form );
-    _warehouse_redirect();
 
+    $form->redirect( $locale->text( 'Warehouse saved!'));
 }
 
 sub delete_warehouse {
 
     AM->delete_warehouse( \%myconfig, \%$form );
-    _warehouse_redirect();
 
-}
-
-sub _warehouse_redirect {
-    use LedgerSMB::Scripts::reports;
-    bless $form, 'LedgerSMB';
-    LedgerSMB::Scripts::reports::list_warehouse($lsmb);
+    $form->redirect( $locale->text( 'Warehouse deleted!'));
 }
 
 sub recurring_transactions {

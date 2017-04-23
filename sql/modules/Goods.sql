@@ -22,7 +22,7 @@ BEGIN
     END IF;
 
     UPDATE parts SET onhand = onhand
-                              - (select t_mfg_lot.qty from mfg_lot_item
+                              - (select qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
      WHERE id in (select parts_id from mfg_lot_item
@@ -31,9 +31,10 @@ BEGIN
     UPDATE parts SET onhand = onhand + t_mfg_lot.qty
      where id = t_mfg_lot.parts_id;
 
-    INSERT INTO gl (reference, description, transdate, approved)
+    INSERT INTO gl (reference, description, transdate, approved,
+                   trans_type_code)
     values ('mfg-' || $1::TEXT, 'Manufacturing lot',
-            now(), true);
+            now(), true, 'as');
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval('id')::int, parts_id, qty, 0
@@ -166,8 +167,6 @@ LANGUAGE SQL STABLE AS $$
                                        WHERE parts_id = p.id)));
 $$;
 
-DROP FUNCTION IF EXISTS partsgroups__list_all();
-
 CREATE OR REPLACE FUNCTION partsgroup__search(in_pricegroup text)
 RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
   SELECT * FROM partsgroup
@@ -189,8 +188,11 @@ CREATE TYPE inv_activity_line AS (
    partnumber text,
    sold numeric,
    revenue numeric,
-   receivable numeric,
-   payable numeric
+   purchased numeric,
+   cost numeric,
+   used numeric,
+   assembled numeric,
+   adjusted numeric
 );
 
 CREATE OR REPLACE FUNCTION inventory__activity
@@ -200,16 +202,25 @@ $$
     SELECT p.id, p.description, p.partnumber,
            SUM(CASE WHEN transtype = 'ar' THEN i.qty ELSE 0 END) AS sold,
            SUM(CASE WHEN transtype = 'ar' THEN i.sellprice * i.qty ELSE 0 END)
-           AS receivable,
+           AS revenue,
            SUM(CASE WHEN transtype = 'ap' THEN i.qty * -1 ELSE 0 END)
-           AS payable,
+           AS purchased,
            SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0
-                END) AS expenses
+                END) AS cost,
+           SUM(CASE WHEN transtype = 'as' AND i.qty > 0 THEN i.qty ELSE 0 END)
+           AS used,
+           SUM(CASE WHEN transtype = 'as' AND i.qty < 0 then -1*i.qty ELSE 0 END)
+           AS assembled,
+           SUM(CASE WHEN transtype = 'ia' THEN i.qty ELSE 0 END)
+           AS adjusted
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
       JOIN (select id, approved, transdate, 'ar' as transtype FROM ar
              UNION
-            SELECT id, approved, transdate, 'ap' as transdate FROM ap) a
+            SELECT id, approved, transdate, 'ap' as transtype FROM ap
+             UNION
+            SELECT id, approved, transdate, trans_type_code as transtype
+              FROM gl) a
             ON (a.id = i.trans_id AND a.approved)
      WHERE ($1 IS NULL OR a.transdate >= $1)
            AND ($2 IS NULL OR a.transdate <= $2)
@@ -231,26 +242,8 @@ CREATE TYPE part_at_date AS (
 -- for now treating assemblies only as bundled deals not as manufactured
 -- items.  We need a good manufacturing solution. --CT
 
-DROP VIEW IF EXISTS invoice_sum CASCADE;
-DROP VIEW IF EXISTS order_sum CASCADE;
-
 -- since we are dealing with physical counts care must be taken with the
 -- approval process during inventory counting.
-CREATE VIEW invoice_sum AS
-SELECT a.transdate, sum(i.qty) as qty, i.parts_id
-  FROM invoice i
-  JOIN (select id, transdate from ar WHERE APPROVED
-         union
-        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id = a.id
- GROUP BY a.transdate, i.parts_id;
-
-CREATE VIEW order_sum AS
-SELECT oe.transdate,
-       sum(oi.ship * case when oe_class_id = 1 THEN 1 ELSE -1 END) as qty,
-       oi.parts_id
-  FROM orderitems oi
-  JOIN oe ON oe.closed is false and oe_class_id in (1, 2)
- GROUP BY oe.transdate, oi.parts_id;
 
 CREATE OR REPLACE FUNCTION inventory__search_part
 (in_parts_id int, in_partnumber text, in_counted_date date)
@@ -261,9 +254,25 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
       UNION ALL
      SELECT ac.a_id, a.parts_id, ac.qty * a.qty
        FROM assembly a JOIN assembly_comp ac ON a.parts_id = ac.parts_id
+),
+invoice_sum AS (
+SELECT a.transdate, sum(i.qty) as qty, i.parts_id
+  FROM invoice i
+  JOIN (select id, transdate from ar WHERE APPROVED
+         union
+        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id = a.id
+ GROUP BY a.transdate, i.parts_id
+),
+order_sum AS (
+SELECT oe.transdate,
+       sum(oi.ship * case when oe_class_id = 1 THEN 1 ELSE -1 END) as qty,
+       oi.parts_id
+  FROM orderitems oi
+  JOIN oe ON oe.closed is false and oe_class_id in (1, 2)
+ GROUP BY oe.transdate, oi.parts_id
 )
      SELECT p.id, p.partnumber,
-            sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty )
+            coalesce(sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty ),0)
        FROM parts p
   LEFT JOIN assembly_comp a ON a.a_id = p.id
   LEFT JOIN invoice_sum i ON i.parts_id = p.id OR a.parts_id = i.parts_id
@@ -277,6 +286,30 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
             AND (oi.transdate IS NULL OR oi.transdate <= $3)
    GROUP BY p.id, p.partnumber;
 $$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__create(in_transdate date)
+RETURNS inventory_report
+AS
+$$
+        INSERT INTO inventory_report(transdate) values (in_transdate)
+        RETURNING *;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__search
+(in_from_date date, in_to_date date, in_partnumber text, in_source text)
+RETURNS SETOF inventory_report AS
+$$
+
+   SELECT r.id, r.transdate, r.source, r.trans_id
+     FROM inventory_report r
+     JOIN inventory_report_line l ON l.adjust_id = r.id
+     JOIN parts p ON l.parts_id = p.id
+    WHERE ($1 is null or $1 <= r.transdate) AND
+          ($2 is null OR $2 >= r.transdate) AND
+          ($3 IS NULL OR plainto_tsquery($3) @@ tsvector(p.partnumber)) AND
+          ($4 IS NULL OR source LIKE $4 || '%')
+ GROUP BY r.id, r.transdate, r.source, r.trans_id;
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION inventory_adjust__save_line
 (in_adjust_id int, in_parts_id int,
@@ -300,73 +333,63 @@ VALUES ($1, $2)
 RETURNING *;
 $$;
 
+
+-- 'inventory_ajdust__approve()' had its return type changed in 1.5.4
+DROP FUNCTION IF EXISTS inventory_adjust__approve(int);
+
+
 CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id int)
-RETURNS inventory_report_line language plpgsql as
+RETURNS inventory_report language plpgsql as
 $$
 DECLARE inv inventory_report;
-        t_ar ar;
-        t_ap ap;
+        t_trans_id int;
 BEGIN
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
-INSERT INTO ar (entity_credit_account, invnumber, invoice, approved,
-                amount, netamount, transdate)
-VALUES (setting__get('inventory_ar_eca'), setting_increment('sinumber'),
-        't', 'f', 0, 0, inv.transdate);
-
-SELECT * INTO t_ar FROM ar WHERE id = currval('id');
+INSERT INTO gl (description, transdate, reference, approved, trans_type_code)
+        VALUES ('Transaction due to approval of inventory adjustment',
+                inv.transdate, 'invadj-' || in_id, true, 'ia')
+    RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report
-   set ar_trans_id = t_ar.id,
-       ar_invnumber = t_ar.invnumber
+   set trans_id = t_trans_id
  WHERE id = in_id;
 
-INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
-                    discount)
-SELECT t_ar.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 1
+-- When the count is lower than expected, we need to write-off
+-- some of our inventory. To do so, we post COGS to the expense
+-- account and reduce the inventory by the amount. There is no
+-- income associated with the transaction, so 'discount' == 100%
+--
+-- When the count is higher than expected, we need to increase
+-- some of our inventory. To do so, we stock at reverse COGS, taking
+-- the cost of the inventory increase out of COGS (to re-add on sale)
+INSERT INTO invoice (trans_id, parts_id, description, qty,
+                     sellprice, precision, discount)
+SELECT t_trans_id, p.id, p.description, l.variance * -1,
+       CASE WHEN l.variance > 0 THEN p.lastcost ELSE 0 END,
+       3, CASE WHEN l.variance > 0 THEN 1 ELSE 0 END
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
  WHERE l.adjust_id = in_id;
 
-INSERT INTO ap (entity_credit_account, invnumber, invoice, approved, amount,
-                netamount, transdate)
-SELECT setting__get('inventory_ap_eca'), setting_increment('vinumber'),
-       't', 'f', sum(l.variance * p.sellprice), sum(l.variance * p.sellprice),
-       inv.transdate
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id;
+PERFORM cogs__add_for_ar_line(id)
+   FROM invoice
+  WHERE qty > 0 AND trans_id = t_trans_id;
 
-SELECT * INTO t_ap FROM ap WHERE id = currval('id');
+PERFORM cogs__add_for_ap_line(id)
+   FROM invoice
+  WHERE qty < 0 AND trans_id = t_trans_id;
 
-UPDATE inventory_report
-   set ap_trans_id = t_ap.id,
-       ap_invnumber = t_ap.invnumber
- WHERE id = in_id;
+UPDATE parts p
+   SET onhand = onhand + (select variance
+                            from inventory_report_line l
+                           where p.id = l.parts_id
+                             and l.adjust_id = in_id)
+ WHERE id IN (select parts_id
+                from inventory_report_line
+               where adjust_id = in_id);
 
-INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
-                    discount, transdate)
-SELECT t_ap.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 0
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id;
-
-INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, approved)
-SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost),
-       inv.transdate, true
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
- WHERE l.adjust_id = in_id
- GROUP BY p.expense_accno_id
- UNION
-SELECT t_ap.id, eca.ar_ap_accno_id, sum(l.variance * -1 * p.lastcost),
-       inv.transdate, true
-  FROM parts p
-  JOIN inventory_report_line l ON p.id = l.parts_id
-  JOIN entity_credit_account eca on eca_id = t_ap.entity_credit_account
- WHERE l.adjust_id = in_id
- GROUP BY eca.ar_ap_accno_id;
 
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
@@ -383,7 +406,7 @@ BEGIN
 SELECT * INTO inv FROM inventory_report where id = in_id;
 IF NOT FOUND THEN
    RETURN FALSE;
-ELSIF inv.ap_trans_id IS NOT NULL OR inv.ar_trans_id IS NOT NULL THEN
+ELSIF inv.trans_id IS NOT NULL THEN
    RAISE EXCEPTION 'Set is Already Approved!';
 END IF;
 
@@ -402,7 +425,7 @@ RETURNS SETOF inventory_report language sql as $$
 SELECT * FROM inventory_report
  WHERE ($1 is null or transdate >= $1)
        AND ($2 IS NULL OR transdate <= $2)
-       AND ($3 IS NULL OR $3 = (ar_trans_id IS NULL AND ap_trans_id IS NULL));
+       AND ($3 IS NULL OR $3 = (trans_id IS NOT NULL));
 
 $$;
 

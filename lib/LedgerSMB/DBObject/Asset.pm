@@ -109,48 +109,6 @@ sub save {
     return $ref;
 }
 
-=item import_file
-
-Parses a csv file.  Sets $self->{import_entries} to an arrayref where each
-member is an arrayref of fields.  It is up to the workflow script to handle
-these entries.
-
-Header information is set to $self->{import_header}.
-
-=cut
-
-sub import_file {
-
-    my $self = shift @_;
-
-    my $handle = $self->{_request}->upload('import_file');
-    my $contents = join("\n", <$handle>);
-
-    $self->{import_entries} = [];
-    for my $line (split /(\r\n|\r|\n)/, $contents){
-        next if ($line !~ /,/);
-        my @fields;
-        $line =~ s/[^"]"",/"/g;
-        while ($line ne '') {
-            if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            } else {
-                $line =~ s/([^,]*),?//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            }
-        }
-        push @{$self->{import_entries}}, \@fields;
-    }
-                   # get rid of header line
-    @{$self->{import_header}} = shift @{$self->{import_entries}};
-    return @{$self->{import_entries}};
-}
-
 =item get
 
 Gets a fixed asset, sets all standard properties.  The id property must be set.

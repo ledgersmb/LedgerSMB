@@ -1634,19 +1634,6 @@ invoices.$$;
 
 COMMENT ON COLUMN journal_note.internal_only IS
 $$ When set to true, does not show up in notes list for invoice templates$$;
--- THe following credit accounts are used for inventory adjustments.
-INSERT INTO entity (id, name, entity_class, control_code,country_id)
-values (0, 'Inventory Entity', 1, 'AUTO-01','232');
-
-INSERT INTO company (legal_name, entity_id)
-values ('Inventory Entity', 0);
-
-INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES
-(0, '00000', 1);
-INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES
-(0, '00000', 2);
 
 
 --

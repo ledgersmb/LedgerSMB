@@ -6,7 +6,9 @@
 <form data-dojo-type="<?lsmb IF base_form; base_form;
                              ELSE;        "lsmb/Form";
                              END ?>"
-      method="post" action="<?lsmb form.script ?>">
+      method="post"
+      action="<?lsmb form.script ?>"
+      id="search-report-dynatable">
 <?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
 <?lsmb PROCESS 'dynatable' ?>

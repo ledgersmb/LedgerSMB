@@ -34,23 +34,6 @@ for my $format (readdir(DCSV)){
 
 =head1 METHODS
 
-=head2 $self->load_file($fieldname)
-
-Accesses the $self->{_request} attribute to acquire CSV content from $fieldname.
-
-=cut
-
-sub load_file {
-
-    my $self = shift @_;
-    my $fieldname = shift @_;
-
-    my $contents = ();
-    my $handle = $self->{_request}->upload($fieldname);
-    $contents = join("\n", <$handle>) if defined $handle;
-    return $contents;
-}
-
 =head2 $self->process()
 
 Processes the input reconciliation file by calling the function
@@ -64,8 +47,8 @@ sub process {
     my $self = shift @_;
 
     # thoroughly implementation-dependent, so depends on helper-functions
-    my ($recon, $fldname) = @_;
-    my $contents = $self->load_file($fldname);
+    my ($recon, $contents) = @_;
+
     if (@{$self->{entries}} = LedgerSMB::Reconciliation::ISO20022->process_xml($recon, $contents)){
         $self->{file_upload} = 1;
         return $self->{entries};
