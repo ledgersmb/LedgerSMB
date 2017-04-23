@@ -439,7 +439,7 @@ sub run_backup {
     } elsif ($request->{backup_type} eq 'browser') {
         my $bak;
         open $bak, '<', $backupfile
-            or die "Failed to open file";
+            or die "Failed to open temporary backup file $backupfile : $!";
         unlink $backupfile; # remove the file after it gets closed
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
