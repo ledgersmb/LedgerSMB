@@ -361,9 +361,9 @@ sub load_modules {
         next unless $mod;
         no warnings 'uninitialized';
         $self->run_file(
-                       file       => "$self->{source_dir}sql/modules/$mod",
-                       log_stdout  => $args->{log} || "${log}_stdout",
-               log_stderr  => $args->{errlog} || "${log}_stderr"
+            file       => "$self->{source_dir}sql/modules/$mod",
+            log_stdout => $args->{log}    || "${log}_stdout",
+            log_stderr => $args->{errlog} || "${log}_stderr"
         );
 
     }
