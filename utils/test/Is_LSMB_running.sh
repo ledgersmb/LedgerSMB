@@ -81,9 +81,30 @@ SkipEarly() {
 [[ -e /tmp/Is_LSMB_running.log ]] && rm /tmp/Is_LSMB_running.log
 [[ -e /tmp/Is_LSMB_running.html ]] && rm /tmp/Is_LSMB_running.html
 
-SkipEarly
+WaitForPlackup() {
+    local -i seconds=0;
+    local processrunning=false;
+    while (( i++ < 60 )); do # wait up to 60 seconds for plack or starman process to start
+        pgrep -f 'plackup' >/dev/null && { processrunning=true; break; }
+        pgrep -f 'starman.*8080' >/dev/null && { processrunning=true; break; }
+        sleep 0.1;
+    done
+    if ! $processrunning; then
+        echo "The starman/plack process didn't start before the timeout";
+        return 1;
+    fi
+    i=0;
+    while (( i++ < 60 )); do # wait up to 60 seconds for plack or starman server to respond to a curl
+        pgrep -f 'plackup' >/dev/null
+        curl --max-time 60 --connect-timeout 60 --fail --silent localhost:5001/setup.pl >/dev/null && { httpdrunning=true; break; }
+        sleep 0.1;
+    done
+}
 
-if curl --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
+SkipEarly
+WaitForPlackup
+
+if curl --max-time 60 --connect-timeout 60 --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
 else    # fail early if starman is not running
     E=$?;
