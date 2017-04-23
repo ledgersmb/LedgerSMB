@@ -306,7 +306,7 @@ sub escape {
     # for Apache 2 we escape strings twice
     if (
         ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
-        && !$beenthere 
+        && !$beenthere
     ) {
         $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
     }
@@ -1205,32 +1205,24 @@ qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" val
 sub generate_selects {
     my ($form, $myconfig) = @_;
 
-
     # currencies
     if (!$form->{currencies}) {
         $form->{currencies} = $form->get_setting('curr');
     }
 
     if ($form->{currencies}) {
-        my %curr;
-        my @curr = split( /:/, $form->{currencies} );
-        $form->{defaultcurrency} = $curr[0];
 
-        foreach (@curr) {
-            $curr{$_} = 1;
-        }
-
-        my @curr = keys %curr;
-        $form->{currency} = $form->{defaultcurrency}
-            unless $form->{currency};
+        my @currencies = split /:/, $form->{currencies};
+        $form->{defaultcurrency} = $currencies[0];
+        $form->{currency} ||= $form->{defaultcurrency};
         $form->{selectcurrency} = "";
 
-        for (@curr) {
-            my $selected = ($form->{currency} eq $_)
-                         ? " selected=\"selected\""
-                         : "";
+        foreach my $currency (sort @currencies) {
+            my $selected = ($form->{currency} eq $currency)
+                         ? ' selected="selected"'
+                         : '';
             $form->{selectcurrency} .=
-                "<option value=\"$_\"$selected>$_</option>\n"
+                "<option value=\"$currency\"$selected>$currency</option>\n";
         }
     }
 
