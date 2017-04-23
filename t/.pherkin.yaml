@@ -18,6 +18,9 @@ default:
            selenium:
              base_url: ${LSMB_BASE_URL}
              page_class: PageObject::Root
+             # Need a long retry timeout because instrumenting
+             # old code takes loooong when running coverage testing
+             retry_timeout: 30
              driver:
                 drv_name: Weasel::Driver::Selenium2
                 wait_timeout: 3000
