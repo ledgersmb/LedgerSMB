@@ -12,7 +12,12 @@ seq:
     - par:
       - xt/4*.t
       - xt/5*.t
-      - xt/6*.t
+      - xt/6[1-3]*.t
+      - seq:
+        - xt/60-startlsmb.t
+        - par:
+        - xt/6[56]*.t
+      - xt/6[7-9]*.t
       - xt/7*.t
       - xt/*.pg
       - seq: **.feature
