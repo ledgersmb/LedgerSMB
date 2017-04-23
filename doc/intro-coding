@@ -1,0 +1,61 @@
+How to contribute code to LedgerSMB.
+
+This is mostly just copied from an email by Erik Huelsmann
+to a volunteer in 2017 on Ledger-smb-devel@lists.sourceforge.net
+
+
+Thanks for volunteering! 
+
+[XXX May need some "Getting to know you. Getting to know us. 
+Getting approval" stuff.]
+
+
+The steps to contribute your refactorings would include:
+
+* Creating a GitHub account
+* Cloning the main repository (ledgersmb/LedgerSMB.git) to your GitHub
+account
+* Create a Travis CI account and link it to your GitHub LedgerSMB repository
+* Creating a local clone of your own GitHub repository
+* Install the "production" dependencies
+* Try running the software using the Starman server and playing around a
+bit (probably create a test database)
+
+
+Ideally, we receive refactorings back into our 'master' branch. From there,
+it can be backported to a release, if the refactoring brings large benefits
+(at a low cost for stability and other quality measures).
+
+The workflow I use myself is to start with the local master branch. Then
+for each feature or refactoring, I try to keep the purpose of the feature
+or refactoring as small as possible. That way, changes are easier to
+review.
+
+When you're done making changes to the branch, push the local branch into
+your GitHub repository and check the build-results on Travis CI. When the
+build result is green, you can open a pull request from your branch in your
+GitHub account to the main LedgerSMB repository. When the build result is
+red, come to the LedgerSMB developers' discussion room (
+https://vector.im/beta/#/room/#ledgersmb:matrix.org). Although you probably
+want to do that sooner rather than later, probably, to get help and answers
+to your questions.
+
+As for what refactorings we're looking for: we keep a list of issues in
+GitHub which are marked as "bite-sized" (
+https://github.com/ledgersmb/LedgerSMB/issues?q=is%3Aissue+is%3Aopen+label%3Abite-sized);
+this is probably a good place to start. Even though they're "bite-sized"
+this means they're limited in scope; when you pick one up as your first
+change, I'd expect these to be sufficiently challenging.
+
+Oh. Last but not least: if you're not yet up to building refactored code:
+we need lots of tests to be defined and coded. You could help out building
+those as a start as well. Most refactorings should include test cases to
+assure the refactored code does what it should do (even though the original
+code probably didn't have tests!), so starting to build tests makes for a
+good first step towards learning what you need to know to get to
+refactoring.
+
+Thanks again for stepping up. If you have more questions (which I'm sure
+you do), please come to the chat channel, or mail your questions here...
+
+
