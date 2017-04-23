@@ -258,8 +258,9 @@ sub get_for_template{
 
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
-        open my $fh, '>', $self->file_path . "/$result->{file_name}"
-            or die "Failed to open file";
+        my $full_path = $self->file_path . "/$result->{file_name}";
+        open my $fh, '>', $full_path
+            or die "Failed to open output file $full_path : $!";
         binmode $fh, ':bytes';
         print $fh $result->{content};
         close $fh;
