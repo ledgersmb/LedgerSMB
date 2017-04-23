@@ -247,9 +247,12 @@ sub get_for_template{
     warn 'entering get_for_template';
 
     my @results = $self->call_procedure(
-                 funcname => 'file__get_for_template',
-                      args => [$args->{ref_key}, $args->{file_class}]
-     );
+        funcname => 'file__get_for_template',
+        args => [
+            $args->{ref_key},
+            $args->{file_class},
+        ],
+    );
     if ( -d $LedgerSMB::Sysconfig::tempdir . '/' . $$){
         die 'directory exists';
     }
@@ -277,7 +280,8 @@ sub get_for_template{
         if ($result->{file_class} == 3){
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;
-        } else {
+        }
+        else {
            $result->{ref_key} = $args->{ref_key};
         }
     }
