@@ -140,7 +140,7 @@ sub get_from_file {
     my ($template_name, $format) = split /\./, $fname;
     my $content = '';
     open my $fh, '<', $path
-        or die "Failed to open template path";
+        or die "Failed to open template file $path : $!";
     $content .= $_ while <$fh>;
     close $fh;
     my %args = (
