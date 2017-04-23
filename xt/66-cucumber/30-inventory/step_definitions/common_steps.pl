@@ -31,7 +31,6 @@ When qr/I create an inventory adjustment dated (.{10,10}) with these counts:/, s
     S->{'the inventory adjustment source'} = 'Adjustment Test 1';
     S->{'the inventory adjustment date'} = $date;
 
-    S->{ext_wsl}->page->body->maindiv->wait_for_content;
     foreach my $row (@{C->data}) {
         S->{ext_wsl}->page->body->maindiv->content->add_row(%$row);
     }
