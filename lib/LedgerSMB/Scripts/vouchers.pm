@@ -467,10 +467,11 @@ sub print_batch {
         $zipcmd =~ s/\%dir/$dirname/g;
         `$zipcmd`;
 
-        open my $zip, '<', "$dirname.zip"
-            or die "Failed to open zip file";
+        my $file_path = "$dirname.zip";
+        open my $zip, '<', $file_path
+            or die "Failed to open temporary zip file $file_path : $!";
         binmode $zip, ':bytes';
-        unlink "$dirname.zip";
+        unlink $file_path;
 
         # TODO: clean up the temp dir!!
         return [
