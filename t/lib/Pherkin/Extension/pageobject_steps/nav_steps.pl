@@ -137,7 +137,6 @@ Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
     my $elm = S->{ext_wsl}->page->body->maindiv
         ->content->find(qq|.//*[\@id="$id" or \@title="$id"
                                 or \@alt="$id"]
-
         |);
     ok(defined $elm, "value-defining element ($id) found");
     my $actual = $elm->get_text;
