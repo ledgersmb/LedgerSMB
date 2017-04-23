@@ -17,7 +17,7 @@ HasRecentlyRun() {
         (( last_run_delta = now - tstamp ))
         (( last_run_delta_minutes = last_run_delta /60 ))
         (( last_run_delta_seconds = last_run_delta - (last_run_delta_minutes*60) ))
-        if (( (tstamp + 6) > now )); then
+        if (( (tstamp + 600) > now )); then
             echo "Skipping $1 as it's already been run ($last_run_delta_minutes minutes and $last_run_delta_seconds seconds ago).";
             return 0;
         else
