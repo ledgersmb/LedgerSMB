@@ -524,7 +524,7 @@ sub render_to_psgi {
     }
     elsif ($self->{rendered}) {
         open $body, '<:raw', $self->{rendered}
-            or die "Failed to open rendered file";
+            or die "Failed to open rendered file $self->{rendered} : $!";
         # as we don't support Windows anyway: unlinking an open file works!
         unlink $self->{rendered};
     }
@@ -585,7 +585,7 @@ sub _http_output {
         $data = "";
         $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
         open my $fh, '<', $self->{rendered}
-            or die "failed to open rendered file";
+            or die "failed to open rendered file $self->{rendered} : $!";
         binmode $fh, $self->{binmode};
         while (my $line = <$fh>){
             $data .= $line;
@@ -703,13 +703,13 @@ sub _lpr_output {
     my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
     open my $pipe, '|-', $lpr
-        or die "failed to open lpr pipe";
+        or die "Failed to open lpr pipe $lpr : $!";
 
     # Output is not defined here.  In the future we should consider
     # changing this to use the system command and hit the file as an arg.
     #  -- CT
     open my $file, '<', "$self->{rendered}"
-        or die "failed to open file";
+        or die "Failed to open rendered file $self->{rendered} : $!";
 
     while (my $line = <$file>){
         print $pipe $line;
