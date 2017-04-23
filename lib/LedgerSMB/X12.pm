@@ -164,7 +164,7 @@ sub parse {
     if (!$self->is_message_file){
         $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
         open my $fh, '>', $file
-            or die "Failed to open file";
+            or die "Failed to open temporary output file $file : $!";
         print $fh $self->message;
         close $fh;
     }

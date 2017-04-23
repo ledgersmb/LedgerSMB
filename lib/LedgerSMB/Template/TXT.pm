@@ -110,7 +110,7 @@ sub process {
     }
     if ($output){
         open my $fh, '>', $output
-            or die "Failed to open output file";
+            or die "Failed to open output file $output : $!";
         print $fh $parent->{output};
         close $fh;
     }
