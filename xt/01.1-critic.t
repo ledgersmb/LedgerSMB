@@ -29,6 +29,7 @@ my @cert_policies = qw(
     Miscellanea::ProhibitFormats
     Modules::ProhibitEvilModules
     Modules::RequireEndWithOne
+    Objects::ProhibitIndirectSyntax
     Subroutines::ProhibitReturnSort
     Subroutines::ProhibitSubroutinePrototypes
     TestingAndDebugging::ProhibitProlongedStrictureOverride
@@ -50,7 +51,6 @@ my @cert_policies = qw(
 #    BuiltinFunctions::ProhibitUniversalIsa
 #    InputOutput::RequireCheckedClose
 #    InputOutput::RequireCheckedSyscalls
-#    Objects::ProhibitIndirectSyntax
 #    RegularExpressions::ProhibitCaptureWithoutTest
 #    Subroutines::ProhibitBuiltinHomonyms
 #    Subroutines::ProhibitExplicitReturnUndef   --explicitly excluded
