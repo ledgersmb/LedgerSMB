@@ -79,7 +79,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Auth;
 use LedgerSMB::App_State;
 
-$form = new Form;
+$form = Form->new;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
