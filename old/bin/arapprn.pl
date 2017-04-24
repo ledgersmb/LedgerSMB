@@ -87,7 +87,7 @@ sub print {
     if ( $form->{media} !~ /screen/ ) {
         $form->error( $locale->text('Select postscript or PDF!')  )
           if $form->{format} !~ /(postscript|pdf)/;
-        $old_form = new Form;
+        $old_form = Form->new;
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     }
 
@@ -122,7 +122,7 @@ sub print {
 
     $form->{queued} .= " $form->{formname} $filename";
     $form->{queued} =~ s/^ //;
-    $printform = new Form;
+    $printform = Form->new;
     for ( keys %$form ) {
         $printform->{$_} = $form->{$_};
     }
