@@ -237,9 +237,7 @@ sub create_links {
     $tax       = 0;
     $taxrate   = 0;
     #$ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
-    $ml = LedgerSMB::PGNumber->new(
-        ($form->{ARAP} eq 'AR') ? 1 : -1)
-    );
+    $ml        = new LedgerSMB::PGNumber( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
 
 
     foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
