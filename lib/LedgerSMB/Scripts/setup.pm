@@ -417,12 +417,12 @@ sub run_backup {
         no warnings 'once';
 
         my $csettings = $LedgerSMB::Company_Config::settings;
-        my $mail = new LedgerSMB::Mailer(
+        my $mail = LedgerSMB::Mailer->new(
             from          => $LedgerSMB::Sysconfig::backup_email_from,
             to            => $request->{email},
             subject       => "Email of Backup",
             message       => 'The Backup is Attached',
-            );
+        );
         $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
