@@ -1097,7 +1097,7 @@ sub e_mail {
 
 sub send_email {
 
-    $old_form = new Form;
+    $old_form = Form->new;
 
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{media} = $old_form->{oldmedia};
@@ -1135,7 +1135,7 @@ sub print {
           if ( $form->{format} !~ /(txt|postscript|pdf)/ );
     }
 
-    $old_form = new Form;
+    $old_form = Form->new;
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
     $form->{rowcount}++;
