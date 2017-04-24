@@ -389,45 +389,47 @@ sub run_backup {
     my $backupfile;
     my $mimetype;
 
-    if ($request->{backup} eq 'roles'){
-       my @t = localtime(time);
-       $t[4]++;
-       $t[5] += 1900;
-       $t[3] = substr( "0$t[3]", -2 );
-       $t[4] = substr( "0$t[4]", -2 );
-       my $date = "$t[5]-$t[4]-$t[3]";
+    if ($request->{backup} eq 'roles') {
+        my @t = localtime(time);
+        $t[4]++;
+        $t[5] += 1900;
+        $t[3] = substr( "0$t[3]", -2 );
+        $t[4] = substr( "0$t[4]", -2 );
+        my $date = "$t[5]-$t[4]-$t[3]";
 
-       $backupfile = $database->backup_globals(
-                      tempdir => $LedgerSMB::Sysconfig::backupdir,
-                         file => "roles_${date}.sql"
-       );
-       $mimetype   = 'text/x-sql';
-    } elsif ($request->{backup} eq 'db'){
-       $backupfile = $database->backup;
-       $mimetype   = 'application/octet-stream';
-    } else {
+        $backupfile = $database->backup_globals(
+            tempdir => $LedgerSMB::Sysconfig::backupdir,
+            file => "roles_${date}.sql"
+        );
+        $mimetype = 'text/x-sql';
+    }
+    elsif ($request->{backup} eq 'db') {
+        $backupfile = $database->backup;
+        $mimetype   = 'application/octet-stream';
+    }
+    else {
         die $request->{_locale}->text('Invalid backup request');
     }
 
     $backupfile or
         die $request->{_locale}->text('Error creating backup file');
 
-    if ($request->{backup_type} eq 'email'){
+    if ($request->{backup_type} eq 'email') {
         # suppress warning of single usage of $LedgerSMB::Sysconfig::...
         no warnings 'once';
 
         my $csettings = $LedgerSMB::Company_Config::settings;
         my $mail = LedgerSMB::Mailer->new(
-            from          => $LedgerSMB::Sysconfig::backup_email_from,
-            to            => $request->{email},
-            subject       => "Email of Backup",
-            message       => 'The Backup is Attached',
+            from     => $LedgerSMB::Sysconfig::backup_email_from,
+            to       => $request->{email},
+            subject  => "Email of Backup",
+            message  => 'The Backup is Attached',
         );
         $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
-            );
+        );
         $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new(
@@ -436,19 +438,25 @@ sub run_backup {
             format => 'HTML',
         );
         return $template->render_to_psgi($request);
-    } elsif ($request->{backup_type} eq 'browser') {
+    }
+    elsif ($request->{backup_type} eq 'browser') {
         my $bak;
         open $bak, '<', $backupfile
             or die "Failed to open temporary backup file $backupfile : $!";
         unlink $backupfile; # remove the file after it gets closed
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
-        return [ 200,
-                 [ 'Content-Type' => $mimetype,
-                   'Content-Disposition' =>
-                        "attachment; filename=\"$attachment_name\"" ],
-                 $bak ];  # return the file-handle
-     } else {
+        return [
+            200,
+            [
+                'Content-Type' => $mimetype,
+                'Content-Disposition' =>
+                    "attachment; filename=\"$attachment_name\""
+            ],
+            $bak  # return the file-handle
+        ];
+    }
+    else {
         die $request->{_locale}->text("Don't know what to do with backup");
     }
 }
