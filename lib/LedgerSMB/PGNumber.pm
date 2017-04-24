@@ -144,26 +144,27 @@ sub from_input {
         return $string if eval { $string->isa(__PACKAGE__) };
     }
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
-    if(!defined $string || $string eq ''){
-     return undef;
+    if (!defined $string || $string eq '') {
+        return undef;
     }
-    #$string = undef if $string eq '';
-    my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+    my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
     my $format = ($args{format}) ? $args{format}
-                              : $LedgerSMB::App_State::User->{numberformat};
+                                 : $LedgerSMB::App_State::User->{numberformat};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
     #return undef if !defined $string;
     my $negate;
     my $pgnum;
     my $newval;
     $negate = 1 if $string =~ /(^\(|DR$)/;
-    if ( UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) )
-    {
+
+    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
         return $string;
     }
-    if (UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) ) {
+
+    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
         $pgnum = $string;
-    } else {
+    }
+    else {
         my $formatter = Number::Format->new(
             -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
             -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
@@ -172,6 +173,7 @@ sub from_input {
         $pgnum = LedgerSMB::PGNumber->new($newval);
         $self->round_mode('+inf');
     }
+
     bless $pgnum, $self;
     $pgnum->bmul(-1) if $negate;
     die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->is_nan();
