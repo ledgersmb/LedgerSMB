@@ -1262,7 +1262,7 @@ sub generate_sales_orders {
         }
     }
 
-    $order = new Form;
+    $order = Form->new;
     for ( keys %{ $form->{order} } ) {
         $order->{dbh} = $form->{dbh};
 
