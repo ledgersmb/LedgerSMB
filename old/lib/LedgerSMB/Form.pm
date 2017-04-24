@@ -732,7 +732,7 @@ sub _redirect {
     $temphash{action} = $form->{action};
 
     undef $form;
-    $form = new Form($argv);
+    $form = Form->new($argv);
 
     for (@common_attrs) {
         $form->{$_} = $temphash{$_};
