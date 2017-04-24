@@ -152,7 +152,7 @@ $self->parser.
 
 sub _parser {
     my ($self) = @_;
-    my $parser = new X12::Parser;
+    my $parser = X12::Parser->new;
     my $file = $self->message;
     return $parser;
 }

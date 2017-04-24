@@ -344,7 +344,7 @@ sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
 
-    my $q = new CGI::Simple;
+    my $q = CGI::Simple->new;
     print $q->redirect('login.pl?action=logout&reason=timeout');
 }
 
@@ -391,7 +391,10 @@ sub _process_argstr {
     my ($self, $argstr) = @_;
 
     my %params=();
-    my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
+
+    # Don't pass an empty string to CGI::Simple
+    my $query = ($argstr) ? CGI::Simple->new($argstr) : CGI::Simple->new;
+
     # my $params = $query->Vars; returns a tied hash with keys that
     # are not parameters of the CGI query.
     %params = $query->Vars;

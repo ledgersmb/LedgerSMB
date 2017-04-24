@@ -653,19 +653,19 @@ sub _email_output {
         @mailmime = ('contenttype', $self->{mimetype});
     }
 
-        # User default for email from
-        $args->{from} ||= $self->{user}->{email};
+    # User default for email from
+    $args->{from} ||= $self->{user}->{email};
 
-        # Default addresses
-        my $csettings = $LedgerSMB::Company_Config::settings;
-        $args->{from} ||= $csettings->{default_email_from};
-        $args->{to} ||= $csettings->{default_email_to};
-        $args->{cc} ||= $csettings->{default_email_cc};
-        $args->{bcc} ||= $csettings->{default_email_bcc};
+    # Default addresses
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $args->{from} ||= $csettings->{default_email_from};
+    $args->{to} ||= $csettings->{default_email_to};
+    $args->{cc} ||= $csettings->{default_email_cc};
+    $args->{bcc} ||= $csettings->{default_email_bcc};
 
 
-        # Mailer stuff
-    my $mail = new LedgerSMB::Mailer(
+    # Mailer stuff
+    my $mail = LedgerSMB::Mailer->new(
         from => $args->{from},
         to => $args->{to},
         cc => $args->{cc},
@@ -678,18 +678,21 @@ sub _email_output {
     if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{rendered}) {
         my @attachment;
         my $name = $args->{filename};
+
         if ($self->{rendered}) {
             @attachment = ('file', $self->{rendered});
             $name ||= $self->{rendered};
-        } else {
+        }
+        else {
             @attachment = ('data', $self->{output});
         }
+
         $mail->attach(
             mimetype => $self->{mimetype},
             filename => $name,
             strip => $$,
             @attachment,
-            );
+        );
     }
     $mail->send;
 }
@@ -711,7 +714,7 @@ sub _lpr_output {
     open my $file, '<', "$self->{rendered}"
         or die "Failed to open rendered file $self->{rendered} : $!";
 
-    while (my $line = <$file>){
+    while (my $line = <$file>) {
         print $pipe $line;
     }
 

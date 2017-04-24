@@ -475,8 +475,8 @@ sub edit {
     }
 
     my $i = 0;
-    my $minusOne    = new LedgerSMB::PGNumber(-1);#HV make sure BigFloat stays BigFloat
-    my $plusOne     = new LedgerSMB::PGNumber(1);#HV make sure BigFloat stays BigFloat
+    my $minusOne = LedgerSMB::PGNumber->new(-1); #HV make sure BigFloat stays BigFloat
+    my $plusOne  = LedgerSMB::PGNumber->new(1);  #HV make sure BigFloat stays BigFloat
 
     foreach my $ref (@{ $form->{GL} }) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";

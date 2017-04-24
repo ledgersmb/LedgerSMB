@@ -1287,7 +1287,7 @@ sub print_and_save {
     $form->error( $locale->text('Select a Printer!') )
       if $form->{media} eq 'screen';
 
-    $old_form = new Form;
+    $old_form = Form->new;
     $form->{display_form} = "save";
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{rowcount}++;

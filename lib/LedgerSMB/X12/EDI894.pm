@@ -51,7 +51,7 @@ has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1,
 sub _order {
     my ($self) = @_;
     my $sep = $self->parser->get_element_separator;
-    my $form = new Form;
+    my $form = Form->new;
     my $sender_idx;
     my $sender_id;
 

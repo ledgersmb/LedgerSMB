@@ -1060,7 +1060,7 @@ sub edit_recurring {
 
 sub process_transactions {
     # save variables
-    my $pt = new Form;
+    my $pt = Form->new;
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
     my $defaultprinter;
