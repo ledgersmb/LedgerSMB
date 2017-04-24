@@ -34,7 +34,7 @@ ExecStart=/usr/bin/plackup           \
     --access-log $LOG                \
     --server HTTP::Server::PSGI      \
     --env development                \
-    --reload
+    --reload                        \
     --Reload "., \
         lib/LedgerSMB, \
         lib/LedgerSMB/Auth, \
