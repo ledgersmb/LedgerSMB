@@ -164,9 +164,9 @@ sub from_input {
     if (UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) ) {
         $pgnum = $string;
     } else {
-        my $formatter = new Number::Format(
-                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+        my $formatter = Number::Format->new(
+            -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+            -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
         $newval = $formatter->unformat_number($string);
         $pgnum = LedgerSMB::PGNumber->new($newval);
