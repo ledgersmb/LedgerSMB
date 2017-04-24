@@ -1428,7 +1428,7 @@ sub print_and_post {
         }
     }
 
-    $old_form = new Form;
+    $old_form = Form->new;
     $form->{display_form} = "post";
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{rowcount}++;
