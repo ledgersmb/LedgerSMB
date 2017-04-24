@@ -665,7 +665,7 @@ sub _email_output {
 
 
         # Mailer stuff
-    my $mail = new LedgerSMB::Mailer(
+    my $mail = LedgerSMB::Mailer->new(
         from => $args->{from},
         to => $args->{to},
         cc => $args->{cc},
