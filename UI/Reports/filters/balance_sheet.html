@@ -147,6 +147,12 @@
                    value_attr = 'text'
                    value = comparison_periods
                    size = '3'
+                   "data-dojo-type"="dijit/form/NumberTextBox"
+                   "data-dojo-props"="constraints:{min:0,max:9,places:0}," _
+                        "invalidMessage:'" _
+                        text('Please enter a numeric value bewteen 0 and 9') _
+                        "'," _
+                        "rangeMessage:'" _ text('Invalid comparisons') _ "'"
                    default_values = 0
                    };
                    ?></legend>
@@ -289,8 +295,7 @@
                       size = 3
                      value = comparison_periods
                            "data-dojo-type" = "lsmb/PublishNumberTextBox"
-                          "data-dojo-props" = "topic:'ui/report/comparison-selection',
-                                               placeHolder:'0',
+                          "data-dojo-props" = "placeHolder:'0',
                                                constraints:{min:0,max:9,places:0,pattern:0},
                                                invalidMessage:'Please enter a numeric value.',
                                                rangeMessage:'Invalid number of periods.'"
