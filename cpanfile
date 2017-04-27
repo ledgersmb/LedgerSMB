@@ -42,7 +42,8 @@ requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
-requires "XML::Simple";
+requires 'Text::CSV';
+requires 'XML::Simple';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
