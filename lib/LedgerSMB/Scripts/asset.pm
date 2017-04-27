@@ -916,31 +916,10 @@ sub _import_file {
     my $request = shift @_;
 
     my $handle = $request->{_request}->upload('import_file');
-    my $contents = join("\n", <$handle>);
+    my $csv = Text::CSV->new;
+    $csv->header($handle);
+    my @import_entries = $csv->getlines_all($handle);
 
-    my @import_entries = [];
-    for my $line (split /(\r\n|\r|\n)/, $contents){
-        next if ($line !~ /,/);
-        my @fields;
-        $line =~ s/[^"]"",/"/g;
-        while ($line ne '') {
-            if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            } else {
-                $line =~ s/([^,]*),?//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            }
-        }
-        push @import_entries, \@fields;
-    }
-
-    # get rid of header line
-    shift @import_entries;
     return @import_entries;
 }
 
