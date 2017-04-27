@@ -54,7 +54,6 @@ my @cert_policies = qw(
 #    RegularExpressions::ProhibitCaptureWithoutTest
 #    Subroutines::ProhibitBuiltinHomonyms
 #    Subroutines::ProhibitExplicitReturnUndef   --explicitly excluded
-#    Subroutines::ProhibitUnusedPrivateSubroutines
 #    Subroutines::ProtectPrivateSubs
 #    Subroutines::RequireFinalReturn
 #    TestingAndDebugging::ProhibitNoStrict      --explicitly excluded
@@ -67,12 +66,20 @@ my @cert_policies = qw(
 #    Variables::RequireLocalizedPunctuationVars
 
 # The following CERT recommended policies will not be enforced:
+#
 #    ErrorHandling::RequireCarping
 #      As per ledgerSMB coding guidelines, calling "die" is the preferred
 #      way to signal an error. We can't stop die()ing, because that's how
 #      our error handling is implemented.  See:
 #      https://ledgersmb.org/community-guide/community-guide/development/coding-guidelines/perl-coding-guidelines
 #      https://matrix.to/#/!qyoLumPqusaXqFJNyK:matrix.org/$1492804519389522uYnup:matrix.org
+#
+#    Subroutines::ProhibitUnusedPrivateSubroutines
+#      This policy doesn't recognise when private subroutines are legitimately
+#      used as builder functions for Moose properties, which is a common
+#      pattern employed in LedgerSMB code. Neither does it recognise when
+#      private methods are used to compose roles in other files.
+
 
 # LedgerSMB enforces some other Perl::Critic policies
 my @lsmb_policies = qw(
