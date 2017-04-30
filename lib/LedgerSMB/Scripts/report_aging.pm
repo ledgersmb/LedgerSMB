@@ -12,7 +12,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 package LedgerSMB::Scripts::report_aging;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;

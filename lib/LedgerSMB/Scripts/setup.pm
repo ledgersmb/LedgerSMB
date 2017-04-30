@@ -24,7 +24,6 @@ use strict;
 use warnings;
 
 use Locale::Country;
-use LedgerSMB;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;

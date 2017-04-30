@@ -290,7 +290,6 @@ sub _preprocess {
     if (eval {$rawvars->can('to_output')}){
         $rawvars = $rawvars->to_output;
     }
-    use LedgerSMB;
     my $type = ref $rawvars;
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
