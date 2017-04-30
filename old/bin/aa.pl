@@ -45,9 +45,14 @@
 #======================================================================
 
 package lsmb_legacy;
+use LedgerSMB::Form;
+use LedgerSMB::IR;
+use LedgerSMB::IS;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Company_Config;
+use LedgerSMB::DBObject::Draft;
+use LedgerSMB::DBObject::TransTemplate;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
@@ -104,11 +109,10 @@ sub copy_to_new{
 }
 
 sub new_screen {
-    use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet batch_id script);
     $oldform = $form;
     $form = {};
-    bless $form, Form;
+    bless $form, 'Form';
     for (@reqprops){
         $form->{$_} = $oldform->{$_};
     }
@@ -1090,10 +1094,7 @@ sub on_hold {
 
 
 sub save_temp {
-    use LedgerSMB;
-    use LedgerSMB::DBObject::TransTemplate;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
+    my $lsmb = { %$form };
     $lsmb->{is_invoice} = 1;
     $lsmb->{due} = $form->{invtotal};
     $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
@@ -1127,11 +1128,7 @@ sub save_temp {
 }
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
@@ -1139,13 +1136,9 @@ sub edit_and_save {
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
     $form->update_invnumber;
 
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
 
     $draft->approve();
 

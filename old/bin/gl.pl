@@ -51,6 +51,8 @@ use LedgerSMB::PE;
 use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Company_Config;
+use LedgerSMB::DBObject::Draft;
+use LedgerSMB::DBObject::TransTemplate;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/arap.pl";
@@ -90,24 +92,15 @@ $form->{login} = 'test';
 
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
     check_balanced($form);
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     GL->post_transaction( \%myconfig, \%$form, $locale);
     edit();
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->approve();
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -351,9 +344,6 @@ sub display_form
 
 
 sub save_temp {
-    use LedgerSMB;
-    use LedgerSMB::DBObject::TransTemplate;
-    my $lsmb = LedgerSMB->new();
     my ($department_name, $department_id) = split/--/, $form->{department};
     $lsmb->{department_id} = $department_id;
     $lsmb->{reference} = $form->{reference};
@@ -375,14 +365,13 @@ sub save_temp {
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new({base => $lsmb});
+    $template = LedgerSMB::DBObject::TransTemplate->new({base => $form});
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }
 
 
 sub display_row {
-
     my ($init) = @_;
     $form->{totaldebit}  = 0;
     $form->{totalcredit} = 0;
@@ -666,9 +655,7 @@ sub post {
 sub delete {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     delete $form->{reference};
