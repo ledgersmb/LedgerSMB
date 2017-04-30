@@ -98,6 +98,11 @@ This verifies the validity of the session cookie.
 
 This function sets up the db handle for the request
 
+=item to_json($output)
+
+Serializes the Perl object (hash) $output to JSON and returns the
+PSGI response triplet (status, headers, body).
+
 =back
 
 
@@ -152,11 +157,18 @@ use utf8;
 use Try::Tiny;
 use Carp;
 use DBI;
+use JSON ();
 
 use base qw(LedgerSMB::Request);
 our $VERSION = '1.6.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
+my $json = JSON->new
+    ->pretty(1)
+    ->indent(1)
+    ->utf8(1)
+    ->convert_blessed(1);
+
 
 sub new {
     my ($class, $cgi_args, $uploads, $cookies) = @_;
@@ -521,6 +533,15 @@ sub set {
     }
     return 1;
 
+}
+
+sub to_json {
+    my ($self, $output) = @_;
+
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             [ $json->encode(LedgerSMB::Template::TXT::preprocess($output)) ]
+        ];
 }
 
 1;
