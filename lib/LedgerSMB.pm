@@ -94,10 +94,6 @@ Expands a hash into human-readable key => value pairs, and formats and rounds am
 
 Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
 
-=item finalize_request()
-
-This zeroes out the App_State.
-
 =item verify_session()
 
 This verifies the validity of the session cookie.
@@ -479,12 +475,6 @@ sub is_allowed_role {
     return $access->{lsmb__is_allowed_role};
 }
 
-sub finalize_request {
-    LedgerSMB::App_State->cleanup();
-    die 'exit'; # return to error handling and cleanup
-                # Without dying, we tend to continue with a bad dbh. --CT
-}
-
 sub error {
     my ($self, $msg) = @_;
     Carp::croak $msg;
@@ -530,13 +520,6 @@ sub _db_init {
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
     return 1;
-}
-
-#private, for db connection errors
-sub _on_connection_error {
-    for (@_){
-        $logger->error("$_");
-    }
 }
 
 sub dberror{
