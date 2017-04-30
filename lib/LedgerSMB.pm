@@ -463,23 +463,16 @@ sub _process_cookies {
     }
 }
 
-sub is_run_mode {
-    my $self = shift @_;
-    #avoid 'uninitialized' warnings in tests
-    my $mode = shift @_;
-    my $rc   = 0;
-    if(! $mode){return $rc;}
-    $mode=lc $mode;
-    if ( $mode eq 'cgi' && $ENV{GATEWAY_INTERFACE} ) {
-        $rc = 1;
-    }
-    elsif ( $mode eq 'cli' && !( $ENV{GATEWAY_INTERFACE} || $ENV{MOD_PERL} ) ) {
-        $rc = 1;
-    }
-    elsif ( $mode eq 'mod_perl' && $ENV{MOD_PERL} ) {
-        $rc = 1;
-    }
-    $rc;
+sub upload {
+    my ($self, $name) = @_;
+
+    return $self->{_request}->upload($name);
+}
+
+sub upload_info {
+    my $self = shift;
+
+    return $self->{_request}->upload_info(@_);
 }
 
 sub call_procedure {

@@ -451,7 +451,7 @@ This parses a file, and returns a the csv in tabular format.
 sub _parse_file {
     my $self = shift @_;
 
-    my $handle = $self->{_request}->upload('import_file');
+    my $handle = $self->upload('import_file');
 
     my $csv = Text::CSV->new;
     $csv->header($handle);
