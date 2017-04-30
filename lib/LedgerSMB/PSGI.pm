@@ -39,19 +39,6 @@ $ENV{GATEWAY_INTERFACE}="cgi/1.1";
 
 =over
 
-=item rest_app
-
-Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
-
-=cut
-
-sub rest_app {
-   return CGI::Emulate::PSGI->handler(
-     sub {
-       do 'old/bin/rest-handler.pl';
-    });
-}
-
 =item old_app
 
 Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bin/
@@ -225,8 +212,6 @@ sub setup_url_space {
              root => './',
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
-
-        mount '/rest/' => rest_app();
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => $old_app
