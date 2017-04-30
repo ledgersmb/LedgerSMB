@@ -55,11 +55,6 @@ If an index is specified, the merged keys are given a form of
 Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
-=item remove_cgi_globals()
-
-Removes all elements starting with a . because these elements conflict with the
-ability to hide the entire structure for things like CSV lookups.
-
 =item call_procedure( procname => $procname, args => $args )
 
 Function that allows you to call a stored procedure by name and map the appropriate argument to the function values.
@@ -85,10 +80,6 @@ Loads user configuration info from LedgerSMB::User
 =item sanitize_for_display()
 
 Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
-
-=item take_top_level()
-
-Removes blank keys and non-reference keys from a hash and returns a hash with only non-blank and referenced keys.
 
 =item type()
 
@@ -633,8 +624,6 @@ sub type {
     return $ENV{REQUEST_METHOD};
 }
 
-sub DESTROY {}
-
 sub set {
 
     my $self = shift @_;
@@ -645,26 +634,6 @@ sub set {
     }
     return 1;
 
-}
-
-sub remove_cgi_globals {
-    my ($self) = @_;
-    for my $key (keys %$self){
-        if ($key =~ /^\./){
-            delete $self->{key}
-        }
-    }
-}
-
-sub take_top_level {
-   my ($self) = @_;
-   my $return_hash = {};
-   for my $key (keys %$self){
-       if (!ref($self->{$key}) && $key !~ /^\./){
-          $return_hash->{$key} = $self->{$key}
-       }
-   }
-   return $return_hash;
 }
 
 1;
