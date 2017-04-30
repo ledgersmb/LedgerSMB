@@ -116,7 +116,8 @@ sub psgi_app {
     local %ENV = ( %ENV, %$environment );
 
     my $psgi_req = Plack::Request->new($env);
-    my $request = LedgerSMB->new($psgi_req->parameters, $psgi_req->uploads);
+    my $request = LedgerSMB->new($psgi_req->parameters,
+                                 $psgi_req->uploads, $psgi_req->cookies);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;

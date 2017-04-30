@@ -159,7 +159,7 @@ our $VERSION = '1.6.0-dev';
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub new {
-    my ($class, $cgi_args, $uploads) = @_;
+    my ($class, $cgi_args, $uploads, $cookies) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -173,6 +173,7 @@ sub new {
     $self->{VERSION} = $VERSION;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
+    $self->{_cookies} = $cookies  if defined $cookies;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();
@@ -342,8 +343,6 @@ sub _process_args {
 
 sub _process_cookies {
     my ($self) = @_;
-    my %cookie;
-
 
     # Explicitly don't use the cookie content when we have a simple request
     # for login.pl without an 'action' query parameter: this is a request
@@ -356,15 +355,8 @@ sub _process_cookies {
         return;
     }
 
-    $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-    my @cookies = split /;/, $ENV{HTTP_COOKIE};
-    foreach (@cookies) {
-        my ( $name, $value ) = split /=/, $_, 2;
-        $cookie{$name} = $value;
-    }
-
-    $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
-
+    $self->{cookie} =
+        $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};
 
     if (! $self->{company} && $self->{cookie}) {
         my $ccookie = $self->{cookie};
