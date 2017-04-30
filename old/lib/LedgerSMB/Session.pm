@@ -18,7 +18,6 @@ package LedgerSMB::Session;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use LedgerSMB::Auth;
-use CGI::Simple;
 use strict;
 use warnings;
 
@@ -27,10 +26,9 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB');
 sub _http_error {
     my ($errcode, $msg_plus) = @_;
     $msg_plus = '' if not defined $msg_plus;
-    my $cgi = CGI::Simple->new();
 
     my $err = {
-    '500' => {status  => '500 Internal Server Error',
+        '500' => {status  => '500 Internal Server Error',
           message => 'An error occurred. Information on this error has been logged.',
                   others  => {}},
         '403' => {status  => '403 Forbidden',
@@ -46,25 +44,13 @@ sub _http_error {
         '454' => {status  => '454 Database Does Not Exist',
                   message => 'Database Does Not Exist' },
     };
-    # Ordinarily I would use $cgi->header to generate the headers
-    # but this doesn't seem to be working.  Although it is generally desirable
-    # to create the headers using the package, I think we should print them
-    # manually.  -CT
-    if ($errcode eq '401'){
-        if ($msg_plus eq 'setup'){
-           $err->{'401'}->{others}->{'WWW-Authenticate'}
-                = "Basic realm=\"LedgerSMB-$msg_plus\"";
-        }
-        print $cgi->header(
-           -type               => 'text/text',
-           -status             => $err->{'401'}->{status},
-           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
-        );
-    } else {
-        print $cgi->header(
-           -type   => 'text/text',
-           -status => $err->{$errcode}->{status},
-        );
+
+    print qq|Status: $err->{$errcode}->{status}
+Content-Type: text/plain
+|;
+    my $others = $err->{$errcode}->{others};
+    for my $key (keys %{$others}) {
+        print qq|$key: $others->{$key}\n|;
     }
     print $err->{$errcode}->{message};
     die;

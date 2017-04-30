@@ -170,7 +170,8 @@ try {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
                       . $locale->text('action not defined!'));
     }
-}catch  {
+}
+catch  {
   # We have an exception here because otherwise we always get an exception
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
@@ -178,6 +179,7 @@ try {
     $form->{_error} = 1;
     $LedgerSMB::App_State::DBH = undef;
     _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    LedgerSMB::App_State::cleanup();
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow

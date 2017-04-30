@@ -55,7 +55,6 @@ use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Template::DBProvider;
-use CGI::Simple::Standard qw(:html);
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;

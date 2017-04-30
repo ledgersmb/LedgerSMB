@@ -7,14 +7,13 @@ requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
-requires 'CGI::Simple';
-requires 'CGI::Simple::Standard';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
+requires 'HTML::Entities';
 requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'List::MoreUtils';
@@ -36,8 +35,9 @@ requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';
 requires 'Plack::Builder';
-requires 'Plack::Middleware::ConditionalGET'; # YLA
-requires 'Plack::Builder::Conditionals'; # YLA
+requires 'Plack::Builder::Conditionals';
+requires 'Plack::Middleware::ConditionalGET';
+requires 'Plack::Request';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
@@ -93,11 +93,11 @@ feature 'xls', "Microsoft Excel" =>
 
 feature 'debug', "Debug pane" =>
     sub {
-        recommends 'Devel::NYTProf';	# No explicit require for debug pane, handled internaly
-        recommends 'Module::Versions';	# No explicit require for debug pane, handled internaly
-        recommends 'Plack::Middleware::Debug::Log4perl';		# Optional
-        recommends 'Plack::Middleware::Debug::Profiler::NYTProf';	# Optional
-        recommends 'Plack::Middleware::InteractiveDebugger';		# Optional
+        recommends 'Devel::NYTProf';    # No explicit require for debug pane, handled internaly
+        recommends 'Module::Versions';  # No explicit require for debug pane, handled internaly
+        recommends 'Plack::Middleware::Debug::Log4perl';                # Optional
+        recommends 'Plack::Middleware::Debug::Profiler::NYTProf';       # Optional
+        recommends 'Plack::Middleware::InteractiveDebugger';            # Optional
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps

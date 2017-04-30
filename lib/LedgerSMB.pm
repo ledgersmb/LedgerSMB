@@ -18,10 +18,6 @@ This method creates a new base request instance. It also validates the
 session/user credentials, as appropriate for the run mode.  Finally, it sets up
 the database connections for the user.
 
-=item unescape($var)
-
-Unescapes the var, i.e. converts html entities back to their characters.
-
 =item open_form()
 
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF
@@ -36,11 +32,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 
 Identical with check_form() above, but also removes the form_id from the
 session.  This should be used when back-button actions are not valid.
-
-=item is_run_mode ('(cli|cgi|mod_perl)')
-
-This function returns 1 if the run mode is what is specified.  Otherwise
-returns 0.
 
 =item is_allowed_role({allowed_roles => @role_names})
 
@@ -60,10 +51,14 @@ If an index is specified, the merged keys are given a form of
 Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
-=item remove_cgi_globals()
+=item upload([$filename])
 
-Removes all elements starting with a . because these elements conflict with the
-ability to hide the entire structure for things like CSV lookups.
+This function returns - when called without arguments - the number of
+files in the upload data when called in scalar context or the names
+of the files when called in list context.
+
+Calling the function with a filename argument returns a filehandle
+to the content.
 
 =item call_procedure( procname => $procname, args => $args )
 
@@ -91,17 +86,9 @@ Loads user configuration info from LedgerSMB::User
 
 Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
 
-=item take_top_level()
-
-Removes blank keys and non-reference keys from a hash and returns a hash with only non-blank and referenced keys.
-
 =item type()
 
 Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
-
-=item finalize_request()
-
-This zeroes out the App_State.
 
 =item verify_session()
 
@@ -110,6 +97,11 @@ This verifies the validity of the session cookie.
 =item initialize_with_db
 
 This function sets up the db handle for the request
+
+=item to_json($output)
+
+Serializes the Perl object (hash) $output to JSON and returns the
+PSGI response triplet (status, headers, body).
 
 =back
 
@@ -145,9 +137,6 @@ package LedgerSMB;
 use strict;
 use warnings;
 
-use CGI::Simple;
-$CGI::Simple::DISABLE_UPLOADS = 0;
-
 use PGObject;
 
 use LedgerSMB::PGNumber;
@@ -165,68 +154,46 @@ use LedgerSMB::DBH;
 use utf8;
 
 
-$CGI::Simple::POST_MAX = -1;
-
 use Try::Tiny;
 use Carp;
 use DBI;
+use JSON ();
 
 use base qw(LedgerSMB::Request);
 our $VERSION = '1.6.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
+my $json = JSON->new
+    ->pretty(1)
+    ->indent(1)
+    ->utf8(1)
+    ->convert_blessed(1);
+
 
 sub new {
-    #my $type   = "" unless defined shift @_;
-    #my $argstr = "" unless defined shift @_;
+    my ($class, $cgi_args, $uploads, $cookies) = @_;
+    my $self = {};
+    bless $self, $class;
+
     (my $package,my $filename,my $line)=caller;
 
-    my $type   = shift @_;
-    my $argstr = shift @_;
-    my $self = {};
-
-    $type = "" unless defined $type;
-    $argstr = "" unless defined $argstr;
-
-    $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
     my $creds =  LedgerSMB::Auth::get_credentials;
     $self->{login} = $creds->{login};
-    bless $self, $type;
-
-    my $query;
-    if(ref($argstr) eq 'DBI::db')
-    {
-        $self->{dbh}=$argstr;
-        $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
-    }
-    else
-    {
-        $query = $self->_process_argstr($argstr);
-    }
-
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{_request} = $query;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
+    $self->{_uploads} = $uploads  if defined $uploads;
+    $self->{_cookies} = $cookies  if defined $cookies;
 
+    $self->_process_args($cgi_args);
     $self->_set_default_locale();
     $self->_set_action();
     $self->_set_script_name();
     $self->_process_cookies();
 
-    #HV set _locale already to default here,
-    # so routines lower in stack can use it;e.g. login.pl
-
-
-    $logger->debug("End");
     return $self;
-}
-
-sub unescape {
-    my ($self, $var) = @_;
-    return $self->{_request}->unescapeHTML($var);
 }
 
 sub open_form {
@@ -272,13 +239,11 @@ sub close_form {
 sub verify_session {
     my ($self) = @_;
 
-    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
-       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-            $logger->error("Session did not check");
-            return 0;
-       }
-       $logger->debug("session_check completed OK");
+    if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
+        $logger->error("Session did not check");
+        return 0;
     }
+    $logger->debug("session_check completed OK");
     return 1;
 }
 
@@ -339,16 +304,6 @@ sub get_user_info {
     $self->{_user}->{language} ||= 'en';
 }
 
-#This function needs to be moved into the session handler.
-sub _get_password {
-    my ($self) = shift @_;
-    $self->{sessionexpired} = shift @_;
-
-    my $q = CGI::Simple->new;
-    print $q->redirect('login.pl?action=logout&reason=timeout');
-}
-
-
 sub _set_default_locale {
     my ($self) = @_;
 
@@ -387,50 +342,19 @@ sub _set_script_name {
 }
 
 
-sub _process_argstr {
-    my ($self, $argstr) = @_;
+sub _process_args {
+    my ($self, $args) = @_;
 
-    my %params=();
+    for my $key (keys %$args){
+        my @values = grep { defined $_ && $_ ne '' } $args->get_all($key);
+        next if ! @values;
 
-    # Don't pass an empty string to CGI::Simple
-    my $query = ($argstr) ? CGI::Simple->new($argstr) : CGI::Simple->new;
-
-    # my $params = $query->Vars; returns a tied hash with keys that
-    # are not parameters of the CGI query.
-    %params = $query->Vars;
-
-    # Some clients send the 'action' parameter twice;
-    # see UI/js-src/Form.js::submit() for more
-    $params{action} = (split /\0/, $params{action})[0]
-        if defined $params{action};
-
-    for my $p(keys %params){
-        if ((! defined $params{$p}) or ($params{$p} eq '')){
-            delete $params{$p};
-            next;
-        }
-        utf8::decode($params{$p});
-        utf8::upgrade($params{$p});
+        $self->{$key} = (@values == 1) ? $values[0] : \@values;
     }
-    $self->merge(\%params);
-
-    # Adding this so that empty values are stored in the db as NULL's.  If
-    # stored procedures want to handle them differently,
-    # they must opt to do so.
-    # -- CT
-    for (keys %$self){
-        if (defined $self->{$_}
-            && $self->{$_} eq ''){
-            $self->{$_} = undef;
-        }
-    }
-    return $query;
 }
 
 sub _process_cookies {
     my ($self) = @_;
-    my %cookie;
-
 
     # Explicitly don't use the cookie content when we have a simple request
     # for login.pl without an 'action' query parameter: this is a request
@@ -443,17 +367,8 @@ sub _process_cookies {
         return;
     }
 
-    if ($self->is_run_mode('cgi', 'mod_perl') and $ENV{HTTP_COOKIE}) {
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
-    }
-
-    $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
-
+    $self->{cookie} =
+        $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};
 
     if (! $self->{company} && $self->{cookie}) {
         my $ccookie = $self->{cookie};
@@ -463,23 +378,18 @@ sub _process_cookies {
     }
 }
 
-sub is_run_mode {
-    my $self = shift @_;
-    #avoid 'uninitialized' warnings in tests
-    my $mode = shift @_;
-    my $rc   = 0;
-    if(! $mode){return $rc;}
-    $mode=lc $mode;
-    if ( $mode eq 'cgi' && $ENV{GATEWAY_INTERFACE} ) {
-        $rc = 1;
+sub upload {
+    my ($self, $name) = @_;
+
+    if (! defined $name) {
+        return map { $_->basename } @{$self->{_uploads}};
     }
-    elsif ( $mode eq 'cli' && !( $ENV{GATEWAY_INTERFACE} || $ENV{MOD_PERL} ) ) {
-        $rc = 1;
-    }
-    elsif ( $mode eq 'mod_perl' && $ENV{MOD_PERL} ) {
-        $rc = 1;
-    }
-    $rc;
+
+    my $tmpfname = $self->{_uploads}->get_one($name)->path;
+    open my $fh, "<", $tmpfname
+        or die "Can't open uploaded temporary file $tmpfname: $!";
+
+    return $fh;
 }
 
 sub call_procedure {
@@ -499,12 +409,6 @@ sub is_allowed_role {
          procname => 'lsmb__is_allowed_role', args => [$args->{allowed_roles}]
     );
     return $access->{lsmb__is_allowed_role};
-}
-
-sub finalize_request {
-    LedgerSMB::App_State->cleanup();
-    die 'exit'; # return to error handling and cleanup
-                # Without dying, we tend to continue with a bad dbh. --CT
 }
 
 sub error {
@@ -529,13 +433,6 @@ sub _db_init {
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
     return 1;
-}
-
-#private, for db connection errors
-sub _on_connection_error {
-    for (@_){
-        $logger->error("$_");
-    }
 }
 
 sub dberror{
@@ -626,8 +523,6 @@ sub type {
     return $ENV{REQUEST_METHOD};
 }
 
-sub DESTROY {}
-
 sub set {
 
     my $self = shift @_;
@@ -640,24 +535,13 @@ sub set {
 
 }
 
-sub remove_cgi_globals {
-    my ($self) = @_;
-    for my $key (keys %$self){
-        if ($key =~ /^\./){
-            delete $self->{key}
-        }
-    }
-}
+sub to_json {
+    my ($self, $output) = @_;
 
-sub take_top_level {
-   my ($self) = @_;
-   my $return_hash = {};
-   for my $key (keys %$self){
-       if (!ref($self->{$key}) && $key !~ /^\./){
-          $return_hash->{$key} = $self->{$key}
-       }
-   }
-   return $return_hash;
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             [ $json->encode(LedgerSMB::Template::TXT::preprocess($output)) ]
+        ];
 }
 
 1;

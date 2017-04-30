@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 208;
+use Test::More tests => 205;
 use File::Find;
 
 my @on_disk;
@@ -32,9 +32,6 @@ my @exception_modules =
 
      # Exclude because tested conditionally on Spreadsheet::WriteExcel
      'LedgerSMB::Template::XLS',
-
-     # Exclude because tested conditionally on XML::Simple way below
-     'LedgerSMB::REST_Format::xml',
 
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
@@ -100,7 +97,6 @@ my @modules =
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
           'LedgerSMB::PSGI::Preloads',
-          'LedgerSMB::REST_Format::json',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
           'LedgerSMB::FileFormats::ISO20022::CAMT053',
@@ -179,7 +175,7 @@ my @modules =
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
-          'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
+          'LedgerSMB::Request::Error',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
     );
 
@@ -220,13 +216,6 @@ SKIP: {
     skip 'OpenOffice::OODoc not installed', 1 if $@;
 
     use_ok('LedgerSMB::Template::ODS');
-}
-
-SKIP: {
-        eval { require XML::Simple };
-
-        skip 'XML::Simple not installed', 1 if $@;
-        use_ok('LedgerSMB::REST_Format::xml');
 }
 
 SKIP: {

@@ -98,7 +98,7 @@ Attaches a file to an object
 sub attach_file {
     my ($request) = @_;
     my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
-    my @fnames =  $request->{_request}->upload_info;
+    my @fnames =  $request->upload;
     $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){
         $file->file_name($request->{url});
@@ -114,7 +114,7 @@ sub attach_file {
         }
         $file->file_name($fnames[0]);
         $file->get_mime_type;
-        my $fh = $request->{_request}->upload('upload_data');
+        my $fh = $request->upload('upload_data');
         binmode $fh, ':raw';
         my $fdata = join ("", <$fh>);
         $file->content($fdata);
