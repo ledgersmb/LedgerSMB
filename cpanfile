@@ -8,13 +8,13 @@ requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'CGI::Simple';
-requires 'CGI::Simple::Standard';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
+requires 'HTML::Entities';
 requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'List::MoreUtils';
