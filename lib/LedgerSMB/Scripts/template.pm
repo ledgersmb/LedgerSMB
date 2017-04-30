@@ -122,7 +122,7 @@ will be accepted.
 
 sub upload {
     my ($request) = @_;
-    my @fnames =  $request->upload_info;
+    my @fnames =  $request->upload;
     my $name = $fnames[0];
     my $fh = $request->upload($name);
     my $fdata = join ("", <$fh>);

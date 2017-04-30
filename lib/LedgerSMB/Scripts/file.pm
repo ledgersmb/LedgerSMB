@@ -98,7 +98,7 @@ Attaches a file to an object
 sub attach_file {
     my ($request) = @_;
     my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
-    my @fnames =  $request->upload_info;
+    my @fnames =  $request->upload;
     $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){
         $file->file_name($request->{url});

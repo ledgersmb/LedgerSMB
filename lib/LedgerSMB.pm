@@ -55,6 +55,15 @@ If an index is specified, the merged keys are given a form of
 Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
+=item upload([$filename])
+
+This function returns - when called without arguments - the number of
+files in the upload data when called in scalar context or the names
+of the files when called in list context.
+
+Calling the function with a filename argument returns a filehandle
+to the content.
+
 =item call_procedure( procname => $procname, args => $args )
 
 Function that allows you to call a stored procedure by name and map the appropriate argument to the function values.
@@ -449,12 +458,6 @@ sub upload {
     my ($self, $name) = @_;
 
     return $self->{_request}->upload($name);
-}
-
-sub upload_info {
-    my $self = shift;
-
-    return $self->{_request}->upload_info(@_);
 }
 
 sub call_procedure {
