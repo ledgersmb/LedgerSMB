@@ -512,29 +512,6 @@ sub error {
     Carp::croak $msg;
 }
 
-sub _error {
-    my ( $self_or_form, $msg, $status ) = @_;
-    $msg = "? _error" if !defined $msg;
-    $status = 500 if ! defined $status;
-
-    if ( ! $ENV{GATEWAY_INTERFACE} && $ENV{error_function} ) {
-
-        &{ $ENV{error_function} }($msg);
-
-    }
-    else {
-        print qq|Status: $status ISE
-Content-Type: text/html; charset=utf-8
-
-<html>
-<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
-<p>dbversion: $self_or_form->{dbversion}, company: $self_or_form->{company}</p>
-</body>
-</html>
-|;
-    }
-    die;
-}
 
 # Database routines used throughout
 

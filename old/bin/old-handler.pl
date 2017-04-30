@@ -132,7 +132,7 @@ try {
 
     if ($myconfig{language}){
         $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-            or LedgerSMB::_error($form, __FILE__ . ':' . __LINE__
+            or _error($form, __FILE__ . ':' . __LINE__
                        . ": Locale not loaded: $!\n" );
     }
 
@@ -177,17 +177,40 @@ try {
   # -- CT
     $form->{_error} = 1;
     $LedgerSMB::App_State::DBH = undef;
-    LedgerSMB::_error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
-1;
-
 $form->{dbh}->commit if defined $form->{dbh};
-
 $form->{dbh}->disconnect()
     if defined $form->{dbh};
 
 # end
 
+
+sub _error {
+    my ($form, $msg, $status) = @_;
+    $msg = "? _error" if !defined $msg;
+    $status = 500 if ! defined $status;
+
+    if (!$ENV{GATEWAY_INTERFACE} && $ENV{error_function}) {
+        &{ $ENV{error_function} }($msg);
+    }
+    else {
+        print qq|Status: $status ISE
+Content-Type: text/html; charset=utf-8
+
+<html>
+<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
+<p>dbversion: $form->{dbversion}, company: $form->{company}</p>
+</body>
+</html>
+|;
+    }
+
+    die;
+}
+
+
+1;
