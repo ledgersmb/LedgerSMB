@@ -12,7 +12,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 package LedgerSMB::Scripts::contact_reports;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Contact::Search;
 use LedgerSMB::Report::Contact::History;

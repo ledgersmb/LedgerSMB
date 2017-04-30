@@ -12,7 +12,6 @@ This module holds Colombia-specific reports.
 
 package LedgerSMB::Scripts::lreports_co;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::co::Caja_Diaria;
 use LedgerSMB::Report::co::Balance_y_Mayor;

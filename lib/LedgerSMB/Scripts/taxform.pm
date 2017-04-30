@@ -21,7 +21,6 @@ package LedgerSMB::Scripts::taxform;
 use strict;
 use warnings;
 
-use LedgerSMB;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::TaxForm;

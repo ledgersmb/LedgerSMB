@@ -15,7 +15,6 @@ list of matching accounts in a ul/li pair
 
 package LedgerSMB::Scripts::journal;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
