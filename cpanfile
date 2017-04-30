@@ -7,7 +7,6 @@ requires 'App::LedgerSMB::Admin', '0.05';
 requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
-requires 'CGI::Simple';
 requires 'Config::IniFiles';
 requires 'DBD::Pg', '3.3.0';
 requires 'DBI';
