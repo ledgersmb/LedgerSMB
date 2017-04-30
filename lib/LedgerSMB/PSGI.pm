@@ -23,6 +23,7 @@ use Try::Tiny;
 
 # To build the URL space
 use Plack::Builder;
+use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
@@ -93,6 +94,7 @@ sub _internal_server_error {
              \@body_lines ];
 }
 
+
 sub psgi_app {
     my $env = shift;
 
@@ -113,7 +115,8 @@ sub psgi_app {
 
     local %ENV = ( %ENV, %$environment );
 
-    my $request = LedgerSMB->new();
+    my $psgi_req = Plack::Request->new($env);
+    my $request = LedgerSMB->new($psgi_req->parameters, $psgi_req->uploads);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;

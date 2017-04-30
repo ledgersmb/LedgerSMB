@@ -18,10 +18,6 @@ This method creates a new base request instance. It also validates the
 session/user credentials, as appropriate for the run mode.  Finally, it sets up
 the database connections for the user.
 
-=item unescape($var)
-
-Unescapes the var, i.e. converts html entities back to their characters.
-
 =item open_form()
 
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF
@@ -136,9 +132,6 @@ package LedgerSMB;
 use strict;
 use warnings;
 
-use CGI::Simple;
-$CGI::Simple::DISABLE_UPLOADS = 0;
-
 use PGObject;
 
 use LedgerSMB::PGNumber;
@@ -156,8 +149,6 @@ use LedgerSMB::DBH;
 use utf8;
 
 
-$CGI::Simple::POST_MAX = -1;
-
 use Try::Tiny;
 use Carp;
 use DBI;
@@ -168,56 +159,28 @@ our $VERSION = '1.6.0-dev';
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub new {
-    #my $type   = "" unless defined shift @_;
-    #my $argstr = "" unless defined shift @_;
+    my ($class, $cgi_args, $uploads) = @_;
+    my $self = {};
+    bless $self, $class;
+
     (my $package,my $filename,my $line)=caller;
 
-    my $type   = shift @_;
-    my $argstr = shift @_;
-    my $self = {};
-
-    $type = "" unless defined $type;
-    $argstr = "" unless defined $argstr;
-
-    $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
     my $creds =  LedgerSMB::Auth::get_credentials;
     $self->{login} = $creds->{login};
-    bless $self, $type;
-
-    my $query;
-    if(ref($argstr) eq 'DBI::db')
-    {
-        $self->{dbh}=$argstr;
-        $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
-    }
-    else
-    {
-        $query = $self->_process_argstr($argstr);
-    }
-
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
-    $self->{_request} = $query;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
+    $self->{_uploads} = $uploads  if defined $uploads;
 
+    $self->_process_args($cgi_args);
     $self->_set_default_locale();
     $self->_set_action();
     $self->_set_script_name();
     $self->_process_cookies();
 
-    #HV set _locale already to default here,
-    # so routines lower in stack can use it;e.g. login.pl
-
-
-    $logger->debug("End");
     return $self;
-}
-
-sub unescape {
-    my ($self, $var) = @_;
-    return $self->{_request}->unescapeHTML($var);
 }
 
 sub open_form {
@@ -328,16 +291,6 @@ sub get_user_info {
     $self->{_user}->{language} ||= 'en';
 }
 
-#This function needs to be moved into the session handler.
-sub _get_password {
-    my ($self) = shift @_;
-    $self->{sessionexpired} = shift @_;
-
-    my $q = CGI::Simple->new;
-    print $q->redirect('login.pl?action=logout&reason=timeout');
-}
-
-
 sub _set_default_locale {
     my ($self) = @_;
 
@@ -376,44 +329,15 @@ sub _set_script_name {
 }
 
 
-sub _process_argstr {
-    my ($self, $argstr) = @_;
+sub _process_args {
+    my ($self, $args) = @_;
 
-    my %params=();
+    for my $key (keys %$args){
+        my @values = grep { defined $_ && $_ ne '' } $args->get_all($key);
+        next if ! @values;
 
-    # Don't pass an empty string to CGI::Simple
-    my $query = ($argstr) ? CGI::Simple->new($argstr) : CGI::Simple->new;
-
-    # my $params = $query->Vars; returns a tied hash with keys that
-    # are not parameters of the CGI query.
-    %params = $query->Vars;
-
-    # Some clients send the 'action' parameter twice;
-    # see UI/js-src/Form.js::submit() for more
-    $params{action} = (split /\0/, $params{action})[0]
-        if defined $params{action};
-
-    for my $p(keys %params){
-        if ((! defined $params{$p}) or ($params{$p} eq '')){
-            delete $params{$p};
-            next;
-        }
-        utf8::decode($params{$p});
-        utf8::upgrade($params{$p});
+        $self->{$key} = (@values == 1) ? $values[0] : \@values;
     }
-    $self->merge(\%params);
-
-    # Adding this so that empty values are stored in the db as NULL's.  If
-    # stored procedures want to handle them differently,
-    # they must opt to do so.
-    # -- CT
-    for (keys %$self){
-        if (defined $self->{$_}
-            && $self->{$_} eq ''){
-            $self->{$_} = undef;
-        }
-    }
-    return $query;
 }
 
 sub _process_cookies {
@@ -453,7 +377,15 @@ sub _process_cookies {
 sub upload {
     my ($self, $name) = @_;
 
-    return $self->{_request}->upload($name);
+    if (! defined $name) {
+        return map { $_->basename } @{$self->{_uploads}};
+    }
+
+    my $tmpfname = $self->{_uploads}->get_one($name)->path;
+    open my $fh, "<", $tmpfname
+        or die "Can't open uploaded temporary file $tmpfname: $!";
+
+    return $fh;
 }
 
 sub call_procedure {
