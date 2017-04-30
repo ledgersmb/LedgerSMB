@@ -37,11 +37,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 Identical with check_form() above, but also removes the form_id from the
 session.  This should be used when back-button actions are not valid.
 
-=item is_run_mode ('(cli|cgi|mod_perl)')
-
-This function returns 1 if the run mode is what is specified.  Otherwise
-returns 0.
-
 =item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
@@ -272,13 +267,11 @@ sub close_form {
 sub verify_session {
     my ($self) = @_;
 
-    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
-       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
-            $logger->error("Session did not check");
-            return 0;
-       }
-       $logger->debug("session_check completed OK");
+    if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
+        $logger->error("Session did not check");
+        return 0;
     }
+    $logger->debug("session_check completed OK");
     return 1;
 }
 
@@ -443,13 +436,11 @@ sub _process_cookies {
         return;
     }
 
-    if ($self->is_run_mode('cgi', 'mod_perl') and $ENV{HTTP_COOKIE}) {
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
+    $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+    my @cookies = split /;/, $ENV{HTTP_COOKIE};
+    foreach (@cookies) {
+        my ( $name, $value ) = split /=/, $_, 2;
+        $cookie{$name} = $value;
     }
 
     $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
