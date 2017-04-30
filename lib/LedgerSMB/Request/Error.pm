@@ -65,22 +65,6 @@ sub http_response {
          </body>|;
 }
 
-=head2 throw
-
-Dies with the status as return code after displaying error.
-
-=cut
-
-use HTTP::Exception;
-sub throw {
-    my ($self) = @_;
-#    warn $self->msg;
-#    exit $self->status;
-    my $e = HTTP::Exception->new($self->status);
-    $e->message($self->msg);
-    $e->throw;
-}
-
 __PACKAGE__->meta->make_immutable;
 
 1;
