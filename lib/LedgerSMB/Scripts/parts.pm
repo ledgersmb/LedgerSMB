@@ -7,7 +7,6 @@ LedgerSMB::Scripts::parts
 package LedgerSMB::Scripts::parts;
 use strict;
 use warnings;
-use CGI::Simple;
 
 use LedgerSMB::Part;
 use LedgerSMB::REST_Format::json;
