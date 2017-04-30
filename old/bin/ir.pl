@@ -40,11 +40,13 @@
 
 package lsmb_legacy;
 use List::Util qw(min max);
+use LedgerSMB::Form;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Setting;
+use LedgerSMB::DBObject::Draft;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/io.pl";
@@ -64,11 +66,7 @@ sub copy_to_new{
 }
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     IR->post_invoice( \%myconfig, \%$form );
@@ -76,12 +74,7 @@ sub edit_and_save {
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
 
     $draft->approve();
 
@@ -99,11 +92,10 @@ sub approve {
 }
 
 sub new_screen {
-    use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet type);
     $oldform = $form;
     $form = {};
-    bless $form, Form;
+    bless $form, 'Form';
     for (@reqprops){
         $form->{$_} = $oldform->{$_};
     }
