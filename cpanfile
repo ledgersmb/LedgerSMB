@@ -14,7 +14,6 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTML::Entities';
-requires 'HTTP::Exception'; # YLA
 requires 'JSON';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
