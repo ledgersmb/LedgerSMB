@@ -510,7 +510,7 @@ sub save {
     $a[3] = substr( "0$a[3]", -2 );
     my $shippingdate = "$a[5]$a[4]$a[3]";
 
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
 
     # add assembly records
     if ( $form->{item} eq 'assembly' && !$project_id ) {

@@ -143,7 +143,7 @@ sub save {
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     if ( !$form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
         $form->{employee} = "$form->{employee}--$form->{employee_id}";
     }
 
@@ -1604,7 +1604,7 @@ sub save_inventory {
     my $employee_id;
 
     ( $null, $employee_id ) = split /--/, $form->{employee};
-    ( $null, $employee_id ) = $form->get_employee($dbh) if !$employee_id;
+    ( $null, $employee_id ) = $form->get_employee if !$employee_id;
 
     $query = qq|
         SELECT serialnumber, ship
@@ -1942,7 +1942,7 @@ sub transfer {
 
     my $dbh = $form->{dbh};
 
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
 
     my @a = localtime;
     $a[5] += 1900;
@@ -2254,7 +2254,7 @@ sub generate_orders {
         my $employee_id;
         my $department_id;
 
-        ( $null, $employee_id ) = $form->get_employee($dbh);
+        ( $null, $employee_id ) = $form->get_employee;
         ( $null, $department_id ) = split /--/, $form->{department};
         $department_id *= 1;
 

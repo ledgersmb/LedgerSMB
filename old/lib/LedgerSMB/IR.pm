@@ -113,7 +113,7 @@ sub post_invoice {
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
 
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );

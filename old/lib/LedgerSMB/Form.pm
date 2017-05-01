@@ -1759,17 +1759,15 @@ sub get_shipto {
 }
 
 
-=item $form->get_employee($dbh);
+=item $form->get_employee();
 
 Returns a list containing the name and id of the employee $form->{login}.  Any
 portion of $form->{login} including and past '@' are ignored.
 
-$dbh is unused.
-
 =cut
 
 sub get_employee {
-    my ( $self, $dbh ) = @_;
+    my ($self) = @_;
 
     my $login = $self->{login};
     $login =~ s/@.*//;
@@ -1786,7 +1784,7 @@ sub get_employee {
 
     $sth->finish;
 
-    @a;
+    return @a;
 }
 
 =item $form->get_name($myconfig, $table[, $transdate])
@@ -2009,7 +2007,7 @@ sub all_vc {
     if ( !$self->{employee_id} ) {
         ( $self->{employee}, $self->{employee_id} ) = split /--/,
           $self->{employee};
-        ( $self->{employee}, $self->{employee_id} ) = $self->get_employee($dbh)
+        ( $self->{employee}, $self->{employee_id} ) = $self->get_employee
           unless $self->{employee_id};
     }
 

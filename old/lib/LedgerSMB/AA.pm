@@ -304,7 +304,7 @@ sub post_transaction {
     #( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     ( $form->{employee_name}, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     # check if id really exists
@@ -948,7 +948,7 @@ sub get_name {
     $form->{forex} = $form->{exchangerate};
 
     # if no employee, default to login
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh)
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee
       unless $form->{employee_id};
 
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
