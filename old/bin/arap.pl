@@ -309,7 +309,7 @@ sub rebuild_vc {
     my ( $vc, $ARAP, $transdate, $job ) = @_;
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
-    $form->all_vc( \%myconfig, $vc, $ARAP, undef, $transdate, $job );
+    $form->all_vc( \%myconfig, $vc, $ARAP, $transdate, $job );
     $form->{"select$vc"} = "";
     for ( @{ $form->{"all_$vc"} } ) {
         $form->{"select$vc"} .=

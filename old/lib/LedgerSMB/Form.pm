@@ -1882,7 +1882,7 @@ sub get_name {
     return $i;
 }
 
-=item $form->all_vc($myconfig, $vc, $module, $dbh, $transdate, $job);
+=item $form->all_vc($myconfig, $vc, $module, $transdate, $job);
 
 Populates the list referred to by $form->{all_${vc}} with hashes of either
 vendor or customer id and name, ordered by the name.  This will be vendor
@@ -1898,13 +1898,13 @@ $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
-$module and $dbh are unused.
+$module is unused.
 
 =cut
 
 sub all_vc {
 
-    my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
+    my ( $self, $myconfig, $vc, $module, $transdate, $job ) = @_;
     my $ref;
     my $table;
 
@@ -1915,7 +1915,7 @@ sub all_vc {
         $table = 'ap';
     }
 
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     my $sth;
     $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
@@ -2604,7 +2604,6 @@ sub create_links {
         $myconfig,
         $vc,
         $module,
-        $dbh,
         $self->{transdate},
         $job
     );
