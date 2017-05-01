@@ -2531,12 +2531,7 @@ sub create_links {
     else {
 
         if (!$self->{"$self->{vc}_id"}) {
-            $self->lastname_used(
-                $myconfig,
-                $dbh,
-                $vc,
-                $module
-            );
+            $self->lastname_used($vc);
         }
     }
 
@@ -2596,7 +2591,7 @@ sub get_setting {
     return $ref->{value};
 }
 
-=item $form->lastname_used($myconfig, $dbh2, $vc, $module);
+=item $form->lastname_used($vc);
 
 Fills the name, currency, ${vc}_id, duedate, and possibly invoice_notes
 attributes of $form with the last used values for the transaction type specified
@@ -2606,15 +2601,11 @@ If $form->{type} matches /_order/, the transaction type used is order, if it
 matches /_quotation/, quotations are looked through.  If $form->{type} does not
 match either of the above, then ar or ap transactions are used.
 
-$myconfig, $dbh2, and $module are unused.
-
 =cut
 
 sub lastname_used {
 
-    my ( $self, $myconfig, $dbh2, $vc, $module ) = @_;
-
-    my $dbh = $self->{dbh};
+    my ($self, $vc) = @_;
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap;
     my $where;

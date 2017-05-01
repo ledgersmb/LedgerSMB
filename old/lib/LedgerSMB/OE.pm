@@ -757,7 +757,7 @@ sub retrieve {
     else {
 
         # get last name used
-        $form->lastname_used( $myconfig, $dbh, $form->{vc} )
+        $form->lastname_used($form->{vc})
           unless $form->{"$form->{vc}_id"};
 
         delete $form->{notes};
