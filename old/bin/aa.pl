@@ -1202,15 +1202,14 @@ sub update {
 
     if ( $newname = &check_name( $form->{vc} ) ) {
         $form->{notes} = $form->{intnotes} unless $form->{id};
-        &rebuild_vc($form->{vc}, $form->{transdate});
+        rebuild_vc($form->{vc}, $form->{transdate});
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
             $form->current_date( \%myconfig, $form->{transdate},
                                  $form->{terms} * 1 );
         $form->{oldtransdate} = $form->{transdate};
-        $newproj =
-            &rebuild_vc($form->{vc}, $form->{transdate})
+        $newproj = rebuild_vc($form->{vc}, $form->{transdate})
             if !$newname;
     }
 
