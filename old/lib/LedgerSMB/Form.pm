@@ -2854,8 +2854,6 @@ their respective $form attributes match /$form->{formname}/, and spoolfile is
 the file extracted from the string $form->{queued} or NULL if there is no entry
 for $form->{formname}.
 
-$myconfig is unused.
-
 =cut
 
 sub update_status {
