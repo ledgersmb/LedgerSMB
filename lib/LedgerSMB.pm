@@ -151,6 +151,7 @@ use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
+use LedgerSMB::Template::TXT;
 use utf8;
 
 
