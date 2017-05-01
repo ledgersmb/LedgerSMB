@@ -1357,7 +1357,7 @@ sub post {
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
-        $form->update_status( \%myconfig );
+        $form->update_status;
         if ( $form->{printandpost} ) {
             &{"print_$form->{formname}"}( $old_form, 1 );
         }

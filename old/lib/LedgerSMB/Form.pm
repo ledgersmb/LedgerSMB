@@ -2845,7 +2845,7 @@ sub get_partsgroup {
     $sth->finish;
 }
 
-=item $form->update_status($myconfig);
+=item $form->update_status();
 
 DELETEs all status rows which have a formname of $form->{formname} and a
 trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
@@ -2860,7 +2860,7 @@ $myconfig is unused.
 
 sub update_status {
 
-    my ($self, $myconfig, $commit) = @_;
+    my ($self) = @_;
 
     # no id return
     return unless $self->{id};
