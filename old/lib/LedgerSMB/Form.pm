@@ -1882,7 +1882,7 @@ sub get_name {
     return $i;
 }
 
-=item $form->all_vc($myconfig, $vc, $module, $transdate, $job);
+=item $form->all_vc($myconfig, $vc, $transdate, $job);
 
 Populates the list referred to by $form->{all_${vc}} with hashes of either
 vendor or customer id and name, ordered by the name.  This will be vendor
@@ -1898,23 +1898,12 @@ $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
-$module is unused.
-
 =cut
 
 sub all_vc {
 
-    my ( $self, $myconfig, $vc, $module, $transdate, $job ) = @_;
+    my ($self, $myconfig, $vc, $transdate, $job) = @_;
     my $ref;
-    my $table;
-
-    if ($module eq 'AR') {
-        $table = 'ar';
-    }
-    elsif ($module eq 'AP'){
-        $table = 'ap';
-    }
-
     my $dbh = $self->{dbh};
 
     my $sth;
@@ -1956,22 +1945,6 @@ sub all_vc {
     my ($count) = $sth->fetchrow_array;
 
     $sth->finish;
-
-    # if ($self->{id}) {
-    # ### fixme: the segment below assumes that the form ID is a
-    # # credit account id, which it isn't necessarily (maybe never?)
-    # # when called from old/bin/oe.pl, it's an order id.
-    #     $query = qq|
-    #     SELECT ec.id, e.name
-    #       FROM entity e
-    #       JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-    #      WHERE ec.id = (select entity_credit_account FROM $table
-    #             WHERE id = ?)
-    #     ORDER BY name|;
-    #     $sth = $self->{dbh}->prepare($query);
-    #     $sth->execute($self->{id});
-    #     ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
-    # }
 
     if ( $count < $myconfig->{vclimit} ) {
 
