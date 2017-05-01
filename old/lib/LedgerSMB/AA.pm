@@ -941,7 +941,7 @@ sub get_name {
         && ( $form->{currency} ne $form->{defaultcurrency} ) )
     {
         $form->{exchangerate} =
-          $form->get_exchangerate( $dbh, $form->{currency}, $form->{transdate},
+          $form->get_exchangerate($form->{currency}, $form->{transdate},
             $buysell );
     }
 

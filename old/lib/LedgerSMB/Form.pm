@@ -1623,7 +1623,7 @@ sub save_exchangerate {
     );
 }
 
-=item $form->get_exchangerate($dbh, $curr, $transdate, $fld);
+=item $form->get_exchangerate($curr, $transdate, $fld);
 
 Returns the exchange rate in relation to the default currency for $currency on
 $transdate for the purpose indicated by $fld.  $fld can be either 'buy' or
@@ -1635,7 +1635,7 @@ $dbh is not used, favouring $self->{dbh}.
 
 sub get_exchangerate {
 
-    my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
+    my ($self, $curr, $transdate, $fld) = @_;
 
     my $exchangerate = 1;
 
@@ -1647,11 +1647,10 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-        $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
 
-    $exchangerate;
+    return LedgerSMB::PGNumber->new($exchangerate);
 }
 
 =item $form->check_exchangerate($myconfig, $currency, $transdate, $fld);
@@ -2533,7 +2532,6 @@ sub create_links {
         my $fld = ($vc eq 'customer') ? 'buy' : 'sell';
 
         $self->{exchangerate} = $self->get_exchangerate(
-            $dbh,
             $self->{currency},
             $self->{transdate},
             $fld
@@ -2547,7 +2545,6 @@ sub create_links {
                 $ref->{"b_unit_$aref->[0]"} = $aref->[1];
             }
             $ref->{exchangerate} = $self->get_exchangerate(
-                $dbh,
                 $self->{currency},
                 $ref->{transdate},
                 $fld
