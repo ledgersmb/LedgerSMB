@@ -179,8 +179,9 @@ sub invoice_links {
 
     $form->{oldlanguage_code} = $form->{language_code};
 
-    $form->get_partsgroup( \%myconfig,
-        { language_code => $form->{language_code} } );
+    $form->get_partsgroup({
+        language_code => $form->{language_code}
+    });
 
     if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{department} = "$form->{department}--$form->{department_id}"

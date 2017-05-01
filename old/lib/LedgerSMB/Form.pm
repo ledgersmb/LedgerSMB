@@ -2763,7 +2763,7 @@ sub redo_rows {
     }
 }
 
-=item $form->get_partsgroup($myconfig[, $p]);
+=item $form->get_partsgroup([$p]);
 
 Populates the list referred to as $form->{all_partsgroup}.  $p refers to a hash
 that describes which partsgroups to retrieve.  $p->{searchitems} can be 'part',
@@ -2777,13 +2777,11 @@ The results in $form->{all_partsgroup} are normally sorted by partsgroup name.
 If a language_code is specified, the results are then sorted by the translated
 description.
 
-$myconfig is unused.
-
 =cut
 
 sub get_partsgroup {
 
-    my ( $self, $myconfig, $p ) = @_;
+    my ($self, $p) = @_;
     my $dbh = $self->{dbh};
 
     my $query = qq|SELECT DISTINCT pg.id, pg.partsgroup

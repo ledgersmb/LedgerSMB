@@ -187,7 +187,7 @@ sub display_row {
         $l{language_code} = $form->{language_code};
         $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
-        $form->get_partsgroup( \%myconfig, \%l );
+        $form->get_partsgroup(\%l);
         if ( @{ $form->{all_partsgroup} } ) {
             $form->{selectpartsgroup} = "<option>\n";
             foreach my $ref ( @{ $form->{all_partsgroup} } ) {

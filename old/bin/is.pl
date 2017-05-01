@@ -165,7 +165,7 @@ sub invoice_links {
 
     $form->{oldlanguage_code} = $form->{language_code};
 
-    $form->get_partsgroup( \%myconfig, { all => 1} );
+    $form->get_partsgroup({ all => 1});
 
     $form->{oldcustomer}  = "$form->{customer}--$form->{customer_id}";
     $form->{oldtransdate} = $form->{transdate};

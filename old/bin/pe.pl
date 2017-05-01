@@ -48,7 +48,7 @@ sub edit {
 }
 
 sub prepare_partsgroup {
-    PE->get_partsgroup( \%myconfig, \%$form )
+    PE->get_partsgroup(\%$form)
       if $form->{id};
 }
 sub prepare_pricegroup {
