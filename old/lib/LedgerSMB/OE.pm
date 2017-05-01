@@ -455,7 +455,7 @@ sub save {
     $form->{name} = $form->{ $form->{vc} };
     $form->{name} =~ s/--$form->{"$form->{vc}_id"}//;
 
-    $form->add_shipto( $dbh, $form->{id}, 1);
+    $form->add_shipto($form->{id}, 1);
 
     # save printed, emailed, queued
 

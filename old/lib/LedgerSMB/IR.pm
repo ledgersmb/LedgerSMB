@@ -813,7 +813,7 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{vendor};
     $form->{name} =~ s/--$form->{vendor_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     if (!$form->{separate_duties}){
         $self->add_cogs($form);

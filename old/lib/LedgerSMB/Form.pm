@@ -1685,20 +1685,21 @@ sub check_exchangerate {
     $exchangerate;
 }
 
-=item $form->add_shipto($dbh, $id);
+=item $form->add_shipto($id, $is_oe);
 
-Inserts a new address into the table shipto if the value of any of the shipto
-address components in $form differs to the regular attribute in $form.  The
-inserted value of trans_id is $id, the other fields correspond with the shipto
-address components of $form.
+Inserts a new location_id reference into the table new_shipto, using the
+Form->{locationid} property.
 
-$dbh is unused.
+$is_oe determines whether the locaation is linked with a transaction or an oe.
+
+If $is_oe is false, the value of trans_id is $id and of oe_id is NULL.
+If $is_oe is true, the value of trans_id is NULL and of oe_id is $id.
 
 =cut
 
 sub add_shipto {
 
-    my ( $self,$dbh,$id, $oe) = @_;
+    my ($self, $id, $is_oe) = @_;
     if (! $self->{locationid}) {
         return;
     }
@@ -1707,13 +1708,13 @@ sub add_shipto {
             INSERT INTO new_shipto
             (trans_id, oe_id,location_id)
             VALUES ( ?, ?, ?)
-            |;
+    |;
 
     my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
     my $trans_id;
     my $oe_id;
 
-    if ($oe) {
+    if ($is_oe) {
         $trans_id = undef;
         $oe_id = $id;
     }

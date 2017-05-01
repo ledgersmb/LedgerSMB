@@ -1441,7 +1441,7 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{customer};
     $form->{name} =~ s/--$form->{customer_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     # save printed, emailed and queued
     $form->save_status($dbh);
