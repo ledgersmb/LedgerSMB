@@ -2011,11 +2011,10 @@ sub all_vc {
           unless $self->{employee_id};
     }
 
-    $self->get_regular_metadata($myconfig,$vc, $module, $dbh, $transdate, $job);
+    $self->get_regular_metadata($myconfig, $vc, $transdate, $job);
 }
 
-=item $form->get_regular_metadata($myconfig, $vc, $module, $dbh, $transdate,
-                                 $job)
+=item $form->get_regular_metadata($myconfig, $vc, $transdate, $job)
 
 This is API-compatible with all_vc.  It is a handy wrapper function that calls
 the following functions:
@@ -2032,12 +2031,10 @@ $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
-$module and $dbh are unused.
-
 =cut
 
 sub get_regular_metadata {
-    my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
+    my ($self, $myconfig, $vc, $transdate, $job) = @_;
     $dbh = $self->{dbh};
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block

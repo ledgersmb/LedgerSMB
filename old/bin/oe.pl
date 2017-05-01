@@ -121,9 +121,12 @@ sub order_links {
     OE->retrieve( \%myconfig, \%$form );
 
     # get projects, departments, languages
-    $form->get_regular_metadata( \%myconfig, $form->{vc},
-                 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
-                 undef, $form->{transdate}, 1 );
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
 
     $form->{oldlanguage_code} = $form->{language_code};
 
