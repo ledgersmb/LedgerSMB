@@ -2576,7 +2576,6 @@ sub create_links {
     $self->all_vc(
         $myconfig,
         $vc,
-        $module,
         $self->{transdate},
         $job
     );
