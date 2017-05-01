@@ -40,7 +40,7 @@ define(["dojo/_base/declare",
                    this._comparison_periods =
                        registry.byId("comparison-periods");
                    this.own(
-                       on(this._comparison_periods, "keyup",
+                       on(this._comparison_periods, "change",
                           function(newvalue) {
                               self._update_display(self._comparison_periods
                                                    .get("value"));
