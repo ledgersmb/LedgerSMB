@@ -143,17 +143,10 @@
                    PROCESS input element_data = {
                    label = text('Comparison Dates')
                    name = 'comparison_periods'
-                   text_attr = 'description'
-                   value_attr = 'text'
-                   value = comparison_periods
+                   value = 0
                    size = '3'
-                   "data-dojo-type"="dijit/form/NumberTextBox"
-                   "data-dojo-props"="constraints:{min:0,max:9,places:0}," _
-                        "invalidMessage:'" _
-                        text('Please enter a numeric value bewteen 0 and 9') _
-                        "'," _
-                        "rangeMessage:'" _ text('Invalid comparisons') _ "'"
-                   default_values = 0
+                   "data-dojo-type"="dijit/form/NumberSpinner"
+                   "data-dojo-props"="constraints:{min:0,max:9,places:0},intermediateChanges:true,style:'width:7ex'"
                    };
                    ?></legend>
         <div id="comparison_dates">
