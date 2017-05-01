@@ -626,7 +626,7 @@ sub project_sales_order {
     my $query = qq|SELECT current_date|;
     my ($transdate) = $dbh->selectrow_array($query);
 
-    $form->all_years( $myconfig, $dbh );
+    $form->all_years;
 
     $form->all_business_units( $transdate, undef, 'Timecards');
     $form->{all_project} = $form->{b_units}->{2};

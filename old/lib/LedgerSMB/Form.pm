@@ -2209,19 +2209,17 @@ sub all_languages {
     $sth->finish;
 }
 
-=item $form->all_years($myconfig[, $dbh2]);
+=item $form->all_years();
 
 Populates the hash $form->{all_month} with a mapping between a two-digit month
 number and the English month name.  Populates the list $form->{all_years} with
 all years which contain transactions.
 
-$dbh2 is unused.
-
 =cut
 
 sub all_years {
 
-    my ($self, $myconfig) = @_;
+    my ($self) = @_;
 
     my $dbh = $self->{dbh};
     $self->{all_years} = [];
