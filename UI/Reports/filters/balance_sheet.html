@@ -143,11 +143,10 @@
                    PROCESS input element_data = {
                    label = text('Comparison Dates')
                    name = 'comparison_periods'
-                   text_attr = 'description'
-                   value_attr = 'text'
-                   value = comparison_periods
+                   value = 0
                    size = '3'
-                   default_values = 0
+                   "data-dojo-type" = "dijit/form/NumberSpinner"
+                   "data-dojo-props" = "intermediateChanges:true, constraints:{min:0, max:9, places:0}, style:'width:7ex', smallDelta:1"
                    };
                    ?></legend>
         <div id="comparison_dates">

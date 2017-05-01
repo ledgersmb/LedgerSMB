@@ -184,13 +184,12 @@
                 data-dojo-props="channel:'ui/reports/period-selection'">
         <legend><?lsmb
         PROCESS input element_data = {
-                   label = text('Comparison Periods')
-                   name = 'comparison_periods'
-                   text_attr = 'description'
-                   value_attr = 'text'
-                   value = comparison_periods
-                   size = '3'
-                   default_values = 0
+                   label = text("Comparison Periods")
+                   name = "comparison_periods"
+             type = "text"
+         value = 0
+"data-dojo-type" = "dijit/form/NumberSpinner"
+"data-dojo-props" = "smallDelta:1, constraints:{min:0, max:9, places:0}, intermediateChanges:true, style:'width:7ex'"
         };
                    ?></legend>
 
