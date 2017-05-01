@@ -2008,7 +2008,7 @@ $form->all_business_units, and $form->all_taxaccounts are all run.
 
 sub get_regular_metadata {
     my ($self, $myconfig, $vc, $transdate, $job) = @_;
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
         $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
