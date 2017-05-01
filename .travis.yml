@@ -169,6 +169,12 @@ after_success:
   - coverage-report
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
+  # try and force the github camo.githubusercontent.com cache to refresh our badges
+  # with no arguments, this only refreshes the badge assests linked to by the default page shown when visiting
+  # https://github.com/ledgersmb/LedgerSMB
+  # if we want to refresh assets other than those (ie: not master branch) then we will need to add explicit arguments to do so
+  # the script is sourced from https://github.com/sbts/github-badge-cache-buster but isn't expected to change so there is no point making it a submodule
+  - utils/test/github-badge-cache-buster.sh
 
 after_failure:
   # display the available resources
