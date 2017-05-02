@@ -162,18 +162,16 @@ sub save_partsgroup {
 
 }
 
-=item PE->get_partsgroup($myconfig, $form);
+=item PE->get_partsgroup($form);
 
 Sets $form->{partsgroup} to the description of the partsgroup identified by
 $form->{id}.  If there are no parts entries associated with that partsgroup,
 $form->{orphaned} is made true, otherwise it is set to false.
 
-$myconfig is unused.
-
 =cut
 
 sub get_partsgroup {
-    my ( $self, $myconfig, $form ) = @_;
+    my ($self, $form) = @_;
 
     my $dbh = $form->{dbh};
 
