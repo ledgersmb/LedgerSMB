@@ -940,9 +940,11 @@ sub get_name {
     if ( $form->{transdate}
         && ( $form->{currency} ne $form->{defaultcurrency} ) )
     {
-        $form->{exchangerate} =
-          $form->get_exchangerate($form->{currency}, $form->{transdate},
-            $buysell );
+        $form->{exchangerate} = $form->get_exchangerate(
+            $form->{currency},
+            $form->{transdate},
+            $buysell
+        );
     }
 
     $form->{forex} = $form->{exchangerate};
