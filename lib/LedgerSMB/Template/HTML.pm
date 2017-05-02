@@ -50,6 +50,7 @@ use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
 use HTML::Entities;
+use HTML::Escape;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
@@ -70,7 +71,8 @@ sub preprocess {
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = encode_entities($vars);
+    #$vars = encode_entities($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
 
