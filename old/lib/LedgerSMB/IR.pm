@@ -113,7 +113,7 @@ sub post_invoice {
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
 
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
@@ -813,7 +813,7 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{vendor};
     $form->{name} =~ s/--$form->{vendor_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     if (!$form->{separate_duties}){
         $self->add_cogs($form);

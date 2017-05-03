@@ -1623,7 +1623,7 @@ sub save_exchangerate {
     );
 }
 
-=item $form->get_exchangerate($dbh, $curr, $transdate, $fld);
+=item $form->get_exchangerate($curr, $transdate, $fld);
 
 Returns the exchange rate in relation to the default currency for $currency on
 $transdate for the purpose indicated by $fld.  $fld can be either 'buy' or
@@ -1635,7 +1635,7 @@ $dbh is not used, favouring $self->{dbh}.
 
 sub get_exchangerate {
 
-    my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
+    my ($self, $curr, $transdate, $fld) = @_;
 
     my $exchangerate = 1;
 
@@ -1647,11 +1647,10 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-        $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
 
-    $exchangerate;
+    return LedgerSMB::PGNumber->new($exchangerate);
 }
 
 =item $form->check_exchangerate($myconfig, $currency, $transdate, $fld);
@@ -1686,20 +1685,21 @@ sub check_exchangerate {
     $exchangerate;
 }
 
-=item $form->add_shipto($dbh, $id);
+=item $form->add_shipto($id, $is_oe);
 
-Inserts a new address into the table shipto if the value of any of the shipto
-address components in $form differs to the regular attribute in $form.  The
-inserted value of trans_id is $id, the other fields correspond with the shipto
-address components of $form.
+Inserts a new location_id reference into the table new_shipto, using the
+Form->{locationid} property.
 
-$dbh is unused.
+$is_oe determines whether the locaation is linked with a transaction or an oe.
+
+If $is_oe is false, the value of trans_id is $id and of oe_id is NULL.
+If $is_oe is true, the value of trans_id is NULL and of oe_id is $id.
 
 =cut
 
 sub add_shipto {
 
-    my ( $self,$dbh,$id, $oe) = @_;
+    my ($self, $id, $is_oe) = @_;
     if (! $self->{locationid}) {
         return;
     }
@@ -1708,13 +1708,13 @@ sub add_shipto {
             INSERT INTO new_shipto
             (trans_id, oe_id,location_id)
             VALUES ( ?, ?, ?)
-            |;
+    |;
 
     my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
     my $trans_id;
     my $oe_id;
 
-    if ($oe) {
+    if ($is_oe) {
         $trans_id = undef;
         $oe_id = $id;
     }
@@ -1759,17 +1759,15 @@ sub get_shipto {
 }
 
 
-=item $form->get_employee($dbh);
+=item $form->get_employee();
 
 Returns a list containing the name and id of the employee $form->{login}.  Any
 portion of $form->{login} including and past '@' are ignored.
 
-$dbh is unused.
-
 =cut
 
 sub get_employee {
-    my ( $self, $dbh ) = @_;
+    my ($self) = @_;
 
     my $login = $self->{login};
     $login =~ s/@.*//;
@@ -1786,7 +1784,7 @@ sub get_employee {
 
     $sth->finish;
 
-    @a;
+    return @a;
 }
 
 =item $form->get_name($myconfig, $table[, $transdate])
@@ -1884,7 +1882,7 @@ sub get_name {
     return $i;
 }
 
-=item $form->all_vc($myconfig, $vc, $module, $dbh, $transdate, $job);
+=item $form->all_vc($myconfig, $vc, $transdate, $job);
 
 Populates the list referred to by $form->{all_${vc}} with hashes of either
 vendor or customer id and name, ordered by the name.  This will be vendor
@@ -1900,24 +1898,13 @@ $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
-$module and $dbh are unused.
-
 =cut
 
 sub all_vc {
 
-    my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
+    my ($self, $myconfig, $vc, $transdate, $job) = @_;
     my $ref;
-    my $table;
-
-    if ($module eq 'AR') {
-        $table = 'ar';
-    }
-    elsif ($module eq 'AP'){
-        $table = 'ap';
-    }
-
-    $dbh = $self->{dbh};
+    my $dbh = $self->{dbh};
 
     my $sth;
     $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
@@ -1959,22 +1946,6 @@ sub all_vc {
 
     $sth->finish;
 
-    # if ($self->{id}) {
-    # ### fixme: the segment below assumes that the form ID is a
-    # # credit account id, which it isn't necessarily (maybe never?)
-    # # when called from old/bin/oe.pl, it's an order id.
-    #     $query = qq|
-    #     SELECT ec.id, e.name
-    #       FROM entity e
-    #       JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-    #      WHERE ec.id = (select entity_credit_account FROM $table
-    #             WHERE id = ?)
-    #     ORDER BY name|;
-    #     $sth = $self->{dbh}->prepare($query);
-    #     $sth->execute($self->{id});
-    #     ($self->{"${vc}_id"}, $self->{$vc}) = $sth->fetchrow_array();
-    # }
-
     if ( $count < $myconfig->{vclimit} ) {
 
         $self->{"${vc}_id"} *= 1;
@@ -2009,15 +1980,14 @@ sub all_vc {
     if ( !$self->{employee_id} ) {
         ( $self->{employee}, $self->{employee_id} ) = split /--/,
           $self->{employee};
-        ( $self->{employee}, $self->{employee_id} ) = $self->get_employee($dbh)
+        ( $self->{employee}, $self->{employee_id} ) = $self->get_employee
           unless $self->{employee_id};
     }
 
-    $self->get_regular_metadata($myconfig,$vc, $module, $dbh, $transdate, $job);
+    $self->get_regular_metadata($myconfig, $vc, $transdate, $job);
 }
 
-=item $form->get_regular_metadata($myconfig, $vc, $module, $dbh, $transdate,
-                                 $job)
+=item $form->get_regular_metadata($myconfig, $vc, $transdate, $job)
 
 This is API-compatible with all_vc.  It is a handy wrapper function that calls
 the following functions:
@@ -2034,13 +2004,11 @@ $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
-$module and $dbh are unused.
-
 =cut
 
 sub get_regular_metadata {
-    my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
-    $dbh = $self->{dbh};
+    my ($self, $myconfig, $vc, $transdate, $job) = @_;
+    my $dbh = $self->{dbh};
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
         $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
@@ -2241,19 +2209,17 @@ sub all_languages {
     $sth->finish;
 }
 
-=item $form->all_years($myconfig[, $dbh2]);
+=item $form->all_years();
 
 Populates the hash $form->{all_month} with a mapping between a two-digit month
 number and the English month name.  Populates the list $form->{all_years} with
 all years which contain transactions.
 
-$dbh2 is unused.
-
 =cut
 
 sub all_years {
 
-    my ($self, $myconfig) = @_;
+    my ($self) = @_;
 
     my $dbh = $self->{dbh};
     $self->{all_years} = [];
@@ -2533,7 +2499,6 @@ sub create_links {
         my $fld = ($vc eq 'customer') ? 'buy' : 'sell';
 
         $self->{exchangerate} = $self->get_exchangerate(
-            $dbh,
             $self->{currency},
             $self->{transdate},
             $fld
@@ -2547,7 +2512,6 @@ sub create_links {
                 $ref->{"b_unit_$aref->[0]"} = $aref->[1];
             }
             $ref->{exchangerate} = $self->get_exchangerate(
-                $dbh,
                 $self->{currency},
                 $ref->{transdate},
                 $fld
@@ -2565,12 +2529,7 @@ sub create_links {
     else {
 
         if (!$self->{"$self->{vc}_id"}) {
-            $self->lastname_used(
-                $myconfig,
-                $dbh,
-                $vc,
-                $module
-            );
+            $self->lastname_used($vc);
         }
     }
 
@@ -2610,8 +2569,6 @@ sub create_links {
     $self->all_vc(
         $myconfig,
         $vc,
-        $module,
-        $dbh,
         $self->{transdate},
         $job
     );
@@ -2632,7 +2589,7 @@ sub get_setting {
     return $ref->{value};
 }
 
-=item $form->lastname_used($myconfig, $dbh2, $vc, $module);
+=item $form->lastname_used($vc);
 
 Fills the name, currency, ${vc}_id, duedate, and possibly invoice_notes
 attributes of $form with the last used values for the transaction type specified
@@ -2642,15 +2599,11 @@ If $form->{type} matches /_order/, the transaction type used is order, if it
 matches /_quotation/, quotations are looked through.  If $form->{type} does not
 match either of the above, then ar or ap transactions are used.
 
-$myconfig, $dbh2, and $module are unused.
-
 =cut
 
 sub lastname_used {
 
-    my ( $self, $myconfig, $dbh2, $vc, $module ) = @_;
-
-    my $dbh = $self->{dbh};
+    my ($self, $vc) = @_;
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap;
     my $where;
@@ -2810,7 +2763,7 @@ sub redo_rows {
     }
 }
 
-=item $form->get_partsgroup($myconfig[, $p]);
+=item $form->get_partsgroup([$p]);
 
 Populates the list referred to as $form->{all_partsgroup}.  $p refers to a hash
 that describes which partsgroups to retrieve.  $p->{searchitems} can be 'part',
@@ -2824,13 +2777,11 @@ The results in $form->{all_partsgroup} are normally sorted by partsgroup name.
 If a language_code is specified, the results are then sorted by the translated
 description.
 
-$myconfig is unused.
-
 =cut
 
 sub get_partsgroup {
 
-    my ( $self, $myconfig, $p ) = @_;
+    my ($self, $p) = @_;
     my $dbh = $self->{dbh};
 
     my $query = qq|SELECT DISTINCT pg.id, pg.partsgroup
@@ -2894,7 +2845,7 @@ sub get_partsgroup {
     $sth->finish;
 }
 
-=item $form->update_status($myconfig);
+=item $form->update_status();
 
 DELETEs all status rows which have a formname of $form->{formname} and a
 trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
@@ -2903,13 +2854,11 @@ their respective $form attributes match /$form->{formname}/, and spoolfile is
 the file extracted from the string $form->{queued} or NULL if there is no entry
 for $form->{formname}.
 
-$myconfig is unused.
-
 =cut
 
 sub update_status {
 
-    my ($self, $myconfig, $commit) = @_;
+    my ($self) = @_;
 
     # no id return
     return unless $self->{id};

@@ -218,7 +218,7 @@ sub link_part {
     delete $form->{IC_links};
     delete $form->{amount};
 
-    $form->get_partsgroup( \%myconfig, { all => 1 } );
+    $form->get_partsgroup({ all => 1 });
     if ( $form->{partsgroup} ) {
         $form->{partsgroup} =
           $form->quote( $form->{partsgroup} ) . "--$form->{partsgroup_id}";
@@ -245,7 +245,7 @@ sub link_part {
             }
         }
 
-        $form->get_partsgroup( \%myconfig );
+        $form->get_partsgroup();
 
         if ( @{ $form->{all_partsgroup} } ) {
             $form->{selectassemblypartsgroup} = qq|<option></option>\n|;

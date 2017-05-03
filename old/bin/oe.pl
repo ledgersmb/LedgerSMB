@@ -121,16 +121,19 @@ sub order_links {
     OE->retrieve( \%myconfig, \%$form );
 
     # get projects, departments, languages
-    $form->get_regular_metadata( \%myconfig, $form->{vc},
-                 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
-                 undef, $form->{transdate}, 1 );
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
 
     $form->{oldlanguage_code} = $form->{language_code};
 
     $l{language_code} = $form->{language_code};
     $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
-    $form->get_partsgroup( \%myconfig, \%l );
+    $form->get_partsgroup(\%l);
 
     for (qw(terms taxincluded)) { $temp{$_} = $form->{$_} }
     $form->{shipto} = 1 if $form->{id};
@@ -2015,7 +2018,7 @@ sub search_transfer {
         $form->error( $locale->text('Nothing to transfer!') );
     }
 
-    $form->get_partsgroup( \%myconfig, { searchitems => 'part' } );
+    $form->get_partsgroup({ searchitems => 'part' });
 
      $form->generate_selects();
 

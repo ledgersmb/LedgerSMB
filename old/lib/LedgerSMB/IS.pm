@@ -773,7 +773,7 @@ sub post_invoice {
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
@@ -1441,7 +1441,7 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{customer};
     $form->{name} =~ s/--$form->{customer_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     # save printed, emailed and queued
     $form->save_status($dbh);

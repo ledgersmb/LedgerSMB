@@ -187,7 +187,7 @@ sub display_row {
         $l{language_code} = $form->{language_code};
         $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
-        $form->get_partsgroup( \%myconfig, \%l );
+        $form->get_partsgroup(\%l);
         if ( @{ $form->{all_partsgroup} } ) {
             $form->{selectpartsgroup} = "<option>\n";
             foreach my $ref ( @{ $form->{all_partsgroup} } ) {
@@ -1436,7 +1436,7 @@ sub print_form {
             $form->{printed} .= " $form->{formname}";
             $form->{printed} =~ s/^ //;
 
-            $form->update_status( \%myconfig, 1);
+            $form->update_status;
         }
 
         $old_form->{printed} = $form->{printed} if %$old_form;
@@ -1452,7 +1452,7 @@ sub print_form {
             $form->{emailed} =~ s/^ //;
 
             # save status
-            $form->update_status( \%myconfig, 1);
+            $form->update_status;
         }
 
         $now = scalar localtime;
@@ -1514,7 +1514,7 @@ sub print_form {
         $form->{queued} =~ s/^ //;
 
         # save status
-        $form->update_status( \%myconfig, 1);
+        $form->update_status;
 
         $old_form->{queued} = $form->{queued};
     }

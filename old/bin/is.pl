@@ -165,7 +165,7 @@ sub invoice_links {
 
     $form->{oldlanguage_code} = $form->{language_code};
 
-    $form->get_partsgroup( \%myconfig, { all => 1} );
+    $form->get_partsgroup({ all => 1});
 
     $form->{oldcustomer}  = "$form->{customer}--$form->{customer_id}";
     $form->{oldtransdate} = $form->{transdate};
@@ -1115,7 +1115,7 @@ sub update {
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
     if ( $newname = &check_name(customer) ) {
-        &rebuild_vc( customer, AR, $form->{transdate}, 1 );
+        rebuild_vc('customer', $form->{transdate}, 1);
     }
     $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
        for qw(transdate duedate crdate);
@@ -1127,7 +1127,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
 
-          &rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
+        rebuild_vc('customer', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};

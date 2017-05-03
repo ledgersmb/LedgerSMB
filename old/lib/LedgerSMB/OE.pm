@@ -143,7 +143,7 @@ sub save {
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     if ( !$form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
         $form->{employee} = "$form->{employee}--$form->{employee_id}";
     }
 
@@ -455,7 +455,7 @@ sub save {
     $form->{name} = $form->{ $form->{vc} };
     $form->{name} =~ s/--$form->{"$form->{vc}_id"}//;
 
-    $form->add_shipto( $dbh, $form->{id}, 1);
+    $form->add_shipto($form->{id}, 1);
 
     # save printed, emailed, queued
 
@@ -757,7 +757,7 @@ sub retrieve {
     else {
 
         # get last name used
-        $form->lastname_used( $myconfig, $dbh, $form->{vc} )
+        $form->lastname_used($form->{vc})
           unless $form->{"$form->{vc}_id"};
 
         delete $form->{notes};
@@ -1604,7 +1604,7 @@ sub save_inventory {
     my $employee_id;
 
     ( $null, $employee_id ) = split /--/, $form->{employee};
-    ( $null, $employee_id ) = $form->get_employee($dbh) if !$employee_id;
+    ( $null, $employee_id ) = $form->get_employee if !$employee_id;
 
     $query = qq|
         SELECT serialnumber, ship
@@ -1942,7 +1942,7 @@ sub transfer {
 
     my $dbh = $form->{dbh};
 
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
 
     my @a = localtime;
     $a[5] += 1900;
@@ -2254,7 +2254,7 @@ sub generate_orders {
         my $employee_id;
         my $department_id;
 
-        ( $null, $employee_id ) = $form->get_employee($dbh);
+        ( $null, $employee_id ) = $form->get_employee;
         ( $null, $department_id ) = split /--/, $form->{department};
         $department_id *= 1;
 
