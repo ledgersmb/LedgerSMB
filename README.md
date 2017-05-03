@@ -123,7 +123,7 @@ specifying ```--with-feature=<feature>```:
 | starman          | Starman Perl/PSGI webserver         |
 | openoffice       | OpenOffice.org document output      |
 | edi              | (EXPERIMENTAL) X12 EDI support      |
-| rest             | (EXPERIMENTAL) RESTful webservices  |
+| xls              | Excel output filters (xls+xlsx)     |
 
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.

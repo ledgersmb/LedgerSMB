@@ -47,11 +47,6 @@ requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
 
-feature 'rest', "RESTful Web Service XML support" =>
-    sub {
-        # no dependencies which aren't already required above
-};
-
 feature 'starman', "Standalone Server w/Starman" =>
     sub {
         requires "Starman";
