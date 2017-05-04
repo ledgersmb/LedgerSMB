@@ -189,18 +189,18 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 sub available_formats {
     my @retval = ('HTML', 'TXT');
     local ($@);
-    if (eval {require LedgerSMB::Template::LaTeX}){
+    if ($LedgerSMB::Sysconfig::template_latex){
         push @retval, 'PDF', 'PS';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::XLS}){
+    }
+    if ($LedgerSMB::Sysconfig::template_xls){
         push @retval, 'XLS';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::XLSX}){
+    }
+    if ($LedgerSMB::Sysconfig::template_xlsx){
         push @retval, 'XLSX';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::ODS}){
+    }
+    if ($LedgerSMB::Sysconfig::template_ods){
         push @retval, 'ODS';
-    } else { $logger->debug($@) if $@; }
+    }
     return \@retval;
 }
 

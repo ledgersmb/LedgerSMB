@@ -207,7 +207,6 @@ def 'cache_templates',
     default => 0,
     doc => qq||;
 
-
 ### SECTION  ---   paths
 
 def 'pathsep',
@@ -262,6 +261,28 @@ def 'templates_cache',
     section => 'paths',
     default => 'lsmb_templates',
     doc => qq|this is a subdir of tempdir, unless it's an absolute path|;
+
+### SECTION  ---   Template file formats
+
+def 'template_latex',
+    section => 'template_format',
+    default => sub { eval {require LedgerSMB::Template::LaTeX}},
+    doc => qq||;
+
+def 'template_xls',
+    section => 'template_format',
+    default => sub { eval {require LedgerSMB::Template::XLS}},
+    doc => qq||;
+
+def 'template_xlsx',
+    section => 'template_format',
+    default => sub { eval {require LedgerSMB::Template::XLSX}},
+    doc => qq||;
+
+def 'template_ods',
+    section => 'template_format',
+    default => sub { eval {require LedgerSMB::Template::ODS}},
+    doc => qq||;
 
 
 ### SECTION  ---   mail
