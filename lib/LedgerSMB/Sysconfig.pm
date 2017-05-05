@@ -526,6 +526,9 @@ our $latex = 0;
 
 
 sub override_defaults {
+
+    local $@; # protect existing $@
+
     # Check Latex
     $latex = eval {require Template::Plugin::Latex; 1;};
 
