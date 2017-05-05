@@ -28,6 +28,16 @@ Nick P is Nick Prater
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.7
+* Fix missing trailing zeros in cheque printing (Erik H, #2565)
+* Change comparison periods selector to a number spinner (Erik H)
+* Fix http error response (Yves L)
+* Fix Salesperson field not displayed (Nick P, #2784)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+Nick P is Nick Prater
+
 
 Changelog for 1.5.6
 * Fix syntax error in LaTeX templates for printed documents (Erik H)
