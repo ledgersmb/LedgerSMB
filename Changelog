@@ -2,20 +2,15 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
-Changelog for 1.5.3
-* Fix access to contact data for database admins (Erik H)
-* Fix Reconciliation Submit button not enabled (Nick P)
-* Fix Batch Search for approved transactions (Chris T)
-* Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
-* Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
+Changelog for 1.5.7
+* Fix missing trailing zeros in cheque printing (Erik H, #2565)
+* Change comparison periods selector to a number spinner (Erik H)
+* Fix http error response (Yves L)
+* Fix Salesperson field not displayed (Nick P, #2784)
 
-Nick P is Nick Prater
-Chris T is Chris Travers
 Erik H is Erik Huelsmann
-
-
-Changelog for 1.5 Series
-Released 2016-12-24
+Yves L is Yves Lavoie
+Nick P is Nick Prater
 
 
 Changelog for 1.5.6
