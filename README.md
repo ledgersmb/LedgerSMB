@@ -209,7 +209,7 @@ With the above steps completed, the system is ready to run the web server:
  >     Instead, if you need to start LedgerSMB from a root process, drop
  >     privileges to a user that doesn't have write access to the LedgerSMB Directories first.
  >     Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
- >     Do not use the starman --user= mechanism, it currently drops privlidges too late.
+ >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
  $ starman -I lib -I old/lib --listen localhost:5762 tools/starman.psgi
