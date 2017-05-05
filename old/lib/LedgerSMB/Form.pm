@@ -1290,7 +1290,7 @@ sub generate_selects {
     }
 
     # sales staff
-    if ($form->{all_employees} && @{ $form->{all_employee} }) {
+    if ($form->{all_employee} && @{ $form->{all_employee} }) {
         $form->{selectemployee} = "";
         for (@{ $form->{all_employee} }) {
             $form->{selectemployee} .=
