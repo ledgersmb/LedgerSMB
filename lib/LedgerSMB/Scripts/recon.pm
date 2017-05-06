@@ -410,31 +410,24 @@ sub approve {
         return get_results($request);
     }
 
-    # Approve will also display the report in a blurred/opaqued out version,
-    # with the controls removed/disabled, so that we know that it has in fact
-    # been cleared. This will also provide for return-home links, auditing,
-    # etc.
+    return [ 400, # bad request
+             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ "'report_id' parameter missing" ]
+        ] if ! $request->{report_id};
 
-    if ($request->type() eq "POST") {
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(
+        { base => $request, copy=> 'all' });
 
-        # we need a report_id for this.
-
-        my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy=> 'all'});
-
-        my $code = $recon->approve($request->{report_id});
-        my $template = $code == 0 ? 'reconciliation/approved'
-                                  : 'reconciliation/report';
-        return LedgerSMB::Template->new(
-                user => $recon->{_user},
-                        template => $template,
-                locale => $recon->{_locale},
-                format => 'HTML',
-                path=>"UI"
-                        )->render_to_psgi($recon);
-    }
-    else {
-        return _display_report($request, $request);
-    }
+    my $code = $recon->approve($request->{report_id});
+    my $template = $code == 0 ? 'reconciliation/approved'
+        : 'reconciliation/report';
+    return LedgerSMB::Template->new(
+        user => $recon->{_user},
+        template => $template,
+        locale => $recon->{_locale},
+        format => 'HTML',
+        path=>"UI",
+        )->render_to_psgi($recon);
 }
 
 =item pending ($self, $request, $user)
