@@ -312,7 +312,30 @@ sub _display_report {
 Displays the new report screen.
 
 =cut
+
 sub new_report {
+    my ($request) = @_;
+
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request, copy => 'all' });
+
+    # we can assume we're to generate the "Make a happy new report!" page.
+    @{$recon->{accounts}} = $recon->get_accounts;
+    my $template = LedgerSMB::Template->new(
+        user => $recon->{_user},
+        template => 'reconciliation/upload',
+        locale => $recon->{_locale},
+        format => 'HTML',
+        path => 'UI',
+    );
+    return $template->render_to_psgi($recon);
+}
+
+=item start_report($request)
+
+=cut
+
+sub start_report {
     my ($request) = @_;
 
     # Trap user error: dates accidentally entered in the amount field
@@ -323,48 +346,23 @@ sub new_report {
     }
 
     $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
-    my $template;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
-    # This method detection makes debugging a bit harder.
-    # Not sure I like it but won't refactor until 1.4..... --CT
-    #
-    if ($request->type() eq "POST") {
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request, copy => 'all' });
 
-        # We can assume that we're doing something useful with new data.
-        # We can also assume that we've got a file.
 
-        # $self is expected to have both the file handling logic, as well as
-        # the logic to load the processing module.
-
-        # Why isn't this testing for errors?
-        my ($report_id, $entries) = $recon->new_report($recon->import_file());
-        if ($recon->{error}) {
-            #$recon->{error};
-
-            $template = LedgerSMB::Template->new(
-                user=>$recon->{_user},
-                template=> 'reconciliation/upload',
-                locale => $recon->{_locale},
-                format=>'HTML',
-                path=>"UI"
-            );
-            return $template->render_to_psgi($recon);
-        }
-        return _display_report($recon, $request);
-    }
-    else {
-
-        # we can assume we're to generate the "Make a happy new report!" page.
-        @{$recon->{accounts}} = $recon->get_accounts;
-        $template = LedgerSMB::Template->new(
+    # Why isn't this testing for errors?
+    my ($report_id, $entries) = $recon->new_report($recon->import_file());
+    if ($recon->{error}) {
+        my $template = LedgerSMB::Template->new(
             user => $recon->{_user},
             template => 'reconciliation/upload',
             locale => $recon->{_locale},
             format => 'HTML',
-            path=>"UI"
-        );
+            path => "UI"
+            );
         return $template->render_to_psgi($recon);
     }
+    return _display_report($recon, $request);
 }
 
 =item delete_report($request)
