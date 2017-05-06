@@ -109,7 +109,7 @@ sub psgi_app {
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
 
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\\?]*)\.pl$/;
+    $env->{SCRIPT_NAME} =~ m/([^\/\\\?]*)\.pl$/;
     my $script = "LedgerSMB::Scripts::$1";
     $request->{_script_handle} = $script;
 
@@ -125,6 +125,14 @@ sub psgi_app {
 
     my ($status, $headers, $body);
     try {
+        my $clear_session_actions =
+            $script->can('clear_session_actions');
+
+        if ($clear_session_actions
+            && grep { $_ eq $request->{action} }
+                    $clear_session_actions->() ) {
+            $request->clear_session;
+        }
         if (! $script->can('no_db')) {
             my $no_db = $script->can('no_db_actions');
 

@@ -90,6 +90,10 @@ Expands a hash into human-readable key => value pairs, and formats and rounds am
 
 Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
 
+=item clear_session()
+
+Clears the session cookie. Only has effect before verification.
+
 =item verify_session()
 
 This verifies the validity of the session cookie.
@@ -237,6 +241,14 @@ sub close_form {
     return $vars[0]->{form_close};
 }
 
+sub clear_session {
+    my ($self) = @_;
+
+    $self->{cookie} = '';
+
+    return undef;
+}
+
 sub verify_session {
     my ($self) = @_;
 
@@ -356,17 +368,6 @@ sub _process_args {
 
 sub _process_cookies {
     my ($self) = @_;
-
-    # Explicitly don't use the cookie content when we have a simple request
-    # for login.pl without an 'action' query parameter: this is a request
-    # for the login page, not for the 'post-login' menu/content page
-    if ($ENV{REQUEST_METHOD} eq 'GET'
-        && $self->{script} eq 'login.pl'
-        && (! defined $self->{action} || $self->{action} eq ''
-            || $self->{action} eq 'authenticate')) {
-        $self->{cookie} = ''; # reset cookie -- prevents later use
-        return;
-    }
 
     $self->{cookie} =
         $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};

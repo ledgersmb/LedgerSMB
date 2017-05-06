@@ -41,6 +41,18 @@ sub no_db_actions {
     return qw(logout authenticate __default logout_js);
 }
 
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default authenticate);
+}
+
 =item __default (no action specified, do this)
 
 Displays the login screen.
