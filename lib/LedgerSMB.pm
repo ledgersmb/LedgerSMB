@@ -351,7 +351,7 @@ sub get_relative_url {
     my ($self) = @_;
 
     return $self->{script} .
-        ($self->{_query_string} ? "?$self->{_query_string}" : '';
+        ($self->{_query_string} ? "?$self->{_query_string}" : '');
 }
 
 sub upload {
