@@ -460,16 +460,7 @@ sub pending {
         format=>'HTML',
         path=>"UI"
     );
-    if ($request->type() eq "POST") {
-        return $template->render_to_psgi(
-            {
-                pending=>$recon->get_pending($request->{year}."-".$request->{month})
-            }
-        );
-    }
-    else {
-        return $template->render_to_psgi();
-    }
+    return $template->render_to_psgi();
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT
