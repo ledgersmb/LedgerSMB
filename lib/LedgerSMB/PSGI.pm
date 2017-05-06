@@ -82,22 +82,10 @@ sub _internal_server_error {
 sub psgi_app {
     my $env = shift;
 
-    # Taken from CGI::Emulate::PSGI
-    #no warnings;
-    local *STDIN = $env->{'psgi.input'};
-    my $environment = {
-        GATEWAY_INTERFACE => 'CGI/1.1',
-        HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-        REMOTE_ADDR     => '127.0.0.1',
-        REMOTE_HOST     => 'localhost',
-        REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }
-          grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
-    };
-    # End of CGI::Emulate::PSGI
-
-    local %ENV = ( %ENV, %$environment );
+    # unfortunately, getting creds is littered all around the code base...
+    # which depends on having HTTP_AUTHORIZATION available, due to
+    # LedgerSMB::Auth::DB depending on it...
+    local $ENV{HTTP_AUTHORIZATION} = $env->{HTTP_AUTHORIZATION};
 
     my $psgi_req = Plack::Request->new($env);
     my $request = LedgerSMB->new($psgi_req->parameters,
