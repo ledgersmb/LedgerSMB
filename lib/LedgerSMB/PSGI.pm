@@ -32,9 +32,6 @@ use Plack::Builder::Conditionals;
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
-# Some old code depends on this variable having been defined
-$ENV{GATEWAY_INTERFACE}="cgi/1.1";
-
 =head1 FUNCTIONS
 
 =over
