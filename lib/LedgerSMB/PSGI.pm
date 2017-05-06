@@ -87,39 +87,42 @@ sub psgi_app {
     # LedgerSMB::Auth::DB depending on it...
     local $ENV{HTTP_AUTHORIZATION} = $env->{HTTP_AUTHORIZATION};
 
+    my $script_name = $env->{SCRIPT_NAME};
+    $script_name =~ m/([^\/\\\?]*)\.pl$/;
+    my $module = "LedgerSMB::Scripts::$1";
+    my $script = "$1.pl";
+
     my $psgi_req = Plack::Request->new($env);
-    my $request = LedgerSMB->new($psgi_req->parameters,
+    my $request = LedgerSMB->new($psgi_req->parameters, $script,
                                  $psgi_req->uploads, $psgi_req->cookies);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
 
-    $env->{SCRIPT_NAME} =~ m/([^\/\\\?]*)\.pl$/;
-    my $script = "LedgerSMB::Scripts::$1";
-    $request->{_script_handle} = $script;
+    $request->{_script_handle} = $module;
 
-    return _internal_server_error('No workflow script specified!')
-        unless $script;
+    return _internal_server_error('No workflow module specified!')
+        unless $module;
 
-    return _internal_server_error("Unable to open script $script : $! : $@")
-        unless use_module($script);
+    return _internal_server_error("Unable to open module $module : $! : $@")
+        unless use_module($module);
 
-    my $action = $script->can($request->{action});
+    my $action = $module->can($request->{action});
     return _internal_server_error("Action Not Defined: $request->{action}")
         unless $action;
 
     my ($status, $headers, $body);
     try {
         my $clear_session_actions =
-            $script->can('clear_session_actions');
+            $module->can('clear_session_actions');
 
         if ($clear_session_actions
             && grep { $_ eq $request->{action} }
                     $clear_session_actions->() ) {
             $request->clear_session;
         }
-        if (! $script->can('no_db')) {
-            my $no_db = $script->can('no_db_actions');
+        if (! $module->can('no_db')) {
+            my $no_db = $module->can('no_db_actions');
 
             if (!$no_db
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {

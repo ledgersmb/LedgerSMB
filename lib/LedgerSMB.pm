@@ -176,7 +176,7 @@ my $json = JSON->new
 
 
 sub new {
-    my ($class, $cgi_args, $uploads, $cookies) = @_;
+    my ($class, $cgi_args, $script_name, $uploads, $cookies) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -191,11 +191,10 @@ sub new {
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
+    $self->{script} = $script_name;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();
-    $self->_set_action();
-    $self->_set_script_name();
     $self->_process_cookies();
 
     return $self;
@@ -317,34 +316,6 @@ sub _set_default_locale {
                   . ": Locale ($lang) not loaded: $!\n" )
         unless $self->{_locale};
 }
-
-sub _set_action {
-    my ($self) = @_;
-
-    $self->{action} = "" unless defined $self->{action};
-    $self->{action} =~ s/\W/_/g;
-    $self->{action} = lc $self->{action};
-}
-
-sub _set_script_name {
-    my ($self) = @_;
-
-    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
-
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $self->{script} = $1 unless !defined $1;
-    $self->{script} = "" unless defined $self->{script};
-
-    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
-        $self->error("Access Denied");
-    }
-    if (!$self->{script}) {
-        $self->{script} = 'login.pl';
-    }
-    $logger->debug("\$self->{script} = $self->{script} "
-                   . "\$self->{action} = $self->{action}");
-}
-
 
 sub _process_args {
     my ($self, $args) = @_;
