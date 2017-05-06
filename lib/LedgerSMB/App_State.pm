@@ -192,21 +192,6 @@ sub cleanup {
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
 }
 
-1;
-
-=head2 get_url
-
-Returns URL of get request or undef
-
-=cut
-
-sub get_url {
-    if ($ENV{REQUEST_METHOD} ne 'GET') {
-       return undef;
-    }
-    return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
-}
-
 =head2 get_relative_url
 
 Returns the script and query string part of the URL of the GET request,
