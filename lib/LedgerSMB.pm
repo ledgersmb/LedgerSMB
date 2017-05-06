@@ -86,10 +86,6 @@ Loads user configuration info from LedgerSMB::User
 
 Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
 
-=item type()
-
-Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
-
 =item clear_session()
 
 Clears the session cookie. Only has effect before verification.
@@ -472,19 +468,6 @@ sub merge {
         $self->{$dst_arg} = $src->{$arg};
     }
     $logger->debug("end caller \$filename=$filename \$line=$line");
-}
-
-sub type {
-
-    my $self = shift @_;
-
-    if (!$ENV{REQUEST_METHOD} or
-        ( !grep {$ENV{REQUEST_METHOD} eq $_} ("HEAD", "GET", "POST") ) ) {
-
-        $self->error("Request method unset or set to unknown value");
-    }
-
-    return $ENV{REQUEST_METHOD};
 }
 
 sub set {
