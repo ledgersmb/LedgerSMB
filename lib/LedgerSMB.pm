@@ -203,9 +203,6 @@ sub new {
 
 sub open_form {
     my ($self, $args) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my $i = 1;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{session_id}],
@@ -220,9 +217,6 @@ sub open_form {
 # move to another module
 sub check_form {
     my ($self) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my @vars = $self->call_procedure(funcname => 'form_check',
                               args => [$self->{session_id}, $self->{form_id}]
     );
@@ -231,9 +225,6 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my @vars = $self->call_procedure(funcname => 'form_close',
                               args => [$self->{session_id}, $self->{form_id}]
     );

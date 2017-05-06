@@ -174,25 +174,6 @@ ok(!$form->{pre}, 'info: CGI, removed $self->{pre}');
 delete $form->{header};
 $ENV{LSMB_NOHEAD} = 0;
 
-delete $ENV{GATEWAY_INTERFACE};
-delete $ENV{info_function};
-$form->{pre} = 'Blah';
-$form->{header} = 'Blah';
-@r = trap{$form->info('hello world')};
-is($trap->stdout, "hello world\n",
-        'info: CLI, content');
-ok($form->{pre}, 'info: CLI, ignored $self->{pre}');
-
-$ENV{info_function} = 'main::form_info_func';
-SKIP: {
-        skip 'Environment variable info_function could not be set' unless
-                $ENV{info_function} eq 'main::form_info_func';
-        is($form->info('hello world'), 'hello world',
-                'info: CLI, function call');
-};
-delete $ENV{info_function};
-
-
 ## $form->isblank checks
 $form = new Form;
 $ENV{GATEWAY_INTERFACE} = 'yes';
@@ -301,9 +282,6 @@ $form = new Form;
 ok(!defined $form->{callback}, 'redirect: No callback set');
 @r = trap{$form->redirect};
 is($trap->stdout, "Location: login.pl\nContent-type: text/html\n\n", 'redirect: No message or callback redirect');
-@r = trap{$form->redirect('hello world')};
-is($trap->stdout, "hello world\n",
-        'redirect: message, no callback redirect');
 $form->{callback} = 1;
 @r = trap{$form->redirect};
 is($trap->stdout, "", 'redirect: callback, no message redirect');
