@@ -66,18 +66,8 @@ sub __default {
         return LedgerSMB::Scripts::menu::root_doc($request);
     }
 
-    my $secure = '';
-
-    # copy of code in LedgerSMB::Session
-    my $path = $ENV{SCRIPT_NAME};
-    $path =~ s|[^/]*$||;
-
-    my $cookie_name = $LedgerSMB::Sysconfig::cookie_name;
-    if ($ENV{SERVER_PORT} == 443){
-        $secure = ' Secure;';
-    }
     $request->{_new_session_cookie_value} =
-        qq|$cookie_name=Login; path=$path;$secure|;
+        qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new(

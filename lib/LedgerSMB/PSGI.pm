@@ -171,11 +171,17 @@ sub psgi_app {
         }
     };
 
-    push @$headers, ( 'Set-Cookie' =>
-                      $request->{'request.download-cookie'} . '=downloaded' )
+
+    my $path = $env->{SCRIPT_NAME};
+    $path =~ s|[^/]*$||g;
+    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
+    push @$headers,
+         ( 'Set-Cookie' =>
+           qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
         if $request->{'request.download-cookie'};
-    push @$headers, ( 'Set-Cookie' =>
-                      $request->{_new_session_cookie_value} )
+    push @$headers,
+         ( 'Set-Cookie' =>
+           qq|$request->{_new_session_cookie_value}; path=$path$secure| )
         if $request->{_new_session_cookie_value};
     return [ $status, $headers, $body ];
 }
