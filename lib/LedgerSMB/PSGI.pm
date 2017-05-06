@@ -94,6 +94,7 @@ sub psgi_app {
 
     my $psgi_req = Plack::Request->new($env);
     my $request = LedgerSMB->new($psgi_req->parameters, $script,
+                                 $env->{QUERY_STRING},
                                  $psgi_req->uploads, $psgi_req->cookies);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};

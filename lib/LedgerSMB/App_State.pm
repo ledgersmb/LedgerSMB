@@ -192,22 +192,6 @@ sub cleanup {
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
 }
 
-=head2 get_relative_url
-
-Returns the script and query string part of the URL of the GET request,
-without the script path, or undef.
-
-=cut
-
-sub get_relative_url {
-    if ($ENV{REQUEST_METHOD} ne 'GET') {
-       return undef;
-    }
-    my $script = $ENV{SCRIPT_NAME};
-    $script =~ s#.*/([^/]+)$#$1#;
-    return "$script?$ENV{QUERY_STRING}";
-}
-
 =head2 all_periods(is_short $bool)
 
 Returns hashref of localized date data with following members:

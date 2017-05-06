@@ -51,6 +51,13 @@ If an index is specified, the merged keys are given a form of
 Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
+=item get_relative_url
+
+Returns the script and query string part of the URL of the GET request,
+without the script path, or undef.
+
+=cut
+
 =item upload([$filename])
 
 This function returns - when called without arguments - the number of
@@ -172,7 +179,8 @@ my $json = JSON->new
 
 
 sub new {
-    my ($class, $cgi_args, $script_name, $uploads, $cookies) = @_;
+    my ($class, $cgi_args, $script_name, $query_string,
+        $uploads, $cookies) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -187,6 +195,7 @@ sub new {
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
+    $self->{_query_string} = $query_string if defined $query_string;
     $self->{script} = $script_name;
 
     $self->_process_args($cgi_args);
@@ -336,6 +345,13 @@ sub _process_cookies {
         $self->{company} = $ccookie
             unless $ccookie eq 'Login';
     }
+}
+
+sub get_relative_url {
+    my ($self) = @_;
+
+    return $self->{script} .
+        ($self->{_query_string} ? "?$self->{_query_string}" : '';
 }
 
 sub upload {
