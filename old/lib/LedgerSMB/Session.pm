@@ -191,15 +191,6 @@ sub _create {
         return;
     }
 
-# this is assuming that the login is safe, which might be a bad assumption
-# so, I'm going to remove some chars, which might make previously valid
-# logins invalid --CM
-
-# I am changing this to use HTTP Basic Auth credentials for now.  -- CT
-
-    my $auth = $ENV{HTTP_AUTHORIZATION};
-    $auth =~ s/^Basic //i;
-
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed,
 #pgsql's isn't great either  -CM
