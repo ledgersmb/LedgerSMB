@@ -13,6 +13,15 @@ possible though currently every LedgerSMB user must be a database user.
 
 =head1 METHODS
 
+
+=head2 factory($env)
+
+This method instantiates an authentication class as of type
+LedgerSMB::Auth::C<$LedgerSMB::Sysconfig::auth>.
+More about plugin classes is described below.
+
+=head2 plugin classes
+
 Each plugin module must provide a class with the following methods
 
 =over
