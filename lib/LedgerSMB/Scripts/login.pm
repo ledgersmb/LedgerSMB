@@ -20,7 +20,6 @@ package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
 use LedgerSMB::User;
-use LedgerSMB::Auth;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
 use Try::Tiny;
@@ -195,7 +194,7 @@ requiring only bogus credentials (logout:logout).
 
 sub logout_js {
     my $request = shift @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = $request->{_auth}->get_credentials;
     return [ 401,
              [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                'Content-Type' => 'text/plain; charset=utf-8' ],
@@ -213,7 +212,7 @@ eval { do "scripts/custom/login.pl"};
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
+Copyright (C) 2009-2017 LedgerSMB Core Team. This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

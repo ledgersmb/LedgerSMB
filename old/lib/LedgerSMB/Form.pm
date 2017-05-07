@@ -17,7 +17,7 @@ Deprecated
  # Small Medium Business Accounting software
  # http://www.ledgersmb.org/
  #
- # Copyright (C) 2006
+ # Copyright (C) 2006-2017
  # This work contains copyrighted information from a number of sources
  # all used with permission.
  #
@@ -69,6 +69,7 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
 use Log::Log4perl;
 use LedgerSMB::App_State;
+use LedgerSMB::Auth;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 use Try::Tiny;
@@ -206,6 +207,7 @@ sub new {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
 
+    $self->{_auth} = LedgerSMB::Auth::factory(\%ENV);
     $self;
 }
 
@@ -1386,7 +1388,12 @@ sub db_init {
     }
     my $dbname = $self->{company};
     $self->{dbh} = LedgerSMB::App_State::DBH;
-    $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company});
+
+    my $creds = $self->{_auth}->get_credentials;
+    $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company},
+                                             $creds->{login},
+                                             $creds->{password});
+
     LedgerSMB::Session::credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
 

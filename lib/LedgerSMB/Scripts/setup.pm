@@ -24,7 +24,6 @@ use strict;
 use warnings;
 
 use Locale::Country;
-use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
@@ -64,7 +63,7 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
+    my $creds = $request->{_auth}->get_credentials('setup');
 
     return [ 401,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
@@ -1372,9 +1371,10 @@ sub complete {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2011-2017 LedgerSMB Core Team.
+This file is licensed under the GNU General Public License version 2,
+or at your option any later version.  Please see the included
+License.txt for details.
 
 =cut
 

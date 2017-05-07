@@ -6,12 +6,6 @@ LedgerSMB::DBH - Database Connection Routines for LedgerSMB
 
   my $dbh = LedgerSMB::DBH->connect($company, $username, $password);
 
-or
-
-  my $dbh = LedgerSMB::DBH->connect($company)
-
-to use credentials returned by LedgerSMB::Auth::get_credentials
-
 =cut
 
 package LedgerSMB::DBH;
@@ -22,6 +16,7 @@ use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
+use Carp;
 use DBI;
 
 =head1 DESCRIPTION
@@ -32,30 +27,27 @@ Sets up and manages the db connection.  This returns a DBI database handle.
 
 =head2 connect ($username, $password)
 
-Returns a connection authenticated with $username and $password.  If $username
-is not sent, then these are taken from LedgerSMB::Auth::get_credentials.
-
+Returns a connection authenticated with $username and $password.
 Returns undef on connection failure or lack of credentials.
 
 =cut
 
 sub connect {
     my ($package, $company, $username, $password) = @_;
-    if (!$username){
-        my $creds = LedgerSMB::Auth::get_credentials;
-        $username = $creds->{login};
-        $password = $creds->{password};
-    }
-    return undef unless $username && $username ne 'logout';
+
+    return undef unless $username && $password;
+    return undef if $username eq 'logout';
+
     my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
            { PrintError => 0, AutoCommit => 0,
              pg_enable_utf8 => 1, pg_server_prepare => 0 })
         or return undef;
-    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
     $dbh->do("set client_min_messages = 'warning'");
-    if($dbi_trace)
-    {
-     $dbh->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
+
+    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
+    if ($dbi_trace) {
+        # See http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
+        $dbh->trace(split /=/,$dbi_trace,2);
     }
 
     return $dbh;
@@ -113,7 +105,7 @@ sub require_version {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2014 The LedgerSMB Core Team.
+Copyright (C) 2014-2017 The LedgerSMB Core Team.
 
 This file may be reused under the terms of the GNU General Public License,
 version 2 or at your option any later version.  Please see the included

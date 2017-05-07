@@ -17,9 +17,9 @@ package LedgerSMB::Session;
 
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
-use LedgerSMB::Auth;
 use strict;
 use warnings;
+use Carp;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -75,6 +75,8 @@ sub credential_prompt{
 Checks to see if a session exists based on current logged in credentials.
 
 Handles failure by creating a new session, since credentials are now separate.
+
+Returns true (1) on success, false (0) on failure.
 
 =cut
 
@@ -159,8 +161,7 @@ sub _create {
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
     if (!$login) {
-       my $creds = LedgerSMB::Auth::get_credentials;
-       $login = $creds->{login};
+        croak "Missing login data from input\n";
     }
 
 
@@ -188,7 +189,7 @@ sub _create {
     my ( $userID ) = $fetchUserID->fetchrow_array;
     unless($userID) {
         $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        return;
+        return 0;
     }
 
 #doing the random stuff in the db so that LedgerSMB won't
@@ -204,7 +205,7 @@ sub _create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken )
-        || return;
+        || return 0;
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator
@@ -221,6 +222,7 @@ sub _create {
     $lsmb->{_new_session_cookie_value} =
         qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
     $lsmb->{LedgerSMB} = $newCookieValue;
+    return 1;
 }
 
 =item destroy
@@ -265,7 +267,7 @@ sub destroy {
 # http://www.ledgersmb.org/
 #
 #
-# Copyright (C) 2006-2011
+# Copyright (C) 2006-2017
 # This work contains copyrighted information from a number of sources all used
 # with permission.  It is released under the GNU General Public License
 # Version 2 or, at your option, any later version.  See COPYRIGHT file for

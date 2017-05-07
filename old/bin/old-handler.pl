@@ -76,7 +76,6 @@ binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
-use LedgerSMB::Auth;
 use LedgerSMB::App_State;
 
 $form = Form->new;

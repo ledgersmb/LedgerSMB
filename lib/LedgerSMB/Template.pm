@@ -160,7 +160,7 @@ desired file extention
 
 =back
 
-=head1 Copyright 2007, The LedgerSMB Core Team
+=head1 Copyright 2007-2017, The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
@@ -310,6 +310,10 @@ sub _preprocess {
     } else { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
+            # don't encode the object's internals; TT won't forward anyway...
+            # btw, some (internal) objects are XS objects, on which this trick
+            # treating it as a hashref really doesn't work...
+            next if /^_/;
             $vars->{_preprocess($_, $escape)} = _preprocess( $rawvars->{$_}, $escape );
         }
     }
