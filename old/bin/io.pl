@@ -1412,7 +1412,6 @@ sub print_form {
     }
 
 
-    $form->{templates} = "$myconfig{templates}";
     $form->{IN}        = "$form->{formname}.$form->{format}";
 
     if ( $form->{format} =~ /(postscript|pdf)/ ) {

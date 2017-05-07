@@ -254,7 +254,6 @@ sub print_transaction {
 
     $form->{invdate} = $form->{transdate};
 
-    $form->{templates} = "$myconfig{templates}";
     if ($form->{formname} eq 'transaction' ){
         $form->{IN} = lc $form->{ARAP} . "_$form->{formname}.html";
         $form->{formname} = lc $form->{ARAP} . "_$form->{formname}";

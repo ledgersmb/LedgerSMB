@@ -100,7 +100,6 @@ sub fetch_config {
     my $sth = $dbh->prepare($query);
     $sth->execute($login);
     my $myconfig = $sth->fetchrow_hashref('NAME_lc');
-    $myconfig->{templates} = "DB";
     bless $myconfig, __PACKAGE__;
     return $myconfig;
 }
