@@ -218,10 +218,6 @@ sub open_form {
         delete $self->{form_id};
     }
 
-    if (!$ENV{GATEWAY_INTERFACE}) {
-        return 1;
-    }
-
     #HV session_id not always set in LedgerSMB/Auth/DB.pm because of mix old,new code-chain?
     if ($self->{session_id}) {
         my $sth = $self->{dbh}->prepare('select form_open(?)');
@@ -245,10 +241,6 @@ sub open_form {
 sub check_form {
     my ($self) = @_;
 
-    if (!$ENV{GATEWAY_INTERFACE}) {
-        return 1;
-    }
-
     return 0 unless $self->{form_id};
     my $sth = $self->{dbh}->prepare('select form_check(?, ?)');
     $sth->execute($self->{session_id}, $self->{form_id});
@@ -260,10 +252,6 @@ sub close_form {
     my ($self) = @_;
     if ($self->{form_id} =~ '^\s*$') {
         delete $self->{form_id};
-    }
-
-    if (!$ENV{GATEWAY_INTERFACE}) {
-        return 1;
     }
 
     my $sth = $self->{dbh}->prepare('select form_close(?, ?)');
@@ -458,28 +446,17 @@ argument.  Otherwise, this function simply prints $msg to STDOUT.
 sub info {
     my ($self, $msg) = @_;
 
-    if ($ENV{GATEWAY_INTERFACE}) {
-        $msg =~ s/\n/<br>/g;
+    $msg =~ s/\n/<br>/g;
 
-        delete $self->{pre};
+    delete $self->{pre};
 
-        if (!$self->{header}) {
-            $self->header;
-            print qq| <body>|;
-            $self->{header} = 1;
-        }
-
-        print "<b>$msg</b>";
+    if (!$self->{header}) {
+        $self->header;
+        print qq| <body>|;
+        $self->{header} = 1;
     }
-    else {
 
-        if ($ENV{info_function}) {
-            __PACKAGE__->can($ENV{info_function})->($msg);
-        }
-        else {
-            print "$msg\n";
-        }
-    }
+    print "<b>$msg</b>";
 }
 
 =item $form->numtextrows($str, $cols[, $maxrows]);
@@ -567,42 +544,43 @@ sub header {
     my $dojo_theme = $self->{dojo_theme};
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
     $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-        if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
-            $stylesheet =
+    if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
+        $stylesheet =
 qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| .
 qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
-        }
+    }
 
-        $self->{charset} ||= "utf-8";
-        $charset =
+    $self->{charset} ||= "utf-8";
+    $charset =
 qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
 
-        $self->{titlebar} =
+    $self->{titlebar} =
           ( $self->{title} )
           ? "$self->{title} - $self->{titlebar}"
           : $self->{titlebar};
-        if ($self->{warn_expire}){
-            $headeradd .= qq|
+    if ($self->{warn_expire}){
+        $headeradd .= qq|
         <script type="text/javascript" language="JavaScript">
         window.alert('Warning:  Your password will expire in $self->{pw_expires}');
     </script>|;
-        }
-        my $dformat = $LedgerSMB::App_State::User->{dateformat};
+    }
+    my $dformat = $LedgerSMB::App_State::User->{dateformat};
 
-        print qq|Content-Type: text/html; charset=utf-8\n\n
+    print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <title>$self->{titlebar}</title> |;
-        if (!$cache){
-            print qq|
+
+    if (!$cache){
+        print qq|
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Cache-Control" content="must-revalidate" />
     <meta http-equiv="Expires" content="-1" /> |;
-        }
-        print qq|
+    }
+
+    print qq|
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
@@ -623,7 +601,6 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 </head>
 
         $self->{pre} \n|;
-    }
 
     $self->{header} = 1;
 }
@@ -1413,10 +1390,11 @@ sub db_init {
     LedgerSMB::Session::credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
 
-    if ($ENV{GATEWAY_INTERFACE} and !$ENV{LSMB_NOHEAD}) {
-        if (! LedgerSMB::Session::check( $self->{cookie}, $self)) {
-            LedgerSMB::Session::credential_prompt;
-        }
+
+    my $path = ($ENV{SCRIPT_NAME});
+    $path =~ s|[^/]*$||;
+    if (! LedgerSMB::Session::check( $self->{cookie}, $self, $path)) {
+        LedgerSMB::Session::credential_prompt;
     }
 
     LedgerSMB::App_State::set_DBH($dbh);

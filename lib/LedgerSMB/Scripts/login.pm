@@ -41,6 +41,18 @@ sub no_db_actions {
     return qw(logout authenticate __default logout_js);
 }
 
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default authenticate);
+}
+
 =item __default (no action specified, do this)
 
 Displays the login screen.
@@ -66,18 +78,8 @@ sub __default {
         return LedgerSMB::Scripts::menu::root_doc($request);
     }
 
-    my $secure = '';
-
-    # copy of code in LedgerSMB::Session
-    my $path = $ENV{SCRIPT_NAME};
-    $path =~ s|[^/]*$||;
-
-    my $cookie_name = $LedgerSMB::Sysconfig::cookie_name;
-    if ($ENV{SERVER_PORT} == 443){
-        $secure = ' Secure;';
-    }
     $request->{_new_session_cookie_value} =
-        qq|$cookie_name=Login; path=$path;$secure|;
+        qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new(

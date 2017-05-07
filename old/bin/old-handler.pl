@@ -89,17 +89,11 @@ print 'Set-Cookie: '
 
 # name of this script
 my $script;
-if ($ENV{GATEWAY_INTERFACE} =~ /^CGI/){
-    $uri = $ENV{REQUEST_URI};
-    $uri =~ s/\?.*//;
-    $ENV{SCRIPT_NAME} = $uri;
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $script = $1;
-} else {
-    $0 =~ tr/\\/\//;
-    $pos = rindex $0, '/';
-    $script = substr( $0, $pos + 1 );
-}
+$uri = $ENV{REQUEST_URI};
+$uri =~ s/\?.*//;
+$ENV{SCRIPT_NAME} = $uri;
+$ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+$script = $1;
 
 
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
@@ -196,11 +190,7 @@ sub _error {
     $msg = "? _error" if !defined $msg;
     $status = 500 if ! defined $status;
 
-    if (!$ENV{GATEWAY_INTERFACE} && $ENV{error_function}) {
-        &{ $ENV{error_function} }($msg);
-    }
-    else {
-        print qq|Status: $status ISE
+    print qq|Status: $status ISE
 Content-Type: text/html; charset=utf-8
 
 <html>
@@ -209,7 +199,6 @@ Content-Type: text/html; charset=utf-8
 </body>
 </html>
 |;
-    }
 
     die;
 }

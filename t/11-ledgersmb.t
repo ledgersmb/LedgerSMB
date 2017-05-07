@@ -54,7 +54,6 @@ utf8::decode($utfstr);
 $lsmb = LedgerSMB->new();
 ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
-ok(defined $lsmb->{action}, 'new: blank, action defined');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 

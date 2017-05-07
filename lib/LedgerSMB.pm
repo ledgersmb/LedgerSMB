@@ -51,6 +51,13 @@ If an index is specified, the merged keys are given a form of
 Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
+=item get_relative_url
+
+Returns the script and query string part of the URL of the GET request,
+without the script path, or undef.
+
+=cut
+
 =item upload([$filename])
 
 This function returns - when called without arguments - the number of
@@ -86,9 +93,9 @@ Loads user configuration info from LedgerSMB::User
 
 Expands a hash into human-readable key => value pairs, and formats and rounds amounts, recursively expanding hashes until there are no hash members present.
 
-=item type()
+=item clear_session()
 
-Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST".
+Clears the session cookie. Only has effect before verification.
 
 =item verify_session()
 
@@ -172,7 +179,8 @@ my $json = JSON->new
 
 
 sub new {
-    my ($class, $cgi_args, $uploads, $cookies) = @_;
+    my ($class, $cgi_args, $script_name, $query_string,
+        $uploads, $cookies) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -187,11 +195,11 @@ sub new {
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
+    $self->{_query_string} = $query_string if defined $query_string;
+    $self->{script} = $script_name;
 
     $self->_process_args($cgi_args);
     $self->_set_default_locale();
-    $self->_set_action();
-    $self->_set_script_name();
     $self->_process_cookies();
 
     return $self;
@@ -199,9 +207,6 @@ sub new {
 
 sub open_form {
     my ($self, $args) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my $i = 1;
     my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{session_id}],
@@ -216,9 +221,6 @@ sub open_form {
 # move to another module
 sub check_form {
     my ($self) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my @vars = $self->call_procedure(funcname => 'form_check',
                               args => [$self->{session_id}, $self->{form_id}]
     );
@@ -227,14 +229,19 @@ sub check_form {
 
 sub close_form {
     my ($self) = @_;
-    if (!$ENV{GATEWAY_INTERFACE}){
-        return 1;
-    }
     my @vars = $self->call_procedure(funcname => 'form_close',
                               args => [$self->{session_id}, $self->{form_id}]
     );
     delete $self->{form_id};
     return $vars[0]->{form_close};
+}
+
+sub clear_session {
+    my ($self) = @_;
+
+    $self->{cookie} = '';
+
+    return undef;
 }
 
 sub verify_session {
@@ -315,34 +322,6 @@ sub _set_default_locale {
         unless $self->{_locale};
 }
 
-sub _set_action {
-    my ($self) = @_;
-
-    $self->{action} = "" unless defined $self->{action};
-    $self->{action} =~ s/\W/_/g;
-    $self->{action} = lc $self->{action};
-}
-
-sub _set_script_name {
-    my ($self) = @_;
-
-    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
-
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $self->{script} = $1 unless !defined $1;
-    $self->{script} = "" unless defined $self->{script};
-
-    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
-        $self->error("Access Denied");
-    }
-    if (!$self->{script}) {
-        $self->{script} = 'login.pl';
-    }
-    $logger->debug("\$self->{script} = $self->{script} "
-                   . "\$self->{action} = $self->{action}");
-}
-
-
 sub _process_args {
     my ($self, $args) = @_;
 
@@ -357,17 +336,6 @@ sub _process_args {
 sub _process_cookies {
     my ($self) = @_;
 
-    # Explicitly don't use the cookie content when we have a simple request
-    # for login.pl without an 'action' query parameter: this is a request
-    # for the login page, not for the 'post-login' menu/content page
-    if ($ENV{REQUEST_METHOD} eq 'GET'
-        && $self->{script} eq 'login.pl'
-        && (! defined $self->{action} || $self->{action} eq ''
-            || $self->{action} eq 'authenticate')) {
-        $self->{cookie} = ''; # reset cookie -- prevents later use
-        return;
-    }
-
     $self->{cookie} =
         $self->{_cookies}->{$LedgerSMB::Sysconfig::cookie_name};
 
@@ -377,6 +345,13 @@ sub _process_cookies {
         $self->{company} = $ccookie
             unless $ccookie eq 'Login';
     }
+}
+
+sub get_relative_url {
+    my ($self) = @_;
+
+    return $self->{script} .
+        ($self->{_query_string} ? "?$self->{_query_string}" : '');
 }
 
 sub upload {
@@ -509,19 +484,6 @@ sub merge {
         $self->{$dst_arg} = $src->{$arg};
     }
     $logger->debug("end caller \$filename=$filename \$line=$line");
-}
-
-sub type {
-
-    my $self = shift @_;
-
-    if (!$ENV{REQUEST_METHOD} or
-        ( !grep {$ENV{REQUEST_METHOD} eq $_} ("HEAD", "GET", "POST") ) ) {
-
-        $self->error("Request method unset or set to unknown value");
-    }
-
-    return $ENV{REQUEST_METHOD};
 }
 
 sub set {

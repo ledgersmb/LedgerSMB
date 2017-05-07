@@ -81,9 +81,6 @@ Handles failure by creating a new session, since credentials are now separate.
 sub check {
     my ( $cookie, $form ) = @_;
 
-    my $path = ($ENV{SCRIPT_NAME});
-    $path =~ s|[^/]*$||;
-    my $secure;
    if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
         return _create($form);
     }
@@ -135,15 +132,8 @@ sub check {
             my $newCookieValue =
               $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
 
-            #now update the cookie in the browser
-            if ($ENV{SERVER_PORT} == 443){
-                 $secure = ' Secure;';
-            }
-            else {
-                $secure = '';
-            }
             $form->{_new_session_cookie_value} =
-                qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
+                qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
             return 1;
         }
         else {
@@ -152,10 +142,6 @@ sub check {
     }
     else {
         #cookie is not valid
-        #delete the cookie in the browser
-        if ($ENV{SERVER_PORT} == 443){
-            $secure = ' Secure;';
-        }
         destroy($form);
         return 0;
     }
@@ -170,9 +156,6 @@ etc.
 
 sub _create {
     my ($lsmb) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    my $secure;
-    $path =~ s|[^/]*$||;
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
     if (!$login) {
@@ -180,11 +163,6 @@ sub _create {
        $login = $creds->{login};
     }
 
-
-    if ( !$ENV{GATEWAY_INTERFACE} ) {
-        #don't create cookies or sessions for CLI use
-        return 1;
-    }
 
     my $fetchUserID = $dbh->prepare(
         "SELECT id
@@ -213,15 +191,6 @@ sub _create {
         return;
     }
 
-# this is assuming that the login is safe, which might be a bad assumption
-# so, I'm going to remove some chars, which might make previously valid
-# logins invalid --CM
-
-# I am changing this to use HTTP Basic Auth credentials for now.  -- CT
-
-    my $auth = $ENV{HTTP_AUTHORIZATION};
-    $auth =~ s/^Basic //i;
-
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed,
 #pgsql's isn't great either  -CM
@@ -249,16 +218,8 @@ sub _create {
     my $newCookieValue = $newSessionID . ':' . $newToken . ':'
     . $lsmb->{company};
 
-    #now set the cookie in the browser
-    #TODO set domain from ENV, also set path to install path
-    if ($ENV{SERVER_PORT} == 443){
-         $secure = ' Secure;';
-    }
-    else {
-        $secure = '';
-    }
     $lsmb->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
+        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
     $lsmb->{LedgerSMB} = $newCookieValue;
 }
 
@@ -269,11 +230,7 @@ Destroys a session and removes it from the db.
 =cut
 
 sub destroy {
-
     my ($form) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    my $secure = '';
-    $path =~ s|[^/]*$||;
 
     my $login = $form->{login};
     $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
@@ -291,11 +248,8 @@ sub destroy {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
     #delete the cookie in the browser
-    if ($ENV{SERVER_PORT} == 443){
-         $secure = ' Secure;';
-    }
     $form->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path;$secure|;
+        qq|${LedgerSMB::Sysconfig::cookie_name}=Login|;
     $dbh->commit; # called before anything else on the page, make sure the
                   # session is really gone.  -CT
 }
