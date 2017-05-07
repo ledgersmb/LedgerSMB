@@ -1004,50 +1004,6 @@ sub update_recurring {
 
 }
 
-=item AM->check_template_name($myconfig, $form);
-
-Performs some sanity checking on the filename $form->{file} and calls
-$form->error if the filename is disallowed.
-
-=cut
-
-sub check_template_name {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    my @allowedsuff = qw(css tex txt html xml);
-    my $test = $form->{file};
-    $test =~ s|^$LedgerSMB::Sysconfig::fs_cssdir||;
-    if ($LedgerSMB::Sysconfig::fs_cssdir
-           and $LedgerSMB::Sysconfig::fs_cssdir !~ m|/$|){
-         $test =~ s|^/||;
-    }
-    if ($LedgerSMB::Sysconfig::templates =~ /^(.:)*?\//){
-        $test =~ s#^$LedgerSMB::Sysconfig::templates/?\\?##;
-    }
-    if ( $test =~ /^(.:)*?\/|:|\.\.\// ) {
-        $form->error("Directory transversal not allowed.");
-    }
-    if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backupdir}\// ) {
-        $form->error(
-"Not allowed to access ${LedgerSMB::Sysconfig::backupdir}/ with this method"
-        );
-    }
-    my $whitelisted = 0;
-    for (@allowedsuff) {
-        if ( $form->{file} =~ /$_$/ ) {
-            $whitelisted = 1;
-        }
-    }
-    if ( !$whitelisted ) {
-        $form->error("Error:  File is of type that is not allowed.");
-    }
-
-    if ( $form->{file} !~ /^$myconfig->{templates}\// ) {
-        $form->error("Not in a whitelisted directory: $form->{file}")
-          unless $form->{file} =~ /^$LedgerSMB::Sysconfig::fs_cssdir\//;
-    }
-}
 
 =item AM->taxes($myconfig, $form);
 

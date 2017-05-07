@@ -462,41 +462,6 @@ sub save_language {
 
     AM->save_language( \%myconfig, \%$form );
 
-    if ( !-d "$myconfig{templates}/$form->{code}" ) {
-
-        umask(002);
-
-        if ( mkdir "$myconfig{templates}/$form->{code}", oct("771") ) {
-
-            umask(007);
-
-            opendir TEMPLATEDIR, "$myconfig{templates}"
-              or $form->error("$myconfig{templates} : $!");
-            @templates = grep !/^(\.|\.\.)/, readdir TEMPLATEDIR;
-            closedir TEMPLATEDIR;
-
-            foreach my $file (@templates) {
-                if ( -f "$myconfig{templates}/$file" ) {
-                    open $infile, '<', "$myconfig{templates}/$file"
-                      or $form->error("$myconfig{templates}/$file : $!");
-
-                    open $outfile, '>', "$myconfig{templates}/$form->{code}/$file"
-                      or $form->error(
-                        "$myconfig{templates}/$form->{code}/$file : $!");
-
-                    while ( $line = <$infile> ) {
-                        print $outfile $line;
-                    }
-                    close $infile;
-                    close $outfile;
-                }
-            }
-        }
-        else {
-            $form->error("${templates}/$form->{code} : $!");
-        }
-    }
-
     $form->redirect( $locale->text('Language saved!') );
 
 }
@@ -531,12 +496,6 @@ sub yes_delete_language {
 
     AM->delete_language( \%myconfig, \%$form );
 
-    # delete templates
-    $dir = "$myconfig{templates}/$form->{code}";
-    if ( -d $dir ) {
-        unlink <$dir/*>;
-        rmdir "$myconfig{templates}/$form->{code}";
-    }
     $form->redirect( $locale->text('Language deleted!') );
 
 }
