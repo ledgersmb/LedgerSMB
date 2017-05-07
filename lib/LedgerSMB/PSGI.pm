@@ -16,6 +16,7 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Auth;
 
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
@@ -82,11 +83,7 @@ sub _internal_server_error {
 sub psgi_app {
     my $env = shift;
 
-    # unfortunately, getting creds is littered all around the code base...
-    # which depends on having HTTP_AUTHORIZATION available, due to
-    # LedgerSMB::Auth::DB depending on it...
-    local $ENV{HTTP_AUTHORIZATION} = $env->{HTTP_AUTHORIZATION};
-
+    my $auth = LedgerSMB::Auth::factory($env);
     my $script_name = $env->{SCRIPT_NAME};
     $script_name =~ m/([^\/\\\?]*)\.pl$/;
     my $module = "LedgerSMB::Scripts::$1";
@@ -95,7 +92,8 @@ sub psgi_app {
     my $psgi_req = Plack::Request->new($env);
     my $request = LedgerSMB->new($psgi_req->parameters, $script,
                                  $env->{QUERY_STRING},
-                                 $psgi_req->uploads, $psgi_req->cookies);
+                                 $psgi_req->uploads, $psgi_req->cookies,
+                                 $auth);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;

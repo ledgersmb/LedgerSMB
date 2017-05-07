@@ -19,27 +19,24 @@ my $got_creds;
 
 # Colons
 $auth_token = MIME::Base64::encode("$username:$colonpasswd");
-$ENV{'HTTP_AUTHORIZATION'} = $auth_token;
-
-$got_creds = LedgerSMB::Auth::get_credentials;
-
+$got_creds = LedgerSMB::Auth::factory(
+    { HTTP_AUTHORIZATION => 'Basic ' . $auth_token }
+    )->get_credentials;
 is($got_creds->{login}, $username, 'username returned');
 is($got_creds->{password}, $colonpasswd, 'username returned');
 
 # Plus sign
 $auth_token = MIME::Base64::encode("$username:$pluspasswd");
-$ENV{'HTTP_AUTHORIZATION'} = $auth_token;
-
-$got_creds = LedgerSMB::Auth::get_credentials;
-
+$got_creds = LedgerSMB::Auth::factory(
+    { HTTP_AUTHORIZATION => 'Basic ' . $auth_token }
+    )->get_credentials;
 is($got_creds->{login}, $username, 'username returned');
 is($got_creds->{password}, $pluspasswd, 'username returned');
 
 # Exclamation point
 $auth_token = MIME::Base64::encode("$username:$excpasswd");
-$ENV{'HTTP_AUTHORIZATION'} = $auth_token;
-
-$got_creds = LedgerSMB::Auth::get_credentials;
-
+$got_creds = LedgerSMB::Auth::factory(
+    { HTTP_AUTHORIZATION => 'Basic ' . $auth_token }
+    )->get_credentials;
 is($got_creds->{login}, $username, 'username returned');
 is($got_creds->{password}, $excpasswd, 'username returned');

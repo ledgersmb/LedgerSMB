@@ -114,7 +114,7 @@ PSGI response triplet (status, headers, body).
 
 
 
-=head1 Copyright (C) 2006, The LedgerSMB core team.
+=head1 Copyright (C) 2006-2017, The LedgerSMB core team.
 
  # This work contains copyrighted information from a number of sources
  # all used with permission.
@@ -150,7 +150,6 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
-use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
@@ -180,15 +179,17 @@ my $json = JSON->new
 
 sub new {
     my ($class, $cgi_args, $script_name, $query_string,
-        $uploads, $cookies) = @_;
+        $uploads, $cookies, $auth) = @_;
     my $self = {};
     bless $self, $class;
 
     (my $package,my $filename,my $line)=caller;
 
 
-    my $creds =  LedgerSMB::Auth::get_credentials;
-    $self->{login} = $creds->{login};
+    # Some tests construct LedgerSMB objects without $auth argument
+    # (in fact, without any arguments), so check for having an $auth
+    # arg before trying to call methods on it.
+    $self->{login} = $auth->get_credentials->{login} if defined $auth;
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
@@ -196,6 +197,7 @@ sub new {
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
     $self->{_query_string} = $query_string if defined $query_string;
+    $self->{_auth} = $auth;
     $self->{script} = $script_name;
 
     $self->_process_args($cgi_args);
@@ -403,7 +405,9 @@ sub _db_init {
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
-        $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
+        my $creds = $self->{_auth}->get_credentials;
+        $self->{dbh} = LedgerSMB::DBH->connect($self->{company},
+            $creds->{login}, $creds->{password})
             || return 0;
     }
     LedgerSMB::App_State::set_DBH($self->{dbh});
