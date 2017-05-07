@@ -115,11 +115,8 @@ sub authenticate {
                      [ 'Please provide your credentials.' ]];
         }
     }
-    my $path = $ENV{SCRIPT_NAME};
-    $path =~ s|[^/]*$||;
 
     if ($request->{dbh} and !$request->{log_out}){
-
         if (!$request->{dbonly}
             && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
             return [ 401,
