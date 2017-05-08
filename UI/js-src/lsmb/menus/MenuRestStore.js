@@ -1,14 +1,18 @@
 define(["dojo/_base/declare",
     "dojo/store/JsonRest", "dojo/store/Observable",
-//    "dojo/store/Memory", "dojo/store/Cache",
+    "dojo/store/Memory", "dojo/store/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel",
     "dijit/tree/dndSource",
-    "dijit/Menu", "dojo/dom", "dojo/domReady!"
+    "dijit/Menu",
+    "dijit/MenuSeparator",
+    "dijit/PopupMenuItem",
+    "dojo/dom", "dojo/domReady!"
 ], function(declare, JsonRest, Observable,
-//    Memory, Cache,
+    Memory, Cache,
     Tree, ObjectStoreModel,
     dndSource,
-    Menu, dom
+    Menu, MenuSeparator, PopupMenuItem,
+    dom
 ){
     // set up the store to get the tree data, plus define the method
     // to query the children of a node
@@ -16,8 +20,8 @@ define(["dojo/_base/declare",
         target:      "menu.pl?action=menuitems_json",
     });
     var store;
-//    var memoryStore = new Memory();
-//    store = new Cache(restStore, memoryStore);
+    var memoryStore = new Memory();
+    store = new Cache(restStore, memoryStore);
     // give store Observable interface so Tree can track updates
     store = new Observable(restStore);
 
@@ -95,7 +99,6 @@ define(["dojo/_base/declare",
 //            }
         }
     }, 'menuTree'); // make sure you have a target HTML element with this id
-    console.dir(tree);
 
     var menu = new Menu({
         targetNodeIds: ['menuTree'],
