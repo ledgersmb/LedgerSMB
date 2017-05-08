@@ -8,3 +8,28 @@ li.menu_closed > ul {
 li.menu_open > ul {
 	display: block;
 }
+
+#version_info {
+    text-align: center;
+}
+
+.header_table {
+    margin-left: auto;
+    margin-right: auto;
+    border=none; border-height=0; padding-top=0; padding-bottom=0; margin-top=0; margin-bottom=0;
+}
+
+.header_center {
+    font-size: smaller;
+    text-align: center;
+}
+
+.header_left {
+    font-size: smaller;
+    text-align: right;
+}
+
+.header_right {
+    font-size: smaller;
+    text-align: left;
+}

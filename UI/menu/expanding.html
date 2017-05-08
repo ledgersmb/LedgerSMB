@@ -1,12 +1,13 @@
 <?lsmb# HTML Snippet, for import only ?>
         <div style="text-align: center"><a target="_blank" href="http://ledgersmb.org/">
-            <img class="cornderlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="LedgerSMB" />
+            <img class="cornderlogo" src="images/ledgersmb_small-trans.png"
         </a></div>
         <div id="version_info"><?lsmb text("LedgerSMB [_1]", version) ?></div>
-        <div id="company_info"><?lsmb text("Logged into [_1]", company) ?></div>
-        <div id="login_info"><?lsmb text("Logged in as [_1]", login) ?></div>
-        <ul id="top_menu" class="menu_open">
-        <?lsmb old_level = 0 ?>
+        <table class="header_table">
+        <tr><td id="header_info" class="header_left"><?lsmb text("User") ?></td><td  class="header_center">&nbsp;|&nbsp;</td><td  class="header_right"><?lsmb text("Company") ?></td></tr>
+        <tr><td id="user_info" class="header_left"><?lsmb login ?></td><td  class="header_center">&nbsp;|&nbsp;</td><td  class="header_right"><?lsmb company ?></td></tr>
+        </table>
+        <hr>
         <?lsmb FOREACH item = menu_items ?>
                 <?lsmb href = "" ?>
                         <!-- <?lsmb item.level ?> :: <?lsmb old_level ?> -->
