@@ -140,6 +140,7 @@ sub menuitems_json {
 
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
 
+    #TODO: Localize Menus here before sending to client
     if ( defined($request->{id}) && $request->{id} ne "" ) {
         my ($item) = $menu->generate_item;
         return $request->to_json( $item );

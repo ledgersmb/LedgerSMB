@@ -13,13 +13,24 @@
         <ul id="menuTree_menu" data-dojo-type="lsmb/menus/MenuRestStore" dojo-trace-api=1
             data-dojo-props='style:"display: none;"'>
             <li data-dojo-type="dijit/MenuItem">
-                <script type="dojo/connect" data-dojo-event="onClick">
-                        // get a hold of the dijit.TreeNode that was the source of this open event
-                        var tn = dijit.byNode(this.getParent().currentTarget);
+                <script type="dojo/connect">
+                    var menu = dijit.byId("menuTree_menu");
+                    // when we right-click anywhere on the tree, make sure we open the menu
+                    menu.bindDomNode(this.domNode);
 
-                        // now print the data store item that backs the tree node
-                        console.debug("menu click for item: ", tn.item.name);
+                    dojo.connect(menu, "_openMyself", this, function(e){
+                        // get a hold of, and log out, the tree node that was the source of this open event
+                        var tn = dijit.getEnclosingWidget(e.target);
+                        console.debug(tn);
+
+                        // now inspect the data store item that backs the tree node:
+                        console.debug(tn.item);
+
+                        // contrived condition: if this tree node doesn't have any children, disable all of the menu items
+                        menu.getChildren().forEach(function(i){ i.set('disabled', !tn.item.children); });
+
+                        // IMPLEMENT CUSTOM MENU BEHAVIOR HERE
+                    });
                 </script>
-                Click me
             </li>
         </ul>
