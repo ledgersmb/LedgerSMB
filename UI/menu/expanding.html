@@ -1,17 +1,21 @@
 <?lsmb# HTML Snippet, for import only ?>
         <div style="text-align: center"><a target="_blank" href="http://ledgersmb.org/">
-            <img class="cornderlogo" src="images/ledgersmb_small.png"
+            <img class="cornerlogo" src="images/ledgersmb_small-trans.png"
                   width="100" height="50" border="1" alt="LedgerSMB" />
         </a></div>
         <div id="version_info"><?lsmb text("LedgerSMB [_1]", version) ?></div>
-        <div id="company_info"><?lsmb text("Logged into [_1]", company) ?></div>
-        <div id="login_info"><?lsmb text("Logged in as [_1]", login) ?></div>
+        <table class="header_table">
+        <tr><td id="header_info" class="header_left"><?lsmb text("User") ?></td>
+            <td  class="header_right"><?lsmb text("Company") ?></td></tr>
+        <tr><td id="user_info" class="header_left"><?lsmb login ?></td>
+            <td  class="header_right"><?lsmb company ?></td></tr>
+        </table>
         <div id="login" style='display:none'><?lsmb login ?></div>
         <div id="open" style='display:none'><?lsmb open ?></div>
-
+        <hr>
         <div id="menuTree"></div>
         <ul id="menuTree_menu" data-dojo-type="lsmb/menus/MenuRestStore" dojo-trace-api=1
-            data-dojo-props='style:"display: none;"'>
+            data-dojo-props='style:"display: none;"' dojo-trace-api='1'>
             <li data-dojo-type="dijit/MenuItem">
                 <script type="dojo/connect">
                     var menu = dijit.byId("menuTree_menu");
