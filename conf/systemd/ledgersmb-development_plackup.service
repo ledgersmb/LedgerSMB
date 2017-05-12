@@ -34,7 +34,7 @@ ExecStart=/usr/bin/plackup           \
     --access-log $LOG                \
     --server HTTP::Server::PSGI      \
     --env development                \
-    --Reload "lib, olb/lib"          \
+    --Reload "lib, old/lib"          \
     tools/starman-development.psgi
 #
 # Take note that the --reload and --Reload switches monitors different
