@@ -133,6 +133,12 @@ sub _default_settings {
                 type => 'YES_NO', },
               { name => 'min_empty',
                 label => $locale->text('Min Empty Lines') },
+              { name => 'default_buyexchange',
+                label => $locale->text('Use web service for current Buy Exchange Rates'),
+                type => 'YES_NO',
+                info => ['Buy rates can be provided automatically to the application by using a web service and providing current date and origin and destination currencies.',
+                         'Please review the terms and conditions for the $1 before use.']
+                },
               ] },
         );
     return @default_settings;
