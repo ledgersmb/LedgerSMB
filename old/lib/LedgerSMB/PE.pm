@@ -162,18 +162,16 @@ sub save_partsgroup {
 
 }
 
-=item PE->get_partsgroup($myconfig, $form);
+=item PE->get_partsgroup($form);
 
 Sets $form->{partsgroup} to the description of the partsgroup identified by
 $form->{id}.  If there are no parts entries associated with that partsgroup,
 $form->{orphaned} is made true, otherwise it is set to false.
 
-$myconfig is unused.
-
 =cut
 
 sub get_partsgroup {
-    my ( $self, $myconfig, $form ) = @_;
+    my ($self, $form) = @_;
 
     my $dbh = $form->{dbh};
 
@@ -626,7 +624,7 @@ sub project_sales_order {
     my $query = qq|SELECT current_date|;
     my ($transdate) = $dbh->selectrow_array($query);
 
-    $form->all_years( $myconfig, $dbh );
+    $form->all_years;
 
     $form->all_business_units( $transdate, undef, 'Timecards');
     $form->{all_project} = $form->{b_units}->{2};

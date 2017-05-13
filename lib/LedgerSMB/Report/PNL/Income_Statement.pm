@@ -15,6 +15,7 @@ This provides the income statement report for LedgerSMB on 1.4 and later.
 
 package LedgerSMB::Report::PNL::Income_Statement;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';
 
 =head1 CRITERIA PROPERTIES
@@ -30,23 +31,6 @@ This is either 'cash' or 'accrual'
 =cut
 
 has basis => (is => 'ro', isa =>'Str', required => 1);
-
-=item comparison_periods
-
-This is the number of periods to compare to
-
-=cut
-
-has comparison_periods => (is => 'ro', isa =>'Int',
-                required =>0, default => 1);
-
-=item comparison_type
-
-This is either by number of periods or by dates
-
-=cut
-
-has comparison_type => (is => 'ro', isa =>'Str', required => 1, default => "by_periods");
 
 =item ignore_yearend
 
@@ -133,4 +117,5 @@ later version.  Please see enclosed LICENSE file for details.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

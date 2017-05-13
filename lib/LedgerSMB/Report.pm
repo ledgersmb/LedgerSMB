@@ -39,6 +39,7 @@ UI/reports/display_report template will be used.
 
 package LedgerSMB::Report;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 use LedgerSMB::Setting;
 
@@ -253,7 +254,7 @@ sub _render {
     $template ||= 'Reports/display_report';
 
     # Sorting and Subtotal logic
-    my $url = LedgerSMB::App_State::get_relative_url();
+    my $url = $request->get_relative_url();
     $self->order_dir('asc') if defined $self->order_by;
     if (defined $self->old_order_by and ($self->order_by eq $self->old_order_by)){
         if (lc($self->order_dir) eq 'asc'){
@@ -395,7 +396,7 @@ Returns a list of columns based on selected ones from the report
 sub show_cols {
     my ($self, $request) = @_;
     my @retval;
-    for my $ref (@{$self->columns}){
+    for my $ref (@{$self->columns($request)}){
         if ($request->{"col_$ref->{col_id}"}){
             push @retval, $ref;
         }

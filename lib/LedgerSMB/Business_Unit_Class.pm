@@ -13,6 +13,7 @@ funds, and projects.
 
 package LedgerSMB::Business_Unit_Class;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_Module;
 with 'LedgerSMB::PGObject';
 

@@ -30,6 +30,7 @@ To get by control code:
 
 package LedgerSMB::Entity::Person::Employee;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::Entity::Person;
 extends 'LedgerSMB::Entity::Person';
 

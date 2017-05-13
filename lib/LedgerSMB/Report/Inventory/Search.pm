@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Inventory::Search;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

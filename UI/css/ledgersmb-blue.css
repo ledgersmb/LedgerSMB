@@ -147,8 +147,21 @@ body.menu {
 A.listheading:link, A.listheading:active, A.listheading:visited {
   color: white;
   text-decoration: none; }
-.listrow1, table.dynatable tr:nth-child(odd) { font-size: 10pt; background-color: #dedede; color: black; vertical-align: top; }
-.listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #f5f5f5; color: black; vertical-align: top; }
+.listrow1, table.dynatable tr:nth-child(odd)
+                                       {
+                                           font-size: 10pt;
+                                           background-color: #dedede;
+                                           color: black;
+                                           vertical-align: top;
+                                       }
+.listrow0, table.dynatable tr:nth-child(even)
+                                       { font-size: 10pt;
+                                         background-color: #f5f5f5;
+                                         color: black;
+                                         vertical-align: top;
+                                       }
+.listrow0:hover, table.dynatable tbody tr:nth-child(even):hover {background-color: #e8e8e8;}
+.listrow1:hover, table.dynatable tbody tr:nth-child(odd):hover {background-color: #e8e8e8;}
 .listsubtotal { font-size: 10pt; background-color: #336666; color: white; }
 .listtotal { font-size: 10pt; background-color: black; color: white; }
 

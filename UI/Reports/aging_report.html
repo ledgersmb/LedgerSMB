@@ -7,8 +7,7 @@ PROCESS "elements.html";
 
 PROCESS "dynatable.html";
 
-LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
-           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
+LINK = request.script _ '?' _ request._query_string _ '&company=' _ DBNAME;
 
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">

@@ -600,7 +600,6 @@ sub save_credit {
     my ($request) = @_;
     $request->{target_div} = 'credit_div';
     my $company;
-    my @taxes;
 
     if (!$request->{ar_ap_account_id}){
           $request->error(

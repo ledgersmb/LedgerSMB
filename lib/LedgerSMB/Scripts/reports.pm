@@ -12,7 +12,6 @@ This module holds common workflow routines for reports.
 
 package LedgerSMB::Scripts::reports;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
@@ -191,23 +190,22 @@ sub generate_balance_sheet {
     my ($request) = @_;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
     $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
-    my $report = LedgerSMB::Report::Balance_Sheet->new(
+    my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
         column_path_prefix => [ 0 ]);
-    $report->run_report;
-    $report->init_comparisons($request);
-    my $counts = $request->{comparison_periods};
-    for my $count (1 .. $counts){
-        next unless $request->{"to_date_$count"};
-        $request->{to_date} = $request->{"to_date_$count"};
-        my $comparison =
-            LedgerSMB::Report::Balance_Sheet->new(
-                %$request,
-                column_path_prefix => [ $count ]);
-        $comparison->run_report;
-        $report->add_comparison($comparison);
+    $rpt->run_report;
+
+    for my $key (qw(from_month from_year from_date to_date internal)) {
+        delete $request->{$_} for (grep { /^$key/ } keys %$request);
     }
-    return $report->render_to_psgi($request);
+
+    for my $cmp_dates (@{$rpt->comparisons}) {
+        my $cmp = LedgerSMB::Report::Balance_Sheet->new(
+            %$request, %$cmp_dates);
+        $cmp->run_report;
+        $rpt->add_comparison($cmp);
+    }
+    return $rpt->render_to_psgi($request);
 }
 
 =item search_overpayments

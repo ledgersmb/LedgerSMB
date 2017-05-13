@@ -8,7 +8,6 @@ LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 
 package LedgerSMB::Scripts::budget_reports;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
 use LedgerSMB::Report::Budget::Variance;

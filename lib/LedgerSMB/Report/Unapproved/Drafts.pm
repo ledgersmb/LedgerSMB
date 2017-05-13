@@ -26,6 +26,7 @@ transactions.
 
 package LedgerSMB::Report::Unapproved::Drafts;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

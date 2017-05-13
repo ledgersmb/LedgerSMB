@@ -113,5 +113,37 @@ When qr/I select the "(.*)" tab/, sub {
     S->{ext_wsl}->page->find(".//*[\@role='tab' and text()='$1']")->click;
 };
 
+When qr/I open the parts screen for '(.*)'/, sub {
+    my $partnumber = $1;
+
+    S->{ext_wsl}->page->body->menu->click_menu(
+        ['Goods and Services', 'Search']
+    );
+    S->{ext_wsl}->page->body->maindiv->content->search(
+        'Part Number' => $partnumber
+    );
+    S->{ext_wsl}->page->body->maindiv->content->find(
+        qq|.//td[contains(concat(" ",normalize-space(\@class)," "),
+                          " partnumber ")]//*[text()="$partnumber"]|)->click;
+
+    use_module($screens{'part entry'});
+    S->{ext_wsl}->page->body->maindiv->wait_for_content;
+};
+
+Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
+    my $id = $1;
+    my $value = $2;
+
+    my $elm = S->{ext_wsl}->page->body->maindiv
+        ->content->find(qq|.//*[\@id="$id" or \@title="$id"
+                                or \@alt="$id"]
+        |);
+    ok(defined $elm, "value-defining element ($id) found");
+    my $actual = $elm->get_text;
+    $actual =~ s/^\s+|\s+$//g;
+    is($actual, $value,
+       "value for element ($id) equals expected value ($value):" .
+        $actual);
+};
 
 1;

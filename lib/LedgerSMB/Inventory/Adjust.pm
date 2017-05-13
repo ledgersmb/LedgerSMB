@@ -13,6 +13,7 @@ LedgerSMB::Inventory::Adjust - Inventory Adjustments for LedgerSMB
 
 package LedgerSMB::Inventory::Adjust;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 use LedgerSMB::Inventory::Adjust_Line;
@@ -88,6 +89,37 @@ has rows => (is => 'rw',
 
 =back
 
+=head1 CONSTRUCTORS
+
+=over
+
+=item new
+
+This constructor is the standard Moose constructor.
+
+=item get( key => { id => $id } )
+
+This constructor retrieves the adjustment with primary key C<id> equal to
+C<$id> from the database and returns a C<LedgerSMB::Inventory::Adjust>
+instance.
+
+=back
+
+=cut
+
+sub get {
+    my $class = shift;
+    my %args = @_;
+
+    my @dblines = __PACKAGE__->call_dbmethod( funcname => 'get_lines',
+                                                args => $args{key} );
+    my @lines = map { LedgerSMB::Inventory::Adjust_Line->new(%$_) } @dblines;
+
+    my ($values) = __PACKAGE__->call_dbmethod( funcname => 'get',
+                                               args => $args{key} );
+    return __PACKAGE__->new(%$values, rows => \@lines);
+}
+
 =head1 METHODS
 
 =over
@@ -106,40 +138,6 @@ sub add_line{
     my @lines = @{$self->rows};
     push @lines, $line;
     $self->rows(\@lines);
-}
-
-=item lines_from_form
-
-This function flattens a form.  It loops from 1 to $hashref->{rowcount}, and
-for each item found, checks for parts_id_$_ and partnumber_$_.  If either is
-found and counted_$_ is found, it creates a new line with the indexed keys of
-parts_id, partnumber, counted, and expected.
-
-Note that expected is optional and if not defined gets calculated based on the
-date of the report.   This happens during the save process.
-
-This then appends the lines onto the current report's @rows in order to ensure
-that many different sources could be combined together in this way.
-
-=cut
-
-sub lines_from_form {
-    my ($self, $hashref) = @_;
-    my @lines;
-    for my $ln (1 .. $hashref->{rowcount}){
-        next
-          if $hashref->{"id_$ln"} eq 'new';
-        my $line = LedgerSMB::Inventory::Adjust_Line->new(
-          parts_id => $hashref->{"id_$ln"},
-         partnumber => $hashref->{"partnumber_$ln"},
-            counted => $hashref->{"counted_$ln"},
-           expected => $hashref->{"onhand_$ln"},
-           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
-        push @lines, $line;
-    }
-    my $rows = $self->rows;
-    push @$rows, @lines;
-    $self->rows($rows);
 }
 
 =item save

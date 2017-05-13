@@ -28,6 +28,7 @@ certain point, and locating specific transactions.
 
 package LedgerSMB::Report::Contact::Purchase;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

@@ -85,7 +85,6 @@ sub will_expire_soon {
 
 sub __generate {
     my ($self) = @_;
-    my @args;
 
     shift @{$self->{menu_items}};
 

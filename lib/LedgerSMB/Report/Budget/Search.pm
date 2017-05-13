@@ -16,6 +16,7 @@ This is a basic search report for budgets.
 
 package LedgerSMB::Report::Budget::Search;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 

@@ -109,9 +109,10 @@ sub process {
         die "Template error: $err" if $err;
     }
     if ($output){
-        open(OUT, '>', $output);
-        print OUT $parent->{output};
-        close OUT;
+        open my $fh, '>', $output
+            or die "Failed to open output file $output : $!";
+        print $fh $parent->{output};
+        close $fh;
     }
     $parent->{mimetype} = 'text/plain';
 }

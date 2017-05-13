@@ -94,7 +94,7 @@ CreateTarBall() {
 Log() {
     echo -e "$@" 1>&5
 }
-export Log
+export -f Log
 
 
 # =============================================

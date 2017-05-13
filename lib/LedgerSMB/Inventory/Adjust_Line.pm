@@ -12,6 +12,7 @@ LedgerSMB::Inventory::Adjust_Line - Inventory Adjustemnt Lines for LedgerSMB
 
 package LedgerSMB::Inventory::Adjust_Line;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 

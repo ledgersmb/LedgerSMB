@@ -44,17 +44,16 @@ Returns a list of LedgerSMB::Database::Change objects
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
-    my $loadorder;
     local $!;
     local $@;
-    open(LOAD, '<', $self->{_path}) or
+    open my $fh, '<', $self->{_path} or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
     my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
        map { my $string = $_; $string =~ s/#.*$//; $string }
-       <LOAD>;
-    close LOAD;
+       <$fh>;
+    close $fh;
     $self->{_scripts} = \@scripts;
     return @scripts;
 }

@@ -201,7 +201,17 @@ sub _display_report {
     $request->close_form;
     $request->open_form;
     $recon->unapproved_checks;
-    $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
+
+    my $contents = '';
+    {
+        local $/;
+        my $handle = $request->upload('csv_file');
+        $contents = <$handle>
+            if defined $handle;
+    }
+
+    $recon->add_entries($recon->import_file($contents))
+        if !$recon->{submitted};
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
     $recon->{form_id} = $request->{form_id};
@@ -258,7 +268,7 @@ sub _display_report {
         for my $amt_name (qw/ our_ their_ /) {
             for my $bal_type (qw/ balance credits debits/) {
                 $l->{"$amt_name$bal_type"} = $l->{"$amt_name$bal_type"}->to_output(money=>1);
-                }
+            }
         }
     }
 
@@ -274,8 +284,8 @@ sub _display_report {
     # Check if only one entry could explain the difference
     if ( !$recon->{submit_enabled}) {
         for my $l (@{$recon->{report_lines}}){
-            $l->{suspect} = $l->{their_credits} == abs($recon->{out_of_balance})
-                         || $l->{their_debits}  == abs($recon->{out_of_balance})
+            $l->{suspect} = $l->{our_credits} == -$recon->{out_of_balance}
+                         || $l->{our_debits}  ==  $recon->{out_of_balance}
                          ? 1 : 0;
         }
     }
@@ -302,7 +312,30 @@ sub _display_report {
 Displays the new report screen.
 
 =cut
+
 sub new_report {
+    my ($request) = @_;
+
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request, copy => 'all' });
+
+    # we can assume we're to generate the "Make a happy new report!" page.
+    @{$recon->{accounts}} = $recon->get_accounts;
+    my $template = LedgerSMB::Template->new(
+        user => $recon->{_user},
+        template => 'reconciliation/upload',
+        locale => $recon->{_locale},
+        format => 'HTML',
+        path => 'UI',
+    );
+    return $template->render_to_psgi($recon);
+}
+
+=item start_report($request)
+
+=cut
+
+sub start_report {
     my ($request) = @_;
 
     # Trap user error: dates accidentally entered in the amount field
@@ -313,49 +346,23 @@ sub new_report {
     }
 
     $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
-    my $template;
-    my $return;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
-    # This method detection makes debugging a bit harder.
-    # Not sure I like it but won't refactor until 1.4..... --CT
-    #
-    if ($request->type() eq "POST") {
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({
+        base => $request, copy => 'all' });
 
-        # We can assume that we're doing something useful with new data.
-        # We can also assume that we've got a file.
 
-        # $self is expected to have both the file handling logic, as well as
-        # the logic to load the processing module.
-
-        # Why isn't this testing for errors?
-        my ($report_id, $entries) = $recon->new_report($recon->import_file());
-        if ($recon->{error}) {
-            #$recon->{error};
-
-            $template = LedgerSMB::Template->new(
-                user=>$recon->{_user},
-                template=> 'reconciliation/upload',
-                locale => $recon->{_locale},
-                format=>'HTML',
-                path=>"UI"
-            );
-            return $template->render_to_psgi($recon);
-        }
-        return _display_report($recon, $request);
-    }
-    else {
-
-        # we can assume we're to generate the "Make a happy new report!" page.
-        @{$recon->{accounts}} = $recon->get_accounts;
-        $template = LedgerSMB::Template->new(
+    # Why isn't this testing for errors?
+    my ($report_id, $entries) = $recon->new_report($recon->import_file());
+    if ($recon->{error}) {
+        my $template = LedgerSMB::Template->new(
             user => $recon->{_user},
             template => 'reconciliation/upload',
             locale => $recon->{_locale},
             format => 'HTML',
-            path=>"UI"
-        );
+            path => "UI"
+            );
         return $template->render_to_psgi($recon);
     }
+    return _display_report($recon, $request);
 }
 
 =item delete_report($request)
@@ -401,31 +408,24 @@ sub approve {
         return get_results($request);
     }
 
-    # Approve will also display the report in a blurred/opaqued out version,
-    # with the controls removed/disabled, so that we know that it has in fact
-    # been cleared. This will also provide for return-home links, auditing,
-    # etc.
+    return [ 400, # bad request
+             [ 'Content-Type' => 'text/plain; charset=utf-8' ],
+             [ "'report_id' parameter missing" ]
+        ] if ! $request->{report_id};
 
-    if ($request->type() eq "POST") {
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(
+        { base => $request, copy=> 'all' });
 
-        # we need a report_id for this.
-
-        my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy=> 'all'});
-
-        my $code = $recon->approve($request->{report_id});
-        my $template = $code == 0 ? 'reconciliation/approved'
-                                  : 'reconciliation/report';
-        return LedgerSMB::Template->new(
-                user => $recon->{_user},
-                        template => $template,
-                locale => $recon->{_locale},
-                format => 'HTML',
-                path=>"UI"
-                        )->render_to_psgi($recon);
-    }
-    else {
-        return _display_report($request, $request);
-    }
+    my $code = $recon->approve($request->{report_id});
+    my $template = $code == 0 ? 'reconciliation/approved'
+        : 'reconciliation/report';
+    return LedgerSMB::Template->new(
+        user => $recon->{_user},
+        template => $template,
+        locale => $recon->{_locale},
+        format => 'HTML',
+        path=>"UI",
+        )->render_to_psgi($recon);
 }
 
 =item pending ($self, $request, $user)
@@ -451,16 +451,7 @@ sub pending {
         format=>'HTML',
         path=>"UI"
     );
-    if ($request->type() eq "POST") {
-        return $template->render_to_psgi(
-            {
-                pending=>$recon->get_pending($request->{year}."-".$request->{month})
-            }
-        );
-    }
-    else {
-        return $template->render_to_psgi();
-    }
+    return $template->render_to_psgi();
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT

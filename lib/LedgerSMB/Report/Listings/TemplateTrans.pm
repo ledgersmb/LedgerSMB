@@ -6,6 +6,7 @@ LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 
 package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 SYNOPSIS

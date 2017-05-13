@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
 
 package LedgerSMB::Report::Listings::Asset_Class;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES

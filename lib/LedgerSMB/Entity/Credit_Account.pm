@@ -29,6 +29,7 @@ and the like.
 
 package LedgerSMB::Entity::Credit_Account;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 

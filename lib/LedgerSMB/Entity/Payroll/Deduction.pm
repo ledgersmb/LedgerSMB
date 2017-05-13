@@ -25,6 +25,7 @@ To save a new deduction:
 
 package LedgerSMB::Entity::Payroll::Deduction;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 

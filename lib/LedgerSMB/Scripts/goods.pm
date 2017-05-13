@@ -53,7 +53,7 @@ sub search {
     }
     my $report = LedgerSMB::Report::Inventory::Search->new(%$request);
     return $report->render_to_psgi($request);
-};
+}
 
 =item search_partsgroups
 

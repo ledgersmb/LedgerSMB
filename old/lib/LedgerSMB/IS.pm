@@ -113,14 +113,10 @@ sub invoice_details {
     my $projectdescription;
     my $projectnumber_id;
     my $translation;
-    my $partsgroup;
-
     my @taxaccounts;
     my %taxaccounts;
     my $taxrate;
     my $taxamount;
-
-    my %translations;
 
     $query = qq|
            SELECT p.description, t.description
@@ -141,7 +137,7 @@ sub invoice_details {
 
 
     # sort items by project and partsgroup
-    for $i ( 1 .. $form->{rowcount} - 1 ) {
+    foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
 
         # account numbers
         $pth->execute( $form->{"id_$i"} );
@@ -233,7 +229,7 @@ sub invoice_details {
     my $k = scalar @sortlist;
     my $j = 0;
 
-    foreach $item (@sortlist) {
+    foreach my $item (@sortlist) {
 
         $i = $item->[0];
         $j++;
@@ -629,7 +625,7 @@ sub invoice_details {
         );
     }
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} ) {
             push( @{ $form->{payment} }, $form->{"paid_$i"} );
             my ( $accno, $description ) = split /--/, $form->{"AR_paid_$i"};
@@ -778,7 +774,7 @@ sub post_invoice {
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
@@ -861,7 +857,7 @@ sub post_invoice {
           VALUES (currval('invoice_id_seq'), ?, ?)"
     );
 
-    foreach $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         my $allocated = 0;
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
         if ($form->{reverse}){
@@ -1072,7 +1068,7 @@ sub post_invoice {
     }
 
     $form->{paid} = 0;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$i"} =
           $form->parse_amount( $myconfig, $form->{"paid_$i"} )->bstr();
         $form->{paid} += $form->{"paid_$i"};
@@ -1123,7 +1119,7 @@ sub post_invoice {
           VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
     );
 
-    foreach $ref ( sort { $b->{amount} <=> $a->{amount} }
+    foreach my $ref ( sort { $b->{amount} <=> $a->{amount} }
         @{ $form->{acc_trans}{lineitems} } )
     {
         $diff ||= 0;
@@ -1276,7 +1272,7 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{customer};
     $form->{name} =~ s/--$form->{customer_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     # save printed, emailed and queued
     $form->save_status($dbh);

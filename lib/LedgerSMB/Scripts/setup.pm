@@ -24,8 +24,6 @@ use strict;
 use warnings;
 
 use Locale::Country;
-use LedgerSMB;
-use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
@@ -65,7 +63,7 @@ sub __default {
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
+    my $creds = $request->{_auth}->get_credentials('setup');
 
     return [ 401,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
@@ -180,7 +178,7 @@ sub get_dispatch_table {
       { appname => 'ledgersmb',
         version => undef,
         message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
-        operation => $request->{_locale}->text("Cancel."),
+        operation => $request->{_locale}->text("Cancel"),
         next_action => 'cancel' } );
 }
 
@@ -207,15 +205,13 @@ sub login {
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
-    } else {
-        my $dispatch_entry;
-
-        foreach $dispatch_entry (get_dispatch_table($request)) {
+    }
+    else {
+        foreach my $dispatch_entry (get_dispatch_table($request)) {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                my $field;
-                foreach $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
 
@@ -404,10 +400,12 @@ sub run_backup {
                          file => "roles_${date}.sql"
        );
        $mimetype   = 'text/x-sql';
-    } elsif ($request->{backup} eq 'db'){
+    }
+    elsif ($request->{backup} eq 'db') {
        $backupfile = $database->backup;
        $mimetype   = 'application/octet-stream';
-    } else {
+    }
+    else {
         die $request->{_locale}->text('Invalid backup request');
     }
 
@@ -419,7 +417,7 @@ sub run_backup {
         no warnings 'once';
 
         my $csettings = $LedgerSMB::Company_Config::settings;
-        my $mail = new LedgerSMB::Mailer(
+        my $mail = LedgerSMB::Mailer->new(
             from          => $LedgerSMB::Sysconfig::backup_email_from,
             to            => $request->{email},
             subject       => "Email of Backup",
@@ -438,18 +436,25 @@ sub run_backup {
             format => 'HTML',
         );
         return $template->render_to_psgi($request);
-    } elsif ($request->{backup_type} eq 'browser') {
+    }
+    elsif ($request->{backup_type} eq 'browser') {
         my $bak;
-        open $bak, '<', $backupfile;
+        open $bak, '<', $backupfile
+            or die "Failed to open temporary backup file $backupfile : $!";
         unlink $backupfile; # remove the file after it gets closed
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
-        return [ 200,
-                 [ 'Content-Type' => $mimetype,
+        return [
+            200,
+            [
+                'Content-Type' => $mimetype,
                    'Content-Disposition' =>
-                        "attachment; filename=\"$attachment_name\"" ],
-                 $bak ];  # return the file-handle
-     } else {
+                    "attachment; filename=\"$attachment_name\""
+            ],
+            $bak  # return the file-handle
+        ];
+    }
+    else {
         die $request->{_locale}->text("Don't know what to do with backup");
     }
 }
@@ -1051,8 +1056,7 @@ sub save_user {
     } elsif ($request->{perms} == 0) {
         $request->call_procedure(funcname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
-                                           "lsmb_$request->{database}__".
-                                            "users_manage",
+                                           'users_manage',
                                          ]
         );
    }
@@ -1128,7 +1132,7 @@ sub process_and_run_upgrade_script {
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
-    $dbh->do("SELECT admin__add_user_to_role(username, lsmb__role('base_user'))
+    $dbh->do("SELECT admin__add_user_to_role(username, 'base_user')
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
@@ -1219,12 +1223,14 @@ sub run_sl30_migration {
 sub create_initial_user {
     my ($request) = @_;
 
-   my $database = _init_db($request) unless $request->{dbh};
-   @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
+    _init_db($request) unless $request->{dbh};
+    @{$request->{salutations}} = $request->call_procedure(
+        funcname => 'person__list_salutations'
+    );
 
-   @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
 
    my $locale = $request->{_locale};
 
@@ -1374,9 +1380,10 @@ sub complete {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2011-2017 LedgerSMB Core Team.
+This file is licensed under the GNU General Public License version 2,
+or at your option any later version.  Please see the included
+License.txt for details.
 
 =cut
 

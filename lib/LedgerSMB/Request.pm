@@ -37,9 +37,7 @@ and old code to use for declarative handling of required inputs, dates, and
 amounts.
 
 In future versions, this may take on more of the role found in LedgerSMB.pm
-today, but hopefully with a lot less cruft.  It isn't clear we will use
-CGI::Simple or rely on a specific interface and so some portability in request
-handling will be required.  That's where this module comes in.
+today, but hopefully with a lot less cruft.
 
 =head1 METHODS
 

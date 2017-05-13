@@ -16,6 +16,7 @@ package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 
 =head1 FUNCTIONS
@@ -703,20 +704,21 @@ push @tests, __PACKAGE__->new(
 
 # There's no AP uniqueness requirement?
 push @tests, __PACKAGE__->new(
-    test_query => "select *
-                     from ap
-                    where invnumber in (select invnumber
-                                               from ap
-                                              group by invnumber
-                                              having count(*) > 1)
-                    order by invnumber",
-    display_name => $locale->text('Non-unique invoice numbers'),
+    test_query => "SELECT id, concat(invnumber,'-',row_number() over(partition by invnumber order by id)) AS invnumber,
+                          dcn, description, transdate, duedate, datepaid, ordnumber, quonumber, approved
+                     FROM ap
+                    WHERE invnumber IN (SELECT invnumber
+                                          FROM ap
+                                      GROUP BY invnumber
+                                        HAVING count(*) > 1)
+                 ORDER BY invnumber",
+    display_name => $locale->text('Non-unique invoice numbers detected'),
     name => 'no_duplicate_ap_invoicenumbers',
     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
     column => 'invnumber',
  instructions => $locale->text(
-                   'Please make all AP invoice numbers unique'),
+                   'Contrary to SQL-ledger, LedgerSMB invoices numbers must be unique. Please review suggestions to make all AP invoice numbers unique. Conflicting entries are presented by pairs, with a suffix added to the invoice number'),
     table => 'ap',
     appname => 'sql-ledger',
     min_version => '2.7',

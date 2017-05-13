@@ -25,6 +25,7 @@ searching for and reporting financial transactions.
 
 package LedgerSMB::Report::GL;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 

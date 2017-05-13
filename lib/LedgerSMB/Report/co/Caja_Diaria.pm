@@ -26,6 +26,7 @@ specific period.
 
 package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
@@ -110,7 +111,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Caja Diaria');
+    return 'Caja Diaria';
 }
 
 =item header_lines

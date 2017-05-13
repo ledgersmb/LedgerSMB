@@ -11,6 +11,7 @@ LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Partsgroups;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 

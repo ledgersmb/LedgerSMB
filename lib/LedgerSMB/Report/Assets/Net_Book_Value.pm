@@ -20,6 +20,7 @@ asset accounts.
 
 package LedgerSMB::Report::Assets::Net_Book_Value;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES

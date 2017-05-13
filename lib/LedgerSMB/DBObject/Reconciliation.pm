@@ -126,11 +126,11 @@ formats.  The format structure is per account id.
 =cut
 
 sub import_file {
-
     my $self = shift @_;
+    my $contents = shift @_;
 
     my $csv = LedgerSMB::Reconciliation::CSV->new({base=>$self});
-    $self->{import_entries} = $csv->process($self, 'csv_file');
+    $self->{import_entries} = $csv->process($self, $contents);
 
     return $self->{import_entries};
 }

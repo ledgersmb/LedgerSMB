@@ -30,6 +30,7 @@ like.
 
 package LedgerSMB::Timecard;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 

@@ -21,6 +21,7 @@ LedgerSMB::Budget_Report.
 =cut
 
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

@@ -28,6 +28,7 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
                           event.stop(e);
                           c++;
                           hash(href + c.toString(16));
+                          mainDiv.fade_main_div();
                         }
                     });
                     var l = window.location;

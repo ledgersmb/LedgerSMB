@@ -14,6 +14,8 @@ funds, and projects.
 package LedgerSMB::Exchangerate;
 
 use Moose;
+use namespace::autoclean;
+
 use LedgerSMB::MooseTypes;
 use LedgerSMB::PGObject;
 with 'LedgerSMB::PGObject';

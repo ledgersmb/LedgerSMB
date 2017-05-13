@@ -102,20 +102,60 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th><?lsmb text('Cleared') ?></th>
-        <th><?lsmb text('Transaction Type') ?></th>
-        <th><?lsmb text('Clear date') ?></th>
-        <th><?lsmb text('Source') ?></th>
-        <th><?lsmb text('Posted Date') ?></th>
-        <th><?lsmb text('Description') ?></th>
-        <th><?lsmb text('Our Debits') ?></th>
-        <th><?lsmb text('Our Credits') ?></th>
-        <th><?lsmb text('Their Debits') ?></th>
-        <th><?lsmb text('Their Credits') ?></th>
+        <th class="header" rowspan="2" scope="rowgroup"></th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Transaction Type') ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup"
+                id="cleared_header_column">
+            <?lsmb text('Cleared') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                    id => 'cleared_header_column',
+                    position => ["above", "below", "after", "before"],
+                    msg => text("Date when the transaction was cleared at your bank") };
+            ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Source') ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup"
+                id="posted_header_column">
+            <?lsmb text('Posted') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                    id => 'posted_header_column',
+                    position => ["above", "below", "after", "before"],
+                    msg => text("Date when the transaction was posted in the ledger") };
+            ?>
+        </th>
+        <th class="header" rowspan="2" scope="rowgroup">
+            <?lsmb text('Description') ?>
+        </th>
+        <th class="header" colspan="2" id="books_header_column">
+            <?lsmb text('Books') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                id => 'books_header_column',
+                position => ["above", "below", "after", "before"],
+                msg => text("Data from your ledger") };
+            ?>
+        </th>
+        <th class="header" colspan="2" id="bank_header_column">
+            <?lsmb text('Bank') ?>
+            <?lsmb INCLUDE tooltip element_data = {
+                id => 'bank_header_column',
+                position => ["above", "below", "after", "before"],
+                msg => text("Data from your bank statement") };
+            ?>
+        </th>
+    </tr>
+    <tr class="listheading">
+        <th class="header"><?lsmb text('Debits') ?></th>
+        <th class="header"><?lsmb text('Credits') ?></th>
+        <th class="header"><?lsmb text('Debits') ?></th>
+        <th class="header"><?lsmb text('Credits') ?></th>
     </tr>
 
     <?lsmb FOREACH row = report_lines ?>
-            <?lsmb IF (row.cleared) -?>
+            <?lsmb IF row.cleared -?>
                            <?lsmb row.cleared = 'checked' -?>
             <?lsmb ELSE ?> <?lsmb row.cleared = undef -?>
             <?lsmb END -?>
@@ -126,7 +166,7 @@ END ?>
             value = row.id
         } ?>
         <tr class=<?lsmb row.suspect ? "suspect" : "record"?>>
-            <td><?lsmb IF !approved and !submitted;
+            <td class="check"><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
             name = "cleared_$row.id"
@@ -157,21 +197,20 @@ END ?>
                 <?lsmb INCLUDE tooltip element_data; ?>
             <?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>
-            <td><?lsmb row.post_date ?></td>
+            <td class="date"><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
-            <td><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
-            <td><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
-            <td><?lsmb reverse ? row.their_credits : row.their_debits ?></td>
-            <td><?lsmb reverse ? row.their_debits  : row.their_credits ?></td>
+            <td class="money"><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
+            <td class="money"><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
+            <td class="money"><?lsmb reverse ? row.their_credits : row.their_debits ?></td>
+            <td class="money"><?lsmb reverse ? row.their_debits  : row.their_credits ?></td>
         </tr>
     <?lsmb i = i + 1 -?>
     <?lsmb END ?>
     <?lsmb END -?>
     <tr class="subtotal">
-        <th><?lsmb text('Total') ?></th>
-        <th colspan=5><?lsmb total_cleared_credits-total_cleared_debits ?></th>
-        <td><?lsmb total_cleared_debits ?></td>
-        <td><?lsmb total_cleared_credits ?></td>
+        <th colspan=6><?lsmb text('Total') ?></th>
+        <td class="money"><?lsmb total_cleared_debits ?></td>
+        <td class="money"><?lsmb total_cleared_credits ?></td>
     </tr>
     </table>
 <table border=0 id="error-table">
@@ -187,16 +226,16 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th><?lsmb text('Cleared') ?></th>
-        <th><?lsmb text('Transaction Type') ?></th>
-        <th><?lsmb text('Clear date') ?></th>
-        <th><?lsmb text('Source') ?></th>
-        <th><?lsmb text('Posted Date') ?></th>
-        <th><?lsmb text('Description') ?></th>
-        <th><?lsmb text('Our Debits') ?></th>
-        <th><?lsmb text('Our Credits') ?></th>
-        <th><?lsmb text('Their Debits') ?></th>
-        <th><?lsmb text('Their Credits') ?></th>
+        <th class="header"></th>
+        <th class="header"><?lsmb text('Transaction Type') ?></th>
+        <th class="header"><?lsmb text('Cleared') ?></th>
+        <th class="header"><?lsmb text('Source') ?></th>
+        <th class="header"><?lsmb text('Posted') ?></th>
+        <th class="header"><?lsmb text('Description') ?></th>
+        <th class="header"><?lsmb text('Our Debits') ?></th>
+        <th class="header"><?lsmb text('Our Credits') ?></th>
+        <th class="header"><?lsmb text('Their Debits') ?></th>
+        <th class="header"><?lsmb text('Their Credits') ?></th>
     </tr>
 
     <?lsmb FOREACH row = report_lines ?>
@@ -206,8 +245,8 @@ END ?>
         name = "id_$i",
         value = row.id
     } ?>
-        <tr class=<?lsmb row.suspect ? "suspect" : "warning"?>>
-            <td><?lsmb IF !approved and !submitted;
+        <tr class=<?lsmb row.suspect ? "check suspect" : "check warning"?>>
+            <td class="check"><?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
             name = "cleared_$row.id"
@@ -216,24 +255,24 @@ END ?>
             };
             END ?></td>
             <td><?lsmb row.trans_type ?></td>
-            <td><?lsmb row.clear_time ?></td>
+            <td class="date"><?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>
-            <td><?lsmb row.post_date ?></td>
+            <td class="date"><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
-            <td><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
-            <td><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
-            <td><?lsmb reverse ? row.their_credits : row.their_debits ?></td>
-            <td><?lsmb reverse ? row.their_debits  : row.their_credits ?></td>
+            <td class="money"><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
+            <td class="money"><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
+            <td class="money"><?lsmb reverse ? row.their_credits : row.their_debits ?></td>
+            <td class="money"><?lsmb reverse ? row.their_debits  : row.their_credits ?></td>
         </tr>
     <?lsmb i = i + 1 -?>
     <?lsmb END -?>
     <?lsmb END -?>
     <tr class="subtotal">
         <th colspan=6><?lsmb text('Total') ?></th>
-        <td><?lsmb mismatch_our_debits ?></td>
-        <td><?lsmb mismatch_our_credits ?></td>
-        <td><?lsmb mismatch_their_debits ?></td>
-        <td><?lsmb mismatch_their_credits ?></td>
+        <td class="money"><?lsmb mismatch_our_debits ?></td>
+        <td class="money"><?lsmb mismatch_our_credits ?></td>
+        <td class="money"><?lsmb mismatch_their_debits ?></td>
+        <td class="money"><?lsmb mismatch_their_credits ?></td>
     </tr>
     </table>
     <table id="outstanding-table">
@@ -249,46 +288,50 @@ END ?>
         ?></th>
     </tr>
     <tr class="listheading">
-        <th><?lsmb text('Cleared') ?></th>
-        <th><?lsmb text('Source') ?></th>
-        <th><?lsmb text('Posted Date') ?></th>
-        <th><?lsmb text('Description') ?></th>
-        <th><?lsmb text('Our Debits') ?></th>
-        <th><?lsmb text('Our Credits') ?></th>
+        <th class="header"><?lsmb text('Cleared') ?></th>
+        <th class="header"><?lsmb text('Source') ?></th>
+        <th class="header"><?lsmb text('Posted') ?></th>
+        <th class="header"><?lsmb text('Description') ?></th>
+        <th class="header"><?lsmb text('Our Debits') ?></th>
+        <th class="header"><?lsmb text('Our Credits') ?></th>
+
     </tr>
-    <?lsmb FOREACH row = report_lines ?>
-    <?lsmb IF row.cleared != 'checked' and row.err != 'mismatch' ?>
-    <?lsmb INCLUDE input element_data = {
+    <?lsmb
+    FOREACH row = report_lines;
+        IF row.cleared != 'checked' and row.err != 'mismatch';
+            INCLUDE input element_data = {
         type = "hidden",
         name = "id_$i",
         value = row.id
     } ?>
         <tr class=<?lsmb row.suspect ? "suspect" : "record"?> id=<?lsmb "recon-line-$row.id" ?>
             data-dojo-type = "lsmb/ReconciliationLine"
-            data-dojo-props = "topic:'ui/reconciliation/report/cleared_$row.id'">
-            <td><?lsmb IF !approved and !submitted;
+                data-dojo-props = "topic:'ui/reconciliation/report/cleared_<?lsmb row.id ?>'">
+                <td>
+                <?lsmb IF !approved and !submitted;
             INCLUDE input element_data = {
             type = "checkbox"
             name = "cleared_$row.id"
             value = row.id
             checked = row.cleared
             "data-dojo-type" = "lsmb/PublishCheckBox"
-            "data-dojo-props" = "topic:'ui/reconciliation/report/cleared_$row.id'"
+                        "data-dojo-props" = "topic:'ui/reconciliation/report/cleared_" _ row.id _ "'"
             };
-            END ?></td>
+                    END ?>
+                </td>
             <td><?lsmb row.scn ?> </td>
-            <td><?lsmb row.post_date ?></td>
+                <td class="date"><?lsmb row.post_date ?></td>
             <td><?lsmb row.payee ?></td>
-            <td><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
-            <td><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
+                <td class="money"><?lsmb reverse ? row.our_credits   : row.our_debits ?></td>
+                <td class="money"><?lsmb reverse ? row.our_debits    : row.our_credits ?></td>
         </tr>
-    <?lsmb i = i + 1 -?>
-    <?lsmb END ?>
-    <?lsmb END -?>
+            <?lsmb i = i + 1;
+        END;
+    END -?>
     <tr class="subtotal">
         <th colspan=4><?lsmb text('Total') ?></th>
-        <td><?lsmb total_uncleared_debits ?></td>
-        <td><?lsmb total_uncleared_credits ?></td>
+        <td class="money"><?lsmb total_uncleared_debits ?></td>
+        <td class="money"><?lsmb total_uncleared_credits ?></td>
     </tr>
 </table>
 <?lsmb INCLUDE input element_data = {

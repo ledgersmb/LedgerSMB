@@ -28,6 +28,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Overview;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;

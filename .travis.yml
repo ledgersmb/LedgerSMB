@@ -60,6 +60,7 @@ matrix:
             - nginx postgresql-9.3-pgtap
       env:
         - DB_TESTING=1
+        - POD_TESTING=1
     - perl: '5.16'
       addons:
         postgresql: "9.2"
@@ -87,6 +88,10 @@ cache:
     - $HOME/dojo_archive
 
 before_install:
+  # list all the running services before we start. Perhaps we can stop some of them to save resources.
+  - sudo service --status-all
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
   - source /opt/jdk_switcher/jdk_switcher.sh
   - jdk_switcher use oraclejdk8
   - phantomjs --version
@@ -110,11 +115,15 @@ before_install:
   - export PATH="$HOME/locallib/bin:$PATH"
   - export PERL_MM_OPT="INSTALL_BASE=$HOME/locallib"
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
-  - npm install uglify-js
+  - npm install uglify-js@">=2.0 <3.0"
 
 install:
   - cpanm --quiet --notest --with-develop --with-feature=edi --with-feature=xls --installdeps .
   - cpan-install --coverage
+  - if [ "${POD_TESTING}" != "" ]; then
+       cpanm --quiet --notest Test::Pod ;
+       cpanm --quiet --notest Test::Pod::Coverage ;
+    fi
 
 before_script:
   - make dist DIST_VER=travis DIST_DIR=${HOME}/built-dist/tar-output
@@ -128,10 +137,12 @@ before_script:
   - ((phantomjs --webdriver=4422 2>/dev/null >/dev/null &) && echo "PhantomJS started succesfully") || (echo "Failed to start PhantomJS!" ; exit 1)
   - #PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi >/dev/null 2>/dev/null &
   - PERL5OPT="$PERL5OPT $HARNESS_PERL_SWITCHES" plackup -Ilib --port 5001 --server HTTP::Server::PSGI tools/starman.psgi --access_log /tmp/plackup-access.log 2> /tmp/plackup-error.log &
-  - sleep 5  # give starman a chance to start
-  - utils/test/Is_LSMB_running.sh  # fail early if starman is not running
+  - #sleep 5  # give starman a chance to start # we now have better handling for this in Is_LSMB_running.sh
+  - utils/test/Is_LSMB_running.sh --early # fail early if starman is not running (can be skipped based on reponame or owner by setting an array in the script)
   - nginx -c /tmp/nginx.conf
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
 
 script:
   - RELEASE_TESTING=1
@@ -156,3 +167,17 @@ after_success:
        echo "" ;
     fi
   - coverage-report
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
+  # try and force the github camo.githubusercontent.com cache to refresh our badges
+  # with no arguments, this only refreshes the badge assests linked to by the default page shown when visiting
+  # https://github.com/ledgersmb/LedgerSMB
+  # if we want to refresh assets other than those (ie: not master branch) then we will need to add explicit arguments to do so
+  # the script is sourced from https://github.com/sbts/github-badge-cache-buster but isn't expected to change so there is no point making it a submodule
+  - utils/test/github-badge-cache-buster.sh
+
+after_failure:
+  # display the available resources
+  - utils/diagnostics/t/01-system-resources.t
+  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
+  - sudo dmesg

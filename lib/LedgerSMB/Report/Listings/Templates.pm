@@ -16,6 +16,7 @@ and orders).  This is not used for the user interface templates.
 
 package LedgerSMB::Report::Listings::Templates;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES

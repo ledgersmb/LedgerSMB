@@ -1036,7 +1036,6 @@ sub num2text_da {
     }
 
     my $i;
-    my $bigplural;
     while (@numblock) {
         $i = $#numblock;
         $numblock[$i] *= 1;

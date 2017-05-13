@@ -11,6 +11,7 @@ LedgerSMB::Report::File - File role for querying files for a report
 
 package LedgerSMB::Report::File;
 use Moose::Role;
+use namespace::autoclean;
 use LedgerSMB::File;
 with 'LedgerSMB::I18N';
 

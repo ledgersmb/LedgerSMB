@@ -10,6 +10,7 @@ LedgerSMB::Report::File::Internal - Files for LSMB processes.
 
 package LedgerSMB::Report::File::Internal;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::File', 'LedgerSMB::I18N';
 

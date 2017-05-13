@@ -1134,54 +1134,39 @@ DECLARE
         pay_row record;
         t_voucher_id int;
         t_voucher_inserted bool;
-        t_currs text[];
-        t_rev_fx numeric;
+
         t_fxgain_id int;
         t_fxloss_id int;
-        t_paid_fx numeric;
 BEGIN
-        t_rev_fx := in_exchangerate;
-
-        --### TODO
-        t_paid_fx := null;
-        --SELECT * INTO t_paid_fx FROM currency_get_exchangerate(
-        --      in_currency, in_date_paid, in_account_class);
-
-       select value::int INTO t_fxgain_id FROM setting_get('fxgain_accno_id');
-       select value::int INTO t_fxloss_id FROM setting_get('fxloss_accno_id');
-
-       SELECT string_to_array(value, ':') into t_currs
-          from defaults
-         where setting_key = 'curr';
-
-        IF in_currency IS NULL OR in_currency = t_currs[1] THEN
-                t_rev_fx := 1;
-                t_paid_fx := 1;
-        END IF;
-        IF t_rev_fx IS NULL THEN
-            RAISE EXCEPTION 'No exchangerate provided and not default currency';
-        END IF;
-
+        select value::int INTO t_fxgain_id FROM setting_get('fxgain_accno_id');
+        select value::int INTO t_fxloss_id FROM setting_get('fxloss_accno_id');
 
         IF in_batch_id IS NOT NULL THEN
                 t_voucher_id := nextval('voucher_id_seq');
                 t_voucher_inserted := FALSE;
         END IF;
         FOR pay_row IN
-                SELECT a.*, c.ar_ap_account_id, arap.curr, arap.fxrate
+                SELECT a.*,
+                       (select distinct chart_id
+                          from acc_trans ac
+                               join account at on ac.chart_id = at.id
+                               join account_link al on at.id = al.account_id
+                         where ((al.description = 'AP'
+                                   and in_account_class = 1)
+                                 or (al.description = 'AR'
+                                    and in_account_class = 2))
+                               and ac.trans_id = a.trans_id)
+                       as ar_ap_account_id,
+                       arap.curr, arap.orig_amount_tc, orig_amount_bc
                 FROM acc_trans a
-                JOIN (select id, curr, entity_credit_account,
-                             CASE WHEN curr = t_currs[1] THEN 1
-                                   ELSE buy END as fxrate
+                JOIN (select id, curr, amount_tc as orig_amount_tc,
+                             amount_bc as orig_amount_bc, entity_credit_account
                         FROM ar
-                   LEFT JOIN exchangerate USING (transdate, curr)
                        WHERE in_account_class = 2
-                        UNION
-                        SELECT id, curr, entity_credit_account,
-                               CASE WHEN curr = t_currs[1] THEN 1
-                                    ELSE sell END as fxrate
+                      UNION
+                      select id, curr, amount_tc as orig_amount_tc,
+                             amount_bc as orig_amount_bc, entity_credit_account
                         FROM ap
-                   LEFT JOIN exchangerate USING (transdate, curr)
                        WHERE in_account_class = 1
                 ) arap ON (a.trans_id = arap.id)
                 JOIN entity_credit_account c
@@ -1193,10 +1178,6 @@ BEGIN
                         AND in_cash_accno = ch.accno
                         and in_voucher_id IS NOT DISTINCT FROM voucher_id
         LOOP
-                IF pay_row.curr = t_currs[1] THEN
-                   pay_row.fxrate = 1;
-                END IF;
-
                 IF in_batch_id IS NOT NULL
                         AND t_voucher_inserted IS NOT TRUE
                 THEN
@@ -1212,30 +1193,45 @@ BEGIN
                 END IF;
 
                 INSERT INTO acc_trans
-                (trans_id, chart_id, amount, transdate, source, memo, approved,
-                        voucher_id)
+                       (trans_id, chart_id, amount_bc, curr, amount_tc,
+                        transdate, source, memo, approved, voucher_id)
                 VALUES
-                (pay_row.trans_id, pay_row.chart_id,
-                        pay_row.amount / t_paid_fx * -1 * t_rev_fx,
-                        in_date_reversed, in_source, 'Reversing ' ||
-                        COALESCE(in_source, ''),
-                        case when in_batch_id is not null then false
-                        else true end, t_voucher_id),
-                 (pay_row.trans_id, pay_row.ar_ap_account_id,
-                        pay_row.amount / t_paid_fx * pay_row.fxrate,
-                        in_date_reversed, in_source, 'Reversing ' ||
-                        COALESCE(in_source, ''),
-                        case when in_batch_id is not null then false
-                        else true end, t_voucher_id),
-                 (pay_row.trans_id,
-                  case when pay_row.fxrate > t_rev_fx
-                       THEN t_fxloss_id ELSE t_fxgain_id END,
-                  pay_row.amount / t_paid_fx * (t_rev_fx - pay_row.fxrate),
-                  in_date_reversed, in_source, 'Reversing ' ||
-                                                COALESCE(in_source, ''),
-                   case when in_batch_id is not null then false
-                        else true end, t_voucher_id);
+                   (pay_row.trans_id, pay_row.chart_id,
+                    -1 * pay_row.amount_bc,
+                    pay_row.curr,
+                    -1 * pay_row.amount_tc,
+                    in_date_reversed,
+                    in_source, 'Reversing ' || COALESCE(in_source, ''),
+                    case when in_batch_id is not null then false
+                    else true end, t_voucher_id),
+                   (pay_row.trans_id, pay_row.ar_ap_account_id,
+                    pay_row.amount_bc,
+                    pay_row.curr,
+                    pay_row.amount_tc,
+                    in_date_reversed,
+                    in_source, 'Reversing ' || COALESCE(in_source, ''),
+                    case when in_batch_id is not null then false
+                    else true end, t_voucher_id);
 
+                IF  ABS((pay_row.amount_bc / pay_row.orig_amount_bc
+                        * pay_row.orig_amount_tc) - pay_row.amount_tc)
+                        > 0.005 THEN
+                   INSERT INTO acc_trans (trans_id, chart_id, amount,
+                                          transdate, source, memo, approved,
+                                          voucher_id)
+                      VALUES
+                         (pay_row.trans_id,
+                          case when (pay_row.amount_bc / pay_row.orig_amount_bc
+                                     * pay_row.orig_amount_tc)
+                                       > pay_row.amount_tc
+                                  THEN t_fxloss_id ELSE t_fxgain_id END,
+                          (pay_row.amount_bc / pay_row.orig_amount_bc
+                            * pay_row.orig_amount_tc) - pay_row.amount_tc,
+                          in_date_reversed, in_source,
+                          'Reversing ' || COALESCE(in_source, ''),
+                          case when in_batch_id is not null then false
+                               else true end, t_voucher_id);
+                END IF;
 
         END LOOP;
         RETURN 1;

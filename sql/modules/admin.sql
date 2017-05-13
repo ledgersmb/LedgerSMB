@@ -29,25 +29,27 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
     BEGIN
 
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+        select rolname into a_role from pg_roles
+          where rolname = lsmb__role(in_role);
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
 
-        select rolname into a_user from pg_roles where rolname = in_username;
+        select rolname into a_user from pg_roles
+         where rolname = in_username;
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions to a non-existant database user.';
         END IF;
 
-        stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_username);
-
-        EXECUTE stmt;
-
         select id into t_userid from users where username = in_username;
         if not FOUND then
           RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
         end if;
+
+        stmt := 'GRANT '|| quote_ident(a_role) ||' to '|| quote_ident(in_username);
+
+        EXECUTE stmt;
 
         return 1;
     END;
@@ -66,19 +68,21 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_rol
     BEGIN
 
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+        select rolname into a_role from pg_roles
+         where rolname = lsmb__role(in_role);
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
         END IF;
 
-        select rolname into a_user from pg_roles where rolname = in_username;
+        select rolname into a_user from pg_roles
+         where rolname = in_username;
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions from a non-existant user.';
         END IF;
 
-        stmt := 'REVOKE '|| quote_ident(in_role) ||' FROM '|| quote_ident(in_username);
+        stmt := 'REVOKE '|| quote_ident(a_role) ||' FROM '|| quote_ident(in_username);
 
         EXECUTE stmt;
 
@@ -99,19 +103,21 @@ CREATE OR REPLACE FUNCTION admin__add_function_to_group(in_func TEXT, in_role TE
     BEGIN
 
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+        select rolname into a_role from pg_roles
+         where rolname = lsmb__role(in_role);
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
         END IF;
 
-        select rolname into a_user from pg_roles where rolname = in_username;
+        select rolname into a_user from pg_roles
+         where rolname = in_username;
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot grant permissions to a non-existant user.';
         END IF;
 
-        stmt := 'GRANT EXECUTE ON FUNCTION '|| quote_ident(in_func) ||' to '|| quote_ident(in_role);
+        stmt := 'GRANT EXECUTE ON FUNCTION '|| quote_ident(in_func) ||' to '|| quote_ident(a_role);
 
         EXECUTE stmt;
 
@@ -133,7 +139,8 @@ CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_ro
     BEGIN
 
         -- Issue the grant
-        select rolname into a_role from pg_roles where rolname = in_role;
+        select rolname into a_role from pg_roles
+         where rolname = lsmb__role(in_role);
 
         IF NOT FOUND THEN
             RAISE EXCEPTION 'Cannot revoke permissions of non-existant role $.';
@@ -145,7 +152,7 @@ CREATE OR REPLACE FUNCTION admin__remove_function_from_group(in_func TEXT, in_ro
             RAISE EXCEPTION 'Cannot revoke permissions from a non-existant function.';
         END IF;
 
-        stmt := 'REVOKE EXECUTE ON FUNCTION '|| quote_ident(in_func) ||' FROM '|| quote_ident(in_role);
+        stmt := 'REVOKE EXECUTE ON FUNCTION '|| quote_ident(in_func) ||' FROM '|| quote_ident(a_role);
 
         EXECUTE stmt;
 
@@ -221,7 +228,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             and r.rolname like (lsmb__role_prefix() || '%')
          LOOP
 
-            RETURN NEXT u_role.rolname::text;
+            RETURN NEXT lsmb__global_role(u_role.rolname);
 
         END LOOP;
         RETURN;
@@ -285,7 +292,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT)
             and r.rolname like (lsmb__role_prefix() || '%')
          LOOP
 
-            RETURN NEXT u_role.rolname::text;
+            RETURN NEXT lsmb__global_role(u_role.rolname);
 
         END LOOP;
         RETURN;
@@ -416,9 +423,7 @@ AS $$
 
         select * into a_user from users lu where lu.id = in_id;
         IF FOUND THEN
-            PERFORM admin__add_user_to_role(
-                        a_user.username,
-                        lsmb__role_prefix() || 'base_user');
+            PERFORM admin__add_user_to_role(a_user.username, 'base_user');
             return a_user.id;
         ELSE
             -- Insert cycle
@@ -441,10 +446,7 @@ AS $$
                 INSERT into entity_employee (entity_id) values (in_entity_id);
             END IF;
             -- Finally, issue the create user statement
-            PERFORM admin__add_user_to_role(
-                        in_username,
-                        lsmb__role_prefix() || 'base_user');
-
+            PERFORM admin__add_user_to_role(in_username, 'base_user');
             return v_user_id ;
 
 
@@ -676,15 +678,29 @@ create or replace function user__get_all_users () returns setof user_listable as
 
 $$ language sql;
 
+
+DROP FUNCTION IF EXISTS admin__get_roles();
+
 create or replace function admin__get_roles () returns setof pg_roles as $$
+DECLARE
+   u_role pg_roles;
+begin
+     FOR u_role IN
         SELECT *
         FROM
             pg_roles
         WHERE
             rolname ~ ('^' || lsmb__role_prefix())
             AND NOT rolcanlogin
-        ORDER BY rolname ASC
-$$ language sql;
+        ORDER BY lsmb__global_role(rolname) ASC
+     LOOP
+        u_role.rolname = lsmb__global_role(u_role.rolname);
+
+        RETURN NEXT u_role;
+     END LOOP;
+end;
+$$ language plpgsql;
+
 
 create or replace function user__save_preferences(
         in_dateformat text,

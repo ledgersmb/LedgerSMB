@@ -776,7 +776,8 @@ SELECT lsmb__grant_perms('part_delete', obj, 'DELETE')
 
 SELECT lsmb__create_role('inventory_reports');
 SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
-  FROM unnest(array['ar'::text, 'ap', 'warehouse_inventory', 'invoice', 'acc_trans']) obj;
+  FROM unnest(array['ar'::text, 'ap', 'warehouse_inventory',
+                    'invoice', 'acc_trans']) obj;
 
 SELECT lsmb__grant_menu('inventory_reports', 114, 'allow');
 SELECT lsmb__grant_menu('inventory_reports', 75, 'allow');
@@ -787,6 +788,9 @@ SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
 
 SELECT lsmb__grant_perms('inventory_adjust', obj, 'INSERT')
   FROM unnest(array['inventory_report'::text, 'inventory_report_line']) obj;
+
+SELECT lsmb__grant_perms('inventory_adjust', obj, 'ALL')
+  FROM unnest(array['inventory_report_id_seq'::text]) obj;
 
 SELECT lsmb__grant_menu('inventory_adjust', node_id, 'allow')
   FROM unnest(array[6,16]) node_id;

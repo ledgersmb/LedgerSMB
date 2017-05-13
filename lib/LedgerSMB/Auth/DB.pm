@@ -16,13 +16,58 @@ authentication.
 
 =cut
 
-package LedgerSMB::Auth;
-use MIME::Base64;
-use LedgerSMB::Sysconfig;
-use Log::Log4perl;
+package LedgerSMB::Auth::DB;
+
 use strict;
+use warnings;
+use Carp;
+
+use MIME::Base64;
+use Log::Log4perl;
+
+use LedgerSMB::Sysconfig;
+
+use Moose;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
+
+
+has 'env' => (is => 'ro', required => 1, isa => 'HashRef');
+
+has 'credentials' => (is => 'ro', required => 0, lazy => 1,
+                      builder => '_build_credentials', isa => 'HashRef');
+
+sub _build_credentials {
+    my ($self) = @_;
+    my $auth = $self->env->{HTTP_AUTHORIZATION};
+
+    return {} unless defined $auth;
+
+    # use a builder, because the response will be the same, no matter how
+    # often we call upon the creds
+
+    die "Authorization header for basic auth expected, but not found ($auth)"
+        unless $auth =~ s/^Basic\s+//i;
+
+    $auth = MIME::Base64::decode($auth);
+    my %rv;
+    @rv{('login', 'password')} = split(/:/, $auth, 2);
+
+    my $username_case = LedgerSMB::Sysconfig::force_username_case;
+    if ($username_case) {
+        if (lc($username_case) eq 'lower') {
+            $rv{login} = lc($rv{login});
+        }
+        elsif (lc($username_case) eq 'upper') {
+            $rv{login} = uc($rv{login});
+        }
+        else {
+            die "Unknown username casing algorithm $username_case; expected 'lower' or 'upper'"
+        }
+    }
+
+    return \%rv;
+}
 
 =item get_credentials
 
@@ -34,27 +79,10 @@ Returns a hashref with the keys of login and password.
 =cut
 
 sub get_credentials {
-    # Handling of HTTP Basic Auth headers
-    my $auth = $ENV{'HTTP_AUTHORIZATION'};
-    $auth =~ s/Basic //i; # strip out basic authentication preface
-    $auth = MIME::Base64::decode($auth);
-    #tshvr4 2014-01-14 Firefox, after logout on normal application (login.pl) and coming to setup.pl, auth seems to be  'logout:logout', TODO remove Dumper statements
+    my ($self, $domain) = @_;
+    # We ignore domain, but other auth providers may choose to use it
 
-    #$auth =~ s/Basic //i; # strip out basic authentication preface
-    #$auth = MIME::Base64::decode($auth);
-    my $return_value = {};
-    #$logger->debug("\$auth=$auth");#be aware of passwords in log!
-    ($return_value->{login}, $return_value->{password}) = split(/:/, $auth, 2);
-    if (defined $LedgerSMB::Sysconfig::force_username_case){
-        if (lc($LedgerSMB::Sysconfig::force_username_case) eq 'lower'){
-            $return_value->{login} = lc($return_value->{login});
-        } elsif (lc($LedgerSMB::Sysconfig::force_username_case) eq 'upper'){
-            $return_value->{login} = uc($return_value->{login});
-        }
-    }
-
-    return $return_value;
-
+    return $self->credentials;
 }
 
 =back
@@ -65,12 +93,14 @@ sub get_credentials {
 # http://www.ledgersmb.org/
 #
 #
-# Copyright (C) 2006-2011
+# Copyright (C) 2006-2017
 # This work contains copyrighted information from a number of sources all used
 # with permission.  It is released under the GNU General Public License
 # Version 2 or, at your option, any later version.  See COPYRIGHT file for
 # details.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 1;

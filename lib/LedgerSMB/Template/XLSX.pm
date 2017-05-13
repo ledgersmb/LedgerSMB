@@ -53,7 +53,6 @@ use warnings;
 
 use Template;
 use LedgerSMB::Template::TTI18N;
-use CGI::Simple::Standard qw(:html);
 use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
 

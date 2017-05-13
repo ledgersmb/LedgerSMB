@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
 

@@ -86,34 +86,33 @@ to establish a database connection and change the user's password.
 =cut
 
 sub change_my_password {
-    use LedgerSMB::Auth;
     my ($self) = @_;
-    my $old_dbh = $self->{dbh};
 
-    my $creds = LedgerSMB::Auth::get_credentials();
-
-    $self->{login} = $creds->{login};
-    my $dbname = $self->{company};
-
-    # Note that we have to request the login/password again if the db
-    # connection fails since this probably means bad credentials are entered.
-    # Just in case, however, I think it is a good idea to include the DBI
-    # error string.  CT
-    $self->{dbh} = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, "$self->{login}", "$self->{old_password}", { AutoCommit => 0 }
-    );
-    if (!$self->{dbh}){
-        $self->error($self->{_locale}->text('Incorrect Password'));
-    }
+    # Before doing any work at all, reject the request when the passwords
+    # don't match...
     if ($self->{new_password} ne $self->{confirm_password}){
         $self->error($self->{_locale}->text('Passwords must match.'));
         die;
     }
+
+
+    $self->get unless $self->{user};
+
+    my $login = $self->{user}->{username};
+    my $dbname = $self->{company};
+
+    my $verify = DBI->connect(
+        qq|dbi:Pg:dbname="$dbname"|, $login, $self->{old_password}
+    );
+    if (!$verify){
+        $self->error($self->{_locale}->text('Incorrect Password'));
+    }
+    else {
+        $verify->disconnect;
+    }
+
     $self->{password} = $self->{new_password};
     $self->call_dbmethod(funcname => 'user__change_password');
-    $self->{dbh}->commit; # This is needed since it is not the normal DBH!
-    $self->{dbh}->disconnect;
-    $self->{dbh} = $old_dbh;
 }
 
 =item $self->get_option_data()

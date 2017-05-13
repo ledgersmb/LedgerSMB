@@ -12,6 +12,7 @@ Since no parameters are required:
 
 package LedgerSMB::Report::Listings::Warehouse;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 REPORT CRITERIA

@@ -18,6 +18,7 @@ To retrieve a role from the db:
 
 package LedgerSMB::Group;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -64,5 +65,6 @@ has roles => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;
 

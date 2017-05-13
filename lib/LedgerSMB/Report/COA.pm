@@ -26,6 +26,7 @@ Typically columns are displayed based on the permissions of the user.
 
 package LedgerSMB::Report::COA;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::App_State;

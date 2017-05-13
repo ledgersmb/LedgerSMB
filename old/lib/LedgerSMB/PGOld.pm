@@ -117,6 +117,10 @@ sub is_allowed_role {
     return $access->{lsmb__is_allowed_role};
 }
 
+sub _get_schema {
+    return 'public';
+}
+
 =back
 
 =cut

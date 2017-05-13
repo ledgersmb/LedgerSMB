@@ -29,6 +29,7 @@ supported by X12::Parser.
 
 package LedgerSMB::X12;
 use Moose;
+use namespace::autoclean;
 use X12::Parser;
 use LedgerSMB::Sysconfig;
 use DateTime;
@@ -151,7 +152,7 @@ $self->parser.
 
 sub _parser {
     my ($self) = @_;
-    my $parser = new X12::Parser;
+    my $parser = X12::Parser->new;
     my $file = $self->message;
     return $parser;
 }
@@ -162,14 +163,18 @@ sub parse {
     my $parser = $self->parser;
     if (!$self->is_message_file){
         $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
-        open TMPFILE, '>', $file;
-        print TMPFILE $self->message;
-        close TMPFILE;
-    } else {
+        open my $fh, '>', $file
+            or die "Failed to open temporary output file $file : $!";
+        print $fh $self->message;
+        close $fh;
+    }
+    else {
         $file = $self->message;
     }
-    $parser->parsefile( file => $file,
-                        conf => $self->config_file);
+    $parser->parsefile(
+        file => $file,
+        conf => $self->config_file
+    );
     return $parser;
 }
 
@@ -198,11 +203,12 @@ Returns the test of a 997 document from the current document.
 
 sub write_997{
     my ($self, $form, $success) = @_;
-     my $status;
-    if ($success){
-       $status = 'A';
-    } else {
-       $status = 'R';
+    my $status;
+    if ($success) {
+        $status = 'A';
+    }
+    else {
+        $status = 'R';
     }
     my $sep = $self->parser->get_element_separator;
     my $seg = $self->parser->{_SEGMENT_SEPARATOR};

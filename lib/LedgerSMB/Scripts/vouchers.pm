@@ -372,13 +372,13 @@ sub reverse_overpayment {
     my $batch = LedgerSMB::Batch->new(base => $request);
     $batch->get;
     my $a_class;
-    for (1 .. $request->{rowcount_}){
-        my $id = $request->{"id_$_"};
+    for my $count (1 .. $request->{rowcount_}){
+        my $id = $request->{"id_$count"};
         $batch->call_procedure(funcname => 'overpayment__reverse',
            args => [$id, $batch->{post_date}, $batch->{id}, $a_class,
                  $request->{cash_accno}, $request->{exchangerate},
                  $request->{curr}]
-         ) if $id;
+        ) if $id;
     }
     return LedgerSMB::Scripts::reports::search_overpayments($request);
 }
@@ -445,38 +445,47 @@ sub print_batch {
     $report->run_report;
 
     my @files =
-        map { my $contents;
-              my $entry = $print_dispatch{lc($_->{batch_class_id})};
-
-              if ($entry) {
-                  dispatch($entry->{script},
-                           $entry->{entrypoint},
-                           { %$request },
-                           # entrypoint's arguments:
-                           $_, $request );
-                  return 1;
-              }
-              return ();
+        map {
+            my $entry = $print_dispatch{lc($_->{batch_class_id})};
+            if ($entry) {
+                dispatch(
+                    $entry->{script},
+                    $entry->{entrypoint},
+                    { %$request },
+                    # entrypoint's arguments:
+                    $_,
+                    $request
+                );
+                return 1;
+            }
+            return ();
         }
         @{$report->rows};
 
     if (@files) {
-       my $zipcmd = $LedgerSMB::Sysconfig::zip;
-       $zipcmd =~ s/\%dir/$dirname/g;
+        my $zipcmd = $LedgerSMB::Sysconfig::zip;
+        $zipcmd =~ s/\%dir/$dirname/g;
+        `$zipcmd`;
 
-       `$zipcmd`;
+        my $file_path = "$dirname.zip";
+        open my $zip, '<', $file_path
+            or die "Failed to open temporary zip file $file_path : $!";
+        binmode $zip, ':bytes';
+        unlink $file_path;
 
-       open my $zip, '<', "$dirname.zip";
-       binmode $zip, ':bytes';
-       unlink "$dirname.zip";
-
-       # TODO: clean up the temp dir!!
-       return [ 200,
-                [ 'Content-Type' => 'application/zip',
-                  'Content-Disposition' => 'attachment; filename="batch-'
-                      . $request->{batch_id} . '.zip"' ],
-                $zip ];
-    } else {
+        # TODO: clean up the temp dir!!
+        return [
+            200,
+            [
+                'Content-Type' => 'application/zip',
+                'Content-Disposition' =>
+                    'attachment; filename="batch-'
+                    . $request->{batch_id} . '.zip"',
+            ],
+            $zip
+        ];
+    }
+    else {
         # TODO: clean up the temp dir!!
         return $report->render_to_psgi($request);
     }

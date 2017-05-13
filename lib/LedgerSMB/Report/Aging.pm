@@ -20,6 +20,7 @@ reportins aimed at the customer in question.
 
 package LedgerSMB::Report::Aging;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;

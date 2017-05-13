@@ -418,8 +418,19 @@
 
 <?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>
 
-<?lsmb BLOCK tooltip; ?>
-  <?lsmb IF element_data && element_data.id.defined() && element_data.msg.defined(); ?>
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:<?lsmb element_data.id ?>" ><?lsmb element_data.msg ?></div>
-  <?lsmb END ?>
-<?lsmb END ?>
+<?lsmb BLOCK tooltip;
+  IF element_data && element_data.id.defined() && element_data.msg.defined();
+     props="connectId:" _ element_data.id;
+     IF element_data.position.defined();
+        positions = [];
+        FOREACH position IN element_data.position
+            "<!-- == $position == -->"; # Prevent loop variable optimization
+            positions.push("'$position'");
+        END;
+        props = props _ ',position:[' _ positions.join(',') _ ']';
+    END; ?>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props=<?lsmb props ?>  >
+         <?lsmb element_data.msg; ?>
+    </div>
+  <?lsmb END;
+END ?>

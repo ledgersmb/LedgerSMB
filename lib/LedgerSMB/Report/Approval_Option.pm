@@ -1,5 +1,6 @@
 package LedgerSMB::Report::Approval_Option;
 use Moose::Role;
+use namespace::autoclean;
 
 =head1 NAME
 

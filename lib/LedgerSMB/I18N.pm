@@ -16,6 +16,7 @@ we look only to the current locale.
 
 package LedgerSMB::I18N;
 use Moose::Role;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 

@@ -25,6 +25,7 @@ standards. This report shows total activity over a time period.
 
 package LedgerSMB::Report::co::Balance_y_Mayor;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
@@ -116,7 +117,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Balance y Mayor');
+    # Do not translate; it's the colombian name of a localized report
+    return 'Balance y Mayor';
 }
 
 =item header_lines

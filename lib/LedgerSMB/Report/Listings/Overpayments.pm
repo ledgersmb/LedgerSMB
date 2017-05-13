@@ -11,6 +11,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Listings::Overpayments;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

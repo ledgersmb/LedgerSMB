@@ -17,6 +17,7 @@ translates data structures for the report.
 
 package LedgerSMB::Report::Balance_Sheet;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 
@@ -41,22 +42,6 @@ Boolean, true if the regular hierarchies need to be ignored,
 =cut
 
 has legacy_hierarchy => (is => 'rw', isa => 'Bool');
-
-=item comparison_periods
-
-This is the number of periods to compare to
-
-=cut
-
-has comparison_periods => (is => 'ro', isa =>'Int', required => 0, default => 0);
-
-=item comparison_type
-
-This is either by number of periods or by dates
-
-=cut
-
-has comparison_type => (is => 'ro', isa =>'Str', required =>0);
 
 =item column_path_prefix
 
@@ -260,7 +245,7 @@ sub run_report {
     for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
         $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
     }
-    for $col_id (keys %{$self->cheads->ids}) {
+    for my $col_id (keys %{$self->cheads->ids}) {
         for my $row_id (keys %{$self->rheads->ids}) {
             my $value = $self->cells->{$row_id}->{$col_id};
 

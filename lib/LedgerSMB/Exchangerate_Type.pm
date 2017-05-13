@@ -11,7 +11,10 @@ translation or other purposes.
 =cut
 
 package LedgerSMB::Exchangerate_Type;
+
 use Moose;
+use namespace::autoclean;
+
 use LedgerSMB::PGObject;
 with 'LedgerSMB::PGObject';
 

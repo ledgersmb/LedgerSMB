@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 
 package LedgerSMB::Report::Listings::Asset;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 use LedgerSMB::MooseTypes;
 
