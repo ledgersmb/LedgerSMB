@@ -126,6 +126,10 @@ sub expanding_menu {
 }
 
 
+=pod
+
+=over
+
 =item menuitems_json
 
 Returns the menu items in JSON format
@@ -155,6 +159,8 @@ sub menuitems_json {
 =pod
 
 =over
+
+=back
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 

@@ -5,7 +5,7 @@ define(["dojo/_base/declare",
     "dijit/Menu", "dijit/MenuSeparator", "dijit/PopupMenuItem",
     "dojo/when", "dojo/dom", "dojo/ready"
 ], function(declare, JsonRest, Observable,
-    Memory, lsmbStoreCache,
+    Memory, Cache,
     Tree, ObjectStoreModel,
     Menu, MenuSeparator, PopupMenuItem,
     when, dom, ready
@@ -23,7 +23,7 @@ define(["dojo/_base/declare",
             },
         });
         var memoryStore = new Memory({idProperty: "id"});
-        var store = new lsmbStoreCache(restStore, memoryStore);
+        var store = new Cache(restStore, memoryStore);
         // Overwrite the standard getter
 
         // give store Observable interface so Tree can track updates
@@ -42,7 +42,7 @@ define(["dojo/_base/declare",
                 // children objects point to their parent (aka relational model)
                 // return this.query({parent: object.id});
                 // That is the standard way but querying the cache will query JSON
-                // If lsmbStoreCache were to be fixed, then we could remove the
+                // If Cache were to be fixed, then we could simplify the
                 // code below, rely on above mechanism and remove Perl & SQL routines
                 var kids;
                 if ( object.children ) {
@@ -58,16 +58,7 @@ define(["dojo/_base/declare",
                                  : ('login.pl' == item.module)  ? "&target='_top'"
                                                                 : "";
                             item.url = url;
-/*                          Not sure we still need that.
-                            item.class= item.module &&
-                                        item.module != 'menu.pl' &&
-                                        item.module != 'login.pl'  ? ''
-                                     :  item.label == 'New Window' ? 'menu-new-window'
-                                     :  item.module                ? 'menu-terminus'
-                                     :  item.menu                  ? 't-submenu'
-                                                                   :  '';
-*/
-                                                                   kids.push(item);
+                            kids.push(item);
                         });
                     }
                 }
@@ -83,20 +74,12 @@ define(["dojo/_base/declare",
             }
         });
 
-        // Custom TreeNode class (based on dijit.TreeNode) that allows rich text labels
-        var MyTreeNode = declare(Tree._TreeNode, {
-            _setLabelAttr: {node: "labelNode", type: "innerHTML"}
-        });
         var tree = new Tree({
             model: model,
             persist: false,
             autoExpand: false,
             showRoot: false,
             openOnClick: true,
-            _createTreeNode: function(args){
-                return new MyTreeNode(args);
-            },
-            //TODO: Alter CSS to make it not-displayble
             getIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened){
                 return (!item || item.menu) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
             },
@@ -104,11 +87,6 @@ define(["dojo/_base/declare",
                 location.hash = item.url;
             }
         }, 'menuTree'); // make sure you have a target HTML element with this id
-        // Connect to tree onLoad to do work once it has initialized
-        tree.onLoadDeferred.then(function(){
-            console.debug("tree onLoad here!");
-            // do work here
-        });
         tree.startup();
         var menu = new Menu({
             targetNodeIds: ['menuTree'],

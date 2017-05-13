@@ -2,7 +2,7 @@ define(["dojo/_base/lang","dojo/when" /*=====, "dojo/_base/declare", "dojo/store
 function(lang, when /*=====, declare, Store =====*/){
 
 // module:
-//		lsmb/menus/Cache
+//        lsmb/menus/Cache
 
 var Cache = function(masterStore, cachingStore, options){
     options = options || {};
