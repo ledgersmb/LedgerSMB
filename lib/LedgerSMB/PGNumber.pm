@@ -21,8 +21,8 @@ for ('float4', 'float8', 'double precision', 'float', 'numeric'){
         PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__);
     } else {
-	PGObject::Type::Registry->register_type(registry => 'default',
-		dbtype => $_, apptype => __PACKAGE__);
+        PGObject::Type::Registry->register_type(registry => 'default',
+                dbtype => $_, apptype => __PACKAGE__);
     }
 }
 
