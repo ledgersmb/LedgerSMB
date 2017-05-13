@@ -64,7 +64,6 @@ sub post_transaction {
     my ( $self, $myconfig, $form ) = @_;
     $form->all_business_units;
 
-    my $exchangerate;
     my $batch_class;
     my %paid;
     my $paidamount;

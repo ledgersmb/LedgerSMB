@@ -105,11 +105,9 @@ sub post_invoice {
     my $exchangerate = 0;
     my $allocated;
     my $taxrate;
-    my $taxamount;
     my $diff = 0;
     my $item;
     my $invoice_id;
-    my $keepcleared;
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
 
