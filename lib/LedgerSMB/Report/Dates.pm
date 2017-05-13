@@ -10,6 +10,7 @@ LedgerSMB::Report::Dates - Date properties for reports in LedgerSMB
 
 package LedgerSMB::Report::Dates;
 use Moose::Role;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 
 =head1 DESCRIPTION
@@ -145,7 +146,8 @@ sub _collect_dates_comparisons {
     foreach my $i (1 .. $args{comparison_periods}) {
         push @dates, {
             from_date => LedgerSMB::PGDate->from_input($args{"from_date_$i"}),
-            to_date => LedgerSMB::PGDate->from_input($args{"to_date_$i"})
+            to_date => LedgerSMB::PGDate->from_input($args{"to_date_$i"}),
+            column_path_prefix => [ $i ]
         };
     }
 
@@ -186,7 +188,8 @@ sub _build_comparisons {
             push @comparisons, {
                 from_date => $date,
                 to_date => $date->clone->add_interval($interval)
-                    ->add_interval('day', -1)
+                    ->add_interval('day', -1),
+                column_path_prefix => [ $c_per ]
             };
         }
     }

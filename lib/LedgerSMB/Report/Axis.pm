@@ -18,6 +18,7 @@ final report.
 
 package LedgerSMB::Report::Axis;
 use Moose;
+use namespace::autoclean;
 
 =head1 PROPERTIES
 

@@ -2,30 +2,47 @@
 
 =head1 NAME
 
-LedgerSMB::Auth.pm - Provides an abstraction layer for session management and
-authentication.
+LedgerSMB::Auth - Provides an abstraction layer for authentication.
 
 =head1 SYNOPSIS
 
-This routine provides an abstraction layer for session management and
-authentication.  The current application only ships with a simple authentication
-layer using database-native accounts.  Other authentication methods are quite
+This routine provides an abstraction layer for authentication.  The current
+application only ships with a simple authentication layer using
+database-native accounts.  Other authentication methods are quite
 possible though currently every LedgerSMB user must be a database user.
 
 =head1 METHODS
 
-Each plugin library must provide the following methods.
+
+=head2 factory($env)
+
+This method instantiates an authentication class as of type
+LedgerSMB::Auth::C<$LedgerSMB::Sysconfig::auth>.
+More about plugin classes is described below.
+
+=head2 plugin classes
+
+Each plugin module must provide a class with the following methods
 
 =over
 
-=item get_credentials
+=item new(env => $env)
 
-Get credentials and return them to the application.
+$env is a hash describing the web request environment such as defined
+by RFC 3875 (CGI version 1.1) and adopted by the PSGI standard.
+
+=item get_credentials($domain)
+
+Get credentials and return them to the application, optionally taking
+$domain into account ($domain can be any of 'setup' or 'main').
 
 Must return a hashref with the following entries:
 
 login
 password
+
+Returning a hashref without these entries means that no valid
+login data is available.
 
 =back
 
@@ -33,16 +50,22 @@ password
 
 package LedgerSMB::Auth;
 
-use LedgerSMB::Sysconfig;
 use strict;
 use warnings;
 
-if ( !$LedgerSMB::Sysconfig::auth ) {
-    $LedgerSMB::Sysconfig::auth = 'DB';
+use LedgerSMB::Sysconfig;
+use Module::Runtime qw(use_module);
+
+
+my $plugin = 'LedgerSMB::Auth::' . LedgerSMB::Sysconfig::auth;
+use_module($plugin) or die "Can't locate Auth parser plugin $plugin";
+
+sub factory {
+    my ($psgi_env) = @_;
+
+    return use_module($plugin)->new(env => $psgi_env);
 }
 
-my $auth_lib = "LedgerSMB/Auth/" . $LedgerSMB::Sysconfig::auth . ".pm";
-require $auth_lib || die $!;
 
 =head1 COPYRIGHT
 
@@ -50,7 +73,7 @@ require $auth_lib || die $!;
 # http://www.ledgersmb.org/
 #
 #
-# Copyright (C) 2006-2011
+# Copyright (C) 2006-2017
 # This work contains copyrighted information from a number of sources all used
 # with permission.  It is released under the GNU General Public License
 # Version 2 or, at your option, any later version.  See COPYRIGHT file for

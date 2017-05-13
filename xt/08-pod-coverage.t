@@ -67,9 +67,6 @@ my @exception_modules =
      # Exclude because tested conditionally on XML::Twig way below
      'LedgerSMB::Template::ODS',
 
-     # Exclude because tested conditionally on XML::Simple way below
-     'LedgerSMB::REST_Format::xml',
-
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
 
@@ -115,14 +112,6 @@ SKIP: {
     skip 'OpenOffice::OODoc not installed', 1 if $@;
 
     my $f = 'LedgerSMB::Template::ODS';
-    pod_coverage_ok($f, { also_private => $also_private{$f} });
-}
-
-SKIP: {
-    eval { require XML::Simple };
-
-    skip 'XML::Simple not installed', 1 if $@;
-    my $f = 'LedgerSMB::REST_Format::xml';
     pod_coverage_ok($f, { also_private => $also_private{$f} });
 }
 

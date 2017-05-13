@@ -23,6 +23,7 @@ methods only
 
 package LedgerSMB::File::ECA;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =head1 METHODS
@@ -52,4 +53,5 @@ your software.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

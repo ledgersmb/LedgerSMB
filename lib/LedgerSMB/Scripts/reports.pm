@@ -12,7 +12,6 @@ This module holds common workflow routines for reports.
 
 package LedgerSMB::Scripts::reports;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;

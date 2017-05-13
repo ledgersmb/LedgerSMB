@@ -6,6 +6,7 @@ LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
 package LedgerSMB::Entity;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 SYNOPSYS

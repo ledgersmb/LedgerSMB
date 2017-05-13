@@ -15,12 +15,10 @@ list of matching accounts in a ul/li pair
 
 package LedgerSMB::Scripts::journal;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
-use LedgerSMB::REST_Format::json;
 use strict;
 use warnings;
 
@@ -48,10 +46,7 @@ sub chart_json {
         grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
         map { $_->{label} = $_->{accno} . '--' . $_->{description}; $_ }
         @results;
-    my $json = LedgerSMB::REST_Format::json->to_output(\@results);
-    return [ 200,
-             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ $json ] ];
+    return $request->to_json(\@results);
 }
 
 =item chart_of_accounts

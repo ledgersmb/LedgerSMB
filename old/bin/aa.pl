@@ -45,11 +45,14 @@
 #======================================================================
 
 package lsmb_legacy;
+use LedgerSMB::Form;
+use LedgerSMB::IR;
+use LedgerSMB::IS;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Company_Config;
-
-use Data::Dumper;
+use LedgerSMB::DBObject::Draft;
+use LedgerSMB::DBObject::TransTemplate;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
@@ -106,11 +109,10 @@ sub copy_to_new{
 }
 
 sub new_screen {
-    use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet batch_id script);
     $oldform = $form;
     $form = {};
-    bless $form, Form;
+    bless $form, 'Form';
     for (@reqprops){
         $form->{$_} = $oldform->{$_};
     }
@@ -243,15 +245,15 @@ sub create_links {
     $netamount = 0;
     $tax       = 0;
     $taxrate   = 0;
-    #$ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
-    $ml        = new LedgerSMB::PGNumber( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
+    $ml = LedgerSMB::PGNumber->new(
+        ($form->{ARAP} eq 'AR') ? 1 : -1
+    );
 
-
-    foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
+    foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
 
         # if there is a value we have an old entry
-        for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+        foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
 
 
             if ( $key eq "$form->{ARAP}_paid" ) {
@@ -676,7 +678,7 @@ $form->open_status_div($status_div_id) . qq|
 
     # Display rows
 
-    for $i ( 1 .. $form->{rowcount} + $min_lines) {
+    foreach my $i ( 1 .. $form->{rowcount} + $min_lines) {
 
         # format amounts
         $form->{"amount_$i"} =
@@ -743,7 +745,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     }
      my $tax_base = $form->{invtotal};
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -836,7 +838,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
 
@@ -1031,7 +1033,6 @@ sub form_footer {
 <th>| . $locale->text('Attached by') . qq|</th>
 </tr> |;
         foreach my $file (@{$form->{files}}){
-     use Data::Dumper;
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
@@ -1103,10 +1104,7 @@ sub on_hold {
 
 
 sub save_temp {
-    use LedgerSMB;
-    use LedgerSMB::DBObject::TransTemplate;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
+    my $lsmb = { %$form };
     $lsmb->{is_invoice} = 1;
     $lsmb->{due} = $form->{invtotal};
     $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
@@ -1140,11 +1138,7 @@ sub save_temp {
 }
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
@@ -1152,13 +1146,9 @@ sub edit_and_save {
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
     $form->update_invnumber;
 
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
 
     $draft->approve();
 
@@ -1189,7 +1179,7 @@ sub update {
           ( "amount", "$form->{ARAP}_amount", "projectnumber", "description","taxformcheck" );
         $count = 0;
         @a     = ();
-        for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
             $form->{"amount_$i"} =
               $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
             if ( $form->{"amount_$i"} ) {
@@ -1212,16 +1202,14 @@ sub update {
 
         if ( $newname = &check_name( $form->{vc} ) ) {
             $form->{notes} = $form->{intnotes} unless $form->{id};
-            &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} );
-
+            rebuild_vc($form->{vc}, $form->{transdate});
         }
         if ( $form->{transdate} ne $form->{oldtransdate} ) {
             $form->{duedate} =
               $form->current_date( \%myconfig, $form->{transdate},
                 $form->{terms} * 1 );
             $form->{oldtransdate} = $form->{transdate};
-            $newproj =
-              &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
+        $newproj = rebuild_vc($form->{vc}, $form->{transdate})
               if !$newname;
         }
 
@@ -1234,7 +1222,7 @@ sub update {
     }
 
     my $tax_base = $form->{invtotal};
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         if($form->{"calctax_$item"} && $is_update){
             $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
         }
@@ -1243,7 +1231,7 @@ sub update {
 
     my $j = 1;
     my $totalpaid = LedgerSMB::PGNumber->bzero();
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0 ) {
             for (qw(datepaid source memo cleared)) {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
@@ -1319,7 +1307,7 @@ sub post {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );
 
@@ -1358,7 +1346,7 @@ sub post {
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
-       $form->update_status( \%myconfig );
+        $form->update_status;
        if ( $form->{printandpost} ) {
            &{"print_$form->{formname}"}( $old_form, 1 );
         }

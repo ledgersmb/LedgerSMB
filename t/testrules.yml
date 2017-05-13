@@ -1,19 +1,25 @@
-
+# The wilrcards below ARE NOT regexes, they are globs and
+# specific to TAP::Parser::Scheduler. The only possibilities are:
+#    ** is any number of characters, including /, within a pathname
+#    * is zero or more characters within a filename/directory name
+#    ? is exactly one character within a filename/directory name
+#    {foo,bar,baz} is any of foo, bar or baz.
+#    \ is an escape character
 seq:
   - seq:
     - par:
       - t/*
-      - xt/0*
-      - xt/1*
-      - xt/2*
-      - xt/3*
+      - xt/{0,1,2,3}*
   - seq: xt/40-dbsetup.t
   - seq:
     - par:
-      - xt/4*.t
-      - xt/5*.t
-      - xt/6*.t
-      - xt/7*.t
+      - xt/{4,5,7}*.t
+      - xt/6{1,2,3,7,8,9}*.t
+      - seq:
+        - xt/60-startlsmb.t
+        - seq:
+          - par:
+            - xt/6{5,6}*.t
+        - seq: **.feature
       - xt/*.pg
-      - seq: **.feature
   - seq: xt/89-dropdb.t

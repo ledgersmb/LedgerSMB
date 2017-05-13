@@ -18,6 +18,7 @@ and sales order generation among other things.
 package LedgerSMB::Report::Timecards;
 use LedgerSMB::MooseTypes;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

@@ -912,6 +912,18 @@ CSV formats.
 
 =cut
 
+sub _import_file {
+    my $request = shift @_;
+
+    my $handle = $request->upload('import_file');
+    my $csv = Text::CSV->new;
+    $csv->header($handle);
+    my @import_entries = $csv->getlines_all($handle);
+
+    return @import_entries;
+}
+
+
 sub run_import {
 
     my ($request) = @_;
@@ -944,7 +956,7 @@ sub run_import {
     for my $a (@{$asset->{dep_accounts}}){
        $dep_account->{"$a->{accno}"} = $a;
     }
-    for my $ail ($asset->import_file($request->{import_file})){
+    for my $ail (_import_file($request)){
         my $ai = LedgerSMB::DBObject::Asset->new({copy => 'base', base => $request});
         for (0 .. $#file_columns){
           $ai->{$file_columns[$_]} = $ail->[$_];

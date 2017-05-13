@@ -16,6 +16,7 @@ use strict;
 use warnings;
 
 use List::MoreUtils qw{ any };
+use Text::CSV;
 
 use LedgerSMB::Template;
 use LedgerSMB::Form;
@@ -450,39 +451,12 @@ This parses a file, and returns a the csv in tabular format.
 sub _parse_file {
     my $self = shift @_;
 
-    my $handle = $self->{_request}->upload('import_file');
-    my $contents = join("\n", <$handle>);
-    my $sep = "";
-    my $n = @{$cols->{$self->{type}}}-1; # 1 separator less than fields
+    my $handle = $self->upload('import_file');
 
-    $self->{import_entries} = [];
-    for my $line (split /(\r\n|\r|\n)/, $contents){
-        if ( $sep eq "" ) {
-            if    ($n == (() = $line =~  /,/g)) { $sep =  "," }
-            elsif ($n == (() = $line =~  /;/g)) { $sep =  ";" }
-            elsif ($n == (() = $line =~ /\t/g)) { $sep = "\t" }
-            else  { die "Unrecognized file format" }
-            $self->{sep} = $sep;
-        }
-        next if ($line !~ /$sep/);
-        my @fields;
-        $line =~ s/[^"]"",/"/g;
-        while ($line ne '') {
-            if ($line =~ /^"/){
-                $line =~ s/"(.*?)"($sep|$)//
-                    || $self->error($self->{_locale}->text('Invalid file'));
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            } else {
-                $line =~ s/([^$sep]*)$sep?//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            }
-        }
-        push @{$self->{import_entries}}, \@fields;
-    }
+    my $csv = Text::CSV->new;
+    $csv->header($handle);
+    @{$self->{import_entries}} = $csv->getlines_all($handle);
+
     return @{$self->{import_entries}};
 }
 

@@ -21,6 +21,7 @@ methods only
 
 package LedgerSMB::File::Transaction;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =back
@@ -76,4 +77,5 @@ your software.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

@@ -3,9 +3,9 @@
 use Module::CPANfile;
 use File::Find;
 
-BEGIN { 
+BEGIN {
  local $@;
-  eval { 
+  eval {
    require Test::Dependencies;
    if ($Test::Dependencies::VERSION < 0.20) {
        require Test::More;
@@ -20,15 +20,12 @@ BEGIN {
        exit 0;
   }
 }
-   
-   
+
 
 use Test::Dependencies exclude =>
   [ qw/ LedgerSMB PageObject / ],
   style => 'light';;
 
-
-use Data::Dumper;
 
 my $file = Module::CPANfile->load;
 

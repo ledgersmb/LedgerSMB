@@ -42,6 +42,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::PGNumber;
 use LedgerSMB::MooseTypes;
 
@@ -167,4 +168,5 @@ sub extract_tax {
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

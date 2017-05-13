@@ -18,6 +18,7 @@ credit account being able to attach itself to a single bank account.
 
 package LedgerSMB::Entity::Bank;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 use PGObject::Util::DBMethod;
 

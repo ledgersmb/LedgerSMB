@@ -121,9 +121,12 @@ sub order_links {
     OE->retrieve( \%myconfig, \%$form );
 
     # get projects, departments, languages
-    $form->get_regular_metadata( \%myconfig, $form->{vc},
-                 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
-                 undef, $form->{transdate}, 1 );
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
 
     # currencies
     @curr = @{$form->{currencies}};
@@ -136,7 +139,7 @@ sub order_links {
     $l{language_code} = $form->{language_code};
     $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
-    $form->get_partsgroup( \%myconfig, \%l );
+    $form->get_partsgroup(\%l);
 
     for (qw(terms taxincluded)) { $temp{$_} = $form->{$_} }
     $form->{shipto} = 1 if $form->{id};
@@ -181,7 +184,7 @@ sub prepare_order {
         }
 
         my $i;
-        foreach $ref ( @{ $form->{form_details} } ) {
+        foreach my $ref ( @{ $form->{form_details} } ) {
             $i++;
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
 
@@ -771,12 +774,14 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     }
 
     if ( !$form->{taxincluded} ) {
-        foreach $item (keys %{$form->{taxes}}) {
+        foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
         $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
-            $form->{"${taccno}_total"} =
-                  $form->format_amount( \%myconfig,
-                    $form->round_amount( $form->{taxes}{$item}, 2 ), 2 );
+            $form->{"${taccno}_total"} = $form->format_amount(
+                \%myconfig,
+                $form->round_amount( $form->{taxes}{$item}, 2 ),
+                2
+            );
             next if !$form->{"${taccno}_total"};
             $tax .= qq|
         <tr>
@@ -1273,7 +1278,7 @@ sub print_and_save {
     $form->error( $locale->text('Select a Printer!') )
       if $form->{media} eq 'screen';
 
-    $old_form = new Form;
+    $old_form = Form->new;
     $form->{display_form} = "save";
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{rowcount}++;
@@ -1453,7 +1458,7 @@ sub invoice {
     $form->{exchangerate} = "";
     $form->{forex}        = "";
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    for my $i ( 1 .. $form->{rowcount} ) {
         $form->{"deliverydate_$i"} = $form->{"reqdate_$i"};
         for (qw(qty sellprice discount)) {
             $form->{"${_}_$i"} =
@@ -1540,7 +1545,7 @@ sub create_backorder {
     # items aren't saved if qty != 0
 
     $dec1 = $dec2 = 0;
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         ($dec) = ( $form->{"qty_$i"} =~ /\.(\d+)/ );
         $dec = length $dec;
         $dec1 = ( $dec > $dec1 ) ? $dec : $dec1;
@@ -1578,7 +1583,7 @@ sub create_backorder {
     @flds =
       qw(partnumber description qty ship unit sellprice discount oldqty orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand deliverydate reqdate projectnumber partsgroup assembly);
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         for (qw(qty sellprice discount)) {
             $form->{"${_}_$i"} =
               $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
@@ -1599,7 +1604,7 @@ sub create_backorder {
     @a     = ();
     $count = 0;
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"}    = $form->{"oldship_$i"};
         $form->{"oldqty_$i"} = $form->{"qty_$i"};
 
@@ -1648,14 +1653,14 @@ sub ship_receive {
     @flds  = ();
     @a     = ();
     $count = 0;
-    foreach $key ( keys %$form ) {
+    foreach my $key ( keys %$form ) {
         if ( $key =~ /_1$/ ) {
             $key =~ s/_1//;
             push @flds, $key;
         }
     }
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
 
         # undo formatting from prepare_order
         for (qw(qty ship)) {
@@ -1838,7 +1843,7 @@ sub display_ship_receive {
         </tr>
 |;
 
-    for $i ( 1 .. $form->{rowcount} - 1 ) {
+    foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
 
         # undo formatting
         $form->{"ship_$i"} =
@@ -1978,7 +1983,7 @@ sub search_transfer {
         $form->error( $locale->text('Nothing to transfer!') );
     }
 
-    $form->get_partsgroup( \%myconfig, { searchitems => 'part' } );
+    $form->get_partsgroup({ searchitems => 'part' });
 
      $form->generate_selects();
 
@@ -2164,7 +2169,7 @@ sub list_transfer {
     }
 
     $i = 0;
-    foreach $ref ( @{ $form->{all_inventory} } ) {
+    foreach my $ref ( @{ $form->{all_inventory} } ) {
 
         $i++;
 
@@ -2264,7 +2269,7 @@ sub generate_purchase_orders {
 
     # flatten array
     $i = 0;
-    foreach $parts_id (
+    foreach my $parts_id (
         sort {
             $form->{orderitems}{$a}{partnumber}
               cmp $form->{orderitems}{$b}{partnumber}
@@ -2293,7 +2298,7 @@ sub generate_purchase_orders {
         if ( exists $form->{orderitems}{$parts_id}{"parts$form->{vc}"} ) {
             $form->{"qty_$i"} = "";
 
-            foreach $id (
+            foreach my $id (
                 sort {
                     $form->{orderitems}{$parts_id}{"parts$form->{vc}"}{$a}
                       {lastcost} * $form->{ $form->{orderitems}{$parts_id}
@@ -2403,7 +2408,7 @@ sub po_orderitems {
     </tr>
 |;
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
 
         for (qw(sku partnumber description curr)) {
             $column_data{$_} = qq|<td>$form->{"${_}_$i"}&nbsp;</td>|;

@@ -20,6 +20,7 @@ companies in LedgerSMB.
 
 package LedgerSMB::Entity::Contact;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 

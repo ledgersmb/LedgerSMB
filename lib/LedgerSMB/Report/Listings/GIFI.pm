@@ -13,6 +13,7 @@ No $request is needed since there are no criteria.
 
 package LedgerSMB::Report::Listings::GIFI;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

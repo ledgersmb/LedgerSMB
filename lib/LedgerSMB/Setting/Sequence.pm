@@ -23,6 +23,7 @@ package LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 use Carp;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION

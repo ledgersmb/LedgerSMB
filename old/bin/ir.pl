@@ -40,11 +40,13 @@
 
 package lsmb_legacy;
 use List::Util qw(min max);
+use LedgerSMB::Form;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Setting;
+use LedgerSMB::DBObject::Draft;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/io.pl";
@@ -64,11 +66,7 @@ sub copy_to_new{
 }
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     IR->post_invoice( \%myconfig, \%$form );
@@ -76,12 +74,7 @@ sub edit_and_save {
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
 
     $draft->approve();
 
@@ -99,11 +92,10 @@ sub approve {
 }
 
 sub new_screen {
-    use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet type);
     $oldform = $form;
     $form = {};
-    bless $form, Form;
+    bless $form, 'Form';
     for (@reqprops){
         $form->{$_} = $oldform->{$_};
     }
@@ -189,8 +181,9 @@ sub invoice_links {
 
     $form->{oldlanguage_code} = $form->{language_code};
 
-    $form->get_partsgroup( \%myconfig,
-        { language_code => $form->{language_code} } );
+    $form->get_partsgroup({
+        language_code => $form->{language_code}
+    });
 
     if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{department} = "$form->{department}--$form->{department_id}"
@@ -204,16 +197,16 @@ sub invoice_links {
     $form->{forex} = $form->{exchangerate};
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
-    foreach $key ( keys %{ $form->{AP_links} } ) {
+    foreach my $key ( keys %{ $form->{AP_links} } ) {
 
         $form->{"select$key"} = "";
-        foreach $ref ( @{ $form->{AP_links}{$key} } ) {
+        foreach my $ref ( @{ $form->{AP_links}{$key} } ) {
             $form->{"select$key"} .=
               "<option value=\"$ref->{accno}--$ref->{description}\">$ref->{accno}--$ref->{description}</option>\n";
         }
 
         if ( $key eq "AP_paid" ) {
-            for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+            foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
                 $form->{"AP_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
 
@@ -272,7 +265,7 @@ sub prepare_invoice {
             $form->{$_} = $form->quote( $form->{$_} );
         }
 
-        foreach $ref ( @{ $form->{invoice_details} } ) {
+        foreach my $ref ( @{ $form->{invoice_details} } ) {
             $i++;
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
 
@@ -676,7 +669,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
                       <td>&nbsp</td>
                     </tr>|;
         }
-        foreach $item (keys %{$form->{taxes}}) {
+        foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
             if ($form->{manual_tax}){
                # Setting defaults from tax calculations
@@ -871,7 +864,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"selectAP_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"AP_paid_$form->{paidaccounts}"} = $1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
 
@@ -1051,7 +1044,7 @@ sub update {
        for qw(transdate duedate crdate);
 
     if ( $newname = &check_name(vendor) ) {
-        &rebuild_vc( vendor, AP, $form->{transdate}, 1 );
+        rebuild_vc('vendor', $form->{transdate}, 1);
     }
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{duedate} =
@@ -1060,7 +1053,7 @@ sub update {
             $form->{terms} * 1 )
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
-        &rebuild_vc( vendor, AP, $form->{transdate}, 1 ) if !$newname;
+        rebuild_vc('vendor', $form->{transdate}, 1) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1073,7 +1066,7 @@ sub update {
     }
 
     $j = 1;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0) {
             for (qw(datepaid source memo cleared)) {
                 $form->{"${_}_$j"} = $form->{"${_}_$i"};
@@ -1276,7 +1269,7 @@ sub post {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         #if ( $form->{"paid_$i"} ) {
         if ( $form->{"paid_$i"} !=0.0 ) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );

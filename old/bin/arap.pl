@@ -204,7 +204,7 @@ sub select_name {
 |;
 
     my $i = 0;
-    foreach $ref ( @{ $form->{name_list} } ) {
+    foreach my $ref ( @{ $form->{name_list} } ) {
         $checked = ( $i++ ) ? "" : "checked";
 
         foreach (qw(name address city state zipcode country)) {
@@ -287,7 +287,7 @@ sub name_selected {
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
 
     # delete all the new_ variables
-    for $i ( 1 .. $form->{lastndx} ) {
+    foreach my $i ( 1 .. $form->{lastndx} ) {
         for (qw(id, name)) { delete $form->{"new_${_}_$i"} }
     }
 
@@ -306,10 +306,10 @@ sub name_selected {
 }
 
 sub rebuild_vc {
-    my ( $vc, $ARAP, $transdate, $job ) = @_;
+    my ($vc, $transdate, $job) = @_;
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
-    $form->all_vc( \%myconfig, $vc, $ARAP, undef, $transdate, $job );
+    $form->all_vc(\%myconfig, $vc, $transdate, $job);
     $form->{"select$vc"} = "";
     for ( @{ $form->{"all_$vc"} } ) {
         $form->{"select$vc"} .=
@@ -422,7 +422,7 @@ sub schedule {
             $p{ $p[$i] }{format} = $p[ $i + 1 ];
         }
 
-        foreach $item ( keys %formname ) {
+        foreach my $item ( keys %formname ) {
 
             $checked = ( $p{$item}{format} ) ? "checked" : "";
             $selectformat =~ s/ selected="selected"//;
@@ -491,7 +491,7 @@ sub schedule {
 |;
 
         $selectformat =~ s/<option.*html//;
-        foreach $item ( keys %formname ) {
+        foreach my $item ( keys %formname ) {
 
             $selectprinter =~ s/ selected="selected"//;
             $selectprinter =~

@@ -20,6 +20,7 @@ use LedgerSMB::Form;
 use feature 'switch';
 
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::X12';
 
 sub _config {
@@ -50,7 +51,7 @@ has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1,
 sub _order {
     my ($self) = @_;
     my $sep = $self->parser->get_element_separator;
-    my $form = new Form;
+    my $form = Form->new;
     my $sender_idx;
     my $sender_id;
 

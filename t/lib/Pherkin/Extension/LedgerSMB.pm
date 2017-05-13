@@ -114,6 +114,54 @@ sub post_scenario {
 }
 
 
+my $emp_counter = 0;
+
+sub create_employee {
+    my $self = shift;
+    my %args = @_;
+
+    my $dbh = $args{dbh} // $self->admin_dbh;
+    my $employeenumber = 'E-' . ($emp_counter++);
+
+    my $emp = LedgerSMB::Entity::Person::Employee->new(
+        employeenumber => $employeenumber,
+        control_code => $employeenumber,
+        dob => LedgerSMB::PGDate->from_input('2006-09-01'),
+        salutation_id => 1,
+        first_name => 'First',
+        last_name => 'Last'.$emp_counter,
+        name => 'First Last',
+        ssn => '1' . $emp_counter,
+        country_id => 232, # United States
+        _DBH => $dbh,
+        );
+    $emp->save;
+
+    return $emp;
+}
+
+my $user_counter = 0;
+
+sub create_user {
+    my $self = shift;
+    my %args = @_;
+
+    my $dbh = $args{dbh} // $self->admin_dbh;
+    my $username = $args{username} //
+        $self->db_name . '_user' . ($user_counter++);
+
+    $self->super_dbh->do(qq(DROP ROLE IF EXISTS "$username"));
+    my $user = LedgerSMB::Entity::User->new(
+        entity_id => $args{entity_id},
+        username => $username,
+        _DBH => $dbh,
+        );
+    $user->create($args{password} // 'password');
+
+    return $user;
+}
+
+
 sub create_template {
     my ($self) = @_;
 
@@ -136,27 +184,11 @@ sub create_template {
                              RaiseError => 1,
                              AutoCommit => 0 });
 
-    my $emp = LedgerSMB::Entity::Person::Employee->new(
-        employeenumber => 'E-001',
-        control_code => 'E-001',
-        dob => LedgerSMB::PGDate->from_input('2006-09-01'),
-        username => $admin,
-        salutation_id => 1,
-        first_name => 'First',
-        last_name => 'Last',
-        name => 'First Last',
-        ssn => '0000010',
-        country_id => 232, # United States
-        _DBH => $dbh,
-        );
-    $emp->save;
-
-    my $user = LedgerSMB::Entity::User->new(
+    my $emp = $self->create_employee(dbh => $dbh);
+    my $user = $self->create_user(dbh => $dbh,
         entity_id => $emp->entity_id,
-        username => $admin,
-        _DBH => $dbh,
-        );
-    $user->create('password');
+                                  username => $admin);
+
     my $roles;
     @$roles = map { $_->{rolname} } @{$user->list_roles};
     $user->save_roles($roles);

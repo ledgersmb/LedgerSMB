@@ -296,7 +296,7 @@ sub to_output {
     $fmt .= ' %T' if $self->is_time();
     $fmt =~ s/^\s+//;
 
-    my $formatter = new DateTime::Format::Strptime(
+    my $formatter = DateTime::Format::Strptime->new(
              pattern => $fmt,
               locale => 'en_US',
             on_error => 'croak',

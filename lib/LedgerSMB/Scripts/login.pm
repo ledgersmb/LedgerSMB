@@ -19,9 +19,7 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
-use LedgerSMB;
 use LedgerSMB::User;
-use LedgerSMB::Auth;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
 use Try::Tiny;
@@ -40,6 +38,18 @@ a request object /not/ connected to the database.
 
 sub no_db_actions {
     return qw(logout authenticate __default logout_js);
+}
+
+=item clear_session_actions
+
+Returns an array of actions which should have the session
+(cookie) cleared before verifying the session and being
+dispatched to.
+
+=cut
+
+sub clear_session_actions {
+    return qw(__default authenticate);
 }
 
 =item __default (no action specified, do this)
@@ -67,18 +77,8 @@ sub __default {
         return LedgerSMB::Scripts::menu::root_doc($request);
     }
 
-    my $secure = '';
-
-    # copy of code in LedgerSMB::Session
-    my $path = $ENV{SCRIPT_NAME};
-    $path =~ s|[^/]*$||;
-
-    my $cookie_name = $LedgerSMB::Sysconfig::cookie_name;
-    if ($ENV{SERVER_PORT} == 443){
-        $secure = ' Secure;';
-    }
     $request->{_new_session_cookie_value} =
-        qq|$cookie_name=Login; path=$path;$secure|;
+        qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new(
@@ -114,11 +114,8 @@ sub authenticate {
                      [ 'Please provide your credentials.' ]];
         }
     }
-    my $path = $ENV{SCRIPT_NAME};
-    $path =~ s|[^/]*$||;
 
     if ($request->{dbh} and !$request->{log_out}){
-
         if (!$request->{dbonly}
             && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
             return [ 401,
@@ -197,7 +194,7 @@ requiring only bogus credentials (logout:logout).
 
 sub logout_js {
     my $request = shift @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = $request->{_auth}->get_credentials;
     return [ 401,
              [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                'Content-Type' => 'text/plain; charset=utf-8' ],
@@ -215,7 +212,7 @@ eval { do "scripts/custom/login.pl"};
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
+Copyright (C) 2009-2017 LedgerSMB Core Team. This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

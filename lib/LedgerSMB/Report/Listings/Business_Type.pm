@@ -20,6 +20,7 @@ None
 
 package LedgerSMB::Report::Listings::Business_Type;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 STATIC METHODS

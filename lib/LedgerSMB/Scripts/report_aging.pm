@@ -12,7 +12,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 package LedgerSMB::Scripts::report_aging;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;
@@ -76,7 +75,6 @@ sub generate_statement {
     my $rtype = $request->{report_type}; # in case we need it later
     $request->{report_type} = 'detail'; # needed to generate statement
 
-    my $template_suffix;
     my @statements;
     my $old_meta = $request->{meta_number};
 

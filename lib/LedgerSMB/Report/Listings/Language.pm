@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Language - List languages for LedgerSMB
 
 package LedgerSMB::Report::Listings::Language;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

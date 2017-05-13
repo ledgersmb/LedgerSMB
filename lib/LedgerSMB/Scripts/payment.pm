@@ -397,20 +397,29 @@ sub print {
                     $invhash->{$_} = $payment->{"${_}_${inv_id}"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"payment_${inv_id}"});
+                    $invhash->{paid} = LedgerSMB::PGNumber
+                        ->from_input($payment->{"payment_${inv_id}"});
                 } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"net_${inv_id}"});
+                    $invhash->{paid} = LedgerSMB::PGNumber
+                        ->from_input($payment->{"net_${inv_id}"});
                 } else {
                     $payment->error("Invalid Payment Amount Option");
                 }
                 $check->{amount} += $invhash->{paid};
+                $invhash->{paid} = $invhash->{paid}->to_output(
+                    format => '1000.00',
+                    money => 1
+                );
                 push @{$check->{invoices}}, $invhash if $inv <= $inv_count;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
             $check->{decimal} = ($check->{amount} - $amt) * 100;
-            $check->{amount} = $check->{amount}->to_output(format => '1000.00');
+            $check->{amount} = $check->{amount}->to_output(
+                    format => '1000.00',
+                    money => 1
+            );
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(
@@ -698,7 +707,7 @@ sub payment2 {
     my $locale       = $request->{_locale};
     my $Payment = LedgerSMB::DBObject::Payment->new({'base' => $request});
     # VARIABLES
-    my ($project_id, $project_number, $project_name, $department_id, $department_name );
+    my ($project_id, $project_number, $project_name, $department_name );
     my @project;
     my @selected_checkboxes;
     my @department;

@@ -21,6 +21,7 @@ up since they are treated as an expense only on sale.
 
 package LedgerSMB::Report::PNL::ECA;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report::PNL';
 
 =head1 CRITERIA PROPERTIES
@@ -140,4 +141,5 @@ later version.  Please see enclosed LICENSE file for details.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

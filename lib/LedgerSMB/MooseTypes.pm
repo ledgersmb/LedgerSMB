@@ -10,6 +10,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 use Moose::Util::TypeConstraints;
 
 use PGObject::Type::ByteString;
@@ -106,4 +107,5 @@ coerce 'LedgerSMB::Moose::FileContent',
   via { PGObject::Type::ByteString->new($_) };
 
 
+__PACKAGE__->meta->make_immutable;
 1;

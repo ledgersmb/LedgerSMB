@@ -22,6 +22,7 @@ use strict;
 use warnings;
 
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 use File::MimeInfo;
@@ -246,21 +247,29 @@ sub get_for_template{
     warn 'entering get_for_template';
 
     my @results = $self->call_procedure(
-                 funcname => 'file__get_for_template',
-                      args => [$args->{ref_key}, $args->{file_class}]
-     );
-    if ( -d $LedgerSMB::Sysconfig::tempdir . '/' . $$){
-        die 'directory exists';
+        funcname => 'file__get_for_template',
+        args => [
+            $args->{ref_key},
+            $args->{file_class},
+        ],
+    );
+
+    #TODO use File::Temp here and in cleanup for temp directory
+    my $dir = $LedgerSMB::Sysconfig::tempdir . '/' . $$;
+    if ( -d $dir){
+        die "Failed to create temporary directory $dir - it already exists : $!";
     }
-    mkdir $LedgerSMB::Sysconfig::tempdir . '/' . $$;
-    $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
+    mkdir $dir;
+    $self->file_path($dir);
 
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
-        open FILE, '>', $self->file_path . "/$result->{file_name}";
-        binmode FILE, ':bytes';
-        print FILE $result->{content};
-        close FILE;
+        my $full_path = $self->file_path . "/$result->{file_name}";
+        open my $fh, '>', $full_path
+            or die "Failed to open output file $full_path : $!";
+        binmode $fh, ':bytes';
+        print $fh $result->{content};
+        close $fh;
         { #pre-5.14 compatibility block
             local ($@); # pre-5.14, do not die() in this block
             eval { # Block used so that Image::Size is optional
@@ -274,7 +283,8 @@ sub get_for_template{
         if ($result->{file_class} == 3){
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;
-        } else {
+        }
+        else {
            $result->{ref_key} = $args->{ref_key};
         }
     }

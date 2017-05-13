@@ -21,6 +21,7 @@ use LedgerSMB::Form;
 
 
 use Moose;
+use namespace::autoclean;
 use feature 'switch';
 extends 'LedgerSMB::X12';
 
@@ -52,7 +53,7 @@ sub _order {
     my ($self) = @_;
     $self->parse;
     my $sep = $self->parser->get_element_separator;
-    my $form = new Form;
+    my $form = Form->new;
     my $sender_idx;
     my $sender_id;
 

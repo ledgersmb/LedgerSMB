@@ -29,6 +29,7 @@ To get by control code:
 
 package LedgerSMB::Entity::Person;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Entity';
 use LedgerSMB::MooseTypes;
 

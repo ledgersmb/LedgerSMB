@@ -10,6 +10,7 @@ LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods
 
 package LedgerSMB::Report::Inventory::History;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 

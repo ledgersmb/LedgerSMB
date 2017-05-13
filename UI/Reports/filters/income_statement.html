@@ -186,11 +186,10 @@
                    PROCESS input element_data = {
                    label = text('Comparison Periods')
                    name = 'comparison_periods'
-                   text_attr = 'description'
-                   value_attr = 'text'
-                   value = comparison_periods
+                   value = 0
                    size = '3'
-                   default_values = 0
+                   "data-dojo-type" = "dijit/form/NumberSpinner"
+                   "data-dojo-props" = "intermediateChanges:true, constraints:{min:0, max:9, places:0}, smallDelta:1, style:'width:7ex'"
                    };
                    ?></legend>
 

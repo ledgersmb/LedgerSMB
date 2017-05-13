@@ -74,13 +74,12 @@ If $raw is set to a true value, we do not wrap in a transaction.
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
-        my $file;
         local $!;
-        open(FILE, '<', $self->path) or
+        open my $fh, '<', $self->path or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
-        binmode FILE, ':utf8';
-        $self->{_content} = join '', <FILE>;
-        close FILE;
+        binmode $fh, ':utf8';
+        $self->{_content} = join '', <$fh>;
+        close $fh;
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
@@ -112,7 +111,7 @@ sub sha {
     my $normalized = join "\n",
                      grep { /\S/ }
                      map { my $string = $_; $string =~ s/--.*//; $string }
-                     split("\n", $content);
+                     split /\n/, $content;
     $self->{_sha} = Digest::SHA::sha512_base64($normalized);
     return $self->{_sha};
 }

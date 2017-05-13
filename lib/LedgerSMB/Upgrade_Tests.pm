@@ -16,6 +16,7 @@ package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 
 =head1 FUNCTIONS

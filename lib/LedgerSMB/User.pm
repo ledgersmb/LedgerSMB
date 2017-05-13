@@ -18,7 +18,7 @@ Deprecated
  # Small Medium Business Accounting software
  # http://www.ledgersmb.org/
  #
- # Copyright (C) 2006
+ # Copyright (C) 2006-2017
  # This work contains copyrighted information from a number of sources
  # all used with permission.
  #
@@ -61,8 +61,8 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Auth;
 use Log::Log4perl;
+use Carp;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
 
@@ -76,31 +76,22 @@ cases.
 =cut
 
 sub fetch_config {
-
     #I'm hoping that this function will go and is a temporary bridge
     #until we get rid of %myconfig elsewhere in the code
 
     my ( $self, $lsmb ) = @_;
 
-    my $login;
-    my $creds = LedgerSMB::Auth::get_credentials;
-    $login = $creds->{login};
+    croak "Can't fetch 'current user' information on unauthenticated connection"
+        unless $lsmb->{_auth} && $lsmb->{_auth}->get_credentials->{login};
 
+    my $login = $lsmb->{_auth}->get_credentials->{login};
     my $dbh = $lsmb->{dbh};
-
-    if ( !$login ) { # Assume this is for current connected user
-        my $sth = $dbh->prepare('SELECT SESSION_USER');
-        $sth->execute();
-        ($login) = $sth->fetchrow_array();
-    }
-
     my $query = qq|
         SELECT * FROM user_preference
          WHERE id = (SELECT id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute($login);
     my $myconfig = $sth->fetchrow_hashref('NAME_lc');
-    $myconfig->{templates} = "DB";
     bless $myconfig, __PACKAGE__;
     return $myconfig;
 }

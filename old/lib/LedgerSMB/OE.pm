@@ -144,7 +144,7 @@ sub save {
 
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     if ( !$form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
         $form->{employee} = "$form->{employee}--$form->{employee_id}";
     }
 
@@ -297,7 +297,7 @@ sub save {
 
             if ( @taxaccounts && $form->round_amount( $taxamount, 2 ) == 0 ) {
                 if ( $form->{taxincluded} ) {
-                    foreach $item (@taxaccounts) {
+                    foreach my $item (@taxaccounts) {
                         $taxamount = $form->round_amount( $item->value, 2 );
                         $taxaccounts{ $item->account } += $taxamount;
                         $taxdiff                       += $taxamount;
@@ -306,14 +306,14 @@ sub save {
                     $taxaccounts{ $taxaccounts[0]->account } += $taxdiff;
                 }
                 else {
-                    foreach $item (@taxaccounts) {
+                    foreach my $item (@taxaccounts) {
                         $taxaccounts{ $item->account } += $item->value;
                         $taxbase{ $item->account }     += $taxbase;
                     }
                 }
             }
             else {
-                foreach $item (@taxaccounts) {
+                foreach my $item (@taxaccounts) {
                     $taxaccounts{ $item->account } += $item->value;
                     $taxbase{ $item->account }     += $taxbase;
                 }
@@ -453,7 +453,7 @@ sub save {
     $form->{name} = $form->{ $form->{vc} };
     $form->{name} =~ s/--$form->{"$form->{vc}_id"}//;
 
-    $form->add_shipto( $dbh, $form->{id}, 1);
+    $form->add_shipto($form->{id}, 1);
 
     # save printed, emailed, queued
 
@@ -538,7 +538,7 @@ sub delete {
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
 
-    foreach $spoolfile (@spoolfiles) {
+    foreach my $spoolfile (@spoolfiles) {
         unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
     return 1;
@@ -686,7 +686,6 @@ sub retrieve {
         my $taxrate;
         my $ptref;
         my $sellprice;
-        my $listprice;
 
         while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
@@ -747,7 +746,7 @@ sub retrieve {
     else {
 
         # get last name used
-        $form->lastname_used( $myconfig, $dbh, $form->{vc} )
+        $form->lastname_used($form->{vc})
           unless $form->{"$form->{vc}_id"};
 
         delete $form->{notes};
@@ -784,7 +783,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach $var ( grep {! $_ eq $form->{defaultcurrency} }
+    foreach my $var ( grep {! $_ eq $form->{defaultcurrency} }
                       @{$form->{currencies}} ) {
         $eth1->execute( $var, $form->{transdate} );
         my @exchangelist;
@@ -825,8 +824,6 @@ sub order_details {
     my $projectdescription;
     my $projectnumber_id;
     my $translation;
-    my $partsgroup;
-
     my @queryargs;
 
     my @taxaccounts;
@@ -834,8 +831,6 @@ sub order_details {
     my $tax;
     my $taxrate;
     my $taxamount;
-
-    my %translations;
 
     my $language_code = $form->{dbh}->quote( $form->{language_code} );
     $query = qq|
@@ -855,7 +850,7 @@ sub order_details {
     my $sortby;
 
     # sort items by project and partsgroup
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
 
         if ( $form->{"id_$i"} ) {
 
@@ -961,7 +956,7 @@ sub order_details {
             WHERE parts_id = ? AND warehouse_id = ?|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
 
-        for $i ( 1 .. $form->{rowcount} ) {
+        foreach my $i ( 1 .. $form->{rowcount} ) {
             $sth->execute( $form->{"id_$i"}, $form->{warehouse_id} )
               || $form->dberror;
 
@@ -985,7 +980,7 @@ sub order_details {
     my $k = scalar @sortlist;
     my $j = 0;
 
-    foreach $item (@sortlist) {
+    foreach my $item (@sortlist) {
         $i = $item->[0];
         $j++;
 
@@ -1154,7 +1149,7 @@ sub order_details {
             $taxamount =
               Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
             $taxbase = Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
-            foreach $item (@taxaccounts) {
+            foreach my $item (@taxaccounts) {
                 push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;
                 if ( $form->{taxincluded} ) {
                     $taxaccounts{ $item->account } += $item->value;
@@ -1312,7 +1307,7 @@ sub order_details {
 
     $tax = 0;
 
-    foreach $item ( sort keys %taxaccounts ) {
+    foreach my $item ( sort keys %taxaccounts ) {
         if ( $form->round_amount( $taxaccounts{$item}, 2 ) ) {
             $tax += $taxamount = $form->round_amount( $taxaccounts{$item}, 2 );
 
@@ -1599,7 +1594,7 @@ sub save_inventory {
     my $employee_id;
 
     ( $null, $employee_id ) = split /--/, $form->{employee};
-    ( $null, $employee_id ) = $form->get_employee($dbh) if !$employee_id;
+    ( $null, $employee_id ) = $form->get_employee if !$employee_id;
 
     $query = qq|
         SELECT serialnumber, ship
@@ -1937,7 +1932,7 @@ sub transfer {
 
     my $dbh = $form->{dbh};
 
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
 
     my @a = localtime;
     $a[5] += 1900;
@@ -2135,7 +2130,7 @@ sub generate_orders {
 
     my $sellprice;
 
-    foreach $vendor_id ( keys %a ) {
+    foreach my $vendor_id ( keys %a ) {
 
         %tax = ();
 
@@ -2249,7 +2244,7 @@ sub generate_orders {
         my $employee_id;
         my $department_id;
 
-        ( $null, $employee_id ) = $form->get_employee($dbh);
+        ( $null, $employee_id ) = $form->get_employee;
         ( $null, $department_id ) = split /--/, $form->{department};
         $department_id *= 1;
 

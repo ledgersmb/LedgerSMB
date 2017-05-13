@@ -17,15 +17,20 @@ my @on_disk;
 # Currently our code violates some of the recommended policies, so tests
 # are being added to this list as violations are fixed.
 my @cert_policies = qw(
+    BuiltinFunctions::ProhibitStringySplit
     BuiltinFunctions::ProhibitUniversalCan
     ClassHierarchies::ProhibitExplicitISA
     ControlStructures::ProhibitMutatingListFunctions
+    ControlStructures::ProhibitUnreachableCode
+    InputOutput::ProhibitBarewordFileHandles
     InputOutput::ProhibitInteractiveTest
     InputOutput::ProhibitOneArgSelect
     InputOutput::ProhibitTwoArgOpen
+    InputOutput::RequireCheckedOpen
     Miscellanea::ProhibitFormats
     Modules::ProhibitEvilModules
     Modules::RequireEndWithOne
+    Objects::ProhibitIndirectSyntax
     Subroutines::ProhibitReturnSort
     Subroutines::ProhibitSubroutinePrototypes
     TestingAndDebugging::ProhibitProlongedStrictureOverride
@@ -33,7 +38,9 @@ my @cert_policies = qw(
     TestingAndDebugging::RequireUseWarnings
     ValuesAndExpressions::ProhibitLeadingZeros
     Variables::ProhibitPerl4PackageNames
+    Variables::ProhibitUnusedVariables
     Variables::ProtectPrivateVars
+    Variables::RequireLexicalLoopIterators
 );
 
 # The CERT recommended policies yet to be applied are listed below. Some
@@ -41,19 +48,12 @@ my @cert_policies = qw(
 # applied by the -severity option in use.
 #    BuiltinFunctions::ProhibitBooleanGrep
 #    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
-#    BuiltinFunctions::ProhibitStringySplit
 #    BuiltinFunctions::ProhibitUniversalIsa
-#    ControlStructures::ProhibitUnreachableCode
-#    ErrorHandling::RequireCarping
-#    InputOutput::ProhibitBarewordFileHandles   --explicitly excluded
 #    InputOutput::RequireCheckedClose
-#    InputOutput::RequireCheckedOpen
 #    InputOutput::RequireCheckedSyscalls
-#    Objects::ProhibitIndirectSyntax
 #    RegularExpressions::ProhibitCaptureWithoutTest
 #    Subroutines::ProhibitBuiltinHomonyms
 #    Subroutines::ProhibitExplicitReturnUndef   --explicitly excluded
-#    Subroutines::ProhibitUnusedPrivateSubroutines
 #    Subroutines::ProtectPrivateSubs
 #    Subroutines::RequireFinalReturn
 #    TestingAndDebugging::ProhibitNoStrict      --explicitly excluded
@@ -62,16 +62,32 @@ my @cert_policies = qw(
 #    ValuesAndExpressions::ProhibitMagicNumbers
 #    ValuesAndExpressions::ProhibitMismatchedOperators
 #    ValuesAndExpressions::ProhibitMixedBooleanOperators
-#    Variables::ProhibitUnusedVariables
 #    Variables::RequireInitializationForLocalVars
-#    Variables::RequireLexicalLoopIterators     --explicitly excluded
 #    Variables::RequireLocalizedPunctuationVars
+
+# The following CERT recommended policies will not be enforced:
+#
+#    ErrorHandling::RequireCarping
+#      As per ledgerSMB coding guidelines, calling "die" is the preferred
+#      way to signal an error. We can't stop die()ing, because that's how
+#      our error handling is implemented.  See:
+#      https://ledgersmb.org/community-guide/community-guide/development/coding-guidelines/perl-coding-guidelines
+#      https://matrix.to/#/!qyoLumPqusaXqFJNyK:matrix.org/$1492804519389522uYnup:matrix.org
+#
+#    Subroutines::ProhibitUnusedPrivateSubroutines
+#      This policy doesn't recognise when private subroutines are legitimately
+#      used as builder functions for Moose properties, which is a common
+#      pattern employed in LedgerSMB code. Neither does it recognise when
+#      private methods are used to compose roles in other files.
+
 
 # LedgerSMB enforces some other Perl::Critic policies
 my @lsmb_policies = qw(
     ProhibitTrailingWhitespace
     ProhibitHardTabs
     Modules
+    Moose::RequireMakeImmutable
+    Moose::RequireCleanNamespace
     TestingAndDebugging
     ProhibitPuncutationVars
 );
@@ -82,20 +98,14 @@ my @lsmb_policies = qw(
 my @exclude_policies = qw(
     Modules::RequireVersionVar
     Subroutines::ProhibitExplicitReturnUndef
-    InputOutput::ProhibitBarewordFileHandles
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::ProhibitNoStrict
-    Variables::RequireLexicalLoopIterators
-    Variables::ProhibitConditionalDeclarations
     InputOutput::RequireEncodingWithUTF8Layer
     BuiltinFunctions::ProhibitStringyEval
 );
 my @exclude_policies_oldcode = qw(
     BuiltinFunctions::ProhibitStringyEval
-    InputOutput::ProhibitBarewordFileHandles
     InputOutput::RequireEncodingWithUTF8Layer
-    Modules::ProhibitConditionalUseStatements
-    Modules::ProhibitEvilModules
     Modules::ProhibitExcessMainComplexity
     Modules::ProhibitMultiplePackages
     Modules::RequireBarewordIncludes
@@ -107,8 +117,6 @@ my @exclude_policies_oldcode = qw(
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::RequireUseStrict
     TestingAndDebugging::RequireUseWarnings
-    Variables::ProhibitConditionalDeclarations
-    Variables::RequireLexicalLoopIterators
 );
 
 
@@ -136,10 +144,10 @@ sub collect {
 find(\&collect, 'lib/', 'old/');
 
 my @on_disk_oldcode =
-    grep { m#^old/bin/# || m#^lib/# } @on_disk;
+    grep { m#^old/#  }
+    @on_disk;
 
 @on_disk =
-    grep { ! m#^old/bin/# }
     grep { ! m#^old/# }
     grep { ! m#^lib/LedgerSMB/Auth/# }
     @on_disk;
