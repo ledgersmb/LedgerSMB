@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(43);
+    SELECT plan(41);
 
     -- Add data
 
