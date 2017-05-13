@@ -117,13 +117,8 @@ BEGIN;
 
     INSERT INTO entity_credit_account
             (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)
-    VALUES (-1000, 1, 'cogs test1', -1000, 'USD', -1103),
-           (-2000, 2, 'cogs test2', -1000, 'USD', -1103);
-
-
-    -- patch up data that could/should have been there
-    INSERT INTO defaults
-         VALUES ('curr', 'USD:CAD:EUR');
+    VALUES (-1000, 1, 'cogs test1', -1000, 'XTS', -1103),
+           (-2000, 2, 'cogs test2', -1000, 'XTS', -1103);
 
     UPDATE parts
        SET onhand = 90
