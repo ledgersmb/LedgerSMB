@@ -85,6 +85,7 @@ sub _set_n {
             return $_;
         }
     }
+    return;
 }
 
 =item DBName
@@ -190,6 +191,7 @@ sub cleanup {
     $DBH = undef;
     $DBName = undef;
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
+    return;
 }
 
 =head2 all_periods(is_short $bool)
