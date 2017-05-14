@@ -4,3 +4,5 @@ The load order for the files is documented in sql/modules/LOADORDER
 Also Roles.sql MUST be run last because portions of it depend on function
 declarations in the other scripts.
 
+The file sql/modules/BLACKLIST lists all functions expected to exist in
+the schema. It is created by the script tools/makeblacklist.pl
