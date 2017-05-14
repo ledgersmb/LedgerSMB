@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Reconciliation::Summary;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends "LedgerSMB::Report";
 with "LedgerSMB::Report::Dates";
@@ -213,7 +214,7 @@ sub run_report {
         $r->{account} = $account->{$r->{chart_id}}->{name};
         $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

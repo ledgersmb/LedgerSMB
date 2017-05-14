@@ -12,7 +12,6 @@ This module holds common workflow routines for reports.
 
 package LedgerSMB::Scripts::reports;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
@@ -87,7 +86,7 @@ sub start_report {
               funcname => 'date_get_all_years'
     );
     my $curr = LedgerSMB::Setting->get('curr');
-    @{$request->{currencies}} = split ':', $curr;
+    @{$request->{currencies}} = split /:/, $curr;
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};

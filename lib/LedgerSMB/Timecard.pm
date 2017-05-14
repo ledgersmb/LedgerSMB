@@ -30,6 +30,7 @@ like.
 
 package LedgerSMB::Timecard;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 
@@ -235,7 +236,7 @@ Saves the current timecard to the database, sets id.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'timecard__save');
-    $self->id($ref->{id});
+    return $self->id($ref->{id});
 }
 
 =item find_part({is_timecard bool, is_service bool, partnumber text})
@@ -261,7 +262,7 @@ Adds $amount to the allocation amount of the timecard.
 
 sub allocate {
     my ($self, $amount) = @_;
-    $self->call_procedure(funcname => 'timecard__allocate',
+    return $self->call_procedure(funcname => 'timecard__allocate',
                               args => [$self->id, $amount]);
 }
 

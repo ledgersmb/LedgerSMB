@@ -139,14 +139,11 @@ gifi__list
 goods__history
 inventory__get_item_by_id
 inventory__get_item_by_partnumber
-inventory_adj__details
-inventory_adj__get
 inventory_adjust__approve
+inventory_adjust__create
 inventory_adjust__delete
 inventory_adjust__get
 inventory_adjust__get_lines
-inventory_create_report
-inventory_report__delete
 is_leapyear
 journal__add
 journal__add_line
@@ -162,6 +159,7 @@ location__deactivate
 location_list_class
 location_list_country
 lsmb__create_role
+lsmb__global_role
 lsmb__grant_exec
 lsmb__grant_role
 lsmb__is_allowed_role

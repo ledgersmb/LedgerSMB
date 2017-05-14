@@ -16,6 +16,7 @@ use strict;
 use warnings;
 
 use List::MoreUtils qw{ any };
+use Text::CSV;
 
 use LedgerSMB::Template;
 use LedgerSMB::Form;
@@ -62,7 +63,8 @@ sub _inventory_template_setup {
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @{$request->{AR_accounts}}, $row;
     }
-};
+    return;
+}
 
 
 our $template_setup = {
@@ -159,7 +161,7 @@ sub _aa_multi {
         AA->post_transaction($request->{_user}, $form);
     }
     return 1;
-};
+}
 
 sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
@@ -243,14 +245,14 @@ sub _inventory_single_date {
         if ! $ap_form->{id};
 
     # Now, update the report record.
-    $dbh->do( # These two params come from posting above, and from
+    return $dbh->do( # These two params come from posting above, and from
               # the db.
               "UPDATE inventory_report
                        SET ar_trans_id = $ar_form->{id},
                            ap_trans_id = $ap_form->{id}
                      WHERE id = $report_id"
         ) or $ap_form->dberror();
-};
+}
 
 sub _process_ar_multi {
     my  ($request, $entries) = @_;
@@ -293,7 +295,7 @@ sub _process_gl {
         }
         ++$form->{rowcount};
     }
-    GL->post_transaction($request->{_user}, $form,
+    return GL->post_transaction($request->{_user}, $form,
                          $request->{_locale});
 }
 
@@ -327,6 +329,7 @@ sub _process_chart {
         $account->merge($settings);
         $account->save();
     }
+    return;
 }
 
 sub _process_gifi {
@@ -339,6 +342,7 @@ sub _process_gifi {
     foreach my $entry (@$entries) {
         $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
     }
+    return;
 }
 
 sub _process_sic {
@@ -351,6 +355,7 @@ sub _process_sic {
         $sth->execute($entry->[0], $entry->[1], $entry->[2])
             || die $sth->errstr();
     }
+    return;
 }
 
 sub _process_timecard {
@@ -375,6 +380,7 @@ sub _process_timecard {
         $jc->{checkedout} = $jc->{transdate} if !$jc->{checkedout};
         LedgerSMB::Timecard->new(%$jc)->save;
     }
+    return;
 }
 
 sub _process_inventory {
@@ -394,9 +400,9 @@ sub _process_inventory {
 
     @$entries =
         map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
-    &_inventory_single_date($request, $entries,
-                            $report_id, $request->{transdate});
 
+    return _inventory_single_date($request, $entries,
+                            $report_id, $request->{transdate});
 }
 
 sub _process_inventory_multi {
@@ -427,6 +433,7 @@ sub _process_inventory_multi {
         &_inventory_single_date($request, $dated_entries{$key},
                                 $report_id, $key);
     }
+    return;
 }
 
 our $process = {
@@ -450,39 +457,12 @@ This parses a file, and returns a the csv in tabular format.
 sub _parse_file {
     my $self = shift @_;
 
-    my $handle = $self->{_request}->upload('import_file');
-    my $contents = join("\n", <$handle>);
-    my $sep = "";
-    my $n = @{$cols->{$self->{type}}}-1; # 1 separator less than fields
+    my $handle = $self->upload('import_file');
 
-    $self->{import_entries} = [];
-    for my $line (split /(\r\n|\r|\n)/, $contents){
-        if ( $sep eq "" ) {
-            if    ($n == (() = $line =~  /,/g)) { $sep =  "," }
-            elsif ($n == (() = $line =~  /;/g)) { $sep =  ";" }
-            elsif ($n == (() = $line =~ /\t/g)) { $sep = "\t" }
-            else  { die "Unrecognized file format" }
-            $self->{sep} = $sep;
-        }
-        next if ($line !~ /$sep/);
-        my @fields;
-        $line =~ s/[^"]"",/"/g;
-        while ($line ne '') {
-            if ($line =~ /^"/){
-                $line =~ s/"(.*?)"($sep|$)//
-                    || $self->error($self->{_locale}->text('Invalid file'));
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            } else {
-                $line =~ s/([^$sep]*)$sep?//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            }
-        }
-        push @{$self->{import_entries}}, \@fields;
-    }
+    my $csv = Text::CSV->new;
+    $csv->header($handle);
+    @{$self->{import_entries}} = $csv->getlines_all($handle);
+
     return @{$self->{import_entries}};
 }
 

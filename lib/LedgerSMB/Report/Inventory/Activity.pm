@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Inventory::Activity;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -87,10 +88,10 @@ sub columns {
                 . 'col_netamount=1&entity_class=2&partnumber=',
      },
 
-     {col_id => 'receivable',
+     {col_id => 'revenue',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Receivable'), },
+        name => LedgerSMB::Report::text('Revenue'), },
 
      {col_id => 'purchased',
         type => 'href',
@@ -101,10 +102,25 @@ sub columns {
                 . 'col_netamount=1&entity_class=1&partnumber=',
      },
 
-     {col_id => 'payable',
+     {col_id => 'cost',
         type => 'text',
        money => 1,
-        name => LedgerSMB::Report::text('Payable'), }
+        name => LedgerSMB::Report::text('Cost'), },
+
+     {col_id => 'used',
+        type => 'text',
+       money => 1,
+        name => LedgerSMB::Report::text('Used'), },
+
+     {col_id => 'assembled',
+        type => 'text',
+       money => 1,
+      name => LedgerSMB::Report::text('Assembled'), },
+
+     {col_id => 'adjusted',
+        type => 'text',
+       money => 1,
+      name => LedgerSMB::Report::text('Adjusted'), }
     ];
 }
 
@@ -156,7 +172,7 @@ sub run_report {
     for my $r (@rows) {
        $r->{row_id} = $r->{partnumber};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

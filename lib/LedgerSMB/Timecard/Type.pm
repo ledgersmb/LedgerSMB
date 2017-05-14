@@ -16,6 +16,7 @@ To list all types, ordered by label:
 
 package LedgerSMB::Timecard::Type;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION

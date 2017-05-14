@@ -23,6 +23,7 @@ use Template::Provider;
 use PGObject::Type::DateTime;
 
 use Moose;
+use namespace::autoclean;
 use MooseX::NonMoose;
 extends 'Template::Provider';
 with 'LedgerSMB::PGObject';
@@ -60,36 +61,41 @@ has 'format' => (is => 'ro');
 
 sub _retrieve_template_data {
     my ($self, $name) = @_;
-
-    my @rv;
-    my (@langs, $lang);
+    my @langs;
 
     if (defined $self->language_code) {
+
+        # First search for a specific dialect - for example 'fr_BE'
         push @langs, $self->language_code
             if $self->language_code =~ m/_/;
 
-        $lang = $self->language_code;
+        # Then try the base language - for example 'fr'
+        my $lang = $self->language_code;
         $lang =~ s/_.*//;
         push @langs, $lang;
     }
+
+    # As a last resort, look for a template with no language
     push @langs, undef;
 
     my $rv;
-    for $lang (@langs) {
-        $rv = $self->call_procedure(funcname => 'template__get',
-                                   args => [
-                                       $name, $lang, $self->format
-                                   ]);
+    foreach my $lang (@langs) {
+        $rv = $self->call_procedure(
+            funcname => 'template__get',
+            args => [
+                $name,
+                $lang,
+                $self->format
+            ]
+        );
         last if defined $rv->{template};
     }
-    $rv = $self->call_procedure(funcname => 'template__get',
-                                   args => [
-                                       $name, undef, $self->format
-                                   ]) unless defined $rv->{template};
+
     return undef unless defined $rv->{template};
 
-    $rv->{last_modified} =
-        PGObject::Type::DateTime->from_db($rv->{last_modified});
+    $rv->{last_modified} = PGObject::Type::DateTime->from_db(
+        $rv->{last_modified}
+    );
     return $rv;
 }
 

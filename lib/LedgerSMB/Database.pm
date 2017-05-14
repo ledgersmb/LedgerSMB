@@ -18,7 +18,7 @@ This module wraps both DBI and the PostgreSQL commandline tools.
 
 =head1 COPYRIGHT
 
-This module is copyright (C) 2007, the LedgerSMB Core Team and subject to
+This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 
@@ -31,7 +31,6 @@ package LedgerSMB::Database;
 use strict;
 use warnings;
 
-use LedgerSMB::Auth;
 use DBI;
 use base qw(App::LedgerSMB::Admin::Database);
 
@@ -174,35 +173,33 @@ sub get_info {
     };
     local $@;
 
-    my $creds = LedgerSMB::Auth->get_credentials();
-    $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
     my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
-           $dbh = $self->new($self->export, (dbname => 'postgres'))
-               ->connect({PrintError=>0});
-           return $retval unless $dbh;
-           $logger->debug("DBI->connect dbh=$dbh");
-       # don't assign to App_State::DBH, since we're a fallback connection,
-       #  not one to the company database
+        $dbh = $self->new($self->export, (dbname => 'postgres'))
+            ->connect({PrintError=>0});
+        return $retval unless $dbh;
+        $logger->debug("DBI->connect dbh=$dbh");
+        # don't assign to App_State::DBH, since we're a fallback connection,
+        #  not one to the company database
 
-           my $sth = $dbh->prepare(
-                 "select count(*) = 1 from pg_database where datname = ?"
-           );
-           $sth->execute($self->{company_name});
-           my ($exists) = $sth->fetchrow_array();
-           if ($exists){
-                $retval->{status} = 'exists';
-           } else {
-                $retval->{status} = 'does not exist';
-           }
-           $sth = $dbh->prepare("SELECT SESSION_USER");
-           $sth->execute;
-           $retval->{username} = $sth->fetchrow_array();
-       $sth->finish();
-       $dbh->disconnect();
+        my $sth = $dbh->prepare(
+            "select count(*) = 1 from pg_database where datname = ?"
+            );
+        $sth->execute($self->{company_name});
+        my ($exists) = $sth->fetchrow_array();
+        if ($exists){
+            $retval->{status} = 'exists';
+        } else {
+            $retval->{status} = 'does not exist';
+        }
+        $sth = $dbh->prepare("SELECT SESSION_USER");
+        $sth->execute;
+        $retval->{username} = $sth->fetchrow_array();
+        $sth->finish();
+        $dbh->disconnect();
 
-           return $retval;
+        return $retval;
    } else { # Got a db handle... try to find the version and app by a few
             # different means
        $logger->debug("DBI->connect dbh=$dbh");
@@ -300,7 +297,7 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    $self->new($self->export, (dbname => $new_name)
+    return $self->new($self->export, (dbname => $new_name)
               )->create(copy_of => $self->dbname);
 }
 
@@ -312,7 +309,6 @@ Loads the base schema definition file Pg-database.sql.
 
 sub load_base_schema {
     my ($self, $args) = @_;
-    my $success;
     my $log = loader_log_filename();
 
     $self->{source_dir} = './'
@@ -352,20 +348,23 @@ sub load_modules {
     my $log = loader_log_filename();
 
     $self->{source_dir} ||= '';
-    open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
-    for my $mod (<LOADORDER>) {
+    my $filename = "$self->{source_dir}sql/modules/$loadorder";
+    open my $fh, '<', $filename
+        or die "Failed to open $filename : $!";
+
+    for my $mod (<$fh>) {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
         no warnings 'uninitialized';
         $self->run_file(
-                       file       => "$self->{source_dir}sql/modules/$mod",
-                       log_stdout  => $args->{log} || "${log}_stdout",
-               log_stderr  => $args->{errlog} || "${log}_stderr"
+            file       => "$self->{source_dir}sql/modules/$mod",
+            log_stdout => $args->{log}    || "${log}_stdout",
+            log_stderr => $args->{errlog} || "${log}_stderr"
         );
 
     }
-    close (LOADORDER); ### return failure to execute the script?
+    close $fh; ### return failure to execute the script?
     return 1;
 }
 
@@ -394,6 +393,7 @@ sub load_coa {
             log_stderr  => $log,
             );
     }
+    return;
 }
 
 
@@ -403,7 +403,7 @@ Creates a database and then loads it.
 
 =cut
 
-sub create_and_load(){
+sub create_and_load {
     my ($self, $args) = @_;
     $self->create;
     $self->load_base_schema({
@@ -414,7 +414,7 @@ sub create_and_load(){
     log     => $args->{log},
     errlog  => $args->{errlog},
             });
-    $self->apply_changes();
+    return $self->apply_changes();
 }
 
 
@@ -463,7 +463,7 @@ sub apply_changes {
         LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
-    $dbh->disconnect;
+    return $dbh->disconnect;
 }
 
 1;

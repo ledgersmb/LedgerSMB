@@ -40,8 +40,6 @@ use LedgerSMB::GL;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 
-1;
-
 # end of main
 
 sub add    { &{"add_$form->{type}"} }
@@ -462,41 +460,6 @@ sub save_language {
 
     AM->save_language( \%myconfig, \%$form );
 
-    if ( !-d "$myconfig{templates}/$form->{code}" ) {
-
-        umask(002);
-
-        if ( mkdir "$myconfig{templates}/$form->{code}", oct("771") ) {
-
-            umask(007);
-
-            opendir TEMPLATEDIR, "$myconfig{templates}"
-              or $form->error("$myconfig{templates} : $!");
-            @templates = grep !/^(\.|\.\.)/, readdir TEMPLATEDIR;
-            closedir TEMPLATEDIR;
-
-            foreach $file (@templates) {
-                if ( -f "$myconfig{templates}/$file" ) {
-                    open( TEMP, '<', "$myconfig{templates}/$file" )
-                      or $form->error("$myconfig{templates}/$file : $!");
-
-                    open( NEW, '>', "$myconfig{templates}/$form->{code}/$file" )
-                      or $form->error(
-                        "$myconfig{templates}/$form->{code}/$file : $!");
-
-                    while ( $line = <TEMP> ) {
-                        print NEW $line;
-                    }
-                    close(TEMP);
-                    close(NEW);
-                }
-            }
-        }
-        else {
-            $form->error("${templates}/$form->{code} : $!");
-        }
-    }
-
     $form->redirect( $locale->text('Language saved!') );
 
 }
@@ -531,12 +494,6 @@ sub yes_delete_language {
 
     AM->delete_language( \%myconfig, \%$form );
 
-    # delete templates
-    $dir = "$myconfig{templates}/$form->{code}";
-    if ( -d $dir ) {
-        unlink <$dir/*>;
-        rmdir "$myconfig{templates}/$form->{code}";
-    }
     $form->redirect( $locale->text('Language deleted!') );
 
 }
@@ -548,7 +505,7 @@ sub taxes {
     AM->taxes( \%myconfig, \%$form );
 
     $i = 0;
-    foreach $ref ( @{ $form->{taxrates} } ) {
+    foreach my $ref ( @{ $form->{taxrates} } ) {
         $i++;
         $form->{"minvalue_$i"} =
           $form->format_amount( \%myconfig, $ref->{minvalue}) || 0;
@@ -637,7 +594,7 @@ sub update {
 
     AM->taxes( \%myconfig, \%$form );
 
-    foreach $item (@a) {
+    foreach my $item (@a) {
         ( $accno, $i ) = split /_/, $item;
         push @t, $accno;
 
@@ -780,21 +737,15 @@ sub save_warehouse {
 
     $form->isblank( "description", $locale->text('Description missing!') );
     AM->save_warehouse( \%myconfig, \%$form );
-    _warehouse_redirect();
 
+    $form->redirect( $locale->text( 'Warehouse saved!'));
 }
 
 sub delete_warehouse {
 
     AM->delete_warehouse( \%myconfig, \%$form );
-    _warehouse_redirect();
 
-}
-
-sub _warehouse_redirect {
-    use LedgerSMB::Scripts::reports;
-    bless $form, 'LedgerSMB';
-    LedgerSMB::Scripts::reports::list_warehouse($lsmb);
+    $form->redirect( $locale->text( 'Warehouse deleted!'));
 }
 
 sub recurring_transactions {
@@ -1066,7 +1017,7 @@ sub edit_recurring {
 
 sub process_transactions {
     # save variables
-    my $pt = new Form;
+    my $pt = Form->new;
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
     my $defaultprinter;
@@ -1344,7 +1295,7 @@ sub process_transactions {
                 $form->{transdate} = $pt->{nextdate};
 
                 $j = 0;
-                foreach $ref ( @{ $form->{GL} } ) {
+                foreach my $ref ( @{ $form->{GL} } ) {
                     $form->{"accno_$j"} = "$ref->{accno}--$ref->{description}";
 
                     $form->{"projectnumber_$j"} =
@@ -1551,3 +1502,4 @@ sub search_taxform {
 
 sub continue { &{ $form->{nextsub} } }
 
+1;

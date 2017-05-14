@@ -11,6 +11,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Listings::Overpayments;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -178,7 +179,7 @@ sub run_report {
     for my $r (@rows){
        $r->{row_id} = $r->{payment_id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

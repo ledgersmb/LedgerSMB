@@ -20,6 +20,7 @@ reportins aimed at the customer in question.
 
 package LedgerSMB::Report::Aging;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
@@ -289,7 +290,7 @@ sub run_report{
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
         $self->total($self->total + $row->{total});
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

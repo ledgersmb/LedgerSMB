@@ -24,8 +24,6 @@ use strict;
 use warnings;
 
 use Locale::Country;
-use LedgerSMB;
-use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
@@ -60,12 +58,12 @@ sub __default {
             template => 'credentials',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 sub _get_database {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
+    my $creds = $request->{_auth}->get_credentials('setup');
 
     return [ 401,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
@@ -207,15 +205,13 @@ sub login {
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
-    } else {
-        my $dispatch_entry;
-
-        foreach $dispatch_entry (get_dispatch_table($request)) {
+    }
+    else {
+        foreach my $dispatch_entry (get_dispatch_table($request)) {
             if ($version_info->{appname} eq $dispatch_entry->{appname}
                 && ($version_info->{version} eq $dispatch_entry->{version}
                     || ! defined $dispatch_entry->{version})) {
-                my $field;
-                foreach $field (qw|operation message next_action|) {
+                foreach my $field (qw|operation message next_action|) {
                     $request->{$field} = $dispatch_entry->{$field};
                 }
 
@@ -252,7 +248,7 @@ sub login {
         template => 'confirm_operation',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item sanity_checks
@@ -265,6 +261,7 @@ sub sanity_checks {
     `psql --help` || die LedgerSMB::App_State::Locale->text(
                                  'psql not found.'
                               );
+    return;
 }
 
 =item list_databases
@@ -311,7 +308,7 @@ sub list_users {
         template => 'list_users',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item copy_db
@@ -335,7 +332,7 @@ sub copy_db {
     )->execute("lsmb_$database->{company_name}__");
     $dbh->commit;
     $dbh->disconnect;
-    complete($request);
+    return complete($request);
 }
 
 
@@ -348,7 +345,7 @@ Backs up a full db
 sub backup_db {
     my $request = shift @_;
     $request->{backup} = 'db';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 =item backup_roles
@@ -360,7 +357,7 @@ Backs up roles only (for all db's)
 sub backup_roles {
     my $request = shift @_;
     $request->{backup} = 'roles';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 # Private method, basically just passes the inputs on to the next screen.
@@ -371,7 +368,7 @@ sub _begin_backup {
             template => 'begin_backup',
             format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 };
 
 
@@ -391,45 +388,47 @@ sub run_backup {
     my $backupfile;
     my $mimetype;
 
-    if ($request->{backup} eq 'roles'){
-       my @t = localtime(time);
-       $t[4]++;
-       $t[5] += 1900;
-       $t[3] = substr( "0$t[3]", -2 );
-       $t[4] = substr( "0$t[4]", -2 );
-       my $date = "$t[5]-$t[4]-$t[3]";
+    if ($request->{backup} eq 'roles') {
+        my @t = localtime(time);
+        $t[4]++;
+        $t[5] += 1900;
+        $t[3] = substr( "0$t[3]", -2 );
+        $t[4] = substr( "0$t[4]", -2 );
+        my $date = "$t[5]-$t[4]-$t[3]";
 
-       $backupfile = $database->backup_globals(
-                      tempdir => $LedgerSMB::Sysconfig::backupdir,
-                         file => "roles_${date}.sql"
-       );
-       $mimetype   = 'text/x-sql';
-    } elsif ($request->{backup} eq 'db'){
-       $backupfile = $database->backup;
-       $mimetype   = 'application/octet-stream';
-    } else {
+        $backupfile = $database->backup_globals(
+            tempdir => $LedgerSMB::Sysconfig::backupdir,
+            file => "roles_${date}.sql"
+        );
+        $mimetype = 'text/x-sql';
+    }
+    elsif ($request->{backup} eq 'db') {
+        $backupfile = $database->backup;
+        $mimetype   = 'application/octet-stream';
+    }
+    else {
         die $request->{_locale}->text('Invalid backup request');
     }
 
     $backupfile or
         die $request->{_locale}->text('Error creating backup file');
 
-    if ($request->{backup_type} eq 'email'){
+    if ($request->{backup_type} eq 'email') {
         # suppress warning of single usage of $LedgerSMB::Sysconfig::...
         no warnings 'once';
 
         my $csettings = $LedgerSMB::Company_Config::settings;
-        my $mail = new LedgerSMB::Mailer(
-            from          => $LedgerSMB::Sysconfig::backup_email_from,
-            to            => $request->{email},
-            subject       => "Email of Backup",
-            message       => 'The Backup is Attached',
-            );
+        my $mail = LedgerSMB::Mailer->new(
+            from     => $LedgerSMB::Sysconfig::backup_email_from,
+            to       => $request->{email},
+            subject  => "Email of Backup",
+            message  => 'The Backup is Attached',
+        );
         $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
-            );
+        );
         $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new(
@@ -438,18 +437,25 @@ sub run_backup {
             format => 'HTML',
         );
         return $template->render_to_psgi($request);
-    } elsif ($request->{backup_type} eq 'browser') {
+    }
+    elsif ($request->{backup_type} eq 'browser') {
         my $bak;
-        open $bak, '<', $backupfile;
+        open $bak, '<', $backupfile
+            or die "Failed to open temporary backup file $backupfile : $!";
         unlink $backupfile; # remove the file after it gets closed
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
-        return [ 200,
-                 [ 'Content-Type' => $mimetype,
-                   'Content-Disposition' =>
-                        "attachment; filename=\"$attachment_name\"" ],
-                 $bak ];  # return the file-handle
-     } else {
+        return [
+            200,
+            [
+                'Content-Type' => $mimetype,
+                'Content-Disposition' =>
+                    "attachment; filename=\"$attachment_name\""
+            ],
+            $bak  # return the file-handle
+        ];
+    }
+    else {
         die $request->{_locale}->text("Don't know what to do with backup");
     }
 }
@@ -763,7 +769,7 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
-    $template->render_to_psgi({
+    return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $header,
@@ -798,7 +804,6 @@ sub fix_tests{
     );
 
     for my $count (1 .. $request->{count}){
-        warn $count;
         my $id = $request->{"id_$count"};
                 $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
@@ -1043,8 +1048,7 @@ sub save_user {
     } elsif ($request->{perms} == 0) {
         $request->call_procedure(funcname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
-                                           "lsmb_$request->{database}__".
-                                            "users_manage",
+                                           'users_manage',
                                          ]
         );
    }
@@ -1120,11 +1124,11 @@ sub process_and_run_upgrade_script {
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
-    $dbh->do("SELECT admin__add_user_to_role(username, lsmb__role('base_user'))
+    $dbh->do("SELECT admin__add_user_to_role(username, 'base_user')
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->disconnect;
+    return $dbh->disconnect;
 }
 
 
@@ -1211,26 +1215,28 @@ sub run_sl30_migration {
 sub create_initial_user {
     my ($request) = @_;
 
-   my $database = _init_db($request) unless $request->{dbh};
-   @{$request->{salutations}}
-    = $request->call_procedure(funcname => 'person__list_salutations' );
+    _init_db($request) unless $request->{dbh};
+    @{$request->{salutations}} = $request->call_procedure(
+        funcname => 'person__list_salutations'
+    );
 
-   @{$request->{countries}}
-    = $request->call_procedure(funcname => 'location_list_country' );
+    @{$request->{countries}} = $request->call_procedure(
+        funcname => 'location_list_country'
+    );
 
-   my $locale = $request->{_locale};
+    my $locale = $request->{_locale};
 
-   @{$request->{perm_sets}} = (
-       {id => '0', label => $locale->text('Manage Users')},
-       {id => '1', label => $locale->text('Full Permissions')},
-       {id => '-1', label => $locale->text('No changes')},
-   );
+    @{$request->{perm_sets}} = (
+        {id => '0', label => $locale->text('Manage Users')},
+        {id => '1', label => $locale->text('Full Permissions')},
+        {id => '-1', label => $locale->text('No changes')},
+    );
     my $template = LedgerSMB::Template->new(
-                   path => 'UI/setup',
-                   template => 'new_user',
-                   format => 'HTML',
-     );
-     return $template->render_to_psgi($request);
+        path => 'UI/setup',
+        template => 'new_user',
+        format => 'HTML',
+    );
+    return $template->render_to_psgi($request);
 }
 
 =item edit_user_roles
@@ -1366,9 +1372,10 @@ sub complete {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (C) 2011-2017 LedgerSMB Core Team.
+This file is licensed under the GNU General Public License version 2,
+or at your option any later version.  Please see the included
+License.txt for details.
 
 =cut
 

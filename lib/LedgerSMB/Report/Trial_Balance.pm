@@ -24,6 +24,7 @@ We can also retrieve a previous report from the database and run it:
 
 package LedgerSMB::Report::Trial_Balance;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
@@ -249,7 +250,8 @@ sub run_report {
                debits => $total_debits,
               credits => $total_credits,
             html_class => 'listtotal'};
-    $self->rows(\@rows);
+
+    return $self->rows(\@rows);
 }
 
 =back

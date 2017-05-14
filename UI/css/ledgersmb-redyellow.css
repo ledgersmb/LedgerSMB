@@ -4,6 +4,11 @@
 td.money {
    text-align: right;
 }
+
+th.date, td.date {
+   white-space: nowrap;
+}
+
 /* general stuff */
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
@@ -44,6 +49,10 @@ table.form th.centered, th.centered {
 
 table.criteria td {
   text-align: right;
+}
+
+table.warning {
+    border: 0;
 }
 
 #company_info, #version_info {
@@ -103,11 +112,11 @@ body.menu {
 }
 
 cornerlogo {
-	border: 1px solid #000000;
-	margin-left: auto;
-	margin-right: auto;
-	background: #ffffff;
-	padding: 4px;
+        border: 1px solid #000000;
+        margin-left: auto;
+        margin-right: auto;
+        background: #ffffff;
+        padding: 4px;
 }
 
 .submenu {
@@ -171,6 +180,8 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
   text-decoration: none; color: white; font-weight: bold}
 .listrow1, table.dynatable tr:nth-child(odd) { font-size: 10pt; background-color: #ff8888; color: black; vertical-align: top; }
 .listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #FFFF88; color: black; vertical-align: top; }
+.listrow1:hover, table.dynatable tbody tr:nth-child(odd):hover { background-color: #cbcbcc; }
+.listrow0:hover, table.dynatable tbody tr:nth-child(even):hover { background-color: #aaa2a0; }
 .listsubtotal, table.dynatable tr.sublisttotal { font-size: 10pt; background-color: #880000; color: white; }
 .listtotal, table.dynatable tr.listtotal { font-size: 10pt; background-color: #004d99; color: white; font-weight: bold}
 
@@ -225,44 +236,46 @@ h2.error {
 }
 
 #notes_div div.note {
-	margin: 1em;
-	padding: 1em;
-	border: 2px;
-	height: 5em;
-	width: 90%;
-	overflow: hidden;
-	background-color: #ddd;
-	border-style: groove;
+        margin: 1em;
+        padding: 1em;
+        border: 2px;
+        height: 5em;
+        width: 90%;
+        overflow: hidden;
+        background-color: #ddd;
+        border-style: groove;
 }
 
 #notes_div div.note:hover {
-	overflow:visible;
-	background-color: #fdd;
-	border-style: groove;
-	height: 100%;
-	width: 90%;
-	min-height: 5em;
-	overflow: auto;
+        overflow:visible;
+        background-color: #fdd;
+        border-style: groove;
+        height: 100%;
+        width: 90%;
+        min-height: 5em;
+        overflow: auto;
 }
 
 #company_div div.note {
-	display: none;
+        display: none;
 }
 
 tr.active {
-	background-color: #ddd;
+        background-color: #ddd;
 }
 
 tr.record {
-	background-color: pink;
+        background-color: pink;
 }
 
 tr.suspect {
 	background-color: red;
+        color: white;
+        font-weight: bold;
 }
 
 tr.warning {
-	background-color: yellow;
+        background-color: yellow;
 }
 input[type=checkbox].remove::before {
     display: inline-block;

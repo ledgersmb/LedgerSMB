@@ -19,7 +19,7 @@ double entry accounting, budgetting, invoicing, quotations, projects, timecards,
 inventory management, shipping and more ...
 
 The UI allows world-wide accessibility; with its data stored in the
-enterprise-strength PostgreSQL open source database system, the system is know
+enterprise-strength PostgreSQL open source database system, the system is known
 to operate smoothly for businesses with thousands of transactions per week.
 Screens and customer visible output are defined in templates, allowing easy and
 fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
@@ -32,7 +32,7 @@ customers or RFQs (request for quotation) to your vendors with PDF attachments.
 
 ## Server
 
- * Perl 5.10+
+ * Perl 5.14+
  * PostgreSQL 9.4+
  * Web server (e.g. nginx, Apache, lighttpd)
 
@@ -123,7 +123,7 @@ specifying ```--with-feature=<feature>```:
 | starman          | Starman Perl/PSGI webserver         |
 | openoffice       | OpenOffice.org document output      |
 | edi              | (EXPERIMENTAL) X12 EDI support      |
-| rest             | (EXPERIMENTAL) RESTful webservices  |
+| xls              | Excel output filters (xls+xlsx)     |
 
 Note: The example command contains ```--with-feature=starman``` for the
 purpose of the quick start.
@@ -207,9 +207,9 @@ With the above steps completed, the system is ready to run the web server:
  > NOTE: DO NOT run starman (or any web service) as root, this is considered
  >     a serious security issue, and as such LedgerSMB doesn't support it.
  >     Instead, if you need to start LedgerSMB from a root process, drop
- >     privlidges to a user that doesn't have write access to the LedgerSMB Directories first.
+ >     privileges to a user that doesn't have write access to the LedgerSMB Directories first.
  >     Most daemonising mechanisims (eg: systemd) provide a mechanism to do this.
- >     Do not use the starman --user= mechanism, it currently drops privlidges too late.
+ >     Do not use the starman --user= mechanism, it currently drops privileges too late.
 
 ```bash
  $ starman -I lib -I old/lib --listen localhost:5762 tools/starman.psgi

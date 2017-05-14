@@ -16,6 +16,7 @@ and orders).  This is not used for the user interface templates.
 
 package LedgerSMB::Report::Listings::Templates;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES
@@ -89,7 +90,7 @@ sub run_report {
           "template_name=$ref->{template_name}&" .
           "language_code=$ref->{language_code}&format=$ref->{format}";
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

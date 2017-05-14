@@ -25,6 +25,7 @@ methods only
 package LedgerSMB::File::Order;
 use strict;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =head1 METHODS
@@ -39,7 +40,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->call_dbmethod(funcname => 'file__attach_to_order');
+    return $self->call_dbmethod(funcname => 'file__attach_to_order');
 }
 
 =item attach_all_from_order({id = int})
@@ -64,6 +65,7 @@ sub attach_all_from_order {
         $new_link->dbobject($self->dbobject);
         $new_link->attach;
     }
+    return;
 }
 
 =item attach_all_from_transaction({id = int})
@@ -89,6 +91,7 @@ sub attach_all_from_transaction {
         $new_link->dbobject($self->dbobject);
         $new_link->attach;
     }
+    return;
 }
 
 =back
@@ -103,4 +106,5 @@ your software.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

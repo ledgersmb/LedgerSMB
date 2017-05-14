@@ -30,6 +30,7 @@ To get by control code:
 
 package LedgerSMB::Entity::Person::Employee;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::Entity::Person;
 extends 'LedgerSMB::Entity::Person';
 
@@ -171,7 +172,7 @@ sub save {
     my ($ref) = $self->call_dbmethod(funcname => 'person__save');
     my ($id) = values(%$ref);
     $self->entity_id($id);
-    $self->call_dbmethod(funcname => 'employee__save');
+    return $self->call_dbmethod(funcname => 'employee__save');
 }
 
 =back

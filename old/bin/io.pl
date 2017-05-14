@@ -45,6 +45,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
+use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
@@ -56,8 +57,6 @@ if ( -f "old/bin/custom/io.pl" ) {
 if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
     eval { require "old/bin/custom/$form->{login}_io.pl"; };
 }
-
-1;
 
 # end of main
 
@@ -93,7 +92,7 @@ if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
     my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
-    for $i (1 .. $form->{rowcount}){
+    foreach my $i (1 .. $form->{rowcount}){
         my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
                                       * ($form->{"discount_$i"} / 100),
                                     $decimalplaces);
@@ -135,13 +134,8 @@ sub _calc_taxes {
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
     $form->update_invnumber;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
 
     $draft->approve();
     edit();
@@ -191,10 +185,10 @@ sub display_row {
         $l{language_code} = $form->{language_code};
         $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
-        $form->get_partsgroup( \%myconfig, \%l );
+        $form->get_partsgroup(\%l);
         if ( @{ $form->{all_partsgroup} } ) {
             $form->{selectpartsgroup} = "<option>\n";
-            foreach $ref ( @{ $form->{all_partsgroup} } ) {
+            foreach my $ref ( @{ $form->{all_partsgroup} } ) {
                 if ( $ref->{translation} ) {
                     $form->{selectpartsgroup} .=
 qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{translation}\n|;
@@ -280,7 +274,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $exchangerate = ($exchangerate) ? $exchangerate : 1;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
-    for $i ( 1 .. max($numrows, $min_lines)) {
+    foreach my $i ( 1 .. max($numrows, $min_lines)) {
         $desc_disabled = '' if $i == $numrows;
         if ( $spc eq '.' ) {
             ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
@@ -306,7 +300,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             # check pricematrix
             @a = split / /, $form->{"pricematrix_$i"};
             if ( scalar @a > 2 ) {
-                foreach $item (@a) {
+                foreach my $item (@a) {
                     ( $q, $p ) = split /:/, $item;
                     if ( ( $p * 1 ) && ( $form->{"qty_$i"} >= ( $q * 1 ) ) ) {
                         ($dec) = ( $p =~ /\.(\d+)/ );
@@ -323,7 +317,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
-    my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
+        my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
                               * ($form->{"discount_$i"} / 100),
                            $decimalplaces);
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
@@ -566,7 +560,7 @@ sub new_item {
 
     # save all other form variables in a previousform variable
     if ( !$form->{previousform} ) {
-        foreach $key ( keys %$form ) {
+        foreach my $key ( keys %$form ) {
 
             # escape ampersands
             $form->{$key} =~ s/&/%26/g;
@@ -716,7 +710,7 @@ sub check_form {
         @flds  = qw(make model);
         $count = 0;
         @a     = ();
-        for $i ( 1 .. $form->{makemodel_rows} ) {
+        foreach my $i ( 1 .. $form->{makemodel_rows} ) {
             if ( ( $form->{"make_$i"} ne "" ) || ( $form->{"model_$i"} ne "" ) )
             {
                 push @a, {};
@@ -765,7 +759,7 @@ sub check_form {
         $count = 0;
         @a     = ();
 
-        for $i ( 1 .. ( $form->{assembly_rows} - 1 ) ) {
+        foreach my $i ( 1 .. ( $form->{assembly_rows} - 1 ) ) {
             if ( $form->{"qty_$i"} ) {
                 push @a, {};
                 my $j = $#a;
@@ -802,7 +796,7 @@ sub check_form {
         @flds  = qw(make model);
         @a     = ();
 
-        for $i ( 1 .. ( $form->{makemodel_rows} ) ) {
+        foreach my $i ( 1 .. ( $form->{makemodel_rows} ) ) {
             if ( ( $form->{"make_$i"} ne "" ) || ( $form->{"model_$i"} ne "" ) )
             {
                 push @a, {};
@@ -828,7 +822,7 @@ sub check_form {
         $count = 0;
         @a     = ();
         if ( $form->{rowcount} ) {
-            for $i ( 1 .. $form->{rowcount} - 1 ) {
+            foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
                 if ( $form->{"partnumber_$i"} ) {
                     push @a, {};
                     my $j = $#a;
@@ -887,7 +881,7 @@ sub invoicetotal {
 
     my ( $amount, $sellprice, $discount, $qty );
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         $sellprice = $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
         $discount  = $form->parse_amount( \%myconfig, $form->{"discount_$i"} );
         $qty       = $form->parse_amount( \%myconfig, $form->{"qty_$i"} );
@@ -906,7 +900,7 @@ sub invoicetotal {
     }
 
     $form->{oldtotalpaid} = 0;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         $form->{oldtotalpaid} += $form->{"paid_$i"};
     }
 
@@ -923,7 +917,7 @@ sub validate_items {
         $form->finalize_request();
     }
 
-    for $i ( 1 .. $form->{rowcount} - 1 ) {
+    foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
         $form->isblank( "partnumber_$i",
             $locale->text( 'Number missing in Row [_1]', $i ) );
     }
@@ -1097,7 +1091,7 @@ sub e_mail {
 
 sub send_email {
 
-    $old_form = new Form;
+    $old_form = Form->new;
 
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     $old_form->{media} = $old_form->{oldmedia};
@@ -1135,7 +1129,7 @@ sub print {
           if ( $form->{format} !~ /(txt|postscript|pdf)/ );
     }
 
-    $old_form = new Form;
+    $old_form = Form->new;
     for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
     $form->{rowcount}++;
@@ -1153,8 +1147,6 @@ sub print_form {
     $form->{fax} = $csettings->{company_fax};
     my $inv = "inv";
     my $due = "due";
-    my $class;
-
     my $numberfld = "sinumber";
 
     my $display_form =
@@ -1300,7 +1292,7 @@ sub print_form {
     my @vars = ();
 
     $form->{parts_id} = [];
-    foreach $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         push @vars,
           (
             "partnumber_$i",    "description_$i",
@@ -1317,7 +1309,7 @@ sub print_form {
     push @vars, $ARAP;
 
     # format payment dates
-    for my $i ( 1 .. $form->{paidaccounts} - 1 ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} - 1 ) {
         if ( exists $form->{longformat} ) {
             $form->{"datepaid_$i"} =
               $locale->date( \%myconfig, $form->{"datepaid_$i"},
@@ -1378,7 +1370,7 @@ sub print_form {
     $shipto = 1;
     # if there is no shipto fill it in from billto
     $form->get_shipto($form->{locationid}) if $form->{locationid};
-    foreach $item (@vars) {
+    foreach my $item (@vars) {
         if ( $form->{"shipto$item"} ) {
             $shipto = 0;
             last;
@@ -1418,7 +1410,6 @@ sub print_form {
     }
 
 
-    $form->{templates} = "$myconfig{templates}";
     $form->{IN}        = "$form->{formname}.$form->{format}";
 
     if ( $form->{format} =~ /(postscript|pdf)/ ) {
@@ -1442,7 +1433,7 @@ sub print_form {
             $form->{printed} .= " $form->{formname}";
             $form->{printed} =~ s/^ //;
 
-            $form->update_status( \%myconfig, 1);
+            $form->update_status;
         }
 
         $old_form->{printed} = $form->{printed} if %$old_form;
@@ -1458,7 +1449,7 @@ sub print_form {
             $form->{emailed} =~ s/^ //;
 
             # save status
-            $form->update_status( \%myconfig, 1);
+            $form->update_status;
         }
 
         $now = scalar localtime;
@@ -1520,7 +1511,7 @@ sub print_form {
         $form->{queued} =~ s/^ //;
 
         # save status
-        $form->update_status( \%myconfig, 1);
+        $form->update_status;
 
         $old_form->{queued} = $form->{queued};
     }
@@ -1557,7 +1548,7 @@ sub print_form {
             $form->{$_} = $form->parse_amount( \%myconfig, $form->{$_} );
         }
 
-        for $i ( 1 .. $form->{paidaccounts} ) {
+        for my $i ( 1 .. $form->{paidaccounts} ) {
             for (qw(paid exchangerate)) {
                 $form->{"${_}_$i"} =
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
@@ -1989,3 +1980,5 @@ sub setlocation_id
 
 
 }
+
+1;

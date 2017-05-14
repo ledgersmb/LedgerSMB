@@ -49,7 +49,8 @@ use warnings;
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
-use CGI::Simple::Standard qw(:html);
+use HTML::Entities;
+use HTML::Escape;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
@@ -70,7 +71,8 @@ sub preprocess {
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
+    #$vars = encode_entities($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
 
@@ -92,7 +94,7 @@ sub process {
     $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
     $cleanvars->{dojo_theme} ||= $dojo_theme;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
-    $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
+    $cleanvars->{UNESCAPE} = sub { return decode_entities(shift @_) };
 
     my $output = '';
     if ($parent->{outputfile}) {
@@ -119,7 +121,7 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    $parent->{mimetype} = 'text/' . $extension;
+    return $parent->{mimetype} = 'text/' . $extension;
 }
 
 sub postprocess {

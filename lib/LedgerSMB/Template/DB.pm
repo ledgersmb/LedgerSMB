@@ -6,6 +6,7 @@ LedgerSMB::Template::DB - Template administration functions for LedgerSMB
 
 package LedgerSMB::Template::DB;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 use LedgerSMB::App_State;
@@ -138,8 +139,10 @@ sub get_from_file {
     $fname = $2;
     my ($template_name, $format) = split /\./, $fname;
     my $content = '';
-    open TEMP, '<', $path;
-    $content .= $_ while <TEMP>;
+    open my $fh, '<', $path
+        or die "Failed to open template file $path : $!";
+    $content .= $_ while <$fh>;
+    close $fh;
     my %args = (
            template_name => $template_name,
            format => $format,
@@ -159,7 +162,7 @@ Saves the current object
 
 sub save {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'template__save');
+    return $self->call_dbmethod(funcname => 'template__save');
 }
 
 =head1 COPYRIGHT

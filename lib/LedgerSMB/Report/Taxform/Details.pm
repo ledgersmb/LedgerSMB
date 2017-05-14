@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Taxform::Details;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -148,7 +149,7 @@ sub run_report {
     for my $row(@rows){
        $row->{total} = $row->{acc_total} + $row->{invoice_total};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

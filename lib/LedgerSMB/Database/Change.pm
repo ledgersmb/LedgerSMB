@@ -74,13 +74,12 @@ If $raw is set to a true value, we do not wrap in a transaction.
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
-        my $file;
         local $!;
-        open(FILE, '<', $self->path) or
+        open my $fh, '<', $self->path or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
-        binmode FILE, ':utf8';
-        $self->{_content} = join '', <FILE>;
-        close FILE;
+        binmode $fh, ':utf8';
+        $self->{_content} = join '', <$fh>;
+        close $fh;
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
@@ -112,7 +111,7 @@ sub sha {
     my $normalized = join "\n",
                      grep { /\S/ }
                      map { my $string = $_; $string =~ s/--.*//; $string }
-                     split("\n", $content);
+                     split /\n/, $content;
     $self->{_sha} = Digest::SHA::sha512_base64($normalized);
     return $self->{_sha};
 }
@@ -168,7 +167,7 @@ Runs against the current dbh without tracking.
 
 sub run {
     my ($self, $dbh) = @_;
-    $dbh->do($self->content); # not raw
+    return $dbh->do($self->content); # not raw
 }
 
 =head2 apply($dbh)
@@ -213,11 +212,12 @@ sub apply {
             VALUES(now(), $path, $sha, ?, ?)
     ")->execute($dbh->state, $dbh->errstr);
     $dbh->commit if $need_commit;
+    return;
 }
 
 sub _need_commit{
     my ($dbh) = @_;
-    1; # todo, detect existing transactions and autocommit status
+    return 1; # todo, detect existing transactions and autocommit status
 }
 =head1 Package Functions
 

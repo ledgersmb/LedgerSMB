@@ -590,7 +590,7 @@ sub save_person {
     );
     $request->{target_div} = 'credit_div';
     $person->save;
-    _main_screen($request, undef, $person);
+    return _main_screen($request, undef, $person);
 }
 
 =item save_credit($request)
@@ -604,7 +604,6 @@ sub save_credit {
     my ($request) = @_;
     $request->{target_div} = 'credit_div';
     my $company;
-    my @taxes;
 
     if (!$request->{ar_ap_account_id}){
           $request->error(

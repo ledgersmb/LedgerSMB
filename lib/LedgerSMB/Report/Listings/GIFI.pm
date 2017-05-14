@@ -13,6 +13,7 @@ No $request is needed since there are no criteria.
 
 package LedgerSMB::Report::Listings::GIFI;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
@@ -82,7 +83,7 @@ sub run_report {
     for my $row (@rows){
         $row->{row_id} = $row->{accno};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

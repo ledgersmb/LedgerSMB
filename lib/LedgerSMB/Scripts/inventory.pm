@@ -79,14 +79,14 @@ sub adjustment_next {
     for my $i (1 .. $request->{rowcount}){
         if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
-        $request->{transdate}, $request->{"partnumber_$i"});
+                $request->{transdate}, $request->{"partnumber_$i"});
             $request->{"id_$i"} = $item->{id};
             $request->{"description_$i"} = $item->{description};
             $request->{"onhand_$i"} = $item->{onhand};
         }
         $request->{"counted_$i"} ||= 0;
-        $request->{"qty_$i"} = $request->{"onhand_$i"}
-        - $request->{"counted_$i"};
+        $request->{"qty_$i"} =
+            $request->{"onhand_$i"} - $request->{"counted_$i"};
     }
     ++$request->{rowcount};
     return enter_adjust($request);
@@ -99,10 +99,30 @@ invoices.
 
 =cut
 
+sub _lines_from_form {
+    my ($adjustment, $hashref) = @_;
+    my @lines;
+    for my $ln (1 .. $hashref->{rowcount}){
+        next
+          if $hashref->{"id_$ln"} eq 'new';
+        my $line = LedgerSMB::Inventory::Adjust_Line->new(
+          parts_id => $hashref->{"id_$ln"},
+         partnumber => $hashref->{"partnumber_$ln"},
+            counted => $hashref->{"counted_$ln"},
+           expected => $hashref->{"onhand_$ln"},
+           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
+        push @lines, $line;
+    }
+    my $rows = $adjustment->rows;
+    push @$rows, @lines;
+    return $adjustment->rows($rows);
+}
+
+
 sub adjustment_save {
     my ($request) = @_;
     my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
-    $adjustment->lines_from_form($request);
+    _lines_from_form($adjustment, $request);
     $adjustment->save;
     return begin_adjust($request);
 }

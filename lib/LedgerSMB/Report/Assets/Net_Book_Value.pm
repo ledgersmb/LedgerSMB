@@ -20,6 +20,7 @@ asset accounts.
 
 package LedgerSMB::Report::Assets::Net_Book_Value;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES
@@ -145,7 +146,7 @@ sub run_report{
     for my $row(@rows){
         $row->{row_id} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

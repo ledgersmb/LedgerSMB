@@ -31,17 +31,10 @@ sub lsmb_error_func {
         print $_[0];
 }
 
-##line  subroutine
-##108   new
-##235   redirect
-##254   format_amount
-##364   parse_amount
-##408   round_amount
-##423   call_procedure
-##454   date_to_number
-##490   db_init
-##522   redo_rows
-##547   merge
+##table of subroutine tests
+##new
+##call_procedure
+##merge
 
 
 $lsmb = LedgerSMB->new();
@@ -57,40 +50,10 @@ $lsmb = LedgerSMB->new();
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
 
-
-# $lsmb->is_run_mode checks
-$lsmb = LedgerSMB->new();
-$ENV{GATEWAY_INTERFACE} = 'foo';
-is($lsmb->is_run_mode('cgi'), 1, 'is_run_mode: CGI - CGI');
-is($lsmb->is_run_mode('cli'), 0, 'is_run_mode: CGI - CLI');
-is($lsmb->is_run_mode('mod_perl'), 0, 'is_run_mode: CGI - mod_perl');
-is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: CGI - (bad mode)');
-is($lsmb->is_run_mode, 0, 'is_run_mode: CGI - (unknown mode)');
-$ENV{MOD_PERL} = 'foo';
-is($lsmb->is_run_mode('cgi'), 1, 'is_run_mode: CGI/mod_perl - CGI');
-is($lsmb->is_run_mode('cli'), 0, 'is_run_mode: CGI/mod_perl - CLI');
-is($lsmb->is_run_mode('mod_perl'), 1, 'is_run_mode: CGI/mod_perl - mod_perl');
-is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: CGI/mod_perl - (bad mode)');
-is($lsmb->is_run_mode, 0, 'is_run_mode: CGI/mod_perl - (unknown mode)');
-delete $ENV{GATEWAY_INTERFACE};
-is($lsmb->is_run_mode('cgi'), 0, 'is_run_mode: mod_perl - CGI');
-is($lsmb->is_run_mode('cli'), 0, 'is_run_mode: mod_perl - CLI');
-is($lsmb->is_run_mode('mod_perl'), 1, 'is_run_mode: mod_perl - mod_perl');
-is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: mod_perl - (bad mode)');
-is($lsmb->is_run_mode, 0, 'is_run_mode: mod_perl - (unknown mode)');
-delete $ENV{MOD_PERL};
-is($lsmb->is_run_mode('cgi'), 0, 'is_run_mode: CLI - CGI');
-is($lsmb->is_run_mode('cli'), 1, 'is_run_mode: CLI - CLI');
-is($lsmb->is_run_mode('mod_perl'), 0, 'is_run_mode: CLI - mod_perl');
-is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: CLI - (bad mode)');
-is($lsmb->is_run_mode, 0, 'is_run_mode: CLI - (unknown mode)');
-
-
 # $lsmb->new checks
 $lsmb = LedgerSMB->new();
 ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, 'LedgerSMB', 'new: blank, correct type');
-ok(defined $lsmb->{action}, 'new: blank, action defined');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 

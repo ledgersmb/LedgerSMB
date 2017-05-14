@@ -22,8 +22,6 @@ use LedgerSMB::PE;
 use LedgerSMB::AA;
 use LedgerSMB::OE;
 
-1;
-
 # end of main
 
 sub add {
@@ -48,7 +46,7 @@ sub edit {
 }
 
 sub prepare_partsgroup {
-    PE->get_partsgroup( \%myconfig, \%$form )
+    PE->get_partsgroup(\%$form)
       if $form->{id};
 }
 sub prepare_pricegroup {
@@ -428,7 +426,7 @@ sub list_translations {
         $sameitem = $form->{translations}->[0]->{ $form->{sort} };
     }
 
-    foreach $ref ( @{ $form->{translations} } ) {
+    foreach my $ref ( @{ $form->{translations} } ) {
 
         $ref->{description} =~ s/\r?\n/<br>/g;
 
@@ -499,7 +497,7 @@ sub edit_translation {
     shift @{ $form->{translations} };
 
     $i = 1;
-    foreach $row ( @{ $form->{translations} } ) {
+    foreach my $row ( @{ $form->{translations} } ) {
         $form->{"language_code_$i"} = $row->{code};
         $form->{"translation_$i"}   = $row->{translation};
         $i++;
@@ -518,7 +516,7 @@ sub translation_header {
     $form->{translation_rows}++;
 
     $form->{selectlanguage} = $form->unescape( $form->{selectlanguage} );
-    for $i ( 1 .. $form->{translation_rows} ) {
+    foreach my $i ( 1 .. $form->{translation_rows} ) {
         $form->{"selectlanguage_$i"} = $form->{selectlanguage};
         if ( $form->{"language_code_$i"} ) {
             $form->{"selectlanguage_$i"} =~
@@ -564,7 +562,7 @@ sub translation_header {
     </tr>
 |;
 
-    for $i ( 1 .. $form->{translation_rows} ) {
+    foreach my $i ( 1 .. $form->{translation_rows} ) {
 
         if ( ( $rows = $form->numtextrows( $form->{"translation_$i"}, 40 ) ) >
             1 )
@@ -631,7 +629,7 @@ sub update {
         @flds  = qw(language translation);
         $count = 0;
         @a     = ();
-        for $i ( 1 .. $form->{translation_rows} ) {
+        foreach my $i ( 1 .. $form->{translation_rows} ) {
             if ( $form->{"language_code_$i"} ne "" ) {
                 push @a, {};
                 $j = $#a;
@@ -693,7 +691,7 @@ sub select_name {
     @column_index = qw(ndx name address city state zipcode country);
 
     my $i = 0;
-    foreach $ref ( @{ $form->{name_list} } ) {
+    foreach my $ref ( @{ $form->{name_list} } ) {
         $checked = ( $i++ ) ? "" : "checked";
 
         $ref->{name} = $form->quote( $ref->{name} );
@@ -768,7 +766,7 @@ sub name_selected {
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
 
     # delete all the new_ variables
-    for $i ( 1 .. $form->{lastndx} ) {
+    foreach my $i ( 1 .. $form->{lastndx} ) {
         for (qw(id name)) { delete $form->{"new_${_}_$i"} }
     }
 
@@ -948,7 +946,7 @@ sub project_jcitems_list {
 
     # flatten array
     $i = 1;
-    foreach $ref ( @{ $form->{jcitems} } ) {
+    foreach my $ref ( @{ $form->{jcitems} } ) {
         if ( $form->{summary} ) {
 
             $thisitem =
@@ -994,7 +992,7 @@ sub project_jcitems_list {
 
     $form->{rowcount} = $i - 1;
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         for (qw(qty allocated)) {
             $form->{"${_}_$i"} =
               $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
@@ -1068,7 +1066,7 @@ sub jcitems {
         </tr>
 |;
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
 
         for (@column_index) {
             $column_data{$_} = qq|<td>$form->{"${_}_$i"}</td>|;
@@ -1239,12 +1237,12 @@ sub sales_order_footer { &jcitems }
 
 sub generate_sales_orders {
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         $form->error( $locale->text('Customer missing!') )
           if ( $form->{"checked_$i"} && !$form->{"customer_$i"} );
     }
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"checked_$i"} ) {
             push @{ $form->{order}{qq|$form->{"customer_id_$i"}|} },
               {
@@ -1262,7 +1260,7 @@ sub generate_sales_orders {
         }
     }
 
-    $order = new Form;
+    $order = Form->new;
     for ( keys %{ $form->{order} } ) {
         $order->{dbh} = $form->{dbh};
 
@@ -1276,7 +1274,7 @@ sub generate_sales_orders {
 
         AA->get_name( \%myconfig, \%$order );
 
-        foreach $ref ( @{ $form->{order}{$_} } ) {
+        foreach my $ref ( @{ $form->{order}{$_} } ) {
             $i++;
 
             for ( keys %$ref ) { $order->{"${_}_$i"} = $ref->{$_} }
@@ -1319,3 +1317,4 @@ sub generate_sales_orders {
 
 }
 
+1;

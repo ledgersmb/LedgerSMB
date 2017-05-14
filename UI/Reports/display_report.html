@@ -8,46 +8,50 @@ PROCESS "elements.html";
 PROCESS "dynatable.html";
 
 FORMATS = LIST_FORMATS();
-LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
+LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
 LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
-<span class="report_header"><?lsmb name ?></span>
-</div>
-<div class="report_header"><label><?lsmb text('Company') ?>:</label>
-<span class="report_header"><?lsmb request.company ?></span>
-</div>
-<?lsmb FOREACH LINE IN hlines ?>
-<div class="report_header"><label><?lsmb LINE.text ?>:</label>
-<span class="report_header">
-<?lsmb
-IF request.${LINE.name};
-    request.${LINE.name};
-ELSE;
-    report.${LINE.name};
-END;
-            ?></span>
-</div>
-<?lsmb END ?>
 <form data-dojo-type="lsmb/Form"
       method="post"
-      action="<?lsmb request.script ?>">
-<?lsmb PROCESS input element_data = {
-     name = 'form_id'
-    value = request.form_id
-     type = 'hidden'
-} ?>
-<?lsmb FOREACH K IN request.hiddens.keys;
-    PROCESS input element_data = {
+      action="<?lsmb request.script ?>"
+      id="search-report-dynatable" >
+  <div class="heading_section">
+    <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
+      <span class="report_header"><?lsmb name ?></span>
+    </div>
+    <div class="report_header"><label><?lsmb text('Company') ?>:</label>
+      <span class="report_header"><?lsmb request.company ?></span>
+    </div>
+    <?lsmb FOREACH LINE IN hlines ?>
+    <div class="report_header"><label><?lsmb LINE.text ?>:</label>
+      <span class="report_header">
+        <?lsmb
+           IF request.${LINE.name};
+              request.${LINE.name};
+           ELSE;
+              report.${LINE.name};
+           END;
+           ?>
+      </span>
+    </div>
+    <?lsmb END ?>
+  </div>
+  <?lsmb PROCESS input element_data = {
+         name = 'form_id'
+         value = request.form_id
+         type = 'hidden'
+         } ?>
+  <?lsmb FOREACH K IN request.hiddens.keys;
+         PROCESS input element_data = {
          name = K
          type = 'hidden'
-        value = request.hiddens.$K
-    };
-    END; ?>
-<?lsmb PROCESS dynatable tbody = {rows = rows }
-               attributes = {class = 'report', order_url = order_url } ?>
+         value = request.hiddens.$K
+         };
+         END; ?>
+  <?lsmb PROCESS dynatable tbody = {rows = rows }
+                 attributes = {class = 'report', order_url = order_url } ?>
 <div id="options">
 <?lsmb
 FOREACH OPTION IN options;

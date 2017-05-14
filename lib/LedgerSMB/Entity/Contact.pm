@@ -20,6 +20,7 @@ companies in LedgerSMB.
 
 package LedgerSMB::Entity::Contact;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
@@ -180,13 +181,15 @@ contains either entity_id or credit_id, and location_id, and location class.
 sub delete {
     my ($ref) = @_;
     if ($ref->{for_credit}){
-        __PACKAGE__->call_procedure(funcname => 'eca__delete_contact',
-                                  args => [$ref->{credit_id}, $ref->{class_id},
-                                           $ref->{contact}]);
+        return __PACKAGE__->call_procedure(
+                        funcname => 'eca__delete_contact',
+                            args => [$ref->{credit_id},
+                $ref->{class_id},   $ref->{contact}]);
     } else {
-        __PACKAGE__->call_procedure(funcname => 'entity__delete_contact',
-                                  args => [$ref->{entity_id}, $ref->{class_id},
-                                           $ref->{contact}]);
+        return __PACKAGE__->call_procedure(
+                        funcname => 'entity__delete_contact',
+                            args => [$ref->{entity_id},
+                $ref->{class_id},   $ref->{contact}]);
     }
 }
 

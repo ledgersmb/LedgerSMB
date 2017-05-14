@@ -32,7 +32,7 @@ Constructor. LedgerSMB::Database::Loadorder->new($path);
 
 sub new {
     my ($package, $path) = @_;
-    bless {_path => $path }, $package;
+    return bless {_path => $path }, $package;
 }
 
 =head2 scripts
@@ -44,17 +44,16 @@ Returns a list of LedgerSMB::Database::Change objects
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
-    my $loadorder;
     local $!;
     local $@;
-    open(LOAD, '<', $self->{_path}) or
+    open my $fh, '<', $self->{_path} or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
     my @scripts =
        map { $self->_process_script($_)}
        grep { $_ =~ /\S/ }
        map { my $string = $_; $string =~ s/#.*$//; $string }
-       <LOAD>;
-    close LOAD;
+       <$fh>;
+    close $fh;
     $self->{_scripts} = \@scripts;
     return @scripts;
 }
@@ -115,11 +114,12 @@ Runs all files in the loadorder without applying tracking info.
 sub run_all {
     my ($self, $dbh) = @_;
     $_->run($dbh) for $self->scripts;
+    return;
 }
 
 =head2 apply_all
 
-Applies all files in the loadorder, with tracking info, locking until it 
+Applies all files in the loadorder, with tracking info, locking until it
 completes.
 
 =cut
@@ -130,17 +130,21 @@ sub apply_all {
     for ($self->scripts){
         $_->apply($dbh) unless $_->is_applied($dbh);
     }
-    _unlock($dbh);
+    return _unlock($dbh);
 }
 
 sub _lock {
     my ($dbh) = @_;
-    $dbh->do("select pg_advisory_lock('db_patches'::regclass::oid::int, 1)");
+    return $dbh->do(
+            "select pg_advisory_lock("
+            . "'db_patches'::regclass::oid::int, 1)");
 }
 
 sub _unlock {
     my ($dbh) = @_;
-    $dbh->do("select pg_advisory_unlock('db_patches'::regclass::oid::int, 1)");
+    return $dbh->do(
+            "select pg_advisory_unlock( "
+            . "'db_patches'::regclass::oid::int, 1)");
 }
 
 sub _needs_init {

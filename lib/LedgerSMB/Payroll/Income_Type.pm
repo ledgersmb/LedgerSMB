@@ -16,6 +16,7 @@ To save a type
 
 package LedgerSMB::Payroll::Income_Type;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION

@@ -131,7 +131,7 @@ sub post_transaction {
     my %tax = ();
     my $accno;
     # add taxes
-    foreach $accno (@taxaccounts) {
+    foreach my $accno (@taxaccounts) {
         #tshvr HV parse first or problem at aa.pl create_links $form->{"${akey}_$form->{acc_trans}{$key}->[$i-1]->{accno}"}=$form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml; 123,45 * -1  gives 123 !!
         $form->{"tax_$accno"}=$form->parse_amount($myconfig,$form->{"tax_$accno"});
         $form->{"tax_$accno"} *= -1 if $form->{reverse};
@@ -179,7 +179,7 @@ sub post_transaction {
     $diff = 0;
 
     # deduct tax from amounts if tax included
-    for $i ( 1 .. $form->{rowcount} ) {
+    foreach my $i ( 1 .. $form->{rowcount} ) {
 
         if ( $amount{fxamount}{$i} ) {
 
@@ -257,7 +257,7 @@ sub post_transaction {
     $diff = 0;
 
     # add payments
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$i"} = $form->parse_amount(
               $myconfig, $form->{"paid_$i"}
         );
@@ -304,7 +304,7 @@ sub post_transaction {
     #( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     ( $form->{employee_name}, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     # check if id really exists
@@ -470,7 +470,7 @@ sub post_transaction {
           VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
     );
 
-    foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
+    foreach my $ref ( @{ $form->{acc_trans}{lineitems} } ) {
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
             $query = qq|
@@ -516,7 +516,7 @@ sub post_transaction {
     }#foreach
 
     # save taxes
-    foreach $ref ( @{ $form->{acc_trans}{taxes} } ) {
+    foreach my $ref ( @{ $form->{acc_trans}{taxes} } ) {
         if ( $ref->{amount} ) {
             $query = qq|
                 INSERT INTO acc_trans
@@ -567,7 +567,7 @@ sub post_transaction {
     }
 
     # add paid transactions
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         if ( $paid{fxamount}{$i} ) {
 
@@ -940,15 +940,17 @@ sub get_name {
     if ( $form->{transdate}
         && ( $form->{currency} ne $form->{defaultcurrency} ) )
     {
-        $form->{exchangerate} =
-          $form->get_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-            $buysell );
+        $form->{exchangerate} = $form->get_exchangerate(
+            $form->{currency},
+            $form->{transdate},
+            $buysell
+        );
     }
 
     $form->{forex} = $form->{exchangerate};
 
     # if no employee, default to login
-    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh)
+    ( $form->{employee}, $form->{employee_id} ) = $form->get_employee
       unless $form->{employee_id};
 
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
@@ -1005,16 +1007,16 @@ sub get_name {
 
     $sth->finish;
     $transdate = $dbh->quote( $form->{transdate} );
-    my $where = qq|AND (t.validto >= $transdate OR t.validto IS NULL)|
-      if $form->{transdate};
+    my $where = $form->{transdate}
+              ? qq|WHERE (t.validto >= $transdate OR t.validto IS NULL)|
+              : '';
 
     # get tax rates and description
     $query = qq|
            SELECT c.accno, c.description, t.rate, t.taxnumber
              FROM account c
              JOIN tax t ON (c.id = t.chart_id)
-            WHERE true
-                  $where
+            $where
          ORDER BY accno, validto|;
 
     $sth = $dbh->prepare($query);

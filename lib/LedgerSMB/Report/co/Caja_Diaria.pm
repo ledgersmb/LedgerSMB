@@ -26,6 +26,7 @@ specific period.
 
 package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
@@ -187,7 +188,7 @@ sub run_report{
         $ref->{document_type} = $doctypes->{$ref->{document_type}}
                 if $doctypes->{$ref->{document_type}};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

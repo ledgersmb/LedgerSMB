@@ -143,11 +143,10 @@
                    PROCESS input element_data = {
                    label = text('Comparison Dates')
                    name = 'comparison_periods'
-                   text_attr = 'description'
-                   value_attr = 'text'
-                   value = comparison_periods
+                   value = 0
                    size = '3'
-                   default_values = 0
+                   "data-dojo-type"="dijit/form/NumberSpinner"
+                   "data-dojo-props"="constraints:{min:0,max:9,places:0},intermediateChanges:true,style:'width:7ex'"
                    };
                    ?></legend>
         <div id="comparison_dates">
@@ -250,74 +249,6 @@
       </fieldset>
 
 
-      <!--
-        <div class="subsection">
-            <div class="label">
-                <?lsmb text('Comparison selection by') ?>
-            </div>
-            <div class="input_row" id="comparison_type_radios">
-            <?lsmb
-                PROCESS input element_data={
-                   value = 'by_periods'
-                      id = 'comparison_by_periods'
-                    name = 'comparison_type',
-                   label = text('Periods')
-                    type = "radio"
-                 checked = (comparison_type == 'by_periods') ? "checked" : undef
-                    "data-dojo-type" = "lsmb/PublishRadioButton"
-                   "data-dojo-props" = "topic:'ui/report/comparison-selection'"
-                };
-
-                PROCESS input element_data={
-                      id = 'comparison_by_dates'
-                    name = 'comparison_type',
-                   label = text('Dates')
-                   value = 'by_dates'
-                 checked = (comparison_type == 'by_dates') ? "checked" : undef
-                    type = "radio"
-                    "data-dojo-type" = "lsmb/PublishRadioButton"
-                   "data-dojo-props" = "topic:'ui/report/comparison-selection'"
-                }; ?>
-            </div>
-
-            <div class="input_row"><?lsmb
-            PROCESS input element_data = {
-                     label = text('Comparison Periods')
-                 text_attr = 'description'
-                        id = 'comparison_periods'
-                      name = 'comparison_periods'
-                      size = 3
-                     value = comparison_periods
-                           "data-dojo-type" = "lsmb/PublishNumberTextBox"
-                          "data-dojo-props" = "topic:'ui/report/comparison-selection',
-                                               placeHolder:'0',
-                                               constraints:{min:0,max:9,places:0,pattern:0},
-                                               invalidMessage:'Please enter a numeric value.',
-                                               rangeMessage:'Invalid number of periods.'"
-            };
-            ?></div>
-            <div id='date_period_id' >
-                <?lsmb PROCESS date_period_type_div
-                       label = text('Period type')
-                               required = true; ?>
-            </div>
-            <div>
-               <div class="input_row" data-dojo-type="lsmb/ComparisonSelectionBalance"
-                                     data-dojo-props="topic:'ui/report/comparison-selection'">
-                    <h3><?lsmb text('Enter date ranges for comparison') ?></h3>
-                    <?lsmb FOREACH c IN [1 .. 9]; ?>
-                        <div id="comparison_dates_<?lsmb c ?>">
-                            <?lsmb PROCESS date_to_date_div
-                                    label = text('Through date') _ ' ' _ c
-                                 required = 'false'
-                        "data-dojo-props" = 'missingMessage:"' _ text('Ooops! You forgot through date!') _ '''"'
-                                   SUFFIX = '_' _ c;
-                            ?>
-                        </div>
-                    <?lsmb END ?>
-               </div>
-            </div>
-        </div>-->
         <?lsmb
         PROCESS button element_data = {
             text = text('Continue')

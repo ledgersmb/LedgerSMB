@@ -19,6 +19,7 @@ against what was budgetted.
 
 package LedgerSMB::Report::Budget::Variance;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 use LedgerSMB::Budget;
@@ -196,7 +197,7 @@ Runs the report, setting rows for rendering.
 sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__variance_report');
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

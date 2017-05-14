@@ -11,6 +11,7 @@ LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
 
 package LedgerSMB::Report::Invoices::Payments;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -238,6 +239,7 @@ sub run_report{
        class => 'submit',
        value => 'reverse_payments',
     }]) if $self->batch_id;
+    return;
 }
 
 =back

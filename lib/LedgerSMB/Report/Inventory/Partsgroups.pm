@@ -11,6 +11,7 @@ LedgerSMB::Report::Inventory::Partsgroups - Partsgroup search for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Partsgroups;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 
@@ -84,7 +85,7 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'partsgroup__search');
     $_->{row_id} = $_->{id} for (@rows);
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

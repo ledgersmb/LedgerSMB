@@ -15,7 +15,7 @@ LedgerSMB::DBObject::TransTemplate -- Template transactions for LedgerSMB
 
 =head1 DESCRIPTION
 
-Template transactions are defined examples of transactions that are likely to 
+Template transactions are defined examples of transactions that are likely to
 recur frequently.  They are stored in the database but never part of the books.
 
 They can be modified and then posted.
@@ -71,6 +71,7 @@ sub save {
        $self->call_dbmethod(funcname => 'journal__save_recurring');
        $self->call_dbmethod(funcname => 'journal__save_recurring_print');
    }
+   return;
 }
 
 =head2 search
@@ -85,9 +86,8 @@ sub search {
    my $self = shift @_;
    $self->{approved} = 'false';
    $self->{is_template} = 'true';
-   @{$self->{search_results}} = $self->call_dbmethod(
-            funcname => 'journal__search'
-   );
+   return @{$self->{search_results}} = $self->call_dbmethod(
+            funcname => 'journal__search' );
 }
 
 =head2 get
@@ -104,16 +104,17 @@ sub get {
     ($self->{invoice_data}) =
                  $self->call_dbmethod(funcname => 'journal__get_invoice');
     if ($self->{invoice_data}->{credit_id}){
-        ($self->{credit_data}) = $self->call_procedure(
+        return ($self->{credit_data}) = $self->call_procedure(
                funcname => 'entity_credit__get',
                args     => [$self->{invoice_data}->{credit_id}]
         );
     }
+    return;
 }
 
 =head2 get_account_info
 
-Gets information for a given chart of account entry. 
+Gets information for a given chart of account entry.
 
 DEPRECATED.  Retrieve via account class instead.
 
@@ -137,7 +138,7 @@ Removes template from database
 sub delete {
     my ($self, $id) = @_;
 
-    $self->call_procedure(funcname => 'journal__delete',
+    return $self->call_procedure(funcname => 'journal__delete',
                           args => [ $id ]);
 }
 

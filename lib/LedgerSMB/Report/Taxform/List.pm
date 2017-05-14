@@ -17,6 +17,7 @@ This is a simple list of tax forms.
 
 package LedgerSMB::Report::Taxform::List;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES
@@ -99,7 +100,7 @@ sub run_report {
                                      ? LedgerSMB::Report::text('Yes')
                                      : LedgerSMB::Report::text('No');
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

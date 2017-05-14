@@ -23,6 +23,7 @@ methods only
 
 package LedgerSMB::File::Entity;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::File';
 
 =head1 METHODS
@@ -37,7 +38,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->call_dbmethod(funcname => 'file__attach_to_entity');
+    return $self->call_dbmethod(funcname => 'file__attach_to_entity');
 }
 
 =back
@@ -52,4 +53,5 @@ your software.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

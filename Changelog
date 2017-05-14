@@ -2,27 +2,48 @@
 Changelog for 1.6 Series
 Forthcoming
 
+User experience
+* Removed the need for the ill-understood 'Inventory Entity' (Erik H)
+
 Performance
 * Remove CGI::Emulate::PSGI wrapper for 'new code' (Erik H/Yves L)
 
 Code cleanup
 * Removed code duplication in
   - Template handling framework (Yves L)
+* Remove unused variables and unreachable code (Nick P)
+* Removed assumptions about being a webapp from libraries (Erik H)
+* Rewrote inventory activity tracking and adjustments (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
+* Enforce numerous Perl::Critic policies (Nick P)
+* SQL & WebApp(BDD) tests for inventory tracking & adjustments (Erik H)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
+Nick P is Nick Prater
 
 
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.7
+* Fix missing trailing zeros in cheque printing (Erik H, #2565)
+* Change comparison periods selector to a number spinner (Erik H)
+* Fix http error response (Yves L)
+* Fix Salesperson field not displayed (Nick P, #2784)
+* Fix can't delete unused account after books closed (Nick P, #2800)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+Nick P is Nick Prater
+
 
 Changelog for 1.5.6
 * Fix syntax error in LaTeX templates for printed documents (Erik H)
 * Refactor filter pages for income statement and balance sheet (Erik H)
+* Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
 
 Erik H is Erik Huelsmann
 
@@ -170,6 +191,8 @@ Released 2014-09-15
 Changelog for 1.4.41
 * Fix 'Bad interval' error with PNL comparisons (Erik H, #2146)
 * Refactor filter pages for income statement and balance sheet (Erik H)
+* Follow-up to earlier compensation for '.' missing from @INC (Erik H, #2275)
+* Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
 
 Erik H is Erik Huelsmann
 

@@ -28,6 +28,7 @@ certain point, and locating specific transactions.
 
 package LedgerSMB::Report::Contact::Purchase;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -298,7 +299,7 @@ sub run_report {
             $r->{invnumber_href_suffix} = "$href?action=edit&id=$r->{id}";
        }
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

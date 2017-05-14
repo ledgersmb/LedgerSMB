@@ -28,6 +28,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Overview;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
@@ -268,7 +269,7 @@ sub run_report{
     for my $r (@rows){
        $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

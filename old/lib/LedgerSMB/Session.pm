@@ -17,20 +17,18 @@ package LedgerSMB::Session;
 
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
-use LedgerSMB::Auth;
-use CGI::Simple;
 use strict;
 use warnings;
+use Carp;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub _http_error {
     my ($errcode, $msg_plus) = @_;
     $msg_plus = '' if not defined $msg_plus;
-    my $cgi = CGI::Simple->new();
 
     my $err = {
-    '500' => {status  => '500 Internal Server Error',
+        '500' => {status  => '500 Internal Server Error',
           message => 'An error occurred. Information on this error has been logged.',
                   others  => {}},
         '403' => {status  => '403 Forbidden',
@@ -46,25 +44,13 @@ sub _http_error {
         '454' => {status  => '454 Database Does Not Exist',
                   message => 'Database Does Not Exist' },
     };
-    # Ordinarily I would use $cgi->header to generate the headers
-    # but this doesn't seem to be working.  Although it is generally desirable
-    # to create the headers using the package, I think we should print them
-    # manually.  -CT
-    if ($errcode eq '401'){
-        if ($msg_plus eq 'setup'){
-           $err->{'401'}->{others}->{'WWW-Authenticate'}
-                = "Basic realm=\"LedgerSMB-$msg_plus\"";
-        }
-        print $cgi->header(
-           -type               => 'text/text',
-           -status             => $err->{'401'}->{status},
-           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
-        );
-    } else {
-        print $cgi->header(
-           -type   => 'text/text',
-           -status => $err->{$errcode}->{status},
-        );
+
+    print qq|Status: $err->{$errcode}->{status}
+Content-Type: text/plain
+|;
+    my $others = $err->{$errcode}->{others};
+    for my $key (keys %{$others}) {
+        print qq|$key: $others->{$key}\n|;
     }
     print $err->{$errcode}->{message};
     die;
@@ -90,14 +76,13 @@ Checks to see if a session exists based on current logged in credentials.
 
 Handles failure by creating a new session, since credentials are now separate.
 
+Returns true (1) on success, false (0) on failure.
+
 =cut
 
 sub check {
     my ( $cookie, $form ) = @_;
 
-    my $path = ($ENV{SCRIPT_NAME});
-    $path =~ s|[^/]*$||;
-    my $secure;
    if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
         return _create($form);
     }
@@ -149,15 +134,8 @@ sub check {
             my $newCookieValue =
               $session_ref->{session_id} . ':' . $session_ref->{token} . ':' . $form->{company};
 
-            #now update the cookie in the browser
-            if ($ENV{SERVER_PORT} == 443){
-                 $secure = ' Secure;';
-            }
-            else {
-                $secure = '';
-            }
             $form->{_new_session_cookie_value} =
-                qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
+                qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
             return 1;
         }
         else {
@@ -166,10 +144,6 @@ sub check {
     }
     else {
         #cookie is not valid
-        #delete the cookie in the browser
-        if ($ENV{SERVER_PORT} == 443){
-            $secure = ' Secure;';
-        }
         destroy($form);
         return 0;
     }
@@ -184,21 +158,12 @@ etc.
 
 sub _create {
     my ($lsmb) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    my $secure;
-    $path =~ s|[^/]*$||;
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
     if (!$login) {
-       my $creds = LedgerSMB::Auth::get_credentials;
-       $login = $creds->{login};
+        croak "Missing login data from input\n";
     }
 
-
-    if ( !$ENV{GATEWAY_INTERFACE} ) {
-        #don't create cookies or sessions for CLI use
-        return 1;
-    }
 
     my $fetchUserID = $dbh->prepare(
         "SELECT id
@@ -224,17 +189,8 @@ sub _create {
     my ( $userID ) = $fetchUserID->fetchrow_array;
     unless($userID) {
         $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        return;
+        return 0;
     }
-
-# this is assuming that the login is safe, which might be a bad assumption
-# so, I'm going to remove some chars, which might make previously valid
-# logins invalid --CM
-
-# I am changing this to use HTTP Basic Auth credentials for now.  -- CT
-
-    my $auth = $ENV{HTTP_AUTHORIZATION};
-    $auth =~ s/^Basic //i;
 
 #doing the random stuff in the db so that LedgerSMB won't
 #require a good random generator - maybe this should be reviewed,
@@ -249,7 +205,7 @@ sub _create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken )
-        || return;
+        || return 0;
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator
@@ -263,17 +219,10 @@ sub _create {
     my $newCookieValue = $newSessionID . ':' . $newToken . ':'
     . $lsmb->{company};
 
-    #now set the cookie in the browser
-    #TODO set domain from ENV, also set path to install path
-    if ($ENV{SERVER_PORT} == 443){
-         $secure = ' Secure;';
-    }
-    else {
-        $secure = '';
-    }
     $lsmb->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure|;
+        qq|${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue|;
     $lsmb->{LedgerSMB} = $newCookieValue;
+    return 1;
 }
 
 =item destroy
@@ -283,11 +232,7 @@ Destroys a session and removes it from the db.
 =cut
 
 sub destroy {
-
     my ($form) = @_;
-    my $path = ($ENV{SCRIPT_NAME});
-    my $secure = '';
-    $path =~ s|[^/]*$||;
 
     my $login = $form->{login};
     $login =~ s/[^a-zA-Z0-9._+\@'-]//g;
@@ -305,11 +250,8 @@ sub destroy {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' );
 
     #delete the cookie in the browser
-    if ($ENV{SERVER_PORT} == 443){
-         $secure = ' Secure;';
-    }
     $form->{_new_session_cookie_value} =
-        qq|${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path;$secure|;
+        qq|${LedgerSMB::Sysconfig::cookie_name}=Login|;
     $dbh->commit; # called before anything else on the page, make sure the
                   # session is really gone.  -CT
 }
@@ -325,7 +267,7 @@ sub destroy {
 # http://www.ledgersmb.org/
 #
 #
-# Copyright (C) 2006-2011
+# Copyright (C) 2006-2017
 # This work contains copyrighted information from a number of sources all used
 # with permission.  It is released under the GNU General Public License
 # Version 2 or, at your option, any later version.  See COPYRIGHT file for

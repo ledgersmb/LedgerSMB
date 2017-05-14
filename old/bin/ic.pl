@@ -46,8 +46,6 @@ use LedgerSMB::Tax;
 
 require "old/bin/io.pl";
 
-1;
-
 # end of main
 
 sub add {
@@ -167,10 +165,10 @@ sub link_part {
 
     # build the popup menus
     $form->{taxaccounts} = "";
-    foreach $key ( keys %{ $form->{IC_links} } ) {
+    foreach my $key ( keys %{ $form->{IC_links} } ) {
 
         $form->{"select$key"} = "";
-        foreach $ref ( @{ $form->{IC_links}{$key} } ) {
+        foreach my $ref ( @{ $form->{IC_links}{$key} } ) {
 
             # if this is a tax field
             if ( $key =~ /IC_tax/ ) {
@@ -218,7 +216,7 @@ sub link_part {
     delete $form->{IC_links};
     delete $form->{amount};
 
-    $form->get_partsgroup( \%myconfig, { all => 1 } );
+    $form->get_partsgroup({ all => 1 });
     if ( $form->{partsgroup} ) {
         $form->{partsgroup} =
           $form->quote( $form->{partsgroup} ) . "--$form->{partsgroup_id}";
@@ -245,7 +243,7 @@ sub link_part {
             }
         }
 
-        $form->get_partsgroup( \%myconfig );
+        $form->get_partsgroup();
 
         if ( @{ $form->{all_partsgroup} } ) {
             $form->{selectassemblypartsgroup} = qq|<option></option>\n|;
@@ -260,7 +258,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
 
     # setup make and models
     $i = 1;
-    foreach $ref ( @{ $form->{makemodels} } ) {
+    foreach my $ref ( @{ $form->{makemodels} } ) {
         for (qw(make model barcode)) { $form->{"${_}_$i"} = $ref->{$_} }
         $i++;
     }
@@ -279,7 +277,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
 
     # vendor matrix (on update, we don't have a price matrix)
     $i = 1;
-    foreach $ref ( @{ $form->{vendormatrix} } ) {
+    foreach my $ref ( @{ $form->{vendormatrix} } ) {
         $form->{"vendor_$i"} = qq|$ref->{name}--$ref->{id}|;
         $form->{"vendor_mn_$i"} = $ref->{meta_number};
 
@@ -314,7 +312,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
 
     # customer matrix (on update, we don't have a price matrix)
     $i = 1;
-    foreach $ref ( @{ $form->{customermatrix} } ) {
+    foreach my $ref ( @{ $form->{customermatrix} } ) {
 
         $form->{"customer_$i"} = "$ref->{name}--$ref->{cid}" if $ref->{cid};
         $form->{"customer_mn_$i"} = $ref->{meta_number};
@@ -426,7 +424,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
     }
 
     # tax fields
-    foreach $item ( split / /, $form->{taxaccounts} ) {
+    foreach my $item ( split / /, $form->{taxaccounts} ) {
         $tax .= qq|
       <input class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" name="IC_tax_$item" value=1 $form->{"IC_tax_$item"}>&nbsp;<b>$form->{"IC_tax_${item}_description"}</b>
       <br><input type="hidden" name="IC_tax_${item}_description" value="$form->{"IC_tax_${item}_description"}">
@@ -474,7 +472,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $onhand = qq|
           <tr>
         <th align="right" nowrap>| . $locale->text('On Hand') . qq|</th>
-        <th align=left nowrap class="plus$n">&nbsp;|
+        <th align=left nowrap class="plus$n" id="onhand">&nbsp;|
           . $form->format_amount( \%myconfig, $form->{onhand} )
           . qq|</th>
           </tr>
@@ -983,7 +981,7 @@ sub makemodel_row {
     </tr>
 |;
 
-    for $i ( 1 .. $numrows ) {
+    foreach my $i ( 1 .. $numrows ) {
         print qq|
     <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="make_$i" size=30 value="$form->{"make_$i"}"></td>
@@ -1028,7 +1026,7 @@ sub vendor_row {
     </tr>
 |;
 
-    for $i ( 1 .. $numrows ) {
+    foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
             $form->{selectcurrency} =~ s/ selected="selected"//;
@@ -1132,7 +1130,7 @@ sub customer_row {
     </tr>
 |;
 
-    for $i ( 1 .. $numrows ) {
+    foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
             $form->{selectcurrency} =~ s/ selected="selected"//;
@@ -1236,7 +1234,7 @@ sub assembly_row {
 
     # save form variables in a previousform variable
     $form->{selectcustomer} = "";    # we seem to have run into a 40kb limit
-    foreach $key ( sort keys %$form ) {
+    foreach my $key ( sort keys %$form ) {
 
         # escape ampersands
         $form->{$key} =~ s/&/%26/g;
@@ -1295,7 +1293,7 @@ sub assembly_row {
 
     $numrows-- if $form->{project_id};
 
-    for $i ( 1 .. $numrows ) {
+    foreach my $i ( 1 .. $numrows ) {
         for (qw(partnumber description)) {
             $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
         }
@@ -1520,7 +1518,7 @@ sub check_vendor {
             $form->{"${_}_$form->{vendor_rows}"} );
     }
 
-    for $i ( 1 .. $form->{vendor_rows} - 1 ) {
+    foreach my $i ( 1 .. $form->{vendor_rows} - 1 ) {
 
         for (qw(lastcost leadtime)) {
             $form->{"${_}_$i"} =
@@ -1595,7 +1593,7 @@ sub check_customer {
             $form->{"${_}_$form->{customer_rows}"} );
     }
 
-    for $i ( 1 .. $form->{customer_rows} - 1 ) {
+    foreach my $i ( 1 .. $form->{customer_rows} - 1 ) {
 
         for (qw(customerprice pricebreak)) {
             $form->{"${_}_$i"} =
@@ -1710,7 +1708,7 @@ sub select_name {
     @column_index = qw(ndx name meta_number address city state zipcode country);
 
     my $i = 0;
-    foreach $ref ( @{ $form->{name_list} } ) {
+    foreach my $ref ( @{ $form->{name_list} } ) {
         $checked = ( $i++ ) ? "" : "checked";
 
         $ref->{name} = $form->quote( $ref->{name} );
@@ -1787,7 +1785,7 @@ sub name_selected {
     $form->{"$form->{vc}_id_$form->{vr}"} = $form->{"new_id_$i"};
 
     # delete all the new_ variables
-    for $i ( 1 .. $form->{lastndx} ) {
+    foreach my $i ( 1 .. $form->{lastndx} ) {
         for (qw(id name)) { delete $form->{"new_${_}_$i"} }
     }
 
@@ -1836,7 +1834,7 @@ sub save {
         for ( keys %newform ) { delete $form->{$_} if $_ ne 'dbh' }
 
         # now take it apart and restore original values
-        foreach $item ( split /&/, $previousform ) {
+        foreach my $item ( split /&/, $previousform ) {
             ( $key, $value ) = split /=/, $item, 2;
             $value =~ s/%26/&/g;
             $form->{$key} = $value if $key ne 'dbh';
@@ -1879,7 +1877,7 @@ sub save {
                 $form->{"${_}_$i"} = $newform{$_};
             }
 
-            foreach $item (qw(listprice sellprice lastcost)) {
+            foreach my $item (qw(listprice sellprice lastcost)) {
                 $form->{$item} += $form->{"${item}_$i"} * $form->{"qty_$i"};
                 $form->{$item} = $form->round_amount( $form->{$item}, 2 );
             }
@@ -1953,7 +1951,7 @@ sub save {
         $form->{makemodel_rows}--;
 
         # put callback together
-        foreach $key ( keys %$form ) {
+        foreach my $key ( keys %$form ) {
 
             # do single escape for Apache 2.0
             $value = $form->escape( $form->{$key}, 1 );
@@ -2137,7 +2135,7 @@ sub list_assemblies {
     $callback = $form->escape($callback);
 
     $i = 1;
-    foreach $ref ( @{ $form->{assembly_items} } ) {
+    foreach my $ref ( @{ $form->{assembly_items} } ) {
 
         for (qw(partnumber description)) {
             $ref->{$_} = $form->quote( $ref->{$_} );
@@ -2234,3 +2232,4 @@ sub add_service        { &add }
 sub add_assembly       { &add }
 sub add_labor_overhead { &add }
 
+1;

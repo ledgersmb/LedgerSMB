@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 207;
+use Test::More tests => 204;
 use File::Find;
 
 my @on_disk;
@@ -27,8 +27,11 @@ my @exception_modules =
      # Exclude because tested conditionally on XML::Twig way below
      'LedgerSMB::Template::ODS',
 
-     # Exclude because tested conditionally on XML::Simple way below
-     'LedgerSMB::REST_Format::xml',
+     # Exclude because tested conditionally on Excel::Writer::XLSX
+     'LedgerSMB::Template::XLSX',
+
+     # Exclude because tested conditionally on Spreadsheet::WriteExcel
+     'LedgerSMB::Template::XLS',
 
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
@@ -94,7 +97,6 @@ my @modules =
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
           'LedgerSMB::PSGI::Preloads',
-          'LedgerSMB::REST_Format::json',
           'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Reconciliation::ISO20022',
           'LedgerSMB::FileFormats::ISO20022::CAMT053',
@@ -172,9 +174,8 @@ my @modules =
           'LedgerSMB::Template::Elements', 'LedgerSMB::Template::DBProvider',
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
-          'LedgerSMB::Template::XLS', 'LedgerSMB::Template::XLSX',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
-          'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
+          'LedgerSMB::Request::Error',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
     );
 
@@ -193,6 +194,8 @@ ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
 
 use_ok('LedgerSMB::Sysconfig')
     || BAIL_OUT('System Configuration could be loaded!');
+my @to_sort = map { rand() } 0 .. $#modules;
+@modules = @modules[ sort { $to_sort[$a] <=> $to_sort[$b] } 0 .. $#modules  ];
 for my $module (@modules) {
     use_ok($module);
 }
@@ -216,13 +219,6 @@ SKIP: {
 }
 
 SKIP: {
-        eval { require XML::Simple };
-
-        skip 'XML::Simple not installed', 1 if $@;
-        use_ok('LedgerSMB::REST_Format::xml');
-}
-
-SKIP: {
         eval { require CGI::Emulate::PSGI };
 
         skip 'CGI::Emulate::PSGI not installed', 1 if $@;
@@ -234,6 +230,24 @@ SKIP: {
 
     skip 'X12::Parser not installed', 3 if $@;
     for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
+        use_ok($_);
+    }
+}
+
+SKIP: {
+    eval { require Excel::Writer::XLSX };
+
+    skip 'Excel::Writer::XLSX not installed', 1 if $@;
+    for ('LedgerSMB::Template::XLSX') {
+        use_ok($_);
+    }
+}
+
+SKIP: {
+    eval { require Spreadsheet::WriteExcel };
+
+    skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
+    for ('LedgerSMB::Template::XLS') {
         use_ok($_);
     }
 }

@@ -71,8 +71,11 @@ sub get {
                                              dbh => LedgerSMB::App_State::DBH(),
                                         funcname => 'setting_get',
                                             args => [$key]) ;
-    $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
-    return $hashref->{value};
+    if (defined($hashref)) {
+        $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
+        return $hashref->{value};
+    }
+    return undef;
 }
 
 sub increment {
@@ -193,7 +196,7 @@ sub set {
     my ($self, $key, $value) = @_;
     $key ||= $self->{key};
     $value ||= $self->{value};
-    $self->call_procedure(funcname => 'setting__set',
+    return $self->call_procedure(funcname => 'setting__set',
                               args => [$key, $value]);
 }
 

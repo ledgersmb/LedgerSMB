@@ -47,3 +47,8 @@
 #1.6 changes
 1.6/drop_chart.sql
 1.6/drop_arap_cols.sql
+1.6/no-inv-entity-cleanup.sql
+1.6/no-inv-entity-tables.sql
+1.6/no-inv-entity-end-entity.sql
+!1.6/no-inv-entity-remove-entity.sql
+1.6/gl-trans-type.sql

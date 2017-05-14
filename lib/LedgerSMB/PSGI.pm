@@ -16,6 +16,7 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Auth;
 
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
@@ -23,6 +24,7 @@ use Try::Tiny;
 
 # To build the URL space
 use Plack::Builder;
+use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
@@ -31,25 +33,9 @@ use Plack::Builder::Conditionals;
 local $@; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
-# Some old code depends on this variable having been defined
-$ENV{GATEWAY_INTERFACE}="cgi/1.1";
-
 =head1 FUNCTIONS
 
 =over
-
-=item rest_app
-
-Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
-
-=cut
-
-sub rest_app {
-   return CGI::Emulate::PSGI->handler(
-     sub {
-       do 'old/bin/rest-handler.pl';
-    });
-}
 
 =item old_app
 
@@ -93,49 +79,49 @@ sub _internal_server_error {
              \@body_lines ];
 }
 
+
 sub psgi_app {
     my $env = shift;
 
-    # Taken from CGI::Emulate::PSGI
-    #no warnings;
-    local *STDIN = $env->{'psgi.input'};
-    my $environment = {
-        GATEWAY_INTERFACE => 'CGI/1.1',
-        HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-        SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-        REMOTE_ADDR     => '127.0.0.1',
-        REMOTE_HOST     => 'localhost',
-        REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-        ( map { $_ => $env->{$_} }
-          grep { !/^psgix?\./ && $_ ne "HTTP_PROXY" } keys %$env )
-    };
-    # End of CGI::Emulate::PSGI
+    my $auth = LedgerSMB::Auth::factory($env);
+    my $script_name = $env->{SCRIPT_NAME};
+    $script_name =~ m/([^\/\\\?]*)\.pl$/;
+    my $module = "LedgerSMB::Scripts::$1";
+    my $script = "$1.pl";
 
-    local %ENV = ( %ENV, %$environment );
-
-    my $request = LedgerSMB->new();
+    my $psgi_req = Plack::Request->new($env);
+    my $request = LedgerSMB->new($psgi_req->parameters, $script,
+                                 $env->{QUERY_STRING},
+                                 $psgi_req->uploads, $psgi_req->cookies,
+                                 $auth);
     $request->{action} ||= '__default';
     my $locale = $request->{_locale};
     $LedgerSMB::App_State::Locale = $locale;
 
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\\?]*)\.pl$/;
-    my $script = "LedgerSMB::Scripts::$1";
-    $request->{_script_handle} = $script;
+    $request->{_script_handle} = $module;
 
-    return _internal_server_error('No workflow script specified!')
-        unless $script;
+    return _internal_server_error('No workflow module specified!')
+        unless $module;
 
-    return _internal_server_error("Unable to open script $script : $! : $@")
-        unless use_module($script);
+    return _internal_server_error("Unable to open module $module : $! : $@")
+        unless use_module($module);
 
-    my $action = $script->can($request->{action});
+    my $action = $module->can($request->{action});
     return _internal_server_error("Action Not Defined: $request->{action}")
         unless $action;
 
     my ($status, $headers, $body);
     try {
-        if (! $script->can('no_db')) {
-            my $no_db = $script->can('no_db_actions');
+        my $clear_session_actions =
+            $module->can('clear_session_actions');
+
+        if ($clear_session_actions
+            && grep { $_ eq $request->{action} }
+                    $clear_session_actions->() ) {
+            $request->clear_session;
+        }
+        if (! $module->can('no_db')) {
+            my $no_db = $module->can('no_db_actions');
 
             if (!$no_db
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
@@ -180,11 +166,17 @@ sub psgi_app {
         }
     };
 
-    push @$headers, ( 'Set-Cookie' =>
-                      $request->{'request.download-cookie'} . '=downloaded' )
+
+    my $path = $env->{SCRIPT_NAME};
+    $path =~ s|[^/]*$||g;
+    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
+    push @$headers,
+         ( 'Set-Cookie' =>
+           qq|$request->{'request.download-cookie'}=downloaded; path=$path$secure| )
         if $request->{'request.download-cookie'};
-    push @$headers, ( 'Set-Cookie' =>
-                      $request->{_new_session_cookie_value} )
+    push @$headers,
+         ( 'Set-Cookie' =>
+           qq|$request->{_new_session_cookie_value}; path=$path$secure| )
         if $request->{_new_session_cookie_value};
     return [ $status, $headers, $body ];
 }
@@ -196,6 +188,7 @@ sub _run_old {
        do 'old/bin/old-handler.pl';
        exit;
     }
+    return;
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
@@ -212,7 +205,7 @@ sub setup_url_space {
     my $old_app = old_app();
     my $psgi_app = \&psgi_app;
 
-    builder {
+    return builder {
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
@@ -221,8 +214,6 @@ sub setup_url_space {
              root => './',
              pod_view => 'Pod::POM::View::HTMl' # the default
                  if $development;
-
-        mount '/rest/' => rest_app();
 
         # not using @LedgerSMB::Sysconfig::scripts: it has not only entry-points
         mount "/$_.pl" => $old_app
@@ -251,6 +242,7 @@ sub setup_url_space {
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };
+
 }
 
 

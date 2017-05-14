@@ -11,6 +11,7 @@ LedgerSMB::Report::Inventory::Pricegroups - Pricegroup search for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Pricegroups;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 
@@ -84,7 +85,7 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'pricegroup__search');
     $_->{row_id} = $_->{id} for (@rows);
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

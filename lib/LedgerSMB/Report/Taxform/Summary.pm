@@ -13,6 +13,7 @@ forms for LedgerSMB
 package LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::DBObject::TaxForm;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -149,7 +150,7 @@ sub run_report {
                                  . '&meta_number=' . $row->{meta_number};
        $row->{total} = $row->{acc_total} + $row->{invoice_total};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

@@ -76,12 +76,9 @@ binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
-use LedgerSMB::Auth;
 use LedgerSMB::App_State;
-use Data::Dumper;
 
-
-$form = new Form;
+$form = Form->new;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
@@ -91,17 +88,11 @@ print 'Set-Cookie: '
 
 # name of this script
 my $script;
-if ($ENV{GATEWAY_INTERFACE} =~ /^CGI/){
-    $uri = $ENV{REQUEST_URI};
-    $uri =~ s/\?.*//;
-    $ENV{SCRIPT_NAME} = $uri;
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $script = $1;
-} else {
-    $0 =~ tr/\\/\//;
-    $pos = rindex $0, '/';
-    $script = substr( $0, $pos + 1 );
-}
+$uri = $ENV{REQUEST_URI};
+$uri =~ s/\?.*//;
+$ENV{SCRIPT_NAME} = $uri;
+$ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+$script = $1;
 
 
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
@@ -134,7 +125,7 @@ try {
 
     if ($myconfig{language}){
         $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-            or LedgerSMB::_error($form, __FILE__ . ':' . __LINE__
+            or _error($form, __FILE__ . ':' . __LINE__
                        . ": Locale not loaded: $!\n" );
     }
 
@@ -172,24 +163,44 @@ try {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
                       . $locale->text('action not defined!'));
     }
-}catch  {
+}
+catch  {
   # We have an exception here because otherwise we always get an exception
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
     $form->{_error} = 1;
     $LedgerSMB::App_State::DBH = undef;
-    LedgerSMB::_error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at /;
+    LedgerSMB::App_State::cleanup();
 };
 
 $logger->trace("leaving after script=old/bin/$form->{script} action=$form->{action}");#trace flow
 
-1;
-
 $form->{dbh}->commit if defined $form->{dbh};
-
 $form->{dbh}->disconnect()
     if defined $form->{dbh};
 
 # end
 
+
+sub _error {
+    my ($form, $msg, $status) = @_;
+    $msg = "? _error" if !defined $msg;
+    $status = 500 if ! defined $status;
+
+    print qq|Status: $status ISE
+Content-Type: text/html; charset=utf-8
+
+<html>
+<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
+<p>dbversion: $form->{dbversion}, company: $form->{company}</p>
+</body>
+</html>
+|;
+
+    die;
+}
+
+
+1;

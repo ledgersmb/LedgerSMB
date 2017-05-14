@@ -19,6 +19,7 @@ A default module (id 0, label '') is available for doing lookups.
 
 package LedgerSMB::App_Module;
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -85,4 +86,5 @@ the included LICENSE.txt for details.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

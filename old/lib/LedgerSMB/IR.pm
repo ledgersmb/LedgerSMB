@@ -113,7 +113,7 @@ sub post_invoice {
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
 
     unless ( $form->{employee_id} ) {
-        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
+        ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
@@ -460,7 +460,7 @@ sub post_invoice {
     }
 
     $form->{paid} = 0;
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$i"} =
           $form->parse_amount( $myconfig, $form->{"paid_$i"} );
         $form->{"paid_$i"} *= -1 if $form->{reverse};
@@ -507,7 +507,7 @@ sub post_invoice {
           $form->round_amount( $form->{paid} * $form->{exchangerate}, 2 );
     }
 
-    foreach $ref ( sort { $b->{amount} <=> $a->{amount} }
+    foreach my $ref ( sort { $b->{amount} <=> $a->{amount} }
         @{ $form->{acc_trans}{lineitems} } )
     {
 
@@ -555,7 +555,7 @@ sub post_invoice {
               "INSERT INTO tax_extended (entry_id, tax_basis, rate)
                     VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
         );
-        for $taccno (split / /, $form->{taxaccounts}){
+        foreach my $taccno (split / /, $form->{taxaccounts}){
             my $taxamount;
             my $taxbasis;
             my $taxrate;
@@ -813,13 +813,13 @@ sub post_invoice {
     # add shipto
     $form->{name} = $form->{vendor};
     $form->{name} =~ s/--$form->{vendor_id}//;
-    $form->add_shipto( $dbh, $form->{id} );
+    $form->add_shipto($form->{id});
 
     if (!$form->{separate_duties}){
         $self->add_cogs($form);
     }
 
-    foreach $item ( keys %updparts ) {
+    foreach my $item ( keys %updparts ) {
         $item  = $dbh->quote($item);
         $query = qq|
             UPDATE parts
@@ -1200,7 +1200,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
         $eth1->execute( $var, $form->{transdate} );
         @array = $eth1->fetchrow_array;
     $form->db_parse_numeric(sth=> $eth1, arrayref=>\@array);

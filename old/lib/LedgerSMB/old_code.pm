@@ -26,15 +26,12 @@ package LedgerSMB::old_code;
 
 use strict;
 use warnings;
-
-use Exporter;
-
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
 use POSIX 'SEEK_SET';
 
-our @ISA = qw(Exporter);
+use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
 
 

@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use LedgerSMB;
 use LedgerSMB::Database;
 
 my $user;

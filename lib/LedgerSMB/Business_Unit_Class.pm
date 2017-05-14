@@ -13,6 +13,7 @@ funds, and projects.
 
 package LedgerSMB::Business_Unit_Class;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::App_Module;
 with 'LedgerSMB::PGObject';
 
@@ -91,7 +92,7 @@ sub get {
                                             args => [$id]
     );
     my $class = $self->new(shift @classes);
-    $class->modules(\@modules);
+    return $class->modules(\@modules);
 }
 
 =item save
@@ -123,7 +124,7 @@ sub save_modules {
     for my $mod (@{$self->modules}){
         push @$mod_ids, $mod->id;
     }
-    $self->call_procedure(funcname => 'business_unit_class__save_modules',
+    return $self->call_procedure(funcname => 'business_unit_class__save_modules',
                               args => [$self->id, $mod_ids]
     );
 }
@@ -161,6 +162,7 @@ Deletes a business unit class.  Such classes may not have business units attache
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit_class__delete');
+    return $ref;
 }
 
 =back

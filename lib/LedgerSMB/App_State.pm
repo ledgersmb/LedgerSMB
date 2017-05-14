@@ -85,6 +85,7 @@ sub _set_n {
             return $_;
         }
     }
+    return;
 }
 
 =item DBName
@@ -190,37 +191,7 @@ sub cleanup {
     $DBH = undef;
     $DBName = undef;
     delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
-}
-
-1;
-
-=head2 get_url
-
-Returns URL of get request or undef
-
-=cut
-
-sub get_url {
-    if ($ENV{REQUEST_METHOD} ne 'GET') {
-       return undef;
-    }
-    return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
-}
-
-=head2 get_relative_url
-
-Returns the script and query string part of the URL of the GET request,
-without the script path, or undef.
-
-=cut
-
-sub get_relative_url {
-    if ($ENV{REQUEST_METHOD} ne 'GET') {
-       return undef;
-    }
-    my $script = $ENV{SCRIPT_NAME};
-    $script =~ s#.*/([^/]+)$#$1#;
-    return "$script?$ENV{QUERY_STRING}";
+    return;
 }
 
 =head2 all_periods(is_short $bool)

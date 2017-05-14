@@ -12,6 +12,7 @@ LedgerSMB::Inventory::Adjust_Line - Inventory Adjustemnt Lines for LedgerSMB
 
 package LedgerSMB::Inventory::Adjust_Line;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
@@ -159,7 +160,7 @@ sub save {
     $self->adjust_id($adjustment_id);
     die 'No part specified' unless $self->parts_id;
     $self->check_variance unless defined $self->variance;
-    $self->call_dbmethod(funcname => 'inventory_adjust__save_line');
+    return $self->call_dbmethod(funcname => 'inventory_adjust__save_line');
 }
 
 =back

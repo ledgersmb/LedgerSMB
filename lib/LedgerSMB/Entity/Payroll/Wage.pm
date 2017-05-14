@@ -21,6 +21,7 @@ To save a new wage:
 
 package LedgerSMB::Entity::Payroll::Wage;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
@@ -93,7 +94,7 @@ Saves the wage and attaches to the entity record
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'wage__save');
-    $self->entry_id($ref->{entry_id});
+    return $self->entry_id($ref->{entry_id});
 }
 
 =back

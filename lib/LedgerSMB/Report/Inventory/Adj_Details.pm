@@ -12,15 +12,13 @@ Details report for LedgerSMB
 =cut
 
 package LedgerSMB::Report::Inventory::Adj_Details;
+
 use Moose;
-use LedgerSMB::Report::Inventory::Search_Adj;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
-use LedgerSMB::Form;
-use LedgerSMB::IS;
-use LedgerSMB::IR;
-use LedgerSMB::AA;
-use LedgerSMB::App_State;
-use LedgerSMB::Setting;
+
+use LedgerSMB::Inventory::Adjust;
+use LedgerSMB::Report::Inventory::Search_Adj;
 
 =head1 DESCRIPTION
 
@@ -82,7 +80,7 @@ sub columns {
     return [
       {col_id => 'partnumber',
          type => 'href',
-    href_base => 'ic.pl?action=edit&id='.
+    href_base => 'ic.pl?action=edit&id=',
          name => LedgerSMB::Report::text('Part Number') },
       {col_id => 'description',
          type => 'text',
@@ -131,13 +129,13 @@ sub set_buttons {
 
 sub run_report {
     my ($self) = @_;
-    my ($rpt) = $self->call_dbmethod(funcname => 'inventory_adj__get');
+    my ($rpt) = $self->call_dbmethod(funcname => 'inventory_adjust__get');
     $self->source($rpt->{source});
-    my @rows = $self->call_dbmethod(funcname => 'inventory_adj__details');
+    my @rows = $self->call_dbmethod(funcname => 'inventory_adjust__get_lines');
     for my $row (@rows){
         $row->{row_id} = $row->{parts_id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head2 approve
@@ -149,65 +147,9 @@ point where caching becomes unsafe.
 
 sub approve {
     my ($self) = @_;
-    my $form_ar = bless({rowcount => 1}, 'Form');
-    my $form_ap = bless({rowcount => 1}, 'Form');
-    my $curr = LedgerSMB::Setting->get('curr');
-    ($curr) = split(':', $curr);
 
-    ## Setting up forms
-    #
-    # ar
-    $form_ar->{dbh} = LedgerSMB::App_State::DBH;
-    $form_ar->{customer} = '00000';
-    $form_ar->{vc} = 'customer';
-    $form_ar->get_name( {}, 'customer', 'today', '2' );
-    $form_ar->{customer_id} = $form_ar->{'name_list'}->[0]->{id};
-    $form_ar->{currency} = $curr;
-    $form_ar->{defaultcurrency} = $curr;
-
-
-    # ap
-    $form_ap->{dbh} = LedgerSMB::App_State::DBH;
-    $form_ap->{vendor} = '00000';
-    $form_ap->{vc} = 'vendor';
-    $form_ap->get_name( {}, 'vendor', 'today', '1' );
-    $form_ap->{vendor_id} = $form_ap->{'name_list'}->[0]->{id};
-    $form_ap->{currency} = $curr;
-    $form_ap->{defaultcurrency} = $curr;
-
-
-    ## Processing reports
-    $self->run_report;
-    my @rows = @{$self->rows};
-    for my $row (@rows){
-        next if $row->{variance} == 0;
-        if ($row->{variance} < 0){
-            my $form = $form_ar;
-            my $rc = $form->{rowcount};
-            $form->{"qty_$rc"} = -1 * $row->{variance};
-            $form->{"id_$rc"} = $row->{parts_id};
-            $form->{"description_$rc"} = $row->{description};
-            $form->{"discount_$rc"} = '100';
-            $form->{"sellprice_$rc"} = $row->{sellprice};
-            ++$form->{rowcount};
-        } elsif ($row->{variance} > 0){
-            my $form = $form_ap;
-            my $rc = $form->{rowcount};
-            $form->{"qty_$rc"} = $row->{variance};
-            $form->{"id_$rc"} = $row->{parts_id};
-            $form->{"description_$rc"} = $row->{description};
-            $form->{"discount_$rc"} = '100';
-            $form->{"sellprice_$rc"} = $row->{lastcost};
-            ++$form->{rowcount};
-
-        }
-    }
-    ## Posting
-    IS->post_invoice({}, $form_ar);
-    IR->post_invoice({}, $form_ap);
-    $self->call_procedure(funcname => 'inventory_report__approve',
-       args => [$self->id, $form_ar->{id}, $form_ap->{ap}]
-    );
+    my $adjust = LedgerSMB::Inventory::Adjust->get( key => { id => $self->id } );
+    return $adjust->approve;
 }
 
 =head2 delete
@@ -218,7 +160,9 @@ Deletes the inventory report
 
 sub delete {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'inventory_report__delete');
+
+    my $adjust = LedgerSMB::Inventory::Adjust->get( key => { id => $self->id } );
+    return $adjust->delete;
 }
 
 =head1 SEE ALSO

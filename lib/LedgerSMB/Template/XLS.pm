@@ -53,7 +53,6 @@ use warnings;
 
 use Template;
 use LedgerSMB::Template::TTI18N;
-use CGI::Simple::Standard qw(:html);
 use LedgerSMB::Sysconfig;
 use Spreadsheet::WriteExcel;
 
@@ -69,24 +68,28 @@ sub _worksheet_handler {
     $rowcount = -1;
     $currcol = 0;
     $_->set_att(type => 'worksheet');
+    return;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
     $_->set_att(type => 'row');
+    return;
 }
 
 sub _cell_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'cell');
+    return;
 }
 
 sub _formula_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'formula');
+    return;
 }
 
 sub _format_handler {
@@ -118,6 +121,7 @@ sub _format_handler {
         $format->del_att($attr);
     }
     $_->set_att(type => 'format', format => { %properties });
+    return;
 }
 
 # Not yet implemented
@@ -131,6 +135,7 @@ sub _format_handler {
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
+    return;
 }
 
 sub _xls_process {
@@ -163,7 +168,7 @@ sub _xls_process {
     $parser->parse($template);
     _handle_subtree($parser->root);
     #$parser->purge;
-    $workbook->close;
+    return $workbook->close;
 }
 
 sub _handle_subtree {
@@ -186,6 +191,7 @@ sub _handle_subtree {
         }
         $child->purge;
     }
+    return;
 }
 
 sub get_template {
@@ -224,6 +230,7 @@ sub process {
     &_xls_process("$parent->{outputfile}.$extension", $output);
 
     $parent->{mimetype} = 'application/vnd.ms-excel';
+    return;
 }
 
 sub postprocess {

@@ -17,6 +17,7 @@ or
 package LedgerSMB::Request::Error;
 use LedgerSMB::App_State;
 use Moose;
+use namespace::autoclean;
 
 =head2 status (default 500)
 
@@ -62,22 +63,6 @@ sub http_response {
            . qq|<body><h2 class="error">Error!</h2> <p><b>$msg</b></p>
          $additional_html
          </body>|;
-}
-
-=head2 throw
-
-Dies with the status as return code after displaying error.
-
-=cut
-
-use HTTP::Exception;
-sub throw {
-    my ($self) = @_;
-#    warn $self->msg;
-#    exit $self->status;
-    my $e = HTTP::Exception->new($self->status);
-    $e->message($self->msg);
-    $e->throw;
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -51,12 +51,13 @@ use LedgerSMB::PE;
 use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Company_Config;
+use LedgerSMB::DBObject::Draft;
+use LedgerSMB::DBObject::TransTemplate;
 
 require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/arap.pl";
 
 $form->{login} = 'test';
-1;
 
 # end of main
 
@@ -90,24 +91,15 @@ $form->{login} = 'test';
 
 
 sub edit_and_save {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
     check_balanced($form);
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     GL->post_transaction( \%myconfig, \%$form, $locale);
     edit();
 }
 
 sub approve {
-    use LedgerSMB::DBObject::Draft;
-    use LedgerSMB;
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->approve();
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -351,9 +343,6 @@ sub display_form
 
 
 sub save_temp {
-    use LedgerSMB;
-    use LedgerSMB::DBObject::TransTemplate;
-    my $lsmb = LedgerSMB->new();
     my ($department_name, $department_id) = split/--/, $form->{department};
     $lsmb->{department_id} = $department_id;
     $lsmb->{reference} = $form->{reference};
@@ -375,94 +364,81 @@ sub save_temp {
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new({base => $lsmb});
+    $template = LedgerSMB::DBObject::TransTemplate->new({base => $form});
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }
 
 
-sub display_row
-{
+sub display_row {
+    my ($init) = @_;
+    $form->{totaldebit}  = 0;
+    $form->{totalcredit} = 0;
 
-  my ($init) = @_;
-  $form->{totaldebit}  = 0;
-  $form->{totalcredit} = 0;
-
-  for $i ( 0 .. $form->{rowcount} )
-  {
+    for my $i ( 0 .. $form->{rowcount} ) {
 
         my $temphash1;
-        $temphash1->{index}=$i;
-        $temphash1->{source}=$form->{"source_$i"};#input box
-    $temphash1->{memo}=$form->{"memo_$i"}; #input box;
-    $temphash1->{accnoset}=1;
-        $temphash1->{projectset}=1;
-        $temphash1->{fx_transactionset}=1;
-    if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"})
-    {
-                  $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
-                  $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
-                  $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
+        $temphash1->{index} = $i;
+        $temphash1->{source} = $form->{"source_$i"}; #input box
+        $temphash1->{memo} = $form->{"memo_$i"}; #input box;
+        $temphash1->{accnoset} = 1;
+        $temphash1->{projectset} = 1;
+        $temphash1->{fx_transactionset} = 1;
+        if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"}) {
+            $temphash1->{accnoset} = 0;   #use  @{ $form->{all_accno} }
+            $temphash1->{projectset} = 0; #use  @{ $form->{all_project} }
+            $temphash1->{fx_transactionset} = 0;    #use checkbox and value=1 if transfer=1
 
         }
-        else
-    {
-                              $form->{"debit_$i"} = LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
-                              $form->{"credit_$i"}= LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
-                  $form->{totaldebit}  += $form->{"debit_$i"};
-                  $form->{totalcredit} += $form->{"credit_$i"};
-                  for (qw(debit credit)) {
-                  $form->{"${_}_$i"} =
-                    ( $form->{"${_}_$i"} )
-                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
-                    : "";
-                  }
+        else {
+            $form->{"debit_$i"} = LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
+            $form->{"credit_$i"} = LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
+            $form->{totaldebit}  += $form->{"debit_$i"};
+            $form->{totalcredit} += $form->{"credit_$i"};
 
-                  $temphash1->{debit}=$form->{"debit_$i"};
-                  $temphash1->{credit}=$form->{"credit_$i"};
-                              for my $cls(@{$form->{bu_class}}){
-                                  $temphash1->{"b_unit_$cls->{id}"} =
-                                         $form->{"b_unit_$cls->{id}_$i"};
-                              }
+            for (qw(debit credit)) {
+                $form->{"${_}_$i"} = ($form->{"${_}_$i"})
+                                   ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+                                   : "";
+            }
 
-                  if ( $i < $form->{rowcount} )
-                  {
-                            $temphash1->{accno}=$form->{"accno_$i"};
+            $temphash1->{debit} = $form->{"debit_$i"};
+            $temphash1->{credit} = $form->{"credit_$i"};
 
-                            if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
-                            $temphash1->{projectnumber}=$form->{"projectnumber_$i"};
-                            $temphash1->{projectnumber}=~ s/--.*//;
+            for my $cls(@{$form->{bu_class}}) {
+                $temphash1->{"b_unit_$cls->{id}"} = $form->{"b_unit_$cls->{id}_$i"};
+            }
 
-                            }
+            if ($i < $form->{rowcount}) {
+                $temphash1->{accno} = $form->{"accno_$i"};
 
-                            if ( $form->{transfer} and $form->{"fx_transaction_$i"})
-                            {
-                            $temphash1->{fx_transactionset}=1;
-                            }
-                            else
-                            {
+                if ($form->{projectset} and $form->{"projectnumber_$i"}) {
+                    $temphash1->{projectnumber} = $form->{"projectnumber_$i"};
+                    $temphash1->{projectnumber} =~ s/--.*//;
+                }
 
-                            $temphash1->{fx_transactionset}=0;
-                            }
-                            $hiddens{"accno_$i"}=$form->{"accno_$i"};
-                            $hiddens{"projectnumber_$i"}=$form->{"projectnumber_$i"};
+                if ($form->{transfer} and $form->{"fx_transaction_$i"}) {
+                    $temphash1->{fx_transactionset} = 1;
+                }
+                else {
+                    $temphash1->{fx_transactionset} = 0;
+                }
 
-                  }
-                  else
-                  {
-                            $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
-                            $temphash1->{projectset}=0;   #use  @{ $form->{all_accno} }
-                            $temphash1->{fx_transactionset}=0;
+                $hiddens{"accno_$i"} = $form->{"accno_$i"};
+                $hiddens{"projectnumber_$i"} = $form->{"projectnumber_$i"};
 
-                  }
-
+            }
+            else {
+                $temphash1->{accnoset} = 0;   #use  @{ $form->{all_accno} }
+                $temphash1->{projectset} = 0;   #use  @{ $form->{all_accno} }
+                $temphash1->{fx_transactionset} = 0;
+            }
          }
 
          push @displayrows,$temphash1;
+    }
 
- }
-
-$hiddens{rowcount}=$form->{rowcount};
+    $hiddens{rowcount} = $form->{rowcount};
 }
 
 sub edit {
@@ -482,16 +458,15 @@ sub edit {
           if $myconfig{acs} =~ /General Ledger--Add Transaction/;
     }
     $form->{title} = "Edit";
-    if($form->{department_id})
-    {
+    if ($form->{department_id}) {
          $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
     }
-    $i = 0;
 
-    my $minusOne    = new LedgerSMB::PGNumber(-1);#HV make sure BigFloat stays BigFloat
-    my $plusOne     = new LedgerSMB::PGNumber(1);#HV make sure BigFloat stays BigFloat
+    my $i = 0;
+    my $minusOne = LedgerSMB::PGNumber->new(-1); #HV make sure BigFloat stays BigFloat
+    my $plusOne  = LedgerSMB::PGNumber->new(1);  #HV make sure BigFloat stays BigFloat
 
-    foreach $ref ( @{ $form->{GL} } ) {
+    foreach my $ref (@{ $form->{GL} }) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
         $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
         for (qw(fx_transaction source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
@@ -516,7 +491,6 @@ sub edit {
    $form->{rowcount} = $i;
    $form->{focus}    = "debit_$i";
    &display_form;
-
 }
 
 sub create_links {
@@ -571,14 +545,15 @@ sub gl_subtotal {
 
 }
 
-sub update {
-     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
-     $form->open_form unless $form->check_form;
 
-     $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
-     if ( $form->{transdate} ne $form->{oldtransdate} ) {
-         $form->{oldtransdate} = $form->{transdate};
-     }
+sub update {
+    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+    $form->open_form unless $form->check_form;
+
+    $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
+    if ( $form->{transdate} ne $form->{oldtransdate} ) {
+        $form->{oldtransdate} = $form->{transdate};
+    }
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
     GL->get_all_acc_dep_pro( \%myconfig, \%$form );
@@ -587,55 +562,58 @@ sub update {
     $count = 0;
     @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
     for my $cls (@{$form->{bu_class}}){
-        if (scalar @{$form->{b_units}->{$cls->{id}}}){
+        if (scalar @{$form->{b_units}->{$cls->{id}}}) {
            push @flds, "b_unit_$cls->{id}";
         }
     }
 
-    for $i ( 0 .. $form->{rowcount} ) {
+    for my $i ( 0 .. $form->{rowcount} ) {
         $form->{"debit_$i"} =~ s/\s+//g;
         $form->{"credit_$i"} =~ s/\s+//g;
-        unless ( ( $form->{"debit_$i"} eq "" )
-            && ( $form->{"credit_$i"} eq "" ) )
-        {
+
+        unless (($form->{"debit_$i"} eq "") && ($form->{"credit_$i"} eq "")) {
             my $found_acc = 0;
-            for my $acc(@{ $form->{all_accno} }){
-                if ($form->{"accno_$i"} eq $acc->{accstyle}){
+            for my $acc(@{ $form->{all_accno} }) {
+                if ($form->{"accno_$i"} eq $acc->{accstyle}) {
                     $found_acc = 1;
-                } elsif ($form->{"accno_$i"} eq $acc->{accno}){
+                }
+                elsif ($form->{"accno_$i"} eq $acc->{accno}) {
                     $form->{"accno_$i"} = $acc->{accstyle};
                     $found_acc = 1;
                 }
+            }
 
-           }
-           if (not $found_acc){
-               $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
-           }
-            for (qw(debit credit)) {
-                $form->{"${_}_$i"} =
-                  $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
+            if (not $found_acc){
+                $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
+            }
+
+            for my $tx_type (qw(debit credit)) {
+                $form->{"${tx_type}_$i"} = $form->parse_amount(
+                    \%myconfig,
+                    $form->{"${tx_type}_$i"}
+                );
             }
 
             push @a, {};
-            $j = $#a;
+            my $j = $#a;
 
-            for (@flds) { $a[$j]->{$_} = $form->{"${_}_$i"} }
+            for my $field (@flds) {
+                $a[$j]->{$field} = $form->{"${field}_$i"};
+            }
             $count++;
         }
     }
 
-    for $i ( 1 .. $count ) {
-        $j = $i - 1;
+    for my $i (1 .. $count) {
+        my $j = $i - 1;
         for (@flds) { $form->{"${_}_$j"} = $a[$j]->{$_} }
     }
 
-    for $i ( $count  .. $form->{rowcount} ) {
+    for my $i ($count .. $form->{rowcount}) {
         for (@flds) { delete $form->{"${_}_$i"} }
     }
 
     $form->{rowcount} = $count + $min_lines;
-
-
 
     &display_form;
 }
@@ -676,9 +654,7 @@ sub post {
 sub delete {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
-    my $lsmb = LedgerSMB->new();
-    $lsmb->merge($form);
-    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $form});
     $draft->delete();
     delete $form->{id};
     delete $form->{reference};
@@ -689,7 +665,7 @@ sub delete {
 sub check_balanced {
     my ($form) = @_;
     # add up debits and credits
-    for $i ( 0 .. $form->{rowcount} ) {
+    for my $i ( 0 .. $form->{rowcount} ) {
         $form->{"debit_$i"} =~ s/\s+//g;
         $form->{"credit_$i"} =~ s/\s+//g;
         $dr = $form->parse_amount( \%myconfig, $form->{"debit_$i"} );
@@ -706,8 +682,7 @@ sub check_balanced {
         $credit += $cr;
     }
 
-    if ( $form->round_amount( $debit, 2 ) != $form->round_amount( $credit, 2 ) )
-    {
+    if ($form->round_amount($debit, 2) != $form->round_amount($credit, 2)) {
         $form->error( $locale->text('Out of balance transaction!') );
     }
 }
@@ -717,3 +692,5 @@ sub save_as_new {
     $form->{approved} = 0;
     &post;
 }
+
+1;

@@ -175,7 +175,7 @@ sub post_transaction {
             qq|VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
     );
     # insert acc_trans transactions
-    for $i ( 0 .. $form->{rowcount} ) {
+    foreach my $i ( 0 .. $form->{rowcount} ) {
 
         $debit  = $form->parse_amount( $myconfig, $form->{"debit_$i"} );
         $credit = $form->parse_amount( $myconfig, $form->{"credit_$i"} );

@@ -48,7 +48,15 @@ sub content {
 sub _build_content {
     my ($self) = @_;
 
-    return $self->find('./*'); # find any immediate child
+    my @found = $self->find_all('./*'); # find any immediate child
+    die "#maindiv is expected to have exactly one child node"
+        unless scalar(@found) == 1;
+
+    my $found = shift @found;
+    die "the immediate child node of #maindiv isn't recognised as a PageObject"
+        unless $found->isa("PageObject");
+
+    return $found;
 }
 
 # Note: copy of PageObject::Root::wait_for_body()

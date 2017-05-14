@@ -10,6 +10,7 @@ LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
 
 package LedgerSMB::Report::Payroll::Income_Types;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
@@ -116,7 +117,7 @@ sub run_report {
     my ($self) = $_;
     my @rows = $self->call_dbmethod(funcname => 'payroll_income_type__search');
     $_->{row_id} = $_->{id} for @rows;
-    $self->rows(@rows);
+    return $self->rows(@rows);
 }
 
 =back

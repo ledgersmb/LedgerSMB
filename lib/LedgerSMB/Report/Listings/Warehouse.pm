@@ -12,6 +12,7 @@ Since no parameters are required:
 
 package LedgerSMB::Report::Listings::Warehouse;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 REPORT CRITERIA
@@ -67,7 +68,7 @@ sub run_report {
     for my $row(@rows){
         $row->{row_id} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

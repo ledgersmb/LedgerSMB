@@ -18,6 +18,7 @@ and sales order generation among other things.
 package LedgerSMB::Report::Timecards;
 use LedgerSMB::MooseTypes;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -189,7 +190,7 @@ sub run_report {
         $row->{"day$row->{weekday}"} = $row->{qty};
         $row->{"row_id"} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

@@ -16,6 +16,7 @@ This is a basic search report for budgets.
 
 package LedgerSMB::Report::Budget::Search;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
@@ -192,7 +193,7 @@ sub prepare_criteria {
        push @business_units, $request->{"business_unit_$count"}
                  if defined $request->{"business_unit_$count"};
     }
-    $request->{business_units} = \@business_units;
+    return $request->{business_units} = \@business_units;
 }
 
 =item run_report
@@ -207,7 +208,7 @@ sub run_report{
     for my $r(@rows){
         $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 

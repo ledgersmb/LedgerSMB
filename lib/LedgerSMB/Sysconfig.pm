@@ -138,6 +138,7 @@ sub def {
             return $cv;
         };
     }
+    return;
 }
 
 
@@ -207,7 +208,6 @@ def 'cache_templates',
     default => 0,
     doc => qq||;
 
-
 ### SECTION  ---   paths
 
 def 'pathsep',
@@ -262,6 +262,28 @@ def 'templates_cache',
     section => 'paths',
     default => 'lsmb_templates',
     doc => qq|this is a subdir of tempdir, unless it's an absolute path|;
+
+### SECTION  ---   Template file formats
+
+def 'template_latex',
+    section => 'template_format',
+    default => 0,
+    doc => qq||;
+
+def 'template_xls',
+    section => 'template_format',
+    default => 0,
+    doc => qq||;
+
+def 'template_xlsx',
+    section => 'template_format',
+    default => 0,
+    doc => qq||;
+
+def 'template_ods',
+    section => 'template_format',
+    default => 0,
+    doc => qq||;
 
 
 ### SECTION  ---   mail
@@ -350,11 +372,6 @@ our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 
 
 
-
-
-# if you have latex installed set to 1
-###TODO-LOCALIZE-DOLLAR-AT
-our $latex = eval {require Template::Plugin::Latex; 1;};
 
 
 # available printers
@@ -502,8 +519,35 @@ sub check_permissions {
                     "Does UID $EUID have execute permission?"
         );
     }
+    return;
 }
 
+# if you have latex installed set to 1
+###TODO-LOCALIZE-DOLLAR-AT
+our $latex = 0;
+
+
+sub override_defaults {
+
+    local $@; # protect existing $@
+
+    # Check Latex
+    $latex = eval {require Template::Plugin::Latex; 1;};
+
+    # Check availability and loadability
+    $LedgerSMB::Sysconfig::template_latex = eval {require LedgerSMB::Template::LaTeX; 1}
+        if $LedgerSMB::Sysconfig::template_latex ne 'disabled';
+    $LedgerSMB::Sysconfig::template_xls   = eval {require LedgerSMB::Template::XLS; 1}
+        if $LedgerSMB::Sysconfig::template_xls ne 'disabled';
+    $LedgerSMB::Sysconfig::template_xlsx  = eval {require LedgerSMB::Template::XLSX; 1}
+        if $LedgerSMB::Sysconfig::template_xlsx ne 'disabled';
+    $LedgerSMB::Sysconfig::template_ods   = eval {require LedgerSMB::Template::ODS; 1}
+        if $LedgerSMB::Sysconfig::template_ods ne 'disabled';
+
+    return;
+}
+
+override_defaults;
 check_permissions;
 
 1;

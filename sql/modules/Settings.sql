@@ -134,6 +134,20 @@ $$ Prepends the role prefix to a role name.
 E.g. 'contact_edit' is converted to 'lsmb_mycompany__contact_edit'
 $$;
 
+CREATE OR REPLACE FUNCTION lsmb__global_role(role text) RETURNS text
+LANGUAGE SQL AS $$
+select case when position(lsmb__role_prefix() in role) = 1
+              then substring(role from length(lsmb__role_prefix())+1)
+       else null
+       end;
+$$;
+
+COMMENT ON FUNCTION lsmb__global_role(role text) IS
+$$ Strips the role prefix from the role turning it
+into a global role identifier, or returns NULL if the string does not
+start with the role prefix.
+$$;
+
 CREATE OR REPLACE FUNCTION sequence__list() RETURNS SETOF lsmb_sequence
 LANGUAGE SQL AS
 $$

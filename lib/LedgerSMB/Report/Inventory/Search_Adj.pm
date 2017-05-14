@@ -13,6 +13,7 @@ inventory adjustments
 
 package LedgerSMB::Report::Inventory::Search_Adj;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
@@ -119,13 +120,13 @@ sub columns {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->call_dbmethod(funcname => 'inventory_adj__search');
+    my @rows = $self->call_dbmethod(funcname => 'inventory_adjust__search');
     for my $row (@rows) {
         $row->{ar_invnumber_suffix} = $row->{ar_invoice_id};
         $row->{ap_invnumber_suffix} = $row->{ap_invoice_id};
         $row->{row_id} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

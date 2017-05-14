@@ -109,48 +109,6 @@ sub save {
     return $ref;
 }
 
-=item import_file
-
-Parses a csv file.  Sets $self->{import_entries} to an arrayref where each
-member is an arrayref of fields.  It is up to the workflow script to handle
-these entries.
-
-Header information is set to $self->{import_header}.
-
-=cut
-
-sub import_file {
-
-    my $self = shift @_;
-
-    my $handle = $self->{_request}->upload('import_file');
-    my $contents = join("\n", <$handle>);
-
-    $self->{import_entries} = [];
-    for my $line (split /(\r\n|\r|\n)/, $contents){
-        next if ($line !~ /,/);
-        my @fields;
-        $line =~ s/[^"]"",/"/g;
-        while ($line ne '') {
-            if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            } else {
-                $line =~ s/([^,]*),?//;
-                my $field = $1;
-                $field =~ s/\s*$//;
-                push @fields, $field;
-            }
-        }
-        push @{$self->{import_entries}}, \@fields;
-    }
-                   # get rid of header line
-    @{$self->{import_header}} = shift @{$self->{import_entries}};
-    return @{$self->{import_entries}};
-}
-
 =item get
 
 Gets a fixed asset, sets all standard properties.  The id property must be set.
@@ -210,6 +168,7 @@ Saves a note.  Uses the following properties:
 sub save_note {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset_item__add_note');
+    return $ref;
 }
 
 =item get_metadata
@@ -250,6 +209,7 @@ sub get_metadata {
     for my $acc (@{$self->{exp_accounts}}){
         $acc->{text} = $acc->{accno} . '--' . $acc->{description};
     }
+    return;
 }
 
 =item get_next_tag
@@ -266,7 +226,7 @@ sub get_next_tag {
           funcname => 'setting_increment',
           args     => ['asset_tag']
     );
-    $self->{tag} = $ref->{setting_increment};
+    return $self->{tag} = $ref->{setting_increment};
 }
 
 =item import_asset
@@ -292,10 +252,11 @@ sub get_invoice_id {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'get_vendor_invoice_id');
     if (!$ref) {
-        $self->error($self->{_locale}->text('Invoice not found'));
+        return $self->error($self->{_locale}->text('Invoice not found'));
     } else {
-        $self->{invoice_id} = $ref->{get_vendor_invoice_id};
+        return $self->{invoice_id} = $ref->{get_vendor_invoice_id};
     }
+    return;
 }
 
 

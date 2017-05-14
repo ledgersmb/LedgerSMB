@@ -10,6 +10,7 @@ LedgerSMB::Report::File::Incoming - Files for LSMB processes.
 
 package LedgerSMB::Report::File::Incoming;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::File', 'LedgerSMB::I18N';
 
@@ -121,7 +122,7 @@ sub run_report {
     my ($self) = $_;
     my @rows = $self->list;
     $_->{row_id} = $_->{id} for @rows;
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

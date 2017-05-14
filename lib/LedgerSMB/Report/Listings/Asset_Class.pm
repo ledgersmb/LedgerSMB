@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Asset_Class - Asset Class listings for LedgerSMB
 
 package LedgerSMB::Report::Listings::Asset_Class;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 CRITERIA PROPERTIES
@@ -116,7 +117,7 @@ sub run_report {
     for my $r (@rows){
         $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

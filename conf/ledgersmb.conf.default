@@ -112,7 +112,7 @@ gzip       = gzip -S .gz
 # The sendmail command is used to send mail unless smtphost is set.
 sendmail   = /usr/bin/sendmail
 
-# 
+#
 # smtphost = 127.0.0.1
 # smtptimeout = 60
 # backup_email_from = backups@lsmb_hosting.com
@@ -145,6 +145,14 @@ sslmode = prefer
 #
 #dojo_built = 1
 
+[template_format]
+# This is the file format allowed to export reports
+# Allowed values are 1, 0 or disabled. The values will be checked at
+# load time against module availability and loadability if not disabled.
+template_latex = 0
+template_xls = 0
+template_xlsx = 0
+template_ods = 0
 
 
 [log4perl_config_modules_loglevel]

@@ -12,6 +12,7 @@ LedgerSMB
 
 package LedgerSMB::Report::Inventory::Search;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -341,7 +342,7 @@ sub run_report {
         }
 
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

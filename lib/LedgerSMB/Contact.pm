@@ -56,11 +56,8 @@ sub save {
         return $self->{id};
     }
     else {
-
         # raise an exception
-        my $err = LedgerSMB::Error->new();
-        $err->text("Unable to save contact information");
-        $err->throw();
+        die "Unable to save contact information";
     }
 }
 
@@ -73,6 +70,7 @@ sub get {
         funcname => 'get',
         args     =>[$id]
     ) };
+    return;
 }
 
 sub search {

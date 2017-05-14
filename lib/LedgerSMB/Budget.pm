@@ -21,6 +21,7 @@ LedgerSMB::Budget_Report.
 =cut
 
 use Moose;
+use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -206,7 +207,7 @@ sub save {
        push @{$self->{details}}, $l_info;
     }
     $self->call_dbmethod(funcname => 'budget__save_details');
-    $self->get($ref->{id});
+    return $self->get($ref->{id});
 }
 
 
@@ -337,7 +338,7 @@ Marks the budget as approved.
 
 sub approve {
    my ($self) = @_;
-   $self->call_dbmethod(funcname => 'budget__approve');
+   return $self->call_dbmethod(funcname => 'budget__approve');
 }
 
 =item reject
@@ -347,7 +348,7 @@ Reject and deletes the budget.
 
 sub reject {
    my ($self) = @_;
-   $self->call_dbmethod(funcname => 'budget__reject');
+   return $self->call_dbmethod(funcname => 'budget__reject');
 }
 
 =item obsolete
@@ -357,7 +358,7 @@ Marks the budget as obsolete/superceded.
 
 sub obsolete {
    my ($self) = @_;
-   $self->call_dbmethod(funcname => 'budget__mark_obsolete');
+   return $self->call_dbmethod(funcname => 'budget__mark_obsolete');
 }
 
 =item save_note(subject string, note string)
@@ -371,6 +372,7 @@ sub save_note {
           funcname => 'budget__save_note',
            args => [$self->{id}, $subject, $note]
    );
+   return;
 }
 
 =back

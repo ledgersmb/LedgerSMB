@@ -10,6 +10,7 @@ LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods
 
 package LedgerSMB::Report::Inventory::History;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
@@ -194,7 +195,7 @@ sub name {
 sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'goods__history');
-    $self->rows(
+    return $self->rows(
         [  map { { (%$_, (row_id => $_->{id})) } } @rows ]
     );
 }

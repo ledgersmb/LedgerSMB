@@ -103,6 +103,8 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
   text-decoration: none; }
 .listrow1, table.dynatable tr:nth-child(odd) { font-size: 14.667px; background-color: #f8f8f8; color: black; vertical-align: top; }
 .listrow0, table.dynatable tr:nth-child(even) { font-size: 14.667px; background-color: #f0f0f0; color: black; vertical-align: top; }
+.listrow1:hover, table.dynatable tbody tr:nth-child(odd):hover { background-color: #a4a4a6; }
+.listrow0:hover, table.dynatable tbody tr:nth-child(even):hover { background-color: #aaa2a0; }
 .listsubtotal { font-size: 14.667px; background-color: #eeeeee; color: black; }
 .listtotal { font-size: 14.667px; background-color: #e0e0e0; color: black; }
 

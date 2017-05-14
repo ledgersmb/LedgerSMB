@@ -23,7 +23,6 @@ and defaults to indefinite validity.
 
 =cut
 package LedgerSMB::Scripts::user;
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;

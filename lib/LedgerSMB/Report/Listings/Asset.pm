@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 
 package LedgerSMB::Report::Listings::Asset;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 use LedgerSMB::MooseTypes;
 
@@ -143,7 +144,7 @@ sub run_report {
     for my $r(@rows){
        $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

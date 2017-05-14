@@ -30,6 +30,7 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
+use namespace::autoclean;
 use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
 
@@ -251,7 +252,7 @@ sub run_report{
         $script = $class_to_script->{lc($ref->{batch_class_id})};
         $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

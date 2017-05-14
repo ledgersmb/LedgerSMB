@@ -160,7 +160,7 @@ desired file extention
 
 =back
 
-=head1 Copyright 2007, The LedgerSMB Core Team
+=head1 Copyright 2007-2017, The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
@@ -183,24 +183,25 @@ use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
+use Module::Runtime qw(use_module);
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub available_formats {
     my @retval = ('HTML', 'TXT');
     local ($@);
-    if (eval {require LedgerSMB::Template::LaTeX}){
+    if ($LedgerSMB::Sysconfig::template_latex){
         push @retval, 'PDF', 'PS';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::XLS}){
+    }
+    if ($LedgerSMB::Sysconfig::template_xls){
         push @retval, 'XLS';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::XLSX}){
+    }
+    if ($LedgerSMB::Sysconfig::template_xlsx){
         push @retval, 'XLSX';
-    } else { $logger->debug($@) if $@; }
-    if (eval {require LedgerSMB::Template::ODS}){
+    }
+    if ($LedgerSMB::Sysconfig::template_ods){
         push @retval, 'ODS';
-    } else { $logger->debug($@) if $@; }
+    }
     return \@retval;
 }
 
@@ -257,12 +258,12 @@ sub new {
         if (defined $self->{language}){
             if (!$self->_valid_language){
                 die 'Invalid language';
-                return undef;
             }
             $self->{include_path_lang} = "$self->{'include_path'}"
                     ."/$self->{language}";
-                        $self->{locale}
-                             = LedgerSMB::Locale->get_handle($self->{language});
+            $self->{locale} = LedgerSMB::Locale->get_handle(
+                $self->{language}
+            );
         }
     }
 
@@ -290,7 +291,6 @@ sub _preprocess {
     if (eval {$rawvars->can('to_output')}){
         $rawvars = $rawvars->to_output;
     }
-    use LedgerSMB;
     my $type = ref $rawvars;
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
@@ -308,13 +308,13 @@ sub _preprocess {
         return $rawvars;
     } elsif ($type eq 'IO::File'){
         return undef;
-    } elsif ($type eq 'Apache2::RequestRec'){
-        # When running in mod_perl2, we might encounter an Apache2::RequestRec
-        # object; escaping its content is nonsense
-        return undef;
     } else { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
+            # don't encode the object's internals; TT won't forward anyway...
+            # btw, some (internal) objects are XS objects, on which this trick
+            # treating it as a hashref really doesn't work...
+            next if /^_/;
             $vars->{_preprocess($_, $escape)} = _preprocess( $rawvars->{$_}, $escape );
         }
     }
@@ -426,12 +426,9 @@ sub _render {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    my $format = "LedgerSMB::Template::$self->{format}";
 
-    eval "require $format";
-    if ($@) {
-        die $@;
-    }
+    my $format = "LedgerSMB::Template::$self->{format}";
+    use_module($format) or die "Failed to load module $format";
 
     my $cleanvars;
     if ($self->{no_escape}) {
@@ -458,9 +455,13 @@ sub _render {
     };
 
     $format->can('process')->($self, $cleanvars);
+
     # Will return undef if postprocessing if disabled -YL
-    my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
-    return $post;
+    if($self->{_no_postprocess}) {
+        return undef;
+    }
+
+    return $format->can('postprocess')->($self);
 }
 
 sub render {
@@ -519,7 +520,8 @@ sub render_to_psgi {
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{rendered}) {
-        open($body, '<:raw', $self->{rendered});
+        open $body, '<:raw', $self->{rendered}
+            or die "Failed to open rendered file $self->{rendered} : $!";
         # as we don't support Windows anyway: unlinking an open file works!
         unlink $self->{rendered};
     }
@@ -560,6 +562,7 @@ sub output {
     } else {
         $self->_http_output_file;
     }
+    return;
 }
 
 sub _http_output {
@@ -579,11 +582,13 @@ sub _http_output {
     if (!defined $data and defined $self->{rendered}){
         $data = "";
         $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
-        open (DATA, '<', $self->{rendered});
-                binmode DATA, $self->{binmode};
-        while (my $line = <DATA>){
+        open my $fh, '<', $self->{rendered}
+            or die "failed to open rendered file $self->{rendered} : $!";
+        binmode $fh, $self->{binmode};
+        while (my $line = <$fh>){
             $data .= $line;
         }
+        close $fh;
         $logger->trace("end DATA < self->{rendered}");
         unlink($self->{rendered}) or die 'Unable to delete output file';
     }
@@ -614,6 +619,7 @@ sub _http_output {
     # change global resource back asap
     binmode (STDOUT, ':utf8');
     $logger->trace("end print to STDOUT");
+    return;
 }
 
 sub _http_output_file {
@@ -634,6 +640,8 @@ sub _http_output_file {
 
     unlink($self->{rendered}) or
         die 'Unable to delete output file';
+
+    return;
 }
 
 sub _email_output {
@@ -646,19 +654,19 @@ sub _email_output {
         @mailmime = ('contenttype', $self->{mimetype});
     }
 
-        # User default for email from
-        $args->{from} ||= $self->{user}->{email};
+    # User default for email from
+    $args->{from} ||= $self->{user}->{email};
 
-        # Default addresses
-        my $csettings = $LedgerSMB::Company_Config::settings;
-        $args->{from} ||= $csettings->{default_email_from};
-        $args->{to} ||= $csettings->{default_email_to};
-        $args->{cc} ||= $csettings->{default_email_cc};
-        $args->{bcc} ||= $csettings->{default_email_bcc};
+    # Default addresses
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $args->{from} ||= $csettings->{default_email_from};
+    $args->{to} ||= $csettings->{default_email_to};
+    $args->{cc} ||= $csettings->{default_email_cc};
+    $args->{bcc} ||= $csettings->{default_email_bcc};
 
 
-        # Mailer stuff
-    my $mail = new LedgerSMB::Mailer(
+    # Mailer stuff
+    my $mail = LedgerSMB::Mailer->new(
         from => $args->{from},
         to => $args->{to},
         cc => $args->{cc},
@@ -671,20 +679,24 @@ sub _email_output {
     if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{rendered}) {
         my @attachment;
         my $name = $args->{filename};
+
         if ($self->{rendered}) {
             @attachment = ('file', $self->{rendered});
             $name ||= $self->{rendered};
-        } else {
+        }
+        else {
             @attachment = ('data', $self->{output});
         }
+
         $mail->attach(
             mimetype => $self->{mimetype},
             filename => $name,
             strip => $$,
             @attachment,
-            );
+        );
     }
     $mail->send;
+    return;
 }
 
 sub _lpr_output {
@@ -695,16 +707,22 @@ sub _lpr_output {
     }
     my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
-    open (LPR, '|-', $lpr);
+    open my $pipe, '|-', $lpr
+        or die "Failed to open lpr pipe $lpr : $!";
 
     # Output is not defined here.  In the future we should consider
     # changing this to use the system command and hit the file as an arg.
     #  -- CT
-    open (FILE, '<', "$self->{rendered}");
-    while (my $line = <FILE>){
-        print LPR $line;
+    open my $file, '<', "$self->{rendered}"
+        or die "Failed to open rendered file $self->{rendered} : $!";
+
+    while (my $line = <$file>) {
+        print $pipe $line;
     }
-    close(LPR);
+
+    close $pipe;
+    close $file;
+    return;
 }
 
 # apply locale settings to column headings and add sort urls if necessary.

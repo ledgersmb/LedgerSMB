@@ -3,7 +3,7 @@
 set -x
 
 date_now=`date --utc "+%F %R%z"`
-version_now=`perl -Ilib -MLedgerSMB -e 'print \$LedgerSMB::VERSION'`
+version_now=`perl -Ilib -Iold/lib -MLedgerSMB -e 'print \$LedgerSMB::VERSION'`
 
 if test "q$version_now" = "q" ;
 then

@@ -12,7 +12,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 
 package LedgerSMB::Scripts::report_aging;
 
-use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;
@@ -76,7 +75,6 @@ sub generate_statement {
     my $rtype = $request->{report_type}; # in case we need it later
     $request->{report_type} = 'detail'; # needed to generate statement
 
-    my $template_suffix;
     my @statements;
     my $old_meta = $request->{meta_number};
 
@@ -130,7 +128,10 @@ sub generate_statement {
         no_auto_output => 1,
     );
     if ($request->{media} eq 'email'){
+
        #TODO -- mailer stuff
+       return;
+
     } elsif ($request->{media} eq 'screen'){
         return $template->render_to_psgi({statements => \@statements},
                   extra_headers => [
@@ -143,13 +144,14 @@ sub generate_statement {
         $request->{report_type}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);
     }
-
+    # Unreachable
 }
 
 sub _strip_specials {
     my $request = shift;
     delete $request->{$_} for (qw(buttons rows _DBH options locale));
     delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
+    return;
 }
 
 =back

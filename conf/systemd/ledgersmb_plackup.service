@@ -21,54 +21,18 @@ Environment=LOG=/var/log/ledgersmb/ledgersmb_plackup.log
 # holding the LedgerSMB sources
 User=ledgersmb
 Group=ledgersmb
+
 # Use -R to monitor files changes and restart the server
-# The list below is exhaustive, change it to suit your needs
-ExecStart=/usr/bin/plackup           \
-    --listen localhost:5762          \
-    -I lib/                          \
-    -I old/lib/                      \
-    --workers 3                      \
-    --access-log $LOG                \
-    --server Starman                 \
-    -R "bin,\
-        lib,\
-        lib/LedgerSMB,\
-        lib/LedgerSMB/Auth,\
-        lib/LedgerSMB/Database,\
-        lib/LedgerSMB/DBObject,\
-        lib/LedgerSMB/Entity,\
-        lib/LedgerSMB/Entity/Payroll,\
-        lib/LedgerSMB/Entity/Person,\
-        lib/LedgerSMB/File,\
-        lib/LedgerSMB/Inventory,\
-        lib/LedgerSMB/Payroll,\
-        lib/LedgerSMB/Reconciliation,\
-        lib/LedgerSMB/Report,\
-        lib/LedgerSMB/Report/Assets,\
-        lib/LedgerSMB/Report/Budget,\
-        lib/LedgerSMB/Report/co,\
-        lib/LedgerSMB/Report/Contact,\
-        lib/LedgerSMB/Report/File,\
-        lib/LedgerSMB/Report/Inventory,\
-        lib/LedgerSMB/Report/Invoices,\
-        lib/LedgerSMB/Report/Listings,\
-        lib/LedgerSMB/Report/Payroll,\
-        lib/LedgerSMB/Report/PNL,\
-        lib/LedgerSMB/Report/Reconciliation,\
-        lib/LedgerSMB/Report/Taxform,\
-        lib/LedgerSMB/Report/Unapproved,\
-        lib/LedgerSMB/Request,\
-        lib/LedgerSMB/REST_Class,\
-        lib/LedgerSMB/REST_Format,\
-        lib/LedgerSMB/RESTXML/Document,\
-        lib/LedgerSMB/Scripts,\
-        lib/LedgerSMB/Scripts/employee,\
-        lib/LedgerSMB/Setting,\
-        lib/LedgerSMB/Taxes,\
-        lib/LedgerSMB/Template,\
-        lib/LedgerSMB/Timecard,\
-        lib/LedgerSMB/X12" \
+ExecStart=/usr/bin/plackup   \
+    --listen localhost:5762  \
+    -I lib/                  \
+    -I old/lib/              \
+    --workers 3              \
+    --access-log $LOG        \
+    --server Starman         \
+    -R "bin, lib, old/lib"   \
     tools/starman.psgi
+
 Restart=always
 
 [Install]

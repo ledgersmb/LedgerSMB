@@ -14,6 +14,7 @@ This report class is an abstract class.
 
 package LedgerSMB::Report::Hierarchical;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Report::Axis;
@@ -123,27 +124,6 @@ sub header_lines {
 
 =back
 
-=head2 _init_comparison($request, $c_per)
-
-TODO!!
-
-=cut
-
-sub _init_comparison{
-    #Todo: This works but should evolve toward a role.
-    my ($self, $request, $c_per) = @_;
-    if ( $request->{comparison_type} eq 'by_periods' ) {
-        my $ri = $request->{interval};
-        # Comparison are backward
-        my $date = $self->date_from->clone->add_interval($ri,-$c_per);
-        $request->{"from_date_$c_per"} = $date->to_output;
-        $request->{"to_date_$c_per"}   = $date->add_interval($ri)
-                                              ->add_interval('day',-1)
-                                              ->to_output;
-        $request->{"interval_$c_per"}  = $ri;
-    }
-}
-
 =head1 SEMI-PUBLIC METHODS
 
 =head2 cell_value($row_id, $col_id, [$value])
@@ -183,21 +163,6 @@ sub accum_cell_value {
                              + $increment);
 }
 
-=head2 init_comparisons($request)
-
-TODO!!
-
-=cut
-
-sub init_comparisons{
-    my ($self, $request) = @_;
-    if ( $request->{comparison_type} eq 'by_periods' ) {
-        my $counts = $request->{comparison_periods};
-        for my $c_per (1 .. $counts) {
-            $self->_init_comparison($request, $c_per);
-        }
-    }
-}
 
 =head2 add_comparison($compared, col_path_prefix => [],
     row_path_prefix => [])
@@ -263,6 +228,7 @@ sub add_comparison{
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
         }
     }
+    return;
 }
 
 

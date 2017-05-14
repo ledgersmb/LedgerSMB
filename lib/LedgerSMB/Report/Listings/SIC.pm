@@ -10,6 +10,7 @@ LedgerSMB::Report::Listings::SIC - List SIC codes in LedgerSMB
 
 package LedgerSMB::Report::Listings::SIC;
 use Moose;
+use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
@@ -76,7 +77,7 @@ sub run_report{
     for my $row(@rows){
         $row->{row_id} = $row->{code};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

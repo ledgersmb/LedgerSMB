@@ -42,7 +42,7 @@ sub new{
     return unless defined $spec;
     my $raw = XMLin($spec);
     return unless $raw->{xmlns} and $raw->{xmlns} eq 'urn:iso:std:iso:20022:tech:xsd:camt.053.001.02';
-    bless ({struct => $raw}, $class);
+    return bless ({struct => $raw}, $class);
 }
 
 =head1 PROPERTIES
@@ -97,7 +97,8 @@ sub _decode_crdt {
     my ($code) = @_;
     die "bad debit/credit code: $code"
           unless lc($code) =~ /^(crdt|dbit)$/;
-    my $ret = 'credit' if lc($code) eq 'crdt';
+    my $ret;
+    $ret = 'credit' if lc($code) eq 'crdt';
     return $ret // 'debit';
 }
 
