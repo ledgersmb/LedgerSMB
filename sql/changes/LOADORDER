@@ -44,4 +44,5 @@
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
 1.5/issue-2278-modify-acc_trans-index.sql
 1.5/template_menu3.sql
+1.5/issue-2800-cant-delete-unused-account-after-books-closed.sql
 #1.6 changes
