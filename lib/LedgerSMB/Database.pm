@@ -297,7 +297,7 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    $self->new($self->export, (dbname => $new_name)
+    return $self->new($self->export, (dbname => $new_name)
               )->create(copy_of => $self->dbname);
 }
 
@@ -393,6 +393,7 @@ sub load_coa {
             log_stderr  => $log,
             );
     }
+    return;
 }
 
 
@@ -402,7 +403,7 @@ Creates a database and then loads it.
 
 =cut
 
-sub create_and_load(){
+sub create_and_load {
     my ($self, $args) = @_;
     $self->create;
     $self->load_base_schema({
@@ -413,7 +414,7 @@ sub create_and_load(){
     log     => $args->{log},
     errlog  => $args->{errlog},
             });
-    $self->apply_changes();
+    return $self->apply_changes();
 }
 
 
@@ -462,7 +463,7 @@ sub apply_changes {
         LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
-    $dbh->disconnect;
+    return $dbh->disconnect;
 }
 
 1;
