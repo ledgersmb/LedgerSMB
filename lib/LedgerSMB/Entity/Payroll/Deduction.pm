@@ -99,7 +99,7 @@ Saves the deduction and attaches to the entity record
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'deduction__save');
-    $self->entry_id($ref->{entry_id});
+    return $self->entry_id($ref->{entry_id});
 }
 
 =back

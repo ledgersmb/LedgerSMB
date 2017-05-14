@@ -64,7 +64,7 @@ sub new {
 
     $self->prepare_message(@_) if @_;
 
-    $self;
+    return $self;
 }
 
 =head2 $mail->prepare_message(to => $to, from => $from, ...)
@@ -142,7 +142,7 @@ sub prepare_message {
     # Annoy people with read receipt requests
     $self->{_message}->add( 'Disposition-Notification-To' => $self->{from} )
       if $self->{notify};
-    $self->{_message}->binmode(':utf8');
+    return $self->{_message}->binmode(':utf8');
 }
 
 =head2 $mail->attach(data => $data, file => $file,
@@ -190,7 +190,7 @@ sub attach {
         @data = ('Path', $args{file});
     }
 
-    $self->{_message}->attach(
+    return $self->{_message}->attach(
         'Type' => $args{mimetype},
         'Filename' => $filename,
         'Disposition' => 'attachment',
@@ -229,6 +229,7 @@ sub send {
         }
     };
     die "Could not send email: $@.  Please check your configuration." if $@;
+    return;
 }
 
 1;
