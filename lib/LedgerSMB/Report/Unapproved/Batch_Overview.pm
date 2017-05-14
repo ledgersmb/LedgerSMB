@@ -269,7 +269,7 @@ sub run_report{
     for my $r (@rows){
        $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back
