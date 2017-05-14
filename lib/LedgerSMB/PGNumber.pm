@@ -14,7 +14,7 @@ use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
 
-LedgerSMB::PGNumber->register_type(registry => 'ledgersmb',
+__PACKAGE__->register(registry => 'ledgersmb',
     types => [qw(float4 float8 float numeric), 'double precision']);
 
 

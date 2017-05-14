@@ -13,7 +13,7 @@ use parent qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-__PACKAGE__->register_type(registry => 'ledgersmb', types => ['date']);
+__PACKAGE__->register(registry => 'ledgersmb', types => ['date']);
 
 
 =head1 SYNPOSIS
