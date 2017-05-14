@@ -67,7 +67,7 @@ my @modules =
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
-          'LedgerSMB::DBObject::EOY', 'LedgerSMB::DBObject::Part',
+          'LedgerSMB::DBObject::EOY', 
           'LedgerSMB::DBObject::Pricelist', 'LedgerSMB::DBObject::TaxForm',
           'LedgerSMB::DBObject::TransTemplate', 'LedgerSMB::DBObject::Menu',
           'LedgerSMB::DBObject::User', 'LedgerSMB::DBObject::Account',
