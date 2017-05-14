@@ -147,11 +147,12 @@ sub _worksheet_handler {
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
     }
+    return;
 }
 
 sub _row_handler {
     $rowcount++;
-    $currcol = 0;
+    return $currcol = 0;
 }
 
 sub _cell_handler {
@@ -172,7 +173,7 @@ sub _cell_handler {
     if (@style_stack) {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
-    $currcol++;
+    return $currcol++;
 }
 
 sub _formula_handler {
@@ -192,7 +193,7 @@ sub _formula_handler {
     if (@style_stack) {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
-    $currcol++;
+    return ++$currcol;
 }
 
 sub _border_set {
@@ -212,22 +213,19 @@ sub _border_set {
     } else {
         $properties->{cell}{"fo:$border"} = "$line_width[$val] #000000";
     }
+
+    my $colour = $format->{att}->{"${edge}_color"};
+    if ($colour =~ /^\d+$/) {
+        $colour = $colour[$colour];
+    } elsif ($colour !~ /^\#......$/) {
+        $colour = $colour_name{$colour};
+    }
     if ($edge and $format->{att}->{"${edge}_color"}) {
-        my $colour = $format->{att}->{"${edge}_color"};
-        if ($colour =~ /^\d+$/) {
-            $colour = $colour[$colour];
-        } elsif ($colour !~ /^\#......$/) {
-            $colour = $colour_name{$colour};
-        }
-        $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+        return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
     } elsif ($format->{att}->{border_color}) {
-        my $colour = $format->{att}->{"${edge}_color"};
-        if ($colour =~ /^\d+$/) {
-            $colour = $colour[$colour];
-        } elsif ($colour !~ /^\#......$/) {
-            $colour = $colour_name{$colour};
-        }
-        $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+        return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+    }else{
+        return;
     }
 }
 
@@ -244,7 +242,7 @@ sub _prepare_float {
     $properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
     $properties{'number:grouping'} = 'true' if $sides[0] =~ /.,...$/;
 
-    \%properties;
+    return \%properties;
 }
 
 sub _prepare_fraction {
@@ -256,7 +254,7 @@ sub _prepare_fraction {
     $properties{'number:min-numerator-digits'} = length($sides[1]);
     $properties{'number:min-denominator-digits'} = length($sides[2]);
 
-    \%properties;
+    return \%properties;
 }
 
 sub _create_positive_style {
@@ -270,7 +268,7 @@ sub _create_positive_style {
             'style:volatile' => 'true',
             },
         );
-    $pstyle->insert_new_elt('last-child',
+    return $pstyle->insert_new_elt('last-child',
         'number:text', {}, ' ');
 }
 
@@ -762,18 +760,18 @@ sub _format_handler {
             ) if $properties{paragraph};
         $style_table{$mystyle} = [$style, \%properties];
     }
-    unshift @style_stack, $style_table{$mystyle};
+    return unshift @style_stack, $style_table{$mystyle};
 }
 
 sub _named_format {
     my ($name, $t, $format) = @_;
     $format->{att}{$name} = 1;
-    &_format_handler($t, $format);
+    return &_format_handler($t, $format);
 }
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
-    shift @style_stack;
+    return shift @style_stack;
 }
 
 sub _ods_process {
@@ -804,7 +802,7 @@ sub _ods_process {
         );
     $parser->parse($template);
     $parser->purge;
-    $ods->save;
+    return $ods->save;
 }
 
 sub get_template {
@@ -854,7 +852,7 @@ sub process {
     }
     &_ods_process("$parent->{outputfile}.$extension", $output);
 
-    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+    return $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 }
 
 sub postprocess {
