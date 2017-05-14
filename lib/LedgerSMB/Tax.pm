@@ -142,7 +142,7 @@ sub calculate_taxes {
 
 =head2 apply_taxes
 
-A shortcut for calculating taxes without extracting (i.e. when taxes not 
+A shortcut for calculating taxes without extracting (i.e. when taxes not
 included)
 
 =head2 extract_taxes
