@@ -38,7 +38,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->call_dbmethod(funcname => 'file__attach_to_tx');
+    return $self->call_dbmethod(funcname => 'file__attach_to_tx');
 }
 
 =item attach_all_from_order({id = int})
@@ -63,6 +63,7 @@ sub attach_all_from_order {
         $new_link->dbobject($self->dbobject);
         $new_link->attach;
     }
+    return;
 }
 
 =back
