@@ -148,7 +148,6 @@ my @on_disk_oldcode =
 
 @on_disk =
     grep { ! m#^old/# }
-    grep { ! m#^lib/LedgerSMB/Auth/# }
     @on_disk;
 
 plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
