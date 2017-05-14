@@ -183,6 +183,7 @@ use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
+use Module::Load;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -425,12 +426,9 @@ sub _render {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    my $format = "LedgerSMB::Template::$self->{format}";
 
-    eval "require $format";
-    if ($@) {
-        die $@;
-    }
+    my $format = "LedgerSMB::Template::$self->{format}";
+    load $format;
 
     my $cleanvars;
     if ($self->{no_escape}) {

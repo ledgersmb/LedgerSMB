@@ -47,7 +47,6 @@ my @cert_policies = qw(
 # of these are explicitly excluded below, as they would otherwise be
 # applied by the -severity option in use.
 #    BuiltinFunctions::ProhibitBooleanGrep
-#    BuiltinFunctions::ProhibitStringyEval      --explicitly excluded
 #    BuiltinFunctions::ProhibitUniversalIsa
 #    InputOutput::RequireCheckedClose
 #    InputOutput::RequireCheckedSyscalls
@@ -101,10 +100,8 @@ my @exclude_policies = qw(
     TestingAndDebugging::ProhibitNoWarnings
     TestingAndDebugging::ProhibitNoStrict
     InputOutput::RequireEncodingWithUTF8Layer
-    BuiltinFunctions::ProhibitStringyEval
 );
 my @exclude_policies_oldcode = qw(
-    BuiltinFunctions::ProhibitStringyEval
     InputOutput::RequireEncodingWithUTF8Layer
     Modules::ProhibitExcessMainComplexity
     Modules::ProhibitMultiplePackages
