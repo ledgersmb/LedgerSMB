@@ -172,7 +172,7 @@ sub run_report {
     for my $r (@rows) {
        $r->{row_id} = $r->{partnumber};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

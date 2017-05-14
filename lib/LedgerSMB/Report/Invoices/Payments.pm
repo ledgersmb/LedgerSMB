@@ -239,6 +239,7 @@ sub run_report{
        class => 'submit',
        value => 'reverse_payments',
     }]) if $self->batch_id;
+    return;
 }
 
 =back
