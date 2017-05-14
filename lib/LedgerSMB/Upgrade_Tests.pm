@@ -47,6 +47,7 @@ sub get_by_name {
     for my $test (@tests){
        return $test if $test->name eq $name;
     }
+    return;
 }
 
 =back

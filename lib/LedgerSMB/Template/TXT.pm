@@ -114,7 +114,7 @@ sub process {
         print $fh $parent->{output};
         close $fh;
     }
-    $parent->{mimetype} = 'text/plain';
+    return $parent->{mimetype} = 'text/plain';
 }
 
 sub postprocess {
