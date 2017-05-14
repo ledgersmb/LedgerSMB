@@ -55,8 +55,6 @@ if ( -f "old/bin/custom/$form->{login}_arapprn.pl" ) {
     eval { require "old/bin/custom/$form->{login}_arapprn.pl"; };
 }
 
-1;
-
 # end of main
 
 sub print {
@@ -371,3 +369,4 @@ sub print_and_post {
 
 }
 
+1;

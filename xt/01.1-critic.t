@@ -109,7 +109,6 @@ my @exclude_policies_oldcode = qw(
     Modules::ProhibitExcessMainComplexity
     Modules::ProhibitMultiplePackages
     Modules::RequireBarewordIncludes
-    Modules::RequireEndWithOne
     Modules::RequireFilenameMatchesPackage
     Modules::RequireVersionVar
     Subroutines::ProhibitExplicitReturnUndef
