@@ -128,7 +128,10 @@ sub generate_statement {
         no_auto_output => 1,
     );
     if ($request->{media} eq 'email'){
+
        #TODO -- mailer stuff
+       return;
+
     } elsif ($request->{media} eq 'screen'){
         return $template->render_to_psgi({statements => \@statements},
                   extra_headers => [
@@ -141,13 +144,14 @@ sub generate_statement {
         $request->{report_type}='aging';
         return LedgerSMB::Scripts::reports::start_report($request);
     }
-
+    # Unreachable
 }
 
 sub _strip_specials {
     my $request = shift;
     delete $request->{$_} for (qw(buttons rows _DBH options locale));
     delete $request->{category} if (exists $request->{category} and $request->{category} eq 'X');
+    return;
 }
 
 =back

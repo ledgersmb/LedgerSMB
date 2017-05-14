@@ -58,7 +58,7 @@ sub __default {
             template => 'credentials',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 sub _get_database {
@@ -248,7 +248,7 @@ sub login {
         template => 'confirm_operation',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item sanity_checks
@@ -256,7 +256,7 @@ Checks for common setup issues and errors if admin tasks cannot be completed/
 
 =cut
 
-sub sanity_checks {
+sub sanity_checks { ## no critic ( RequireFinalReturn )
     my ($database) = @_;
     `psql --help` || die LedgerSMB::App_State::Locale->text(
                                  'psql not found.'
@@ -307,7 +307,7 @@ sub list_users {
         template => 'list_users',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item copy_db
@@ -331,7 +331,7 @@ sub copy_db {
     )->execute("lsmb_$database->{company_name}__");
     $dbh->commit;
     $dbh->disconnect;
-    complete($request);
+    return complete($request);
 }
 
 
@@ -344,7 +344,7 @@ Backs up a full db
 sub backup_db {
     my $request = shift @_;
     $request->{backup} = 'db';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 =item backup_roles
@@ -356,7 +356,7 @@ Backs up roles only (for all db's)
 sub backup_roles {
     my $request = shift @_;
     $request->{backup} = 'roles';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 # Private method, basically just passes the inputs on to the next screen.
@@ -367,7 +367,7 @@ sub _begin_backup {
             template => 'begin_backup',
             format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 };
 
 
@@ -768,7 +768,7 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
-    $template->render_to_psgi({
+    return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $header,
@@ -1127,7 +1127,7 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->disconnect;
+    return $dbh->disconnect;
 }
 
 
