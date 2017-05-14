@@ -32,7 +32,7 @@ Constructor. LedgerSMB::Database::Loadorder->new($path);
 
 sub new {
     my ($package, $path) = @_;
-    bless {_path => $path }, $package;
+    return bless {_path => $path }, $package;
 }
 
 =head2 scripts
@@ -114,11 +114,12 @@ Runs all files in the loadorder without applying tracking info.
 sub run_all {
     my ($self, $dbh) = @_;
     $_->run($dbh) for $self->scripts;
+    return;
 }
 
 =head2 apply_all
 
-Applies all files in the loadorder, with tracking info, locking until it 
+Applies all files in the loadorder, with tracking info, locking until it
 completes.
 
 =cut
@@ -129,17 +130,21 @@ sub apply_all {
     for ($self->scripts){
         $_->apply($dbh) unless $_->is_applied($dbh);
     }
-    _unlock($dbh);
+    return _unlock($dbh);
 }
 
 sub _lock {
     my ($dbh) = @_;
-    $dbh->do("select pg_advisory_lock('db_patches'::regclass::oid::int, 1)");
+    return $dbh->do(
+            "select pg_advisory_lock("
+            . "'db_patches'::regclass::oid::int, 1)");
 }
 
 sub _unlock {
     my ($dbh) = @_;
-    $dbh->do("select pg_advisory_unlock('db_patches'::regclass::oid::int, 1)");
+    return $dbh->do(
+            "select pg_advisory_unlock( "
+            . "'db_patches'::regclass::oid::int, 1)");
 }
 
 sub _needs_init {
