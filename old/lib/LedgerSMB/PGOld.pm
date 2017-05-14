@@ -48,6 +48,7 @@ sub new {
     my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
     my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
     $self =  PGObject::Simple::new($pkg, %$self);
+    $self->_set_registry('ledgersmb'); # needed for consistency
     $self->__validate__  if $self->can('__validate__');
     return $self;
 }

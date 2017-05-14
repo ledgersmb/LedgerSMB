@@ -32,7 +32,7 @@ use PGObject::Type::ByteString;
 use LedgerSMB::MooseTypes;
 
 
-PGObject::Type::ByteString->register();
+PGObject::Type::ByteString->register(registry => 'ledgersmb');
 
 =item  attached_by_id
 

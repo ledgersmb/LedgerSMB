@@ -9,13 +9,11 @@ use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
 use PGObject;
-use base qw(PGObject::Type::DateTime);
+use parent qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('date');
+__PACKAGE__->register_type(registry => 'ledgersmb', types => ['date']);
 
 
 =head1 SYNPOSIS
