@@ -40,8 +40,6 @@ use LedgerSMB::GL;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 
-1;
-
 # end of main
 
 sub add    { &{"add_$form->{type}"} }
@@ -1504,3 +1502,4 @@ sub search_taxform {
 
 sub continue { &{ $form->{nextsub} } }
 
+1;

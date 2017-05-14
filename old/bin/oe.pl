@@ -53,8 +53,6 @@ use LedgerSMB::Locale;
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
 
-1;
-
 # end of main
 
 sub add {
@@ -2611,3 +2609,4 @@ sub vendor_selected {
 
 }
 
+1;
