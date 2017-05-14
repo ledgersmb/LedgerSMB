@@ -172,7 +172,7 @@ sub save {
     my ($ref) = $self->call_dbmethod(funcname => 'person__save');
     my ($id) = values(%$ref);
     $self->entity_id($id);
-    $self->call_dbmethod(funcname => 'employee__save');
+    return $self->call_dbmethod(funcname => 'employee__save');
 }
 
 =back
