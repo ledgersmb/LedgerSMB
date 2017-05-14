@@ -250,7 +250,8 @@ sub run_report {
                debits => $total_debits,
               credits => $total_credits,
             html_class => 'listtotal'};
-    $self->rows(\@rows);
+
+    return $self->rows(\@rows);
 }
 
 =back

@@ -216,7 +216,7 @@ sub _get_to_date {
     if ($self->interval eq 'month'){
        $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
-       $date->add(months => 3);
+       $date->add(months => 3);         ## no critic ( ProhibitMagicNumbers)
     } elsif ($self->interval eq 'year'){
        $date->add(years => 1);
     }
@@ -232,6 +232,7 @@ sub _set_lazy_dates {
               $self->to_date;
               $self->date_from;
               $self->date_to;
+              return;
 }
 
 

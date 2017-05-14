@@ -363,7 +363,7 @@ sub run_report{
         }
         $self->process_bclasses($ref);
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back
