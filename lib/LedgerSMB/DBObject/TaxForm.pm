@@ -54,7 +54,7 @@ sub save
 
     my ($self) = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'tax_form__save');
-    $self->{taxform_id} = $ref->{'tax_form__save'};
+    return $self->{taxform_id} = $ref->{'tax_form__save'};
 
 }
 
@@ -158,7 +158,7 @@ sub get_metadata
     );
 
     my ($ref) = $self->call_procedure(funcname => 'setting_get', args => ['default_country']);
-    $self->{default_country} = $ref->{setting_get};
+    return $self->{default_country} = $ref->{setting_get};
 }
 
 
