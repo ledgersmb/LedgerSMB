@@ -114,6 +114,7 @@ sub save {
           }
        }
     }
+    return;
 }
 
 =item get
@@ -162,6 +163,7 @@ sub generate {
            $asset->{checked} = "CHECKED";
         }
     }
+    return;
 }
 
 =item approve
@@ -181,7 +183,7 @@ approved.
 
 sub approve {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'asset_report__approve');
+    return $self->call_dbmethod(funcname => 'asset_report__approve');
 }
 
 =item search
@@ -240,6 +242,7 @@ sub get_metadata {
             $acct->{text} = $acct->{accno}. '--'. $acct->{description};
         }
     }
+    return;
 }
 
 =back

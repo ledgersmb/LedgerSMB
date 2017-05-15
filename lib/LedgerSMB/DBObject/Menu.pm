@@ -97,6 +97,7 @@ sub __generate {
             }
         }
     }
+    return;
 }
 
 1;

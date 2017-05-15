@@ -39,6 +39,7 @@ sub _get_translations {
     for my $trans (@translations) {
         $self->{translations}->{$trans->{language_code}} = $trans;
     }
+    return;
 }
 
 
@@ -98,7 +99,7 @@ sub save {
         $self->call_procedure(funcname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
 
-    $self->_get_translations;
+    return $self->_get_translations;
 }
 
 =item save_translations
@@ -125,6 +126,7 @@ sub save_translations {
                           $self->{translations}->{$lang_code}]);
         }
     }
+    return;
 }
 
 =item get()
@@ -168,7 +170,7 @@ $account->{id} must be set.
 sub check_transactions {
     my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'account_has_transactions');
-    $self->{has_transactions} = $ref->{'account_has_transactions'};
+    return $self->{has_transactions} = $ref->{'account_has_transactions'};
 }
 
 =item is_recon
@@ -204,6 +206,7 @@ sub delete {
     } else {
     die "Unknown charttype."
     }
+    return;
 }
 
 =item list()
@@ -258,7 +261,7 @@ sub generate_links {
         }
      }
 
-     $self->{link} = $self->_db_array_scalars(@links);
+     return $self->{link} = $self->_db_array_scalars(@links);
 }
 
 =item list_headings
