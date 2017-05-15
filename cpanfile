@@ -19,6 +19,7 @@ requires 'JSON';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'MIME::Lite';
+requires 'Module::Runtime';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
@@ -65,7 +66,6 @@ feature 'edi', "X12 EDI support" =>
     sub {
         requires 'X12::Parser';
         requires 'Path::Class';
-        requires 'Module::Runtime';
 };
 
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
