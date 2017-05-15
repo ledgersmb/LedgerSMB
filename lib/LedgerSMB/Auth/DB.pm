@@ -24,10 +24,9 @@ use Carp;
 
 use MIME::Base64;
 use Log::Log4perl;
-
 use LedgerSMB::Sysconfig;
-
 use Moose;
+use namespace::autoclean;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');
 
