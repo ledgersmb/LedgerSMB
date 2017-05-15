@@ -7,9 +7,7 @@ use Carp;
 use PageObject;
 use MIME::Base64;
 use Test::More;
-
-use Module::Runtime qw(use_module);
-
+use Module::Load;
 use Moose;
 extends 'PageObject';
 
@@ -100,8 +98,7 @@ sub click_menu {
         return undef;
     }
     # make sure the widget is registered before resolving the Weasel widget
-    ok(use_module($tgt_class),
-       "$tgt_class can be 'use'-d dynamically");
+    ok(load $tgt_class, "$tgt_class can be 'use'-d dynamically");
 
     do {
         $item = $item->find(".$ul/li[./a[text()='$_']]");

@@ -4,8 +4,7 @@ use strict;
 use warnings;
 
 use Carp;
-use Module::Runtime qw(use_module);
-
+use Module::Load;
 use Moose;
 extends 'Weasel::Element';
 

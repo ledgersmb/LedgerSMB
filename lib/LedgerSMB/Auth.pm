@@ -54,16 +54,15 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use Module::Runtime qw(use_module);
-
+use Module::Load;
 
 my $plugin = 'LedgerSMB::Auth::' . LedgerSMB::Sysconfig::auth;
-use_module($plugin) or die "Can't locate Auth parser plugin $plugin";
+load $plugin;
 
 sub factory {
     my ($psgi_env) = @_;
 
-    return use_module($plugin)->new(env => $psgi_env);
+    return $plugin->new(env => $psgi_env);
 }
 
 

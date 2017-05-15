@@ -4,8 +4,7 @@
 use strict;
 use warnings;
 
-use Module::Runtime qw/ use_module /;
-
+use Module::Load;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
@@ -23,7 +22,7 @@ my %pages = (
 When qr/I navigate to the application root/, sub {
     my $module = "PageObject::App::Login";
 
-    use_module($module);
+    load $module;
     S->{page} = $module->open(S->{ext_wsl})->verify;
 };
 
@@ -32,7 +31,7 @@ When qr/I navigate to the (.*) page/, sub {
     die "Unknown page '$page'"
         unless exists $pages{$page};
 
-    use_module($pages{$page});
+    load $pages{$page};
     S->{page} = $pages{$page}->open(S->{ext_wsl})->verify;
 };
 
@@ -126,7 +125,7 @@ When qr/I open the parts screen for '(.*)'/, sub {
         qq|.//td[contains(concat(" ",normalize-space(\@class)," "),
                           " partnumber ")]//*[text()="$partnumber"]|)->click;
 
-    use_module($screens{'part entry'});
+    load $screens{'part entry'};
     S->{ext_wsl}->page->body->maindiv->wait_for_content;
 };
 
