@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Carp;
-use Module::Load;
 use Moose;
 extends 'Weasel::Element';
 
