@@ -51,8 +51,7 @@ sub country_codes {
 
     closedir(DIR);
 
-    %cc;
-
+    return %cc;
 }
 
 =head2 METHODS
@@ -70,7 +69,7 @@ from the db for consistency.
 sub save_preferences {
     my ($self) = @_;
     $self->call_dbmethod(funcname => 'user__save_preferences');
-    $self->get;
+    return $self->get;
 }
 
 =item $self->change_my_password()
@@ -112,7 +111,7 @@ sub change_my_password {
     }
 
     $self->{password} = $self->{new_password};
-    $self->call_dbmethod(funcname => 'user__change_password');
+    return $self->call_dbmethod(funcname => 'user__change_password');
 }
 
 =item $self->get_option_data()
@@ -161,7 +160,7 @@ sub get_option_data {
     }
     my ($pw_expiration) = $self->call_dbmethod(
             funcname => 'user__check_my_expiration');
-    $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
+    return $self->{password_expires} = $pw_expiration->{user__check_my_expiration};
 }
 
 =item $self->save()
@@ -304,7 +303,7 @@ sub get_all_users {
     my $self = shift @_;
 
     my @ret = $self->call_dbmethod( funcname=>"user__get_all_users" );
-    $self->{users} = \@ret;
+    return $self->{users} = \@ret;
 }
 
 
