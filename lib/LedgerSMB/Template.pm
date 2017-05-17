@@ -620,7 +620,8 @@ sub _http_output {
     print $data;
     # change global resource back asap
     binmode (STDOUT, ':utf8');
-    return $logger->trace("end print to STDOUT");
+    $logger->trace("end print to STDOUT");
+    return;
 }
 
 sub _http_output_file {
@@ -696,7 +697,8 @@ sub _email_output {
             @attachment,
         );
     }
-    return $mail->send;
+    $mail->send;
+    return;
 }
 
 sub _lpr_output {
@@ -721,7 +723,8 @@ sub _lpr_output {
     }
 
     close $pipe;
-    return close $file;
+    close $file;
+    return;
 }
 
 # apply locale settings to column headings and add sort urls if necessary.

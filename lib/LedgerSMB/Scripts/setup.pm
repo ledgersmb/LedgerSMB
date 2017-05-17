@@ -256,11 +256,12 @@ Checks for common setup issues and errors if admin tasks cannot be completed/
 
 =cut
 
-sub sanity_checks { ## no critic ( RequireFinalReturn )
+sub sanity_checks { 
     my ($database) = @_;
     `psql --help` || die LedgerSMB::App_State::Locale->text(
                                  'psql not found.'
                               );
+    return;
 }
 
 =item list_databases

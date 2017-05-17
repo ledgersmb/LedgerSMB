@@ -493,7 +493,8 @@ sub merge {
         }
         $self->{$dst_arg} = $src->{$arg};
     }
-    return $logger->debug("end caller \$filename=$filename \$line=$line");
+    $logger->debug("end caller \$filename=$filename \$line=$line");
+    return;
 }
 
 sub set {
