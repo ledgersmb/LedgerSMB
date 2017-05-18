@@ -73,7 +73,7 @@ sub build_filter_by_period {
           );
 
 
-    @{$self->{radioOptions}} = (
+    return @{$self->{radioOptions}} = (
                {
                   label  => $locale->text('Current'),
                   name   => 'radioPeriod',

@@ -188,6 +188,7 @@ sub _run_old {
        do 'old/bin/old-handler.pl';
        exit;
     }
+    return;
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
@@ -204,7 +205,7 @@ sub setup_url_space {
     my $old_app = old_app();
     my $psgi_app = \&psgi_app;
 
-    builder {
+    return builder {
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
@@ -241,6 +242,7 @@ sub setup_url_space {
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };
+
 }
 
 

@@ -39,7 +39,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->call_dbmethod(funcname => 'file__save_incoming');
+    return $self->call_dbmethod(funcname => 'file__save_incoming');
 }
 
 =back

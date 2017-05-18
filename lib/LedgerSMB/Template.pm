@@ -562,6 +562,7 @@ sub output {
     } else {
         $self->_http_output_file;
     }
+    return;
 }
 
 sub _http_output {
@@ -618,6 +619,7 @@ sub _http_output {
     # change global resource back asap
     binmode (STDOUT, ':utf8');
     $logger->trace("end print to STDOUT");
+    return;
 }
 
 sub _http_output_file {
@@ -638,6 +640,8 @@ sub _http_output_file {
 
     unlink($self->{rendered}) or
         die 'Unable to delete output file';
+
+    return;
 }
 
 sub _email_output {
@@ -692,6 +696,7 @@ sub _email_output {
         );
     }
     $mail->send;
+    return;
 }
 
 sub _lpr_output {
@@ -717,6 +722,7 @@ sub _lpr_output {
 
     close $pipe;
     close $file;
+    return;
 }
 
 # apply locale settings to column headings and add sort urls if necessary.

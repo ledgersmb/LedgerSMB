@@ -156,7 +156,7 @@ sub process {
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    $parent->{rendered} = "$parent->{outputfile}.$format";
+    return $parent->{rendered} = "$parent->{outputfile}.$format";
 }
 
 sub postprocess {

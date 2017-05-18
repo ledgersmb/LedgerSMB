@@ -208,7 +208,7 @@ sub set_mime_type {
     $self->mime_type_text($mime_type);
     my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text',
          args => [undef, $self->mime_type_text]);
-    $self->mime_type_id($ref->{id});
+    return $self->mime_type_id($ref->{id});
 
 }
 
@@ -221,6 +221,7 @@ Auto-detects the type of the file.  Not yet implemented
 sub detect_type {
     my ($self) = @_;
     $logger->warn("Stub LedgerSMB::File::detect_type\n");
+    return;
 };
 
 =item get
@@ -233,6 +234,7 @@ sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'file__get');
     $self->{$_} = $ref->{$_} for keys %$ref;
+    return;
 }
 
 =item get_for_template({ref_key => int, file_class => int})
@@ -307,6 +309,7 @@ sub DEMOLISH {
    }
    closedir (TMP);
    rmdir $self->{file_path};
+   return;
 }
 
 =item list({ref_key => int, file_class => int})

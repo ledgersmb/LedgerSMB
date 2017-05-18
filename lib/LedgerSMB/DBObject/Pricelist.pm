@@ -53,6 +53,7 @@ sub save {
         $line->merge($ref);
         $line->call_dbmethod(funcname => 'pricelist__save');
     }
+    return;
 }
 
 =back
@@ -71,7 +72,7 @@ sub delete {
     my $line = __PACKAGE__->new({base => $self,
                                  merge => ['credit_id', 'entry_id'] }
         );
-    $line->call_dbmethod(funcname => 'pricelist__delete');
+    return $line->call_dbmethod(funcname => 'pricelist__delete');
 }
 
 

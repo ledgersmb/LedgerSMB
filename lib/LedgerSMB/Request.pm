@@ -83,6 +83,7 @@ sub requires_series {
                               map { "${att}_$_" } ($start .. $stop)
                         } @_ );
     }
+    return;
 }
 
 =head2 requires_from($moose_class_name)
@@ -105,7 +106,8 @@ sub requires_from {
     }
     Carp::croak $dummy if defined $dummy;
 
-    $self->require(grep { $meta->get_attribute($_)->is_required }
+    return $self->require(
+            grep { $meta->get_attribute($_)->is_required }
                    ($meta->get_attribute_list));
 }
 
@@ -120,6 +122,7 @@ parse_amount, or for add-ons written with Moo instead of Moose.
 sub numbers {
     my $self = shift @_;
     $self->{$_} = LedgerSMB::PGNumber->from_input($self->{$_}) for @_;
+    return;
 }
 
 =head2 numbers_series($start, $stop, @attnames)
@@ -137,6 +140,7 @@ sub numbers_series {
     for my $att (@_){
         $self->numbers( map { "${att}_$_" } ($start .. $stop));
     }
+    return;
 }
 
 =head2 dates (@attnames)
@@ -149,6 +153,7 @@ Like numbers() above, but converts to LedgerSMB::PGDate objects instead,.
 sub dates {
     my $self = shift @_;
     $self->{$_} = LedgerSMB::PGDate->from_input($self->{$_}) for @_;
+    return;
 }
 
 =head2 dates_series ($start, $stop, @attnames)
@@ -164,6 +169,7 @@ sub dates_series {
     for my $att (@_){
         $self->dates(map { "${att}_$_" }  ($start .. $stop));
     }
+    return;
 }
 
 =head1 COPYRIGHT

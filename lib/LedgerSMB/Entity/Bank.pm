@@ -22,7 +22,7 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject';
 use PGObject::Util::DBMethod;
 
-sub _get_prefix { 'entity__' };
+sub _get_prefix { return 'entity__' };
 
 =head1 PROPERTIES
 
@@ -111,7 +111,7 @@ setting things like the id field.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'save_bank_account');
-    $self = $self->new(%$ref);
+    return $self = $self->new(%$ref);
 }
 
 =item delete

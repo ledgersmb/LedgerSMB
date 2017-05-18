@@ -195,7 +195,7 @@ sub name {
 sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'goods__history');
-    $self->rows(
+    return $self->rows(
         [  map { { (%$_, (row_id => $_->{id})) } } @rows ]
     );
 }

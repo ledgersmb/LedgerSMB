@@ -38,7 +38,7 @@ Attaches or links a specific file to the given transaction.
 
 sub attach {
     my ($self, $args) = @_;
-    $self->call_dbmethod(funcname => 'file__attach_to_entity');
+    return $self->call_dbmethod(funcname => 'file__attach_to_entity');
 }
 
 =back

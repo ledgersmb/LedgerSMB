@@ -70,6 +70,7 @@ sub get {
         funcname => 'get',
         args     =>[$id]
     ) };
+    return;
 }
 
 sub search {

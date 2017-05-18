@@ -290,7 +290,7 @@ sub run_report{
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
         $self->total($self->total + $row->{total});
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

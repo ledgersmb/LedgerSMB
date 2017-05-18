@@ -252,6 +252,7 @@ This routine generates an order based on timecards
 sub generate_order {
     my ($request) = @_;
     # TODO after beta 1
+    return;
 }
 
 =item get

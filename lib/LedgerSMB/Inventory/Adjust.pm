@@ -18,7 +18,7 @@ with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 use LedgerSMB::Inventory::Adjust_Line;
 
-sub _get_prefix { 'inventory_adjust__' }
+sub _get_prefix { return 'inventory_adjust__' }
 
 =head1 DESCRIPTION
 
@@ -137,7 +137,7 @@ sub add_line{
     my $line = LedgerSMB::Inventory::Adjust_Line->new(%$hashref);
     my @lines = @{$self->rows};
     push @lines, $line;
-    $self->rows(\@lines);
+    return $self->rows(\@lines);
 }
 
 =item save
@@ -155,6 +155,7 @@ sub save {
         $row->check_variance($self->transdate);
         $row->save($self->id);
     }
+    return;
 }
 
 =item approve
@@ -167,6 +168,7 @@ These can then be approved, adjusted, have payment lines recorded, and the like.
 sub approve {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'approve');
+    return;
 };
 
 
@@ -180,6 +182,7 @@ adjustment is not approved.
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'delete');
+    return;
 }
 
 =item get_part_at_date

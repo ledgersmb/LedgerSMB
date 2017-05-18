@@ -104,7 +104,7 @@ sub run_report {
     my ($self) = $_;
     my @rows = $self->list;
     $_->{row_id} = $_->{id} for @rows;
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

@@ -50,7 +50,7 @@ sub initialize{
    { no strict 'refs';
    @{$settings->{curr}} = split (/:/, $settings->{curr});
    }
-   $LedgerSMB::App_State::Company_Config = $settings;
+   return $LedgerSMB::App_State::Company_Config = $settings;
 }
 
 1;

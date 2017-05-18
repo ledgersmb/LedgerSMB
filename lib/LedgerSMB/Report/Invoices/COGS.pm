@@ -167,7 +167,7 @@ Line Item COGS Report
 
 =cut
 
-sub name { LedgerSMB::Report::text('Line Item COGS Report'); }
+sub name { return LedgerSMB::Report::text('Line Item COGS Report'); }
 
 =head1 METHODS
 
@@ -184,7 +184,7 @@ sub run_report {
         $row->{partnumber_href_suffix} = $row->{parts_id};
         $row->{invnumber_href_suffix} = $row->{trans_id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

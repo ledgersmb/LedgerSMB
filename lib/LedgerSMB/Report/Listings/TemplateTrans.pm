@@ -76,7 +76,7 @@ none
 
 =cut
 
-sub header_lines { [] }
+sub header_lines { return [] }
 
 =head2 set_buttons
 
@@ -124,7 +124,7 @@ sub run_report {
        $ref->{journal_type} = $jtype{$ref->{entry_type}};
        $ref->{row_id} = $ref->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

@@ -435,6 +435,7 @@ sub save_pricematrix {
                                       args => \@args);
         }
     }
+    return;
 }
 
 
