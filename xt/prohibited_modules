@@ -1,0 +1,11 @@
+# Perl::Critic policy Modules::ProhibitEvilModules will throw an error
+# if any of the modules listed here are used.
+Carp::Always
+Data::Dumper
+Data::Printer
+
+# Module::Load::load is vulnerable to path traversal attacks
+# We prefer to use Module::Runtime, which is not vulnerable to
+# this issue. See: 
+# https://rt.cpan.org/Public/Bug/Display.html?id=106128
+Module::Load  Consider using Module::Runtime instead of Module::Load to avoid path traversal vulnerability
