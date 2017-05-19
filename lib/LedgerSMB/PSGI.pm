@@ -17,9 +17,8 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
-
+use Module::Load;
 use CGI::Emulate::PSGI;
-use Module::Runtime qw/ use_module /;
 use Try::Tiny;
 
 # To build the URL space
@@ -104,7 +103,7 @@ sub psgi_app {
         unless $module;
 
     return _internal_server_error("Unable to open module $module : $! : $@")
-        unless use_module($module);
+        unless load $module;
 
     my $action = $module->can($request->{action});
     return _internal_server_error("Action Not Defined: $request->{action}")

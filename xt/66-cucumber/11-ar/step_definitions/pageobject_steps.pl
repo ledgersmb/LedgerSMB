@@ -11,8 +11,6 @@ use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
 use LedgerSMB::PGDate;
 
-
-use Module::Runtime qw(use_module);
 use PageObject::App::Login;
 
 use Test::More;
