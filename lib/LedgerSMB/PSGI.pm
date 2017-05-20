@@ -146,8 +146,14 @@ sub psgi_app {
         }
 
         $LedgerSMB::App_State::DBH = $request->{dbh};
-        ($status, $headers, $body) = @{&$action($request)};
-
+        if ( defined $action ) {
+            ($status, $headers, $body) = @{&$action($request)};
+        } else {
+            ($status, $headers, $body) =
+                      (500,
+                       ['text/html'],
+                       ['Action routine not defined, please file a bug'] );
+        }
         $request->{dbh}->commit if defined $request->{dbh};
         LedgerSMB::App_State->cleanup();
     }
