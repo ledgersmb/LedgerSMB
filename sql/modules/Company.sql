@@ -336,10 +336,11 @@ RETURNS SETOF contact_search_result AS $$
             OR in_contact_info IS NULL
         )
         AND (
-            (
+            (   -- Are we filtering by address?
                 in_address IS NULL
                 AND in_city IS NULL
                 AND in_state IS NULL
+                AND in_mail_code IS NULL
                 AND in_country IS NULL
             )
             OR (
@@ -350,22 +351,72 @@ RETURNS SETOF contact_search_result AS $$
                     ON leca.id = le2a.credit_id
                     JOIN location ll ON le2a.location_id = ll.id
                     WHERE (
+                        in_address IS NULL
+                        OR
                         line_one @@ plainto_tsquery(in_address)
                         OR
                         line_two @@ plainto_tsquery(in_address)
                         OR
                         line_three @@ plainto_tsquery(in_address)
                     )
-                    AND city ILIKE
-                        '%' || coalesce(in_city, '') || '%'
-                    AND state ILIKE
-                        '%' || coalesce(in_state, '') || '%'
-                    AND mail_code ILIKE
-                         coalesce(in_mail_code, '') || '%'
-                    AND country_id IN (
-                        SELECT id FROM country
-                        WHERE name ilike in_country
-                        OR short_name ilike in_country
+                    AND (
+                        in_city IS NULL
+                        OR city ILIKE '%' || in_city || '%'
+                    )
+                    AND (
+                        -- location.state can be NULL
+                        in_state IS NULL
+                        OR state ILIKE '%' || in_state || '%'
+                    )
+                    AND (
+                        -- location.mail_code can be NULL
+                        in_mail_code IS NULL
+                        OR mail_code ILIKE in_mail_code || '%'
+                    )
+                    AND (
+                        in_country IS NULL
+                        OR country_id IN (
+                            SELECT id FROM country
+                            WHERE name ilike in_country
+                            OR short_name ilike in_country
+                        )
+                    )
+
+                    UNION
+
+                    SELECT entity_id
+                    FROM entity_to_location e2l
+                    JOIN location ON e2l.location_id = location.id
+                    WHERE (
+                        in_address IS NULL
+                        OR
+                        line_one @@ plainto_tsquery(in_address)
+                        OR
+                        line_two @@ plainto_tsquery(in_address)
+                        OR
+                        line_three @@ plainto_tsquery(in_address)
+                    )
+                    AND (
+                        in_city IS NULL
+                        OR city ILIKE '%' || in_city || '%'
+                    )
+                    AND (
+                        -- location.state can be NULL
+                        in_state IS NULL
+                        OR state ILIKE '%' || in_state || '%'
+                    )
+                    AND (
+                        -- location.mail_code can be NULL
+                        in_mail_code IS NULL
+                        OR mail_code ILIKE in_mail_code || '%'
+                    )
+                    AND (
+                        in_country IS NULL
+                        OR country_id IN (
+                            SELECT id FROM country
+                            WHERE name ILIKE in_country
+                            OR short_name ILIKE in_country
+                        )
                     )
                 )
             )
