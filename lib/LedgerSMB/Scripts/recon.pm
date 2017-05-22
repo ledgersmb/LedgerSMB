@@ -20,6 +20,7 @@ package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
+use LedgerSMB::Magic qw( HTTP_BAD_REQUEST);
 use LedgerSMB::Setting;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Reconciliation::Summary;
@@ -235,10 +236,10 @@ sub _display_report {
     for my $field (qw/ total_cleared_credits total_cleared_debits total_uncleared_credits total_uncleared_debits /) {
       $recon->{"$field"} = LedgerSMB::PGNumber->from_input(0);
     }
-    my $neg_factor = 1;
+    my $is_positive = 1;
     if ($recon->{account_info}->{category} =~ /(A|E)/){
-       $recon->{their_total} *= -1;
-       $neg_factor = -1;
+       $recon->{their_total} = - $recon->{their_total};
+       $is_positive = 0;
     }
     # Credit/Debit separation (useful for some)
     for my $l (@{$recon->{report_lines}}){
@@ -274,10 +275,13 @@ sub _display_report {
 
     $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
-    $recon->{statement_gl_calc} = $neg_factor *
-                                    ($recon->{their_total}
+    $recon->{statement_gl_calc} = $is_positive
+                                  ?  ($recon->{their_total}
                                     + $recon->{outstanding_total}
-                                    + $recon->{mismatch_our_total});
+                                    + $recon->{mismatch_our_total})
+                                  : - ($recon->{their_total}
+                                    + $recon->{outstanding_total}
+                                    + $recon->{mismatch_our_total}) ;
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
     $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
 
@@ -294,7 +298,7 @@ sub _display_report {
          $recon->{"$amt_name$bal_type"} = $recon->{"$amt_name$bal_type"}->to_output(money=>1);
       }
     }
-    $recon->{their_total} = $recon->{their_total} * $neg_factor;
+    $recon->{their_total} = $is_positive ? $recon->{their_total} : - $recon->{their_total};
 
     for my $field (qw/ cleared_total outstanding_total statement_gl_calc their_total /) {
       $recon->{"$field"} = $recon->{"$field"}->to_output(money=>1);
@@ -408,7 +412,7 @@ sub approve {
         return get_results($request);
     }
 
-    return [ 400, # bad request
+    return [ HTTP_BAD_REQUEST,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],
              [ "'report_id' parameter missing" ]
         ] if ! $request->{report_id};

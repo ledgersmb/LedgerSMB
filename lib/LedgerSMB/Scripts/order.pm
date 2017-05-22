@@ -20,6 +20,7 @@ use warnings;
 
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
+use LedgerSMB::Magic qw( OEC_PURCHASE_ORDER OEC_SALES_ORDER OEC_QUOTATION OEC_RFQ );
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -52,7 +53,7 @@ sub get_criteria {
     $request->{entity_class} = $request->{oe_class_id} % 2 + 1;
     $request->{report_name} = 'orders';
     $request->{open} = 1 if $request->{search_type} ne 'search';
-    if ($request->{oe_class_id} == 1){
+    if ($request->{oe_class_id} == OEC_SALES_ORDER ){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Sales Orders');
         } elsif ($request->{search_type} eq 'generate'){
@@ -63,7 +64,7 @@ sub get_criteria {
         } elsif ($request->{search_type} eq 'ship'){
             $request->{title} = $locale->text('Ship');
         }
-    } elsif ($request->{oe_class_id} == 2){
+    } elsif ($request->{oe_class_id} == OEC_PURCHASE_ORDER ){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Purchase Orders');
         } elsif ($request->{search_type} eq 'combine'){
@@ -74,11 +75,11 @@ sub get_criteria {
         } elsif ($request->{search_type} eq 'ship'){
             $request->{title} = $locale->text('Receive');
         }
-    } elsif ($request->{oe_class_id} == 3){
+    } elsif ($request->{oe_class_id} == OEC_QUOTATION ){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Quotations');
         }
-    } elsif ($request->{oe_class_id} == 4){
+    } elsif ($request->{oe_class_id} == OEC_RFQ ){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Requests for Quotation');
         }
