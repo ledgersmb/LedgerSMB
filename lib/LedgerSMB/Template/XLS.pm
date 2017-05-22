@@ -65,8 +65,9 @@ my $rowcount;
 my $currcol;
 
 sub _worksheet_handler {
-    $rowcount = -1;
     $currcol = 0;
+    $rowcount = 0;
+    -- $rowcount;
     return $_->set_att(type => 'worksheet');
 }
 
