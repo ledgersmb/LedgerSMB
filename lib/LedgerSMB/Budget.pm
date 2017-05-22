@@ -246,7 +246,7 @@ sub from_input {
              $line->{amount} =   $input->{"credit_$rownum"}
                                - $input->{"debit_$rownum"};
              $line->{credit} = $line->{amount} if $line->{amount} > 0;
-             $line->{debit}  = $line->{amount} * -1 if $line->{amount} < 0;
+             $line->{debit}  = -$line->{amount} if $line->{amount} < 0;
          }
          my ($accno) = split /--/, $input->{"accno_$rownum"};
          my ($ref) = $input->call_procedure(
