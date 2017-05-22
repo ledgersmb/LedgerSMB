@@ -31,35 +31,8 @@ var Cache = function(masterStore, cachingStore, options){
                 });
             });
         },
-/*
-        add: function(object, directives){
-            return when(masterStore.add(object, directives), function(result){
-                // now put result in cache
-                cachingStore.add(result && typeof result == "object" ? result : object, directives);
-                return result; // the result from the add should be dictated by the masterStore and be unaffected by the cachingStore
-            });
-        },
-        put: function(object, directives){
-            // first remove from the cache, so it is empty until we get a response from the master store
-            cachingStore.remove((directives && directives.id) || this.getIdentity(object));
-            return when(masterStore.put(object, directives), function(result){
-                // now put result in cache
-                cachingStore.put(result && typeof result == "object" ? result : object, directives);
-                return result; // the result from the put should be dictated by the masterStore and be unaffected by the cachingStore
-            });
-        },
-        remove: function(id, directives){
-            return when(masterStore.remove(id, directives), function(result){
-                return cachingStore.remove(id, directives);
-            });
-        },
-        evict: function(id){
-            return cachingStore.remove(id);
-        }
-*/
     });
 };
-//lang.setObject("lsmb.menus.Cache", Cache);
 return Cache;
 });
 
