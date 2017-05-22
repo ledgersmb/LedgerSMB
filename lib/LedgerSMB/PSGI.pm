@@ -14,7 +14,7 @@ LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 use strict;
 use warnings;
 
-use PGObject 'ledgersmb';
+use PGObject;
 
 use LedgerSMB;
 use LedgerSMB::App_State;

@@ -8,7 +8,7 @@ package LedgerSMB::PGDate;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
-use PGObject;
+use PGObject 'ledgersmb';
 use parent qw(PGObject::Type::DateTime);
 use strict;
 use warnings;

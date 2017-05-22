@@ -8,6 +8,7 @@ LedgerSMB::PGNumber - Number handling and serialization to database
 package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
+use PGObject 'ledgersmb';
 use parent qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
