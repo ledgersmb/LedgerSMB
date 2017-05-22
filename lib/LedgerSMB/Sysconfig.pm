@@ -7,10 +7,14 @@ use strict;
 use warnings;
 use Cwd;
 
+
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);
 use English qw(-no_match_vars);
+
+
+use LedgerSMB::Magic qw( MEGABYTE );
 
 =head2 die_pretty $line_1, $line_2, $line_N;
 
@@ -163,7 +167,7 @@ def 'force_username_case',
 
 def 'max_post_size',
     section => 'main',
-    default => 1024 * 1024,
+    default => MEGABYTE,
     doc => qq||;
 
 def 'cookie_name',

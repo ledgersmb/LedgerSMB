@@ -180,6 +180,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Magic qw( HTTP_OK);
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
@@ -528,7 +529,7 @@ sub render_to_psgi {
         unlink $self->{rendered};
     }
 
-    return [ 200, $headers, $body ];
+    return [ HTTP_OK, $headers, $body ];
 }
 
 sub escape {
