@@ -14,9 +14,8 @@ use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('float4', 'float8', 'double precision', 'float', 'numeric');
+__PACKAGE__->register(registry => 'default', 
+    dbtype => [qw(float4 float8 float numeric), 'double precision']);
 
 
 =head1 SYNPOSIS
