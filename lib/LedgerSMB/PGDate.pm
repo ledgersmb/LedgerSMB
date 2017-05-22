@@ -13,9 +13,17 @@ use base qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-PGObject->register_type(pg_type => $_,
+if ($PGObject::VERSION =~ /^1\./){
+    PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
-   for ('date');
+    for ('date');
+} else {
+    PGObject::Type::Registry->register_type(
+                                  registry => 'default',
+                                    dbtype => $_,
+                                   apptype => __PACKAGE__)
+        for ('date');
+}
 
 
 =head1 SYNPOSIS

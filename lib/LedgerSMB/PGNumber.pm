@@ -14,9 +14,17 @@ use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('float4', 'float8', 'double precision', 'float', 'numeric');
+# For 1.6, better to move to the type's registration API rather than 
+# do it ourselves, but this keeps the logic the same.
+for ('float4', 'float8', 'double precision', 'float', 'numeric'){
+    if ($PGObject::VERSION =~ /^1\./){
+        PGObject->register_type(pg_type => $_,
+                                  perl_class => __PACKAGE__);
+    } else {
+        PGObject::Type::Registry->register_type(registry => 'default',
+                dbtype => $_, apptype => __PACKAGE__);
+    }
+}
 
 
 =head1 SYNPOSIS
