@@ -1,3 +1,15 @@
 # default arguments for the 'prove' command
 -l
 -Iold/lib/
+# arguments for Perl source runner
+--source Perl
+# arguments for pgTAP integration
+--source pgTAP
+--pgtap-option suffix=.pg
+# arguments for pherkin integration
+--source Feature
+--feature-option extensions=.feature
+# which files to run?
+--ext=.t
+--ext=.pg
+--ext=.feature
