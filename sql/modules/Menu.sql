@@ -12,8 +12,7 @@ CREATE TYPE menu_item AS (
    label varchar,
    path varchar,
    parent int,
-   args text[],
-   children int[]
+   args text[]
 );
 
 CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS
