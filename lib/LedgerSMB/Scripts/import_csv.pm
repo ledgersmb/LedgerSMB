@@ -245,13 +245,13 @@ sub _inventory_single_date {
         if ! $ap_form->{id};
 
     # Now, update the report record.
-    return $dbh->do( # These two params come from posting above, and from
+    return ($dbh->do( # These two params come from posting above, and from
               # the db.
               "UPDATE inventory_report
                        SET ar_trans_id = $ar_form->{id},
                            ap_trans_id = $ap_form->{id}
                      WHERE id = $report_id"
-        ) or $ap_form->dberror();
+        ) or $ap_form->dberror());
 }
 
 sub _process_ar_multi {
