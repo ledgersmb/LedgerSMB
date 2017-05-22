@@ -110,18 +110,14 @@ sub name {
 
 =cut
 
-my %jtype = (
-    1 => 'gl',
-    2 => 'ar',
-    3 => 'ap',
-    );
+my @jtype = ( undef, 'gl', 'ar', 'ap' );    # XXX magic number map.  From where is the magic? --rir
 
 sub run_report {
     my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'journal__search');
     for my $ref(@rows){
-       $ref->{journal_type} = $jtype{$ref->{entry_type}};
+       $ref->{journal_type} = $jtype[$ref->{entry_type}];
        $ref->{row_id} = $ref->{id};
     }
     return $self->rows(\@rows);
