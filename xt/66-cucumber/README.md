@@ -52,12 +52,12 @@ The code consists of the following components:
  * Step files, which implement function specific steps, in a
    `step_definitions` subdirectory of each numbered directory
    (e.g. `01-basic/step_definitions/`)
- * `pherkin` extensions in `t/lib/Pherkin/Extension` which implement
+ * `pherkin` extensions in `xt/lib/Pherkin/Extension` which implement
    * `LedgerSMB`: Steps which define application state (provides
      database handle access)
    * `PageObject`: Steps to access the browser UI, common to most
      test scripts
- * `PageObject`s (in `t/lib/`)
+ * `PageObject`s (in `xt/lib/`)
    * implementing access to browser page
      functionality, deriving from `Weasel::Element`, thereby referring
      to their root DOM element
@@ -107,7 +107,7 @@ When a specific widget is expected to be returned, the receiver should
 use the session's wait_for() function to poll for the correct return
 type. The default settings for wait_for make it poll for a number of
 seconds.  A good example is the `Then 'I should see the <screen-name>
-screen'` step in `t/lib/Pherkin/Extensions/pageobject_steps/nav_steps.pl`.
+screen'` step in `xt/lib/Pherkin/Extensions/pageobject_steps/nav_steps.pl`.
 
 Caching accessors, such as `content` above, should be resistent to the
 'repeated accessing' pattern caused by this polling behaviour by validating
