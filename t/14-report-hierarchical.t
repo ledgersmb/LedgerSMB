@@ -3,6 +3,7 @@
 use Test::More (tests => 6);
 use strict;
 use warnings;
+use PGObject 'ledgersmb';
 
 use Data::Dumper;
 

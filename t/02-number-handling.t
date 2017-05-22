@@ -10,6 +10,7 @@ $ENV{REQUEST_METHOD} = 'GET';
 #use Test::More 'no_plan';
 use Test::More tests => 374;
 use Test::Trap qw(trap $trap);
+use PGObject 'ledgersmb';
 use Math::BigFloat;
 
 use LedgerSMB;

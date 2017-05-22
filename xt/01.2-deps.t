@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 
 use Module::CPANfile;
+
 use File::Find;
+use PGObject 'ledgersmb';
 
 BEGIN {
  local $@;
