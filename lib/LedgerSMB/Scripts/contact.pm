@@ -32,6 +32,7 @@ use LedgerSMB::Entity::Bank;
 use LedgerSMB::Entity::Note;
 use LedgerSMB::Entity::User;
 use LedgerSMB::File;
+use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
@@ -71,7 +72,7 @@ control code
 
 sub get_by_cc {
     my ($request) = @_;
-    if ($request->{entity_class} == 3){
+    if ($request->{entity_class} == EC_EMPLOYEE){
         my $emp = LedgerSMB::Entity::Person::Employee->get_by_cc(
                             $request->{control_code}
         );
@@ -105,7 +106,7 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    if ($request->{entity_class} && $request->{entity_class} == 3){
+    if ($request->{entity_class} && $request->{entity_class} == EC_EMPLOYEE){
         my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
         );
@@ -145,7 +146,7 @@ sub _main_screen {
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
        no warnings 'uninitialized';
-       if ($person->{entity_id} && $person->{entity_class} == 3){
+       if ($person->{entity_id} && $person->{entity_class} == EC_EMPLOYEE){
           shift @DIVS;
           unshift @DIVS, 'employee', 'user', 'wage';
        }
@@ -155,7 +156,8 @@ sub _main_screen {
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
-    } elsif (defined $person->{entity_class} && $person->{entity_class} == 3) {
+    } elsif (defined $person->{entity_class}
+                && $person->{entity_class} == EC_EMPLOYEE ) {
        @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
@@ -390,7 +392,7 @@ sub save_employee {
                            );
         ($request->{control_code}) = values %$ref;
     }
-    $request->{entity_class} = 3;
+    $request->{entity_class} = EC_EMPLOYEE ;
     $request->{ssn} = $request->{personal_id} if defined $request->{personal_id};
     $request->{control_code} = $request->{employeenumber} if defined $request->{employeenumber};
     $request->{employeenumber} ||= $request->{control_code};
@@ -574,7 +576,7 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
-    if ($request->{entity_class} == 3){
+    if ($request->{entity_class} == EC_EMPLOYEE ){
         $request->{dob} = $request->{birthdate} if $request->{birthdate};
        return save_employee($request);
     }
