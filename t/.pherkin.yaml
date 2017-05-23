@@ -20,14 +20,16 @@ default:
              page_class: PageObject::Root
              # Need a long retry timeout because instrumenting
              # old code takes loooong when running coverage testing
-             retry_timeout: 30
+             retry_timeout: 300
              driver:
                 drv_name: Weasel::Driver::Selenium2
-                wait_timeout: 3000
+                wait_timeout: 30000
                 window_size:  1024x1280
                 caps:
                   port: 4422
                   remote_server_addr: ${REMOTE_SERVER_ADDR}
                   browser_name: ${BROWSER}
+                  idleTimeout: 300
+                  platform: Linux
       Pherkin::Extension::PageObject:
          dummy: 1
