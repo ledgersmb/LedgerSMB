@@ -13,7 +13,7 @@ use base qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-__PACKAGE__->register(registry => 'default', dbtype => ['date']);
+__PACKAGE__->register(registry => 'default', types => ['date']);
 
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
