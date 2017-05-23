@@ -92,7 +92,6 @@ sub click_menu {
     my $root = $self->find("//*[\@id='top_menu']");
 
     my $item = $root;
-    my $ul = '';
 
     my $tgt_class = $menu_path_pageobject_map{join(' > ', @$path)};
     if (!defined $tgt_class || $tgt_class eq '') {
@@ -104,12 +103,10 @@ sub click_menu {
        "$tgt_class can be 'use'-d dynamically");
 
     do {
-        $item = $item->find(".$ul/li[./a[text()='$_']]");
-        my $link = $item->find("./a");
-        $link->click
-            unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
+        $item = $item->find(".//span[contains(\@class,'dijitTreeContent') and .//span[contains(\@class,'dijitTreeLabel') and normalize-space(.)='$path']]");
+        $item->click
+            unless ($item->get_attribute('class') =~ /\bdijitTreeContentExpanded\b/);
 
-        $ul = '/ul';
     } for @$path;
 
     return $self->session->page->body->maindiv->wait_for_content;
