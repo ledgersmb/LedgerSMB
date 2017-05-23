@@ -143,6 +143,7 @@ before_script:
   - if [ "${DOJO_BUILT}" != "" ]; then sed -i -e "s#dojo_built *= *(\d)+#dojo_built={dojo_built}#" ledgersmb.conf ; fi
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
+  - which node
 
 script:
   - RELEASE_TESTING=1
