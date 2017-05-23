@@ -16,6 +16,7 @@ requires 'File::MimeInfo';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'JSON';
+recommends 'JSON::XS';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
