@@ -86,7 +86,7 @@ sub _verify {
                 && scalar(@logged_into_found) > 0);
 };
 
-
+use Data::Printer;
 sub click_menu {
     my ($self, $path) = @_;
     my $root = $self->find("//*[\@id='top_menu']");
@@ -103,7 +103,10 @@ sub click_menu {
        "$tgt_class can be 'use'-d dynamically");
 
     do {
-        $item = $item->find(".//span[contains(\@class,'dijitTreeContent') and .//span[contains(\@class,'dijitTreeLabel') and normalize-space(.)='$path']]");
+        warn p $item;
+        warn p $path;
+        $item = $item->find(".//span[contains(\@class,'dijitTreeContent') and .//span[contains(\@class,'dijitTreeLabel') and normalize-space(.)='$_']]");
+        warn p $item;
         $item->click
             unless ($item->get_attribute('class') =~ /\bdijitTreeContentExpanded\b/);
 
