@@ -68,25 +68,29 @@ sub _worksheet_handler {
     $rowcount = 0;
     -- $rowcount;
     $currcol = 0;
-    return $_->set_att(type => 'worksheet');
+    $_->set_att(type => 'worksheet');
+    return;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    return $_->set_att(type => 'row');
+    $_->set_att(type => 'row');
+    return;
 }
 
 sub _cell_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
-    return $_->set_att(type => 'cell');
+    $_->set_att(type => 'cell');
+    return;
 }
 
 sub _formula_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
-    return $_->set_att(type => 'formula');
+    $_->set_att(type => 'formula');
+    return;
 }
 
 sub _format_handler {
@@ -117,7 +121,8 @@ sub _format_handler {
         }
         $format->del_att($attr);
     }
-    return $_->set_att(type => 'format', format => { %properties });
+    $_->set_att(type => 'format', format => { %properties });
+    return;
 }
 
 # Not yet implemented
@@ -127,6 +132,7 @@ sub _format_handler {
 #    $format->{att}{$name} = 1;
 #    &_format_handler($t, $format);
 #    $format->set_att(type => 'named_format');
+#    return;
 #}
 
 sub _format_cleanup_handler {

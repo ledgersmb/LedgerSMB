@@ -152,7 +152,8 @@ sub _worksheet_handler {
 
 sub _row_handler {
     $rowcount++;
-    return $currcol = 0;
+    $currcol = 0;
+    return;
 }
 
 sub _cell_handler {
@@ -173,7 +174,8 @@ sub _cell_handler {
     if (@style_stack) {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
-    return $currcol++;
+    $currcol++;
+    return;
 }
 
 sub _formula_handler {
@@ -193,7 +195,8 @@ sub _formula_handler {
     if (@style_stack) {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
-    return ++$currcol;
+    ++$currcol;
+    return;
 }
 
 sub _border_set {

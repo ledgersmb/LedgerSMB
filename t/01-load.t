@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 206;
+use Test::More tests => 203;
 use File::Find;
 
 my @on_disk;
@@ -61,7 +61,7 @@ my @modules =
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Template', 'LedgerSMB::Company_Config',
-          'LedgerSMB::Contact', 'LedgerSMB::Database',
+          'LedgerSMB::Database',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
@@ -70,7 +70,7 @@ my @modules =
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
-          'LedgerSMB::DBObject::EOY', 'LedgerSMB::DBObject::Part',
+          'LedgerSMB::DBObject::EOY', 
           'LedgerSMB::DBObject::Pricelist', 'LedgerSMB::DBObject::TaxForm',
           'LedgerSMB::DBObject::TransTemplate', 'LedgerSMB::DBObject::Menu',
           'LedgerSMB::DBObject::User', 'LedgerSMB::DBObject::Account',

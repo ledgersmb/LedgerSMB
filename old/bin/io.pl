@@ -58,8 +58,6 @@ if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
     eval { require "old/bin/custom/$form->{login}_io.pl"; };
 }
 
-1;
-
 # end of main
 
 # this is for our long dates
@@ -1982,3 +1980,5 @@ sub setlocation_id
 
 
 }
+
+1;

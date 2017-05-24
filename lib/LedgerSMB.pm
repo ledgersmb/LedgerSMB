@@ -197,7 +197,7 @@ sub new {
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
-    $self->{_query_string} = $query_string if defined $query_string;
+    $self->{query_string} = $query_string if defined $query_string;
     $self->{_auth} = $auth;
     $self->{script} = $script_name;
 
@@ -360,7 +360,7 @@ sub get_relative_url {
     my ($self) = @_;
 
     return $self->{script} .
-        ($self->{_query_string} ? "?$self->{_query_string}" : '');
+        ($self->{query_string} ? "?$self->{query_string}" : '');
 }
 
 sub upload {
@@ -494,7 +494,8 @@ sub merge {
         }
         $self->{$dst_arg} = $src->{$arg};
     }
-    return $logger->debug("end caller \$filename=$filename \$line=$line");
+    $logger->debug("end caller \$filename=$filename \$line=$line");
+    return;
 }
 
 sub set {

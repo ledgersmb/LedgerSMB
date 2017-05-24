@@ -33,6 +33,7 @@ Changelog for 1.5.7
 * Change comparison periods selector to a number spinner (Erik H)
 * Fix http error response (Yves L)
 * Fix Salesperson field not displayed (Nick P, #2784)
+* Fix can't delete unused account after books closed (Nick P, #2800)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie

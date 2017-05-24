@@ -65,8 +65,6 @@ if ( -f "old/bin/custom/$form->{login}_aa.pl" ) {
 
 my $is_update;
 
-1;
-
 
 # end of main
 
@@ -1755,3 +1753,4 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
 
 }
 
+1;

@@ -57,8 +57,6 @@ require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
 
-1;
-
 # end of main
 sub on_update{}
 
@@ -1486,3 +1484,5 @@ sub save_info {
         }
 
 }
+
+1;

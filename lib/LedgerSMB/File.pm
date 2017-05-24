@@ -220,7 +220,8 @@ Auto-detects the type of the file.  Not yet implemented
 
 sub detect_type {
     my ($self) = @_;
-    return $logger->warn("Stub LedgerSMB::File::detect_type\n");
+    $logger->warn("Stub LedgerSMB::File::detect_type\n");
+    return;
 };
 
 =item get
@@ -307,7 +308,8 @@ sub DEMOLISH {
        unlink $self->{file_path} . '/' . $file;
    }
    closedir (TMP);
-   return rmdir $self->{file_path};
+   rmdir $self->{file_path};
+   return;
 }
 
 =item list({ref_key => int, file_class => int})
