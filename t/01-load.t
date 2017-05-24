@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 203;
+use Test::More tests => 204;
 use File::Find;
 
 my @on_disk;
