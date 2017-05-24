@@ -364,7 +364,7 @@ sub load_modules {
         );
 
     }
-    close $fh; ### return failure to execute the script?
+    close $fh or die "Cannot close $filename";
     return 1;
 }
 

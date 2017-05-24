@@ -427,6 +427,7 @@ sub _render {
         die "Invalid format";
     }
 
+
     my $format = "LedgerSMB::Template::$self->{format}";
     use_module($format) or die "Failed to load module $format";
 
@@ -588,7 +589,7 @@ sub _http_output {
         while (my $line = <$fh>){
             $data .= $line;
         }
-        close $fh;
+        close $fh or die "Cannot close file $self->{rendered}";
         $logger->trace("end DATA < self->{rendered}");
         unlink($self->{rendered}) or die 'Unable to delete output file';
     }
@@ -604,18 +605,21 @@ sub _http_output {
     }
     if (!$ENV{LSMB_NOHEAD}){
         if (!$cache){
-            print "Cache-Control: no-store, no-cache, must-revalidate\n";
-            print "Cache-Control: post-check=0, pre-check=0, false\n";
-            print "Pragma: no-cache\n";
+            print "Cache-Control: no-store, no-cache, must-revalidate\n"
+                . "Cache-Control: post-check=0, pre-check=0, false\n"
+                . "Pragma: no-cache\n"
+                or die "Cannot print to STDOUT";
         }
         if ($self->{mimetype} =~ /^text/) {
-            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
+            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n"
+                or die "Cannot print to STDOUT";
         } else {
-            print "Content-Type: $self->{mimetype}$disposition\n\n";
+            print "Content-Type: $self->{mimetype}$disposition\n\n"
+                or die "Cannot print to STDOUT";
         }
     }
     binmode STDOUT, $self->{binmode};
-    print $data;
+    print $data or die "Cannot print to STDOUT";;
     # change global resource back asap
     binmode (STDOUT, ':utf8');
     $logger->trace("end print to STDOUT");
@@ -634,7 +638,7 @@ sub _http_output_file {
         local $/;
         $data = <$FH>;
     }
-    close($FH);
+    close($FH) or die "Cannot close file $self->{rendered}";
 
     $self->_http_output($data);
 
@@ -717,11 +721,11 @@ sub _lpr_output {
         or die "Failed to open rendered file $self->{rendered} : $!";
 
     while (my $line = <$file>) {
-        print $pipe $line;
+        print $pipe $line or die "Cannot print to $lpr";
     }
 
-    close $pipe;
-    close $file;
+    close $pipe or die "Cannot close pipe to $lpr";
+    close $file or die "Cannot close file $self->{rendered}";
     return;
 }
 

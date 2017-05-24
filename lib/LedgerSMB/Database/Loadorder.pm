@@ -53,7 +53,7 @@ sub scripts {
        grep { $_ =~ /\S/ }
        map { my $string = $_; $string =~ s/#.*$//; $string }
        <$fh>;
-    close $fh;
+    close $fh or die "Cannot open file $self->{_path}";
     $self->{_scripts} = \@scripts;
     return @scripts;
 }

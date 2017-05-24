@@ -111,8 +111,8 @@ sub process {
     if ($output){
         open my $fh, '>', $output
             or die "Failed to open output file $output : $!";
-        print $fh $parent->{output};
-        close $fh;
+        print $fh $parent->{output} or die "Cannot print to file $output";
+        close $fh or die "Cannot close file $output";
     }
     return $parent->{mimetype} = 'text/plain';
 }

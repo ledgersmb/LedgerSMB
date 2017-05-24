@@ -79,7 +79,7 @@ sub content {
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
         binmode $fh, ':utf8';
         $self->{_content} = join '', <$fh>;
-        close $fh;
+        close $fh or die "Cannot close file " .  $self->path();
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
