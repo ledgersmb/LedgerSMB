@@ -5867,42 +5867,6 @@ This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
 
-\section{LedgerSMB::Contact\label{LedgerSMB::Contact}\index{LedgerSMB::Contact}}
-
-
-LedgerSMB class for managing Contacts
-
-\subsection*{SYOPSIS\label{LedgerSMB::Contact_SYOPSIS}\index{LedgerSMB::Contact!SYOPSIS}}
-
-
-This module creates object instances based on LedgerSMB's in-database ORM.
-
-\subsection*{METHODS\label{LedgerSMB::Contact_METHODS}\index{LedgerSMB::Contact!METHODS}}
-
-
-The following method is static:
-
-\begin{description}
-
-\item[{new (\$LedgerSMB object);}] \mbox{}
-
-The following methods are passed through to stored procedures via Autoload.
-=item save
-
-
-\item[{get}] \mbox{}
-\item[{search}] \mbox{}
-
-The above list may grow over time, and may depend on other installed modules.
-
-\end{description}
-\subsection*{Copyright (C) 2007, The LedgerSMB core team.\label{LedgerSMB::Contact_Copyright_C_2007_The_LedgerSMB_core_team_}\index{LedgerSMB::Contact!Copyright (C) 2007, The LedgerSMB core team.}}
-
-
-This file is licensed under the Gnu General Public License version 2, or at your
-option any later version.  A copy of the license should have been included with
-your software.
-
 \section{SYNOPSIS\label{SYNOPSIS}\index{SYNOPSIS}}
 
 
@@ -9468,61 +9432,6 @@ Initializes the num2text system
 \item[{num2text}] \mbox{}
 
 Translates numbers into words.
-
-\section{LedgerSMB::DBObject::Part\label{LedgerSMB::DBObject::Part}\index{LedgerSMB::DBObject::Part}}
-
-
-Base parts functions to support new 1.3 stuff
-
-\subsection*{SYNOPSIS\label{LedgerSMB::DBObject::Part_SYNOPSIS}\index{LedgerSMB::DBObject::Part!SYNOPSIS}}
-\begin{verbatim}
- my $psearch  = LedgerSMB::DBObject::Part->new({base => $request});
- my $results = $psearch->search_lite(
-           {partnumber => '124', 
-           description => '200GB USB Drive' };
-\end{verbatim}
-\subsection*{DESCRIPTION\label{LedgerSMB::DBObject::Part_DESCRIPTION}\index{LedgerSMB::DBObject::Part!DESCRIPTION}}
-
-
-This package contains the basic parts search functions for 1.3.  In future
-versions this may be heavily expanded.
-
-\subsection*{PROPERTIES\label{LedgerSMB::DBObject::Part_PROPERTIES}\index{LedgerSMB::DBObject::Part!PROPERTIES}}
-
-
-None yet
-
-\subsection*{METHODS\label{LedgerSMB::DBObject::Part_METHODS}\index{LedgerSMB::DBObject::Part!METHODS}}
-\begin{description}
-
-\item[{search\_lite(\$args)}] \mbox{}
-
-This performs a light-weight search, suitable for parts lookups, not heavy parts
-searching.  It takes a single hashref as an argument, which contains any of the
-following attributes
-
-\begin{description}
-
-\item[{partnumber}] \mbox{}
-
-This matches on the beginning of the string of the partnumber only.
-
-
-\item[{description}] \mbox{}
-
-This is a full text search of the description.  So '200GB USB Drive' matches
-'USB Hard Drive, 200GB' as well as 'Thumb drive, USB, 200gb'.  This is believed
-to currently be the most forgiving yet useful way of doing this part of the
-search.
-
-\end{description}
-\end{description}
-\subsection*{COPYRIGHT\label{LedgerSMB::DBObject::Part_COPYRIGHT}\index{LedgerSMB::DBObject::Part!COPYRIGHT}}
-
-
-Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later
-version.  Please see the included LICENSE.txt for more information.
 
 \section{LedgerSMB::DBObject::User\label{LedgerSMB::DBObject::User}\index{LedgerSMB::DBObject::User}}
 

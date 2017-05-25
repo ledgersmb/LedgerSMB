@@ -1,6 +1,6 @@
 default:
    includes:
-      - t/lib
+      - xt/lib
       - lib
       - old/lib
    extensions:
