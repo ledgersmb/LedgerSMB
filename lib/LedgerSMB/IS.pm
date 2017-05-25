@@ -1060,8 +1060,8 @@ sub post_invoice {
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
-                   if (not defined $form->{batch_id}){
-                       $form->error($locale->text('Batch ID Missing'));
+                    if (not defined $form->{batch_id}){
+                       $form->error('Batch ID Missing');
                    }
                    $query = qq|
             INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
