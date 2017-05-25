@@ -29,7 +29,6 @@ User/group management for LedgerSMB
 
 use base qw(LedgerSMB::PGOld);
 
-use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
