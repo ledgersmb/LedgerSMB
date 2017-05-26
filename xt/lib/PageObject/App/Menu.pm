@@ -76,6 +76,10 @@ my %menu_path_pageobject_map = (
 sub _verify {
     my ($self) = @_;
 
+    my $pwd = $self->find('*contains', text => "'Warning:  Your password will expire in");
+    $pwd->find('*button', text => 'Ok')->click
+        if $pwd;
+
     my @logged_in_company =
         $self->find_all("//*[\@id='company_info' and string-length(normalize-space(text())) > 0]");
     my @logged_in_login =
@@ -104,8 +108,10 @@ sub click_menu {
        "$tgt_class can be 'use'-d dynamically");
 
     do {
+        warn $_;
         $item = $item->find(".$ul/li[./a[text()='$_']]");
         my $link = $item->find("./a");
+        warn $item if !defined($link);
         $link->click
             unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
 
