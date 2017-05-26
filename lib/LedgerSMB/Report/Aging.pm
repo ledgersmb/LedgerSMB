@@ -185,7 +185,7 @@ Returns the name of the template to use
 
 sub template {
     my ($self) = @_;
-    if (!$self->format or (uc($self->format) eq 'HTML')
+    if (not $self->format or (uc($self->format) eq 'HTML')
            or (uc($self->format) eq 'PDF'))
     {
            return 'Reports/aging_report';
