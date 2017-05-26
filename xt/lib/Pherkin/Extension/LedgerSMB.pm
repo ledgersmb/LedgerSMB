@@ -162,6 +162,13 @@ sub create_user {
 }
 
 
+sub check_template_exists {
+    my ($self) = @_;
+
+    my $template = $self->template_db_name;
+    return $self->super_dbh->do(qq(SELECT 1 from pg_database WHERE datname='standard-template'));
+}
+
 sub create_template {
     my ($self) = @_;
 

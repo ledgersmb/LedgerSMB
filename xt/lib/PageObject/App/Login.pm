@@ -37,16 +37,14 @@ sub login {
     my $password = $args{password};
     my $company = $args{company};
     do {
+        warn "No $_->{label} defined" if !defined($_->{value});
         my $element = $self->find('*labeled', text => $_->{label});
         $element->click;
         $element->clear;
         $element->send_keys($_->{value});
-    } for ({ label => "User Name",
-             value => $user },
-           { label => "Password",
-             value => $password },
-           { label => "Company",
-             value => $company });
+    } for ({ label => "User Name", value => $user },
+           { label => "Password",  value => $password },
+           { label => "Company",   value => $company });
     $self->find('*button', text => "Login")->click;
     return $self->session->page->wait_for_body;
 }
