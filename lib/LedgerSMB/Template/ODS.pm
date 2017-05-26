@@ -342,7 +342,7 @@ sub _format_handler {
                 $properties{paragraph}{'style:vertical-align'} = $val;
             }
         } elsif ($attr eq 'hidden') {
-            if ($properties{cell}{'style:cell-protect'} and !$val) {
+            if ($properties{cell}{'style:cell-protect'} and not $val) {
                 delete $properties{cell}{'style:cell-protect'};
             } elsif ($val) {
                 $properties{cell}{'style:cell-protect'} = 'formula-hidden';
@@ -352,13 +352,13 @@ sub _format_handler {
         } elsif ($attr eq 'size') {
             $properties{text}{'fo:font-size'} = "${val}pt";
         } elsif ($attr eq 'bold') {
-            if ($properties{text}{'fo:font-weight'} and !$val) {
+            if ($properties{text}{'fo:font-weight'} and not $val) {
                 delete $properties{text}{'fo:font-weight'};
             } elsif ($val) {
                 $properties{text}{'fo:font-weight'} = 'bold';
             }
         } elsif ($attr eq 'italic') {
-            if ($properties{text}{'fo:font-style'} and !$val) {
+            if ($properties{text}{'fo:font-style'} and not $val) {
                 delete $properties{text}{'fo:font-style'};
             } elsif ($val) {
                 $properties{text}{'fo:font-style'} = 'italic';
@@ -370,19 +370,19 @@ sub _format_handler {
                 $properties{text}{'style:text-line-through-type'} = 'single';
             }
         } elsif ($attr eq 'font_shadow') {
-            if ($properties{text}{'fo:text-shadow'} and !$val) {
+            if ($properties{text}{'fo:text-shadow'} and not $val) {
                 delete $properties{text}{'fo:text-shadow'};
             } elsif ($val) {
                 $properties{text}{'fo:text-shadow'} = '2pt';
             }
         } elsif ($attr eq 'font_outline') {
-            if ($properties{text}{'style:text-outline'} and !$val) {
+            if ($properties{text}{'style:text-outline'} and not $val) {
                 delete $properties{text}{'style:text-outline'};
             } elsif ($val) {
                 $properties{text}{'style:text-outline'} = 'true';
             }
         } elsif ($attr eq 'shrink') {
-            if ($properties{cell}{'style:shrink-to-fit'} and !$val) {
+            if ($properties{cell}{'style:shrink-to-fit'} and not $val) {
                 delete $properties{cell}{'style:shrink-to-fit'};
             } elsif ($val) {
                 $properties{cell}{'style:shrink-to-fit'} = 'true';
@@ -394,7 +394,7 @@ sub _format_handler {
                 $properties{text}{'style:wrap-option'} = 'wrap';
             }
         } elsif ($attr eq 'text_justlast') {
-            if ($properties{paragraph}{'fo:text-align-last'} and !$val) {
+            if ($properties{paragraph}{'fo:text-align-last'} and not $val) {
                 delete $properties{paragraph}{'fo:text-align-last'};
             } elsif ($val) {
                 $properties{paragraph}{'fo:text-align-last'} = 'justify';
