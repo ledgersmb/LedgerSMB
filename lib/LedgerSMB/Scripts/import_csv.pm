@@ -289,7 +289,7 @@ sub _process_gl {
                 $request->{_user}, $ref->[2]
                 );
         }
-        next if !$ref->[1] and !$ref->[2];
+        next if not $ref->[1] and not $ref->[2];
         for my $col (@{$cols->{$request->{type}}}){
             $form->{"${col}_$form->{rowcount}"} = shift @$ref;
         }
