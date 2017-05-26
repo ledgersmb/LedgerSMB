@@ -10,6 +10,10 @@ Changelog for 1.5.7
 * Fix can't delete unused account after books closed (Nick P, #2800)
 * Fix Contact search on address broken (Nick P, #2490)
 * Fix parts with capitals can't be added to AP invoices (Erik H)
+* Change 'Super-user login' to 'Database admin login' (Erik H, #2654)
+* Fix reconciliation loads parser from non-existing location (Erik H, #2313)
+* Clarify 'Import (Yes/No)' on user creation (Erik H, #1510)
+* Fix left menu initially too narrow (Erik H, #955)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
