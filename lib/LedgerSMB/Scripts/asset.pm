@@ -550,7 +550,7 @@ sub report_results {
     }
     for my $r (@results){
         next if (($r->{report_class} != 1 and $ar->{depreciation})
-                 or ($r->{report_class} == 1 and !$ar->{depreciation}));
+                 or ($r->{report_class} == 1 and not $ar->{depreciation}));
         $hiddens->{"id_$count"} = $r->{id};
         my $ref = {
               select         => {input => { name    => "report_$count",
