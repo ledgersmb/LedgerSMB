@@ -35,23 +35,53 @@ text('Password') ?></label>
                  size='60' } ?>
 </div>
 <div class="input_row">
-<label><?lsmb text('Import') ?></label>
-<div id="yesno"><span>
-                <?lsmb INCLUDE input element_data = {
-                           label   = 'Yes'
-                           value   = '1'
-                           checked = ''
-                           name    = 'pls_import'
-                           type    = 'radio'
-                   }; ?></span> <span><?lsmb
-                   INCLUDE input element_data = {
-                           label   = 'No'
-                           value   = '0'
-                           checked = 'CHECKED'
-                           name    = 'pls_import'
-                           type    = 'radio'
-                   } ?></span>
-</div>
+  <label><?lsmb text('User creation') ?></label>
+  <div class="input_group">
+    <div>
+      <?lsmb
+         PROCESS input element_data = {
+         label   = text("Create new user")
+         value   = '0'
+         checked = 'CHECKED'
+         name    = 'pls_import'
+         type    = 'radio'
+         }
+         label_pos = 1 ;
+         ?>
+    </div>
+    <div>
+      <?lsmb
+         PROCESS input element_data = {
+         label   = text("Import existing user")
+         value   = '1'
+         checked = ''
+         name    = 'pls_import'
+         type    = 'radio'
+         }
+         label_pos = 1 ; ?>
+    </div>
+  </div>
+  <div data-dojo-type="dijit/Tooltip"
+       data-dojo-props="connectId:'pls-import-1',position:['below']">
+    <div style="width:30em">
+      <b>Import an existing user (from another database)</b><br /><br />
+      This username exists because it is being used with another database;
+      using it with the current database requires it to be <em>imported</em>.
+      <br /><br />
+      Note that technically any existing PostgreSQL &quot;role&quot; that is to
+      be used as a username needs to be imported this way, regardless of whether
+      it is a username in a different database.
+    </div>
+  </div>
+  <div data-dojo-type="dijit/Tooltip"
+       data-dojo-props="connectId:'pls-import-0'">
+    <div style="width:30em">
+      <b>Creates a new user</b><br />
+      This username <em>must not</em> be used by any of the other databases. If
+      you want to use a username that is already used with another database,
+      you can do so by selecting the <b>Import</b> option.
+    </div>
+  </div>
 </div>
 <div class="input_row">
 <?lsmb INCLUDE select element_data = {

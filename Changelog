@@ -37,7 +37,7 @@ Changelog for 1.5.7
 * Fix parts with capitals can't be added to AP invoices (Erik H)
 * Change 'Super-user login' to 'Database admin login' (Erik H, #2654)
 * Fix reconciliation loads parser from non-existing location (Erik H, #2313)
-
+* Clarify 'Import (Yes/No)' on user creation (Erik H, #1510)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
