@@ -166,8 +166,8 @@ sub attach {
     if (defined $args{file}) {
         if (!$args{file}){
             carp "Invalid filename provided";
-        } elsif (!defined $args{data}
-             and !(-f $args{file} and -r $args{file})){
+        } elsif (not defined $args{data}
+             and not (-f $args{file} and -r $args{file})){
             carp "Cannot access file: $args{file}";
         }
     } else {
