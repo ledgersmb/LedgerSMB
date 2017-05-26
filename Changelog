@@ -35,6 +35,7 @@ Changelog for 1.5.7
 * Fix Salesperson field not displayed (Nick P, #2784)
 * Fix can't delete unused account after books closed (Nick P, #2800)
 * Fix parts with capitals can't be added to AP invoices (Erik H)
+* Change 'Super-user login' to 'Database admin login' (Erik H, #2654)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
