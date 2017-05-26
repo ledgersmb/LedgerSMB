@@ -1082,7 +1082,7 @@ sub retrieve_item {
 
     if ( $form->{"partnumber_$i"} ne "" ) {
         $var = $dbh->quote( $form->{"partnumber_$i"} );
-        $where .= " AND lower(p.partnumber) = $var or mm.barcode is not null";
+        $where .= " AND p.partnumber = $var or mm.barcode is not null";
     }
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
