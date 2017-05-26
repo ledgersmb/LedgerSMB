@@ -18,8 +18,8 @@ __PACKAGE__->self_register(
               });
 
 
-my @fields = ("Username", "Password", "Yes", "No", "Salutation",
-              "First Name", "Last name", "Employee Number",
+my @fields = ("Username", "Password", "Create new user", "Import existing user",
+              "Salutation", "First Name", "Last name", "Employee Number",
               "Date of Birth", "Tax ID/SSN", "Country", "Assign Permissions");
 
 
