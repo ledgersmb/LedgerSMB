@@ -115,7 +115,7 @@ sub authenticate {
         }
     }
 
-    if ($request->{dbh} and !$request->{log_out}){
+    if ($request->{dbh} and not $request->{log_out}){
         if (!$request->{dbonly}
             && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
             return [ 401,
