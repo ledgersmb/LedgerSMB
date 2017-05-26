@@ -240,7 +240,7 @@ sub from_input {
                  'Cannot specify both debits and credits for budget line [_1]',
                  $rownum
              ));
-         } elsif(!$input->{"debit_$rownum"} and !$input->{"credit_$rownum"}){
+         } elsif( !$input->{"debit_$rownum"} && !$input->{"credit_$rownum"}){
              next;
          } else {
              $line->{amount} =   $input->{"credit_$rownum"}
