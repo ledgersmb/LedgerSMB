@@ -394,13 +394,6 @@ sub _render {
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
 
-    my @stdformats = ();
-    for (qw(HTML PDF PS)){
-       if (scalar(grep {/^$_$/} $self->available_formats)){
-           push @stdformats, $_;
-       }
-    }
-    $vars->{STDFORMATS} = \@stdformats;
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
         eval {
