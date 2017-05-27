@@ -18,6 +18,10 @@ Processes the template for text.
 
 Returns the output filename.
 
+=item escape ($var)
+
+Implements the templates escaping protocol. Returns C<$var>.
+
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
