@@ -7,10 +7,6 @@ LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
 =item preprocess ($vars)
 
 Returns $vars.
@@ -48,11 +44,6 @@ use LedgerSMB::Template::TTI18N;
 my $binmode = ':utf8';
 my $extension = 'csv';
 
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
-
 sub escape {
     return shift;
 }
@@ -76,7 +67,7 @@ sub process {
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
+                $parent->get_template_source($extension),
                 {
                     %$cleanvars,
                     %$LedgerSMB::Template::TTI18N::ttfuncs,

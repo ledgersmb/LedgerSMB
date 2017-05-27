@@ -10,10 +10,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 =item get_extension
 Private method to get extension.  Do not call directly.
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
 =item preprocess ($vars)
 
 Returns $vars.
@@ -66,11 +62,6 @@ sub get_extension {
     }
 }
 
-sub get_template {
-    my ($name, $parent) = @_;
-    return "${name}.". get_extension($parent);
-}
-
 sub escape {
     return shift;
 }
@@ -95,7 +86,7 @@ sub process {
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
+                $parent->get_template_source(get_extension($parent)),
                 {
                     %$cleanvars,
                     %$LedgerSMB::Template::TTI18N::ttfuncs,

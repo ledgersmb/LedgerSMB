@@ -18,8 +18,11 @@ This command instantiates a new template:
 
 =item template
 
-The template to be processed.  This can either be a reference to the template
-in string form or the name of the file that is the template to be processed.
+The template to be processed.  This is the file that is the template to be
+processed. When C<include_path> equals 'DB', the file is retrieved from
+the database instead of from disk.
+Based on the specified format, an appropriate extension is appended
+to resolve to the correct template file.
 
 =item format
 
@@ -322,20 +325,13 @@ sub _preprocess {
 }
 
 sub get_template_source {
-    my $self = shift;
-    my $get_template = shift;
+    my ($self, $format_extension) = @_;
 
     my $source;
     if ($self->{include_path} eq 'DB'){
         $source = $self->{template};
-    } elsif (ref $self->{template} eq 'SCALAR') {
-        $source = $self->{template};
-    } elsif (ref $self->{template} eq 'ARRAY') {
-        $source = join "\n", @{$self->{template}};
-    } elsif (defined $get_template) {
-        $source = $get_template->($self->{template});
     } else {
-        $source = undef;
+        $source = $self->{template} . '.' . $format_extension;
     }
     return $source;
 }

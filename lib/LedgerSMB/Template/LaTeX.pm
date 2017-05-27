@@ -16,10 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
 =item preprocess ($vars)
 
 Currently does nothing.
@@ -84,11 +80,6 @@ my $extension = 'tex';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
-
 # Breaking this off to be used separately.
 sub escape {
     my ($vars) = shift @_;
@@ -132,7 +123,7 @@ sub process {
     $Template::Latex::DEBUG = 1 if $parent->{debug};
     my $template = Template::Latex->new($arghash) || die Template::Latex->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
+                $parent->get_template_source($extension),
                 {
                     %$cleanvars,
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
