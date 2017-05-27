@@ -60,7 +60,7 @@ if ( defined $ENV{PERL5OPT}
 for my $value ([], {}) {
     my $rv = LedgerSMB::Template::preprocess($value, sub { return shift; });
     is(ref $rv, ref $value,
-       "return value type equals input value type ($class)");
+       "return value type equals input value type");
 }
 
 
