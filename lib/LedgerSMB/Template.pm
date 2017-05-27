@@ -265,6 +265,9 @@ sub new {
         }
     }
 
+    carp 'no_escape mode enabled in rendering'
+        if $self->{no_escape};
+
     return $self;
 }
 
@@ -377,6 +380,25 @@ sub get_template_args {
     return $arghash;
 }
 
+sub _tt_url {
+    my $str = shift;
+
+    $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
+    return $str;
+}
+
+sub _maketext {
+    my $self = shift;
+    my $escape = shift;
+
+    if (defined $self->{locale}) {
+        return $escape->($self->{locale}->maketext(@_));
+    }
+    else {
+        return $escape->(@_);
+    }
+}
+
 sub _render {
     my $self = shift;
     my $vars = shift;
@@ -401,33 +423,11 @@ sub _render {
     } if $LedgerSMB::App_State::Locale;
 
     my $format = "LedgerSMB::Template::$self->{format}";
-    use_module($format) or die "Failed to load module $format";
-
-    my $cleanvars;
-
     my $escape = $format->can('escape');
-    if ($self->{no_escape}) {
-        carp 'no_escape mode enabled in rendering';
-        $cleanvars = $vars;
-    } else {
-        $cleanvars = _preprocess($vars, $escape);
-    }
-    $cleanvars->{escape} = sub { return $escape->(@_) };
-    if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-        $cleanvars->{text} = sub {
-                    return $escape->($self->{locale}->maketext(@_))
-                        if defined $_[0]};
-    }
-    else {
-        $cleanvars->{text} = sub { return $escape->(shift @_) };
-    }
-    $cleanvars->{tt_url} = sub {
-           my $str  = shift @_;
-
-           my $regex = qr/([^a-zA-Z0-9_.-])/;
-           $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-           return $str;
-    };
+    my $cleanvars = $self->{no_escape} ? $vars : _preprocess($vars, $escape);
+    $cleanvars->{escape} = sub { return $escape->(@_); };
+    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
+    $cleanvars->{tt_url} = \&_tt_url;
 
     $format->can('process')->($self, $cleanvars);
 
