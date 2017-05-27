@@ -431,13 +431,14 @@ sub _render {
     use_module($format) or die "Failed to load module $format";
 
     my $cleanvars;
+    my $escape = $format->can('escape');
     if ($self->{no_escape}) {
         carp 'no_escape mode enabled in rendering';
         $cleanvars = $vars;
     } else {
-        $cleanvars = _preprocess($vars, $format->can('escape'));
+        $cleanvars = _preprocess($vars, $escape);
     }
-    $cleanvars->{escape} = sub { return $format->escape(@_)};
+    $cleanvars->{escape} = sub { return $escape->(@_) };
     if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
         $cleanvars->{text} = sub {
                     return $self->escape($self->{locale}->maketext(@_))
