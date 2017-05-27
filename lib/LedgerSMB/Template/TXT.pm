@@ -69,8 +69,8 @@ sub escape {
 sub process {
     my $parent = shift;
     my $cleanvars = shift;
-        $cleanvars->{EDI_CURRENT_DATE} = $date;
-        $cleanvars->{EDI_CURRENT_TIME} = $time;
+    $cleanvars->{EDI_CURRENT_DATE} = $date;
+    $cleanvars->{EDI_CURRENT_TIME} = $time;
 
     my $output = '';
     if ($parent->{outputfile}) {
