@@ -207,8 +207,9 @@ sub available_formats {
 
 sub new {
     my $class = shift;
-    my $self = {};
     my %args = @_;
+    my $self = {};
+    bless $self, $class;
 
     $self->{myconfig} = $args{user};
     $self->{template} = $args{template};
@@ -247,7 +248,6 @@ sub new {
         $self->{format_args}{extension} = lc $self->{format};
         $self->{format} = 'TXT';
     }
-    bless $self, $class;
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
