@@ -414,10 +414,6 @@ sub _render {
         push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
     }
 
-    if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-        die "Invalid format";
-    }
-
     my $format = "LedgerSMB::Template::$self->{format}";
     use_module($format) or die "Failed to load module $format";
 
