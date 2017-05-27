@@ -192,7 +192,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub available_formats {
     my @retval = ('HTML', 'TXT');
-    local ($@);
+
     if ($LedgerSMB::Sysconfig::template_latex){
         push @retval, 'PDF', 'PS';
     }
