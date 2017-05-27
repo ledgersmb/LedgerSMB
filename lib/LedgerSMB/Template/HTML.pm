@@ -61,8 +61,6 @@ sub process {
     my $parent = shift;
     my $cleanvars = shift;
 
-    $parent->{binmode} = $binmode;
-
     my $dojo_theme;
     if ($LedgerSMB::App_State::DBH){
         local ($@); # pre-5.14, do not die() in this block

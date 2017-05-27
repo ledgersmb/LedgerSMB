@@ -72,8 +72,6 @@ sub process {
         $cleanvars->{EDI_CURRENT_DATE} = $date;
         $cleanvars->{EDI_CURRENT_TIME} = $time;
 
-    $parent->{binmode} = $binmode;
-
     my $output = '';
     if ($parent->{outputfile}) {
         if (ref $parent->{outputfile}){

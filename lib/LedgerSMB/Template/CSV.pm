@@ -52,8 +52,6 @@ sub process {
     my $parent = shift;
     my $cleanvars = shift;
 
-    $parent->{binmode} = $binmode;
-
     my $output = '';
     if ($parent->{outputfile}) {
         if (ref $parent->{outputfile}){
