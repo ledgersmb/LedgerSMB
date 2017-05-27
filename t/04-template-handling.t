@@ -261,21 +261,6 @@ is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-        'template' => \ 'Look at me <?lsmb login ?>.', 'no_auto_output' => 1);
-ok(defined $template,
-        'Template, new (HTML): Object creation with string template');
-isa_ok($template, 'LedgerSMB::Template',
-        'Template, new (HTML): Object creation with string template');
-is($template->{include_path}, 't/data',
-        'Template, new (HTML): Object creation with string template');
-is($template->render({'login' => 'foo&bar'}),
-        undef,
-        'Template, render (HTML): Simple HTML string template, no file');
-is($template->{output}, "Look at me foo&amp;bar.",
-        'Template, render (HTML): Simple HTML string template, correct output');
-
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
         'template' => '04-gettext', 'output_file' => '04-gettext',
         'no_auto_output' => 1);
 ok(defined $template,
