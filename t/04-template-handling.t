@@ -58,13 +58,9 @@ if ( defined $ENV{PERL5OPT}
 ###############################################
 
 for my $value ([], {}) {
-    for my $class (qw/ HTML CSV TXT/) {
-        if ("LedgerSMB::Template::$class"->can('preprocess')) {
-            no strict 'refs';
-            my $rv = "LedgerSMB::Template::$class"->can('preprocess')->($value);
-            is(ref $rv, ref $value, "return value type equals input value type ($class)");
-        }
-    }
+    my $rv = LedgerSMB::Template::preprocess($value, sub { return shift; });
+    is(ref $rv, ref $value,
+       "return value type equals input value type ($class)");
 }
 
 
@@ -72,21 +68,21 @@ for my $value ([], {}) {
 ## LedgerSMB::Template::HTML checks ##
 ######################################
 
-is(LedgerSMB::Template::HTML::get_template('04-template'), '04-template.html',
-        'HTML, get_template: Returned correct template file name');
-is(LedgerSMB::Template::HTML::preprocess('04-template'), '04-template',
+my $escape = LedgerSMB::Template::HTML->can('escape');
+is(LedgerSMB::Template::preprocess('04-template', $escape), '04-template',
         'HTML, preprocess: Returned simple string unchanged');
-is(LedgerSMB::Template::HTML::preprocess('14 > 12'), '14 &gt; 12',
+is(LedgerSMB::Template::preprocess('14 > 12', $escape), '14 &gt; 12',
         'HTML, preprocess: Returned properly escaped string');
-is_deeply(LedgerSMB::Template::HTML::preprocess([0, 'apple', 'mango&durian']),
+is_deeply(LedgerSMB::Template::preprocess([0, 'apple', 'mango&durian'],
+                                          $escape),
         [0, 'apple', 'mango&amp;durian'],
         'HTML, preprocess: Returned properly escaped array ref contents');
-is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies',
-                'test' => 1}),
+is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
+                'test' => 1}, $escape),
         {'fruit' => '&amp;veggies', 'test' => 1},
         'HTML, preprocess: Returned properly escaped hash ref contents');
-is_deeply(LedgerSMB::Template::HTML::preprocess({'fruit' => '&veggies',
-                'test' => ['nest', 'bird', '0 < 15', 1]}),
+is_deeply(LedgerSMB::Templatepreprocess({'fruit' => '&veggies',
+                'test' => ['nest', 'bird', '0 < 15', 1]}, $escape),
         {'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
         'HTML, preprocess: Returned properly escaped nested contents');
 is(LedgerSMB::Template::HTML::postprocess({outputfile => '04-template'}),
