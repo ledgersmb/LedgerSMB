@@ -196,7 +196,7 @@ sub new {
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
     $self->{_uploads} = $uploads  if defined $uploads;
     $self->{_cookies} = $cookies  if defined $cookies;
-    $self->{_query_string} = $query_string if defined $query_string;
+    $self->{query_string} = $query_string if defined $query_string;
     $self->{_auth} = $auth;
     $self->{script} = $script_name;
 
@@ -217,7 +217,7 @@ sub open_form {
     if ($args->{commit}){
        $self->{dbh}->commit;
     }
-    $self->{form_id} = $vars[0]->{form_open};
+    return $self->{form_id} = $vars[0]->{form_open};
 }
 
 # move to another module
@@ -303,6 +303,8 @@ sub initialize_with_db {
 
     $self->{stylesheet} =
         $self->{_user}->{stylesheet} unless $self->{stylesheet};
+
+    return;
 }
 
 
@@ -311,7 +313,7 @@ sub get_user_info {
     $LedgerSMB::App_State::User =
         $self->{_user} =
         LedgerSMB::User->fetch_config($self);
-    $self->{_user}->{language} ||= 'en';
+    return $self->{_user}->{language} ||= 'en';
 }
 
 sub _set_default_locale {
@@ -322,6 +324,8 @@ sub _set_default_locale {
     $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
         unless $self->{_locale};
+
+    return;
 }
 
 sub _process_args {
@@ -333,6 +337,7 @@ sub _process_args {
 
         $self->{$key} = (@values == 1) ? $values[0] : \@values;
     }
+    return;
 }
 
 sub _process_cookies {
@@ -347,13 +352,14 @@ sub _process_cookies {
         $self->{company} = $ccookie
             unless $ccookie eq 'Login';
     }
+    return;
 }
 
 sub get_relative_url {
     my ($self) = @_;
 
     return $self->{script} .
-        ($self->{_query_string} ? "?$self->{_query_string}" : '');
+        ($self->{query_string} ? "?$self->{query_string}" : '');
 }
 
 sub upload {
@@ -488,6 +494,7 @@ sub merge {
         $self->{$dst_arg} = $src->{$arg};
     }
     $logger->debug("end caller \$filename=$filename \$line=$line");
+    return;
 }
 
 sub set {

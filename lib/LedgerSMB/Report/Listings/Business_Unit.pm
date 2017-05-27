@@ -75,7 +75,7 @@ None.
 
 =cut
 
-sub header_lines { [] };
+sub header_lines { return [] };
 
 =head2 name
 
@@ -83,7 +83,7 @@ Business Units List
 
 =cut
 
-sub name { LedgerSMB::Report::text('Business Unit List'); }
+sub name { return LedgerSMB::Report::text('Business Unit List'); }
 
 =head1 METHODS
 
@@ -93,7 +93,7 @@ sub name { LedgerSMB::Report::text('Business Unit List'); }
 
 sub run_report {
     my $self = shift;
-    $self->rows([
+    return $self->rows([
       map { { %$_, row_id => $_->{id}, } }
        $self->call_dbmethod(funcname => 'business_unit__list_by_class',
                               args => { business_unit_class_id => $self->id } )

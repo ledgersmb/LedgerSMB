@@ -590,7 +590,7 @@ sub save_person {
     );
     $request->{target_div} = 'credit_div';
     $person->save;
-    _main_screen($request, undef, $person);
+    return _main_screen($request, undef, $person);
 }
 
 =item save_credit($request)

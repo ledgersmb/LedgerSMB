@@ -1,7 +1,7 @@
 #!perl
 
 
-use lib 't/lib';
+use lib 'xt/lib';
 use strict;
 use warnings;
 

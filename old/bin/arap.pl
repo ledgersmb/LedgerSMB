@@ -49,8 +49,6 @@ if ( -f "old/bin/custom/$form->{login}_arap.pl" ) {
     eval { require "old/bin/custom/$form->{login}_arap.pl"; };
 }
 
-1;
-
 # end of main
 
 sub check_name {
@@ -826,4 +824,4 @@ sub sales_invoice_  { &add_transaction(is) }
 sub vendor_invoice_ { &add_transaction(ir) }
 
 
-
+1;

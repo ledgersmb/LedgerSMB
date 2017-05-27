@@ -192,7 +192,7 @@ In these cases one needs to set it manually.  Use this function to do this.
 sub set_segment_sep {
     my ($self, $sep) = @_;
     # ick, ai don't like how this involves messing around with internals.
-    $self->parser->{_SEGMENT_SEPARATOR} = $sep;
+    return $self->parser->{_SEGMENT_SEPARATOR} = $sep;
 }
 
 =item write_997($form, $success)

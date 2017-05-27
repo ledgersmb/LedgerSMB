@@ -121,7 +121,7 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    $parent->{mimetype} = 'text/' . $extension;
+    return $parent->{mimetype} = 'text/' . $extension;
 }
 
 sub postprocess {

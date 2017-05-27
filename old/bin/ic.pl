@@ -46,8 +46,6 @@ use LedgerSMB::Tax;
 
 require "old/bin/io.pl";
 
-1;
-
 # end of main
 
 sub add {
@@ -2234,3 +2232,4 @@ sub add_service        { &add }
 sub add_assembly       { &add }
 sub add_labor_overhead { &add }
 
+1;

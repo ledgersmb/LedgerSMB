@@ -224,9 +224,9 @@ sub single_batch_approve {
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->post;
-        list_batches($request);
+        return list_batches($request);
     } else {
-        get_batch($request);
+        return get_batch($request);
     }
 }
 

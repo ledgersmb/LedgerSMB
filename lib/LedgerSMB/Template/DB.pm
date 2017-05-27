@@ -162,7 +162,7 @@ Saves the current object
 
 sub save {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'template__save');
+    return $self->call_dbmethod(funcname => 'template__save');
 }
 
 =head1 COPYRIGHT

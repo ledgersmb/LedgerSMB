@@ -22,8 +22,6 @@ use LedgerSMB::PE;
 use LedgerSMB::AA;
 use LedgerSMB::OE;
 
-1;
-
 # end of main
 
 sub add {
@@ -1319,3 +1317,4 @@ sub generate_sales_orders {
 
 }
 
+1;

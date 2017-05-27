@@ -214,7 +214,7 @@ sub run_report {
         $r->{account} = $account->{$r->{chart_id}}->{name};
         $r->{row_id} = $r->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

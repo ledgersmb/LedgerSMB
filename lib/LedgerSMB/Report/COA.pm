@@ -200,7 +200,7 @@ sub run_report{
         $r->{html_class} = 'listheading' if $r->{is_heading};
         $r->{link} =~ s/:/\n/g if $r->{link};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

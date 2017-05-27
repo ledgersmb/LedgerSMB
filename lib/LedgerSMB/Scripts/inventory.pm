@@ -115,7 +115,7 @@ sub _lines_from_form {
     }
     my $rows = $adjustment->rows;
     push @$rows, @lines;
-    $adjustment->rows($rows);
+    return $adjustment->rows($rows);
 }
 
 

@@ -138,6 +138,7 @@ sub def {
             return $cv;
         };
     }
+    return;
 }
 
 
@@ -518,6 +519,7 @@ sub check_permissions {
                     "Does UID $EUID have execute permission?"
         );
     }
+    return;
 }
 
 # if you have latex installed set to 1
@@ -541,6 +543,8 @@ sub override_defaults {
         if $LedgerSMB::Sysconfig::template_xlsx ne 'disabled';
     $LedgerSMB::Sysconfig::template_ods   = eval {require LedgerSMB::Template::ODS; 1}
         if $LedgerSMB::Sysconfig::template_ods ne 'disabled';
+
+    return;
 }
 
 override_defaults;

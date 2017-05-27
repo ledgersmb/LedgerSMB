@@ -106,6 +106,8 @@ WaitForPlackup() {
     done
     if ! $httpdrunning; then
         echo "The starman/plack httpd didn't respond before the timeout";
+        DUMPfile /tmp/plackup-error.log;
+        DUMPfile /tmp/plackup-access.log;
         return 1;
     fi
 }
@@ -124,6 +126,7 @@ else    # fail early if starman is not running
     DUMPfile /tmp/Is_LSMB_running.log
     DUMPfile /tmp/Is_LSMB_running.html
     DUMPfile /tmp/plackup-error.log;
+    DUMPfile /tmp/plackup-access.log;
     exit $E;
 fi
 

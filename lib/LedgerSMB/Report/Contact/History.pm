@@ -336,7 +336,7 @@ sub run_report {
      #$r->{invnumber_href_suffix} = $r->{invoice_id};
      $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{inv_id}";
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

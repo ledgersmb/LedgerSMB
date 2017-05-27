@@ -190,7 +190,7 @@ sub run_report {
         $row->{"day$row->{weekday}"} = $row->{qty};
         $row->{"row_id"} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

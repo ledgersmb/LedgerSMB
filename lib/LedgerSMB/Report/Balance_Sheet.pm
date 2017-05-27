@@ -263,7 +263,7 @@ sub run_report {
         }
     }
 
-    $self->rows([]);
+    return $self->rows([]);
 }
 
 =head2 template

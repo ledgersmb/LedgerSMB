@@ -88,6 +88,7 @@ sub get_metadata {
     for my $acc (@{$self->{dep_accounts}}){
         $acc->{text} = $acc->{accno} . '--' . $acc->{description};
     }
+    return;
 }
 
 =item get_asset_class()

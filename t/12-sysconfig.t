@@ -7,7 +7,7 @@ use English qw(-no_match_vars); # required to 'require Sysconfig'
 
 chdir 't/data';
 
-require '../../lib/LedgerSMB/Sysconfig.pm';
+require LedgerSMB::Sysconfig;
 
 
 plan tests => (11+scalar(@LedgerSMB::Sysconfig::scripts)

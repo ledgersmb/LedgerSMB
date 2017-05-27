@@ -97,6 +97,7 @@ sub columns {
      pwidth => '3', },
 
     );
+    return @COLS;
 }
 
 
@@ -173,7 +174,7 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__general_balance');
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back
