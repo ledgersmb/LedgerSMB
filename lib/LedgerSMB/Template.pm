@@ -247,6 +247,9 @@ sub new {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
+    my $format = "LedgerSMB::Template::$self->{format}";
+    use_module($format) or die "Failed to load module $format";
+
     if (!$self->{include_path}){
         $self->{include_path} = $self->{'myconfig'}->{'templates'};
         $self->{include_path} ||= 'templates/demo';
@@ -389,23 +392,19 @@ sub _render {
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
 
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        eval {
-            $vars->{PRINTERS} = [
-                {text => $LedgerSMB::App_State::Locale->text('Screen'),
-                 value => 'screen'},
-                ];
-        };
-    }
-    for (keys %LedgerSMB::Sysconfig::printers){
-        push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
-    }
+    @{$vars->{PRINTERS}} =
+        map { { text => $_, value => $_ } }
+        keys %LedgerSMB::Sysconfig::printers;
+    unshift @{$vars->{PRINTERS}}, {
+        text => $LedgerSMB::App_State::Locale->text('Screen'),
+        value => 'screen'
+    } if $LedgerSMB::App_State::Locale;
 
     my $format = "LedgerSMB::Template::$self->{format}";
     use_module($format) or die "Failed to load module $format";
 
     my $cleanvars;
+
     my $escape = $format->can('escape');
     if ($self->{no_escape}) {
         carp 'no_escape mode enabled in rendering';
