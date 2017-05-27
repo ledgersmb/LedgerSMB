@@ -75,11 +75,6 @@ sub escape {
     return shift;
 }
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
-
 sub process {
     my $parent = shift;
     my $cleanvars = shift;

@@ -63,11 +63,6 @@ sub get_template {
     return "${name}.$extension";
 }
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
-
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;

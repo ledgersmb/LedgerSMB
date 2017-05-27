@@ -435,7 +435,7 @@ sub _render {
         carp 'no_escape mode enabled in rendering';
         $cleanvars = $vars;
     } else {
-        $cleanvars = $format->can('preprocess')->($vars);
+        $cleanvars = _preprocess($vars, $format->can('escape'));
     }
     $cleanvars->{escape} = sub { return $format->escape(@_)};
     if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
