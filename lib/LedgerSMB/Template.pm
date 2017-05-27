@@ -395,7 +395,7 @@ sub _render {
             (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
-    $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
+
     my @stdformats = ();
     for (qw(HTML PDF PS)){
        if (scalar(grep {/^$_$/} $self->available_formats)){
