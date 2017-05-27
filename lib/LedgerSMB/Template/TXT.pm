@@ -10,10 +10,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 =item get_extension
 Private method to get extension.  Do not call directly.
 
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.

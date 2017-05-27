@@ -16,10 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item preprocess ($vars)
-
-Currently does nothing.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for the appropriate output format.

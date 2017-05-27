@@ -11,10 +11,6 @@ Microsoft Spreadsheet output.
 
 =over
 
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.

@@ -7,11 +7,6 @@ LedgerSMB::Template::HTML - Template support module for LedgerSMB
 
 =over
 
-=item preprocess ($vars)
-
-This method returns a reference to a hash that contains a copy of the passed
-hashref's data with HTML entities converted to escapes.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for HTML.

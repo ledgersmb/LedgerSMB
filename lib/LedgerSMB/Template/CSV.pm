@@ -7,10 +7,6 @@ LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
 =over
 
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.
