@@ -87,7 +87,7 @@ sub process {
     } else {
         $output = \$parent->{output};
     }
-    my $arghash = $parent->get_template_args($extension,$binmode,1);
+    my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source($extension),

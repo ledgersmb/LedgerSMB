@@ -337,7 +337,6 @@ sub get_template_args {
     my $self = shift;
     my $extension = shift;
     my $binmode = shift;
-    my $trim = shift // 0;
 
     my %additional_options = ();
     if ($self->{include_path} eq 'DB'){
@@ -362,7 +361,6 @@ sub get_template_args {
         START_TAG => quotemeta('<?lsmb'),
         END_TAG => quotemeta('?>'),
         DELIMITER => ';',
-        TRIM => $trim,
         DEBUG => ($self->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
         (%additional_options)
