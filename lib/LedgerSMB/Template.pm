@@ -147,11 +147,6 @@ This command checks for valid langages.  Returns 1 if the language is valid,
 
 Apply locale settings to column headings and add sort urls if necessary.
 
-=item escape($string)
-
-Escapes a scalar string if the format supports such escaping and returns the
-sanitized version.
-
 =item my $source = get_template_source($get_template)
 
 Returns the Template source when common or call a specialized getter if not
@@ -382,7 +377,7 @@ sub get_template_args {
 sub _render {
     my $self = shift;
     my $vars = shift;
-    $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
+    $vars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $LedgerSMB::App_State::User;
     $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
@@ -421,11 +416,11 @@ sub _render {
     $cleanvars->{escape} = sub { return $escape->(@_) };
     if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
         $cleanvars->{text} = sub {
-                    return $self->escape($self->{locale}->maketext(@_))
+                    return $escape->($self->{locale}->maketext(@_))
                         if defined $_[0]};
     }
     else {
-        $cleanvars->{text} = sub { return $self->escape(shift @_) };
+        $cleanvars->{text} = sub { return $escape->(shift @_) };
     }
     $cleanvars->{tt_url} = sub {
            my $str  = shift @_;
@@ -508,16 +503,6 @@ sub render_to_psgi {
     }
 
     return [ 200, $headers, $body ];
-}
-
-sub escape {
-    my ($self, $vars) = @_;
-    my $format = "LedgerSMB::Template::$self->{format}";
-    if ($format->can('escape')){
-         return $format->can('escape')->($vars);
-    } else {
-         return $vars;
-    }
 }
 
 sub output {
