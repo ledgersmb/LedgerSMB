@@ -54,11 +54,11 @@ if ( defined $ENV{PERL5OPT}
 }
 
 ###############################################
-## LedgerSMB::Template::*::preprocess checks ##
+## LedgerSMB::Template::_preprocess checks ##
 ###############################################
 
 for my $value ([], {}) {
-    my $rv = LedgerSMB::Template::preprocess($value, sub { return shift; });
+    my $rv = LedgerSMB::Template::_preprocess($value, sub { return shift; });
     is(ref $rv, ref $value,
        "return value type equals input value type");
 }
@@ -69,19 +69,19 @@ for my $value ([], {}) {
 ######################################
 
 my $escape = LedgerSMB::Template::HTML->can('escape');
-is(LedgerSMB::Template::preprocess('04-template', $escape), '04-template',
+is(LedgerSMB::Template::_preprocess('04-template', $escape), '04-template',
         'HTML, preprocess: Returned simple string unchanged');
-is(LedgerSMB::Template::preprocess('14 > 12', $escape), '14 &gt; 12',
+is(LedgerSMB::Template::_preprocess('14 > 12', $escape), '14 &gt; 12',
         'HTML, preprocess: Returned properly escaped string');
-is_deeply(LedgerSMB::Template::preprocess([0, 'apple', 'mango&durian'],
+is_deeply(LedgerSMB::Template::_preprocess([0, 'apple', 'mango&durian'],
                                           $escape),
         [0, 'apple', 'mango&amp;durian'],
         'HTML, preprocess: Returned properly escaped array ref contents');
-is_deeply(LedgerSMB::Template::preprocess({'fruit' => '&veggies',
+is_deeply(LedgerSMB::Template::_preprocess({'fruit' => '&veggies',
                 'test' => 1}, $escape),
         {'fruit' => '&amp;veggies', 'test' => 1},
         'HTML, preprocess: Returned properly escaped hash ref contents');
-is_deeply(LedgerSMB::Templatepreprocess({'fruit' => '&veggies',
+is_deeply(LedgerSMB::Template::_preprocess({'fruit' => '&veggies',
                 'test' => ['nest', 'bird', '0 < 15', 1]}, $escape),
         {'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
         'HTML, preprocess: Returned properly escaped nested contents');
