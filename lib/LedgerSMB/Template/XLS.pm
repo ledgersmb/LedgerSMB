@@ -199,9 +199,14 @@ sub get_template {
     return "${name}.${extension}t";
 }
 
+
+sub escape {
+    return shift;
+}
+
 sub preprocess {
     my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars);
+    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
 }
 
 sub process {

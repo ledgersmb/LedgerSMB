@@ -301,9 +301,9 @@ sub _preprocess {
             push @{$vars}, _preprocess( $_, $escape );
         }
     } elsif (!$type) {
-        return defined($escape) ? &$escape($rawvars) : $rawvars;
+        return $escape->($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return defined($escape) ? &$escape($$rawvars) : $$rawvars;
+        return $escape->($$rawvars);
     } elsif ($type eq 'CODE'){ # a code reference makes no sense
         return $rawvars;
     } elsif ($type eq 'IO::File'){

@@ -132,7 +132,6 @@ sub process {
     }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $output = "$parent->{outputfile}";
-    $output =~ s/$extension/$format/;
     $arghash->{LATEX_FORMAT} = $format;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
@@ -156,7 +155,7 @@ sub process {
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    return $parent->{rendered} = "$parent->{outputfile}.$format";
+    return $parent->{rendered} = "$parent->{outputfile}";
 }
 
 sub postprocess {
