@@ -39,7 +39,6 @@ use warnings;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
@@ -72,10 +71,7 @@ sub process {
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source($extension),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                },
+                $cleanvars,
                 $output,
                 {binmode => $binmode})
     ){

@@ -48,7 +48,6 @@ use strict;
 
 use Template::Latex;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
@@ -121,7 +120,6 @@ sub process {
                 $parent->get_template_source($extension),
                 {
                     %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
                     FORMAT => $format,
                 },
                 $output,

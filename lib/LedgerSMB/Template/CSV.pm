@@ -39,7 +39,6 @@ use strict;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 
 my $binmode = ':utf8';
 my $extension = 'csv';
@@ -55,10 +54,7 @@ sub process {
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source($extension),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                },
+                $cleanvars,
                 $output,
                 {binmode => $binmode})
     ){

@@ -44,7 +44,6 @@ use warnings;
 
 use IO::Scalar;
 use Template;
-use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
 
@@ -206,10 +205,7 @@ sub process {
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source('.xlst'),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                },
+                $cleanvars,
                 \$temp_output,
                 {binmode => ':utf8'})
     ){

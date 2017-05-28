@@ -44,7 +44,6 @@ use warnings;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
@@ -812,10 +811,7 @@ sub process {
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source("${extension}t"),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                },
+                $cleanvars,
                 $output,
                 {binmode => ':utf8'})
     ){

@@ -249,57 +249,6 @@ is($template->render({'login' => 'foo&bar'}),
 is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
         'Template, render (HTML): Simple HTML template, correct output');
 
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-        'template' => '04-gettext', 'output_file' => '04-gettext',
-        'no_auto_output' => 1);
-ok(defined $template,
-        'Template, new (HTML): Object creation with outputfile');
-isa_ok($template, 'LedgerSMB::Template',
-        'Template, new (HTML): Object creation with outputfile');
-is($template->{include_path}, 't/data',
-        'Template, new (HTML): Object creation with outputfile');
-is($template->render({'month' => 'June', 'login' => 'foo&bar',
-        'fr' => $locale}), 't/var/04-gettext',
-        'Template, render (HTML): Gettext HTML template');
-ok(-e "t/var/04-gettext",
-        'Template, render (HTML): File created');
-open($FH, '<', "t/var/04-gettext");
-@r = <$FH>;
-close($FH);
-chomp(@r);
-is(join("\n", @r),
-        "I am a foo&amp;bar.\nLook at me Juin.\njuni\nTo foo&amp;bar",
-        'Template, render (HTML): Gettext HTML template, correct output');
-is(unlink("t/var/04-gettext"), 1,
-        'Template, render (HTML): removing testfile');
-ok(!-e "t/var/04-gettext.html",
-        'Template, render (HTML): testfile removed');
-
-## XeTeX test, requires PDFLATEX to be xelatex and modified Template::Latex
-SKIP: {
-        skip 'XeTeX and modified Template::Latex requiring PDF tests';
-        $template = undef;
-        $template = new LedgerSMB::Template('user' => $myconfig,
-                'format' => 'PDF', 'template' => '04-gettext',
-                'no_auto_output' => 1);
-        ok(defined $template,
-                'Template, new (PDF): XeTeX template creation');
-        isa_ok($template, 'LedgerSMB::Template',
-                'Template, new (PDF): XeTeX template creation');
-        is($template->{include_path}, 't/data',
-                'Template, new (PDF): XeTeX template creation');
-        is($template->render({'login' => 'foo&bar'}),
-                "t/var/04-gettext-output-$$.pdf",
-                'Template, render (PDF): XeTeX PDF template, default filename');
-        ok(-e "t/var/04-gettext-output-$$.pdf",
-                'Template, render (PDF): File created');
-        is(unlink("t/var/04-gettext-output-$$.pdf"), 1,
-                'Template, render (PDF): removing testfile');
-        ok(!-e "t/var/04-gettext-output-$$.pdf",
-                'Template, render (PDF): testfile removed');
-}
-
 #########################################
 ## LedgerSMB::Template private methods ##
 #########################################

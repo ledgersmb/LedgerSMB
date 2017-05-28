@@ -42,7 +42,6 @@ use warnings;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use DateTime;
 
 # The following are for EDI only
@@ -76,10 +75,7 @@ sub process {
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
                 $parent->get_template_source(get_extension($parent)),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                },
+                $cleanvars,
                 $output,
                 {binmode => $binmode})
     ){
