@@ -359,6 +359,7 @@ sub get_template_args {
     my $arghash = {
         INCLUDE_PATH => $paths,
         ENCODING => 'utf8',
+        TRIM => (!$binmode || $binmode eq ':utf8'),
         START_TAG => quotemeta('<?lsmb'),
         END_TAG => quotemeta('?>'),
         DELIMITER => ';',

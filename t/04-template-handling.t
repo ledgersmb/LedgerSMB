@@ -233,7 +233,7 @@ is($template->{include_path}, 't/data',
 is($template->render({'login' => 'foo&bar'}),
         '04-template.txt',
         'Template, render: Simple text template, no filename');
-is($template->{output}, "I am a template.\nLook at me foo&bar.\n",
+is($template->{output}, "I am a template.\nLook at me foo&bar.",
         'Template, render (TXT): Simple TXT template, correct output');
 
 $template = undef;
