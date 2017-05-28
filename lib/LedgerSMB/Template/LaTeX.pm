@@ -123,7 +123,6 @@ sub process {
                     %$cleanvars,
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
                     FORMAT => $format,
-                    'escape' => \&preprocess
                 },
                 $output,
                 {binmode => 1})

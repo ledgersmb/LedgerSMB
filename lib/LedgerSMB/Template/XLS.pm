@@ -208,7 +208,6 @@ sub process {
                 {
                     %$cleanvars,
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
                 },
                 \$temp_output,
                 {binmode => ':utf8'})
