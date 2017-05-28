@@ -102,8 +102,7 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
     $parent->{outputfile} ||=
         "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
@@ -113,11 +112,11 @@ sub process {
         $format = 'pdf';
     }
     my $arghash = $parent->get_template_args($extension,$binmode);
-    my $output = "$parent->{outputfile}";
     $arghash->{LATEX_FORMAT} = $format;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
-    my $template = Template::Latex->new($arghash) || die Template::Latex->error();
+    my $template = Template::Latex->new($arghash)
+        || die Template::Latex->error();
     unless ($template->process(
                 $parent->get_template_source($extension),
                 {
@@ -141,8 +140,7 @@ sub process {
 }
 
 sub postprocess {
-    my $parent = shift;
-    return $parent->{rendered};
+    return;
 }
 
 1;

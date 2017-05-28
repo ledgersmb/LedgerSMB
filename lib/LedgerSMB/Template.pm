@@ -430,14 +430,24 @@ sub _render {
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
 
-    $format->can('process')->($self, $cleanvars);
+    my $output = '';
+    if ($self->{outputfile}) {
+        if (ref $self->{outputfile}){
+            $output = $self->{outputfile};
+        } else {
+            $output = $self->{outputfile};
+        }
+    } else {
+        $output = \$self->{output};
+    }
+    $format->can('process')->($self, $cleanvars, $output);
 
     # Will return undef if postprocessing if disabled -YL
     if($self->{_no_postprocess}) {
         return undef;
     }
-
-    return $format->can('postprocess')->($self);
+    $format->can('postprocess')->($self);
+    return $self->{outputfile};
 }
 
 sub render {
@@ -451,8 +461,8 @@ sub render {
         $logger->debug("before self output");
         $self->output(%$vars);
         $logger->debug("after self output");
-        if ($self->{rendered}) {
-            unlink($self->{rendered});
+        if ($self->{outputfile}) {
+            unlink($self->{outputfile});
         }
     }
 
@@ -495,11 +505,11 @@ sub render_to_psgi {
                                 lc($self->{format}) . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
-    elsif ($self->{rendered}) {
-        open $body, '<:raw', $self->{rendered}
-            or die "Failed to open rendered file $self->{rendered} : $!";
+    elsif ($self->{outputfile}) {
+        open $body, '<:raw', $self->{outputfile}
+            or die "Failed to open rendered file $self->{outputfile} : $!";
         # as we don't support Windows anyway: unlinking an open file works!
-        unlink $self->{rendered};
+        unlink $self->{outputfile};
     }
 
     return [ 200, $headers, $body ];
@@ -517,7 +527,7 @@ sub output {
     if ('email' eq lc $method) {
         $self->_email_output;
     } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-        cp($self->{rendered}, $args{OUT});
+        cp($self->{outputfile}, $args{OUT});
         return if "zip" eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
@@ -545,25 +555,23 @@ sub _http_output {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    if (!defined $data and defined $self->{rendered}){
+    if (!defined $data and defined $self->{outputfile}){
         $data = "";
-        $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
-        open my $fh, '<', $self->{rendered}
-            or die "failed to open rendered file $self->{rendered} : $!";
+        $logger->trace("begin DATA < self->{outputfile}=$self->{outputfile} \$self->{format}=$self->{format}");
+        open my $fh, '<', $self->{outputfile}
+            or die "failed to open rendered file $self->{outputfile} : $!";
         binmode $fh, $self->{binmode};
         while (my $line = <$fh>){
             $data .= $line;
         }
         close $fh;
-        $logger->trace("end DATA < self->{rendered}");
-        unlink($self->{rendered}) or die 'Unable to delete output file';
+        $logger->trace("end DATA < self->{outputfile}");
+        unlink($self->{outputfile}) or die 'Unable to delete output file';
     }
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $disposition = "";
-    my $name;
-    $name = $format->can('postprocess')->($self) if $format->can('postprocess');
-    $name ||= $self->{rendered};
+    my $name = $self->{filename};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
@@ -593,7 +601,7 @@ sub _http_output_file {
         LedgerSMB::App_State::cleanup();
     my $FH;
 
-    open($FH, '<:bytes', $self->{rendered}) or
+    open($FH, '<:bytes', $self->{outputfile}) or
         die 'Unable to open rendered file';
     my $data;
     {
@@ -604,7 +612,7 @@ sub _http_output_file {
 
     $self->_http_output($data);
 
-    unlink($self->{rendered}) or
+    unlink($self->{outputfile}) or
         die 'Unable to delete output file';
 
     return;
@@ -615,7 +623,7 @@ sub _email_output {
     my $args = $self->{output_args};
 
     my @mailmime;
-    if (!$self->{rendered} and !$args->{attach}) {
+    if (!$self->{outputfile} and !$args->{attach}) {
         $args->{message} .= $self->{output};
         @mailmime = ('contenttype', $self->{mimetype});
     }
@@ -642,13 +650,12 @@ sub _email_output {
         message => $args->{message},
         @mailmime,
     );
-    if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{rendered}) {
+    if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{outputfile}) {
         my @attachment;
         my $name = $args->{filename};
 
-        if ($self->{rendered}) {
-            @attachment = ('file', $self->{rendered});
-            $name ||= $self->{rendered};
+        if ($self->{outputfile}) {
+            @attachment = ('file', $self->{outputfile});
         }
         else {
             @attachment = ('data', $self->{output});
@@ -679,8 +686,8 @@ sub _lpr_output {
     # Output is not defined here.  In the future we should consider
     # changing this to use the system command and hit the file as an arg.
     #  -- CT
-    open my $file, '<', "$self->{rendered}"
-        or die "Failed to open rendered file $self->{rendered} : $!";
+    open my $file, '<', "$self->{outputfile}"
+        or die "Failed to open rendered file $self->{outputfile} : $!";
 
     while (my $line = <$file>) {
         print $pipe $line;

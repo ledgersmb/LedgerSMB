@@ -85,8 +85,6 @@ is_deeply(LedgerSMB::Template::_preprocess({'fruit' => '&veggies',
                 'test' => ['nest', 'bird', '0 < 15', 1]}, $escape),
         {'fruit' => '&amp;veggies', 'test' => ['nest', 'bird', '0 &lt; 15', 1]},
         'HTML, preprocess: Returned properly escaped nested contents');
-is(LedgerSMB::Template::HTML::postprocess({outputfile => '04-template'}),
-        '04-template.html', 'HTML, postprocess: Return output filename');
 
 ####################
 ## Template tests ##
@@ -231,7 +229,7 @@ isa_ok($template, 'LedgerSMB::Template',
 is($template->{include_path}, 't/data',
         'Template, new (TXT): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
-        '04-template.txt',
+        undef, # no output file -> undef return value
         'Template, render: Simple text template, no filename');
 is($template->{output}, "I am a template.\nLook at me foo&bar.",
         'Template, render (TXT): Simple TXT template, correct output');
@@ -262,18 +260,18 @@ isa_ok($template, 'LedgerSMB::Template',
 is($template->{include_path}, 't/data',
         'Template, new (HTML): Object creation with outputfile');
 is($template->render({'month' => 'June', 'login' => 'foo&bar',
-        'fr' => $locale}), 't/var/04-gettext.html',
+        'fr' => $locale}), 't/var/04-gettext',
         'Template, render (HTML): Gettext HTML template');
-ok(-e "t/var/04-gettext.html",
+ok(-e "t/var/04-gettext",
         'Template, render (HTML): File created');
-open($FH, '<', "t/var/04-gettext.html");
+open($FH, '<', "t/var/04-gettext");
 @r = <$FH>;
 close($FH);
 chomp(@r);
 is(join("\n", @r),
         "I am a foo&amp;bar.\nLook at me Juin.\njuni\nTo foo&amp;bar",
         'Template, render (HTML): Gettext HTML template, correct output');
-is(unlink("t/var/04-gettext.html"), 1,
+is(unlink("t/var/04-gettext"), 1,
         'Template, render (HTML): removing testfile');
 ok(!-e "t/var/04-gettext.html",
         'Template, render (HTML): testfile removed');
@@ -417,11 +415,11 @@ SKIP: {
 sub get_output_line_array {
         my $FH;
         my ($template) = @_;
-        open($FH, '<:bytes', $template->{rendered}) or
+        open($FH, '<:bytes', $template->{outputfile}) or
                 die 'Unable to open rendered file';
         my @lines = <$FH>;
         close $FH;
-        unlink $template->{rendered};
+        unlink $template->{outputfile};
         return @lines;
 }
 

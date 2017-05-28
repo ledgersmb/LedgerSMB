@@ -199,13 +199,12 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
-    my $output = '';
     my $tempdir = $LedgerSMB::Sysconfig::tempdir;
     $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
+    my $temp_output;
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
@@ -215,21 +214,19 @@ sub process {
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
                     'escape' => \&preprocess
                 },
-                \$output,
+                \$temp_output,
                 {binmode => ':utf8'})
     ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    &_xlsx_process("$parent->{outputfile}.$extension", $output);
+    &_xlsx_process($output, $temp_output);
 
     return $parent->{mimetype} = 'application/vnd.ms-excel';
 }
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    return;
 }
 
 1;

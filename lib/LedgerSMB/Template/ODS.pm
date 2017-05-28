@@ -806,19 +806,8 @@ sub escape {
     return $vars;
 }
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
-    my $output = '';
+    my ($parent, $cleanvars, $output) = @_;
 
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
@@ -828,7 +817,7 @@ sub process {
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
                     'escape' => \&preprocess
                 },
-                \$output,
+                $output,
                 {binmode => ':utf8'})
     ){
         my $err = $template->error();
@@ -840,9 +829,7 @@ sub process {
 }
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    return;
 }
 
 1;

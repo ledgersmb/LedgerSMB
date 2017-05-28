@@ -49,19 +49,8 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
-    my $output = '';
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
@@ -81,12 +70,7 @@ sub process {
 }
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension" if $parent->{outputfile};
-    if (!$parent->{rendered}){
-        return "$parent->{template}.$extension";
-    }
-    return $parent->{rendered};
+    return;
 }
 
 1;

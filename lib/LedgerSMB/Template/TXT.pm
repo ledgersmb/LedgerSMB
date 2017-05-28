@@ -67,20 +67,11 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
+
     $cleanvars->{EDI_CURRENT_DATE} = $date;
     $cleanvars->{EDI_CURRENT_TIME} = $time;
 
-    my $output = '';
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.". get_extension($parent);
-            $parent->{outputfile} = $output;
-        }
-    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
@@ -90,28 +81,18 @@ sub process {
                     %$LedgerSMB::Template::TTI18N::ttfuncs,
                     'escape' => \&preprocess
                 },
-                \$parent->{output},
+                $output,
                 {binmode => $binmode})
     ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    if ($output){
-        open my $fh, '>', $output
-            or die "Failed to open output file $output : $!";
-        print $fh $parent->{output};
-        close $fh;
-    }
+
     return $parent->{mimetype} = 'text/plain';
 }
 
 sub postprocess {
-    my ($parent) = shift;
-    if (!$parent->{rendered}){
-        return $parent->{template} . '.' . get_extension($parent);
-    }
-    $parent->{rendered} = "$parent->{outputfile}.". get_extension($parent) if $parent->{outputfile};
-    return $parent->{rendered};
+    return;
 }
 
 1;
