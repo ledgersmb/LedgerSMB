@@ -103,9 +103,6 @@ sub escape {
 sub process {
     my ($parent, $cleanvars, $output) = @_;
 
-    $parent->{outputfile} ||=
-        "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
-
     my $format = 'ps';
     if ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
