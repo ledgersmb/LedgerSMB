@@ -42,6 +42,7 @@ package LedgerSMB::Template::XLSX;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
@@ -131,9 +132,16 @@ sub _format_cleanup_handler {
 }
 
 sub _xlsx_process {
-    my ($filename, $template) = @_;
+    my ($output, $template) = @_;
 
-    $workbook  = Excel::Writer::XLSX->new("$filename");
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Excel::Writer::XLSX wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    $output = IO::Scalar->new($output) if ref $output;
+    $workbook  = Excel::Writer::XLSX->new($output);
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {

@@ -15,6 +15,7 @@ requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'IO::Scalar';
 requires 'JSON';
 recommends 'JSON::XS';
 requires 'List::MoreUtils';
