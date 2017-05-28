@@ -140,14 +140,6 @@ ok(defined $template,
 throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
         'Template, render: File not found caught';
 
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'TODO',
-        'template' => '04-template', 'no_auto_output' => 1);
-ok(defined $template,
-        'Template, new: Object creation with non-existent format');
-throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
-        'Template, render: Invalid format caught';
-
 #####################
 ## Rendering tests ##
 #####################
