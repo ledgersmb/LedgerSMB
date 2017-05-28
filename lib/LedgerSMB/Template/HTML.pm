@@ -61,16 +61,10 @@ sub process {
     my ($parent, $cleanvars, $output) = @_;
 
     my $dojo_theme;
-    if ($LedgerSMB::App_State::DBH){
-        local ($@); # pre-5.14, do not die() in this block
-        eval { LedgerSMB::Company_Config->initialize()
-                   unless $LedgerSMB::App_State::Company_Config;
-               $dojo_theme =
-                   $LedgerSMB::App_State::Company_Config->{dojo_theme};
-        }; # eval required to make setup.pl work as advertised
-    }
-    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-    $cleanvars->{dojo_theme} ||= $dojo_theme;
+    $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
+            if $LedgerSMB::App_State::Company_Config;
+    $cleanvars->{dojo_theme} //= $dojo_theme;
+    $cleanvars->{dojo_theme} //= $LedgerSMB::Sysconfig::dojo_theme;;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
     $cleanvars->{UNESCAPE} = sub { return decode_entities(shift @_) };
 
