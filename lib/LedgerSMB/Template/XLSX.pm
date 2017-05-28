@@ -201,9 +201,6 @@ sub escape {
 sub process {
     my ($parent, $cleanvars, $output) = @_;
 
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
-
     my $temp_output;
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
