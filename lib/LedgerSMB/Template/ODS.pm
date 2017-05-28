@@ -824,10 +824,12 @@ sub process {
     }
     &_ods_process("$parent->{outputfile}.$extension", $output);
 
-    return $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+    return;
 }
 
 sub postprocess {
+    my $parent = shift;
+    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
     return;
 }
 

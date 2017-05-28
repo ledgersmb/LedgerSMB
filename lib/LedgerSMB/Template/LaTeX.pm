@@ -130,15 +130,17 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
+    return;
+}
+
+sub postprocess {
+    my $parent = shift;
+
     if (lc $format eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    return $parent->{rendered} = "$parent->{outputfile}";
-}
-
-sub postprocess {
     return;
 }
 

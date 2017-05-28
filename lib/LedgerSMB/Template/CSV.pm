@@ -65,10 +65,12 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    return $parent->{mimetype} = 'text/' . $extension;
+    return;
 }
 
 sub postprocess {
+    my $parent = shift;
+    $parent->{mimetype} = 'text/' . $extension;
     return;
 }
 

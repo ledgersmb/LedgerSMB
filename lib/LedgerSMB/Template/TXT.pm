@@ -87,10 +87,12 @@ sub process {
         die "Template error: $err" if $err;
     }
 
-    return $parent->{mimetype} = 'text/plain';
+    return;
 }
 
 sub postprocess {
+    my $parent = shift;
+    $parent->{mimetype} = 'text/plain';
     return;
 }
 

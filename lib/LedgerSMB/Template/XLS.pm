@@ -217,11 +217,12 @@ sub process {
     }
     &_xls_process($output, $temp_output);
 
-    $parent->{mimetype} = 'application/vnd.ms-excel';
     return;
 }
 
 sub postprocess {
+    my $parent = shift;
+    $parent->{mimetype} = 'application/vnd.ms-excel';
     return;
 }
 
