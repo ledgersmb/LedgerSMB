@@ -472,12 +472,8 @@ sub _render {
 
     my $output = '';
     if ($self->{outputfile}) {
-        if (ref $self->{outputfile}){
-            $output = $self->{outputfile};
-        } else {
-            $output = $self->{outputfile};
-        }
-    } else {
+        $output = $self->{outputfile};
+     } else {
         $output = \$self->{output};
     }
     $format->can('process')->($self, $cleanvars, $output);
