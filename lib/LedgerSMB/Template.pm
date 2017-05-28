@@ -158,6 +158,46 @@ desired file extention
 
 =back
 
+=head1 FORMATS
+
+The template employs formats for a number of format-specific tasks:
+
+=over
+
+=item Escaping/encoding of values
+
+=item Discovery of format specific templates
+
+=item Evaluation of the template
+
+=back
+
+In order to perform these actions, formats need to implement the following
+entry-points:
+
+=over
+
+=item escape($value)
+
+The template calls this function with one scalar value as its argument,
+repeatedly until all values to be passed to the template have been escaped.
+
+=item process($template, $variables, $output)
+
+The template driver calls this function to evaluate the actual template.
+The variables in C<$variables> have been encoded using the C<escape> function
+provided by the format.
+The C<$output> variable indicates where the output of the template evaluation
+is to be sent and is either a string (in which case it is to be interpreted
+as an output file name) or a scalar reference (in which case the evaluated
+template is to be stored in the referred-to variable).
+
+=item postprocess($template)
+
+Allows the format to do postprocessing. No requirements in particular.
+
+=back
+
 =head1 Copyright 2007-2017, The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
