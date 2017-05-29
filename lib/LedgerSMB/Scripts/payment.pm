@@ -176,10 +176,10 @@ sub pre_bulk_post_report {
              }
              # If vendor, this is debit-normal so multiply by -1
              if ($request->{account_class} == EC_VENDOR ){ # vendor
-                 $ref->{amount} = -$ref->{amount};
+                 $ref->{amount} *= -1;
               }
               if ($ref->{amount} < 0) {
-                  $ref->{debits} = - $ref->{amount};
+                  $ref->{debits} = $ref->{amount} * -1;
                   $ref->{credits} = 0;
               } else {
                   $ref->{debits} = 0;
@@ -200,10 +200,10 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
-    $ref->{amount} = -$ref->{amount};
+    $ref->{amount} *= -1;
 
     if ($ref->{amount} < 0) {
-        $ref->{debits} = -$ref->{amount};
+        $ref->{debits} = $ref->{amount} * -1;
         $ref->{credits} = 0;
     } else {
         $ref->{debits} = 0;
