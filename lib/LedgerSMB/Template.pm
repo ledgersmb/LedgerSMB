@@ -182,19 +182,60 @@ entry-points:
 The template calls this function with one scalar value as its argument,
 repeatedly until all values to be passed to the template have been escaped.
 
-=item process($template, $variables, $output)
+The return value is the escaped value to substitute for C<$value>. The
+escaping mechanism is format specific.
 
-The template driver calls this function to evaluate the actual template.
-The variables in C<$variables> have been encoded using the C<escape> function
-provided by the format.
-The C<$output> variable indicates where the output of the template evaluation
-is to be sent and is either a string (in which case it is to be interpreted
-as an output file name) or a scalar reference (in which case the evaluated
-template is to be stored in the referred-to variable).
+=item setup($parent, $variables, $output)
 
-=item postprocess($template)
+The template driver calls this function just before the evaluation of
+the template. The C<$parent> is an instance of this class. The C<$variables>
+is a hashref containing the escaped variable values which will be passed to
+the template. C<$output> holds the output destination; either
+a string (containing a filename) or a scalar reference (for in-memory
+capturing of template output).
 
-Allows the format to do postprocessing. No requirements in particular.
+This function returns a tuple with the first value being the (temporary)
+output destination and the second a configuration hash with at least the
+following keys:
+
+=over
+
+=item format_extension
+
+This extension, together with the base name specified by the caller of
+the renderer, is used to look up the format specific template.
+
+=item binmode
+
+This value indicates which binmode to use for the output being generated.
+Valid values are C<':utf8'>, C<1> or C<0>.
+
+=back
+
+The configuration hash can be used as a communication channel between
+C<setup> and C<postprocess> by adding keys starting with an underscore (C<_>).
+
+=item initialize_template($parent, $config, $template)
+
+After the Template Toolkit engine has been initialized based on the
+values returned by C<setup>, the driver calls this function, if a format
+provides it.
+
+C<$config> corresponds with the second argument returned by C<setup>.
+
+C<$template> is an instance of a Template Toolkit template
+processor - its value can be used to register plugins if such is required
+for the specific format.
+
+=item postprocess($parent, $output, $config)
+
+After having evaluated the template, the driver calls this function. Its
+arguments are the instance of the driver C<$parent> (same as for C<setup>),
+C<$output> (the first item of the tuple returned by C<setup>) and the
+configuration hash C<$config>.
+
+This function does not have a defined return value, but should return
+C<undef> for forward compatibility.
 
 =back
 
