@@ -179,7 +179,7 @@ sub view_budget {
         my $row = {};
         $row->{description} = $line->{description};
         if ($line->{amount} < 0 ) {
-            $row->{debit} = -$line->{amount};
+            $row->{debit} = $line->{amount} * -1;
         } else {
             $row->{credit} = $line->{amount};
         }
