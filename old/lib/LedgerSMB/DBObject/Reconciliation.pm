@@ -378,10 +378,10 @@ sub get {
     my %report_days = map { $_->{id} => $_->{days} } @{$db_report_days};
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => { id => $self->{chart_id} });
-    my $pos = 1;
+    my $neg = 1;
     if (defined $self->{account_info}->{category}   # Report may be empty
     and $self->{account_info}->{category} =~ /(A|E)/){
-        $pos = 0;
+        $neg = -1;
     }
     $self->{account_info} = $ref;
     ($ref) = $self->call_dbmethod(funcname=>'reconciliation__get_cleared_balance',
@@ -402,9 +402,8 @@ sub get {
 
     for my $line (@{$self->{report_lines}}){
         if ($line->{cleared}){
-            $our_balance += $pos ? $line->{our_balance} : -$line->{our_balance};
-            $self->{cleared_total} += $pos ? $line->{our_balance} : -$line->{our_balance};
-
+            $our_balance += ($neg * $line->{our_balance});
+            $self->{cleared_total} += ($neg * $line->{our_balance});
         }elsif (($self->{their_balance} != '0'
                  and $self->{their_balance} != $self->{our_balance})
                 or $line->{our_balance} == 0){
@@ -435,8 +434,8 @@ sub get {
     }
     $self->{format_amount} = sub { return $self->format_amount(@_); };
     if ($self->{account_info}->{category} =~ /(A|E)/){
-       $self->{our_total} = -$self->{our_total};
-       return $self->{mismatch_their_total} = -$self->{mismatch_their_total};
+       $self->{our_total} *= -1;
+       return $self->{mismatch_their_total} *= -1;
     }
     return;
 }
