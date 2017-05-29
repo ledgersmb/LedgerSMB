@@ -14,7 +14,7 @@ use DBI qw(:sql_types);
 use English qw(-no_match_vars);
 
 
-use LedgerSMB::Magic qw( MEGABYTE );
+use LedgerSMB::Magic qw( MAX_POST_SIZE_DEFAULT );
 
 =head2 die_pretty $line_1, $line_2, $line_N;
 
@@ -167,7 +167,7 @@ def 'force_username_case',
 
 def 'max_post_size',
     section => 'main',
-    default => MEGABYTE,
+    default => MAX_POST_SIZE_DEFAULT,
     doc => qq||;
 
 def 'cookie_name',
