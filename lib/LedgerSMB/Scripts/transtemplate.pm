@@ -84,7 +84,7 @@ sub convert_to_form{
         }
         for my $row (@{$trans->{line_items}}){
             if ($row->{amount} < 0){
-                $form->{"debit_$form->{rowcount}"} = - $row->{amount};
+                $form->{"debit_$form->{rowcount}"} = $row->{amount} * -1;
             } else {
                 $form->{"credit_$form->{rowcount}"} = $row->{amount};
             }
