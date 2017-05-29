@@ -16,10 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
 =item process()
 
 temporary item
@@ -59,7 +55,12 @@ my $extension = 'tex';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 
-# Breaking this off to be used separately.
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
+
 sub escape {
     my ($vars) = shift @_;
     return '' unless defined $vars;

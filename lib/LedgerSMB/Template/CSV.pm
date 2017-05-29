@@ -7,10 +7,6 @@ LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
 =over
 
-=item escape($var)
-
-Implements the template's escaping protocol. Returns C<$var>.
-
 =item process($parent, $cleanvars)
 
 Processes the template for text.
@@ -26,6 +22,12 @@ use Template;
 
 my $binmode = ':utf8';
 my $extension = 'csv';
+
+=item escape($var)
+
+Implements the template's escaping protocol. Returns C<$var>.
+
+=cut
 
 sub escape {
     return shift;

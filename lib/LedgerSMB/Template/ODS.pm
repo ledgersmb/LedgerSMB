@@ -11,10 +11,6 @@ OpenDocument Spreadsheet output.
 
 =over
 
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
 =item process()
 
 temporary item
@@ -780,6 +776,12 @@ sub _ods_process {
     $parser->purge;
     return $ods->save;
 }
+
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
 
 sub escape {
     my $vars = shift @_;

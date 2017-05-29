@@ -7,10 +7,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
 =over
 
-=item escape($var)
-
-Implements the templates escaping protocol. Returns C<$var>.
-
 =item process()
 
 temporary item
@@ -41,6 +37,12 @@ sub _get_extension {
         return $extension;
     }
 }
+
+=item escape($var)
+
+Implements the templates escaping protocol. Returns C<$var>.
+
+=cut
 
 sub escape {
     return shift;

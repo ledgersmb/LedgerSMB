@@ -7,10 +7,6 @@ LedgerSMB::Template::HTML - Template support module for LedgerSMB
 
 =over
 
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
 =item process()
 
 temporary item
@@ -30,6 +26,12 @@ use LedgerSMB::App_State;
 
 my $binmode = ':utf8';
 my $extension = 'html';
+
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
 
 sub escape {
     my $vars = shift @_;

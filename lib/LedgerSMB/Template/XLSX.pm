@@ -11,10 +11,6 @@ Microsoft Spreadsheet XLSX output.
 
 =over
 
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
 =item process()
 
 temporary item
@@ -175,6 +171,12 @@ sub _handle_subtree {
     }
     return;
 }
+
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
 
 sub escape {
     return shift;
