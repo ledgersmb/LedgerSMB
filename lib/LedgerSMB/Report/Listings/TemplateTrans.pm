@@ -7,6 +7,8 @@ LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
 use namespace::autoclean;
+use LedgerSMB::Magic qw( JRNL_GJ JRNL_AR JRNL_AP );
+
 extends 'LedgerSMB::Report';
 
 =head1 SYNOPSIS
@@ -110,14 +112,16 @@ sub name {
 
 =cut
 
-my @jtype = ( undef, 'gl', 'ar', 'ap' );    # XXX magic number map.  From where is the magic? --rir
+my %jtype = ( JRNL_GJ => 'gl',
+              JRNL_AR => 'ar',
+              JRNL_AP => 'ap' );
 
 sub run_report {
     my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'journal__search');
     for my $ref(@rows){
-       $ref->{journal_type} = $jtype[$ref->{entry_type}];
+       $ref->{journal_type} = $jtype{$ref->{entry_type}};
        $ref->{row_id} = $ref->{id};
     }
     return $self->rows(\@rows);
