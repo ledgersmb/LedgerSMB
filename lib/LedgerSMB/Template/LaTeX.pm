@@ -16,10 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item process()
-
-temporary item
-
 =cut
 
 package LedgerSMB::Template::LaTeX;
@@ -110,30 +106,22 @@ sub setup {
     });
 }
 
-sub process {
-    my ($parent, $cleanvars, $output) = @_;
+=item initialize_template($parent, $config, $template)
 
-    my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'pdf') {
-        $format = 'pdf';
-    }
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash)
-        || die Template->error();
+Implements the template's engine instance initialization protocol.
 
-    my %options = ( FORMAT => $format );
+Note that this particular module uses this event to register the
+Latex plugin.
+
+=cut
+
+sub initialize_template {
+    my ($parent, $config, $template) = @_;
+
+    my %options = ( FORMAT => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
 
-    unless ($template->process(
-                $parent->get_template_source($extension),
-                %$cleanvars,
-                $output,
-                {binmode => 1})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    return;
+    return undef;
 }
 
 =item postprocess($parent, $output, $config)
@@ -156,9 +144,6 @@ sub postprocess {
 =back
 
 =head1 Copyright (C) 2007-2017, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
 
 It is released under the GNU General Public License Version 2 or, at your
 option, any later version.  See COPYRIGHT file for details.  For a full list

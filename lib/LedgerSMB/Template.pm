@@ -520,7 +520,25 @@ sub _render {
 
     my $config;
     ($output, $config) = $format->can('setup')->($self, $cleanvars, $output);
-    $format->can('process')->($self, $cleanvars, $output);
+
+    my $arghash = $self->get_template_args(
+        $config->{input_extension},
+        $config->{binmode});
+    my $template = Template->new($arghash)
+        || die Template->error();
+
+    my $initialize_template = $format->can('initialize_template');
+    $initialize_template->($self, $config, $template)
+        if defined $initialize_template;
+
+    if (! $template->process(
+              $self->get_template_source($config->{input_extension}),
+              $cleanvars,
+              $output,
+              { binmode => $config->{binmode} })) {
+        my $err = $template->error();
+        die "Template error: $err" if $err;
+    }
 
     if($self->{_no_postprocess}) {
         return undef;

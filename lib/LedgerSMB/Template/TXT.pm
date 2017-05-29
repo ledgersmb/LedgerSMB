@@ -7,10 +7,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
 =over
 
-=item process()
-
-temporary item
-
 =cut
 
 package LedgerSMB::Template::TXT;
@@ -66,24 +62,6 @@ sub setup {
     });
 }
 
-sub process {
-    my ($parent, $cleanvars, $output) = @_;
-
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source(_get_extension($parent)),
-                $cleanvars,
-                $output,
-                {binmode => $binmode})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-
-    return;
-}
-
 =item postprocess($parent, $output, $config)
 
 Implements the template's post-processing protocol.
@@ -99,9 +77,6 @@ sub postprocess {
 =back
 
 =head1 Copyright (C) 2007-2017, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
 
 It is released under the GNU General Public License Version 2 or, at your
 option, any later version.  See COPYRIGHT file for details.  For a full list
