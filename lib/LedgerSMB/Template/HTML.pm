@@ -38,11 +38,9 @@ use strict;
 use warnings;
 
 use Template;
-use Template::Parser;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
 
 my $binmode = ':utf8';

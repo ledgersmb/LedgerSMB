@@ -38,7 +38,6 @@ use warnings;
 use strict;
 
 use Template;
-use Template::Parser;
 
 my $binmode = ':utf8';
 my $extension = 'csv';

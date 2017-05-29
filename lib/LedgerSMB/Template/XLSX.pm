@@ -44,7 +44,6 @@ use warnings;
 
 use IO::Scalar;
 use Template;
-use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
 
 my $binmode = undef;

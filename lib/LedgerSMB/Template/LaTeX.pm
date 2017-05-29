@@ -47,7 +47,6 @@ use warnings;
 use strict;
 
 use Template::Latex;
-use Template::Parser;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;

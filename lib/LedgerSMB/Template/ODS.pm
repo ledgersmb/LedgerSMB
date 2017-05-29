@@ -43,7 +43,6 @@ use strict;
 use warnings;
 
 use Template;
-use Template::Parser;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;

@@ -41,7 +41,6 @@ use strict;
 use warnings;
 
 use Template;
-use Template::Parser;
 use DateTime;
 
 # The following are for EDI only
