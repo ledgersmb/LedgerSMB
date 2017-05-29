@@ -27,7 +27,7 @@ package LedgerSMB::Template::LaTeX;
 use warnings;
 use strict;
 
-use Template::Latex;
+use Template::Plugin::Latex;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
@@ -99,11 +99,14 @@ sub setup {
     if ($parent->{format_args}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
+    # The templates use the FORMAT variable to indicate to the LaTeX
+    # filter which output type is desired.
     $cleanvars->{FORMAT} = $format;
 
     return ($output, {
         binmode => 1,
         input_extension => $extension,
+        _format => $format,
     });
 }
 
@@ -115,17 +118,15 @@ sub process {
         $format = 'pdf';
     }
     my $arghash = $parent->get_template_args($extension,$binmode);
-    $arghash->{LATEX_FORMAT} = $format;
+    my $template = Template->new($arghash)
+        || die Template->error();
 
-    $Template::Latex::DEBUG = 1 if $parent->{debug};
-    my $template = Template::Latex->new($arghash)
-        || die Template::Latex->error();
+    my %options = ( FORMAT => $format );
+    Template::Plugin::Latex->new($template->context, \%options);
+
     unless ($template->process(
                 $parent->get_template_source($extension),
-                {
-                    %$cleanvars,
-                    FORMAT => $format,
-                },
+                %$cleanvars,
                 $output,
                 {binmode => 1})
     ){
