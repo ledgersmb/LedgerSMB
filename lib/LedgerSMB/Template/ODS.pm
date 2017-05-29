@@ -22,12 +22,13 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
-use OpenOffice::OODoc;
+use OpenOffice::OODoc::File;
 use OpenOffice::OODoc::Styles;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
@@ -747,8 +748,9 @@ sub _format_cleanup_handler {
 }
 
 sub _ods_process {
-    my ($filename, $template) = @_;
-    $ods = ooDocument(file => "$filename", create => 'spreadsheet');
+    my ($output, $template) = @_;
+    $output = IO::Scalar->new($output) if ref $output;
+    $ods = odfContainer($output, create => 'spreadsheet');
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -799,9 +801,11 @@ Implements the template's initialization protocol.
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
-    return ($output, {
+    my $temp_output;
+    return (\$temp_output, {
         input_extension => $extension,
-        binmode => $binmode,
+        binmode => ':utf8',
+        _output => $output,
     });
 }
 
@@ -819,8 +823,6 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    &_ods_process("$parent->{outputfile}.$extension", $output);
-
     return;
 }
 
@@ -832,7 +834,10 @@ Implements the template's post-processing protocol.
 
 sub postprocess {
     my ($parent, $output, $config) = @_;
+
+    &_ods_process($config->{_output}, $output);
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+
     return undef;
 }
 

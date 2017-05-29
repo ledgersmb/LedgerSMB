@@ -78,7 +78,7 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
 feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
-        requires "OpenOffice::OODoc";
+        requires "OpenOffice::OODoc::File";
         requires 'OpenOffice::OODoc::Styles';
 };
 

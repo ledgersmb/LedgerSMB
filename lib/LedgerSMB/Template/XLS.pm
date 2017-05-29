@@ -190,9 +190,11 @@ Implements the template's initialization protocol.
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
-    return ($output, {
+    my $temp_output;
+    return (\$temp_output, {
         input_extension => 'xlst',
         binmode => $binmode,
+        _output => $output,
     });
 }
 
@@ -211,8 +213,6 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    &_xls_process($output, $temp_output);
-
     return;
 }
 
@@ -224,7 +224,10 @@ Implements the template's post-processing protocol.
 
 sub postprocess {
     my ($parent, $output, $config) = @_;
+
     $parent->{mimetype} = 'application/vnd.ms-excel';
+    &_xls_process($config->{_output}, $output);
+
     return undef;
 }
 
