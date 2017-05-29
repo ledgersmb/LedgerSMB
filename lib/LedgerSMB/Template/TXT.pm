@@ -51,7 +51,7 @@ my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 my $binmode = ':utf8';
 my $extension = 'txt';
 
-sub get_extension {
+sub _get_extension {
     my ($parent) = shift;
     if ($parent->{format_args}->{extension}){
         return $parent->{format_args}->{extension};
@@ -82,7 +82,7 @@ sub process {
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(get_extension($parent)),
+                $parent->get_template_source(_get_extension($parent)),
                 $cleanvars,
                 $output,
                 {binmode => $binmode})
