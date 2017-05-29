@@ -64,11 +64,20 @@ sub escape {
     return shift;
 }
 
-sub process {
+sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
     $cleanvars->{EDI_CURRENT_DATE} = $date;
     $cleanvars->{EDI_CURRENT_TIME} = $time;
+
+    return ($output, {
+        input_extension => _get_extension($parent),
+        binmode => $binmode,
+    });
+}
+
+sub process {
+    my ($parent, $cleanvars, $output) = @_;
 
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();

@@ -511,15 +511,17 @@ sub _render {
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
 
-    my $output = '';
+    my $output;
     if ($self->{outputfile}) {
         $output = $self->{outputfile};
-     } else {
+    } else {
         $output = \$self->{output};
     }
+
+    my $config;
+    ($output, $config) = $format->can('setup')->($self, $cleanvars, $output);
     $format->can('process')->($self, $cleanvars, $output);
 
-    # Will return undef if postprocessing if disabled -YL
     if($self->{_no_postprocess}) {
         return undef;
     }

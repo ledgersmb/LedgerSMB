@@ -99,6 +99,22 @@ sub escape {
     return $vars;
 }
 
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    $Template::Latex::DEBUG = 1 if $parent->{debug};
+    my $format = 'ps';
+    if ($parent->{format_args}{filetype} eq 'pdf') {
+        $format = 'pdf';
+    }
+    $cleanvars->{FORMAT} = $format;
+
+    return ($output, {
+        binmode => 1,
+        input_extension => $extension,
+    });
+}
+
 sub process {
     my ($parent, $cleanvars, $output) = @_;
 

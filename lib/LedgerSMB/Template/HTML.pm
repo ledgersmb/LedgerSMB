@@ -54,9 +54,8 @@ sub escape {
     return $vars;
 }
 
-sub process {
+sub setup {
     my ($parent, $cleanvars, $output) = @_;
-
     my $dojo_theme;
     $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
             if $LedgerSMB::App_State::Company_Config;
@@ -64,6 +63,15 @@ sub process {
     $cleanvars->{dojo_theme} //= $LedgerSMB::Sysconfig::dojo_theme;;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
     $cleanvars->{UNESCAPE} = sub { return decode_entities(shift @_) };
+
+    return ($output, {
+        input_extension => $extension,
+        binmode => $binmode,
+    });
+}
+
+sub process {
+    my ($parent, $cleanvars, $output) = @_;
 
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();

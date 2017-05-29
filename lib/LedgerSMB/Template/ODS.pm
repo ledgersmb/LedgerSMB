@@ -803,6 +803,16 @@ sub escape {
     $vars = escapeHTML($vars);
     return $vars;
 }
+
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    return ($output, {
+        input_extension => $extension,
+        binmode => $binmode,
+    });
+}
+
 sub process {
     my ($parent, $cleanvars, $output) = @_;
 

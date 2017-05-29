@@ -196,6 +196,15 @@ sub escape {
     return shift;
 }
 
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    return ($output, {
+        input_extension => 'xlst',
+        binmode => $binmode,
+    });
+}
+
 sub process {
     my ($parent, $cleanvars, $output) = @_;
 
