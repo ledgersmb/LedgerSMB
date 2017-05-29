@@ -19,10 +19,6 @@ Escapes a scalar string and returns the sanitized version.
 
 temporary item
 
-=item postprocess($parent, $output, $config)
-
-Implements the template's postprocessing protocol.
-
 =cut
 
 package LedgerSMB::Template::XLSX;
@@ -219,8 +215,14 @@ sub process {
     return;
 }
 
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
+
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'application/vnd.ms-excel';
     return;
 }

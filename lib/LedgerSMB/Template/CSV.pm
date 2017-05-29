@@ -15,10 +15,6 @@ Implements the template's escaping protocol. Returns C<$var>.
 
 Processes the template for text.
 
-=item postprocess($parent, $output, $config)
-
-Implements the template's post-processing protocol.
-
 =cut
 
 package LedgerSMB::Template::CSV;
@@ -67,10 +63,16 @@ sub process {
     return;
 }
 
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
+
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'text/' . $extension;
-    return;
+    return undef;
 }
 
 =back

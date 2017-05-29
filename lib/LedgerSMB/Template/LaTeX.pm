@@ -24,10 +24,6 @@ Escapes a scalar string and returns the sanitized version.
 
 temporary item
 
-=item postprocess($parent, $output, $config)
-
-Currently does nothing.
-
 =cut
 
 package LedgerSMB::Template::LaTeX;
@@ -138,8 +134,14 @@ sub process {
     return;
 }
 
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
+
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
 
     if (lc $format eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
