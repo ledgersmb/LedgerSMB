@@ -66,7 +66,25 @@ sub _order {
                 $sender_idx = $elements[5];
                 $sender_id = $elements[6];
                 $form->{edi_isa} = \@elements;
-                my @new_elements = @elements[0 ..4, 7, 8, 5, 6, 9 .. 16 ];
+                my @new_elements = (
+                    $elements[0],
+                    $elements[1],
+                    $elements[2],
+                    $elements[3],
+                    $elements[4],
+                    $elements[7],
+                    $elements[8],
+                    $elements[5],
+                    $elements[6],
+                    $elements[9],
+                    $elements[10],
+                    $elements[11],
+                    $elements[12],
+                    $elements[13],
+                    $elements[14],
+                    $elements[15],
+                    $elements[16],
+                );
                 $form->{edi_isa_return} = join $sep, @new_elements;
         } elsif ('ST' eq $loop){
                 my ($segment) = $self->parser->get_loop_segments;
