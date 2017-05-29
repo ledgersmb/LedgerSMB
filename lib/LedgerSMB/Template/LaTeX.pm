@@ -57,14 +57,15 @@ use strict;
 use Template::Latex;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Magic qw( UNI_aring UNI_Aring );
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
 
 BEGIN {
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(UNI_Aring)};
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(UNI_aring)};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN CAPITAL LETTER A WITH RING ABOVE}"};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN SMALL LETTER A WITH RING ABOVE}"};
     %TeX::Encode::charmap::CHAR_MAP = (
         %TeX::Encode::charmap::CHARS,
         %TeX::Encode::charmap::ACCENTED_CHARS,
