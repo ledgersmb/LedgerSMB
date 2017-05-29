@@ -11,29 +11,17 @@ Microsoft Spreadsheet XLSX output.
 
 =over
 
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
 =item escape($string)
 
 Escapes a scalar string and returns the sanitized version.
 
-=back
+=item process()
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+temporary item
 
-This work contains copyrighted information from a number of sources all used
-with permission.
+=item postprocess($parent, $output, $config)
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Implements the template's postprocessing protocol.
 
 =cut
 
@@ -196,6 +184,12 @@ sub escape {
     return shift;
 }
 
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
@@ -230,5 +224,19 @@ sub postprocess {
     $parent->{mimetype} = 'application/vnd.ms-excel';
     return;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+This work contains copyrighted information from a number of sources all used
+with permission.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

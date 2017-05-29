@@ -7,29 +7,18 @@ LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
 =over
 
-=item process ($parent, $cleanvars)
+=item escape($var)
+
+Implements the template's escaping protocol. Returns C<$var>.
+
+=item process($parent, $cleanvars)
 
 Processes the template for text.
 
-=item postprocess ($parent)
+=item postprocess($parent, $output, $config)
 
-Returns the output filename.
+Implements the template's post-processing protocol.
 
-=item escape ($var)
-
-Implements the templates escaping protocol. Returns C<$var>.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
 =cut
 
 package LedgerSMB::Template::CSV;
@@ -45,6 +34,12 @@ my $extension = 'csv';
 sub escape {
     return shift;
 }
+
+=item setup($parent, $vars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
 
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
@@ -77,5 +72,20 @@ sub postprocess {
     $parent->{mimetype} = 'text/' . $extension;
     return;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+This work contains copyrighted information from a number of sources all used
+with permission.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
+
 
 1;

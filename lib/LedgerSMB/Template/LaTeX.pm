@@ -16,29 +16,18 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item process ($parent, $cleanvars)
-
-Processes the template for the appropriate output format.
-
-=item postprocess ($parent)
-
-Currently does nothing.
-
 =item escape($string)
 
 Escapes a scalar string and returns the sanitized version.
 
-=back
+=item process()
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+temporary item
 
-This work contains copyrighted information from a number of sources all used
-with permission.
+=item postprocess($parent, $output, $config)
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Currently does nothing.
+
 =cut
 
 package LedgerSMB::Template::LaTeX;
@@ -99,6 +88,12 @@ sub escape {
     return $vars;
 }
 
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
@@ -153,5 +148,20 @@ sub postprocess {
     }
     return;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+This work contains copyrighted information from a number of sources all used
+with permission.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
+
 
 1;

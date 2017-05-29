@@ -7,32 +7,18 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
 =over
 
-=item get_extension
-Private method to get extension.  Do not call directly.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape ($var)
+=item escape($var)
 
 Implements the templates escaping protocol. Returns C<$var>.
 
-=back
+=item process()
 
-=head1 Copyright (C) 2007, The LedgerSMB core team.
+temporary item
 
-This work contains copyrighted information from a number of sources all used
-with permission.
+=item postprocess($parent, $output, $config)
 
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
+Implements the template's postprocessing protocol.
+
 =cut
 
 package LedgerSMB::Template::TXT;
@@ -63,6 +49,12 @@ sub _get_extension {
 sub escape {
     return shift;
 }
+
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
 
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
@@ -99,5 +91,19 @@ sub postprocess {
     $parent->{mimetype} = 'text/plain';
     return;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+This work contains copyrighted information from a number of sources all used
+with permission.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;
