@@ -8,7 +8,7 @@ employees, etc.
   @notes = LedgerSMB::Entity::Bank->list($entity_id, [$credit_id]);
   $note->add;
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 This module handles tracking of notes for customers, vendors, employees, sales
 leads, and more.  Notes are expected to be read-only, and essentially
