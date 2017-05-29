@@ -4,6 +4,8 @@ use warnings;
 
 use base 'Exporter';
 
+# TODO  Interleave Pod XXX
+
 our @EXPORT_OK = qw(
     BC_AP
     BC_AR
@@ -46,8 +48,14 @@ our @EXPORT_OK = qw(
     HTTP_SEE_OTHER
     HTTP_UNAUTHORIZED
 
+    JRNL_GJ
+    JRNL_AR
+    JRNL_AP
+    JRNL_CR
+    JRNL_CD
+
     MAX_DAYS_IN_MONTH
-    MEGABYTE
+    MAX_POST_SIZE_DEFAULT
     MIN_PER_HOUR
     MONEY_EPSILON
     MONTHS_PER_QUARTER
@@ -75,9 +83,6 @@ our @EXPORT_OK = qw(
     SATURDAY
     SUNDAY
 
-    UNI_Aring
-    UNI_aring
-
     YEARS_PER_CENTURY
 );
 
@@ -97,7 +102,7 @@ use constant {
     SATURDAY           => 6,
 
     # miscellany
-    MEGABYTE      => 1024 * 1024,
+    MAX_POST_SIZE_DEFAULT      => 1024 * 1024 * 4,
     MONEY_EPSILON => 0.001,         # XXX GAP/IFRS require .0001  maybe???
                                     # I read that somewhere, maybe Celko --rir
     RATIO_TO_PERCENT => 100,
@@ -132,6 +137,13 @@ use constant {
     FC_INTERNAL    => 6,
     FC_INCOMING    => 7,
 
+    # journal_type
+    JRNL_GJ => 1,
+    JRNL_AR => 2,
+    JRNL_AP => 3,
+    JRNL_CR => 4,
+    JRNL_CD => 5,
+
     # our note classes
     NC_ENTITY                => 1,
     NC_INVOICE               => 2,
@@ -154,21 +166,17 @@ use constant {
 
     # EDI
     EDI_PATHNAME_MAX => 180,    # default max length of EDI pathname
-                                # code says 180, perldoc says 179
+                                # TODO possible fencepost error XXX
 
     # HTTP  These can be taken from HTTP::Status
-    HTTP_OK                    => 200,
+    HTTP_OK                    => 200,  # TODO  use HTTP::Status XXX
     HTTP_FOUND                 => 302,
     HTTP_SEE_OTHER             => 303,
     HTTP_BAD_REQUEST           => 400,
     HTTP_UNAUTHORIZED          => 401,
     HTTP_INTERNAL_SERVER_ERROR => 500,
 
-    HTTP_454 => 454,
-
-    # Unicode
-    UNI_Aring => 0x00c5,
-    UNI_aring => 0x00e5,
+    HTTP_454 => 454,        # TODO  find the right HTTP code XXX
 
 };
 
@@ -222,15 +230,6 @@ use constant {
 #   (17,'Billing BCC');
 #   (18,'EDI Interchange ID');
 #   (19,'EDI ID');
-
-# COMMENT ON TABLE journal_type IS
-# $$ This table describes the journal entry type of the transaction.  The
-# following values are hard coded by default:
-# 1:  General journal
-# 2:  Sales (AR)
-# 3:  Purchases (AP)
-# 4:  Receipts
-# 5:  Payments
 
 # INSERT INTO business_unit_class (id, label, active, ordering)
 # VALUES (1, 'Department', '0', '10'),
@@ -295,10 +294,10 @@ the names are subject to change.
 
 =head3  LedgerSMB miscellaneous contants
 
-    MEGABYTE                        1024*1024
+    MAX_POST_SIZE_DEFAULT           1024*1024
     MONEY_EPSILON                   0.001
 
-GAP/IFRS seems to require .0001  (maybe???  I read that somewhere, 
+GAP/IFRS seems to require .0001  (maybe???  I read that somewhere,
 maybe Celko --rir).
 
     RATIO_TO_PERCENT        100
@@ -336,6 +335,13 @@ maybe Celko --rir).
     FC_INTERNAL               6
     FC_INCOMING               7
 
+=head3   LedgerSMB Accounting Journal codes
+    JRNL_GJ                     1
+    JRNL_AR                     2
+    JRNL_AP                     3
+    JRNL_CR                     4
+    JRNL_CD                     5
+
 =head3  LedgerSMB note_class codes
 
     NC_ENTITY                   1
@@ -361,7 +367,7 @@ maybe Celko --rir).
 
 =head3  EDI
 
-    EDI_PATHNAME_MAX            180    
+    EDI_PATHNAME_MAX            180
 
 Default max length of EDI pathname code says 180, perldoc says 179.
 
@@ -375,11 +381,6 @@ Default max length of EDI pathname code says 180, perldoc says 179.
     HTTP_INTERNAL_SERVER_ERROR  500
 
     HTTP_454                    454
-
-=head3  Unicode
-
-    UNI_Aring               0x00c5
-    UNI_aring               0x00e5
 
 =head1 BUGS
 
