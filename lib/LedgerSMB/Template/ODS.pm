@@ -11,15 +11,6 @@ OpenDocument Spreadsheet output.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.  '.xlst' is the
-extension that was chosen for the templates.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.
@@ -53,7 +44,6 @@ use warnings;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
@@ -808,16 +798,6 @@ sub _ods_process {
     return $ods->save;
 }
 
-sub get_template {
-    my $name = shift;
-    return "${name}.${extension}t";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
-
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
@@ -825,29 +805,14 @@ sub escape {
     return $vars;
 }
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
-    my $output = '';
+    my ($parent, $cleanvars, $output) = @_;
 
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
-                \$output,
+                $parent->get_template_source("${extension}t"),
+                $cleanvars,
+                $output,
                 {binmode => ':utf8'})
     ){
         my $err = $template->error();
@@ -855,13 +820,13 @@ sub process {
     }
     &_ods_process("$parent->{outputfile}.$extension", $output);
 
-    return $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+    return;
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+    return;
 }
 
 1;

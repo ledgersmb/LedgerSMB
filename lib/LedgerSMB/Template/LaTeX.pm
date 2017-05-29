@@ -16,14 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
-=item preprocess ($vars)
-
-Currently does nothing.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for the appropriate output format.
@@ -56,7 +48,6 @@ use strict;
 
 use Template::Latex;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
@@ -84,16 +75,6 @@ my $extension = 'tex';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
-
 # Breaking this off to be used separately.
 sub escape {
     my ($vars) = shift @_;
@@ -120,8 +101,7 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
     $parent->{outputfile} ||=
         "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
@@ -131,19 +111,16 @@ sub process {
         $format = 'pdf';
     }
     my $arghash = $parent->get_template_args($extension,$binmode);
-    my $output = "$parent->{outputfile}";
-    $output =~ s/$extension/$format/;
     $arghash->{LATEX_FORMAT} = $format;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
-    my $template = Template::Latex->new($arghash) || die Template::Latex->error();
+    my $template = Template::Latex->new($arghash)
+        || die Template::Latex->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
+                $parent->get_template_source($extension),
                 {
                     %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
                     FORMAT => $format,
-                    'escape' => \&preprocess
                 },
                 $output,
                 {binmode => 1})
@@ -151,17 +128,18 @@ sub process {
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
+    return;
+}
+
+sub postprocess {
+    my $parent = shift;
+
     if (lc $format eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    return $parent->{rendered} = "$parent->{outputfile}.$format";
-}
-
-sub postprocess {
-    my $parent = shift;
-    return $parent->{rendered};
+    return;
 }
 
 1;

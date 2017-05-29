@@ -7,15 +7,6 @@ LedgerSMB::Template::HTML - Template support module for LedgerSMB
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
-=item preprocess ($vars)
-
-This method returns a reference to a hash that contains a copy of the passed
-hashref's data with HTML entities converted to escapes.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for HTML.
@@ -48,7 +39,6 @@ use warnings;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use HTML::Entities;
 use HTML::Escape;
 use LedgerSMB::Sysconfig;
@@ -57,16 +47,6 @@ use LedgerSMB::App_State;
 
 my $binmode = ':utf8';
 my $extension = 'html';
-
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
 
 sub escape {
     my $vars = shift @_;
@@ -77,57 +57,34 @@ sub escape {
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
-
-    $parent->{binmode} = $binmode;
+    my ($parent, $cleanvars, $output) = @_;
 
     my $dojo_theme;
-    if ($LedgerSMB::App_State::DBH){
-        local ($@); # pre-5.14, do not die() in this block
-        eval { LedgerSMB::Company_Config->initialize()
-                   unless $LedgerSMB::App_State::Company_Config;
-               $dojo_theme =
-                   $LedgerSMB::App_State::Company_Config->{dojo_theme};
-        }; # eval required to make setup.pl work as advertised
-    }
-    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-    $cleanvars->{dojo_theme} ||= $dojo_theme;
+    $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
+            if $LedgerSMB::App_State::Company_Config;
+    $cleanvars->{dojo_theme} //= $dojo_theme;
+    $cleanvars->{dojo_theme} //= $LedgerSMB::Sysconfig::dojo_theme;;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
     $cleanvars->{UNESCAPE} = sub { return decode_entities(shift @_) };
 
-    my $output = '';
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
-    my $arghash = $parent->get_template_args($extension,$binmode,1);
+    my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
+                $parent->get_template_source($extension),
+                $cleanvars,
                 $output,
                 {binmode => $binmode})
     ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    return $parent->{mimetype} = 'text/' . $extension;
+    return;
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension" if $parent->{outputfile};
-    return $parent->{rendered};
+    $parent->{mimetype} = 'text/' . $extension;
+    return;
 }
 
 1;

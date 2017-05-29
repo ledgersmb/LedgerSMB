@@ -18,8 +18,11 @@ This command instantiates a new template:
 
 =item template
 
-The template to be processed.  This can either be a reference to the template
-in string form or the name of the file that is the template to be processed.
+The template to be processed.  This is the file that is the template to be
+processed. When C<include_path> equals 'DB', the file is retrieved from
+the database instead of from disk.
+Based on the specified format, an appropriate extension is appended
+to resolve to the correct template file.
 
 =item format
 
@@ -144,11 +147,6 @@ This command checks for valid langages.  Returns 1 if the language is valid,
 
 Apply locale settings to column headings and add sort urls if necessary.
 
-=item escape($string)
-
-Escapes a scalar string if the format supports such escaping and returns the
-sanitized version.
-
 =item my $source = get_template_source($get_template)
 
 Returns the Template source when common or call a specialized getter if not
@@ -157,6 +155,46 @@ Returns the Template source when common or call a specialized getter if not
 
 Returns a hash with the default arguments for the Template and the
 desired file extention
+
+=back
+
+=head1 FORMATS
+
+The template employs formats for a number of format-specific tasks:
+
+=over
+
+=item Escaping/encoding of values
+
+=item Discovery of format specific templates
+
+=item Evaluation of the template
+
+=back
+
+In order to perform these actions, formats need to implement the following
+entry-points:
+
+=over
+
+=item escape($value)
+
+The template calls this function with one scalar value as its argument,
+repeatedly until all values to be passed to the template have been escaped.
+
+=item process($template, $variables, $output)
+
+The template driver calls this function to evaluate the actual template.
+The variables in C<$variables> have been encoded using the C<escape> function
+provided by the format.
+The C<$output> variable indicates where the output of the template evaluation
+is to be sent and is either a string (in which case it is to be interpreted
+as an output file name) or a scalar reference (in which case the evaluated
+template is to be stored in the referred-to variable).
+
+=item postprocess($template)
+
+Allows the format to do postprocessing. No requirements in particular.
 
 =back
 
@@ -189,7 +227,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub available_formats {
     my @retval = ('HTML', 'TXT');
-    local ($@);
+
     if ($LedgerSMB::Sysconfig::template_latex){
         push @retval, 'PDF', 'PS';
     }
@@ -207,8 +245,9 @@ sub available_formats {
 
 sub new {
     my $class = shift;
-    my $self = {};
     my %args = @_;
+    my $self = {};
+    bless $self, $class;
 
     $self->{myconfig} = $args{user};
     $self->{template} = $args{template};
@@ -240,18 +279,17 @@ sub new {
     } elsif (lc $self->{format} eq 'xlsx'){
         $self->{format} = 'XLSX';
         $self->{format_args}{filetype} = 'xlsx';
-    } elsif (lc $self->{format} eq 'XML'){
-        $self->{format} = 'XML';
-        $self->{format_args}{filetype} = 'xml';
     } elsif ($self->{format} =~ /edi$/i){
         $self->{format_args}{extension} = lc $self->{format};
         $self->{format} = 'TXT';
     }
-    bless $self, $class;
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
+    my $format = "LedgerSMB::Template::$self->{format}";
+    use_module($format) or die "Failed to load module $format";
+
     if (!$self->{include_path}){
         $self->{include_path} = $self->{'myconfig'}->{'templates'};
         $self->{include_path} ||= 'templates/demo';
@@ -266,6 +304,9 @@ sub new {
             );
         }
     }
+
+    carp 'no_escape mode enabled in rendering'
+        if $self->{no_escape};
 
     return $self;
 }
@@ -301,9 +342,9 @@ sub _preprocess {
             push @{$vars}, _preprocess( $_, $escape );
         }
     } elsif (!$type) {
-        return defined($escape) ? &$escape($rawvars) : $rawvars;
+        return $escape->($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return defined($escape) ? &$escape($$rawvars) : $$rawvars;
+        return $escape->($$rawvars);
     } elsif ($type eq 'CODE'){ # a code reference makes no sense
         return $rawvars;
     } elsif ($type eq 'IO::File'){
@@ -322,20 +363,13 @@ sub _preprocess {
 }
 
 sub get_template_source {
-    my $self = shift;
-    my $get_template = shift;
+    my ($self, $format_extension) = @_;
 
     my $source;
     if ($self->{include_path} eq 'DB'){
         $source = $self->{template};
-    } elsif (ref $self->{template} eq 'SCALAR') {
-        $source = $self->{template};
-    } elsif (ref $self->{template} eq 'ARRAY') {
-        $source = join "\n", @{$self->{template}};
-    } elsif (defined $get_template) {
-        $source = $get_template->($self->{template});
     } else {
-        $source = undef;
+        $source = $self->{template} . '.' . $format_extension;
     }
     return $source;
 }
@@ -344,7 +378,6 @@ sub get_template_args {
     my $self = shift;
     my $extension = shift;
     my $binmode = shift;
-    my $trim = shift // 0;
 
     my %additional_options = ();
     if ($self->{include_path} eq 'DB'){
@@ -366,10 +399,10 @@ sub get_template_args {
     my $arghash = {
         INCLUDE_PATH => $paths,
         ENCODING => 'utf8',
+        TRIM => (!$binmode || $binmode eq ':utf8'),
         START_TAG => quotemeta('<?lsmb'),
         END_TAG => quotemeta('?>'),
         DELIMITER => ';',
-        TRIM => $trim,
         DEBUG => ($self->{debug})? 'dirs': undef,
         DEBUG_FORMAT => '',
         (%additional_options)
@@ -388,10 +421,29 @@ sub get_template_args {
     return $arghash;
 }
 
+sub _tt_url {
+    my $str = shift;
+
+    $str =~ s/([^a-zA-Z0-9_.-])/sprintf("%%%02x", ord($1))/ge;
+    return $str;
+}
+
+sub _maketext {
+    my $self = shift;
+    my $escape = shift;
+
+    if (defined $self->{locale}) {
+        return $escape->($self->{locale}->maketext(@_));
+    }
+    else {
+        return $escape->(@_);
+    }
+}
+
 sub _render {
     my $self = shift;
     my $vars = shift;
-    $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
+    $vars->{LIST_FORMATS} = sub { return $self->available_formats; };
     $vars->{ENVARS} = \%ENV;
     $vars->{USER} = $LedgerSMB::App_State::User;
     $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
@@ -402,66 +454,36 @@ sub _render {
             (LedgerSMB::Setting->new(%$self)->get_currencies)[0],
         decimal_places => $LedgerSMB::Company_Config::decimal_places,
     } if $vars->{DBNAME} && LedgerSMB::App_State::DBH;
-    $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
-    my @stdformats = ();
-    for (qw(HTML PDF PS)){
-       if (scalar(grep {/^$_$/} $self->available_formats)){
-           push @stdformats, $_;
-       }
-    }
-    $vars->{STDFORMATS} = \@stdformats;
-    { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
-        eval {
-            $vars->{PRINTERS} = [
-                {text => $LedgerSMB::App_State::Locale->text('Screen'),
-                 value => 'screen'},
-                ];
-        };
-    }
-    for (keys %LedgerSMB::Sysconfig::printers){
-        push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
-    }
 
-    if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-        die "Invalid format";
-    }
+    @{$vars->{PRINTERS}} =
+        map { { text => $_, value => $_ } }
+        keys %LedgerSMB::Sysconfig::printers;
+    unshift @{$vars->{PRINTERS}}, {
+        text => $LedgerSMB::App_State::Locale->text('Screen'),
+        value => 'screen'
+    } if $LedgerSMB::App_State::Locale;
 
     my $format = "LedgerSMB::Template::$self->{format}";
-    use_module($format) or die "Failed to load module $format";
+    my $escape = $format->can('escape');
+    my $cleanvars = $self->{no_escape} ? $vars : _preprocess($vars, $escape);
+    $cleanvars->{escape} = sub { return $escape->(@_); };
+    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
+    $cleanvars->{tt_url} = \&_tt_url;
 
-    my $cleanvars;
-    if ($self->{no_escape}) {
-        carp 'no_escape mode enabled in rendering';
-        $cleanvars = $vars;
-    } else {
-        $cleanvars = $format->can('preprocess')->($vars);
+    my $output = '';
+    if ($self->{outputfile}) {
+        $output = $self->{outputfile};
+     } else {
+        $output = \$self->{output};
     }
-    $cleanvars->{escape} = sub { return $format->escape(@_)};
-    if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-        $cleanvars->{text} = sub {
-                    return $self->escape($self->{locale}->maketext(@_))
-                        if defined $_[0]};
-    }
-    else {
-        $cleanvars->{text} = sub { return $self->escape(shift @_) };
-    }
-    $cleanvars->{tt_url} = sub {
-           my $str  = shift @_;
-
-           my $regex = qr/([^a-zA-Z0-9_.-])/;
-           $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-           return $str;
-    };
-
-    $format->can('process')->($self, $cleanvars);
+    $format->can('process')->($self, $cleanvars, $output);
 
     # Will return undef if postprocessing if disabled -YL
     if($self->{_no_postprocess}) {
         return undef;
     }
-
-    return $format->can('postprocess')->($self);
+    $format->can('postprocess')->($self);
+    return $self->{outputfile};
 }
 
 sub render {
@@ -475,8 +497,8 @@ sub render {
         $logger->debug("before self output");
         $self->output(%$vars);
         $logger->debug("after self output");
-        if ($self->{rendered}) {
-            unlink($self->{rendered});
+        if ($self->{outputfile}) {
+            unlink($self->{outputfile});
         }
     }
 
@@ -519,24 +541,14 @@ sub render_to_psgi {
                                 lc($self->{format}) . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
-    elsif ($self->{rendered}) {
-        open $body, '<:raw', $self->{rendered}
-            or die "Failed to open rendered file $self->{rendered} : $!";
+    elsif ($self->{outputfile}) {
+        open $body, '<:raw', $self->{outputfile}
+            or die "Failed to open rendered file $self->{outputfile} : $!";
         # as we don't support Windows anyway: unlinking an open file works!
-        unlink $self->{rendered};
+        unlink $self->{outputfile};
     }
 
     return [ 200, $headers, $body ];
-}
-
-sub escape {
-    my ($self, $vars) = @_;
-    my $format = "LedgerSMB::Template::$self->{format}";
-    if ($format->can('escape')){
-         return $format->can('escape')->($vars);
-    } else {
-         return $vars;
-    }
 }
 
 sub output {
@@ -551,7 +563,7 @@ sub output {
     if ('email' eq lc $method) {
         $self->_email_output;
     } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-        cp($self->{rendered}, $args{OUT});
+        cp($self->{outputfile}, $args{OUT});
         return if "zip" eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
@@ -579,25 +591,23 @@ sub _http_output {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    if (!defined $data and defined $self->{rendered}){
+    if (!defined $data and defined $self->{outputfile}){
         $data = "";
-        $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
-        open my $fh, '<', $self->{rendered}
-            or die "failed to open rendered file $self->{rendered} : $!";
+        $logger->trace("begin DATA < self->{outputfile}=$self->{outputfile} \$self->{format}=$self->{format}");
+        open my $fh, '<', $self->{outputfile}
+            or die "failed to open rendered file $self->{outputfile} : $!";
         binmode $fh, $self->{binmode};
         while (my $line = <$fh>){
             $data .= $line;
         }
         close $fh;
-        $logger->trace("end DATA < self->{rendered}");
-        unlink($self->{rendered}) or die 'Unable to delete output file';
+        $logger->trace("end DATA < self->{outputfile}");
+        unlink($self->{outputfile}) or die 'Unable to delete output file';
     }
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $disposition = "";
-    my $name;
-    $name = $format->can('postprocess')->($self) if $format->can('postprocess');
-    $name ||= $self->{rendered};
+    my $name = $self->{filename};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
@@ -627,7 +637,7 @@ sub _http_output_file {
         LedgerSMB::App_State::cleanup();
     my $FH;
 
-    open($FH, '<:bytes', $self->{rendered}) or
+    open($FH, '<:bytes', $self->{outputfile}) or
         die 'Unable to open rendered file';
     my $data;
     {
@@ -638,7 +648,7 @@ sub _http_output_file {
 
     $self->_http_output($data);
 
-    unlink($self->{rendered}) or
+    unlink($self->{outputfile}) or
         die 'Unable to delete output file';
 
     return;
@@ -649,7 +659,7 @@ sub _email_output {
     my $args = $self->{output_args};
 
     my @mailmime;
-    if (!$self->{rendered} and !$args->{attach}) {
+    if (!$self->{outputfile} and !$args->{attach}) {
         $args->{message} .= $self->{output};
         @mailmime = ('contenttype', $self->{mimetype});
     }
@@ -676,13 +686,12 @@ sub _email_output {
         message => $args->{message},
         @mailmime,
     );
-    if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{rendered}) {
+    if ($args->{attach} or $self->{mimetype} !~ m#^text/# or $self->{outputfile}) {
         my @attachment;
         my $name = $args->{filename};
 
-        if ($self->{rendered}) {
-            @attachment = ('file', $self->{rendered});
-            $name ||= $self->{rendered};
+        if ($self->{outputfile}) {
+            @attachment = ('file', $self->{outputfile});
         }
         else {
             @attachment = ('data', $self->{output});
@@ -713,8 +722,8 @@ sub _lpr_output {
     # Output is not defined here.  In the future we should consider
     # changing this to use the system command and hit the file as an arg.
     #  -- CT
-    open my $file, '<', "$self->{rendered}"
-        or die "Failed to open rendered file $self->{rendered} : $!";
+    open my $file, '<', "$self->{outputfile}"
+        or die "Failed to open rendered file $self->{outputfile} : $!";
 
     while (my $line = <$file>) {
         print $pipe $line;
@@ -723,43 +732,6 @@ sub _lpr_output {
     close $pipe;
     close $file;
     return;
-}
-
-# apply locale settings to column headings and add sort urls if necessary.
-sub column_heading {
-
-    my $self = shift;
-    my ($names, $sortby) = @_;
-    my %sorturls;
-
-    if ($sortby) {
-        %sorturls = map
-        { $_ => $sortby->{href}."=$_"} @{$sortby->{columns}};
-    }
-
-    foreach my $attname (keys %$names) {
-
-        # process 2 cases - simple name => value, and complex name => hash
-        # pairs. The latter is used to include urls in column headers.
-
-        if (ref $names->{$attname} eq 'HASH') {
-            my $t = $self->{locale}->maketext($names->{$attname}{text});
-            $names->{$attname}{text} = $t;
-        } else {
-            my $t = $self->{locale}->maketext($names->{$attname});
-            if (defined $sorturls{$attname}) {
-                $names->{$attname} =
-                {
-                    text => $t,
-                     href => $sorturls{$attname}
-                };
-            } else {
-                $names->{$attname} = $t;
-            }
-        }
-    }
-
-    return $names;
 }
 
 1;

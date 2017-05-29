@@ -7,14 +7,6 @@ LedgerSMB::Template::CSV - Template support module for LedgerSMB
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.
@@ -22,6 +14,10 @@ Processes the template for text.
 =item postprocess ($parent)
 
 Returns the output filename.
+
+=item escape ($var)
+
+Implements the templates escaping protocol. Returns C<$var>.
 
 =back
 
@@ -43,62 +39,35 @@ use strict;
 
 use Template;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 
 my $binmode = ':utf8';
 my $extension = 'csv';
 
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars);
+sub escape {
+    return shift;
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
-    $parent->{binmode} = $binmode;
-
-    my $output = '';
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
+                $parent->get_template_source($extension),
+                $cleanvars,
                 $output,
                 {binmode => $binmode})
     ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    return $parent->{mimetype} = 'text/' . $extension;
+    return;
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension" if $parent->{outputfile};
-    if (!$parent->{rendered}){
-        return "$parent->{template}.$extension";
-    }
-    return $parent->{rendered};
+    $parent->{mimetype} = 'text/' . $extension;
+    return;
 }
 
 1;

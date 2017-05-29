@@ -11,15 +11,6 @@ Microsoft Spreadsheet XLSX output.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.  '.xlst' is the
-extension that was chosen for the templates.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
 =item process ($parent, $cleanvars)
 
 Processes the template for text.
@@ -51,8 +42,8 @@ package LedgerSMB::Template::XLSX;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
-use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
 
@@ -140,9 +131,16 @@ sub _format_cleanup_handler {
 }
 
 sub _xlsx_process {
-    my ($filename, $template) = @_;
+    my ($output, $template) = @_;
 
-    $workbook  = Excel::Writer::XLSX->new("$filename");
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Excel::Writer::XLSX wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    $output = IO::Scalar->new($output) if ref $output;
+    $workbook  = Excel::Writer::XLSX->new($output);
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -195,48 +193,34 @@ sub _handle_subtree {
     return;
 }
 
-sub get_template {
-    my $name = shift;
-    return "${name}.xlst";
-}
-
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars);
+sub escape {
+    return shift;
 }
 
 sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+    my ($parent, $cleanvars, $output) = @_;
 
-    my $output = '';
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
-
+    my $temp_output;
     my $arghash = $parent->get_template_args($extension,$binmode);
     my $template = Template->new($arghash) || die Template->error();
     unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
-                \$output,
+                $parent->get_template_source('.xlst'),
+                $cleanvars,
+                \$temp_output,
                 {binmode => ':utf8'})
     ){
         my $err = $template->error();
         die "Template error: $err" if $err;
     }
-    &_xlsx_process("$parent->{outputfile}.$extension", $output);
+    &_xlsx_process($output, $temp_output);
 
-    return $parent->{mimetype} = 'application/vnd.ms-excel';
+    return;
 }
 
 sub postprocess {
     my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    $parent->{mimetype} = 'application/vnd.ms-excel';
+    return;
 }
 
 1;
