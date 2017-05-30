@@ -216,7 +216,7 @@ sub _get_to_date {
     if ($self->interval eq 'month'){
        $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
-       $date->add(months => 3);         ## no critic ( ProhibitMagicNumbers)
+       $date->add(months => MONTHS_PER_QUARTER);
     } elsif ($self->interval eq 'year'){
        $date->add(years => 1);
     }
