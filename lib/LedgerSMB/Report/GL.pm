@@ -333,7 +333,7 @@ sub run_report{
     my @rows = $self->call_dbmethod(funcname => 'report__gl');
     for my $ref(@rows){
         if ($ref->{amount} < 0){
-            $ref->{debits} =  -$ref->{amount};
+            $ref->{debits} = $ref->{amount} * -1;
             $ref->{credits} = 0;
         } else {
             $ref->{credits} = $ref->{amount};

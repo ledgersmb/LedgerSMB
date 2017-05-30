@@ -255,7 +255,7 @@ sub run_report {
             my $cat = $props->{account_category};
             my $contra = $props->{contra};
             my $sign = (($contra) ? -1 : 1)
-                 * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
+                * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
 
             $self->cell_value($row_id, $col_id, $sign * $value)
                 if $sign < 0;

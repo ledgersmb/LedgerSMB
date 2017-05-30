@@ -243,11 +243,11 @@ sub run_report {
             my $cat = $props->{account_category};
             my $contra = $props->{contra};
 
-            # XXX if $contra is constrained to 0, 1, undef, and '' then no bangbang
-            my $is_positive = !!$contra == ( $cat eq 'A' or $cat eq 'E' );
+            my $sign = (($contra) ? -1 : 1)
+                * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
 
             $self->cell_value($row_id, $col_id, -$value)
-                if not $is_positive;
+                if $sign < 0;
         }
     }
 

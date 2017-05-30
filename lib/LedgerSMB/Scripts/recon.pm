@@ -275,10 +275,10 @@ sub _display_report {
 
     $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
-   $recon->{statement_gl_calc} = $neg_factor *
+  $recon->{statement_gl_calc} = $neg_factor *
                                     ($recon->{their_total}
                                     + $recon->{outstanding_total}
-                                    + $recon->{mismatch_our_total}) ;
+                                    + $recon->{mismatch_our_total});
     $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
     $recon->{submit_enabled} = ($recon->{their_total} == $recon->{our_total});
 
