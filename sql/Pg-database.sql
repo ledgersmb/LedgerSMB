@@ -558,6 +558,20 @@ CREATE TABLE users (
     entity_id int not null references entity(id) on delete cascade
 );
 
+COMMENT ON TABLE users IS
+$$ This table maps lsmb entities to postgresql roles, which are used to
+authenticate lsmb users. The username field maps to the postgresql role name
+and is therefore subject to its limitations.
+
+A role name is considered an Identifier and as such must begin with
+a letter or an underscore and is limited by default to 63 bytes (could be
+fewer characters if unicode) as documented here:
+https://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS
+
+Lsmb restricts the length of username, but this is an arbitrary restriction
+beyond the postgresql role name limitations already described.
+$$:
+
 -- Session tracking table
 
 CREATE TABLE session(
