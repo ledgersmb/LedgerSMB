@@ -12,7 +12,7 @@ package LedgerSMB::Report::Dates;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
-
+use LedgerSMB::Magic qw( MONTHS_PER_QUARTER );
 =head1 DESCRIPTION
 
 This handles standard date controls in reports.  It just adds properties to
