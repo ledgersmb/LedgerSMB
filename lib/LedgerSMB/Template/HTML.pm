@@ -68,7 +68,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'text/' . $extension;
-    return;
+    return undef;
 }
 
 =back

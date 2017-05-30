@@ -113,13 +113,13 @@ sub _worksheet_handler {
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
     }
-    return;
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    return;
+    return undef;
 }
 
 sub _cell_handler {
@@ -141,7 +141,7 @@ sub _cell_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     $currcol++;
-    return;
+    return undef;
 }
 
 sub _formula_handler {
@@ -162,7 +162,7 @@ sub _formula_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     ++$currcol;
-    return;
+    return undef;
 }
 
 sub _border_set {
@@ -194,7 +194,7 @@ sub _border_set {
     } elsif ($format->{att}->{border_color}) {
         return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
     }else{
-        return;
+        return undef;
     }
 }
 

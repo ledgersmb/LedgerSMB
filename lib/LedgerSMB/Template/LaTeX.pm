@@ -138,7 +138,7 @@ sub postprocess {
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    return;
+    return undef;
 }
 
 =back

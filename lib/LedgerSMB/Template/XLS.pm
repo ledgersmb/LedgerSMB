@@ -34,28 +34,28 @@ sub _worksheet_handler {
     $rowcount = -1;
     $currcol = 0;
     $_->set_att(type => 'worksheet');
-    return;
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
     $_->set_att(type => 'row');
-    return;
+    return undef;
 }
 
 sub _cell_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'cell');
-    return;
+    return undef;
 }
 
 sub _formula_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'formula');
-    return;
+    return undef;
 }
 
 sub _format_handler {
@@ -87,7 +87,7 @@ sub _format_handler {
         $format->del_att($attr);
     }
     $_->set_att(type => 'format', format => { %properties });
-    return;
+    return undef;
 }
 
 # Not yet implemented
@@ -101,7 +101,7 @@ sub _format_handler {
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
-    return;
+    return undef;
 }
 
 sub _xls_process {
@@ -164,7 +164,7 @@ sub _handle_subtree {
         }
         $child->purge;
     }
-    return;
+    return undef;
 }
 
 =item escape($string)
