@@ -11,30 +11,6 @@ Microsoft Spreadsheet XLSX output.
 
 =over
 
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
-
 =cut
 
 package LedgerSMB::Template::XLSX;
@@ -44,7 +20,6 @@ use warnings;
 
 use IO::Scalar;
 use Template;
-use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
 
 my $binmode = undef;
@@ -59,28 +34,28 @@ sub _worksheet_handler {
     $rowcount = -1;
     $currcol = 0;
     $_->set_att(type => 'worksheet');
-    return;
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
     $_->set_att(type => 'row');
-    return;
+    return undef;
 }
 
 sub _cell_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'cell');
-    return;
+    return undef;
 }
 
 sub _formula_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'formula');
-    return;
+    return undef;
 }
 
 sub _format_handler {
@@ -112,7 +87,7 @@ sub _format_handler {
         $format->del_att($attr);
     }
     $_->set_att(type => 'format', format => { %properties });
-    return;
+    return undef;
 }
 
 # Not yet implemented
@@ -122,7 +97,7 @@ sub _format_handler {
 #    $format->{att}{$name} = 1;
 #    &_format_handler($t, $format);
 #    $format->set_att(type => 'named_format');
-#    return;
+#    return undef;
 #}
 
 sub _format_cleanup_handler {
@@ -190,37 +165,60 @@ sub _handle_subtree {
         }
         $child->purge;
     }
-    return;
+    return undef;
 }
+
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
 
 sub escape {
     return shift;
 }
 
-sub process {
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
     my $temp_output;
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source('.xlst'),
-                $cleanvars,
-                \$temp_output,
-                {binmode => ':utf8'})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    &_xlsx_process($output, $temp_output);
-
-    return;
+    return (\$temp_output, {
+        input_extension => 'xlst',
+        binmode => $binmode,
+        _output => $output,
+    });
 }
+
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
 
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
+
     $parent->{mimetype} = 'application/vnd.ms-excel';
-    return;
+    &_xlsx_process($config->{_output}, $output);
+
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

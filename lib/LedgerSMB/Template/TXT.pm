@@ -7,32 +7,6 @@ LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
 =over
 
-=item get_extension
-Private method to get extension.  Do not call directly.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape ($var)
-
-Implements the templates escaping protocol. Returns C<$var>.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
 =cut
 
 package LedgerSMB::Template::TXT;
@@ -41,7 +15,6 @@ use strict;
 use warnings;
 
 use Template;
-use Template::Parser;
 use DateTime;
 
 # The following are for EDI only
@@ -52,7 +25,7 @@ my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 my $binmode = ':utf8';
 my $extension = 'txt';
 
-sub get_extension {
+sub _get_extension {
     my ($parent) = shift;
     if ($parent->{format_args}->{extension}){
         return $parent->{format_args}->{extension};
@@ -61,35 +34,55 @@ sub get_extension {
     }
 }
 
+=item escape($var)
+
+Implements the templates escaping protocol. Returns C<$var>.
+
+=cut
+
 sub escape {
     return shift;
 }
 
-sub process {
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
     $cleanvars->{EDI_CURRENT_DATE} = $date;
     $cleanvars->{EDI_CURRENT_TIME} = $time;
 
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source(get_extension($parent)),
-                $cleanvars,
-                $output,
-                {binmode => $binmode})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-
-    return;
+    return ($output, {
+        input_extension => _get_extension($parent),
+        binmode => $binmode,
+    });
 }
+
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
 
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'text/plain';
-    return;
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

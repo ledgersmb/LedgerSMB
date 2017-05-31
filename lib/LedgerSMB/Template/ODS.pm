@@ -11,30 +11,6 @@ OpenDocument Spreadsheet output.
 
 =over
 
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
-
 =cut
 
 package LedgerSMB::Template::ODS;
@@ -42,13 +18,13 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
-use Template::Parser;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
-use OpenOffice::OODoc;
+use OpenOffice::OODoc::File;
 use OpenOffice::OODoc::Styles;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
@@ -137,13 +113,13 @@ sub _worksheet_handler {
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
     }
-    return;
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    return;
+    return undef;
 }
 
 sub _cell_handler {
@@ -165,7 +141,7 @@ sub _cell_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     $currcol++;
-    return;
+    return undef;
 }
 
 sub _formula_handler {
@@ -186,7 +162,7 @@ sub _formula_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     ++$currcol;
-    return;
+    return undef;
 }
 
 sub _border_set {
@@ -218,7 +194,7 @@ sub _border_set {
     } elsif ($format->{att}->{border_color}) {
         return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
     }else{
-        return;
+        return undef;
     }
 }
 
@@ -768,8 +744,9 @@ sub _format_cleanup_handler {
 }
 
 sub _ods_process {
-    my ($filename, $template) = @_;
-    $ods = ooDocument(file => "$filename", create => 'spreadsheet');
+    my ($output, $template) = @_;
+    $output = IO::Scalar->new($output) if ref $output;
+    $ods = odfContainer($output, create => 'spreadsheet');
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -798,35 +775,60 @@ sub _ods_process {
     return $ods->save;
 }
 
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
+
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
     $vars = escapeHTML($vars);
     return $vars;
 }
-sub process {
+
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
     my ($parent, $cleanvars, $output) = @_;
 
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source("${extension}t"),
-                $cleanvars,
-                $output,
-                {binmode => ':utf8'})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    &_ods_process("$parent->{outputfile}.$extension", $output);
-
-    return;
+    my $temp_output;
+    return (\$temp_output, {
+        input_extension => $extension,
+        binmode => ':utf8',
+        _output => $output,
+    });
 }
+
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
 
 sub postprocess {
-    my $parent = shift;
+    my ($parent, $output, $config) = @_;
+
+    &_ods_process($config->{_output}, $output);
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
-    return;
+
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

@@ -43,7 +43,6 @@ requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Request';
 requires 'Template', '2.14';
-requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
@@ -72,14 +71,14 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Latex', '3.08';
+        requires 'Template::Plugin::Latex', '3.08';
         requires 'TeX::Encode';
 };
 
 feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
-        requires "OpenOffice::OODoc";
+        requires "OpenOffice::OODoc::File";
         requires 'OpenOffice::OODoc::Styles';
 };
 
