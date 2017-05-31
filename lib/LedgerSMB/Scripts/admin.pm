@@ -59,7 +59,7 @@ sub list_sessions {
         last_used => 'Last Used',
         locks_active => 'Transactions Locked'
     };
-    my $column_heading = $template->column_heading($column_names);
+    my $column_heading = _column_heading($request, $column_names);
     my $rows = [];
     my $rowcount = "0";
     my $base_url = "admin.pl?action=delete_session";
@@ -97,6 +97,45 @@ sub delete_session {
 }
 
 =back
+
+=cut
+
+# apply locale settings to column headings and add sort urls if necessary.
+sub _column_heading {
+    my $self = shift;
+    my ($names, $sortby) = @_;
+    my %sorturls;
+
+    if ($sortby) {
+        %sorturls = map
+        { $_ => $sortby->{href}."=$_"} @{$sortby->{columns}};
+    }
+
+    foreach my $attname (keys %$names) {
+
+        # process 2 cases - simple name => value, and complex name => hash
+        # pairs. The latter is used to include urls in column headers.
+
+        if (ref $names->{$attname} eq 'HASH') {
+            my $t = $self->{_locale}->maketext($names->{$attname}{text});
+            $names->{$attname}{text} = $t;
+        } else {
+            my $t = $self->{_locale}->maketext($names->{$attname});
+            if (defined $sorturls{$attname}) {
+                $names->{$attname} =
+                {
+                    text => $t,
+                     href => $sorturls{$attname}
+                };
+            } else {
+                $names->{$attname} = $t;
+            }
+        }
+    }
+
+    return $names;
+}
+
 
 =head1 COPYRIGHT
 

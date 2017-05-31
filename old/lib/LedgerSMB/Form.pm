@@ -2554,6 +2554,8 @@ sub create_links {
         ($val) = $sth->fetchrow_array();
         if ($_ eq 'curr') {
             $self->{currencies} = $val;
+            my @currencies = split /:/, $val;
+            $self->{defaultcurrency} = $currencies[0];
         }
         else {
             $self->{$_} = $val;

@@ -382,7 +382,7 @@ sub post_invoice {
                      || $form->dberror($query);
                 if (!$form->{approved}){
                    if (not defined $form->{batch_id}){
-                       $form->error($locale->text('Batch ID Missing'));
+                       $form->error('Batch ID Missing');
                    }
                    $query = qq|
             INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
@@ -1080,7 +1080,7 @@ sub retrieve_item {
 
     if ( $form->{"partnumber_$i"} ne "" ) {
         $var = $dbh->quote( $form->{"partnumber_$i"} );
-        $where .= " AND lower(p.partnumber) = $var or mm.barcode is not null";
+        $where .= " AND p.partnumber = $var or mm.barcode is not null";
     }
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
