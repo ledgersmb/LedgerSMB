@@ -25,6 +25,7 @@ use LedgerSMB::Report::Listings::Asset_Class;
 use LedgerSMB::Report::Listings::Asset;
 use strict;
 use warnings;
+
 our @file_columns = qw(tag purchase_date description asset_class location vendor
                       invoice department asset_account purchase_value
                       accum_dep nbv start_depreciation usable_life

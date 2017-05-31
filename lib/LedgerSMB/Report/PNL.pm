@@ -246,7 +246,7 @@ sub run_report {
             my $sign = (($contra) ? -1 : 1)
                 * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
 
-            $self->cell_value($row_id, $col_id, -$value)
+            $self->cell_value($row_id, $col_id, $sign * $value)
                 if $sign < 0;
         }
     }
