@@ -55,7 +55,6 @@ our @EXPORT_OK = qw(
     JRNL_CD
 
     MAX_DAYS_IN_MONTH
-    MAX_POST_SIZE_DEFAULT
     MIN_PER_HOUR
     MONEY_EPSILON
     MONTHS_PER_QUARTER
@@ -65,6 +64,7 @@ our @EXPORT_OK = qw(
     NC_INVOICE
     NC_ENTITY_CREDIT_ACCOUNT
     NC_JOURNAL_ENTRY
+    NC_UNKNOWN_4
 
     OEC_SALES_ORDER
     OEC_PURCHASE_ORDER
@@ -102,7 +102,6 @@ use constant {
     SATURDAY           => 6,
 
     # miscellany
-    MAX_POST_SIZE_DEFAULT      => 1024 * 1024 * 4,
     MONEY_EPSILON => 0.001,         # XXX GAP/IFRS require .0001  maybe???
                                     # I read that somewhere, maybe Celko --rir
     RATIO_TO_PERCENT => 100,
@@ -148,6 +147,7 @@ use constant {
     NC_ENTITY                => 1,
     NC_INVOICE               => 2,
     NC_ENTITY_CREDIT_ACCOUNT => 3,
+    NC_UNKNOWN_4             => undef,
     NC_JOURNAL_ENTRY         => 5,
 
     # our order entry classes
@@ -294,7 +294,6 @@ the names are subject to change.
 
 =head3  LedgerSMB miscellaneous contants
 
-    MAX_POST_SIZE_DEFAULT           1024*1024
     MONEY_EPSILON                   0.001
 
 GAP/IFRS seems to require .0001  (maybe???  I read that somewhere,
@@ -347,6 +346,7 @@ maybe Celko --rir).
     NC_ENTITY                   1
     NC_INVOICE                  2
     NC_ENTITY_CREDIT_ACCOUNT    3
+    NC_UNKNOWN_4                undef
     NC_JOURNAL_ENTRY            5
 
 =head3  LedgerSMB order entry class codes
