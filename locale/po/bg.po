@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.7-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-04-09 15:04+0000\n"
+"POT-Creation-Date: 2017-06-01 15:55+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Bulgarian (https://www.transifex.com/ledgersmb/teams/58325/"
 "bg/)\n"
@@ -276,8 +276,8 @@ msgstr ""
 msgid "Account [_1] not found."
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:227
-#: UI/Reports/filters/income_statement.html:274
+#: UI/Reports/filters/balance_sheet.html:226
+#: UI/Reports/filters/income_statement.html:273
 msgid "Account category"
 msgstr ""
 
@@ -285,8 +285,8 @@ msgstr ""
 msgid "Account does not exist!"
 msgstr "Сметката не съществува!"
 
-#: UI/Reports/filters/balance_sheet.html:180
-#: UI/Reports/filters/income_statement.html:227
+#: UI/Reports/filters/balance_sheet.html:179
+#: UI/Reports/filters/income_statement.html:226
 msgid "Account numbers"
 msgstr ""
 
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Active Sessions"
 msgstr ""
 
-#: bin/am.pl:1528 bin/ic.pl:2104 lib/LedgerSMB/Report/File/Incoming.pm:102
+#: bin/am.pl:1533 bin/ic.pl:2104 lib/LedgerSMB/Report/File/Incoming.pm:102
 #: lib/LedgerSMB/Report/File/Internal.pm:90
 msgid "Add"
 msgstr "Добави"
@@ -544,7 +544,7 @@ msgstr "Добави превод"
 msgid "Add Unit"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:98
+#: UI/Contact/divs/employee.html:221 UI/Contact/divs/user.html:126
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
 msgid "Add User"
 msgstr "Добави потребител"
@@ -765,7 +765,7 @@ msgid "Amount Budgetted"
 msgstr ""
 
 #: bin/aa.pl:1658 lib/LedgerSMB/Report/Invoices/Outstanding.pm:238
-#: lib/LedgerSMB/Scripts/payment.pm:788 lib/LedgerSMB/Scripts/payment.pm:794
+#: lib/LedgerSMB/Scripts/payment.pm:797 lib/LedgerSMB/Scripts/payment.pm:803
 #: templates/demo/check_base.tex:53
 #: templates/demo_with_images/check_base.tex:53
 #: templates/xedemo/check_base.tex:53
@@ -817,15 +817,15 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1182
+#: lib/LedgerSMB/Scripts/payment.pm:1191
 msgid "Applied discount"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1737 lib/LedgerSMB/Scripts/payment.pm:1815
+#: lib/LedgerSMB/Scripts/payment.pm:1746 lib/LedgerSMB/Scripts/payment.pm:1824
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:786
+#: lib/LedgerSMB/Scripts/payment.pm:795
 msgid "Apply Disc"
 msgstr ""
 
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
-#: lib/LedgerSMB/GL.pm:148 lib/LedgerSMB/IR.pm:386 lib/LedgerSMB/IS.pm:1065
+#: lib/LedgerSMB/GL.pm:148
 msgid "Batch ID Missing"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr ""
 msgid "Bin"
 msgstr "Пакет"
 
-#: bin/am.pl:1505 bin/io.pl:1222 bin/oe.pl:265 bin/oe.pl:277 bin/printer.pl:88
+#: bin/am.pl:1510 bin/io.pl:1222 bin/oe.pl:265 bin/oe.pl:277 bin/printer.pl:88
 #: bin/printer.pl:102 templates/demo/bin_list.html:4
 #: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
 #: templates/demo_with_images/bin_list.html:4
@@ -1766,16 +1766,15 @@ msgid "Compare to"
 msgstr "Сравни със"
 
 #: UI/Reports/filters/balance_sheet.html:144
-#, fuzzy
 msgid "Comparison Dates"
-msgstr "Дата на заданието"
+msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:285
+#: UI/Reports/filters/balance_sheet.html:284
 #: UI/Reports/filters/income_statement.html:187
 msgid "Comparison Periods"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:256
+#: UI/Reports/filters/balance_sheet.html:255
 msgid "Comparison selection by"
 msgstr ""
 
@@ -1854,16 +1853,16 @@ msgstr ""
 #: bin/aa.pl:1761 bin/arap.pl:269 bin/arapprn.pl:417 bin/ic.pl:956
 #: bin/ic.pl:1770 bin/ic.pl:2052 bin/ic.pl:2201 bin/io.pl:620 bin/io.pl:1081
 #: bin/oe.pl:1547 bin/oe.pl:2075 bin/oe.pl:2586 bin/pe.pl:330 bin/pe.pl:749
-#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:617
-#: lib/LedgerSMB/Scripts/payment.pm:684 lib/LedgerSMB/Scripts/payment.pm:1348
+#: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:626
+#: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Scripts/payment.pm:1357
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
 #: UI/asset/begin_depreciation_all.html:26 UI/asset/begin_report.html:61
 #: UI/Contact/divs/credit.html:401 UI/create_batch.html:52
 #: UI/inventory/adjustment_setup.html:37 UI/oe-save_warn.html:19
 #: UI/payments/payments_filter.html:187 UI/Reports/co/filter_bm.html:140
 #: UI/Reports/co/filter_cd.html:115 UI/Reports/filters/aging.html:148
-#: UI/Reports/filters/balance_sheet.html:322 UI/Reports/filters/gl.html:324
-#: UI/Reports/filters/income_statement.html:308
+#: UI/Reports/filters/balance_sheet.html:321 UI/Reports/filters/gl.html:324
+#: UI/Reports/filters/income_statement.html:307
 #: UI/Reports/filters/inventory_activity.html:32
 #: UI/Reports/filters/invoice_outstanding.html:295
 #: UI/Reports/filters/invoice_search.html:404
@@ -2008,8 +2007,12 @@ msgstr ""
 msgid "Create New Tax Form"
 msgstr ""
 
-#: UI/setup/new_user.html:139
+#: UI/setup/new_user.html:169
 msgid "Create User"
+msgstr ""
+
+#: UI/Contact/divs/user.html:71 UI/setup/new_user.html:43
+msgid "Create new user"
 msgstr ""
 
 #: UI/asset/search_reports.html:48 UI/create_batch.html:82
@@ -2041,7 +2044,7 @@ msgstr ""
 msgid "Credit Accounts"
 msgstr ""
 
-#: bin/am.pl:1498 templates/demo/invoice.html:17 templates/demo/invoice.tex:114
+#: bin/am.pl:1503 templates/demo/invoice.html:17 templates/demo/invoice.tex:114
 #: templates/demo_with_images/invoice.html:17
 #: templates/demo_with_images/invoice.tex:114 templates/xedemo/invoice.tex:111
 #: sql/Pg-database.sql:2907
@@ -2186,6 +2189,10 @@ msgstr ""
 msgid "D M"
 msgstr ""
 
+#: UI/setup/credentials.html:24
+msgid "DB admin login"
+msgstr ""
+
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
 msgstr "Дата на раждане"
@@ -2230,6 +2237,10 @@ msgstr ""
 msgid "Database Operation Complete"
 msgstr ""
 
+#: UI/setup/credentials.html:8
+msgid "Database administrator credentials"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/setup.pm:186
 msgid "Database does not exist."
 msgstr ""
@@ -2260,7 +2271,7 @@ msgstr "Бази-данни"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
 #: lib/LedgerSMB/Scripts/asset.pm:532 lib/LedgerSMB/Scripts/payment.pm:154
-#: lib/LedgerSMB/Scripts/payment.pm:782 templates/demo/ap_transaction.html:73
+#: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/ap_transaction.html:73
 #: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
 #: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
 #: templates/demo/ar_transaction.html:191 templates/demo/ar_transaction.tex:77
@@ -2367,7 +2378,7 @@ msgstr ""
 msgid "Date from"
 msgstr ""
 
-#: UI/Admin/user_search.html:51 UI/setup/new_user.html:102
+#: UI/Admin/user_search.html:51 UI/setup/new_user.html:132
 msgid "Date of Birth"
 msgstr ""
 
@@ -2376,9 +2387,8 @@ msgid "Date received missing!"
 msgstr "Липсва дата на получаване!"
 
 #: UI/Reports/filters/balance_sheet.html:47
-#, fuzzy
 msgid "Date selection"
-msgstr "Обяснение"
+msgstr ""
 
 #: bin/aa.pl:1702 UI/payments/payment1.html:73
 #: UI/Reports/filters/contact_search.html:123
@@ -2394,7 +2404,7 @@ msgid "Date: [_1]"
 msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:70
-#: UI/Reports/filters/balance_sheet.html:274
+#: UI/Reports/filters/balance_sheet.html:273
 #: UI/Reports/filters/income_statement.html:102
 msgid "Dates"
 msgstr ""
@@ -2418,7 +2428,7 @@ msgstr "Дни"
 msgid "Debit"
 msgstr "Дебит"
 
-#: bin/am.pl:1499 sql/Pg-database.sql:2903
+#: bin/am.pl:1504 sql/Pg-database.sql:2903
 msgid "Debit Invoice"
 msgstr "Дебитно известие към фактура"
 
@@ -2793,7 +2803,7 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:785
+#: bin/ic.pl:1127 lib/LedgerSMB/Scripts/payment.pm:794
 #: UI/accounts/edit.html:300 UI/accounts/edit.html:340
 #: UI/am-business-form.html:16 UI/Contact/divs/credit.html:167
 #: UI/Contact/divs/credit.html:168 UI/payments/payments_detail.html:328
@@ -2955,7 +2965,7 @@ msgstr ""
 msgid "E-mail [_1]"
 msgstr ""
 
-#: bin/am.pl:1467 bin/io.pl:1276
+#: bin/am.pl:1472 bin/io.pl:1276
 msgid "E-mail address missing!"
 msgstr "Липсва Ел.адрес!"
 
@@ -3166,7 +3176,7 @@ msgstr "Сътрудник"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:114
 #: t/data/04-complex_template.html:92 UI/Contact/divs/employee.html:132
-#: UI/setup/new_user.html:92
+#: UI/setup/new_user.html:122
 msgid "Employee Number"
 msgstr "Сътрудник номер"
 
@@ -3251,7 +3261,7 @@ msgstr ""
 msgid "Enter User"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:306
+#: UI/Reports/filters/balance_sheet.html:305
 msgid "Enter date ranges for comparison"
 msgstr ""
 
@@ -3362,7 +3372,7 @@ msgstr "Курс"
 
 #: bin/aa.pl:434 bin/ir.pl:351 bin/is.pl:331 bin/oe.pl:341 bin/oe.pl:349
 #: bin/oe.pl:1533 lib/LedgerSMB/Report/Contact/History.pm:116
-#: lib/LedgerSMB/Scripts/payment.pm:793 UI/orders/order.html:54
+#: lib/LedgerSMB/Scripts/payment.pm:802 UI/orders/order.html:54
 #: UI/payments/payment2.html:139 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 #: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
@@ -3373,7 +3383,7 @@ msgstr "Валутен курс"
 msgid "Exchange rate for payment missing!"
 msgstr "Валутен курс за пропуснато плащане"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1104
+#: lib/LedgerSMB/Scripts/payment.pm:1113
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -3595,7 +3605,7 @@ msgid "First"
 msgstr ""
 
 #: UI/Admin/user_search.html:21 UI/Contact/divs/employee.html:43
-#: UI/setup/new_user.html:72
+#: UI/setup/new_user.html:102
 msgid "First Name"
 msgstr ""
 
@@ -3670,7 +3680,7 @@ msgstr ""
 #: UI/Reports/co/filter_bm.html:21 UI/Reports/co/filter_cd.html:39
 #: UI/Reports/filters/contact_search.html:117
 #: UI/Reports/filters/income_statement.html:126
-#: UI/Reports/filters/income_statement.html:202
+#: UI/Reports/filters/income_statement.html:201
 #: UI/Reports/filters/purchase_history.html:119
 #: UI/Reports/filters/purchase_history.html:140
 #: UI/rp-search-generate_balance_sheet.html:19
@@ -3706,8 +3716,8 @@ msgstr "От склад"
 msgid "From date"
 msgstr ""
 
-#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:208
-#: UI/Reports/filters/income_statement.html:255
+#: UI/asset/begin_report.html:33 UI/Reports/filters/balance_sheet.html:207
+#: UI/Reports/filters/income_statement.html:254
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Full"
 msgstr ""
@@ -3882,8 +3892,8 @@ msgstr "HTML Шаблони"
 msgid "Heading"
 msgstr "Заглавие"
 
-#: UI/Reports/filters/balance_sheet.html:190
-#: UI/Reports/filters/income_statement.html:237
+#: UI/Reports/filters/balance_sheet.html:189
+#: UI/Reports/filters/income_statement.html:236
 msgid "Hierarchy type"
 msgstr ""
 
@@ -3967,8 +3977,7 @@ msgstr "Изображение"
 msgid "Images in Templates"
 msgstr ""
 
-#: UI/Contact/divs/user.html:59 UI/setup/edit_user.html:59
-#: UI/setup/new_user.html:38 sql/Pg-database.sql:2783 sql/Pg-database.sql:2893
+#: UI/setup/edit_user.html:59 sql/Pg-database.sql:2783 sql/Pg-database.sql:2893
 #: sql/Pg-database.sql:2908 sql/Pg-database.sql:2913
 msgid "Import"
 msgstr ""
@@ -3995,6 +4004,10 @@ msgstr ""
 
 #: sql/Pg-database.sql:2780
 msgid "Import Inventory"
+msgstr ""
+
+#: UI/Contact/divs/user.html:83 UI/setup/new_user.html:55
+msgid "Import existing user"
 msgstr ""
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:29
@@ -4126,7 +4139,7 @@ msgstr ""
 msgid "Invalid file"
 msgstr ""
 
-#: bin/am.pl:1425 bin/am.pl:1473
+#: bin/am.pl:1430 bin/am.pl:1478
 msgid "Invalid redirect"
 msgstr ""
 
@@ -4185,12 +4198,12 @@ msgstr "Ивентара е запазен!"
 msgid "Inventory transferred!"
 msgstr "Инвентара е преместен!"
 
-#: bin/am.pl:1497 bin/io.pl:1035 bin/io.pl:1041 bin/io.pl:1162 bin/is.pl:251
+#: bin/am.pl:1502 bin/io.pl:1035 bin/io.pl:1041 bin/io.pl:1162 bin/is.pl:251
 #: bin/is.pl:1400 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
-#: lib/LedgerSMB/Scripts/payment.pm:781 templates/demo/invoice.html:4
+#: lib/LedgerSMB/Scripts/payment.pm:790 templates/demo/invoice.html:4
 #: templates/demo/invoice.tex:116 templates/demo/printPayment.html:41
 #: templates/demo_with_images/invoice.html:4
 #: templates/demo_with_images/invoice.html:18
@@ -4478,8 +4491,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Language.pm:68
 #: lib/LedgerSMB/Report/Listings/Templates.pm:67
 #: UI/Contact/divs/credit.html:273 UI/Contact/divs/credit.html:274
-#: UI/Reports/filters/balance_sheet.html:242
-#: UI/Reports/filters/income_statement.html:289 UI/users/preferences.html:70
+#: UI/Reports/filters/balance_sheet.html:241
+#: UI/Reports/filters/income_statement.html:288 UI/users/preferences.html:70
 #: sql/Pg-database.sql:2879
 msgid "Language"
 msgstr "Език"
@@ -4514,7 +4527,7 @@ msgstr ""
 msgid "Last Updated"
 msgstr ""
 
-#: UI/setup/new_user.html:82
+#: UI/setup/new_user.html:112
 msgid "Last name"
 msgstr ""
 
@@ -4806,7 +4819,7 @@ msgstr "Май"
 
 #: bin/aa.pl:816 bin/ir.pl:674 bin/ir.pl:844 bin/is.pl:761 bin/is.pl:924
 #: lib/LedgerSMB/Report/GL.pm:127 lib/LedgerSMB/Scripts/payment.pm:156
-#: lib/LedgerSMB/Scripts/payment.pm:787 templates/demo/ap_transaction.html:195
+#: lib/LedgerSMB/Scripts/payment.pm:796 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
 #: UI/orders/order.html:248 UI/payments/payment2.html:307
@@ -5091,7 +5104,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr "Няма отворен проект!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1220
+#: lib/LedgerSMB/Scripts/payment.pm:1229
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -5161,8 +5174,8 @@ msgstr ""
 msgid "Not Submitted"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:220
-#: UI/Reports/filters/income_statement.html:267
+#: UI/Reports/filters/balance_sheet.html:219
+#: UI/Reports/filters/income_statement.html:266
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 
@@ -5382,7 +5395,7 @@ msgstr ""
 msgid "Only for documentation"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:312
+#: UI/Reports/filters/balance_sheet.html:311
 msgid "Ooops! You forgot through date!"
 msgstr ""
 
@@ -5604,7 +5617,7 @@ msgstr ""
 msgid "POST AND PRINT"
 msgstr ""
 
-#: bin/am.pl:1500 bin/io.pl:1181 bin/is.pl:253 bin/is.pl:1005 bin/oe.pl:253
+#: bin/am.pl:1505 bin/io.pl:1181 bin/is.pl:253 bin/is.pl:1005 bin/oe.pl:253
 #: bin/oe.pl:272 bin/printer.pl:79 bin/printer.pl:97
 #: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
 #: templates/demo/packing_list.tex:81
@@ -5629,7 +5642,7 @@ msgstr "Липсва номер на опаковъчния лист!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:233
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:140
-#: lib/LedgerSMB/Scripts/payment.pm:784 templates/demo/invoice.html:190
+#: lib/LedgerSMB/Scripts/payment.pm:793 templates/demo/invoice.html:190
 #: templates/demo/invoice.tex:175 templates/demo_with_images/invoice.html:193
 #: templates/demo_with_images/invoice.tex:174 templates/xedemo/invoice.html:192
 #: templates/xedemo/invoice.tex:169 UI/payments/payments_detail.html:327
@@ -5741,7 +5754,7 @@ msgstr ""
 msgid "Payables"
 msgstr "Подлежащи на плащане"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1016 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1025 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:280 UI/accounts/edit.html:322
 #: UI/Contact/divs/credit.html:209 UI/Contact/divs/credit.html:210
 #: UI/payments/payments_detail.html:217 sql/Pg-database.sql:2804
@@ -5846,7 +5859,7 @@ msgid "Period type"
 msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:83
-#: UI/Reports/filters/balance_sheet.html:264
+#: UI/Reports/filters/balance_sheet.html:263
 #: UI/Reports/filters/income_statement.html:115
 msgid "Periods"
 msgstr ""
@@ -5867,7 +5880,7 @@ msgstr "Телефон"
 msgid "Physical"
 msgstr ""
 
-#: bin/am.pl:1501 bin/io.pl:1204 bin/is.pl:252 bin/oe.pl:252 bin/oe.pl:271
+#: bin/am.pl:1506 bin/io.pl:1204 bin/is.pl:252 bin/oe.pl:252 bin/oe.pl:271
 #: bin/printer.pl:75 bin/printer.pl:93 templates/demo/pick_list.html:4
 #: templates/demo/pick_list.html:18 templates/demo/pick_list.tex:74
 #: templates/demo_with_images/pick_list.html:4
@@ -6017,19 +6030,19 @@ msgstr ""
 msgid "Posting Date:"
 msgstr ""
 
-#: bin/am.pl:1374
+#: bin/am.pl:1379
 msgid "Posting GL Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1214
+#: bin/am.pl:1219
 msgid "Posting Sales Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1236 bin/am.pl:1245
+#: bin/am.pl:1241 bin/am.pl:1250
 msgid "Posting Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1224
+#: bin/am.pl:1229
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
@@ -6145,43 +6158,43 @@ msgstr "Разпечатано"
 msgid "Printer"
 msgstr "Принтер"
 
-#: bin/am.pl:1409
+#: bin/am.pl:1414
 msgid "Printing Bin List [_1]"
 msgstr ""
 
-#: bin/am.pl:1402
+#: bin/am.pl:1407
 msgid "Printing Credit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1403
+#: bin/am.pl:1408
 msgid "Printing Debit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1401
+#: bin/am.pl:1406
 msgid "Printing Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1404
+#: bin/am.pl:1409
 msgid "Printing Packing List [_1]"
 msgstr ""
 
-#: bin/am.pl:1405
+#: bin/am.pl:1410
 msgid "Printing Pick List [_1]"
 msgstr ""
 
-#: bin/am.pl:1408
+#: bin/am.pl:1413
 msgid "Printing Purchase Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1406
+#: bin/am.pl:1411
 msgid "Printing Sales Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1400
+#: bin/am.pl:1405
 msgid "Printing Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1407
+#: bin/am.pl:1412
 msgid "Printing Work Order [_1]"
 msgstr ""
 
@@ -6270,7 +6283,7 @@ msgstr ""
 msgid "Purchase History"
 msgstr ""
 
-#: bin/am.pl:1281 bin/am.pl:1504 bin/io.pl:1215 bin/ir.pl:547 bin/ir.pl:947
+#: bin/am.pl:1286 bin/am.pl:1509 bin/io.pl:1215 bin/ir.pl:547 bin/ir.pl:947
 #: bin/oe.pl:264 bin/oe.pl:666 bin/oe.pl:867 bin/oe.pl:1226 bin/printer.pl:84
 #: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
 #: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
@@ -6496,7 +6509,7 @@ msgstr ""
 msgid "Recd"
 msgstr "Запис"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1016 sql/Pg-database.sql:2803
+#: lib/LedgerSMB/Scripts/payment.pm:1025 sql/Pg-database.sql:2803
 #: sql/Pg-database.sql:2972
 msgid "Receipt"
 msgstr "Приходен ордер"
@@ -6530,7 +6543,7 @@ msgstr "Получи"
 msgid "Receive Merchandise"
 msgstr "Получаване на стока"
 
-#: lib/LedgerSMB/Scripts/payment.pm:838
+#: lib/LedgerSMB/Scripts/payment.pm:847
 msgid "Received"
 msgstr ""
 
@@ -6676,9 +6689,8 @@ msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:13
 #: UI/Reports/filters/income_statement.html:21
-#, fuzzy
 msgid "Report type"
-msgstr "Справка за"
+msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:85
 msgid "Reporting Basis"
@@ -6688,7 +6700,7 @@ msgstr ""
 msgid "Reporting Units"
 msgstr ""
 
-#: UI/Reports/filters/income_statement.html:301
+#: UI/Reports/filters/income_statement.html:300
 msgid "Reporting unit filters"
 msgstr ""
 
@@ -6766,7 +6778,7 @@ msgstr ""
 msgid "Required period type"
 msgstr ""
 
-#: UI/Contact/divs/user.html:90 UI/setup/edit_user.html:88
+#: UI/Contact/divs/user.html:118 UI/setup/edit_user.html:88
 msgid "Reset Password"
 msgstr ""
 
@@ -6887,7 +6899,7 @@ msgstr "Фактура продажба"
 msgid "Sales Invoice/AR Transaction Number"
 msgstr "Фактура продажби/Номер на превод от клиент"
 
-#: bin/am.pl:1275 bin/am.pl:1502 bin/io.pl:1167 bin/is.pl:591 bin/is.pl:1034
+#: bin/am.pl:1280 bin/am.pl:1507 bin/io.pl:1167 bin/is.pl:591 bin/is.pl:1034
 #: bin/oe.pl:250 bin/oe.pl:655 bin/oe.pl:866 bin/oe.pl:1220 bin/printer.pl:67
 #: templates/demo/sales_order.html:4 templates/demo/sales_order.html:18
 #: templates/demo/sales_order.tex:99
@@ -7003,7 +7015,7 @@ msgstr ""
 msgid "Save Draft"
 msgstr ""
 
-#: UI/Contact/divs/user.html:159 UI/setup/edit_user.html:156
+#: UI/Contact/divs/user.html:187 UI/setup/edit_user.html:156
 msgid "Save Groups"
 msgstr ""
 
@@ -7048,7 +7060,7 @@ msgstr "Запази като нов"
 msgid "Saved id [_1]"
 msgstr ""
 
-#: bin/am.pl:1320
+#: bin/am.pl:1325
 msgid "Saving [_1] [_2]"
 msgstr ""
 
@@ -7065,7 +7077,7 @@ msgstr "Разписание"
 msgid "Scheduled"
 msgstr "Зададено разписание"
 
-#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:529
+#: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:538
 #: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Екран"
@@ -7241,9 +7253,8 @@ msgstr "Избери txt, postscrip или PDF!"
 
 #: UI/Reports/filters/balance_sheet.html:50
 #: UI/Reports/filters/income_statement.html:85
-#, fuzzy
 msgid "Select using"
-msgstr "Избери клиент"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:121
 msgid "Selected"
@@ -7266,43 +7277,43 @@ msgstr "Продажба"
 msgid "Sell Price"
 msgstr "Продажна цена"
 
-#: bin/am.pl:1454
+#: bin/am.pl:1459
 msgid "Sending Bin List [_1]"
 msgstr ""
 
-#: bin/am.pl:1447
+#: bin/am.pl:1452
 msgid "Sending Credit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1448
+#: bin/am.pl:1453
 msgid "Sending Debit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1446
+#: bin/am.pl:1451
 msgid "Sending Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1449
+#: bin/am.pl:1454
 msgid "Sending Packing List [_1]"
 msgstr ""
 
-#: bin/am.pl:1450
+#: bin/am.pl:1455
 msgid "Sending Pick List [_1]"
 msgstr ""
 
-#: bin/am.pl:1453
+#: bin/am.pl:1458
 msgid "Sending Purchase Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1451
+#: bin/am.pl:1456
 msgid "Sending Sales Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1445
+#: bin/am.pl:1450
 msgid "Sending Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1452
+#: bin/am.pl:1457
 msgid "Sending Work Order [_1]"
 msgstr ""
 
@@ -7876,14 +7887,6 @@ msgstr ""
 msgid "Sun"
 msgstr ""
 
-#: UI/setup/credentials.html:24
-msgid "Super-user login"
-msgstr ""
-
-#: UI/setup/credentials.html:8
-msgid "Superuser Credentials"
-msgstr ""
-
 #: UI/Contact/divs/person.html:117
 msgid "Surname"
 msgstr ""
@@ -7971,7 +7974,7 @@ msgstr ""
 msgid "Tax ID"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:112
+#: UI/Contact/divs/employee.html:154 UI/setup/new_user.html:142
 msgid "Tax ID/SSN"
 msgstr ""
 
@@ -8213,15 +8216,15 @@ msgstr ""
 msgid "The amount of"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1498 lib/LedgerSMB/Scripts/payment.pm:1504
+#: lib/LedgerSMB/Scripts/payment.pm:1507 lib/LedgerSMB/Scripts/payment.pm:1513
 msgid "The amount of the invoice number"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1752
+#: lib/LedgerSMB/Scripts/payment.pm:1761
 msgid "The amount to be pay from the accno"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1720
+#: lib/LedgerSMB/Scripts/payment.pm:1729
 msgid "The amount to be pay of the invoice number"
 msgstr ""
 
@@ -8285,11 +8288,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1118
+#: lib/LedgerSMB/Scripts/payment.pm:1127
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1805
+#: lib/LedgerSMB/Scripts/payment.pm:1814
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -8306,8 +8309,8 @@ msgstr ""
 msgid "Threshold"
 msgstr ""
 
-#: UI/Reports/filters/balance_sheet.html:160
-#: UI/Reports/filters/balance_sheet.html:310
+#: UI/Reports/filters/balance_sheet.html:159
+#: UI/Reports/filters/balance_sheet.html:309
 msgid "Through date"
 msgstr ""
 
@@ -8383,7 +8386,7 @@ msgstr "Пъти"
 #: UI/Reports/co/filter_bm.html:27 UI/Reports/co/filter_cd.html:45
 #: UI/Reports/filters/aging.html:34
 #: UI/Reports/filters/income_statement.html:138
-#: UI/Reports/filters/income_statement.html:210
+#: UI/Reports/filters/income_statement.html:209
 #: UI/Reports/filters/purchase_history.html:127
 #: UI/Reports/filters/purchase_history.html:148
 #: UI/rp-search-generate_income_statement.html:14
@@ -8430,7 +8433,7 @@ msgstr ""
 msgid "To my browser"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:835
+#: lib/LedgerSMB/Scripts/payment.pm:844
 msgid "To pay"
 msgstr ""
 
@@ -8478,7 +8481,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:98
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:96
 #: lib/LedgerSMB/Scripts/asset.pm:537 lib/LedgerSMB/Scripts/payment.pm:200
-#: lib/LedgerSMB/Scripts/payment.pm:783 templates/demo/ap_transaction.html:126
+#: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
 #: templates/demo/ar_transaction.html:146 templates/demo/invoice.html:184
@@ -8555,7 +8558,7 @@ msgstr "Стока с проследяване"
 msgid "Trade Discount"
 msgstr "Търговска остъпка"
 
-#: bin/aa.pl:915 bin/am.pl:1496
+#: bin/aa.pl:915 bin/am.pl:1501
 msgid "Transaction"
 msgstr "Превод"
 
@@ -8891,7 +8894,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1627
+#: lib/LedgerSMB/Scripts/payment.pm:1636
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -8910,6 +8913,10 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:982
 msgid "User already exists. Import?"
+msgstr ""
+
+#: UI/Contact/divs/user.html:59 UI/setup/new_user.html:38
+msgid "User creation"
 msgstr ""
 
 #: UI/Contact/divs/user.html:28 UI/Contact/divs/user.html:41
@@ -8951,9 +8958,8 @@ msgid "Valid until"
 msgstr "Валидно до"
 
 #: UI/Reports/filters/income_statement.html:23
-#, fuzzy
 msgid "Valuation"
-msgstr "Превод"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:92
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:99
@@ -9149,7 +9155,7 @@ msgstr ""
 msgid "Widgit Themes"
 msgstr ""
 
-#: bin/am.pl:1503 bin/io.pl:1174 bin/oe.pl:251 bin/printer.pl:71
+#: bin/am.pl:1508 bin/io.pl:1174 bin/oe.pl:251 bin/printer.pl:71
 #: templates/demo_with_images/work_order.html:4
 #: templates/demo_with_images/work_order.html:18
 #: templates/demo_with_images/work_order.tex:109
@@ -9334,7 +9340,7 @@ msgstr ""
 msgid "disposal"
 msgstr ""
 
-#: bin/am.pl:1254 bin/am.pl:1325 bin/am.pl:1379 bin/am.pl:1430 bin/am.pl:1480
+#: bin/am.pl:1259 bin/am.pl:1330 bin/am.pl:1384 bin/am.pl:1435 bin/am.pl:1485
 msgid "done"
 msgstr "Готов"
 
@@ -9342,7 +9348,7 @@ msgstr "Готов"
 msgid "ea"
 msgstr "бр."
 
-#: bin/am.pl:1328 bin/am.pl:1483
+#: bin/am.pl:1333 bin/am.pl:1488
 msgid "failed"
 msgstr "грешка"
 
@@ -9366,19 +9372,19 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1752
+#: lib/LedgerSMB/Scripts/payment.pm:1761
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1504
+#: lib/LedgerSMB/Scripts/payment.pm:1513
 msgid "is lesser than 0"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1498
+#: lib/LedgerSMB/Scripts/payment.pm:1507
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1720
+#: lib/LedgerSMB/Scripts/payment.pm:1729
 msgid "is null"
 msgstr ""
 
@@ -9438,8 +9444,8 @@ msgstr ""
 msgid "unexpected error!"
 msgstr "Необяснима грешка!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1760 lib/LedgerSMB/Scripts/payment.pm:1777
-#: lib/LedgerSMB/Scripts/payment.pm:1832 lib/LedgerSMB/Scripts/payment.pm:1849
+#: lib/LedgerSMB/Scripts/payment.pm:1769 lib/LedgerSMB/Scripts/payment.pm:1786
+#: lib/LedgerSMB/Scripts/payment.pm:1841 lib/LedgerSMB/Scripts/payment.pm:1858
 msgid "use of an overpayment"
 msgstr ""
 
