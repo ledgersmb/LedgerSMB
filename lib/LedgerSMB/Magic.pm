@@ -4,21 +4,17 @@ use warnings;
 
 use base 'Exporter';
 
-# TODO  Interleave Pod XXX
-
 our @EXPORT_OK = qw(
     BC_AP
     BC_AR
+    BC_GL
     BC_PAYMENT
     BC_PAYMENT_REVERSAL
-    BC_GL
     BC_RECEIPT
     BC_RECEIPT_REVERSAL
     BC_SALES_INVOICE
     BC_VENDOR_INVOICE
-
     CENTURY_START_YEAR
-
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -27,229 +23,47 @@ our @EXPORT_OK = qw(
     EC_LEAD
     EC_REFERRAL
     EC_VENDOR
-
     EDI_PATHNAME_MAX
-
-    FC_TRANSACTION
+    FC_ECA
+    FC_ENTITY
+    FC_INCOMING
+    FC_INTERNAL
     FC_ORDER
     FC_PART
-    FC_ENTITY
-    FC_ECA
-    FC_INTERNAL
-    FC_INCOMING
-
+    FC_TRANSACTION
     FUTURE_YEARS_LIMIT
-
     HTTP_454
-    HTTP_BAD_REQUEST
-    HTTP_FOUND
-    HTTP_INTERNAL_SERVER_ERROR
-    HTTP_OK
-    HTTP_SEE_OTHER
-    HTTP_UNAUTHORIZED
-
-    JRNL_GJ
-    JRNL_AR
     JRNL_AP
-    JRNL_CR
+    JRNL_AR
     JRNL_CD
-
+    JRNL_CR
+    JRNL_GJ
     MAX_DAYS_IN_MONTH
     MIN_PER_HOUR
     MONEY_EPSILON
     MONTHS_PER_QUARTER
     MONTHS_PER_YEAR
-
     NC_ENTITY
-    NC_INVOICE
     NC_ENTITY_CREDIT_ACCOUNT
+    NC_INVOICE
     NC_JOURNAL_ENTRY
     NC_UNKNOWN_4
-
-    OEC_SALES_ORDER
     OEC_PURCHASE_ORDER
     OEC_QUOTATION
     OEC_RFQ
-
+    OEC_SALES_ORDER
     PERL_TIME_EPOCH
     RATIO_TO_PERCENT
-
     RC_DEPRECIATION
     RC_DISPOSAL
     RC_IMPORT
     RC_PARTIAL_DISPOSAL
-
-    SEC_PER_HOUR
     SATURDAY
+    SEC_PER_HOUR
     SUNDAY
-
     YEARS_PER_CENTURY
 );
 
-use constant {
-
-    # temporal
-    CENTURY_START_YEAR => 2000,    # start of current century
-    FUTURE_YEARS_LIMIT => 20,      # go to last century if too far in future
-    SEC_PER_HOUR       => 3600,
-    MIN_PER_HOUR       => 60,
-    MONTHS_PER_QUARTER => 3,
-    MONTHS_PER_YEAR    => 12,
-    MAX_DAYS_IN_MONTH  => 31,
-    PERL_TIME_EPOCH    => 1900,
-    YEARS_PER_CENTURY  => 100,
-    SUNDAY             => 0,
-    SATURDAY           => 6,
-
-    # miscellany
-    MONEY_EPSILON => 0.001,         # XXX GAP/IFRS require .0001  maybe???
-                                    # I read that somewhere, maybe Celko --rir
-    RATIO_TO_PERCENT => 100,
-
-    # our batch classes
-    BC_AP               => 1,
-    BC_AR               => 2,
-    BC_PAYMENT          => 3,
-    BC_PAYMENT_REVERSAL => 4,
-    BC_GL               => 5,
-    BC_RECEIPT          => 6,
-    BC_RECEIPT_REVERSAL => 7,
-    BC_SALES_INVOICE    => 8,
-    BC_VENDOR_INVOICE   => 9,
-
-    # our entity classes
-    EC_VENDOR    => 1,
-    EC_CUSTOMER  => 2,
-    EC_EMPLOYEE  => 3,
-    EC_CONTACT   => 4,
-    EC_LEAD      => 5,
-    EC_REFERRAL  => 6,
-    EC_HOT_LEAD  => 7,
-    EC_COLD_LEAD => 8,
-
-    # our file classes:  files attached to sql records
-    FC_TRANSACTION => 1,
-    FC_ORDER       => 2,
-    FC_PART        => 3,
-    FC_ENTITY      => 4,
-    FC_ECA         => 5,
-    FC_INTERNAL    => 6,
-    FC_INCOMING    => 7,
-
-    # journal_type
-    JRNL_GJ => 1,
-    JRNL_AR => 2,
-    JRNL_AP => 3,
-    JRNL_CR => 4,
-    JRNL_CD => 5,
-
-    # our note classes
-    NC_ENTITY                => 1,
-    NC_INVOICE               => 2,
-    NC_ENTITY_CREDIT_ACCOUNT => 3,
-    NC_UNKNOWN_4             => undef,
-    NC_JOURNAL_ENTRY         => 5,
-
-    # our order entry classes
-    OEC_SALES_ORDER    => 1,
-    OEC_PURCHASE_ORDER => 2,
-    OEC_QUOTATION      => 3,
-    OEC_RFQ            => 4,
-
-    # our asset report classes
-    RC_DEPRECIATION     => 1,
-    RC_DISPOSAL         => 2,
-    RC_IMPORT           => 3,
-    RC_PARTIAL_DISPOSAL => 4,
-
-    # codes
-
-    # EDI
-    EDI_PATHNAME_MAX => 180,    # default max length of EDI pathname
-                                # TODO possible fencepost error XXX
-
-    # HTTP  These can be taken from HTTP::Status
-    HTTP_OK                    => 200,  # TODO  use HTTP::Status XXX
-    HTTP_FOUND                 => 302,
-    HTTP_SEE_OTHER             => 303,
-    HTTP_BAD_REQUEST           => 400,
-    HTTP_UNAUTHORIZED          => 401,
-    HTTP_INTERNAL_SERVER_ERROR => 500,
-
-    HTTP_454 => 454,        # TODO  find the right HTTP code XXX
-
-};
-
-1;
-
-# Other magical stuff that might help
-
-#INSERT INTO lsmb_module (id, label)
-#VALUES (1, 'AR'),
-#       (2, 'AP'),
-#       (3, 'GL'),
-#       (4, 'Entity'),
-#       (5, 'Manufacturing'),
-#       (6, 'Fixed Assets'),
-#       (7, 'Timecards');
-
-#INSERT INTO location_class(id,class,authoritative)
-#VALUES ('1','Billing',TRUE);
-#       ('2','Sales',FALSE);
-#       ('3','Shipping',FALSE);
-#       ('4','Physical',TRUE);
-#       ('5','Mailing',FALSE);
-
-# INSERT INTO salutation (id,salutation) VALUES
-#    ('1','Dr.');
-#    ('2','Miss.');
-#    ('3','Mr.');
-#    ('4','Mrs.');
-#    ('5','Ms.');
-#    ('6','Sir.');
-
-# INSERT INTO contact_class (id,class) values
-#   (1,'Primary Phone');
-#   (2,'Secondary Phone');
-#   (3,'Cell Phone');
-#   (4,'AIM');
-#   (5,'Yahoo');
-#   (6,'Gtalk');
-#   (7,'MSN');
-#   (8,'IRC');
-#   (9,'Fax');
-#   (10,'Generic Jabber');
-#   (11,'Home Phone');
-#   -- The e-mail classes are hard-coded into LedgerSMB/Form.pm by class_id
-#   -- i.e. 'class_id's 12 - 17
-#   (12,'Email');
-#   (13,'CC');
-#   (14,'BCC');
-#   (15,'Billing Email');
-#   (16,'Billing CC');
-#   (17,'Billing BCC');
-#   (18,'EDI Interchange ID');
-#   (19,'EDI ID');
-
-# INSERT INTO business_unit_class (id, label, active, ordering)
-# VALUES (1, 'Department', '0', '10'),
-#       (2, 'Project', '0', '20'),
-#       (3, 'Job', '0', '30'),
-#       (4, 'Fund', '0', '40'),
-#       (5, 'Customer', '0', '50'),
-#       (6, 'Vendor', '0', '60'),
-#       (7, 'Lot',  '0', 50);
-
-# INSERT INTO jctype (id, label, description, is_service, is_timecard)
-# (1, 'time', 'Timecards for project services', true, true);
-# (2, 'materials', 'Materials for projects', false, false);
-# (3, 'overhead', 'Time/Overhead for payroll, manufacturing, etc', false, true);
-
-# menu node's 1 -- 253
-
-# Menu attribute ids  1 -- 681
-
-__END__
 
 =head1 NAME
 
@@ -273,117 +87,213 @@ constants may be found here rather than separate modules.
 =head1 CONSTANTS
 
 The following constant functions are available.  None are exported by
-default; they can be imported individually.
+default.
 
-These were all extracted from our source code in a ad hoc manner;
-the names are subject to change.
+=head3  LedgerSMB batch class code enumeration.
 
-=head3  LedgerSMB temporal constants
+    BC_AP                1
+    BC_AR                2
+    BC_PAYMENT           3
+    BC_PAYMENT_REVERSAL  4
+    BC_GL                5
+    BC_RECEIPT           6
+    BC_RECEIPT_REVERSAL  7
+    BC_SALES_INVOICE     8
+    BC_VENDOR_INVOICE    9
 
-    CENTURY_START_YEAR              2000
-    FUTURE_YEARS_LIMIT              20
-    SEC_PER_HOUR                    3600
-    MIN_PER_HOUR                    60
-    MONTHS_PER_QUARTER              3
-    MONTHS_PER_YEAR                 12
-    MAX_DAYS_IN_MONTH               31
-    PERL_TIME_EPOCH                 1900
-    YEARS_PER_CENTURY               100
-    SUNDAY                          0
-    SATURDAY                        6
+=cut
 
-=head3  LedgerSMB miscellaneous contants
+use constant BC_AP               => 1;
+use constant BC_AR               => 2;
+use constant BC_PAYMENT          => 3;
+use constant BC_PAYMENT_REVERSAL => 4;
+use constant BC_GL               => 5;
+use constant BC_RECEIPT          => 6;
+use constant BC_RECEIPT_REVERSAL => 7;
+use constant BC_SALES_INVOICE    => 8;
+use constant BC_VENDOR_INVOICE   => 9;
 
-    MONEY_EPSILON                   0.001
 
-GAP/IFRS seems to require .0001  (maybe???  I read that somewhere,
-maybe Celko --rir).
 
-    RATIO_TO_PERCENT        100
+=head3  LedgerSMB entity class code enumeration.
 
-=head3  LedgerSMB batch class codes
+    EC_VENDOR      1
+    EC_CUSTOMER    2
+    EC_EMPLOYEE    3
+    EC_CONTACT     4
+    EC_LEAD        5
+    EC_REFERRAL    6
+    EC_HOT_LEAD    7
+    EC_COLD_LEAD   8
 
-    BC_AP                     1
-    BC_AR                     2
-    BC_PAYMENT                3
-    BC_PAYMENT_REVERSAL       4
-    BC_GL                     5
-    BC_RECEIPT                6
-    BC_RECEIPT_REVERSAL       7
-    BC_SALES_INVOICE          8
-    BC_VENDOR_INVOICE         9
+=cut
 
-=head3  LedgerSMB entity class codes
+use constant EC_VENDOR    => 1;
+use constant EC_CUSTOMER  => 2;
+use constant EC_EMPLOYEE  => 3;
+use constant EC_CONTACT   => 4;
+use constant EC_LEAD      => 5;
+use constant EC_REFERRAL  => 6;
+use constant EC_HOT_LEAD  => 7;
+use constant EC_COLD_LEAD => 8;
 
-    EC_VENDOR                 1
-    EC_CUSTOMER               2
-    EC_EMPLOYEE               3
-    EC_CONTACT                4
-    EC_LEAD                   5
-    EC_REFERRAL               6
-    EC_HOT_LEAD               7
-    EC_COLD_LEAD              8
 
-=head3  LedgerSMB attached file class codes
 
-    FC_TRANSACTION            1
-    FC_ORDER                  2
-    FC_PART                   3
-    FC_ENTITY                 4
-    FC_ECA                    5
-    FC_INTERNAL               6
-    FC_INCOMING               7
+=head3  LedgerSMB attached file class code enumeration.
 
-=head3   LedgerSMB Accounting Journal codes
-    JRNL_GJ                     1
-    JRNL_AR                     2
-    JRNL_AP                     3
-    JRNL_CR                     4
-    JRNL_CD                     5
+    FC_TRANSACTION  1
+    FC_ORDER        2
+    FC_PART         3
+    FC_ENTITY       4
+    FC_ECA          5
+    FC_INTERNAL     6
+    FC_INCOMING     7
 
-=head3  LedgerSMB note_class codes
+=cut
+
+use constant FC_TRANSACTION => 1;
+use constant FC_ORDER       => 2;
+use constant FC_PART        => 3;
+use constant FC_ENTITY      => 4;
+use constant FC_ECA         => 5;
+use constant FC_INTERNAL    => 6;
+use constant FC_INCOMING    => 7;
+
+
+=head3   LedgerSMB Accounting Journal code enumeration.
+
+    JRNL_GJ    1
+    JRNL_AR    2
+    JRNL_AP    3
+    JRNL_CR    4
+    JRNL_CD    5
+
+=cut
+
+use constant JRNL_GJ => 1;
+use constant JRNL_AR => 2;
+use constant JRNL_AP => 3;
+use constant JRNL_CR => 4;
+use constant JRNL_CD => 5;
+
+
+=head3  LedgerSMB note_class code enumeration.
 
     NC_ENTITY                   1
     NC_INVOICE                  2
     NC_ENTITY_CREDIT_ACCOUNT    3
-    NC_UNKNOWN_4                undef
+    NC_UNKNOWN_4                4
     NC_JOURNAL_ENTRY            5
 
-=head3  LedgerSMB order entry class codes
+=cut
+
+use constant NC_ENTITY                => 1;
+use constant NC_INVOICE               => 2;
+use constant NC_ENTITY_CREDIT_ACCOUNT => 3;
+use constant NC_UNKNOWN_4             => 4;
+use constant NC_JOURNAL_ENTRY         => 5;
+
+
+=head3  LedgerSMB order entry class code enumeration.
 
     OEC_SALES_ORDER             1
     OEC_PURCHASE_ORDER          2
     OEC_QUOTATION               3
     OEC_RFQ                     4
 
-=head3  LedgerSMB asset report class codes
+=cut
 
-    RC_DEPRECIATION             1
-    RC_DISPOSAL                 2
-    RC_IMPORT                   3
-    RC_PARTIAL_DISPOSAL         4
+use constant OEC_SALES_ORDER    => 1;
+use constant OEC_PURCHASE_ORDER => 2;
+use constant OEC_QUOTATION      => 3;
+use constant OEC_RFQ            => 4;
 
-=head2    Codes from other organizations
+
+=head3  LedgerSMB asset report class code enumeration.
+
+    RC_DEPRECIATION      1
+    RC_DISPOSAL          2
+    RC_IMPORT            3
+    RC_PARTIAL_DISPOSAL  4
+
+=cut
+
+use constant RC_DEPRECIATION     => 1;
+use constant RC_DISPOSAL         => 2;
+use constant RC_IMPORT           => 3;
+use constant RC_PARTIAL_DISPOSAL => 4;
+
+
+=head3  LedgerSMB temporal constants
+
+    CENTURY_START_YEAR  2000    Start of current century.
+    FUTURE_YEARS_LIMIT    20    When exceeded dates default to last century.
+    SEC_PER_HOUR        3600
+    MIN_PER_HOUR          60
+    MONTHS_PER_QUARTER     3
+    MONTHS_PER_YEAR       12
+    MAX_DAYS_IN_MONTH     31
+    PERL_TIME_EPOCH     1900
+    YEARS_PER_CENTURY    100
+    SUNDAY                 0    Unixy numeric for day of week.
+    SATURDAY               6
+
+=cut
+
+use constant CENTURY_START_YEAR => 2000;
+use constant FUTURE_YEARS_LIMIT => 20;
+use constant SEC_PER_HOUR       => 3600;
+use constant MIN_PER_HOUR       => 60;
+use constant MONTHS_PER_QUARTER => 3;
+use constant MONTHS_PER_YEAR    => 12;
+use constant MAX_DAYS_IN_MONTH  => 31;
+use constant PERL_TIME_EPOCH    => 1900;
+use constant YEARS_PER_CENTURY  => 100;
+use constant SUNDAY             => 0;
+use constant SATURDAY           => 6;
+
+
+=head3  LedgerSMB miscellaneous contants
+
+    MONEY_EPSILON       0.001
+    RATIO_TO_PERCENT  100
+
+=cut
+
+use constant MONEY_EPSILON => 0.001;
+use constant RATIO_TO_PERCENT => 100;
+
+=head3 External codes.
+
+    These constants are derived from the standards or practices
+of other organizations or systems.
 
 =head3  EDI
 
-    EDI_PATHNAME_MAX            180
+    EDI_PATHNAME_MAX   180
 
-Default max length of EDI pathname code says 180, perldoc says 179.
+Maximum length of EDI pathname.
 
-=head3  HTTP
+=cut
 
-    HTTP_OK                     200
-    HTTP_FOUND                  302
-    HTTP_SEE_OTHER              303
-    HTTP_BAD_REQUEST            400
-    HTTP_UNAUTHORIZED           401
-    HTTP_INTERNAL_SERVER_ERROR  500
+use constant EDI_PATHNAME_MAX => 180;    # TODO possible fencepost error
 
-    HTTP_454                    454
+
+=head3  Our HTTP status code extensions.
+
+    HTTP_454           454
+
+=cut
+
+use constant HTTP_454 => 454;
+
+
 
 =head1 BUGS
 
 Are more organized.
 
+=cut
 
+
+1;

@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Cwd;
 
-
+my $y = 123;
 use Config;
 use Config::IniFiles;
 use DBI qw(:sql_types);

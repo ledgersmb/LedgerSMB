@@ -17,7 +17,7 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
-use LedgerSMB::Magic qw( HTTP_OK HTTP_SEE_OTHER 
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER 
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
 use CGI::Emulate::PSGI;

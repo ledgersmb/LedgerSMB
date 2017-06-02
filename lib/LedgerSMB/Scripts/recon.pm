@@ -20,7 +20,7 @@ package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
-use LedgerSMB::Magic qw( HTTP_BAD_REQUEST);
+use HTTP::Status qw( HTTP_BAD_REQUEST);
 use LedgerSMB::Setting;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Reconciliation::Summary;

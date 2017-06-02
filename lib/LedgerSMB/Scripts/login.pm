@@ -19,7 +19,7 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
-use LedgerSMB::Magic qw( HTTP_UNAUTHORIZED HTTP_SEE_OTHER HTTP_OK ) ;
+use HTTP::Status qw( HTTP_UNAUTHORIZED HTTP_SEE_OTHER HTTP_OK ) ;
 use LedgerSMB::User;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;

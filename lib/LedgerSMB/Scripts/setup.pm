@@ -33,7 +33,8 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
-use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 HTTP_OK HTTP_UNAUTHORIZED PERL_TIME_EPOCH );
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 $LedgerSMB::VERSION =~ /(\d+\.\d+)./;

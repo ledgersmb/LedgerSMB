@@ -153,7 +153,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Session;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
-use LedgerSMB::Magic qw( HTTP_OK) ;
+use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;

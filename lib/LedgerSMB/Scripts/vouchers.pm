@@ -16,7 +16,7 @@ package LedgerSMB::Scripts::vouchers;
 
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
-use LedgerSMB::Magic qw( HTTP_OK);
+use HTTP::Status qw( HTTP_OK);
 use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;

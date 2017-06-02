@@ -259,7 +259,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Magic qw( HTTP_OK);
+use HTTP::Status qw( HTTP_OK);
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
