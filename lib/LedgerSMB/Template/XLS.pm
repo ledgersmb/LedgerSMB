@@ -11,39 +11,6 @@ Microsoft Spreadsheet output.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.  '.xlst' is the
-extension that was chosen for the templates.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
-
 =cut
 
 package LedgerSMB::Template::XLS;
@@ -51,9 +18,8 @@ package LedgerSMB::Template::XLS;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
-use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Sysconfig;
 use Spreadsheet::WriteExcel;
 
 my $binmode = undef;
@@ -68,28 +34,28 @@ sub _worksheet_handler {
     $rowcount = -1;
     $currcol = 0;
     $_->set_att(type => 'worksheet');
-    return;
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
     $_->set_att(type => 'row');
-    return;
+    return undef;
 }
 
 sub _cell_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'cell');
-    return;
+    return undef;
 }
 
 sub _formula_handler {
     $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
     $_->set_att(type => 'formula');
-    return;
+    return undef;
 }
 
 sub _format_handler {
@@ -121,7 +87,7 @@ sub _format_handler {
         $format->del_att($attr);
     }
     $_->set_att(type => 'format', format => { %properties });
-    return;
+    return undef;
 }
 
 # Not yet implemented
@@ -135,13 +101,20 @@ sub _format_handler {
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
-    return;
+    return undef;
 }
 
 sub _xls_process {
-    my ($filename, $template) = @_;
+    my ($output, $template) = @_;
 
-    $workbook  = Spreadsheet::WriteExcel->new("$filename");
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Spreadsheet::WriteExcel wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    $output = IO::Scalar->new($output) if ref $output;
+    $workbook  = Spreadsheet::WriteExcel->new($output);
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -191,52 +164,60 @@ sub _handle_subtree {
         }
         $child->purge;
     }
-    return;
+    return undef;
 }
 
-sub get_template {
-    my $name = shift;
-    return "${name}.${extension}t";
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
+
+sub escape {
+    return shift;
 }
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars);
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    my $temp_output;
+    return (\$temp_output, {
+        input_extension => 'xlst',
+        binmode => $binmode,
+        _output => $output,
+    });
 }
 
-sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+=item postprocess($parent, $output, $config)
 
-    my $output = '';
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
+Implements the template's post-processing protocol.
 
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
-                \$output,
-                {binmode => ':utf8'})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    &_xls_process("$parent->{outputfile}.$extension", $output);
-
-    $parent->{mimetype} = 'application/vnd.ms-excel';
-    return;
-}
+=cut
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    my ($parent, $output, $config) = @_;
+
+    $parent->{mimetype} = 'application/vnd.ms-excel';
+    &_xls_process($config->{_output}, $output);
+
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;
