@@ -32,8 +32,15 @@ createEmail() {
 
 	$release_changelog
 
+	The release can be installed from Docker Hub using the command
+
+	   $ docker pull ledgersmb/ledgersmb:$release_version
+
 	The release can be downloaded from sourceforge at
 	  https://sourceforge.net/projects/ledger-smb/files/$prj_url_dir/$release_version/
+
+	For installation instructions and system requirements, see
+	  https://github.com/ledgersmb/LedgerSMB/blob/$release_version/README.md
 
 	These are the sha256 checksums of the uploaded files:
 	$release_sha256sums
