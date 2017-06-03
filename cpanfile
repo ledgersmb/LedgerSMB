@@ -3,8 +3,6 @@
 
 requires 'perl', '5.14.0';
 
-requires 'App::LedgerSMB::Admin', '0.05';
-requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
