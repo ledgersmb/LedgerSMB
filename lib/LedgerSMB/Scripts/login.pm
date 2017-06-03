@@ -19,6 +19,7 @@ This script contains the request handlers for logging in and out of LedgerSMB.
 package LedgerSMB::Scripts::login;
 
 use LedgerSMB::Locale;
+use HTTP::Status qw( HTTP_UNAUTHORIZED HTTP_SEE_OTHER HTTP_OK ) ;
 use LedgerSMB::User;
 use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
@@ -63,13 +64,13 @@ sub __default {
 
     if ($request->{cookie} && $request->{cookie} ne 'Login') {
         if (! $request->_db_init()) {
-            return [ 401,
+            return [ HTTP_UNAUTHORIZED,
                      [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                        'Content-Type' => 'text/plain; charset=utf-8' ],
                      [ 'Please provide your credentials.' ]];
         }
         if (! $request->verify_session()) {
-            return [ 303,
+            return [ HTTP_SEE_OTHER,
                      [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
                      [ '<html><body><h1>Session expired</h1></body></html>' ] ];
         }
@@ -94,10 +95,10 @@ sub __default {
 =item authenticate
 
 This routine checks for the authentication information and if successful
-sends either a 302 redirect or a 200 successful response.
+sends either a HTTP_FOUND redirect or a HTTP_OK successful response.
 
-If unsuccessful sends a 401 if the username/password is bad, or a 454 error
-if the database does not exist.
+If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad, 
+or a HTTP_454 error if the database does not exist.
 
 =cut
 
@@ -108,7 +109,7 @@ sub authenticate {
              $request->{company} = $LedgerSMB::Sysconfig::default_db;
         }
         if (! $request->_db_init) {
-            return [ 401,
+            return [ HTTP_UNAUTHORIZED,
                      [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                        'Content-Type' => 'text/plain; charset=utf-8' ],
                      [ 'Please provide your credentials.' ]];
@@ -118,12 +119,12 @@ sub authenticate {
     if ($request->{dbh} and !$request->{log_out}){
         if (!$request->{dbonly}
             && ! LedgerSMB::Session::check($request->{cookie}, $request)) {
-            return [ 401,
+            return [ HTTP_UNAUTHORIZED,
                      [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                        'Content-Type' => 'text/plain; charset=utf-8' ],
                      [ 'Please provide your credentials.' ] ];
         }
-        return [ 200,
+        return [ HTTP_OK,
                  [ 'Content-Type' => 'text/plain; charset=utf-8' ],
                  [ 'Success' ] ];
     }
@@ -134,7 +135,7 @@ sub authenticate {
                      [ 'Content-Type' => 'text/plain; charset=utf-8' ],
                      [ 'Database does not exist' ] ];
         } else {
-            return [ 401,
+            return [ HTTP_UNAUTHORIZED,
                      [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                        'Content-Type' => 'text/plain; charset=utf-8' ],
                      [ 'Please enter your credentials.' ] ];
@@ -195,7 +196,7 @@ requiring only bogus credentials (logout:logout).
 sub logout_js {
     my $request = shift @_;
     my $creds = $request->{_auth}->get_credentials;
-    return [ 401,
+    return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm=LedgerSMB',
                'Content-Type' => 'text/plain; charset=utf-8' ],
              [ 'Please enter your credentials.' ] ]

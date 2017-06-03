@@ -7,6 +7,7 @@ LedgerSMB::PgDate - Date handling and serialization to database
 package LedgerSMB::PGDate;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
+use LedgerSMB::Magic qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
 use Carp;
 use PGObject;
 use base qw(PGObject::Type::DateTime);
@@ -213,7 +214,7 @@ sub add_interval {
     die "Bad interval: $interval" if not defined $delta_name;
 
     $n //= 1;    # Default to 1
-    $n *= 3 if $interval eq 'quarter'; # A quarter is 3 months
+    $n *= MONTHS_PER_QUARTER if $interval eq 'quarter'; # A quarter is 3 months
 
     my $has_time = $self->is_time();
     $self->add($delta_name => $n, end_of_month => 'preserve');
@@ -250,10 +251,10 @@ sub from_input{
         }
         if ($fmt->{short_year}) {
             my $year = DateTime->today()->year();
-            my $short_year = $year % 100;
+            my $short_year = $year % YEARS_PER_CENTURY;
             my $century = $year - $short_year;
 
-            if ($args{year} > ($short_year+20)) {
+            if ($args{year} > ($short_year+FUTURE_YEARS_LIMIT)) {
                 $args{year} += ($century-1);
             }
             else {

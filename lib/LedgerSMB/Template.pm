@@ -259,6 +259,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use HTTP::Status qw( HTTP_OK);
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
@@ -609,7 +610,7 @@ sub render_to_psgi {
         unlink $self->{outputfile};
     }
 
-    return [ 200, $headers, $body ];
+    return [ HTTP_OK, $headers, $body ];
 }
 
 sub output {

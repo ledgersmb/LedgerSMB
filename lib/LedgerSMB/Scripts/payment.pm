@@ -50,6 +50,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
@@ -174,7 +175,7 @@ sub pre_bulk_post_report {
                     LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
              }
              # If vendor, this is debit-normal so multiply by -1
-             if ($request->{account_class} == 1){ # vendor
+             if ($request->{account_class} == EC_VENDOR ){ # vendor
                  $ref->{amount} *= -1;
               }
               if ($ref->{amount} < 0) {
@@ -199,7 +200,7 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
-       $ref->{amount} *= -1;
+    $ref->{amount} *= -1;
 
     if ($ref->{amount} < 0) {
         $ref->{debits} = $ref->{amount} * -1;

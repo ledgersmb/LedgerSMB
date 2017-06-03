@@ -34,15 +34,17 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
+use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA FC_INTERNAL FC_INCOMING);
+
 
 our $fileclassmap = {
-   1   => 'LedgerSMB::File::Transaction',
-   2   => 'LedgerSMB::File::Order',
-   3   => 'LedgerSMB::File::Part',
-   4   => 'LedgerSMB::File::Entity',
-   5   => 'LedgerSMB::File::ECA',
-   6   => 'LedgerSMB::File::Internal',
-   7   => 'LedgerSMB::File::Incoming',
+   FC_TRANSACTION   => 'LedgerSMB::File::Transaction',
+   FC_ORDER         => 'LedgerSMB::File::Order',
+   FC_PART          => 'LedgerSMB::File::Part',
+   FC_ENTITY        => 'LedgerSMB::File::Entity',
+   FC_ECA           => 'LedgerSMB::File::ECA',
+   FC_INTERNAL      => 'LedgerSMB::File::Internal',
+   FC_INCOMING      => 'LedgerSMB::File::Incoming',
 };
 
 sub get {

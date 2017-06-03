@@ -153,6 +153,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Session;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
+use HTTP::Status qw( HTTP_OK) ;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
@@ -512,7 +513,7 @@ sub set {
 sub to_json {
     my ($self, $output) = @_;
 
-    return [ 200,
+    return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ $json->encode(LedgerSMB::Template::TXT::preprocess($output)) ]
         ];

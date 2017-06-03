@@ -12,6 +12,8 @@ use Config::IniFiles;
 use DBI qw(:sql_types);
 use English qw(-no_match_vars);
 
+
+
 =head2 die_pretty $line_1, $line_2, $line_N;
 
 each $line_* is a string that will be output on a separate line:
@@ -163,7 +165,7 @@ def 'force_username_case',
 
 def 'max_post_size',
     section => 'main',
-    default => 1024 * 1024,
+    default => 4194304, ## no critic ( ProhibitMagicNumbers)
     doc => qq||;
 
 def 'cookie_name',

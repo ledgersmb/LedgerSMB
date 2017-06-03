@@ -29,8 +29,10 @@ use TeX::Encode::charmap;
 use TeX::Encode;
 
 BEGIN {
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00e5)};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN CAPITAL LETTER A WITH RING ABOVE}"};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN SMALL LETTER A WITH RING ABOVE}"};
     %TeX::Encode::charmap::CHAR_MAP = (
         %TeX::Encode::charmap::CHARS,
         %TeX::Encode::charmap::ACCENTED_CHARS,
