@@ -20,16 +20,17 @@ default:
              page_class: PageObject::Root
              # Need a long retry timeout because instrumenting
              # old code takes loooong when running coverage testing
-             retry_timeout: 300
+             # And to compensate for opening link and then creating
+             # test databases. A much better solution would be to delay
+             # opening of the channel after the test database creation.
+             retry_timeout: 120
              driver:
                 drv_name: Weasel::Driver::Selenium2
-                wait_timeout: 30000
+                wait_timeout: 3000
                 window_size:  1024x1280
                 caps:
                   port: 4422
                   remote_server_addr: ${REMOTE_SERVER_ADDR}
                   browser_name: ${BROWSER}
-                  platform: Linux
-                  extra_capabilities: { idleTimeout: 600 }
       Pherkin::Extension::PageObject:
          dummy: 1
