@@ -133,7 +133,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
 
-    if (lc $format eq 'pdf') {
+    if (lc $config->{_format} eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
