@@ -11,6 +11,7 @@ requires 'DBI';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
+requires 'File::Temp';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'IO::Scalar';
@@ -76,7 +77,7 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
 feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
-        requires "OpenOffice::OODoc::File";
+        requires "OpenOffice::OODoc";
         requires 'OpenOffice::OODoc::Styles';
 };
 

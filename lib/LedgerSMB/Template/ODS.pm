@@ -24,8 +24,9 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
+use File::Temp;
 use HTML::Escape;
-use OpenOffice::OODoc::File;
+use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
@@ -746,8 +747,17 @@ sub _format_cleanup_handler {
 
 sub _ods_process {
     my ($output, $template) = @_;
-    $output = IO::Scalar->new($output) if ref $output;
-    $ods = odfContainer($output, create => 'spreadsheet');
+    my $fn;
+    my $fh; # if we need to use a temp file, we need to keep the object
+            # in scope, because when it goes out of scope, the file is removed
+    if (ref $output) {
+        $fh = File::Temp->new();
+        $fn = $fh->filename;
+    }
+    else {
+        $fn = $output;
+    }
+    $ods = ooDocument(file => $fn, create => 'spreadsheet');
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -773,7 +783,17 @@ sub _ods_process {
         );
     $parser->parse($template);
     $parser->purge;
-    return $ods->save;
+    $ods->save;
+
+    if (ref $output) {
+       my $size = (stat($fn))[7];
+       open my $inp, "<", $fn;
+       sysread($inp, $$output, $size)
+         or die "Error: $!";
+       $fh->close
+         or die "Can't clean up ODS generation temporary file";
+    }
+    return undef;
 }
 
 =item escape($string)
