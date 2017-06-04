@@ -139,11 +139,13 @@ sub _worksheet_handler {
         $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
+        # Rename "Sheet1" to whatever we want to be our first sheet
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
                 $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
+        $sheetname = $_->{att}->{name};
     }
 }
 
