@@ -320,6 +320,9 @@ sub new {
     } elsif (lc $self->{format} eq 'xlsx'){
         $self->{format} = 'XLSX';
         $self->{format_args}{filetype} = 'xlsx';
+    } elsif (lc $self->{format} eq 'xls'){
+        $self->{format} = 'XLSX';
+        $self->{format_args}{filetype} = 'xls';
     } elsif ($self->{format} =~ /edi$/i){
         $self->{format_args}{extension} = lc $self->{format};
         $self->{format_args}{filetype} = lc $self->{format};

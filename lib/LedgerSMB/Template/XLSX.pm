@@ -21,9 +21,19 @@ use warnings;
 use IO::Scalar;
 use Template;
 use Excel::Writer::XLSX;
+use Spreadsheet::WriteExcel;
 
 my $binmode = undef;
 my $extension = 'xlsx';
+
+sub _get_extension {
+    my ($parent) = shift;
+    if ($parent->{format_args}->{filetype}){
+        return $parent->{format_args}->{filetype};
+    } else {
+        return $extension;
+    }
+}
 
 my $workbook;
 my $worksheet;
@@ -106,17 +116,7 @@ sub _format_cleanup_handler {
 }
 
 sub _xlsx_process {
-    my ($output, $template) = @_;
-
-    # Implement Template Toolkit's protocol: if the variable
-    # '$output' contains a string, it's a filename. If it's a
-    # reference, the variable referred to is the output memory area
-    #
-    # Excel::Writer::XLSX wants a filehandle or filename, so
-    # convert the variable reference into a filehandle
-    $output = IO::Scalar->new($output) if ref $output;
-    $workbook  = Excel::Writer::XLSX->new($output);
-
+    my ($workbook, $template) = @_;
     my $parser = XML::Twig->new(
         start_tag_handlers => {
             worksheet => \&_worksheet_handler,
@@ -190,6 +190,7 @@ sub setup {
     my $temp_output;
     return (\$temp_output, {
         input_extension => 'xlst',
+        _output_extension => _get_extension($parent),
         binmode => $binmode,
         _output => $output,
     });
@@ -202,10 +203,26 @@ Implements the template's post-processing protocol.
 =cut
 
 sub postprocess {
-    my ($parent, $output, $config) = @_;
+    my ($parent, $temp_output, $config) = @_;
 
     $parent->{mimetype} = 'application/vnd.ms-excel';
-    &_xlsx_process($config->{_output}, $$output);
+
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Excel::Writer::XLSX wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    my $output = $config->{_output};
+    $output = IO::Scalar->new($output) if ref $output;
+
+    if ($config->{_output_extension} eq 'xlsx') {
+        $workbook  = Excel::Writer::XLSX->new($output);
+    }
+    else {
+        $workbook = Spreadsheet::WriteExcel->new($output);
+    }
+    &_xlsx_process($workbook, $$temp_output);
 
     return undef;
 }
