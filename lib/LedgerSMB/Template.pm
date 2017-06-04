@@ -50,7 +50,11 @@ The language for template selection.
 
 =item include_path (optional)
 
-Overrides the template directory.  Used with user interface templates.
+Overrides the template directory.
+
+The special value 'DB' enforces reading of the template from the
+current database.  Resolving the template takes the 'language' and
+'format' values into account.
 
 =item no_auto_output (optional)
 
@@ -259,6 +263,9 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::DBProvider;
+
+use Template::Parser;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
