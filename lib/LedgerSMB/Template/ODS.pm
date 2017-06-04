@@ -789,11 +789,12 @@ sub _ods_process {
 
     if (ref $output) {
        my $size = (stat($fn))[7];
-       open my $inp, "<", $fn;
+       open(my $inp, "<", $fn)
+         or die "Unable to open temporary file for reading ODS output: $!";
        sysread($inp, $$output, $size)
          or die "Error: $!";
        $fh->close
-         or die "Can't clean up ODS generation temporary file";
+         or die "Can't clean up ODS generation temporary file: $!";
     }
     return undef;
 }
