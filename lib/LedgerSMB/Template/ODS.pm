@@ -29,8 +29,6 @@ use HTML::Escape;
 use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 
-$OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
-
 my $binmode = undef;
 my $extension = 'ods';
 
@@ -751,13 +749,15 @@ sub _ods_process {
     my $fh; # if we need to use a temp file, we need to keep the object
             # in scope, because when it goes out of scope, the file is removed
     if (ref $output) {
-        $fh = File::Temp->new();
+        $fh = File::Temp->new( DIR => LedgerSMB::Sysconfig::tempdir());
         $fn = $fh->filename;
     }
     else {
         $fn = $output;
     }
-    $ods = ooDocument(file => $fn, create => 'spreadsheet');
+    $ods = ooDocument(file => $fn,
+                      create => 'spreadsheet',
+                      work_dir => LedgerSMB::Sysconfig::tempdir());
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
