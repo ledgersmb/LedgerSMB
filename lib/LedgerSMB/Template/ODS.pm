@@ -24,6 +24,7 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
+use HTML::Escape;
 use OpenOffice::OODoc::File;
 use OpenOffice::OODoc::Styles;
 
@@ -784,7 +785,7 @@ Escapes a scalar string and returns the sanitized version.
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
 
