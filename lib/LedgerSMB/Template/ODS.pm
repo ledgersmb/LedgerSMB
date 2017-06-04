@@ -800,7 +800,7 @@ sub setup {
 
     my $temp_output;
     return (\$temp_output, {
-        input_extension => $extension,
+        input_extension => "odst",
         binmode => ':utf8',
         _output => $output,
     });
