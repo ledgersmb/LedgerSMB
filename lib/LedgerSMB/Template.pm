@@ -322,6 +322,7 @@ sub new {
         $self->{format_args}{filetype} = 'xlsx';
     } elsif ($self->{format} =~ /edi$/i){
         $self->{format_args}{extension} = lc $self->{format};
+        $self->{format_args}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
     }
 
@@ -596,10 +597,10 @@ sub render_to_psgi {
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
+        my $ext = lc($self->{format_args}{filetype} // $self->{format});
         push @$headers,
             ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' .
-                                lc($self->{format}) . '"'
+                  'attachment; filename="Report.' . $ext . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{outputfile}) {
