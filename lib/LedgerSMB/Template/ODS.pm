@@ -24,10 +24,10 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
-use OpenOffice::OODoc::File;
+use File::Temp;
+use HTML::Escape;
+use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
-
-$OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
 my $extension = 'ods';
@@ -107,11 +107,13 @@ sub _worksheet_handler {
     $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
+        # Rename "Sheet1" to whatever we want to be our first sheet
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
         $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
+        $sheetname = $_->{att}->{name};
     }
     return undef;
 }
@@ -745,8 +747,19 @@ sub _format_cleanup_handler {
 
 sub _ods_process {
     my ($output, $template) = @_;
-    $output = IO::Scalar->new($output) if ref $output;
-    $ods = odfContainer($output, create => 'spreadsheet');
+    my $fn;
+    my $fh; # if we need to use a temp file, we need to keep the object
+            # in scope, because when it goes out of scope, the file is removed
+    if (ref $output) {
+        $fh = File::Temp->new( DIR => LedgerSMB::Sysconfig::tempdir());
+        $fn = $fh->filename;
+    }
+    else {
+        $fn = $output;
+    }
+    $ods = ooDocument(file => $fn,
+                      create => 'spreadsheet',
+                      work_dir => LedgerSMB::Sysconfig::tempdir());
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -772,7 +785,18 @@ sub _ods_process {
         );
     $parser->parse($template);
     $parser->purge;
-    return $ods->save;
+    $ods->save;
+
+    if (ref $output) {
+       my $size = (stat($fn))[7];
+       open(my $inp, "<", $fn)
+         or die "Unable to open temporary file for reading ODS output: $!";
+       sysread($inp, $$output, $size)
+         or die "Error: $!";
+       $fh->close
+         or die "Can't clean up ODS generation temporary file: $!";
+    }
+    return undef;
 }
 
 =item escape($string)
@@ -784,7 +808,7 @@ Escapes a scalar string and returns the sanitized version.
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
 
@@ -799,7 +823,7 @@ sub setup {
 
     my $temp_output;
     return (\$temp_output, {
-        input_extension => $extension,
+        input_extension => "odst",
         binmode => ':utf8',
         _output => $output,
     });
