@@ -543,7 +543,7 @@ sub _render {
     if($self->{_no_postprocess}) {
         return undef;
     }
-    $format->can('postprocess')->($self);
+    $format->can('postprocess')->($self, $output, $config);
     return $self->{outputfile};
 }
 

@@ -814,7 +814,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
 
-    &_ods_process($config->{_output}, $output);
+    &_ods_process($config->{_output}, $$output);
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 
     return undef;

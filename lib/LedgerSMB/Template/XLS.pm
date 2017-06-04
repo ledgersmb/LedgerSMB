@@ -204,7 +204,7 @@ sub postprocess {
     my ($parent, $output, $config) = @_;
 
     $parent->{mimetype} = 'application/vnd.ms-excel';
-    &_xls_process($config->{_output}, $output);
+    &_xls_process($config->{_output}, $$output);
 
     return undef;
 }
