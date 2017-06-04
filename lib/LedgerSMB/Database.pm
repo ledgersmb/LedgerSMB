@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+
 =head1 NAME
 
 LedgerSMB::Database - Provides the APIs for database creation and management.
@@ -33,7 +33,7 @@ use warnings;
 
 use LedgerSMB::Auth;
 use DBI;
-use base qw(App::LedgerSMB::Admin::Database);
+use base qw(PGObject::Util::DBAdmin);
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Database::Loadorder;
@@ -466,6 +466,55 @@ sub apply_changes {
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     $dbh->disconnect;
+}
+
+=head2 stats
+
+Returns a hashref of table names to rows.  The following tables are counted:
+
+=over
+
+=item ar
+
+=item ap
+
+=item gl
+
+=item oe
+
+=item acc_trans
+
+=item users
+
+=item entity_credit_account
+
+=item entity
+
+=back
+
+=cut
+
+my @tables = qw(ar ap gl users entity_credit_account entity acc_trans oe);
+
+sub stats {
+    my ($self) = @_;
+    my $dbh = $self->connect;
+    my $results;
+
+    $results->{$_->{table}} = $_->{count}
+    for map {
+       my $sth = $dbh->prepare($_->{query});
+       $sth->execute;
+       my ($count) = $sth->fetchrow_array;
+       { table => $_->{table}, count => $count };
+    } map {
+       my $qt = 'SELECT COUNT(*) FROM __TABLE__';
+       my $id = $dbh->quote_identifier($_);
+       $qt =~ s/__TABLE__/$id/;
+       { table => $_, query => $qt };
+    } @tables;
+
+    return $results;
 }
 
 1;

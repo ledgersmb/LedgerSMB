@@ -45,7 +45,6 @@ push @on_disk, 'tools/starman.psgi';
 
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
-                ignores => [ 'App::LedgerSMB::Admin', 'Image::Size',
-                             'LaTeX::Driver', 'PGObject::Util::DBAdmin',
+                ignores => [ 'Image::Size', 'LaTeX::Driver',
                              'Starman', 'TeX::Encode::charmap'] );
 
