@@ -39,37 +39,38 @@ my $workbook;
 my $worksheet;
 my $rowcount;
 my $currcol;
+my $format;
 
 sub _worksheet_handler {
-    $rowcount = -1;
+    my ($twig, $elt) = @_;
+    $rowcount = 0;
     $currcol = 0;
-    $_->set_att(type => 'worksheet');
+
+    $worksheet = $workbook->add_worksheet($elt->att('name'));
     return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    $_->set_att(type => 'row');
     return undef;
 }
 
 sub _cell_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
+    my ($twig, $elt) = @_;
+    $worksheet->write($rowcount,$currcol,$elt->att('text'),$format);
     $currcol++;
-    $_->set_att(type => 'cell');
     return undef;
 }
 
 sub _formula_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
-    $_->set_att(type => 'formula');
     return undef;
 }
 
 sub _format_handler {
     my ($t, $format) = @_;
+
     my %properties;
     while (my ($attr, $val) = each %{$format->{att}}) {
         if ($attr eq 'border') {
@@ -96,7 +97,8 @@ sub _format_handler {
         }
         $format->del_att($attr);
     }
-    $_->set_att(type => 'format', format => { %properties });
+
+    $format = $workbook->add_format(%properties);
     return undef;
 }
 
@@ -116,11 +118,12 @@ sub _format_cleanup_handler {
 }
 
 sub _xlsx_process {
-    my ($workbook, $template) = @_;
+    my ($wbk, $template) = @_;
+    $workbook = $wbk;
+
     my $parser = XML::Twig->new(
         start_tag_handlers => {
             worksheet => \&_worksheet_handler,
-            row => \&_row_handler,
             cell => \&_cell_handler,
             formula => \&_formula_handler,
             format => \&_format_handler,
@@ -131,6 +134,7 @@ sub _xlsx_process {
 #            strikeout => sub { &_named_format('strikeout', @_) },
             },
         twig_handlers => {
+            row => \&_row_handler,
             format => \&_format_cleanup_handler,
             bold => \&_format_cleanup_handler,
             hidden => \&_format_cleanup_handler,
@@ -140,32 +144,7 @@ sub _xlsx_process {
             }
         );
     $parser->parse($template);
-    _handle_subtree($parser->root);
-    #$parser->purge;
     return $workbook->close;
-}
-
-sub _handle_subtree {
-    my ($tree,$format) = @_;
-    my @children = $tree->children;
-    foreach my $child (@children) {
-        my $att = $child->{att};
-        if ($att->{type} eq 'worksheet') {
-            $worksheet = $workbook->add_worksheet($att->{name});
-            _handle_subtree($child);
-        } elsif ($att->{type} eq 'cell') {
-            $worksheet->write($att->{row},$att->{col},$att->{text},$format);
-        } elsif ($att->{type} eq 'format') {
-            my $format = $workbook->add_format(%{$att->{format}});
-            _handle_subtree($child,$format);
-        } elsif ($att->{type} eq 'row') {
-            _handle_subtree($child,$format);
-        } else {
-            warn p($child);
-        }
-        $child->purge;
-    }
-    return undef;
 }
 
 =item escape($string)
