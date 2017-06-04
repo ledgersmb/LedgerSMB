@@ -11,7 +11,6 @@ requires 'DBI';
 requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
-requires 'File::Temp';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
 requires 'IO::Scalar';
