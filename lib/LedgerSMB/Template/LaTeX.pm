@@ -100,7 +100,7 @@ sub setup {
     $cleanvars->{FORMAT} = $format;
 
     return ($output, {
-        binmode => 1,
+        binmode => ':raw',
         input_extension => $extension,
         _format => $format,
     });
