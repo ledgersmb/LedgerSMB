@@ -320,8 +320,12 @@ sub new {
     } elsif (lc $self->{format} eq 'xlsx'){
         $self->{format} = 'XLSX';
         $self->{format_args}{filetype} = 'xlsx';
+    } elsif (lc $self->{format} eq 'xls'){
+        $self->{format} = 'XLSX';
+        $self->{format_args}{filetype} = 'xls';
     } elsif ($self->{format} =~ /edi$/i){
         $self->{format_args}{extension} = lc $self->{format};
+        $self->{format_args}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
     }
 
@@ -543,7 +547,7 @@ sub _render {
     if($self->{_no_postprocess}) {
         return undef;
     }
-    $format->can('postprocess')->($self);
+    $format->can('postprocess')->($self, $output, $config);
     return $self->{outputfile};
 }
 
@@ -596,10 +600,10 @@ sub render_to_psgi {
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
+        my $ext = lc($self->{format_args}{filetype} // $self->{format});
         push @$headers,
             ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' .
-                                lc($self->{format}) . '"'
+                  'attachment; filename="Report.' . $ext . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{outputfile}) {
