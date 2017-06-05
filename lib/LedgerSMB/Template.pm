@@ -644,7 +644,7 @@ sub _http_output {
     # clean up after getting the (last) setting
     LedgerSMB::App_State::cleanup();
 
-    if (!defined $data and defined $self->{outputfile}) {
+    if (not defined $data and defined $self->{outputfile}) {
         local $/;
         open(my $fh, '<:bytes', $self->{outputfile}) or
             die 'Unable to open rendered file';
@@ -688,9 +688,9 @@ sub _http_output {
 sub _email_output {
     my $self = shift;
     my $args = $self->{output_options};
-
     my @mailmime;
-    if (!$self->{outputfile} and !$args->{attach}) {
+
+    if (not $self->{outputfile} and not $args->{attach}) {
         $args->{message} .= $self->{output};
         @mailmime = ('contenttype', $self->{mimetype});
     }
