@@ -340,21 +340,6 @@ sub new {
     my $format = "LedgerSMB::Template::$self->{format}";
     use_module($format) or die "Failed to load module $format";
 
-    if (!$self->{include_path}){
-        $self->{include_path} = $self->{'myconfig'}->{'templates'};
-        $self->{include_path} ||= 'templates/demo';
-        if (defined $self->{language}){
-            if (!$self->_valid_language){
-                die 'Invalid language';
-            }
-            $self->{include_path_lang} = "$self->{'include_path'}"
-                    ."/$self->{language}";
-            $self->{locale} = LedgerSMB::Locale->get_handle(
-                $self->{language}
-            );
-        }
-    }
-
     carp 'no_escape mode enabled in rendering'
         if $self->{no_escape};
 
@@ -364,14 +349,6 @@ sub new {
 sub new_UI {
     my $class = shift;
     return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
-}
-
-sub _valid_language {
-    my $self = shift;
-    if ($self->{language} =~ m#(/|\\|:|\.\.|^\.)#){
-        return 0;
-    }
-    return 1;
 }
 
 sub _preprocess {
