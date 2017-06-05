@@ -261,8 +261,6 @@ sub get_for_template{
     if ( -d $dir){
         die "Failed to create temporary directory $dir - it already exists : $!";
     }
-    mkdir $dir;
-    $self->file_path($dir);
 
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
@@ -270,8 +268,8 @@ sub get_for_template{
         open my $fh, '>', $full_path
             or die "Failed to open output file $full_path : $!";
         binmode $fh, ':bytes';
-        print $fh $result->{content};
-        close $fh;
+        print $fh $result->{content} or die "Cannot print to file $full_path";;
+        close $fh or die "Cannot close file $full_path";
         { #pre-5.14 compatibility block
             local ($@); # pre-5.14, do not die() in this block
             eval { # Block used so that Image::Size is optional

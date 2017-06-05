@@ -77,7 +77,7 @@ sub adjustment_next {
     my ($request) = @_;
     my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
     for my $i (1 .. $request->{rowcount}){
-        if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
+        if ($request->{"id_$i"} eq "new" or not $request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
                 $request->{transdate}, $request->{"partnumber_$i"});
             $request->{"id_$i"} = $item->{id};

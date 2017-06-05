@@ -21,43 +21,56 @@ use warnings;
 use IO::Scalar;
 use Template;
 use Excel::Writer::XLSX;
+use Spreadsheet::WriteExcel;
 
 my $binmode = undef;
 my $extension = 'xlsx';
+
+sub _get_extension {
+    my ($parent) = shift;
+    if ($parent->{format_options}->{filetype}){
+        return $parent->{format_options}->{filetype};
+    } else {
+        return $extension;
+    }
+}
 
 my $workbook;
 my $worksheet;
 my $rowcount;
 my $currcol;
+my $format;
 
 sub _worksheet_handler {
-    $_->set_att(type => 'worksheet');
+    my ($twig, $elt) = @_;
+    $rowcount = 0;
+    $currcol = 0;
+
+    $worksheet = $workbook->add_worksheet($elt->att('name'));
     return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    $_->set_att(type => 'row');
     return undef;
 }
 
 sub _cell_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
+    my ($twig, $elt) = @_;
+    $worksheet->write($rowcount,$currcol,$elt->att('text'),$format);
     $currcol++;
-    $_->set_att(type => 'cell');
     return undef;
 }
 
 sub _formula_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
-    $_->set_att(type => 'formula');
     return undef;
 }
 
 sub _format_handler {
     my ($t, $format) = @_;
+
     my %properties;
     while (my ($attr, $val) = each %{$format->{att}}) {
         if ($attr eq 'border') {
@@ -84,7 +97,8 @@ sub _format_handler {
         }
         $format->del_att($attr);
     }
-    $_->set_att(type => 'format', format => { %properties });
+
+    $format = $workbook->add_format(%properties);
     return undef;
 }
 
@@ -104,21 +118,12 @@ sub _format_cleanup_handler {
 }
 
 sub _xlsx_process {
-    my ($output, $template) = @_;
-
-    # Implement Template Toolkit's protocol: if the variable
-    # '$output' contains a string, it's a filename. If it's a
-    # reference, the variable referred to is the output memory area
-    #
-    # Excel::Writer::XLSX wants a filehandle or filename, so
-    # convert the variable reference into a filehandle
-    $output = IO::Scalar->new($output) if ref $output;
-    $workbook  = Excel::Writer::XLSX->new($output);
+    my ($wbk, $template) = @_;
+    $workbook = $wbk;
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
             worksheet => \&_worksheet_handler,
-            row => \&_row_handler,
             cell => \&_cell_handler,
             formula => \&_formula_handler,
             format => \&_format_handler,
@@ -129,6 +134,7 @@ sub _xlsx_process {
 #            strikeout => sub { &_named_format('strikeout', @_) },
             },
         twig_handlers => {
+            row => \&_row_handler,
             format => \&_format_cleanup_handler,
             bold => \&_format_cleanup_handler,
             hidden => \&_format_cleanup_handler,
@@ -138,32 +144,7 @@ sub _xlsx_process {
             }
         );
     $parser->parse($template);
-    _handle_subtree($parser->root);
-    #$parser->purge;
     return $workbook->close;
-}
-
-sub _handle_subtree {
-    my ($tree,$format) = @_;
-    my @children = $tree->children;
-    foreach my $child (@children) {
-        my $att = $child->{att};
-        if ($att->{type} eq 'worksheet') {
-            $worksheet = $workbook->add_worksheet($att->{name});
-            _handle_subtree($child);
-        } elsif ($att->{type} eq 'cell') {
-            $worksheet->write($att->{row},$att->{col},$att->{text},$format);
-        } elsif ($att->{type} eq 'format') {
-            my $format = $workbook->add_format(%{$att->{format}});
-            _handle_subtree($child,$format);
-        } elsif ($att->{type} eq 'row') {
-            _handle_subtree($child,$format);
-        } else {
-            warn p($child);
-        }
-        $child->purge;
-    }
-    return undef;
 }
 
 =item escape($string)
@@ -188,6 +169,7 @@ sub setup {
     my $temp_output;
     return (\$temp_output, {
         input_extension => 'xlst',
+        _output_extension => _get_extension($parent),
         binmode => $binmode,
         _output => $output,
     });
@@ -200,10 +182,26 @@ Implements the template's post-processing protocol.
 =cut
 
 sub postprocess {
-    my ($parent, $output, $config) = @_;
+    my ($parent, $temp_output, $config) = @_;
 
     $parent->{mimetype} = 'application/vnd.ms-excel';
-    &_xlsx_process($config->{_output}, $output);
+
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Excel::Writer::XLSX wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    my $output = $config->{_output};
+    $output = IO::Scalar->new($output) if ref $output;
+
+    if ($config->{_output_extension} eq 'xlsx') {
+        $workbook  = Excel::Writer::XLSX->new($output);
+    }
+    else {
+        $workbook = Spreadsheet::WriteExcel->new($output);
+    }
+    &_xlsx_process($workbook, $$temp_output);
 
     return undef;
 }

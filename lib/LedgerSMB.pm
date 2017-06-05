@@ -515,7 +515,10 @@ sub to_json {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ $json->encode(LedgerSMB::Template::TXT::preprocess($output)) ]
+             [ $json->encode(
+                   LedgerSMB::Template::_preprocess(
+                       $output,
+                       \&LedgerSMB::Template::TXT::escape )) ]
         ];
 }
 

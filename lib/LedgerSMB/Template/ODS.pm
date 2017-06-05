@@ -24,10 +24,10 @@ use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
-use OpenOffice::OODoc::File;
+use File::Temp;
+use HTML::Escape;
+use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
-
-$OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
 my $extension = 'ods';
@@ -107,11 +107,13 @@ sub _worksheet_handler {
     $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
+        # Rename "Sheet1" to whatever we want to be our first sheet
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
         $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
+        $sheetname = $_->{att}->{name};
     }
     return undef;
 }
@@ -308,7 +310,7 @@ sub _format_handler {
                 $properties{paragraph}{'style:vertical-align'} = $val;
             }
         } elsif ($attr eq 'hidden') {
-            if ($properties{cell}{'style:cell-protect'} and !$val) {
+            if ($properties{cell}{'style:cell-protect'} and not $val) {
                 delete $properties{cell}{'style:cell-protect'};
             } elsif ($val) {
                 $properties{cell}{'style:cell-protect'} = 'formula-hidden';
@@ -318,13 +320,13 @@ sub _format_handler {
         } elsif ($attr eq 'size') {
             $properties{text}{'fo:font-size'} = "${val}pt";
         } elsif ($attr eq 'bold') {
-            if ($properties{text}{'fo:font-weight'} and !$val) {
+            if ($properties{text}{'fo:font-weight'} and not $val) {
                 delete $properties{text}{'fo:font-weight'};
             } elsif ($val) {
                 $properties{text}{'fo:font-weight'} = 'bold';
             }
         } elsif ($attr eq 'italic') {
-            if ($properties{text}{'fo:font-style'} and !$val) {
+            if ($properties{text}{'fo:font-style'} and not $val) {
                 delete $properties{text}{'fo:font-style'};
             } elsif ($val) {
                 $properties{text}{'fo:font-style'} = 'italic';
@@ -336,19 +338,19 @@ sub _format_handler {
                 $properties{text}{'style:text-line-through-type'} = 'single';
             }
         } elsif ($attr eq 'font_shadow') {
-            if ($properties{text}{'fo:text-shadow'} and !$val) {
+            if ($properties{text}{'fo:text-shadow'} and not $val) {
                 delete $properties{text}{'fo:text-shadow'};
             } elsif ($val) {
                 $properties{text}{'fo:text-shadow'} = '2pt';
             }
         } elsif ($attr eq 'font_outline') {
-            if ($properties{text}{'style:text-outline'} and !$val) {
+            if ($properties{text}{'style:text-outline'} and not $val) {
                 delete $properties{text}{'style:text-outline'};
             } elsif ($val) {
                 $properties{text}{'style:text-outline'} = 'true';
             }
         } elsif ($attr eq 'shrink') {
-            if ($properties{cell}{'style:shrink-to-fit'} and !$val) {
+            if ($properties{cell}{'style:shrink-to-fit'} and not $val) {
                 delete $properties{cell}{'style:shrink-to-fit'};
             } elsif ($val) {
                 $properties{cell}{'style:shrink-to-fit'} = 'true';
@@ -360,7 +362,7 @@ sub _format_handler {
                 $properties{text}{'style:wrap-option'} = 'wrap';
             }
         } elsif ($attr eq 'text_justlast') {
-            if ($properties{paragraph}{'fo:text-align-last'} and !$val) {
+            if ($properties{paragraph}{'fo:text-align-last'} and not $val) {
                 delete $properties{paragraph}{'fo:text-align-last'};
             } elsif ($val) {
                 $properties{paragraph}{'fo:text-align-last'} = 'justify';
@@ -745,8 +747,19 @@ sub _format_cleanup_handler {
 
 sub _ods_process {
     my ($output, $template) = @_;
-    $output = IO::Scalar->new($output) if ref $output;
-    $ods = odfContainer($output, create => 'spreadsheet');
+    my $fn;
+    my $fh; # if we need to use a temp file, we need to keep the object
+            # in scope, because when it goes out of scope, the file is removed
+    if (ref $output) {
+        $fh = File::Temp->new( DIR => LedgerSMB::Sysconfig::tempdir());
+        $fn = $fh->filename;
+    }
+    else {
+        $fn = $output;
+    }
+    $ods = ooDocument(file => $fn,
+                      create => 'spreadsheet',
+                      work_dir => LedgerSMB::Sysconfig::tempdir());
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -772,7 +785,18 @@ sub _ods_process {
         );
     $parser->parse($template);
     $parser->purge;
-    return $ods->save;
+    $ods->save;
+
+    if (ref $output) {
+       my $size = (stat($fn))[7];
+       open(my $inp, "<", $fn)
+         or die "Unable to open temporary file for reading ODS output: $!";
+       sysread($inp, $$output, $size)
+         or die "Error: $!";
+       $fh->close
+         or die "Can't clean up ODS generation temporary file: $!";
+    }
+    return undef;
 }
 
 =item escape($string)
@@ -784,7 +808,7 @@ Escapes a scalar string and returns the sanitized version.
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
 
@@ -799,7 +823,7 @@ sub setup {
 
     my $temp_output;
     return (\$temp_output, {
-        input_extension => $extension,
+        input_extension => "odst",
         binmode => ':utf8',
         _output => $output,
     });
@@ -814,7 +838,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
 
-    &_ods_process($config->{_output}, $output);
+    &_ods_process($config->{_output}, $$output);
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 
     return undef;
