@@ -32,7 +32,7 @@ use LedgerSMB::Magic qw( FC_PART );
 use LedgerSMB::MooseTypes;
 
 
-PGObject::Type::ByteString->register(registry => 'default');
+PGObject::Type::ByteString->register();
 
 =item  attached_by_id
 
