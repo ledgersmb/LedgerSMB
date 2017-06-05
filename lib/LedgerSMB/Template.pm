@@ -295,70 +295,50 @@ sub available_formats {
 sub new {
     my $class = shift;
     my %args = @_;
-    my $self = {};
+    my $self = {
+        binmode => undef,
+    };
     bless $self, $class;
 
     $logger->trace('new(<args>), keys: ' . join '|', keys %args);
-    $logger->trace('output_args, keys: ' . join '|', keys %{$args{output_options}});
+    $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
+
+    $self->{$_} = $args{$_}
+        for (qw( template format language no_escape debug locale method
+                 format_options output_options no_auto_output ));
     $self->{myconfig} = $args{user};
-    $self->{template} = $args{template};
-    $self->{format} = $args{format};
-    $self->{language} = $args{language};
-    $self->{no_escape} = $args{no_escape};
-    $self->{debug} = $args{debug};
-    $self->{binmode} = undef;
     $self->{outputfile} =
         "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
         $args{output_file};
     $self->{include_path} = $args{path};
-    $self->{locale} = $args{locale};
-    $self->{noauto} = $args{no_auto_output};
-    $self->{method} = $args{method};
     $self->{method} ||= $args{media};
-    $self->{format_args} = $args{format_options};
-    $self->{output_args} = $args{output_options};
     if ($self->{language}){ # Language takes precedence over locale
         $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
     }
 
     if (lc $self->{format} eq 'pdf') {
         $self->{format} = 'LaTeX';
-        $self->{format_args}{filetype} = 'pdf';
+        $self->{format_options}{filetype} = 'pdf';
     } elsif (lc $self->{format} eq 'ps' or lc $self->{format} eq 'postscript') {
         $self->{format} = 'LaTeX';
-        $self->{format_args}{filetype} = 'ps';
+        $self->{format_options}{filetype} = 'ps';
     } elsif (lc $self->{format} eq 'xlsx'){
         $self->{format} = 'XLSX';
-        $self->{format_args}{filetype} = 'xlsx';
+        $self->{format_options}{filetype} = 'xlsx';
     } elsif (lc $self->{format} eq 'xls'){
         $self->{format} = 'XLSX';
-        $self->{format_args}{filetype} = 'xls';
+        $self->{format_options}{filetype} = 'xls';
     } elsif ($self->{format} =~ /edi$/i){
-        $self->{format_args}{extension} = lc $self->{format};
-        $self->{format_args}{filetype} = lc $self->{format};
+        $self->{format_options}{extension} = lc $self->{format};
+        $self->{format_options}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    my $format = "LedgerSMB::Template::$self->{format}";
-    use_module($format) or die "Failed to load module $format";
-
-    if (!$self->{include_path}){
-        $self->{include_path} = $self->{'myconfig'}->{'templates'};
-        $self->{include_path} ||= 'templates/demo';
-        if (defined $self->{language}){
-            if (!$self->_valid_language){
-                die 'Invalid language';
-            }
-            $self->{include_path_lang} = "$self->{'include_path'}"
-                    ."/$self->{language}";
-            $self->{locale} = LedgerSMB::Locale->get_handle(
-                $self->{language}
-            );
-        }
-    }
+    use_module("LedgerSMB::Template::$self->{format}")
+       or die "Failed to load module $self->{format}";
 
     carp 'no_escape mode enabled in rendering'
         if $self->{no_escape};
@@ -369,14 +349,6 @@ sub new {
 sub new_UI {
     my $class = shift;
     return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
-}
-
-sub _valid_language {
-    my $self = shift;
-    if ($self->{language} =~ m#(/|\\|:|\.\.|^\.)#){
-        return 0;
-    }
-    return 1;
 }
 
 sub _preprocess {
@@ -567,7 +539,7 @@ sub render {
 
     my $post = $self->_render($vars);
 
-    if (!$self->{'noauto'}) {
+    if (!$self->{no_auto_output}) {
         # Clean up
         $logger->debug("before self output");
         $self->output;
@@ -610,7 +582,7 @@ sub render_to_psgi {
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
-        my $ext = lc($self->{format_args}{filetype} // $self->{format});
+        my $ext = lc($self->{format_options}{filetype} // $self->{format});
         push @$headers,
             ( 'Content-Disposition' =>
                   'attachment; filename="Report.' . $ext . '"'
@@ -630,7 +602,7 @@ sub output {
     my $self = shift;
     my %args = @_;
 
-    for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
+    for ( keys %args ) { $self->{output_options}->{$_} = $args{$_}; };
 
     my $method = $self->{method} || $args{method} || $args{media};
     $method = '' if !defined $method;
@@ -661,7 +633,7 @@ sub _http_output {
     # the sub below is a performance optimization: we don't want to
     # concatenate the keys for every request when not logging.
     $logger->trace(sub {
-        return "output_args keys: " . join '|', keys %{$self->{output_args}};
+        return "output_options keys: " . join '|', keys %{$self->{output_options}};
     });
     if ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.
@@ -683,7 +655,7 @@ sub _http_output {
     }
 
     my $disposition = "";
-    my $name = $self->{output_args}{filename};
+    my $name = $self->{output_options}{filename};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
@@ -711,7 +683,7 @@ sub _http_output {
 
 sub _email_output {
     my $self = shift;
-    my $args = $self->{output_args};
+    my $args = $self->{output_options};
 
     my @mailmime;
     if (!$self->{outputfile} and !$args->{attach}) {
@@ -765,7 +737,7 @@ sub _email_output {
 
 sub _lpr_output {
     my ($self, $in_args) = shift;
-    my $args = $self->{output_args};
+    my $args = $self->{output_options};
     if ($self->{format} ne 'LaTeX') {
         die "Invalid Format";
     }

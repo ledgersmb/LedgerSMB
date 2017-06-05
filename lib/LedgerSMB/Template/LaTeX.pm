@@ -92,7 +92,7 @@ sub setup {
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
     my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'pdf') {
+    if ($parent->{format_options}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
     # The templates use the FORMAT variable to indicate to the LaTeX

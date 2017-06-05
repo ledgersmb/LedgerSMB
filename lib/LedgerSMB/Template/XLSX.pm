@@ -28,8 +28,8 @@ my $extension = 'xlsx';
 
 sub _get_extension {
     my ($parent) = shift;
-    if ($parent->{format_args}->{filetype}){
-        return $parent->{format_args}->{filetype};
+    if ($parent->{format_options}->{filetype}){
+        return $parent->{format_options}->{filetype};
     } else {
         return $extension;
     }
