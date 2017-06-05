@@ -15,6 +15,7 @@ Asset Management workflow script
 =cut
 
 package LedgerSMB::Scripts::asset;
+use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Asset_Class;
 use LedgerSMB::DBObject::Asset;
@@ -457,7 +458,7 @@ sub display_report {
        push @$cols, 'dm', 'amount';
        $hiddens->{report_class} = $request->{report_class};
    }
-   if ($request->{report_class} == 4){
+   if ($request->{report_class} == RC_PARTIAL_DISPOSAL ){
        $request->{title} = $locale->text('Asset Partial Disposal Report');
        push @$cols, 'percent';
    }
@@ -618,9 +619,9 @@ sub report_details {
     my $locale = $request->{_locale};
     my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
-    if ($report->{report_class} == 2) {
+    if ($report->{report_class} == RC_DISPOSAL) {
       return disposal_details($report);
-    } elsif ($report->{report_class} == 4) {
+    } elsif ($report->{report_class} == RC_PARTIAL_DISPOSAL ) {
       return partial_disposal_details($report);
     }
     my @cols = qw(tag start_depreciation purchase_value method_short_name
@@ -972,7 +973,7 @@ sub run_import {
             $ai->{start_depreciation} = $ai->{purchase_date};
         }
         if ($ai->{asset_class} !~ /Leasehold/i){
-           $ai->{usable_life} = $ai->{usable_life}/12;
+           $ai->{usable_life} = $ai->{usable_life}/MONTHS_PER_YEAR;
         }
         $ai->{dep_report_id} = $report_results->{id};
         $ai->{location_id} = $location->{"$ai->{location}"};

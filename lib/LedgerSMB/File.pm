@@ -28,7 +28,7 @@ with 'LedgerSMB::PGObject';
 use File::MimeInfo;
 use Log::Log4perl;
 use PGObject::Type::ByteString;
-
+use LedgerSMB::Magic qw( FC_PART );
 use LedgerSMB::MooseTypes;
 
 
@@ -280,7 +280,7 @@ sub get_for_template{
                 $result->{sizey} = $y;
             };
         }
-        if ($result->{file_class} == 3){
+        if ($result->{file_class} == FC_PART){
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;
         }

@@ -15,6 +15,7 @@ use namespace::autoclean;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 use LedgerSMB::MooseTypes;
+use LedgerSMB::Magic qw( OEC_SALES_ORDER OEC_PURCHASE_ORDER OEC_QUOTATION OEC_RFQ );
 
 =head1 DESCRIPTION
 
@@ -183,16 +184,16 @@ sub columns {
     my ($self) = @_;
     my $ORDNUMBER;
     my $METANUMBER;
-    if (1 == $self->oe_class_id){
+    if (OEC_SALES_ORDER == $self->oe_class_id){
        $ORDNUMBER = $self->Text('Sales Orders');
        $METANUMBER = $self->Text('Customer');
-    } elsif (2 == $self->oe_class_id){
+    } elsif (OEC_PURCHASE_ORDER == $self->oe_class_id){
        $ORDNUMBER = $self->Text('Purchase Orders');
        $METANUMBER = $self->Text('Vendor');
-    } elsif (3 == $self->oe_class_id){
+    } elsif (OEC_QUOTATION == $self->oe_class_id){
        $ORDNUMBER = $self->Text('Quotations');
        $METANUMBER = $self->Text('Customer');
-    } elsif (4 == $self->oe_class_id){
+    } elsif (OEC_RFQ == $self->oe_class_id){
        $ORDNUMBER = $self->Text('RFQs');
        $METANUMBER = $self->Text('Vendor');
     } else {
@@ -284,13 +285,13 @@ sub header_lines {
 
 sub name {
     my ($self) = @_;
-    if (1 == $self->oe_class_id){
+    if (OEC_SALES_ORDER == $self->oe_class_id){
        return $self->Text('Sales Orders');
-    } elsif (2 == $self->oe_class_id){
+    } elsif (OEC_PURCHASE_ORDER == $self->oe_class_id){
        return $self->Text('Purchase Orders');
-    } elsif (3 == $self->oe_class_id){
+    } elsif (OEC_QUOTATION == $self->oe_class_id){
        return $self->Text('Quotations');
-    } elsif (4 == $self->oe_class_id){
+    } elsif (OEC_RFQ == $self->oe_class_id){
        return $self->Text('RFQs');
     } else {
         die 'Unsupported OE Class Type';

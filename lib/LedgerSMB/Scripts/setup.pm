@@ -33,6 +33,8 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 $LedgerSMB::VERSION =~ /(\d+\.\d+)./;
@@ -65,7 +67,7 @@ sub _get_database {
     my ($request) = @_;
     my $creds = $request->{_auth}->get_credentials('setup');
 
-    return [ 401,
+    return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
                'Content-Type' => 'text/text; charset=UTF-8' ],
              [ 'Please enter your credentials' ] ]
@@ -73,7 +75,7 @@ sub _get_database {
 
     # Ideally this regex should be configurable per instance, and possibly per admin user
     # for now we simply use a fixed regex. It will cover many if not most use cases.
-    return [ 454,
+    return [ HTTP_454,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
                'Content-Type' => 'text/html; charset=UTF-8' ],
              [ "<html><body><h1 align='center'>Access to the ($request->{database}) database is Forbidden!</h1></br><h4 align='center'><a href='/setup.pl?database=$request->{database}'>return to setup</a></h4></body></html>" ] ]
@@ -389,12 +391,13 @@ sub run_backup {
     my $mimetype;
 
     if ($request->{backup} eq 'roles') {
-        my @t = localtime(time);
-        $t[4]++;
-        $t[5] += 1900;
-        $t[3] = substr( "0$t[3]", -2 );
-        $t[4] = substr( "0$t[4]", -2 );
-        my $date = "$t[5]-$t[4]-$t[3]";
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)
+         = my @t = localtime(time);
+        $mon++;
+        $year += PERL_TIME_EPOCH;
+        $mday = sprintf "%02d", $mday;
+        $mon = sprintf "%02d", $mon;
+        my $date = "$year-$mon-$mday";
 
         $backupfile = $database->backup_globals(
             tempdir => $LedgerSMB::Sysconfig::backupdir,
@@ -446,7 +449,7 @@ sub run_backup {
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
         return [
-            200,
+            HTTP_OK,
             [
                 'Content-Type' => $mimetype,
                 'Content-Disposition' =>
@@ -989,7 +992,7 @@ Saves the administrative user, and then directs to the login page.
 sub save_user {
     my ($request) = @_;
     $request->requires(qw(first_name last_name ssn employeenumber));
-    $request->{entity_class} = 3;
+    $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     use LedgerSMB::Entity::Person::Employee;
     use LedgerSMB::Entity::User;

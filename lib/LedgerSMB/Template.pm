@@ -270,6 +270,7 @@ use Template::Parser;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
+use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
@@ -596,7 +597,7 @@ sub render_to_psgi {
         unlink $self->{outputfile};
     }
 
-    return [ 200, $headers, $body ];
+    return [ HTTP_OK, $headers, $body ];
 }
 
 sub output {
