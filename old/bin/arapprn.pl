@@ -309,9 +309,11 @@ sub print_transaction {
     $form->{fileid} =~ s/(\s|\W)+//g;
 
     my $template = LedgerSMB::Template->new(
-        user => \%myconfig, template => $form->{'formname'},
+        user => \%myconfig,
+        template => $form->{'formname'},
+        path => 'DB',
         locale => $locale,
-    no_auto_output => 1,
+        no_auto_output => 1,
         format => uc $form->{format} );
 
     $template->render($form);
