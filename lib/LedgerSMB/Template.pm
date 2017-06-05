@@ -337,8 +337,8 @@ sub new {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    my $format = "LedgerSMB::Template::$self->{format}";
-    use_module($format) or die "Failed to load module $format";
+    use_module("LedgerSMB::Template::$self->{format}")
+       or die "Failed to load module $self->{format}";
 
     carp 'no_escape mode enabled in rendering'
         if $self->{no_escape};
