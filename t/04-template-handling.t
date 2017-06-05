@@ -92,24 +92,6 @@ is_deeply(LedgerSMB::Template::_preprocess({'fruit' => '&veggies',
 
 # Template->new
 $myconfig = {'templates' => 't/data'};
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => 'x/0', 'format' => 'HTML')}
-        qr/Invalid language/, 'Template, new: Invalid language caught 1';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1\\2', 'format' => 'HTML')}
-        qr/Invalid language/, 'Template, new: Invalid language caught 2';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '1:2', 'format' => 'HTML')}
-        qr/Invalid language/, 'Template, new: Invalid language caught 3';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '..', 'format' => 'HTML')}
-        qr/Invalid language/, 'Template, new: Invalid language caught 4';
-throws_ok{new LedgerSMB::Template('user' => $myconfig, 'language' => '.svn', 'format' => 'HTML')}
-        qr/Invalid language/,
-        'Template, new: Invalid language caught 5';
-$template = undef;
-$template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de', 'format' => 'HTML');
-ok(defined $template, 'Template, new: Object creation with valid language');
-isa_ok($template, 'LedgerSMB::Template',
-        'Template, new: Object creation with valid language');
-is($template->{include_path_lang}, 't/data/de',
-        'Template, new: Object creation with valid language has good include_path');
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'language' => 'de',
         'path' => 't/data', 'output_file' => 'test', 'format' => 'HTML');
@@ -124,7 +106,7 @@ is($template->{outputfile}, 't/var/test',
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-        'template' => '04-template', 'locale' => $locale);
+        path => 't/data', 'template' => '04-template', 'locale' => $locale);
 ok(defined $template,
         'Template, new: Object creation with locale');
 isa_ok($template, 'LedgerSMB::Template',
@@ -132,7 +114,7 @@ isa_ok($template, 'LedgerSMB::Template',
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-        'template' => '04-template-2', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template-2', 'no_auto_output' => 1);
 ok(defined $template,
         'Template, new: Object creation with non-existent template');
 throws_ok{$template->render({'login' => 'foo'})} qr/not found/,
@@ -146,7 +128,7 @@ SKIP: {
     skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
     ok(defined $template,
         'Template, new (PDF): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -165,7 +147,7 @@ SKIP: {
 
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PS',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
     ok(defined $template,
         'Template, new (PS): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -183,7 +165,7 @@ SKIP: {
 
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'XLS',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
     ok(defined $template,
         'Template, new (XLS): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -201,7 +183,7 @@ SKIP: {
 
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'XLSX',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
     ok(defined $template,
         'Template, new (XLSX): Object creation with format and template');
     isa_ok($template, 'LedgerSMB::Template',
@@ -221,12 +203,10 @@ SKIP: {
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'TXT',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
 ok(defined $template,
         'Template, new (TXT): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template',
-        'Template, new (TXT): Object creation with format and template');
-is($template->{include_path}, 't/data',
         'Template, new (TXT): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
         undef, # no output file -> undef return value
@@ -236,12 +216,10 @@ is($template->{output}, "I am a template.\nLook at me foo&bar.",
 
 $template = undef;
 $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'HTML',
-        'template' => '04-template', 'no_auto_output' => 1);
+        path => 't/data', 'template' => '04-template', 'no_auto_output' => 1);
 ok(defined $template,
         'Template, new (HTML): Object creation with format and template');
 isa_ok($template, 'LedgerSMB::Template',
-        'Template, new (HTML): Object creation with format and template');
-is($template->{include_path}, 't/data',
         'Template, new (HTML): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
         undef,
