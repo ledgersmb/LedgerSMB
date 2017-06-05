@@ -3,3 +3,7 @@ modules_file = xt/prohibited_modules
 
 [CodeLayout::ProhibitHardTabs]
 allow_leading_tabs = 0
+
+[ValuesAndExpressions::ProhibitMagicNumbers]
+allowed_values = -1 0 1 2
+

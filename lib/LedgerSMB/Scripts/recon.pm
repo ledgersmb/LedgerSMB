@@ -20,6 +20,7 @@ package LedgerSMB::Scripts::recon;
 
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
+use HTTP::Status qw( HTTP_BAD_REQUEST);
 use LedgerSMB::Setting;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Reconciliation::Summary;
@@ -274,7 +275,7 @@ sub _display_report {
 
     $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
-    $recon->{statement_gl_calc} = $neg_factor *
+  $recon->{statement_gl_calc} = $neg_factor *
                                     ($recon->{their_total}
                                     + $recon->{outstanding_total}
                                     + $recon->{mismatch_our_total});
@@ -408,7 +409,7 @@ sub approve {
         return get_results($request);
     }
 
-    return [ 400, # bad request
+    return [ HTTP_BAD_REQUEST,
              [ 'Content-Type' => 'text/plain; charset=utf-8' ],
              [ "'report_id' parameter missing" ]
         ] if ! $request->{report_id};

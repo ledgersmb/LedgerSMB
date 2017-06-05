@@ -12,7 +12,7 @@ package LedgerSMB::Report::Dates;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::MooseTypes;
-
+use LedgerSMB::Magic qw( MONTHS_PER_QUARTER );
 =head1 DESCRIPTION
 
 This handles standard date controls in reports.  It just adds properties to
@@ -208,7 +208,7 @@ sub _get_from_date {
 
 sub _get_to_date {
     my ($self) = @_;
-    if ($self->interval eq 'none' or ! defined $self->from_date){
+    if ($self->interval eq 'none' or not defined $self->from_date){
         return LedgerSMB::PGDate->from_db();
     }
     my $dateobj = $self->from_date;
@@ -216,7 +216,7 @@ sub _get_to_date {
     if ($self->interval eq 'month'){
        $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
-       $date->add(months => 3);         ## no critic ( ProhibitMagicNumbers)
+       $date->add(months => MONTHS_PER_QUARTER);
     } elsif ($self->interval eq 'year'){
        $date->add(years => 1);
     }

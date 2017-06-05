@@ -17,6 +17,8 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER 
+   HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
@@ -74,7 +76,7 @@ sub _internal_server_error {
 
     push @body_lines, '</body></html>';
 
-    return [ 500,
+    return [ HTTP_INTERNAL_SERVER_ERROR,
              [ 'Content-Type' => 'text/html; charset=UTF-8' ],
              \@body_lines ];
 }
@@ -127,7 +129,7 @@ sub psgi_app {
                 || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
                 if (! $request->_db_init()) {
                     ($status, $headers, $body) =
-                        ( 401,
+                        ( HTTP_UNAUTHORIZED,
                           [ 'Content-Type' => 'text/plain; charset=utf-8',
                             'WWW-Authenticate' => 'Basic realm=LedgerSMB' ],
                           [ 'Please enter your credentials' ]
@@ -136,7 +138,7 @@ sub psgi_app {
                 }
                 if (! $request->verify_session()) {
                     ($status, $headers, $body) =
-                        ( 303, # Found, GET other
+                        ( HTTP_SEE_OTHER,
                           [ 'Location' => 'login.pl?action=logout&reason=timeout' ],
                           [] );
                     return; # exit 'try' scope
@@ -231,7 +233,7 @@ sub setup_url_space {
             return sub {
                 my $env = shift;
 
-                return [ 302,
+                return [ HTTP_FOUND,
                          [ Location => '/login.pl' ],
                          [ '' ] ]
                              if $env->{PATH_INFO} eq '/';

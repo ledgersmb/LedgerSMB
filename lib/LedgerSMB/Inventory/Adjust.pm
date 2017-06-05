@@ -133,7 +133,7 @@ routines and the like.
 
 sub add_line{
     my ($self, $hashref) = @_;
-    return if !$hashref->{partnumber} and !$hashref->{parts_id};
+    return if not $hashref->{partnumber} and not $hashref->{parts_id};
     my $line = LedgerSMB::Inventory::Adjust_Line->new(%$hashref);
     my @lines = @{$self->rows};
     push @lines, $line;

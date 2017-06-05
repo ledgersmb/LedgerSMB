@@ -7,6 +7,8 @@ LedgerSMB::Report::Listings::TemplateTrans - Listing of Template Transactions
 package LedgerSMB::Report::Listings::TemplateTrans;
 use Moose;
 use namespace::autoclean;
+use LedgerSMB::Magic qw( JRNL_GJ JRNL_AR JRNL_AP );
+
 extends 'LedgerSMB::Report';
 
 =head1 SYNOPSIS
@@ -110,11 +112,9 @@ sub name {
 
 =cut
 
-my %jtype = (
-    1 => 'gl',
-    2 => 'ar',
-    3 => 'ap',
-    );
+my %jtype = ( JRNL_GJ => 'gl',
+              JRNL_AR => 'ar',
+              JRNL_AP => 'ap' );
 
 sub run_report {
     my ($self) = @_;

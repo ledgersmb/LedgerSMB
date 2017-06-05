@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 203;
+use Test::More tests => 202;
 use File::Find;
 
 my @on_disk;
@@ -28,10 +28,8 @@ my @exception_modules =
      'LedgerSMB::Template::ODS',
 
      # Exclude because tested conditionally on Excel::Writer::XLSX
+     # and Spreadsheet::WriteExcel
      'LedgerSMB::Template::XLSX',
-
-     # Exclude because tested conditionally on Spreadsheet::WriteExcel
-     'LedgerSMB::Template::XLS',
 
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
@@ -172,11 +170,12 @@ my @modules =
           'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::Elements', 'LedgerSMB::Template::DBProvider',
-          'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
+          'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::Request::Error',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
+          'LedgerSMB::Magic',
     );
 
 my %modules;
@@ -236,18 +235,13 @@ SKIP: {
 
 SKIP: {
     eval { require Excel::Writer::XLSX };
-
     skip 'Excel::Writer::XLSX not installed', 1 if $@;
-    for ('LedgerSMB::Template::XLSX') {
-        use_ok($_);
-    }
-}
 
-SKIP: {
+
     eval { require Spreadsheet::WriteExcel };
-
     skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
-    for ('LedgerSMB::Template::XLS') {
+
+    for ('LedgerSMB::Template::XLSX') {
         use_ok($_);
     }
 }

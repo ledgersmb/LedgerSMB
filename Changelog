@@ -2,23 +2,27 @@
 Changelog for 1.6 Series
 Forthcoming
 
-User experience
-* Removed the need for the ill-understood 'Inventory Entity' (Erik H)
-
 Performance
-* Remove CGI::Emulate::PSGI wrapper for 'new code' (Erik H/Yves L)
+* Move 'new code' to real PSGI (removes CGI::Emulate::PSGI) (Erik H/Yves L)
+
+Rewritten inventory tracking and adjustments
+* Removed the need for the ill-understood 'Inventory Entity' (Erik H)
+* Inventory adjustments GL transactions instead of dummy invoices (Erik H)
+* SQL & in-browser(BDD) tests (Erik H)
 
 Code cleanup
 * Removed code duplication in
   - Template handling framework (Yves L)
 * Remove unused variables and unreachable code (Nick P)
-* Removed assumptions about being a webapp from libraries (Erik H)
-* Rewrote inventory activity tracking and adjustments (Erik H)
+* Authentication handling centralized in request dispatch code (Erik H)
+* Cleaned up handling of uploaded files in request handling (Erik H)
+* Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
+* Template format plugin cleanup and refactoring (Erik H)
+* Template handling code cleanup (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
 * Enforce numerous Perl::Critic policies (Nick P)
-* SQL & WebApp(BDD) tests for inventory tracking & adjustments (Erik H)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
@@ -34,6 +38,11 @@ Changelog for 1.5.7
 * Fix http error response (Yves L)
 * Fix Salesperson field not displayed (Nick P, #2784)
 * Fix can't delete unused account after books closed (Nick P, #2800)
+* Fix parts with capitals can't be added to AP invoices (Erik H)
+* Change 'Super-user login' to 'Database admin login' (Erik H, #2654)
+* Fix reconciliation loads parser from non-existing location (Erik H, #2313)
+* Clarify 'Import (Yes/No)' on user creation (Erik H, #1510)
+* Fix left menu initially too narrow (Erik H, #955)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie

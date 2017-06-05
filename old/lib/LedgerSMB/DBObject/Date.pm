@@ -15,6 +15,7 @@ use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 
+use LedgerSMB::Magic qw(MAX_DAYS_IN_MONTH );
 use LedgerSMB::PGNumber;
 our $VERSION = '0.1.0';
 
@@ -43,7 +44,7 @@ sub build_filter_by_period {
     my ($self, $locale) = @_;
     my @all_years = $self->call_procedure(funcname => 'date_get_all_years');
 
-    for my $day (1 .. 31) {
+    for my $day (1 .. MAX_DAYS_IN_MONTH) {
       push@{$self->{daysOptions}} , { value => $day, text => $day }
     }
 
