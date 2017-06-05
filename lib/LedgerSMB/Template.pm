@@ -35,8 +35,9 @@ details.
 
 =item output_options (optional)
 
-A hash of output-specific options.  See the appropriate output method for
-details.
+A hash of output-specific options.  If the output is sent as an HTTP
+response, the output option C<filename> causes C<Content-Disposition>
+headers to be generated of the type C<attachment> (forcing file download).
 
 =item locale (optional)
 
@@ -50,7 +51,11 @@ The language for template selection.
 
 =item include_path (optional)
 
-Overrides the template directory.  Used with user interface templates.
+Overrides the template directory.
+
+The special value 'DB' enforces reading of the template from the
+current database.  Resolving the template takes the 'language' and
+'format' values into account.
 
 =item no_auto_output (optional)
 
@@ -259,6 +264,9 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::DBProvider;
+
+use Template::Parser;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
@@ -290,6 +298,8 @@ sub new {
     my $self = {};
     bless $self, $class;
 
+    $logger->trace('new(<args>), keys: ' . join '|', keys %args);
+    $logger->trace('output_args, keys: ' . join '|', keys %{$args{output_options}});
     $self->{myconfig} = $args{user};
     $self->{template} = $args{template};
     $self->{format} = $args{format};
@@ -560,7 +570,7 @@ sub render {
     if (!$self->{'noauto'}) {
         # Clean up
         $logger->debug("before self output");
-        $self->output(%$vars);
+        $self->output;
         $logger->debug("after self output");
         if ($self->{outputfile}) {
             unlink($self->{outputfile});
@@ -632,50 +642,52 @@ sub output {
         return if "zip" eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
-    } elsif (defined $self->{output} or lc $method eq 'screen') {
+    } elsif (lc $method eq 'screen') {
         $self->_http_output;
     } elsif (defined $method and $method ne '' ) {
         $self->_lpr_output;
     } else {
-        $self->_http_output_file;
+        $self->_http_output;
     }
     return;
 }
 
 sub _http_output {
-    my ($self, $data) = @_;
-    LedgerSMB::App_State::cleanup();
-    $data ||= $self->{output};
+    my ($self) = @_;
+    my $data = $self->{output};
     my $cache = 1; # default
+
+    $logger->trace("Entering _http_output()");
+    # the sub below is a performance optimization: we don't want to
+    # concatenate the keys for every request when not logging.
+    $logger->trace(sub {
+        return "output_args keys: " . join '|', keys %{$self->{output_args}};
+    });
     if ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.
         # Let's see about caching.
         $cache = 0 if LedgerSMB::Setting->get('disable_back');
     }
+    # clean up after getting the (last) setting
+    LedgerSMB::App_State::cleanup();
 
-    if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-        die "Invalid format";
-    }
-    if (!defined $data and defined $self->{outputfile}){
-        $data = "";
-        $logger->trace("begin DATA < self->{outputfile}=$self->{outputfile} \$self->{format}=$self->{format}");
-        open my $fh, '<', $self->{outputfile}
-            or die "failed to open rendered file $self->{outputfile} : $!";
-        binmode $fh, $self->{binmode};
-        while (my $line = <$fh>){
-            $data .= $line;
-        }
-        close $fh;
-        $logger->trace("end DATA < self->{outputfile}");
-        unlink($self->{outputfile}) or die 'Unable to delete output file';
+    if (!defined $data and defined $self->{outputfile}) {
+        local $/;
+        open(my $fh, '<:bytes', $self->{outputfile}) or
+            die 'Unable to open rendered file';
+        $data = <$fh>;
+        close($fh) or warn "Unable to close rendered file";
+
+        unlink($self->{outputfile}) or
+            die 'Unable to delete output file';
     }
 
-    my $format = "LedgerSMB::Template::$self->{format}";
     my $disposition = "";
-    my $name = $self->{filename};
+    my $name = $self->{output_args}{filename};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
+        $logger->debug("Adding disposition header: $disposition");
     }
     if (!$ENV{LSMB_NOHEAD}){
         if (!$cache){
@@ -692,30 +704,8 @@ sub _http_output {
     binmode STDOUT, $self->{binmode};
     print $data;
     # change global resource back asap
-    binmode (STDOUT, ':utf8');
+    binmode STDOUT, ':utf8';
     $logger->trace("end print to STDOUT");
-    return;
-}
-
-sub _http_output_file {
-    my $self = shift;
-        LedgerSMB::App_State::cleanup();
-    my $FH;
-
-    open($FH, '<:bytes', $self->{outputfile}) or
-        die 'Unable to open rendered file';
-    my $data;
-    {
-        local $/;
-        $data = <$FH>;
-    }
-    close($FH);
-
-    $self->_http_output($data);
-
-    unlink($self->{outputfile}) or
-        die 'Unable to delete output file';
-
     return;
 }
 

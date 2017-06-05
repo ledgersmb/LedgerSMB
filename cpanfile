@@ -41,6 +41,7 @@ requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Request';
 requires 'Template', '2.14';
+requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
@@ -76,7 +77,7 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
 feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
-        requires "OpenOffice::OODoc::File";
+        requires "OpenOffice::OODoc";
         requires 'OpenOffice::OODoc::Styles';
 };
 

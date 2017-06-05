@@ -312,7 +312,9 @@ sub print_transaction {
         filename => "$form->{formname}-$form->{invnumber}.$form->{format}"
         );
     my $template = LedgerSMB::Template->new(
-        user => \%myconfig, template => $form->{'formname'},
+        user => \%myconfig,
+        template => $form->{'formname'},
+        path => 'DB',
         locale => $locale,
         output_options => \%output_options,
         format => uc $form->{format} );
