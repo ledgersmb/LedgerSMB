@@ -27,7 +27,7 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '< 2'; # '1.403.2';
+requires 'PGObject', '>=1.403002, < 2';
 requires 'PGObject::Simple', '2.0.0';
 requires 'PGObject::Simple::Role', '1.13.2';
 requires 'PGObject::Type::BigFloat';
