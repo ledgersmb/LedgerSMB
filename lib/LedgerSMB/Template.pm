@@ -684,8 +684,8 @@ sub _http_output {
 sub _email_output {
     my $self = shift;
     my $args = $self->{output_options};
-
     my @mailmime;
+
     if (not $self->{outputfile} and not $args->{attach}) {
         $args->{message} .= $self->{output};
         @mailmime = ('contenttype', $self->{mimetype});
