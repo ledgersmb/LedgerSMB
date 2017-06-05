@@ -656,7 +656,7 @@ sub _http_output {
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    if (!defined $data and defined $self->{outputfile}){
+    if (not defined $data and defined $self->{rendered}){
         $data = "";
         $logger->trace("begin DATA < self->{outputfile}=$self->{outputfile} \$self->{format}=$self->{format}");
         open my $fh, '<', $self->{outputfile}
@@ -724,7 +724,8 @@ sub _email_output {
     my $args = $self->{output_args};
 
     my @mailmime;
-    if (!$self->{outputfile} and !$args->{attach}) {
+    
+    if (not $self->{outputfile} and not $args->{attach}) {
         $args->{message} .= $self->{output};
         @mailmime = ('contenttype', $self->{mimetype});
     }
