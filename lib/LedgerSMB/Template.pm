@@ -490,6 +490,7 @@ sub _render {
         value => 'screen'
     } if $LedgerSMB::App_State::Locale;
 
+
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
     my $cleanvars = $self->{no_escape} ? $vars : _preprocess($vars, $escape);
@@ -663,18 +664,21 @@ sub _http_output {
     }
     if (!$ENV{LSMB_NOHEAD}){
         if (!$cache){
-            print "Cache-Control: no-store, no-cache, must-revalidate\n";
-            print "Cache-Control: post-check=0, pre-check=0, false\n";
-            print "Pragma: no-cache\n";
+            print "Cache-Control: no-store, no-cache, must-revalidate\n"
+                . "Cache-Control: post-check=0, pre-check=0, false\n"
+                . "Pragma: no-cache\n"
+                or die "Cannot print to STDOUT";
         }
         if ($self->{mimetype} =~ /^text/) {
-            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
+            print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n"
+                or die "Cannot print to STDOUT";
         } else {
-            print "Content-Type: $self->{mimetype}$disposition\n\n";
+            print "Content-Type: $self->{mimetype}$disposition\n\n"
+                or die "Cannot print to STDOUT";
         }
     }
     binmode STDOUT, $self->{binmode};
-    print $data;
+    print $data or die "Cannot print to STDOUT";;
     # change global resource back asap
     binmode STDOUT, ':utf8';
     $logger->trace("end print to STDOUT");
@@ -753,11 +757,11 @@ sub _lpr_output {
         or die "Failed to open rendered file $self->{outputfile} : $!";
 
     while (my $line = <$file>) {
-        print $pipe $line;
+        print $pipe $line or die "Cannot print to $lpr";
     }
 
-    close $pipe;
-    close $file;
+    close $pipe or die "Cannot close pipe to $lpr";
+    close $file or die "Cannot close file $self->{rendered}";
     return;
 }
 

@@ -141,8 +141,11 @@ sub get_from_file {
     my $content = '';
     open my $fh, '<', $path
         or die "Failed to open template file $path : $!";
-    $content .= $_ while <$fh>;
-    close $fh;
+    {
+        local $/ = undef;
+        $content =  <$fh>;
+    }
+    close $fh or die "Cannot close file $path";
     my %args = (
            template_name => $template_name,
            format => $format,
