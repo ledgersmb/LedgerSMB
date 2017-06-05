@@ -308,16 +308,17 @@ sub print_transaction {
     $form->{fileid} = $form->{invnumber};
     $form->{fileid} =~ s/(\s|\W)+//g;
 
+    my %output_options = (
+        filename => "$form->{formname}-$form->{invnumber}.$form->{format}"
+        );
     my $template = LedgerSMB::Template->new(
         user => \%myconfig,
         template => $form->{'formname'},
         path => 'DB',
         locale => $locale,
-        no_auto_output => 1,
+        output_options => \%output_options,
         format => uc $form->{format} );
-
     $template->render($form);
-    $template->output(%{$form});
 
     if (%$old_form) {
         $old_form->{invnumber} = $form->{invnumber};
