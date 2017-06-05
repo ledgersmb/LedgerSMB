@@ -92,7 +92,7 @@ sub setup {
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
     my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'pdf') {
+    if ($parent->{format_options}{filetype} eq 'pdf') {
         $format = 'pdf';
     }
     # The templates use the FORMAT variable to indicate to the LaTeX
@@ -100,7 +100,7 @@ sub setup {
     $cleanvars->{FORMAT} = $format;
 
     return ($output, {
-        binmode => 1,
+        binmode => ':raw',
         input_extension => $extension,
         _format => $format,
     });
@@ -133,7 +133,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
 
-    if (lc $format eq 'pdf') {
+    if (lc $config->{_format} eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';

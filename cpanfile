@@ -3,8 +3,6 @@
 
 requires 'perl', '5.14.0';
 
-requires 'App::LedgerSMB::Admin', '0.05';
-requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
@@ -29,7 +27,7 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '1.403.2';
+requires 'PGObject', '>=1.403002, < 2';
 requires 'PGObject::Simple', '2.0.0';
 requires 'PGObject::Simple::Role', '1.13.2';
 requires 'PGObject::Type::BigFloat';
@@ -43,6 +41,7 @@ requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Request';
 requires 'Template', '2.14';
+requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';
 requires 'Text::CSV';
@@ -78,7 +77,7 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
 feature 'openoffice', "OpenOffice.org output" =>
     sub {
         requires "XML::Twig";
-        requires "OpenOffice::OODoc::File";
+        requires "OpenOffice::OODoc";
         requires 'OpenOffice::OODoc::Styles';
 };
 

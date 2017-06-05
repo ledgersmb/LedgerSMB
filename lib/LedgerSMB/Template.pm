@@ -35,8 +35,9 @@ details.
 
 =item output_options (optional)
 
-A hash of output-specific options.  See the appropriate output method for
-details.
+A hash of output-specific options.  If the output is sent as an HTTP
+response, the output option C<filename> causes C<Content-Disposition>
+headers to be generated of the type C<attachment> (forcing file download).
 
 =item locale (optional)
 
@@ -50,7 +51,11 @@ The language for template selection.
 
 =item include_path (optional)
 
-Overrides the template directory.  Used with user interface templates.
+Overrides the template directory.
+
+The special value 'DB' enforces reading of the template from the
+current database.  Resolving the template takes the 'language' and
+'format' values into account.
 
 =item no_auto_output (optional)
 
@@ -259,6 +264,9 @@ use LedgerSMB::Locale;
 use LedgerSMB::Mailer;
 use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::DBProvider;
+
+use Template::Parser;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
@@ -287,64 +295,50 @@ sub available_formats {
 sub new {
     my $class = shift;
     my %args = @_;
-    my $self = {};
+    my $self = {
+        binmode => undef,
+    };
     bless $self, $class;
 
+    $logger->trace('new(<args>), keys: ' . join '|', keys %args);
+    $logger->trace('output_options, keys: ' . join '|', keys %{$args{output_options}});
+
+    $self->{$_} = $args{$_}
+        for (qw( template format language no_escape debug locale method
+                 format_options output_options no_auto_output ));
     $self->{myconfig} = $args{user};
-    $self->{template} = $args{template};
-    $self->{format} = $args{format};
-    $self->{language} = $args{language};
-    $self->{no_escape} = $args{no_escape};
-    $self->{debug} = $args{debug};
-    $self->{binmode} = undef;
     $self->{outputfile} =
         "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
         $args{output_file};
     $self->{include_path} = $args{path};
-    $self->{locale} = $args{locale};
-    $self->{noauto} = $args{no_auto_output};
-    $self->{method} = $args{method};
     $self->{method} ||= $args{media};
-    $self->{format_args} = $args{format_options};
-    $self->{output_args} = $args{output_options};
     if ($self->{language}){ # Language takes precedence over locale
         $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
     }
 
     if (lc $self->{format} eq 'pdf') {
         $self->{format} = 'LaTeX';
-        $self->{format_args}{filetype} = 'pdf';
+        $self->{format_options}{filetype} = 'pdf';
     } elsif (lc $self->{format} eq 'ps' or lc $self->{format} eq 'postscript') {
         $self->{format} = 'LaTeX';
-        $self->{format_args}{filetype} = 'ps';
+        $self->{format_options}{filetype} = 'ps';
     } elsif (lc $self->{format} eq 'xlsx'){
         $self->{format} = 'XLSX';
-        $self->{format_args}{filetype} = 'xlsx';
+        $self->{format_options}{filetype} = 'xlsx';
+    } elsif (lc $self->{format} eq 'xls'){
+        $self->{format} = 'XLSX';
+        $self->{format_options}{filetype} = 'xls';
     } elsif ($self->{format} =~ /edi$/i){
-        $self->{format_args}{extension} = lc $self->{format};
+        $self->{format_options}{extension} = lc $self->{format};
+        $self->{format_options}{filetype} = lc $self->{format};
         $self->{format} = 'TXT';
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
         die "Invalid format";
     }
-    my $format = "LedgerSMB::Template::$self->{format}";
-    use_module($format) or die "Failed to load module $format";
-
-    if (!$self->{include_path}){
-        $self->{include_path} = $self->{'myconfig'}->{'templates'};
-        $self->{include_path} ||= 'templates/demo';
-        if (defined $self->{language}){
-            if (!$self->_valid_language){
-                die 'Invalid language';
-            }
-            $self->{include_path_lang} = "$self->{'include_path'}"
-                    ."/$self->{language}";
-            $self->{locale} = LedgerSMB::Locale->get_handle(
-                $self->{language}
-            );
-        }
-    }
+    use_module("LedgerSMB::Template::$self->{format}")
+       or die "Failed to load module $self->{format}";
 
     carp 'no_escape mode enabled in rendering'
         if $self->{no_escape};
@@ -355,14 +349,6 @@ sub new {
 sub new_UI {
     my $class = shift;
     return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
-}
-
-sub _valid_language {
-    my $self = shift;
-    if ($self->{language} =~ m#(/|\\|:|\.\.|^\.)#){
-        return 0;
-    }
-    return 1;
 }
 
 sub _preprocess {
@@ -544,7 +530,7 @@ sub _render {
     if($self->{_no_postprocess}) {
         return undef;
     }
-    $format->can('postprocess')->($self);
+    $format->can('postprocess')->($self, $output, $config);
     return $self->{outputfile};
 }
 
@@ -554,10 +540,10 @@ sub render {
 
     my $post = $self->_render($vars);
 
-    if (!$self->{'noauto'}) {
+    if (!$self->{no_auto_output}) {
         # Clean up
         $logger->debug("before self output");
-        $self->output(%$vars);
+        $self->output;
         $logger->debug("after self output");
         if ($self->{outputfile}) {
             unlink($self->{outputfile});
@@ -597,10 +583,10 @@ sub render_to_psgi {
         utf8::encode($body)
             if utf8::is_utf8($body);
         $body = [ $body ];
+        my $ext = lc($self->{format_options}{filetype} // $self->{format});
         push @$headers,
             ( 'Content-Disposition' =>
-                  'attachment; filename="Report.' .
-                                lc($self->{format}) . '"'
+                  'attachment; filename="Report.' . $ext . '"'
             ) if $self->{format} && 'html' ne lc $self->{format};
     }
     elsif ($self->{outputfile}) {
@@ -617,7 +603,7 @@ sub output {
     my $self = shift;
     my %args = @_;
 
-    for ( keys %args ) { $self->{output_args}->{$_} = $args{$_}; };
+    for ( keys %args ) { $self->{output_options}->{$_} = $args{$_}; };
 
     my $method = $self->{method} || $args{method} || $args{media};
     $method = '' if !defined $method;
@@ -629,50 +615,52 @@ sub output {
         return if "zip" eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
-    } elsif (defined $self->{output} or lc $method eq 'screen') {
+    } elsif (lc $method eq 'screen') {
         $self->_http_output;
     } elsif (defined $method and $method ne '' ) {
         $self->_lpr_output;
     } else {
-        $self->_http_output_file;
+        $self->_http_output;
     }
     return;
 }
 
 sub _http_output {
-    my ($self, $data) = @_;
-    LedgerSMB::App_State::cleanup();
-    $data ||= $self->{output};
+    my ($self) = @_;
+    my $data = $self->{output};
     my $cache = 1; # default
+
+    $logger->trace("Entering _http_output()");
+    # the sub below is a performance optimization: we don't want to
+    # concatenate the keys for every request when not logging.
+    $logger->trace(sub {
+        return "output_options keys: " . join '|', keys %{$self->{output_options}};
+    });
     if ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.
         # Let's see about caching.
         $cache = 0 if LedgerSMB::Setting->get('disable_back');
     }
+    # clean up after getting the (last) setting
+    LedgerSMB::App_State::cleanup();
 
-    if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-        die "Invalid format";
-    }
-    if (!defined $data and defined $self->{outputfile}){
-        $data = "";
-        $logger->trace("begin DATA < self->{outputfile}=$self->{outputfile} \$self->{format}=$self->{format}");
-        open my $fh, '<', $self->{outputfile}
-            or die "failed to open rendered file $self->{outputfile} : $!";
-        binmode $fh, $self->{binmode};
-        while (my $line = <$fh>){
-            $data .= $line;
-        }
-        close $fh or die "Cannot close file $self->{outputfile}";
-        $logger->trace("end DATA < self->{outputfile}");
-        unlink($self->{outputfile}) or die 'Unable to delete output file';
+    if (!defined $data and defined $self->{outputfile}) {
+        local $/;
+        open(my $fh, '<:bytes', $self->{outputfile}) or
+            die 'Unable to open rendered file';
+        $data = <$fh>;
+        close($fh) or warn "Unable to close rendered file";
+
+        unlink($self->{outputfile}) or
+            die 'Unable to delete output file';
     }
 
-    my $format = "LedgerSMB::Template::$self->{format}";
     my $disposition = "";
-    my $name = $self->{filename};
+    my $name = $self->{output_options}{filename};
     if ($name) {
         $name =~ s#^.*/##;
         $disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
+        $logger->debug("Adding disposition header: $disposition");
     }
     if (!$ENV{LSMB_NOHEAD}){
         if (!$cache){
@@ -692,36 +680,14 @@ sub _http_output {
     binmode STDOUT, $self->{binmode};
     print $data or die "Cannot print to STDOUT";;
     # change global resource back asap
-    binmode (STDOUT, ':utf8');
+    binmode STDOUT, ':utf8';
     $logger->trace("end print to STDOUT");
-    return;
-}
-
-sub _http_output_file {
-    my $self = shift;
-        LedgerSMB::App_State::cleanup();
-    my $FH;
-
-    open($FH, '<:bytes', $self->{outputfile}) or
-        die 'Unable to open rendered file';
-    my $data;
-    {
-        local $/;
-        $data = <$FH>;
-    }
-    close($FH) or die "Cannot close file $self->{rendered}";
-
-    $self->_http_output($data);
-
-    unlink($self->{outputfile}) or
-        die 'Unable to delete output file';
-
     return;
 }
 
 sub _email_output {
     my $self = shift;
-    my $args = $self->{output_args};
+    my $args = $self->{output_options};
 
     my @mailmime;
     if (!$self->{outputfile} and !$args->{attach}) {
@@ -775,7 +741,7 @@ sub _email_output {
 
 sub _lpr_output {
     my ($self, $in_args) = shift;
-    my $args = $self->{output_args};
+    my $args = $self->{output_options};
     if ($self->{format} ne 'LaTeX') {
         die "Invalid Format";
     }

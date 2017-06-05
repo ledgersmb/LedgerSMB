@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 201;
 use File::Find;
 
 my @on_disk;
@@ -28,10 +28,8 @@ my @exception_modules =
      'LedgerSMB::Template::ODS',
 
      # Exclude because tested conditionally on Excel::Writer::XLSX
+     # and Spreadsheet::WriteExcel
      'LedgerSMB::Template::XLSX',
-
-     # Exclude because tested conditionally on Spreadsheet::WriteExcel
-     'LedgerSMB::Template::XLS',
 
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
@@ -236,18 +234,13 @@ SKIP: {
 
 SKIP: {
     eval { require Excel::Writer::XLSX };
-
     skip 'Excel::Writer::XLSX not installed', 1 if $@;
-    for ('LedgerSMB::Template::XLSX') {
-        use_ok($_);
-    }
-}
 
-SKIP: {
+
     eval { require Spreadsheet::WriteExcel };
-
     skip 'Spreadsheet::WriteExcel not installed', 1 if $@;
-    for ('LedgerSMB::Template::XLS') {
+
+    for ('LedgerSMB::Template::XLSX') {
         use_ok($_);
     }
 }

@@ -101,8 +101,8 @@ populate_workspace() {
 
 populate_docker_workspace() {
   ( cd $docker_workspace && \
-    $git clone --recursive --single-branch --branch "$branch" "$docker_URL" docker) \
-  || fail "Failed to check out branch '$branch' from '$docker_URL'!"
+    $git clone --recursive --single-branch --branch "$branch" "$URL_docker" "$docker_workspace/docker") \
+  || fail "Failed to check out (docker) branch '$branch' from '$docker_URL'!"
 }
 
 update_translations() {
@@ -110,14 +110,13 @@ update_translations() {
     $tx pull -f -a && utils/devel/rebuild_pot.sh && \
     ($find . -name '*~' -exec rm \{} + ) && \
     ($find . -name '*.orig' -exec rm \{} + ) && \
-    $git add --all locale && git commit -m "* Automated release language update" \
-    && $git push origin "$branch") \
+    $git add --all locale && git commit -m "* Automated release language update" ) \
    || fail "Failed to update branch ($branch) translations"
 }
 
 update_dockerfile() {
    (cd "$docker_workspace/docker" && \
-    $sed -i -e "s/^ENV LSMB_VERSION .*\$/ENV LSMB_VERSION $release_version/" && \
+    $sed -i -e "s/^ENV LSMB_VERSION .*\$/ENV LSMB_VERSION $release_version/" Dockerfile && \
     $git commit -a -m "* Automatic Dockerfile update by release process" && \
     $git tag "$release_version") \
    || fail "Failed to update Dockerfile!"
@@ -233,11 +232,11 @@ put 'ledgersmb-$release_version.tar.gz'
 }
 
 publish_files_gh() {
-   gh_auth=-u "$github_user:$github_token"
+   gh_auth="-u $github_user:$github_token"
    (cd "$our_workspace" && \
     $curl -X POST $gh_auth "$GH_api/ledgersmb/LedgerSMB/releases" \
           -d "{'tag_name': '$release_version', 'draft': false, 'body': 'todo'}" \
-       > release_create_response)
+       > release_create_response) \
    || fail "Failed to create GitHub release!"
    upload_url=$($jq -M -r '.upload_url' < $our_workspace/release_create_response | $sed -e 's/{.*//')
    $curl -X POST -H 'Content-Type: text/plain' $gh_auth \
@@ -315,6 +314,12 @@ fi
 
 create_versiontarball
 sign_versiontarball
+
+# We have the signed binaries now and are about to publish;
+# if anything goes wrong beyond this point, we need the
+# binaries to restart the process "by hand" or even to
+# execute it by hand
+tap - TERM EXIT
 
 typeset -u yn
 echo -n "Ready to publish now. Proceed? [y/N] "

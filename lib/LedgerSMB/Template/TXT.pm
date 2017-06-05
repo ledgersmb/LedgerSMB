@@ -27,8 +27,8 @@ my $extension = 'txt';
 
 sub _get_extension {
     my ($parent) = shift;
-    if ($parent->{format_args}->{extension}){
-        return $parent->{format_args}->{extension};
+    if ($parent->{format_options}->{extension}){
+        return $parent->{format_options}->{extension};
     } else {
         return $extension;
     }
