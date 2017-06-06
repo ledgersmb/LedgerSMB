@@ -20,7 +20,11 @@ my $company_seq = 0;
 Given qr/a (fresh )?standard test company/, sub {
     my $fresh_required = $1;
 
-    S->{ext_lsmb}->ensure_template;
+    if ( !$fresh_required && S->{ext_lsmb}->check_template_exists ) {
+        S->{ext_lsmb}->template_created(1);
+    }
+    S->{ext_lsmb}->ensure_template
+        unless S->{ext_lsmb}->template_created;
 
     if (! S->{"the company"} || $fresh_required) {
         my $company = "standard-" . $company_seq++;

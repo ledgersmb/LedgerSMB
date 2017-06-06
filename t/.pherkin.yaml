@@ -20,7 +20,7 @@ default:
              page_class: PageObject::Root
              # Need a long retry timeout because instrumenting
              # old code takes loooong when running coverage testing
-             retry_timeout: 30
+             retry_timeout: 90
              driver:
                 drv_name: Weasel::Driver::Selenium2
                 wait_timeout: 3000

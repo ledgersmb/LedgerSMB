@@ -11,7 +11,7 @@ This package is free software; you can redistribute it and/or modify it under th
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }
 A:active { text-decoration: underline; }
-A:hover { 
+A:hover {
   background-color: transparent;
   text-decoration: underline;
 }
@@ -23,7 +23,7 @@ body {
   background-color: #EDECEB;
 }
 
-.cornderlogo {
+.cornerlogo {
  border: 1px solid #000;
  width: 150px;
  margin-left: 1px;
