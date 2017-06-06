@@ -7,6 +7,7 @@ LedgerSMB::Template::DBProvider
 =cut
 
 use Template;
+use LedgerSMB::Sysconfig;
 use LedgerSMB::Database;
 use LedgerSMB::Template::DBProvider;
 use Test::More;

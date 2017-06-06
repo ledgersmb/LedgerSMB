@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use LedgerSMB::Sysconfig;
 
 use lib 'xt/41-coaload';
 
