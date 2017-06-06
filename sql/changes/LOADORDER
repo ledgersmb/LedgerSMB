@@ -53,3 +53,4 @@
 !1.6/no-inv-entity-remove-entity.sql
 1.6/gl-trans-type.sql
 1.6/drop-entity-duplicate_constraint.sql
+1.6/fix-entity-primary-key.sql
