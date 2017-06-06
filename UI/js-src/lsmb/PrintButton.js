@@ -22,12 +22,14 @@ define([
                                    action: this.get("value"),
                                    type: f.type.value,
                                    id: f.id.value,
-                                   vc: f.vc.value,
                                    formname: f.formname.value,
                                    language_code: f.language_code.value,
                                    media: "screen",
                                    format: f.format.value
                                };
+                               if (f.vc) {
+                                   data["vc"] = f.vc.value;
+                               }
                            }
                            else {
                                data = domform.toObject(f);
