@@ -47,7 +47,7 @@ sub init_taxes {
     my @accounts = split / /, $taxaccounts;
     if ( defined $taxaccounts2 ) {
         #my @tmpaccounts = @accounts;#unused var
-        $#accounts = -1;# empty @accounts,@accounts=();
+        @accounts=(); # empty @accounts
         for my $acct ( split / /, $taxaccounts2 ) {
             if ( $taxaccounts =~ /\b$acct\b/ ) {
                 push @accounts, $acct;
@@ -142,7 +142,7 @@ sub calculate_taxes {
 
 =head2 apply_taxes
 
-A shortcut for calculating taxes without extracting (i.e. when taxes not 
+A shortcut for calculating taxes without extracting (i.e. when taxes not
 included)
 
 =head2 extract_taxes

@@ -52,8 +52,6 @@ require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/io.pl";
 require "old/bin/arap.pl";
 
-1;
-
 # end of main
 sub copy_to_new{
     delete $form->{id};
@@ -1355,3 +1353,5 @@ sub save_info {
         }
 
 }
+
+1;

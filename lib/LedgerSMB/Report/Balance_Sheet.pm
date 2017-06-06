@@ -254,7 +254,6 @@ sub run_report {
             my $props = $self->rheads->id_props($row_id);
             my $cat = $props->{account_category};
             my $contra = $props->{contra};
-
             my $sign = (($contra) ? -1 : 1)
                 * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
 
@@ -263,7 +262,7 @@ sub run_report {
         }
     }
 
-    $self->rows([]);
+    return $self->rows([]);
 }
 
 =head2 template

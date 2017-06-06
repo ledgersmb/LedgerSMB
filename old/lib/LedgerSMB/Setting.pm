@@ -197,7 +197,7 @@ sub set {
     my ($self, $key, $value) = @_;
     $key ||= $self->{key};
     $value ||= $self->{value};
-    $self->call_procedure(funcname => 'setting__set',
+    return $self->call_procedure(funcname => 'setting__set',
                               args => [$key, $value]);
 }
 

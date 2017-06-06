@@ -100,7 +100,7 @@ sub run_report {
                                      ? LedgerSMB::Report::text('Yes')
                                      : LedgerSMB::Report::text('No');
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

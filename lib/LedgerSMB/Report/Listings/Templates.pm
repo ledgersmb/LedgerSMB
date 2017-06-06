@@ -90,7 +90,7 @@ sub run_report {
           "template_name=$ref->{template_name}&" .
           "language_code=$ref->{language_code}&format=$ref->{format}";
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

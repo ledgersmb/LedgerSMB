@@ -76,6 +76,7 @@ sub set_datestyle {
         'dd.mm.yyyy' => 'set DateStyle to \'GERMAN\''
     );
     $dbh->do( $date_query{ $datestyle } ) if $date_query{ $datestyle };
+    return;
 }
 
 =head2 require_version($version)

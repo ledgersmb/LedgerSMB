@@ -28,6 +28,8 @@ use MooseX::NonMoose;
 extends 'Template::Provider';
 with 'LedgerSMB::PGObject';
 
+my $logger = Log::Log4perl->get_logger(__PACKAGE__);
+
 
 =head1 DESCRIPTION
 
@@ -80,6 +82,8 @@ sub _retrieve_template_data {
 
     my $rv;
     foreach my $lang (@langs) {
+        $logger->info("Retrieving template for ($name, " . ( $lang // "-undef-" ) . ", "
+                      . $self->format . ")");
         $rv = $self->call_procedure(
             funcname => 'template__get',
             args => [
@@ -90,9 +94,11 @@ sub _retrieve_template_data {
         );
         last if defined $rv->{template};
     }
-
+    $logger->warn("No match found retrieving the template '$name'")
+        unless defined $rv->{template};
     return undef unless defined $rv->{template};
 
+    $logger->info("Match found");
     $rv->{last_modified} = PGObject::Type::DateTime->from_db(
         $rv->{last_modified}
     );
@@ -114,9 +120,12 @@ from the database's 'last_modified' column.
 sub _template_modified {
     my ($self, $path) = @_;
     # TT thinks <path> and ./<path> are the same thing.
+    $logger->info("last modified date requested for $path");
     $path =~ s#^./##;
 
     my $tpl = $self->_retrieve_template_data($path);
+    $logger->warn("No last modified date for $path")
+        unless $tpl->{last_modified};
     return ($tpl->{last_modified}) ? int($tpl->{last_modified}->epoch) : undef;
 }
 
@@ -132,9 +141,13 @@ Implements the super's protocol, depending on context, returns:
 sub _template_content {
     my ($self, $path) = @_;
     # TT thinks <path> and ./<path> are the same thing.
+
+    $logger->info("Retrieving template content for $path");
     $path =~ s#^./##;
 
     my $tpl = $self->_retrieve_template_data($path);
+    $logger->error("Template for $path not found")
+        if ! defined $tpl->{template};
     return wantarray
         ? ($tpl->{template},
            (defined $tpl->{template}) ? undef : 'not found',
@@ -151,6 +164,7 @@ factor determining the template content (other factors: format, language).
 =cut
 
 sub _compiled_filename {
+    $logger->debug('declining template caching');
     return undef;
 }
 

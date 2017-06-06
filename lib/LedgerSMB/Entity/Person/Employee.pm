@@ -32,6 +32,7 @@ package LedgerSMB::Entity::Person::Employee;
 use Moose;
 use namespace::autoclean;
 use LedgerSMB::Entity::Person;
+use LedgerSMB::Magic qw( EC_EMPLOYEE );
 extends 'LedgerSMB::Entity::Person';
 
 use LedgerSMB::App_State;
@@ -141,7 +142,7 @@ sub get {
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'employee__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
-    $ref->{entity_class} = 3;
+    $ref->{entity_class} = EC_EMPLOYEE;
     $ref->{name} = "$ref->{first_name} $ref->{last_name}";
     return __PACKAGE__->new(%$ref);
 }
@@ -172,7 +173,7 @@ sub save {
     my ($ref) = $self->call_dbmethod(funcname => 'person__save');
     my ($id) = values(%$ref);
     $self->entity_id($id);
-    $self->call_dbmethod(funcname => 'employee__save');
+    return $self->call_dbmethod(funcname => 'employee__save');
 }
 
 =back

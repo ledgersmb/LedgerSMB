@@ -68,7 +68,7 @@ sub run_report {
     for my $row(@rows){
         $row->{row_id} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

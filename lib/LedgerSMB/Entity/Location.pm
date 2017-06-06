@@ -248,7 +248,7 @@ sub save {
     } else {
         $procname = 'entity__location_save';
     }
-    $self->call_dbmethod(funcname => $procname);
+    return $self->call_dbmethod(funcname => $procname);
 }
 
 =item delete()
@@ -276,7 +276,7 @@ sub delete{
            $ref->{entity_id}, $ref->{location_id}, $ref->{location_class}
         ];
     }
-    __PACKAGE__->call_procedure(funcname => $procname, args => $args );
+    return __PACKAGE__->call_procedure(funcname => $procname, args => $args );
 }
 
 =back

@@ -197,7 +197,7 @@ Runs the report, setting rows for rendering.
 sub run_report {
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__variance_report');
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

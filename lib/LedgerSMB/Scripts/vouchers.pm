@@ -16,6 +16,7 @@ package LedgerSMB::Scripts::vouchers;
 
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
+use HTTP::Status qw( HTTP_OK);
 use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
@@ -224,9 +225,9 @@ sub single_batch_approve {
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->post;
-        list_batches($request);
+        return list_batches($request);
     } else {
-        get_batch($request);
+        return get_batch($request);
     }
 }
 
@@ -384,7 +385,7 @@ sub reverse_overpayment {
 }
 
 my %print_dispatch = (
-   2 => { script => 'ar.pl',
+   BC_AR => { script => 'ar.pl',
           entrypoint => sub {
                my ($voucher, $request) = @_;
                $lsmb_legacy::form->{ARAP} = 'AR';
@@ -399,7 +400,7 @@ my %print_dispatch = (
                lsmb_legacy::print();
           }
         },
-   8 => { script => 'is.pl',
+   BC_SALES_INVOICE => { script => 'is.pl',
           entrypoint => sub {
                my ($voucher, $request) = @_;
                $lsmb_legacy::form->{formname} = 'invoice';
@@ -411,7 +412,7 @@ my %print_dispatch = (
                lsmb_legacy::print();
           }
         },
-   9 => { script => 'is.pl',
+   BC_VENDOR_INVOICE => { script => 'is.pl',
           entrypoint => sub {
                my ($voucher, $request) = @_;
                $lsmb_legacy::form->{formname} = 'product_receipt';
@@ -475,7 +476,7 @@ sub print_batch {
 
         # TODO: clean up the temp dir!!
         return [
-            200,
+            HTTP_OK,
             [
                 'Content-Type' => 'application/zip',
                 'Content-Disposition' =>

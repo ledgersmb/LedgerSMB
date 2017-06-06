@@ -11,39 +11,6 @@ Microsoft Spreadsheet XLSX output.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.  '.xlst' is the
-extension that was chosen for the templates.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
-
 =cut
 
 package LedgerSMB::Template::XLSX;
@@ -51,45 +18,59 @@ package LedgerSMB::Template::XLSX;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
-use LedgerSMB::Template::TTI18N;
-use LedgerSMB::Sysconfig;
 use Excel::Writer::XLSX;
+use Spreadsheet::WriteExcel;
 
 my $binmode = undef;
 my $extension = 'xlsx';
+
+sub _get_extension {
+    my ($parent) = shift;
+    if ($parent->{format_options}->{filetype}){
+        return $parent->{format_options}->{filetype};
+    } else {
+        return $extension;
+    }
+}
 
 my $workbook;
 my $worksheet;
 my $rowcount;
 my $currcol;
+my $format;
 
 sub _worksheet_handler {
-    $rowcount = -1;
+    my ($twig, $elt) = @_;
+    $rowcount = 0;
     $currcol = 0;
-    $_->set_att(type => 'worksheet');
+
+    $worksheet = $workbook->add_worksheet($elt->att('name'));
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    $_->set_att(type => 'row');
+    return undef;
 }
 
 sub _cell_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
+    my ($twig, $elt) = @_;
+    $worksheet->write($rowcount,$currcol,$elt->att('text'),$format);
     $currcol++;
-    $_->set_att(type => 'cell');
+    return undef;
 }
 
 sub _formula_handler {
-    $_->set_att( row => $rowcount, col => $currcol);
     $currcol++;
-    $_->set_att(type => 'formula');
+    return undef;
 }
 
 sub _format_handler {
     my ($t, $format) = @_;
+
     my %properties;
     while (my ($attr, $val) = each %{$format->{att}}) {
         if ($attr eq 'border') {
@@ -116,7 +97,9 @@ sub _format_handler {
         }
         $format->del_att($attr);
     }
-    $_->set_att(type => 'format', format => { %properties });
+
+    $format = $workbook->add_format(%properties);
+    return undef;
 }
 
 # Not yet implemented
@@ -126,21 +109,21 @@ sub _format_handler {
 #    $format->{att}{$name} = 1;
 #    &_format_handler($t, $format);
 #    $format->set_att(type => 'named_format');
+#    return undef;
 #}
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
+    return ($t, $format); # dubious; evaluation of my is undoc/undefined
 }
 
 sub _xlsx_process {
-    my ($filename, $template) = @_;
-
-    $workbook  = Excel::Writer::XLSX->new("$filename");
+    my ($wbk, $template) = @_;
+    $workbook = $wbk;
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
             worksheet => \&_worksheet_handler,
-            row => \&_row_handler,
             cell => \&_cell_handler,
             formula => \&_formula_handler,
             format => \&_format_handler,
@@ -151,6 +134,7 @@ sub _xlsx_process {
 #            strikeout => sub { &_named_format('strikeout', @_) },
             },
         twig_handlers => {
+            row => \&_row_handler,
             format => \&_format_cleanup_handler,
             bold => \&_format_cleanup_handler,
             hidden => \&_format_cleanup_handler,
@@ -160,75 +144,77 @@ sub _xlsx_process {
             }
         );
     $parser->parse($template);
-    _handle_subtree($parser->root);
-    #$parser->purge;
-    $workbook->close;
+    return $workbook->close;
 }
 
-sub _handle_subtree {
-    my ($tree,$format) = @_;
-    my @children = $tree->children;
-    foreach my $child (@children) {
-        my $att = $child->{att};
-        if ($att->{type} eq 'worksheet') {
-            $worksheet = $workbook->add_worksheet($att->{name});
-            _handle_subtree($child);
-        } elsif ($att->{type} eq 'cell') {
-            $worksheet->write($att->{row},$att->{col},$att->{text},$format);
-        } elsif ($att->{type} eq 'format') {
-            my $format = $workbook->add_format(%{$att->{format}});
-            _handle_subtree($child,$format);
-        } elsif ($att->{type} eq 'row') {
-            _handle_subtree($child,$format);
-        } else {
-            warn p($child);
-        }
-        $child->purge;
-    }
+=item escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
+
+sub escape {
+    return shift;
 }
 
-sub get_template {
-    my $name = shift;
-    return "${name}.xlst";
+=item setup($parent, $cleanvars, $output)
+
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    my $temp_output;
+    return (\$temp_output, {
+        input_extension => 'xlst',
+        _output_extension => _get_extension($parent),
+        binmode => $binmode,
+        _output => $output,
+    });
 }
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars);
-}
+=item postprocess($parent, $output, $config)
 
-sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+Implements the template's post-processing protocol.
 
-    my $output = '';
-    my $tempdir = $LedgerSMB::Sysconfig::tempdir;
-    $parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
-
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
-                \$output,
-                {binmode => ':utf8'})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    &_xlsx_process("$parent->{outputfile}.$extension", $output);
-
-    $parent->{mimetype} = 'application/vnd.ms-excel';
-}
+=cut
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    my ($parent, $temp_output, $config) = @_;
+
+    $parent->{mimetype} = 'application/vnd.ms-excel';
+
+    # Implement Template Toolkit's protocol: if the variable
+    # '$output' contains a string, it's a filename. If it's a
+    # reference, the variable referred to is the output memory area
+    #
+    # Excel::Writer::XLSX wants a filehandle or filename, so
+    # convert the variable reference into a filehandle
+    my $output = $config->{_output};
+    $output = IO::Scalar->new($output) if ref $output;
+
+    if ($config->{_output_extension} eq 'xlsx') {
+        $workbook  = Excel::Writer::XLSX->new($output);
+    }
+    else {
+        $workbook = Spreadsheet::WriteExcel->new($output);
+    }
+    &_xlsx_process($workbook, $$temp_output);
+
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

@@ -52,6 +52,7 @@ use warnings;
 use base qw(LedgerSMB::PGOld);
 use LedgerSMB::Reconciliation::CSV;
 use LedgerSMB::PGNumber;
+use LedgerSMB::Magic qw( MONEY_EPSILON);
 
 
 # don't need new
@@ -70,10 +71,10 @@ sub update {
     my $beginning_balance = $self->{beginning_balance} // 0;
     my $total_cleared_credits = $self->{total_cleared_credits} // 0;
     my $total_cleared_debits = $self->{total_cleared_debits} // 0;
-    $self->{submit_allowed} =
+    return $self->{submit_allowed} =
         abs(($their_total - $beginning_balance)
             - ($total_cleared_credits - $total_cleared_debits))
-        >= 0.001;
+        >= MONEY_EPSILON;
 }
 
 sub _pre_save {
@@ -88,7 +89,7 @@ sub _pre_save {
         }
         ++ $i;
     }
-    $self->{line_ids} =~ s/,?$/}/;
+    return $self->{line_ids} =~ s/,?$/}/;
 }
 
 =item submit
@@ -100,7 +101,7 @@ Submits the reconciliation set for approval.
 sub submit {
     my $self = shift @_;
     $self->_pre_save;
-    $self->call_dbmethod(funcname=>'reconciliation__submit_set');
+    return $self->call_dbmethod(funcname=>'reconciliation__submit_set');
 }
 
 
@@ -114,7 +115,7 @@ Saves the reconciliation set for later work
 sub save {
     my $self = shift @_;
     $self->_pre_save;
-    $self->call_dbmethod(funcname=>'reconciliation__save_set');
+    return $self->call_dbmethod(funcname=>'reconciliation__save_set');
 }
 
 =item import_file
@@ -149,7 +150,9 @@ Sets $self->{check} with the name of the test and the number of failures
 
 sub unapproved_checks {
     my $self = shift @_;
-    $self->{check} = { map { $_->{setting_key} => $_->{value} } $self->call_dbmethod(funcname=>'reconciliation__check') };
+    return $self->{check}
+            = { map { $_->{setting_key} => $_->{value} }
+                    $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
 
 =item approve($self,$reportid)
@@ -180,8 +183,11 @@ sub approve {
     # this is destined to change as we figure out the Error system.
     elsif ($code == 99) {
 
-        $self->error("User $self->{user}->{name} cannot approve report, must be a different user.");
+        return $self->error(
+                "User $self->{user}->{name} cannot approve report, "
+                ."must be a different user.");
     }
+    return;
 }
 
 =item new_report
@@ -260,7 +266,7 @@ This rejects a submitted but not approved report.
 
 sub reject {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'reconciliation__reject_set');
+    return $self->call_dbmethod(funcname => 'reconciliation__reject_set');
 }
 
 =item add_entries
@@ -304,6 +310,7 @@ sub add_entries {
         ###TODO-ISSUE-UNDECLARED-ENTRIES
         #$entry->{report_id} = $report_id;
     }
+    return;
 }
 
 =item get
@@ -428,8 +435,9 @@ sub get {
     $self->{format_amount} = sub { return $self->format_amount(@_); };
     if ($self->{account_info}->{category} =~ /(A|E)/){
        $self->{our_total} *= -1;
-       $self->{mismatch_their_total} *= -1;
+       return $self->{mismatch_their_total} *= -1;
     }
+    return;
 }
 
 =item get_accounts

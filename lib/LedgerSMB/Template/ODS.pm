@@ -11,39 +11,6 @@ OpenDocument Spreadsheet output.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.  '.xlst' is the
-extension that was chosen for the templates.
-
-=item preprocess ($vars)
-
-Returns $vars.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for text.
-
-=item postprocess ($parent)
-
-Returns the output filename.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
-
 =cut
 
 package LedgerSMB::Template::ODS;
@@ -51,17 +18,16 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
+use IO::Scalar;
 use Template;
-use Template::Parser;
-use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;  ## no critic
 use XML::Twig;
 use Digest::MD5 qw(md5_hex);
+use File::Temp;
+use HTML::Escape;
 use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
-
-$OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
 my $extension = 'ods';
@@ -141,17 +107,21 @@ sub _worksheet_handler {
     $maxcols = $columns;
     my $sheet;
     if ($_->is_first_child) {
+        # Rename "Sheet1" to whatever we want to be our first sheet
         $sheet = $ods->getTable(0, $rows, $columns);
         $ods->renameTable($sheet, $_->{att}->{name});
         $sheetname = $_->{att}->{name};
     } else {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
+        $sheetname = $_->{att}->{name};
     }
+    return undef;
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
+    return undef;
 }
 
 sub _cell_handler {
@@ -173,6 +143,7 @@ sub _cell_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     $currcol++;
+    return undef;
 }
 
 sub _formula_handler {
@@ -192,7 +163,8 @@ sub _formula_handler {
     if (@style_stack) {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
-    $currcol++;
+    ++$currcol;
+    return undef;
 }
 
 sub _border_set {
@@ -212,22 +184,19 @@ sub _border_set {
     } else {
         $properties->{cell}{"fo:$border"} = "$line_width[$val] #000000";
     }
+
+    my $colour = $format->{att}->{"${edge}_color"};
+    if ($colour =~ /^\d+$/) {
+        $colour = $colour[$colour];
+    } elsif ($colour !~ /^\#......$/) {
+        $colour = $colour_name{$colour};
+    }
     if ($edge and $format->{att}->{"${edge}_color"}) {
-        my $colour = $format->{att}->{"${edge}_color"};
-        if ($colour =~ /^\d+$/) {
-            $colour = $colour[$colour];
-        } elsif ($colour !~ /^\#......$/) {
-            $colour = $colour_name{$colour};
-        }
-        $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+        return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
     } elsif ($format->{att}->{border_color}) {
-        my $colour = $format->{att}->{"${edge}_color"};
-        if ($colour =~ /^\d+$/) {
-            $colour = $colour[$colour];
-        } elsif ($colour !~ /^\#......$/) {
-            $colour = $colour_name{$colour};
-        }
-        $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+        return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
+    }else{
+        return undef;
     }
 }
 
@@ -244,7 +213,7 @@ sub _prepare_float {
     $properties{'number:min-integer-digits'} = length($sides[0] =~ /0+$/);
     $properties{'number:grouping'} = 'true' if $sides[0] =~ /.,...$/;
 
-    \%properties;
+    return \%properties;
 }
 
 sub _prepare_fraction {
@@ -256,7 +225,7 @@ sub _prepare_fraction {
     $properties{'number:min-numerator-digits'} = length($sides[1]);
     $properties{'number:min-denominator-digits'} = length($sides[2]);
 
-    \%properties;
+    return \%properties;
 }
 
 sub _create_positive_style {
@@ -270,7 +239,7 @@ sub _create_positive_style {
             'style:volatile' => 'true',
             },
         );
-    $pstyle->insert_new_elt('last-child',
+    return $pstyle->insert_new_elt('last-child',
         'number:text', {}, ' ');
 }
 
@@ -341,7 +310,7 @@ sub _format_handler {
                 $properties{paragraph}{'style:vertical-align'} = $val;
             }
         } elsif ($attr eq 'hidden') {
-            if ($properties{cell}{'style:cell-protect'} and !$val) {
+            if ($properties{cell}{'style:cell-protect'} and not $val) {
                 delete $properties{cell}{'style:cell-protect'};
             } elsif ($val) {
                 $properties{cell}{'style:cell-protect'} = 'formula-hidden';
@@ -351,13 +320,13 @@ sub _format_handler {
         } elsif ($attr eq 'size') {
             $properties{text}{'fo:font-size'} = "${val}pt";
         } elsif ($attr eq 'bold') {
-            if ($properties{text}{'fo:font-weight'} and !$val) {
+            if ($properties{text}{'fo:font-weight'} and not $val) {
                 delete $properties{text}{'fo:font-weight'};
             } elsif ($val) {
                 $properties{text}{'fo:font-weight'} = 'bold';
             }
         } elsif ($attr eq 'italic') {
-            if ($properties{text}{'fo:font-style'} and !$val) {
+            if ($properties{text}{'fo:font-style'} and not $val) {
                 delete $properties{text}{'fo:font-style'};
             } elsif ($val) {
                 $properties{text}{'fo:font-style'} = 'italic';
@@ -369,19 +338,19 @@ sub _format_handler {
                 $properties{text}{'style:text-line-through-type'} = 'single';
             }
         } elsif ($attr eq 'font_shadow') {
-            if ($properties{text}{'fo:text-shadow'} and !$val) {
+            if ($properties{text}{'fo:text-shadow'} and not $val) {
                 delete $properties{text}{'fo:text-shadow'};
             } elsif ($val) {
                 $properties{text}{'fo:text-shadow'} = '2pt';
             }
         } elsif ($attr eq 'font_outline') {
-            if ($properties{text}{'style:text-outline'} and !$val) {
+            if ($properties{text}{'style:text-outline'} and not $val) {
                 delete $properties{text}{'style:text-outline'};
             } elsif ($val) {
                 $properties{text}{'style:text-outline'} = 'true';
             }
         } elsif ($attr eq 'shrink') {
-            if ($properties{cell}{'style:shrink-to-fit'} and !$val) {
+            if ($properties{cell}{'style:shrink-to-fit'} and not $val) {
                 delete $properties{cell}{'style:shrink-to-fit'};
             } elsif ($val) {
                 $properties{cell}{'style:shrink-to-fit'} = 'true';
@@ -393,7 +362,7 @@ sub _format_handler {
                 $properties{text}{'style:wrap-option'} = 'wrap';
             }
         } elsif ($attr eq 'text_justlast') {
-            if ($properties{paragraph}{'fo:text-align-last'} and !$val) {
+            if ($properties{paragraph}{'fo:text-align-last'} and not $val) {
                 delete $properties{paragraph}{'fo:text-align-last'};
             } elsif ($val) {
                 $properties{paragraph}{'fo:text-align-last'} = 'justify';
@@ -762,23 +731,35 @@ sub _format_handler {
             ) if $properties{paragraph};
         $style_table{$mystyle} = [$style, \%properties];
     }
-    unshift @style_stack, $style_table{$mystyle};
+    return unshift @style_stack, $style_table{$mystyle};
 }
 
 sub _named_format {
     my ($name, $t, $format) = @_;
     $format->{att}{$name} = 1;
-    &_format_handler($t, $format);
+    return &_format_handler($t, $format);
 }
 
 sub _format_cleanup_handler {
     my ($t, $format) = @_;
-    shift @style_stack;
+    return shift @style_stack;
 }
 
 sub _ods_process {
-    my ($filename, $template) = @_;
-    $ods = ooDocument(file => "$filename", create => 'spreadsheet');
+    my ($output, $template) = @_;
+    my $fn;
+    my $fh; # if we need to use a temp file, we need to keep the object
+            # in scope, because when it goes out of scope, the file is removed
+    if (ref $output) {
+        $fh = File::Temp->new( DIR => LedgerSMB::Sysconfig::tempdir());
+        $fn = $fh->filename;
+    }
+    else {
+        $fn = $output;
+    }
+    $ods = ooDocument(file => $fn,
+                      create => 'spreadsheet',
+                      work_dir => LedgerSMB::Sysconfig::tempdir());
 
     my $parser = XML::Twig->new(
         start_tag_handlers => {
@@ -805,62 +786,73 @@ sub _ods_process {
     $parser->parse($template);
     $parser->purge;
     $ods->save;
+
+    if (ref $output) {
+       my $size = (stat($fn))[7];
+       open(my $inp, "<", $fn)
+         or die "Unable to open temporary file for reading ODS output: $!";
+       sysread($inp, $$output, $size)
+         or die "Error: $!";
+       $fh->close
+         or die "Can't clean up ODS generation temporary file: $!";
+    }
+    return undef;
 }
 
-sub get_template {
-    my $name = shift;
-    return "${name}.${extension}t";
-}
+=item escape($string)
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
+Escapes a scalar string and returns the sanitized version.
+
+=cut
 
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    $vars = escapeHTML($vars);
+    $vars = escape_html($vars);
     return $vars;
 }
-sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
-    my $output = '';
 
-    if ($parent->{outputfile}) {
-        if (ref $parent->{outputfile}){
-            $output = $parent->{outputfile};
-        } else {
-            $output = "$parent->{outputfile}.$extension";
-        }
-    } else {
-        $output = \$parent->{output};
-    }
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $template = Template->new($arghash) || die Template->error();
-    unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    'escape' => \&preprocess
-                },
-                \$output,
-                {binmode => ':utf8'})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
-    }
-    &_ods_process("$parent->{outputfile}.$extension", $output);
+=item setup($parent, $cleanvars, $output)
 
-    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+Implements the template's initialization protocol.
+
+=cut
+
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
+
+    my $temp_output;
+    return (\$temp_output, {
+        input_extension => "odst",
+        binmode => ':utf8',
+        _output => $output,
+    });
 }
+
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
 
 sub postprocess {
-    my $parent = shift;
-    $parent->{rendered} = "$parent->{outputfile}.$extension";
-    return $parent->{rendered};
+    my ($parent, $output, $config) = @_;
+
+    &_ods_process($config->{_output}, $$output);
+    $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
+
+    return undef;
 }
+
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
 
 1;

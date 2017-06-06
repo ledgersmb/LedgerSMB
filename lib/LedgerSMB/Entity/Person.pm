@@ -176,7 +176,7 @@ Saves the item and populates db defaults in id and created.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'person__save');
-    $self->entity_id(values %$ref);
+    return $self->entity_id(values %$ref);
 }
 
 =back

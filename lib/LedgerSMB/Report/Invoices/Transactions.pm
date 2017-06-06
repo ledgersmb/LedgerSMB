@@ -329,6 +329,7 @@ sub name {
     my $self = shift;
     return LedgerSMB::Report::text('Search AP') if $self->entity_class == 1;
     return LedgerSMB::Report::text('Search AR') if $self->entity_class == 2;
+    return;
 }
 
 =head1 METHODS
@@ -356,7 +357,7 @@ sub run_report {
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

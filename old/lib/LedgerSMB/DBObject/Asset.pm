@@ -168,6 +168,7 @@ Saves a note.  Uses the following properties:
 sub save_note {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'asset_item__add_note');
+    return $ref;
 }
 
 =item get_metadata
@@ -208,6 +209,7 @@ sub get_metadata {
     for my $acc (@{$self->{exp_accounts}}){
         $acc->{text} = $acc->{accno} . '--' . $acc->{description};
     }
+    return;
 }
 
 =item get_next_tag
@@ -224,7 +226,7 @@ sub get_next_tag {
           funcname => 'setting_increment',
           args     => ['asset_tag']
     );
-    $self->{tag} = $ref->{setting_increment};
+    return $self->{tag} = $ref->{setting_increment};
 }
 
 =item import_asset
@@ -250,10 +252,11 @@ sub get_invoice_id {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'get_vendor_invoice_id');
     if (!$ref) {
-        $self->error($self->{_locale}->text('Invoice not found'));
+        return $self->error($self->{_locale}->text('Invoice not found'));
     } else {
-        $self->{invoice_id} = $ref->{get_vendor_invoice_id};
+        return $self->{invoice_id} = $ref->{get_vendor_invoice_id};
     }
+    return;
 }
 
 

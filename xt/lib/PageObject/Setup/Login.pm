@@ -26,7 +26,7 @@ sub _verify {
     my ($self) = @_;
 
     $self->find('*labeled', text => $_)
-        for ("Password", "Database", "Super-user login");
+        for ("Password", "Database", "DB admin login");
     return $self;
 };
 
@@ -43,7 +43,7 @@ sub login {
             $self->find('*labeled', text => $_->{label});
         $element->send_keys($_->{value});
         $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
-    } for ({ label => "Super-user login",
+    } for ({ label => "DB admin login",
              value => $user,
              list => 1 },
            { label => "Password",

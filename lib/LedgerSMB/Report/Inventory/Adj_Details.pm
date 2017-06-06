@@ -135,7 +135,7 @@ sub run_report {
     for my $row (@rows){
         $row->{row_id} = $row->{parts_id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head2 approve
@@ -149,7 +149,7 @@ sub approve {
     my ($self) = @_;
 
     my $adjust = LedgerSMB::Inventory::Adjust->get( key => { id => $self->id } );
-    $adjust->approve;
+    return $adjust->approve;
 }
 
 =head2 delete
@@ -162,7 +162,7 @@ sub delete {
     my ($self) = @_;
 
     my $adjust = LedgerSMB::Inventory::Adjust->get( key => { id => $self->id } );
-    $adjust->delete;
+    return $adjust->delete;
 }
 
 =head1 SEE ALSO

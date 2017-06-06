@@ -342,7 +342,7 @@ sub run_report {
         }
 
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

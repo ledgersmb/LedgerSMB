@@ -228,6 +228,7 @@ sub add_comparison{
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
         }
     }
+    return;
 }
 
 

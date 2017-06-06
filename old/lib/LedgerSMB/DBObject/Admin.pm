@@ -61,6 +61,7 @@ Deletes a session identified by the session_id hashref.
 sub delete_session {
    my $self = shift @_;
    my @sessions = $self->call_dbmethod(funcname => 'admin__drop_session');
+   return;
 }
 
 =item save_roles
@@ -109,6 +110,7 @@ sub save_roles {
             );
         }
     }
+    return;
 }
 
 =item get_salutations

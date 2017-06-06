@@ -222,7 +222,7 @@ sub render {
     my $self = shift;
     my $request = shift;
 
-    $self->_render($request, renderer => 'render');
+    return $self->_render($request, renderer => 'render');
 }
 
 =item render_to_psgi
@@ -446,6 +446,7 @@ sub process_bclasses {
                  unless grep(/$bu->[1]/, @{$ref->{$bu->[0]}});
      }
     }
+    return;
 }
 
 =back

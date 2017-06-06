@@ -52,7 +52,7 @@ sub _set_file_class {
 sub _set_lazy {
     my ($self) = @_;
     $self->file_class;
-    $self->ref_key;
+    return $self->ref_key;
 }
 
 =head1 METHODS ADDED

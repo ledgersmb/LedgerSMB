@@ -58,7 +58,6 @@ require 'old/bin/bridge.pl'; # needed for voucher dispatches
 require "old/bin/arap.pl";
 
 $form->{login} = 'test';
-1;
 
 # end of main
 
@@ -702,3 +701,5 @@ sub save_as_new {
     $form->{approved} = 0;
     &post;
 }
+
+1;

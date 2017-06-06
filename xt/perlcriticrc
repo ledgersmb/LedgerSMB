@@ -1,10 +1,8 @@
 [Modules::ProhibitEvilModules]
-modules = Carp::Always Data::Dumper Data::Printer
-
-[Modules::ProhibitExcessMainComplexity]
-# Sysconfig.pm needs to be simplified, because it has McCabe = 21
-# but working around that today
-max_mccabe = 22
+modules_file = xt/prohibited_modules
 
 [CodeLayout::ProhibitHardTabs]
 allow_leading_tabs = 0
+
+[ValuesAndExpressions::ProhibitMagicNumbers]
+allowed_values = -1 0 1 2

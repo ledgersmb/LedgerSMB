@@ -1,7 +1,7 @@
 #!perl
 
 BEGIN {
-    use lib 't/lib';
+    use lib 'xt/lib';
     use LedgerSMB;
     use Test::More;
     use LedgerSMB::Template;

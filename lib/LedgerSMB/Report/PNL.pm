@@ -251,7 +251,7 @@ sub run_report {
         }
     }
 
-    $self->rows([]);
+    return $self->rows([]);
 }
 
 =back

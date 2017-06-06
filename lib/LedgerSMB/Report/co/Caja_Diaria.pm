@@ -188,7 +188,7 @@ sub run_report{
         $ref->{document_type} = $doctypes->{$ref->{document_type}}
                 if $doctypes->{$ref->{document_type}};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

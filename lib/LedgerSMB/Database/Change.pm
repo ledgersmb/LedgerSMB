@@ -79,7 +79,7 @@ sub content {
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
         binmode $fh, ':utf8';
         $self->{_content} = join '', <$fh>;
-        close $fh;
+        close $fh or die "Cannot close file " .  $self->path();
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
@@ -167,7 +167,7 @@ Runs against the current dbh without tracking.
 
 sub run {
     my ($self, $dbh) = @_;
-    $dbh->do($self->content); # not raw
+    return $dbh->do($self->content); # not raw
 }
 
 =head2 apply($dbh)
@@ -212,11 +212,12 @@ sub apply {
             VALUES(now(), $path, $sha, ?, ?)
     ")->execute($dbh->state, $dbh->errstr);
     $dbh->commit if $need_commit;
+    return;
 }
 
 sub _need_commit{
     my ($dbh) = @_;
-    1; # todo, detect existing transactions and autocommit status
+    return 1; # todo, detect existing transactions and autocommit status
 }
 =head1 Package Functions
 

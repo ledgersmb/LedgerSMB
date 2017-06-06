@@ -172,7 +172,7 @@ sub date {
     if ( defined $longformat ) {
         $longdate = $self->maketext( $longmonth[ --$mm ] ) . " $dd $yy";
     }
-    $longdate;
+    return $longdate;
 }
 
 1;
