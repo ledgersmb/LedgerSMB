@@ -3,8 +3,6 @@
 
 requires 'perl', '5.14.0';
 
-requires 'App::LedgerSMB::Admin', '0.05';
-requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
@@ -15,6 +13,8 @@ requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::Status';
+requires 'IO::Scalar';
 requires 'JSON';
 recommends 'JSON::XS';
 requires 'List::MoreUtils';
@@ -28,12 +28,12 @@ requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '1.403.2';
-requires 'PGObject::Simple', '2.0.0';
-requires 'PGObject::Simple::Role', '1.13.2';
-requires 'PGObject::Type::BigFloat';
-requires 'PGObject::Type::DateTime', '1.0.4';
-requires 'PGObject::Type::ByteString', '1.1.1';
+requires 'PGObject', '>=1.403002, < 2';
+requires 'PGObject::Simple', '>= 2.000000, < 3';
+requires 'PGObject::Simple::Role', '>= 1.013002, < 2';
+requires 'PGObject::Type::BigFloat', '< 2';
+requires 'PGObject::Type::DateTime', '>= 1.000005, < 2';
+requires 'PGObject::Type::ByteString', '>= 1.001002, < 1.002000';
 requires 'PGObject::Util::DBMethod';
 requires 'PGObject::Util::DBAdmin', '0.09';
 requires 'Plack::App::File';
@@ -71,7 +71,7 @@ feature 'edi', "X12 EDI support" =>
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Latex', '3.08';
+        requires 'Template::Plugin::Latex', '3.08';
         requires 'TeX::Encode';
 };
 
