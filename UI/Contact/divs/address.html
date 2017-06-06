@@ -52,7 +52,7 @@
         LOC.delete= '[' _ text('Delete') _ ']';
         base_suffix = "$request.script?entity_id=$entity_id&location_id=$LOC.id" _
                "&credit_id=$credit_act.id&is_for_credit=$LOC.is_for_credit&target_div=address_div" _
-               "location_class=$LOC.location_class";
+               "&location_class=$LOC.location_class";
         LOC.edit_href_suffix= base_suffix _ '&action=edit';
         LOC.delete_href_suffix= base_suffix _ '&action=delete_location';
         IF LOC.id == request.location_id && request.action == 'edit';
