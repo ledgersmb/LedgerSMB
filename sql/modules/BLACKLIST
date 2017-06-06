@@ -171,6 +171,7 @@ lsmb_module__get
 lsmb_module__list
 menu_children
 menu_generate
+menu_item
 mfg_lot__commit
 next_leap_year_calc
 order__combine
