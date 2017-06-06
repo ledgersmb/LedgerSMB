@@ -58,8 +58,6 @@ if ( -f "old/bin/custom/$form->{login}_io.pl" ) {
     eval { require "old/bin/custom/$form->{login}_io.pl"; };
 }
 
-1;
-
 # end of main
 
 # this is for our long dates
@@ -1454,9 +1452,9 @@ sub print_form {
         $output_options{bcc} = $form->{bcc};
         $output_options{from} = $myconfig{email};
         $output_options{notify} = 1 if $form->{read_receipt};
-    $output_options{message} = $form->{message};
-    $output_options{filename} = $form->{formname} . '_'. $form->{"${inv}number"};
-    $output_options{filename} .= '.'. $form->{format}; # assuming pdf or html
+        $output_options{message} = $form->{message};
+        $output_options{filename} = $form->{formname} . '-'. $form->{"${inv}number"};
+        $output_options{filename} .= '.'. $form->{format}; # assuming pdf or html
 
         if ( %$old_form ) {
             $old_form->{intnotes} = qq|$old_form->{intnotes}\n\n|
@@ -1480,7 +1478,10 @@ sub print_form {
 
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }
-
+    } elsif ( $form->{media} eq 'screen' ) {
+        $output_options{filename} =
+            $form->{formname} . '-'. $form->{"${inv}number"} .
+            '.'. $form->{format}; # assuming pdf or htm
     } elsif ( $form->{media} eq 'queue' ) {
         %queued = split / /, $form->{queued};
 
@@ -1516,11 +1517,12 @@ sub print_form {
         user => \%myconfig,
         locale => $locale,
         template => $form->{'formname'},
+        path => 'DB',
         language => $form->{language_code},
         format => uc $form->{format},
         method => $form->{media},
         output_options => \%output_options,
-    output_file => $form->{formname} . "-" . $form->{"${inv}number"},
+        filename => $form->{formname} . "-" . $form->{"${inv}number"},
         );
     $template->render($form);
 
@@ -1971,3 +1973,5 @@ sub setlocation_id
 
 
 }
+
+1;

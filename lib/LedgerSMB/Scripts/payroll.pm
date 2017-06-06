@@ -110,7 +110,7 @@ Displays income type search results
 sub income_type_results {
     my ($request) = @_;
     use LedgerSMB::Report::Payroll::Income_Types;
-    LedgerSMB::Report::Payroll::Income_Types->new(%$request)->render($request);
+    return LedgerSMB::Report::Payroll::Income_Types->new(%$request)->render($request);
 }
 
 =back

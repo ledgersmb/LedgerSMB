@@ -33,6 +33,8 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 $LedgerSMB::VERSION =~ /(\d+\.\d+)./;
@@ -58,14 +60,14 @@ sub __default {
         template => 'credentials',
           format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 sub _get_database {
     my ($request) = @_;
     my $creds = $request->{_auth}->get_credentials('setup');
 
-    return [ 401,
+    return [ HTTP_UNAUTHORIZED,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
                'Content-Type' => 'text/text; charset=UTF-8' ],
              [ 'Please enter your credentials' ] ]
@@ -73,7 +75,7 @@ sub _get_database {
 
     # Ideally this regex should be configurable per instance, and possibly per admin user
     # for now we simply use a fixed regex. It will cover many if not most use cases.
-    return [ 454,
+    return [ HTTP_454,
              [ 'WWW-Authenticate' => 'Basic realm="LedgerSMB"',
                'Content-Type' => 'text/html; charset=UTF-8' ],
              [ "<html><body><h1 align='center'>Access to the ($request->{database}) database is Forbidden!</h1></br><h4 align='center'><a href='/setup.pl?database=$request->{database}'>return to setup</a></h4></body></html>" ] ]
@@ -248,7 +250,7 @@ sub login {
         template => 'confirm_operation',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item sanity_checks
@@ -261,6 +263,7 @@ sub sanity_checks {
     `psql --help` || die LedgerSMB::App_State::Locale->text(
                                  'psql not found.'
                               );
+    return;
 }
 
 =item list_databases
@@ -307,7 +310,7 @@ sub list_users {
         template => 'list_users',
         format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 }
 
 =item copy_db
@@ -331,7 +334,7 @@ sub copy_db {
     )->execute("lsmb_$database->{company_name}__");
     $dbh->commit;
     $dbh->disconnect;
-    complete($request);
+    return complete($request);
 }
 
 
@@ -344,7 +347,7 @@ Backs up a full db
 sub backup_db {
     my $request = shift @_;
     $request->{backup} = 'db';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 =item backup_roles
@@ -356,7 +359,7 @@ Backs up roles only (for all db's)
 sub backup_roles {
     my $request = shift @_;
     $request->{backup} = 'roles';
-    _begin_backup($request);
+    return _begin_backup($request);
 }
 
 # Private method, basically just passes the inputs on to the next screen.
@@ -367,7 +370,7 @@ sub _begin_backup {
             template => 'begin_backup',
             format => 'HTML',
     );
-    $template->render_to_psgi($request);
+    return $template->render_to_psgi($request);
 };
 
 
@@ -387,19 +390,20 @@ sub run_backup {
     my $backupfile;
     my $mimetype;
 
-    if ($request->{backup} eq 'roles'){
-       my @t = localtime(time);
-       $t[4]++;
-       $t[5] += 1900;
-       $t[3] = substr( "0$t[3]", -2 );
-       $t[4] = substr( "0$t[4]", -2 );
-       my $date = "$t[5]-$t[4]-$t[3]";
+    if ($request->{backup} eq 'roles') {
+        my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)
+         = my @t = localtime(time);
+        $mon++;
+        $year += PERL_TIME_EPOCH;
+        $mday = sprintf "%02d", $mday;
+        $mon = sprintf "%02d", $mon;
+        my $date = "$year-$mon-$mday";
 
-       $backupfile = $database->backup_globals(
-                      tempdir => $LedgerSMB::Sysconfig::backupdir,
-                         file => "roles_${date}.sql"
-       );
-       $mimetype   = 'text/x-sql';
+        $backupfile = $database->backup_globals(
+            tempdir => $LedgerSMB::Sysconfig::backupdir,
+            file => "roles_${date}.sql"
+        );
+        $mimetype = 'text/x-sql';
     }
     elsif ($request->{backup} eq 'db') {
        $backupfile = $database->backup;
@@ -445,7 +449,7 @@ sub run_backup {
 
         my $attachment_name = 'ledgersmb-backup-' . time . '.sqlc';
         return [
-            200,
+            HTTP_OK,
             [
                 'Content-Type' => $mimetype,
                    'Content-Disposition' =>
@@ -767,7 +771,7 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
-    $template->render_to_psgi({
+    return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $header,
@@ -997,7 +1001,7 @@ Saves the administrative user, and then directs to the login page.
 sub save_user {
     my ($request) = @_;
     $request->requires(qw(first_name last_name ssn employeenumber));
-    $request->{entity_class} = 3;
+    $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     use LedgerSMB::Entity::Person::Employee;
     use LedgerSMB::Entity::User;
@@ -1136,7 +1140,7 @@ sub process_and_run_upgrade_script {
                 from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
-    $dbh->disconnect;
+    return $dbh->disconnect;
 }
 
 

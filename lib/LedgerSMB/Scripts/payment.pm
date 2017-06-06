@@ -50,6 +50,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
@@ -174,7 +175,7 @@ sub pre_bulk_post_report {
                     LedgerSMB::PGNumber->from_input($request->{"payment_$inv_id"});
              }
              # If vendor, this is debit-normal so multiply by -1
-             if ($request->{account_class} == 1){ # vendor
+             if ($request->{account_class} == EC_VENDOR ){ # vendor
                  $ref->{amount} *= -1;
               }
               if ($ref->{amount} < 0) {
@@ -199,7 +200,7 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
-       $ref->{amount} *= -1;
+    $ref->{amount} *= -1;
 
     if ($ref->{amount} < 0) {
         $ref->{debits} = $ref->{amount} * -1;
@@ -436,7 +437,7 @@ sub print {
     } else {
 
     }
-
+    return;
 }
 
 =item update_payments
@@ -1219,7 +1220,7 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
      push @op_memo, $request->{"overpayment_memo_$i"};
-     if (!$id and $id ne "0"){
+     if (not $id and $id ne "0"){
          $request->error($request->{_locale}->text('No overpayment account selected.  Was one set up?'));
      }
      push @op_account_id, $id;

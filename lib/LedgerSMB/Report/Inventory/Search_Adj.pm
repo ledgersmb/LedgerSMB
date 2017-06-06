@@ -126,7 +126,7 @@ sub run_report {
         $row->{ap_invnumber_suffix} = $row->{ap_invoice_id};
         $row->{row_id} = $row->{id};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

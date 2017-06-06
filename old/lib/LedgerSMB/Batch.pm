@@ -31,7 +31,7 @@ sub get_new_info {
     my $self = shift @_;
     my $cc_object = LedgerSMB::Setting->new({base => $self});
     $cc_object->{key} = 'batch_cc';
-    $self->{batch_number} = $cc_object->increment;
+    return $self->{batch_number} = $cc_object->increment;
 }
 
 =item create
@@ -55,7 +55,7 @@ Deletes the voucher specified by $id.
 
 sub delete_voucher {
     my ($self, $voucher_id) = @_;
-    $self->call_procedure(funcname => 'voucher__delete', args => [$voucher_id]);
+    return $self->call_procedure(funcname => 'voucher__delete', args => [$voucher_id]);
 }
 
 =item unlock($id)
@@ -66,7 +66,7 @@ Unlocks a given batch
 
 sub unlock{
     my ($self, $id) = @_;
-    $self->call_procedure(funcname => 'batch__unlock', args => [$id]);
+    return $self->call_procedure(funcname => 'batch__unlock', args => [$id]);
 }
 
 =item get_search_criteria
@@ -99,7 +99,8 @@ sub get_search_criteria {
     @{$self->{batch_users}} = $self->call_dbmethod(
          funcname => 'batch_get_users'
     );
-    unshift @{$self->{batch_users}}, {username => $self->{_locale}->text('Any'), id => '0', entity_id => '0'};
+    return unshift @{$self->{batch_users}}
+            , {username => $self->{_locale}->text('Any'), id => '0', entity_id => '0'};
 }
 
 =item get_search_method (private)
@@ -224,7 +225,7 @@ Gets the batch and merges information with the current batch object.
 sub get {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
-    $self->merge($ref);
+    return $self->merge($ref);
 }
 
 1;

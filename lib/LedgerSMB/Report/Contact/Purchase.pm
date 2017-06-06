@@ -299,7 +299,7 @@ sub run_report {
             $r->{invnumber_href_suffix} = "$href?action=edit&id=$r->{id}";
        }
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

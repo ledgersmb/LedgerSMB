@@ -40,8 +40,6 @@ use LedgerSMB::GL;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 
-1;
-
 # end of main
 
 sub add    { &{"add_$form->{type}"} }
@@ -1155,6 +1153,11 @@ sub process_transactions {
                     for (qw(invnumber reference)) {
                         $form->{$_} = $form->unquote( $form->{$_} );
                     }
+                    # Make sure the transaction isn't posted as a draft
+                    $form->{approved} = 1;
+                    # Make sure the posting procedure doesn't override
+                    # the 'approved' status
+                    $form->{separate_duties} = 0;
 
                     if ( $pt->{invoice} ) {
                         if ( $pt->{arid} ) {
@@ -1504,3 +1507,4 @@ sub search_taxform {
 
 sub continue { &{ $form->{nextsub} } }
 
+1;

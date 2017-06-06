@@ -16,37 +16,6 @@ valid filetype specifiers are 'pdf' and 'ps'.
 
 =over
 
-=item get_template ($name)
-
-Returns the appropriate template filename for this format.
-
-=item preprocess ($vars)
-
-Currently does nothing.
-
-=item process ($parent, $cleanvars)
-
-Processes the template for the appropriate output format.
-
-=item postprocess ($parent)
-
-Currently does nothing.
-
-=item escape($string)
-
-Escapes a scalar string and returns the sanitized version.
-
-=back
-
-=head1 Copyright (C) 2007, The LedgerSMB core team.
-
-This work contains copyrighted information from a number of sources all used
-with permission.
-
-It is released under the GNU General Public License Version 2 or, at your
-option, any later version.  See COPYRIGHT file for details.  For a full list
-including contact information of contributors, maintainers, and copyright
-holders, see the CONTRIBUTORS file.
 =cut
 
 package LedgerSMB::Template::LaTeX;
@@ -54,16 +23,16 @@ package LedgerSMB::Template::LaTeX;
 use warnings;
 use strict;
 
-use Template::Latex;
-use Template::Parser;
-use LedgerSMB::Template::TTI18N;
+use Template::Plugin::Latex;
 use Log::Log4perl;
 use TeX::Encode::charmap;
 use TeX::Encode;
 
 BEGIN {
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
-    delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00e5)};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN CAPITAL LETTER A WITH RING ABOVE}"};
+    delete $TeX::Encode::charmap::ACCENTED_CHARS{
+        "\N{LATIN SMALL LETTER A WITH RING ABOVE}"};
     %TeX::Encode::charmap::CHAR_MAP = (
         %TeX::Encode::charmap::CHARS,
         %TeX::Encode::charmap::ACCENTED_CHARS,
@@ -84,17 +53,12 @@ my $extension = 'tex';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template::LaTeX');
 
-sub get_template {
-    my $name = shift;
-    return "${name}.$extension";
-}
+=item escape($string)
 
-sub preprocess {
-    my $rawvars = shift;
-    return LedgerSMB::Template::_preprocess($rawvars, \&escape);
-}
+Escapes a scalar string and returns the sanitized version.
 
-# Breaking this off to be used separately.
+=cut
+
 sub escape {
     my ($vars) = shift @_;
     return '' unless defined $vars;
@@ -119,49 +83,76 @@ sub escape {
     return $vars;
 }
 
-sub process {
-    my $parent = shift;
-    my $cleanvars = shift;
+=item setup($parent, $cleanvars, $output)
 
-    $parent->{outputfile} ||=
-        "${LedgerSMB::Sysconfig::tempdir}/$parent->{template}-output-$$";
+Implements the template's initialization protocol.
 
-    my $format = 'ps';
-    if ($parent->{format_args}{filetype} eq 'pdf') {
-        $format = 'pdf';
-    }
-    my $arghash = $parent->get_template_args($extension,$binmode);
-    my $output = "$parent->{outputfile}";
-    $output =~ s/$extension/$format/;
-    $arghash->{LATEX_FORMAT} = $format;
+=cut
+
+sub setup {
+    my ($parent, $cleanvars, $output) = @_;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
-    my $template = Template::Latex->new($arghash) || die Template::Latex->error();
-    unless ($template->process(
-                $parent->get_template_source(\&get_template),
-                {
-                    %$cleanvars,
-                    %$LedgerSMB::Template::TTI18N::ttfuncs,
-                    FORMAT => $format,
-                    'escape' => \&preprocess
-                },
-                $output,
-                {binmode => 1})
-    ){
-        my $err = $template->error();
-        die "Template error: $err" if $err;
+    my $format = 'ps';
+    if ($parent->{format_options}{filetype} eq 'pdf') {
+        $format = 'pdf';
     }
-    if (lc $format eq 'pdf') {
+    # The templates use the FORMAT variable to indicate to the LaTeX
+    # filter which output type is desired.
+    $cleanvars->{FORMAT} = $format;
+
+    return ($output, {
+        binmode => ':raw',
+        input_extension => $extension,
+        _format => $format,
+    });
+}
+
+=item initialize_template($parent, $config, $template)
+
+Implements the template's engine instance initialization protocol.
+
+Note that this particular module uses this event to register the
+Latex plugin.
+
+=cut
+
+sub initialize_template {
+    my ($parent, $config, $template) = @_;
+
+    my %options = ( FORMAT => $config->{_format} );
+    Template::Plugin::Latex->new($template->context, \%options);
+
+    return undef;
+}
+
+=item postprocess($parent, $output, $config)
+
+Implements the template's post-processing protocol.
+
+=cut
+
+sub postprocess {
+    my ($parent, $output, $config) = @_;
+
+    if (lc $config->{_format} eq 'pdf') {
         $parent->{mimetype} = 'application/pdf';
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    $parent->{rendered} = "$parent->{outputfile}.$format";
+    return undef;
 }
 
-sub postprocess {
-    my $parent = shift;
-    return $parent->{rendered};
-}
+=back
+
+=head1 Copyright (C) 2007-2017, The LedgerSMB core team.
+
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
+holders, see the CONTRIBUTORS file.
+
+=cut
+
 
 1;

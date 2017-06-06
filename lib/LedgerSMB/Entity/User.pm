@@ -110,6 +110,7 @@ sub reset_password {
     my ($ref) = $self->call_dbmethod(
         funcname => 'admin__save_user',
         args => { password => $password });
+   return;
 }
 
 =item create
@@ -129,6 +130,7 @@ sub create {
             funcname => 'admin__add_user_to_role',
             args => [ $self->username, $role ]);
     }
+    return;
 }
 
 =item save_roles($role_list)
@@ -155,7 +157,7 @@ sub save_roles {
                                   args => [$self->{username}, $rol_name]);
         }
     }
-    $self->role_list($role_list);
+    return $self->role_list($role_list);
 }
 
 =item list_roles

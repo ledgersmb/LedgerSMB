@@ -83,7 +83,7 @@ sub run_report {
     for my $row (@rows){
         $row->{row_id} = $row->{accno};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

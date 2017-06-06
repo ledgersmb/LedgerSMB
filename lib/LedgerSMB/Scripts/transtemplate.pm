@@ -37,7 +37,7 @@ sub _run_update {
     convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
     $lsmb_legacy::form->{title} = 'Add';
 
-    lsmb_legacy::update();
+    return lsmb_legacy::update();
 }
 
 sub view {
@@ -106,7 +106,7 @@ sub convert_to_form{
             $form->{"amount_$form->{rowcount}"} = $row->{amount};
         }
     }
-    delete $form->{id};
+    return delete $form->{id};
 }
 
 =item list

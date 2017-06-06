@@ -17,7 +17,7 @@ env:
 
 matrix:
   include:
-    - perl: '5.24'
+    - perl: '5.26'
       addons:
         postgresql: '9.6'
         sauce_connect: true
@@ -25,7 +25,7 @@ matrix:
           packages:
             - nginx postgresql-9.6-pgtap
       env:
-        - TEST_SAUCE=1
+        - POD_TESTING=1
     - perl: '5.24'
       addons:
         postgresql: '9.5'
@@ -60,7 +60,6 @@ matrix:
             - nginx postgresql-9.3-pgtap
       env:
         - DB_TESTING=1
-        - POD_TESTING=1
     - perl: '5.16'
       addons:
         postgresql: "9.2"
@@ -150,13 +149,10 @@ script:
      LSMB_TEST_DB=1 LSMB_NEW_DB=lsmbinstalltest
      LSMB_BASE_URL="http://127.0.0.1:5000"
      HARNESS_RULESFILE="t/testrules.yml"
-    prove -j9 -r --source Perl
-          --ext=.t --ext=.pg --ext=.feature
-          --source pgTAP   --pgtap-option dbname=lsmbinstalltest
-                           --pgtap-option username=postgres
-                           --pgtap-option suffix=.pg
-          --source Feature --feature-option extensions=.feature
-                           --feature-option tags=~@wip
+    prove -j9 -r
+          --pgtap-option dbname=lsmbinstalltest
+          --pgtap-option username=postgres
+          --feature-option tags=~@wip
           t/ xt/
 
 after_success:

@@ -63,7 +63,8 @@ sub _inventory_template_setup {
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @{$request->{AR_accounts}}, $row;
     }
-};
+    return;
+}
 
 
 our $template_setup = {
@@ -160,7 +161,7 @@ sub _aa_multi {
         AA->post_transaction($request->{_user}, $form);
     }
     return 1;
-};
+}
 
 sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
@@ -244,14 +245,14 @@ sub _inventory_single_date {
         if ! $ap_form->{id};
 
     # Now, update the report record.
-    $dbh->do( # These two params come from posting above, and from
+    return ($dbh->do( # These two params come from posting above, and from
               # the db.
               "UPDATE inventory_report
                        SET ar_trans_id = $ar_form->{id},
                            ap_trans_id = $ap_form->{id}
                      WHERE id = $report_id"
-        ) or $ap_form->dberror();
-};
+        ) or $ap_form->dberror());
+}
 
 sub _process_ar_multi {
     my  ($request, $entries) = @_;
@@ -288,13 +289,13 @@ sub _process_gl {
                 $request->{_user}, $ref->[2]
                 );
         }
-        next if !$ref->[1] and !$ref->[2];
+        next if not $ref->[1] and not $ref->[2];
         for my $col (@{$cols->{$request->{type}}}){
             $form->{"${col}_$form->{rowcount}"} = shift @$ref;
         }
         ++$form->{rowcount};
     }
-    GL->post_transaction($request->{_user}, $form,
+    return GL->post_transaction($request->{_user}, $form,
                          $request->{_locale});
 }
 
@@ -328,6 +329,7 @@ sub _process_chart {
         $account->merge($settings);
         $account->save();
     }
+    return;
 }
 
 sub _process_gifi {
@@ -340,6 +342,7 @@ sub _process_gifi {
     foreach my $entry (@$entries) {
         $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
     }
+    return;
 }
 
 sub _process_sic {
@@ -352,6 +355,7 @@ sub _process_sic {
         $sth->execute($entry->[0], $entry->[1], $entry->[2])
             || die $sth->errstr();
     }
+    return;
 }
 
 sub _process_timecard {
@@ -376,6 +380,7 @@ sub _process_timecard {
         $jc->{checkedout} = $jc->{transdate} if !$jc->{checkedout};
         LedgerSMB::Timecard->new(%$jc)->save;
     }
+    return;
 }
 
 sub _process_inventory {
@@ -395,9 +400,9 @@ sub _process_inventory {
 
     @$entries =
         map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
-    &_inventory_single_date($request, $entries,
-                            $report_id, $request->{transdate});
 
+    return _inventory_single_date($request, $entries,
+                            $report_id, $request->{transdate});
 }
 
 sub _process_inventory_multi {
@@ -428,6 +433,7 @@ sub _process_inventory_multi {
         &_inventory_single_date($request, $dated_entries{$key},
                                 $report_id, $key);
     }
+    return;
 }
 
 our $process = {

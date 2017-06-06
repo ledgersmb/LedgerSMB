@@ -222,7 +222,7 @@ Runs the report and sets $self->rows
 sub run_report{
     my ($self) = @_;
     die LedgerSMB::Report::text('Must have cash account in batch')
-        if $self->batch_id and !defined $self->cash_accno;
+        if $self->batch_id and not defined $self->cash_accno;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->call_dbmethod(funcname => 'payment__search');
     my $count = 1;
@@ -239,6 +239,7 @@ sub run_report{
        class => 'submit',
        value => 'reverse_payments',
     }]) if $self->batch_id;
+    return;
 }
 
 =back

@@ -376,7 +376,7 @@ sub save_sequences {
            )->save;
         }
     }
-    sequence_screen($request);
+    return sequence_screen($request);
 }
 
 =back

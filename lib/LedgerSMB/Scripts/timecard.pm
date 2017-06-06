@@ -22,6 +22,7 @@ use LedgerSMB::Report::Timecards;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::Setting;
 use DateTime;
 use strict;
@@ -72,9 +73,9 @@ sub display {
     $request->{non_billable} ||= 0;
     if ($request->{in_hour} and $request->{in_min}) {
         my $request->{min_used} =
-            ($request->{in_hour} * 60) + $request->{in_min} -
-            ($request->{out_hour} * 60) - $request->{out_min};
-        $request->{qty} = $request->{min_used}/60 - $request->{non_billable};
+            ($request->{in_hour} * MIN_PER_HOUR) + $request->{in_min} -
+            ($request->{out_hour} * MIN_PER_HOUR) - $request->{out_min};
+        $request->{qty} = $request->{min_used}/MIN_PER_HOUR - $request->{non_billable};
     } else { # Default to current date and time
         my $now = DateTime->now;
         $request->{in_hour} = $now->hour unless defined $request->{in_hour};
@@ -115,7 +116,7 @@ sub timecard_screen {
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
 
          my @dates = ();
-         for (0 .. 6){
+         for (SUNDAY .. SATURDAY){
             push @dates, LedgerSMB::PGDate->from_db(
                     $startdate->add(days => 1)->strftime('%Y-%m-%d'),
                     'date'
@@ -163,7 +164,7 @@ sub _get_qty {
     my ($checkedin, $checkedout) = @_;
     my $when_in = LedgerSMB::PGDate->from_input($checkedin);
     my $when_out = LedgerSMB::PGDate->from_input($checkedout);
-    return ($when_in->epoch - $when_out->epoch) / 3600;
+    return ($when_in->epoch - $when_out->epoch) / SEC_PER_HOUR;
 }
 
 =item save_week
@@ -175,7 +176,7 @@ Saves a week of timecards.
 sub save_week {
     my $request = shift @_;
     for my $row(1 .. $request->{rowcount}){
-        for my $dow (0 .. 6){
+        for my $dow (SUNDAY  .. SATURDAY){
             my $date = $request->{"transdate_$dow"};
             my $hash = { transdate => LedgerSMB::PGDate->from_input($date),
                          checkedin => LedgerSMB::PGDate->from_input($date), };
@@ -251,6 +252,7 @@ This routine generates an order based on timecards
 sub generate_order {
     my ($request) = @_;
     # TODO after beta 1
+    return;
 }
 
 =item get

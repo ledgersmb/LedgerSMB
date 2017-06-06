@@ -170,6 +170,7 @@ children and no transactions attached.
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit__delete');
+    return;
 }
 
 =item search

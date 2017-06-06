@@ -60,7 +60,8 @@ sub __validate__ {
   };
   # We should try to re-engineer this so that we don't have to include SQL in
   # this file.  --CT
-  ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
+  return ($self->{current_date})
+            = $self->{dbh}->selectrow_array('select current_date');
 }
 
 =over
@@ -131,8 +132,9 @@ sub get_metadata {
     }
     if ($self->{batch_id} && !defined $self->{batch_date}){
         my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
-        $self->{batch_date} = $ref->{default_date};
+        return $self->{batch_date} = $ref->{default_date};
     }
+    return;
 }
 
 =over
@@ -246,7 +248,7 @@ $payment->{account_class}).  This reverses the entries with that source.
 
 sub reverse {
     my ($self) = @_;
-    $self->call_dbmethod(funcname => 'payment__reverse');
+    return $self->call_dbmethod(funcname => 'payment__reverse');
 }
 
 =over
@@ -577,7 +579,7 @@ sub get_payment_detail_data {
             $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);
         }
     }
-
+    return;
 }
 
 =item post_bulk
@@ -692,7 +694,7 @@ sub post_bulk {
             $self->call_dbmethod(funcname => 'payment_bulk_post');
         }
     }
-    $self->{queue_payments} = $queue_payments;
+    return $self->{queue_payments} = $queue_payments;
 }
 
 =item check_job
@@ -703,7 +705,7 @@ To be moved into payment_queue addon.
 
 sub check_job {
     my ($self) = @_;
-    ($self->{job}) = $self->call_dbmethod(funcname => 'job__status');
+    return ($self->{job}) = $self->call_dbmethod(funcname => 'job__status');
 }
 
 =item post_payment
@@ -743,6 +745,7 @@ my ($self) = @_;
 for my $row(@{$self->{line_info}}){
     $row->{invoice_date} = $row->{trans_date};
 }
+return;
 }
 
 =item get_open_overpayment_entities
@@ -788,7 +791,8 @@ return @{$self->{available_overpayment_amount}};
 
 sub overpayment_reverse {
     my ($self, $args) = @_;
-    __PACKAGE__->call_procedure(funcname => 'overpayment__reverse',
+    return __PACKAGE__->call_procedure(
+                                 funcname => 'overpayment__reverse',
                                      args => [$args->{id},
                                               $args->{post_date},
                                               $args->{batch_id},

@@ -3,8 +3,6 @@
 
 requires 'perl', '5.14.0';
 
-requires 'App::LedgerSMB::Admin', '0.05';
-requires 'App::LedgerSMB::Admin::Database';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
@@ -15,18 +13,22 @@ requires 'DateTime::Format::Strptime';
 requires 'File::MimeInfo';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::Status';
+requires 'IO::Scalar';
 requires 'JSON';
+recommends 'JSON::XS';
 requires 'List::MoreUtils';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Log::Log4perl';
 requires 'LWP::Simple';
 requires 'MIME::Lite';
+requires 'Module::Runtime';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
-requires 'PGObject', '1.403.2';
+requires 'PGObject', '>=1.403002, < 2';
 requires 'PGObject::Simple', '2.0.0';
 requires 'PGObject::Simple::Role', '1.13.2';
 requires 'PGObject::Type::BigFloat';
@@ -65,13 +67,12 @@ feature 'edi', "X12 EDI support" =>
     sub {
         requires 'X12::Parser';
         requires 'Path::Class';
-        requires 'Module::Runtime';
 };
 
 feature 'latex-pdf-ps', "PDF and PostScript output" =>
     sub {
         requires 'LaTeX::Driver', '0.300.2';
-        requires 'Template::Latex', '3.08';
+        requires 'Template::Plugin::Latex', '3.08';
         requires 'TeX::Encode';
 };
 

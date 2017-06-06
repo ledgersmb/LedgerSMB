@@ -12,6 +12,8 @@ use Config::IniFiles;
 use DBI qw(:sql_types);
 use English qw(-no_match_vars);
 
+
+
 =head2 die_pretty $line_1, $line_2, $line_N;
 
 each $line_* is a string that will be output on a separate line:
@@ -138,6 +140,7 @@ sub def {
             return $cv;
         };
     }
+    return;
 }
 
 
@@ -162,7 +165,7 @@ def 'force_username_case',
 
 def 'max_post_size',
     section => 'main',
-    default => 1024 * 1024,
+    default => 4194304, ## no critic ( ProhibitMagicNumbers)
     doc => qq||;
 
 def 'cookie_name',
@@ -518,6 +521,7 @@ sub check_permissions {
                     "Does UID $EUID have execute permission?"
         );
     }
+    return;
 }
 
 # if you have latex installed set to 1
@@ -541,6 +545,8 @@ sub override_defaults {
         if $LedgerSMB::Sysconfig::template_xlsx ne 'disabled';
     $LedgerSMB::Sysconfig::template_ods   = eval {require LedgerSMB::Template::ODS; 1}
         if $LedgerSMB::Sysconfig::template_ods ne 'disabled';
+
+    return;
 }
 
 override_defaults;

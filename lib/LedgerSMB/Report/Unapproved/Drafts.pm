@@ -234,7 +234,7 @@ sub run_report{
         $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
         $ref->{id_href_suffix} = $ref->{reference_href_suffix};
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =back

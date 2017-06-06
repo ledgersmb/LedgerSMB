@@ -11,6 +11,11 @@ use LedgerSMB::Database;
 use LedgerSMB::Template::DBProvider;
 use Test::More;
 
+use Log::Log4perl;
+use Log::Log4perl::Level ();
+
+Log::Log4perl->easy_init( Log::Log4perl::Level::to_priority( 'OFF' ) );
+
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB LSMB_TEST_DB));
 plan skip_all => (join ', ', @missing) . ' not set' if @missing;
 

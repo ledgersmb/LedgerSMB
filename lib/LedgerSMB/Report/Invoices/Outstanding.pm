@@ -338,7 +338,7 @@ sub run_report {
                          . "&entity_id=$r->{entity_id}&".
                          "meta_number=$r->{meta_number}";
     }
-    $self->rows(\@rows);
+    return $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT
