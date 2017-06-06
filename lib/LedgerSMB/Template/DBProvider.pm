@@ -82,7 +82,7 @@ sub _retrieve_template_data {
 
     my $rv;
     foreach my $lang (@langs) {
-        $logger->info("Retrieving template for ($name, $lang, "
+        $logger->info("Retrieving template for ($name, " . ( $lang // "-undef-" ) . ", "
                       . $self->format . ")");
         $rv = $self->call_procedure(
             funcname => 'template__get',
