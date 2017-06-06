@@ -32,6 +32,14 @@ Nick P is Nick Prater
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.8
+* Fix printing of AR/AP transactions results in JavaScript error (Erik H)
+* Fix ODS output appearing on 'Title page' instead of 'Search results' (Erik H)
+* Fix Edit Vendor address misses 'Save' button (Erik H, #2709)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.7
 * Fix missing trailing zeros in cheque printing (Erik H, #2565)
 * Change comparison periods selector to a number spinner (Erik H)
