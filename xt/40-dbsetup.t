@@ -1,6 +1,7 @@
 # Database setup tests.
 
 use Test::More;
+use PGObject 'ledgersmb';
 use LedgerSMB::Database;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;

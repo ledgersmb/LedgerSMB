@@ -8,15 +8,15 @@ LedgerSMB::PGNumber - Number handling and serialization to database
 package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
-use base qw(PGObject::Type::BigFloat);
+use PGObject 'ledgersmb';
+use parent qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('float4', 'float8', 'double precision', 'float', 'numeric');
+__PACKAGE__->register(registry => 'ledgersmb',
+    types => [qw(float4 float8 float numeric), 'double precision']);
 
 
 =head1 SYNPOSIS

@@ -9,14 +9,12 @@ use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use LedgerSMB::Magic qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
 use Carp;
-use PGObject;
-use base qw(PGObject::Type::DateTime);
+use PGObject 'ledgersmb';
+use parent qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('date');
+__PACKAGE__->register(registry => 'ledgersmb', types => ['date']);
 
 
 =head1 SYNPOSIS

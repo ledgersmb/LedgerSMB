@@ -9,6 +9,7 @@ use strict;
 use warnings;
 
 use Test::More; # plan automatically generated below
+use PGObject 'ledgersmb';
 use File::Find;
 use File::Util;
 

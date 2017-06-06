@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Test::More tests => 202;
 use File::Find;
+use PGObject 'ledgersmb';
 
 my @on_disk;
 sub collect {

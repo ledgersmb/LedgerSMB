@@ -14,6 +14,8 @@ LedgerSMB::PSGI - PSGI application routines for LedgerSMB
 use strict;
 use warnings;
 
+use PGObject;
+
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
@@ -30,6 +32,7 @@ use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
+
 
 
 local $@; # localizes just for initial load.
