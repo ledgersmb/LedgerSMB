@@ -17,21 +17,21 @@ Scenario Outline: Navigate to menu and open screen
    Then I should see the <screen> screen
   Examples:
     | path                                      | screen                   |
-#    | Contacts > Add Contact                    | contact creation         |
+#   | Contacts > Add Contact                    | contact creation         |
     | Contacts > Search                         | Contact search           |
     | AR > Add Transaction                      | AR transaction entry     |
     | AR > Import Batch                         | Batch import             |
     | AR > Sales Invoice                        | AR invoice entry         |
     | AR > Credit Note                          | AR note entry            |
     | AR > Credit Invoice                        | AR credit invoice entry |
-#    | AR > Add Return                           | AR returns               |
-#    | AR > Search                               | AR search                |
+#   | AR > Add Return                           | AR returns               |
+#   | AR > Search                               | AR search                |
     | AP > Add Transaction                      | AP transaction entry     |
-#    | AP > Import Batch                         | Batch import             |
+#   | AP > Import Batch                         | Batch import             |
     | AP > Vendor Invoice                       | AP invoice entry         |
     | AP > Debit Note                           | AP note entry            |
     | AP > Debit Invoice                        | AP debit invoice entry   |
-#    | AP > Search                               | AP search                |
+#   | AP > Search                               | AP search                |
     | Budgets > Search                          | Budget search            |
     | HR > Employees > Search                   | Employee search          |
     | Order Entry > Sales Order                 | Sales order entry        |
@@ -51,4 +51,3 @@ Scenario Outline: Navigate to menu and open screen
     | Goods and Services > Add Overhead         | overhead entry           |
     | System > Defaults                         | system defaults          |
     | System > Taxes                            | system taxes             |
-    
