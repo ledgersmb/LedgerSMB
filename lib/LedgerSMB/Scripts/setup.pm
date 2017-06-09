@@ -37,8 +37,12 @@ use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
-$LedgerSMB::VERSION =~ /(\d+\.\d+)./;
-my $MINOR_VERSION = $1;
+my $MINOR_VERSION;
+if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
+    $MINOR_VERSION = $1;
+} else {
+        die "Error: Invalid data";
+}
 
 =item no_db
 

@@ -1115,8 +1115,11 @@ if (!$request->{exrate}) {
 # LETS GET THE DEPARTMENT INFO
 # WE HAVE TO SET $dbPayment->{department_id} in order to process
 if ($request->{department}) {
- $request->{department} =~ /^(\d+)--*/;
- $Payment->{department_id} = $1;
+    if ( $request->{department} =~ /^(\d+)--*/ ) {
+        $Payment->{department_id} = $1;
+    } else {
+        die "Error: Invalid data";
+    }
 }
 #
 # We want to set a gl_description,
@@ -1216,10 +1219,17 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
      $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
-     $request->{"overpayment_account_$i"} =~ /^(\d+)--*/;
-     my $id = $1;
-     $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/;
-     my $cashid = $1;
+     if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
+        my $id = $1;
+     } else {
+        die "Error: Invalid data";
+     }
+     my $cashid;
+     if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
+        $cashid = $1;
+     } else {
+        die "Error: Invalid data";
+     }
      push @op_amount, $request->{"overpayment_topay_$i"};
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
