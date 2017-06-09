@@ -95,7 +95,7 @@ sub _init_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    local $@;
+    local $@ = undef;
     $request->{dbh} = eval {
         $database->connect({PrintError => 0, AutoCommit => 0 })
     } if ! defined $request->{dbh};

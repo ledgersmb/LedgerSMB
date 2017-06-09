@@ -32,7 +32,7 @@ use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 
 
-local $@; # localizes just for initial load.
+local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
 =head1 FUNCTIONS
