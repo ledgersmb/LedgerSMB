@@ -44,25 +44,6 @@
 #
 #######################################################################
 
-our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
-
-# Clearing all namespaces for persistant code use
-for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE PE IC AM)) {
-   for my $k (keys %{"${nsp}::"}){
-        next if $k =~ /[A-Z]+/;
-        next if $k eq 'try' or $k eq 'catch';
-        next if *{"${nsp}::{$k}"}{CODE};
-        if (*{"${nsp}::{$k}"}{ARRAY}) {
-            @{"${nsp}::{$k}"} = () unless /^(?:INC|ISA|EXPORT|EXPORT_OK|ARGV|_|\W)$/;
-        }
-        if (*{"${nsp}::{$k}"}{HASH}) {
-            %{"${nsp}::{$k}"} = ();
-        }
-        if (*{"${nsp}::{$k}"}{SCALAR}){
-           ${"${nsp}::{$k}"} = undef;
-        }
-    }
-}
 package lsmb_legacy;
 use Digest::MD5;
 use Try::Tiny;
@@ -79,6 +60,10 @@ use LedgerSMB::App_State;
 $form = Form->new;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
+
+use Log::Log4perl;
+#make logger available to other old programs
+our $logger=Log::Log4perl->get_logger('old-handler-chain');
 
 print 'Set-Cookie: '
     . $form->{"request.download-cookie"} . '=downloaded' . "\n"
