@@ -772,7 +772,7 @@ Changelog for 1.4.1
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-Pongracz I is Pongracz Istv�an
+Pongracz I is Pongracz IstvÃan
 
 Changelog for 1.4.0
 General Enhancements:
@@ -2096,7 +2096,7 @@ Changelog for 1.2.10
 * Fixed 1814437, Multiple paths set causing errors (Seneca)
 * Add the ampersand to the HTML escape list for parse_template (Seneca)
 * fixed 1815329, $ not escaped properly for LaTeX (Seneca)
-* updated Hungarian translation from Pongrácz István (patch 1814156, Seneca)
+* updated Hungarian translation from PongrÃ¡cz IstvÃ¡n (patch 1814156, Seneca)
 * Properly handle invoice-type quantities from customer search (Seneca)
 * Correcting improper redirect when reposting POS invoices.(Chris T)
 * Fixing issues relating to database queries and POS-module redirects (Seneca)
