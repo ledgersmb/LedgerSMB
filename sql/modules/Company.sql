@@ -325,22 +325,30 @@ BEGIN
 					AND in_country IS NULL)
 				OR (c.entity_id IN 
 				(select entity_id 
-                                   FROM entity_credit_account leca
-                                   JOIN eca_to_location le2a 
-                                     ON leca.id = le2a.credit_id
+                                   FROM (select entity_id, location_id from 
+					entity_credit_account leca
+                                        JOIN eca_to_location le2a 
+                                             ON leca.id = le2a.credit_id
+					UNION
+					SELECT entity_id, location_id
+				          FROM entity_to_location
+				        ) le2a
                                    JOIN location ll ON le2a.location_id = ll.id
-			          WHERE (line_one @@ plainto_tsquery(in_address)
+			          WHERE (in_address is null OR
+					line_one @@ plainto_tsquery(in_address)
                                         OR
 				        line_two @@ plainto_tsquery(in_address)
                                         OR
 					line_three @@ plainto_tsquery(in_address))
-					AND city ILIKE 
-                                            '%' || coalesce(in_city, '') || '%'
-					AND state ILIKE
-					    '%' || coalesce(in_state, '') || '%'
-					AND mail_code ILIKE
-		   			    coalesce(in_mail_code, '') || '%'
-					AND country_id 
+					AND (in_city IS NULL OR city ILIKE 
+                                            '%' || coalesce(in_city, '') || '%')
+					AND (in_state is null OR state ILIKE
+					    '%' || coalesce(in_state, '') || '%')
+					AND in_mail_code is null OR
+					    mail_code ILIKE
+		   			    coalesce(in_mail_code, '') || '%')
+					AND (in_country IS NULL OR 
+					    country_id 
                                             IN (SELECT id FROM country
 						 WHERE name ilike in_country
 						       OR short_name 
