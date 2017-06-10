@@ -38,8 +38,10 @@ Changelog for 1.5.8
 * Fix Edit Vendor address misses 'Save' button (Erik H, #2709)
 * Fix Recurring Transactions screen fails on second access (Erik H, #2888)
 * Fix 'On Hand' goods search filter not being applied (Erik H, #2845)
+* Clean up issues found by Debian's 'lintian' (Erik H, Robert C)
 
 Erik H is Erik Huelsmann
+Robert C is Robert James Clay
 
 
 Changelog for 1.5.7
