@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+
 package LedgerSMB::Rest;
 
 =head1 NAME
