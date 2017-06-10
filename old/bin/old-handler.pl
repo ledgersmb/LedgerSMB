@@ -61,6 +61,10 @@ $form = Form->new;
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 
+use Log::Log4perl;
+#make logger available to other old programs
+our $logger=Log::Log4perl->get_logger('old-handler-chain');
+
 print 'Set-Cookie: '
     . $form->{"request.download-cookie"} . '=downloaded' . "\n"
     if $form->{"request.download-cookie"};
