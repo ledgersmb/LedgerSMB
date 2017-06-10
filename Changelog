@@ -7,6 +7,7 @@ Changelog for 1.5.8
 * Fix ODS output appearing on 'Title page' instead of 'Search results' (Erik H)
 * Fix Edit Vendor address misses 'Save' button (Erik H, #2709)
 * Fix Recurring Transactions screen fails on second access (Erik H, #2888)
+* Fix 'On Hand' goods search filter not being applied (Erik H, #2845)
 
 Erik H is Erik Huelsmann
 
