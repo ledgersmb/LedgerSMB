@@ -390,39 +390,37 @@ html, body {
 
 /*********** payments *************/
 
-/*
-#payments table.detail_table_visible {
-        display: block;
-}
-#payments table.detail_table_hidden{
-        display: none;
+#payments .source {
+    width: 35ex;
 }
 
-#payments div.selectall {
-       float: left;
+#payments th.listheading {
+    padding-left: 1ex;
 }
 
-#payments div {
-        overflow: auto;
+#payments #open-items td {
+    padding-left: 1ex;
+    padding-right: 1ex;
 }
 
-#payments label {
-        text-align: right;
-        float: left;
-        width: 8em;
-        margin-right: 1em;
+#payments #open-items .invoice-posting-details td {
+    padding-left: inherit;
+    padding-right: inherit;
 }
 
-
-#payments input {
-        float: left;
+#payments .topay_amount,
+#payments .overpayment_topay {
+    width: 20ex;
 }
 
-#payments input[type="checkbox"],
-#payments input[type="radio"]{
-        float: none;
+#payments .amount {
+    text-align: right;
 }
-*/
+
+#payments .topay_amount input,
+#payments .overpayment_topay input {
+    text-align: right;
+}
 
 #payments .details_select input[type="radio"] {
         float: left;
