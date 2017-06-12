@@ -19,6 +19,9 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 
+use Data::Dumper;
+
+
 When qr/I open the sales invoice entry screen/, sub {
     my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
 
