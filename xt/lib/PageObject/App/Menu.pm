@@ -77,9 +77,9 @@ sub _verify {
     my ($self) = @_;
 
     my @logged_in_company =
-        $self->find_all("//*[\@id='company_info' and string-length(normalize-space(text())) > 0]");
+        $self->find_all("//*[\@id='company_info_header' and text() = 'Company']");
     my @logged_in_login =
-        $self->find_all("//*[\@id='login_info' and string-length(normalize-space(text())) > 0]");
+        $self->find_all("//*[\@id='login_info_header' and text() = 'User']");
 
     return $self
         unless ((scalar(@logged_in_company) > 0)
