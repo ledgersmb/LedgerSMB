@@ -157,6 +157,7 @@ sub create_user {
         _DBH => $dbh,
         );
     $user->create($args{password} // 'password');
+    $dbh->do(qq(ALTER USER "$username" VALID UNTIL 'infinity'));
 
     return $user;
 }
