@@ -135,7 +135,7 @@ sub get_from_file {
     if ($path =~ m|/.*:| ){
        die 'Cannot run on NTFS alternate data stream!';
     }
-    if ( $path =~ m|(.*)/([^/]+)$|; ) {
+    if ( $path =~ m|(.*)/([^/]+)$| ) {
         $fname = $2;
     }  else {
         $fname = $path;

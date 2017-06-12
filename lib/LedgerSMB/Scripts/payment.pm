@@ -1219,8 +1219,9 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
      $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
+     my $id;
      if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
-        my $id = $1;
+        $id = $1;
      } else {
         die "Error: Invalid data";
      }
