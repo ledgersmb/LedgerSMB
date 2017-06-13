@@ -157,6 +157,7 @@ LANGUAGE SQL STABLE AS $$
                         where in_serial_number is not null
                               and serialnumber = in_serial_number))
               AND ((in_status = 'active' and not p.obsolete)
+                   OR (in_status = 'onhand' and p.onhand > 0)
                    OR (in_status = 'obsolete' and p.obsolete)
                    OR (in_status = 'short' and p.onhand <= p.rop)
                    OR (in_status = 'unused'
