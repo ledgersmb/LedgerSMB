@@ -10,6 +10,7 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 use LedgerSMB::App_State;
+use File::Spec;
 
 =head1 SYNPOPSIS
 
@@ -131,16 +132,16 @@ does not call this without carefully whitelisting values.
 
 sub get_from_file {
     my ($package, $path, $language_code) = @_;
-    my $fname;
+
     if ($path =~ m|/.*:| ){
        die 'Cannot run on NTFS alternate data stream!';
     }
-    if ( $path =~ m|(.*)/([^/]+)$| ) {
-        $fname = $2;
-    }  else {
-        $fname = $path;
-    }
+
+    my ( undef, undef, $fname)  = File::Spec->splitpath( $path);
+    die "Bad template file name $fname, should have one dot."
+        unless 2 == split /\./, $fname;
     my ($template_name, $format) = split /\./, $fname;
+
     my $content = '';
     open my $fh, '<', $path
         or die "Failed to open template file $path : $!";
