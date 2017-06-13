@@ -249,7 +249,7 @@ sub _render {
     $self->run_report($request) if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
-    local ($@);
+    local $@ = undef;
     eval {$template = $self->template};
     $template ||= 'Reports/display_report';
 
@@ -275,7 +275,7 @@ sub _render {
                    my $srt_a = $a->{$self->order_by};
                    my $srt_b = $b->{$self->order_by};
                    { # pre-5.14 compatibility block
-                       local ($@); # pre-5.14, do not die() in this block
+                       local $@ = undef; # pre-5.14, do not die() in this block
                        $srt_a = $srt_a->to_sort
                            if eval { $srt_a->can('to_sort') };
                        $srt_b = $srt_b->to_sort
@@ -299,7 +299,7 @@ sub _render {
         for my $k (keys %$r){
             next if $exclude->{$k};
             { # pre-5.14 compatibility block
-                local ($@); # pre-5.14, do not die() in this block
+                local $@ = undef; # pre-5.14, do not die() in this block
                 if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
                     $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
                     $total_row->{$k}->badd($r->{$k});
@@ -344,7 +344,7 @@ sub _render {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
                 { # pre-5.14 compatibility block
-                    local ($@); # pre-5.14, do not die() in this block
+                    local $@ = undef; # pre-5.14, do not die() in this block
                     if ( eval {$row->{$col->{col_id}}->can('to_output')}){
                         $row->{$col->{col_id}} =
                             $row->{$col->{col_id}}->to_output(money => 1);

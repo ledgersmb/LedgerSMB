@@ -100,7 +100,7 @@ sub requires_from {
 
     my $dummy;
     { # pre-5.14 compatibility block
-    local ($@); # pre-5.14, do not die() in this block
+    local $@ = undef; # pre-5.14, do not die() in this block
     eval { $meta = $class->meta }
          or $dummy = "Could not get meta object.  Is $class a valid Moose class?";
     }
