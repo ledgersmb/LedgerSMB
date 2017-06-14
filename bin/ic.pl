@@ -1332,7 +1332,7 @@ sub assembly_row {
             $column_data{qty} =
 qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="channel: '/part/part-select/$i'"></td>|;
+qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="required:false,channel: '/part/part-select/$i'"></td>|;
             $column_data{description} =
 qq|<td><div data-dojo-type="lsmb/parts/PartDescription" name="description_$i" size=30 data-dojo-props="channel: '/part/part-select/$i'">$form->{"description_$i"}</div></td>|;
             $column_data{partsgroup} =
@@ -1468,9 +1468,6 @@ sub update {
             $rows = scalar @{ $form->{item_list} };
 
             if ($rows) {
-                $form->{"adj_$i"} = 1;
-
-                $form->{"qty_$i"} = 1;
                 $form->{"adj_$i"} = 1;
                 for (qw(partnumber description unit)) {
                     $form->{item_list}[$i]{$_} =
