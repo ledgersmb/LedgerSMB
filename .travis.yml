@@ -109,7 +109,6 @@ before_install:
   - export PERL_MB_OPT="--install_base=$HOME/locallib"
 
 install:
-  - cpanm --quiet --notest PGObject::Simple::Role~2.0.0
   - cpanm --quiet --notest --with-develop --with-feature=edi --installdeps .
   - cpan-install --coverage
 
