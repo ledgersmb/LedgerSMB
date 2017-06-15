@@ -145,8 +145,8 @@ sub _main_screen {
        @DIVS = qw(credit address contact_info bank_act notes files);
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
-       no warnings 'uninitialized';
-       if ($person->{entity_id} && $person->{entity_class} == EC_EMPLOYEE){
+       if ($person->{entity_id} && $person->{entity_class}
+                && $person->{entity_class} == EC_EMPLOYEE ){
           shift @DIVS;
           unshift @DIVS, 'employee', 'user', 'wage';
        }

@@ -1603,15 +1603,16 @@ if (($Payment->{"new_entity_id"} != $Payment->{"entity_credit_id"})&& !$Payment-
 @overpayments = $Payment->get_available_overpayment_amount();
 
 for my $ref (0 .. $#overpayments) {
-    no warnings 'uninitialized';
-       push @ui_overpayments, {     id               =>  $overpayments[$ref]->{chart_id},
-                                    accno          =>  $overpayments[$ref]->{accno},
-                                    description    =>  $overpayments[$ref]->{description},
-                                    amount         =>  "$overpayments[$ref]->{movements}",
-                                    available      =>  "$overpayments[$ref]->{available}",
-                                    touse          =>  qq|$amount_to_be_used{"$overpayments[$ref]->{accno}"}|
-                            };
-       $ui_avble_subtotal += "$overpayments[$ref]->{available}";
+    my $overpay = $overpayments[$ref];
+    push @ui_overpayments, {
+            id          =>  $overpay->{chart_id},
+            accno       =>  $overpay->{accno},
+            description =>  $overpay->{description},
+            amount      =>  $overpay->{movements},
+            available   =>  $overpay->{available},
+            touse       =>  $amount_to_be_used{$overpay->{accno}},
+    };
+    $ui_avble_subtotal += $overpay->{available};
 }
 
 
