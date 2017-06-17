@@ -507,7 +507,7 @@ sub _get_template_directories {
     opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
     while( my $name = readdir(DIR)){
         next if ($name =~ /\./);
-        if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
+        if (-d "$LedgerSMB::Sysconfig::templates/$name" ) {
             push @dirarray, {text => $name, value => $name};
         }
     }
