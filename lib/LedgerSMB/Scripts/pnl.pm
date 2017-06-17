@@ -38,7 +38,7 @@ use warnings;
 
 sub generate_income_statement {
     my ($request) = @_;
-    $ENV{LSMB_ALWAYS_MONEY} = 1;
+    local $ENV{LSMB_ALWAYS_MONEY} = 1;
 
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){

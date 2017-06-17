@@ -50,7 +50,7 @@ sub old_app {
         sub {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
-            $ENV{SCRIPT_NAME} = $uri;
+            local $ENV{SCRIPT_NAME} = $uri;
 
             _run_old();
         });
