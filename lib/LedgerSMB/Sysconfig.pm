@@ -132,7 +132,7 @@ sub def {
         # If an environment variable is associated, set it  based on the
         # current value (taken from the config file, default, or pre-existing
         #  env var.
-        local $ENV{$envvar} = ${$name}                  
+        local $ENV{$envvar} = ${$name}
             if $envvar && defined ${$name};
 
         # create a functional interface
