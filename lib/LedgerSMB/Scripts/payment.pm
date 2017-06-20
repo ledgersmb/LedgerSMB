@@ -1114,7 +1114,7 @@ if (!$request->{exrate}) {
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 # LETS GET THE DEPARTMENT INFO
 
-if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) {
+if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) ) {
         $Payment->{department_id} = $1;
 } else {
         $Payment->{department_id} = undef;

@@ -40,7 +40,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $MINOR_VERSION;
 if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
     $MINOR_VERSION = $1;
-} 
+}
 
 =item no_db
 
