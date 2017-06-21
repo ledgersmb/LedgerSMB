@@ -10,7 +10,8 @@ no lib '.'; # can run from anywhere
 my %func = (); # set of functions as keys
 
 my $order;
-open ($order, '<', "$FindBin::Bin/../sql/modules/LOADORDER");
+open ($order, '<', "$FindBin::Bin/../sql/modules/LOADORDER")
+    or die "Cannot open LOADORDER";
 for my $mod (<$order>) {
     chomp($mod);
     $mod =~ s/(\s+|#.*)//g;
@@ -31,7 +32,8 @@ sub process_mod {
 
 sub write_blacklist {
     my @funcs = @_;
-    open my $bl, '>', "$FindBin::Bin/../sql/modules/BLACKLIST";
+    open my $bl, '>', "$FindBin::Bin/../sql/modules/BLACKLIST"
+        or die "Cannot write BLACKLIST";
     say $bl $_ for @funcs;
     close $bl;
 }
