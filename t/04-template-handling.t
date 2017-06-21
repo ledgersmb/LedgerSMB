@@ -3,14 +3,6 @@
 use strict;
 use warnings;
 
-# Absolute directory name required to not trip up Template::Latex
-$ENV{TMPDIR} = "$ENV{PWD}/t/var";
-$ENV{LANG} = 'LANG=en_US.UTF8';
-
-$ENV{REQUEST_METHOD} = 'GET';
-     # Suppress warnings from LedgerSMB::_process_cookies
-
-
 use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
@@ -30,10 +22,10 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
 
-$LedgerSMB::Sysconfig::tempdir = 't/var';
+$LedgerSMB::Sysconfig::tempdir .= 't/var';
 
 my @r;
-my $temp;
+my $temp = $LedgerSMB::Sysconfig::tempdir;
 my $form;
 my $myconfig;
 my $template;
@@ -101,7 +93,7 @@ isa_ok($template, 'LedgerSMB::Template',
         'Template, new: Object creation with valid language and path');
 is($template->{include_path}, 't/data',
         'Template, new: Object creation with valid path overrides language');
-is($template->{outputfile}, 't/var/test',
+is($template->{outputfile}, "$temp/test",
         'Template, new: Object creation with filename is correct');
 
 $template = undef;
@@ -136,13 +128,13 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (PDF): Object creation with format and template');
     is($template->render({'login' => 'foo&bar'}),
-        "t/var/04-template-output-$$.pdf",
+        "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): Simple PDF template, default filename');
-    ok(-e "t/var/04-template-output-$$.pdf",
+    ok(-e "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): File created');
-    is(unlink("t/var/04-template-output-$$.pdf"), 1,
+    is(unlink("$temp/04-template-output-$$.pdf"), 1,
         'Template, render (PDF): removing testfile');
-    ok(!-e "t/var/04-template-output-$$.pdf",
+    ok(!-e "$temp/04-template-output-$$.pdf",
         'Template, render (PDF): testfile removed');
 
     $template = undef;
@@ -155,12 +147,12 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (PS): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        "t/var/04-template-output-$$.ps",
+        "$temp/04-template-output-$$.ps",
         'Template, render (PS): Simple Postscript template, default filename');
-    ok(-e "t/var/04-template-output-$$.ps", 'Template, render (PS): File created');
-    is(unlink("t/var/04-template-output-$$.ps"), 1,
+    ok(-e "$temp/04-template-output-$$.ps", 'Template, render (PS): File created');
+    is(unlink("$temp/04-template-output-$$.ps"), 1,
         'Template, render (PS): removing testfile');
-    ok(!-e "t/var/04-template-output-$$.ps",
+    ok(!-e "$temp/04-template-output-$$.ps",
         'Template, render (PS): testfile removed');
 
     $template = undef;
@@ -173,12 +165,12 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (XLS): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        "t/var/04-template-output-$$.xls",
+        "$temp/04-template-output-$$.xls",
         'Template, render (XLS): Simple Postscript template, default filename');
-    ok(-e "t/var/04-template-output-$$.xls", 'Template, render (XLS): File created');
-    is(unlink("t/var/04-template-output-$$.xls"), 1,
+    ok(-e "$temp/04-template-output-$$.xls", 'Template, render (XLS): File created');
+    is(unlink("$temp/04-template-output-$$.xls"), 1,
         'Template, render (XLS): removing testfile');
-    ok(!-e "t/var/04-template-output-$$.xls",
+    ok(!-e "$temp/04-template-output-$$.xls",
         'Template, render (XLS): testfile removed');
 
     $template = undef;
@@ -191,12 +183,12 @@ SKIP: {
     is($template->{include_path}, 't/data',
         'Template, new (XLSX): Object creation with format and template');
     is($template->render({'login' => 'foo\&bar'}),
-        "t/var/04-template-output-$$.xlsx",
+        "$temp/04-template-output-$$.xlsx",
         'Template, render (XLSX): Simple Postscript template, default filename');
-    ok(-e "t/var/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
-    is(unlink("t/var/04-template-output-$$.xlsx"), 1,
+    ok(-e "$temp/04-template-output-$$.xlsx", 'Template, render (XLSX): File created');
+    is(unlink("$temp/04-template-output-$$.xlsx"), 1,
         'Template, render (XLSX): removing testfile');
-    ok(!-e "t/var/04-template-output-$$.xlsx",
+    ok(!-e "$temp/04-template-output-$$.xlsx",
         'Template, render (XLSX): testfile removed');
 
 }
@@ -332,7 +324,7 @@ SKIP: {
     $template->render({media => 'test'});
     $template->output(media => 'test');
 
-    ok (open (LPR_TEST, '<', 't/var/04-lpr-test'), 'LedgerSMB::Template::_output_lpr output file opened successfully');
+    ok (open (LPR_TEST, '<', "$temp/04-lpr-test"), 'LedgerSMB::Template::_output_lpr output file opened successfully');
 
     my $line1 = <LPR_TEST>;
 
