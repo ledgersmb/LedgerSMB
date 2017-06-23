@@ -42,7 +42,8 @@ ok($provider->isa('Template::Provider'),
 my $dbh = LedgerSMB::Database->new(
     dbname => $ENV{LSMB_NEW_DB},
     username => $ENV{PGUSER},
-    password => $ENV{PGPASSWORD})
+    password => $ENV{PGPASSWORD},
+    host => $ENV{PGHOST})
     ->connect({ AutoCommit => 0, PrintError => 0, RaiseError => 1 });
 
 $dbh->do(qq|

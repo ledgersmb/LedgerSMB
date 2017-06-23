@@ -28,7 +28,7 @@ extends 'Test::BDD::Cucumber::Extension';
 has db_name => (is => 'rw', default => $ENV{PGDATABASE});
 has username => (is => 'rw', default => $ENV{PGUSER});
 has password => (is => 'rw', default => $ENV{PGPASSWORD});
-has host => (is => 'rw', default => 'localhost');
+has host => (is => 'rw', default => $ENV{PGHOST} // 'localhost');
 has template_db_name => (is => 'rw', default => 'standard-template');
 has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
@@ -214,13 +214,13 @@ sub ensure_template {
 sub create_from_template {
     my ($self, $company) = @_;
 
-    my $template = $self->template_db_name;
-    $self->ensure_nonexisting_company($company);
-    $self->super_dbh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
+        my $template = $self->template_db_name;
+        $self->ensure_nonexisting_company($company);
+        $self->super_dbh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
 
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
-    $self->_clear_admin_dbh;
+        $self->_clear_admin_dbh;
 }
 
 sub ensure_nonexisting_company {
