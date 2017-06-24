@@ -103,7 +103,7 @@ sub _ISA {
     my ($self) = @_;
     my @segments = $self->parser->get_loop_segments;
     @segments = $self->parser->get_loop_segments unless @segments;
-    if ($segments[0] != 'ISA'){
+    if ($segments[0] ne 'ISA'){
         $self->parse;  # re-initialize parser, we don't have an ISA!
         die 'No ISA'; # Trappable error.
     }
