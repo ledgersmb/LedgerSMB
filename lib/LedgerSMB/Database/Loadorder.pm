@@ -44,8 +44,8 @@ Returns a list of LedgerSMB::Database::Change objects
 sub scripts {
     my ($self) = @_;
     return @{$self->{_scripts}} if $self->{_scripts};
-    local $!;
-    local $@;
+    local $! = undef;
+    local $@ = undef;
     open my $fh, '<', $self->{_path} or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
     my @scripts =

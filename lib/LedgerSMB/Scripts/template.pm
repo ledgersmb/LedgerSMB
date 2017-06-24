@@ -48,7 +48,7 @@ sub display {
     my ($request) = @_;
     my $dbtemp;
     { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
+        local $@ = undef; # pre-5.14, do not die() in this block
         eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
     }
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
@@ -76,7 +76,7 @@ sub edit {
     my ($request) = @_;
     my $dbtemp;
     { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
+        local $@ = undef; # pre-5.14, do not die() in this block
         $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
         delete $request->{language_code}
             unless $dbtemp;
