@@ -1,5 +1,6 @@
 #!/usr/bin/ksh
 
+set -x
 # automatically convert tag_release to upper case
 typeset -u tag_release
 
@@ -13,9 +14,6 @@ new_dev_version="$3"
 sf_user="$4"
 checkout_dir="LedgerSMB"
 release_key="8DA0AF10"
-frs_prj_dir="/home/frs/project/l/le/ledger-smb/"
-frs_tagged_dir="Releases"
-frs_untagged_dir="Beta Releases"
 tag_release="Y"
 
 if [[ ! -f ~/.lsmb-github-releases ]]; then
@@ -220,22 +218,11 @@ update_docker_remote() {
    || fail "Failed to update remote docker repository!"
 }
 
-publish_files_sf() {
-   (cd "$our_workspace" && \
-    echo "cd '$frs_prj_dir/$prj_sub_dir'
-mkdir '$release_version'
-cd '$release_version'
-put 'ledgersmb-$release_version.tar.gz.asc'
-put 'ledgersmb-$release_version.tar.gz'
-" | $sftp -b - "${sf_user}@frs.sourceforge.net") \
-   || fail "Failed to upload files to sourceforge!"
-}
-
 publish_files_gh() {
    gh_auth="-u $github_user:$github_token"
    (cd "$our_workspace" && \
     $curl -X POST $gh_auth "$GH_api/ledgersmb/LedgerSMB/releases" \
-          -d "{'tag_name': '$release_version', 'draft': false, 'body': 'todo'}" \
+          -d "{\"tag_name\": \"$release_version\", \"name\": \"$release_version\", \"draft\": false, \"body\": \"todo\", \"name\": \"\"}" \
        > release_create_response) \
    || fail "Failed to create GitHub release!"
    upload_url=$($jq -M -r '.upload_url' < $our_workspace/release_create_response | $sed -e 's/{.*//')
@@ -314,12 +301,14 @@ fi
 
 create_versiontarball
 sign_versiontarball
+extract_changelog
+extract_sha256sum
 
 # We have the signed binaries now and are about to publish;
 # if anything goes wrong beyond this point, we need the
 # binaries to restart the process "by hand" or even to
 # execute it by hand
-tap - TERM EXIT
+trap - TERM EXIT
 
 typeset -u yn
 echo -n "Ready to publish now. Proceed? [y/N] "
@@ -328,21 +317,9 @@ if [[ "$yn" != "Y" ]]; then
    fail "Aborted by user!"
 fi
 
-if [[ "$tag_release" == "Y" ]]; then
-   # if we don't have a release tag, be sure to discard it!
-   update_remote
-   prj_sub_dir="$frs_tagged_dir"
-else
-   prj_sub_dir="$frs_untagged_dir"
-fi
-publish_files_sf
 publish_files_gh
 # only after we published to GH, update the docker files so they can download
 update_docker_remote
-
-extract_changelog
-extract_sha256sum
-prj_url_dir=$(echo "$prj_sub_dir" | sed -e 's/ /%20/g')
 
 clear
 echo "
@@ -357,8 +334,16 @@ contains the following fixes and improvements:
 
 $extracted_changelog
 
-The release can be downloaded from sourceforge at
-  https://sourceforge.net/projects/ledger-smb/files/$prj_url_dir/$release_version/
+
+For installation instructions and system requirements, see
+  https://github.com/ledgersmb/LedgerSMB/blob/$release_version/README.md
+
+The release can be downloaded from GitHub at
+  https://github.com/ledgersmb/LedgerSMB/releases/tag/$release_version
+
+Or pulled from Docker Hub using the command
+
+    \$ docker pull ledgersmb/ledgersmb:$release_version
 
 These are the sha256 checksums of the uploaded files:
 $extracted_sha256sums
