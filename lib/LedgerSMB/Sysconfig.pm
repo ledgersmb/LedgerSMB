@@ -132,7 +132,7 @@ sub def {
         # If an environment variable is associated, set it  based on the
         # current value (taken from the config file, default, or pre-existing
         #  env var.
-        local $ENV{$envvar} = ${$name}
+        $ENV{$envvar} = ${$name}
             if $envvar && defined ${$name};
 
         # create a functional interface
@@ -499,7 +499,7 @@ sub check_permissions {
 
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
     # commit 6978b88 added this line to resolve issues if HOME isn't set
-    local $ENV{HOME} = $tempdir;
+    $ENV{HOME} = $tempdir;
 
 
     if(!(-d "$tempdir")){
