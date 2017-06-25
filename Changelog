@@ -42,6 +42,8 @@ Changelog for 1.5.8
 * Fix layout regression of 1.5 in single payment screen (Erik H, #1917)
 * Fix 'Update' on Assembly page resetting BOM count to 1 (Erik H, 2835)
 * Fix 'Update' on Assembly page requiring all BOM lines filled (Erik H, 2835)
+* New 'Welcome' screen after login, helping people find help (Erik H)
+* Updated Indonesian translation (LedgerSMB Transifex Indonesian group)
 
 Erik H is Erik Huelsmann
 Robert C is Robert James Clay

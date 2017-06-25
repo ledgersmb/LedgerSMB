@@ -361,7 +361,7 @@ sub _render {
         my $lines = shift;
         return unless $lines;
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
-        return [map { { %$_, %{shift @newlines} } } @$lines ];
+        return [map { +{ %$_, %{shift @newlines} } } @$lines ];
     };
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,

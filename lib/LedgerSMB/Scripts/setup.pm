@@ -327,7 +327,7 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-           {%$database, (company_name => $request->{new_name})}
+           +{%$database, (company_name => $request->{new_name})}
     )->connect({ PrintError => 0, AutoCommit => 0 });
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
@@ -507,7 +507,7 @@ sub _get_template_directories {
     opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
     while( my $name = readdir(DIR)){
         next if ($name =~ /\./);
-        if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
+        if (-d "$LedgerSMB::Sysconfig::templates/$name" ) {
             push @dirarray, {text => $name, value => $name};
         }
     }
@@ -757,7 +757,7 @@ sub _failed_check {
                    size => 15,
            }};
         push @$rows, $row;
-        $hiddens->{"id_$count"} = $row->{$check->id_column},
+        $hiddens->{"id_$count"} = $row->{$check->id_column};
         ++$count;
    }
     $sth->finish();
