@@ -3,8 +3,15 @@
             <img class="cornderlogo" src="images/ledgersmb_small-trans.png" width="100" height="50" border="1" alt="LedgerSMB" />
         </a></div>
         <div id="version_info"><?lsmb text("LedgerSMB [_1]", version) ?></div>
-        <div id="company_info"><?lsmb text("Logged into [_1]", company) ?></div>
-        <div id="login_info"><?lsmb text("Logged in as [_1]", login) ?></div>
+        <table id="header_info" class="header_table">
+        <tr><td id="login_info_header" class="header_left"><?lsmb text("User") ?></td>
+            <td id="company_info_header" class="header_right"><?lsmb text("Company") ?></td>
+        </tr>
+        <tr><td id="login_info" class="header_left"><?lsmb login ?></td>
+            <td id="company_info" class="header_right"><?lsmb company ?></td>
+        </tr>
+        </table>
+        <hr>
         <ul id="top_menu" class="menu_open">
         <?lsmb old_level = 0 ?>
         <?lsmb FOREACH item = menu_items ?>
