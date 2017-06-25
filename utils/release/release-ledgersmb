@@ -371,4 +371,7 @@ Please execute the following steps manually:
    [Note: Don't forget to set the correct branch to '$branch'!]
 "
 
+rm -rf "$our_workspace"
+rm -rf "$docker_workspace"
+
 exit 0
