@@ -621,12 +621,12 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                OR (in_closed IS TRUE AND ( a.force_closed IS NOT TRUE AND
                  abs(p.due) > 0.005) IS NOT TRUE)
             )
-            AND ( -- by partnumber
+            AND  -- by partnumber
               (in_partnumber IS NULL 
                  OR a.id IN (
                     select i.trans_id 
                       FROM invoice i JOIN parts p ON i.parts_id = p.id
-                     WHERE p.partnumber = in_partnumber
+                     WHERE p.partnumber = in_partnumber))
                      
 
 LOOP
