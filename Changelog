@@ -219,6 +219,7 @@ Changelog for 1.4.41
 * Refactor filter pages for income statement and balance sheet (Erik H)
 * Follow-up to earlier compensation for '.' missing from @INC (Erik H, #2275)
 * Fix reversal of payments against non-eca-default AR/AP account (Erik H, #2558)
+* Fix goods/services search with AR/AP invoices (Chris T, #2938)
 
 Erik H is Erik Huelsmann
 
