@@ -714,7 +714,7 @@ SELECT 'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated, allocat
 
 -- Testing inventory history here because we kind of need complete invoices here
 INSERT INTO test_result(test_name, success)
- select 'get correct count of ar and ap lines from inv. history', count(*) = 26 
+ select 'get correct count of ar and ap lines from inv. history', count(*) = 26
   from goods__history(null, null, null, null, null, false, false, false, false, true, true);
 
 INSERT INTO test_result(test_name, success)
