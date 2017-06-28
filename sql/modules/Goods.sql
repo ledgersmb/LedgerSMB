@@ -498,7 +498,7 @@ $$
             FROM ar
            UNION
           SELECT id, 'ap' as o_table, invnumber as ordnumber, 'ir' as oe_class,
-                 null, transdate, entity_credit_account
+                 null, transdate, entity_credit_account, 'i' as expected_line
             FROM ap) o ON o.id = i.trans_id
                           AND o.expected_line = i.i_type
     JOIN entity_credit_account eca ON o.entity_credit_account = eca.id
