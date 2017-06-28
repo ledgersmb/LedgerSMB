@@ -837,27 +837,27 @@ BEGIN;
 
     PREPARE test AS select count(*) = 26
   from goods__history(null, null, null, null, null, false, false, false, false, true, true);
-    select result_eq('test', array[true], 'get correct count of ar and ap lines from inv. history (26)');
+    select results_eq('test', array[true], 'get correct count of ar and ap lines from inv. history (26)');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 14
   from goods__history(null, null, null, null, null, false, false, false, false, true, false);
-    select result_eq('test', array[true], 'get correct count of ar lines from inv. history');
+    select results_eq('test', array[true], 'get correct count of ar lines from inv. history');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 12
   from goods__history(null, null, null, null, null, false, false, false, false, false, true);
-    select result_eq('test', array[true], 'get correct count (12) of ap lines from inv. history');
+    select results_eq('test', array[true], 'get correct count (12) of ap lines from inv. history');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 0
   from goods__history(null, null, null, null, null, false, false, false, false, false, false);
-    select result_eq('test', array[true], 'get correct count (0) of ap lines from inv. history with all exclused');
+    select results_eq('test', array[true], 'get correct count (0) of ap lines from inv. history with all exclused');
      DEALLOCATE test;
 
     PREPARE test AS select count(*) = 26
   from goods__history(null, null, null, null, null, null, null, null, null, null, null);
-    select result_eq('test', array[true], 'get correct count (26) of ap lines from inv. history with all default');
+    select results_eq('test', array[true], 'get correct count (26) of ap lines from inv. history with all default');
      DEALLOCATE test;
 
     -- Finish the tests and clean up.
