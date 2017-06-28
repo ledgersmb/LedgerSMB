@@ -712,6 +712,28 @@ INSERT INTO test_result(test_name, success)
 SELECT 'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated, allocated = -75
   FROM invoice WHERE id = -5204;
 
+-- Testing inventory history here because we kind of need complete invoices here
+INSERT INTO test_result(test_name, success)
+ select 'get correct count of ar and ap lines from inv. history', count(*) = 26 
+  from goods__history(null, null, null, null, null, false, false, false, false, true, true);
+
+INSERT INTO test_result(test_name, success)
+ select 'get correct count of ar lines from inv. history', count(*) = 14
+  from goods__history(null, null, null, null, null, false, false, false, false, true, false);
+
+INSERT INTO test_result(test_name, success)
+ select 'get correct count of ap lines from inv. history', count(*) = 12
+  from goods__history(null, null, null, null, null, false, false, false, false, false, true);
+
+INSERT INTO test_result(test_name, success)
+ select 'get correct count of none (0) from inv. history', count(*) = 0
+  from goods__history(null, null, null, null, null, false, false, false, false, false, false);
+
+INSERT INTO test_result(test_name, success)
+ select 'get correct count of all from inv. history', count(*) = 26
+  from goods__history(null, null, null, null, null, null, null, null, null, null, null);
+
+
 
 SELECT * FROM test_result;
 
