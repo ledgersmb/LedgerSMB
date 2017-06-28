@@ -1113,14 +1113,13 @@ if (!$request->{exrate}) {
 # LETS GET THE CUSTOMER/VENDOR INFORMATION
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 # LETS GET THE DEPARTMENT INFO
-# WE HAVE TO SET $dbPayment->{department_id} in order to process
-if ($request->{department}) {
-    if ( $request->{department} =~ /^(\d+)--*/ ) {
+
+if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) ) {
         $Payment->{department_id} = $1;
-    } else {
-        die "Error: Invalid data";
-    }
+} else {
+        $Payment->{department_id} = undef;
 }
+
 #
 # We want to set a gl_description,
 # since we are using two tables there is no need to use doubled information,
@@ -1219,18 +1218,13 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
      $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
-     my $id;
-     if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
-        $id = $1;
-     } else {
-        die "Error: Invalid data";
-     }
-     my $cashid;
-     if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
-        $cashid = $1;
-     } else {
-        die "Error: Invalid data";
-     }
+
+      my $id = ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/)
+         ? $1 : undef;
+
+      my $cashid = ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/)
+         ? $1 : undef;
+
      push @op_amount, $request->{"overpayment_topay_$i"};
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
