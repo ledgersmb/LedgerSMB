@@ -1219,12 +1219,14 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # provides for us.
      $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
 
-      my $id = ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/)
-         ? $1 : undef;
-
-      my $cashid = ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/)
-         ? $1 : undef;
-
+     my $id;
+     if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
+          $id = $1;
+     }
+     my $cashid;
+     if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
+         $cashid = $1;
+     }
      push @op_amount, $request->{"overpayment_topay_$i"};
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
