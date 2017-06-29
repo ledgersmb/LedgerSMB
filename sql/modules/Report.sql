@@ -516,13 +516,22 @@ SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
 
 $$;
 
+DROP FUNCTION IF EXISTS report__aa_transactions
+(in_entity_class int, in_account_id int, in_entity_name text,
+ in_meta_number text,
+ in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
+ in_ponumber text, in_source text, in_description text, in_notes text,
+ in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
+ in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool);
+
 CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_entity_name text,
  in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text,
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
- in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool)
+ in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
+ in_partnumber text)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
 DECLARE retval aa_transactions_line;
@@ -612,6 +621,12 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                OR (in_closed IS TRUE AND ( a.force_closed IS NOT TRUE AND
                  abs(p.due) > 0.005) IS NOT TRUE)
             )
+            AND  -- by partnumber
+              (in_partnumber IS NULL
+                 OR a.id IN (
+                    select i.trans_id
+                      FROM invoice i JOIN parts p ON i.parts_id = p.id
+                     WHERE p.partnumber = in_partnumber))
 
 LOOP
 
