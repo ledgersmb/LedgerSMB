@@ -4,7 +4,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(114);
+    SELECT plan(119);
 
     -- Add data
 
@@ -833,7 +833,32 @@ BEGIN;
                     FROM invoice WHERE id = -5204;
     SELECT todo('Fix, Bad syntax and no id = -5204',1);
 --    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated);
-    DEALLOCATE test;
+     DEALLOCATE test;
+
+    PREPARE test AS select count(*) = 26
+  from goods__history(null, null, null, null, null, false, false, false, false, true, true);
+    select results_eq('test', array[true], 'get correct count of ar and ap lines from inv. history (26)');
+     DEALLOCATE test;
+
+    PREPARE test AS select count(*) = 14
+  from goods__history(null, null, null, null, null, false, false, false, false, true, false);
+    select results_eq('test', array[true], 'get correct count of ar lines from inv. history');
+     DEALLOCATE test;
+
+    PREPARE test AS select count(*) = 12
+  from goods__history(null, null, null, null, null, false, false, false, false, false, true);
+    select results_eq('test', array[true], 'get correct count (12) of ap lines from inv. history');
+     DEALLOCATE test;
+
+    PREPARE test AS select count(*) = 0
+  from goods__history(null, null, null, null, null, false, false, false, false, false, false);
+    select results_eq('test', array[true], 'get correct count (0) of ap lines from inv. history with all exclused');
+     DEALLOCATE test;
+
+    PREPARE test AS select count(*) = 26
+  from goods__history(null, null, null, null, null, null, null, null, null, null, null);
+    select results_eq('test', array[true], 'get correct count (26) of ap lines from inv. history with all default');
+     DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
