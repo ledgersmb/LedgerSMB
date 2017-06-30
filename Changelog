@@ -2,6 +2,9 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.9
+* Fix goods/services search with AR/AP invoices (Chris T, #2938)
+
 Changelog for 1.5.8
 * Fix printing of AR/AP transactions results in JavaScript error (Erik H)
 * Fix ODS output appearing on 'Title page' instead of 'Search results' (Erik H)
