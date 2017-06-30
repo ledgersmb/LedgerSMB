@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-$ENV{TMPDIR} = 't/var';
 $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
 
