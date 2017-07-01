@@ -1149,9 +1149,6 @@ sub print_form {
     my $due = "due";
     my $numberfld = "sinumber";
 
-    my $display_form =
-      ( $form->{display_form} ) ? $form->{display_form} : "display_form";
-
     if ( $form->{formname} eq "invoice" ) {
         $form->{label} = $locale->text('Invoice');
     }
