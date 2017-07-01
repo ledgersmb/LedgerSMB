@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.8-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-06-01 16:05+0000\n"
+"POT-Creation-Date: 2017-07-01 16:13+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Malay (Malaysia) (https://www.transifex.com/ledgersmb/"
 "teams/58325/ms_MY/)\n"
@@ -199,7 +199,7 @@ msgstr "Akses Dinafikan"
 #: UI/Contact/contact.html:20 UI/Contact/divs/credit.html:187
 #: UI/Contact/divs/credit.html:188 UI/journal/journal_entry.html:113
 #: UI/orders/order.html:253 UI/payments/payment2.html:86
-#: UI/payments/payment2.html:240 UI/payments/payment2.html:304
+#: UI/payments/payment2.html:246 UI/payments/payment2.html:311
 #: UI/payments/payments_detail.html:213 UI/payments/payments_filter.html:95
 #: UI/payroll/deduction.html:50 UI/payroll/income.html:52
 #: UI/rc-reconciliation.html:12 UI/reconciliation/upload.html:25
@@ -229,7 +229,7 @@ msgstr "Nama Akaun"
 msgid "Account No."
 msgstr "No. Akaun"
 
-#: bin/ic.pl:1024 bin/ic.pl:1678 lib/LedgerSMB/Report/Budget/Search.pm:124
+#: bin/ic.pl:1024 bin/ic.pl:1675 lib/LedgerSMB/Report/Budget/Search.pm:124
 #: lib/LedgerSMB/Report/Budget/Variance.pm:73 lib/LedgerSMB/Report/COA.pm:88
 #: lib/LedgerSMB/Report/Contact/History.pm:60
 #: lib/LedgerSMB/Report/Contact/History.pm:141
@@ -362,7 +362,7 @@ msgstr "Aktif pada"
 msgid "Active Sessions"
 msgstr "Sesi Aktif"
 
-#: bin/am.pl:1533 bin/ic.pl:2104 lib/LedgerSMB/Report/File/Incoming.pm:102
+#: bin/am.pl:1533 bin/ic.pl:2101 lib/LedgerSMB/Report/File/Incoming.pm:102
 #: lib/LedgerSMB/Report/File/Internal.pm:90
 msgid "Add"
 msgstr "Tambah"
@@ -589,7 +589,7 @@ msgstr ""
 msgid "Added id [_1]"
 msgstr ""
 
-#: bin/aa.pl:603 bin/arap.pl:175 bin/ic.pl:1681 bin/ir.pl:464 bin/is.pl:480
+#: bin/aa.pl:603 bin/arap.pl:175 bin/ic.pl:1678 bin/ir.pl:464 bin/is.pl:480
 #: bin/oe.pl:441 bin/pe.pl:668 UI/Contact/divs/address.html:80
 #: UI/Contact/divs/address.html:125 UI/Reports/filters/contact_search.html:90
 #: UI/Reports/filters/purchase_history.html:70
@@ -752,7 +752,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:135 templates/xedemo/sales_order.tex:122
 #: templates/xedemo/sales_quotation.html:104
 #: templates/xedemo/sales_quotation.tex:91 UI/orders/order.html:249
-#: UI/payments/payment2.html:308 UI/Reports/filters/gl.html:103
+#: UI/payments/payment2.html:315 UI/Reports/filters/gl.html:103
 #: UI/Reports/filters/gl.html:109
 #: UI/Reports/filters/invoice_outstanding.html:197
 #: UI/Reports/filters/invoice_search.html:308
@@ -797,7 +797,7 @@ msgstr ""
 msgid "Amount to be used"
 msgstr ""
 
-#: UI/payments/payment2.html:220
+#: UI/payments/payment2.html:225
 msgid "Amount to pay"
 msgstr ""
 
@@ -895,7 +895,7 @@ msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
 msgid "As per"
 msgstr ""
 
-#: bin/ic.pl:2224
+#: bin/ic.pl:2221
 msgid "Assemblies restocked!"
 msgstr "Pemasangan diisi semula"
 
@@ -1289,7 +1289,7 @@ msgstr ""
 msgid "Billion"
 msgstr ""
 
-#: bin/ic.pl:493 bin/ic.pl:2097 bin/io.pl:248 bin/oe.pl:1859
+#: bin/ic.pl:493 bin/ic.pl:2094 bin/io.pl:248 bin/oe.pl:1859
 #: lib/LedgerSMB/Report/Inventory/History.pm:134
 #: lib/LedgerSMB/Report/Inventory/Search.pm:214
 #: templates/demo/bin_list.html:154 templates/demo/bin_list.tex:109
@@ -1478,7 +1478,7 @@ msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun perbelanjaan tidak wujud!"
 msgid "Cannot create Service; Income account does not exist!"
 msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
-#: bin/ic.pl:1995
+#: bin/ic.pl:1992
 msgid "Cannot delete item!"
 msgstr "Barang tidak boleh dipadam"
 
@@ -1533,7 +1533,7 @@ msgstr "Cukai tidak disimpan!"
 msgid "Cannot specify both debits and credits for budget line [_1]"
 msgstr ""
 
-#: bin/ic.pl:2227
+#: bin/ic.pl:2224
 msgid "Cannot stock assemblies!"
 msgstr "Pemasangan tidak boleh diisi semula"
 
@@ -1548,7 +1548,7 @@ msgstr ""
 msgid "Cash"
 msgstr "Tunai"
 
-#: UI/payments/payment2.html:305 UI/Reports/filters/payments.html:65
+#: UI/payments/payment2.html:312 UI/Reports/filters/payments.html:65
 msgid "Cash Account"
 msgstr ""
 
@@ -1592,7 +1592,7 @@ msgstr ""
 msgid "Check"
 msgstr "Semak"
 
-#: bin/ic.pl:2033
+#: bin/ic.pl:2030
 msgid "Check Inventory"
 msgstr "Periksa Senarai Barang"
 
@@ -1851,7 +1851,7 @@ msgid "Content"
 msgstr ""
 
 #: bin/aa.pl:1761 bin/arap.pl:269 bin/arapprn.pl:417 bin/ic.pl:956
-#: bin/ic.pl:1770 bin/ic.pl:2052 bin/ic.pl:2201 bin/io.pl:620 bin/io.pl:1081
+#: bin/ic.pl:1767 bin/ic.pl:2049 bin/ic.pl:2198 bin/io.pl:620 bin/io.pl:1081
 #: bin/oe.pl:1547 bin/oe.pl:2075 bin/oe.pl:2586 bin/pe.pl:330 bin/pe.pl:749
 #: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:626
 #: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Scripts/payment.pm:1357
@@ -2095,7 +2095,7 @@ msgstr "Mata wang (kolon-berasingan)"
 #: UI/Contact/divs/credit.html:222 UI/Contact/pricelist.csv:46
 #: UI/Contact/pricelist.html:59 UI/Contact/pricelist.tex:62
 #: UI/orders/order.html:48 UI/payments/payment1.html:56
-#: UI/payments/payment2.html:131 UI/payments/payments_filter.html:123
+#: UI/payments/payment2.html:133 UI/payments/payments_filter.html:123
 #: UI/payments/use_overpayment1.html:43 UI/payments/use_overpayment2.html:92
 #: UI/Reports/filters/invoice_outstanding.html:218
 #: UI/Reports/filters/invoice_search.html:327
@@ -2647,7 +2647,7 @@ msgid "Depreciation Successful"
 msgstr "susut nilai berjaya"
 
 #: bin/aa.pl:612 bin/aa.pl:663 bin/aa.pl:1523 bin/am.pl:841 bin/ic.pl:746
-#: bin/ic.pl:1267 bin/ic.pl:2026 bin/ic.pl:2093 bin/io.pl:236 bin/io.pl:1722
+#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1722
 #: bin/ir.pl:479 bin/is.pl:498 bin/oe.pl:1852 bin/oe.pl:2056 bin/oe.pl:2134
 #: bin/oe.pl:2168 bin/oe.pl:2417 bin/pe.pl:311 bin/pe.pl:357 bin/pe.pl:386
 #: bin/pe.pl:1038 lib/LedgerSMB/Report/Aging.pm:109
@@ -3373,7 +3373,7 @@ msgstr "Tukar"
 #: bin/aa.pl:434 bin/ir.pl:351 bin/is.pl:331 bin/oe.pl:341 bin/oe.pl:349
 #: bin/oe.pl:1533 lib/LedgerSMB/Report/Contact/History.pm:116
 #: lib/LedgerSMB/Scripts/payment.pm:802 UI/orders/order.html:54
-#: UI/payments/payment2.html:139 UI/payments/payments_detail.html:146
+#: UI/payments/payment2.html:141 UI/payments/payments_detail.html:146
 #: UI/payments/payments_detail.html:155 UI/payments/use_overpayment2.html:100
 #: UI/Reports/filters/overpayments.html:51 UI/Reports/filters/payments.html:110
 msgid "Exchange Rate"
@@ -4180,12 +4180,12 @@ msgstr "Inventori Pelarasan"
 msgid "Inventory and COGS"
 msgstr ""
 
-#: bin/ic.pl:1813
+#: bin/ic.pl:1810
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
 
-#: bin/ic.pl:1812
+#: bin/ic.pl:1809
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 
@@ -4368,11 +4368,11 @@ msgstr ""
 #: templates/xedemo/sales_order.html:128 templates/xedemo/sales_order.tex:118
 #: templates/xedemo/sales_quotation.html:97
 #: templates/xedemo/work_order.html:128 templates/xedemo/work_order.tex:124
-#: UI/io-email.html:96 UI/payments/payment2.html:303
+#: UI/io-email.html:96 UI/payments/payment2.html:310
 msgid "Item"
 msgstr "Barang"
 
-#: bin/ic.pl:1992
+#: bin/ic.pl:1989
 msgid "Item deleted!"
 msgstr "Barang dipadam"
 
@@ -4821,12 +4821,12 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:796 templates/demo/ap_transaction.html:195
 #: templates/demo_with_images/ap_transaction.html:195
 #: templates/xedemo/ap_transaction.html:195 UI/journal/journal_entry.html:118
-#: UI/orders/order.html:248 UI/payments/payment2.html:307
+#: UI/orders/order.html:248 UI/payments/payment2.html:314
 #: UI/Reports/filters/gl.html:75 UI/Reports/filters/gl.html:249
 msgid "Memo"
 msgstr "Memo"
 
-#: UI/payments/payment2.html:211
+#: UI/payments/payment2.html:216
 msgid "Memo to help retrieval"
 msgstr ""
 
@@ -5255,7 +5255,7 @@ msgstr ""
 msgid "Null model numbers"
 msgstr ""
 
-#: bin/ic.pl:745 bin/ic.pl:1264 bin/ic.pl:2020 bin/ic.pl:2089 bin/io.pl:233
+#: bin/ic.pl:745 bin/ic.pl:1264 bin/ic.pl:2017 bin/ic.pl:2086 bin/io.pl:233
 #: bin/oe.pl:1849 bin/pe.pl:268 bin/pe.pl:350 bin/pe.pl:382
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:140
 #: templates/demo/invoice.tex:139 templates/demo/packing_list.html:119
@@ -5316,7 +5316,7 @@ msgstr ""
 msgid "OH"
 msgstr "OH"
 
-#: UI/payments/payment2.html:300
+#: UI/payments/payment2.html:307
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr ""
 
@@ -5614,7 +5614,7 @@ msgstr "Jumlah PO"
 msgid "POST"
 msgstr "SIMPAN"
 
-#: UI/payments/payment2.html:475 UI/payments/use_overpayment2.html:358
+#: UI/payments/payment2.html:485 UI/payments/use_overpayment2.html:358
 msgid "POST AND PRINT"
 msgstr "SIMPAN dan Cetak"
 
@@ -6003,7 +6003,7 @@ msgstr ""
 #: bin/aa.pl:905 bin/aa.pl:937 bin/aa.pl:957 bin/gl.pl:258 bin/gl.pl:298
 #: bin/ir.pl:541 bin/ir.pl:575 bin/ir.pl:944 bin/is.pl:585 bin/is.pl:623
 #: bin/is.pl:1028 lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
-#: UI/payments/payment2.html:469
+#: UI/payments/payment2.html:479
 msgid "Post"
 msgstr "Simpan"
 
@@ -6329,7 +6329,7 @@ msgstr ""
 msgid "Q"
 msgstr ""
 
-#: bin/ic.pl:1259 bin/ic.pl:2100 bin/io.pl:239 bin/oe.pl:1855 bin/oe.pl:2147
+#: bin/ic.pl:1259 bin/ic.pl:2097 bin/io.pl:239 bin/oe.pl:1855 bin/oe.pl:2147
 #: bin/pe.pl:1041 lib/LedgerSMB/Report/Contact/History.pm:87
 #: lib/LedgerSMB/Report/Inventory/History.pm:155
 #: lib/LedgerSMB/Report/Inventory/Search.pm:294
@@ -6384,7 +6384,7 @@ msgstr "Kuantiti"
 msgid "Quantity"
 msgstr ""
 
-#: bin/ic.pl:2217
+#: bin/ic.pl:2214
 msgid "Quantity exceeds available units to stock!"
 msgstr "Kuantiti melebihi unit yang ada kepada stok!"
 
@@ -6473,7 +6473,7 @@ msgstr "Nombor RFQ"
 msgid "RFQs"
 msgstr "RFQs"
 
-#: bin/ic.pl:486 bin/ic.pl:2102 lib/LedgerSMB/Report/Inventory/Search.pm:210
+#: bin/ic.pl:486 bin/ic.pl:2099 lib/LedgerSMB/Report/Inventory/Search.pm:210
 #: UI/Reports/filters/search_goods.html:295
 msgid "ROP"
 msgstr ""
@@ -7229,7 +7229,7 @@ msgstr "Pilih Mesin Pencetak!"
 msgid "Select by Default:"
 msgstr "Pilih Tetapan utama"
 
-#: bin/arap.pl:184 bin/ic.pl:1687 bin/pe.pl:672
+#: bin/arap.pl:184 bin/ic.pl:1684 bin/pe.pl:672
 msgid "Select from one of the names below"
 msgstr "Pilih salah satu nama dibawah"
 
@@ -7659,8 +7659,8 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:193 templates/xedemo/invoice.html:255
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:29
 #: UI/journal/journal_entry.html:117 UI/orders/order.html:247
-#: UI/payments/payment2.html:109 UI/payments/payment2.html:253
-#: UI/payments/payment2.html:306 UI/payments/payments_detail.html:304
+#: UI/payments/payment2.html:109 UI/payments/payment2.html:259
+#: UI/payments/payment2.html:313 UI/payments/payments_detail.html:304
 #: UI/reconciliation/report.html:84 UI/reconciliation/report.html:159
 #: UI/reconciliation/report.html:210 UI/Reports/filters/gl.html:69
 #: UI/Reports/filters/gl.html:243 UI/Reports/filters/inventory_adj.html:11
@@ -7669,7 +7669,7 @@ msgstr ""
 msgid "Source"
 msgstr "Sumber"
 
-#: UI/payments/payment2.html:126
+#: UI/payments/payment2.html:128
 msgid "Source documentation"
 msgstr ""
 
@@ -7793,7 +7793,7 @@ msgstr ""
 msgid "Stock"
 msgstr "Stok"
 
-#: bin/ic.pl:2002 bin/ic.pl:2109 sql/Pg-database.sql:2938
+#: bin/ic.pl:1999 bin/ic.pl:2106 sql/Pg-database.sql:2938
 msgid "Stock Assembly"
 msgstr "Himpunan Stok "
 
@@ -7853,7 +7853,7 @@ msgstr "Dihantar"
 #: templates/xedemo/purchase_order.html:159
 #: templates/xedemo/sales_order.html:161
 #: templates/xedemo/sales_quotation.html:130 UI/orders/order.html:215
-#: UI/payments/payment2.html:294 UI/payments/payment2.html:448
+#: UI/payments/payment2.html:301 UI/payments/payment2.html:458
 #: UI/payments/use_overpayment2.html:140 UI/payments/use_overpayment2.html:326
 #: UI/Reports/filters/gl.html:296
 #: UI/Reports/filters/invoice_outstanding.html:281
@@ -8457,11 +8457,11 @@ msgstr ""
 msgid "To: [_1]"
 msgstr ""
 
-#: UI/payments/payment2.html:173
+#: UI/payments/payment2.html:178
 msgid "Toggle all removal checkboxes"
 msgstr ""
 
-#: UI/payments/payment2.html:288
+#: UI/payments/payment2.html:295
 msgid "Toggle removal of entry in current payment"
 msgstr ""
 
@@ -8529,7 +8529,7 @@ msgstr "Tahap Tertinggi"
 #: templates/xedemo/sales_quotation.html:154 templates/xedemo/timecard.html:105
 #: templates/xedemo/timecard.tex:45 UI/orders/order.html:225
 #: UI/payments/payment1.html:86 UI/payments/payment1.html:95
-#: UI/payments/payment2.html:453 UI/payments/payments_detail.html:326
+#: UI/payments/payment2.html:463 UI/payments/payments_detail.html:326
 #: UI/reconciliation/report.html:146 UI/reconciliation/report.html:197
 #: UI/reconciliation/report.html:241
 #: UI/Reports/filters/invoice_outstanding.html:211
@@ -8843,7 +8843,7 @@ msgstr ""
 #: bin/ir.pl:533 bin/ir.pl:943 bin/is.pl:577 bin/is.pl:1026 bin/oe.pl:629
 #: bin/oe.pl:852 bin/oe.pl:1952 bin/pe.pl:606
 #: lib/LedgerSMB/Scripts/budgets.pm:97 UI/am-taxes.html:72
-#: UI/payments/payment2.html:463 UI/payments/payments_detail.html:469
+#: UI/payments/payment2.html:473 UI/payments/payments_detail.html:469
 #: UI/payroll/deduction.html:90 UI/payroll/income.html:96
 #: UI/reconciliation/report.html:267
 msgid "Update"
@@ -8918,9 +8918,8 @@ msgid "User already exists. Import?"
 msgstr "Pengguna telah wujud. impot?"
 
 #: UI/Contact/divs/user.html:59 UI/setup/new_user.html:38
-#, fuzzy
 msgid "User creation"
-msgstr "Susut Nilai"
+msgstr ""
 
 #: UI/Contact/divs/user.html:28 UI/Contact/divs/user.html:41
 #: UI/setup/edit_user.html:29 UI/setup/edit_user.html:42
@@ -9048,7 +9047,7 @@ msgstr "Pembekal tiada dalam fail!"
 msgid "Verify"
 msgstr ""
 
-#: bin/old-handler.pl:167
+#: bin/old-handler.pl:165
 msgid "Version"
 msgstr "Versi"
 
@@ -9281,11 +9280,11 @@ msgstr ""
 msgid "[_1] [_2] Transaction"
 msgstr ""
 
-#: bin/ic.pl:1645
+#: bin/ic.pl:1642
 msgid "[_1]: Customer not on file!"
 msgstr ""
 
-#: bin/ic.pl:1567
+#: bin/ic.pl:1564
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
@@ -9293,7 +9292,7 @@ msgstr ""
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr ""
 
-#: bin/old-handler.pl:176
+#: bin/old-handler.pl:174
 msgid "action not defined!"
 msgstr ""
 
