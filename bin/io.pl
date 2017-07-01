@@ -1490,9 +1490,6 @@ sub print_form {
             $old_form->{message} = $form->{message};
             $old_form->{emailed} = $form->{emailed};
 
-            $old_form->{format} = "postscript" if $myconfig{printer};
-            $old_form->{media} = $myconfig{printer};
-
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }
 
