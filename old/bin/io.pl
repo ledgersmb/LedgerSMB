@@ -1149,9 +1149,6 @@ sub print_form {
     my $due = "due";
     my $numberfld = "sinumber";
 
-    my $display_form =
-      ( $form->{display_form} ) ? $form->{display_form} : "display_form";
-
     if ( $form->{formname} eq "invoice" ) {
         $form->{label} = $locale->text('Invoice');
     }
@@ -1483,9 +1480,6 @@ sub print_form {
 
             $old_form->{message} = $form->{message};
             $old_form->{emailed} = $form->{emailed};
-
-            $old_form->{format} = "postscript" if $myconfig{printer};
-            $old_form->{media} = $myconfig{printer};
 
             $old_form->save_intnotes( \%myconfig, ($order) ? 'oe' : lc $ARAP );
         }

@@ -881,7 +881,6 @@ sub recurring_details {
            SELECT s.*, ar.id AS arid, ar.invoice AS arinvoice,
                   ap.id AS apid, ap.invoice AS apinvoice,
                   ar.duedate - ar.transdate AS overdue,
-                  ar.datepaid - ar.transdate AS paid,
                   oe.reqdate - oe.transdate AS req,
                   oe.id AS oeid,
                           CASE oe.oe_class_id
