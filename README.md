@@ -49,6 +49,36 @@ a wide range of mobile browsers.
 
 # Quick start
 
+The quickest way to get set up is to use the Docker containers the project
+makes available through Docker Hub.
+
+After setting up Docker on the, run these commands to produce a testing
+setup:
+
+```sh
+ $ docker pull ledgersmb/ledgersmb
+ $ docker pull postgres
+ $ mkdir -p /var/lib/pg-container/data
+ $ docker run -d --name lsmb-postgres \
+      -v /var/lib/pg-container/data:/var/lib/postgresql/data \
+      -e POSTGRES_PASSWORD=<your secure password> \
+      -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
+ $ docker run -d --name lsmb --link lsmb-postgres ledgersmb/ledgersmb
+```
+
+The commands above automatically start the containers.
+
+More environment variables are available to be able to
+
+ * run the PostgreSQL database on a different server than the one
+   running the LedgerSMB container
+ * set up outgoing e-mail to send invoices, reports and other outputs
+   from the container
+
+See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgersmb/).
+
+# Quick start (from source)
+
 The instructions below are for getting started quickly; the [project's
 site](http://ledgersmb.org) provides [in-depth installation instructions](http://ledgersmb.org/topic/installing-ledgersmb-15)
 for **production** installs.
