@@ -42,7 +42,7 @@ below.
 
 ## Client
 
-A [Dojo 1.10 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
+A [Dojo 1.12 compatible web browser](http://dojotoolkit.org/reference-guide/1.10/releasenotes/1.10.html#user-agent-support)
 is all that's required on the client (except IE8 and 9); it includes Chrome as
 of version 13, FireFox as of 3.6 and MS Internet Explorer as of version 10 and
 a wide range of mobile browsers.
