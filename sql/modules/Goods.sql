@@ -489,18 +489,18 @@ $$
                  'i' as i_type
             FROM invoice) i ON p.id = i.parts_id
     JOIN (select o.id, 'oe' as o_table, ordnumber as ordnumber, c.oe_class,
-                 o.oe_class_id, o.transdate, o.entity_credit_account
+                 o.oe_class_id, o.transdate, o.entity_credit_account, 'o' as expected_line
             FROM oe o
             JOIN oe_class c ON o.oe_class_id = c.id
            UNION
           SELECT id, 'ar' as o_table, invnumber as ordnumber, 'is' as oe_class,
-                 null, transdate, entity_credit_account
+                 null, transdate, entity_credit_account, 'i' as expected_line
             FROM ar
            UNION
           SELECT id, 'ap' as o_table, invnumber as ordnumber, 'ir' as oe_class,
-                 null, transdate, entity_credit_account
+                 null, transdate, entity_credit_account, 'i' as expected_line
             FROM ap) o ON o.id = i.trans_id
-                          AND (o_table = 'oe') = (i_type = 'o')
+                          AND o.expected_line = i.i_type
     JOIN entity_credit_account eca ON o.entity_credit_account = eca.id
     JOIN entity e ON e.id = eca.entity_id
    WHERE (in_partnumber is null or p.partnumber like in_partnumber || '%')
@@ -508,12 +508,17 @@ $$
               OR p.description @@ plainto_tsquery(in_description))
          AND (in_date_from is null or in_date_from <= o.transdate)
          and (in_date_to is null or in_date_to >= o.transdate)
-         AND (in_inc_po is not true or o.oe_class = 'Purchase Order')
-         AND (in_inc_so is not true or o.oe_class = 'Sales Order')
-         AND (in_inc_quo is not true or o.oe_class = 'Quotation')
-         AND (in_inc_rfq is not true or o.oe_class = 'RFQ')
-         AND (in_inc_ir is not true or o.oe_class = 'ir')
-         AND (in_inc_is is not true or o.oe_class = 'is')
+         AND ((in_inc_po IS NULL AND in_inc_so IS NULL
+                AND in_inc_quo IS NULL AND in_inc_rfq IS NULL
+                AND in_inc_ir IS NULL AND in_inc_is IS NULL)
+              OR (
+                 (in_inc_po is true and o.oe_class = 'Purchase Order')
+                 OR (in_inc_so is true and o.oe_class = 'Sales Order')
+                 OR (in_inc_quo is true and o.oe_class = 'Quotation')
+                 OR (in_inc_rfq is true and o.oe_class = 'RFQ')
+                 OR (in_inc_ir is true and o.oe_class = 'ir')
+                 OR (in_inc_is is true and o.oe_class = 'is')
+             ))
 ORDER BY o.transdate desc, o.id desc;
 $$;
 

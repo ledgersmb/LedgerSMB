@@ -8,7 +8,13 @@ PROCESS "elements.html";
 PROCESS "dynatable.html";
 
 FORMATS = LIST_FORMATS();
-LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
+QSTRING = ENVARS.QUERY_STRING;
+
+IF NOT QSTRING.match('&amp;company=');
+   QSTRING = QSTRING _ '&amp;company=' _ DBNAME;
+END;
+
+LINK = request.script _ '?' _ QSTRING;
 LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 
 ?>
