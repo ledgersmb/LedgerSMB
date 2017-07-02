@@ -1727,10 +1727,12 @@ sub display_ship_receive {
 
     if ( $form->{vc} eq 'customer' ) {
         $form->{title} = $locale->text('Ship Merchandise');
+        $form->{type} = "ship_order";
         $shipped = $locale->text('Shipping Date');
     }
     else {
         $form->{title} = $locale->text('Receive Merchandise');
+        $form->{type} = "receive_order";
         $shipped = $locale->text('Date Received');
     }
 
