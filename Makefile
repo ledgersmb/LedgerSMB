@@ -9,7 +9,7 @@ endif
 
 .DEFAULT_GOAL := help
 
-DEB_essential := cpanminus postgresql make gcc libdbd-pg-perl
+DEB_essential := cpanminus postgresql make libdbd-pg-perl
 DEB_essential += starman
 DEB_perlmodules := libcgi-emulate-psgi-perl libcgi-simple-perl libconfig-inifiles-perl
 DEB_perlmodules += libdbd-pg-perl libdbi-perl libdatetime-perl
@@ -29,7 +29,7 @@ DEB_feature_OpenOffice := libopenoffice-oodoc-perl
 
 # Core packages provided by Fedora 24
 RHEL_essential := perl-devel perl-CPAN perl-App-cpanminus
-RHEL_essential += postgresql make gcc perl-DBD-Pg
+RHEL_essential += postgresql make perl-DBD-Pg
 RHEL_essential += perl-Starman
 RHEL_perlmodules := perl-CGI-Emulate-PSGI perl-CGI-Simple perl-Config-IniFiles
 RHEL_perlmodules += perl-DBD-Pg perl-DBI perl-DateTime perl-DateTime-Format-Strptime
@@ -409,7 +409,7 @@ cpan:
 	$(error "No make in $(PATH), please install make")
 	endif
 	ifeq (, $(shell which gcc))
-	$(error "No gcc in $(PATH), please install gcc")
+	$(error "No gcc in $(PATH), please install gcc. You can uninstall it after we finish.")
 	endif
 	cpanm --quiet --notest --with-feature=starman --installdeps .
 
