@@ -31,15 +31,10 @@ updateIRC() {
     ./notification-helpers/release-irc.sh $release_type $release_version
 }
 
-updateSourceforge() {  # note release-sourceforge.sh silently exits if $release_type != stable .   Anything else doesn't make sense.
-    ./notification-helpers/release-sourceforge.sh "$release_type" "$release_version"
-}
-
 RunAllUpdates() {
     if ! [[ "$release_type" == "old" ]]; then
         updateWikipedia "$release_version" "$release_date";
         updateIRC;
-        updateSourceforge;
     fi
     ./notification-helpers/release-email.sh;
 }

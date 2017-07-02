@@ -356,7 +356,7 @@ sub _preprocess {
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
-    local ($@);
+    local $@ = undef;
     if (eval {$rawvars->can('to_output')}){
         $rawvars = $rawvars->to_output;
     }
@@ -646,7 +646,7 @@ sub _http_output {
     LedgerSMB::App_State::cleanup();
 
     if (not defined $data and defined $self->{outputfile}) {
-        local $/;
+        local $/ = undef;
         open(my $fh, '<:bytes', $self->{outputfile}) or
             die 'Unable to open rendered file';
         $data = <$fh>;

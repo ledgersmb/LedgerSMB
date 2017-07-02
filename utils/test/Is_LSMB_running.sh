@@ -5,11 +5,24 @@ source utils/test/sysexits.shlib
 # You can add to either of these two variables to skip this test during travis setup.
 # If it's skipped during this early run, it should also be run later in xt/60 which will never be skipped.
 Repo_early_skip_list+=('https://github.com/ylavoie/LedgerSMB.git');
-Repo_early_skip_list+=('https://github.com/sbts/LedgerSMB.git');
+#Repo_early_skip_list+=('https://github.com/sbts/LedgerSMB.git');
 Repo_owner_early_skip_list+=('ylavoie');
-Repo_owner_early_skip_list+=('sbts');
+#Repo_owner_early_skip_list+=('sbts');
 
 [[ -x `which git` ]] && Repo_URL=`git config --get remote.origin.url` || Repo_URL='unknown'
+[[ "${Repo_URL,,}" == "unknown" ]] && {
+    [[ -r .git/config ]] && {
+        InSection=false;
+        while read -srt5 A B C; do
+            [[ "${A}${B}${C}" =~ .*[[].*[]] ]] && InSection=false;
+            $InSection && {
+                [[ "${A,,}" == 'url' ]] && Repo_URL="$C"
+                break;
+            }
+            [[ "${A,,}${B,,}${C,,}" =~ remote.*origin ]] && InSection=true;
+        done < .git/config
+    }
+}
 Repo_Slug_Owner="${TRAVIS_REPO_SLUG%%/*}"; Repo_Slug_Owner="${Repo_Slug_Owner:-unknown}"
 
 HELP() {

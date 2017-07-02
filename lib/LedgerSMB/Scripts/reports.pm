@@ -188,7 +188,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::reports');
 
 sub generate_balance_sheet {
     my ($request) = @_;
-    $ENV{LSMB_ALWAYS_MONEY} = 1;
+    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
