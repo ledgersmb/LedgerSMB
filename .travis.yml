@@ -146,3 +146,19 @@ after_success:
     fi
   - coverage-report
 
+after_failure:
+  # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
+  - echo ===============================
+  - echo === dmesg                   ===
+  - echo ===============================
+  - sudo dmesg
+  - echo ===============================
+  - echo === /tmp/plackup-access.log ===
+  - echo ===============================
+  - cat /tmp/plackup-access.log
+  - echo
+  - echo ===============================
+  - echo === /tmp/plackup-error.log ===
+  - echo ===============================
+  - cat /tmp/plackup-error.log
+  - echo
