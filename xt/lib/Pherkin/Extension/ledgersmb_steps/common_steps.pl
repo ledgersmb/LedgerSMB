@@ -136,7 +136,7 @@ Given qr/a vendor '(.*)'$/, sub {
         legal_name => $vendor_name,
         name => $vendor_name,
         entity_class => 1,
-        _DBH => $admin_dbh,
+        _dbh => $admin_dbh,
         );
     $company = $company->save;
 
@@ -147,7 +147,7 @@ Given qr/a vendor '(.*)'$/, sub {
     my $vendor = LedgerSMB::Entity::Credit_Account->new(
         entity_id => $company->entity_id,
         entity_class => 1,
-        _DBH => $admin_dbh,
+        _dbh => $admin_dbh,
         ar_ap_account_id => $accno_ids{'2100'},
         meta_number => $vendor_name,
         );
