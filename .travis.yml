@@ -34,7 +34,7 @@ matrix:
           packages:
             - nginx postgresql-9.5-pgtap
       env:
-        # - TEST_SAUCE=1
+        - TEST_SAUCE=1
         - DOJO_BUILT=0
     - perl: '5.22'
       addons:
