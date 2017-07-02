@@ -1048,7 +1048,7 @@ sub process_transactions {
             # something is not being copied back that needs to be.  Looking
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
-            for (qw(header dbversion company dbh login path sessionid
+            for (qw(header dbversion company dbh login path sessionid _auth
                     stylesheet timeout id)
             ) {
                 $form->{$_} = $pt->{$_};
