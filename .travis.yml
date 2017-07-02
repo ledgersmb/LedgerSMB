@@ -177,3 +177,8 @@ after_failure:
   - utils/diagnostics/t/01-system-resources.t
   # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
   - sudo dmesg
+  - echo === /tmp/plackup-access.log ===
+  - cat /tmp/plackup-access.log
+  - echo === /tmp/plackup-error.log ===
+  - cat /tmp/plackup-error.log
+
