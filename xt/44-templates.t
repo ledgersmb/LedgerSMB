@@ -145,7 +145,7 @@ VALUES ('provider-test3', NULL, 'Hello <?lsmb name ?>, ....',
 
 $output = '';
 $provider = LedgerSMB::Template::DBProvider->new({
-    _DBH => $dbh,
+    _dbh => $dbh,
     language_code => undef,
     format => 'html',
     PARSER => Template::Parser->new({
