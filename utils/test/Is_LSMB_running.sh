@@ -1,6 +1,16 @@
 #!/bin/bash
 
-source utils/test/sysexits.shlib
+[[ -r utils/test/sysexits.shlib ]] && source utils/test/sysexits.shlib || \
+    [[ -r sysexits.shlib ]] && source sysexits.shlib
+
+if [[ -z $EX_NOHOST ]]; then
+    echo '=================================='
+    echo '=================================='
+    echo "== sysexits.shlib wasn't loaded =="
+    echo '=================================='
+    echo '=================================='
+    exit 99;
+fi
 
 # You can add to either of these two variables to skip this test during travis setup.
 # If it's skipped during this early run, it should also be run later in xt/60 which will never be skipped.
@@ -72,6 +82,11 @@ DIE() {
     echo '=============================================';
     echo "$@";
     echo '=============================================';
+    DUMPfile /tmp/Is_LSMB_running.log
+    DUMPfile /tmp/Is_LSMB_running.html
+    DUMPfile /tmp/plackup-error.log;
+    DUMPfile /tmp/plackup-access.log;
+
     exit $E;
 }
 
@@ -126,21 +141,14 @@ WaitForPlackup() {
 }
 
 SkipEarly
-WaitForPlackup || exit $EX_NOHOST
+WaitForPlackup || DIE $EX_NOHOST "ERROR: plackup or starman didn't start for some reason" "Check these logs for more info"
 
 
 if curl --max-time 60 --connect-timeout 60 --progress-bar localhost:5001/setup.pl 2>/tmp/Is_LSMB_running.log >/tmp/Is_LSMB_running.html ; then
     echo "Starman/Plack is Running";
 else    # fail early if starman is not running
     E=$?;
-    echo '=============================';
-    echo "  Starman/plack Not running";
-    echo '=============================';
-    DUMPfile /tmp/Is_LSMB_running.log
-    DUMPfile /tmp/Is_LSMB_running.html
-    DUMPfile /tmp/plackup-error.log;
-    DUMPfile /tmp/plackup-access.log;
-    exit $E;
+    DIE $E "ERROR: Starman/plack Not running";
 fi
 
 if $UPDATE; then
