@@ -83,12 +83,12 @@ on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
  * cpanminus  This can be manually installed, or installed as a system package.
+   It may not be necessary to install cpanminus if you are only going to install from debian packages.
  * PostgreSQL client libraries
  * PostgreSQL server
  * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
    This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
    in RedHat/Fedora
- * gcc        This is needed by quite a few of our cpan dependencies
  * make       This is used by cpan dependencies during thier build process
 
 Then, some of the features listed below have system requirements as well:
@@ -108,6 +108,9 @@ This section depends on [a working local::lib installation](https://ledgersmb.or
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
 and `cpanminus` respectively). `cpanm` depends on the `make` and `gcc` commands being available.
+
+NOTE: gcc can be removed after all cpan dependencies are installed.
+      However, it may be necessary to reinstall it if additional modules are required during an upgrade
 
 To install the Perl module dependencies, run:
 
