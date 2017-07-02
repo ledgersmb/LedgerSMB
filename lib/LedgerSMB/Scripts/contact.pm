@@ -84,7 +84,7 @@ sub get_by_cc {
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
     { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
+        local $@ = undef; # pre-5.14, do not die() in this block
         if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
             $company = $entity;
         } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
@@ -117,7 +117,7 @@ sub get {
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
     { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
+        local $@ = undef; # pre-5.14, do not die() in this block
         if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
             $company = $entity;
         } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
@@ -301,7 +301,7 @@ sub _main_screen {
          value => 3} if $credit_act->{id};
 
     { # pre-5.14 compatibility block
-        local ($@); # pre-5.14, do not die() in this block
+        local $@ = undef; # pre-5.14, do not die() in this block
         $request->close_form() if eval {$request->can('close_form')};
         $request->open_form() if eval {$request->can('close_form')};
     }

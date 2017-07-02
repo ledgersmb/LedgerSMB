@@ -343,7 +343,7 @@ This runs the report and sets the $report->rows.
 
 sub run_report {
     my $self = shift;
-    $ENV{LSMB_ALWAYS_MONEY} = 1;
+    local $ENV{LSMB_ALWAYS_MONEY} = 1;
     $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){

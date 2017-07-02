@@ -165,17 +165,16 @@ use utf8;
 use Try::Tiny;
 use Carp;
 use DBI;
-use JSON ();
+use JSON::MaybeXS;
 
 use base qw(LedgerSMB::Request);
 our $VERSION = '1.6.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
-my $json = JSON->new
-    ->pretty(1)
-    ->indent(1)
-    ->utf8(1)
-    ->convert_blessed(1);
+my $json = JSON::MaybeXS->new( pretty => 1,
+                               utf8 => 1,
+                               indent => 1,
+                               convert_blessed => 1);
 
 
 sub new {

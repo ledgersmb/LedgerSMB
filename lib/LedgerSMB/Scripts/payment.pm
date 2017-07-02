@@ -928,8 +928,8 @@ sub payment2 {
                 discount          => $request->{"optional_discount_$invoice_id"} ? "$invoice->{discount}" : 0 ,
                 optional_discount =>  $request->{"optional_discount_$invoice_id"},
                 exchange_rate     =>  "$invoice->{exchangerate}",
-                               due_fx            =>  "$due_fx", # This was set at the begining of the for statement
-                topay             => "$invoice->{due}" - "$invoice->{discount}",
+                due_fx            =>  "$due_fx", # This was set at the begining of the for statement
+                topay             => $invoice->{due} - $invoice->{discount},
                 source_text       =>  $request->{"source_text_$invoice_id"},
                 optional          =>  $request->{"optional_pay_$invoice_id"},
                 selected_account  =>  $request->{"account_$invoice_id"},
@@ -1164,7 +1164,7 @@ for my $ref (0 .. $#array_options) {
          # if this is the last payment of an invoice
      my  $temporary_discount = 0;
      my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
-     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due_fx}" <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
+     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($array_options[$ref]->{due_fx} <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
          $temporary_discount = $array_options[$ref]->{discount_fx};
      }
          #
@@ -1606,7 +1606,7 @@ for my $ref (0 .. $#overpayments) {
                                     available      =>  "$overpayments[$ref]->{available}",
                                     touse          =>  qq|$amount_to_be_used{"$overpayments[$ref]->{accno}"}|
                             };
-       $ui_avble_subtotal += "$overpayments[$ref]->{available}";
+       $ui_avble_subtotal += $overpayments[$ref]->{available};
 }
 
 

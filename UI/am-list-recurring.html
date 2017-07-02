@@ -1,7 +1,11 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" method="post" action="<?lsmb form.script ?>">
+<form data-dojo-type="lsmb/Form" method="post" action="am.pl">
+  <?lsmb # This form is also rendered when form.script contains 'is.pl'
+         # or 'ir.pl'; however, submission really must be taken to 'am.pl'
+         # so we have no option but to hard-code it ?>
+
 
 <table width="100%">
   <tr>

@@ -32,7 +32,7 @@ use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
 
 
-local $@; # localizes just for initial load.
+local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
 
 =head1 FUNCTIONS
@@ -50,7 +50,7 @@ sub old_app {
         sub {
             my $uri = $ENV{REQUEST_URI};
             $uri =~ s/\?.*//;
-            $ENV{SCRIPT_NAME} = $uri;
+            local $ENV{SCRIPT_NAME} = $uri;
 
             _run_old();
         });

@@ -36,6 +36,7 @@ sub content_test {
     my $ui_header_used = 0;
     $ui_header_used = 1 if $filename =~ m/UI\/lib\//;
     my $is_snippet = 0;
+    my $no_validate = 0;
 
     my ($fh, @tab_lines, @trailing_space_lines, $text);
     $text = '';
@@ -44,9 +45,11 @@ sub content_test {
         push @tab_lines, ($.) if /\t/;
         push @trailing_space_lines, ($.) if / $/;
         $ui_header_used = 1 if /ui-header\.html/;
-        $is_snippet = 1 if /<?lsmb# HTML Snippet.*?>/;
-        $is_snippet = 1 if /<!-- HTML Snippet.*-->/;
-        $is_snippet = 1 if $filename =~ /js-src\/lsmb.*\/templates/;
+        $no_validate = 1 if /<\?lsmb# HTML Snippet.*, +no validate *.+\?>/
+                         || /<!-- HTML Snippet.*, +no validate *.+-->/;
+        $is_snippet = 1 if /<\?lsmb# HTML Snippet.*\?>/
+                        || /<!-- HTML Snippet.*-->/
+                        || $filename =~ /js-src\/lsmb.*\/templates/;
         $text .= $_;
     }
     close $fh;
@@ -96,7 +99,7 @@ sub content_test {
 
     my $error_count = $lint->errors;
 
-    local $TODO = "Postponed" if $filename =~ m/menu\/expanding.html/;
+    local $TODO = "Postponed" if $no_validate;
     foreach my $error ( $lint->errors ) {
         if ( $error->as_string !~ m/(<\/?title>|<\?lsmb.+\?>)/
            && ! ((  $error->as_string =~ m/<(head|html)> tag is required/

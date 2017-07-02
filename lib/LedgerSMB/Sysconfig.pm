@@ -128,7 +128,11 @@ sub def {
         }
 
         ${$name} = $ENV{$envvar} if ( $envvar && defined $ENV{$envvar} );  # If an environment variable is associated and currently defined, override the configfile and default with the ENV VAR
-        $ENV{$envvar} = ${$name}                                # If an environment variable is associated Set it based on the current value (taken from the config file, default, or pre-existing env var.
+
+        # If an environment variable is associated, set it  based on the
+        # current value (taken from the config file, default, or pre-existing
+        #  env var.
+        $ENV{$envvar} = ${$name}
             if $envvar && defined ${$name};
 
         # create a functional interface
@@ -531,7 +535,7 @@ our $latex = 0;
 
 sub override_defaults {
 
-    local $@; # protect existing $@
+    local $@ = undef; # protect existing $@
 
     # Check Latex
     $latex = eval {require Template::Plugin::Latex; 1;};

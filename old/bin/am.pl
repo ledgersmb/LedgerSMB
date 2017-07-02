@@ -863,7 +863,7 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|$form->{script}?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&login=$form->{login}&sessionid=$form->{sessionid}&module=$ref->{module}&invoice=$ref->{invoice}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
@@ -1048,7 +1048,7 @@ sub process_transactions {
             # something is not being copied back that needs to be.  Looking
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
-            for (qw(header dbversion company dbh login path sessionid
+            for (qw(header dbversion company dbh login path sessionid _auth
                     stylesheet timeout id)
             ) {
                 $form->{$_} = $pt->{$_};

@@ -677,13 +677,8 @@ sub redirect {
 sub _redirect {
     # referenced directly from am.pl, because of the need of our return value
     use List::Util qw(first);
-    my ($form) = @_;
-
-    my ( $script, $argv ) = split( /\?/, $form->{callback} );
-
-    my @common_attrs = qw(
-      dbh login favicon stylesheet titlebar password vc header
-    );
+    my ($self) = @_;
+    my ( $script, $argv ) = split( /\?/, $self->{callback}, 2 );
 
     if ( !$script ) {    # http redirect to login.pl if called w/no args
         print "Location: login.pl\n";
@@ -691,13 +686,13 @@ sub _redirect {
         return;
     }
 
-    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}){
-        print "Location: $form->{callback}\n";
+    if (first { $_ eq $script } @{LedgerSMB::Sysconfig::newscripts}) {
+        print "Location: $self->{callback}\n";
         print "Content-type: text/html\n\n";
         return;
     }
 
-    $form->error(
+    $self->error(
         LedgerSMB::App_State::Locale->text(
             "[_1]:[_2]:[_3]: Invalid Redirect",
             __FILE__,
@@ -706,20 +701,12 @@ sub _redirect {
         )
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
 
-    my %temphash;
-    for (@common_attrs) {
-        $temphash{$_} = $form->{$_};
-    }
-    $temphash{action} = $form->{action};
 
-    undef $form;
-    $form = Form->new($argv);
-
-    for (@common_attrs) {
-        $form->{$_} = $temphash{$_};
-    }
-    $form->{action} ||= $temphash{action}; # default to old action if not set
-
+    my $form = Form->new($argv);
+    $form->{$_} = $self->{$_} for qw(
+      dbh login favicon stylesheet titlebar password vc header _auth
+    );
+    $form->{action} ||= $self->{action}; # default to old action if not set
     $form->{script} = $script;
 
     my %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
@@ -727,6 +714,7 @@ sub _redirect {
         $form->db_init( \%myconfig );
     }
 
+    $lsmb_legacy::form = $form;
     require "old/bin/$script";
     no strict 'refs';
     &{ "lsmb_legacy::$form->{action}" };
