@@ -32,7 +32,7 @@ requires 'PGObject', '>=1.403002, < 2';
 # PGObject::Simple 3.0.1 breaks our file uploads
 requires 'PGObject::Simple', '>=3.0.2';
 requires 'PGObject::Simple::Role', '1.13.2';
-requires 'PGObject::Type::BigFloat';
+requires 'PGObject::Type::BigFloat', '1.0.0';
 requires 'PGObject::Type::DateTime', '1.0.4';
 requires 'PGObject::Type::ByteString', '1.1.1';
 requires 'PGObject::Util::DBMethod';

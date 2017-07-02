@@ -133,7 +133,7 @@ sub create_employee {
         name => 'First Last',
         ssn => '1' . $emp_counter,
         country_id => 232, # United States
-        _DBH => $dbh,
+        _dbh => $dbh,
         );
     $emp->save;
 
@@ -154,7 +154,7 @@ sub create_user {
     my $user = LedgerSMB::Entity::User->new(
         entity_id => $args{entity_id},
         username => $username,
-        _DBH => $dbh,
+        _dbh => $dbh,
         );
     $user->create($args{password} // 'password');
     $dbh->do(qq(ALTER USER "$username" VALID UNTIL 'infinity'));

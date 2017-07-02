@@ -35,7 +35,7 @@ Given qr/a customer named "(.*)"/, sub {
         legal_name   => $customer,
 
         # internal fields
-        _DBH         => $dbh,
+        _dbh => $dbh,
         );
     $company = $company->save;
 
@@ -52,7 +52,7 @@ Given qr/a customer named "(.*)"/, sub {
     #     curr             => 'USD',
 
     #     # internal fields
-    #     _DBH             => $dbh,
+    #     _dbh => $dbh,
     #     );
     # $eca->save;
 
