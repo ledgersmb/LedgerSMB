@@ -429,6 +429,12 @@ fbsd_feature_XLS:
 #   make cpan
 #       installs any remaining perl dependancies using cpanm
 cpan:
+ifeq (, $(shell which make))
+	$(error "No make in $(PATH), please install make")
+endif
+ifeq (, $(shell which gcc))
+	$(error "No gcc in $(PATH), please install gcc")
+endif
 	cpanm --quiet --notest --with-feature=starman --installdeps .
 
 
