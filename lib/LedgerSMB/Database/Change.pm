@@ -74,7 +74,7 @@ If $raw is set to a true value, we do not wrap in a transaction.
 sub content {
     my ($self, $raw) = @_;
     unless ($self->{_content}) {
-        local $!;
+        local $! = undef;
         open my $fh, '<', $self->path or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
         binmode $fh, ':utf8';
@@ -257,7 +257,7 @@ Returns true if the tracking system needs to be initialized
 
 sub needs_init {
     my ($dbh) = @_;
-    local $@;
+    local $@ = undef;
     my $rows = eval { $dbh->prepare(
        "select 1 from db_patches"
     )->execute(); };

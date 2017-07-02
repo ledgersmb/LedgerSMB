@@ -75,7 +75,7 @@ sub convert_to_form{
     my ($trans, $form, $type) = @_;
     my %myconfig;
     $form->{session_id} = $trans->{session_id};
-    if ($type eq 1){
+    if ($type == 1){
         $form->{reference} = $trans->{reference};
         $form->{description} = $trans->{description};
         $form->{rowcount} = 0;
@@ -96,7 +96,7 @@ sub convert_to_form{
     } else { #ar or ap
         my $meta_number = $trans->{credit_data}->{meta_number};
         $form->{reverse} = 0;
-        if ($type eq 2){
+        if ($type == 2){
             $form->{customer} = $meta_number;
         } else {
             $form->{vendor} = $meta_number;

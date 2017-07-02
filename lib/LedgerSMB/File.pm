@@ -271,7 +271,7 @@ sub get_for_template{
         print $fh $result->{content} or die "Cannot print to file $full_path";;
         close $fh or die "Cannot close file $full_path";
         { #pre-5.14 compatibility block
-            local ($@); # pre-5.14, do not die() in this block
+            local $@ = undef; # pre-5.14, do not die() in this block
             eval { # Block used so that Image::Size is optional
                 require Image::Size;
                 my ($x, $y);
