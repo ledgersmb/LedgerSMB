@@ -74,6 +74,14 @@ current='/tmp/Is_LSMB_running.html'
 
 printf -v LF "\n";
 
+DUMPfile() {
+    echo "== $1";
+    if [[ -r "$1" ]]; then
+        cat -v "$1";
+    fi
+    echo '=============================';
+}
+
 DIE() {
     E=$1; shift;
     T=$1; shift
@@ -88,14 +96,6 @@ DIE() {
     DUMPfile /tmp/plackup-access.log;
 
     exit $E;
-}
-
-DUMPfile() {
-    echo "== $1";
-    if [[ -r "$1" ]]; then
-        cat -v "$1";
-    fi
-    echo '=============================';
 }
 
 SkipEarly() {
@@ -134,8 +134,6 @@ WaitForPlackup() {
     done
     if ! $httpdrunning; then
         echo "The starman/plack httpd didn't respond before the timeout";
-        DUMPfile /tmp/plackup-error.log;
-        DUMPfile /tmp/plackup-access.log;
         return 1;
     fi
 }
