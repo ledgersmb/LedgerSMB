@@ -104,6 +104,8 @@ sub pre_scenario {
     $stash->{"the admin password"} = $self->admin_user_password;
     $stash->{"the company"} = $self->last_feature_stash->{"the company"}
         if $self->last_feature_stash->{"the company"};
+
+    $stash->{one_db} = grep { $_ eq 'one-db'} @{$scenario->tags};
 }
 
 
@@ -162,10 +164,19 @@ sub create_user {
     return $user;
 }
 
+sub check_database {
+    my ($self,$db) = @_;
+    my $returnstring = `psql -c "SELECT 1 FROM pg_database WHERE datname='$db'"`;
+    return grep { /^ +1$/ } split("\n", $returnstring);
+}
 
 sub create_template {
     my ($self) = @_;
 
+    if ($self->last_scenario_stash->{one_db} && $self->check_database($self->template_db_name)) {
+        $self->template_created(1);
+        return;
+    }
     my $template = $self->template_db_name;
     my $admin = $self->admin_user_name;
     $self->super_dbh->do(qq(DROP DATABASE IF EXISTS "$template"));
@@ -202,7 +213,6 @@ sub create_template {
     $self->template_created(1);
 }
 
-
 sub ensure_template {
     my ($self) = @_;
 
@@ -210,17 +220,18 @@ sub ensure_template {
         unless $self->template_created;
 }
 
-
 sub create_from_template {
     my ($self, $company) = @_;
 
-    my $template = $self->template_db_name;
-    $self->ensure_nonexisting_company($company);
-    $self->super_dbh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
-
     $self->last_feature_stash->{"the company"} = $company;
     $self->last_scenario_stash->{"the company"} = $company;
-    $self->_clear_admin_dbh;
+
+    if (!$self->last_scenario_stash->{one_db} || !$self->check_database($company)) {
+        my $template = $self->template_db_name;
+        $self->ensure_nonexisting_company($company);
+        $self->super_dbh->do(qq(CREATE DATABASE "$company" TEMPLATE "$template"));
+        $self->_clear_admin_dbh;
+    }
 }
 
 sub ensure_nonexisting_company {
