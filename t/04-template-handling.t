@@ -21,9 +21,6 @@ use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 
-
-$LedgerSMB::Sysconfig::tempdir .= 't/var';
-
 my @r;
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 my $form;
