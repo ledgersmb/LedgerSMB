@@ -7,6 +7,13 @@ use lib "$FindBin::Bin/../lib";
 use 5.010; # say makes things easier
 no lib '.'; # can run from anywhere
 
+use LedgerSMB::Sysconfig;
+
+my $tempdir = $LedgerSMB::Sysconfig::tempdir;
+my $outputfile = ( defined $ARGV[1] && $ARGV[1] eq '--regenerate')
+               ? "$FindBin::Bin/../sql/modules/BLACKLIST"
+               : "$tempdir/BLACKLIST";
+
 my %func = (); # set of functions as keys
 
 my $order;
@@ -32,7 +39,7 @@ sub process_mod {
 
 sub write_blacklist {
     my @funcs = @_;
-    open my $bl, '>', "$FindBin::Bin/../sql/modules/BLACKLIST"
+    open my $bl, '>', $outputfile
         or die "Cannot write BLACKLIST";
     say $bl $_ for @funcs;
     close $bl;

@@ -288,7 +288,7 @@ endif
 
 # make blacklist
 blacklist:
-	perl tools/makeblacklist.pl
+	perl tools/makeblacklist.pl -- --regenerate
 
 # make pod
 #make submodules
