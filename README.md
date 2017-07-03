@@ -63,7 +63,7 @@ setup:
       -v /var/lib/pg-container/data:/var/lib/postgresql/data \
       -e POSTGRES_PASSWORD=<your secure password> \
       -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
- $ docker run -d --name lsmb --link lsmb-postgres ledgersmb/ledgersmb
+ $ docker run -d --name lsmb --link lsmb-postgres:postgres ledgersmb/ledgersmb
 ```
 
 The commands above automatically start the containers.
