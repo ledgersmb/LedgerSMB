@@ -420,7 +420,7 @@ sub run_backup {
 
 
 
-        my $csettings = $LedgerSMB::Company_Config::settings;
+
         my $mail = LedgerSMB::Mailer->new(
             from     => $LedgerSMB::Sysconfig::backup_email_from,
             to       => $request->{email},
