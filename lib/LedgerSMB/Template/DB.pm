@@ -137,9 +137,8 @@ sub get_from_file {
     }
     if ( $path =~ m|(.*)/([^/]+)$| ) {
         $fname = $2;
-    }  else {
-        $fname = $path;
     }
+
     my ($template_name, $format) = split /\./, $fname;
     my $content = '';
     open my $fh, '<', $path
