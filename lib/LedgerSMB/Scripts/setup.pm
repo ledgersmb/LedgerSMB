@@ -37,8 +37,10 @@ use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
-$LedgerSMB::VERSION =~ /(\d+\.\d+)./;
-my $MINOR_VERSION = $1;
+my $CURRENT_MINOR_VERSION;
+if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
+    $CURRENT_MINOR_VERSION = $1;
+}
 
 =item no_db
 
@@ -1156,7 +1158,7 @@ sub run_upgrade {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-$MINOR_VERSION");
+                   "$dbinfo->{version}-$CURRENT_MINOR_VERSION");
 
     if ($v ne '1.2'){
         $request->{only_templates} = 1;
@@ -1185,7 +1187,7 @@ sub run_sl28_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl28",
-                   "sl2.8-$MINOR_VERSION");
+                   "sl2.8-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
 }
@@ -1205,7 +1207,7 @@ sub run_sl30_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl30",
-                                   "sl3.0-$MINOR_VERSION");
+                                   "sl3.0-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
 }

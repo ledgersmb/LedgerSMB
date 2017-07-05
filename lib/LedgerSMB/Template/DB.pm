@@ -131,12 +131,14 @@ does not call this without carefully whitelisting values.
 
 sub get_from_file {
     my ($package, $path, $language_code) = @_;
-    my $fname = $path;
+    my $fname;
     if ($path =~ m|/.*:| ){
        die 'Cannot run on NTFS alternate data stream!';
     }
-    $path =~ m|(.*)/([^/]+)$|;
-    $fname = $2;
+    if ( $path =~ m|(.*)/([^/]+)$| ) {
+        $fname = $2;
+    }
+
     my ($template_name, $format) = split /\./, $fname;
     my $content = '';
     open my $fh, '<', $path
