@@ -419,10 +419,10 @@ sub run_backup {
         die $request->{_locale}->text('Error creating backup file');
 
     if ($request->{backup_type} eq 'email') {
-        # suppress warning of single usage of $LedgerSMB::Sysconfig::...
-        no warnings 'once';
 
-        my $csettings = $LedgerSMB::Company_Config::settings;
+
+
+
         my $mail = LedgerSMB::Mailer->new(
             from     => $LedgerSMB::Sysconfig::backup_email_from,
             to       => $request->{email},
@@ -870,11 +870,11 @@ sub select_coa {
     use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
-    { no warnings 'uninitialized'; # silence warnings if this is missing
-      if ($request->{coa_lc} =~ /\.\./){
+
+      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
           die $request->{_locale}->text('Access Denied');
       }
-    }
+
     if ($request->{coa_lc}){
         if ($request->{chart}){
             my ($reauth, $database) = _get_database($request);

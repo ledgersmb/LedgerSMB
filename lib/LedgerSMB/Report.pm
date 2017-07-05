@@ -281,7 +281,7 @@ sub _render {
                        $srt_b = $srt_b->to_sort
                            if eval { $srt_b->can('to_sort') };
                    }
-                   no warnings 'numeric';
+                   no warnings 'numeric'; ## no critic ( ProhibitNoWarnings )
                    $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
       if $self->order_by;
