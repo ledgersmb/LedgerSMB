@@ -74,20 +74,6 @@ the variables above given a "my" scope instead of an "our" one.
 
 =over
 
-=cut
-
-sub _set_n {
-    no strict 'refs';
-    my ($att) = shift @_;
-    for (@_){
-        if ($_ ne __PACKAGE__){
-            $$att = $_;
-            return $_;
-        }
-    }
-    return;
-}
-
 =item DBName
 
 =cut
@@ -101,7 +87,7 @@ sub DBName {
 =cut
 
 sub set_DBName {
-    return _set_n('DBName', @_);
+    return $DBName = shift;
 }
 
 =item User
@@ -117,7 +103,7 @@ sub User {
 =cut
 
 sub set_User {
-    return _set_n('User', @_);
+    return $User = shift;
 }
 
 =item Locale
@@ -133,7 +119,7 @@ sub Locale {
 =cut
 
 sub set_Locale {
-    return _set_n('Locale', @_);
+    return $Locale = shift;
 }
 
 =item Company_Settings
@@ -149,7 +135,7 @@ sub Company_Settings {
 =cut
 
 sub set_Company_Settings {
-    return _set_n('Company_Settings', @_);
+    return $Company_Settings = shift;
 }
 
 =item DBH
@@ -165,7 +151,7 @@ sub DBH {
 =cut
 
 sub set_DBH {
-    return _set_n('DBH', @_);
+    return $DBH = shift;
 }
 
 =back
