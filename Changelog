@@ -40,6 +40,8 @@ Changelog for 1.5.9
 * Fix missing column SQL error when posting recurring invoices (Erik H)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.5.8
 * Fix printing of AR/AP transactions results in JavaScript error (Erik H)
@@ -1025,6 +1027,7 @@ Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.41
 * Fix for invalid ref when entering payment  (John Locke)
+
 
 Changelog for 1.3.40
 * Updated nginx configuration (Pongracz I)
