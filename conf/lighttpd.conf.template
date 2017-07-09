@@ -1,0 +1,70 @@
+# This is a 'vhost' definition file example for use with Starman/LedgerSMB
+# reverse proxying.
+#
+# Please replace the following parameters:
+#
+#   * WORKING_DIR
+#   * YOUR_SERVER_NAME
+#   * SSL_KEY_FILE
+#   * SSL_CERT_FILE
+
+server.modules = (
+	"mod_expire",
+	"mod_access",
+	"mod_alias",
+	"mod_compress",
+ 	"mod_redirect",
+)
+
+server.name YOUR_SERVER_NAME;
+
+server.document-root        = "WORKING_DIR/UI"
+server.errorlog             = "/var/log/lighttpd/error.log"
+server.pid-file             = "/var/run/lighttpd.pid"
+server.username             = "www-data"
+server.groupname            = "www-data"
+
+  # If you own a publicly exposed server, consider submitting it
+  # to the SSL security tests available at
+  #    https://www.ssllabs.com/ssltest/
+
+  # Replace snippets/snakeoil.conf with either your own version of snakeoil.conf
+  # or modified versions of the following ssl_certificate, ssl_certificate_key lines
+  include snippets/snakeoil.conf;
+  #ssl_certificate SSL_CERT_FILE;
+  # after expansion, the above may look like:
+  # ssl_certificate /etc/certs/example.com.pem;
+  #ssl_certificate_key SSL_KEY_FILE;
+
+server.port                 = 443
+ssl.engine                  = "enable"
+ssl.pemfile                 = "SSL_CERT_FILE"
+
+index-file.names            = ( "login.pl", "index.php", "index.html", "index.lighttpd.html" )
+url.access-deny             = ( "~", ".inc" )
+static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+
+compress.cache-dir          = "/var/cache/lighttpd/compress/"
+compress.filetype           = ( "application/javascript", "text/css", "text/html", "text/plain" )
+
+# default listening port for IPv6 falls back to the IPv4 port
+## Use ipv6 if available
+include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+include_shell "/usr/share/lighttpd/create-mime.assign.pl"
+include_shell "/usr/share/lighttpd/include-conf-enabled.pl"
+
+server.modules   += ( "mod_proxy" )
+
+proxy.server     = ( ".pl" =>
+                     ( 
+                       ( "host" => "127.0.0.1",
+                         "port" => 5762
+                       )
+                     )
+                   )
+
+expire.url = (
+              "/css/"    => "access plus 2 months",
+              "/images/" => "access plus 2 months",
+              "/js/"     => "access plus 2 months",
+)
