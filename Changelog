@@ -10,6 +10,8 @@ Changelog for 1.5.9
 * Fix missing column SQL error when posting recurring invoices (Erik H)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.5.8
 * Fix printing of AR/AP transactions results in JavaScript error (Erik H)
