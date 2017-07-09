@@ -132,7 +132,7 @@ John L is John Locke
 
 Changelog for 1.5.0
 
-UI changes:
+UI changes
 * LedgerSMB now frameless (ChrisT)
 * Full use of Dojo widgets (ErikH)
 * Compressed/compiled Dojo for better performance (JohnL)
@@ -143,13 +143,13 @@ Price Matrix Enhancements
 * Quantity discounts can be set in the pricematrix (Chris T)
 * Price matrix now filters on currency (Chris T)
 
-Template changes:
+Template changes
 * All document templates (including INCLUDEs) now in-database (Erik H, #854)
 * 1.4's <?lsmb LETTERHEAD ?> now <?lsmb INCLUDE letterhead ?>
 * 1.3's INCLUDE extensions dropped;
     <?lsmb INCLUDE letterhead.tex ?> -> <?lsmb INCLUDE letterhead ?>
 
-Code Cleanup:
+Code Cleanup
 * Relying on Plack for webserver integration; stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
 * Removed dead code (coveralls.io used for identification) (ErikH)
@@ -159,11 +159,11 @@ Code Cleanup:
 * Removed unused saved trial balance components (ChrisT, GH 775)
 * Source tree restructuring: libraries in lib/, docroot in UI/ (ErikH)
 
-API Enhancements:
+API Enhancements
 * Moved a great deal of code into PGObject framework on CPAN (ChrisT)
 * Session handling committed before main action (Chris T, GH 943)
 
-Quality assurance:
+Quality assurance
 * Verification of pre-defined Chart of Accounts files (ChrisT)
 * Assurance of completeness of 'use'-tested source files (ErikH)
 * Extended 'use'-tests to cover full set of source files (ErikH)
@@ -274,6 +274,12 @@ David G is David Godfrey
 Changelog for 1.4.33
 * Fixed issue with COA overview and tax accounts (Chris T, #2030)
 * Fixed issue with outstanding reversing amount and total (Chris T, #2031)
+* Fixed "save draft" buttons not showing (Chris T, #994)
+* Fixed error reopening books across multiple closings (Chris T #2025)
+* Fixed moose error in timecard with qty mising (Chris T, #2048)
+
+Chris T is Chris Travers
+
 
 Changelog for 1.4.32
 * Moved to findbin from use lib '.' (Chris T, #1911)
