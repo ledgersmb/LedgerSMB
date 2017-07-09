@@ -58,6 +58,7 @@ Changelog for 1.5.7
 * Fix http error response (Yves L)
 * Fix Salesperson field not displayed (Nick P, #2784)
 * Fix can't delete unused account after books closed (Nick P, #2800)
+* Fix Contact search on address broken (Nick P, #2490)
 * Fix parts with capitals can't be added to AP invoices (Erik H)
 * Change 'Super-user login' to 'Database admin login' (Erik H, #2654)
 * Fix reconciliation loads parser from non-existing location (Erik H, #2313)
@@ -107,7 +108,6 @@ Changelog for 1.5.3
 * Fix Reconciliation Submit button not enabled (Nick P)
 * Fix Batch Search for approved transactions (Chris T)
 * Compensate for CVE-2016-1238 ('.' no longer in @INC) (Erik H)
-* Fix Invoice line item descriptions not visible until clicked (Erik H, 2607)
 * Fix Invoice line item descriptions not visible until clicked (Erik H, #2607)
 * Fix payment amounts in Cash->Reports->Receipts (Erik H, 2618)
 
@@ -295,8 +295,10 @@ Changelog for 1.4.34
 * Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
 * Fixed PNL hierarchies both selected (Erik H, #2147)
 * Fixed error at bottom of invoice, under Starman (Erik H)
+* Add test and hard fail on incorrect tempdir permissions  (David G)
 
 Erik H is Erik Huelsmann
+David G is David Godfrey
 
 
 Changelog for 1.4.33
