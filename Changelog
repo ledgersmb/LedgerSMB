@@ -222,6 +222,10 @@ JohnL is John Locke
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.42
+* Fix goods/services search with AR/AP invoices (Chris T, #2938)
+* Fix ar/ap not searchable by part number (Chris T, #2926)
+
 
 Changelog for 1.4.41
 * Fix 'Bad interval' error with PNL comparisons (Erik H, #2146)
@@ -301,7 +305,7 @@ Changelog for 1.4.34
 * Fixed PNL comparison periods selection resulting in error (Erik H, #2148)
 * Fixed PNL hierarchies both selected (Erik H, #2147)
 * Fixed error at bottom of invoice, under Starman (Erik H)
-* Add test and hard fail on incorrect tempdir permissions  (David G)
+* Add test and hard fail with error if tempdir permissions aren't sane. (David G)
 
 Erik H is Erik Huelsmann
 David G is David Godfrey
@@ -340,9 +344,11 @@ Changelog for 1.4.31
 * Fixed can't log into companies with & in their names (Chris T, #1004)
 * Added NZ chart of accounts (Kiwi)
 * Fixed can't create checkpoints before transactions (Chris T, #1704)
-# Fixed contact_all insufficient to create contacts (Chris T, #1219)
+* Fixed contact_all insufficient to create contacts (Chris T, #1219)
+* Fixed internal server errors on debian following upgrade (Chris T and Erik H)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.30
@@ -648,6 +654,8 @@ Changelog for 1.4.12
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
@@ -670,6 +678,8 @@ Chris T is Chris Travers
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
 Pongracz I is Istvan Pongracz
+
+
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
 * Malay translation added (Kaiser F, and others)
@@ -694,9 +704,11 @@ Erik H is Erik Huelsmann
 John L is John Locke
 
 Changelog for 1.4.9
+* Fixed issue with contacts not loading in 1.4,8 (regression, Chris T)
 * Removed optional dependency on LaTeX from starman preload (Chris T)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
@@ -822,7 +834,8 @@ Changelog for 1.4.1
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-Pongracz I is Pongracz IstvÃan
+Pongracz I is Pongracz Istvan
+
 
 Changelog for 1.4.0
 General Enhancements:
@@ -945,9 +958,12 @@ Changelog for 1.3.46
 * Some log quieting fixes. (Chris T)
 * Fixed bug 1262, cannot post overpayment with formatted numbers (Chris T)
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+* Fixed bug 1273, some invoices cannot be opened (John L)
 
 Chris T is Chris Travers
+John L is John Locke
 Pongracz I is Pongracz Istvan
+
 
 Changelog for 1.3.45
 * Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
@@ -1002,6 +1018,7 @@ Changelog for 1.3.42
 * Fix for invoice with shipto linking to wrong one on report (Chris T, 1104)
 * Fix for shipto's not being automatically checked (Chris T, 1100)
 * Fixed forex rounding issue with single payments not posting (Chris T)
+* Fixed typo in search payment form: aligh -> align (Pongracz I)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
@@ -1016,9 +1033,8 @@ Changelog for 1.3.40
 * Fixed internal server error using cash/payment (Chris T)
 * Fixed #1133 (FX rate changed after selecting part/service) (Pongracz I)
 * Fixed #1078 (Don't populate all empty projects automatically) (Pongracz I)
-* Fixed #1139 (Vendor can show up as default customer in sales order,
-confusing...) (Pongracz I)
-* fixes cogs qty/allocated type mismatch (Chris T)
+* Fixed #1139 (Vendor can show up as default customer in sales order, confusing...) (Pongracz I)
+* Fixed type mismatch between invoice.qty and invoice.allocated (Chris T)
 * Fixed manual tax invoices not reversing properly (Chris T, 1134)
 
 Chris T is Chris Travers
