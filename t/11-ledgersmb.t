@@ -62,25 +62,24 @@ SKIP: {
         LedgerSMB::App_State::set_DBH($lsmb->{dbh});
         @r = $lsmb->call_procedure('procname' => 'character_length',
                 'funcschema' => 'pg_catalog',
-                'args' => ['month'], 'schema'=>"pg_catalog");
+                'args' => ['month']);
         is($#r, 0, 'call_procedure: correct return length (one row)');
         is($r[0]->{'character_length'}, 5,
                 'call_procedure: single arg, non-numeric return');
 
         @r = $lsmb->call_procedure('procname' => 'trunc',
                 'funcschema' => 'pg_catalog',
-                'args' => [57.1, 0], 'schema' => 'pg_catalog');
+                'args' => [57.1, 0]);
         is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
                 'call_procedure: two args, numeric return');
 
         @r = $lsmb->call_procedure('procname' => 'pi',
                 'funcschema' => 'pg_catalog',
-                'args' => [], 'schema'=>'pg_catalog');
+                'args' => []);
         like($r[0]->{'pi'}, qr/^3.14/,
                 'call_procedure: empty arg list, non-numeric return');
         @r = $lsmb->call_procedure('procname' => 'pi',
-                'funcschema' => 'pg_catalog',
-                'schema'=>'pg_catalog');
+                'funcschema' => 'pg_catalog');
         like($r[0]->{'pi'}, qr/^3.14/,
                 'call_procedure: no args, non-numeric return');
     $lsmb->{dbh}->rollback();
