@@ -1,7 +1,8 @@
 #!/bin/bash
 
-[[ -r utils/test/sysexits.shlib ]] && source utils/test/sysexits.shlib || \
+[[ -r utils/test/sysexits.shlib ]] && source utils/test/sysexits.shlib || {
     [[ -r sysexits.shlib ]] && source sysexits.shlib
+}
 
 if [[ -z $EX_NOHOST ]]; then
     echo '=================================='
