@@ -122,7 +122,7 @@ pager = less
 
 ##### 
 
-[ProhibitPunctuationVars]
+[Variables::ProhibitPunctuationVars]
     set_themes = lsmb lsmb_new lsmb_old
 
 ###############################################################
