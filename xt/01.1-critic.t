@@ -16,53 +16,15 @@ my @on_disk;
 #
 # Currently our code violates some of the recommended policies, so tests
 # are being added to this list as violations are fixed.
-my @cert_policies = qw(
-    BuiltinFunctions::ProhibitStringySplit
-    BuiltinFunctions::ProhibitUniversalCan
-    ClassHierarchies::ProhibitExplicitISA
-    ControlStructures::ProhibitMutatingListFunctions
-    ControlStructures::ProhibitUnreachableCode
-    InputOutput::ProhibitBarewordFileHandles
-    InputOutput::ProhibitInteractiveTest
-    InputOutput::ProhibitOneArgSelect
-    InputOutput::ProhibitTwoArgOpen
-    InputOutput::RequireCheckedOpen
-    Miscellanea::ProhibitFormats
-    Modules::ProhibitEvilModules
-    Modules::RequireEndWithOne
-    Objects::ProhibitIndirectSyntax
-    Subroutines::ProhibitReturnSort
-    Subroutines::ProhibitSubroutinePrototypes
-    TestingAndDebugging::ProhibitProlongedStrictureOverride
-    TestingAndDebugging::RequireUseStrict
-    TestingAndDebugging::RequireUseWarnings
-    ValuesAndExpressions::ProhibitLeadingZeros
-    Variables::ProhibitPerl4PackageNames
-    Variables::ProhibitUnusedVariables
-    Variables::ProtectPrivateVars
-    Variables::RequireLexicalLoopIterators
-);
+
+# lsmb_new
+
 
 # The CERT recommended policies yet to be applied are listed below. Some
 # of these are explicitly excluded below, as they would otherwise be
 # applied by the -severity option in use.
-#    BuiltinFunctions::ProhibitBooleanGrep
-#    BuiltinFunctions::ProhibitUniversalIsa
-#    InputOutput::RequireCheckedClose
-#    InputOutput::RequireCheckedSyscalls
-#    RegularExpressions::ProhibitCaptureWithoutTest
-#    Subroutines::ProhibitBuiltinHomonyms
-#    Subroutines::ProhibitExplicitReturnUndef   --explicitly excluded
-#    Subroutines::ProtectPrivateSubs
-#    Subroutines::RequireFinalReturn
-#    TestingAndDebugging::ProhibitNoStrict      --explicitly excluded
-#    TestingAndDebugging:;ProhibitNoWarnings    --explicitly excluded
-#    ValuesAndExpressions::ProhibitCommaSeparatedStatements
-#    ValuesAndExpressions::ProhibitMagicNumbers
-#    ValuesAndExpressions::ProhibitMismatchedOperators
-#    ValuesAndExpressions::ProhibitMixedBooleanOperators
-#    Variables::RequireInitializationForLocalVars
-#    Variables::RequireLocalizedPunctuationVars
+
+# lsmb_wip ( lsmb_new_wip, lsmb_old_wip)
 
 # The following CERT recommended policies will not be enforced:
 #
@@ -79,41 +41,22 @@ my @cert_policies = qw(
 #      pattern employed in LedgerSMB code. Neither does it recognise when
 #      private methods are used to compose roles in other files.
 
+# lsmb_reject
 
 # LedgerSMB enforces some other Perl::Critic policies
-my @lsmb_policies = qw(
-    CodeLayout::ProhibitTrailingWhitespace
-    ProhibitHardTabs
-    Modules
-    Moose::RequireMakeImmutable
-    Moose::RequireCleanNamespace
-    TestingAndDebugging
-    ProhibitPuncutationVars
-);
+#
+#  lsmb_new
+
 
 # LedgerSMB explicitly excludes some policies which we currently violate
 # and which would be applied automatically by the -severity option in use.
 # As violations are fixed, we can gradually remove these exclusions.
-my @exclude_policies = qw(
-    Modules::RequireVersionVar
-    Subroutines::ProhibitExplicitReturnUndef
-    TestingAndDebugging::ProhibitNoWarnings
-    TestingAndDebugging::ProhibitNoStrict
-    InputOutput::RequireEncodingWithUTF8Layer
-);
-my @exclude_policies_oldcode = qw(
-    InputOutput::RequireEncodingWithUTF8Layer
-    Modules::ProhibitExcessMainComplexity
-    Modules::ProhibitMultiplePackages
-    Modules::RequireBarewordIncludes
-    Modules::RequireFilenameMatchesPackage
-    Modules::RequireVersionVar
-    Subroutines::ProhibitExplicitReturnUndef
-    TestingAndDebugging::ProhibitNoStrict
-    TestingAndDebugging::ProhibitNoWarnings
-    TestingAndDebugging::RequireUseStrict
-    TestingAndDebugging::RequireUseWarnings
-);
+
+# more lsmb_new_wip, less for lsmb_new
+# my @exclude_policies = qw(
+
+# more lsmb_old_wip, less for lsmb_old
+# my @exclude_policies_oldcode = qw(
 
 
 sub test_files {
@@ -149,35 +92,21 @@ my @on_disk_oldcode =
 
 plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
-&test_files(
+test_files(
     Perl::Critic->new(
         -profile => 'xt/perlcriticrc',
-        -severity => 5,
-        -theme => '',
-        -exclude => [
-            @exclude_policies,
-        ],
-        -include => [
-            @cert_policies,
-            @lsmb_policies,
-        ],
+        -severity => 1,
+        -theme => 'lsmb_new',
     ),
     \@on_disk
 );
 
-&test_files(
+test_files(
     Perl::Critic->new(
         -only => 1,
         -profile => 'xt/perlcriticrc',
-        -severity => 5,
-        -theme => '',
-        -exclude => [
-            @exclude_policies_oldcode,
-        ],
-        -include => [
-            @cert_policies,
-            @lsmb_policies,
-        ],
+        -severity => 1,
+        -theme => 'lsmb_old',
     ),
     \@on_disk_oldcode
 );
