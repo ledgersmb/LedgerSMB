@@ -8,13 +8,13 @@
 #    lsmb_new -- themes that are enforced in testing on 'new' code
 #    lsmb_old --  themes that are enforced in testing on 'old' code; subset of lsmb_new
 #    lsmb_new_wip -- themes we want to use on 'new' code
-#    lsmb_wip -- rename for lsmb_new_wip  DEFAULT
+#  * lsmb_wip -- rename for lsmb_new_wip  DEFAULT
 #    lsmb_old_wip -- themes we want to use on 'old' code, subset of lsmb_new_wip, UNNECESSARY!
 #    lsmb -- includes all themes we want to use and do enforce;  all of the above
 #    lsmb_reject -- explicitly rejected themes      # just a documentation
 #    lsmb_consider  -- themes we are confused about using       # just a documentation
 
-theme = lsmb_new_wip
+#theme = lsmb_new_wip
 only = 1
 severity = 1
 verbose =%s %p %f   %l\n

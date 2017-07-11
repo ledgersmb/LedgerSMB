@@ -94,6 +94,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
 test_files(
     Perl::Critic->new(
+        -only => 1,
         -profile => 'xt/perlcriticrc',
         -severity => 1,
         -theme => 'lsmb_new',
