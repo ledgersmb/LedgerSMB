@@ -82,7 +82,7 @@ my @cert_policies = qw(
 
 # LedgerSMB enforces some other Perl::Critic policies
 my @lsmb_policies = qw(
-    ProhibitTrailingWhitespace
+    CodeLayout::ProhibitTrailingWhitespace
     ProhibitHardTabs
     Modules
     Moose::RequireMakeImmutable
@@ -167,6 +167,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
 &test_files(
     Perl::Critic->new(
+        -only => 1,
         -profile => 'xt/perlcriticrc',
         -severity => 5,
         -theme => '',
