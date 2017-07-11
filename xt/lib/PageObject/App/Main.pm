@@ -49,7 +49,8 @@ sub _build_content {
     my ($self) = @_;
 
     my @found = $self->find_all('./*'); # find any immediate child
-    die "#maindiv is expected to have exactly one child node"
+    die "#maindiv is expected to have exactly one child node, found " . scalar(@found) .
+        '(' . join(',',map {ref $_} @found) . ')'
         unless scalar(@found) == 1;
 
     my $found = shift @found;
