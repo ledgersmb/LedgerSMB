@@ -111,21 +111,20 @@ on 'develop' => sub {
     recommends 'Linux::Inotify2';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
+    requires 'Perl::Critic::Moose';
     requires 'Pherkin::Extension::Weasel', '0.02';
+    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
+    requires 'Selenium::Remote::Driver';
+    requires 'TAP::Parser::SourceHandler::pgTAP';
     requires 'Test::BDD::Cucumber', '0.52';
     requires 'Test::Class::Moose';
     requires 'Test::Class::Moose::Role';
     requires 'Test::Class::Moose::Role::ParameterizedInstances';
     requires 'Test::Exception';
-    requires 'Test::Trap';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
-    requires 'Perl::Critic';
-    requires 'Perl::Critic::Moose';
-    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
-    requires 'Selenium::Remote::Driver';
-    requires 'TAP::Parser::SourceHandler::pgTAP';
+    requires 'Test::Trap';
     requires 'Weasel', '0.11';
     requires 'Weasel::Driver::Selenium2', '0.05';
     requires 'Weasel::Widgets::Dojo';
