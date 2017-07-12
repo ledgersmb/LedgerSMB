@@ -57,8 +57,12 @@ SKIP: {
         skip 'Skipping call_procedure tests, no db specified', 5
                 if !defined $ENV{PGDATABASE};
         $lsmb = LedgerSMB->new();
-        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
+        my $pghost = "";
+        $pghost = ";host=" . $ENV{PGHOST}
+            if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';
+        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}$pghost",
                 undef, undef, {AutoCommit => 0 });
+        ok($lsmb->{dbh},"Connected to $ENV{PGDATABASE}");
         LedgerSMB::App_State::set_DBH($lsmb->{dbh});
         @r = $lsmb->call_procedure('procname' => 'character_length',
                 'funcschema' => 'pg_catalog',
