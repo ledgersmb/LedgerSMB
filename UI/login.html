@@ -3,7 +3,13 @@
         include_stylesheet = ["login.css", "css/ledgersmb.css"]
         include_script = [ 'login.js' ]
 ?>
-<?lsmb PROCESS elements.html ?>
+<?lsmb
+   PROCESS elements.html ;
+   IF dojo_built == 0;
+      DOJO_LOCATION = "js-src";
+   ELSE;
+      DOJO_LOCATION = "js";
+   END -?>
 <body class="login, <?lsmb dojo_theme ?>"
       id="app-login">
   <br /><br />
@@ -27,6 +33,11 @@
             <img src="images/ledgersmb.png"
                  class="logo"
                  alt="LedgerSMB Logo" /></a>
+          <div style="position:relative; width:100%; height:15em;">
+          <div id="loading"
+               style="z-index:100; position:absolute; top:0; left:0; width:100%; height:100%; background: white url(<?lsmb DOJO_LOCATION ?>/dijit/icons/images/loadingAnimation.gif) no-repeat center center" >
+          </div>
+          <div style="z-index:10; position:absolute; top:0; left:0; width:100%; height:100%;">
           <h1 class="login" align="center">
             <?lsmb text("LedgerSMB [_1]", VERSION) ?>
           </h1>
@@ -80,6 +91,8 @@
                  accesskey="l"
                  id="action-login"
                  text=text('Login') } ?>
+          </div>
+          </div>
         </div>
         <div id="login-indicator">
           <span><?lsmb text('Logging in.  Please wait.') ?></span>
@@ -89,3 +102,11 @@
   </center>
 </body>
 </html>
+<script>
+  require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
+  function(dom, style, ready) {
+    ready(80, function() {
+  style.set(dom.byId('loading'), 'display', 'none');
+  });
+  });
+</script>
