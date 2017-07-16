@@ -36,7 +36,7 @@ Changelog for 1.5.9
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix inventory activity report drill down over-inclusive (Chris T, #2926)
 * Fix Ship/Receive column alignments (Chris T)
-* Fix mailing recurring invoices shows invoice in-screen (Erik H)
+* Fix mailing recurring invoices shows invoice in-screen (Erik H, #3004)
 * Fix missing column SQL error when posting recurring invoices (Erik H)
 
 Chris T is Chris Travers
