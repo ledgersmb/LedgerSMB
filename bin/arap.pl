@@ -784,7 +784,7 @@ sub reprint {
 
     $form->{copies} = 1;
 
-    &$pf;
+    &$pf();
 
     if ( $form->{media} eq 'email' ) {
 
