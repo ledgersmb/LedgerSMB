@@ -8,8 +8,6 @@ use PageObject;
 use MIME::Base64;
 use Test::More;
 
-use Try::Tiny;
-
 use Module::Runtime qw(use_module);
 
 use Moose;
