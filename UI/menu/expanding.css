@@ -9,6 +9,21 @@ li.menu_open > ul {
 	display: block;
 }
 
+/*
+ * dijitTreeIcon & dijitTreeExpando are redundant
+ * Select the former for + signs or the latter for folder icons
+ */
+/*
+.dijitTreeIcon {
+    background-image: none;
+    width: 0
+}
+*/
+.claro .dijitTreeExpando {
+    background-image: none;
+    width: 0
+}
+
 #version_info {
     text-align: center;
 }

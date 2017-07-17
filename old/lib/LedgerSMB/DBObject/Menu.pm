@@ -41,9 +41,10 @@ th result set, This function does not return an entry for the top-level menu.
 
 sub generate {
     my ($self) = shift @_;
+    my $root = shift @_;
 
     @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_generate');
-    $self->__generate;
+    $self->__generate($root);
 
     return @{$self->{menu_items}};
 }
@@ -60,6 +61,22 @@ sub generate_section {
     my ($self) = shift @_;
 
     @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_children');
+    $self->__generate;
+
+    return @{$self->{menu_items}};
+}
+
+=item generate_item()
+
+This class acts like Menu::Generate except it returns only a single menu item
+$object->{id}.
+
+=cut
+
+sub generate_item {
+    my ($self) = shift @_;
+
+    @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_item');
     $self->__generate;
 
     return @{$self->{menu_items}};
@@ -84,9 +101,10 @@ sub will_expire_soon {
 # Private method which contains logic common to the full menu and section logic
 
 sub __generate {
-    my ($self) = @_;
+    my ($self) = shift @_;
+    my $root = shift @_;
 
-    shift @{$self->{menu_items}};
+    shift @{$self->{menu_items}} if !defined $root;;
 
     for my $attribute (@{$self->{menu_items}}){
 
