@@ -8,6 +8,8 @@ Changelog for 1.5.9
 * Fix Ship/Receive column alignments (Chris T)
 * Fix mailing recurring invoices shows invoice in-screen (Erik H, #3004)
 * Fix missing column SQL error when posting recurring invoices (Erik H)
+* Show an error when page assets (Dojo) are missing (Erik H)
+* Fix new welcome page being referred to by absolute path (Erik H, #2994)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
