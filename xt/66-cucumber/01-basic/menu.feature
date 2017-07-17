@@ -105,7 +105,7 @@ Scenario Outline: Navigate to menu and open screen
 #   | Goods and Services > Import Inventory      |                          |
 #   | Goods and Services > Reports               |                          |
 #   | Goods and Services > Reports > Inventory Activity |                   |
-#   | Goods and Services > Search                | GS Search                |
+#   | Goods and Services > Search                | search for goods & services |
 #   | Goods and Services > Search Groups         |                          |
 #   | Goods and Services > Search Pricegroups    |                          |
 #   | Goods and Services > Stock Assembly        |                          |
@@ -201,6 +201,6 @@ Scenario Outline: Navigate to menu and open screen
 #   | Timecards > Translations > Description     |                          |
 #   | Transaction Approval > Batches             |                          |
 #   | Transaction Approval > Drafts              |                          |
-#   | Transaction Approval > Inventory           | TA Inventory             |
+#   | Transaction Approval > Inventory           | unapproved inventory adjustments search screen |
 #   | Transaction Approval > Reconciliation      |                          |
 #   | Transaction Templates                      |                          |
