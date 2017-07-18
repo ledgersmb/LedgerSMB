@@ -8,16 +8,21 @@ use PageObject;
 
 use Moose;
 extends 'PageObject';
+__PACKAGE__->self_register(
+              'ar-customer-return',
+              './/div[@id="AR-invoice-reverse"]',
+              tag_name => 'form',
+              attributes => {
+                  id => 'AR-invoice-reverse',
+              });
 
 my $page_heading = 'Add Customer Return';
 
 sub _verify {
     my ($self) = @_;
 
-    $self->stash->{ext_wsl}->page
-        ->find("//*[\@id='maindiv']
-                           [.//*[\@class='listtop'
-                                 and text()='$page_heading']]");
+    $self->find(".//*[\@class='listtop'
+                      and text()='$page_heading']");
 
     return $self;
 }
