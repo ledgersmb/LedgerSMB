@@ -41,6 +41,7 @@ Changelog for 1.5.9
 * Show an error when page assets (Dojo) are missing (Erik H)
 * Fix new welcome page being referred to by absolute path (Erik H, #2994)
 * Fix 'Not an ARRAY reference' error in recurring AP processing (Erik H, #2973)
+* Fix the fix for '.' missing in @INC (Erik H)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
