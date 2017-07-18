@@ -10,6 +10,7 @@ Changelog for 1.5.9
 * Fix missing column SQL error when posting recurring invoices (Erik H)
 * Show an error when page assets (Dojo) are missing (Erik H)
 * Fix new welcome page being referred to by absolute path (Erik H, #2994)
+* Fix 'Not an ARRAY reference' error in recurring AP processing (Erik H, #2973)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
