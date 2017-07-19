@@ -161,6 +161,7 @@ use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
 use File::Spec;
+use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -414,7 +415,9 @@ sub _http_output {
     if ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.
         # Let's see about caching.
-        $cache = 0 if LedgerSMB::Setting->get('disable_back');
+        try {
+          $cache = 0 if LedgerSMB::Setting->get('disable_back');
+        }
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
