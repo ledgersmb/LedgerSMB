@@ -1,33 +1,27 @@
 # LedgerSMB perlcriticrc file
 
-#This config is set up to avoid interaction with
-# the larger local perlcritic environment.
-#To avoid pulling in unwanted policies use the -only option and
-#these themes:
-#
-#    lsmb_new -- themes that are enforced in testing on 'new' code
-#    lsmb_old --  themes that are enforced in testing on 'old' code; subset of lsmb_new
-#    lsmb_new_wip -- themes we want to use on 'new' code
-#  * lsmb_wip -- rename for lsmb_new_wip  DEFAULT
-#    lsmb_old_wip -- themes we want to use on 'old' code, subset of lsmb_new_wip, UNNECESSARY!
-#    lsmb -- includes all themes we want to use and do enforce;  all of the above
-#    lsmb_reject -- explicitly rejected themes      # just a documentation
-#    lsmb_consider  -- themes we are confused about using       # just a documentation
+# Use these themes:
 
-#theme = lsmb_new_wip
+#  lsmb         -- includes all themes we want to use 
+#  lsmb_new     -- themes enforced on 'new' code
+#  lsmb_old     --  themes enforced on 'old' code; subset of lsmb_new
+#  lsmb_wip     -- themes we want to use on 'new' code
+#  lsmb_old_wip -- themes we want to use on 'old' code, subset of lsmb_wip, UNNECESSARY!
+
+#  lsmb_reject   -- explicitly rejected themes
+#  lsmb_consider -- themes we are confused about using
+
+theme = lsmb_wip
 only = 1
 severity = 1
 verbose =%s %p %f   %l\n
+#verbose =%f %p   %l  (%s)\n
 color =  0
 pager = less
 
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-
-
-###########################################################
-## What were in cert_policies
+    set_themes = lsmb lsmb_wip lsmb_old_wip
 
 [BuiltinFunctions::ProhibitStringySplit]
     set_themes = lsmb lsmb_new
@@ -78,8 +72,6 @@ pager = less
     set_themes = lsmb lsmb_new
 [Variables::RequireLexicalLoopIterators]
 
-###############################################################
-# What were in lsmb_policies
 
 [CodeLayout::ProhibitTrailingWhitespace]
     set_themes = lsmb lsmb_new lsmb_old
@@ -88,7 +80,6 @@ pager = less
     set_themes = lsmb lsmb_new lsmb_old
     allow_leading_tabs = 0
 
-#####   [Modules]  a theme expands to:   
 
 [Modules::ProhibitAutomaticExportation]
     set_themes = lsmb lsmb_new lsmb_old
@@ -112,10 +103,6 @@ pager = less
     set_themes = lsmb lsmb_new lsmb_old_wip
 [Modules::RequireNoMatchVarsWithUseEnglish]
     set_themes = lsmb lsmb_new lsmb_old
-[Modules::RequireVersionVar]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-
-#####
 
 
 [Moose::RequireMakeImmutable]
@@ -123,12 +110,11 @@ pager = less
 [Moose::RequireCleanNamespace]
     set_themes = lsmb lsmb_new lsmb_old
 
-######    [TestingAndDebugging]  a theme expands to:
 
 [TestingAndDebugging::ProhibitNoStrict]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
+    set_themes = lsmb lsmb_wip lsmb_old_wip
 [TestingAndDebugging::ProhibitNoWarnings]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
+    set_themes = lsmb lsmb_wip lsmb_old_wip
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
     set_themes = lsmb lsmb_new lsmb_old
 [TestingAndDebugging::RequireTestLabels]
@@ -138,56 +124,47 @@ pager = less
 [TestingAndDebugging::RequireUseWarnings]
     set_themes = lsmb lsmb_new lsmb_old_wip
 
-##### 
+[InputOutput::RequireEncodingWithUTF8Layer]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[Subroutines::ProhibitExplicitReturnUndef]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
 
-# this was not in play for being misspelled.  
-# I don't like this one, it is not helpful.
+[BuiltinFunctions::ProhibitBooleanGrep]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[BuiltinFunctions::ProhibitUniversalIsa]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[InputOutput::RequireCheckedClose]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[InputOutput::RequireCheckedSyscalls]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[RegularExpressions::ProhibitCaptureWithoutTest]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[Subroutines::ProtectPrivateSubs]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[Subroutines::RequireFinalReturn]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[ValuesAndExpressions::ProhibitCommaSeparatedStatements]
+    set_themes = lsmb lsmb_new lsmb_old_wip
+[ValuesAndExpressions::ProhibitMismatchedOperators]
+    set_themes = lsmb lsmb_new lsmb_old_wip
+[ValuesAndExpressions::ProhibitMixedBooleanOperators]
+    set_themes = lsmb lsmb_new lsmb_old_wip
+[Variables::RequireInitializationForLocalVars]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+[Variables::RequireLocalizedPunctuationVars]
+    set_themes = lsmb lsmb_wip lsmb_old_wip
+
+# I don't like this one, it is not helpful. It is easier
+# to recognize the punct namespace and look them up
+# as needed than to remember all the long names.
+
 [Variables::ProhibitPunctuationVars]
     set_themes = lsmb lsmb_consider
 
-###############################################################
-# What was in exclude_policies is now themed lsmb_new_wip
-#  Some is above.
+# VersionVar unnecessary, really an app
+[Modules::RequireVersionVar]
+    set_themes = lsmb lsmb_reject
 
-[InputOutput::RequireEncodingWithUTF8Layer]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[Subroutines::ProhibitExplicitReturnUndef]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-
-
-###############################################################
-# What was in exclude_policies_oldcode is now themed lsmb_old_wip
-#  All is above.
-
-###############################################################
-# What was commented out as to be applied CERT recommended is
-# now themed lsmb_new_wip lsmb_old_wip
-# Some is above.
-
-[BuiltinFunctions::ProhibitBooleanGrep]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[BuiltinFunctions::ProhibitUniversalIsa]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[InputOutput::RequireCheckedClose]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[InputOutput::RequireCheckedSyscalls]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[RegularExpressions::ProhibitCaptureWithoutTest]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
+# Too many methods
 [Subroutines::ProhibitBuiltinHomonyms]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[Subroutines::ProtectPrivateSubs]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[Subroutines::RequireFinalReturn]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[ValuesAndExpressions::ProhibitCommaSeparatedStatements]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[ValuesAndExpressions::ProhibitMismatchedOperators]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[ValuesAndExpressions::ProhibitMixedBooleanOperators]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[Variables::RequireInitializationForLocalVars]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-[Variables::RequireLocalizedPunctuationVars]
-    set_themes = lsmb lsmb_new_wip lsmb_old_wip
-
+    set_themes = lsmb_reject
