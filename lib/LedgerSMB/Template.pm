@@ -272,6 +272,7 @@ use File::Copy "cp";
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
+use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -572,11 +573,15 @@ sub render_to_psgi {
         (@{$args{extra_headers} // []})
         ];
 
+    my $disabled_back;
+    try {
+      $disabled_back = $LedgerSMB::App_State::DBH && LedgerSMB::Setting->get('disable_back');
+    };
     push @$headers, (
         'Cache-Control' =>
           'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, false',
         'Pragma' => 'no-cache'
-    ) if ($LedgerSMB::App_State::DBH && LedgerSMB::Setting->get('disable_back'));
+        ) if !defined $disabled_back || $disabled_back;
 
     my $body;
     if ($self->{output}) {
