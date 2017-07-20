@@ -1462,6 +1462,8 @@ sub post_invoice {
     if (!$form->{separate_duties}){
         $self->add_cogs($form);
     }
+
+    return 1;
 }
 
 sub retrieve_invoice {
