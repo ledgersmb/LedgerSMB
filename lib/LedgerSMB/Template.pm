@@ -575,7 +575,14 @@ sub render_to_psgi {
 
     my $disabled_back;
     try {
-      $disabled_back = $LedgerSMB::App_State::DBH && LedgerSMB::Setting->get('disable_back');
+        # This is a hack due to the fact that we don't distinguish
+        # between database connections and application instances.
+
+        # The reason we need to protect this bit of code is that
+        # setup.pl invokes templates with a database connection
+        # for non-LedgerSMB 1.3+ databases (LedgerSMB 1.2 or SQL Ledger)
+        $disabled_back = $LedgerSMB::App_State::DBH
+            && LedgerSMB::Setting->get('disable_back');
     };
     push @$headers, (
         'Cache-Control' =>
