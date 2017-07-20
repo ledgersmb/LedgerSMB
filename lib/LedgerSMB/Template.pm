@@ -117,6 +117,11 @@ Returns a list of format names, any of the following (in order) as applicable:
 Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
 and leaves auto-output enabled.
 
+=item preprocess ($rawvars, $escape)
+
+Preprocess for rendering.
+
+
 =item render($hashref)
 
 This command renders the template.  If no_auto_output was not specified during
