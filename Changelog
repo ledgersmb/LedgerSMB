@@ -44,6 +44,7 @@ Changelog for 1.5.9
 * Fix recurring AP invoices posted but 'next date' unchanged (Erik H, #3019)
 * Fix the fix for '.' missing in @INC (Erik H)
 * Add lighttpd example config (Yves L)
+* Fix regression in setup.pl with LedgerSMB 1.2 or SQL Ledger db (Yves L)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
