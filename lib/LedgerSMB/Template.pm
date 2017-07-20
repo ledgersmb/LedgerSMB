@@ -257,7 +257,6 @@ package LedgerSMB::Template;
 use strict;
 use warnings;
 use Carp;
-
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
@@ -272,6 +271,9 @@ use File::Copy "cp";
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
+
+use parent qw( Exporter );
+our @EXPORT_OK = qw( preprocess );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -352,7 +354,7 @@ sub new_UI {
     return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
 }
 
-sub _preprocess {
+sub preprocess {
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
@@ -367,7 +369,7 @@ sub _preprocess {
     if ( $type eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
-            push @{$vars}, _preprocess( $_, $escape );
+            push @{$vars}, preprocess( $_, $escape );
         }
     } elsif (!$type) {
         return $escape->($rawvars);
@@ -384,7 +386,7 @@ sub _preprocess {
             # btw, some (internal) objects are XS objects, on which this trick
             # treating it as a hashref really doesn't work...
             next if /^_/;
-            $vars->{_preprocess($_, $escape)} = _preprocess( $rawvars->{$_}, $escape );
+            $vars->{preprocess($_, $escape)} = preprocess( $rawvars->{$_}, $escape );
         }
     }
     return $vars;
@@ -494,7 +496,7 @@ sub _render {
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
-    my $cleanvars = $self->{no_escape} ? $vars : _preprocess($vars, $escape);
+    my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
     $cleanvars->{escape} = sub { return $escape->(@_); };
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
