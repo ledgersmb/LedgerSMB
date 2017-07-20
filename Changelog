@@ -45,6 +45,8 @@ Changelog for 1.5.9
 * Fix the fix for '.' missing in @INC (Erik H)
 * Add lighttpd example config (Yves L)
 * Fix regression in setup.pl with LedgerSMB 1.2 or SQL Ledger db (Yves L)
+* Fix error when adding customer-specific price to customer (Erik H, #2643)
+* Fix can't edit sales & purchase quotation through web UI (Erik H, #2617)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
