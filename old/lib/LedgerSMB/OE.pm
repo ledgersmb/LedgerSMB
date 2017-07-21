@@ -1092,10 +1092,7 @@ sub order_details {
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
 
             my $discount = $form->round_amount(
-                $sellprice *
-                  $form->parse_amount( $myconfig, $form->{"discount_$i"} ) /
-                  100,
-                $decimalplaces
+                $sellprice * $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100, $decimalplaces
             );
 
             # keep a netprice as well, (sellprice - discount)
