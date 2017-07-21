@@ -17,7 +17,7 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
-use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER 
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
 use CGI::Emulate::PSGI;
@@ -118,7 +118,8 @@ sub psgi_app {
             $module->can('clear_session_actions');
 
         if ($clear_session_actions
-            && ( !none{ $_ eq $request->{action} } $clear_session_actions->() ) 
+            && ( !none{ $_ eq $request->{action} } 
+                    $clear_session_actions->() )
         ) {
             $request->clear_session;
         }
