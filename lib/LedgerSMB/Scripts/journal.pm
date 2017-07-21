@@ -134,7 +134,6 @@ files.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
 eval {
     local ($!, $@);
     my $do_ = 'scripts/custom/journal.pl';
