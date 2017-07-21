@@ -38,18 +38,24 @@ sub login {
     my $company = $args{company};
     my $next_page = $args{next_page} // '*setup-admin';
 
-    do {
-        my $element =
-            $self->find('*labeled', text => $_->{label});
-        $element->send_keys($_->{value});
-        $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
-    } for ({ label => "DB admin login",
-             value => $user,
-             list => 1 },
-           { label => "Password",
-             value => $password },
-           { label => "Database",
-             value => $company });
+    local ($!, $@);
+    unless ( do {
+            my $element =
+                $self->find('*labeled', text => $_->{label});
+            $element->send_keys($_->{value});
+            $element->send_keys(KEYS->{'tab'}) if defined $_->{list};
+        } for ({ label => "DB admin login",
+                 value => $user,
+                 list => 1 },
+               { label => "Password",
+                 value => $password },
+               { label => "Database",
+                 value => $company });
+    ) {
+        if ($! or $@) {
+            warn "Failed to execute xt::lib::PageObject::Setup::login do ($!): $@\n";
+        }
+    }
 
     my $btn = $self->find('*button', text => "Login");
     $btn->click;

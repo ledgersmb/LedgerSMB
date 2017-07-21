@@ -79,7 +79,14 @@ sub dispatch {
             # Note that we're only loading this code *after* the fork,
             # so, we're only ever "polluting" the namespaces of the
             # child Perl process which we'll ditch right after.
-            do "old/bin/$script";
+            local ($!, $@);
+            my $do_ = "old/bin/$script";
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (old_code.pm)\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
+            }
         }
         if (ref $entrypoint eq "CODE") {
             $entrypoint->(@_);

@@ -31,7 +31,18 @@ our $VERSION = '0.1';
 our $custom_batch_types = {};
 
 ###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/vouchers.pl"};
+eval {
+    local ($!, $@);
+    my $do_ = 'scripts/custom/vouchers.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (vouchers.pm - first)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+};
 
 =item create_batch
 
@@ -493,7 +504,18 @@ sub print_batch {
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/vouchers.pl"};
+eval {
+    local ($!, $@);
+    my $do_ = 'scripts/custom/vouchers.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (vouchers.pm - end)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+};
 1;
 
 =back

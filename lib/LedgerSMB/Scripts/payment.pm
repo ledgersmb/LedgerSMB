@@ -1908,6 +1908,17 @@ return use_overpayment($request);
 =cut
 
 ###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/payment.pl"};
+eval {
+    local ($!, $@);
+    my $do_ = 'scripts/custom/payment.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error(payment.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+};
 1;
 
