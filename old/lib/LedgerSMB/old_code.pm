@@ -73,15 +73,17 @@ sub dispatch {
         $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
         %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
         {
-            no strict;
-            no warnings 'redefine';
-
             # Note that we're only loading this code *after* the fork,
             # so, we're only ever "polluting" the namespaces of the
             # child Perl process which we'll ditch right after.
             local ($!, $@);
             my $do_ = "old/bin/$script";
-            unless ( do $do_ ) {
+            unless ( {
+                no strict;
+                no warnings 'redefine';
+
+                do $do_;
+            } ) {
                 if ($! or $@) {
                     print "Status: 500 Internal server error (old_code.pm)\n\n";
                     warn "Failed to execute $do_ ($!): $@\n";
