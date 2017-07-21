@@ -1009,7 +1009,6 @@ sub run_import {
     return begin_import($request);
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
 eval {
     local ($!, $@);
     my $do_ = "scripts/custom/asset.pl";
