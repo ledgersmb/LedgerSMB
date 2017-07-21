@@ -326,7 +326,7 @@ sub edit_sic {
 
     $form->{title} = "Edit";
 
-    $form->{code} =~ s/\\'/'/g;
+    $form->{code} =~ s/\\'/'/g; # ' # kludge the single quote for syntax highlighting
     $form->{code} =~ s/\\\\/\\/g;
 
     AM->get_sic( \%myconfig, \%$form );
@@ -415,7 +415,7 @@ sub edit_language {
 
     $form->{title} = "Edit";
 
-    $form->{code} =~ s/\\'/'/g;
+    $form->{code} =~ s/\\'/'/g; #' # kludge the single quote for syntax highlighting
     $form->{code} =~ s/\\\\/\\/g;
 
     AM->get_language( \%myconfig, \%$form );
@@ -1044,7 +1044,16 @@ sub edit_recurring {
     }
 
     $form->{script} = "$form->{module}.pl";
-    do "bin/$form->{script}";
+    {
+        local ($!, $@);
+        my $do_ = "bin/$form->{script}";
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (am.pl)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    };
 
     &{ $links{ $form->{module} } };
 
@@ -1123,7 +1132,16 @@ sub process_transactions {
                         $form->{module} = "ap";
                         $invfld         = "vinumber";
                     }
-                    do "bin/$form->{script}";
+                    {
+                        local ($!, $@);
+                        my $do_ = "bin/$form->{script}";
+                        unless ( do $do_ ) {
+                            if ($! or $@) {
+                                print "Status: 500 Internal server error (am.pl)\n\n";
+                                warn "Failed to execute $do_ ($!): $@\n";
+                            }
+                        }
+                    };
 
                     if ( $pt->{invoice} ) {
                         &invoice_links;

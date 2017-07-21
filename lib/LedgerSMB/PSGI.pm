@@ -44,10 +44,18 @@ Returns a 'PSGI app' which handles GET/POST requests for the RESTful services
 =cut
 
 sub rest_app {
-   return CGI::Emulate::PSGI->handler(
-     sub {
-       do 'bin/rest-handler.pl';
-    });
+    return CGI::Emulate::PSGI->handler(
+        sub {
+            local ($!, $@);
+            my $do_ = 'bin/rest-handler.pl';
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (PSGI.pm (rest_app))\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
+            }
+        }
+    );
 }
 
 =item old_app
@@ -93,16 +101,31 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-       do 'bin/old-handler.pl';
+        local ($!, $@);
+        my $do_ = 'bin/old-handler.pl';
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+
        exit;
     }
 }
 
 sub _run_new {
     my ($script) = @_;
-    if (-f 'bin/lsmb-request.pl'){
+    if (-f 'bin/lsmb-request.pl'){ ###FIXME: we probably don't need to explicitly test for the file to exist here as the wrapper around do $do_ will handle it for us
         try {
-            do 'bin/lsmb-request.pl';
+            local ($!, $@);
+            my $do_ = 'bin/lsmb-request.pl';
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (PSGI.pm run_new)\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
+            }
         }
         catch {
             # simple 'die' statements are request terminations

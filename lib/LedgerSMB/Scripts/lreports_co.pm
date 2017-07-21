@@ -97,6 +97,16 @@ files.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/lreports_co.pl"};
+{
+    local ($!, $@);
+    my $do_ = 'scripts/custom/lreports_co.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (lreports_co.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+};
 1;

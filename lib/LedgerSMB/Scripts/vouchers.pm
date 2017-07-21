@@ -28,8 +28,23 @@ use warnings;
 our $VERSION = '0.1';
 our $custom_batch_types = {};
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/vouchers.pl"};
+sub _run_script {
+    my ($script, $msg) = @_;
+    local ($!, $@);
+    if ( -e $script ) {
+        unless ( do $script ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error ($msg)\n\n";
+                warn "Failed to execute $script ($!): $@\n";
+            }
+        }
+    } else {
+        warn "$script not found.";
+    }
+}
+
+_run_script('scripts/custom/vouchers.pl', 'vouchers.pl - custom start');
+
 
 =item create_batch
 
@@ -414,7 +429,7 @@ my %print_dispatch = (
                if (my $cpid = fork()){
                   wait;
                } else {
-                  do 'bin/ar.pl';
+                    _run_script('bin/ar.pl', 'vouchers.pm disp2');
                   require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
@@ -442,7 +457,7 @@ my %print_dispatch = (
                if (fork){
                   wait;
                } else {
-                  do 'bin/is.pl';
+                    _run_script('bin/is.pl', 'vouchers.pm disp8');
                   require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
@@ -464,7 +479,7 @@ my %print_dispatch = (
                if (fork){
                   wait;
                } else {
-                  do 'bin/is.pl';
+                    _run_script('bin/is.pl', 'vouchers.pm disp9');
                   require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
@@ -544,8 +559,7 @@ sub print_batch {
 
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/vouchers.pl"};
+_run_script('scripts/custom/vouchers.pl', 'vouchers.pl - custom end');
 1;
 
 =back

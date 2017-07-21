@@ -524,7 +524,17 @@ any later version.  Please see the included LICENSE.txt for more details.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do 'scripts/custom/import_trans.pl'; };
+{
+    local ($!, $@);
+    my $do_ = 'scripts/custom/import_trans.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (import_csv.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+};
 
 1;

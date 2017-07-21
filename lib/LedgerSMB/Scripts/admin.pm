@@ -167,9 +167,18 @@ sub delete_session {
     list_sessions($request);
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/admin.pl"};
-
+{
+    local ($!, $@);
+    my $do_ = 'scripts/custom/admin.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (login.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    }
+}
 =back
 
 =head1 COPYRIGHT
