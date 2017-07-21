@@ -23,6 +23,7 @@ use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
 use Try::Tiny;
+use List::Util qw{ any none };
 
 # To build the URL space
 use Plack::Builder;
@@ -30,7 +31,6 @@ use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
-
 
 local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -118,7 +118,7 @@ sub psgi_app {
             $module->can('clear_session_actions');
 
         if ($clear_session_actions
-            && grep { $_ eq $request->{action} }
+            && any { $_ eq $request->{action} }
                     $clear_session_actions->() ) {
             $request->clear_session;
         }
@@ -126,7 +126,7 @@ sub psgi_app {
             my $no_db = $module->can('no_db_actions');
 
             if (!$no_db
-                || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
+                || ( $no_db && none { $_ eq $request->{action} } $no_db->())) {
                 if (! $request->_db_init()) {
                     ($status, $headers, $body) =
                         ( HTTP_UNAUTHORIZED,
