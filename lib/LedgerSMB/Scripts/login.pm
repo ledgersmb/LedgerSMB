@@ -206,7 +206,7 @@ sub logout_js {
 }
 
 
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/login.pl';
     if ( -e $do_ ) {

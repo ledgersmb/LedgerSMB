@@ -96,8 +96,7 @@ files.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/lreports_co.pl';
     if ( -e $do_ ) {

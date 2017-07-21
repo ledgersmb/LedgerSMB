@@ -455,8 +455,7 @@ sub pending {
     return $template->render_to_psgi();
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/recon.pl';
     if ( -e $do_ ) {

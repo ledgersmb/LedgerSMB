@@ -527,7 +527,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 
 =cut
 
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/import_trans.pl';
     if ( -e $do_ ) {

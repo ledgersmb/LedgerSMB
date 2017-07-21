@@ -134,7 +134,7 @@ files.
 
 =cut
 
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/journal.pl';
     if ( -e $do_ ) {

@@ -1009,7 +1009,7 @@ sub run_import {
     return begin_import($request);
 }
 
-eval {
+{
     local ($!, $@);
     my $do_ = "scripts/custom/asset.pl";
     if ( -e $do_ ) {

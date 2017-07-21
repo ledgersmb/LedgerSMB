@@ -30,8 +30,7 @@ use LedgerSMB::old_code qw(dispatch);
 our $VERSION = '0.1';
 our $custom_batch_types = {};
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {
@@ -503,8 +502,7 @@ sub print_batch {
     }
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {

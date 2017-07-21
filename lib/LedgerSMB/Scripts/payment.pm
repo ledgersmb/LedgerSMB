@@ -1907,8 +1907,7 @@ return use_overpayment($request);
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval {
+{
     local ($!, $@);
     my $do_ = 'scripts/custom/payment.pl';
     if ( -e $do_ ) {
