@@ -161,6 +161,7 @@ use LedgerSMB::DBH;
 use LedgerSMB::Template::TXT;
 use utf8;
 
+use LedgerSMB::Template qw( preprocess );
 
 use Try::Tiny;
 use Carp;
@@ -515,7 +516,7 @@ sub to_json {
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ $json->encode(
-                   LedgerSMB::Template::_preprocess(
+                   preprocess(
                        $output,
                        \&LedgerSMB::Template::TXT::escape )) ]
         ];
