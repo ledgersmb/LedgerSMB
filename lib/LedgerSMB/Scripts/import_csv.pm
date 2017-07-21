@@ -530,7 +530,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 ###TODO-LOCALIZE-DOLLAR-AT
 eval {
     local ($!, $@);
-    my $do_ = 'scripts/custom/import_trans.pl'; 
+    my $do_ = 'scripts/custom/import_trans.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
