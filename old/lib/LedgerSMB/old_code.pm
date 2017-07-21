@@ -78,12 +78,11 @@ sub dispatch {
             # child Perl process which we'll ditch right after.
             local ($!, $@);
             my $do_ = "old/bin/$script";
-            unless ( {
-                no strict;
-                no warnings 'redefine';
 
-                do $do_;
-            } ) {
+            no strict;
+            no warnings 'redefine';
+
+            unless ( do $do_ ) {
                 if ($! or $@) {
                     print "Status: 500 Internal server error (old_code.pm)\n\n";
                     warn "Failed to execute $do_ ($!): $@\n";
