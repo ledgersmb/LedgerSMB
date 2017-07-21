@@ -206,7 +206,6 @@ sub logout_js {
 }
 
 
-###TODO-LOCALIZE-DOLLAR-AT
 eval {
     local ($!, $@);
     my $do_ = 'scripts/custom/login.pl';
