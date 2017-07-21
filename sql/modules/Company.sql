@@ -1627,7 +1627,7 @@ ELSIF t_entity_class = 2 THEN -- CUSTOMER
         INSERT INTO partscustomer
                (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr, qty);
+                in_curr, in_qty);
 
         t_insert := true;
     END IF;
