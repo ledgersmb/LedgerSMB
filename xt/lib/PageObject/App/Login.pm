@@ -36,24 +36,17 @@ sub login {
     my $user = $args{user};
     my $password = $args{password};
     my $company = $args{company};
-
-    local ($!, $@);
-    unless ( do {
-            my $element = $self->find('*labeled', text => $_->{label});
-            $element->click;
-            $element->clear;
-            $element->send_keys($_->{value});
-        } for ({ label => "User Name",
-                 value => $user },
-               { label => "Password",
-                 value => $password },
-               { label => "Company",
-                 value => $company });
-    ) {
-        if ($! or $@) {
-            warn "Failed to execute xt::lib::PageObject::App::login do ($!): $@\n";
-        }
-    }
+    do {
+        my $element = $self->find('*labeled', text => $_->{label});
+        $element->click;
+        $element->clear;
+        $element->send_keys($_->{value});
+    } for ({ label => "User Name",
+             value => $user },
+           { label => "Password",
+             value => $password },
+           { label => "Company",
+             value => $company });
     $self->find('*button', text => "Login")->click;
     return $self->session->page->wait_for_body;
 }

@@ -103,20 +103,14 @@ sub click_menu {
     ok(use_module($tgt_class),
        "$tgt_class can be 'use'-d dynamically");
 
-    local ($!, $@);
-    unless ( do {
-            $item = $item->find(".$ul/li[./a[text()='$_']]");
-            my $link = $item->find("./a");
-            $link->click
-                unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
+    do {
+        $item = $item->find(".$ul/li[./a[text()='$_']]");
+        my $link = $item->find("./a");
+        $link->click
+            unless ($item->get_attribute('class') =~ /\bmenu_open\b/);
 
-            $ul = '/ul';
-        } for @$path;
-    ) {
-        if ($! or $@) {
-            warn "Failed to execute xt::lib::PageObject::App::click_menu do ($!): $@\n";
-        }
-    }
+        $ul = '/ul';
+    } for @$path;
 
     return $self->session->page->body->maindiv->wait_for_content;
 }
