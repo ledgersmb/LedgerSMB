@@ -118,7 +118,7 @@ sub psgi_app {
             $module->can('clear_session_actions');
 
         if ($clear_session_actions
-            && ( !none{ $_ eq $request->{action} } 
+            && ( !none{ $_ eq $request->{action} }
                     $clear_session_actions->() )
         ) {
             $request->clear_session;
