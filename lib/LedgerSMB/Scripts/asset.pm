@@ -1012,7 +1012,7 @@ sub run_import {
 ###TODO-LOCALIZE-DOLLAR-AT
 eval {
     local ($!, $@);
-    my $do_ = "scripts/custom/asset.pl"
+    my $do_ = "scripts/custom/asset.pl";
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
