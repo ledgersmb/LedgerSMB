@@ -23,7 +23,7 @@ use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
 use Try::Tiny;
-use List::Util qw{ any none };
+use List::Util qw{  none };
 
 # To build the URL space
 use Plack::Builder;
@@ -118,8 +118,8 @@ sub psgi_app {
             $module->can('clear_session_actions');
 
         if ($clear_session_actions
-            && any { $_ eq $request->{action} }
-                    $clear_session_actions->() ) {
+            && ( !none{ $_ eq $request->{action} } $clear_session_actions->() ) 
+        ) {
             $request->clear_session;
         }
         if (! $module->can('no_db')) {
