@@ -31,8 +31,8 @@ try {
             my $do_ = "old/lib/LedgerSMB/Reconciliation/CSV/Formats/$format";
             unless ( do $do_ ) {
                 if ($! or $@) {
-                    print "Status: 500 Internal server error (CSV.pm)\n\n";
-                    warn "Failed to execute $do_ ($!): $@\n";
+                    warn "\nFailed to execute $do_ ($!): $@\n";
+                    die ( "Status: 500 Internal server error (CSV.pm)\n\n" );
                 }
             }
         }
