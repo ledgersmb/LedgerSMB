@@ -530,7 +530,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 {
     local ($!, $@);
     my $do_ = 'scripts/custom/import_trans.pl';
-    if ( ! -e $do_ ) {
+    if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
                 warn "\nFailed to execute $do_ ($!): $@\n";
