@@ -161,7 +161,21 @@ sub generate {
         for my $k (keys %$request){
             $form->{$k} = $request->{$k};
         }
-        { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
+        {
+            local ($!, $@);
+            my $do_ = 'bin/oe.pl';
+            if ( -e $do_ ) {
+                no strict;
+                no warnings 'redefine';
+                unless ( do $do_ ) {
+                    if ($! or $@) {
+                        print "Status: 500 Internal server error (login.pm)\n\n";
+                        warn "Failed to execute $do_ ($!): $@\n";
+                    }
+                }
+            }
+        }
+
         my $locale = $LedgerSMB::App_State::Locale;
         lsmb_legacy::generate_purchase_orders($form, $locale);
         exit;
