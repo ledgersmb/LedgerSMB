@@ -223,7 +223,7 @@ update_docker_remote() {
 
 publish_files_dl() {
     (cd "$our_workspace" && \
-     echo "cd '$dl_base_dir/$dl_sub_dir'
+     echo "cd '$dl_base_dir/$prj_sub_dir'
 mkdir '$release_version'
 cd '$release_version'
 put 'ledgersmb-$release_version.tar.gz.asc'
