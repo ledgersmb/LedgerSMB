@@ -28,7 +28,7 @@ extends 'Test::BDD::Cucumber::Extension';
 has db_name => (is => 'rw', default => $ENV{PGDATABASE});
 has username => (is => 'rw', default => $ENV{PGUSER});
 has password => (is => 'rw', default => $ENV{PGPASSWORD});
-has host => (is => 'rw', default => 'localhost');
+has host => (is => 'rw', default => $ENV{PGHOST} // 'localhost');
 has template_db_name => (is => 'rw', default => 'standard-template');
 has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
@@ -133,7 +133,7 @@ sub create_employee {
         name => 'First Last',
         ssn => '1' . $emp_counter,
         country_id => 232, # United States
-        _DBH => $dbh,
+        _dbh => $dbh,
         );
     $emp->save;
 
@@ -154,7 +154,7 @@ sub create_user {
     my $user = LedgerSMB::Entity::User->new(
         entity_id => $args{entity_id},
         username => $username,
-        _DBH => $dbh,
+        _dbh => $dbh,
         );
     $user->create($args{password} // 'password');
     $dbh->do(qq(ALTER USER "$username" VALID UNTIL 'infinity'));

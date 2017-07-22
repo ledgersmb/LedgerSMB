@@ -42,7 +42,8 @@ ok($provider->isa('Template::Provider'),
 my $dbh = LedgerSMB::Database->new(
     dbname => $ENV{LSMB_NEW_DB},
     username => $ENV{PGUSER},
-    password => $ENV{PGPASSWORD})
+    password => $ENV{PGPASSWORD},
+    host => $ENV{PGHOST})
     ->connect({ AutoCommit => 0, PrintError => 0, RaiseError => 1 });
 
 $dbh->do(qq|
@@ -58,7 +59,7 @@ VALUES ('provider-test1', 'en_US', 'The en_US language template',
 |);
 
 $provider = LedgerSMB::Template::DBProvider->new({
-    _DBH => $dbh,
+    _dbh => $dbh,
     language_code => undef,
     format => 'html',
 });
@@ -145,7 +146,7 @@ VALUES ('provider-test3', NULL, 'Hello <?lsmb name ?>, ....',
 
 $output = '';
 $provider = LedgerSMB::Template::DBProvider->new({
-    _DBH => $dbh,
+    _dbh => $dbh,
     language_code => undef,
     format => 'html',
     PARSER => Template::Parser->new({

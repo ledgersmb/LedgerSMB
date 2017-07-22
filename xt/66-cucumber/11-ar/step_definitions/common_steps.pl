@@ -22,7 +22,7 @@ Given qr/a customer named "(.*)"/, sub {
         dbname => S->{"the company"},
         usermame => $ENV{PGUSER},     ###TODO: we had 'S->{"the admin"}
         password => $ENV{PGPASSWORD}, ### but that didn't work
-        host => 'localhost')
+        host => $ENV{PGHOST} // 'localhost')
         ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 0 });
 
     my $company = LedgerSMB::Entity::Company->new(
@@ -35,7 +35,7 @@ Given qr/a customer named "(.*)"/, sub {
         legal_name   => $customer,
 
         # internal fields
-        _DBH         => $dbh,
+        _dbh => $dbh,
         );
     $company = $company->save;
 
@@ -52,7 +52,7 @@ Given qr/a customer named "(.*)"/, sub {
     #     curr             => 'USD',
 
     #     # internal fields
-    #     _DBH             => $dbh,
+    #     _dbh => $dbh,
     #     );
     # $eca->save;
 

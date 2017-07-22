@@ -37,8 +37,10 @@ use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
-$LedgerSMB::VERSION =~ /(\d+\.\d+)./;
-my $MINOR_VERSION = $1;
+my $CURRENT_MINOR_VERSION;
+if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
+    $CURRENT_MINOR_VERSION = $1;
+}
 
 =item no_db
 
@@ -416,11 +418,8 @@ sub run_backup {
     $backupfile or
         die $request->{_locale}->text('Error creating backup file');
 
-    if ($request->{backup_type} eq 'email'){
-        # suppress warning of single usage of $LedgerSMB::Sysconfig::...
-        no warnings 'once';
+    if ($request->{backup_type} eq 'email') {
 
-        my $csettings = $LedgerSMB::Company_Config::settings;
         my $mail = LedgerSMB::Mailer->new(
             from          => $LedgerSMB::Sysconfig::backup_email_from,
             to            => $request->{email},
@@ -877,11 +876,11 @@ sub select_coa {
     use LedgerSMB::Sysconfig;
 
     my ($request) = @_;
-    { no warnings 'uninitialized'; # silence warnings if this is missing
-      if ($request->{coa_lc} =~ /\.\./){
+
+      if ($request->{coa_lc} and $request->{coa_lc} =~ /\.\./ ){
           die $request->{_locale}->text('Access Denied');
       }
-    }
+
     if ($request->{coa_lc}){
         if ($request->{chart}){
             my ($reauth, $database) = _get_database($request);
@@ -1165,7 +1164,7 @@ sub run_upgrade {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
-                   "$dbinfo->{version}-$MINOR_VERSION");
+                   "$dbinfo->{version}-$CURRENT_MINOR_VERSION");
 
     if ($v ne '1.2'){
         $request->{only_templates} = 1;
@@ -1194,7 +1193,7 @@ sub run_sl28_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl28",
-                   "sl2.8-$MINOR_VERSION");
+                   "sl2.8-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
 }
@@ -1214,7 +1213,7 @@ sub run_sl30_migration {
     $dbh->commit;
 
     process_and_run_upgrade_script($request, $database, "sl30",
-                                   "sl3.0-$MINOR_VERSION");
+                                   "sl3.0-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
 }

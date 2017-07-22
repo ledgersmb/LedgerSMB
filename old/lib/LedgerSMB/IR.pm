@@ -615,7 +615,7 @@ sub post_invoice {
         $dbh->do($query) || $form->dberror($query);
     }
 
-
+    return 1;
 }
 
 sub retrieve_invoice {

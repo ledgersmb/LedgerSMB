@@ -134,6 +134,17 @@ files.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/journal.pl"};
+{
+    local ($!, $@);
+    my $do_ = 'scripts/custom/journal.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (journal.pm)\n\n" );
+            }
+        }
+    }
+};
+
 1;
