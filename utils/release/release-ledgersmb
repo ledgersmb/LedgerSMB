@@ -387,12 +387,9 @@ All automated steps completed.
 Please execute the following steps manually:
 
  * Update the latest version on Wikipedia
-   - https://en.wikipedia.org/w/index.php?title=LedgerSMB&action=edit
-   - https://es.wikipedia.org/w/index.php?title=LedgerSMB&action=edit
- * Send out the release announcement to
-   - ledger-smb-announce@lists.sourceforge.net
-   - ledger-smb-users@lists.sourceforge.net
-   - ledger-smb-devel@lists.sourceforge.net
+   - https://en.wikipedia.org/wiki/Comparison_of_accounting_software
+   - https://ru.wikipedia.org/w/index.php?title=%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82:%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8/%D0%A1%D0%BF%D0%B8%D1%81%D0%BA%D0%B8/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_ERP-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC&action=edit
+   - https://en.wikipedia.org/wiki/List_of_ERP_software_packages
  * Publish the release announcement using the 'release' content type
    on ledgersmb.org (http://ledgersmb.org/node/add/release when logged in)
    [Note: Don't forget to set the correct branch to '$branch'!]
