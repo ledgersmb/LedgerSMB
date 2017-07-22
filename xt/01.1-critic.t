@@ -13,7 +13,7 @@ my @on_disk;
 sub test_files {
     my ($critic, $files) = @_;
 
-    Perl::Critic::Violation::set_format( '%s %p %f: %l\n');
+    Perl::Critic::Violation::set_format( 'S%s %p %f: %l\n');
 
     for my $file (@$files) {
         my @findings = $critic->critique($file);
