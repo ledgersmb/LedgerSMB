@@ -47,10 +47,15 @@ Changelog for 1.5.9
 * Fix regression in setup.pl with LedgerSMB 1.2 or SQL Ledger db (Yves L)
 * Fix error when adding customer-specific price to customer (Erik H, #2643)
 * Fix can't edit sales & purchase quotation through web UI (Erik H, #2617)
+* Fix string match operator typo in company searches (Erik H)
+* Fix LedgerSMB 1.2->1.5 migration script syntax errors (Erik H)
+* Add migration non-standard (gl) 'account links' for 1.2->1.5 (Erik H)
+* When including code with 'do', don't silently skip errors (David G, #3020)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
+David G is David Godfrey
 
 
 Changelog for 1.5.8
