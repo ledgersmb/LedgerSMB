@@ -188,7 +188,15 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-       do 'old/bin/old-handler.pl';
+        local ($!, $@);
+        my $do_ = 'old/bin/old-handler.pl';
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+
        exit;
     }
     return;

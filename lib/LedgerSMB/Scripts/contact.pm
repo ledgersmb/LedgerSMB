@@ -47,7 +47,16 @@ my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($d
 closedir $dh;
 
 for (@pluginmods){
-  do "lib/LedgerSMB/Entity/Plugins/$_";
+    local ($!, $@);
+    my $do_ = "lib/LedgerSMB/Entity/Plugins/$_";
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die ( "Status: 500 Internal server error (contact.pm)\n\n" );
+            }
+        }
+    }
 }
 
 
