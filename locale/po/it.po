@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.9-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-07-01 16:13+0000\n"
+"POT-Creation-Date: 2017-07-22 19:02+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Italian (https://www.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -365,7 +365,7 @@ msgstr "Attivo"
 msgid "Active Sessions"
 msgstr "Sessioni attive"
 
-#: bin/am.pl:1533 bin/ic.pl:2101 lib/LedgerSMB/Report/File/Incoming.pm:102
+#: bin/am.pl:1551 bin/ic.pl:2101 lib/LedgerSMB/Report/File/Incoming.pm:102
 #: lib/LedgerSMB/Report/File/Internal.pm:90
 msgid "Add"
 msgstr "Nuovo"
@@ -535,7 +535,7 @@ msgstr "Nuova tassazione"
 msgid "Add Timecard"
 msgstr ""
 
-#: bin/io.pl:1829
+#: bin/io.pl:1835
 msgid "Add To List"
 msgstr "Aggiungi a elenco"
 
@@ -568,15 +568,15 @@ msgstr "Nuovo reso a fornitore"
 msgid "Add Warehouse"
 msgstr "Nuovo magazzino"
 
-#: bin/io.pl:1644
+#: bin/io.pl:1650
 msgid "Add line1"
 msgstr "Aggiungi linea1"
 
-#: bin/io.pl:1647
+#: bin/io.pl:1653
 msgid "Add line2"
 msgstr "Nuova linea2"
 
-#: bin/io.pl:1651
+#: bin/io.pl:1657
 msgid "Add line3 "
 msgstr "Nuova linea3"
 
@@ -613,7 +613,7 @@ msgstr "Indirizzo:"
 msgid "Address: [_1]"
 msgstr "Indirizzo: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:180 t/data/04-complex_template.html:30
+#: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr "Indirizzi"
@@ -1024,7 +1024,7 @@ msgstr ""
 msgid "Attached by"
 msgstr "Collegato a"
 
-#: bin/io.pl:1059
+#: bin/io.pl:1068
 msgid "Attached document for [_1] [_2]"
 msgstr ""
 
@@ -1185,7 +1185,7 @@ msgstr "Conto bancario"
 msgid "Bank Account:"
 msgstr "Conto bancario"
 
-#: lib/LedgerSMB/Scripts/contact.pm:182 t/data/04-complex_template.html:32
+#: lib/LedgerSMB/Scripts/contact.pm:191 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 msgid "Bank Accounts"
@@ -1263,7 +1263,7 @@ msgstr ""
 msgid "Bcc"
 msgstr "Bcc"
 
-#: bin/arap.pl:795 bin/io.pl:1464
+#: bin/arap.pl:795 bin/io.pl:1473
 msgid "Bcc: [_1]"
 msgstr "Ccn: [_1]"
 
@@ -1292,7 +1292,7 @@ msgstr ""
 msgid "Billion"
 msgstr ""
 
-#: bin/ic.pl:493 bin/ic.pl:2094 bin/io.pl:248 bin/oe.pl:1859
+#: bin/ic.pl:493 bin/ic.pl:2094 bin/io.pl:248 bin/oe.pl:1861
 #: lib/LedgerSMB/Report/Inventory/History.pm:134
 #: lib/LedgerSMB/Report/Inventory/Search.pm:214
 #: templates/demo/bin_list.html:154 templates/demo/bin_list.tex:109
@@ -1309,7 +1309,7 @@ msgstr ""
 msgid "Bin"
 msgstr "Codice BIN"
 
-#: bin/am.pl:1510 bin/io.pl:1222 bin/oe.pl:265 bin/oe.pl:277 bin/printer.pl:88
+#: bin/am.pl:1528 bin/io.pl:1231 bin/oe.pl:265 bin/oe.pl:277 bin/printer.pl:88
 #: bin/printer.pl:102 templates/demo/bin_list.html:4
 #: templates/demo/bin_list.html:18 templates/demo/bin_list.tex:74
 #: templates/demo_with_images/bin_list.html:4
@@ -1416,7 +1416,7 @@ msgid "COGS Lots Report"
 msgstr ""
 
 #: UI/Contact/pricelist.html:114 UI/Reports/aging_report.html:118
-#: UI/Reports/balance_sheet.html:119 UI/Reports/display_report.html:70
+#: UI/Reports/balance_sheet.html:119 UI/Reports/display_report.html:76
 #: UI/Reports/PNL.html:98
 msgid "CSV"
 msgstr "CSV"
@@ -1437,7 +1437,7 @@ msgstr ""
 msgid "Can't void a voided invoice!"
 msgstr ""
 
-#: bin/io.pl:1833 lib/LedgerSMB/Scripts/setup.pm:137
+#: bin/io.pl:1839 lib/LedgerSMB/Scripts/setup.pm:137
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -1561,7 +1561,7 @@ msgstr ""
 msgid "Cc"
 msgstr "Cc"
 
-#: bin/arap.pl:794 bin/io.pl:1463
+#: bin/arap.pl:794 bin/io.pl:1472
 msgid "Cc: [_1]"
 msgstr ""
 
@@ -1720,9 +1720,9 @@ msgstr "Combina ordini vendita"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:74
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:71
-#: lib/LedgerSMB/Scripts/contact.pm:174 UI/Contact/contact.html:17
-#: UI/Contact/divs/company.html:2 UI/login.html:70
-#: UI/Reports/aging_report.html:19 UI/Reports/display_report.html:19
+#: lib/LedgerSMB/Scripts/contact.pm:183 UI/Contact/contact.html:17
+#: UI/Contact/divs/company.html:2 UI/login.html:87
+#: UI/Reports/aging_report.html:19 UI/Reports/display_report.html:25
 #: UI/Reports/display_report.tex:24
 msgid "Company"
 msgstr "Azienda"
@@ -1795,7 +1795,7 @@ msgstr "Conferma!"
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
-#: bin/io.pl:1719 templates/demo/bin_list.html:110
+#: bin/io.pl:1725 templates/demo/bin_list.html:110
 #: templates/demo/packing_list.html:81 templates/demo/pick_list.html:80
 #: templates/demo/product_receipt.html:104
 #: templates/demo/product_receipt.tex:106
@@ -1819,7 +1819,7 @@ msgstr ""
 msgid "Contact"
 msgstr "Contatto"
 
-#: lib/LedgerSMB/Scripts/contact.pm:181 t/data/04-complex_template.html:31
+#: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:29
 #: UI/Contact/divs/contact_info.html:109
 #: UI/Reports/filters/purchase_history.html:31
@@ -1852,8 +1852,8 @@ msgid "Content"
 msgstr ""
 
 #: bin/aa.pl:1761 bin/arap.pl:269 bin/arapprn.pl:417 bin/ic.pl:956
-#: bin/ic.pl:1767 bin/ic.pl:2049 bin/ic.pl:2198 bin/io.pl:620 bin/io.pl:1081
-#: bin/oe.pl:1547 bin/oe.pl:2075 bin/oe.pl:2586 bin/pe.pl:330 bin/pe.pl:749
+#: bin/ic.pl:1767 bin/ic.pl:2049 bin/ic.pl:2198 bin/io.pl:620 bin/io.pl:1090
+#: bin/oe.pl:1547 bin/oe.pl:2077 bin/oe.pl:2588 bin/pe.pl:330 bin/pe.pl:749
 #: bin/pe.pl:919 bin/pe.pl:1186 lib/LedgerSMB/Scripts/payment.pm:626
 #: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Scripts/payment.pm:1357
 #: UI/am-audit-control.html:49 UI/asset/begin_approval.html:67
@@ -1919,7 +1919,7 @@ msgstr ""
 msgid "Copy to New Name"
 msgstr ""
 
-#: bin/ic.pl:1026 bin/ic.pl:1273 bin/oe.pl:2425
+#: bin/ic.pl:1026 bin/ic.pl:1273 bin/oe.pl:2427
 msgid "Cost"
 msgstr ""
 
@@ -1939,11 +1939,11 @@ msgstr ""
 msgid "Could not save the data.  Please try again"
 msgstr ""
 
-#: bin/oe.pl:2008
+#: bin/oe.pl:2010
 msgid "Could not save!"
 msgstr ""
 
-#: bin/oe.pl:2288
+#: bin/oe.pl:2290
 msgid "Could not transfer Inventory!"
 msgstr ""
 
@@ -1961,7 +1961,7 @@ msgstr ""
 msgid "Counterparty Code"
 msgstr ""
 
-#: bin/io.pl:1663 lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:31
+#: bin/io.pl:1669 lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:31
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:31
 #: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:84
 #: UI/Contact/divs/address.html:192 UI/Contact/divs/company.html:105
@@ -1984,7 +1984,7 @@ msgstr "Nome nazione"
 msgid "Country:"
 msgstr "Nazione"
 
-#: UI/setup/credentials.html:60
+#: UI/setup/credentials.html:75
 msgid "Create"
 msgstr "Crea"
 
@@ -2033,7 +2033,7 @@ msgstr ""
 msgid "Credit"
 msgstr "Avere"
 
-#: lib/LedgerSMB/Scripts/contact.pm:301
+#: lib/LedgerSMB/Scripts/contact.pm:310
 msgid "Credit Account"
 msgstr ""
 
@@ -2041,11 +2041,11 @@ msgstr ""
 msgid "Credit Account Number"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:179 UI/Contact/divs/credit.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:188 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
 msgstr ""
 
-#: bin/am.pl:1503 templates/demo/invoice.html:17 templates/demo/invoice.tex:114
+#: bin/am.pl:1521 templates/demo/invoice.html:17 templates/demo/invoice.tex:114
 #: templates/demo_with_images/invoice.html:17
 #: templates/demo_with_images/invoice.tex:114 templates/xedemo/invoice.tex:111
 #: sql/Pg-database.sql:2907
@@ -2076,7 +2076,7 @@ msgstr ""
 msgid "Cumulative Error:"
 msgstr ""
 
-#: bin/ic.pl:1012 bin/ic.pl:1111 bin/oe.pl:2430
+#: bin/ic.pl:1012 bin/ic.pl:1111 bin/oe.pl:2432
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:243
 msgid "Curr"
 msgstr "Valuta"
@@ -2155,7 +2155,7 @@ msgstr ""
 msgid "Customer Name"
 msgstr "Nome cliente"
 
-#: bin/aa.pl:1598 bin/io.pl:1601 lib/LedgerSMB/Report/Invoices/Payments.pm:115
+#: bin/aa.pl:1598 bin/io.pl:1607 lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:185
 #: lib/LedgerSMB/Scripts/configuration.pm:115
 #: UI/payments/payments_filter.html:66
@@ -2190,7 +2190,7 @@ msgstr ""
 msgid "D M"
 msgstr ""
 
-#: UI/setup/credentials.html:24
+#: UI/setup/credentials.html:39
 msgid "DB admin login"
 msgstr ""
 
@@ -2210,7 +2210,7 @@ msgstr ""
 msgid "Data not saved.  Please update again."
 msgstr ""
 
-#: UI/setup/credentials.html:48 UI/setup/list_databases.html:13
+#: UI/setup/credentials.html:63 UI/setup/list_databases.html:13
 msgid "Database"
 msgstr "Database"
 
@@ -2228,7 +2228,7 @@ msgstr "Server"
 
 #: UI/setup/begin_backup.html:7 UI/setup/complete.html:8
 #: UI/setup/complete_migration_revert.html:8 UI/setup/confirm_operation.html:7
-#: UI/setup/credentials.html:7 UI/setup/new_user.html:7
+#: UI/setup/credentials.html:22 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:7
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
@@ -2238,7 +2238,7 @@ msgstr ""
 msgid "Database Operation Complete"
 msgstr ""
 
-#: UI/setup/credentials.html:8
+#: UI/setup/credentials.html:23
 msgid "Database administrator credentials"
 msgstr ""
 
@@ -2355,7 +2355,7 @@ msgstr ""
 msgid "Date Paid"
 msgstr "Data di pagamento"
 
-#: bin/oe.pl:1735
+#: bin/oe.pl:1737
 msgid "Date Received"
 msgstr ""
 
@@ -2383,7 +2383,7 @@ msgstr ""
 msgid "Date of Birth"
 msgstr "Data di nascita"
 
-#: bin/oe.pl:1993
+#: bin/oe.pl:1995
 msgid "Date received missing!"
 msgstr ""
 
@@ -2400,7 +2400,7 @@ msgstr ""
 msgid "Date to register payment"
 msgstr ""
 
-#: bin/arap.pl:801 bin/io.pl:1482
+#: bin/arap.pl:801 bin/io.pl:1491
 msgid "Date: [_1]"
 msgstr ""
 
@@ -2429,7 +2429,7 @@ msgstr "Giorni"
 msgid "Debit"
 msgstr "Dare"
 
-#: bin/am.pl:1504 sql/Pg-database.sql:2903
+#: bin/am.pl:1522 sql/Pg-database.sql:2903
 msgid "Debit Invoice"
 msgstr "Fattura a debito"
 
@@ -2648,9 +2648,9 @@ msgid "Depreciation Successful"
 msgstr ""
 
 #: bin/aa.pl:612 bin/aa.pl:663 bin/aa.pl:1523 bin/am.pl:841 bin/ic.pl:746
-#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1722
-#: bin/ir.pl:479 bin/is.pl:498 bin/oe.pl:1852 bin/oe.pl:2056 bin/oe.pl:2134
-#: bin/oe.pl:2168 bin/oe.pl:2417 bin/pe.pl:311 bin/pe.pl:357 bin/pe.pl:386
+#: bin/ic.pl:1267 bin/ic.pl:2023 bin/ic.pl:2090 bin/io.pl:236 bin/io.pl:1728
+#: bin/ir.pl:479 bin/is.pl:498 bin/oe.pl:1854 bin/oe.pl:2058 bin/oe.pl:2136
+#: bin/oe.pl:2170 bin/oe.pl:2419 bin/pe.pl:311 bin/pe.pl:357 bin/pe.pl:386
 #: bin/pe.pl:1038 lib/LedgerSMB/Report/Aging.pm:109
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:76
 #: lib/LedgerSMB/Report/Budget/Search.pm:85
@@ -2849,7 +2849,7 @@ msgstr ""
 msgid "Division by 0 error"
 msgstr ""
 
-#: bin/io.pl:1947
+#: bin/io.pl:1953
 msgid "Do not keep field empty [_1]"
 msgstr ""
 
@@ -2865,7 +2865,7 @@ msgstr "Tipo documento"
 msgid "Don't know what to do with backup"
 msgstr ""
 
-#: bin/oe.pl:1949 bin/oe.pl:1957
+#: bin/oe.pl:1951 bin/oe.pl:1959
 msgid "Done"
 msgstr "Fatto"
 
@@ -2953,7 +2953,7 @@ msgid "Duplicate employee numbers"
 msgstr "Numero impiegato duplicato"
 
 #: bin/am.pl:854 bin/arap.pl:411 bin/is.pl:589 bin/is.pl:1032 bin/oe.pl:637
-#: bin/oe.pl:860 bin/oe.pl:1956 UI/io-email.html:16
+#: bin/oe.pl:860 bin/oe.pl:1958 UI/io-email.html:16
 #: UI/Reports/filters/contact_search.html:49 UI/rp-email.html:15
 msgid "E-mail"
 msgstr "E-mail"
@@ -2966,7 +2966,7 @@ msgstr ""
 msgid "E-mail [_1]"
 msgstr ""
 
-#: bin/am.pl:1472 bin/io.pl:1276
+#: bin/am.pl:1490 bin/io.pl:1285
 msgid "E-mail address missing!"
 msgstr "Indirizzo e-mail mancante!"
 
@@ -3157,7 +3157,7 @@ msgid "Email"
 msgstr ""
 
 #: bin/aa.pl:478 bin/aa.pl:1483 bin/oe.pl:539 bin/pe.pl:865
-#: lib/LedgerSMB/Report/Orders.pm:263 lib/LedgerSMB/Scripts/contact.pm:176
+#: lib/LedgerSMB/Report/Orders.pm:263 lib/LedgerSMB/Scripts/contact.pm:185
 #: templates/demo/ap_transaction.html:93 templates/demo/ap_transaction.tex:68
 #: templates/demo/ar_transaction.tex:85 templates/demo/timecard.html:31
 #: templates/demo/timecard.tex:22
@@ -3287,7 +3287,7 @@ msgstr "Inserito il"
 msgid "Entered at: [_1]"
 msgstr "Inserito il: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:299 sql/Pg-database.sql:1054
+#: lib/LedgerSMB/Scripts/contact.pm:308 sql/Pg-database.sql:1054
 msgid "Entity"
 msgstr "Entità"
 
@@ -3339,7 +3339,7 @@ msgstr "Attivita a Passività"
 msgid "Error creating backup file"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/vouchers.pm:94
+#: lib/LedgerSMB/Scripts/vouchers.pm:109
 msgid "Error creating batch.  Please try again."
 msgstr ""
 
@@ -3577,7 +3577,7 @@ msgstr "Nome file"
 msgid "File type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:184 UI/Contact/divs/files.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:193 UI/Contact/divs/files.html:2
 msgid "Files"
 msgstr "File"
 
@@ -3670,7 +3670,7 @@ msgstr "quattrodici"
 msgid "Fri"
 msgstr ""
 
-#: bin/aa.pl:1700 bin/ic.pl:1130 bin/oe.pl:2142 bin/pe.pl:836
+#: bin/aa.pl:1700 bin/ic.pl:1130 bin/oe.pl:2144 bin/pe.pl:836
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:35
 #: templates/demo_with_images/bin_list.html:28
 #: templates/demo_with_images/bin_list.tex:35 templates/xedemo/bin_list.html:28
@@ -3709,7 +3709,7 @@ msgstr ""
 msgid "From File"
 msgstr ""
 
-#: bin/oe.pl:2155
+#: bin/oe.pl:2157
 msgid "From Warehouse"
 msgstr ""
 
@@ -3805,11 +3805,11 @@ msgstr "Genera"
 msgid "Generate Control Code"
 msgstr ""
 
-#: bin/oe.pl:2527
+#: bin/oe.pl:2529
 msgid "Generate Orders"
 msgstr "Genera ordini"
 
-#: bin/oe.pl:2432
+#: bin/oe.pl:2434
 msgid "Generate Purchase Orders"
 msgstr "Genera ordini acquisto"
 
@@ -3849,8 +3849,8 @@ msgstr "Storico di beni e servizi"
 msgid "Grand Total"
 msgstr "Totale generale"
 
-#: bin/ic.pl:426 bin/ic.pl:1276 bin/io.pl:270 bin/oe.pl:2060 bin/oe.pl:2138
-#: bin/oe.pl:2173 bin/pe.pl:145
+#: bin/ic.pl:426 bin/ic.pl:1276 bin/io.pl:270 bin/oe.pl:2062 bin/oe.pl:2140
+#: bin/oe.pl:2175 bin/pe.pl:145
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:48 UI/io-email.html:87
 msgid "Group"
 msgstr ""
@@ -4140,7 +4140,7 @@ msgstr "Data/ora inserita non valida"
 msgid "Invalid file"
 msgstr "File non valido"
 
-#: bin/am.pl:1430 bin/am.pl:1478
+#: bin/am.pl:1448 bin/am.pl:1496
 msgid "Invalid redirect"
 msgstr "Redirezione non valida"
 
@@ -4192,15 +4192,15 @@ msgstr ""
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 
-#: bin/oe.pl:2005
+#: bin/oe.pl:2007
 msgid "Inventory saved!"
 msgstr "Inventario registrato!"
 
-#: bin/oe.pl:2285
+#: bin/oe.pl:2287
 msgid "Inventory transferred!"
 msgstr ""
 
-#: bin/am.pl:1502 bin/io.pl:1035 bin/io.pl:1041 bin/io.pl:1162 bin/is.pl:251
+#: bin/am.pl:1520 bin/io.pl:1044 bin/io.pl:1050 bin/io.pl:1171 bin/is.pl:251
 #: bin/is.pl:1400 bin/printer.pl:51 lib/LedgerSMB/Report/Aging.pm:103
 #: lib/LedgerSMB/Report/Inventory/Search.pm:278
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:170
@@ -4270,7 +4270,7 @@ msgstr ""
 msgid "Invoice Date"
 msgstr "Data Registrazione Fattura"
 
-#: bin/aa.pl:1321 bin/io.pl:1279 bin/ir.pl:1270 bin/is.pl:1361
+#: bin/aa.pl:1321 bin/io.pl:1288 bin/ir.pl:1270 bin/is.pl:1361
 msgid "Invoice Date missing!"
 msgstr "Manca la data della Fattura!"
 
@@ -4293,7 +4293,7 @@ msgstr "Numero Fattura"
 msgid "Invoice Number"
 msgstr "Numero fattura"
 
-#: bin/io.pl:1289
+#: bin/io.pl:1298
 msgid "Invoice Number missing!"
 msgstr "Manca il numero della Fattura!"
 
@@ -4533,7 +4533,7 @@ msgstr "Ultimo aggiornamento"
 msgid "Last name"
 msgstr "Cognome"
 
-#: bin/oe.pl:2428 sql/Pg-database.sql:546
+#: bin/oe.pl:2430 sql/Pg-database.sql:546
 msgid "Lead"
 msgstr ""
 
@@ -4566,7 +4566,7 @@ msgstr ""
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
-#: UI/login.html:31 UI/menu/expanding.html:4
+#: UI/login.html:48 UI/menu/expanding.html:4
 msgid "LedgerSMB [_1]"
 msgstr ""
 
@@ -4698,11 +4698,11 @@ msgstr ""
 msgid "Logged out due to inactivity"
 msgstr ""
 
-#: UI/login.html:85
+#: UI/login.html:104
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: UI/login.html:82 UI/setup/credentials.html:55
+#: UI/login.html:99 UI/setup/credentials.html:70
 msgid "Login"
 msgstr "Login"
 
@@ -4833,7 +4833,7 @@ msgstr ""
 msgid "Memo to help retrieval"
 msgstr ""
 
-#: bin/io.pl:1487 UI/io-email.html:34 UI/rp-email.html:33
+#: bin/io.pl:1496 UI/io-email.html:34 UI/rp-email.html:33
 msgid "Message"
 msgstr "Messaggio"
 
@@ -5054,7 +5054,7 @@ msgstr "novanta"
 msgid "No"
 msgstr "No"
 
-#: lib/LedgerSMB/Scripts/contact.pm:631
+#: lib/LedgerSMB/Scripts/contact.pm:640
 msgid "No AR or AP Account Selected"
 msgstr ""
 
@@ -5190,7 +5190,7 @@ msgstr "Classe di note"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:270
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:255
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:314
-#: lib/LedgerSMB/Scripts/contact.pm:183 t/data/04-complex_template.html:33
+#: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:33
 #: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:219
 #: templates/demo/purchase_order.html:219
@@ -5223,15 +5223,15 @@ msgstr "Annotazioni"
 msgid "Notes:<br />"
 msgstr "Note:<br />"
 
-#: bin/oe.pl:2002
+#: bin/oe.pl:2004
 msgid "Nothing entered!"
 msgstr "Nulla inserito!"
 
-#: bin/oe.pl:2303 bin/oe.pl:2566 bin/pe.pl:1161
+#: bin/oe.pl:2305 bin/oe.pl:2568 bin/pe.pl:1161
 msgid "Nothing selected!"
 msgstr "Non hai selezionato nulla!"
 
-#: bin/oe.pl:2019
+#: bin/oe.pl:2021
 msgid "Nothing to transfer!"
 msgstr "Nulla da trasferire!"
 
@@ -5257,7 +5257,7 @@ msgid "Null model numbers"
 msgstr "Nessun numero modelli"
 
 #: bin/ic.pl:745 bin/ic.pl:1264 bin/ic.pl:2017 bin/ic.pl:2086 bin/io.pl:233
-#: bin/oe.pl:1849 bin/pe.pl:268 bin/pe.pl:350 bin/pe.pl:382
+#: bin/oe.pl:1851 bin/pe.pl:268 bin/pe.pl:350 bin/pe.pl:382
 #: templates/demo/bin_list.html:147 templates/demo/invoice.html:140
 #: templates/demo/invoice.tex:139 templates/demo/packing_list.html:119
 #: templates/demo/pick_list.html:111 templates/demo/product_receipt.html:127
@@ -5309,7 +5309,7 @@ msgid "Number missing in Row [_1]"
 msgstr ""
 
 #: UI/Contact/pricelist.html:110 UI/Reports/aging_report.html:126
-#: UI/Reports/display_report.html:74
+#: UI/Reports/display_report.html:80
 msgid "ODS"
 msgstr ""
 
@@ -5426,7 +5426,7 @@ msgstr "O"
 msgid "Or Add To Batch"
 msgstr ""
 
-#: bin/io.pl:1038 bin/io.pl:1042 bin/oe.pl:2421
+#: bin/io.pl:1047 bin/io.pl:1051 bin/oe.pl:2423
 #: lib/LedgerSMB/Report/Inventory/Search.pm:282
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:201
 msgid "Order"
@@ -5469,7 +5469,7 @@ msgstr "Ordine #"
 msgid "Order By"
 msgstr "Ordina per"
 
-#: bin/oe.pl:394 bin/oe.pl:1805 templates/demo/purchase_order.html:103
+#: bin/oe.pl:394 bin/oe.pl:1807 templates/demo/purchase_order.html:103
 #: templates/demo/sales_order.html:103
 #: templates/demo_with_images/purchase_order.html:103
 #: templates/demo_with_images/sales_order.html:103
@@ -5479,7 +5479,7 @@ msgstr "Ordina per"
 msgid "Order Date"
 msgstr "Data dell'ordine"
 
-#: bin/io.pl:1281 bin/oe.pl:1190 bin/oe.pl:1363
+#: bin/io.pl:1290 bin/oe.pl:1190 bin/oe.pl:1363
 msgid "Order Date missing!"
 msgstr "Manca la data dell'ordine"
 
@@ -5488,7 +5488,7 @@ msgid "Order Entry"
 msgstr "Ordini"
 
 #: bin/aa.pl:628 bin/aa.pl:1511 bin/aa.pl:1624 bin/ir.pl:494 bin/is.pl:523
-#: bin/oe.pl:388 bin/oe.pl:1800 lib/LedgerSMB/Report/Contact/Purchase.pm:69
+#: bin/oe.pl:388 bin/oe.pl:1802 lib/LedgerSMB/Report/Contact/Purchase.pm:69
 #: UI/orders/order.html:84 UI/Reports/filters/invoice_outstanding.html:149
 #: UI/Reports/filters/invoice_search.html:97
 #: UI/Reports/filters/invoice_search.html:260 UI/Reports/filters/orders.html:40
@@ -5496,7 +5496,7 @@ msgstr "Ordini"
 msgid "Order Number"
 msgstr "Numero fattura fornitore"
 
-#: bin/io.pl:1291 bin/oe.pl:1362
+#: bin/io.pl:1300 bin/oe.pl:1362
 msgid "Order Number missing!"
 msgstr "Manca il numero dell'ordine!"
 
@@ -5504,7 +5504,7 @@ msgstr "Manca il numero dell'ordine!"
 msgid "Order deleted!"
 msgstr "Ordine Cancellato!"
 
-#: bin/oe.pl:2555
+#: bin/oe.pl:2557
 msgid "Order generation failed!"
 msgstr "Generazione ordine fallita!"
 
@@ -5583,9 +5583,9 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: bin/am.pl:1063 lib/LedgerSMB/Form.pm:1351 UI/Contact/pricelist.html:104
+#: bin/am.pl:1072 lib/LedgerSMB/Form.pm:1341 UI/Contact/pricelist.html:104
 #: UI/Reports/aging_report.html:113 UI/Reports/balance_sheet.html:117
-#: UI/Reports/display_report.html:65 UI/Reports/PNL.html:96
+#: UI/Reports/display_report.html:71 UI/Reports/PNL.html:96
 msgid "PDF"
 msgstr "PDF"
 
@@ -5601,7 +5601,7 @@ msgid "PO #"
 msgstr "Ordine acquisto #"
 
 #: bin/aa.pl:644 bin/aa.pl:1515 bin/aa.pl:1626 bin/ir.pl:511 bin/is.pl:540
-#: bin/oe.pl:402 bin/oe.pl:1810 lib/LedgerSMB/Report/Contact/Purchase.pm:73
+#: bin/oe.pl:402 bin/oe.pl:1812 lib/LedgerSMB/Report/Contact/Purchase.pm:73
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:205
 #: lib/LedgerSMB/Report/Orders.pm:247 UI/orders/order.html:102
 #: UI/Reports/filters/invoice_outstanding.html:155
@@ -5619,7 +5619,7 @@ msgstr "REGISTRA"
 msgid "POST AND PRINT"
 msgstr "REGISTRA e stampa"
 
-#: bin/am.pl:1505 bin/io.pl:1181 bin/is.pl:253 bin/is.pl:1005 bin/oe.pl:253
+#: bin/am.pl:1523 bin/io.pl:1190 bin/is.pl:253 bin/is.pl:1005 bin/oe.pl:253
 #: bin/oe.pl:272 bin/printer.pl:79 bin/printer.pl:97
 #: templates/demo/packing_list.html:4 templates/demo/packing_list.html:18
 #: templates/demo/packing_list.tex:81
@@ -5632,11 +5632,11 @@ msgstr "REGISTRA e stampa"
 msgid "Packing List"
 msgstr "Lista Etichette"
 
-#: bin/io.pl:1280
+#: bin/io.pl:1289
 msgid "Packing List Date missing!"
 msgstr "Manca la data della Packing List!"
 
-#: bin/io.pl:1290
+#: bin/io.pl:1299
 msgid "Packing List Number missing!"
 msgstr "Manca il codice della Packing List!"
 
@@ -5670,7 +5670,7 @@ msgstr "Descrizione particolare"
 msgid "Part Group"
 msgstr ""
 
-#: bin/oe.pl:2052 bin/oe.pl:2130 bin/oe.pl:2164 bin/oe.pl:2415 bin/pe.pl:1033
+#: bin/oe.pl:2054 bin/oe.pl:2132 bin/oe.pl:2166 bin/oe.pl:2417 bin/pe.pl:1033
 #: lib/LedgerSMB/Report/Contact/History.pm:79
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:87
 #: lib/LedgerSMB/Report/Inventory/History.pm:118
@@ -5716,7 +5716,7 @@ msgstr ""
 msgid "Partsgroups"
 msgstr ""
 
-#: UI/Contact/divs/user.html:48 UI/login.html:58 UI/setup/credentials.html:37
+#: UI/Contact/divs/user.html:48 UI/login.html:75 UI/setup/credentials.html:52
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:30
 msgid "Password"
 msgstr "Password"
@@ -5866,7 +5866,7 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:175 UI/Contact/divs/person.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:184 UI/Contact/divs/person.html:2
 msgid "Person"
 msgstr "Persona"
 
@@ -5882,7 +5882,7 @@ msgstr "Telefono"
 msgid "Physical"
 msgstr ""
 
-#: bin/am.pl:1506 bin/io.pl:1204 bin/is.pl:252 bin/oe.pl:252 bin/oe.pl:271
+#: bin/am.pl:1524 bin/io.pl:1213 bin/is.pl:252 bin/oe.pl:252 bin/oe.pl:271
 #: bin/printer.pl:75 bin/printer.pl:93 templates/demo/pick_list.html:4
 #: templates/demo/pick_list.html:18 templates/demo/pick_list.tex:74
 #: templates/demo_with_images/pick_list.html:4
@@ -6032,23 +6032,23 @@ msgstr ""
 msgid "Posting Date:"
 msgstr ""
 
-#: bin/am.pl:1379
+#: bin/am.pl:1397
 msgid "Posting GL Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1219
+#: bin/am.pl:1237
 msgid "Posting Sales Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1241 bin/am.pl:1250
+#: bin/am.pl:1259 bin/am.pl:1268
 msgid "Posting Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1229
+#: bin/am.pl:1247
 msgid "Posting Vendor Invoice [_1]"
 msgstr "Registro fattura acquisti [_1]"
 
-#: bin/am.pl:1062 bin/printer.pl:151 lib/LedgerSMB/Form.pm:1349
+#: bin/am.pl:1071 bin/printer.pl:151 lib/LedgerSMB/Form.pm:1339
 msgid "Postscript"
 msgstr "Postscript"
 
@@ -6133,7 +6133,7 @@ msgid "Primary Phone"
 msgstr "Telefono principale"
 
 #: bin/aa.pl:904 bin/aa.pl:935 bin/am.pl:855 bin/arap.pl:486 bin/ir.pl:539
-#: bin/is.pl:583 bin/is.pl:1027 bin/oe.pl:631 bin/oe.pl:853 bin/oe.pl:1953
+#: bin/is.pl:583 bin/is.pl:1027 bin/oe.pl:631 bin/oe.pl:853 bin/oe.pl:1955
 #: lib/LedgerSMB/Report/Taxform/Details.pm:130
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:127
 #: UI/payments/payments_detail.html:495 UI/timecards/timecard.html:161
@@ -6160,43 +6160,43 @@ msgstr "Stampato"
 msgid "Printer"
 msgstr "Stampante"
 
-#: bin/am.pl:1414
+#: bin/am.pl:1432
 msgid "Printing Bin List [_1]"
 msgstr ""
 
-#: bin/am.pl:1407
+#: bin/am.pl:1425
 msgid "Printing Credit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1408
+#: bin/am.pl:1426
 msgid "Printing Debit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1406
+#: bin/am.pl:1424
 msgid "Printing Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1409
+#: bin/am.pl:1427
 msgid "Printing Packing List [_1]"
 msgstr ""
 
-#: bin/am.pl:1410
+#: bin/am.pl:1428
 msgid "Printing Pick List [_1]"
 msgstr ""
 
-#: bin/am.pl:1413
+#: bin/am.pl:1431
 msgid "Printing Purchase Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1411
+#: bin/am.pl:1429
 msgid "Printing Sales Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1405
+#: bin/am.pl:1423
 msgid "Printing Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1412
+#: bin/am.pl:1430
 msgid "Printing Work Order [_1]"
 msgstr ""
 
@@ -6212,7 +6212,7 @@ msgstr ""
 msgid "Proceeds"
 msgstr ""
 
-#: bin/am.pl:985 UI/am-list-recurring.html:62
+#: bin/am.pl:985 UI/am-list-recurring.html:66
 msgid "Process Transactions"
 msgstr ""
 
@@ -6285,7 +6285,7 @@ msgstr "Data acquisto:"
 msgid "Purchase History"
 msgstr "Storico acquisti"
 
-#: bin/am.pl:1286 bin/am.pl:1509 bin/io.pl:1215 bin/ir.pl:547 bin/ir.pl:947
+#: bin/am.pl:1304 bin/am.pl:1527 bin/io.pl:1224 bin/ir.pl:547 bin/ir.pl:947
 #: bin/oe.pl:264 bin/oe.pl:666 bin/oe.pl:867 bin/oe.pl:1226 bin/printer.pl:84
 #: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:4
 #: templates/demo/purchase_order.html:18 templates/demo/purchase_order.tex:100
@@ -6329,7 +6329,7 @@ msgstr "Comprato"
 msgid "Q"
 msgstr ""
 
-#: bin/ic.pl:1259 bin/ic.pl:2097 bin/io.pl:239 bin/oe.pl:1855 bin/oe.pl:2147
+#: bin/ic.pl:1259 bin/ic.pl:2097 bin/io.pl:239 bin/oe.pl:1857 bin/oe.pl:2149
 #: bin/pe.pl:1041 lib/LedgerSMB/Report/Contact/History.pm:87
 #: lib/LedgerSMB/Report/Inventory/History.pm:155
 #: lib/LedgerSMB/Report/Inventory/Search.pm:294
@@ -6400,7 +6400,7 @@ msgstr "Trimestre"
 msgid "Quarters"
 msgstr "Trimestri"
 
-#: bin/io.pl:1229 bin/io.pl:1236 bin/oe.pl:230 bin/oe.pl:657 bin/oe.pl:864
+#: bin/io.pl:1238 bin/io.pl:1245 bin/oe.pl:230 bin/oe.pl:657 bin/oe.pl:864
 #: bin/oe.pl:1237 bin/printer.pl:57
 #: lib/LedgerSMB/Report/Inventory/Search.pm:286
 #: lib/LedgerSMB/Report/Orders.pm:251 templates/demo/sales_quotation.html:4
@@ -6425,7 +6425,7 @@ msgstr "Offerta n."
 msgid "Quotation Date"
 msgstr "Data offerta"
 
-#: bin/io.pl:1282 bin/oe.pl:1193 bin/oe.pl:1369
+#: bin/io.pl:1291 bin/oe.pl:1193 bin/oe.pl:1369
 msgid "Quotation Date missing!"
 msgstr "Manca data offerta"
 
@@ -6433,7 +6433,7 @@ msgstr "Manca data offerta"
 msgid "Quotation Number"
 msgstr "Offerta numero"
 
-#: bin/io.pl:1292 bin/oe.pl:1368
+#: bin/io.pl:1301 bin/oe.pl:1368
 msgid "Quotation Number missing!"
 msgstr "Manca numero d'offerta"
 
@@ -6505,7 +6505,7 @@ msgstr ""
 msgid "Rebuild/Upgrade?"
 msgstr ""
 
-#: bin/io.pl:180 bin/oe.pl:1839 templates/demo/bin_list.html:152
+#: bin/io.pl:180 bin/oe.pl:1841 templates/demo/bin_list.html:152
 #: templates/demo_with_images/bin_list.html:152
 #: templates/xedemo/bin_list.html:152
 msgid "Recd"
@@ -6541,7 +6541,7 @@ msgstr "Crediti"
 msgid "Receive"
 msgstr "Ricevuta"
 
-#: bin/oe.pl:1734
+#: bin/oe.pl:1735
 msgid "Receive Merchandise"
 msgstr ""
 
@@ -6585,7 +6585,7 @@ msgstr ""
 msgid "Recurring Transaction for [_1]"
 msgstr "Transazione ricorrente per [_1]"
 
-#: bin/am.pl:817 UI/am-list-recurring.html:8 sql/Pg-database.sql:2926
+#: bin/am.pl:817 UI/am-list-recurring.html:12 sql/Pg-database.sql:2926
 msgid "Recurring Transactions"
 msgstr "Transazioni ricorrenti"
 
@@ -6604,7 +6604,7 @@ msgstr "Transazioni ricorrenti"
 msgid "Reference"
 msgstr "Riferimento"
 
-#: bin/io.pl:1293
+#: bin/io.pl:1302
 msgid "Reference Number Missing"
 msgstr ""
 
@@ -6660,7 +6660,7 @@ msgstr "Ripeti"
 msgid "Report Approved"
 msgstr "Resoconto verificato"
 
-#: UI/Reports/aging_report.html:15 UI/Reports/display_report.html:16
+#: UI/Reports/aging_report.html:15 UI/Reports/display_report.html:22
 #: UI/Reports/display_report.tex:22
 msgid "Report Name"
 msgstr "Nome resoconto"
@@ -6716,7 +6716,7 @@ msgstr "Resoconti"
 msgid "Reposting Not Allowed"
 msgstr ""
 
-#: bin/oe.pl:2423
+#: bin/oe.pl:2425
 msgid "Req"
 msgstr ""
 
@@ -6864,7 +6864,7 @@ msgstr ""
 msgid "SIC:"
 msgstr ""
 
-#: bin/io.pl:271 bin/oe.pl:1841 bin/oe.pl:2413
+#: bin/io.pl:271 bin/oe.pl:1843 bin/oe.pl:2415
 msgid "SKU"
 msgstr ""
 
@@ -6901,7 +6901,7 @@ msgstr "Fattura di vendita"
 msgid "Sales Invoice/AR Transaction Number"
 msgstr ""
 
-#: bin/am.pl:1280 bin/am.pl:1507 bin/io.pl:1167 bin/is.pl:591 bin/is.pl:1034
+#: bin/am.pl:1298 bin/am.pl:1525 bin/io.pl:1176 bin/is.pl:591 bin/is.pl:1034
 #: bin/oe.pl:250 bin/oe.pl:655 bin/oe.pl:866 bin/oe.pl:1220 bin/printer.pl:67
 #: templates/demo/sales_order.html:4 templates/demo/sales_order.html:18
 #: templates/demo/sales_order.tex:99
@@ -7062,7 +7062,7 @@ msgstr "Salva come nuovo"
 msgid "Saved id [_1]"
 msgstr ""
 
-#: bin/am.pl:1325
+#: bin/am.pl:1343
 msgid "Saving [_1] [_2]"
 msgstr ""
 
@@ -7080,7 +7080,7 @@ msgid "Scheduled"
 msgstr ""
 
 #: bin/printer.pl:131 lib/LedgerSMB/Scripts/payment.pm:538
-#: lib/LedgerSMB/Template.pm:310 UI/lib/utilities.html:44
+#: lib/LedgerSMB/Template.pm:311 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Schermo"
 
@@ -7217,7 +7217,7 @@ msgstr "Scegli cliente"
 msgid "Select Templates to Load"
 msgstr ""
 
-#: bin/oe.pl:2532
+#: bin/oe.pl:2534
 msgid "Select Vendor"
 msgstr "Scegli fornitore"
 
@@ -7237,7 +7237,7 @@ msgstr "Seleziona uno dei seguenti nomi"
 msgid "Select invoices"
 msgstr ""
 
-#: UI/setup/credentials.html:16
+#: UI/setup/credentials.html:31
 msgid "Select or Enter User"
 msgstr "Scegli o inserisci un utente"
 
@@ -7249,7 +7249,7 @@ msgstr "Scegli pagamento"
 msgid "Select postscript or PDF!"
 msgstr "Scegli tra postscript e PDF!"
 
-#: bin/io.pl:1132
+#: bin/io.pl:1141
 msgid "Select txt, postscript or PDF!"
 msgstr ""
 
@@ -7279,43 +7279,43 @@ msgstr "Vendere"
 msgid "Sell Price"
 msgstr "Prezzo di vendita"
 
-#: bin/am.pl:1459
+#: bin/am.pl:1477
 msgid "Sending Bin List [_1]"
 msgstr ""
 
-#: bin/am.pl:1452
+#: bin/am.pl:1470
 msgid "Sending Credit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1453
+#: bin/am.pl:1471
 msgid "Sending Debit Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1451
+#: bin/am.pl:1469
 msgid "Sending Invoice [_1]"
 msgstr ""
 
-#: bin/am.pl:1454
+#: bin/am.pl:1472
 msgid "Sending Packing List [_1]"
 msgstr ""
 
-#: bin/am.pl:1455
+#: bin/am.pl:1473
 msgid "Sending Pick List [_1]"
 msgstr ""
 
-#: bin/am.pl:1458
+#: bin/am.pl:1476
 msgid "Sending Purchase Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1456
+#: bin/am.pl:1474
 msgid "Sending Sales Order [_1]"
 msgstr ""
 
-#: bin/am.pl:1450
+#: bin/am.pl:1468
 msgid "Sending Transaction [_1]"
 msgstr ""
 
-#: bin/am.pl:1457
+#: bin/am.pl:1475
 msgid "Sending Work Order [_1]"
 msgstr ""
 
@@ -7348,7 +7348,7 @@ msgstr "Sequenze"
 msgid "Serial #"
 msgstr "Serie #"
 
-#: bin/io.pl:268 bin/oe.pl:1862
+#: bin/io.pl:268 bin/oe.pl:1864
 msgid "Serial No."
 msgstr "Serie N."
 
@@ -7413,7 +7413,7 @@ msgstr "diciassette"
 msgid "Seventy"
 msgstr "settanta"
 
-#: bin/io.pl:173 bin/oe.pl:1835 lib/LedgerSMB/Scripts/order.pm:65
+#: bin/io.pl:173 bin/oe.pl:1837 lib/LedgerSMB/Scripts/order.pm:65
 #: templates/demo/packing_list.html:124 templates/demo/pick_list.html:114
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
@@ -7480,12 +7480,12 @@ msgstr "Spedire a:"
 msgid "Ship Via"
 msgstr ""
 
-#: bin/aa.pl:907 bin/io.pl:1587 bin/is.pl:587 bin/is.pl:1030 bin/oe.pl:635
-#: bin/oe.pl:857 bin/oe.pl:1955
+#: bin/aa.pl:907 bin/io.pl:1593 bin/is.pl:587 bin/is.pl:1030 bin/oe.pl:635
+#: bin/oe.pl:857 bin/oe.pl:1957
 msgid "Ship to"
 msgstr "Spedire a"
 
-#: bin/aa.pl:1666 bin/aa.pl:1696 bin/is.pl:508 bin/oe.pl:594 bin/oe.pl:1789
+#: bin/aa.pl:1666 bin/aa.pl:1696 bin/is.pl:508 bin/oe.pl:594 bin/oe.pl:1791
 #: templates/demo/bin_list.html:115 templates/demo/invoice.html:117
 #: templates/demo/invoice.tex:127 templates/demo/packing_list.html:86
 #: templates/demo/packing_list.tex:93 templates/demo/pick_list.html:83
@@ -7524,11 +7524,11 @@ msgstr "Porto"
 msgid "Shipping"
 msgstr "Logistica"
 
-#: bin/oe.pl:1731
+#: bin/oe.pl:1732
 msgid "Shipping Date"
 msgstr "Data spedizione"
 
-#: bin/oe.pl:1989
+#: bin/oe.pl:1991
 msgid "Shipping Date missing!"
 msgstr "Manca data spedizione"
 
@@ -7536,7 +7536,7 @@ msgstr "Manca data spedizione"
 msgid "Shipping Label"
 msgstr "Etichetta di spedizione"
 
-#: bin/aa.pl:1664 bin/is.pl:504 bin/oe.pl:590 bin/oe.pl:1784
+#: bin/aa.pl:1664 bin/is.pl:504 bin/oe.pl:590 bin/oe.pl:1786
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:113
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:271
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:326
@@ -7748,7 +7748,7 @@ msgstr "Data iniziale"
 msgid "Starting Date:"
 msgstr "Data iniziale:"
 
-#: bin/io.pl:1657
+#: bin/io.pl:1663
 msgid "State"
 msgstr ""
 
@@ -7814,7 +7814,7 @@ msgstr ""
 msgid "Subject"
 msgstr "Oggetto"
 
-#: bin/arap.pl:804 bin/io.pl:1485 UI/Contact/divs/notes.html:77
+#: bin/arap.pl:804 bin/io.pl:1494 UI/Contact/divs/notes.html:77
 msgid "Subject: [_1]"
 msgstr ""
 
@@ -7831,7 +7831,7 @@ msgstr "Invia"
 msgid "Submitted"
 msgstr "Inviato"
 
-#: bin/aa.pl:1744 bin/io.pl:1335 bin/ir.pl:752 bin/is.pl:828 bin/oe.pl:788
+#: bin/aa.pl:1744 bin/io.pl:1344 bin/ir.pl:752 bin/is.pl:828 bin/oe.pl:788
 #: templates/demo/ap_transaction.html:130
 #: templates/demo/ar_transaction.html:129 templates/demo/invoice.html:171
 #: templates/demo/invoice.tex:163 templates/demo/product_receipt.html:159
@@ -8373,7 +8373,7 @@ msgstr ""
 msgid "Times"
 msgstr "Volte"
 
-#: bin/ic.pl:1131 bin/oe.pl:2145 bin/pe.pl:839 templates/demo/invoice.html:27
+#: bin/ic.pl:1131 bin/oe.pl:2147 bin/pe.pl:839 templates/demo/invoice.html:27
 #: templates/demo/request_quotation.tex:27 templates/demo/sales_order.html:28
 #: templates/demo_with_images/invoice.html:29
 #: templates/demo_with_images/request_quotation.tex:27
@@ -8415,7 +8415,7 @@ msgstr ""
 msgid "To Pay"
 msgstr "Da pagare"
 
-#: bin/oe.pl:2160
+#: bin/oe.pl:2162
 msgid "To Warehouse"
 msgstr "Per magazzino"
 
@@ -8453,7 +8453,7 @@ msgstr "Da pagare"
 msgid "To:"
 msgstr ""
 
-#: bin/arap.pl:802 bin/io.pl:1483
+#: bin/arap.pl:802 bin/io.pl:1492
 msgid "To: [_1]"
 msgstr "A: [_1]"
 
@@ -8560,7 +8560,7 @@ msgstr ""
 msgid "Trade Discount"
 msgstr "Sconto"
 
-#: bin/aa.pl:915 bin/am.pl:1501
+#: bin/aa.pl:915 bin/am.pl:1519
 msgid "Transaction"
 msgstr "Scrittura"
 
@@ -8591,20 +8591,20 @@ msgstr "Tipologia scrittura"
 msgid "Transactions"
 msgstr "Scritture contabili"
 
-#: bin/oe.pl:2149 bin/oe.pl:2265 sql/Pg-database.sql:2825
+#: bin/oe.pl:2151 bin/oe.pl:2267 sql/Pg-database.sql:2825
 #: sql/Pg-database.sql:2860
 msgid "Transfer"
 msgstr ""
 
-#: bin/oe.pl:2026 bin/oe.pl:2176
+#: bin/oe.pl:2028 bin/oe.pl:2178
 msgid "Transfer Inventory"
 msgstr ""
 
-#: bin/oe.pl:2044
+#: bin/oe.pl:2046
 msgid "Transfer from"
 msgstr ""
 
-#: bin/oe.pl:2048
+#: bin/oe.pl:2050
 msgid "Transfer to"
 msgstr ""
 
@@ -8688,7 +8688,7 @@ msgstr "Ventidue"
 msgid "Two"
 msgstr "due"
 
-#: bin/io.pl:1716 lib/LedgerSMB/Report/Inventory/History.pm:146
+#: bin/io.pl:1722 lib/LedgerSMB/Report/Inventory/History.pm:146
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:80
 #: lib/LedgerSMB/Scripts/asset.pm:533 t/data/04-complex_template.html:384
@@ -8749,7 +8749,7 @@ msgstr ""
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
-#: bin/ic.pl:790 bin/ic.pl:1261 bin/io.pl:241 bin/oe.pl:1857
+#: bin/ic.pl:790 bin/ic.pl:1261 bin/io.pl:241 bin/oe.pl:1859
 #: lib/LedgerSMB/Report/Contact/History.pm:91
 #: lib/LedgerSMB/Report/Inventory/History.pm:130
 #: lib/LedgerSMB/Report/Inventory/Search.pm:206 templates/demo/invoice.tex:143
@@ -8827,7 +8827,7 @@ msgstr ""
 msgid "Unsupported account link combinations"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:457
+#: lib/LedgerSMB/Scripts/contact.pm:466
 msgid "Unsupported account type"
 msgstr ""
 
@@ -8841,7 +8841,7 @@ msgstr "Non usato"
 
 #: bin/aa.pl:903 bin/aa.pl:929 bin/gl.pl:257 bin/ic.pl:832 bin/ic.pl:841
 #: bin/ir.pl:533 bin/ir.pl:943 bin/is.pl:577 bin/is.pl:1026 bin/oe.pl:629
-#: bin/oe.pl:852 bin/oe.pl:1952 bin/pe.pl:606
+#: bin/oe.pl:852 bin/oe.pl:1954 bin/pe.pl:606
 #: lib/LedgerSMB/Scripts/budgets.pm:97 UI/am-taxes.html:72
 #: UI/payments/payment2.html:473 UI/payments/payments_detail.html:469
 #: UI/payroll/deduction.html:90 UI/payroll/income.html:96
@@ -8892,7 +8892,7 @@ msgstr ""
 msgid "Use Overpayment"
 msgstr ""
 
-#: bin/io.pl:1825
+#: bin/io.pl:1831
 msgid "Use Shipto"
 msgstr ""
 
@@ -8904,12 +8904,12 @@ msgstr ""
 msgid "Used"
 msgstr "Usato"
 
-#: lib/LedgerSMB/Scripts/contact.pm:177 t/data/04-complex_template.html:36
+#: lib/LedgerSMB/Scripts/contact.pm:186 t/data/04-complex_template.html:36
 #: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "Utente"
 
-#: UI/login.html:46
+#: UI/login.html:63
 msgid "User Name"
 msgstr "Nome utente"
 
@@ -8972,8 +8972,8 @@ msgstr "Varianza"
 msgid "Variance:"
 msgstr "Varianza:"
 
-#: bin/aa.pl:516 bin/aa.pl:1606 bin/ic.pl:1023 bin/ir.pl:420 bin/oe.pl:2419
-#: bin/oe.pl:2575 bin/pe.pl:1016 bin/pe.pl:1166
+#: bin/aa.pl:516 bin/aa.pl:1606 bin/ic.pl:1023 bin/ir.pl:420 bin/oe.pl:2421
+#: bin/oe.pl:2577 bin/pe.pl:1016 bin/pe.pl:1166
 #: lib/LedgerSMB/Report/Aging.pm:80
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:176
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
@@ -9010,7 +9010,7 @@ msgstr ""
 msgid "Vendor Name"
 msgstr "Nome fornitore"
 
-#: bin/aa.pl:1607 bin/io.pl:1602 lib/LedgerSMB/Report/Invoices/Payments.pm:113
+#: bin/aa.pl:1607 bin/io.pl:1608 lib/LedgerSMB/Report/Invoices/Payments.pm:113
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:183
 #: lib/LedgerSMB/Scripts/configuration.pm:116 UI/asset/edit_asset.html:197
 #: UI/asset/search_asset.html:165 UI/payments/payments_filter.html:64
@@ -9075,11 +9075,11 @@ msgstr ""
 msgid "Wages and Deductions"
 msgstr "Stipendi e deduzioni"
 
-#: lib/LedgerSMB/Scripts/contact.pm:178
+#: lib/LedgerSMB/Scripts/contact.pm:187
 msgid "Wages/Deductions"
 msgstr "Stipendi/Deduzioni"
 
-#: bin/oe.pl:1740 templates/demo/bin_list.html:112
+#: bin/oe.pl:1742 templates/demo/bin_list.html:112
 #: templates/demo/bin_list.tex:82 templates/demo/packing_list.html:83
 #: templates/demo/packing_list.tex:90 templates/demo/pick_list.html:81
 #: templates/demo/pick_list.tex:82 templates/demo_with_images/bin_list.html:112
@@ -9157,7 +9157,7 @@ msgstr ""
 msgid "Widgit Themes"
 msgstr ""
 
-#: bin/am.pl:1508 bin/io.pl:1174 bin/oe.pl:251 bin/printer.pl:71
+#: bin/am.pl:1526 bin/io.pl:1183 bin/oe.pl:251 bin/printer.pl:71
 #: templates/demo_with_images/work_order.html:4
 #: templates/demo_with_images/work_order.html:18
 #: templates/demo_with_images/work_order.tex:109
@@ -9233,7 +9233,7 @@ msgstr "CAP"
 msgid "Zero"
 msgstr "Zero"
 
-#: bin/io.pl:1660
+#: bin/io.pl:1666
 msgid "Zip Code"
 msgstr "CAP"
 
@@ -9288,7 +9288,7 @@ msgstr "Cliente [_1] non in archivio!"
 msgid "[_1]: Vendor not on file!"
 msgstr "Fornitore [_1] non in archivio!"
 
-#: lib/LedgerSMB/Form.pm:714
+#: lib/LedgerSMB/Form.pm:711
 msgid "[_1]:[_2]:[_3]: Invalid Redirect"
 msgstr ""
 
@@ -9312,7 +9312,7 @@ msgstr "cassa"
 msgid "check"
 msgstr "assegno"
 
-#: bin/io.pl:1654
+#: bin/io.pl:1660
 msgid "city"
 msgstr "città"
 
@@ -9342,7 +9342,7 @@ msgstr "deprezzamento"
 msgid "disposal"
 msgstr "disposizione"
 
-#: bin/am.pl:1259 bin/am.pl:1330 bin/am.pl:1384 bin/am.pl:1435 bin/am.pl:1485
+#: bin/am.pl:1277 bin/am.pl:1348 bin/am.pl:1402 bin/am.pl:1453 bin/am.pl:1503
 msgid "done"
 msgstr "fatto"
 
@@ -9350,7 +9350,7 @@ msgstr "fatto"
 msgid "ea"
 msgstr "ci"
 
-#: bin/am.pl:1333 bin/am.pl:1488
+#: bin/am.pl:1351 bin/am.pl:1506
 msgid "failed"
 msgstr "fallito"
 
@@ -9406,7 +9406,7 @@ msgstr "altro"
 msgid "partial disposal"
 msgstr "disposizione parziale"
 
-#: UI/Reports/aging_report.html:109 UI/Reports/display_report.html:61
+#: UI/Reports/aging_report.html:109 UI/Reports/display_report.html:67
 msgid "permalink"
 msgstr ""
 
@@ -9418,7 +9418,7 @@ msgstr "produzione"
 msgid "psql not found."
 msgstr "psql non trovato"
 
-#: bin/arap.pl:809 bin/io.pl:1489
+#: bin/arap.pl:809 bin/io.pl:1498
 msgid "sent"
 msgstr "spedito"
 
