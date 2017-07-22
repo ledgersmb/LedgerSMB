@@ -28,6 +28,17 @@ UPDATE business_unit_class
 
 
 --Accounts
+
+-- add unknown account links to the account links table as 'custom'
+
+INSERT INTO account_link_description(description, summary, custom)
+SELECT link, false, true
+  FROM (select distinct unnest(string_to_array(link,':')) as link
+          from lsmb12.chart) c
+ where not exists (select 1
+                     from account_link_description
+                    where description = c.link);
+
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
