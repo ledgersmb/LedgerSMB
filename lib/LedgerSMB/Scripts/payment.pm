@@ -1913,8 +1913,8 @@ return use_overpayment($request);
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
-                print "Status: 500 Internal server error(payment.pm)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error(payment.pm)\n\n" );
             }
         }
     }

@@ -36,8 +36,8 @@ our $custom_batch_types = {};
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
-                print "Status: 500 Internal server error (vouchers.pm - first)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (vouchers.pm - first)\n\n" );
             }
         }
     }
@@ -508,8 +508,8 @@ sub print_batch {
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
-                print "Status: 500 Internal server error (vouchers.pm - end)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (vouchers.pm - end)\n\n" );
             }
         }
     }
