@@ -326,7 +326,7 @@ RETURNS SETOF contact_search_result AS $$
                        (select entity_id
                           FROM entity_credit_account leca
                           JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
-                         WHERE contact ~*~ ANY(in_contact_info))
+                         WHERE contact ~* ANY(in_contact_info))
                       OR '' ILIKE ALL(in_contact_info)
                       OR in_contact_info IS NULL)
 
