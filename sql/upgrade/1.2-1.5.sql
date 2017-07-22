@@ -22,12 +22,23 @@ ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
 INSERT INTO business_unit (class_id, id, control_code, description)
      SELECT 1, id, role || id::text, description FROM lsmb12.department;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 1
    AND EXISTS (select 1 from lsmb12.department);
 
 
 --Accounts
+
+-- add unknown account links to the account links table as 'custom'
+
+INSERT INTO account_link_description(description, summary, custom)
+SELECT link, false, true
+  FROM (select distinct unnest(string_to_array(link,':')) as link
+          from lsmb12.chart) c
+ where not exists (select 1
+                     from account_link_description
+                    where description = c.link);
+
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
@@ -533,7 +544,7 @@ INSERT INTO business_unit (id,control_code, description, start_date, end_date,
        FROM lsmb12.project p
   LEFT JOIN lsmb12.customer c ON p.customer_id = c.id;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 2
    AND EXISTS (select 1 from lsmb12.project);
 

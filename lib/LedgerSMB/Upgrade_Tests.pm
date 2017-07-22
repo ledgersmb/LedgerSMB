@@ -369,7 +369,7 @@ push @tests, __PACKAGE__->new(
         table => 'entity_credit_account',
  instructions => $locale->text("Make sure all meta numbers are unique."),
       appname => 'ledgersmb',
-  min_version => '1.2',
+  min_version => '1.3',
   max_version => '1.4'
 );
 
