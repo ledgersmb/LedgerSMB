@@ -20,7 +20,7 @@ color =  0
 pager = less
 
 [ValuesAndExpressions::ProhibitMagicNumbers]
-    allowed_values = -1 0 1 2
+    allowed_values = -1 0 1 2 100
     set_themes = lsmb lsmb_wip lsmb_old_wip
 
 [BuiltinFunctions::ProhibitStringySplit]
