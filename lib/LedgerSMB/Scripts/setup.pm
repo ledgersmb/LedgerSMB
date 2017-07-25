@@ -760,13 +760,13 @@ sub _failed_check {
       my $id = $row->{$check->{id_column}};
       my @values = @selectable_values;
       for my $column (@{$check->column}) {
-        my @selectable_value = shift @values;
+        my $selectable_value = shift @values;
         $row->{$column} =
-           ( defined @selectable_value && $selectable_value[0] )
+           ( defined $selectable_value && $selectable_value->[0] )
            ? { select => {
                    name => $column . "_$id",
                    id => $id,
-                   options => @selectable_value,
+                   options => $selectable_value,
                    default_blank => 1,
            } }
            : { input => {
