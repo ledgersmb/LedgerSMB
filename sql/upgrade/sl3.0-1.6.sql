@@ -40,6 +40,10 @@ SELECT account__save(id, accno, description, category,
 
 delete from account_link where description = 'CT_tax';
 
+-- Business
+
+INSERT INTO business SELECT * FROM sl30.business;
+
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
@@ -328,21 +332,12 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 --     SELECT entity_id, login FROM sl30.employee em
 --      WHERE login IS NOT NULL;
 
--- No manager-managee information in SL30
---INSERT
---  INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
---       employeenumber, dob, manager_id)
---SELECT entity_id, startdate, enddate, r.description, ssn, sales,
---       employeenumber, dob,
---       (select entity_id from sl30.employee where id = em.managerid)
---  FROM sl30.employee em
---LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
-
 INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob, 0
+       employeenumber, dob,
+       (select entity_id from sl30.employee where id = em.acsrole_id)
   FROM sl30.employee em
 LEFT JOIN sl30.acsrole r on em.acsrole_id = r.id;
 
@@ -789,8 +784,6 @@ SELECT id, 2, project_id + 1000 FROM sl30.orderitems
 INSERT INTO exchangerate select * from sl30.exchangerate;
 
 INSERT INTO status SELECT * FROM sl30.status; -- may need to comment this one out sometimes
-
-INSERT INTO business SELECT * FROM sl30.business;
 
 INSERT INTO sic SELECT * FROM sl30.sic;
 
