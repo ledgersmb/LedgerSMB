@@ -301,6 +301,7 @@ push @tests, __PACKAGE__->new(
  display_name => $locale->text('No NULL Amounts'),
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
+    id_column => 'trans_id',
  instructions => $locale->text(
                    'There are NULL values in the amounts column of your
 source database. Please either find professional help to migrate your
