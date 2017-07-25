@@ -204,7 +204,8 @@ sub login {
     _init_db($request);
     sanity_checks($database);
     $request->{login_name} = $version_info->{username};
-    if ($version_info->{status} eq 'does not exist'){
+    # $version_info->{status} isn't always defined
+    if (defined $version_info->{status} && $version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
@@ -226,7 +227,7 @@ sub login {
         if (! defined $request->{next_action}) {
             $request->{message} = $request->{_locale}->text(
                 'Unknown database found.'
-                );
+                ) . $version_info->{full_version};
             $request->{operation} = $request->{_locale}->text('Cancel?');
             $request->{next_action} = 'cancel';
         } elsif ($request->{next_action} eq 'rebuild_modules') {
