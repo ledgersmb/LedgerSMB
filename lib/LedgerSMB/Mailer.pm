@@ -44,6 +44,7 @@ use warnings;
 use strict;
 use Carp;
 
+use Digest::MD5 qw(md5_hex);
 use Encode;
 use MIME::Lite;
 use LedgerSMB::Sysconfig;
@@ -113,9 +114,24 @@ sub prepare_message {
 
     my $domain = $self->{from};
     $domain =~ s/(.*?\@|>)//g;
-    my $boundary = time;
-    $boundary = "LSMB-$boundary";
-    my $msg_id = "<$boundary\@$domain>";
+
+    # Make sure we generate a message id which has sufficient chance
+    # of being unique. Note that the purpose of MD5 here isn't to be
+    # cryptographically secure; it's a hash which provides sufficient
+    # distribution across the number space.
+    my $msg_random = md5_hex(
+        'From' => $self->{from},
+        'To' => $self->{to},
+        'Cc' => $self->{cc},
+        'Bcc' => $self->{bcc},
+        'Subject' => $self->{subject},
+        # To get better distribution, also take non-message related
+        # components into account: time, pid and a random number
+        'Date/Time' => time,
+        'Process-id' => $$,
+        'Random-component' => rand(),
+        );
+    my $msg_id = "<LSMB-$msg_random\@$domain>";
 
     $self->{contenttype} = "text/plain" unless $self->{contenttype};
 
