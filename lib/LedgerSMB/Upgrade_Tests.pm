@@ -114,6 +114,16 @@ Repair query column to get the values from
 
 has selectable_values => (is => 'ro', isa => 'ArrayRef[Str]', required => 0);
 
+=item insert
+
+Allow insert instead of update. This to set defaults on a very limited subset
+of tables. Business, for example isn't required in SQL-Ledger but mandatory for
+LedgerSMB.
+
+=cut
+
+has insert => (is => 'ro', isa => 'Bool', required => 0, default => 0);
+
 =item id_where
 
 Repair query key to set the values if we can repair
