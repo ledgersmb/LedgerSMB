@@ -734,7 +734,7 @@ sub _failed_check {
             format => 'HTML',
     );
     my $rows = [];
-    my $count = 1;
+    my $count = 0;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
                            id_column => $check->{id_column},
@@ -760,13 +760,12 @@ sub _failed_check {
                    size => 15,
            }};
         push @$rows, $row;
-        $hiddens->{"id_$count"} = $row->{$check->id_column};
         ++$count;
+        $hiddens->{"id_$count"} = $row->{$check->id_column};
    }
     $sth->finish();
 
     $hiddens->{count} = $count;
-#    $hiddens->{edit} = $check->column; # Why again. Set in module beginning
 
     my $buttons = [
            { type => 'submit',
