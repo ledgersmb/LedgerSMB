@@ -682,7 +682,6 @@ sub upgrade {
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-    my @selectable_values = ();
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
@@ -691,15 +690,20 @@ sub upgrade {
         next if ($check->min_version gt $dbinfo->{version})
             || ($check->max_version lt $dbinfo->{version})
             || ($check->appname ne $dbinfo->{appname});
-        if ( $check->selectable_values ) {
-            my $sth = $request->{dbh}->prepare($check->selectable_values);
-            $sth->execute()
-                or die "Failed to execute pre-migration check " . $check->name;
-            while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-                push @selectable_values, { value => $row->{value},
-                                           text => $row->{id}
-                };
+        my @selectable_values = ();
+        for my $selectable_value (@{$check->selectable_values // []}) {
+            my @values = ();
+            if ( $selectable_value ) {
+                my $sth = $request->{dbh}->prepare($selectable_value);
+                $sth->execute()
+                    or die "Failed to execute pre-migration check " . $check->name;
+                while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+                    push @values, { value => $row->{value},
+                                     text => $row->{id}
+                    };
+                }
             }
+            push @selectable_values,[@values];
         }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
@@ -738,33 +742,44 @@ sub _failed_check {
     # Count has to reflect the actual number of rows
     my $count = 0;
     my $hiddens = {table => $check->table,
-                    edit => $check->column,
-                           id_column => $check->{id_column},
-                            id_where => $check->{id_where},
+               id_column => $check->{id_column},
+                id_where => $check->{id_where},
+                  insert => $check->{insert},
                 database => $request->{database}};
+    my $i = 1;
+    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
+    for my $edit (@{$check->column}) {
+      $hiddens->{"edit_$i"} = $edit;
+      $i++;
+    }
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        $row->{$check->column} =
-           ( $check->column && $check->selectable_values )
+      my $id = $row->{$check->{id_column}};
+      my @values = @selectable_values;
+      for my $column (@{$check->column}) {
+        my @selectable_value = shift @values;
+        $row->{$column} =
+           ( defined @selectable_value && $selectable_value[0] )
            ? { select => {
-                   name => $check->column . "_$row->{trans_id}",
-                   id => $row->{trans_id},
-                   options => \@selectable_values,
+                   name => $column . "_$id",
+                   id => $id,
+                   options => @selectable_value,
                    default_blank => 1,
            } }
            : { input => {
-                   name => $check->column . "_$row->{id}",
-                   value => $row->{$check->column},
+                   name => $column . "_$id",
+                   value => $row->{$column} // '',
                    type => 'text',
                    size => 15,
-           }};
-        push @$rows, $row;
-        ++$count;
-        $hiddens->{"id_$count"} = $row->{$check->id_column};
-   }
+          } };
+      };
+      push @$rows, $row;
+      ++$count;
+      $hiddens->{"id_$count"} = $row->{$check->id_column};
+    }
     $sth->finish();
 
     $hiddens->{count} = $count;
@@ -804,16 +819,28 @@ sub fix_tests{
     my $locale = $request->{_locale};
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
-    my $edit = $request->{dbh}->quote_identifier($request->{edit});
     my $where = $request->{id_where};
+
+    my @edits;
+    my $i = 1;
+    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
+    while (defined $request->{"edit_$i"}) {
+      push @edits, $request->{"edit_$i"};
+      $i++;
+    }
     my $sth = $request->{dbh}->prepare(
-            "UPDATE $table SET $edit = ? where $where = ?"
-    );
+            "UPDATE $table SET " .
+                join(',',map {$request->{dbh}->quote_identifier($_) . " = ?"} @edits) .
+                " where $where = ?");
 
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
-                $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
-            $request->error($sth->errstr);
+        my @values;
+        for my $edit (@edits) {
+          push @values, $request->{"${edit}_$id"};
+        }
+        $sth->execute(@values, $id) ||
+          $request->error($sth->errstr);
     }
     $sth->finish();
     $request->{dbh}->commit;
