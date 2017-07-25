@@ -735,6 +735,7 @@ sub _failed_check {
             format => 'HTML',
     );
     my $rows = [];
+    # Count has to reflect the actual number of rows
     my $count = 0;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
