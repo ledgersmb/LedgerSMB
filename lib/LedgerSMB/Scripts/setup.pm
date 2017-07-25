@@ -1129,7 +1129,7 @@ sub process_and_run_upgrade_script {
         template => $template,
         no_auto_output => 1,
         format_options => {extension => 'sql'},
-        output_file => 'upgrade',
+        output_file => 'upgrade.sql',
         format => 'TXT' );
     $dbtemplate->render($request);
     $database->run_file(
