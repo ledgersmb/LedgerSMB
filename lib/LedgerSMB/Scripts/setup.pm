@@ -828,7 +828,11 @@ sub fix_tests{
       push @edits, $request->{"edit_$i"};
       $i++;
     }
-    my $sth = $request->{dbh}->prepare(
+    my $sth = $request->{insert}
+      ? $request->{dbh}->prepare(
+            "INSERT INTO $table(" . join(',',@edits) . ") VALUES(" .
+                join(',',map { '?' } @edits) . ")" )
+      : $request->{dbh}->prepare(
             "UPDATE $table SET " .
                 join(',',map {$request->{dbh}->quote_identifier($_) . " = ?"} @edits) .
                 " where $where = ?");
@@ -839,8 +843,13 @@ sub fix_tests{
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }
-        $sth->execute(@values, $id) ||
-          $request->error($sth->errstr);
+        if ( $request->{insert}) {
+          $sth->execute(@values) ||
+            $request->error($sth->errstr);
+        } else {
+          $sth->execute(@values, $id) ||
+            $request->error($sth->errstr);
+        }
     }
     $sth->finish();
     $request->{dbh}->commit;
