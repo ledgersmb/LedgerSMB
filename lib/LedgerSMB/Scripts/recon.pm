@@ -204,7 +204,7 @@ sub _display_report {
     $recon->unapproved_checks;
 
     my $contents = '';
-    {
+    if ($request->{csv_file}) {
         local $/ = undef;
         my $handle = $request->upload('csv_file');
         $contents = <$handle>
@@ -212,7 +212,7 @@ sub _display_report {
     }
 
     $recon->add_entries($recon->import_file($contents))
-        if !$recon->{submitted};
+        if !$recon->{submitted} && $contents;
     $recon->{can_approve} = $request->is_allowed_role({allowed_roles => ['reconciliation_approve']});
     $recon->get();
     $recon->{form_id} = $request->{form_id};
