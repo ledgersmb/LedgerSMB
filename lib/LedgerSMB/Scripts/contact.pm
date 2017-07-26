@@ -288,7 +288,7 @@ sub _main_screen {
     }
 
     my @location_class_list =
-       grep { $_->{id} < 4 }
+       grep { $_->{class} =~ m/^(?:Billing|Sales|Shipping)$/ }
             LedgerSMB->call_procedure(funcname => 'location_list_class');
 
     my @business_types =
