@@ -690,26 +690,28 @@ sub upgrade {
         next if ($check->min_version gt $dbinfo->{version})
             || ($check->max_version lt $dbinfo->{version})
             || ($check->appname ne $dbinfo->{appname});
-        my @selectable_values = ();
-        for my $selectable_value (@{$check->selectable_values // []}) {
-            my @values = ();
-            if ( $selectable_value ) {
-                my $sth = $request->{dbh}->prepare($selectable_value);
-                $sth->execute()
-                    or die "Failed to execute pre-migration check " . $check->name;
-                while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-                    push @values, { value => $row->{value},
-                                     text => $row->{id}
-                    };
-                }
-            }
-            push @selectable_values,[@values];
+        my %selectable_values = ();
+        if ( $check->column ) {
+          for my $column (@{$check->column}) {
+              my @values = ();
+              if ( $check->selectable_values && $check->selectable_values->{$column} ) {
+                  my $sth = $request->{dbh}->prepare($check->selectable_values->{$column});
+                  $sth->execute()
+                      or die "Failed to execute pre-migration check " . $check->name;
+                  while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+                      push @values, { value => $row->{value},
+                                       text => $row->{id}
+                      };
+                  }
+              }
+              $selectable_values{$column} = [@values];
+          }
         }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             return _failed_check($request, $check, $sth, @selectable_values);
+             return _failed_check($request, $check, $sth, %selectable_values);
         }
         $sth->finish();
     }
@@ -732,7 +734,7 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth, @selectable_values) = @_;
+    my ($request, $check, $sth, %selectable_values) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
@@ -758,11 +760,10 @@ sub _failed_check {
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
-      my @values = @selectable_values;
       for my $column (@{$check->column}) {
-        my $selectable_value = shift @values;
+        my $selectable_value = $selectable_values{$column};
         $row->{$column} =
-           ( defined $selectable_value && $selectable_value->[0] )
+           ( defined $selectable_value && @$selectable_value )
            ? { select => {
                    name => $column . "_$id",
                    id => $id,

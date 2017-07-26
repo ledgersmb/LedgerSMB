@@ -112,7 +112,7 @@ Repair query column to get the values from
 
 =cut
 
-has selectable_values => (is => 'ro', isa => 'ArrayRef[Str]', required => 0);
+has selectable_values => (is => 'ro', isa => 'HashRef', required => 0);
 
 =item insert
 
@@ -296,8 +296,8 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
                    'Make invoice numbers unique'),
          name => 'unique_ar_invnumbers',
- display_cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
-       column =>  ['invnumber'],
+ display_cols => ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
+       column => ['invnumber'],
         table =>  'ar',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -322,42 +322,42 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
-                                        WITH ac1 AS (
-                                        SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
-                                                FROM acc_trans
-                                                WHERE trans_id IN (
-                                                        SELECT trans_id FROM (
-                                                                SELECT trans_id, SUM(amount) as amount from acc_trans
-                                                                WHERE chart_id IS NULL
-                                                                GROUP BY trans_id) as a
-                                                        WHERE a.amount <> 0)
-                                                AND chart_id IS NULL
-                                                GROUP BY trans_id, chart_id
-                                                ORDER BY trans_id, transdate
-                                ),
-                                -- Hint the user about the type of the remaining entries
-                                ac2 AS (
-                                        SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
-                                        FROM acc_trans ac
-                                        JOIN chart c ON chart_id = c.id
-                                        WHERE trans_id IN ( SELECT trans_id FROM ac1)
-                                        AND c.link ~ 'amount'
-                                )
-                                -- Present data
-                                SELECT * from ac1
-                                LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
-                                ORDER BY ac1.trans_id",
- display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
-         name => 'no_unbalanced_ac_transactions',
- display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
- instructions => $LedgerSMB::App_State::Locale->text(
-                   'The following transactions have unassigned amounts'),
-                table => 'acc_trans',
-selectable_values => ["SELECT concat(accno,' -- ',description) AS id, id as value
-                                          FROM chart
-                                          WHERE charttype = 'A'
-                                          ORDER BY id"],
+       test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
+                                            WITH ac1 AS (
+                                            SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
+                                                    FROM acc_trans
+                                                    WHERE trans_id IN (
+                                                            SELECT trans_id FROM (
+                                                                    SELECT trans_id, SUM(amount) as amount from acc_trans
+                                                                    WHERE chart_id IS NULL
+                                                                    GROUP BY trans_id) as a
+                                                            WHERE a.amount <> 0)
+                                                    AND chart_id IS NULL
+                                                    GROUP BY trans_id, chart_id
+                                                    ORDER BY trans_id, transdate
+                                    ),
+                                    -- Hint the user about the type of the remaining entries
+                                    ac2 AS (
+                                            SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
+                                            FROM acc_trans ac
+                                            JOIN chart c ON chart_id = c.id
+                                            WHERE trans_id IN ( SELECT trans_id FROM ac1)
+                                            AND c.link ~ 'amount'
+                                    )
+                                    -- Present data
+                                    SELECT * from ac1
+                                    LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
+                                    ORDER BY ac1.trans_id",
+     display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
+             name => 'no_unbalanced_ac_transactions',
+     display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
+     instructions => $LedgerSMB::App_State::Locale->text(
+                       'The following transactions have unassigned amounts'),
+            table => 'acc_trans',
+selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS id, id as value
+                                    FROM chart
+                                    WHERE charttype = 'A'
+                                    ORDER BY id" },
            column => ['chart_id'],
         id_column => 'trans_id',
          id_where => 'chart_id IS NULL AND trans_id',
