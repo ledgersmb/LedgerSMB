@@ -204,7 +204,9 @@ sub login {
     _init_db($request);
     sanity_checks($database);
     $request->{login_name} = $version_info->{username};
-    if ($version_info->{status} eq 'does not exist'){
+    # $version_info->{status} isn't always defined by get_info, so useless undefined messages
+    # are generated.
+    if (defined $version_info->{status} && $version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
@@ -226,7 +228,7 @@ sub login {
         if (! defined $request->{next_action}) {
             $request->{message} = $request->{_locale}->text(
                 'Unknown database found.'
-                );
+                ) . $version_info->{full_version};
             $request->{operation} = $request->{_locale}->text('Cancel?');
             $request->{next_action} = 'cancel';
         } elsif ($request->{next_action} eq 'rebuild_modules') {
@@ -733,7 +735,8 @@ sub _failed_check {
             format => 'HTML',
     );
     my $rows = [];
-    my $count = 1;
+    # Count has to reflect the actual number of rows
+    my $count = 0;
     my $hiddens = {table => $check->table,
                     edit => $check->column,
                            id_column => $check->{id_column},
@@ -759,13 +762,12 @@ sub _failed_check {
                    size => 15,
            }};
         push @$rows, $row;
-        $hiddens->{"id_$count"} = $row->{$check->id_column};
         ++$count;
+        $hiddens->{"id_$count"} = $row->{$check->id_column};
    }
     $sth->finish();
 
     $hiddens->{count} = $count;
-#    $hiddens->{edit} = $check->column; # Why again. Set in module beginning
 
     my $buttons = [
            { type => 'submit',
