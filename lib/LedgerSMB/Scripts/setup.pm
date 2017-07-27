@@ -677,6 +677,7 @@ my %upgrade_run_step = (
     'ledgersmb/1.3' => 'run_upgrade'
     );
 
+use Data::Dumper;
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -691,21 +692,19 @@ sub upgrade {
             || ($check->max_version lt $dbinfo->{version})
             || ($check->appname ne $dbinfo->{appname});
         my %selectable_values = ();
-        if ( $check->column ) {
-          for my $column (@{$check->column}) {
-              my @values = ();
-              if ( $check->selectable_values && $check->selectable_values->{$column} ) {
-                  my $sth = $request->{dbh}->prepare($check->selectable_values->{$column});
-                  $sth->execute()
-                      or die "Failed to execute pre-migration check " . $check->name;
-                  while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-                      push @values, { value => $row->{value},
-                                       text => $row->{id}
-                      };
-                  }
-              }
-              $selectable_values{$column} = [@values];
-          }
+        for my $column (@{$check->columns // []}) {
+            my @values = ();
+            if ( $check->selectable_values && $check->selectable_values->{$column} ) {
+                my $sth = $request->{dbh}->prepare($check->selectable_values->{$column});
+                $sth->execute()
+                    or die "Failed to execute pre-migration check " . $check->name;
+                while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+                    push @values, { value => $row->{value},
+                                     text => $row->{id}
+                    };
+                }
+            }
+            $selectable_values{$column} = [@values];
         }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
@@ -747,20 +746,24 @@ sub _failed_check {
                id_column => $check->{id_column},
                 id_where => $check->{id_where},
                   insert => $check->{insert},
+                   edits => $check->columns,
                 database => $request->{database}};
-    my $i = 1;
-    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
-    for my $edit (@{$check->column}) {
-      $hiddens->{"edit_$i"} = $edit;
-      $i++;
-    }
+#    @{$hiddens->{edits}} = @{$check->columns // []};
+#    my $i = 1;
+#    warn Dumper $check->columns;
+#    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
+#    for my $edit (@{$check->columns}) {
+#      $hiddens->{"edit_$i"} = $edit;
+#      $i++;
+#    }
+    warn Dumper $hiddens;
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
-      for my $column (@{$check->column}) {
+      for my $column (@{$check->columns}) {
         my $selectable_value = $selectable_values{$column};
         $row->{$column} =
            ( defined $selectable_value && @$selectable_value )
@@ -822,16 +825,20 @@ sub fix_tests{
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $where = $request->{id_where};
 
-    my @edits;
-    my $i = 1;
-    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
-    while (defined $request->{"edit_$i"}) {
-      push @edits, $request->{"edit_$i"};
-      $i++;
-    }
+warn Dumper $request->{edits};
+    my @edits = @{$request->{edits} // []};
+warn Dumper @edits;
+#    my $i = 1;
+#    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
+#    while (defined $request->{"edit_$i"}) {
+#      push @edits, $request->{"edit_$i"};
+#      $i++;
+#    }
     my $sth = $request->{insert}
       ? $request->{dbh}->prepare(
-            "INSERT INTO $table(" . join(',',@edits) . ") VALUES(" .
+            "INSERT INTO $table(" .
+                join(',',map {$request->{dbh}->quote_identifier($_)} @edits) .
+                ") VALUES(" .
                 join(',',map { '?' } @edits) . ")" )
       : $request->{dbh}->prepare(
             "UPDATE $table SET " .

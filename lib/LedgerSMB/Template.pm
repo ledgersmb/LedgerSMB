@@ -360,7 +360,9 @@ sub new_UI {
     return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
 }
 
+use Dumper;
 sub preprocess {
+  warn Dumper \@_;
     my ($rawvars, $escape) = @_;
     return undef unless defined $rawvars;
 
