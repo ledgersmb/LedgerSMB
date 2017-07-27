@@ -2,6 +2,13 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.10
+* Fix loading image URL taken from Dojo 1.12 (instead of 1.10) (Erik H)
+* Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.9
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix inventory activity report drill down over-inclusive (Chris T, #2926)
