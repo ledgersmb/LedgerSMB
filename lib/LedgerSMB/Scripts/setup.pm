@@ -763,7 +763,7 @@ sub _failed_check {
                    name => $column . "_$id",
                    id => $id,
                    options => $selectable_value,
-                   default_blank => 1,
+                   default_blank => ( 1 != @$selectable_value ) ? 1 : 0
            } }
            : { input => {
                    name => $column . "_$id",
