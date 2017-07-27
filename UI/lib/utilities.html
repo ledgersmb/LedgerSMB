@@ -2,6 +2,10 @@
 <?lsmb BLOCK print_options ?>
 <div class="print-options"><?lsmb
 
+# This test is wrong. SCALAR have a size of 1, but so do ARRAY and HASHes
+# of 1 element, so we assign an object to a SCALAR at line 13.
+# So either we fix this or throw an exception is an object is passed on here - YL
+# And relying on size to discriminate between hidden and template is bound to fail.
 IF templates.size == 1;
 PROCESS input element_data = {
      name = 'template'
