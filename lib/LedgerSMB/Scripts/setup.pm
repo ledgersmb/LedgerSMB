@@ -745,15 +745,13 @@ sub _failed_check {
                id_column => $check->{id_column},
                 id_where => $check->{id_where},
                   insert => $check->{insert},
-                   edits => $check->columns,
                 database => $request->{database}};
-# UI/lib/utilities.html assumes no objects and will put the string equivalent
-# of the object address, so we cannot use the code below to send edits through
-# hiddens.
-#    @{$hiddens->{edits}} = @{$check->columns // []};
+    # UI/lib/utilities.html assumes no objects and will put the string equivalent
+    # of the object address, so we cannot use the code below to send edits through
+    # hiddens.
+    #    @{$hiddens->{edits}} = @{$check->columns // []};
     my $i = 1;
-    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
-    for my $edit (@{$check->column}) {
+    for my $edit (@{$check->columns}) {
       $hiddens->{"edit_$i"} = $edit;
       $i++;
     }
@@ -825,10 +823,9 @@ sub fix_tests{
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $where = $request->{id_where};
 
-# Because of said bug with objects in hiddens.
+    # Because of said bug with objects in hiddens.
     my @edits;
     my $i = 1;
-    # Move around Can't use string "ARRAY as an ARRAY ref while "strict refs" in use
     while (defined $request->{"edit_$i"}) {
       push @edits, $request->{"edit_$i"};
       $i++;
