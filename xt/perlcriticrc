@@ -5,8 +5,8 @@
 #  lsmb         -- includes all themes we want to use 
 #  lsmb_new     -- themes enforced on 'new' code
 #  lsmb_old     --  themes enforced on 'old' code; subset of lsmb_new
-#  lsmb_wip     -- themes we want to use on 'new' code
-#  lsmb_old_wip -- themes we want to use on 'old' code, subset of lsmb_wip, UNNECESSARY!
+#  lsmb_wip     -- themes we are trying to use on 'new' code 
+#  lsmb_old_wip -- themes we are trying to use on 'old' code, subset of lsmb_wip
 
 #  lsmb_reject   -- explicitly rejected themes
 #  lsmb_consider -- themes we are confused about using
@@ -96,7 +96,7 @@ pager = less
 [Modules::RequireEndWithOne]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireExplicitInclusion]
-    set_themes = lsmb lsmb_consider
+    set_themes = lsmb lsmb_wip
 [Modules::RequireExplicitPackage]
     set_themes = lsmb lsmb_new lsmb_old
 [Modules::RequireFilenameMatchesPackage]
@@ -154,17 +154,15 @@ pager = less
 [Variables::RequireLocalizedPunctuationVars]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 
-# I don't like this one, it is not helpful. It is easier
-# to recognize the punct namespace and look them up
-# as needed than to remember all the long names.
 
-[Variables::ProhibitPunctuationVars]
-    set_themes = lsmb lsmb_consider
+# Rejected policies
 
-# VersionVar unnecessary, really an app
-[Modules::RequireVersionVar]
-    set_themes = lsmb lsmb_reject
+# It is easier to lookup $^D than remember 
+# if $DEBUGGING is an application var.
+#[Variables::ProhibitPunctuationVars]
 
-# Too many methods
-[Subroutines::ProhibitBuiltinHomonyms]
-    set_themes = lsmb_reject
+# LSMB is more application than lib
+#[Modules::RequireVersionVar]
+
+# Policy fails on methods.
+#[Subroutines::ProhibitBuiltinHomonyms]
