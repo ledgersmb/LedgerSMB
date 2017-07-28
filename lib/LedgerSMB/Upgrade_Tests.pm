@@ -903,9 +903,27 @@ push @tests, __PACKAGE__->new(
     max_version => '3.0'
     );
 
+push @tests, __PACKAGE__->new(
+    test_query => "select distinct concat(ac.trans_id,'-',ac.id) as id, ap.transdate, ap.datepaid,
+                          ac.cleared-ap.datepaid as delay, ap.amount,v.name, ac.cleared
+                    from ap
+                    join acc_trans ac on ap.id=ac.trans_id
+                    left join vendor v on v.id=ap.vendor_id
+                    where (ac.cleared-ap.datepaid > 60 or ac.cleared-ap.datepaid < 0) and ac.id > 0
+                    order by ap.transdate, ap.datepaid",
+  display_name => $locale->text('Invalid or suspect cleared delays'),
+          name => 'invalid_cleared_dates',
+  display_cols => ['id', 'name', 'transdate', 'datepaid', 'cleared', 'delay', 'amount'],
+ instructions => $locale->text(
+                   'Suspect or invalid cleared delays have been detected. Please review the dates in the original application'),
+        table => 'ap',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+);
 
 
- ### On the vendor side, SL doesn't use pricegroups
+### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
 #     test_query => "select *
 #                      from partsvendor
