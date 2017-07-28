@@ -55,7 +55,7 @@ sub preference_screen {
         format   => 'HTML'
     );
 
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = $request->{_auth}->get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
     return $template->render_to_psgi({ request => $request,
