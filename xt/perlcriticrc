@@ -154,18 +154,15 @@ pager = less
 [Variables::RequireLocalizedPunctuationVars]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 
-#------------------------------------------------------
+
 # Rejected policies
 
 # It is easier to lookup $^D than remember 
 # if $DEBUGGING is an application var.
-[Variables::ProhibitPunctuationVars]
-    set_themes = lsmb_reject 
+#[Variables::ProhibitPunctuationVars]
 
 # LSMB is more application than lib
-[Modules::RequireVersionVar]
-    set_themes = lsmb_reject
+#[Modules::RequireVersionVar]
 
 # Policy fails on methods.
-[Subroutines::ProhibitBuiltinHomonyms]
-    set_themes = lsmb_reject
+#[Subroutines::ProhibitBuiltinHomonyms]
