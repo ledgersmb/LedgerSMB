@@ -751,7 +751,7 @@ sub _failed_check {
     # hiddens.
     #    @{$hiddens->{edits}} = @{$check->columns // []};
     my $i = 1;
-    for my $edit (@{$check->columns}) {
+    for my $edit (@{$check->columns // []}) {
       $hiddens->{"edit_$i"} = $edit;
       $i++;
     }
@@ -761,7 +761,7 @@ sub _failed_check {
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
-      for my $column (@{$check->columns}) {
+      for my $column (@{$check->columns // []}) {
         my $selectable_value = $selectable_values{$column};
         $row->{$column} =
            ( defined $selectable_value && @$selectable_value )
