@@ -420,9 +420,6 @@ sub run_backup {
 
     if ($request->{backup_type} eq 'email') {
 
-
-
-
         my $mail = LedgerSMB::Mailer->new(
             from     => $LedgerSMB::Sysconfig::backup_email_from,
             to       => $request->{email},
@@ -784,7 +781,9 @@ sub _failed_check {
            { type => 'submit',
              name => 'action',
             value => 'fix_tests',
-             text => $request->{_locale}->text('Save and Retry'),
+             text => $request->{_locale}->text($check->columns
+                                                ? 'Save and Retry'
+                                                : 'Cancel'),
             class => 'submit' },
     ];
 
