@@ -549,6 +549,14 @@ UPDATE business_unit_class
    AND EXISTS (select 1 from lsmb12.project);
 
 
+INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber, notes)
+    SELECT  id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber, notes
+       FROM lsmb12.invoice;
+
 INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
             fx_transaction, memo, invoice_id, entry_id)
      SELECT trans_id, a.id, amount, transdate, source, cleared,
@@ -570,14 +578,6 @@ INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
      SELECT ac.entry_id, 2, ac.project_id + 1000
        FROM lsmb12.acc_trans ac
       WHERE ac.project_id IS NOT NULL;
-
-INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber, notes)
-    SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber, notes
-       FROM lsmb12.invoice;
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id
