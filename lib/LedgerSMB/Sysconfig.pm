@@ -119,9 +119,10 @@ sub def {
 
     $docs{$sec}->{$key} = $args{doc};
     {
-        ## no critic (strict);
-        no strict 'refs';                               # needed as we use the contents of a variable as the main variable name
-        no warnings 'redefine';
+
+        ## no critic (ProhibitNoStrict)
+        no strict 'refs';           ## no critic (ProhibitProlongedStrictureOverride ) # sniff  # needed as we use the contents of a variable as the main variable name
+        no warnings 'redefine';     ## no critic ( ProhibitNoWarnings ) # sniff
         ${$name} = $cfg->val($sec, $key, $default);     # get the value of config key $section.$key.  If it doesn't exist use $default instead
         if (defined $suffix) {
             ${$name} = "${$name}$suffix";               # Append a value suffix if defined, probably something like $EUID or $PID etc
@@ -132,7 +133,7 @@ sub def {
         # If an environment variable is associated, set it  based on the
         # current value (taken from the config file, default, or pre-existing
         #  env var.
-        $ENV{$envvar} = ${$name}
+        $ENV{$envvar} = ${$name}    ## no critic   # sniff
             if $envvar && defined ${$name};
 
         # create a functional interface
@@ -499,7 +500,7 @@ sub check_permissions {
 
     my $tempdir = LedgerSMB::Sysconfig::tempdir();
     # commit 6978b88 added this line to resolve issues if HOME isn't set
-    $ENV{HOME} = $tempdir;
+    $ENV{HOME} = $tempdir;    ## no critic   # sniff
 
 
     if(!(-d "$tempdir")){
