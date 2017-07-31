@@ -700,7 +700,7 @@ sub _http_output {
     binmode STDOUT, $self->{binmode};
     print $data or die "Cannot print to STDOUT";;
     # change global resource back asap
-    binmode STDOUT, ':utf8';
+    binmode STDOUT, 'encoding(:UTF-8)';
     $logger->trace("end print to STDOUT");
     return;
 }
