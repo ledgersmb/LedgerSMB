@@ -677,6 +677,14 @@ my %upgrade_run_step = (
     'ledgersmb/1.3' => 'run_upgrade'
     );
 
+sub _upgrade_test_is_applicable {
+    my ($dbinfo, $test) = @_;
+
+    return (($test->min_version le $dbinfo->{version})
+            && ($test->max_version ge $dbinfo->{version})
+            && ($test->appname eq $dbinfo->{appname}));
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -687,9 +695,8 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version gt $dbinfo->{version})
-            || ($check->max_version lt $dbinfo->{version})
-            || ($check->appname ne $dbinfo->{appname});
+        next if ! _uprade_test_is_applicable($dbinfo, $check);
+
         my %selectable_values = ();
         for my $column (@{$check->columns // []}) {
             my @values = ();
