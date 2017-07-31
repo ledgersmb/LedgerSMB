@@ -816,11 +816,10 @@ sub fix_tests{
     my ($request) = @_;
 
     _init_db($request);
-    $request->{dbh}->{AutoCommit} = 0;
-    my $locale = $request->{_locale};
-
-    my $table = $request->{dbh}->quote_identifier($request->{table});
+    my $dbh = $request->{dbh};
+    my $table = $dbh->quote_identifier($request->{table});
     my $where = $request->{id_where};
+    $dbh->{AutoCommit} = 0;
 
     my @edits;
     my $i = 1;
@@ -828,16 +827,19 @@ sub fix_tests{
       push @edits, $request->{"edit_$i"};
       $i++;
     }
-    my $sth = $request->{insert}
-      ? $request->{dbh}->prepare(
-            "INSERT INTO $table(" .
-                join(',',map {$request->{dbh}->quote_identifier($_)} @edits) .
-                ") VALUES(" .
-                join(',',map { '?' } @edits) . ")" )
-      : $request->{dbh}->prepare(
-            "UPDATE $table SET " .
-                join(',',map {$request->{dbh}->quote_identifier($_) . " = ?"} @edits) .
-                " where $where = ?");
+
+    my $query;
+    if ($request->{insert}) {
+        my $columns = join(', ', map { $dbh->quote_identifier($_) } @edits);
+        my $values = join(', ', map { '?' } @edits);
+        $query = "INSERT INTO $table ($columns) VALUES ($values)";
+    }
+    else {
+        my $setters =
+            join(', ', map { $dbh->quote_identifier($_) . " = ?" } @edits);
+        my $query = "UPDATE $table SET $setters WHERE $where = ?";
+    }
+    my $sth = $dbh->prepare($query);
 
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
@@ -845,16 +847,14 @@ sub fix_tests{
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }
-        if ( $request->{insert}) {
-          $sth->execute(@values) ||
+        push @values, $request->{"id_$count"}
+           if ! $request->{insert};
+
+        $sth->execute(@values) ||
             $request->error($sth->errstr);
-        } else {
-          $sth->execute(@values, $id) ||
-            $request->error($sth->errstr);
-        }
     }
     $sth->finish();
-    $request->{dbh}->commit;
+    $dbh->commit;
     return upgrade($request);
 }
 
