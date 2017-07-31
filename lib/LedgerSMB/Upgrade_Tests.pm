@@ -108,7 +108,12 @@ has table => (is => 'ro', isa => 'Str', required => 0);
 
 =item selectable_values
 
-Repair query columns to get the values from
+Hash specifying for each column (identified by the key) which
+query to execute to retrieve the values to fill the drop-down with.
+
+Each query needs to return 2 columns: C<text> and C<value>, where
+C<value> is the value to be stored in the (fixed) record and
+C<text> is the textual value to be presented in the UI.
 
 =cut
 
@@ -354,7 +359,7 @@ push @tests, __PACKAGE__->new(
      instructions => $LedgerSMB::App_State::Locale->text(
                        'The following transactions have unassigned amounts'),
             table => 'acc_trans',
-selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS id, id as value
+selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS text, id as value
                                     FROM chart
                                     WHERE charttype = 'A'
                                     ORDER BY id" },

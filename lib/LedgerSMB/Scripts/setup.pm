@@ -697,21 +697,6 @@ sub upgrade {
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
         next if ! _uprade_test_is_applicable($dbinfo, $check);
 
-        my %selectable_values = ();
-        for my $column (@{$check->columns // []}) {
-            my @values = ();
-            if ( $check->selectable_values && $check->selectable_values->{$column} ) {
-                my $sth = $request->{dbh}->prepare($check->selectable_values->{$column});
-                $sth->execute()
-                    or die "Failed to execute pre-migration check " . $check->name;
-                while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-                    push @values, { value => $row->{value},
-                                     text => $row->{id}
-                    };
-                }
-            }
-            $selectable_values{$column} = [@values];
-        }
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
@@ -740,6 +725,20 @@ sub upgrade {
 
 sub _failed_check {
     my ($request, $check, $sth, %selectable_values) = @_;
+
+    my %selectable_values = ();
+    for my $column (@{$check->columns // []}) {
+        if ( $check->selectable_values
+             && $check->selectable_values->{$column} ) {
+            my $sth = $request->{dbh}->prepare(
+                $check->selectable_values->{$column});
+
+            $sth->execute()
+                or die "Failed to query drop-down data in " . $check->name;
+            $selectable_values{$column} = $sth->fetchall_arrayref({});
+        }
+    }
+
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
