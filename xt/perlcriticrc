@@ -150,7 +150,7 @@ pager = less
 [ValuesAndExpressions::ProhibitMixedBooleanOperators]
     set_themes = lsmb lsmb_new lsmb_old_wip
 [Variables::RequireInitializationForLocalVars]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip
 [Variables::RequireLocalizedPunctuationVars]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 

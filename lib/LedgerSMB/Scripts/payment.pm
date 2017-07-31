@@ -1908,7 +1908,7 @@ return use_overpayment($request);
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/payment.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {

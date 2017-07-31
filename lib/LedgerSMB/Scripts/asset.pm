@@ -1010,7 +1010,7 @@ sub run_import {
 }
 
 {
-    local ($!, $@);
+    local ($!, $@) = ( undef, undef);
     my $do_ = "scripts/custom/asset.pl";
     if ( -e $do_ ) {
         unless ( do $do_ ) {

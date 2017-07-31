@@ -31,7 +31,7 @@ our $VERSION = '0.1';
 our $custom_batch_types = {};
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
@@ -503,7 +503,7 @@ sub print_batch {
 }
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/vouchers.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {

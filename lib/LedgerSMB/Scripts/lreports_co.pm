@@ -97,7 +97,7 @@ files.
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = ( undef, undef);
     my $do_ = 'scripts/custom/lreports_co.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
