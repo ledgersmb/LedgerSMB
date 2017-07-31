@@ -125,7 +125,7 @@ pager = less
     set_themes = lsmb lsmb_new lsmb_old_wip
 
 [InputOutput::RequireEncodingWithUTF8Layer]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip
 [Subroutines::ProhibitExplicitReturnUndef]
     set_themes = lsmb lsmb_wip lsmb_old_wip
 
