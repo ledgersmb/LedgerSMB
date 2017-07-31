@@ -701,7 +701,7 @@ sub upgrade {
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             return _failed_check($request, $check, $sth, %selectable_values);
+             return _failed_check($request, $check, $sth);
         }
         $sth->finish();
     }
@@ -724,7 +724,7 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth, %selectable_values) = @_;
+    my ($request, $check, $sth) = @_;
 
     my %selectable_values = ();
     for my $column (@{$check->columns // []}) {
@@ -739,11 +739,20 @@ sub _failed_check {
         }
     }
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML',
-    );
+    my $hiddens = {
+       table => $check->table,
+   id_column => $check->{id_column},
+    id_where => $check->{id_where},
+      insert => $check->{insert},
+    database => $request->{database}
+    };
+    # We need to flatten the columns array, because dyna-form doesn't
+    # know about complex values for the 'hiddens' attribute
+    my $i = 1;
+    for my $edit (@{$check->columns // []}) {
+      $hiddens->{"edit_$i"} = $edit;
+      $i++;
+    }
 
     my $rows = [];
     my $count = 0;
@@ -770,23 +779,8 @@ sub _failed_check {
       ++$count;
       $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
+    $hiddens->{count} = scalar(@$rows);
     $sth->finish();
-
-    my $hiddens = {
-       count => scalar(@rows),
-       table => $check->table,
-   id_column => $check->{id_column},
-    id_where => $check->{id_where},
-      insert => $check->{insert},
-    database => $request->{database}
-    };
-    # We need to flatten the columns array, because dyna-form doesn't
-    # know about complex values for the 'hiddens' attribute
-    my $i = 1;
-    for my $edit (@{$check->columns // []}) {
-      $hiddens->{"edit_$i"} = $edit;
-      $i++;
-    }
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my $buttons = [
@@ -796,6 +790,13 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
+
+    my $template = LedgerSMB::Template->new(
+        path => 'UI',
+        template => 'form-dynatable',
+        format => 'HTML',
+    );
+
     return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
