@@ -740,30 +740,13 @@ sub _failed_check {
     }
 
     my $template = LedgerSMB::Template->new(
-            path => 'UI',
-            template => 'form-dynatable',
-            format => 'HTML',
+        path => 'UI',
+        template => 'form-dynatable',
+        format => 'HTML',
     );
 
     my $rows = [];
     my $count = 0;
-    my $hiddens = {table => $check->table,
-               id_column => $check->{id_column},
-                id_where => $check->{id_where},
-                  insert => $check->{insert},
-                database => $request->{database}};
-
-    # We need to flatten the columns array, because dyna-form doesn't
-    # know about complex values for the 'hiddens' attribute
-    my $i = 1;
-    for my $edit (@{$check->columns // []}) {
-      $hiddens->{"edit_$i"} = $edit;
-      $i++;
-    }
-    my $header = {};
-    for (@{$check->display_cols}){
-        $header->{$_} = $_;
-    }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
       for my $column (@{$check->columns // []}) {
@@ -789,8 +772,23 @@ sub _failed_check {
     }
     $sth->finish();
 
-    $hiddens->{count} = scalar(@rows);
+    my $hiddens = {
+       count => scalar(@rows),
+       table => $check->table,
+   id_column => $check->{id_column},
+    id_where => $check->{id_where},
+      insert => $check->{insert},
+    database => $request->{database}
+    };
+    # We need to flatten the columns array, because dyna-form doesn't
+    # know about complex values for the 'hiddens' attribute
+    my $i = 1;
+    for my $edit (@{$check->columns // []}) {
+      $hiddens->{"edit_$i"} = $edit;
+      $i++;
+    }
 
+    my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -801,7 +799,7 @@ sub _failed_check {
     return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
-           heading            => $header,
+           heading            => $heading,
            headers            => [$check->display_name, $check->instructions],
            columns            => $check->display_cols,
            rows               => $rows,
