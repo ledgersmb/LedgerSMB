@@ -112,9 +112,9 @@ pager = less
 
 
 [TestingAndDebugging::ProhibitNoStrict]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip
 [TestingAndDebugging::ProhibitNoWarnings]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
     set_themes = lsmb lsmb_new lsmb_old
 [TestingAndDebugging::RequireTestLabels]
@@ -152,7 +152,7 @@ pager = less
 [Variables::RequireInitializationForLocalVars]
     set_themes = lsmb lsmb_new lsmb_old_wip
 [Variables::RequireLocalizedPunctuationVars]
-    set_themes = lsmb lsmb_wip lsmb_old_wip
+    set_themes = lsmb lsmb_new lsmb_old_wip
 
 
 # Rejected policies
