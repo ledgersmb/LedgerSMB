@@ -135,7 +135,7 @@ files.
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/journal.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {

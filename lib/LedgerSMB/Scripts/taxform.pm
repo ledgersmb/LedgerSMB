@@ -226,7 +226,7 @@ files.
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/taxform.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {

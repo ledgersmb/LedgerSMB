@@ -47,7 +47,8 @@ my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($d
 closedir $dh;
 
 for (@pluginmods){
-    local ($!, $@);
+    local $! = undef;
+    local $@ = undef;
     my $do_ = "lib/LedgerSMB/Entity/Plugins/$_";
     if ( -e $do_ ) {
         unless ( do $do_ ) {

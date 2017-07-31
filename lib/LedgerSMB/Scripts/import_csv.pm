@@ -532,7 +532,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = ( undef, undef);
     my $do_ = 'scripts/custom/import_trans.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
