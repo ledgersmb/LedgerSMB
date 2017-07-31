@@ -744,8 +744,8 @@ sub _failed_check {
             template => 'form-dynatable',
             format => 'HTML',
     );
+
     my $rows = [];
-    # Count has to reflect the actual number of rows
     my $count = 0;
     my $hiddens = {table => $check->table,
                id_column => $check->{id_column},
@@ -789,7 +789,7 @@ sub _failed_check {
     }
     $sth->finish();
 
-    $hiddens->{count} = $count;
+    $hiddens->{count} = scalar(@rows);
 
     my $buttons = [
            { type => 'submit',
