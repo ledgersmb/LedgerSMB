@@ -23,17 +23,20 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
+use Digest::MD5;
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use LedgerSMB::App_State;
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $MINOR_VERSION = '1.5';
@@ -708,13 +711,15 @@ sub _failed_check {
             template => 'form-dynatable',
             format => 'HTML',
     );
+
+    my $hiddens = {
+       check => $check->name,
+verify_check => md5_hex($check->test_query),
+    database => $request->{database}
+    };
+
     my $rows = [];
     my $count = 1;
-    my $hiddens = {table => $check->table,
-                    edit => $check->column,
-                           id_column => $check->{id_column},
-                            id_where => $check->{id_where},
-                database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
@@ -773,13 +778,30 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    _init_db($request);
-    $request->{dbh}->{AutoCommit} = 0;
-    my $locale = $request->{_locale};
+    my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
+    my $dbh = $request->{dbh};
+    $dbh->{AutoCommit} = 0;
 
-    my $table = $request->{dbh}->quote_identifier($request->{table});
-    my $edit = $request->{dbh}->quote_identifier($request->{edit});
-        my $where = $request->{id_where};
+    my @fix_tests = grep { $_->name eq $request->{check} }
+        _applicable_upgrade_tests($dbinfo);
+
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found multiple applicable tests by the same identifier"
+        if @fix_tests > 1;
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found no applicable tests for given identifier"
+        if @fix_tests == 0;
+
+    my $check = shift @fix_tests;
+    die "Inconsistent state fixing date for $request->{check}: "
+        . "found different test by the same name while fixing data"
+        if $request->{verify_check} ne md5_hex($check->test_query);
+
+
+    my $table = $check->table;
+    my $where = $check->id_where;
+    my @edits = @{$check->columns};
     my $sth = $request->{dbh}->prepare(
             "UPDATE $table SET $edit = ? where $where = ?"
     );
