@@ -106,14 +106,23 @@ Repair query table to run once per result.
 
 has table => (is => 'ro', isa => 'Str', required => 0);
 
-
 =item selectable_values
 
-Repair query column to get the values from
+Repair query columns to get the values from
 
 =cut
 
-has selectable_values => (is => 'ro', isa => 'Str', required => 0);
+has selectable_values => (is => 'ro', isa => 'HashRef', required => 0);
+
+=item insert
+
+Insert data instead of update. This to set defaults on a very limited subset
+of tables. Business, for example isn't required in SQL-Ledger but mandatory for
+LedgerSMB.
+
+=cut
+
+has insert => (is => 'ro', isa => 'Bool', required => 0, default => 0);
 
 =item id_where
 
@@ -131,13 +140,13 @@ Repair column to use as id
 
 has id_column => (is => 'ro', isa => 'Str', required => 0, default => 'id');
 
-=item column
+=item columns
 
-Repair query column to run once per result
+Repair query columns to run once per result
 
 =cut
 
-has column => (is => 'ro', isa => 'Str', required => 0);
+has columns => (is => 'ro', isa => 'ArrayRef[Str]', required => 0);
 
 =item display_cols
 
@@ -187,7 +196,7 @@ push @tests, __PACKAGE__->new(
                    'Please make all customer numbers unique'),
          name => 'unique_customernumber',
  display_cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
-       column => 'customernumber',
+      columns => ['customernumber'],
         table => 'customer',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -206,7 +215,7 @@ push @tests, __PACKAGE__->new(
                    'Please make all vendor numbers unique'),
          name => 'unique_vendornumber',
  display_cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
-       column => 'customernumber',
+      columns => ['customernumber'],
         table => 'customer',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -220,7 +229,7 @@ push @tests, __PACKAGE__->new(
                    'Enter employee numbers where they are missing'),
          name => 'null_employeenumber',
  display_cols => ['login', 'name', 'employeenumber'],
-       column => 'employeenumber',
+      columns => ['employeenumber'],
         table => 'employee',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -235,7 +244,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
-       column => 'name',
+      columns => ['name'],
         table => 'employee',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -253,7 +262,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
                    'Make employee numbers unique'),
  display_cols => ['login', 'name', 'employeenumber'],
-       column => 'employeenumber',
+      columns => ['employeenumber'],
         table => 'employee',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -272,7 +281,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
                    'Make non-obsolete partnumbers unique'),
  display_cols => ['partnumber', 'description', 'sellprice'],
-       column => 'partnumber',
+      columns => ['partnumber'],
         table => 'parts',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -287,8 +296,8 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
                    'Make invoice numbers unique'),
          name => 'unique_ar_invnumbers',
- display_cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
-       column =>  'invnumber',
+ display_cols => ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
+      columns => ['invnumber'],
         table =>  'ar',
       appname => 'ledgersmb',
   min_version => '1.2',
@@ -302,6 +311,7 @@ push @tests, __PACKAGE__->new(
  display_name => $locale->text('No NULL Amounts'),
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
+    id_column => 'trans_id',
  instructions => $locale->text(
                    'There are NULL values in the amounts column of your
 source database. Please either find professional help to migrate your
@@ -312,43 +322,43 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
-                                        WITH ac1 AS (
-                                        SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
-                                                FROM acc_trans
-                                                WHERE trans_id IN (
-                                                        SELECT trans_id FROM (
-                                                                SELECT trans_id, SUM(amount) as amount from acc_trans
-                                                                WHERE chart_id IS NULL
-                                                                GROUP BY trans_id) as a
-                                                        WHERE a.amount <> 0)
-                                                AND chart_id IS NULL
-                                                GROUP BY trans_id, chart_id
-                                                ORDER BY trans_id, transdate
-                                ),
-                                -- Hint the user about the type of the remaining entries
-                                ac2 AS (
-                                        SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
-                                        FROM acc_trans ac
-                                        JOIN chart c ON chart_id = c.id
-                                        WHERE trans_id IN ( SELECT trans_id FROM ac1)
-                                        AND c.link ~ 'amount'
-                                )
-                                -- Present data
-                                SELECT * from ac1
-                                LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
-                                ORDER BY ac1.trans_id",
- display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
-         name => 'no_unbalanced_ac_transactions',
- display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
- instructions => $LedgerSMB::App_State::Locale->text(
-                   'The following transactions have unassigned amounts'),
-                table => 'acc_trans',
-selectable_values => "SELECT concat(accno,' -- ',description) AS id, id as value
-                                          FROM chart
-                                          WHERE charttype = 'A'
-                                          ORDER BY id",
-           column => 'chart_id',
+       test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
+                                            WITH ac1 AS (
+                                            SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
+                                                    FROM acc_trans
+                                                    WHERE trans_id IN (
+                                                            SELECT trans_id FROM (
+                                                                    SELECT trans_id, SUM(amount) as amount from acc_trans
+                                                                    WHERE chart_id IS NULL
+                                                                    GROUP BY trans_id) as a
+                                                            WHERE a.amount <> 0)
+                                                    AND chart_id IS NULL
+                                                    GROUP BY trans_id, chart_id
+                                                    ORDER BY trans_id, transdate
+                                    ),
+                                    -- Hint the user about the type of the remaining entries
+                                    ac2 AS (
+                                            SELECT DISTINCT ac.trans_id,SUBSTR(c.link,1,2) AS type
+                                            FROM acc_trans ac
+                                            JOIN chart c ON chart_id = c.id
+                                            WHERE trans_id IN ( SELECT trans_id FROM ac1)
+                                            AND c.link ~ 'amount'
+                                    )
+                                    -- Present data
+                                    SELECT * from ac1
+                                    LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
+                                    ORDER BY ac1.trans_id",
+     display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
+             name => 'no_unbalanced_ac_transactions',
+     display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
+     instructions => $LedgerSMB::App_State::Locale->text(
+                       'The following transactions have unassigned amounts'),
+            table => 'acc_trans',
+selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS id, id as value
+                                    FROM chart
+                                    WHERE charttype = 'A'
+                                    ORDER BY id" },
+          columns => ['chart_id'],
         id_column => 'trans_id',
          id_where => 'chart_id IS NULL AND trans_id',
       appname => 'sql-ledger',
@@ -367,7 +377,7 @@ push @tests, __PACKAGE__->new(
  display_name => $locale->text('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
  display_cols => [ 'meta_number', 'class', 'description', 'name' ],
-       column => 'meta_number',
+      columns => ['meta_number'],
         table => 'entity_credit_account',
  instructions => $locale->text("Make sure all meta numbers are unique."),
       appname => 'ledgersmb',
@@ -403,7 +413,7 @@ push @tests, __PACKAGE__->new(
          name => 'missing_gifi_table_rows',
  display_cols => [ 'accno', 'description' ],
         table => 'gifi',
-       column => 'description',
+      columns => ['description'],
     id_column => 'accno',
      id_where => 'description IS NULL AND accno',
  instructions => $locale->text("Please add the missing GIFI accounts"),
@@ -471,7 +481,7 @@ push @tests,__PACKAGE__->new(
  instructions => $locale->text(
                    'Please make sure all accounts have a category of
 (A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
-    column => 'category',
+   columns => ['category'],
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -491,7 +501,7 @@ push @tests,__PACKAGE__->new(
                    'An account can either be a summary account (which have a
 link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-    column => 'link',
+   columns => ['link'],
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -527,7 +537,7 @@ push @tests,__PACKAGE__->new(
     display_cols => ['id', 'customernumber', 'name'],
  instructions => $locale->text(
                    'Please make sure there are no empty customer numbers.'),
-    column => 'customernumber',
+   columns => ['customernumber'],
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -546,7 +556,7 @@ push @tests,__PACKAGE__->new(
  instructions => $locale->text(
                    'Please make sure all accounts have a category of
 (A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense.'),
-    column => 'category',
+   columns => ['category'],
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -565,7 +575,7 @@ push @tests,__PACKAGE__->new(
 #                    'An account can either be a summary account (which have a
 # link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 # number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-#     column => 'category',
+#    columns => ['category'],
 #     table => 'chart',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',
@@ -605,7 +615,7 @@ push @tests,__PACKAGE__->new(
     display_cols => ['id', 'customernumber', 'name'],
  instructions => $locale->text(
                    'Please make all customer numbers unique'),
-    column => 'customernumber',
+   columns => ['customernumber'],
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -621,7 +631,7 @@ push @tests,__PACKAGE__->new(
     display_cols => ['id', 'vendornumber', 'name'],
  instructions => $locale->text(
                    'Please make sure there are no empty vendor numbers.'),
-    column => 'vendornumber',
+   columns => ['vendornumber'],
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -640,7 +650,7 @@ push @tests,__PACKAGE__->new(
     display_cols => ['id', 'vendornumber', 'name'],
  instructions => $locale->text(
                    'Please make all vendor numbers unique'),
-    column => 'vendornumber',
+   columns => ['vendornumber'],
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -656,7 +666,7 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'login', 'name', 'employeenumber'],
  instructions => $locale->text(
                    'Please make sure all employees have an employee number'),
-    column => 'employeenumber',
+   columns => ['employeenumber'],
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -673,7 +683,7 @@ push @tests, __PACKAGE__->new(
     display_name => $locale->text('Null employee numbers'),
     name => 'no_duplicate_employeenumbers',
     display_cols => ['id', 'login', 'name', 'employeenumber'],
-    column => 'employeenumber',
+   columns => ['employeenumber'],
  instructions => $locale->text(
                    'Please make all employee numbers unique'),
     table => 'employee',
@@ -694,7 +704,7 @@ push @tests, __PACKAGE__->new(
     name => 'no_duplicate_ar_invoicenumbers',
     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
-    column => 'invnumber',
+   columns => ['invnumber'],
  instructions => $locale->text(
                    'Please make all AR invoice numbers unique'),
     table => 'ar',
@@ -717,7 +727,7 @@ push @tests, __PACKAGE__->new(
     name => 'no_duplicate_ap_invoicenumbers',
     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
-    column => 'invnumber',
+   columns => ['invnumber'],
  instructions => $locale->text(
                    'Contrary to SQL-ledger, LedgerSMB invoices numbers must be unique. Please review suggestions to make all AP invoice numbers unique. Conflicting entries are presented by pairs, with a suffix added to the invoice number'),
     table => 'ap',
@@ -738,7 +748,7 @@ push @tests, __PACKAGE__->new(
  instructions => $locale->text(
                    'Make non-obsolete partnumbers unique'),
  display_cols => ['partnumber', 'description', 'sellprice'],
-       column => 'partnumber',
+      columns => ['partnumber'],
         table => 'parts',
       appname => 'sql-ledger',
   min_version => '2.7',
@@ -755,7 +765,7 @@ push @tests, __PACKAGE__->new(
     display_cols => ['parts_id', 'make', 'model'],
  instructions => $locale->text(
                    'Please make sure all modelsnumbers are non-empty'),
-    column => 'model',
+   columns => ['model'],
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -770,7 +780,7 @@ push @tests, __PACKAGE__->new(
     display_name => $locale->text('Null make numbers'),
     name => 'no_null_makenumbers',
     display_cols => ['parts_id', 'make', 'model'],
-    column => 'make',
+   columns => ['make'],
     instructions => $locale->text(
                    'Please make sure all make numbers are non-empty'),
     table => 'makemodel',
@@ -805,7 +815,7 @@ push @tests, __PACKAGE__->new(
     display_name => $locale->text('Unknown charttype; should be H(eader)/A(ccount)'),
     name => 'unknown_charttype',
     display_cols => ['accno', 'charttype', 'description'],
-    column => 'charttype',
+   columns => ['charttype'],
  instructions => $locale->text(
                    'Please fix the presented rows to either be "H" or "A"'),
     table => 'chart',
@@ -823,7 +833,7 @@ push @tests, __PACKAGE__->new(
     display_name => $locale->text('Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)Q(uity))'),
     name => 'unknown_account_category',
     display_cols => ['accno', 'category', 'description'],
-    column => 'category',
+   columns => ['category'],
  instructions => $locale->text(
                    'Please fix the pricegroup data in your partscustomer table (no UI available)'),
     table => 'chart',
