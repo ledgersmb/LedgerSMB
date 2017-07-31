@@ -204,6 +204,8 @@ sub get_info {
             # different means
        $logger->debug("DBI->connect dbh=$dbh");
 
+       $retval->{status} = 'exists';
+
        my $sth;
        $sth = $dbh->prepare("SELECT SESSION_USER");
        $sth->execute;
@@ -280,7 +282,6 @@ sub get_info {
             $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
        } else {
             $retval->{appname} = 'unknown';
-            $retval->{exists} = 'exists';
        }
        $dbh->rollback;
    }
