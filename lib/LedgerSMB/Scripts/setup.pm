@@ -746,10 +746,9 @@ sub _failed_check {
                 id_where => $check->{id_where},
                   insert => $check->{insert},
                 database => $request->{database}};
-    # UI/lib/utilities.html assumes no objects and will put the string equivalent
-    # of the object address, so we cannot use the code below to send edits through
-    # hiddens.
-    #    @{$hiddens->{edits}} = @{$check->columns // []};
+
+    # We need to flatten the columns array, because dyna-form doesn't
+    # know about complex values for the 'hiddens' attribute
     my $i = 1;
     for my $edit (@{$check->columns // []}) {
       $hiddens->{"edit_$i"} = $edit;
@@ -823,7 +822,6 @@ sub fix_tests{
     my $table = $request->{dbh}->quote_identifier($request->{table});
     my $where = $request->{id_where};
 
-    # Because of said bug with objects in hiddens.
     my @edits;
     my $i = 1;
     while (defined $request->{"edit_$i"}) {
