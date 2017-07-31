@@ -637,6 +637,21 @@ my %upgrade_run_step = (
     'ledgersmb/1.3' => 'run_upgrade'
     );
 
+sub _upgrade_test_is_applicable {
+    my ($dbinfo, $test) = @_;
+
+    return (($test->min_version le $dbinfo->{version})
+            && ($test->max_version ge $dbinfo->{version})
+            && ($test->appname eq $dbinfo->{appname}));
+}
+
+sub _applicable_upgrade_tests {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_ }
+                  LedgerSMB::Upgrade_Tests->get_tests;
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -647,10 +662,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version gt $dbinfo->{version})
-            || ($check->max_version lt $dbinfo->{version})
-            || ($check->appname ne $dbinfo->{appname});
+    for my $check (_applicatble_upgrade_tests($dbinfo))
         if ( $check->selectable_values ) {
             my $sth = $request->{dbh}->prepare($check->selectable_values);
             $sth->execute()
@@ -661,6 +673,7 @@ sub upgrade {
                 };
             }
         }
+
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
         or die "Failed to execute pre-migration check " . $check->name;
