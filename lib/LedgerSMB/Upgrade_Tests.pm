@@ -904,16 +904,20 @@ push @tests, __PACKAGE__->new(
     );
 
 push @tests, __PACKAGE__->new(
-    test_query => "select distinct concat(ac.trans_id,'-',ac.id) as id, ap.transdate, ap.datepaid,
-                          ac.cleared-ap.datepaid as delay, ap.amount,v.name, ac.cleared
-                    from ap
-                    join acc_trans ac on ap.id=ac.trans_id
-                    left join vendor v on v.id=ap.vendor_id
-                    where (ac.cleared-ap.datepaid > 60 or ac.cleared-ap.datepaid < 0) and ac.id > 0
-                    order by ap.transdate, ap.datepaid",
+    test_query => "select concat(ac.trans_id,'-',ac.id) as id,
+                          ap.transdate, ap.datepaid,
+                          ac.cleared-ac.transdate as delay, ap.amount,v.name,
+                          ac.transdate,ac.cleared
+                  from ap
+                  join acc_trans ac on ap.id=ac.trans_id
+                  left join vendor v on v.id=ap.vendor_id
+                  where ((ac.cleared-ac.transdate > 150 or ac.cleared-ac.transdate < 0)
+                         or ac.cleared < ap.datepaid and ac.id = (select max(id) from acc_trans where ap.id=acc_trans.trans_id))
+                    and ac.id > 0
+                  order by ac.cleared,id, ac.transdate, ap.datepaid",
   display_name => $locale->text('Invalid or suspect cleared delays'),
           name => 'invalid_cleared_dates',
-  display_cols => ['id', 'name', 'transdate', 'datepaid', 'cleared', 'delay', 'amount'],
+  display_cols => ['name', 'id', 'datepaid', 'transdate', 'cleared', 'delay', 'amount'],
  instructions => $locale->text(
                    'Suspect or invalid cleared delays have been detected. Please review the dates in the original application'),
         table => 'ap',
