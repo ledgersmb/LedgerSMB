@@ -70,3 +70,7 @@ tr.listheading {
 }
 tr.listrow:nth-child(even) {background: #FFF}
 tr.listrow:nth-child(odd) {background: #EEE}
+
+td.dijitStretch {
+    min-width: 125px;
+}
