@@ -755,7 +755,6 @@ sub _failed_check {
     }
 
     my $rows = [];
-    my $count = 0;
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
       for my $column (@{$check->columns // []}) {
@@ -776,7 +775,7 @@ sub _failed_check {
           } };
       };
       push @$rows, $row;
-      ++$count;
+      my $count = scalar(@$rows);
       $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
     $hiddens->{count} = scalar(@$rows);
@@ -848,7 +847,7 @@ sub fix_tests{
 
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
-        my @values = [];
+        my @values;
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }
