@@ -420,9 +420,6 @@ sub run_backup {
 
     if ($request->{backup_type} eq 'email') {
 
-
-
-
         my $mail = LedgerSMB::Mailer->new(
             from     => $LedgerSMB::Sysconfig::backup_email_from,
             to       => $request->{email},
@@ -763,7 +760,7 @@ sub _failed_check {
                    name => $column . "_$id",
                    id => $id,
                    options => $selectable_value,
-                   default_blank => 1,
+                   default_blank => ( 1 != @$selectable_value )
            } }
            : { input => {
                    name => $column . "_$id",
@@ -783,8 +780,10 @@ sub _failed_check {
     my $buttons = [
            { type => 'submit',
              name => 'action',
-            value => 'fix_tests',
-             text => $request->{_locale}->text('Save and Retry'),
+            value => $check->columns ? 'fix_tests' : 'cancel',
+             text => $request->{_locale}->text($check->columns
+                                                ? 'Save and Retry'
+                                                : 'Cancel'),
             class => 'submit' },
     ];
 
