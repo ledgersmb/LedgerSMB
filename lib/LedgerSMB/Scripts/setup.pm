@@ -842,13 +842,13 @@ sub fix_tests{
     else {
         my $setters =
             join(', ', map { $dbh->quote_identifier($_) . " = ?" } @edits);
-        my $query = "UPDATE $table SET $setters WHERE $where = ?";
+        $query = "UPDATE $table SET $setters WHERE $where = ?";
     }
     my $sth = $dbh->prepare($query);
 
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
-        my @values;
+        my @values = [];
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }
