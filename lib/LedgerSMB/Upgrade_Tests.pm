@@ -552,13 +552,18 @@ push @tests,__PACKAGE__->new(
 
     push @tests,__PACKAGE__->new(
         test_query => "select *
-                         from (select count(*) as id from business) as a
-                        where id=0",
+                         from (
+                           select distinct business_id as id
+                             from ( select business_id from customer
+                              union select business_id from vendor
+                           ) bi where business_id not in (
+                                select id from business)) as a
+                        where id <> 0",
         display_name => $locale->text('Empty businesses'),
         name => 'no_businesses',
         display_cols => ['description', 'discount'],
      instructions => $locale->text(
-                       'Contrary to SQL-Ledger, LedgerSMB requires businesses. Please make sure there is at least 1 business defined.'),
+                       'Undefined businesses. Please make sure business used by vendors and constomers are defined.'),
         columns => ['description', 'discount'],
         table => 'business',
         appname => 'sql-ledger',
@@ -571,19 +576,20 @@ push @tests,__PACKAGE__->new(
 push @tests, __PACKAGE__->new(
     test_query => "SELECT id, name, business_id
                      FROM vendor
-                    WHERE business_id is null
-                       OR business_id NOT IN (SELECT id
-                                              FROM business)
+                    WHERE business_id NOT IN (SELECT id
+                     FROM business)
+                      AND business_id <> 0
                  ORDER BY name",
     display_name => $locale->text('Vendor not in a business'),
     name => 'no_business_for_vendor',
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => $locale->text(
-                   'Contrary to SQL-ledger, LedgerSMB vendors must be assigned to a business. Please select the proper business from the list'),
-selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS id, id as value
+                   'LedgerSMB vendors must be assigned to a valid business. ' .
+                   'Please review the selection or select the proper business from the list'),
+selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
-                                        ORDER BY id" },
+                                        ORDER BY id"},
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -593,16 +599,16 @@ selectable_values => { business_id => "SELECT concat(description,' -- ',discount
 push @tests, __PACKAGE__->new(
     test_query => "SELECT id, name, business_id
                      FROM customer
-                    WHERE business_id is null
-                       OR business_id NOT IN (SELECT id
+                    WHERE business_id NOT IN (SELECT id
                                               FROM business)
+                      AND business_id <> 0
                  ORDER BY name",
     display_name => $locale->text('Customer not in a business'),
     name => 'no_business_for_customer',
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => $locale->text(
-                   'Contrary to SQL-ledger, LedgerSMB customers must be assigned to a business. ' .
+                   'LedgerSMB customers must be assigned to a valid business. ' .
                    'Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
@@ -964,6 +970,24 @@ push @tests, __PACKAGE__->new(
     appname => 'sql-ledger',
     min_version => '2.7',
     max_version => '3.0'
+    );
+
+    push @tests, __PACKAGE__->new(
+        test_query => "select ac.trans_id,ac.id,ac.memo, ac.amount,c.description,c.accno,c.link,ac.cleared
+                        from acc_trans ac
+                        join chart c on ac.chart_id=c.id
+                        where c.link not like '%paid'
+                        and ac.cleared is not null
+                        order by accno,transdate,id",
+      display_name => $locale->text('Reconciliations on non-bank accounts'),
+              name => 'invalid_cleared_dates',
+      display_cols => ['trans_id', 'id', 'memo', 'amount', 'description','accno', 'cleared'],
+     instructions => $locale->text(
+                       "There shouldn't be reconciliations on non-bank accounts. Please review the dates in the original application"),
+            table => 'acc_trans',
+          appname => 'sql-ledger',
+      min_version => '2.7',
+      max_version => '3.0'
     );
 
 push @tests, __PACKAGE__->new(

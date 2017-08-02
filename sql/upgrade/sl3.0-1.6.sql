@@ -70,6 +70,7 @@ UPDATE sl30.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 
 --Entity Credit Account
 
+UPDATE sl30.vendor SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
         cash_account_id, startdate, enddate, threshold, entity_class)
@@ -90,6 +91,7 @@ UPDATE sl30.vendor SET credit_id =
         WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
+UPDATE sl30.customer SET business_id = NULL WHERE business_id = 0;
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
         cash_account_id, startdate, enddate, threshold, entity_class)
