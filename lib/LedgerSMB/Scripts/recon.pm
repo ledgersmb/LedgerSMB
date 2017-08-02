@@ -455,8 +455,18 @@ sub pending {
     return $template->render_to_psgi();
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/recon.pl" };
+{
+    local ($!, $@) = (undef, undef);
+    my $do_ = 'scripts/custom/recon.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (recon.pm)\n\n" );
+            }
+        }
+    }
+};
 1;
 
 =back

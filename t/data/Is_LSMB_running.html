@@ -25,7 +25,7 @@
                 locale: '',
                 packages: [{"name":"lsmb","location":"../lsmb"}]
             };
-            var lsmbConfig = { "dateformat": 'yyyy-mm-dd' };
+            var lsmbConfig = { "dateformat": '' };
         </script>
         <script type="text/javascript" src="js/dojo/dojo.js"></script>
         <script type="text/javascript" src="js/lsmb/main.js"></script>
@@ -36,9 +36,17 @@
         
         <meta name="robots" content="noindex,nofollow" />
 </head>
-
 <body id="setup-login" class="lsmb claro">
-<div class="setupconsole">
+  <div class="setupconsole" style="position:relative;height:23em">
+    <div id="loading" style="z-index:100;position:absolute;top:0;left:0;width:100%;height:100%;background:white">
+      <img
+         style="display: block; margin: auto auto; font-family: "
+         src="js/dijit/icons/images/loadingAnimation.gif"
+         alt="If this text is showing, there's most likely a problem with the Dojo setup"
+         title="Loading ..."
+         width="20" height="20" />
+    </div>
+    <div style="z-index:90;position:absolute;top:0;left:0;width:calc(100% - 4em);height:calc(100% - 4em);padding:2em">
 <h2>Database Management Console</h2>
 <div class="listtop">Database administrator credentials</div>
 <form id="loginform"
@@ -78,5 +86,14 @@
 </div>
 </form>
 </div>
+</div>
 </body>
 </html>
+<script>
+  require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
+  function(dom, style, ready) {
+    ready(80, function() {
+  style.set(dom.byId('loading'), 'display', 'none');
+  });
+  });
+</script>

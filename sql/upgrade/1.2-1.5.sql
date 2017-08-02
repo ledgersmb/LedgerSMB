@@ -22,12 +22,23 @@ ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
 INSERT INTO business_unit (class_id, id, control_code, description)
      SELECT 1, id, role || id::text, description FROM lsmb12.department;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 1
    AND EXISTS (select 1 from lsmb12.department);
 
 
 --Accounts
+
+-- add unknown account links to the account links table as 'custom'
+
+INSERT INTO account_link_description(description, summary, custom)
+SELECT link, false, true
+  FROM (select distinct unnest(string_to_array(link,':')) as link
+          from lsmb12.chart) c
+ where not exists (select 1
+                     from account_link_description
+                    where description = c.link);
+
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
@@ -533,10 +544,18 @@ INSERT INTO business_unit (id,control_code, description, start_date, end_date,
        FROM lsmb12.project p
   LEFT JOIN lsmb12.customer c ON p.customer_id = c.id;
 UPDATE business_unit_class
-   SET active = t
+   SET active = true
  WHERE id = 2
    AND EXISTS (select 1 from lsmb12.project);
 
+
+INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber, notes)
+    SELECT  id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber, notes
+       FROM lsmb12.invoice;
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
             fx_transaction, memo, invoice_id, entry_id)
@@ -559,14 +578,6 @@ INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
      SELECT ac.entry_id, 2, ac.project_id + 1000
        FROM lsmb12.acc_trans ac
       WHERE ac.project_id IS NOT NULL;
-
-INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber, notes)
-    SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber, notes
-       FROM lsmb12.invoice;
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id

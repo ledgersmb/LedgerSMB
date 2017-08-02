@@ -14,10 +14,7 @@ use base qw(PGObject::Type::DateTime);
 use strict;
 use warnings;
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('date');
-
+__PACKAGE__->register(registry => 'default', types => ['date']);
 
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and

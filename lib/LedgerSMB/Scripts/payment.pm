@@ -1109,11 +1109,13 @@ if (!$request->{exrate}) {
 # LETS GET THE CUSTOMER/VENDOR INFORMATION
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
 # LETS GET THE DEPARTMENT INFO
-# WE HAVE TO SET $dbPayment->{department_id} in order to process
-if ($request->{department}) {
- $request->{department} =~ /^(\d+)--*/;
- $Payment->{department_id} = $1;
+
+if ($request->{department} and ( $request->{department} =~ /^(\d+)--*/ ) ) {
+        $Payment->{department_id} = $1;
+} else {
+        $Payment->{department_id} = undef;
 }
+
 #
 # We want to set a gl_description,
 # since we are using two tables there is no need to use doubled information,
@@ -1212,10 +1214,15 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
      $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
-     $request->{"overpayment_account_$i"} =~ /^(\d+)--*/;
-     my $id = $1;
-     $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/;
-     my $cashid = $1;
+
+     my $id;
+     if ( $request->{"overpayment_account_$i"} =~ /^(\d+)--*/) {
+          $id = $1;
+     }
+     my $cashid;
+     if ( $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/) {
+         $cashid = $1;
+     }
      push @op_amount, $request->{"overpayment_topay_$i"};
      push @op_cash_account_id, $cashid;
      push @op_source, $request->{"overpayment_source1_$i"}.' '.$request->{"overpayment_source2_$i"};
@@ -1598,15 +1605,16 @@ if (($Payment->{"new_entity_id"} != $Payment->{"entity_credit_id"})&& !$Payment-
 @overpayments = $Payment->get_available_overpayment_amount();
 
 for my $ref (0 .. $#overpayments) {
-    no warnings 'uninitialized';
-       push @ui_overpayments, {     id               =>  $overpayments[$ref]->{chart_id},
-                                    accno          =>  $overpayments[$ref]->{accno},
-                                    description    =>  $overpayments[$ref]->{description},
-                                    amount         =>  "$overpayments[$ref]->{movements}",
-                                    available      =>  "$overpayments[$ref]->{available}",
-                                    touse          =>  qq|$amount_to_be_used{"$overpayments[$ref]->{accno}"}|
-                            };
-       $ui_avble_subtotal += $overpayments[$ref]->{available};
+    my $overpay = $overpayments[$ref];
+    push @ui_overpayments, {
+            id          =>  $overpay->{chart_id},
+            accno       =>  $overpay->{accno},
+            description =>  $overpay->{description},
+            amount      =>  $overpay->{movements},
+            available   =>  $overpay->{available},
+            touse       =>  $amount_to_be_used{$overpay->{accno}},
+    };
+    $ui_avble_subtotal += $overpay->{available};
 }
 
 
@@ -1716,12 +1724,12 @@ while ($request->{"entity_id_$count"})
   #the $invoice_id_amount_to_pay hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice
   $invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} += $request->{"amount_$count"};
   if($invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} > $applied_due){
-    $request->{"warning"} .= "Warning\n"
+    $request->{"warning"} .= "Warning\n";
   }
 
   #The amount to be paid shouldn't be negative
   if ($request->{"amount_$count"} < 0){
-    $request->{"warning"} .= "Warning\n"
+    $request->{"warning"} .= "Warning\n";
   }
 
   #Is the amount to be paid null?, tell the user and he/she will be able to manage it
@@ -1894,7 +1902,17 @@ return use_overpayment($request);
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/payment.pl"};
+{
+    local ($!, $@) = (undef, undef);
+    my $do_ = 'scripts/custom/payment.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error(payment.pm)\n\n" );
+            }
+        }
+    }
+};
 1;
 

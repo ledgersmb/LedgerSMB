@@ -87,14 +87,8 @@ sub init_taxes {
 
         my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
         require $module;
-        $module = $ref->{taxmodulename};
-        $module =~ s/\//::/g;
-        my $tax;
-        {
-          no strict 'refs';
-          $tax = "LedgerSMB::Taxes::$module"->new(%$ref);
-        }
 
+        my $tax = "LedgerSMB::Taxes::$ref->{taxmodulename}"->new(%$ref);
         $tax->account($taxaccount);
         $tax->taxnumber( $ref->{'taxnumber'} );
         $tax->value( 0 );

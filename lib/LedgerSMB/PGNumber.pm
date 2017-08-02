@@ -4,7 +4,6 @@ LedgerSMB::PGNumber - Number handling and serialization to database
 
 =cut
 
-
 package LedgerSMB::PGNumber;
 # try using the GMP library for Math::BigFloat for speed
 use Math::BigFloat try => 'GMP';
@@ -13,10 +12,10 @@ use strict;
 use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
+use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 
-PGObject->register_type(pg_type => $_,
-                                  perl_class => __PACKAGE__)
-   for ('float4', 'float8', 'double precision', 'float', 'numeric');
+__PACKAGE__->register(registry => 'default',
+    types => [qw(float4 float8 float numeric), 'double precision']);
 
 
 =head1 SYNPOSIS
@@ -225,7 +224,7 @@ sub to_output {
     my $dplaces = $places;
     $places = 0 unless defined $places and ($places > 0);
     my $zfill = ($places > 0) ? 1 : 0;
-    $dplaces = 5 unless defined $dplaces;
+    $dplaces = DEFAULT_NUM_PREC  unless defined $dplaces;
     my $formatter = Number::Format->new(
         -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
         -decimal_point => $lsmb_formats->{$format}->{decimal_sep},

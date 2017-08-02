@@ -34,7 +34,7 @@ matrix:
           packages:
             - nginx postgresql-9.5-pgtap
       env:
-        - TEST_SAUCE=1
+        # - TEST_SAUCE=1
         - DOJO_BUILT=0
     - perl: '5.22'
       addons:
@@ -176,4 +176,17 @@ after_failure:
   # display the available resources
   - utils/diagnostics/t/01-system-resources.t
   # display the dmesg log. may give some hints about system related failures. eg: has the OOM killer triggered
+  - echo ===============================
+  - echo === dmesg                   ===
+  - echo ===============================
   - sudo dmesg
+  - echo ===============================
+  - echo === /tmp/plackup-access.log ===
+  - echo ===============================
+  - cat /tmp/plackup-access.log
+  - echo
+  - echo ===============================
+  - echo === /tmp/plackup-error.log ===
+  - echo ===============================
+  - cat /tmp/plackup-error.log
+  - echo

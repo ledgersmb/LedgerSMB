@@ -56,12 +56,13 @@ your software.
 
 package LedgerSMB::Setting;
 use LedgerSMB::App_State;
-use base qw(LedgerSMB::PGOld);
+use base qw(LedgerSMB::PGOld Exporter);
 use strict;
 use warnings;
 
 our $VERSION = '1.0.0';
 
+our @EXPORT_OK = qw( increment_process );
 
 sub get {
     my $self = shift;
@@ -89,7 +90,7 @@ sub increment {
                                              args => [$key]) ;
     my $value = $retval->{setting_increment};
 
-    my $var = _increment_process($value, $self, $myconfig);
+    my $var = increment_process($value, $self, $myconfig);
 
     $self->{value} = $var if $self->{key};
     return $var;
@@ -97,7 +98,7 @@ sub increment {
 
 # Increment processing routine, used by only related classes.
 #
-sub _increment_process{
+sub increment_process{
     my ($value, $self ) = @_;
 # check for and replace
 # <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of

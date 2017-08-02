@@ -1,7 +1,66 @@
 <?lsmb# HTML Snippet, for import only ?>
+<?lsmb
+   # Internal documentation for the DYNATABLE block
+
+   # The block generates a table, originally designed to move over all
+   # report generating code to a common framework; deduplicating the
+   # HTML/txt/csv/pdf table generation code as it was all over the place
+
+   # Note that the block is designed to be used both as a regular output
+   # table as well as an input table.  As a result it can be used with/as
+   # part of a form. When used with a form, the following auto-generated
+   # fields (not specified as input) are included in the submitted data:
+   #   - rowcount_<attributes.id>: total number of rows in body and footer
+   #   - row_<rownum>            : the row_id belonging to row <rownum>
+   # Other fields are mapped to their fieldnames:
+   #   [<attributes.input_prefix>_]<col_id>_<rownum>
+
+   # The block takes the following arguments:
+
+   #  - attributes   : a hash of attributes (specified below)
+   #  - columns      : an array of hashes specifying per-column attributes
+   #  - hide_header  : a boolean, used to suppress <thead>...</thead>
+   #  - tbody        : a hash of values to be used for the body (see below)
+   #  - tfoot        : a hash of values to be used for <tfoot>...</tfoot>
+
+   # the 'attributes' hash supports the following attributes:
+   #  - id           : the value for the table's "id" attribute
+   #  - class        : the (additional) css classes to be applied to the table
+   #  - width        : the value to be used for the table's "width" attribute
+   #  - order_url    : URL to be used to change the column sort order
+   #  - input_prefix : Prefix to be applied to all inputs on the table,
+   #                   allowing multiple tables in a single <form></form>
+
+   # the elements in the 'columns' array support these attributes:
+   #  - type         : can be any of 'input_text', 'href', 'hidden', 'checkbox'
+   #                   'radio', 'mirrored', 'text'
+   #  - col_id       : the internal identifier for the column
+   #  - class        : the (additional) css classes to be applied to the column
+   #  - data_dojo_type : Dojo type for the inputs in the column
+   #  - name         : the value presented in the table header for this column
+   #  - href_base    : the URL base to use for 'href' typed columns
+   #  - href_target  : value for the 'target' attribute of the 'a' tag
+
+   # the elements in the 'tbody' hash support these attributes:
+   #  - rows         : an array of hashes with the values for each column
+   #    - NOINPUT    : boolean suppressing inputs on this row for input columns
+   #    - html_class : the (additional) css classes to be applied to the row
+   #    - row_id     : value identifying the row (usually the primary key)
+   #    - ${col_id}  : value to be used for column with 'col_id' eq ${col_id}
+   #    - ${col_id}_href_suffix : the URL fragment to be appended to the
+   #                              href_base value specified by ${col_id}
+   #                              when that's an 'href' typed column
+
+   # the elements in the 'tfoot' hash support these attributes:
+   #  - rows         : an array of hashes with the values for each column
+   #  - col_types    : a hash of ${col_id} values, overriding the column's
+   #                   type, including 'spacer' as a supported type
+   #  - dojo_type    : overrides the column's ${data_dojo_type}
+   -?>
 <?lsmb BLOCK dynatable ?>
-<table id="<?lsmb attributes.id ?>" class="dynatable <?lsmb attributes.class ?>"
-width="<?lsmb attributes.width ?>">
+<table id="<?lsmb attributes.id ?>"
+       class="dynatable <?lsmb attributes.class ?>"
+       width="<?lsmb attributes.width ?>">
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>

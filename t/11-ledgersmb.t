@@ -57,23 +57,33 @@ SKIP: {
         skip 'Skipping call_procedure tests, no db specified', 5
                 if !defined $ENV{PGDATABASE};
         $lsmb = LedgerSMB->new();
-        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
+        my $pghost = "";
+        $pghost = ";host=" . $ENV{PGHOST}
+            if $ENV{PGHOST} && $ENV{PGHOST} ne 'localhost';
+        $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}$pghost",
                 undef, undef, {AutoCommit => 0 });
+        ok($lsmb->{dbh},"Connected to $ENV{PGDATABASE}");
         LedgerSMB::App_State::set_DBH($lsmb->{dbh});
         @r = $lsmb->call_procedure('procname' => 'character_length',
-                'args' => ['month'], 'schema'=>"pg_catalog");
+                'funcschema' => 'pg_catalog',
+                'args' => ['month']);
         is($#r, 0, 'call_procedure: correct return length (one row)');
         is($r[0]->{'character_length'}, 5,
                 'call_procedure: single arg, non-numeric return');
 
-        @r = $lsmb->call_procedure('procname' => 'trunc', 'args' => [57.1, 0], 'schema' => 'pg_catalog');
+        @r = $lsmb->call_procedure('procname' => 'trunc',
+                'funcschema' => 'pg_catalog',
+                'args' => [57.1, 0]);
         is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
                 'call_procedure: two args, numeric return');
 
-        @r = $lsmb->call_procedure('procname' => 'pi', 'args' => [], 'schema'=>'pg_catalog');
+        @r = $lsmb->call_procedure('procname' => 'pi',
+                'funcschema' => 'pg_catalog',
+                'args' => []);
         like($r[0]->{'pi'}, qr/^3.14/,
                 'call_procedure: empty arg list, non-numeric return');
-        @r = $lsmb->call_procedure('procname' => 'pi', 'schema'=>'pg_catalog');
+        @r = $lsmb->call_procedure('procname' => 'pi',
+                'funcschema' => 'pg_catalog');
         like($r[0]->{'pi'}, qr/^3.14/,
                 'call_procedure: no args, non-numeric return');
     $lsmb->{dbh}->rollback();
@@ -98,4 +108,3 @@ $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');
 is($lsmb->{peach_1}, 3, 'merge: Index 1, added peach as peach_1');
-

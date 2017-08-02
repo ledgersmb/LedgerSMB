@@ -356,7 +356,7 @@ sub load_modules {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
-        no warnings 'uninitialized';
+
         $self->run_file(
             file       => "$self->{source_dir}sql/modules/$mod",
             log_stdout => $args->{log}    || "${log}_stdout",

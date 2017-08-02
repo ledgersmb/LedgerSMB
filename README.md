@@ -63,7 +63,7 @@ setup:
       -v /var/lib/pg-container/data:/var/lib/postgresql/data \
       -e POSTGRES_PASSWORD=<your secure password> \
       -e PGDATA=/var/lib/postgresql/data/pgdata  postgres
- $ docker run -d --name lsmb --link lsmb-postgres ledgersmb/ledgersmb
+ $ docker run -d --name lsmb --link lsmb-postgres:postgres ledgersmb/ledgersmb
 ```
 
 The commands above automatically start the containers.
@@ -112,11 +112,14 @@ The following non-Perl (system) dependencies need to be in place for the
 on the [How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html)
 page on CPAN.
 
+ * cpanminus  This can be manually installed, or installed as a system package.
+   It may not be necessary to install cpanminus if you are only going to install from debian packages.
  * PostgreSQL client libraries
  * PostgreSQL server
  * DBD::Pg 3.4.2+ (so cpanm recognises that it won't need to compile it)  
    This package is called `libdbd-pg-perl` in Debian and `perl-DBD-Pg`
    in RedHat/Fedora
+ * make       This is used by cpan dependencies during thier build process
 
 Then, some of the features listed below have system requirements as well:
 
@@ -134,15 +137,27 @@ Then, some of the features listed below have system requirements as well:
 This section depends on [a working local::lib installation](https://ledgersmb.org/content/setting-perls-locallib-ledgersmb-why-and-how)
 as well as an installed `cpanm` executable. Both should be available from
 your distribution's package repository (Debian calls them `liblocal-lib-perl`
-and `cpanminus` respectively). `cpanm` depends on the `make` command being available.
+and `cpanminus` respectively). `cpanm` depends on the `make` and `gcc` commands being available.
+
+NOTE: gcc can be removed after all cpan dependencies are installed.
+      However, it may be necessary to reinstall it if additional modules are required during an upgrade
 
 To install the Perl module dependencies, run:
 
 ```sh
-
  $ cpanm --quiet --notest --with-feature=starman [other features] --installdeps .
 
 ```
+NOTE: Don't miss the "." at the end of the cpanm command!
+Don't forget to make sure the environment variable `PERL5LIB=/home/ledgersmb/perl5/lib/perl5` points at the running user's perl5 dir
+Also, NEVER run cpanm as root, it's best to run it as the user you intend to run ledgersmb as when possible.
+This installs the cpan modules in `~/perl5`
+If you can't run it as the final user, don't worry, just run it as any user (eg: johnny),
+and make sure the environment variable `PERL5LIB=/home/johhny/perl5/lib/perl5` points at jonny's perl5 dir
+
+Setting the `PERL5` environment variable is normally done by editing the initscript, or systemd service file.
+If you are running manually, then you will need to set and export `PERL5` before running starman/plack
+
 The following features may be selected by
 specifying ```--with-feature=<feature>```:
 

@@ -91,9 +91,9 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my ($request) = @_;
-    {
-      no warnings 'uninitialized';
-      $request->{parent} = undef if $request->{parent} == -1;
+
+    if ( defined $request->{parent} and $request->{parent} == -1 ) {
+        $request->{parent} = undef;
     }
     die $request->{_locale}->text('Please select a valid heading')
        if (defined $request->{heading}

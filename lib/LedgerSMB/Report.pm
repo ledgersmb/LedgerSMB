@@ -42,7 +42,7 @@ use Moose;
 use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 use LedgerSMB::Setting;
-
+use List::Util qw{ any };
 use LedgerSMB::Template;
 use LedgerSMB::App_State;
 
@@ -281,7 +281,7 @@ sub _render {
                        $srt_b = $srt_b->to_sort
                            if eval { $srt_b->can('to_sort') };
                    }
-                   no warnings 'numeric';
+                   no warnings 'numeric'; ## no critic ( ProhibitNoWarnings )
                    $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
       if $self->order_by;
@@ -443,7 +443,7 @@ sub process_bclasses {
     for my $bu (@{$ref->{business_units}}){
      if($bu->[1]){#avoid message:Use of uninitialized value in hash element
         push @{$ref->{$bu->[0]}}, $bu->[1]
-                 unless grep(/$bu->[1]/, @{$ref->{$bu->[0]}});
+                 unless any { /$bu->[1]/ } @{$ref->{$bu->[0]}};
      }
     }
     return;

@@ -77,7 +77,7 @@ sub content {
         local $! = undef;
         open my $fh, '<', $self->path or
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
-        binmode $fh, ':utf8';
+        binmode $fh, 'encoding(:UTF-8)';
         $self->{_content} = join '', <$fh>;
         close $fh or die "Cannot close file " .  $self->path();
     }
