@@ -695,7 +695,7 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ! _uprade_test_is_applicable($dbinfo, $check);
+        next if ! _upgrade_test_is_applicable($dbinfo, $check);
 
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
