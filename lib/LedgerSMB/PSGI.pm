@@ -188,7 +188,7 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-        local ($!, $@);
+        local ($!, $@) = (undef, undef);
         my $do_ = 'old/bin/old-handler.pl';
         unless ( do $do_ ) {
             if ($! or $@) {

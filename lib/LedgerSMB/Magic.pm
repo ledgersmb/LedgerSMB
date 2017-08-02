@@ -4,6 +4,7 @@ use warnings;
 
 use base 'Exporter';
 
+
 our @EXPORT_OK = qw(
     BC_AP
     BC_AR
@@ -15,6 +16,7 @@ our @EXPORT_OK = qw(
     BC_SALES_INVOICE
     BC_VENDOR_INVOICE
     CENTURY_START_YEAR
+    DEFAULT_NUM_PREC
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -227,6 +229,7 @@ use constant RC_PARTIAL_DISPOSAL => 4;
 =head3  LedgerSMB temporal constants
 
     CENTURY_START_YEAR  2000    Start of current century.
+    DEFAULT_NUM_PREC       5
     FUTURE_YEARS_LIMIT    20    When exceeded dates default to last century.
     SEC_PER_HOUR        3600
     MIN_PER_HOUR          60
@@ -241,6 +244,7 @@ use constant RC_PARTIAL_DISPOSAL => 4;
 =cut
 
 use constant CENTURY_START_YEAR => 2000;
+use constant DEFAULT_NUM_PREC   => 5;
 use constant FUTURE_YEARS_LIMIT => 20;
 use constant SEC_PER_HOUR       => 3600;
 use constant MIN_PER_HOUR       => 60;
@@ -288,6 +292,15 @@ use constant EDI_PATHNAME_MAX => 180;    # TODO possible fencepost error
 use constant HTTP_454 => 454;
 
 
+=head1  NOTE
+
+Numeric literal values that are not considered magical in LedgerSMB code.
+
+    -1  for use as a fat minus or array index
+     0
+     1
+     2
+     100 for use finding percentages or shifting monetary values
 
 =head1 BUGS
 

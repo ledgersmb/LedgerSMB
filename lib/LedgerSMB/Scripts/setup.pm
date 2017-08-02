@@ -204,7 +204,9 @@ sub login {
     _init_db($request);
     sanity_checks($database);
     $request->{login_name} = $version_info->{username};
-    if ($version_info->{status} eq 'does not exist'){
+    # $version_info->{status} isn't always defined by get_info, so useless undefined messages
+    # are generated.
+    if (defined $version_info->{status} && $version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
@@ -226,7 +228,7 @@ sub login {
         if (! defined $request->{next_action}) {
             $request->{message} = $request->{_locale}->text(
                 'Unknown database found.'
-                );
+                ) . $version_info->{full_version};
             $request->{operation} = $request->{_locale}->text('Cancel?');
             $request->{next_action} = 'cancel';
         } elsif ($request->{next_action} eq 'rebuild_modules') {
@@ -672,35 +674,31 @@ my %upgrade_run_step = (
     'ledgersmb/1.3' => 'run_upgrade'
     );
 
+sub _upgrade_test_is_applicable {
+    my ($dbinfo, $test) = @_;
+
+    return (($test->min_version le $dbinfo->{version})
+            && ($test->max_version ge $dbinfo->{version})
+            && ($test->appname eq $dbinfo->{appname}));
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
-    my @selectable_values = ();
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version gt $dbinfo->{version})
-            || ($check->max_version lt $dbinfo->{version})
-            || ($check->appname ne $dbinfo->{appname});
-        if ( $check->selectable_values ) {
-            my $sth = $request->{dbh}->prepare($check->selectable_values);
-            $sth->execute()
-                or die "Failed to execute pre-migration check " . $check->name;
-            while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-                push @selectable_values, { value => $row->{value},
-                                           text => $row->{id}
-                };
-            }
-        }
+        next if ! _upgrade_test_is_applicable($dbinfo, $check);
+
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
-             return _failed_check($request, $check, $sth, @selectable_values);
+             return _failed_check($request, $check, $sth);
         }
         $sth->finish();
     }
@@ -723,46 +721,64 @@ sub upgrade {
 }
 
 sub _failed_check {
-    my ($request, $check, $sth, @selectable_values) = @_;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI',
-            template => 'form-dynatable',
-            format => 'HTML',
-    );
-    my $rows = [];
-    my $count = 1;
-    my $hiddens = {table => $check->table,
-                    edit => $check->column,
-               id_column => $check->{id_column},
-                id_where => $check->{id_where},
-                database => $request->{database}};
-    my $header = {};
-    for (@{$check->display_cols}){
-        $header->{$_} = $_;
+    my ($request, $check, $sth) = @_;
+
+    my %selectable_values = ();
+    for my $column (@{$check->columns // []}) {
+        if ( $check->selectable_values
+             && $check->selectable_values->{$column} ) {
+            my $sth = $request->{dbh}->prepare(
+                $check->selectable_values->{$column});
+
+            $sth->execute()
+                or die "Failed to query drop-down data in " . $check->name;
+            $selectable_values{$column} = $sth->fetchall_arrayref({});
+        }
     }
+
+    my $hiddens = {
+       table => $check->table,
+   id_column => $check->{id_column},
+    id_where => $check->{id_where},
+      insert => $check->{insert},
+    database => $request->{database}
+    };
+    # We need to flatten the columns array, because dyna-form doesn't
+    # know about complex values for the 'hiddens' attribute
+    my $i = 1;
+    for my $edit (@{$check->columns // []}) {
+      $hiddens->{"edit_$i"} = $edit;
+      $i++;
+    }
+
+    my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        $row->{$check->column} =
-           ( $check->column && $check->selectable_values )
+      my $id = $row->{$check->{id_column}};
+      for my $column (@{$check->columns // []}) {
+        my $selectable_value = $selectable_values{$column};
+        $row->{$column} =
+           ( defined $selectable_value && @$selectable_value )
            ? { select => {
-                   name => $check->column . "_$row->{trans_id}",
-                   id => $row->{trans_id},
-                   options => \@selectable_values,
+                   name => $column . "_$id",
+                   id => $id,
+                   options => $selectable_value,
                    default_blank => 1,
            } }
            : { input => {
-                   name => $check->column . "_$row->{id}",
-                   value => $row->{$check->column} // "Missing " . $row->{$check->{id_column}},
+                   name => $column . "_$id",
+                   value => $row->{$column} // '',
                    type => 'text',
                    size => 15,
-           }};
-        push @$rows, $row;
-        $hiddens->{"id_$count"} = $row->{$check->id_column};
-        ++$count;
+          } };
+      };
+      push @$rows, $row;
+      my $count = scalar(@$rows);
+      $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
+    $hiddens->{count} = scalar(@$rows);
     $sth->finish();
 
-    $hiddens->{count} = $count;
-
+    my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -770,10 +786,17 @@ sub _failed_check {
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
+
+    my $template = LedgerSMB::Template->new(
+        path => 'UI',
+        template => 'form-dynatable',
+        format => 'HTML',
+    );
+
     return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
-           heading            => $header,
+           heading            => $heading,
            headers            => [$check->display_name, $check->instructions],
            columns            => $check->display_cols,
            rows               => $rows,
@@ -794,33 +817,45 @@ sub fix_tests{
     my ($request) = @_;
 
     _init_db($request);
-    $request->{dbh}->{AutoCommit} = 0;
-    my $locale = $request->{_locale};
-
-    my $table = $request->{dbh}->quote_identifier($request->{table});
-    my $edit = $request->{dbh}->quote_identifier($request->{edit});
+    my $dbh = $request->{dbh};
+    my $table = $dbh->quote_identifier($request->{table});
     my $where = $request->{id_where};
-    my $sthu = $request->{dbh}->prepare(
-        "UPDATE $table SET $edit = ? WHERE $where = ?"
-    );
-    my $sthi = $request->{dbh}->prepare(
-        "INSERT INTO table($edit,$where) VALUES (?, ?)"
-    );
+    $dbh->{AutoCommit} = 0;
+
+    my @edits;
+    my $i = 1;
+    while (defined $request->{"edit_$i"}) {
+      push @edits, $request->{"edit_$i"};
+      $i++;
+    }
+
+    my $query;
+    if ($request->{insert}) {
+        my $columns = join(', ', map { $dbh->quote_identifier($_) } @edits);
+        my $values = join(', ', map { '?' } @edits);
+        $query = "INSERT INTO $table ($columns) VALUES ($values)";
+    }
+    else {
+        my $setters =
+            join(', ', map { $dbh->quote_identifier($_) . " = ?" } @edits);
+        $query = "UPDATE $table SET $setters WHERE $where = ?";
+    }
+    my $sth = $dbh->prepare($query);
+
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
-        $sthu->execute($request->{"$request->{edit}_$id"}, $id) ||
-        $request->error($sthu->errstr);
-#        my $status = $sthu->execute($request->{"$request->{edit}_$id"}, $id);
-#        if ( $status == 0 ) {
-#            $sthi->execute($request->{"$request->{edit}_$id"}, $id) ||
-#            $request->error($sthi->errstr);
-#        } elsif ( $status < 0 ) {
-#            $request->error($sthu->errstr);
-#        }
+        my @values;
+        for my $edit (@edits) {
+          push @values, $request->{"${edit}_$id"};
+        }
+        push @values, $request->{"id_$count"}
+           if ! $request->{insert};
+
+        $sth->execute(@values) ||
+            $request->error($sth->errstr);
     }
-    $sthu->finish();
-    $sthi->finish();
-    $request->{dbh}->commit;
+    $sth->finish();
+    $dbh->commit;
     return upgrade($request);
 }
 
@@ -1108,7 +1143,7 @@ sub process_and_run_upgrade_script {
         template => $template,
         no_auto_output => 1,
         format_options => {extension => 'sql'},
-        output_file => 'upgrade',
+        output_file => 'upgrade.sql',
         format => 'TXT' );
     $dbtemplate->render($request);
     $database->run_file(

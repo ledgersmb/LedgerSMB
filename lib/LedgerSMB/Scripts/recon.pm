@@ -456,7 +456,7 @@ sub pending {
 }
 
 {
-    local ($!, $@);
+    local ($!, $@) = (undef, undef);
     my $do_ = 'scripts/custom/recon.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {

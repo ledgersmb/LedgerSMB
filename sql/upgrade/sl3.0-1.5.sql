@@ -620,23 +620,33 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 ALTER TABLE sl30.acc_trans ADD COLUMN lsmb_entry_id integer;
 
+INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber)
+    SELECT  id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
+            deliverydate, serialnumber
+       FROM sl30.invoice;
+
 update sl30.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
-INSERT INTO acc_trans
-(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction,
-        memo, approved, cleared_on, voucher_id)
-SELECT lsmb_entry_id, trans_id, (select id
+INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount, transdate,
+                       source, cleared, fx_transaction,
+                       memo, approved, cleared_on, voucher_id, invoice_id)
+ SELECT lsmb_entry_id, acc_trans.trans_id, (select id
                     from account
                    where accno = (select accno
                                     from sl30.chart
                                    where chart.id = acc_trans.chart_id)),
                                     amount, transdate, source,
         CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
-        memo, approved, cleared, vr_id
-        FROM sl30.acc_trans
-        WHERE chart_id IS NOT NULL AND trans_id IN (
-            SELECT id FROM transactions);
+        memo, approved, cleared, vr_id, invoice.id
+   FROM sl30.acc_trans
+LEFT JOIN sl30.invoice ON acc_trans.id = invoice.id
+                          AND acc_trans.trans_id = invoice.trans_id
+  WHERE chart_id IS NOT NULL
+    AND acc_trans.trans_id IN (SELECT id FROM transactions);
 
 -- Reconciliations
 -- Serially reuseable
@@ -764,14 +774,6 @@ SELECT ac.entry_id, 2, slac.project_id+1000
   JOIN sl30.acc_trans slac ON slac.lsmb_entry_id = ac.entry_id
  WHERE project_id > 0;
 
-
-INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber)
-    SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit,
-            deliverydate, serialnumber
-       FROM sl30.invoice;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id

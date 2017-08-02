@@ -21,6 +21,7 @@ use Text::CSV;
 use LedgerSMB::Template;
 use LedgerSMB::Form;
 use LedgerSMB::Setting;
+use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
 
 our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx', 'credit_fx', 'source', 'memo'],
@@ -53,13 +54,13 @@ sub _inventory_template_setup {
              FROM chart_get_ar_ap(?)"
         );
 
-    $sth->execute(1); # AP accounts
+    $sth->execute(EC_VENDOR);
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @{$request->{AP_accounts}}, $row;
     }
 
 
-    $sth->execute(2); # AR accounts
+    $sth->execute(EC_CUSTOMER);
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @{$request->{AR_accounts}}, $row;
     }
@@ -304,27 +305,30 @@ sub _process_chart {
 
     my ($request, $entries) = @_;
 
+    use constant ACCNO          => 0;
+    use constant DESCRIPTION    => 1;
+    use constant CHARTTYPE      => 2;
+    use constant CATEGORY       => 3;
+    use constant CONTRA         => 4;
+    use constant TAX            => 5;
+    use constant LINK           => 6;
+    use constant HEADING        => 7;
+    use constant GIFI_ACCNO     => 8;
+
     foreach my $entry (@$entries){
         my $account = LedgerSMB::DBObject::Account->new({base=>$request});
         my $settings = {
-            accno => $entry->[0],
-            description => $entry->[1],
-            charttype => $entry->[2],
-            category => $entry->[3],
-            contra => $entry->[4],
-            tax => $entry->[5],
+            accno => $entry->[ACCNO],
+            description => $entry->[DESCRIPTION],
+            charttype => $entry->[CHARTTYPE],
+            category => $entry->[CATEGORY],
+            contra => $entry->[CONTRA],
+            tax => $entry->[TAX],
 #            heading => $entry->[7],
-            gifi_accno => $entry->[8],
+            gifi_accno => $entry->[GIFI_ACCNO],
         };
-
-        if ($entry->[6] !~ /:/) {
-            $settings->{$entry->[6]} = 1
-                if ($entry->[6] ne "");
-        } else {
-            foreach my $link (split( /:/, $entry->[6])) {
-                $settings->{$link} = 1;
-            }
-        }
+        my @link = split /:/, $entry->[LINK];
+        @$settings{ @link } = ( (1) x @link);
 
         $account->merge($settings);
         $account->save();
@@ -528,7 +532,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 =cut
 
 {
-    local ($!, $@);
+    local ($!, $@) = ( undef, undef);
     my $do_ = 'scripts/custom/import_trans.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
