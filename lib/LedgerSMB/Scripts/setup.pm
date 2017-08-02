@@ -695,7 +695,7 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ! _uprade_test_is_applicable($dbinfo, $check);
+        next if ! _upgrade_test_is_applicable($dbinfo, $check);
 
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
@@ -755,7 +755,6 @@ sub _failed_check {
     }
 
     my $rows = [];
-    my $count = 0;
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
       my $id = $row->{$check->{id_column}};
       for my $column (@{$check->columns // []}) {
@@ -776,7 +775,7 @@ sub _failed_check {
           } };
       };
       push @$rows, $row;
-      ++$count;
+      my $count = scalar(@$rows);
       $hiddens->{"id_$count"} = $row->{$check->id_column};
     }
     $hiddens->{count} = scalar(@$rows);
@@ -842,7 +841,7 @@ sub fix_tests{
     else {
         my $setters =
             join(', ', map { $dbh->quote_identifier($_) . " = ?" } @edits);
-        my $query = "UPDATE $table SET $setters WHERE $where = ?";
+        $query = "UPDATE $table SET $setters WHERE $where = ?";
     }
     my $sth = $dbh->prepare($query);
 
