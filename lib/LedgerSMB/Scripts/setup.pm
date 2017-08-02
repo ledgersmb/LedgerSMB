@@ -780,7 +780,7 @@ sub _failed_check {
     my $buttons = [
            { type => 'submit',
              name => 'action',
-            value => 'fix_tests',
+            value => $check->columns ? 'fix_tests' : 'cancel',
              text => $request->{_locale}->text($check->columns
                                                 ? 'Save and Retry'
                                                 : 'Cancel'),
