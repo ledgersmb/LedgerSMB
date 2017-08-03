@@ -249,6 +249,10 @@ Released 2014-09-15
 Changelog for 1.4.42
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix ar/ap not searchable by part number (Chris T, #2926)
+* Round-trip fewer values over web requests during migration (Erik H)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.41
