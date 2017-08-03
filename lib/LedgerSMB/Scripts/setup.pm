@@ -648,7 +648,7 @@ sub _upgrade_test_is_applicable {
 sub _applicable_upgrade_tests {
     my $dbinfo = shift;
 
-    return grep { _upgrade_test_is_applicable($dbinfo, $_ }
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
                   LedgerSMB::Upgrade_Tests->get_tests;
 }
 
