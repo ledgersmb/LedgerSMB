@@ -663,7 +663,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (_applicatble_upgrade_tests($dbinfo))
+    for my $check (_applicatble_upgrade_tests($dbinfo)) {
         if ( $check->selectable_values ) {
             my $sth = $request->{dbh}->prepare($check->selectable_values);
             $sth->execute()
