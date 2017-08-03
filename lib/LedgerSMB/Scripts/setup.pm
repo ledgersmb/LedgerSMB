@@ -23,6 +23,7 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
+use Digest::MD5;
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
@@ -637,6 +638,21 @@ my %upgrade_run_step = (
     'ledgersmb/1.3' => 'run_upgrade'
     );
 
+sub _upgrade_test_is_applicable {
+    my ($dbinfo, $test) = @_;
+
+    return (($test->min_version le $dbinfo->{version})
+            && ($test->max_version ge $dbinfo->{version})
+            && ($test->appname eq $dbinfo->{appname}));
+}
+
+sub _applicable_upgrade_tests {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
+                  LedgerSMB::Upgrade_Tests->get_tests;
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -647,10 +663,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version gt $dbinfo->{version})
-            || ($check->max_version lt $dbinfo->{version})
-            || ($check->appname ne $dbinfo->{appname});
+    for my $check (_applicatble_upgrade_tests($dbinfo)) {
         if ( $check->selectable_values ) {
             my $sth = $request->{dbh}->prepare($check->selectable_values);
             $sth->execute()
@@ -661,6 +674,7 @@ sub upgrade {
                 };
             }
         }
+
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
         or die "Failed to execute pre-migration check " . $check->name;
@@ -695,13 +709,15 @@ sub _failed_check {
             template => 'form-dynatable',
             format => 'HTML',
     );
+
+    my $hiddens = {
+       check => $check->name,
+verify_check => md5_hex($check->test_query),
+    database => $request->{database}
+    };
+
     my $rows = [];
     my $count = 1;
-    my $hiddens = {table => $check->table,
-                    edit => $check->column,
-                           id_column => $check->{id_column},
-                            id_where => $check->{id_where},
-                database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
         $header->{$_} = $_;
@@ -760,13 +776,30 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    _init_db($request);
-    $request->{dbh}->{AutoCommit} = 0;
-    my $locale = $request->{_locale};
+    my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
+    my $dbh = $request->{dbh};
+    $dbh->{AutoCommit} = 0;
 
-    my $table = $request->{dbh}->quote_identifier($request->{table});
-    my $edit = $request->{dbh}->quote_identifier($request->{edit});
-        my $where = $request->{id_where};
+    my @fix_tests = grep { $_->name eq $request->{check} }
+        _applicable_upgrade_tests($dbinfo);
+
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found multiple applicable tests by the same identifier"
+        if @fix_tests > 1;
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found no applicable tests for given identifier"
+        if @fix_tests == 0;
+
+    my $check = shift @fix_tests;
+    die "Inconsistent state fixing date for $request->{check}: "
+        . "found different test by the same name while fixing data"
+        if $request->{verify_check} ne md5_hex($check->test_query);
+
+
+    my $table = $check->table;
+    my $where = $check->id_where;
+    my $edit = $check->column;
     my $sth = $request->{dbh}->prepare(
             "UPDATE $table SET $edit = ? where $where = ?"
     );
