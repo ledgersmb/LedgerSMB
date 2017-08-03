@@ -551,17 +551,19 @@ push @tests,__PACKAGE__->new(
 
 
     push @tests,__PACKAGE__->new(
-        test_query => "select *
-                         from (
-                           select distinct business_id as id
-                             from ( select business_id from customer
+        test_query => "select id, 'auto-business-' || id as description, 0 as discount from (
+                          select distinct id from (
+                                    select business_id as id from customer
                               union select business_id from vendor
-                           ) bi where business_id not in (
-                                select id from business)) as a
-                        where id <> 0",
+                          ) a
+                           where id is not null
+                             and id <> 0
+                             and id not in (select id from business)
+                        order by id
+                      ) a",
         display_name => $locale->text('Empty businesses'),
         name => 'no_businesses',
-        display_cols => ['description', 'discount'],
+        display_cols => ['id', 'description', 'discount'],
      instructions => $locale->text(
                        'Undefined businesses. Please make sure business used by vendors and constomers are defined.'),
         columns => ['description', 'discount'],
