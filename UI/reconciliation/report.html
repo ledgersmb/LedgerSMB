@@ -184,7 +184,7 @@ END ?>
                             id = id
                             msg = text('Clear date is [*,_1,day] in the future of after posting',0-row.days)
                         };
-                    ELSIF row.days > 60;
+                    ELSIF row.days > 150;
                         class='cleared-past';
                         element_data = {
                             id = id
