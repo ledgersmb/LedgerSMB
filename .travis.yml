@@ -41,7 +41,7 @@ matrix:
         - DB_TESTING=1
     - perl: '5.12'
       addons:
-        postgresql: "9.1"
+        postgresql: "9.2"
       env:
         - DB_TESTING=1
     - perl: '5.10'
