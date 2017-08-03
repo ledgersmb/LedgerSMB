@@ -17,9 +17,17 @@ env:
 
 matrix:
   include:
-    - perl: '5.24'
+    - perl: '5.26'
       addons:
         postgresql: "9.6"
+        apt:
+          packages:
+            - nginx
+      env:
+        - DB_TESTING=1
+    - perl: '5.24'
+      addons:
+        postgresql: "9.5"
         apt:
           packages:
             - nginx
