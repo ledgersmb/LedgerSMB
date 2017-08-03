@@ -1,6 +1,7 @@
 # run on container-based build:
 sudo: false
 language: perl
+dist: trusty
 matrix:
   include:
     - perl: '5.26'
