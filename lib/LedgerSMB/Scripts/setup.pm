@@ -24,19 +24,17 @@ use strict;
 use warnings;
 
 use Digest::MD5;
-use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
+use LedgerSMB::App_State;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
-
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $MINOR_VERSION = '1.5';
