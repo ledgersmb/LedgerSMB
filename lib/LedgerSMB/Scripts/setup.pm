@@ -23,18 +23,20 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
+use Digest::MD5;
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
+use Try::Tiny;
+
+use LedgerSMB::App_State;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use LedgerSMB::App_State;
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
-use Try::Tiny;
-use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
-use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
@@ -680,6 +682,13 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
+sub _applicable_upgrade_tests {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
+                  LedgerSMB::Upgrade_Tests->get_tests;
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -689,9 +698,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ! _upgrade_test_is_applicable($dbinfo, $check);
-
+    for my $check (_applicable_upgrade_tests($dbinfo)) {
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
@@ -735,19 +742,10 @@ sub _failed_check {
     }
 
     my $hiddens = {
-       table => $check->table,
-   id_column => $check->{id_column},
-    id_where => $check->{id_where},
-      insert => $check->{insert},
+       check => $check->name,
+verify_check => md5_hex($check->test_query),
     database => $request->{database}
     };
-    # We need to flatten the columns array, because dyna-form doesn't
-    # know about complex values for the 'hiddens' attribute
-    my $i = 1;
-    for my $edit (@{$check->columns // []}) {
-      $hiddens->{"edit_$i"} = $edit;
-      $i++;
-    }
 
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
@@ -816,18 +814,30 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    _init_db($request);
+    my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
     my $dbh = $request->{dbh};
-    my $table = $dbh->quote_identifier($request->{table});
-    my $where = $request->{id_where};
     $dbh->{AutoCommit} = 0;
 
-    my @edits;
-    my $i = 1;
-    while (defined $request->{"edit_$i"}) {
-      push @edits, $request->{"edit_$i"};
-      $i++;
-    }
+    my @fix_tests = grep { $_->name eq $request->{check} }
+        _applicable_upgrade_tests($dbinfo);
+
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found multiple applicable tests by the same identifier"
+        if @fix_tests > 1;
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found no applicable tests for given identifier"
+        if @fix_tests == 0;
+
+    my $check = shift @fix_tests;
+    die "Inconsistent state fixing date for $request->{check}: "
+        . "found different test by the same name while fixing data"
+        if $request->{verify_check} ne md5_hex($check->test_query);
+
+
+    my $table = $check->table;
+    my $where = $check->id_where;
+    my @edits = @{$check->columns};
 
     my $query;
     if ($request->{insert}) {
