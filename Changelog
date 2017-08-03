@@ -35,8 +35,11 @@ Released 2016-12-24
 Changelog for 1.5.10
 * Fix loading image URL taken from Dojo 1.12 (instead of 1.10) (Erik H)
 * Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
+* Round-trip fewer values over web requests during migration (Erik H)
+* Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
 
 Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
 
 
 Changelog for 1.5.9
