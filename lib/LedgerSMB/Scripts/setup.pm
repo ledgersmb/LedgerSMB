@@ -799,7 +799,7 @@ sub fix_tests{
 
     my $table = $check->table;
     my $where = $check->id_where;
-    my @edits = @{$check->columns};
+    my $edit = $check->column;
     my $sth = $request->{dbh}->prepare(
             "UPDATE $table SET $edit = ? where $where = ?"
     );
