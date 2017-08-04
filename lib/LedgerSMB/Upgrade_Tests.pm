@@ -16,6 +16,7 @@ package LedgerSMB::Upgrade_Tests;
 use strict;
 use warnings;
 use Moose;
+use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use LedgerSMB::App_State;
 
@@ -119,6 +120,18 @@ C<text> is the textual value to be presented in the UI.
 
 has selectable_values => (is => 'ro', isa => 'HashRef', required => 0);
 
+=item force_queries
+
+Array of queries to run on Force. Typically, they will be use to remove missing
+or invalid values from tables. For example, removing references to a missing
+business discount from the customer and vendor tables. The data is still good
+because the discount has been applied but we cannot find the actual values at
+the time.
+
+=cut
+
+has force_queries => (is => 'ro', isa => 'ArrayRef', required => 0);
+
 =item insert
 
 Insert data instead of update. This to set defaults on a very limited subset
@@ -173,12 +186,42 @@ has display_name => (is => 'ro', isa => 'Str', required => 1);
 
 Human readable instructions for test, localized.
 
-=back
-
 =cut
 
 has instructions => (is => 'ro', isa => 'Str', required => 1);
 
+=item buttons
+
+Enabled buttons
+
+=cut
+
+# Wouldn't an enum be better?
+subtype 'button'
+    => as 'Str'
+    => where { 'Save and Retry', 'Cancel', 'Force'};
+
+has buttons => (is => 'ro', isa => 'ArrayRef[button]',
+                default => sub {['Save and Retry', 'Cancel']},
+                required => 0);
+
+=item tooltips
+
+Tooltip for each button
+
+=cut
+
+has tooltips => (is => 'ro',
+    isa => 'HashRef[Str]',
+    default => sub {
+        my $locale = LedgerSMB::App_State::Locale;
+        return {
+            'Save and Retry' => $locale->text('Save the fixes provided and attempt to continue migration'),
+            'Cancel' => $locale->text('Cancel the migration')
+    }},
+    required => 0);
+
+=back
 
 sub _get_tests {
     my ($request) = @_;
@@ -549,7 +592,8 @@ push @tests,__PACKAGE__->new(
     max_version => '3.0'
     );
 
-
+##ok. Report, Give description about possible user action, impact and us clearing the data, then a Accept button to continue or Cancel if he thinks he can fix the original data.
+##And Cancel should probably become Cancel migration
     push @tests,__PACKAGE__->new(
         test_query => "select id, 'auto-business-' || id as description, 0 as discount from (
                           select distinct id from (
@@ -561,17 +605,31 @@ push @tests,__PACKAGE__->new(
                              and id not in (select id from business)
                         order by id
                       ) a",
-        display_name => $locale->text('Empty businesses'),
-        name => 'no_businesses',
-        display_cols => ['id', 'description', 'discount'],
-     instructions => $locale->text(
-                       'Undefined businesses. Please make sure business used by vendors and constomers are defined.'),
-        columns => ['description', 'discount'],
-        table => 'business',
-        appname => 'sql-ledger',
-        min_version => '2.7',
-        max_version => '3.0',
-        insert => 1
+      display_name => $locale->text('Empty businesses'),
+              name => 'no_businesses',
+      display_cols => ['id', 'description', 'discount'],
+      instructions => $locale->text(
+                       'Undefined businesses.
+Please make sure business used by vendors and constomers are defined.
+Hover on buttons to see their effects and impacts'),
+           columns => ['description', 'discount'],
+             table => 'business',
+           appname => 'sql-ledger',
+       min_version => '2.7',
+       max_version => '3.0',
+            insert => 1,
+            # They should be constrained
+           buttons => ['Save and Retry', 'Cancel', 'Force'],
+     force_queries => ['UPDATE customer SET business_id = NULL
+                         WHERE business_id NOT IN (
+                            SELECT id FROM business);
+                        UPDATE vendor SET business_id = NULL
+                         WHERE business_id NOT IN (
+                            SELECT id FROM business);'],
+          # I want to add to the tooltips already defaulted properly - YL
+          tooltips => +{
+            'Force' => $locale->text('This will remove the business references in vendor and customer tables')
+          }
         );
 
 
