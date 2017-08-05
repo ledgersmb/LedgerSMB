@@ -23,7 +23,7 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
-use Digest::MD5;
+use Digest::MD5 qw(md5_hex);
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
 use Try::Tiny;
