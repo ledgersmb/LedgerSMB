@@ -18,7 +18,7 @@ management tasks.
 #
 package LedgerSMB::Scripts::setup;
 
-use Digest::MD5;
+use Digest::MD5 qw(md5_hex);
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
