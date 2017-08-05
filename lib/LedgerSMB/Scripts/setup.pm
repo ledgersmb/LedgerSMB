@@ -23,7 +23,7 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
-use Digest::MD5;
+use Digest::MD5 qw(md5_hex);
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
