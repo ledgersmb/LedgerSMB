@@ -148,10 +148,7 @@ sub menuitems_json {
     if ( $method eq 'GET' ) {
 
         #TODO: Localize Menus here before sending to client
-        if ( defined($request->{id}) && $request->{id} ne "" ) {
-            my ($item) = $menu->generate_item;
-            return $request->to_json( $item );
-        } elsif ( defined($request->{parent_id}) && $request->{parent_id} ne "" ) {
+        if ( defined($request->{parent_id}) && $request->{parent_id} ne "" ) {
             $menu->generate_section;
         } else {
             $menu->generate(1); # Keep the root item
