@@ -86,8 +86,6 @@ sub will_expire_soon {
 sub __generate {
     my ($self) = shift @_;
 
-    shift @{$self->{menu_items}};
-
     for my $attribute (@{$self->{menu_items}}){
         for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
