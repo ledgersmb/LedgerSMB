@@ -16,28 +16,6 @@
         <div id="open" style='display:none'><?lsmb open ?></div>
         <hr>
 
-        <div id="top_menu"></div>
-        <ul id="menuTree_menu" data-dojo-type="lsmb/menus/MenuRestStore"
-            data-dojo-props='style:"display: none;"'>
-            <li data-dojo-type="dijit/MenuItem">
-                <script type="dojo/connect">
-                    var menu = dijit.byId("menuTree_menu");
-                    // when we right-click anywhere on the tree, make sure we open the menu
-                    menu.bindDomNode(this.domNode);
-
-                    dojo.connect(menu, "_openMyself", this, function(e){
-                        // get a hold of, and log out, the tree node that was the source of this open event
-                        var tn = dijit.getEnclosingWidget(e.target);
-                        console.debug(tn);
-
-                        // now inspect the data store item that backs the tree node:
-                        console.debug(tn.item);
-
-                        // contrived condition: if this tree node doesn't have any children, disable all of the menu items
-                        menu.getChildren().forEach(function(i){ i.set('disabled', !tn.item.children); });
-
-                        // IMPLEMENT CUSTOM MENU BEHAVIOR HERE
-                    });
-                </script>
-            </li>
-        </ul>
+        <div id="top_menu"
+             data-dojo-type="lsmb/menus/MenuRestStore">
+        </div>

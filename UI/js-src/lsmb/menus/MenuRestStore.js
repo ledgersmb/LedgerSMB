@@ -2,17 +2,12 @@ define(["dojo/_base/declare",
     "dojo/store/JsonRest", "dojo/store/Observable",
     "dojo/store/Memory", "lsmb/menus/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel",
-    "dijit/Menu",
     "dojo/when", "dojo/dom"
 ], function(declare, JsonRest, Observable,
     Memory, Cache,
     Tree, ObjectStoreModel,
-    Menu,
     when, dom
 ){
-  return declare(
-    "lsmb/menus/MenuRestStore", [Menu], {
-    postCreate: function() {
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
         var restStore = new JsonRest({
@@ -77,7 +72,7 @@ define(["dojo/_base/declare",
             }
         });
 
-        var tree = new Tree({
+    return declare("lsmb/menus/MenuRestStore", [Tree], {
             model: model,
             persist: false,
             autoExpand: false,
@@ -89,12 +84,6 @@ define(["dojo/_base/declare",
             onClick: function(item){
                 location.hash = item.url;
             }
-        }, 'top_menu'); // make sure you have a target HTML element with this id
-        tree.startup();
-        var menu = new Menu({
-            targetNodeIds: ['top_menu'],
         });
-        return menu;
-    }
- });
 });
+
