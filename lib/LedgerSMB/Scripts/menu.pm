@@ -145,17 +145,13 @@ sub menuitems_json {
     my $method = $request->{_auth}->{env}->{REQUEST_METHOD};
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
 
-    if ( $method eq 'GET' ) {
-
-        #TODO: Localize Menus here before sending to client
-        if ( defined($request->{parent_id}) && $request->{parent_id} ne "" ) {
-            $menu->generate_section;
-        } else {
-            $menu->generate(1); # Keep the root item
-        }
-        return $request->to_json( [@{$menu->{menu_items}}] );
+    #TODO: Localize Menus here before sending to client
+    if ( defined($request->{parent_id}) && $request->{parent_id} ne "" ) {
+        $menu->generate_section;
+    } else {
+        $menu->generate(1); # Keep the root item
     }
-    return [400, [], []];
+    return $request->to_json( [@{$menu->{menu_items}}] );
 }
 
 =pod
