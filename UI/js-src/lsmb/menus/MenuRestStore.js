@@ -12,10 +12,7 @@ define(["dojo/_base/declare",
         // to query the children of a node
         var restStore = new JsonRest({
             target:      "menu.pl?action=menuitems_json",
-            idProperty: "id",
-            _getTarget: function(id){
-                return this.target;
-            },
+            idProperty: "id"
         });
         var memoryStore = new Memory({idProperty: "id"});
         var store = new Cache(restStore, memoryStore);
