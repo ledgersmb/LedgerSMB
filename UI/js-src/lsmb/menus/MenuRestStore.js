@@ -2,13 +2,13 @@ define(["dojo/_base/declare",
     "dojo/store/JsonRest", "dojo/store/Observable",
     "dojo/store/Memory", "lsmb/menus/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel",
-    "dijit/Menu", "dijit/MenuSeparator", "dijit/PopupMenuItem",
-    "dojo/when", "dojo/dom", "dojo/ready"
+    "dijit/Menu",
+    "dojo/when", "dojo/dom"
 ], function(declare, JsonRest, Observable,
     Memory, Cache,
     Tree, ObjectStoreModel,
-    Menu, MenuSeparator, PopupMenuItem,
-    when, dom, ready
+    Menu,
+    when, dom
 ){
   return declare(
     "lsmb/menus/MenuRestStore", [Menu], {
