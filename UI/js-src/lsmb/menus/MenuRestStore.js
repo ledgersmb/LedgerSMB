@@ -1,8 +1,9 @@
 define(["dojo/_base/declare",
+        "dojo/_base/array",
     "dojo/store/JsonRest", "dojo/store/Observable",
     "dojo/store/Memory", "lsmb/menus/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel"
-], function(declare, JsonRest, Observable,
+       ], function(declare, array, JsonRest, Observable,
     Memory, Cache,
     Tree, ObjectStoreModel
 ){
@@ -48,9 +49,16 @@ define(["dojo/_base/declare",
                     url += item.module + "?";
                     url += item.args.join("&");
                 }
-                url += ('New Window' == item.label) ? "&target='new'"
-                    : "";
-                location.hash = url;
+                if ( array.some( item.args,
+                                 function (q) {
+                                     return ("new=1" == q);
+                                 }) ) {
+                    // Simulate a target="_blank" attribute on an A tag
+                    window.open(location.origin + location.pathname + location.search + '#' + url);
+                }
+                else {
+                    location.hash = url;
+                }
             }
         });
 });
