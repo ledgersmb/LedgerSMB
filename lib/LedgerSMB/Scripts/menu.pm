@@ -150,7 +150,7 @@ sub menuitems_json {
     $_->{label} = $locale->maketext($_->{label})
         for (@{$menu->{menu_items}});
 
-    return $request->to_json( [@{$menu->{menu_items}}] );
+    return $request->to_json( $menu->{menu_items} );
 }
 
 =pod
