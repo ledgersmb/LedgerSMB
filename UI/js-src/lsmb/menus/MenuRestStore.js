@@ -49,7 +49,6 @@ define(["dojo/_base/declare",
                     url += item.args.join("&");
                 }
                 url += ('New Window' == item.label) ? "&target='new'"
-                    : ('login.pl' == item.module)  ? "&target='_top'"
                     : "";
                 location.hash = url;
             }
