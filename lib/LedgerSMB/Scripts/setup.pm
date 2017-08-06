@@ -767,20 +767,15 @@ verify_check => md5_hex($check->test_query),
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my %buttons = map { $_ => 1 } @{$check->buttons};
-    my %tooltips;
-    while ( my ($key, $value) = each $check->tooltips ) {
-      $tooltips{$key} = $request->{_locale}->text($value);
-    }
     my $buttons;
     push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'fix_tests',
           tooltip => { id => 'action-fix-tests',
-                       msg => $tooltips{'Save and Retry'},
-                       position => (qw/above below after before/)
+                       msg => $request->{_locale}->text($check->{tooltips}{'Save and Retry'}),
+                       position => 'above'
                      },
-             text => $request->{_locale}->text('Save and Retry'),
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
         if $check->columns;
@@ -789,8 +784,8 @@ verify_check => md5_hex($check->test_query),
              name => 'action',
             value => 'cancel',
           tooltip => { id => 'action-cancel',
-                       msg => $tooltips{'Cancel'},
-                       position => (qw/above below after before/)
+                       msg => $request->{_locale}->text($check->{tooltips}{'Cancel'}),
+                       position => 'above'
                      },
              text => $request->{_locale}->text('Cancel'),
             class => 'submit' }
@@ -800,8 +795,8 @@ verify_check => md5_hex($check->test_query),
              name => 'action',
             value => 'force',
           tooltip => { id => 'action-force',
-                       msg => $tooltips{'Force'},
-                       position => (qw/above below after before/)
+                       msg => $request->{_locale}->text($check->{tooltips}{'Force'}),
+                       position => 'above'
                      },
              text => $request->{_locale}->text('Force'),
             class => 'submit' }
@@ -867,7 +862,7 @@ sub fix_tests{
 
     my $query;
     if ($check->{insert}) {
-        my @id = $id_displayed ? $request->{id_column} : ();
+        my @id = $id_displayed ? $check->{id_column} : ();
         push @id,@edits;
         my $columns = join(', ', map { $dbh->quote_identifier($_) } @id);
         my $values = join(', ', map { '?' } @id);

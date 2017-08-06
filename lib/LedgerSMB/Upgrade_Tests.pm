@@ -200,7 +200,8 @@ Enabled buttons
 
 subtype 'button'
     => as 'Str'
-    => where { 1 or grep( /^$_$/, ['Save and Retry', 'Cancel', 'Force'] )};
+    => where { $_ =~ /Save and Retry|Cancel|Force/ }
+    => message { "Invalid button '$_'" };
 
 has buttons => (is => 'ro', isa => 'ArrayRef[button]',
                 default => sub {['Save and Retry', 'Cancel']},
@@ -594,8 +595,6 @@ push @tests,__PACKAGE__->new(
     max_version => '3.0'
     );
 
-##ok. Report, Give description about possible user action, impact and us clearing the data, then a Accept button to continue or Cancel if he thinks he can fix the original data.
-##And Cancel should probably become Cancel migration
     push @tests,__PACKAGE__->new(
         test_query => "select id, 'auto-business-' || id as description, 0 as discount from (
                           select distinct id from (
@@ -682,29 +681,6 @@ selectable_values => { business_id => "SELECT concat(description,' -- ',discount
     min_version => '2.7',
     max_version => '3.0'
     );
-
-    push @tests,__PACKAGE__->new(
-        test_query => "select *
-                         from (
-                           select distinct business_id as id
-                             from ( select business_id from customer
-                              union select business_id from vendor
-                           ) bi where business_id not in (
-                                select id from business)) as a
-                        where id <> 0",
-        display_name => marktext('Empty businesses'),
-        name => 'no_businesses',
-        display_cols => ['description', 'discount'],
-     instructions => marktext(
-                       'Undefined businesses. Please make sure business used by vendors and constomers are defined.'),
-        columns => ['description', 'discount'],
-        table => 'business',
-        appname => 'sql-ledger',
-        min_version => '2.7',
-        max_version => '3.0',
-        insert => 1
-        );
-
 
 push @tests, __PACKAGE__->new(
     test_query => "SELECT id, name, business_id
