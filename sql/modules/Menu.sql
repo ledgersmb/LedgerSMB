@@ -12,16 +12,13 @@ CREATE TYPE menu_item AS (
    label varchar,
    path varchar,
    parent int,
-   args text[],
-   children int[]
+   args text[]
 );
 
 
 
 CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS
 $$
-        WITH t (position,id,level,label,path,parent,to_args)
-        AS (
                WITH RECURSIVE tree (path, id, parent, level, positions)
                                AS (select id::text as path, id, parent,
                                            0 as level, position::text
@@ -38,7 +35,7 @@ $$
                 FROM tree c
                 JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
-               WHERE n.id=0 OR n.id IN (select node_id
+               WHERE n.id IN (select node_id
                                 FROM menu_acl acl
                           LEFT JOIN pg_roles pr on pr.rolname = acl.role_name
                                WHERE CASE WHEN role_name
@@ -83,14 +80,7 @@ $$
                                            like c.path::text || ',%')
             GROUP BY n.position, n.id, c.level, n.label, c.path, c.positions,
                      n.parent
-            ORDER BY string_to_array(c.positions, ',')::int[])
-        SELECT t.*, ch.children from t
-        LEFT JOIN (
-            SELECT parent, level, array_agg(id) as children
-            FROM t
-            GROUP BY parent,level
-        ) AS ch ON t.id = ch.parent
-
+            ORDER BY string_to_array(c.positions, ',')::int[]
 $$ language sql;
 
 COMMENT ON FUNCTION menu_generate() IS
