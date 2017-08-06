@@ -34,6 +34,8 @@ sub escape {
     return undef unless defined $vars;
     #$vars = encode_entities($vars);
     $vars = escape_html($vars);
+    #Allow back only a few decorations.
+    $vars =~ s~&lt;(/?[biu]|br)&gt;~<$1>~g;
     return $vars;
 }
 
