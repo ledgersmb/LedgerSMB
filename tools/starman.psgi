@@ -6,6 +6,8 @@ BEGIN {
 
 package LedgerSMB::FCGI;
 
+no lib '.';
+
 use FindBin;
 use lib $FindBin::Bin . '/..'; # required for 'old code'-"require"s
 use lib $FindBin::Bin . '/../lib';
