@@ -34,7 +34,7 @@ define(["dojo/_base/declare",
             }
         });
 
-    return declare("lsmb/menus/MenuRestStore", [Tree], {
+    return declare("lsmb/menus/Tree", [Tree], {
             model: model,
             persist: false,
             autoExpand: false,
