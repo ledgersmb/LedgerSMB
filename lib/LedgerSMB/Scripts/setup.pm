@@ -767,14 +767,19 @@ verify_check => md5_hex($check->test_query),
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
     my %buttons = map { $_ => 1 } @{$check->buttons};
+    my %tooltips;
+    while ( my ($key, $value) = each $check->tooltips ) {
+      $tooltips{$key} = $request->{_locale}->text($value);
+    }
     my $buttons;
     push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'fix_tests',
           tooltip => { id => 'action-fix-tests',
-                       position => qw/above below after before/,
-                       msg => $check->{tooltips}{'Save and Retry'}},
+                       msg => $tooltips{'Save and Retry'},
+                       position => (qw/above below after before/)
+                     },
              text => $request->{_locale}->text('Save and Retry'),
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
@@ -784,18 +789,20 @@ verify_check => md5_hex($check->test_query),
              name => 'action',
             value => 'cancel',
           tooltip => { id => 'action-cancel',
-                       position => qw/above below after before/,
-                       msg => $check->{tooltips}{'Cancel'}},
+                       msg => $tooltips{'Cancel'},
+                       position => (qw/above below after before/)
+                     },
              text => $request->{_locale}->text('Cancel'),
             class => 'submit' }
-    if $buttons{Cancel} or !$check->columns;
+    if $buttons{Cancel} or scalar($check->columns) == 0;
     push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'force',
           tooltip => { id => 'action-force',
-                       position => qw/above below after before/,
-                       msg => $check->{tooltips}{'Force'}},
+                       msg => $tooltips{'Force'},
+                       position => (qw/above below after before/)
+                     },
              text => $request->{_locale}->text('Force'),
             class => 'submit' }
     if $buttons{Force} && $check->{force_queries};
@@ -809,7 +816,8 @@ verify_check => md5_hex($check->test_query),
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $heading,
-           headers            => [$check->display_name, $check->instructions],
+           headers            => [$request->{_locale}->text($check->display_name),
+                                  $request->{_locale}->text($check->instructions)],
            columns            => $check->display_cols,
            rows               => $rows,
            hiddens            => $hiddens,
