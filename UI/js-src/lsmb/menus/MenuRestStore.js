@@ -27,6 +27,7 @@ define(["dojo/_base/declare",
         // create model to interface Tree to store
         var model = new ObjectStoreModel({
             store: store,
+            labelAttr: 'label',
             // Utility routines
             mayHaveChildren: function(object){
                 // if true, we might be missing the data, false and nothing should be done
@@ -65,10 +66,6 @@ define(["dojo/_base/declare",
             getRoot: function(onItem, onError){
                 // get the root object, we will do a get() and callback the result
                 this.store.get('0').then(onItem, onError);
-            },
-            getLabel: function(object){
-                // just get the name (note some models makes use of 'labelAttr' as opposed to simply returning the key 'name')
-                return object.label;
             }
         });
 
