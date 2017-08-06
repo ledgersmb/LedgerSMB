@@ -15,7 +15,6 @@ define(["dojo/_base/declare",
         });
         var memoryStore = new Memory({idProperty: "id"});
         var store = new Cache(restStore, memoryStore);
-        // Overwrite the standard getter
 
         // give store Observable interface so Tree can track updates
         store = new Observable(store);
@@ -26,6 +25,9 @@ define(["dojo/_base/declare",
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
+                // Note that this *only* works because we implemented
+                // our own cache which stores the full returned array
+                // on 'get(0)'
                 onComplete(memoryStore.query({parent: object.id}));
              },
             getRoot: function(onItem, onError){
