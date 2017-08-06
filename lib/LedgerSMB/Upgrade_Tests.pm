@@ -632,7 +632,7 @@ Hover on buttons to see their effects and impacts'),
           tooltips => {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
             'Cancel' => marktext('Cancel the migration'),
-            'Force' => marktext('This will remove the business references in vendor and customer tables')
+            'Force' => marktext('This will <b>remove</b> the business references in <u>vendor</u> and <u>customer</u> tables')
           }
         );
 
