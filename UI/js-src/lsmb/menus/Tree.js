@@ -1,10 +1,9 @@
 define(["dojo/_base/declare",
         "dojo/_base/array",
-        "dojo/when",
     "dojo/store/JsonRest", "dojo/store/Observable",
     "dojo/store/Memory", "dojo/store/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel"
-       ], function(declare, array, when, JsonRest, Observable,
+       ], function(declare, array, JsonRest, Observable,
     Memory, Cache,
     Tree, ObjectStoreModel
 ){
