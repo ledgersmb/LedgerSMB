@@ -44,6 +44,7 @@
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
 1.5/issue-2278-modify-acc_trans-index.sql
 1.5/template_menu3.sql
+1.5/template_menu4.sql
 #1.6 changes
 1.6/drop_chart.sql
 1.6/drop_arap_cols.sql

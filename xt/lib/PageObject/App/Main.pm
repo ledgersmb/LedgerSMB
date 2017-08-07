@@ -54,7 +54,7 @@ sub _build_content {
         unless scalar(@found) == 1;
 
     my $found = shift @found;
-    die "the immediate child node of #maindiv isn't recognised as a PageObject"
+    die "the immediate child node of #maindiv isn't recognised as a PageObject but as a " . ref $found
         unless $found->isa("PageObject");
 
     return $found;

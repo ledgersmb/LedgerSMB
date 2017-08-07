@@ -76,6 +76,7 @@ my %screens = (
     'Purchase order search' => 'PageObject::App::Search::Order',
     'Sales order entry' => 'PageObject::App::Orders::Sales',
     'Purchase order entry' => 'PageObject::App::Orders::Purchase',
+    'generate balance sheet' => 'PageObject::App::Report::Filters::BalanceSheet',
     'generate sales order' => 'PageObject::App::Search::Order',
     'generate purchase order' => 'PageObject::App::Search::Order',
     'combine sales order' => 'PageObject::App::Search::Order',
@@ -90,6 +91,11 @@ my %screens = (
     'overhead entry' => 'PageObject::App::Parts::Overhead',
     'system defaults' => 'PageObject::App::System::Defaults',
     'system taxes' => 'PageObject::App::System::Taxes',
+    'year-end' => ' PageObject::App::Closing',
+    'Enter Inventory' => ' PageObject::App::Parts::AdjustSetup',
+    'search for goods & services' => ' PageObject::App::Search::GoodsServices',
+    'balance sheet filter' => ' PageObject::App::Report::Filters::BalanceSheet',
+    'unapproved inventory adjustments search screen' => ' PageObject::App::Parts::AdjustSearchUnapproved',
     );
 
 Then qr/I should see the (.*) screen/, sub {

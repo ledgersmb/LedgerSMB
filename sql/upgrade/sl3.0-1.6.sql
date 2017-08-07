@@ -677,7 +677,7 @@ WHERE cr.id = cr1.id;
 UPDATE cr_report SET submitted = false
 WHERE id IN (
     SELECT DISTINCT report_id FROM cr_report_line
-    WHERE clear_time - post_date > 60
+    WHERE clear_time - post_date > 150
 );
 -- Approve valid reports.
 UPDATE cr_report SET approved = true

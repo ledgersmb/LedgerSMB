@@ -47,7 +47,17 @@ my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($d
 closedir $dh;
 
 for (@pluginmods){
-  do "lib/LedgerSMB/Entity/Plugins/$_";
+    local $! = undef;
+    local $@ = undef;
+    my $do_ = "lib/LedgerSMB/Entity/Plugins/$_";
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die ( "Status: 500 Internal server error (contact.pm)\n\n" );
+            }
+        }
+    }
 }
 
 
@@ -279,7 +289,7 @@ sub _main_screen {
     }
 
     my @location_class_list =
-       grep { $_->{id} < 4 }
+       grep { $_->{class} =~ m/^(?:Billing|Sales|Shipping)$/ }
             LedgerSMB->call_procedure(funcname => 'location_list_class');
 
     my @business_types =

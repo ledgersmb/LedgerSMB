@@ -20,7 +20,7 @@ To save a sequence:
 =cut
 
 package LedgerSMB::Setting::Sequence;
-use LedgerSMB::Setting;
+use LedgerSMB::Setting qw( increment_process );
 use Carp;
 use Moose;
 use namespace::autoclean;
@@ -173,7 +173,7 @@ sub increment {
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'sequence__increment',
                                           args => [$label]);
     my ($value) = values %$ref;
-    return LedgerSMB::Setting::_increment_process($value, $vars);
+    return increment_process($value, $vars);
 
 }
 

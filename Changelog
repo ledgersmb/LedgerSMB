@@ -32,6 +32,16 @@ Nick P is Nick Prater
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.10
+* Fix loading image URL taken from Dojo 1.12 (instead of 1.10) (Erik H)
+* Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
+* Round-trip fewer values over web requests during migration (Erik H)
+* Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
+
+Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+
+
 Changelog for 1.5.9
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix inventory activity report drill down over-inclusive (Chris T, #2926)
@@ -41,9 +51,21 @@ Changelog for 1.5.9
 * Show an error when page assets (Dojo) are missing (Erik H)
 * Fix new welcome page being referred to by absolute path (Erik H, #2994)
 * Fix 'Not an ARRAY reference' error in recurring AP processing (Erik H, #2973)
+* Fix recurring AP invoices posted but 'next date' unchanged (Erik H, #3019)
+* Fix the fix for '.' missing in @INC (Erik H)
+* Add lighttpd example config (Yves L)
+* Fix regression in setup.pl with LedgerSMB 1.2 or SQL Ledger db (Yves L)
+* Fix error when adding customer-specific price to customer (Erik H, #2643)
+* Fix can't edit sales & purchase quotation through web UI (Erik H, #2617)
+* Fix string match operator typo in company searches (Erik H)
+* Fix LedgerSMB 1.2->1.5 migration script syntax errors (Erik H)
+* Add migration non-standard (gl) 'account links' for 1.2->1.5 (Erik H)
+* When including code with 'do', don't silently skip errors (David G, #3020)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+Yves L is Yves Lavoie
+David G is David Godfrey
 
 
 Changelog for 1.5.8
@@ -230,6 +252,10 @@ Released 2014-09-15
 Changelog for 1.4.42
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix ar/ap not searchable by part number (Chris T, #2926)
+* Round-trip fewer values over web requests during migration (Erik H)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.41

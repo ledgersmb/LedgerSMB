@@ -1729,12 +1729,12 @@ while ($request->{"entity_id_$count"})
   #the $invoice_id_amount_to_pay hash will keep track of the amount to be paid of an specific invoice_id, this amount could not be more than the due of that invoice
   $invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} += $request->{"amount_$count"};
   if($invoice_id_amount_to_pay{qq|$request->{"invoice_id_$count"}|} > $applied_due){
-    $request->{"warning"} .= "Warning\n"
+    $request->{"warning"} .= "Warning\n";
   }
 
   #The amount to be paid shouldn't be negative
   if ($request->{"amount_$count"} < 0){
-    $request->{"warning"} .= "Warning\n"
+    $request->{"warning"} .= "Warning\n";
   }
 
   #Is the amount to be paid null?, tell the user and he/she will be able to manage it
@@ -1907,7 +1907,17 @@ return use_overpayment($request);
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/payment.pl"};
+{
+    local ($!, $@) = (undef, undef);
+    my $do_ = 'scripts/custom/payment.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error(payment.pm)\n\n" );
+            }
+        }
+    }
+};
 1;
 

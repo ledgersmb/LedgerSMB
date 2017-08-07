@@ -167,6 +167,16 @@ files.
 
 =cut
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/menu.pl"};
+{
+    local ($!, $@) = ( undef, undef);
+    my $do_ = 'scripts/custom/menu.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (menu.pm)\n\n" );
+            }
+        }
+    }
+};
 1;

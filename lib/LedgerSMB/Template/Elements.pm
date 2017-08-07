@@ -23,6 +23,7 @@ package LedgerSMB::Template::Elements;
 
 use strict;
 use warnings;
+use List::Util qw{ any };
 
 sub new {
     my ($class) = @_;
@@ -190,7 +191,7 @@ sub generate_checkbox_elements {
         }
         # Add checked attribute if the default value applies to this element.
         if ( defined($checkboxes->{default_values}) &&
-          grep {$_ eq $checkbox_name} @{$checkboxes->{default_values}}) {
+          any {$_ eq $checkbox_name} @{$checkboxes->{default_values}}) {
             $element->{checked} = 'checked';
         }
         push @$elements, $element;

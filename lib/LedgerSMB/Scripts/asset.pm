@@ -1009,8 +1009,18 @@ sub run_import {
     return begin_import($request);
 }
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/asset.pl"};
+{
+    local ($!, $@) = ( undef, undef);
+    my $do_ = "scripts/custom/asset.pl";
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die ( "Status: 500 Internal server error (asset.pm)\n\n" );
+            }
+        }
+    }
+};
 
 1;
 
