@@ -1,20 +1,24 @@
 define(["dojo/_base/declare",
         "dojo/_base/array",
+        "dojo/when",
     "dojo/store/JsonRest", "dojo/store/Observable",
-    "dojo/store/Memory", "lsmb/menus/Cache",
+    "dojo/store/Memory", "dojo/store/Cache",
     "dijit/Tree", "dijit/tree/ObjectStoreModel"
-       ], function(declare, array, JsonRest, Observable,
+       ], function(declare, array, when, JsonRest, Observable,
     Memory, Cache,
     Tree, ObjectStoreModel
 ){
         // set up the store to get the tree data, plus define the method
         // to query the children of a node
         var restStore = new JsonRest({
-            target:      "menu.pl?action=menuitems_json",
+            target:      "menu.pl?action=menuitems_json&",
             idProperty: "id"
         });
         var memoryStore = new Memory({idProperty: "id"});
         var store = new Cache(restStore, memoryStore);
+
+        // initialize the store with the full menu
+        var results = store.query({});
 
         // give store Observable interface so Tree can track updates
         store = new Observable(store);
@@ -25,14 +29,10 @@ define(["dojo/_base/declare",
             labelAttr: 'label',
             mayHaveChildren: function(item){ return item.menu; },
             getChildren: function(object, onComplete, onError){
-                // Note that this *only* works because we implemented
-                // our own cache which stores the full returned array
-                // on 'get(0)'
                 onComplete(memoryStore.query({parent: object.id}));
              },
             getRoot: function(onItem, onError){
-                // get the root object, we will do a get() and callback the result
-                this.store.get(0).then(onItem, onError);
+                store.get(0).then(onItem, onError);
             }
         });
 
