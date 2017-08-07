@@ -2,24 +2,14 @@ li.menu_closed {
 }
 
 li.menu_closed > ul {
-	display: none;
+        display: none;
 }
 
 li.menu_open > ul {
-	display: block;
+        display: block;
 }
 
-/*
- * dijitTreeIcon & dijitTreeExpando are redundant
- * Select the former for + signs or the latter for folder icons
- */
-/*
-.dijitTreeIcon {
-    background-image: none;
-    width: 0
-}
-*/
-.claro .dijitTreeExpando {
+#top_menu .dijitTreeIcon {
     background-image: none;
     width: 0
 }
