@@ -24,6 +24,7 @@ requires 'LWP::Simple';
 requires 'MIME::Lite';
 requires 'Module::Runtime';
 requires 'Moose';
+requires 'Moose::Error::Croak';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::NonMoose';
