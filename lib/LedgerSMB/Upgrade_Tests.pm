@@ -19,6 +19,9 @@ use Moose;
 use namespace::autoclean;
 use LedgerSMB::App_State;
 
+# Reduce verbosity of Moose errors to the exact reason and line.
+__PACKAGE__->meta->error_class('Moose::Error::Croak');
+
 =head1 FUNCTIONS
 
 =over

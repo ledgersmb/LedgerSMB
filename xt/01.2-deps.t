@@ -37,5 +37,6 @@ push @on_disk, 'tools/starman.psgi';
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
                 ignores => [ 'Image::Size', 'LaTeX::Driver',
+                             'Moose::Error::Croak',
                              'Starman', 'TeX::Encode::charmap'] );
 
