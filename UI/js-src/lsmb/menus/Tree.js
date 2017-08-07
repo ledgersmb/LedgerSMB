@@ -38,13 +38,8 @@ define(["dojo/_base/declare",
 
     return declare("lsmb/menus/Tree", [Tree], {
             model: model,
-            persist: false,
-            autoExpand: false,
             showRoot: false,
             openOnClick: true,
-            getIconClass: function(/*dojo.data.Item*/ item, /*Boolean*/ opened){
-                return (!item || item.menu) ? (opened ? "dijitFolderOpened" : "dijitFolderClosed") : "dijitLeaf"
-            },
             onClick: function(item){
                 var url = '';
                 if ( item.module ) {
