@@ -773,34 +773,34 @@ verify_check => md5_hex($check->test_query),
              name => 'action',
             value => 'fix_tests',
           tooltip => { id => 'action-fix-tests',
-                       msg => $request->{_locale}->text($check->{tooltips}{'Save and Retry'}),
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Save and Retry'}),
                        position => 'above'
                      },
              text => $request->{_locale}->text('Save and Retry'),
-            class => 'submit' },
+            class => 'submit' }
         if $check->columns;
     push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'cancel',
           tooltip => { id => 'action-cancel',
-                       msg => $request->{_locale}->text($check->{tooltips}{'Cancel'}),
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Cancel'}),
                        position => 'above'
                      },
              text => $request->{_locale}->text('Cancel'),
             class => 'submit' }
-    if $buttons{Cancel} or scalar($check->columns) == 0;
+        if $buttons{Cancel} or scalar($check->columns) == 0;
     push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'force',
           tooltip => { id => 'action-force',
-                       msg => $request->{_locale}->text($check->{tooltips}{'Force'}),
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Force'}),
                        position => 'above'
                      },
              text => $request->{_locale}->text('Force'),
             class => 'submit' }
-    if $buttons{Force} && $check->{force_queries};
+        if $buttons{Force} && $check->{force_queries};
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -811,8 +811,8 @@ verify_check => md5_hex($check->test_query),
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $heading,
-           headers            => [$request->{_locale}->text($check->display_name),
-                                  $request->{_locale}->text($check->instructions)],
+           headers            => [$request->{_locale}->maketext($check->display_name),
+                                  $request->{_locale}->maketext($check->instructions)],
            columns            => $check->display_cols,
            rows               => $rows,
            hiddens            => $hiddens,
@@ -862,10 +862,10 @@ sub fix_tests{
 
     my $query;
     if ($check->{insert}) {
-        my @id = $id_displayed ? $check->{id_column} : ();
-        push @id,@edits;
-        my $columns = join(', ', map { $dbh->quote_identifier($_) } @id);
-        my $values = join(', ', map { '?' } @id);
+        my @_edits = $id_displayed ? $check->{id_column} : ();
+        push @_edits,@edits;
+        my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
+        my $values = join(', ', map { '?' } @_edits);
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
     }
     else {
@@ -879,7 +879,7 @@ sub fix_tests{
         my $id = $request->{"id_$count"};
         my @values;
         push @values, $id
-            if $check->{insert} and $id_displayed;
+            if $id_displayed;
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }

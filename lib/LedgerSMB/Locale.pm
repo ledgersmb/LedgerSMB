@@ -16,11 +16,12 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 Returns a locale handle for accessing the other methods.  Inherited from
 Locale::Maketext.
 
-=item marktext
+=item marktext ($string)
 
 Identity function. Allows text to me marked for translation so that it 
 will be picked by the PO scanner. The actual translation has to be done
 in the calling module when the page is prepared.
+Note: This isn't a method but a utility function.
 
 =item text ($string, @params)
 
@@ -91,7 +92,6 @@ package LedgerSMB::Locale;
 
 use strict;
 use warnings;
-use Exporter;
 
 use base qw( Locale::Maketext Exporter );
 our @EXPORT_OK = qw(marktext);
