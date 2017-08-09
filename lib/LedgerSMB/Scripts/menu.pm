@@ -73,12 +73,9 @@ sub root_doc {
         }
     }
 
-    $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
+    $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'main',
-        format => 'HTML'
     );
     return $template->render_to_psgi($menu);
 }

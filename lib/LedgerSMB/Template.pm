@@ -118,6 +118,9 @@ Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
 the user to C<$request->{_user}>, the locale to C<$request->{_locale}
 and leaves auto-output enabled.
 
+Additionally, variables are added to the template processor as required
+by the HTML UI.
+
 =item preprocess ($rawvars, $escape)
 
 Preprocess for rendering.
@@ -357,7 +360,8 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format language no_escape debug locale method
-                 format_options output_options no_auto_output ));
+                 format_options output_options no_auto_output
+                 additional_vars ));
     $self->{myconfig} = $args{user};
     $self->{outputfile} =
         "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
@@ -401,13 +405,22 @@ sub new {
 sub new_UI {
     my $class = shift;
     my $request = shift;
+
+    my $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
+            if $LedgerSMB::App_State::Company_Config;
+    my $UI_vars = {
+        dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
+        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
+    };
+
     return $class->new(
         @_,
         no_auto_ouput => 0,
         format => 'HTML' ,
         path => 'UI',
         user => $request->{_user},
-        locale => $request->{_locale}
+        locale => $request->{_locale},
+        additional_vars => $UI_vars
     );
 }
 
@@ -560,6 +573,8 @@ sub _render {
         if ($unescape && !$self->{no_escape});
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
+    $cleanvars->{$_} = $self->{additional_vars}->{$_}
+        for (keys %{$self->{additional_vars}});
 
     my $output;
     if ($self->{outputfile}) {

@@ -55,12 +55,6 @@ Implements the template's initialization protocol.
 
 sub setup {
     my ($parent, $cleanvars, $output) = @_;
-    my $dojo_theme;
-    $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
-            if $LedgerSMB::App_State::Company_Config;
-    $cleanvars->{dojo_theme} //= $dojo_theme;
-    $cleanvars->{dojo_theme} //= $LedgerSMB::Sysconfig::dojo_theme;;
-    $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
 
     return ($output, {
         input_extension => $extension,
