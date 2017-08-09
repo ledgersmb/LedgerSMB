@@ -64,12 +64,6 @@ sub root_doc {
 
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
-    for my $item (@{$menu->{menu_items}}){
-        if ($request->{'open'}
-            && $request->{'open'} =~ /:$item->{id}:/ ){
-            $item->{'open'} = 'true';
-        }
-    }
 
     $template = LedgerSMB::Template->new_UI(
         $request,
