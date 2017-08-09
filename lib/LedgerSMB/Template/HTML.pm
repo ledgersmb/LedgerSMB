@@ -37,6 +37,16 @@ sub escape {
     return $vars;
 }
 
+=item unescape($string)
+
+Apply the reverse transformation of C<escape> to <$string>.
+
+=cut
+
+sub unescape {
+    return decode_entities(shift @_);
+}
+
 =item setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.
@@ -51,7 +61,6 @@ sub setup {
     $cleanvars->{dojo_theme} //= $dojo_theme;
     $cleanvars->{dojo_theme} //= $LedgerSMB::Sysconfig::dojo_theme;;
     $cleanvars->{dojo_built} ||= $LedgerSMB::Sysconfig::dojo_built;
-    $cleanvars->{UNESCAPE} = sub { return decode_entities(shift @_) };
 
     return ($output, {
         input_extension => $extension,

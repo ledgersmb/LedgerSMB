@@ -232,6 +232,11 @@ repeatedly until all values to be passed to the template have been escaped.
 The return value is the escaped value to substitute for C<$value>. The
 escaping mechanism is format specific.
 
+=item unescape($value) [optional]
+
+The template calls this function with one scalar value as its argument,
+in order to reverse the transformation as applied by C<escape>.
+
 =item setup($parent, $variables, $output)
 
 The template driver calls this function just before the evaluation of
@@ -539,8 +544,11 @@ sub _render {
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
+    my $unescape = $format->can('unescape');
     my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
     $cleanvars->{escape} = sub { return $escape->(@_); };
+    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
+        if ($unescape && !$self->{no_escape});
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
 
