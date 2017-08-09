@@ -168,6 +168,43 @@ desired file extention
 
 =back
 
+=head1 TEMPLATE FUNCTIONS
+
+Templates can make use of the following functions, installed by the
+template processor, when available for the current format.
+
+=over
+
+=item escape($string)
+
+This function encodes the string argument to be safe for inclusion in
+the target document, showing the exact content of the string.
+
+E.g. for HTML encoding, this means that ampersand is encoded into C<&amp;>
+and that newline characters in LaTeX are encoded into double backslashes.
+
+=item UNESCAPE($string) [optional]
+
+This function reverses the string-escaping as might have been applied by
+the C<escape> function. This function is not guaranteed to be available
+(currently only supported for HTML templates).
+
+=item text($string, @args)
+
+This function looks up the translation of C<$string> in the language lexicon,
+interpolating the string's variable placeholders with the arguments provided
+in C<@args>. The resulting string will be escaped using the C<escape> function.
+
+Note: This string looks up the exact string C<$string>, which makes it
+unsuited for translation of string values passed to the template through
+(escaped) string variable values.
+
+=item tt_url($string)
+
+This function applies basic URL encoding to C<$string>.
+
+=back
+
 =head1 FORMATS
 
 The template employs formats for a number of format-specific tasks:
