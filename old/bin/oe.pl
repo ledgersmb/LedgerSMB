@@ -1255,9 +1255,8 @@ sub save {
     if ( !$form->{repost}  && $form->{id}) {
        $form->{repost} = 1;
        my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
-        template => 'oe-save_warn',
+           $form,
+           template => 'oe-save_warn',
        );
 
        return $template->render({

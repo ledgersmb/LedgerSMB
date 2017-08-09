@@ -112,9 +112,10 @@ Returns a list of format names, any of the following (in order) as applicable:
 
 =back
 
-=item new_UI(user => \%myconfig, locale => $locale, template => $file, ...)
+=item new_UI($request, template => $file, ...)
 
 Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
+the user to C<$request->{_user}>, the locale to C<$request->{_locale}
 and leaves auto-output enabled.
 
 =item preprocess ($rawvars, $escape)
@@ -399,7 +400,15 @@ sub new {
 
 sub new_UI {
     my $class = shift;
-    return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
+    my $request = shift;
+    return $class->new(
+        @_,
+        no_auto_ouput => 0,
+        format => 'HTML' ,
+        path => 'UI',
+        user => $request->{_user},
+        locale => $request->{_locale}
+    );
 }
 
 sub preprocess {
