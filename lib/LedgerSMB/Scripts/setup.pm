@@ -862,8 +862,8 @@ sub fix_tests{
 
     my $query;
     if ($check->{insert}) {
-        my @_edits = $id_displayed ? $check->{id_column} : ();
-        push @_edits,@edits;
+        my @_edits = @edits;
+        unshift @_edits, $check->{id_column} if $id_displayed;
         my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
         my $values = join(', ', map { '?' } @_edits);
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
