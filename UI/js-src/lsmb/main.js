@@ -56,24 +56,3 @@ require(["dojo/parser", "dojo/query", "dojo/on", "dijit/registry",
                     });
             });
         });
-
-
-require([
-    "dojo/on", "dojo/query", "dojo/dom-class", "dojo/_base/event",
-    "dojo/domReady!"],
-        function (on, query, domclass, event) {
-            query("a.t-submenu").forEach(function(node){
-                on(node, "click", function(e) {
-                  if ( !e.ctrlKey && !e.shiftKey && !e.button != 0 ) {
-                    event.stop(e);
-                    var parent = node.parentNode;
-                    if (domclass.contains(parent, "menu_closed")) {
-                        domclass.replace(parent, "menu_open", "menu_closed");
-                    }
-                    else {
-                        domclass.replace(parent, "menu_closed", "menu_open");
-                    }
-                  }
-                });
-            });
-        });

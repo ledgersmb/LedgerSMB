@@ -60,3 +60,17 @@ img.logo {
 button {
     margin-top: 10px;
 }
+
+.listtop {
+    font-size: larger;
+}
+
+tr.listheading {
+    background-color: lightgrey;
+}
+tr.listrow:nth-child(even) {background: #FFF}
+tr.listrow:nth-child(odd) {background: #EEE}
+
+td.dijitStretch {
+    min-width: 125px;
+}
