@@ -530,10 +530,11 @@ sub _tt_url {
 
 sub _maketext {
     my $self = shift;
+    my $escape = shift;
 
-    return defined $self->{locale}
-        ? $self->{locale}->maketext(@_)
-        : shift;
+    return $escape->(defined $self->{locale}
+                    ? $self->{locale}->maketext(@_)
+                    : shift);
 }
 
 sub _render {
@@ -566,7 +567,7 @@ sub _render {
     $cleanvars->{escape} = sub { return $escape->(@_); };
     $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
         if ($unescape && !$self->{no_escape});
-    $cleanvars->{text} = sub { return $self->_maketext(@_); };
+    $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
     $cleanvars->{$_} = $self->{additional_vars}->{$_}
         for (keys %{$self->{additional_vars}});
