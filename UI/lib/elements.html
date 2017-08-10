@@ -424,6 +424,12 @@
 
 <?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>
 
+<?lsmb BLOCK decorated_text;
+  IF element_data && element_data.msg.defined();
+    UNESCAPE(element_data.msg);
+  END;
+END ?>
+
 <?lsmb BLOCK tooltip;
   IF element_data && element_data.id.defined() && element_data.msg.defined();
      props="connectId:'" _ element_data.id _ "'";
@@ -436,7 +442,9 @@
         props = props _ ',position:[' _ positions.join(',') _ ']';
     END; ?>
     <div data-dojo-type="dijit/Tooltip" data-dojo-props=<?lsmb props ?>  >
-         <?lsmb UNESCAPE(element_data.msg) ?>
+         <?lsmb INCLUDE decorated_text element_data = {
+                msg => element_data.msg };
+         ?>
     </div>
   <?lsmb END;
 END ?>
