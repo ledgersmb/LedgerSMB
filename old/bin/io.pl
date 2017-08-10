@@ -1086,8 +1086,7 @@ sub e_mail {
         text => $locale->text('Continue'),
         });
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'io-email',
         );
     $template->render({

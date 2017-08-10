@@ -219,10 +219,8 @@ sub yearend_info {
     $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};
     my $template = LedgerSMB::Template->new_UI(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        template => 'accounts/yearend'
-    );
+        $request,
+        template => 'accounts/yearend');
     return $template->render_to_psgi({ request => $request,
                                        eoy => $eoy});
 }
@@ -244,8 +242,7 @@ sub post_yearend {
     my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->close_books;
     my $template = LedgerSMB::Template->new_UI(
-        user => $request->{_user},
-        locale => $request->{_locale},
+        $request,
         template => 'accounts/yearend_complete'
     );
     return $template->render_to_psgi($eoy);

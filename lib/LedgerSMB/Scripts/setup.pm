@@ -59,10 +59,9 @@ sub no_db {
 sub __default {
 
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'credentials',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/credentials',
     );
     return $template->render_to_psgi($request);
 }
@@ -249,10 +248,9 @@ sub login {
             }
         }
     }
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'confirm_operation',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/confirm_operation',
     );
     return $template->render_to_psgi($request);
 }
@@ -287,10 +285,9 @@ sub list_databases {
     # for now we simply use a fixed regex. It will cover many if not most use cases.
     @{$request->{dbs}} = map {+{ row_id => $_, db  => $_ }} grep { ! m/^(postgres|template0|template1)$/ } @results ;
 
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'list_databases',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/list_databases',
     );
     return $template->render_to_psgi($request);
 }
@@ -309,10 +306,9 @@ sub list_users {
     for my $u (@$users) {
         push @{$request->{users}}, {row_id => $u->{id}, name => $u->{username} };
     }
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'list_users',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/list_users',
     );
     return $template->render_to_psgi($request);
 }
@@ -369,10 +365,9 @@ sub backup_roles {
 # Private method, basically just passes the inputs on to the next screen.
 sub _begin_backup {
     my $request = shift @_;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'begin_backup',
-            format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/begin_backup',
     );
     return $template->render_to_psgi($request);
 };
@@ -435,10 +430,9 @@ sub run_backup {
         );
         $mail->send;
         unlink $backupfile;
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/complete',
         );
         return $template->render_to_psgi($request);
     }
@@ -486,11 +480,10 @@ sub revert_migration {
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'complete_migration_revert',
-        format => 'HTML',
-           );
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/complete_migration_revert',
+        );
 
     return $template->render_to_psgi($request);
 }
@@ -527,10 +520,9 @@ so that further workflow can be aborted.
 sub template_screen {
     my ($request) = @_;
     $request->{template_dirs} = _get_template_directories();
-    return LedgerSMB::Template->new(
-           path => 'UI/setup',
-           template => 'template_info',
-           format => 'HTML',
+    return LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/template_info',
     )->render_to_psgi($request);
 }
 
@@ -709,10 +701,9 @@ sub upgrade {
     }
 
     if (upgrade_info($request) > 0) {
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'upgrade_info',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/upgrade_info',
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
@@ -785,10 +776,9 @@ verify_check => md5_hex($check->test_query),
             class => 'submit' },
     ];
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'form-dynatable',
-        format => 'HTML',
     );
 
     return $template->render_to_psgi({
@@ -891,10 +881,9 @@ sub create_db {
             $request->{_locale}->text('Login?');
         $request->{next_action} = 'login';
 
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'confirm_operation',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/confirm_operation',
         );
         return $template->render_to_psgi($request);
     }
@@ -954,10 +943,9 @@ sub select_coa {
         closedir(COA);
     }
 
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'select_coa',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/select_coa',
     );
     return $template->render_to_psgi($request);
 }
@@ -1025,11 +1013,10 @@ sub _render_new_user {
         {id => '1', label => $locale->text('Full Permissions')},
         );
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'new_user',
-        format => 'HTML',
-           );
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
+        );
 
     return $template->render_to_psgi($request);
 }
@@ -1081,10 +1068,9 @@ sub save_user {
                {id => '0', label => $locale->text('Manage Users')},
                {id => '1', label => $locale->text('Full Permissions')},
            );
-           my $template = LedgerSMB::Template->new(
-                path => 'UI/setup',
-                template => 'new_user',
-                format => 'HTML',
+           my $template = LedgerSMB::Template->new_UI(
+               $request,
+               template => 'setup/new_user',
            );
            $duplicate = $template->render_to_psgi($request);
        } else {
@@ -1287,10 +1273,9 @@ sub create_initial_user {
         {id => '1', label => $locale->text('Full Permissions')},
         {id => '-1', label => $locale->text('No changes')},
     );
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'new_user',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
     );
     return $template->render_to_psgi($request);
 }
@@ -1321,11 +1306,9 @@ sub edit_user_roles {
 
     $user_obj->{username} = $user_rec[0]->{username};
 
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'edit_user',
-        format => 'HTML',
-        path=>'UI/setup',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/edit_user',
     );
     my $template_data = {
                         request => $request,
@@ -1415,10 +1398,9 @@ sub complete {
     my $database = _init_db($request);
     my $temp = $database->loader_log_filename();
     $request->{lsmb_info} = $database->stats();
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/complete',
     );
     return $template->render_to_psgi($request);
 }
