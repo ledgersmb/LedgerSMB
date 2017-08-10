@@ -89,7 +89,9 @@ company__next_id
 contact_class__list
 cr_coa_to_account_save
 cr_report_block_changing_approved
-currency_get_exchangerate
+currency__delete
+currency__get
+currency__list
 date_get_all_years
 days_in_month
 deduction__list_for_entity
@@ -125,6 +127,12 @@ eoy__reopen_books_at
 eoy_create_checkpoint
 eoy_earnings_accounts
 eoy_reopen_books
+exchangerate__delete
+exchangerate__get
+exchangerate__list
+exchangerate_type__delete
+exchangerate_type__get
+exchangerate_type__list
 file__get
 file__list_by
 file__list_links
@@ -190,7 +198,6 @@ payment_get_vc_info
 payment_type__get_label
 payment_type__list
 payments_get_open_currencies
-payments_set_exchangerate
 payroll_income_category__list
 payroll_income_class__for_country
 payroll_income_type__get
@@ -239,7 +246,6 @@ sequence__increment
 sequence__list
 sequence__list_by_key
 session_check
-setting__get_currencies
 setting__increment_base
 sic__list
 tax_form__get

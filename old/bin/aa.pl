@@ -191,11 +191,11 @@ sub create_links {
         $form->{vc}   = 'customer';
     }
 
-    $form->create_links( module => $form->{ARAP},
-                         myconfig => \%myconfig,
-                         vc => $form->{vc},
-                         billing => $form->{vc} eq 'customer'
-                         && $form->{type} eq 'invoice')
+     $form->create_links( module => $form->{ARAP},
+                                 myconfig => \%myconfig,
+                                 vc => $form->{vc},
+                                 billing => $form->{vc} eq 'customer'
+                                      && $form->{type} eq 'invoice')
         unless $form->{"$form->{ARAP}_links"};
 
 
@@ -210,6 +210,11 @@ sub create_links {
         $form->error($locale->text(
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
+    }
+    @curr = @{$form->{currencies}};
+
+    for (@curr) {
+        $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n"
     }
 
     my $vc = $form->{vc};
@@ -288,7 +293,6 @@ sub create_links {
                 else {
 
 
-
                     $form->{"${akey}_$i"} =
                       $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
 
@@ -353,6 +357,7 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
+    delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
 }
 
@@ -424,7 +429,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" id=currency name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
@@ -656,7 +660,7 @@ $form->open_status_div($status_div_id) . qq|
     print qq|
     <tr>
       <th>| . $locale->text('Amount') . qq|</th>
-      <th></th>
+     <th>| . (($form->{currency} ne $form->{defaultcurrency}) ? $form->{defaultcurrency} : '') . qq|</th>
       <th>| . $locale->text('Account') . qq|</th>
       <th>| . $locale->text('Description') . qq|</th>
       <th>| . $locale->text('Tax Form Applied') . qq|</th>|;
@@ -703,9 +707,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
     <tr valign=top>
-      <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
-      <td></td>
-      <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
+     <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
+     <td>| . (($form->{currency} ne $form->{defaultcurrency})
+              ? $form->format_amount(\%myconfig, $form->{"amount_$i"}
+                                                  * $form->{exchangerate},2)
+              : '')  . qq|</td>
+     <td><select data-dojo-type="dijit/form/Select" id="$form->{ARAP}_amount_$i" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
       $description
           $taxformcheck
       $project|;
@@ -769,8 +776,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     print qq|
         <tr>
       <th align=left>$form->{invtotal}</th>
-      <td></td>
-      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
+     <td>| . (($form->{currency} ne $form->{defaultcurrency})
+              ? $form->format_amount(\%myconfig,
+                                     $form->{invtotal}
+                                     * $form->{exchangerate}, 2) : '') . qq|</td>
+     <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $form->{"select$form->{ARAP}"}
               </select></td>
         </tr>
@@ -1158,64 +1168,54 @@ sub update {
     $form->open_form() unless $form->check_form();
     $is_update = 1;
 
-    $form->{invtotal} = 0;
+        $form->{invtotal} = 0;
 
-    $form->{exchangerate} =
+        $form->{exchangerate} =
           $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
-    @flds =
+        @flds =
           ( "amount", "$form->{ARAP}_amount", "projectnumber", "description","taxformcheck" );
-    $count = 0;
-    @a     = ();
+        $count = 0;
+        @a     = ();
     foreach my $i ( 1 .. $form->{rowcount} ) {
-        $form->{"amount_$i"} =
-            $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
-        if ( $form->{"amount_$i"} ) {
-            push @a, {};
-            $j = $#a;
+            $form->{"amount_$i"} =
+              $form->parse_amount( \%myconfig, $form->{"amount_$i"} );
+            if ( $form->{"amount_$i"} ) {
+                push @a, {};
+                $j = $#a;
 
-            for (@flds) { $a[$j]->{$_} = $form->{"${_}_$i"} }
-            $count++;
+                for (@flds) { $a[$j]->{$_} = $form->{"${_}_$i"} }
+                $count++;
+            }
         }
-    }
 
-    $form->redo_rows( \@flds, \@a, $count, $form->{rowcount} );
-    $form->{rowcount} = $count + 1;
+        $form->redo_rows( \@flds, \@a, $count, $form->{rowcount} );
+        $form->{rowcount} = $count + 1;
 
-    for ( 1 .. $form->{rowcount} ) {
+        for ( 1 .. $form->{rowcount} ) {
         if ( defined $form->{"amount_$_"} ) {
             $form->{invtotal} += $form->{"amount_$_"};
         }
     }
 
-    $form->{exchangerate} = $exchangerate
-        if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig, $form->{currency}, $form->{transdate},
-                    ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
-                )
-            )
-        );
-
-    if ( $newname = &check_name( $form->{vc} ) ) {
-        $form->{notes} = $form->{intnotes} unless $form->{id};
-        rebuild_vc($form->{vc}, $form->{transdate});
-    }
-    if ( $form->{transdate} ne $form->{oldtransdate} ) {
-        $form->{duedate} =
-            $form->current_date( \%myconfig, $form->{transdate},
-                                 $form->{terms} * 1 );
-        $form->{oldtransdate} = $form->{transdate};
+        if ( $newname = &check_name( $form->{vc} ) ) {
+            $form->{notes} = $form->{intnotes} unless $form->{id};
+            rebuild_vc($form->{vc}, $form->{transdate});
+        }
+        if ( $form->{transdate} ne $form->{oldtransdate} ) {
+            $form->{duedate} =
+              $form->current_date( \%myconfig, $form->{transdate},
+                $form->{terms} * 1 );
+            $form->{oldtransdate} = $form->{transdate};
         $newproj = rebuild_vc($form->{vc}, $form->{transdate})
-            if !$newname;
-    }
+              if !$newname;
+        }
 
     @taxaccounts = split / /, $form->{taxaccounts};
 
     for (@taxaccounts) {
         $form->{"tax_$_"} =
-            $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
+          $form->parse_amount( \%myconfig, $form->{"tax_$_"} );
         $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
@@ -1240,17 +1240,6 @@ sub update {
             }
 
             $totalpaid += $form->{"paid_$j"};
-
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig, $form->{currency},
-                        $form->{"datepaid_$j"},
-                        ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
-                    )
-                )
-              );
 
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo paid exchangerate forex cleared)) {
@@ -1339,7 +1328,7 @@ sub post {
     # if oldname ne name redo form
     ($name) = split /--/, $form->{ $form->{vc} };
     if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}|
-         and $form->{"old$form->{vc}"} ne $name) {
+        and $form->{"old$form->{vc}"} ne $name) {
         &update;
         $form->finalize_request();
     }
@@ -1356,17 +1345,17 @@ sub post {
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
         $form->update_status;
-        if ( $form->{printandpost} ) {
-            &{"print_$form->{formname}"}( $old_form, 1 );
+       if ( $form->{printandpost} ) {
+           &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
         if(defined($form->{batch_id}) and $form->{batch_id}
            and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
-        }
-        $form->{rowcount} = 0;
-        edit();
     }
+            $form->{rowcount} = 0;
+            edit();
+        }
     else {
         $form->error( $locale->text('Cannot post transaction!') );
     }

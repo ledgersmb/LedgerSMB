@@ -43,6 +43,7 @@ requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
 requires 'Plack::Request';
 requires 'Template', '2.14';
+requires 'Text::CSV';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Try::Tiny';

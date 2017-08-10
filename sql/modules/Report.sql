@@ -46,8 +46,8 @@ SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber,
  ORDER BY p.partnumber, a.invnumber;
 $$;
 
-DROP TYPE IF EXISTS report_aging_item CASCADE;
 
+DROP TYPE IF EXISTS report_aging_item CASCADE;
 CREATE TYPE report_aging_item AS (
         entity_id int,
         account_number varchar(24),
@@ -81,7 +81,7 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 RETURNS SETOF report_aging_item
 AS
 $$
-                  WITH RECURSIVE bu_tree (id, path) AS (
+     WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
                   FROM business_unit
                  WHERE id = any(in_business_units)
@@ -96,33 +96,30 @@ $$
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes,
                        CASE WHEN a.age/30 = 0
-                                 THEN (a.sign * sum(ac.amount))
+                                 THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
                             as c0,
                        CASE WHEN a.age/30 = 1
-                                 THEN (a.sign * sum(ac.amount))
+                                 THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
                             as c30,
                        CASE WHEN a.age/30 = 2
-                            THEN (a.sign * sum(ac.amount))
+                            THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
                             as c60,
                        CASE WHEN a.age/30 > 2
-                            THEN (a.sign * sum(ac.amount))
+                            THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
                             as c90,
                        a.duedate, a.id, a.curr,
-                       COALESCE((SELECT sell FROM exchangerate ex
-                         WHERE a.curr = ex.curr
-                              AND ex.transdate = a.transdate), 1)
-                       AS exchangerate,
+                       null::numeric AS exchangerate,
                         (SELECT compound_array(ARRAY[[p.partnumber,
                                         i.description, i.qty::text]])
                                 FROM parts p
                                 JOIN invoice i ON (i.parts_id = p.id)
                                 WHERE i.trans_id = a.id) AS line_items,
                    (coalesce(in_to_date, now())::date - a.transdate) as age
-                  FROM (select id, invnumber, till, ordnumber, amount, duedate,
+                  FROM (select id, invnumber, till, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                -1 AS sign, transdate, force_closed,
                                CASE WHEN in_use_duedate
@@ -134,7 +131,7 @@ $$
                           FROM ar
                          WHERE in_entity_class = 2
                          UNION
-                        SELECT id, invnumber, null, ordnumber, amount, duedate,
+                        SELECT id, invnumber, null, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                1 as sign, transdate, force_closed,
                                CASE WHEN in_use_duedate
@@ -171,12 +168,12 @@ $$
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
-                       a.ponumber, a.notes, a.amount, a.sign,
+                       a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
                 HAVING (in_business_units is null or in_business_units
                        <@ compound_array(string_to_array(bu_tree.path,
                                          ',')::int[]))
-                       AND sum(ac.amount::numeric(20,2)) <> 0
+                       AND sum(ac.amount_bc::numeric(20,2)) <> 0
               ORDER BY entity_id, curr, transdate, invnumber
 $$ language sql;
 
@@ -241,8 +238,8 @@ ELSIF in_accno IS NOT NULL THEN
    SELECT id INTO t_chart_id FROM account WHERE accno  = in_accno;
    t_balance :=
       account__obtain_balance((in_from_date - '1 day'::interval)::date,
-                              (select id from account
-                                where accno = in_accno));
+                                       (select id from account
+                                         where accno = in_accno));
 ELSE
    t_balance := null;
 END IF;
@@ -258,10 +255,10 @@ FOR retval IN
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
-              ac.source, ac.amount, c.accno, c.gifi_accno,
+              ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
-              sum(ac.amount) over (rows unbounded preceding) + t_balance
+              sum(ac.amount_bc) over (rows unbounded preceding) + t_balance
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
          FROM (select id, 'gl' as type, false as invoice, reference,
@@ -298,13 +295,14 @@ FOR retval IN
                    OR (transdate >= in_from_date AND  in_to_date IS NULL)
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
-              AND (in_approved is null OR
-                     (in_approved = g.approved AND (ac.approved or in_approved is false)))
-              AND (in_from_amount IS NULL OR abs(ac.amount) >= in_from_amount)
-              AND (in_to_amount IS NULL OR abs(ac.amount) <= in_to_amount)
+              AND (in_approved is false OR (g.approved AND ac.approved))
+              AND (in_from_amount IS NULL
+                   OR abs(ac.amount_bc) >= in_from_amount)
+              AND (in_to_amount IS NULL
+                   OR abs(ac.amount_bc) <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
-              ac.source, ac.amount, c.accno, c.gifi_accno,
+              ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id
        HAVING in_business_units is null or in_business_units
@@ -334,8 +332,8 @@ CREATE OR REPLACE FUNCTION report__cash_summary
 RETURNS SETOF cash_summary_item AS
 $$
 SELECT a.id, a.accno, a.is_heading, a.description, t.label,
-       sum(CASE WHEN ac.amount < 0 THEN ac.amount * -1 ELSE NULL END),
-       sum(CASE WHEN ac.amount > 0 THEN ac.amount ELSE NULL END)
+       sum(CASE WHEN ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE NULL END),
+       sum(CASE WHEN ac.amount_bc > 0 THEN ac.amount_bc ELSE NULL END)
   FROM (select id, accno, false as is_heading, description FROM account
        UNION
         SELECT id, accno, true, description FROM account_heading) a
@@ -372,12 +370,12 @@ RETURNS SETOF general_balance_line AS
 $$
 
 SELECT a.id, a.accno, a.description,
-      sum(CASE WHEN ac.transdate < $1 THEN abs(amount) ELSE null END),
-      sum(CASE WHEN ac.transdate >= $1 AND ac.amount < 0
-               THEN ac.amount * -1 ELSE null END),
-      SUM(CASE WHEN ac.transdate >= $1 AND ac.amount > 0
-               THEN ac.amount ELSE null END),
-      SUM(ABS(ac.amount))
+      sum(CASE WHEN ac.transdate < $1 THEN abs(amount_bc) ELSE null END),
+      sum(CASE WHEN ac.transdate >= $1 AND ac.amount_bc < 0
+               THEN ac.amount_bc * -1 ELSE null END),
+      SUM(CASE WHEN ac.transdate >= $1 AND ac.amount_bc > 0
+               THEN ac.amount_bc ELSE null END),
+      SUM(ABS(ac.amount_bc))
  FROM account a
  LEFT
  JOIN acc_trans ac ON ac.chart_id = a.id
@@ -426,23 +424,26 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount, a.netamount, a.amount - a.netamount as tax,
-       a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
+       a.invnumber, a.amount_bc, a.netamount_bc,
+       a.netamount_bc - a.amount_bc as tax,
+       a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
-  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
-               till, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold, force_closed
+  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes, till, person_id, entity_credit_account, invoice,
+               shippingpoint, shipvia, ordnumber, ponumber, description,
+               on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
-        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
-               null, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold, force_closed
+        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes, null, person_id, entity_credit_account, invoice,
+               shippingpoint, shipvia, ordnumber, ponumber, description,
+               on_hold, force_closed
           FROM ap
          WHERE in_entity_class = 1 and approved) a
   LEFT
-  JOIN (SELECT trans_id, sum(amount) *
+  JOIN (SELECT trans_id, sum(amount_bc) *
                CASE WHEN in_entity_class = 1 THEN 1 ELSE -1 END AS due,
                max(transdate) as last_payment
           FROM acc_trans ac
@@ -531,27 +532,31 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
-       a.transdate, a.invnumber, a.amount, a.netamount,
-       a.amount - a.netamount as tax, a.amount - p.due, p.due, p.last_payment,
+       a.transdate, a.invnumber, a.amount_bc as amount, a.netamount_bc
+                    as netamount,
+       a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,
+       p.due, p.last_payment,
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'::text[]
 
-  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
+  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2
                and (in_approved is null or (in_approved = approved))
          UNION
-        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
+        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap
          WHERE in_entity_class = 1
                and (in_approved is null or (in_approved = approved))) a
   LEFT
-  JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
+  JOIN (select sum(amount_bc) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
           FROM acc_trans ac
           JOIN account_link l ON ac.chart_id = l.account_id
@@ -688,12 +693,12 @@ acc_meta AS (
                                       WHERE setting_key = 'earn_id')])
 ),
 acc_balance AS (
-   SELECT ac.chart_id as id, sum(ac.amount) as balance
+   SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
      FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
+   HAVING sum(ac.amount_bc) <> 0.00
 ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance

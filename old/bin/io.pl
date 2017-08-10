@@ -317,7 +317,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
-        my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
+    my $discount_amount = $form->round_amount( $form->{"sellprice_$i"}
                               * ($form->{"discount_$i"} / 100),
                            $decimalplaces);
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
@@ -1005,17 +1005,6 @@ sub create_form {
 
     $form->{exchangerate} = "";
     $form->{forex}        = "";
-    if ( $form->{currency} ne $form->{defaultcurrency} ) {
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, $buysell
-                )
-            )
-          );
-    }
 
     &prepare_order;
 
@@ -1138,7 +1127,7 @@ sub print {
     }
 
     $old_form = Form->new;
-    for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
+        for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
     $form->{rowcount}++;
     &print_form;

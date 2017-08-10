@@ -187,7 +187,7 @@ sub create_template {
 
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
-                                  entity_id => $emp->entity_id,
+        entity_id => $emp->entity_id,
                                   username => $admin);
 
     my $roles;
@@ -271,8 +271,12 @@ SELECT id
 |);
 
     for my $line (@$lines) {
-        $line->{amount} = ($line->{credit} || 0) - ($line->{debit} || 0);
-        delete $line->{$_} for (qw/ credit debit /);
+        $line->{amount_bc} =
+            ($line->{credit_bc} || 0) - ($line->{debit_bc} || 0);
+        $line->{amount_tc} =
+            ($line->{credit_tc} || 0) - ($line->{debit_tc} || 0)
+            if exists $line->{credit_tc} || exists $line->{debit_tc};
+        delete $line->{$_} for (qw/ credit_bc credit_tc debit_bc debit_tc /);
 
         next if $line->{account_id};
 
@@ -296,12 +300,14 @@ INSERT INTO gl(transdate, person_id)
 
     my $line_sth = $self->admin_dbh->prepare(
         qq|
-INSERT INTO acc_trans(trans_id, transdate, chart_id, amount)
-     VALUES (?, ?, ?, ?)
+INSERT INTO acc_trans(trans_id, transdate, chart_id, amount_bc, curr, amount_tc)
+     VALUES (?, ?, ?, ?, ?, ?)
 |);
     for my $line (@$lines) {
         $line_sth->execute($trans_id, $posting_date,
-                           $line->{account_id}, $line->{amount})
+                           $line->{account_id}, $line->{amount_bc},
+                           $line->{curr} // 'USD',
+                           $line->{amount_tc} // $line->{amount_bc})
             or die "Failed to insert 'acc_trans' table row: " . $line_sth->errstr;
     }
 }

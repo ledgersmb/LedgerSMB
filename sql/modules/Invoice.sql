@@ -18,9 +18,8 @@ $$
          till, department_id, approved, entity_credit_account)
  VALUES ($1, $2, coalesce($3, 'f'),
          $4,$5, $6, coalesce($7, 'today'),
-         coalesce($8, 'today'), $9, coalesce($10,
-         (select defaults_get_defaultcurrency from
-          defaults_get_defaultcurrency())),
+         coalesce($8, 'today'), $9,
+         coalesce($10, defaults_get_defaultcurrency(),
          coalesce($11, person__get_my_entity_id()),
          $12, $13, coalesce($14, true), $15);
 
@@ -47,9 +46,8 @@ $$
          till, department_id, approved, entity_credit_account)
  VALUES ($1, $2, coalesce($3, 'f'),
          $4,$5, $6, coalesce($7, 'today'),
-         coalesce($8, 'today'), $9, coalesce($10,
-         (select defaults_get_defaultcurrency from
-          defaults_get_defaultcurrency())),
+         coalesce($8, 'today'), $9,
+         coalesce($10, defaults_get_defaultcurrency()),
          coalesce($11, person__get_my_entity_id()),
          $12, $13, coalesce($14, true), $15);
 

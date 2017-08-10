@@ -36,6 +36,7 @@ use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use LedgerSMB::Setting;
 use Try::Tiny;
 
 use LedgerSMB::old_code;
@@ -295,13 +296,9 @@ sub _main_screen {
     my @business_types =
                LedgerSMB->call_procedure(funcname => 'business_type__list');
 
-    my ($curr_list) =
-          LedgerSMB->call_procedure(funcname => 'setting__get_currencies');
-
-    my @all_currencies;
-    for my $curr (@{$curr_list->{'setting__get_currencies'}}){
-        push @all_currencies, { text => $curr};
-    }
+    my @all_currencies =
+        map { { curr => $_ } }
+        (LedgerSMB::Setting->new())->get_currencies;
 
     my $default_country = LedgerSMB::Setting->get('default_country');
 
@@ -312,7 +309,6 @@ sub _main_screen {
     push@{$attach_level_options},
         {text => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
-    ;
 
     { # pre-5.14 compatibility block
         local $@ = undef; # pre-5.14, do not die() in this block

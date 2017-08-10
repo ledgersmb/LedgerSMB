@@ -175,8 +175,32 @@ GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module
 
 \echo Exchange rate creation (requires insert/update on exchangerate table)
 SELECT lsmb__create_role('exchangerate_edit');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+--### TODO: advisory rates still need to work!
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit currencies'), 'allow');
+GRANT SELECT ON currency TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'DELETE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type_id_seq', 'ALL');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rate types'), 'allow');
+GRANT SELECT ON exchangerate_type TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rates'), 'allow');
+GRANT SELECT ON exchangerate_default TO PUBLIC;
+
+
 
 \echo Basic file attachments
 SELECT lsmb__create_role('file_read');
@@ -1184,7 +1208,10 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'menu_node', 'menu_attribute', 'menu_acl',
                     'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
-                    'business', 'exchangerate', 'new_shipto', 'tax',
+                    'business',
+                    --###TODO: Add table for advisory rates
+                    --'exchangerate',
+                    'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
 
 SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');

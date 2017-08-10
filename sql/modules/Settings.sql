@@ -12,7 +12,6 @@ set client_min_messages = 'warning';
 BEGIN;
 
 DROP FUNCTION IF EXISTS defaults_get_defaultcurrency();
-
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
 RETURNS char(3) AS
 $$
@@ -101,16 +100,6 @@ $$This function takes a value for a sequence in the defaults table and increment
 it.  Leading zeroes and spaces are preserved as placeholders.  Currently <?lsmb
 parsing is not supported in this routine though it may be added at a later date.
 $$;
-
-CREATE OR REPLACE FUNCTION setting__get_currencies() RETURNS text[]
-AS
-$$
-SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
-$$ LANGUAGE SQL;
--- Table schema defaults
-
-COMMENT ON FUNCTION setting__get_currencies() is
-$$ Returns an array of currencies from the defaults table.$$;
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
 

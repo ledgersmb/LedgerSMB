@@ -433,7 +433,14 @@ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id 
 INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '8140'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '9761'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '8761'));
-INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
+
+INSERT INTO currency (curr, description)
+   VALUES
+      ('HUF', 'HUF'),
+      ('EUR', 'EUR'),
+      ('USD', 'USD');
+INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF');
+
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 UPDATE defaults SET value = 'VK00000' WHERE setting_key = 'glnumber';
 UPDATE defaults SET value = 'VSZ10000' WHERE setting_key = 'sinumber';

@@ -86,26 +86,31 @@ BEGIN;
     --1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
     -- in full in current year. id -1024
 
-    INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
-                    approved)
-    values(-1024, date1(), 1010, 1010, 'USD', -255, true);
+    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr,
+                    amount_tc, netamount_tc, entity_credit_account, approved)
+        VALUES(-1024, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1024, -1000, date1(), 1010, true, -111);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc,
+                          curr, approved, entry_id)
+        VALUES (-1024, -1000, date1(), 1010, 1010, 'XTS', true, -111);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1024, -1001, date1(), -1000, true, -112);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+        VALUES (-1024, -1001, date1(), -1000, -1000, 'XTS', true, -112);
 
     INSERT INTO ac_tax_form(entry_id, reportable) values (-112, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1024, -1001, date1(), -10, true, -113);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+        VALUES (-1024, -1001, date1(), -10, -10, 'XTS', true, -113);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1024, -1002, date1(), 1010, true, -114);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+        VALUES (-1024, -1002, date1(), 1010, 1010, 'XTS', true, -114);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1024, -1000, date1(), -1010, true, -115);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+        VALUES (-1024, -1000, date1(), -1010, -1010, 'XTS', true, -115);
 
     -- Run tests
 
@@ -124,26 +129,31 @@ BEGIN;
     -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1025
 
-    INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved)
-    values(-1025, date1(), 1010, 1010, 'USD', -255, true);
+    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, amount_tc, netamount_tc,
+                    curr, entity_credit_account, approved)
+         VALUES (-1025, date1(), 1010, 1010, 1010, 1010, 'XTS', -255, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1025, -1000, date1(), 1010, true, -121);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1025, -1000, date1(), 1010, 1010, 'XTS', true, -121);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1025, -1001, date1(), -1000, true, -122);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1025, -1001, date1(), -1000, -1000, 'XTS', true, -122);
 
     INSERT INTO ac_tax_form(entry_id, reportable) values (-122, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1025, -1001, date1(), -10, true, -123);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1025, -1001, date1(), -10, -10, 'XTS', true, -123);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1025, -1002, date1(), 505, true, -124);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1025, -1002, date1(), 505, 505, 'XTS', true, -124);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1025, -1000, date1(), -505, true, -125);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1025, -1000, date1(), -505, -505, 'XTS', true, -125);
 
     -- Run tests
 
@@ -162,32 +172,39 @@ BEGIN;
     -- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
     -- paid $500 currnet year, $500 in future year -1026
 
-    INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved)
-          values(-1026, date1(), 1010, 1010, 'USD', -255, true);
+    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr,
+                    amount_tc, netamount_tc, entity_credit_account, approved)
+          values(-1026, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1000, date1(), 1010, true, -131);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1000, date1(), 1010, 1010, 'XTS', true, -131);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1001, date1(), -1000, true, -132);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1001, date1(), -1000, -1000, 'XTS', true, -132);
 
     INSERT INTO ac_tax_form(entry_id, reportable) values (-132, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1001, date1(), -10, true, -133);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1001, date1(), -10, -10, 'XTS', true, -133);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1002, date1(), 505, true, -134);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1002, date1(), 505, 505, 'XTS', true, -134);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1000, date1(), -505, true, -135);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1000, date1(), -505, -505, 'XTS', true, -135);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1002, date2(), 505, true, -136);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1002, date2(), 505, 505, 'XTS', true, -136);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1026, -1000, date2(), -505, true, -137);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1026, -1000, date2(), -505, -505, 'XTS', true, -137);
 
     PREPARE test AS SELECT sum(portion) = 1
                       FROM cash_impact
@@ -217,26 +234,31 @@ BEGIN;
     -- $500 currnet year, $500 in future year -1027, to second vendor
     -- Vendor Invoices.
 
-    INSERT INTO ap (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved)
-    values(-1027, date1(), 1010, 1010, 'USD', -256, true);
+    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr,
+                    amount_tc, netamount_tc, entity_credit_account, approved)
+    values(-1027, date1(), 1010, 1010, 'XTS', 1010, 1010, -256, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1027, -1000, date1(), 1010, true, -141);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1027, -1000, date1(), 1010, 1010, 'XTS', true, -141);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1027, -1001, date1(), -1000, true, -142);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1027, -1001, date1(), -1000, -1000, 'XTS', true, -142);
 
     INSERT INTO ac_tax_form(entry_id, reportable) values (-142, true);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1027, -1001, date1(), -10, true, -143);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1027, -1001, date1(), -10, -10, 'XTS', true, -143);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1027, -1002, date1(), 1010, true, -144);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1027, -1002, date1(), 1010, 1010, 'XTS', true, -144);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
-         VALUES (-1027, -1000, date1(), -1010, true, -145);
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+                          approved, entry_id)
+         VALUES (-1027, -1000, date1(), -1010, -1010, 'XTS', true, -145);
 
     PREPARE test AS SELECT sum(portion) = 1
                       FROM cash_impact

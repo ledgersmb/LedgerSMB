@@ -715,7 +715,7 @@ SELECT cr.id::INT, a.source, n.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.
     JOIN reconciliation__account_list() coa ON coa.accno=s.accno
     JOIN public.cr_report cr
     ON s.id = a.chart_id
-    AND date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
+    AND  date_trunc('MONTH', a.transdate)::DATE <= date_trunc('MONTH', cr.end_date)::DATE
     AND date_trunc('MONTH', a.cleared)::DATE   >= date_trunc('MONTH', cr.end_date)::DATE
     AND ( a.cleared IS NOT NULL OR a.transdate > (SELECT MAX(cleared) FROM sl30.acc_trans))
     JOIN (
@@ -743,6 +743,7 @@ FROM (
   FROM _cr_report_line
 ) cr1
 WHERE cr.id = cr1.id;
+UPDATE cr_report_line SET insert_time = post_date;
 -- Patch for suspect clear dates
 -- The UI should reflect this
 -- Unsubmit the suspect report to allow easy edition

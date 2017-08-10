@@ -29,11 +29,13 @@ $$ language sql;
 
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric,
+in_amount_fx numeric, in_curr text,
 in_cleared bool, in_memo text, in_business_units int[]
 ) RETURNS journal_line AS $$
-        INSERT INTO journal_line(account_id, journal_id, amount, cleared)
-        VALUES (in_account_id, in_journal_id, in_amount,
-                coalesce(in_cleared, false));
+        INSERT INTO journal_line(account_id, journal_id, amount,
+          amount_tc, curr, cleared)
+        VALUES (in_account_id, in_journal_id, in_amount, in_amount_fx,
+           in_curr, coalesce(in_cleared, false));
 
         INSERT INTO business_unit_jl(entry_id, bu_class, bu_id)
         SELECT currval('journal_line_id_seq'), class_id, id
@@ -105,8 +107,8 @@ in_recurring bool
 DECLARE retval journal_search_result;
 BEGIN
         FOR retval IN
-                SELECT j.id, j.reference , j.description, j.journal,
-                        j.post_date , j.approved,
+                SELECT j.id, j.reference, j.description, j.journal,
+                        j.post_date, j.approved,
                         j.is_template, eca.meta_number,
                         e.name, ec.class,
                         coalesce(
@@ -118,21 +120,23 @@ BEGIN
                 LEFT JOIN entity e ON (eca.entity_id = e.id)
                 LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
---              WHERE (in_reference IS NULL OR in_reference = j.reference) AND
---                      (in_description IS NULL
---                              or in_description = j.description) AND
---                      (in_entry_type is null or in_entry_type = j.journal)
---                      and (in_transaction_date is null
---                              or in_transaction_date = j.post_date) and
---                      j.approved = coalesce(in_approved, true) and
---                      j.is_template = coalesce(in_is_template, false) and
---                      (in_meta_number is null
---                              or eca.meta_number = in_meta_number) and
---                      (in_entity_class is null
---                              or eca.entity_class = in_entity_class) AND
- --                       (in_recurring IS NOT TRUE OR
-  --                              coalesce(r.startdate, r.nextdate) <= now()::date
-   --                     )
+                WHERE (in_reference IS NULL OR in_reference = j.reference) AND
+                        (in_description IS NULL
+                                or in_description = j.description) AND
+                        (in_entry_type is null or in_entry_type = j.journal)
+                        and (in_transaction_date is null
+                                or in_transaction_date = j.post_date) and
+                        j.approved = coalesce(in_approved, true) and
+                        j.is_template = coalesce(in_is_template, false) and
+                        (in_department_id is null
+                                or j.department_id = in_department_id) and
+                        (in_meta_number is null
+                                or eca.meta_number = in_meta_number) and
+                        (in_entity_class is null
+                                or eca.entity_class = in_entity_class) AND
+                        (in_recurring IS NOT TRUE OR
+                                coalesce(r.startdate, r.nextdate) <= now()::date
+                        )
         LOOP
                 RETURN NEXT retval;
         END LOOP;

@@ -147,6 +147,7 @@ sub add {
     }
     $form->{oldtransdate} = $form->{transdate};
     $form->{focus}        = "reference";
+    &create_links;
     display_form(1);
 
 }
@@ -353,13 +354,20 @@ sub save_temp {
     $lsmb->{journal_lines} = [];
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"accno_$iter"} and
-                  (($form->{"credit_$iter"} != 0) or ($form->{"debit_$iter"} != 0))){
+            (($form->{"credit_$iter"} != 0) or
+             ($form->{"debit_$iter"} != 0) or
+             ($form->{"credit_fx_$iter"} != 0) or
+             ($form->{"debit_fx_$iter"} != 0))){
              my ($acc_id, $acc_name) = split /--/, $form->{"accno_$iter"};
-             my $amount = $form->{"credit_$iter"} || ( $form->{"debit_$iter"}
-                                                     * -1 );
+             my $amount = $form->{"credit_$iter"} ||
+                 ( $form->{"debit_$iter"} * -1 );
+             my $amount_fx = $form->{"credit_fx_$iter"} ||
+                 ( $form->{"debit_fx_$iter"} * -1 );
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
                    amount => $amount,
+                   amount_fx => $amount_fx,
+                   curr => $form->{"curr_$iter"},
                    cleared => false,
                   };
         }
@@ -371,74 +379,68 @@ sub save_temp {
 
 
 sub display_row {
-    my ($init) = @_;
-    $form->{totaldebit}  = 0;
-    $form->{totalcredit} = 0;
+  my ($init) = @_;
+  $form->{totaldebit}  = 0;
+  $form->{totalcredit} = 0;
 
     for my $i ( 0 .. $form->{rowcount} ) {
 
         my $temphash1;
-        $temphash1->{index} = $i;
-        $temphash1->{source} = $form->{"source_$i"}; #input box
-        $temphash1->{memo} = $form->{"memo_$i"}; #input box;
-        $temphash1->{accnoset} = 1;
-        $temphash1->{projectset} = 1;
+        $temphash1->{index}=$i;
+        $temphash1->{source}=$form->{"source_$i"};#input box
+    $temphash1->{memo}=$form->{"memo_$i"}; #input box;
+        $temphash1->{curr}=$form->{"curr_$i"};
+    $temphash1->{accnoset}=1;
+        $temphash1->{projectset}=1;
         $temphash1->{fx_transactionset} = 1;
         if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"}) {
-            $temphash1->{accnoset} = 0;   #use  @{ $form->{all_accno} }
-            $temphash1->{projectset} = 0; #use  @{ $form->{all_project} }
-            $temphash1->{fx_transactionset} = 0;    #use checkbox and value=1 if transfer=1
+                  $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+                  $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
+                  $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
 
         }
         else {
-            $form->{"debit_$i"} = LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
-            $form->{"credit_$i"} = LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
+            $form->{"debit_$i"} =
+                LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
+            $form->{"credit_$i"} =
+                LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
             $form->{totaldebit}  += $form->{"debit_$i"};
             $form->{totalcredit} += $form->{"credit_$i"};
 
-            for (qw(debit credit)) {
+            for (qw(debit debit_fx credit credix_fx)) {
                 $form->{"${_}_$i"} = ($form->{"${_}_$i"})
-                                   ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
-                                   : "";
+                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+                    : "";
+                $temphash1->{$_} = $form->{"${_}_$i"};
             }
 
-            $temphash1->{debit} = $form->{"debit_$i"};
-            $temphash1->{credit} = $form->{"credit_$i"};
-
-            for my $cls(@{$form->{bu_class}}) {
-                $temphash1->{"b_unit_$cls->{id}"} = $form->{"b_unit_$cls->{id}_$i"};
+            for my $cls(@{$form->{bu_class}}){
+                $temphash1->{"b_unit_$cls->{id}"} =
+                    $form->{"b_unit_$cls->{id}_$i"};
             }
 
-            if ($i < $form->{rowcount}) {
-                $temphash1->{accno} = $form->{"accno_$i"};
+            if ( $i < $form->{rowcount} ) {
+                $temphash1->{accno}=$form->{"accno_$i"};
 
-                if ($form->{projectset} and $form->{"projectnumber_$i"}) {
-                    $temphash1->{projectnumber} = $form->{"projectnumber_$i"};
-                    $temphash1->{projectnumber} =~ s/--.*//;
+                if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
+                    $temphash1->{projectnumber}=$form->{"projectnumber_$i"};
+                    $temphash1->{projectnumber}=~ s/--.*//;
                 }
 
-                if ($form->{transfer} and $form->{"fx_transaction_$i"}) {
-                    $temphash1->{fx_transactionset} = 1;
-                }
-                else {
-                    $temphash1->{fx_transactionset} = 0;
-                }
-
-                $hiddens{"accno_$i"} = $form->{"accno_$i"};
-                $hiddens{"projectnumber_$i"} = $form->{"projectnumber_$i"};
+                $hiddens{"accno_$i"}=$form->{"accno_$i"};
+                $hiddens{"projectnumber_$i"}=$form->{"projectnumber_$i"};
 
             }
             else {
-                $temphash1->{accnoset} = 0;   #use  @{ $form->{all_accno} }
-                $temphash1->{projectset} = 0;   #use  @{ $form->{all_accno} }
-                $temphash1->{fx_transactionset} = 0;
+                $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+                $temphash1->{projectset}=0;   #use  @{ $form->{all_accno} }
             }
-         }
+        }
 
-         push @displayrows,$temphash1;
+        push @displayrows,$temphash1;
     }
 
-    $hiddens{rowcount} = $form->{rowcount};
+  $hiddens{rowcount}=$form->{rowcount};
 }
 
 sub edit {
@@ -469,14 +471,16 @@ sub edit {
     foreach my $ref (@{ $form->{GL} }) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
         $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
-        for (qw(fx_transaction source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
-        if ( $ref->{amount} < 0 ) {
-            $form->{totaldebit} -= $ref->{amount};
-            $form->{"debit_$i"} =  $ref->{amount} * $minusOne;
+        for (qw(curr source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
+        if ( $ref->{amount_bc} < 0 ) {
+            $form->{totaldebit} -= $ref->{amount_bc};
+            $form->{"debit_$i"} =  $ref->{amount_bc} * $minusOne;
+            $form->{"debit_fx_$i"} =  $ref->{amount_tc} * $minusOne;
         }
         else {
-            $form->{totalcredit} += $ref->{amount};
-            $form->{"credit_$i"} =  $ref->{amount} * $plusOne;
+            $form->{totalcredit} += $ref->{amount_bc};
+            $form->{"credit_$i"} =  $ref->{amount_bc} * $plusOne;
+            $form->{"credit_fx_$i"} =  $ref->{amount_tc} * $plusOne;
         }
         for my $cls (@{$form->{bu_class}}){
             $form->{"b_unit_$cls->{id}_$i"} = $ref->{"b_unit_$cls->{id}"};
@@ -547,22 +551,24 @@ sub gl_subtotal {
 
 
 sub update {
-    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
-    $form->open_form unless $form->check_form;
+    &create_links;
+     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+     $form->open_form unless $form->check_form;
 
-    $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
-    if ( $form->{transdate} ne $form->{oldtransdate} ) {
-        $form->{oldtransdate} = $form->{transdate};
-    }
+     $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
+     if ( $form->{transdate} ne $form->{oldtransdate} ) {
+         $form->{oldtransdate} = $form->{transdate};
+     }
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
     GL->get_all_acc_dep_pro( \%myconfig, \%$form );
 
     @a     = ();
     $count = 0;
-    @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
+    @flds  = qw(accno debit debit_fx credit credit_fx curr
+                projectnumber source memo);
     for my $cls (@{$form->{bu_class}}){
-        if (scalar @{$form->{b_units}->{$cls->{id}}}) {
+        if (scalar @{$form->{b_units}->{$cls->{id}}}){
            push @flds, "b_unit_$cls->{id}";
         }
     }
@@ -570,28 +576,31 @@ sub update {
     for my $i ( 0 .. $form->{rowcount} ) {
         $form->{"debit_$i"} =~ s/\s+//g;
         $form->{"credit_$i"} =~ s/\s+//g;
-
-        unless (($form->{"debit_$i"} eq "") && ($form->{"credit_$i"} eq "")) {
+        $form->{"debit_fx_$i"} =~ s/\s+//g;
+        $form->{"credit_fx_$i"} =~ s/\s+//g;
+        unless ( ( $form->{"debit_$i"} eq "" )
+            && ( $form->{"credit_$i"} eq "" )
+            && ( $form->{"debit_fx_$i"} eq "" )
+            && ( $form->{"credit_fx_$i"} eq "" ) )
+        {
             my $found_acc = 0;
-            for my $acc(@{ $form->{all_accno} }) {
-                if ($form->{"accno_$i"} eq $acc->{accstyle}) {
+            for my $acc(@{ $form->{all_accno} }){
+                if ($form->{"accno_$i"} eq $acc->{accstyle}){
                     $found_acc = 1;
                 }
                 elsif ($form->{"accno_$i"} eq $acc->{accno}) {
                     $form->{"accno_$i"} = $acc->{accstyle};
                     $found_acc = 1;
                 }
-            }
+           }
 
             if (not $found_acc){
-                $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
+                $form->error($locale->text('Account [_1] not found.',
+                                           $form->{"accno_$i"}));
             }
-
-            for my $tx_type (qw(debit credit)) {
-                $form->{"${tx_type}_$i"} = $form->parse_amount(
-                    \%myconfig,
-                    $form->{"${tx_type}_$i"}
-                );
+            for my $tx_type (qw(debit credit debit_fx credit_fx)) {
+                $form->{"${tx_type}_$i"} =
+                    $form->parse_amount( \%myconfig, $form->{"${tx_type}_$i"} );
             }
 
             push @a, {};

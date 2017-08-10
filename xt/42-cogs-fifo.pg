@@ -67,8 +67,8 @@ BEGIN;
 
     INSERT INTO entity_credit_account
             (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)
-    VALUES (-1000, 1, 'cogs test1', -1000, 'USD', -1103),
-           (-2000, 2, 'cogs test2', -1000, 'USD', -1103);
+    VALUES (-1000, 1, 'cogs test1', -1000, 'XTS', -1103),
+           (-2000, 2, 'cogs test2', -1000, 'XTS', -1103);
 
     -- Run tests
 
@@ -78,7 +78,7 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1201, -1201, -1, 100, 0, 3);
 
-    PREPARE test AS SELECT sum(amount) IS NULL
+    PREPARE test AS SELECT sum(amount_bc) IS NULL
                       FROM acc_trans
                      WHERE trans_id = -1201 AND chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'initial COGS is null, (invoice 1, series 1)');
@@ -87,7 +87,7 @@ BEGIN;
     SELECT cogs__add_for_ar_line(-1201);
     select * from invoice where id < 0;
 
-    PREPARE test AS SELECT sum(amount) = 0
+    PREPARE test AS SELECT sum(amount_bc) = 0
                       FROM acc_trans
                      WHERE trans_id = -1201 AND chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-run COGS is 0, (invoice 1, series 1)');
@@ -100,7 +100,7 @@ BEGIN;
 
     SELECT cogs__add_for_ap_line(-1202);
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
                       from acc_trans
                      where trans_id = -1201 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 37.50, (invoice 1, series 1)');
@@ -121,7 +121,7 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1203, -1203, -1, 100, 0, 3);
 
-    PREPARE test AS SELECT sum(amount) IS NULL
+    PREPARE test AS SELECT sum(amount_bc) IS NULL
                       from acc_trans
                      where trans_id = -1203 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'initial COGS is null, (invoice 3, series 1)');
@@ -146,14 +146,14 @@ BEGIN;
 
     --duplicate to check against reversals
     PREPARE test AS SELECT 
-                       sum(amount) = -37.5
+                       sum(amount_bc) = -37.5
                       from acc_trans
                      where trans_id = -1201 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS still 37.50, (invoice 1, series 1)');
     DEALLOCATE test;
 
     PREPARE test AS SELECT 
-                        sum(amount) = 0
+                        sum(amount_bc) = 0
                       from acc_trans
                      where trans_id = -1203 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-run COGS is 0, (invoice 3, series 1)');
@@ -186,13 +186,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 75 (invoice 4, series 1)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
                       from acc_trans
                      where trans_id = -1201 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 62.50, (invoice 1, series 1)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -50
+    PREPARE test AS SELECT sum(amount_bc) = -50
                       from acc_trans
                      where trans_id = -1203 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 50, (invoice 2, series 1)');
@@ -230,13 +230,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 50 (invoice 5, series 1)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
                       from acc_trans
                      where trans_id = -1201 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 62.50, (invoice 1, series 1)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -150
+    PREPARE test AS SELECT sum(amount_bc) = -150
                       from acc_trans
                      where trans_id = -1203 and chart_id = -1102;
     SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 150, (invoice 2, series 1)');
@@ -273,7 +273,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 2 series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
                       from acc_trans
                      where trans_id = -2202 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 2)');
@@ -328,13 +328,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-4, allocation invoice 4 series 2 is 75');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
                       from acc_trans
                      where trans_id = -2202 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-4 COGS is 37.50, (invoice 2, series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
                       from acc_trans
                      where trans_id = -2204 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-4 COGS is 62.50, (invoice 2, series 4)');
@@ -372,19 +372,19 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 5 series 2 is 50');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
                       from acc_trans
                      where trans_id = -2202 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 37.50, (invoice 2, series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
                       from acc_trans
                      where trans_id = -2204 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 62.50, (invoice 2, series 4)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -50
+    PREPARE test AS SELECT sum(amount_bc) = -50
                       from acc_trans
                      where trans_id = -2205 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 50, (invoice 2, series 5)');
@@ -429,25 +429,25 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 6 series 2 is 150; ');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
     from acc_trans
      where trans_id = -2202 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 37.50, (invoice 2, series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
     from acc_trans
      where trans_id = -2204 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 62.50, (invoice 4, series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -50
+    PREPARE test AS SELECT sum(amount_bc) = -50
     from acc_trans
      where trans_id = -2205 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 50, (invoice 5, series 2)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 125
+    PREPARE test AS SELECT sum(amount_bc) = 125
     from acc_trans
      where trans_id = -2206 and chart_id = -2102;
     SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is -125, (invoice 6, series 2)');
@@ -484,7 +484,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 2 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
     from acc_trans
      where trans_id = -3202 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 3)');
@@ -512,13 +512,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 3 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
     from acc_trans
      where trans_id = -3202 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -12.5
+    PREPARE test AS SELECT sum(amount_bc) = -12.5
     from acc_trans
      where trans_id = -3203 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 12.5, (invoice 3, series 3)');
@@ -553,13 +553,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 50 post-AR run (invoice 4 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
     from acc_trans
      where trans_id = -3202 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 37.50, (invoice 2, series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
     from acc_trans
      where trans_id = -3203 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 62.5, (invoice 3, series 3)');
@@ -600,19 +600,19 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 50 post-AR run (invoice 5 series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -37.5
+    PREPARE test AS SELECT sum(amount_bc) = -37.5
     from acc_trans
      where trans_id = -3202 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 37.50, (invoice 2, series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -62.5
+    PREPARE test AS SELECT sum(amount_bc) = -62.5
     from acc_trans
      where trans_id = -3203 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 62.5, (invoice 3, series 3)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = -50
+    PREPARE test AS SELECT sum(amount_bc) = -50
     from acc_trans
      where trans_id = -3205 and chart_id = -3102;
     SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 50, (invoice 3, series 5)');
@@ -649,7 +649,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-2 Allocated is -75 (invoice 2 series 4)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 0
+    PREPARE test AS SELECT sum(amount_bc) = 0
       FROM acc_trans
      WHERE trans_id = -4202 and chart_id = -4102;
     SELECT results_eq('test',ARRAY[true],'post-ap-2 COGS is 0, invoice 2, series 4)');
@@ -677,7 +677,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-3 Allocated is 0 (invoice 3 series 4)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 0
+    PREPARE test AS SELECT sum(amount_bc) = 0
       FROM acc_trans
      WHERE trans_id = -4202 and chart_id = -4102;
     SELECT results_eq('test',ARRAY[true],'post-ap-3 COGS is 0, invoice 2, series 4)');
@@ -710,13 +710,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 75 (invoice 4 series 4)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 0
+    PREPARE test AS SELECT sum(amount_bc) = 0
       FROM acc_trans
      WHERE trans_id = -4202 and chart_id = -4102;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 0, invoice 2, series 4)');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount) = 25
+    PREPARE test AS SELECT sum(amount_bc) = 25
       FROM acc_trans
      WHERE trans_id = -4204 and chart_id = -4102;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 25, invoice 2, series 4)');
@@ -831,6 +831,8 @@ BEGIN;
 
     PREPARE test AS SELECT allocated = -75
                     FROM invoice WHERE id = -5204;
+--    TODO: Fix, Bad syntax and no id = -5204
+
     SELECT todo('Fix, Bad syntax and no id = -5204',1);
 --    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75; ' || allocated);
      DEALLOCATE test;

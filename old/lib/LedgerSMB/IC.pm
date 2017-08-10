@@ -41,6 +41,7 @@ package IC;
 
 use Log::Log4perl;
 use LedgerSMB::File;
+use LedgerSMB::Setting;
 use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('IC');
@@ -1015,11 +1016,7 @@ sub create_links {
             SELECT value FROM defaults
              WHERE setting_key = 'weightunit'|;
         ( $form->{weightunit} ) = $dbh->selectrow_array($query);
-        $query = qq|
-            SELECT value FROM defaults
-             WHERE setting_key = 'curr'|;
-        ( $form->{currencies} ) = $dbh->selectrow_array($query);
-
+        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
     }
 }
 

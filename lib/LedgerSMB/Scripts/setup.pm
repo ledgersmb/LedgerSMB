@@ -405,8 +405,8 @@ sub run_backup {
         $mimetype = 'text/x-sql';
     }
     elsif ($request->{backup} eq 'db') {
-        $backupfile = $database->backup;
-        $mimetype   = 'application/octet-stream';
+       $backupfile = $database->backup;
+       $mimetype   = 'application/octet-stream';
     }
     else {
         die $request->{_locale}->text('Invalid backup request');
@@ -418,16 +418,16 @@ sub run_backup {
     if ($request->{backup_type} eq 'email') {
 
         my $mail = LedgerSMB::Mailer->new(
-            from     => $LedgerSMB::Sysconfig::backup_email_from,
-            to       => $request->{email},
-            subject  => "Email of Backup",
-            message  => 'The Backup is Attached',
-        );
+            from          => $LedgerSMB::Sysconfig::backup_email_from,
+            to            => $request->{email},
+            subject       => "Email of Backup",
+            message       => 'The Backup is Attached',
+            );
         $mail->attach(
             mimetype => $mimetype,
             filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
-        );
+            );
         $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new_UI(
@@ -447,7 +447,7 @@ sub run_backup {
             HTTP_OK,
             [
                 'Content-Type' => $mimetype,
-                'Content-Disposition' =>
+                   'Content-Disposition' =>
                     "attachment; filename=\"$attachment_name\""
             ],
             $bak  # return the file-handle
@@ -483,7 +483,7 @@ sub revert_migration {
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/complete_migration_revert',
-        );
+           );
 
     return $template->render_to_psgi($request);
 }
@@ -955,7 +955,7 @@ sub select_coa {
             my ($reauth, $database) = _get_database($request);
             return $reauth if $reauth;
 
-            $database->load_coa( {
+           $database->load_coa( {
                country => $request->{coa_lc},
                chart => $request->{chart} });
 
@@ -1051,7 +1051,7 @@ sub _render_new_user {
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/new_user',
-        );
+           );
 
     return $template->render_to_psgi($request);
 }
@@ -1301,18 +1301,18 @@ sub create_initial_user {
         funcname => 'location_list_country'
     );
 
-    my $locale = $request->{_locale};
+   my $locale = $request->{_locale};
 
-    @{$request->{perm_sets}} = (
-        {id => '0', label => $locale->text('Manage Users')},
-        {id => '1', label => $locale->text('Full Permissions')},
-        {id => '-1', label => $locale->text('No changes')},
-    );
+   @{$request->{perm_sets}} = (
+       {id => '0', label => $locale->text('Manage Users')},
+       {id => '1', label => $locale->text('Full Permissions')},
+       {id => '-1', label => $locale->text('No changes')},
+   );
     my $template = LedgerSMB::Template->new_UI(
         $request,
         template => 'setup/new_user',
-    );
-    return $template->render_to_psgi($request);
+     );
+     return $template->render_to_psgi($request);
 }
 
 =item edit_user_roles
