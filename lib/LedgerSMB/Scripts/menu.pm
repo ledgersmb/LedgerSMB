@@ -38,10 +38,8 @@ and route to the appropriate function.  It routes to expanding_menu.
 
 sub __default {
     my ($request) = @_;
-    if ($request->{new}){
-        return root_doc($request);
-    }
-    return expanding_menu($request);
+
+    return root_doc($request);
 }
 
 =pod
@@ -66,19 +64,10 @@ sub root_doc {
 
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
-    for my $item (@{$menu->{menu_items}}){
-        if ($request->{'open'}
-            && $request->{'open'} =~ /:$item->{id}:/ ){
-            $item->{'open'} = 'true';
-        }
-    }
 
-    $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
+    $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'main',
-        format => 'HTML'
     );
     return $template->render_to_psgi($menu);
 }
@@ -87,44 +76,34 @@ sub root_doc {
 
 =over
 
-=item expanding_menu
+=item menuitems_json
 
-This function generates an expanding menu.  By default all nodes are closed, but
-there nodes which are supposed to be open are marked.
-
+Returns the menu items in JSON format
 
 =back
 
+
 =cut
 
-sub expanding_menu {
+sub menuitems_json {
     my ($request) = @_;
-    if ($request->{'open'} !~ s/:$request->{id}:/:/){
-    $request->{'open'} .= ":$request->{id}:";
-    }
-
-    # The above system can lead to extra colons.
-    $request->{'open'} =~ s/:+/:/g;
-
-
+    my $locale = $request->{_locale};
+    # There must be a better way
+    my $method = $request->{_auth}->{env}->{REQUEST_METHOD};
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
-    $menu->generate();
-    for my $item (@{$menu->{menu_items}}){
-        if ($request->{'open'} =~ /:$item->{id}:/ ){
-            $item->{'open'} = 'true';
-        }
-    }
 
-    my $template = LedgerSMB::Template->new(
-         user => $request->{_user},
-         locale => $request->{_locale},
-         path => 'UI/menu',
-         template => 'expanding',
-         format => 'HTML',
-    );
-    return $template->render_to_psgi($menu);
+    $menu->generate;
+    $_->{label} = $locale->maketext($_->{label})
+        for (@{$menu->{menu_items}});
+
+    return $request->to_json( $menu->{menu_items} );
 }
 
+=pod
+
+=over
+
+=back
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 

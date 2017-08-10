@@ -292,8 +292,7 @@ sub defaults_screen {
     );
 
     my $template = LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User,
-        locale => $request->{_locale},
+        $request,
         template => 'Configuration/settings');
     return $template->render_to_psgi({
         form => $request,
@@ -326,10 +325,9 @@ sub sequence_screen {
     ++$count;
     }
     return LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User,
-        locale => $locale,
-        template => 'Configuration/sequence')
-        ->render_to_psgi($request);
+        $request,
+        template => 'Configuration/sequence'
+        )->render_to_psgi($request);
 }
 
 =item save_defaults

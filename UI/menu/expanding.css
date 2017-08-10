@@ -1,12 +1,6 @@
-li.menu_closed {
-}
-
-li.menu_closed > ul {
-	display: none;
-}
-
-li.menu_open > ul {
-	display: block;
+#top_menu .dijitTreeIcon {
+    background-image: none;
+    width: 0
 }
 
 #version_info {

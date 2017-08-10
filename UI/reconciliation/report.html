@@ -184,7 +184,7 @@ END ?>
                             id = id
                             msg = text('Clear date is [*,_1,day] in the future of after posting',0-row.days)
                         };
-                    ELSIF row.days > 60;
+                    ELSIF row.days > 150;
                         class='cleared-past';
                         element_data = {
                             id = id
@@ -193,7 +193,7 @@ END ?>
                     END;
                 END;
             ?>
-            <td id='<?lsmb id ?>' class='<?lsmb class ?>'>
+            <td id='<?lsmb id ?>' class='date <?lsmb class ?>'>
                 <?lsmb INCLUDE tooltip element_data; ?>
             <?lsmb row.clear_time ?></td>
             <td><?lsmb row.scn ?> </td>

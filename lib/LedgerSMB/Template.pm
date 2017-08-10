@@ -112,10 +112,14 @@ Returns a list of format names, any of the following (in order) as applicable:
 
 =back
 
-=item new_UI(user => \%myconfig, locale => $locale, template => $file, ...)
+=item new_UI($request, template => $file, ...)
 
 Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
+the user to C<$request->{_user}>, the locale to C<$request->{_locale}
 and leaves auto-output enabled.
+
+Additionally, variables are added to the template processor as required
+by the HTML UI.
 
 =item preprocess ($rawvars, $escape)
 
@@ -168,6 +172,43 @@ desired file extention
 
 =back
 
+=head1 TEMPLATE FUNCTIONS
+
+Templates can make use of the following functions, installed by the
+template processor, when available for the current format.
+
+=over
+
+=item escape($string)
+
+This function encodes the string argument to be safe for inclusion in
+the target document, showing the exact content of the string.
+
+E.g. for HTML encoding, this means that ampersand is encoded into C<&amp;>
+and that newline characters in LaTeX are encoded into double backslashes.
+
+=item UNESCAPE($string) [optional]
+
+This function reverses the string-escaping as might have been applied by
+the C<escape> function. This function is not guaranteed to be available
+(currently only supported for HTML templates).
+
+=item text($string, @args)
+
+This function looks up the translation of C<$string> in the language lexicon,
+interpolating the string's variable placeholders with the arguments provided
+in C<@args>. The resulting string will be escaped using the C<escape> function.
+
+Note: This string looks up the exact string C<$string>, which makes it
+unsuited for translation of string values passed to the template through
+(escaped) string variable values.
+
+=item tt_url($string)
+
+This function applies basic URL encoding to C<$string>.
+
+=back
+
 =head1 FORMATS
 
 The template employs formats for a number of format-specific tasks:
@@ -194,6 +235,11 @@ repeatedly until all values to be passed to the template have been escaped.
 
 The return value is the escaped value to substitute for C<$value>. The
 escaping mechanism is format specific.
+
+=item unescape($value) [optional]
+
+The template calls this function with one scalar value as its argument,
+in order to reverse the transformation as applied by C<escape>.
 
 =item setup($parent, $variables, $output)
 
@@ -314,7 +360,8 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format language no_escape debug locale method
-                 format_options output_options no_auto_output ));
+                 format_options output_options no_auto_output
+                 additional_vars ));
     $self->{myconfig} = $args{user};
     $self->{outputfile} =
         "${LedgerSMB::Sysconfig::tempdir}/$args{output_file}" if
@@ -357,7 +404,24 @@ sub new {
 
 sub new_UI {
     my $class = shift;
-    return $class->new(@_, no_auto_ouput => 0, format => 'HTML', path => 'UI');
+    my $request = shift;
+
+    my $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
+            if $LedgerSMB::App_State::Company_Config;
+    my $UI_vars = {
+        dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
+        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
+    };
+
+    return $class->new(
+        @_,
+        no_auto_ouput => 0,
+        format => 'HTML' ,
+        path => 'UI',
+        user => $request->{_user},
+        locale => $request->{_locale},
+        additional_vars => $UI_vars
+    );
 }
 
 sub preprocess {
@@ -468,12 +532,9 @@ sub _maketext {
     my $self = shift;
     my $escape = shift;
 
-    if (defined $self->{locale}) {
-        return $escape->($self->{locale}->maketext(@_));
-    }
-    else {
-        return $escape->(@_);
-    }
+    return $escape->(defined $self->{locale}
+                    ? $self->{locale}->maketext(@_)
+                    : shift);
 }
 
 sub _render {
@@ -499,13 +560,17 @@ sub _render {
         value => 'screen'
     } if $LedgerSMB::App_State::Locale;
 
-
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
+    my $unescape = $format->can('unescape');
     my $cleanvars = $self->{no_escape} ? $vars : preprocess($vars, $escape);
     $cleanvars->{escape} = sub { return $escape->(@_); };
+    $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
+        if ($unescape && !$self->{no_escape});
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
     $cleanvars->{tt_url} = \&_tt_url;
+    $cleanvars->{$_} = $self->{additional_vars}->{$_}
+        for (keys %{$self->{additional_vars}});
 
     my $output;
     if ($self->{outputfile}) {

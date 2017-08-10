@@ -23,18 +23,20 @@ package LedgerSMB::Scripts::setup;
 use strict;
 use warnings;
 
+use Digest::MD5 qw(md5_hex);
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 use Locale::Country;
+use Try::Tiny;
+
+use LedgerSMB::App_State;
 use LedgerSMB::Database;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use LedgerSMB::App_State;
+use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
-use Try::Tiny;
-use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
-use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
@@ -57,10 +59,9 @@ sub no_db {
 sub __default {
 
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-        template => 'credentials',
-          format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/credentials',
     );
     return $template->render_to_psgi($request);
 }
@@ -204,9 +205,7 @@ sub login {
     _init_db($request);
     sanity_checks($database);
     $request->{login_name} = $version_info->{username};
-    # $version_info->{status} isn't always defined by get_info, so useless undefined messages
-    # are generated.
-    if (defined $version_info->{status} && $version_info->{status} eq 'does not exist'){
+    if ($version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
@@ -249,10 +248,9 @@ sub login {
             }
         }
     }
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'confirm_operation',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/confirm_operation',
     );
     return $template->render_to_psgi($request);
 }
@@ -287,10 +285,9 @@ sub list_databases {
     # for now we simply use a fixed regex. It will cover many if not most use cases.
     @{$request->{dbs}} = map {+{ row_id => $_, db  => $_ }} grep { ! m/^(postgres|template0|template1)$/ } @results ;
 
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'list_databases',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/list_databases',
     );
     return $template->render_to_psgi($request);
 }
@@ -309,10 +306,9 @@ sub list_users {
     for my $u (@$users) {
         push @{$request->{users}}, {row_id => $u->{id}, name => $u->{username} };
     }
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'list_users',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/list_users',
     );
     return $template->render_to_psgi($request);
 }
@@ -369,10 +365,9 @@ sub backup_roles {
 # Private method, basically just passes the inputs on to the next screen.
 sub _begin_backup {
     my $request = shift @_;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'begin_backup',
-            format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/begin_backup',
     );
     return $template->render_to_psgi($request);
 };
@@ -435,10 +430,9 @@ sub run_backup {
             );
         $mail->send;
         unlink $backupfile;
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/complete',
         );
         return $template->render_to_psgi($request);
     }
@@ -486,10 +480,9 @@ sub revert_migration {
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'complete_migration_revert',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/complete_migration_revert',
            );
 
     return $template->render_to_psgi($request);
@@ -527,10 +520,9 @@ so that further workflow can be aborted.
 sub template_screen {
     my ($request) = @_;
     $request->{template_dirs} = _get_template_directories();
-    return LedgerSMB::Template->new(
-           path => 'UI/setup',
-           template => 'template_info',
-           format => 'HTML',
+    return LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/template_info',
     )->render_to_psgi($request);
 }
 
@@ -682,6 +674,13 @@ sub _upgrade_test_is_applicable {
             && ($test->appname eq $dbinfo->{appname}));
 }
 
+sub _applicable_upgrade_tests {
+    my $dbinfo = shift;
+
+    return grep { _upgrade_test_is_applicable($dbinfo, $_) }
+                  LedgerSMB::Upgrade_Tests->get_tests;
+}
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
@@ -691,9 +690,7 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ! _upgrade_test_is_applicable($dbinfo, $check);
-
+    for my $check (_applicable_upgrade_tests($dbinfo)) {
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
             or die "Failed to execute pre-migration check " . $check->name;
@@ -704,10 +701,9 @@ sub upgrade {
     }
 
     if (upgrade_info($request) > 0) {
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'upgrade_info',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/upgrade_info',
         );
 
         $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
@@ -737,19 +733,10 @@ sub _failed_check {
     }
 
     my $hiddens = {
-       table => $check->table,
-   id_column => $check->{id_column},
-    id_where => $check->{id_where},
-      insert => $check->{insert},
+       check => $check->name,
+verify_check => md5_hex($check->test_query),
     database => $request->{database}
     };
-    # We need to flatten the columns array, because dyna-form doesn't
-    # know about complex values for the 'hiddens' attribute
-    my $i = 1;
-    for my $edit (@{$check->columns // []}) {
-      $hiddens->{"edit_$i"} = $edit;
-      $i++;
-    }
 
     my $rows = [];
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
@@ -762,7 +749,7 @@ sub _failed_check {
                    name => $column . "_$id",
                    id => $id,
                    options => $selectable_value,
-                   default_blank => 1,
+                   default_blank => ( 1 != @$selectable_value )
            } }
            : { input => {
                    name => $column . "_$id",
@@ -779,25 +766,53 @@ sub _failed_check {
     $sth->finish();
 
     my $heading = { map { $_ => $_ } @{$check->display_cols} };
-    my $buttons = [
+    my %buttons = map { $_ => 1 } @{$check->buttons};
+    my $buttons;
+    push @$buttons,
            { type => 'submit',
              name => 'action',
             value => 'fix_tests',
+          tooltip => { id => 'action-fix-tests',
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Save and Retry'}),
+                       position => 'above'
+                     },
              text => $request->{_locale}->text('Save and Retry'),
-            class => 'submit' },
-    ];
+            class => 'submit' }
+        if $check->columns;
+    push @$buttons,
+           { type => 'submit',
+             name => 'action',
+            value => 'cancel',
+          tooltip => { id => 'action-cancel',
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Cancel'}),
+                       position => 'above'
+                     },
+             text => $request->{_locale}->text('Cancel'),
+            class => 'submit' }
+        if $buttons{Cancel} or scalar($check->columns) == 0;
+    push @$buttons,
+           { type => 'submit',
+             name => 'action',
+            value => 'force',
+          tooltip => { id => 'action-force',
+                       msg => $request->{_locale}->maketext($check->{tooltips}->{'Force'}),
+                       position => 'above'
+                     },
+             text => $request->{_locale}->text('Force'),
+            class => 'submit' }
+        if $buttons{Force} && $check->{force_queries};
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'form-dynatable',
-        format => 'HTML',
     );
 
     return $template->render_to_psgi({
            form               => $request,
            base_form          => 'dijit/form/Form',
            heading            => $heading,
-           headers            => [$check->display_name, $check->instructions],
+           headers            => [$request->{_locale}->maketext($check->display_name),
+                                  $request->{_locale}->maketext($check->instructions)],
            columns            => $check->display_cols,
            rows               => $rows,
            hiddens            => $hiddens,
@@ -816,23 +831,41 @@ script.
 sub fix_tests{
     my ($request) = @_;
 
-    _init_db($request);
+    my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
     my $dbh = $request->{dbh};
-    my $table = $dbh->quote_identifier($request->{table});
-    my $where = $request->{id_where};
     $dbh->{AutoCommit} = 0;
 
-    my @edits;
-    my $i = 1;
-    while (defined $request->{"edit_$i"}) {
-      push @edits, $request->{"edit_$i"};
-      $i++;
-    }
+    my @fix_tests = grep { $_->name eq $request->{check} }
+        _applicable_upgrade_tests($dbinfo);
+
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found multiple applicable tests by the same identifier"
+        if @fix_tests > 1;
+    die "Inconsistent state fixing data for $request->{check}: "
+        . "found no applicable tests for given identifier"
+        if @fix_tests == 0;
+
+    my $check = shift @fix_tests;
+    die "Inconsistent state fixing date for $request->{check}: "
+        . "found different test by the same name while fixing data"
+        if $request->{verify_check} ne md5_hex($check->test_query);
+
+
+    my $table = $check->table;
+    my $where = $check->id_where;
+    my @edits = @{$check->columns};
+    # If we are inserting and id is displayed, we want to insert
+    # at this exact location
+    my $id_displayed = $check->{insert}
+                and grep( /^$check->{id_column}$/, @{$check->display_cols} );
 
     my $query;
-    if ($request->{insert}) {
-        my $columns = join(', ', map { $dbh->quote_identifier($_) } @edits);
-        my $values = join(', ', map { '?' } @edits);
+    if ($check->{insert}) {
+        my @_edits = @edits;
+        unshift @_edits, $check->{id_column} if $id_displayed;
+        my $columns = join(', ', map { $dbh->quote_identifier($_) } @_edits);
+        my $values = join(', ', map { '?' } @_edits);
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
     }
     else {
@@ -845,11 +878,13 @@ sub fix_tests{
     for my $count (1 .. $request->{count}){
         my $id = $request->{"id_$count"};
         my @values;
+        push @values, $id
+            if $id_displayed;
         for my $edit (@edits) {
           push @values, $request->{"${edit}_$id"};
         }
         push @values, $request->{"id_$count"}
-           if ! $request->{insert};
+           if ! $check->{insert};
 
         $sth->execute(@values) ||
             $request->error($sth->errstr);
@@ -881,10 +916,9 @@ sub create_db {
             $request->{_locale}->text('Login?');
         $request->{next_action} = 'login';
 
-        my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'confirm_operation',
-            format => 'HTML',
+        my $template = LedgerSMB::Template->new_UI(
+            $request,
+            template => 'setup/confirm_operation',
         );
         return $template->render_to_psgi($request);
     }
@@ -944,10 +978,9 @@ sub select_coa {
         closedir(COA);
     }
 
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'select_coa',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/select_coa',
     );
     return $template->render_to_psgi($request);
 }
@@ -1015,10 +1048,9 @@ sub _render_new_user {
         {id => '1', label => $locale->text('Full Permissions')},
         );
 
-    my $template = LedgerSMB::Template->new(
-        path => 'UI/setup',
-        template => 'new_user',
-        format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
            );
 
     return $template->render_to_psgi($request);
@@ -1071,10 +1103,9 @@ sub save_user {
                {id => '0', label => $locale->text('Manage Users')},
                {id => '1', label => $locale->text('Full Permissions')},
            );
-           my $template = LedgerSMB::Template->new(
-                path => 'UI/setup',
-                template => 'new_user',
-                format => 'HTML',
+           my $template = LedgerSMB::Template->new_UI(
+               $request,
+               template => 'setup/new_user',
            );
            $duplicate = $template->render_to_psgi($request);
        } else {
@@ -1277,10 +1308,9 @@ sub create_initial_user {
        {id => '1', label => $locale->text('Full Permissions')},
        {id => '-1', label => $locale->text('No changes')},
    );
-    my $template = LedgerSMB::Template->new(
-                   path => 'UI/setup',
-                   template => 'new_user',
-                   format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/new_user',
      );
      return $template->render_to_psgi($request);
 }
@@ -1311,11 +1341,9 @@ sub edit_user_roles {
 
     $user_obj->{username} = $user_rec[0]->{username};
 
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'edit_user',
-        format => 'HTML',
-        path=>'UI/setup',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/edit_user',
     );
     my $template_data = {
                         request => $request,
@@ -1373,6 +1401,27 @@ sub cancel{
     return __default(@_);
 }
 
+=item force
+
+Force work.  Forgets unmatching tests, applies a curing statement and move on.
+
+=cut
+
+sub force{
+    my ($request) = @_;
+    my $database = _init_db($request);
+
+    my %test = map { $_->name => $_ } LedgerSMB::Upgrade_Tests->get_tests();
+    my $force_queries = $test{$request->{check}}->{force_queries};
+
+    for my $force_query ( @$force_queries ) {
+        my $dbh = $request->{dbh};
+        $dbh->do($force_query);
+        $dbh->commit;
+    }
+    return upgrade($request);
+}
+
 =item rebuild_modules
 
 This method rebuilds the modules and sets the version setting in the defaults
@@ -1405,10 +1454,9 @@ sub complete {
     my $database = _init_db($request);
     my $temp = $database->loader_log_filename();
     $request->{lsmb_info} = $database->stats();
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/complete',
     );
     return $template->render_to_psgi($request);
 }
