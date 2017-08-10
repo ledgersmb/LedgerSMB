@@ -32,7 +32,6 @@ Escapes a scalar string and returns the sanitized version.
 sub escape {
     my $vars = shift @_;
     return undef unless defined $vars;
-    #$vars = encode_entities($vars);
     $vars = escape_html($vars);
     return $vars;
 }

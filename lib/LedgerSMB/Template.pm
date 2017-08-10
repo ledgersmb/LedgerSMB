@@ -532,12 +532,9 @@ sub _maketext {
     my $self = shift;
     my $escape = shift;
 
-    if (defined $self->{locale}) {
-        return $escape->($self->{locale}->maketext(@_));
-    }
-    else {
-        return $escape->(@_);
-    }
+    return $escape->(defined $self->{locale}
+                    ? $self->{locale}->maketext(@_)
+                    : shift);
 }
 
 sub _render {
@@ -562,7 +559,6 @@ sub _render {
         text => $LedgerSMB::App_State::Locale->text('Screen'),
         value => 'screen'
     } if $LedgerSMB::App_State::Locale;
-
 
     my $format = "LedgerSMB::Template::$self->{format}";
     my $escape = $format->can('escape');
