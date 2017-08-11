@@ -218,7 +218,7 @@ has tooltips => (is => 'ro',
     default => sub {
         return {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration')
+            'Cancel' => marktext('Cancel the <b>migration</b>')
     }},
     required => 0);
 
@@ -610,9 +610,9 @@ push @tests,__PACKAGE__->new(
               name => 'no_businesses',
       display_cols => ['id', 'description', 'discount'],
       instructions => marktext(
-                       'Undefined businesses.
-Please make sure business used by vendors and constomers are defined.
-Hover on buttons to see their effects and impacts'),
+                       'Undefined businesses.<br>
+Please make sure business used by vendors and constomers are defined.<br>
+<i><b>Hover on buttons</b> to see their effects and impacts</i>'),
            columns => ['description', 'discount'],
              table => 'business',
            appname => 'sql-ledger',
@@ -630,7 +630,7 @@ Hover on buttons to see their effects and impacts'),
           # I want to add to the tooltips already defaulted properly - YL
           tooltips => {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration'),
+            'Cancel' => marktext('Cancel the <b>migration</b>'),
             'Force' => marktext('This will <b>remove</b> the business references in <u>vendor</u> and <u>customer</u> tables')
           }
         );
@@ -648,8 +648,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB vendors must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB vendors must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -671,8 +671,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB customers must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB customers must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -694,8 +694,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB vendors must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB vendors must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -717,8 +717,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB customers must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB customers must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
