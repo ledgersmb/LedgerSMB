@@ -218,7 +218,7 @@ has tooltips => (is => 'ro',
     default => sub {
         return {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration')
+            'Cancel' => marktext('Cancel the <b>migration</b>')
     }},
     required => 0);
 
@@ -630,7 +630,7 @@ Please make sure business used by vendors and constomers are defined.<br>
           # I want to add to the tooltips already defaulted properly - YL
           tooltips => {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration'),
+            'Cancel' => marktext('Cancel the <b>migration</b>'),
             'Force' => marktext('This will <b>remove</b> the business references in <u>vendor</u> and <u>customer</u> tables')
           }
         );
