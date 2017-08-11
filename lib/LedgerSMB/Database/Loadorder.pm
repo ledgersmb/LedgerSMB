@@ -106,7 +106,7 @@ sub _limit_by_tag {
     chomp $tags;
     $self->{tagged} =
         any { $_ eq $self->{tag} }
-        map { $_ =~ s/\s//g; $_; }
+        map { my $s = $_; $s =~ s/\s//g; $s; }
         split /,/, $tags;
     return ($self->{tagged} ? $line : '');
 }
