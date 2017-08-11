@@ -568,7 +568,6 @@ sub _render {
     $cleanvars->{UNESCAPE} = sub { return $unescape->(@_); }
         if ($unescape && !$self->{no_escape});
     $cleanvars->{text} = sub { return $self->_maketext($escape, @_); };
-    $cleanvars->{decorated_text} = sub { return $self->{locale}->maketext(@_); };
     $cleanvars->{tt_url} = \&_tt_url;
     $cleanvars->{$_} = $self->{additional_vars}->{$_}
         for (keys %{$self->{additional_vars}});

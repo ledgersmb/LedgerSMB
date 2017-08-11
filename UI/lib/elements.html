@@ -426,7 +426,7 @@
 
 <?lsmb BLOCK decorated_text;
   IF element_data && element_data.msg.defined();
-    decorated_text(element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>'));
+    element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>');
   END;
 END ?>
 
