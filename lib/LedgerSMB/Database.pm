@@ -302,14 +302,18 @@ sub copy {
               )->create(copy_of => $self->dbname);
 }
 
-=head2 $db->load_base_schema()
+=head2 $db->load_base_schema([ upto_tag => $tag, log => $path, errlog => $path ])
 
-Loads the base schema definition file Pg-database.sql.
+Loads the base schema definition file Pg-database.sql and the
+database schema upgrade scripts.
+
+When an C<upto_tag> argument is provided, only schema changes upto a specific
+tag in the LOADORDER file will be applied (the main use-case being migrations).
 
 =cut
 
 sub load_base_schema {
-    my ($self, $args) = @_;
+    my ($self, %args) = @_;
     my $log = loader_log_filename();
 
     $self->{source_dir} = './'
@@ -318,23 +322,22 @@ sub load_base_schema {
     $self->run_file(
 
         file       => "$self->{source_dir}sql/Pg-database.sql",
-        log_stdout => ($args->{log} || "${log}_stdout"),
-        log_stderr => ($args->{errlog} || "${log}_stderr")
+        log_stdout => ($args{log} || "${log}_stdout"),
+        log_stderr => ($args{errlog} || "${log}_stderr")
     );
 
     if (opendir(LOADDIR, 'sql/on_load')) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
                 file       => "$self->{source_dir}sql/on_load/$fname",
-                log_stdout => ($args->{log} || "${log}_stdout"),
-                log_stderr => ($args->{errlog} || "${log}_stderr")
+                log_stdout => ($args{log} || "${log}_stdout"),
+                log_stderr => ($args{errlog} || "${log}_stderr")
                 ) if -f "sql/on_load/$fname";
         }
         closedir(LOADDIR);
     }
-    $self->apply_changes();
+    $self->apply_changes(upto_tag => $args{upto_tag});
     return 1;
-
 }
 
 
@@ -407,10 +410,10 @@ Creates a database and then loads it.
 sub create_and_load {
     my ($self, $args) = @_;
     $self->create;
-    $self->load_base_schema({
-    log_stdout     => $args->{log},
-    errlog  => $args->{errlog},
-          });
+    $self->load_base_schema(
+        log_stdout     => $args->{log},
+        errlog  => $args->{errlog},
+        );
     $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
@@ -447,21 +450,23 @@ sub upgrade_modules {
     return 1;
 }
 
-=head2 apply_changes
+=head2 apply_changes( [upto_tag => $tag] )
 
-Runs fixes if they have not been applied.
+Runs fixes if they have not been applied, optionally up to
+a specific tagged point in the LOADORDER file.
 
 =cut
 
 sub apply_changes {
-    my ($self) = @_;
+    my ($self, %args) = @_;
     my $dbh = $self->connect({
         PrintError=>0,
         AutoCommit => 0,
         pg_server_prepare => 0});
     $dbh->do("set client_min_messages = 'warning'");
     my $loadorder =
-        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER',
+                                            upto_tag => $args{upto_tag});
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     return $dbh->disconnect;

@@ -1149,14 +1149,11 @@ sub process_and_run_upgrade_script {
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
 
-    $database->load_base_schema({
+    $database->load_base_schema(
         log     => $temp . "_stdout",
         errlog  => $temp . "_stderr",
-                                });
-    $database->load_modules('LOADORDER', {
-        log     => $temp . "_stdout",
-        errlog  => $temp . "_stderr",
-                            });
+        upto_tag=> 'migration-target'
+        );
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -1198,6 +1195,13 @@ sub process_and_run_upgrade_script {
 
     $dbh->do("delete from defaults where setting_key like 'migration_%'");
 
+    # the schema was left incomplete when we created it, in order to provide
+    # a frozen (fixed) migration target. Now, however, we need to apply the
+    # changes from the remaining database schema management scripts to
+    # make the schema a complete one.
+    rebuild_modules($database);
+
+
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
@@ -1235,6 +1239,7 @@ sub run_upgrade {
     if ($v ne '1.2'){
         $request->{only_templates} = 1;
     }
+
     my $templates = LedgerSMB::Setting->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
@@ -1431,8 +1436,8 @@ between versions on a stable branch (typically upgrading)
 =cut
 
 sub rebuild_modules {
-    my ($request) = @_;
-    my $database = _init_db($request);
+    my ($request, $database) = @_;
+    $database //= _init_db($request);
 
     # The order is important here:
     #  New modules should be able to depend on the latest changes
