@@ -1450,7 +1450,7 @@ sub rebuild_modules {
 
 =item complete
 
-Gets the info and adds shows the complete screen.
+Gets the statistics info and shows the complete screen.
 
 =cut
 
@@ -1466,12 +1466,18 @@ sub complete {
     return $template->render_to_psgi($request);
 }
 
+=item system_info
 
+Asks the various modules for system and version info, showing the result
+
+=cut
 
 sub system_info {
     my ($request) = @_;
     my $database = _init_db($request);
 
+    # the intent here is to get a much more sophisticated system which
+    # asks registered modules for their system and dependency info
     my $info = {
         db => $database->get_info->{system_info},
         system => LedgerSMB::system_info()->{system},
