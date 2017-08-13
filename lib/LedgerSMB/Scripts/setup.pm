@@ -1467,6 +1467,25 @@ sub complete {
 }
 
 
+
+sub system_info {
+    my ($request) = @_;
+    my $database = _init_db($request);
+
+    my $info = {
+        db => $database->get_info->{system_info},
+        system => LedgerSMB::system_info()->{system},
+        environment => \%ENV,
+        modules => \%INC,
+    };
+    $request->{info} = $info;
+    return LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/system_info',
+        )->render_to_psgi($request);
+}
+
+
 =back
 
 =head1 COPYRIGHT

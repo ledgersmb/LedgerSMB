@@ -522,6 +522,19 @@ sub to_json {
         ];
 }
 
+sub system_info {
+    my ($dbh) = @_;
+
+    return {
+        system => {
+            perl => $^V->stringify,
+            LedgerSMB => $VERSION,
+            Plack => $Plack::VERSION,
+            INCLUDE_PATH => join("\n", @INC),
+        }
+    };
+}
+
 1;
 
 
