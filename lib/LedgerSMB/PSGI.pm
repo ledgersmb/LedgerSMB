@@ -26,6 +26,7 @@ use Try::Tiny;
 use List::Util qw{  none };
 
 # To build the URL space
+use Plack;
 use Plack::Builder;
 use Plack::Request;
 use Plack::App::File;

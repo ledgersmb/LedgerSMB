@@ -163,6 +163,37 @@ though the fullversion may give you an idea of what the actual version is run.
 
 =cut
 
+
+sub _stringify_db_ver {
+    my ($ver) = @_;
+    return join('.',
+                reverse
+                map {
+                    my $t = $ver;
+                    $ver = int($ver/100);
+                    ($t % 100); } 1..3);
+}
+
+sub _set_system_info {
+    my ($dbh, $rv) = @_;
+
+    my ($server_encoding) =
+        @{${$dbh->selectall_arrayref("SHOW SERVER_ENCODING;")}[0]};
+    my ($client_encoding) =
+        @{${$dbh->selectall_arrayref("SHOW CLIENT_ENCODING;")}[0]};
+
+    $rv->{system_info} = {
+        db_client => _stringify_db_ver($dbh->{pg_lib_version}),
+        db_server => _stringify_db_ver($dbh->{pg_server_version}),
+        db_perl => $DBD::Pg::VERSION->stringify,
+        db_utf8_mode => $dbh->{pg_enable_utf8},
+        server_encoding => $server_encoding,
+        client_encoding => $client_encoding,
+    };
+
+    return;
+}
+
 sub get_info {
     my $self = shift @_;
     my $retval = { # defaults
@@ -180,6 +211,8 @@ sub get_info {
             ->connect({PrintError=>0});
         return $retval unless $dbh;
         $logger->debug("DBI->connect dbh=$dbh");
+        _set_system_info($dbh, $retval);
+
         # don't assign to App_State::DBH, since we're a fallback connection,
         #  not one to the company database
 
@@ -205,6 +238,7 @@ sub get_info {
        $logger->debug("DBI->connect dbh=$dbh");
 
        $retval->{status} = 'exists';
+       _set_system_info($dbh, $retval);
 
        my $sth;
        $sth = $dbh->prepare("SELECT SESSION_USER");
@@ -285,9 +319,7 @@ sub get_info {
        }
        $dbh->rollback;
    }
-   #$logger->debug("DBI->disconnect dbh=$dbh");
-   #$dbh->disconnect;#leave disconnect to upper level
-   return $retval;
+    return $retval;
 }
 
 =head2 $db->copy('new_name')
