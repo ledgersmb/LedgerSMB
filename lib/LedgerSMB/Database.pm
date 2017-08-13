@@ -182,13 +182,19 @@ sub _set_system_info {
     my ($client_encoding) =
         @{${$dbh->selectall_arrayref("SHOW CLIENT_ENCODING;")}[0]};
 
+    my %utf8_mode_desc = (
+        '-1' => 'Auto-detect',
+        '0'  => 'Never',
+        '1'  => 'Always'
+        );
     $rv->{system_info} = {
-        db_client => _stringify_db_ver($dbh->{pg_lib_version}),
-        db_server => _stringify_db_ver($dbh->{pg_server_version}),
-        db_perl => $DBD::Pg::VERSION->stringify,
-        db_utf8_mode => $dbh->{pg_enable_utf8},
-        server_encoding => $server_encoding,
-        client_encoding => $client_encoding,
+        'PostgreSQL (client)' => _stringify_db_ver($dbh->{pg_lib_version}),
+        'PostgreSQL (server)' => _stringify_db_ver($dbh->{pg_server_version}),
+        'DBD::Pg (version)' => $DBD::Pg::VERSION->stringify,
+        'DBI (version)' => $DBI::VERSION,
+         'DBD::Pg UTF-8 mode' => $utf8_mode_desc{$dbh->{pg_enable_utf8}},
+        'PostgreSQL server encoding' => $server_encoding,
+        'PostgreSQL client encoding' => $client_encoding,
     };
 
     return;
