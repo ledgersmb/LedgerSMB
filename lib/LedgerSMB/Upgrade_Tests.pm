@@ -21,7 +21,6 @@ use namespace::autoclean;
 use List::Util qw( first );
 
 use LedgerSMB::Locale qw(marktext);
-use List::Util qw(any);
 
 =head1 FUNCTIONS
 
@@ -523,10 +522,6 @@ push @tests, __PACKAGE__->new(
       instructions => marktext(
                        "This should never show. We added a unique key to acc_trans"),
            buttons => ['Save and Retry', 'Cancel'],
-          tooltips => {
-    'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the <b>migration</b>'),
-          },
              table => 'acc_trans',
            appname => 'sql-ledger',
        min_version => '2.7',
@@ -1314,7 +1309,7 @@ push @tests, __PACKAGE__->new(
                           AND ac.approved
                      ORDER BY accno, transdate, ac.id",
       display_name => marktext('Reconciliations on non-bank accounts'),
-              name => 'invalid_cleared_dates',
+              name => 'reconciliation_on_non_bank_accounts',
       display_cols => ['i_key', 'trans_id', 'id', 'memo', 'amount', 'description',
                        'accno', 'link', 'charttype', 'category', 'cleared', 'approved'],
            columns => ['cleared'],
@@ -1325,15 +1320,16 @@ push @tests, __PACKAGE__->new(
 Please review the dates in the original application"),
            buttons => ['Save and Retry', 'Cancel', 'Force'],
           tooltips => {
-    'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the <b>migration</b>'),
-             'Force' => marktext('This will <b>ignore</b> the non-necessary reconciliations')
+               'Force' => marktext('This will <b>ignore</b> the non-necessary reconciliations'),
+               'Skip'  => marktext('This will <b>skip</b> this test <b><u>without doing any correction</u></b>')
           },
-     force_queries => ["UPDATE acc_trans ac SET cleared = NULL
-                      WHERE chart_id in ( c.category NOT IN ( 'A', 'L' ) 
-                           OR c.link NOT LIKE '%paid' ) 
-                        AND ac.cleared IS NOT NULL 
-                        AND ac.approved;"],
+     force_queries => [q(UPDATE acc_trans ac SET cleared = NULL
+                         WHERE chart_id in ( SELECT id
+                                               FROM chart c
+                                              WHERE c.category NOT IN ( 'A', 'L' )
+                                                 OR c.link NOT LIKE '%paid' )
+                           AND ac.cleared IS NOT NULL
+                           AND ac.approved;)],
              table => 'acc_trans',
       appname => 'sql-ledger',
   min_version => '2.7',
