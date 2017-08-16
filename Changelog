@@ -7,6 +7,7 @@ Changelog for 1.5.10
 * Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
 * Round-trip fewer values over web requests during migration (Erik H)
 * Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
+* Fix 500 ISE on bottom of order when creating from vendor (Erik H, #3057)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
