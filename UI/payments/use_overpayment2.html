@@ -1,10 +1,7 @@
-<?lsmb INCLUDE "ui-header.html";
-   subtotal_inv = 0  ?>
-<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'payments/img/down.gif','payments/img/up.gif') "
-class="lsmb <?lsmb dojo_theme ?>">
+<?lsmb PROCESS elements.html  # Include form elements helper. ?>
+<?lsmb subtotal_inv = 0  ?>
+<body id="payment_2_body" class="lsmb <?lsmb dojo_theme ?>">
  <form data-dojo-type="lsmb/Form" name="pay_single_dues" method="post" action="<?lsmb script ?>">
-
- <?lsmb PROCESS elements.html  # Include form elements helper. ?>
 
  <table width="100%" id="header_table">
   <tr id="top_bar" class="listtop">
@@ -386,4 +383,3 @@ class="lsmb <?lsmb dojo_theme ?>">
  <?lsmb END -?>
   </form>
 </body>
-</html>
