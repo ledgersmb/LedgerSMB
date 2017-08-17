@@ -2,8 +2,16 @@
 Changelog for 1.6 Series
 Forthcoming
 
+User Interface
+* Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
+
+Installation & Administration
+* Added 'System Information' page to setup.pl for problem diagnosis (Erik H)
+* Numerous improvements for the migrations and infrastructure (Yves L/Erik H)
+* Better detection of incorrect @INC paths (David G)
+
 Performance
-* Move 'new code' to real PSGI (removes CGI::Emulate::PSGI) (Erik H/Yves L)
+* PSGI responses no longer written to file but from memory (Erik H/Yves L)
 
 Rewritten inventory tracking and adjustments
 * Removed the need for the ill-understood 'Inventory Entity' (Erik H)
@@ -19,14 +27,18 @@ Code cleanup
 * Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
 * Template format plugin cleanup and refactoring (Erik H)
 * Template handling code cleanup (Erik H)
+* Unreferenced UI templates deleted (Erik H)
+* Centralized and more robust entry point for code in old/ (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
-* Enforce numerous Perl::Critic policies (Nick P)
+* Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
 Nick P is Nick Prater
+Rob R is Rob Ransbottom
+David G is David Godfrey
 
 
 Changelog for 1.5 Series
