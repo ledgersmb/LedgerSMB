@@ -1,15 +1,3 @@
-<?lsmb INCLUDE 'ui-header.html'
-                stylesheet = stylesheet
-                include_stylesheet = [
-                        'css/system/global.css'
-                        'payments/payments.css'
-                ]
-                titlebar = text('Checking Job') # '
-                refresh = {
-                        url = "payment.pl?job_id=${job_id}&account_class=${account_class}&action=check_job"
-                        delay = 20
-                }
-?>
 <body class="lsmb <?lsmb dojo_theme ?>">
   <div id="payments">
    <div class="listtop"><?lsmb text('Checking Job [_1]', job_id) ?></div>
@@ -35,4 +23,3 @@
   <?lsmb END # if job.completed ?>
   <div id="payments">
 </body>
-</html>

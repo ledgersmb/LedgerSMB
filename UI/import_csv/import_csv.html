@@ -1,10 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html'
-      stylesheet = stylesheet
-      include_stylesheet = ["asset/asset.css"]
-      include_script = ["asset/asset.js"]
-?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
   <div id="<?lsmb request.page_id ?>">
     <div class="listtop"><?lsmb request.title ?></div>
     <div class="info"><?lsmb request.info ?></div>
@@ -82,4 +77,3 @@
     </form>
   </div>
 </body>
-</html>

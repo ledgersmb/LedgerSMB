@@ -1,8 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html'
-        stylesheet=USER.stylesheet
-        include_stylesheet = ["budgetting/budgetting.css"];
-    PROCESS elements.html;
-    PROCESS report_base.html; ?>
+<?lsmb PROCESS elements.html;
+       PROCESS report_base.html; ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="budgets">
 <form data-dojo-type="lsmb/Form" method="post" action="<?lsmb request.script ?>">
@@ -188,4 +185,3 @@
 <?lsmb END # FOREACH Note ?>
 </div>
 </body>
-</html>
