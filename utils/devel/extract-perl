@@ -38,7 +38,11 @@ sub slurp{ local (*ARGV, $/); @ARGV = shift; readline; }
 
 while (<>) {
     chomp;
+    open SOURCE, "<:encoding(UTF-8)", $_
+        or die "Can't open '$_'; error: $!";
 
+    my $state = NUL;
+    my $line_no = 1;
     my $file = $_;
     my $source = slurp($file);
 
