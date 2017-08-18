@@ -115,6 +115,7 @@ on 'develop' => sub {
     requires 'Perl::Critic::Moose';
     requires 'Pherkin::Extension::Weasel', '0.02';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
+    requires 'PPR';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP';
     requires 'Test::BDD::Cucumber', '0.52';
