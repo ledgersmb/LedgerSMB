@@ -92,10 +92,10 @@ sub content_test {
     my @reportable_errors;
 
     push @reportable_errors,
-           "Line(s) with tabs: " . (join ', ', @tab_lines))
+           "Line(s) with tabs: " . (join ', ', @tab_lines)
         if @tab_lines;
     push @reportable_errors,
-           "Line with trailing space(s): " . (join ', ', @trailing_space_lines))
+           "Line with trailing space(s): " . (join ', ', @trailing_space_lines)
         if @trailing_space_lines;
 
     foreach my $error ( $lint->errors ) {
