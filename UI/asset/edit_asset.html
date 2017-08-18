@@ -27,14 +27,6 @@
 ?>
 
 
-<script>
-window.default_unit_label = {
-<?lsmb FOREACH a_class IN asset.asset_classes -?>
-   "<?lsmb a_class.id ?>": "<?lsmb asset.dep_method.${a_class.id}.unit_label ?>",
-<?lsmb END -?>
-};
-</script>
-
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
         type = "text"
