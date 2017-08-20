@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-=comment
+=pod
 
 This script contains a relatively simple state machine to scan various
 Perl files for translatable strings.
