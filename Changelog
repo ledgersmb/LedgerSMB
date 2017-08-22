@@ -8,6 +8,7 @@ Changelog for 1.5.10
 * Round-trip fewer values over web requests during migration (Erik H)
 * Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
 * Fix 500 ISE on bottom of order when creating from vendor (Erik H, #3057)
+* Contact info now properly HTML-escaped (Erik H, #2820)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
