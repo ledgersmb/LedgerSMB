@@ -104,12 +104,15 @@ feature 'debug', "Debug pane" =>
 on 'develop' => sub {
     requires 'App::Prove', '3.36';
     requires 'File::Util';
+    requires 'Getopt::Long';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
     recommends 'Linux::Inotify2';
+    requires 'List::Util';
+    requires 'Locale::Maketext::Simple';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
