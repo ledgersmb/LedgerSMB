@@ -23,9 +23,10 @@ use File::Find;
 
 my @on_disk;
 sub collect {
-    return if $File::Find::name !~ m/\.(pm|t|tex)$/;
+    return if $File::Find::name !~ m/\.(pl|pm|t|tex)$/;
 
     my $module = $File::Find::name;
+    return if $module =~ m/07.1-extract-perl.t/;
     push @on_disk, $module
 }
 find(\&collect, 'lib/LedgerSMB/', 'old/lib/LedgerSMB/');
