@@ -15,9 +15,9 @@ extract a sub-set of strings from our SQL files.
 
 use strict;
 use warnings;
+use utf8;
 
 use PPR;
-use utf8;
 use Carp qw( croak );
 use Getopt::Long;
 
