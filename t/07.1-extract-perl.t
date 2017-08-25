@@ -47,7 +47,13 @@ my @tests = (
       results => [ 'Continue', 'Ok' ] },
     { statement => "my f\$ = test(<<END;\nA heredoc string\nwith many lines\nEND\n);",
       results => [ "A heredoc string\nwith many lines" ] },
-    { statement => "my e\$ = test(<<'END';\nA heredoc string\nwith many lines\n"
+    { statement => "my f\$ = test(<<'END';\nA heredoc string\nwith single quotes\nEND\n);",
+      results => [ "A heredoc string\nwith single quotes" ] },
+    { statement => "my f\$ = test(<<\"END\";\nA heredoc string\nwith double quotes\nEND\n);",
+      results => [ "A heredoc string\nwith double quotes" ] },
+    { statement => "my f\$ = test(<<`END`;\nA heredoc string\nwith back ticks\nEND\n);",
+      results => [ "A heredoc string\nwith back ticks" ] },
+    { statement => "my e\$ = test(<<'END'; #Comment\nA heredoc string\nwith many lines\n"
                                   . "and a literal which shouldn't be interpolated \$a\nEND\n);",
       results => [ "A heredoc string\nwith many lines\n"
                                   . "and a literal which shouldn't be interpolated \$a" ] },
