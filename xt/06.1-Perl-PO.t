@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-=description
+=pod
 
 This script scans various Perl files for translatable strings.
 
@@ -15,9 +15,9 @@ extract a sub-set of strings from our SQL files.
 
 use strict;
 use warnings;
+use utf8;
 
 use PPR;
-use utf8;
 use Test::More;
 use File::Find;
 
