@@ -3,9 +3,9 @@
 use strict;
 use warnings;
 
-use LedgerSMB::Sysconfig;
+use File::Spec;
 
-my $tempdir  = $LedgerSMB::Sysconfig::tempdir;
+my $tempdir  = File::Spec->tmpdir();
 my $testfile = "$tempdir/extract-tests.pl";
 my $pofile   = "$tempdir/extract-tests.po";
 
