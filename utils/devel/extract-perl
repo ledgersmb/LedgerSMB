@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-=description
+=pod
 
 This script scans various Perl files for translatable strings.
 
