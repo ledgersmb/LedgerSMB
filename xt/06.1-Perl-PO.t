@@ -20,6 +20,7 @@ use utf8;
 use PPR;
 use Test::More;
 use File::Find;
+use Capture::Tiny ':all';
 
 my @on_disk;
 sub collect {
@@ -41,55 +42,18 @@ my $line;
 for my $file (@on_disk) {
 
     subtest $file => sub {
-        my $source = slurp($file);
+
         my $errors = 0;
 
-        my (@lines,$line);  # Record line numbers
-        $line = 1;
-        my @text = grep {defined}
-            $source =~
-            m{
-               ((?&PerlEndOfLine) (??{ ++$line }))*?     # Count the lines
-               (?: (?:[Mm]ark)?[Tt]ext\b                 # Introducer
-                   (?&PerlOWS) [\(\s] (?&PerlOWS))       # '(' or ' '
-               ((?&PerlString)) (?{ push @lines,$line }) # string and line
-               $PPR::GRAMMAR                             # Preload our grammar
-             }gmx;
+        # Produce a PO file
+        my $stderr = capture_stderr {
+            system("echo \"$file\" | utils/devel/extract-perl >/dev/null");
+        };
+        for my $err (split /\n/, $stderr) {
 
-        # Deduplicate, standardize and pack line references
-        my %text;
-        for (@text) {
-            my $string = $_;
-
-            # @lines must follow @text
-            my $line = shift @lines;
-
-            my $type = $string =~ m/^('|q\b|<<\s*')/  ?  "Q"
-                     : $string =~ m/^("|qq\b|<<\s*")/ ? "DQ"
-                                                      :  "-";
-            # Prevent unwanted interpolations
-            if ( $type ne "Q" && $string =~ m( .* ((?&PerlVariable)) .* $PPR::GRAMMAR)x ) {
-                ok(0, "$file:$line: Direct variable interpolation not supported; use bracketed ([_1]) syntax to replace <$1>");
-                $errors++;
-                next;
-            }
-
-            # Remove beginning and end delimitors
-            # The following doesn't work yet
-            #$string = $2
-            #    if $string =~ m( .* ((?&PerlString)) .* $PPR::GRAMMAR);
-            #TODO: Replace by the above once PPR has added support
-            if    ( $string =~ /^(["'])(.*)\1$/s )       { $string = $2 ;} # "string"
-            elsif ( $string =~ /^q{1,2}\((.*)\)$/s)      { $string = $1 ;} # q() or qq()
-            elsif ( $string =~ /^<<(['"\b])([a-z0-9_])\1;
-                                 \s*(?:\#[^\n]*)
-                                 (.*)\n\2$/mxi)          { $string = $3 ;} # heredoc
-            else {
-                ok(0, "$file:$line: Unsupported string delimiters in <$string>");
-                $errors++;
-                next;
-            }
+            ok(0, $err);
+            $errors++;
         }
         ok(!$errors,$file) if !$errors;
-    };
+    }
 }
