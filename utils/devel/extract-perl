@@ -19,12 +19,6 @@ use utf8;
 
 use PPR;
 use Carp qw( croak );
-use Getopt::Long;
-
-#TODO: What relevant options to add?
-my $pack;
-  GetOptions ("pack"  => \$pack)     # pack references
-  or die("Error in command line arguments\n");
 
 my %dict;
 
@@ -63,7 +57,7 @@ while (<>) {
              }gmx;
     next if !@text;
 
-    # Deduplicate, standardize and pack line references
+    # Deduplicate and standardize
     my %text;
     for (@text) {
         my $string = $_;
@@ -102,14 +96,9 @@ while (<>) {
 
         push @{$text{$string}}, $line;
     }
-    if ( $pack ) {
-        add_entry($_, $file, join(',',@{$text{$_}}))
-            for (keys %text);
-    } else {
-        for my $k (keys %text) {
-            add_entry($k, $file, $_)
-                for (@{$text{$k}});
-        }
+    for my $k (keys %text) {
+        add_entry($k, $file, $_)
+            for (@{$text{$k}});
     }
 };
 
