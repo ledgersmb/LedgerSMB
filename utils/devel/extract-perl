@@ -71,26 +71,26 @@ while (<>) {
         # @lines must follow @text
         my $line = shift @lines;
 
-        my $type = $string =~ m/^('|q\b|<<\s*')/  ?  "Q"
-                 : $string =~ m/^("|qq\b|<<\s*")/ ? "DQ"
-                                                  :  "-";
+        my $type = $string =~ m/^(?&PerlQuotelikeQ)  $PPR::GRAMMAR/x ?  "Q"
+                 : $string =~ m/^(?&PerlQuotelikeQQ) $PPR::GRAMMAR/x ? "DQ"
+                                                                     :  "-";
         # Prevent unwanted interpolations
-        if ( $type ne "Q" && $string =~ m( .* ((?&PerlVariable)) .* $PPR::GRAMMAR)x ) {
+        if ( $type ne "Q" && $string =~ m/ ((?&PerlVariable)) $PPR::GRAMMAR/x ) {
             croak "$file:$line: Direct variable interpolation not supported; use bracketed ([_1]) syntax to replace $1";
             next;
         }
 
-        # Remove beginning and end delimitors
+        # Remove beginning and end delimiters
         # The following doesn't work yet
         #$string = $2
-        #    if $string =~ m( .* ((?&PerlString)) .* $PPR::GRAMMAR);
-        #warn "string = '$string', 1 = <$1>, 2 = <$2>, 3 = <$3>, 4 = <$4>";
-        #TODO: Replace by the above once PPR has added support
+        #    if $string =~ m( .* ((?&PerlStringUnquoted)) .* $PPR::GRAMMAR);
+        #TODO: Replace the 3 next lines by the above once PPR has added support
         if    ( $string =~ /^(["'])(.*)\1$/s )       { $string = $2 ;} # "string"
         elsif ( $string =~ /^q{1,2}\((.*)\)$/s)      { $string = $1 ;} # q() or qq()
-        elsif ( $string =~ /^<<(['"\b])([a-z0-9_])\1;
-                             \s*(?:\#[^\n]*)
-                             (.*)\n\2$/mxi)          { $string = $3 ;} # heredoc
+        elsif ( $string =~ m/^(?<PerlHeredoc>)
+                             \s*(?:\#[^\n]*)\n
+                             (.*)\n(?<_heredoc_terminator>)
+                             $PPR::GRAMMAR $/mxi)    { $string = $3 ;} # heredoc
         else {
             croak "$file:$line: Unsupported string delimiters in <$string>";
             next;
