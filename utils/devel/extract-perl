@@ -25,7 +25,7 @@ use constant {
     NUL => 1,
     POD => 10,
     TXT => 20,
-    TXT_FIN => 21,
+    FIN => 21,
 };
 
 
@@ -35,6 +35,7 @@ sub add_entry {
     my ($string, $file, $line) = @_;
 
     return if $string =~ m/^[\s\t\n]*$/g; # return on empty/space-only strings
+    $string =~ s/(\\|\$)/\\$1/g;
 
     $dict{$string} = []
         if ! exists $dict{$string};
@@ -42,91 +43,114 @@ sub add_entry {
     push @{$dict{$string}}, "#: $file:$line\n";
 }
 
+sub slurp{
+    local (*ARGV, $/);
+    @ARGV = shift;
+    open SOURCE, "<:encoding(UTF-8)", $_
+        or die "Can't open '$_'; error: $!";
+    readline(SOURCE);
+}
 
 while (<>) {
     chomp;
-    open SOURCE, "<:encoding(UTF-8)", $_
-        or die "Can't open '$_'; error: $!";
+
+    my $file = $_;
+    my $source = slurp($file);
+    $source .= "\n";    # Make sure the last line has a newline.
 
     my $state = NUL;
     my $line_no = 1;
-    my $file = $_;
-    while (<SOURCE>) {
+    my $text;
 
-        ++$line_no;
+    while ($source ne '') {
 
       PARSER: {
-          $_ = substr($_,pos($_)) if pos($_);
-          # print "S:$state:$_";
+         #Note: All patterns below MUST be global for pos to be set
+         if ( defined pos($source)) {
+              my $p = pos($source);
+              $line_no += ( substr($source,0,$p) =~ tr /\n//) ;
+              $source = substr($source,$p);
+          }
+#          warn "S:$state:$line_no:".substr($source,0,index($source,"\n")+1);
+
+          $source =~ m/^[\s\t\n]+/gs
+              && do { next; };  # Strip leading white space
 
           $state==NUL &&
-              m/^=[a-zA-Z]\S*\s*/g
-              && do { $state = POD; next; };
-
-          $state==POD &&
-              m/^=cut/g
-              && do { $state = NUL; next; };
+              $source =~ m/^=\w+\b.*?\n=cut\n/gs
+              && do { $state = NUL; redo; };
 
           $state==NUL &&
               # the reports use a workaround with a function called Text()
               # or MarkText()
-              m/(?<![\w\d_])([Mm]ark)?[tT]ext[\s\t\n]*\(/g
-              && do { $state = TXT; redo; };
+              $source =~ m/^[^\n]*\b(([Mm]ark)?[tT]ext)[\s\t\n]*\(/gs
+              && do { $state = TXT; $text = $1; redo; };
 
-          $state==TXT &&
-              m/^[\s\t\n]*'(([^'\\]|''|\\.)*)'/g
-              && do { $state = TXT_FIN;
-                      my $string = $1;
-                      $string =~ s/\\'/'/g;
-                      $string =~ s/\\/\\\\/g;
-                      $string =~ s/"/\\"/g;
-                      $string =~ s/\$/\\\$/g;
+          $state==TXT # All patterns must give $1 for the whole
+                      # $2 for the separator and $4 for the inner string
+            && (    $source =~ m/^( (')  ((([^'\\]++|\\.)*+))     ('))/gsx
+                 || $source =~ m/^( (\bq\()(([^\)\\]|\(.*\)|\\.)*)(\)) )/gsx
+                 || $source =~ m/^( <<(['`])(\w+)\2;(?:[ \t]*\#[^\n]*)?\n(.+)\n(\3)\n)/gsx
+            ) && do {
+                      $state = FIN;
+                      my $string = $4;
+                      if ($2 eq "'" ) {
+                          $string =~ s/\\'/'/g;
+                          $string =~ s/"/\\"/g;
+                      }
                       add_entry($string, $file, $line_no);
                       redo;
-          };
+              };
 
-          $state==TXT &&
-              m/^[\s\t\n]*"(([^"\\]|\\.)*)"/g
-              && do { $state = TXT_FIN;
-                      my $string = $1;
-                      if ($string =~ m/(?<!\\)\$/g) {
-                          warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax!";
+          $state==TXT
+            && (    $source =~ m/^( (")  ((([^"\\]++|\\.)*+))     ("))/gsx
+                 || $source =~ m/^( (\bqq\()((([^\)\\]|\(.*\)|\\.)*))(\)))/gsx
+                 || $source =~ m/^( <<(")?(\w+)"?;(?:[ \t]*\#[^\n]*)?\n(.+)\n(\3)\n)/gsx
+            ) && do {
+                      my $string = $3;
+                      if ($string =~ m/(?<!\\)([\$\%\@][\w\[\]\{\}\-\<\>\.]+)/gs) {
+                          warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax for '$1'!\n";
                           $state = NUL;
                       }
                       else {
-                          add_entry($1, $file, $line_no);
+                          add_entry($string, $file, $line_no);
+                          $state = FIN;
                       }
-                      redo; };
+                      redo;
+              };
 
           $state==TXT &&
-              ! m/^[\s\t]*$/g
-              && do { warn "$file:$line_no: text() called with non string first argument; resetting scan (consider using maketext() directly!\n";
+              ! $source =~ m/^[\s\t\n]*$/s
+              && do { my $s = $source =~ /^.*$/s; chop($s);
+                      warn "$file:$line_no: $text() called with non string first argument; resetting scan (consider using maketext('$s') directly!\n";
+                      pos($source) += length $s;
                       $state = NUL;
-          };
+              };
 
-          $state==TXT_FIN &&
-              m/^[\s\t\n]*,/g
-              && do { $state = NUL; redo; };
+          $state==FIN &&
+              $source =~ m/^[,\)]/gs
+              && do { $text = undef; $state = NUL; redo; };
 
-          $state==TXT_FIN &&
-              m/^[\s\t\n]*\)/g
-              && do { $state = NUL; redo; };
+          $state==FIN &&
+              ! $source =~ m/^$/gs
+              && do { my $junk = substr($source,0,index($source,"\n"));
+                      warn "$file:$line_no: junk '$junk' after first text() argument; resetting scan!\n";
+                      pos($source) += length $junk;
+                      $state = NUL; next;
+              };
 
-          $state==TXT_FIN &&
-              ! m/^[\s\t\n]*$/g
-              && do { warn "$file:$line_no: junk '$_' after first text() argument; resetting scan!\n";
-                      $state = NUL;
-          };
+          $source =~ m/^[^\n]*?\n/gs
+              && do { redo; }; # Skip to next line
         };
     };
-    close SOURCE;
+    die "Remaining data in $source"
+        if $source;
 };
 
-
-foreach my $string (keys %dict) {
-    foreach my $location (@{$dict{$string}}) {
+foreach my $string (sort keys %dict) {
+    foreach my $location (sort @{$dict{$string}}) {
         print $location;
     }
-    print "msgid \"$string\"\n";
+    print "msgid \"" . join("\"\n\"",split("\n",$string)) . "\"\n";
     print "msgstr \"\"\n\n";
 }
