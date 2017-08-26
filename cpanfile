@@ -110,11 +110,13 @@ on 'develop' => sub {
     requires 'HTML::Lint::Pluggable::HTML5';
     requires 'HTML::Lint::Pluggable::WhiteList';
     recommends 'Linux::Inotify2';
+    requires 'Locale::Maketext::Simple';
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Pherkin::Extension::Weasel', '0.02';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
+    requires 'PPR';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP';
     requires 'Test::BDD::Cucumber', '0.52';
