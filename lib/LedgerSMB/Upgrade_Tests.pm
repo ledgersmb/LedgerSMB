@@ -785,8 +785,8 @@ push @tests,__PACKAGE__->new(
 #     display_name => marktext('Unsupported account link combinations'),
 #     name => 'unsupported_account_links',
 #     display_cols => ['accno', 'description', 'link'],
-#  instructions => marktext(
-#                    'An account can either be a summary account (which have a
+#  instructions =>
+#          marktext( 'An account can either be a summary account (which have a
 # link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 # number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
 #    columns => ['category'],
@@ -1146,8 +1146,8 @@ push @tests, __PACKAGE__->new(
 #     display_name => marktext('Non-existing vendor pricegroups in partsvendor'),
 #     name => 'partsvendor_pricegroups_exist',
 #     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
-#  instructions => marktext(
-#                    'Please fix the pricegroup data in your partsvendor table (no UI available)'),
+#  instructions =>
+#         marktext('Please fix the pricegroup data in your partsvendor table (no UI available)'),
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',

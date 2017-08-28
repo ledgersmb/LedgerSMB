@@ -173,7 +173,7 @@ sub display_form
     if (@{$form->{all_project}}){
        unshift @{ $form->{all_project} }, {};
     }
-    $title = $locale->text("$form->{title}");
+    $title = $locale->maketext($form->{title});
     if ( $form->{transfer} ) {
         $form->{title} = $locale->text("[_1] Cash Transfer Transaction", $title);
     }
