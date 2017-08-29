@@ -35,7 +35,7 @@ sub add_entry {
     my ($string, $file, $line) = @_;
 
     return if $string =~ m/^[\s\t\n]*$/g; # return on empty/space-only strings
-    $string =~ s/(\\|\$)/\\$1/g;
+    $string =~ s/(?<!\\)(\$)/\\$1/g;
 
     $dict{$string} = []
         if ! exists $dict{$string};
@@ -96,7 +96,7 @@ while (<>) {
                       my $string = $4;
                       if ($2 eq "'" ) {
                           $string =~ s/\\'/'/g;
-                          $string =~ s/"/\\"/g;
+                          $string =~ s/(?<!\\)"/\\"/g;
                       }
                       add_entry($string, $file, $line_no);
                       redo;
