@@ -107,7 +107,7 @@ while (<>) {
                  || $source =~ m/^( (\bqq\()((([^\)\\]|\(.*\)|\\.)*))(\)))/gsx
                  || $source =~ m/^( <<(")?(\w+)"?;(?:[ \t]*\#[^\n]*)?\n(.+)\n(\3)\n)/gsx
             ) && do {
-                      my $string = $3;
+                      my $string = $4;
                       if ($string =~ m/(?<!\\)([\$\%\@][\w\[\]\{\}\-\<\>\.]+)/gs) {
                           warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax for '$1'!\n";
                           $state = NUL;
