@@ -82,12 +82,9 @@ sub __default {
         qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'login',
-        format => 'HTML'
     );
     return $template->render_to_psgi($request);
 }
@@ -97,7 +94,7 @@ sub __default {
 This routine checks for the authentication information and if successful
 sends either a HTTP_FOUND redirect or a HTTP_OK successful response.
 
-If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad, 
+If unsuccessful sends a HTTP_UNAUTHORIZED if the username/password is bad,
 or a HTTP_454 error if the database does not exist.
 
 =cut
@@ -155,7 +152,7 @@ sub login {
     if (!$request->{_user}){
         __default($request);
     }
-    require LedgerSMB::Scripts::menu;
+
     return LedgerSMB::Scripts::menu::root_doc($request);
 }
 
@@ -176,12 +173,9 @@ sub logout {
         $request->_db_init();
         LedgerSMB::Session::destroy($request);
     };
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI',
+    my $template = LedgerSMB::Template->new_UI(
+        $request,
         template => 'logout',
-        format => 'HTML'
     );
     return $template->render_to_psgi($request);
 }
@@ -206,8 +200,18 @@ sub logout_js {
 }
 
 
-###TODO-LOCALIZE-DOLLAR-AT
-eval { do "scripts/custom/login.pl"};
+{
+    local ($!, $@) = ( undef, undef);
+    my $do_ = 'scripts/custom/login.pl';
+    if ( -e $do_ ) {
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                warn "\nFailed to execute $do_ ($!): $@\n";
+                die (  "Status: 500 Internal server error (login.pm)\n\n" );
+            }
+        }
+    }
+};
 
 =back
 

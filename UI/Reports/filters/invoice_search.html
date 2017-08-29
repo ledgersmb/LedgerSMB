@@ -1,14 +1,15 @@
-<?lsmb INCLUDE "ui-header.html" ;
-       PROCESS "report_base.html";
+<?lsmb PROCESS "report_base.html";
        PROCESS "elements.html";
        IF entity_class == 1;
            TITLE = text('Search AP Invoices'); #'
            NAME = text('Vendor');
            META_NUMBER = text('Vendor Number'); #'
+           FORM_ID = 'search-ap-invoice';
        ELSIF entity_class == 2;
            TITLE = text('Search AR Invoices'); #'
            NAME = text('Customer');
            META_NUMBER = text('Customer Number'); #'
+           FORM_ID = 'search-ar-invoice';
        END;
         FOREACH T IN accounts;
            T.text = T.accno _ '--' _ T.description;
@@ -16,7 +17,8 @@
         accounts.unshift({});
 ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form data-dojo-type="lsmb/Form" action="invoice.pl" method="GET">
+<form data-dojo-type="lsmb/Form" action="invoice.pl" method="GET"
+      id="<?lsmb FORM_ID ?>">
 <?lsmb PROCESS input element_data = {
      name = 'entity_class'
     value = entity_class
@@ -404,4 +406,3 @@
 } ?>
 </form>
 </body>
-</html>

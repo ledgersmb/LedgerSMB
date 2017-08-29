@@ -6,7 +6,7 @@ div.setupconsole {
     background-color: white;
     margin-right: auto;
     margin-left: auto;
-    width: 25em;
+    width: 80em;
     padding: 2em;
     padding-bottom: 2em;
     border-style: outset;
@@ -22,6 +22,10 @@ div {
     width: 2em
 }
 
+caption {
+    font-weight: bold;
+    margin-top: 3em;
+}
 
 label {
     width: 10em;
@@ -59,4 +63,18 @@ img.logo {
 
 button {
     margin-top: 10px;
+}
+
+.listtop {
+    font-size: larger;
+}
+
+tr.listheading {
+    background-color: lightgrey;
+}
+tr.listrow:nth-child(even) {background: #FFF}
+tr.listrow:nth-child(odd) {background: #EEE}
+
+td.dijitStretch {
+    min-width: 125px;
 }

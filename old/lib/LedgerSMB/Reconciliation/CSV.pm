@@ -23,13 +23,20 @@ use Try::Tiny;
 use base qw(LedgerSMB::PGOld);
 
 try {
-no warnings;
-opendir (DCSV, 'old/lib/LedgerSMB/Reconciliation/CSV/Formats');
-for my $format (readdir(DCSV)){
-    if ($format !~ /^\./){
-        do "old/lib/LedgerSMB/Reconciliation/CSV/Formats/$format";
+    no warnings;
+    opendir (DCSV, 'old/lib/LedgerSMB/Reconciliation/CSV/Formats');
+    for my $format (readdir(DCSV)){
+        if ($format !~ /^\./){
+            local ($!, $@);
+            my $do_ = "old/lib/LedgerSMB/Reconciliation/CSV/Formats/$format";
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    warn "\nFailed to execute $do_ ($!): $@\n";
+                    die ( "Status: 500 Internal server error (CSV.pm)\n\n" );
+                }
+            }
+        }
     }
-}
 };
 
 =head1 METHODS

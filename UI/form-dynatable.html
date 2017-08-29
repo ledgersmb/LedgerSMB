@@ -1,4 +1,3 @@
-<?lsmb PROCESS 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?>
 <?lsmb PROCESS 'dynatable-old.html' ?>
 
@@ -9,7 +8,11 @@
       method="post"
       action="<?lsmb form.script ?>"
       id="search-report-dynatable">
-<?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
+<?lsmb FOREACH header IN headers ?><div class="listtop">
+         <?lsmb INCLUDE decorated_text element_data = {
+                msg => header };
+         ?></div>
+<?lsmb END ?>
 
 <?lsmb PROCESS 'dynatable' ?>
 <br />
@@ -23,4 +26,3 @@
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
 </body>
-</html>

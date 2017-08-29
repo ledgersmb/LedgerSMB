@@ -30,6 +30,7 @@ use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
 use POSIX 'SEEK_SET';
+use Try::Tiny;
 
 use base qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
@@ -67,27 +68,42 @@ sub dispatch {
         return parse_cgi_output($stdout);
     }
     else {
-        local *STDOUT = $stdout;
-        $lsmb_legacy::form = Form->new();
-        $lsmb_legacy::form->{$_} = $args->{$_} for (keys %$args);
-        $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
-        %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
-        {
-            no strict;
-            no warnings 'redefine';
+        # make 100% sure any "die"-s don't bubble up higher than this point in
+        # the stack: we're a fork()ed process and should under no circumstance
+        # end up acting like another worker. When we are done, we need to
+        # exit() below.
+        try {
+            local *STDOUT = $stdout;
+            $lsmb_legacy::form = Form->new();
+            $lsmb_legacy::form->{$_} = $args->{$_} for (keys %$args);
+            $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
+            %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
+            {
+                # Note that we're only loading this code *after* the fork,
+                # so, we're only ever "polluting" the namespaces of the
+                # child Perl process which we'll ditch right after.
+                local ($!, $@);
+                my $do_ = "old/bin/$script";
 
-            # Note that we're only loading this code *after* the fork,
-            # so, we're only ever "polluting" the namespaces of the
-            # child Perl process which we'll ditch right after.
-            do "old/bin/$script";
-        }
-        if (ref $entrypoint eq "CODE") {
-            $entrypoint->(@_);
-        }
-        else {
-            &${"lsmb_legacy::$entrypoint"}($lsmb_legacy::form,
-                                           $lsmb_legacy::locale);
-        }
+                no strict;
+                no warnings 'redefine';
+
+                unless ( do $do_ ) {
+                    if ($! or $@) {
+                        print "Status: 500 Internal server error (old_code.pm)\n\n";
+                        warn "Failed to execute $do_ ($!): $@\n";
+                    }
+                }
+            }
+            if (ref $entrypoint eq "CODE") {
+                $entrypoint->(@_);
+            }
+            else {
+                no strict 'refs';
+                &{"lsmb_legacy::$entrypoint"}($lsmb_legacy::form,
+                                              $lsmb_legacy::locale);
+            }
+        };
         exit;
     }
 }

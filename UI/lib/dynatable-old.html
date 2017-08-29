@@ -1,5 +1,39 @@
 <?lsmb# HTML Snippet, for import only ?>
 <?lsmb BLOCK dynatable ?>
+<?lsmb
+   # This block is deprecated and should be replaced by the use of
+   #  the block "dynatable" (without the "-old" suffix).
+
+   # The functionality of this block maps as follows to the new one:
+
+   #  - The "options" block argument has been dropped
+   #  - The "form.title" has been dropped
+   # These two should be replaced by an HTML block leading up to the table.
+
+   #  - "heading.$column" -> "COL.name" (where COL the column data in 'columns')
+   #  - "heading.$column.href" -> "attributes.order_url" (for sorting),
+   #       dropped otherwise
+   #  - row.class ('heading', 'subtotal', 'divider') ->
+   #       should directly use the classes mapped by the block:
+   #       ('listheading', 'listsubtotal', 'listheading')
+
+   # Mapping of rows to "listrow${row.i}" has been dropped and should be
+   # applied through CSS pseudo classes (:nth-child())
+
+   #  - "columns.size" -> dropped
+   #  - "row_alignment.$column" -> dropped (use CSS classes)
+   #  - "totals" -> "tfoot.rows"
+   #  - "row.$column.delimiter" -> dropped
+   #  - "row.$column.text" -> "row.$col_id"
+   #  - "row.$column" -> "row.$col_id"
+   #  - "row.$column.input.type" -> "COL.type"
+   #  - "row.$column.input.value" -> "row.$col_id"
+   #  - "row.$column.input.name" -> (auto: [<input_prefix>_]<col_id>_<rownum>)
+   #  - "row.$column.select" -> not supported
+
+   # Mapping rows to "th" or "td" elements based on row.class -> dropped
+
+-?>
 <table width="100%">
   <tr>
     <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>

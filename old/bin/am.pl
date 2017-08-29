@@ -109,8 +109,7 @@ sub add_gifi {
     &gifi_footer(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-gifi-form');
     $template->render({
         form => $form,
@@ -135,8 +134,7 @@ sub edit_gifi {
     &gifi_footer(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-gifi-form');
     $template->render({
         form => $form,
@@ -228,8 +226,7 @@ sub add_business {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-business-form');
     $template->render({
         form => $form,
@@ -253,8 +250,7 @@ sub edit_business {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-business-form');
     $template->render({
         form => $form,
@@ -309,8 +305,7 @@ sub add_sic {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-sic-form');
     $template->render({
         form => $form,
@@ -324,7 +319,7 @@ sub edit_sic {
 
     $form->{title} = "Edit";
 
-    $form->{code} =~ s/\\'/'/g;
+    $form->{code} =~ s/\\'/'/g; # ' # kludge the single quote for syntax highlighting
     $form->{code} =~ s/\\\\/\\/g;
 
     AM->get_sic( \%myconfig, \%$form );
@@ -337,8 +332,7 @@ sub edit_sic {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-sic-form');
     $template->render({
         form => $form,
@@ -397,8 +391,7 @@ sub add_language {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-language-form');
     $template->render({
         form => $form,
@@ -413,7 +406,7 @@ sub edit_language {
 
     $form->{title} = "Edit";
 
-    $form->{code} =~ s/\\'/'/g;
+    $form->{code} =~ s/\\'/'/g; #' # kludge the single quote for syntax highlighting
     $form->{code} =~ s/\\\\/\\/g;
 
     AM->get_language( \%myconfig, \%$form );
@@ -426,8 +419,7 @@ sub edit_language {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-language-form');
     $template->render({
         form => $form,
@@ -477,8 +469,7 @@ sub delete_language {
         text => $locale->text('Delete Language'),
         });
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'form-confirmation');
     $template->render({
         form => $form,
@@ -575,8 +566,7 @@ sub display_taxes {
     }
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-taxes');
     $template->render({
         form => $form,
@@ -681,8 +671,7 @@ sub add_warehouse {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-warehouse-form');
     $template->render({
         form => $form,
@@ -705,8 +694,7 @@ sub edit_warehouse {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-warehouse-form');
     $template->render({
         form => $form,
@@ -936,8 +924,7 @@ sub recurring_transactions {
     };
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig,
-        locale => $locale,
+        $form,
         template => 'am-list-recurring');
     $template->render({
         form => $form,
@@ -993,7 +980,16 @@ sub edit_recurring {
     }
 
     $form->{script} = "$form->{module}.pl";
-    do "old/bin/$form->{script}";
+    {
+        local ($!, $@);
+        my $do_ = "old/bin/$form->{script}";
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (am.pl)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+    };
 
     &{ $links{ $form->{module} } };
 
@@ -1072,7 +1068,16 @@ sub process_transactions {
                         $form->{module} = "ap";
                         $invfld         = "vinumber";
                     }
-                    do "old/bin/$form->{script}";
+                    {
+                        local ($!, $@);
+                        my $do_ = "old/bin/$form->{script}";
+                        unless ( do $do_ ) {
+                            if ($! or $@) {
+                                print "Status: 500 Internal server error (am.pl)\n\n";
+                                warn "Failed to execute $do_ ($!): $@\n";
+                            }
+                        }
+                    };
 
                     if ( $pt->{invoice} ) {
                         &invoice_links;

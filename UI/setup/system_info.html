@@ -1,0 +1,48 @@
+<?lsmb INCLUDE "ui-header.html"
+          stylesheet="ledgersmb.css"
+          include_stylesheet=["setup/stylesheet.css"]
+       ?>
+<?lsmb PROCESS elements.html ?>
+<body id="setup-system-info" class="lsmb <?lsmb dojo_theme ?>">
+<div class="setupconsole">
+<h2><?lsmb text('System Information') ?></h2>
+<?lsmb INCLUDE 'setup/ui-db-credentials.html' ?>
+<p><?lsmb text('LedgerSMB has detected the following system components'); ?></p>
+
+<table>
+  <caption>Database component</caption>
+  <tbody>
+    <?lsmb FOR item IN info.db.keys.sort ?>
+    <tr>
+      <th><?lsmb item ?></th><td style="text-align: right"><?lsmb info.db.$item ?></td>
+    </tr>
+    <?lsmb END ?>
+  </tbody>
+</table>
+
+<table>
+  <caption>Base system</caption>
+  <tbody>
+    <?lsmb FOR item IN info.system.keys.sort ?>
+    <tr>
+      <th><?lsmb item ?></th><td style="text-align: right"><?lsmb info.system.$item ?></td>
+    </tr>
+    <?lsmb END ?>
+  </tbody>
+</table>
+
+<table>
+  <caption>Environment</caption>
+  <tbody>
+    <?lsmb FOR item IN info.environment.keys.sort ?>
+    <tr>
+      <th><?lsmb item ?></th><td style="text-align: left"><?lsmb info.environment.$item ?></td>
+    </tr>
+    <?lsmb END ?>
+  </tbody>
+</table>
+
+
+
+</body>
+</html>

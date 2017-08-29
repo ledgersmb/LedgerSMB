@@ -326,7 +326,7 @@ RETURNS SETOF contact_search_result AS $$
                        (select entity_id
                           FROM entity_credit_account leca
                           JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
-                         WHERE contact ~*~ ANY(in_contact_info))
+                         WHERE contact ~* ANY(in_contact_info))
                       OR '' ILIKE ALL(in_contact_info)
                       OR in_contact_info IS NULL)
 
@@ -1627,7 +1627,7 @@ ELSIF t_entity_class = 2 THEN -- CUSTOMER
         INSERT INTO partscustomer
                (parts_id, credit_id, sellprice, validfrom, validto, curr, qty)
         VALUES (in_parts_id, in_credit_id, in_price, in_validfrom, in_validto,
-                in_curr, qty);
+                in_curr, in_qty);
 
         t_insert := true;
     END IF;

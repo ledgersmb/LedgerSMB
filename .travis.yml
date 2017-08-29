@@ -15,6 +15,9 @@ env:
     - secure: q9IckmvMBEEQ6EeM4U8K4y96Lx6tEaxs/A5GYUJxNJVhUkx3YqJKeERArZc4fpoV3CtUCFPDs/tktiFJn1LDeh3s9vJitUAGMU2AQxiUNARXK4EkEdPhvbX+CtusIIKDXYwEqXLiymv6mmpcc9/19CvHUzr9CiKZbb/LpS8lWqc=
     - secure: cZKPTfU0h4rH2IIRr1Ds1XRPDrloe/K+menYm+VK54hE4MM2zTtNDmWn0fyPdeHeJDRrTF0pyobje8RG9E2Ld5YPHXve1/lVkieoPeqzm9V8hlvZlkgTQJiMAvKzjhSlUJx8AKPjX+jQZfhgAS1hnuWwOIB1cAA7fMpPJ7rPVWo=
 
+notifications:
+  webhooks: https://ledgersmb.org/webhook/travis_ci_notifications
+
 matrix:
   include:
     - perl: '5.26'
@@ -130,6 +133,7 @@ before_script:
   - tar xzf tar-output/ledgersmb-travis.tar.gz
   - cd ledgersmb
   - cp conf/ledgersmb.conf.default ledgersmb.conf
+  - cp t/.proverc ./
   - coverage-setup 2>/dev/null
   - export DEVEL_COVER_OPTIONS=+ignore,"\.lttc\$"
   - sed -e "s#{ROOT}#$PWD#" conf/nginx-travis.conf >/tmp/nginx.conf

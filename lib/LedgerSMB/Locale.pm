@@ -16,6 +16,13 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 Returns a locale handle for accessing the other methods.  Inherited from
 Locale::Maketext.
 
+=item marktext ($string)
+
+Identity function. Allows text to me marked for translation so that it 
+will be picked by the PO scanner. The actual translation has to be done
+in the calling module when the page is prepared.
+Note: This isn't a method but a utility function.
+
 =item text ($string, @params)
 
 Returns the translation for the given string.  Use this method with a litteral
@@ -86,7 +93,9 @@ package LedgerSMB::Locale;
 use strict;
 use warnings;
 
-use base 'Locale::Maketext';
+use base qw( Locale::Maketext Exporter );
+our @EXPORT_OK = qw(marktext);
+
 use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;
 use Encode;
@@ -98,6 +107,10 @@ Locale::Maketext::Lexicon->import(
         _decode => 1,
     }
 );
+
+sub marktext {
+    return shift;
+}
 
 sub text {
     my ( $self, $text, @params ) = @_;
@@ -155,9 +168,9 @@ sub date {
     }
 
     $dd *= 1;
-    $yy += 2000 if length $yy == 2;
-    $dd = substr( "0$dd", -2 );
-    $mm = substr( "0$mm", -2 );
+    $yy = "20" . $yy if length $yy == 2;
+    $dd = "0" . $dd if length $dd == 1;
+    $mm = "0" . $mm if length $mm == 1;
 
     if ( $myconfig->{dateformat} =~ /^dd/ ) {
         $longdate = "$dd$spc$mm$spc$yy";

@@ -290,6 +290,12 @@
           ?>
           <?lsmb PROCESS auto_label  # Process element label. ?>
           <button<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>><?lsmb element_data.text ?></button>
+          <?lsmb IF element_data.tooltip.msg;
+                INCLUDE tooltip element_data = {
+                id => element_data.tooltip.id,
+                position => element_data.tooltip.position,
+                msg => element_data.tooltip.msg };
+          END ?>
   <?lsmb END ?>
 <?lsmb END ?>
 
@@ -418,9 +424,15 @@
 
 <?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>
 
+<?lsmb BLOCK decorated_text;
+  IF element_data && element_data.msg.defined();
+    element_data.msg.replace('&lt;((/?[ibup]|br))&gt;','<$1>');
+  END;
+END ?>
+
 <?lsmb BLOCK tooltip;
   IF element_data && element_data.id.defined() && element_data.msg.defined();
-     props="connectId:" _ element_data.id;
+     props="connectId:'" _ element_data.id _ "'";
      IF element_data.position.defined();
         positions = [];
         FOREACH position IN element_data.position
@@ -430,7 +442,9 @@
         props = props _ ',position:[' _ positions.join(',') _ ']';
     END; ?>
     <div data-dojo-type="dijit/Tooltip" data-dojo-props=<?lsmb props ?>  >
-         <?lsmb element_data.msg; ?>
+         <?lsmb INCLUDE decorated_text element_data = {
+                msg => element_data.msg };
+         ?>
     </div>
   <?lsmb END;
 END ?>

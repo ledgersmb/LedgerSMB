@@ -230,7 +230,7 @@ sub post_invoice {
             push( @{ $form->{projectnumber} }, $form->{"projectnumber_$i"} );
 
             push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
-
+            $form->{discount} = [] if ref $form->{discount} ne 'ARRAY';
             push( @{ $form->{discount} }, $form->{"discount_$i"} );
 
             push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
@@ -829,7 +829,7 @@ sub post_invoice {
         $dbh->do($query) || $form->dberror($query);
     }
 
-
+    return 1;
 }
 
 sub retrieve_invoice {

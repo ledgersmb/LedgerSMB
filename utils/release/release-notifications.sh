@@ -51,9 +51,9 @@ ValidateEnvironment() {
     ############
         while true; do
             TestConfigInit;
-            TestConfig4Key 'mail'   'AnnounceList'  'ledger-smb-announce@lists.sourceforge.net'
-            TestConfig4Key 'mail'   'UsersList'     'ledger-smb-users@lists.sourceforge.net'
-            TestConfig4Key 'mail'   'DevelList'     'ledger-smb-devel@lists.sourceforge.net'
+            TestConfig4Key 'mail'   'AnnounceList'  'announce@lists.ledgersmb.org'
+            TestConfig4Key 'mail'   'UsersList'     'users@lists.ledgersmb.org'
+            TestConfig4Key 'mail'   'DevelList'     'devel@lists.ledgersmb.org'
             TestConfig4Key 'mail'   'FromAddress'   'release@ledgersmb.org'
             TestConfig4Key 'mail'   'MTAbinary'     'ssmtp'
             if TestConfigAsk "Send List Mail"; then break; fi
@@ -73,17 +73,6 @@ ValidateEnvironment() {
             TestConfig4Key 'drupal' 'User'          'foobar'
             TestConfig4Key 'drupal' 'Password'      ''
             if TestConfigAsk "ledgersmb.org Release Post"; then break; fi
-        done
-
-        while true; do
-            TestConfigInit;
-            TestConfig4Key 'sourceforge' 'Project'             'ledgersmb'
-            TestConfig4Key 'sourceforge' 'ReadlineHistory'     '/tmp/sourceforge.history'
-            TestConfig4Key 'sourceforge' 'ApiKey'              'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-            TestConfig4Key 'sourceforge' 'DefaultFileTemplate' 'Releases/${release_version}/ledgersmb-${release_version}.tar.gz'
-            TestConfig4Key 'sourceforge' 'download_label'      'Download Latest ($release_version)'
-            TestConfig4Key 'sourceforge' 'OS_List'             'windows mac linux bsd solaris others'
-            if TestConfigAsk "Sourceforge Default Download Update"; then break; fi
         done
 
         while true; do # the script release-IRC.sh checks its own config. but lets at least make sure we have a server url
@@ -116,7 +105,6 @@ main() {
 	    |                                                         | |
 	    |   *  Update Version on Wikipedia (en)                   | |
 	    |   *  Update IRC Title                                   | |
-	    |   *  Update Sourceforge Download Link                   | |
 	    |   *  Send Release Emails to                             | |
 	    |           *  $(printf "%-43s" "${cfgValue[mail_AnnounceList]}";)| |
 	    |           *  $(printf "%-43s" "${cfgValue[mail_UsersList]}";)| |
@@ -162,9 +150,9 @@ key: drupal_Password     =
 key: drupal_URL          = www.ledgersmb.org
 key: drupal_User         = *****
 key: mail_FromAddress    = *******@******
-key: mail_AnnounceList   = ledger-smb-announce@lists.sourceforge.net
-key: mail_UsersList      = ledger-smb-users@lists.sourceforge.net
-key: mail_DevelList      = ledger-smb-devel@lists.sourceforge.net
+key: mail_AnnounceList   = announce@lists.ledgersmb.org
+key: mail_UsersList      = users@lists.ledgersmb.org
+key: mail_DevelList      = devel@lists.ledgersmb.org
 key: mail_Password       = testPW
 key: wiki_PageToEdit     = User:Sbts.david/sandbox
 key: wiki_Password       =

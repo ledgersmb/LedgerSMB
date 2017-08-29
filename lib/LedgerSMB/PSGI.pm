@@ -17,20 +17,21 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
-use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER 
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
 use CGI::Emulate::PSGI;
 use Module::Runtime qw/ use_module /;
 use Try::Tiny;
+use List::Util qw{  none };
 
 # To build the URL space
+use Plack;
 use Plack::Builder;
 use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Builder::Conditionals;
-
 
 local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -118,15 +119,16 @@ sub psgi_app {
             $module->can('clear_session_actions');
 
         if ($clear_session_actions
-            && grep { $_ eq $request->{action} }
-                    $clear_session_actions->() ) {
+            && ( !none{ $_ eq $request->{action} }
+                    $clear_session_actions->() )
+        ) {
             $request->clear_session;
         }
         if (! $module->can('no_db')) {
             my $no_db = $module->can('no_db_actions');
 
             if (!$no_db
-                || ( $no_db && ! grep { $_ eq $request->{action} } $no_db->())) {
+                || ( $no_db && none { $_ eq $request->{action} } $no_db->())) {
                 if (! $request->_db_init()) {
                     ($status, $headers, $body) =
                         ( HTTP_UNAUTHORIZED,
@@ -187,7 +189,15 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-       do 'old/bin/old-handler.pl';
+        local ($!, $@) = (undef, undef);
+        my $do_ = 'old/bin/old-handler.pl';
+        unless ( do $do_ ) {
+            if ($! or $@) {
+                print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                warn "Failed to execute $do_ ($!): $@\n";
+            }
+        }
+
        exit;
     }
     return;

@@ -34,8 +34,9 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
-use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA FC_INTERNAL FC_INCOMING);
-
+use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA 
+            FC_INTERNAL FC_INCOMING);
+use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
 
 our $fileclassmap = {
    FC_TRANSACTION   => 'LedgerSMB::File::Transaction',
@@ -56,7 +57,7 @@ sub get {
 
     $file->get_mime_type;
     if ($file->mime_type_text eq 'text/x-uri'){
-        return [ 303,  # Found
+        return [ HTTP_SEE_OTHER,
                  [ 'Location' => $file->content ],
                  [] ];
     }
@@ -65,7 +66,7 @@ sub get {
     $mime_type .= '; charset=utf-8'
         if $mime_type =~ /^text\//;
 
-    return [ 200,
+    return [ HTTP_OK,
              [ 'Content-Type' => $mime_type,
                'Content-Disposition' =>
                    'attachment; filename="' . $file->file_name . '"' ],
@@ -123,7 +124,7 @@ sub attach_file {
     }
     $file->attach;
 
-    return [ 303,  # Found
+    return [ HTTP_SEE_OTHER,
              [ 'Location' => $request->{callback} ],
              [ ] ];
 }
