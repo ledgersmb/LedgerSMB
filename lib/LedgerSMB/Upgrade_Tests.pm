@@ -428,6 +428,37 @@ push @tests, __PACKAGE__->new(
   max_version => '1.4'
 );
 
+push @tests, __PACKAGE__->new(
+   test_query => "select * from from cr_coa_to_account ccta
+                   where chart_id in (select crcoa.chart_id
+                                        from cr_coa_to_account crcoa
+                                       where ccta.chart_id = crcoa.chart_id
+                                    group by crcoa.chart_id
+                                      having count(crcoa.chart_id) > 1)",
+ display_name => marktext('Accounts marked for recon -- once'),
+         name => 'non_duplicate_recon_accounts_marker',
+ display_cols => [ 'chart_id', 'account' ],
+        table => 'cr_coa_to_account',
+ instructions => marktext("Please use pgAdmin3 or psql to remove the duplicates"),
+      appname => 'ledgersmb',
+  min_version => '1.3',
+  max_version => '1.4'
+);
+
+push @tests, __PACKAGE__->new(
+   test_query => "select * from from cr_coa_to_account ccta
+                   where not exists (select 1
+                                       from account
+                                      where account.id = ccta.chart_id)",
+ display_name => marktext('Accounts marked for recon exist'),
+         name => 'recon_accounts_exist',
+ display_cols => [ 'chart_id', 'account' ],
+        table => 'cr_coa_to_account',
+ instructions => marktext("Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' table and change it to an existing value"),
+      appname => 'ledgersmb',
+  min_version => '1.3',
+  max_version => '1.4'
+);
 
 
 #=pod
