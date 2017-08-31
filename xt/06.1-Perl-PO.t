@@ -2,14 +2,10 @@
 
 =pod
 
-This script scans various Perl files for translatable strings.
-
-The scanner uses our extractor tool to find text() or marktext()
-translation routines, either in code or comments, because they sometimes
-intentionally contain translatable strings.
-
-This script exists because xgettext and xgettext.pl don't allow us to
-extract a sub-set of strings from our SQL files.
+This script scans Perl files for translatable strings. The only exceptions 
+are the localization extraction functionality test, which explicitly test
+for invalid cases and feature support files, which use a test function which
+isn't for localization.
 
 =cut
 
