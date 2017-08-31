@@ -4,7 +4,7 @@
 
 This script scans various Perl files for translatable strings.
 
-The scanner uses the Perl Pattern Recognizer to find text() or marktext()
+The scanner uses our extractor tool to find text() or marktext()
 translation routines, either in code or comments, because they sometimes
 intentionally contain translatable strings.
 
