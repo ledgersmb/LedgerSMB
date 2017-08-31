@@ -162,7 +162,7 @@ sub psgi_app {
 
         my $content_type = header_get($headers, 'content-type');
         header_set($headers, 'Content-Type', "$content_type; charset: utf-8")
-            if $content_type ~= m|^text/| && $content_type !~ m|charset=|;
+            if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
 
         $request->{dbh}->commit if defined $request->{dbh};
         LedgerSMB::App_State->cleanup();
