@@ -17,6 +17,7 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
+use LedgerSMB::Setting;
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER
    HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR HTTP_FOUND);
 
@@ -33,6 +34,7 @@ use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
 use Plack::Builder::Conditionals;
+use Plack::Util;
 
 local $@ = undef; # localizes just for initial load.
 eval { require LedgerSMB::Template::LaTeX; };
@@ -152,6 +154,15 @@ sub psgi_app {
 
         $LedgerSMB::App_State::DBH = $request->{dbh};
         ($status, $headers, $body) = @{&$action($request)};
+        push @$headers, (
+            'Cache-Control' =>
+            'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, false',
+            'Pragma' => 'no-cache'
+        ) if LedgerSMB::Setting->get('disable_back');
+
+        my $content_type = header_get($headers, 'content-type');
+        header_set($headers, 'Content-Type', "$content_type; charset: utf-8")
+            if $content_type ~= m|^text/| && $content_type !~ m|charset=|;
 
         $request->{dbh}->commit if defined $request->{dbh};
         LedgerSMB::App_State->cleanup();
