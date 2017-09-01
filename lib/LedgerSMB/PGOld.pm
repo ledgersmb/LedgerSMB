@@ -69,6 +69,8 @@ sub set_dbh {
 This is a wrapper around PGObject::Simple->dbh with the exception that we provide a
 a static/class invocation possibility as well.
 
+=cut
+
 sub dbh {
     my ($self) = @_;
     return $self->SUPER::dbh() if ref $self;
