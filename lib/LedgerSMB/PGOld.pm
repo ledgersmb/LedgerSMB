@@ -64,6 +64,17 @@ sub set_dbh {
     return  LedgerSMB::App_State::DBH();
 }
 
+=item dbh
+
+This is a wrapper around PGObject::Simple->dbh with the exception that we provide a
+a static/class invocation possibility as well.
+
+sub dbh {
+    my ($self) = @_;
+    return $self->SUPER::dbh() if ref $self;
+    return LedgerSMB::App_State::DBH();
+}
+
 sub _parse_array {
     my ($self, $value) = @_;
     return @$value if ref $value eq 'ARRAY';
