@@ -804,12 +804,11 @@ verify_check => md5_hex($check->test_query),
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
-        template => 'form-dynatable',
+        template => 'form-dynatable'
     );
 
     return $template->render_to_psgi({
            form               => $request,
-           base_form          => 'dijit/form/Form',
            heading            => $heading,
            headers            => [$request->{_locale}->maketext($check->display_name),
                                   $request->{_locale}->maketext($check->instructions)],
