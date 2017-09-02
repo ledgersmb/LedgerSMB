@@ -1179,11 +1179,11 @@ sub process_and_run_upgrade_script {
         errlog => $temp . "_stderr"
         );
 
-
     my $sth = $dbh->prepare(qq(select value='yes'
                                  from defaults
                                 where setting_key='migration_ok'));
     $sth->execute();
+
     my ($success) = $sth->fetchrow_array();
     $sth->finish();
 
@@ -1198,8 +1198,7 @@ sub process_and_run_upgrade_script {
     # a frozen (fixed) migration target. Now, however, we need to apply the
     # changes from the remaining database schema management scripts to
     # make the schema a complete one.
-    rebuild_modules($database);
-
+    rebuild_modules($request,$database);
 
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
