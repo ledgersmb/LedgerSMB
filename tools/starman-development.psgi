@@ -49,6 +49,7 @@ use Plack::Builder;
 use Plack::Middleware::Debug::Log4perl;
 #use Plack::Middleware::InteractiveDebugger;
 #use Plack::Middleware::Debug::TemplateToolkit;
+#TODO: Explore https://github.com/elindsey/Devel-hdb
 
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
