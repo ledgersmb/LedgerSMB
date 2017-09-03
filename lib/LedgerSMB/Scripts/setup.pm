@@ -804,7 +804,7 @@ verify_check => md5_hex($check->test_query),
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
-        template => 'form-dynatable'
+        template => 'setup/migration_step'
     );
 
     return $template->render_to_psgi({
