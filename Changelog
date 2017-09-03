@@ -9,9 +9,13 @@ Changelog for 1.5.10
 * Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
 * Fix 500 ISE on bottom of order when creating from vendor (Erik H, #3057)
 * Contact info now properly HTML-escaped (Erik H, #2820)
+* Add check for cr_coa_to_account primary key to 1.3 migration (Erik H, #2663)
+* Add work-around to PGOld for PGObject::Simple 2.x incompatibility (Chris T)
+* Fix missing asset classes on Depreciate and Disposal screens (Erik H, #3123)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
+Chris T is Chris Travers
 
 
 Changelog for 1.5.9
