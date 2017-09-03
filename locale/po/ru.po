@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.10-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-07-22 19:02+0000\n"
+"POT-Creation-Date: 2017-09-03 18:54+0000\n"
 "Last-Translator: Максим Дронь <dronmax@gmail.com>, 2016\n"
 "Language-Team: Russian (https://www.transifex.com/ledgersmb/teams/58325/ru/)\n"
 "Language: ru\n"
@@ -187,7 +187,7 @@ msgstr "Сводная ведомость транзакций по счетам
 
 #: lib/LedgerSMB.pm:596 lib/LedgerSMB.pm:597
 #: lib/LedgerSMB/Scripts/configuration.pm:332
-#: lib/LedgerSMB/Scripts/setup.pm:839
+#: lib/LedgerSMB/Scripts/setup.pm:872
 msgid "Access Denied"
 msgstr "Доступ невозможен"
 
@@ -314,7 +314,7 @@ msgstr "Счета из"
 msgid "Accounts To"
 msgstr "Счета к"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:508 lib/LedgerSMB/Upgrade_Tests.pm:582
+#: lib/LedgerSMB/Upgrade_Tests.pm:539 lib/LedgerSMB/Upgrade_Tests.pm:613
 msgid "Accounts without heading"
 msgstr "Счета без названий"
 
@@ -977,11 +977,11 @@ msgstr ""
 msgid "Attach File"
 msgstr ""
 
-#: UI/Contact/divs/address.html:105 UI/Contact/divs/contact_info.html:78
+#: UI/Contact/divs/address.html:105 UI/Contact/divs/contact_info.html:80
 msgid "Attach To"
 msgstr ""
 
-#: UI/Contact/divs/address.html:111 UI/Contact/divs/contact_info.html:82
+#: UI/Contact/divs/address.html:111 UI/Contact/divs/contact_info.html:84
 msgid "Attach to"
 msgstr ""
 
@@ -1441,15 +1441,15 @@ msgstr ""
 msgid "Can't void a voided invoice!"
 msgstr ""
 
-#: bin/io.pl:1839 lib/LedgerSMB/Scripts/setup.pm:137
+#: bin/io.pl:1839 lib/LedgerSMB/Scripts/setup.pm:138
 msgid "Cancel"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:163
+#: lib/LedgerSMB/Scripts/setup.pm:164
 msgid "Cancel."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:209
+#: lib/LedgerSMB/Scripts/setup.pm:210
 msgid "Cancel?"
 msgstr ""
 
@@ -1825,8 +1825,8 @@ msgid "Contact"
 msgstr "Контактное лицо"
 
 #: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:31
-#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:29
-#: UI/Contact/divs/contact_info.html:109
+#: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:31
+#: UI/Contact/divs/contact_info.html:111
 #: UI/Reports/filters/purchase_history.html:31
 msgid "Contact Info"
 msgstr ""
@@ -1997,7 +1997,7 @@ msgstr ""
 msgid "Create Batch"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:187
+#: lib/LedgerSMB/Scripts/setup.pm:188
 msgid "Create Database?"
 msgstr ""
 
@@ -2247,11 +2247,11 @@ msgstr ""
 msgid "Database administrator credentials"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:186
+#: lib/LedgerSMB/Scripts/setup.pm:187
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:801
+#: lib/LedgerSMB/Scripts/setup.pm:834
 msgid "Database exists."
 msgstr ""
 
@@ -2737,8 +2737,8 @@ msgstr ""
 #: UI/am-department-form.html:12 UI/am-gifi-form.html:16
 #: UI/am-language-form.html:16 UI/am-sic-form.html:20
 #: UI/am-warehouse-form.html:12 UI/budgetting/budget_entry.html:29
-#: UI/budgetting/budget_entry.html:68 UI/Contact/divs/contact_info.html:28
-#: UI/Contact/divs/contact_info.html:98 UI/Contact/divs/credit.html:28
+#: UI/budgetting/budget_entry.html:68 UI/Contact/divs/contact_info.html:30
+#: UI/Contact/divs/contact_info.html:100 UI/Contact/divs/credit.html:28
 #: UI/Contact/divs/credit.html:86 UI/Contact/divs/credit.html:87
 #: UI/Contact/pricelist.csv:11 UI/Contact/pricelist.html:26
 #: UI/Contact/pricelist.tex:17 UI/create_batch.html:25 UI/create_batch.html:81
@@ -2866,7 +2866,7 @@ msgstr ""
 msgid "Document Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:429
+#: lib/LedgerSMB/Scripts/setup.pm:430
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -2874,11 +2874,11 @@ msgstr ""
 msgid "Done"
 msgstr "Выполнено"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:602
+#: lib/LedgerSMB/Upgrade_Tests.pm:633
 msgid "Double customernumbers"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:637
+#: lib/LedgerSMB/Upgrade_Tests.pm:668
 msgid "Double vendornumbers"
 msgstr ""
 
@@ -3199,19 +3199,19 @@ msgstr ""
 msgid "Employees"
 msgstr "Сотрудники"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:449
+#: lib/LedgerSMB/Upgrade_Tests.pm:480
 msgid "Empty AP account"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:438
+#: lib/LedgerSMB/Upgrade_Tests.pm:469
 msgid "Empty AR account"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:524
+#: lib/LedgerSMB/Upgrade_Tests.pm:555
 msgid "Empty customernumbers"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:618
+#: lib/LedgerSMB/Upgrade_Tests.pm:649
 msgid "Empty vendornumbers"
 msgstr ""
 
@@ -3340,7 +3340,7 @@ msgstr ""
 msgid "Equity to Liabilities"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:386
+#: lib/LedgerSMB/Scripts/setup.pm:387
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3352,7 +3352,7 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:473
+#: lib/LedgerSMB/Scripts/setup.pm:474
 msgid "Error while opening directory: [_1]"
 msgstr ""
 
@@ -3728,8 +3728,8 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:938 lib/LedgerSMB/Scripts/setup.pm:996
-#: lib/LedgerSMB/Scripts/setup.pm:1201
+#: lib/LedgerSMB/Scripts/setup.pm:971 lib/LedgerSMB/Scripts/setup.pm:1029
+#: lib/LedgerSMB/Scripts/setup.pm:1234
 msgid "Full Permissions"
 msgstr ""
 
@@ -4133,7 +4133,7 @@ msgstr "Внутренние заметки"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:383
+#: lib/LedgerSMB/Scripts/setup.pm:384
 msgid "Invalid backup request"
 msgstr ""
 
@@ -4551,19 +4551,19 @@ msgstr ""
 msgid "Leadtime"
 msgstr "Основное время"
 
-#: lib/LedgerSMB/Scripts/setup.pm:141
+#: lib/LedgerSMB/Scripts/setup.pm:142
 msgid "LedgerSMB 1.2 db found."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:146
+#: lib/LedgerSMB/Scripts/setup.pm:147
 msgid "LedgerSMB 1.3 db found."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:151
+#: lib/LedgerSMB/Scripts/setup.pm:152
 msgid "LedgerSMB 1.4 db found."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:157
+#: lib/LedgerSMB/Scripts/setup.pm:158
 msgid "LedgerSMB 1.5 db found."
 msgstr ""
 
@@ -4711,7 +4711,7 @@ msgstr ""
 msgid "Login"
 msgstr "Пользователь"
 
-#: lib/LedgerSMB/Scripts/setup.pm:803
+#: lib/LedgerSMB/Scripts/setup.pm:836
 msgid "Login?"
 msgstr ""
 
@@ -4757,7 +4757,7 @@ msgstr ""
 msgid "Make invoice numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:272 lib/LedgerSMB/Upgrade_Tests.pm:737
+#: lib/LedgerSMB/Upgrade_Tests.pm:272 lib/LedgerSMB/Upgrade_Tests.pm:768
 msgid "Make non-obsolete partnumbers unique"
 msgstr ""
 
@@ -4771,8 +4771,8 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:937 lib/LedgerSMB/Scripts/setup.pm:995
-#: lib/LedgerSMB/Scripts/setup.pm:1200
+#: lib/LedgerSMB/Scripts/setup.pm:970 lib/LedgerSMB/Scripts/setup.pm:1028
+#: lib/LedgerSMB/Scripts/setup.pm:1233
 msgid "Manage Users"
 msgstr ""
 
@@ -4951,7 +4951,7 @@ msgstr ""
 msgid "Multiple dates"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:882
+#: lib/LedgerSMB/Upgrade_Tests.pm:913
 msgid ""
 "Multiple tax rates with the same end date have been detected for a tax "
 "account;"
@@ -5087,7 +5087,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1202
+#: lib/LedgerSMB/Scripts/setup.pm:1235
 msgid "No changes"
 msgstr ""
 
@@ -5149,11 +5149,11 @@ msgstr ""
 msgid "Non-cash"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:788
+#: lib/LedgerSMB/Upgrade_Tests.pm:819
 msgid "Non-existing customer pricegroups in partscustomer"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:898
+#: lib/LedgerSMB/Upgrade_Tests.pm:929
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr ""
 
@@ -5161,7 +5161,7 @@ msgstr ""
 msgid "Non-tracking Items"
 msgstr "Нетрассируемые элементы"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:692 lib/LedgerSMB/Upgrade_Tests.pm:714
+#: lib/LedgerSMB/Upgrade_Tests.pm:723 lib/LedgerSMB/Upgrade_Tests.pm:745
 msgid "Non-unique invoice numbers"
 msgstr ""
 
@@ -5249,15 +5249,15 @@ msgstr "ноя"
 msgid "November"
 msgstr "ноябрь"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:653 lib/LedgerSMB/Upgrade_Tests.pm:672
+#: lib/LedgerSMB/Upgrade_Tests.pm:684 lib/LedgerSMB/Upgrade_Tests.pm:703
 msgid "Null employee numbers"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:768
+#: lib/LedgerSMB/Upgrade_Tests.pm:799
 msgid "Null make numbers"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:751
+#: lib/LedgerSMB/Upgrade_Tests.pm:782
 msgid "Null model numbers"
 msgstr ""
 
@@ -5899,13 +5899,13 @@ msgstr ""
 msgid "Pick List"
 msgstr "Список для выбора"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:862
+#: lib/LedgerSMB/Upgrade_Tests.pm:893
 msgid ""
 "Please add a header to the CoA which sorts before the listed accounts "
 "(usually \"0000\" works) (in the standard SL UI)"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:843
+#: lib/LedgerSMB/Upgrade_Tests.pm:874
 msgid ""
 "Please add at least one header to your CoA which sorts before all other "
 "account numbers (in the standard SL UI)"
@@ -5915,60 +5915,60 @@ msgstr ""
 msgid "Please add the missing GIFI accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:452
+#: lib/LedgerSMB/Upgrade_Tests.pm:483
 msgid "Please correct the empty AP accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:441
+#: lib/LedgerSMB/Upgrade_Tests.pm:472
 msgid "Please correct the empty AR accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:808
+#: lib/LedgerSMB/Upgrade_Tests.pm:839
 msgid "Please fix the presented rows to either be \"H\" or \"A\""
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:792 lib/LedgerSMB/Upgrade_Tests.pm:826
+#: lib/LedgerSMB/Upgrade_Tests.pm:823 lib/LedgerSMB/Upgrade_Tests.pm:857
 msgid ""
 "Please fix the pricegroup data in your partscustomer table (no UI available)"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:720
+#: lib/LedgerSMB/Upgrade_Tests.pm:751
 msgid "Please make all AP invoice numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:698
+#: lib/LedgerSMB/Upgrade_Tests.pm:729
 msgid "Please make all AR invoice numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:186 lib/LedgerSMB/Upgrade_Tests.pm:606
+#: lib/LedgerSMB/Upgrade_Tests.pm:186 lib/LedgerSMB/Upgrade_Tests.pm:637
 msgid "Please make all customer numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:677
+#: lib/LedgerSMB/Upgrade_Tests.pm:708
 msgid "Please make all employee numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:205 lib/LedgerSMB/Upgrade_Tests.pm:641
+#: lib/LedgerSMB/Upgrade_Tests.pm:205 lib/LedgerSMB/Upgrade_Tests.pm:672
 msgid "Please make all vendor numbers unique"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:657
+#: lib/LedgerSMB/Upgrade_Tests.pm:688
 msgid "Please make sure all employees have an employee number"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:773
+#: lib/LedgerSMB/Upgrade_Tests.pm:804
 msgid "Please make sure all make numbers are non-empty"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:755
+#: lib/LedgerSMB/Upgrade_Tests.pm:786
 msgid "Please make sure all modelsnumbers are non-empty"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:528
+#: lib/LedgerSMB/Upgrade_Tests.pm:559
 msgid "Please make sure there are no empty customer numbers."
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:622
+#: lib/LedgerSMB/Upgrade_Tests.pm:653
 msgid "Please make sure there are no empty vendor numbers."
 msgstr ""
 
@@ -6506,7 +6506,7 @@ msgstr ""
 msgid "Re-open Period"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:158
+#: lib/LedgerSMB/Scripts/setup.pm:159
 msgid "Rebuild/Upgrade?"
 msgstr ""
 
@@ -6873,11 +6873,11 @@ msgstr ""
 msgid "SKU"
 msgstr "SKU"
 
-#: lib/LedgerSMB/Scripts/setup.pm:128
+#: lib/LedgerSMB/Scripts/setup.pm:129
 msgid "SQL-Ledger 3.0 database detected."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:107
+#: lib/LedgerSMB/Scripts/setup.pm:108
 msgid "SQL-Ledger database detected."
 msgstr ""
 
@@ -7002,7 +7002,7 @@ msgstr ""
 msgid "Save"
 msgstr "Сохранить"
 
-#: UI/Contact/divs/contact_info.html:128
+#: UI/Contact/divs/contact_info.html:130
 msgid "Save As New"
 msgstr ""
 
@@ -7014,7 +7014,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:121
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:123
 msgid "Save Contact"
 msgstr ""
 
@@ -7050,7 +7050,7 @@ msgstr "Сохранить расписание"
 msgid "Save Template"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:738
+#: lib/LedgerSMB/Scripts/setup.pm:754
 msgid "Save and Retry"
 msgstr ""
 
@@ -8275,7 +8275,7 @@ msgstr "Тринадцать"
 msgid "Thirty"
 msgstr "Тридцать"
 
-#: UI/Contact/divs/address.html:78 UI/Contact/divs/contact_info.html:26
+#: UI/Contact/divs/address.html:78 UI/Contact/divs/contact_info.html:28
 msgid "This Account"
 msgstr ""
 
@@ -8698,7 +8698,7 @@ msgstr "Два"
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:80
 #: lib/LedgerSMB/Scripts/asset.pm:533 t/data/04-complex_template.html:384
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/address.html:119
-#: UI/Contact/divs/contact_info.html:27 UI/Contact/divs/credit.html:25
+#: UI/Contact/divs/contact_info.html:29 UI/Contact/divs/credit.html:25
 #: UI/Contact/divs/wage.html:7
 msgid "Type"
 msgstr ""
@@ -8750,7 +8750,7 @@ msgstr ""
 msgid "Unique Vendornumber"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:270 lib/LedgerSMB/Upgrade_Tests.pm:735
+#: lib/LedgerSMB/Upgrade_Tests.pm:270 lib/LedgerSMB/Upgrade_Tests.pm:766
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
@@ -8782,21 +8782,21 @@ msgstr "Единица"
 msgid "Unit Price"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:839
+#: lib/LedgerSMB/Upgrade_Tests.pm:870
 msgid "Unknown "
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:821
+#: lib/LedgerSMB/Upgrade_Tests.pm:852
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
 "(e)Q(uity))"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:803
+#: lib/LedgerSMB/Upgrade_Tests.pm:834
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:207
+#: lib/LedgerSMB/Scripts/setup.pm:208
 msgid "Unknown database found."
 msgstr ""
 
@@ -8812,7 +8812,7 @@ msgstr ""
 msgid "Unpproved"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:162
+#: lib/LedgerSMB/Scripts/setup.pm:163
 msgid "Unsupported LedgerSMB version detected."
 msgstr ""
 
@@ -8820,15 +8820,15 @@ msgstr ""
 msgid "Unsupported Number"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:135
+#: lib/LedgerSMB/Scripts/setup.pm:136
 msgid "Unsupported SQL-Ledger version detected."
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:467 lib/LedgerSMB/Upgrade_Tests.pm:542
+#: lib/LedgerSMB/Upgrade_Tests.pm:498 lib/LedgerSMB/Upgrade_Tests.pm:573
 msgid "Unsupported account categories"
 msgstr ""
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:486 lib/LedgerSMB/Upgrade_Tests.pm:560
+#: lib/LedgerSMB/Upgrade_Tests.pm:517 lib/LedgerSMB/Upgrade_Tests.pm:591
 msgid "Unsupported account link combinations"
 msgstr ""
 
@@ -8918,7 +8918,7 @@ msgstr "Сотрудник"
 msgid "User Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:982
+#: lib/LedgerSMB/Scripts/setup.pm:1015
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -9173,11 +9173,11 @@ msgstr ""
 msgid "Work Order"
 msgstr "Рабочий заказ"
 
-#: lib/LedgerSMB/Scripts/setup.pm:109
+#: lib/LedgerSMB/Scripts/setup.pm:110
 msgid "Would you like to migrate the database?"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:112
+#: lib/LedgerSMB/Scripts/setup.pm:113
 msgid "Would you like to upgrade the database?"
 msgstr ""
 
@@ -9419,7 +9419,7 @@ msgstr ""
 msgid "production"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:245
+#: lib/LedgerSMB/Scripts/setup.pm:246
 msgid "psql not found."
 msgstr ""
 
