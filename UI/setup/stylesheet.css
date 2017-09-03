@@ -2,6 +2,16 @@ body {
     overflow-y: auto;
 }
 
+div#loading {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
 div#setupconsole {
     background-color: white;
     margin-right: auto;
@@ -30,6 +40,9 @@ form#loginform {
     display: inline-block;
 }
 
+.login_form {
+    text-align: left;
+}
 div {
     overflow: auto;
 }
@@ -52,6 +65,7 @@ label {
     padding-right: 0.5em;
     margin-top: 0.5em;
 }
+
 input {
     width: 14em;
     margin: 0;
