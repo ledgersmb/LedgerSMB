@@ -14,6 +14,8 @@ ONLY one of these should be copied into the appropriate system config dir and mo
 on debian systems it would be a subdir of /etc/nginx/ or /etc/apache/
 - apache-vhost.conf
 Sample apache config file
+- lighttpd-vhost.conf
+Sample lighttpd config file
 - nginx-vhost.conf
 Sample nginx config file
 - default.vcl
