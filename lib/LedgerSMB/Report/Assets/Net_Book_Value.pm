@@ -68,7 +68,7 @@ sub columns {
 
           {type => 'href',
          col_id => 'tag',
-      href_base => 'asset.pl?action=ed&id=',
+      href_base => 'asset.pl?action=asset_edit&id=',
            name =>  LedgerSMB::Report::text('Tag'),},
 
           {type => 'text',
