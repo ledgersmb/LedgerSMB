@@ -67,7 +67,7 @@ sub columns {
 
           {type => 'href',
          col_id => 'tag',
-      href_base => 'asset.pl?action=ed&id=',
+      href_base => 'asset.pl?action=asset_edit&id=',
            name =>  LedgerSMB::Report::text('Tag'),},
 
           {type => 'text',
@@ -130,7 +130,7 @@ Net Book Value
 =cut
 
 sub name {
-    return LedgerSMB::Report->text('Net Book Value');
+    return LedgerSMB::Report::text('Net Book Value');
 }
 
 =head1 METHODS

@@ -403,7 +403,7 @@ sub display_report {
    my $rows = [];
    my $hiddens = {};
    my $count = 0;
-   for my $asset (@{$request->{assets}}){
+   for my $asset (@{$report->{assets}}){
        push @$rows,
             { select         => {input => { name    => "asset_$count",
                                             checked => $asset->{checked},
