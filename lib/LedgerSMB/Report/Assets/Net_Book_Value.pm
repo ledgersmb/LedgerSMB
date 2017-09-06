@@ -131,7 +131,7 @@ Net Book Value
 =cut
 
 sub name {
-    return LedgerSMB::Report->text('Net Book Value');
+    return LedgerSMB::Report::text('Net Book Value');
 }
 
 =head1 METHODS
