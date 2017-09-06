@@ -2,6 +2,17 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.11
+* Rename lighttpd example configuration file for consistency (Yves L)
+* Fix Net Book Value report shows 'LedgerSMB::Report' as its name (Erik H, #3132)
+* Fix Depreciation screen not showing any assets (Erik H, #3131)
+* Fix fixed asset's 'Usable life' field not showing entered value (Erik H, #3130)
+* Fix Net Book Value report's link to asset details broken (Erik H, #3129)
+
+Yves L is Yves Lavoie
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.10
 * Fix loading image URL taken from Dojo 1.12 (instead of 1.10) (Erik H)
 * Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
