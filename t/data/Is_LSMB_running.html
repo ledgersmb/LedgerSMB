@@ -36,7 +36,7 @@
         
         <meta name="robots" content="noindex,nofollow" />
 </head><body id="setup-login" class="lsmb claro">
-    <div class="setupconsole" style="position:relative;height:25em">
+    <div class="setupconsole" style="position:relative;height:100%">
         <div id="loading">
             <img style="display: block; margin: auto auto;"
                  src="js/dijit/icons/images/loadingAnimation.gif"
@@ -64,7 +64,8 @@
                 </div>
             </div>
             <form id="loginform"
-                  name="credentials">
+                  name="credentials"
+                  style="margin-top:1em">
                 <div class="login_form">
                     <div class="tabular col-1">
                         <div id="userpass">
@@ -87,7 +88,8 @@
           <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />
                         </div>
                     </div>
-                    <div class="inputrow" style="text-align:center">
+                    <div class="inputrow"
+                         style="text-align:right; padding-right: 4ex; margin-top: 1ex">
                         <button data-dojo-type="lsmb/SetupLoginButton"
                                 class="submit"
                                 data-dojo-props="action:'login'"
