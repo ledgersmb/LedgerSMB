@@ -2,11 +2,21 @@ body {
     overflow-y: auto;
 }
 
-div.setupconsole {
+div#loading {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
+div#setupconsole {
     background-color: white;
     margin-right: auto;
     margin-left: auto;
-    width: 80em;
+    min-width: 21em;
     padding: 2em;
     padding-bottom: 2em;
     border-style: outset;
@@ -14,6 +24,25 @@ div.setupconsole {
     margin-bottom: 2em;
 }
 
+div#logindiv {
+    z-index: 90;
+    position:absolute;
+    top:0;
+    left:0;
+    width:calc(100% - 4em);
+    height:calc(100% - 4em);
+    padding:2em;
+    text-align: center;
+    margin: 0 auto;
+}
+
+form#loginform {
+    display: inline-block;
+}
+
+.login_form {
+    text-align: left;
+}
 div {
     overflow: auto;
 }
@@ -36,6 +65,7 @@ label {
     padding-right: 0.5em;
     margin-top: 0.5em;
 }
+
 input {
     width: 14em;
     margin: 0;

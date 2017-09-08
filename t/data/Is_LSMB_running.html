@@ -35,65 +35,79 @@
             <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         
         <meta name="robots" content="noindex,nofollow" />
-</head>
-<body id="setup-login" class="lsmb claro">
-  <div class="setupconsole" style="position:relative;height:23em">
-    <div id="loading" style="z-index:100;position:absolute;top:0;left:0;width:100%;height:100%;background:white">
-      <img
-         style="display: block; margin: auto auto; font-family: "
-         src="js/dijit/icons/images/loadingAnimation.gif"
-         alt="If this text is showing, there's most likely a problem with the Dojo setup"
-         title="Loading ..."
-         width="20" height="20" />
-    </div>
-    <div style="z-index:90;position:absolute;top:0;left:0;width:calc(100% - 4em);height:calc(100% - 4em);padding:2em">
-<h2>Database Management Console</h2>
-<div class="listtop">Database administrator credentials</div>
-<form id="loginform"
-      name="credentials">
-<div class="login_form">
-<div class="tabular col-1">
-<div id="userpass">
-<div class="inputrow">
-<label id="s-user-label" for="s-user" class="username">DB admin login</label>
+</head><body id="setup-login" class="lsmb claro">
+    <div class="setupconsole" style="position:relative;height:25em">
+        <div id="loading">
+            <img style="display: block; margin: auto auto;"
+                 src="js/dijit/icons/images/loadingAnimation.gif"
+                 alt="If this text is showing, there's most likely a problem with the Dojo setup"
+                 title="Loading ..."
+                 width="20" height="20" />
+        </div>
+        <div id="logindiv">
+            <div class="login" align="center">
+                <h1 class="login"
+                    style="font-weight: bold; margin-top:0; margin-bottom: 1em">
+                    Database Management Console
+                </h1>
+                <a href="http://www.ledgersmb.org/"
+                   target="_top">
+                   <img src="images/ledgersmb.png"
+                        class="logo"
+                        alt="LedgerSMB Logo" />
+                </a>
+                <h2 align="center" style="margin-top: 0">
+                    LedgerSMB 1.6.0-dev
+                </h2>
+                <div class="listtop">
+                    Database administrator credentials
+                </div>
+            </div>
+            <form id="loginform"
+                  name="credentials">
+                <div class="login_form">
+                    <div class="tabular col-1">
+                        <div id="userpass">
+                            <div class="inputrow">
+                                <label id="s-user-label" for="s-user" class="username">DB admin login</label>
           <select id="s-user" class="username" title="DB admin login" name="s_user" size="15" data-dojo-type="dijit/form/ComboBox" data-dojo-props="value:'', placeHolder:'Select or Enter User'">
             
             <option  id="s-user-1" value="lsmb_dbadmin" >lsmb_dbadmin</option><option  id="s-user-2" value="postgres" >postgres</option>
           </select>
-</div>
-<div class="inputrow">
-<label id="s-password-label" for="s-password" class="password">Password</label>
+                            </div>
+                            <div class="inputrow">
+                                <label id="s-password-label" for="s-password" class="password">Password</label>
       
           <input id="s-password" class="password" title="Password" type="password" name="s_password" size="15" data-dojo-type="dijit/form/ValidationTextBox" />
-</div>
-</div>
-<div class="inputrow">
-<label id="database-label" for="database" class="database">Database</label>
+                            </div>
+                        </div>
+                        <div class="inputrow">
+                            <label id="database-label" for="database" class="database">Database</label>
       
           <input id="database" class="database" title="Database" type="text" name="database" size="15" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" />
-</div></div>
-<div class="inputrow" style="text-align:center">
-  <button data-dojo-type="lsmb/SetupLoginButton"
-          class="submit"
-          data-dojo-props="action:'login'"
-          >Login</button>
-  <button data-dojo-type="lsmb/SetupLoginButton"
-          class="submit"
-          data-dojo-props="action:'create_db'"
-          >Create</button>
-
-</div>
-</div>
-</form>
-</div>
-</div>
+                        </div>
+                    </div>
+                    <div class="inputrow" style="text-align:center">
+                        <button data-dojo-type="lsmb/SetupLoginButton"
+                                class="submit"
+                                data-dojo-props="action:'login'"
+                            >Login</button>
+                        <button data-dojo-type="lsmb/SetupLoginButton"
+                                class="submit"
+                                data-dojo-props="action:'create_db'"
+                            >Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
 <script>
   require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
   function(dom, style, ready) {
     ready(80, function() {
-  style.set(dom.byId('loading'), 'display', 'none');
-  });
+        style.set(dom.byId('loading'), 'display', 'none');
+    });
   });
 </script>
