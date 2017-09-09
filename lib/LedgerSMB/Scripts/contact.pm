@@ -36,7 +36,6 @@ use Try::Tiny;
 
 use strict;
 use warnings;
-use Try::Tiny;
 
 #Plugins
 opendir(my $dh, 'lib/LedgerSMB/Entity/Plugins')
@@ -502,17 +501,22 @@ sub dispatch_legacy {
         wait;
     }
     else {
-        my $script = $dispatch->{$request->{action}}{script};
-        $form->{script} = $script;
-        $form->{action} = 'add';
-        $form->{dbh} = $request->{dbh};
-        $form->{script} =~ s|.*/||;
-        { no strict; no warnings 'redefine'; do $script; }
-        { no warnings;
-          # Suppress 'only referenced once' warnings
-          $lsmb_legacy::form = $form;
-          $lsmb_legacy::locale = $locale; }
-        "lsmb_legacy"->can($form->{action})->();
+        # We need a 'try' block here to prevent errors being thrown in
+        # the inner block from escaping out of the block and missing
+        # the 'exit' below.
+        try {
+            my $script = $dispatch->{$request->{action}}{script};
+            $form->{script} = $script;
+            $form->{action} = 'add';
+            $form->{dbh} = $request->{dbh};
+            $form->{script} =~ s|.*/||;
+            { no strict; no warnings 'redefine'; do $script; }
+            { no warnings;
+              # Suppress 'only referenced once' warnings
+              $lsmb_legacy::form = $form;
+              $lsmb_legacy::locale = $locale; }
+            "lsmb_legacy"->can($form->{action})->();
+        };
         exit;
     }
 }

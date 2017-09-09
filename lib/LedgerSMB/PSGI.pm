@@ -101,16 +101,20 @@ sub _run_old {
     if (my $cpid = fork()){
        wait;
     } else {
-        local ($!, $@);
-        my $do_ = 'bin/old-handler.pl';
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+        # We need a 'try' block here to prevent errors being thrown in
+        # the inner block from escaping out of the block and missing
+        # the 'exit' below.
+        try {
+            local ($!, $@);
+            my $do_ = 'bin/old-handler.pl';
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
             }
-        }
-
-       exit;
+        };
+        exit;
     }
 }
 
