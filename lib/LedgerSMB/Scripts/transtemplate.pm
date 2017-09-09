@@ -56,7 +56,7 @@ sub view {
         unless $script;
     if ($script =~ /^bin/){
         if (my $cpid = fork()) {
-            wait;
+            waitpid $cpid, 0;
             return;
         }
         else {

@@ -198,7 +198,7 @@ sub add_vouchers {
     delete $request->{id};
     if ($script =~ /^bin/) {
         if (my $cpid = fork()) {
-            wait;
+            waitpid $cpid, 0;
         }
         else {
             # We need a 'try' block here to prevent errors being thrown in
@@ -432,7 +432,7 @@ my %print_dispatch = (
    2 => sub {
                my ($voucher, $request) = @_;
                if (my $cpid = fork()){
-                  wait;
+                  waitpid $cpid, 0;
                } else {
                    # We need a 'try' block here to prevent errors being thrown in
                    # the inner block from escaping out of the block and missing
@@ -465,7 +465,7 @@ my %print_dispatch = (
    8 => sub {
                my ($voucher, $request) = @_;
                if (fork){
-                  wait;
+                  waitpid $cpid, 0;
                } else {
                    # We need a 'try' block here to prevent errors being thrown in
                    # the inner block from escaping out of the block and missing
@@ -492,7 +492,7 @@ my %print_dispatch = (
    9 => sub {
                my ($voucher, $request) = @_;
                if (fork){
-                  wait;
+                  waitpid $cpid, 0;
                } else {
                    # We need a 'try' block here to prevent errors being thrown in
                    # the inner block from escaping out of the block and missing

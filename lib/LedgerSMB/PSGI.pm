@@ -99,7 +99,7 @@ sub new_app {
 
 sub _run_old {
     if (my $cpid = fork()){
-       wait;
+       waitpid $cpid, 0;
     } else {
         # We need a 'try' block here to prevent errors being thrown in
         # the inner block from escaping out of the block and missing

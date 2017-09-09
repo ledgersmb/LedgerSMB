@@ -156,7 +156,7 @@ sub generate {
     my ($request) = @_;
 
     if (my $cpid = fork()) {
-        wait;
+        waitpid $cpid, 0;
     }
     else {
         # We need a 'try' block here to prevent errors being thrown in
