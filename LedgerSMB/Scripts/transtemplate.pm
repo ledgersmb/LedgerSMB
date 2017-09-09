@@ -12,6 +12,9 @@ package LedgerSMB::Scripts::transtemplate;
 use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Report::Listings::TemplateTrans;
 use LedgerSMB::Template;
+
+use Try::Tiny;
+
 our $VERSION = '0.1';
 
 =head1 ROUTINES
@@ -53,27 +56,32 @@ sub view {
             return;
         }
         else {
-            # I hate this old code!
-            $lsmb_legacy::form = new Form;
-            $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
-            $lsmb_legacy::form->{dbh} = $request->{dbh};
-            $lsmb_legacy::locale = $request->{_locale};
-            %lsmb_legacy::myconfig = ();
-            %lsmb_legacy::myconfig = %{$request->{_user}};
-            $lsmb_legacy::form->{stylesheet} =
-                $lsmb_legacy::myconfig{stylesheet};
-            $lsmb_legacy::form->{script} = $script;
-            $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
-            delete $lsmb_legacy::form->{id};
+            # We need a 'try' block here to prevent errors being thrown in
+            # the inner block from escaping out of the block and missing
+            # the 'exit' below.
+            try {
+                $lsmb_legacy::form = new Form;
+                $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+                $lsmb_legacy::form->{dbh} = $request->{dbh};
+                $lsmb_legacy::locale = $request->{_locale};
+                %lsmb_legacy::myconfig = ();
+                %lsmb_legacy::myconfig = %{$request->{_user}};
+                $lsmb_legacy::form->{stylesheet} =
+                    $lsmb_legacy::myconfig{stylesheet};
+                $lsmb_legacy::form->{script} = $script;
+                $lsmb_legacy::form->{script} =~ s/(bin|scripts)\///;
+                delete $lsmb_legacy::form->{id};
 
-            convert_to_form($transtemplate, $lsmb_legacy::form, $journal_type);
-            {
-                no strict;
-                no warnings 'redefine';
+                convert_to_form($transtemplate, $lsmb_legacy::form,
+                                $journal_type);
+                {
+                    no strict;
+                    no warnings 'redefine';
 
-                do $script;
-            }
-            $template_dispatch->{$journal_type}->{function}($lsmb_legacy::form);
+                    do $script;
+                }
+                $template_dispatch->{$journal_type}->{function}($lsmb_legacy::form);
+            };
 
             exit;
         }

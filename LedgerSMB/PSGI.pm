@@ -66,12 +66,17 @@ sub post_dispatch {
 
 sub _run_old {
     if (my $cpid = fork()){
-       wait;
+       waitpid $cpid, 0;
     } else {
-       &$pre_dispatch() if $pre_dispatch;
-       do 'old-handler.pl';
-       &$post_dispatch() if $post_dispatch;
-       exit;
+        # We need a 'try' block here to prevent errors being thrown in
+        # the inner block from escaping out of the block and missing
+        # the 'exit' below.
+        try {
+            &$pre_dispatch() if $pre_dispatch;
+            do 'old-handler.pl';
+            &$post_dispatch() if $post_dispatch;
+        };
+        exit;
     }
 }
 

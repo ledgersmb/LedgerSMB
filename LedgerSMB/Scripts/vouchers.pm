@@ -25,6 +25,7 @@ use CGI::Simple;
 use LedgerSMB::CP;
 use strict;
 
+use Try::Tiny;
 
 our $custom_batch_types = {};
 
@@ -47,10 +48,10 @@ current user.
 
 sub create_batch {
     my ($request) = @_;
-	$request->open_form;
-	$request->{hidden} = [
+        $request->open_form;
+        $request->{hidden} = [
         {name => "batch_type", value => $request->{batch_type}},
-		{name => "form_id",   value => $request->{form_id}},
+                {name => "form_id",   value => $request->{form_id}},
         {name => 'overpayment', value => $request->{overpayment}},
     ];
  
@@ -123,39 +124,39 @@ sub add_vouchers {
      sales_invoice => {script => 'bin/is.pl', function => sub {lsmb_legacy::add()}},
     vendor_invoice => {script => 'bin/ir.pl', function => sub {lsmb_legacy::add()}},
         receipt    => {script => undef, 
-	             function => sub {
-				my ($request) = @_;
-				$request->{account_class} = 2;
-				LedgerSMB::Scripts::payment::payments($request);
-				}},
+                     function => sub {
+                                my ($request) = @_;
+                                $request->{account_class} = 2;
+                                LedgerSMB::Scripts::payment::payments($request);
+                                }},
         payment   => {script => undef, 
-	             function => sub {
-				my ($request) = @_;
-				$request->{account_class} = 1;
-				LedgerSMB::Scripts::payment::payments($request);
-				}},
+                     function => sub {
+                                my ($request) = @_;
+                                $request->{account_class} = 1;
+                                LedgerSMB::Scripts::payment::payments($request);
+                                }},
         payment_reversal => {
                       script => undef,
                     function => sub {
-				my ($request) = @_;
-				$request->{account_class} = 1;
+                                my ($request) = @_;
+                                $request->{account_class} = 1;
                                 if ($request->{overpayment}){
                                     $request->{report_name} = 'overpayments'; 
                                     LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
-				    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
-				}},
+                                }},
         receipt_reversal => {
                       script => undef,
                     function => sub {
-				my ($request) = @_;
-				$request->{account_class} = 2;
+                                my ($request) = @_;
+                                $request->{account_class} = 2;
                                 if ($request->{overpayment}){
                                     $request->{report_name} = 'overpayments'; 
                                     LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
-			   	    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
      
                      }},
@@ -404,73 +405,88 @@ my %print_dispatch = (
    2 => sub { 
                my ($voucher, $request) = @_;
                if (my $cpid = fork()){
-                  wait; 
+                  waitpid $cpid, 0; 
                } else {
-                  do 'bin/ar.pl';
-                  require 'LedgerSMB/Form.pm';
-                  %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, 'Form';
-                  local $LedgerSMB::App_State::DBH = 0;
-                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
-                  $lsmb_legacy::form->{ARAP} = 'AR';
-                  $lsmb_legacy::form->{arap} = 'ar';
-                  $lsmb_legacy::form->{vc} = 'customer';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
-                               if ref $voucher;
-                  $lsmb_legacy::form->{formname} = 'ar_transaction';
-                  $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
+                   # We need a 'try' block here to prevent errors being thrown in
+                   # the inner block from escaping out of the block and missing
+                   # the 'exit' below.
+                   try {
+                       do 'bin/ar.pl';
+                       require 'LedgerSMB/Form.pm';
+                       %$lsmb_legacy::form = (%$request);
+                       bless $lsmb_legacy::form, 'Form';
+                       local $LedgerSMB::App_State::DBH = 0;
+                       $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                       $lsmb_legacy::form->{ARAP} = 'AR';
+                       $lsmb_legacy::form->{arap} = 'ar';
+                       $lsmb_legacy::form->{vc} = 'customer';
+                       $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                           if ref $voucher;
+                       $lsmb_legacy::form->{formname} = 'ar_transaction';
+                       $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
 
-                  lsmb_legacy::create_links();
-		  $lsmb_legacy::form->{media} = $request->{media};
+                       lsmb_legacy::create_links();
+                       $lsmb_legacy::form->{media} = $request->{media};
 
-                  lsmb_legacy::print();
-                  exit;
+                       lsmb_legacy::print();
+                   };
+                   exit;
                }
                1;
              },
    1 => sub { 0 },
    8 => sub { 
                my ($voucher, $request) = @_;
-               if (fork){
-                  wait; 
+               if (my $cpid = fork){
+                  waitpid $cpid, 0; 
                } else {
-                  do 'bin/is.pl';
-                  require 'LedgerSMB/Form.pm';
-                  %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, 'Form';
-                  local $LedgerSMB::App_State::DBH = 0;
-                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
-                  $lsmb_legacy::form->{formname} = 'invoice';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                   # We need a 'try' block here to prevent errors being thrown in
+                   # the inner block from escaping out of the block and missing
+                   # the 'exit' below.
+                   try {
+                       do 'bin/is.pl';
+                       require 'LedgerSMB/Form.pm';
+                       %$lsmb_legacy::form = (%$request);
+                       bless $lsmb_legacy::form, 'Form';
+                       local $LedgerSMB::App_State::DBH = 0;
+                       $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                       $lsmb_legacy::form->{formname} = 'invoice';
+                       $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
                                if ref $voucher;
 
-                  lsmb_legacy::create_links();
+                       lsmb_legacy::create_links();
 
-                  lsmb_legacy::print();
-                  exit;
+                       lsmb_legacy::print();
+                   };
+                   exit;
                }
                1;
              },
    9 => sub {
                my ($voucher, $request) = @_;
-               if (fork){
-                  wait; 
+               if (my $cpid = fork){
+                  waitpid $cpid, 0; 
                } else {
-                  do 'bin/is.pl';
-                  require 'LedgerSMB/Form.pm';
-                  %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, 'Form';
-                  local $LedgerSMB::App_State::DBH = 0;
-                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
-                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
-                  $lsmb_legacy::form->{formname} = 'product_receipt';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                   # We need a 'try' block here to prevent errors being thrown in
+                   # the inner block from escaping out of the block and missing
+                   # the 'exit' below.
+                   try {
+                       do 'bin/is.pl';
+                       require 'LedgerSMB/Form.pm';
+                       %$lsmb_legacy::form = (%$request);
+                       bless $lsmb_legacy::form, 'Form';
+                       local $LedgerSMB::App_State::DBH = 0;
+                       $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                       $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                       $lsmb_legacy::form->{formname} = 'product_receipt';
+                       $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
                                if ref $voucher;
 
-                  lsmb_legacy::create_links();
+                       lsmb_legacy::create_links();
 
-                  lsmb_legacy::print();
-                  exit;
+                       lsmb_legacy::print();
+                   };
+                   exit;
                }
                1;
              },
