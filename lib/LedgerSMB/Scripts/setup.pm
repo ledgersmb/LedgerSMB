@@ -804,12 +804,11 @@ verify_check => md5_hex($check->test_query),
 
     my $template = LedgerSMB::Template->new_UI(
         $request,
-        template => 'form-dynatable',
+        template => 'setup/migration_step'
     );
 
     return $template->render_to_psgi({
            form               => $request,
-           base_form          => 'dijit/form/Form',
            heading            => $heading,
            headers            => [$request->{_locale}->maketext($check->display_name),
                                   $request->{_locale}->maketext($check->instructions)],
@@ -1149,14 +1148,11 @@ sub process_and_run_upgrade_script {
     or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
     $dbh->commit;
 
-    $database->load_base_schema({
+    $database->load_base_schema(
         log     => $temp . "_stdout",
         errlog  => $temp . "_stderr",
-                                });
-    $database->load_modules('LOADORDER', {
-        log     => $temp . "_stdout",
-        errlog  => $temp . "_stderr",
-                            });
+        upto_tag=> 'migration-target'
+        );
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -1183,11 +1179,11 @@ sub process_and_run_upgrade_script {
         errlog => $temp . "_stderr"
         );
 
-
     my $sth = $dbh->prepare(qq(select value='yes'
                                  from defaults
                                 where setting_key='migration_ok'));
     $sth->execute();
+
     my ($success) = $sth->fetchrow_array();
     $sth->finish();
 
@@ -1197,6 +1193,12 @@ sub process_and_run_upgrade_script {
     if ! $success;
 
     $dbh->do("delete from defaults where setting_key like 'migration_%'");
+
+    # the schema was left incomplete when we created it, in order to provide
+    # a frozen (fixed) migration target. Now, however, we need to apply the
+    # changes from the remaining database schema management scripts to
+    # make the schema a complete one.
+    rebuild_modules($request,$database);
 
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
@@ -1235,6 +1237,7 @@ sub run_upgrade {
     if ($v ne '1.2'){
         $request->{only_templates} = 1;
     }
+
     my $templates = LedgerSMB::Setting->get('templates');
     if ($templates){
        $request->{template_dir} = $templates;
@@ -1431,8 +1434,8 @@ between versions on a stable branch (typically upgrading)
 =cut
 
 sub rebuild_modules {
-    my ($request) = @_;
-    my $database = _init_db($request);
+    my ($request, $database) = @_;
+    $database //= _init_db($request);
 
     # The order is important here:
     #  New modules should be able to depend on the latest changes
@@ -1445,7 +1448,7 @@ sub rebuild_modules {
 
 =item complete
 
-Gets the info and adds shows the complete screen.
+Gets the statistics info and shows the complete screen.
 
 =cut
 
@@ -1459,6 +1462,31 @@ sub complete {
         template => 'setup/complete',
     );
     return $template->render_to_psgi($request);
+}
+
+=item system_info
+
+Asks the various modules for system and version info, showing the result
+
+=cut
+
+sub system_info {
+    my ($request) = @_;
+    my $database = _init_db($request);
+
+    # the intent here is to get a much more sophisticated system which
+    # asks registered modules for their system and dependency info
+    my $info = {
+        db => $database->get_info->{system_info},
+        system => LedgerSMB::system_info()->{system},
+        environment => \%ENV,
+        modules => \%INC,
+    };
+    $request->{info} = $info;
+    return LedgerSMB::Template->new_UI(
+        $request,
+        template => 'setup/system_info',
+        )->render_to_psgi($request);
 }
 
 

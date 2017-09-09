@@ -110,6 +110,11 @@ This function sets up the db handle for the request
 Serializes the Perl object (hash) $output to JSON and returns the
 PSGI response triplet (status, headers, body).
 
+=item system_info($dbh)
+
+Returns a hashref with the keys being system information sections,
+each being a hashref detailing configuration items with their values.
+
 =back
 
 
@@ -520,6 +525,19 @@ sub to_json {
                        $output,
                        \&LedgerSMB::Template::TXT::escape )) ]
         ];
+}
+
+sub system_info {
+    my ($dbh) = @_;
+
+    return {
+        system => {
+            perl => $^V->stringify,
+            LedgerSMB => $VERSION,
+            Plack => $Plack::VERSION,
+            INCLUDE_PATH => join("\n", @INC),
+        }
+    };
 }
 
 1;

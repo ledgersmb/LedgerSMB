@@ -2,8 +2,16 @@
 Changelog for 1.6 Series
 Forthcoming
 
+User Interface
+* Left menu replaced by a (faster) Dojo-based version (Yves L/Erik H)
+
+Installation & Administration
+* Added 'System Information' page to setup.pl for problem diagnosis (Erik H)
+* Numerous improvements for the migrations and infrastructure (Yves L/Erik H)
+* Better detection of incorrect @INC paths (David G)
+
 Performance
-* Move 'new code' to real PSGI (removes CGI::Emulate::PSGI) (Erik H/Yves L)
+* PSGI responses no longer written to file but from memory (Erik H/Yves L)
 
 Rewritten inventory tracking and adjustments
 * Removed the need for the ill-understood 'Inventory Entity' (Erik H)
@@ -19,27 +27,48 @@ Code cleanup
 * Moved to Plack::Request (from CGI::Simple & LedgerSMB) (Erik H)
 * Template format plugin cleanup and refactoring (Erik H)
 * Template handling code cleanup (Erik H)
+* Unreferenced UI templates deleted (Erik H)
+* Centralized and more robust entry point for code in old/ (Erik H)
 
 Quality assurance
 * Port testing of database routines to pgTAP (and Perl's 'prove') (Yves L)
-* Enforce numerous Perl::Critic policies (Nick P)
+* Enforce numerous Perl::Critic policies with code cleanup (Nick P/Rob R)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
 Nick P is Nick Prater
+Rob R is Rob Ransbottom
+David G is David Godfrey
 
 
 Changelog for 1.5 Series
 Released 2016-12-24
+
+Changelog for 1.5.11
+* Rename lighttpd example configuration file for consistency (Yves L)
+* Fix Net Book Value report shows 'LedgerSMB::Report' as its name (Erik H, #3132)
+* Fix Depreciation screen not showing any assets (Erik H, #3131)
+* Fix fixed asset's 'Usable life' field not showing entered value (Erik H, #3130)
+* Fix Net Book Value report's link to asset details broken (Erik H, #3129)
+
+Yves L is Yves Lavoie
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.5.10
 * Fix loading image URL taken from Dojo 1.12 (instead of 1.10) (Erik H)
 * Fix mails being sent with non-unique Message-IDs (Erik H, #3041)
 * Round-trip fewer values over web requests during migration (Erik H)
 * Migrate accounting <-> invoice relationship from LSMB 1.2/SL (Erik H/Yves L)
+* Fix 500 ISE on bottom of order when creating from vendor (Erik H, #3057)
+* Contact info now properly HTML-escaped (Erik H, #2820)
+* Add check for cr_coa_to_account primary key to 1.3 migration (Erik H, #2663)
+* Add work-around to PGOld for PGObject::Simple 2.x incompatibility (Chris T)
+* Fix missing asset classes on Depreciate and Disposal screens (Erik H, #3123)
 
 Erik H is Erik Huelsmann
 Yves L is Yves Lavoie
+Chris T is Chris Travers
 
 
 Changelog for 1.5.9
@@ -253,6 +282,7 @@ Changelog for 1.4.42
 * Fix goods/services search with AR/AP invoices (Chris T, #2938)
 * Fix ar/ap not searchable by part number (Chris T, #2926)
 * Round-trip fewer values over web requests during migration (Erik H)
+* Bank account info now properly HTML-escaped (Erik H, #2820)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann

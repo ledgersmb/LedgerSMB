@@ -1,13 +1,6 @@
-<?lsmb INCLUDE 'ui-header.html'
-                stylesheet = stylesheet
-                include_stylesheet = [
-                        'css/system/global.css'
-                        'payments/payments.css'
-                ]
-                titlebar = text('Search Payments') # '
-?><?lsmb PROCESS 'elements.html';
-         PROCESS 'report_base.html';
-         IF ! entity_class.defined; entity_class = account_class; END ?>
+<?lsmb PROCESS 'elements.html';
+       PROCESS 'report_base.html';
+       IF ! entity_class.defined; entity_class = account_class; END ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb IF account_class == 2;
             CONTACT = "Customer Number";
@@ -128,4 +121,3 @@
 </div>
 </form>
 </body>
-</html>

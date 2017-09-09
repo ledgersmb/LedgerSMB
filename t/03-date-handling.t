@@ -82,9 +82,9 @@ foreach my $format (0 .. $#formats) {
         for my $mm (1 .. 12) {
                 my $start = $fmt;
                 my $temp = sprintf('%02d', $mm);
-                my $month_en = $locale_en->text($months[$mm - 1]);
-                my $month_en_2 = $locale_en->text($mon[$mm - 1]);
-                my $month_es = $locale_es->text($months[$mm - 1]);
+                my $month_en = $locale_en->maketext($months[$mm - 1]);
+                my $month_en_2 = $locale_en->maketext($mon[$mm - 1]);
+                my $month_es = $locale_es->maketext($months[$mm - 1]);
                 $start =~ s/dd/29/;
                 $start =~ s/yyyy/2000/;
                 $start =~ s/yy/00/;

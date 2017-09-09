@@ -1,9 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html'
-      include_stylesheet = ["asset/asset.css"]
-      include_script = ["asset/asset.js"]
-?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
 <div class="listtop"><?lsmb asset.title ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
@@ -30,14 +26,6 @@
 
 ?>
 
-
-<script>
-window.default_unit_label = {
-<?lsmb FOREACH a_class IN asset.asset_classes -?>
-   "<?lsmb a_class.id ?>": "<?lsmb asset.dep_method.${a_class.id}.unit_label ?>",
-<?lsmb END -?>
-};
-</script>
 
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
@@ -98,7 +86,7 @@ window.default_unit_label = {
 <?lsmb PROCESS input element_data = {
         label = text("Usable Life") #'
         name = "usable_life"
-        value = usable_life
+        value = asset.usable_life
         type = "text"
         size = 10
 } ?>
@@ -225,4 +213,3 @@ window.default_unit_label = {
 </form>
 </div>
 </body>
-</html>

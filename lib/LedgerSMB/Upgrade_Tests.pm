@@ -218,7 +218,7 @@ has tooltips => (is => 'ro',
     default => sub {
         return {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration')
+            'Cancel' => marktext('Cancel the <b>migration</b>')
     }},
     required => 0);
 
@@ -491,6 +491,37 @@ push @tests, __PACKAGE__->new(
   max_version => '1.4'
 );
 
+push @tests, __PACKAGE__->new(
+   test_query => "select * from from cr_coa_to_account ccta
+                   where chart_id in (select crcoa.chart_id
+                                        from cr_coa_to_account crcoa
+                                       where ccta.chart_id = crcoa.chart_id
+                                    group by crcoa.chart_id
+                                      having count(crcoa.chart_id) > 1)",
+ display_name => marktext('Accounts marked for recon -- once'),
+         name => 'non_duplicate_recon_accounts_marker',
+ display_cols => [ 'chart_id', 'account' ],
+        table => 'cr_coa_to_account',
+ instructions => marktext("Please use pgAdmin3 or psql to remove the duplicates"),
+      appname => 'ledgersmb',
+  min_version => '1.3',
+  max_version => '1.4'
+);
+
+push @tests, __PACKAGE__->new(
+   test_query => "select * from from cr_coa_to_account ccta
+                   where not exists (select 1
+                                       from account
+                                      where account.id = ccta.chart_id)",
+ display_name => marktext('Accounts marked for recon exist'),
+         name => 'recon_accounts_exist',
+ display_cols => [ 'chart_id', 'account' ],
+        table => 'cr_coa_to_account',
+ instructions => marktext("Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' table and change it to an existing value"),
+      appname => 'ledgersmb',
+  min_version => '1.3',
+  max_version => '1.4'
+);
 
 
 #=pod
@@ -610,9 +641,9 @@ push @tests,__PACKAGE__->new(
               name => 'no_businesses',
       display_cols => ['id', 'description', 'discount'],
       instructions => marktext(
-                       'Undefined businesses.
-Please make sure business used by vendors and constomers are defined.
-Hover on buttons to see their effects and impacts'),
+                       'Undefined businesses.<br>
+Please make sure business used by vendors and constomers are defined.<br>
+<i><b>Hover on buttons</b> to see their effects and impacts</i>'),
            columns => ['description', 'discount'],
              table => 'business',
            appname => 'sql-ledger',
@@ -630,7 +661,7 @@ Hover on buttons to see their effects and impacts'),
           # I want to add to the tooltips already defaulted properly - YL
           tooltips => {
             'Save and Retry' => marktext('Save the fixes provided and attempt to continue migration'),
-            'Cancel' => marktext('Cancel the migration'),
+            'Cancel' => marktext('Cancel the <b>migration</b>'),
             'Force' => marktext('This will <b>remove</b> the business references in <u>vendor</u> and <u>customer</u> tables')
           }
         );
@@ -648,8 +679,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB vendors must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB vendors must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -671,8 +702,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB customers must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB customers must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -694,8 +725,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB vendors must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB vendors must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -717,8 +748,8 @@ push @tests, __PACKAGE__->new(
     display_cols => ['id', 'name', 'business_id'],
     columns => ['business_id'],
  instructions => marktext(
-                   'LedgerSMB customers must be assigned to a valid business. ' .
-                   'Please review the selection or select the proper business from the list'),
+                   'LedgerSMB customers must be assigned to a valid business.<br>
+Please review the selection or select the proper business from the list'),
 selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
                                         ORDER BY id"},
@@ -754,8 +785,8 @@ push @tests,__PACKAGE__->new(
 #     display_name => marktext('Unsupported account link combinations'),
 #     name => 'unsupported_account_links',
 #     display_cols => ['accno', 'description', 'link'],
-#  instructions => marktext(
-#                    'An account can either be a summary account (which have a
+#  instructions =>
+#          marktext( 'An account can either be a summary account (which have a
 # link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 # number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
 #    columns => ['category'],
@@ -1115,8 +1146,8 @@ push @tests, __PACKAGE__->new(
 #     display_name => marktext('Non-existing vendor pricegroups in partsvendor'),
 #     name => 'partsvendor_pricegroups_exist',
 #     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
-#  instructions => marktext(
-#                    'Please fix the pricegroup data in your partsvendor table (no UI available)'),
+#  instructions =>
+#         marktext('Please fix the pricegroup data in your partsvendor table (no UI available)'),
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
 #     min_version => '2.7',

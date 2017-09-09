@@ -39,7 +39,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Setting;
 use Try::Tiny;
 
-use LedgerSMB::old_code;
+use LedgerSMB::old_code qw(dispatch);
 
 #Plugins
 opendir(my $dh, 'lib/LedgerSMB/Entity/Plugins')

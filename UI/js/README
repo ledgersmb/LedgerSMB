@@ -1,8 +1,0 @@
-
-This directory will be populated by running
-
-  $ make dojo
-
-
-Don't store any files in it, because the directory
- is *replaced* by the build process.

@@ -697,17 +697,6 @@ sub post_bulk {
     return $self->{queue_payments} = $queue_payments;
 }
 
-=item check_job
-
-To be moved into payment_queue addon.
-
-=cut
-
-sub check_job {
-    my ($self) = @_;
-    return ($self->{job}) = $self->call_dbmethod(funcname => 'job__status');
-}
-
 =item post_payment
 
 This method uses payment_post to store a payment (not a bulk payment) on the database.
