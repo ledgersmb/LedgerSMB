@@ -11,6 +11,7 @@ define([
     ],
        function(Form, declare, event, on, hash, domattr, domform,
                 query, registry) {
+           var c = 0;
            return declare("lsmb/Form",
                           [Form],
               {
@@ -46,9 +47,10 @@ define([
                               alert('Form contains no action. Please file a bug');
                               return false;
                           }
+                          c++;
                           var qobj = domform.toQuery(this.domNode);
                           qobj = "action=" + this.clickedAction + "&" + qobj;
-                          url = url + "?" + qobj;
+                          url = url + "?" + qobj + '#' + c.toString(16);
                           hash(url); // add GET forms to the back button history
                       } else {
                           options["method"] = method;
