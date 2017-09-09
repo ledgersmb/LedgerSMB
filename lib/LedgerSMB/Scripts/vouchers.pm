@@ -464,7 +464,7 @@ my %print_dispatch = (
    1 => sub { 0 },
    8 => sub {
                my ($voucher, $request) = @_;
-               if (fork){
+               if (my $cpid = fork){
                   waitpid $cpid, 0;
                } else {
                    # We need a 'try' block here to prevent errors being thrown in
@@ -491,7 +491,7 @@ my %print_dispatch = (
              },
    9 => sub {
                my ($voucher, $request) = @_;
-               if (fork){
+               if (my $cpid = fork){
                   waitpid $cpid, 0;
                } else {
                    # We need a 'try' block here to prevent errors being thrown in
