@@ -23,6 +23,8 @@ use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
 use LedgerSMB::Form; # for dispatching to old code
 
+use Try::Tiny;
+
 =head1 ROUTINES
 
 =over
@@ -154,30 +156,35 @@ sub generate {
     my ($request) = @_;
 
     if (my $cpid = fork()) {
-        wait;
+        waitpid $cpid, 0;
     }
     else {
-        my $form = new Form;
-        for my $k (keys %$request){
-            $form->{$k} = $request->{$k};
-        }
-        {
-            local ($!, $@);
-            my $do_ = 'bin/oe.pl';
-            if ( -e $do_ ) {
-                no strict;
-                no warnings 'redefine';
-                unless ( do $do_ ) {
-                    if ($! or $@) {
-                        print "Status: 500 Internal server error (login.pm)\n\n";
-                        warn "Failed to execute $do_ ($!): $@\n";
+        # We need a 'try' block here to prevent errors being thrown in
+        # the inner block from escaping out of the block and missing
+        # the 'exit' below.
+        try {
+            my $form = new Form;
+            for my $k (keys %$request){
+                $form->{$k} = $request->{$k};
+            }
+            {
+                local ($!, $@);
+                my $do_ = 'bin/oe.pl';
+                if ( -e $do_ ) {
+                    no strict;
+                    no warnings 'redefine';
+                    unless ( do $do_ ) {
+                        if ($! or $@) {
+                            print "Status: 500 Internal server error (login.pm)\n\n";
+                            warn "Failed to execute $do_ ($!): $@\n";
+                        }
                     }
                 }
             }
-        }
 
-        my $locale = $LedgerSMB::App_State::Locale;
-        lsmb_legacy::generate_purchase_orders($form, $locale);
+            my $locale = $LedgerSMB::App_State::Locale;
+            lsmb_legacy::generate_purchase_orders($form, $locale);
+        };
         exit;
     }
 }
