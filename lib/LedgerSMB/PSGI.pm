@@ -187,16 +187,22 @@ sub psgi_app {
 
 sub _run_old {
     if (my $cpid = fork()){
-       wait;
+       waitpid $cpid, 0;
     } else {
-        local ($!, $@) = (undef, undef);
-        my $do_ = 'old/bin/old-handler.pl';
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+        # make 100% sure any "die"-s don't bubble up higher than this point in
+        # the stack: we're a fork()ed process and should under no circumstance
+        # end up acting like another worker. When we are done, we need to
+        # exit() below.
+        try {
+            local ($!, $@) = (undef, undef);
+            my $do_ = 'old/bin/old-handler.pl';
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
             }
-        }
+        };
 
        exit;
     }
