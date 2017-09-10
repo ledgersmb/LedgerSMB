@@ -289,190 +289,103 @@ CREATE OR REPLACE FUNCTION contact__search
         in_notes text, in_users bool)
 RETURNS SETOF contact_search_result AS $$
 
-        SELECT e.id, e.control_code, ec.id, ec.meta_number,
-                ec.description, ec.entity_class,
-                c.legal_name, c.sic_code, b.description , ec.curr::text
-        FROM (select * from entity
-               where control_code like in_control_code || '%'
-              union
-              select * from entity where in_control_code is null) e
-        JOIN (SELECT legal_name, sic_code, entity_id
-                FROM company
-               WHERE legal_name @@ plainto_tsquery(in_name_part)
-                     OR legal_name ilike in_name_part || '%'
-              UNION ALL
+   WITH entities_matching_name AS (
               SELECT legal_name, sic_code, entity_id
                 FROM company
                WHERE in_name_part IS NULL
+             OR legal_name @@ plainto_tsquery(in_name_part)
+             OR legal_name ilike in_name_part || '%'
               UNION ALL
              SELECT coalesce(first_name, '') || ' '
-                    || coalesce(middle_name, '') || ' '
-                    || coalesce(last_name, ''), null, entity_id
+             || coalesce(middle_name, '')
+             || ' ' || coalesce(last_name, ''), null, entity_id
                FROM person
-              WHERE coalesce(first_name, '') || ' '
-                    || coalesce(middle_name, '') || ' '
-                    || coalesce(last_name, '')
+       WHERE in_name_part IS NULL
+             OR coalesce(first_name, '') || ' ' || coalesce(middle_name, '')
+                || ' ' || coalesce(last_name, '')
                      @@ plainto_tsquery(in_name_part)
-              UNION ALL
-             SELECT coalesce(first_name, '') || ' '
-                    || coalesce(middle_name, '') || ' '
-                    || coalesce(last_name, ''), null, entity_id
-               FROM person
-               WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
-        LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-        LEFT JOIN business b ON (ec.business_id = b.id)
-        WHERE (
-            in_entity_class is null
-            OR coalesce(ec.entity_class,e.entity_class) = in_entity_class
+   ),
+   matching_eca_contacts AS (
+       SELECT credit_id
+         FROM eca_to_contact
+        WHERE (in_contact_info IS NULL
+               OR contact = ANY(in_contact_info))
+              AND (in_contact IS NULL
+                   OR description @@ plainto_tsquery(in_contact))
+   ),
+   matching_entity_contacts AS (
+       SELECT entity_id
+         FROM entity_to_contact
+        WHERE (in_contact_info IS NULL
+               OR contact = ANY(in_contact_info))
+              AND (in_contact IS NULL
+                   OR description @@ plainto_tsquery(in_contact))
+   ),
+   matching_locations AS (
+       SELECT id
+         FROM location
+        WHERE (in_address IS NULL
+               OR line_one @@ plainto_tsquery(in_address)
+               OR line_two @@ plainto_tsquery(in_address)
+               OR line_three @@ plainto_tsquery(in_address))
+              AND (in_city IS NULL
+                   OR city ILIKE '%' || in_city || '%')
+              AND (in_state IS NULL
+                   OR state ILIKE '%' || in_state || '%')
+              AND (in_mail_code IS NULL
+                   OR mail_code ILIKE in_mail_code || '%')
+              AND (in_country IS NULL
+                   OR EXISTS (select 1 from country
+                               where name ilike '%' || in_country || '%'
+                                  or short_name ilike '%' || in_country || '%'))
         )
-        AND (
-            c.entity_id IN (
-                select entity_id
-                FROM entity_credit_account leca
-                JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
-                WHERE contact ~* ANY(in_contact_info)
-            )
-            OR '' ILIKE ALL(in_contact_info)
-            OR in_contact_info IS NULL
-        )
-        AND (
-            (   -- Are we filtering by address?
-                in_address IS NULL
-                AND in_city IS NULL
-                AND in_state IS NULL
-                AND in_mail_code IS NULL
-                AND in_country IS NULL
-            )
-            OR (
-                c.entity_id IN (
-                    select entity_id
-                    FROM entity_credit_account leca
-                    JOIN eca_to_location le2a
-                    ON leca.id = le2a.credit_id
-                    JOIN location ll ON le2a.location_id = ll.id
-                    WHERE (
-                        in_address IS NULL
-                        OR
-                        line_one @@ plainto_tsquery(in_address)
-                        OR
-                        line_two @@ plainto_tsquery(in_address)
-                        OR
-                        line_three @@ plainto_tsquery(in_address)
-                    )
-                    AND (
-                        in_city IS NULL
-                        OR city ILIKE '%' || in_city || '%'
-                    )
-                    AND (
-                        -- location.state can be NULL
-                        in_state IS NULL
-                        OR state ILIKE '%' || in_state || '%'
-                    )
-                    AND (
-                        -- location.mail_code can be NULL
-                        in_mail_code IS NULL
-                        OR mail_code ILIKE in_mail_code || '%'
-                    )
-                    AND (
-                        in_country IS NULL
-                        OR country_id IN (
-                            SELECT id FROM country
-                            WHERE name ilike in_country
-                            OR short_name ilike in_country
-                        )
-                    )
-
-                    UNION
-
-                    SELECT entity_id
-                    FROM entity_to_location e2l
-                    JOIN location ON e2l.location_id = location.id
-                    WHERE (
-                        in_address IS NULL
-                        OR
-                        line_one @@ plainto_tsquery(in_address)
-                        OR
-                        line_two @@ plainto_tsquery(in_address)
-                        OR
-                        line_three @@ plainto_tsquery(in_address)
-                    )
-                    AND (
-                        in_city IS NULL
-                        OR city ILIKE '%' || in_city || '%'
-                    )
-                    AND (
-                        -- location.state can be NULL
-                        in_state IS NULL
-                        OR state ILIKE '%' || in_state || '%'
-                    )
-                    AND (
-                        -- location.mail_code can be NULL
-                        in_mail_code IS NULL
-                        OR mail_code ILIKE in_mail_code || '%'
-                    )
-                    AND (
-                        in_country IS NULL
-                        OR country_id IN (
-                            SELECT id FROM country
-                            WHERE name ILIKE in_country
-                            OR short_name ILIKE in_country
-                        )
-                    )
-                )
-            )
-        )
-        AND (
-            ec.business_id = coalesce(in_business_id, ec.business_id)
-            OR (
-                ec.business_id IS NULL
-                AND in_business_id IS NULL
-            )
-        )
-        AND (
-            ec.startdate <= coalesce(in_active_date_to, ec.startdate)
-            OR (ec.startdate IS NULL)
-        )
-        AND (
-            ec.enddate >= coalesce(in_active_date_from, ec.enddate)
-            OR (ec.enddate IS NULL)
-        )
-        AND (
-            ec.meta_number like in_meta_number || '%'
-            OR in_meta_number IS NULL
-        )
-        AND (
-            in_notes IS NULL
-            OR e.id in (
-                SELECT entity_id from entity_note
-                WHERE note @@ plainto_tsquery(in_notes)
-            )
-            OR ec.id IN (
-                select ref_key FROM eca_note
-                WHERE note @@ plainto_tsquery(in_notes)
-            )
-        )
-        AND (
-            in_users IS NULL
-            OR in_users = (
-                exists (
-                    select 1 from users
-                    where entity_id = e.id
-                )
-            )
-        )
-        AND (
-            in_contact IS NULL
-            OR e.id IN (
-                select entity_id
-                FROM entity_to_contact
-                WHERE description @@ plainto_tsquery(in_contact)
-            )
-            OR ec.id IN (
-                SELECT credit_id
-                FROM eca_to_contact
-                WHERE description @@ plainto_tsquery(in_contact)
-            )
-        )
+   SELECT e.id, e.control_code, ec.id, ec.meta_number,
+          ec.description, ec.entity_class,
+          c.legal_name, c.sic_code, b.description , ec.curr::text
+     FROM entity e
+     JOIN entities_matching_name c ON c.entity_id = e.id
+LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+LEFT JOIN business b ON (ec.business_id = b.id)
+    WHERE (in_entity_class is null
+           OR coalesce(ec.entity_class, e.entity_class) = in_entity_class)
+          AND (in_control_code IS NULL
+               OR e.control_code like in_control_code || '%')
+          AND ((in_contact_info IS NULL AND in_contact IS NULL)
+                OR EXISTS (select 1
+                             from matching_eca_contacts mec
+                            where mec.credit_id = ec.id)
+                OR EXISTS (select 1
+                             from matching_entity_contacts mec
+                            where mec.entity_id = e.id))
+           AND ((in_address IS NULL AND in_city IS NULL
+                 AND in_state IS NULL AND in_mail_code IS NULL
+                 AND in_country IS NULL)
+                OR EXISTS (select 1
+                             from matching_locations m
+                             join eca_to_location etl ON m.id = etl.location_id
+                            where etl.credit_id = ec.id)
+                OR EXISTS (select 1
+                             from matching_locations m
+                             join entity_to_location etl
+                                  ON m.id = etl.location_id
+                            where etl.entity_id = e.id))
+           AND (in_business_id IS NULL
+                OR ec.business_id = in_business_id)
+           AND (in_active_date_to IS NULL
+                OR ec.startdate <= in_active_date_to)
+           AND (in_active_date_from IS NULL
+                OR ec.enddate >= ec.enddate)
+           AND (in_meta_number IS NULL
+                OR ec.meta_number like in_meta_number || '%')
+           AND (in_notes IS NULL
+                OR EXISTS (select 1 from entity_note n
+                            where e.id = n.entity_id
+                                  and note @@ plainto_tsquery(in_notes))
+                OR EXISTS (select 1 from eca_note n
+                            where ec.id = n.ref_key
+                                  and note @@ plainto_tsquery(in_notes)))
+           AND (in_users IS NULL OR NOT in_users
+                OR EXISTS (select 1 from users where entity_id = e.id))
         ORDER BY legal_name;
 $$ language sql;
 
