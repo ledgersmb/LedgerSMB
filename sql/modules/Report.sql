@@ -413,7 +413,7 @@ CREATE TYPE aa_transactions_line AS (
     till text,
     salesperson text,
     manager text,
-    shpping_point text,
+    shipping_point text,
     ship_via text,
     business_units text[]
 );
