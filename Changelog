@@ -9,6 +9,9 @@ Changelog for 1.4.42
 * Round-trip fewer values over web requests during migration (Erik H)
 * Bank account info now properly HTML-escaped (Erik H, #2820)
 * Ensure forked sub-processes to be correctly terminated (Erik H)
+* Fix missing content in columns of the outstanding report (Erik H, #2585)
+* Fix contacts search ignores e-mail and phone filters (Erik H, #2821)
+* Fix contacts search by address data doesn't work (Erik H, #2490)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
