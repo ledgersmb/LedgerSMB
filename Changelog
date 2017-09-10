@@ -52,6 +52,9 @@ Changelog for 1.5.11
 * Fix Net Book Value report's link to asset details broken (Erik H, #3129)
 * Ensure forked sub-processes to be correctly terminated (Erik H)
 * Fix Form submission sometimes seems to hang (Erik H, #2972)
+* Fix missing content in columns of the outstanding report (Erik H, #2585)
+* Fix contacts search ignores e-mail and phone filters (Erik H, #2821)
+* Fix contacts search by address data doesn't work (Erik H, #2490)
 
 Yves L is Yves Lavoie
 Erik H is Erik Huelsmann
