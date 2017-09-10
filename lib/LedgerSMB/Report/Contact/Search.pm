@@ -140,7 +140,7 @@ Aggregated from email, phone, fax, etc.  Aggregated by this report (internal).
 
 =cut
 
-has contact_info => (is => 'ro', isa => 'ArrayRef[Str]]', required => 0);
+has contact_info => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
 
 =item email
 
@@ -264,6 +264,10 @@ Runs the report, populates rows.
 
 sub run_report {
     my ($self) = @_;
+    my @contact_info;
+    push @contact_info, $self->phone if $self->phone;
+    push @contact_info, $self->email if $self->email;
+    $self->contact_info(\@contact_info) if @contact_info;
     my @rows = $self->call_dbmethod(funcname => 'contact__search');
     for my $r(@rows){
         $r->{meta_number} ||= "";
