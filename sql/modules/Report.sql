@@ -440,13 +440,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.amount - a.netamount as tax,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
-<<<<<<< HEAD
        '{}' as business_units -- TODO
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes,
-=======
-       '{}'::text[] as business_units -- TODO
-  FROM (select id, transdate, invnumber, curr, amount, netamount, duedate, notes,
->>>>>>> df4f1ec... * Fix #2585: Add missing content for outstanding report columns
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
