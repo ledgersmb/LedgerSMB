@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.11-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-09-03 18:54+0000\n"
+"POT-Creation-Date: 2017-09-12 19:28+0000\n"
 "Last-Translator: allphoneso donie <allphoneso.m6@gmail.com>, 2017\n"
 "Language-Team: Indonesian (https://www.transifex.com/ledgersmb/teams/58325/"
 "id/)\n"
@@ -611,7 +611,7 @@ msgstr ""
 msgid "Address: [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:30
+#: lib/LedgerSMB/Scripts/contact.pm:188 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr ""
@@ -1183,7 +1183,7 @@ msgstr ""
 msgid "Bank Account:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:191 t/data/04-complex_template.html:32
+#: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 msgid "Bank Accounts"
@@ -1704,21 +1704,21 @@ msgstr "Kode harap diisi!"
 msgid "Cold Lead"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:111 sql/Pg-database.sql:2866
+#: lib/LedgerSMB/Scripts/order.pm:113 sql/Pg-database.sql:2866
 msgid "Combine"
 msgstr "Kombinasi"
 
-#: lib/LedgerSMB/Scripts/order.pm:71
+#: lib/LedgerSMB/Scripts/order.pm:73
 msgid "Combine Purchase Orders"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:63
+#: lib/LedgerSMB/Scripts/order.pm:65
 msgid "Combine Sales Orders"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:74
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:71
-#: lib/LedgerSMB/Scripts/contact.pm:183 UI/Contact/contact.html:17
+#: lib/LedgerSMB/Scripts/contact.pm:182 UI/Contact/contact.html:17
 #: UI/Contact/divs/company.html:2 UI/login.html:87
 #: UI/Reports/aging_report.html:19 UI/Reports/display_report.html:25
 #: UI/Reports/display_report.tex:24
@@ -1817,7 +1817,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:31
+#: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:31
 #: UI/Contact/divs/contact_info.html:111
 #: UI/Reports/filters/purchase_history.html:31
@@ -1982,7 +1982,7 @@ msgstr "Nama Negara"
 msgid "Country:"
 msgstr "Negara:"
 
-#: UI/setup/credentials.html:75
+#: UI/setup/credentials.html:90
 msgid "Create"
 msgstr ""
 
@@ -2031,7 +2031,7 @@ msgstr ""
 msgid "Credit"
 msgstr "Kredit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:310
+#: lib/LedgerSMB/Scripts/contact.pm:309
 msgid "Credit Account"
 msgstr ""
 
@@ -2039,7 +2039,7 @@ msgstr ""
 msgid "Credit Account Number"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:188 UI/Contact/divs/credit.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
 msgstr ""
 
@@ -2188,7 +2188,7 @@ msgstr ""
 msgid "D M"
 msgstr ""
 
-#: UI/setup/credentials.html:39
+#: UI/setup/credentials.html:55
 msgid "DB admin login"
 msgstr ""
 
@@ -2208,7 +2208,7 @@ msgstr "Data tidak tersimpan. Silahkan Coba kembali"
 msgid "Data not saved.  Please update again."
 msgstr "Data tidak tersimpan. Silahkan tambah kembali"
 
-#: UI/setup/credentials.html:63 UI/setup/list_databases.html:13
+#: UI/setup/credentials.html:79 UI/setup/list_databases.html:13
 msgid "Database"
 msgstr ""
 
@@ -2226,7 +2226,7 @@ msgstr ""
 
 #: UI/setup/begin_backup.html:7 UI/setup/complete.html:8
 #: UI/setup/complete_migration_revert.html:8 UI/setup/confirm_operation.html:7
-#: UI/setup/credentials.html:22 UI/setup/new_user.html:7
+#: UI/setup/credentials.html:25 UI/setup/new_user.html:7
 #: UI/setup/select_coa.html:7 UI/setup/template_info.html:7
 #: UI/setup/upgrade_info.html:7
 msgid "Database Management Console"
@@ -2236,7 +2236,7 @@ msgstr ""
 msgid "Database Operation Complete"
 msgstr ""
 
-#: UI/setup/credentials.html:23
+#: UI/setup/credentials.html:37
 msgid "Database administrator credentials"
 msgstr ""
 
@@ -3155,7 +3155,7 @@ msgid "Email"
 msgstr ""
 
 #: bin/aa.pl:478 bin/aa.pl:1483 bin/oe.pl:539 bin/pe.pl:865
-#: lib/LedgerSMB/Report/Orders.pm:263 lib/LedgerSMB/Scripts/contact.pm:185
+#: lib/LedgerSMB/Report/Orders.pm:263 lib/LedgerSMB/Scripts/contact.pm:184
 #: templates/demo/ap_transaction.html:93 templates/demo/ap_transaction.tex:68
 #: templates/demo/ar_transaction.tex:85 templates/demo/timecard.html:31
 #: templates/demo/timecard.tex:22
@@ -3285,7 +3285,7 @@ msgstr ""
 msgid "Entered at: [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:308 sql/Pg-database.sql:1054
+#: lib/LedgerSMB/Scripts/contact.pm:307 sql/Pg-database.sql:1054
 msgid "Entity"
 msgstr ""
 
@@ -3337,7 +3337,7 @@ msgstr ""
 msgid "Error creating backup file"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/vouchers.pm:109
+#: lib/LedgerSMB/Scripts/vouchers.pm:110
 msgid "Error creating batch.  Please try again."
 msgstr ""
 
@@ -3575,7 +3575,7 @@ msgstr ""
 msgid "File type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:193 UI/Contact/divs/files.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:192 UI/Contact/divs/files.html:2
 msgid "Files"
 msgstr ""
 
@@ -3794,7 +3794,7 @@ msgstr ""
 msgid "General Ledger Reports"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:119 UI/Reports/aging_report.html:100
+#: lib/LedgerSMB/Scripts/order.pm:121 UI/Reports/aging_report.html:100
 #: sql/Pg-database.sql:2782 sql/Pg-database.sql:2820
 msgid "Generate"
 msgstr ""
@@ -3811,7 +3811,7 @@ msgstr ""
 msgid "Generate Purchase Orders"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:61
+#: lib/LedgerSMB/Scripts/order.pm:63
 msgid "Generate Purchase Orders from Sales Orders"
 msgstr ""
 
@@ -3819,7 +3819,7 @@ msgstr ""
 msgid "Generate Sales Orders"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:74
+#: lib/LedgerSMB/Scripts/order.pm:76
 msgid "Generate Sales Orders from Purchase Orders"
 msgstr ""
 
@@ -4562,7 +4562,7 @@ msgstr "LedgerSMB 1.5 db tidak ditemukan."
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
-#: UI/login.html:48 UI/menu/expanding.html:4
+#: UI/login.html:48 UI/menu/expanding.html:4 UI/setup/credentials.html:34
 msgid "LedgerSMB [_1]"
 msgstr ""
 
@@ -4698,7 +4698,7 @@ msgstr ""
 msgid "Logging in.  Please wait."
 msgstr ""
 
-#: UI/login.html:99 UI/setup/credentials.html:70
+#: UI/login.html:99 UI/setup/credentials.html:86
 msgid "Login"
 msgstr "Masuk"
 
@@ -5050,7 +5050,7 @@ msgstr "Sembilan Puluh"
 msgid "No"
 msgstr "Tidak"
 
-#: lib/LedgerSMB/Scripts/contact.pm:640
+#: lib/LedgerSMB/Scripts/contact.pm:644
 msgid "No AR or AP Account Selected"
 msgstr ""
 
@@ -5186,7 +5186,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:270
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:255
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:314
-#: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:33
+#: lib/LedgerSMB/Scripts/contact.pm:191 t/data/04-complex_template.html:33
 #: t/data/04-complex_template.html:626 templates/demo/printPayment.html:124
 #: templates/demo/product_receipt.html:219
 #: templates/demo/purchase_order.html:219
@@ -5712,7 +5712,7 @@ msgstr ""
 msgid "Partsgroups"
 msgstr ""
 
-#: UI/Contact/divs/user.html:48 UI/login.html:75 UI/setup/credentials.html:52
+#: UI/Contact/divs/user.html:48 UI/login.html:75 UI/setup/credentials.html:68
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:30
 msgid "Password"
 msgstr ""
@@ -5862,7 +5862,7 @@ msgstr ""
 msgid "Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:184 UI/Contact/divs/person.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/person.html:2
 msgid "Person"
 msgstr ""
 
@@ -6533,7 +6533,7 @@ msgstr ""
 msgid "Receivables"
 msgstr "Piutang"
 
-#: lib/LedgerSMB/Scripts/order.pm:76 sql/Pg-database.sql:2824
+#: lib/LedgerSMB/Scripts/order.pm:78 sql/Pg-database.sql:2824
 msgid "Receive"
 msgstr "Penerimaan"
 
@@ -7153,11 +7153,11 @@ msgstr ""
 msgid "Search Pricegroups"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:69
+#: lib/LedgerSMB/Scripts/order.pm:71
 msgid "Search Purchase Orders"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:80
+#: lib/LedgerSMB/Scripts/order.pm:82
 msgid "Search Quotations"
 msgstr ""
 
@@ -7169,11 +7169,11 @@ msgstr "Cari Penerimaan"
 msgid "Search Reconciliation Reports"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:84
+#: lib/LedgerSMB/Scripts/order.pm:86
 msgid "Search Requests for Quotation"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/order.pm:58
+#: lib/LedgerSMB/Scripts/order.pm:60
 msgid "Search Sales Orders"
 msgstr ""
 
@@ -7233,7 +7233,7 @@ msgstr "Pilih dari salah satu nama di bawah"
 msgid "Select invoices"
 msgstr ""
 
-#: UI/setup/credentials.html:31
+#: UI/setup/credentials.html:47
 msgid "Select or Enter User"
 msgstr ""
 
@@ -7409,7 +7409,7 @@ msgstr "Tujuh belas"
 msgid "Seventy"
 msgstr "Tujuh puluh"
 
-#: bin/io.pl:173 bin/oe.pl:1837 lib/LedgerSMB/Scripts/order.pm:65
+#: bin/io.pl:173 bin/oe.pl:1837 lib/LedgerSMB/Scripts/order.pm:67
 #: templates/demo/packing_list.html:124 templates/demo/pick_list.html:114
 #: templates/demo_with_images/packing_list.html:124
 #: templates/demo_with_images/pick_list.html:114
@@ -8823,7 +8823,7 @@ msgstr ""
 msgid "Unsupported account link combinations"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:466
+#: lib/LedgerSMB/Scripts/contact.pm:465
 msgid "Unsupported account type"
 msgstr ""
 
@@ -8900,7 +8900,7 @@ msgstr ""
 msgid "Used"
 msgstr "Digunakan"
 
-#: lib/LedgerSMB/Scripts/contact.pm:186 t/data/04-complex_template.html:36
+#: lib/LedgerSMB/Scripts/contact.pm:185 t/data/04-complex_template.html:36
 #: UI/am-company-logo.html:12 UI/Contact/divs/user.html:3
 msgid "User"
 msgstr "Pengguna"
@@ -9071,7 +9071,7 @@ msgstr ""
 msgid "Wages and Deductions"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:187
+#: lib/LedgerSMB/Scripts/contact.pm:186
 msgid "Wages/Deductions"
 msgstr ""
 
