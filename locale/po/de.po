@@ -4,7 +4,7 @@
 # Mikkel Høgh <mikkel@hoegh.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.11-dev\n"
+"Project-Id-Version: LedgerSMB 1.5.11\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-09-12 19:28+0000\n"
 "Last-Translator: Mikkel Høgh <mikkel@hoegh.org>, 2016\n"
