@@ -315,8 +315,8 @@ sub get_business {
           FROM business
          WHERE id = ?|;
 
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} );
+    $sth = $dbh->prepare($query) || $form->dberror($query);
+    $sth->execute( $form->{id} ) || $from->dberror($query);
     ( $form->{description}, $form->{discount} ) = $sth->fetchrow_array();
 
 }
