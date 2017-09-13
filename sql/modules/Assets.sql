@@ -80,14 +80,11 @@ $$
                   ai.usable_life, -- years
                   ai.usable_life -
                   get_fractional_year(coalesce(max(report_date),
-                                         start_depreciation,
-                                         purchase_date),
-                                       coalesce(start_depreciation,
-                                         purchase_date)),
+                                               start_depreciation),
+                                      start_depreciation),
                   get_fractional_year(coalesce(max(report_date),
-                                         start_depreciation,
-                                         purchase_date),
-                                $2),
+                                               start_depreciation),
+                                      $2),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
             ai.department_id, ai.location_id
@@ -115,13 +112,11 @@ $$
             asset_dep__straight_line_base(
                   ai.usable_life * 12,
                   ai.usable_life * 12 --months
-                  - months_passed(coalesce(start_depreciation, purchase_date),
+                  - months_passed(start_depreciation,
                                   coalesce(max(report_date),
-                                           start_depreciation,
-                                           purchase_date)),
+                                           start_depreciation)),
                   months_passed(coalesce(max(report_date),
-                                         start_depreciation,
-                                         purchase_date),
+                                         start_depreciation),
                                 $2),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
@@ -156,13 +151,11 @@ $$
             asset_dep__straight_line_base(
                   ai.usable_life,
                   ai.usable_life --months
-                  - months_passed(coalesce(start_depreciation, purchase_date),
+                  - months_passed(start_depreciation,
                                   coalesce(max(report_date),
-                                           start_depreciation,
-                                           purchase_date)),
+                                           start_depreciation)),
                   months_passed(coalesce(max(report_date),
-                                         start_depreciation,
-                                         purchase_date),
+                                         start_depreciation),
                                 $2),
                   purchase_value - salvage_value,
                   coalesce(sum(l.amount), 0)),
@@ -654,12 +647,11 @@ CREATE TYPE asset_nbv_line AS (
 CREATE OR REPLACE FUNCTION asset_nbv_report ()
 returns setof asset_nbv_line AS
 $$
-   SELECT ai.id, ai.tag, ai.description, coalesce(ai.start_depreciation, ai.purchase_date),
+   SELECT ai.id, ai.tag, ai.description, ai.start_depreciation,
           adm.short_name, ai.usable_life
-           - months_passed(coalesce(ai.start_depreciation, ai.purchase_date),
-                                  coalesce(max(r.report_date),
-                                           ai.start_depreciation,
-                                           ai.purchase_date))/ 12,
+           - months_passed(ai.start_depreciation,
+                           coalesce(max(r.report_date),
+                                    ai.start_depreciation))/ 12,
           ai.purchase_value - ai.salvage_value, ai.salvage_value, max(r.report_date),
           sum(rl.amount), ai.purchase_value - coalesce(sum(rl.amount), 0)
      FROM asset_item ai
@@ -867,7 +859,7 @@ CREATE TYPE asset_report_line_result AS(
 CREATE OR REPLACE FUNCTION asset_report__get_lines(in_id int)
 RETURNS SETOF asset_report_line_result
 as $$
-   select ai.tag, coalesce(ai.start_depreciation, ai.purchase_date), ai.purchase_value, m.short_name,
+   select ai.tag, ai.start_depreciation, ai.purchase_value, m.short_name,
           ai.usable_life,
           ai.purchase_value - ai.salvage_value, max(pr.report_date),
           sum(case when pr.report_date < r.report_date then prl.amount
@@ -953,7 +945,7 @@ $$
      JOIN asset_class ac ON (ai.asset_class_id = ac.id)
 LEFT JOIN asset_report_line arl ON (arl.asset_id = ai.id)
 LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
-    WHERE COALESCE(ai.start_depreciation, ai.purchase_date) <= $3 AND ac.id = $2
+    WHERE ai.start_depreciation <= $3 AND ac.id = $2
           AND obsolete_by IS NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.purchase_value, ai.usable_life,
           ai.purchase_date, ai.location_id, ai.invoice_id, ai.asset_account_id,
