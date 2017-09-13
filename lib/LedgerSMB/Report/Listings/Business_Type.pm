@@ -87,7 +87,7 @@ sub run_report {
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'business_type__list');
     for my $ref(@rows){
-        $ref->{id} = $ref->{id};
+        $ref->{row_id} = $ref->{id};
         $ref->{discount} *= 100;
     }
     $self->rows(\@rows);
