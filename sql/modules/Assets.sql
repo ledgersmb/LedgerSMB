@@ -665,7 +665,10 @@ $$
      FROM asset_item ai
      JOIN asset_class ac ON (ai.asset_class_id = ac.id)
      JOIN asset_dep_method adm ON (adm.id = ac.method)
-LEFT JOIN asset_report_line rl ON (ai.id = rl.asset_id)
+LEFT JOIN (select arl.*
+             from asset_report_line arl
+             join asset_report ar on arl.report_id = ar.id
+            where approved_at is not null) rl ON (ai.id = rl.asset_id)
 LEFT JOIN asset_report r on (rl.report_id = r.id)
     WHERE r.id IS NULL OR r.approved_at IS NOT NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_date,
