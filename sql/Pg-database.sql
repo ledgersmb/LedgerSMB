@@ -1081,7 +1081,8 @@ CREATE TABLE note (id serial primary key,
                    created timestamp not null default now(),
                    created_by text DEFAULT SESSION_USER,
                    ref_key integer not null,
-                   subject text);
+                   subject text,
+                   check (false) no inherit );
 
 COMMENT ON TABLE note IS
 $$ This is an abstract table which should have zero rows.  It is inherited by
@@ -4611,7 +4612,8 @@ CREATE TABLE file_base (
        id serial not null unique,
        ref_key int not null,
        file_class int not null references file_class(id),
-       primary key (ref_key, file_name, file_class)
+       primary key (ref_key, file_name, file_class),
+       check (false) no inherit
 );
 
 COMMENT ON TABLE file_base IS
@@ -4715,7 +4717,8 @@ CREATE TABLE file_secondary_attachment (
        dest_class int references file_class(id),
        attached_by int not null references entity(id),
        attached_at timestamp not null default now(),
-       PRIMARY KEY(file_id, source_class, dest_class, ref_key)
+       PRIMARY KEY(file_id, source_class, dest_class, ref_key),
+       check (false) no inherit
 );
 
 COMMENT ON TABLE file_secondary_attachment IS
