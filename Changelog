@@ -2,6 +2,16 @@
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.12
+* Fix depreciation method listing incorrect stored procedure (Erik H)
+* Fix failure to select business type details from business list (Erik H, #3154)
+* Require fixed asset values needed in depreciation to be entered (Erik H)
+* Fix the Net Book Value report listing assets by the wrong class (Erik H)
+* Fix the Net Book Value report incorrectly excluding some assets (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.11
 * Rename lighttpd example configuration file for consistency (Yves L)
 * Fix Net Book Value report shows 'LedgerSMB::Report' as its name (Erik H, #3132)
