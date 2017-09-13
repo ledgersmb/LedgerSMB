@@ -3755,16 +3755,20 @@ insert the relevant lines into asset_report_line. $$;
 comment on column asset_dep_method.method IS
 $$ These are keyed to specific stored procedures.  Currently only "straight_line" is supported$$;
 
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
-values ('Annual Straight Line Daily', 1, 'asset_dep_straight_line_yr_d', 'in years', 'SLYD');
-
-
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
-values ('Whole Month Straight Line', 1, 'asset_dep_straight_line_whl_m',
-'in months', 'SLMM');
-
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
-values ('Annual Straight Line Monthly', 1, 'asset_dep_straight_line_yr_m', 'in years', 'SLYM');
+INSERT INTO asset_dep_method
+  (method, unit_class,
+   sproc,
+   unit_label, short_name)
+values
+  ('Annual Straight Line Daily', 1,
+   'asset_dep_straight_line_yr_d',
+   'in years', 'SLYD'),
+  ('Whole Month Straight Line', 1,
+   'asset_dep_straight_line_month',
+   'in months', 'SLMM'),
+  ('Annual Straight Line Monthly', 1,
+   'asset_dep_straight_line_yr_m',
+   'in years', 'SLYM');
 
 CREATE TABLE asset_class (
         id serial not null unique,

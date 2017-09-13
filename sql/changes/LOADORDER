@@ -45,4 +45,10 @@
 1.5/issue-2278-modify-acc_trans-index.sql
 1.5/template_menu3.sql
 1.5/template_menu4.sql
+1.5/fixed-assets-depreciation-sproc.sql
+#tag: migration-target
+# Note: the schema as created up to here, is the one as required by
+#   the migration scripts in sql/upgrade/. Don't insert any change
+#   scripts before this point, because it breaks the migrations from
+#   both LedgerSMB 1.2 & 1.3 as well as from SQL 2.8 and 3.0
 #1.6 changes
