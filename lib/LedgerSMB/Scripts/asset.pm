@@ -569,7 +569,7 @@ sub report_results {
                total          => $r->{total}->to_output(money => 1),
         };
         for my $ac (@{$ar->{asset_classes}}){
-            if ($ac->{id} = $r->{asset_class}){
+            if ($ac->{id} == $r->{asset_class}){
                 $ref->{asset_class} = $ac->{label};
             }
         }
