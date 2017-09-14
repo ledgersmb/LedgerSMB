@@ -167,10 +167,10 @@ sub date {
         ( $yy, $mm, $dd ) = ( $date =~ /(..)(..)(..)/ );
     }
 
-    $dd *= 1;
-    $yy = "20" . $yy if length $yy == 2;
-    $dd = "0" . $dd if length $dd == 1;
-    $mm = "0" . $mm if length $mm == 1;
+    # $dd *= 1;
+    $yy = '20' . $yy if length $yy == 2;
+    $dd = '0' . $dd if length $dd == 1;
+    $mm = '0' . $mm if length $mm == 1;
 
     if ( $myconfig->{dateformat} =~ /^dd/ ) {
         $longdate = "$dd$spc$mm$spc$yy";
