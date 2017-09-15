@@ -300,7 +300,7 @@ sub to_output {
             on_error => 'croak',
     );
     my $date = $formatter->format_datetime($self);
-    if ($date =~ /\:/ and not $self->is_time()) { die "to_output"; }
+    if ($date =~ /\:/ and not $self->is_time()) { die 'to_output'; }
     return $date;
 }
 

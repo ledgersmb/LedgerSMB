@@ -45,7 +45,7 @@ has approved => (is => 'ro', isa => 'Bool', default => 0);
 
 sub columns {
     my ($self) = @_;
-    my $href_base="transtemplate.pl?action=view&id=";
+    my $href_base='transtemplate.pl?action=view&id=';
     return [ {
         col_id => 'row_select',
         type => 'checkbox',
