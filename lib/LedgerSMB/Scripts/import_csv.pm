@@ -50,8 +50,8 @@ our $postprocess = {};
 sub _inventory_template_setup {
     my ($request) = @_;
     my $sth = $request->{dbh}->prepare(
-        "SELECT concat(accno,'--',description) as value
-             FROM chart_get_ar_ap(?)"
+        q{SELECT concat(accno,'--',description) as value
+             FROM chart_get_ar_ap(?)}
         );
 
     $sth->execute(EC_VENDOR);
@@ -102,10 +102,10 @@ sub _aa_multi {
     # Necessary to test things are found before starting to
     # import! -- CT
     my $acst = $request->{dbh}->prepare(
-        "select count(*) from account where accno = ?"
+        'select count(*) from account where accno = ?'
         );
     my $vcst = $request->{dbh}->prepare(
-        "select count(*) from entity_credit_account where meta_number = ?"
+        'select count(*) from entity_credit_account where meta_number = ?'
         );
     for my $ref (@$entries){
         my $pass;
@@ -141,7 +141,7 @@ sub _aa_multi {
         $form->{amount_1} = $form->parse_amount(
             $request->{_user}, $form->{amount_1});
         $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
-        $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
+        $form->{vc} = ($arap eq 'ar') ? 'customer' : 'vendor';
         $form->{arap} = $arap;
         $form->{uc($arap)} = shift @$ref;
         $form->{description_1} = shift @$ref;
@@ -151,8 +151,8 @@ sub _aa_multi {
         $form->{approved} = '0';
         $form->{defaultcurrency} = $default_currency;
         my $sth = $form->{dbh}->prepare(
-            "SELECT id FROM entity_credit_account
-              WHERE entity_class = ? and meta_number = ?"
+            'SELECT id FROM entity_credit_account
+              WHERE entity_class = ? and meta_number = ?'
             );
         $sth->execute( ($arap eq 'ar') ? 2 : 1,
                        uc($form->{vendornumber}));
@@ -186,12 +186,12 @@ sub _inventory_single_date {
     # Intentionally not setting CRDATE here
 
     my $p_info_sth = $dbh->prepare(
-        "SELECT * FROM parts WHERE partnumber = ?"
+        'SELECT * FROM parts WHERE partnumber = ?'
         ) or $ap_form->dberror();
     my $ins_sth = $dbh->prepare(
-        "INSERT INTO inventory_report_line
+        'INSERT INTO inventory_report_line
                 (parts_id, counted, expected, adjust_id)
-             VALUES (?, ?, ?, ?)"
+             VALUES (?, ?, ?, ?)'
         ) or $ap_form->dberror();
 
     my $adjustment = ($request->{stock_type} ne 'relative') ?
@@ -240,9 +240,9 @@ sub _inventory_single_date {
     IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
     IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
 
-    $ar_form->{id} = "NULL"
+    $ar_form->{id} = 'NULL'
         if ! $ar_form->{id};
-    $ap_form->{id} = "NULL"
+    $ap_form->{id} = 'NULL'
         if ! $ap_form->{id};
 
     # Now, update the report record.
@@ -370,10 +370,10 @@ sub _process_timecard {
         my $jc = {};
         my $counter = 0;
         for my $col (@{$cols->{timecard}}){
-            if ($request->{sep} eq ";" &&
+            if ($request->{sep} eq ';' &&
                 any { $_ eq $col } @floats) {
                 $entry->[$counter] =~ s/,/./;
-                $entry->[$counter] = 0 if $entry->[$counter] eq "";
+                $entry->[$counter] = 0 if $entry->[$counter] eq '';
             }
             $jc->{$col} = $entry->[$counter];
             ++$counter;
@@ -392,14 +392,14 @@ sub _process_inventory {
     my $dbh = $request->{dbh};
 
     $dbh->do( # Not worth parameterizing for one input
-              "INSERT INTO inventory_report
+              'INSERT INTO inventory_report
                             (transdate, source)
-                     VALUES (".$dbh->quote($request->{transdate}).
-              ", 'CSV upload')"
+                     VALUES ('.$dbh->quote($request->{transdate}).
+              q{, 'CSV upload')}
         ) or $request->dberror();
 
     my ($report_id) = $dbh->selectrow_array(
-        "SELECT currval('inventory_report_id_seq')"
+        q{SELECT currval('inventory_report_id_seq')}
         ) or $request->dberror();
 
     @$entries =
@@ -423,15 +423,15 @@ sub _process_inventory_multi {
 
     for my $key (keys %dated_entries) {
         $dbh->do( # Not worth parameterizing for one input
-                  "INSERT INTO inventory_report
+                  'INSERT INTO inventory_report
                             (transdate, source)
-                     VALUES (".$dbh->quote($key).
-                  ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
-                  ." || ')')"
+                     VALUES ('.$dbh->quote($key).
+                  q{, 'CSV upload (' || }.$dbh->quote($request->{transdate})
+                  .q{ || ')')}
             ) or $request->dberror();
 
         my ($report_id) = $dbh->selectrow_array(
-            "SELECT currval('inventory_report_id_seq')"
+            q{SELECT currval('inventory_report_id_seq')}
             ) or $request->dberror();
 
         &_inventory_single_date($request, $dated_entries{$key},
@@ -482,7 +482,7 @@ sub begin_import {
         ($template_file{$request->{type}}) ?
         $template_file{$request->{type}} : 'import_csv';
 
-    if (ref($template_setup->{$request->{type}}) eq "CODE") {
+    if (ref($template_setup->{$request->{type}}) eq 'CODE') {
         $template_setup->{$request->{type}}($request);
     }
 
