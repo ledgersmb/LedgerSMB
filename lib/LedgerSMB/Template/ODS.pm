@@ -834,9 +834,14 @@ sub preprocess {
         return escapeHTML($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return escapeHTML($$rawvars);
+    } elsif ($type eq 'CODE') {
+        return $rawvars;
+    } elsif ($type eq 'IO::File') {
+        return undef;
     } else { # Hashes and objects
         for ( keys %{$rawvars} ) {
-            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
+            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} )
+                if $_ !~ /^_/;
         }
     }
 
