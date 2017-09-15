@@ -409,7 +409,7 @@ sub display_report {
        push @$rows,
             { select         => {input => { name    => "asset_$count",
                                             checked => $asset->{checked},
-                                            type    => "checkbox",
+                                            type    => 'checkbox',
                                             value   => '1',
                                           },
                                 },
@@ -541,7 +541,7 @@ sub report_results {
     my $rows = [];
     my $hiddens = {};
     my $count = 0;
-    my $base_href = "asset.pl?action=report_details&".
+    my $base_href = 'asset.pl?action=report_details&'.
                      "expense_acct=$ar->{expense_acct}";
     if ($ar->{depreciation}){
              $base_href .= '&depreciation=1';
@@ -556,11 +556,11 @@ sub report_results {
         my $ref = {
               select         => {input => { name    => "report_$count",
                                             checked => $r->{checked},
-                                            type    => "checkbox",
+                                            type    => 'checkbox',
                                             value   => $r->{id},
                                           },
                                 },
-               id             => {href => $base_href . "&id=".$r->{id},
+               id             => {href => $base_href . '&id='.$r->{id},
                                   text => $r->{id},
                                  },
                report_date    => $r->{report_date},
@@ -627,7 +627,7 @@ sub report_details {
     my @cols = qw(tag start_depreciation purchase_value method_short_name
                  usable_life basis prior_through prior_dep dep_this_time
                  dep_ytd dep_total);
-    $report->{title} = $locale->text("Report [_1] on date [_2]",
+    $report->{title} = $locale->text('Report [_1] on date [_2]',
                      $report->{id}, $report->{report_date}->to_output);
     my $header = {
                             tag => $locale->text('Tag'),
@@ -691,7 +691,7 @@ sub partial_disposal_details {
     my @cols = qw(tag begin_depreciation purchase_value description
                  percent_disposed disposed_acquired_value
                  percent_remaining remaining_aquired_value);
-    $report->{title} = $locale->text("Partial Disposal Report [_1] on date [_2]",
+    $report->{title} = $locale->text('Partial Disposal Report [_1] on date [_2]',
                         $report->{id}, $report->{report_date});
     my $header = {
                    tag                => $locale->text('Tag'),
@@ -760,7 +760,7 @@ sub disposal_details {
     $report->get;
     my @cols = qw(tag description start_dep disposed_on dm purchase_value
                  accum_depreciation adj_basis disposal_amt gain_loss);
-    $report->{title} = $locale->text("Disposal Report [_1] on date [_2]",
+    $report->{title} = $locale->text('Disposal Report [_1] on date [_2]',
                      $report->{id}, $report->{report_date});
     my $header = {
                             tag => $locale->text('Tag'),
@@ -1011,7 +1011,7 @@ sub run_import {
 
 {
     local ($!, $@) = ( undef, undef);
-    my $do_ = "scripts/custom/asset.pl";
+    my $do_ = 'scripts/custom/asset.pl';
     if ( -e $do_ ) {
         unless ( do $do_ ) {
             if ($! or $@) {
