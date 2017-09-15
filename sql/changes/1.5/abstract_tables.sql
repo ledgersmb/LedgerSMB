@@ -1,5 +1,4 @@
 
--- NOT VALID might be a kluge if these table are populated
 
 ALTER TABLE IF EXISTS ONLY public.note
     ADD CHECK (false) NO INHERIT;
