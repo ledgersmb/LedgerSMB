@@ -31,7 +31,7 @@ use warnings;
 
 our $VERSION = 1.0;
 
-my $slash = "::";
+my $slash = '::';
 
 =item preference_screen
 

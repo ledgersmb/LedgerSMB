@@ -334,7 +334,7 @@ sub run_report {
         } else {
             $r->{invnumber_href_suffix} = $r->{meta_number};
         }
-        $r->{entity_name_href_suffix} = "entity_class=" . $self->entity_class
+        $r->{entity_name_href_suffix} = 'entity_class=' . $self->entity_class
                          . "&entity_id=$r->{entity_id}&".
                          "meta_number=$r->{meta_number}";
     }

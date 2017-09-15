@@ -267,7 +267,7 @@ sub _render {
     $url =~ s/&?order_dir=[^\&]*//g if $url;
     $self->order_url($url);
     $self->order_url(
-        "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir
+        "$url&old_order_by=".$self->order_by.'&order_dir='.$self->order_dir
     ) if $self->order_by;
 
     my $rows = $self->rows;
@@ -401,7 +401,7 @@ sub show_cols {
             push @retval, $ref;
         }
         if ($ref->{col_id} =~ /bc_\d+/){
-            push @retval, $ref if $request->{"col_business_units"};
+            push @retval, $ref if $request->{'col_business_units'};
         }
     }
     if (scalar @retval == 0){
