@@ -587,7 +587,7 @@ sub report_results {
                    type  => 'submit',
                    class => 'submit',
                    name  => 'action',
-                   value => 'approve'
+                   value => 'report_results_approve'
                    },
     ];
     my $template = LedgerSMB::Template->new(
@@ -602,7 +602,7 @@ sub report_results {
          heading => $header,
          rows    => $rows,
          columns => $cols,
-         hiddens  => $request,
+         hiddens  => $hiddens,
         buttons  => $buttons,
    });
 }
@@ -663,7 +663,7 @@ sub report_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'report_details_approve'
                    },
     ];
     return $template->render_to_psgi({
@@ -732,7 +732,7 @@ sub partial_disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     return $template->render_to_psgi({
@@ -797,7 +797,7 @@ sub disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     return $template->render_to_psgi({
