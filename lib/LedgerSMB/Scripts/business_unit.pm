@@ -177,7 +177,7 @@ Saves a new unit and returns to the add entry screen
 sub save_new {
     my ($request) = @_;
     my $unit = _save($request);
-    $request->{message} = $request->{_locale}->text("Added id [_1]", $unit->id);
+    $request->{message} = $request->{_locale}->text('Added id [_1]', $unit->id);
     return add($request);
 }
 
@@ -191,7 +191,7 @@ LedgerSMB::Business_Unit must be set for $request.
 sub save {
     my ($request) = @_;
     my $unit = _save($request);
-    $request->{message} = $request->{_locale}->text("Saved id [_1]", $unit->id);
+    $request->{message} = $request->{_locale}->text('Saved id [_1]', $unit->id);
     return edit($request);
 }
 
@@ -230,7 +230,7 @@ sub save_class {
     my @modules = $lsmb_modules->list;
     my $modlist = [];
     for my $mod (@modules){
-        if ($request->{"module_" . $mod->id}){
+        if ($request->{'module_' . $mod->id}){
             push @$modlist, $mod;
         }
     }
