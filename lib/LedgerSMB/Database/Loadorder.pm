@@ -172,24 +172,24 @@ sub apply_all {
 sub _lock {
     my ($dbh) = @_;
     return $dbh->do(
-            "select pg_advisory_lock("
-            . "'db_patches'::regclass::oid::int, 1)");
+            'select pg_advisory_lock('
+            . q{'db_patches'::regclass::oid::int, 1)});
 }
 
 sub _unlock {
     my ($dbh) = @_;
     return $dbh->do(
-            "select pg_advisory_unlock( "
-            . "'db_patches'::regclass::oid::int, 1)");
+               'select pg_advisory_unlock( '
+            . q{db_patches'::regclass::oid::int, 1)});
 }
 
 sub _needs_init {
     my $dbh = pop @_;
-    my $count = $dbh->prepare("
+    my $count = $dbh->prepare(q{
         select relname from pg_class
          where relname = 'db_patches'
                and pg_table_is_visible(oid)
-    ")->execute();
+    })->execute();
     return !int($count);
 }
 
