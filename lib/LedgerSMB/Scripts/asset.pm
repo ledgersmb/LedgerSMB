@@ -812,7 +812,7 @@ sub disposal_details {
 
 =item disposal_details_approve
 
-Pass through function for form-dynatable's action munging.  An lias for
+Pass through function for form-dynatable's action munging.  An alias for
 report_details_approve.
 
 =cut
