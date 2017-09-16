@@ -237,11 +237,11 @@ sub _get_tests {
 
 push @tests, __PACKAGE__->new(
         test_query =>
-           "select id, customernumber, name, address1, city, state, zipcode
+           'select id, customernumber, name, address1, city, state, zipcode
                    from customer where customernumber in
                     (SELECT customernumber from customer
                    GROUP BY customernumber
-                   HAVING count(*) > 1)",
+                   HAVING count(*) > 1)',
  display_name => marktext('Unique Customernumber'),
  instructions => marktext(
                    'Please make all customer numbers unique'),
@@ -256,11 +256,11 @@ push @tests, __PACKAGE__->new(
 
 push @tests, __PACKAGE__->new(
         test_query =>
-           "select id, vendornumber, name, address1, city, state, zipcode
+           'select id, vendornumber, name, address1, city, state, zipcode
                    from vendor where vendornumber in
                     (SELECT vendornumber from vendor
                    GROUP BY vendornumber
-                   HAVING count(*) > 1)",
+                   HAVING count(*) > 1)',
  display_name => marktext('Unique Vendornumber'),
  instructions => marktext(
                    'Please make all vendor numbers unique'),
@@ -274,7 +274,7 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "SELECT * FROM employee WHERE employeenumber IS NULL",
+   test_query => 'SELECT * FROM employee WHERE employeenumber IS NULL',
  display_name => marktext('No Null employeenumber'),
  instructions => marktext(
                    'Enter employee numbers where they are missing'),
@@ -288,10 +288,10 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "SELECT * FROM employee
-                   WHERE not name ~ '[[:alnum:]_]'::text",
+   test_query => q{SELECT * FROM employee
+                   WHERE not name ~ '[[:alnum:]_]'::text},
          name => 'minimal_employee_name_requirements',
- display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
+ display_name => marktext(q{Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)}),
  instructions => marktext(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
@@ -321,12 +321,12 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from parts where obsolete is not true
+   test_query => 'select * from parts where obsolete is not true
                   and partnumber in
                   (select partnumber from parts
                   WHERE obsolete is not true
                   group by partnumber having count(*) > 1)
-                  order by partnumber",
+                  order by partnumber',
          name => 'duplicate_partnumbers',
  display_name => marktext('Unique nonobsolete partnumbers'),
  instructions => marktext(
@@ -358,10 +358,10 @@ push @tests, __PACKAGE__->new(
 # New tests in 1.4
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from acc_trans WHERE amount IS NULL",
+   test_query => 'select * from acc_trans WHERE amount IS NULL',
  display_name => marktext('No NULL Amounts'),
          name => 'no_null_ac_amounts',
- display_cols => ["trans_id", "chart_id", "transdate"],
+ display_cols => ['trans_id', 'chart_id', 'transdate'],
     id_column => 'trans_id',
  instructions => marktext(
                    'There are NULL values in the amounts column of your
@@ -373,7 +373,7 @@ database, or delete the offending rows through PgAdmin III or psql'),
 );
 
 push @tests, __PACKAGE__->new(
-       test_query => "-- Select transactions without charts where removing them would unbalance tha transaction
+       test_query => q{-- Select transactions without charts where removing them would unbalance tha transaction
                                             WITH ac1 AS (
                                             SELECT DISTINCT trans_id, chart_id, MIN(transdate) as transdate, ROUND(CAST(SUM(amount) AS NUMERIC),2) AS amount
                                                     FROM acc_trans
@@ -398,17 +398,17 @@ push @tests, __PACKAGE__->new(
                                     -- Present data
                                     SELECT * from ac1
                                     LEFT JOIN ac2 ON (ac1.trans_id = ac2.trans_id)
-                                    ORDER BY ac1.trans_id",
+                                    ORDER BY ac1.trans_id},
      display_name => $LedgerSMB::App_State::Locale->text('No unassigned amounts in Transactions'),
              name => 'no_unbalanced_ac_transactions',
-     display_cols => ["trans_id", "type", "chart_id", "transdate", "amount"],
+     display_cols => ['trans_id', 'type', 'chart_id', 'transdate', 'amount'],
      instructions => $LedgerSMB::App_State::Locale->text(
                        'The following transactions have unassigned amounts'),
             table => 'acc_trans',
-selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS text, id as value
+selectable_values => { chart_id => q{SELECT concat(accno,' -- ',description) AS text, id as value
                                     FROM chart
                                     WHERE charttype = 'A'
-                                    ORDER BY id" },
+                                    ORDER BY id} },
           columns => ['chart_id'],
         id_column => 'trans_id',
          id_where => 'chart_id IS NULL AND trans_id',
@@ -418,36 +418,36 @@ selectable_values => { chart_id => "SELECT concat(accno,' -- ',description) AS t
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select *, eca.id as id  from entity_credit_account eca
+   test_query => 'select *, eca.id as id  from entity_credit_account eca
                      join entity_class ec on eca.entity_class = ec.id
                      join entity e on eca.entity_id = e.id
                    where meta_number in
                        (select meta_number from entity_credit_account
                         group by meta_number having count(*) > 1)
-                   order by meta_number",
+                   order by meta_number',
  display_name => marktext('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
  display_cols => [ 'meta_number', 'class', 'description', 'name' ],
       columns => ['meta_number'],
         table => 'entity_credit_account',
- instructions => marktext("Make sure all meta numbers are unique."),
+ instructions => marktext('Make sure all meta numbers are unique.'),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.4'
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select distinct gifi_accno from chart
+   test_query => q{select distinct gifi_accno from chart
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\\s*\$'",
+                         and gifi_accno !~ '^\\s*\$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
         table => 'chart',
- instructions => marktext("Please use the 1.2 UI to add the GIFI accounts"),
+ instructions => marktext('Please use the 1.2 UI to add the GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
@@ -467,7 +467,7 @@ push @tests, __PACKAGE__->new(
       columns => ['description'],
     id_column => 'accno',
      id_where => 'description IS NULL AND accno',
- instructions => marktext("Please add the missing GIFI accounts"),
+ instructions => marktext('Please add the missing GIFI accounts'),
       appname => 'sql-ledger',
   min_version => '2.7',
   max_version => '3.0'
@@ -485,19 +485,19 @@ push @tests, __PACKAGE__->new(
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
         table => 'account',
- instructions => marktext("Please use the 1.3/1.4 UI to add the GIFI accounts"),
+ instructions => marktext('Please use the 1.3/1.4 UI to add the GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.4'
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from from cr_coa_to_account ccta
+   test_query => q{select * from from cr_coa_to_account ccta
                    where chart_id in (select crcoa.chart_id
                                         from cr_coa_to_account crcoa
                                        where ccta.chart_id = crcoa.chart_id
                                     group by crcoa.chart_id
-                                      having count(crcoa.chart_id) > 1)",
+                                      having count(crcoa.chart_id) > 1)},
  display_name => marktext('Accounts marked for recon -- once'),
          name => 'non_duplicate_recon_accounts_marker',
  display_cols => [ 'chart_id', 'account' ],
