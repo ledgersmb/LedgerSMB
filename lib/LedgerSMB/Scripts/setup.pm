@@ -122,12 +122,12 @@ Returns the main dispatch table for the versions with supported upgrades
 
 sub get_dispatch_table {
     my ($request) = @_;
-    my $sl_detect = $request->{_locale}->text("SQL-Ledger database detected.");
+    my $sl_detect = $request->{_locale}->text('SQL-Ledger database detected.');
     my $migratemsg =  $request->{_locale}->text(
-               "Would you like to migrate the database?"
+               'Would you like to migrate the database?'
     );
     my $upgrademsg =  $request->{_locale}->text(
-               "Would you like to upgrade the database?"
+               'Would you like to upgrade the database?'
     );
 
     return ( { appname => 'sql-ledger',
@@ -143,47 +143,47 @@ sub get_dispatch_table {
       { appname => 'sql-ledger',
         version => '3.0',
         message => $request->{_locale}->text(
-                     "SQL-Ledger 3.0 database detected."
+                     'SQL-Ledger 3.0 database detected.'
                    ),
         operation => $migratemsg,
         next_action => 'upgrade' },
       { appname => 'sql-ledger',
         version => undef,
         message => $request->{_locale}->text(
-                      "Unsupported SQL-Ledger version detected."
+                      'Unsupported SQL-Ledger version detected.'
                    ),
-        operation => $request->{_locale}->text("Cancel"),
+        operation => $request->{_locale}->text('Cancel'),
         next_action => 'cancel' },
       { appname => 'ledgersmb',
         version => '1.2',
-        message => $request->{_locale}->text("LedgerSMB 1.2 db found."),
+        message => $request->{_locale}->text('LedgerSMB 1.2 db found.'),
         operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
         version => '1.3',
-        message => $request->{_locale}->text("LedgerSMB 1.3 db found."),
+        message => $request->{_locale}->text('LedgerSMB 1.3 db found.'),
         operation => $upgrademsg,
         next_action => 'upgrade' },
       { appname => 'ledgersmb',
         version => '1.4',
-        message => $request->{_locale}->text("LedgerSMB 1.4 db found."),
+        message => $request->{_locale}->text('LedgerSMB 1.4 db found.'),
         operation => $upgrademsg,
         # rebuild_modules will upgrade 1.4->1.5 by applying (relevant) changes
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.5',
-        message => $request->{_locale}->text("LedgerSMB 1.5 db found."),
+        message => $request->{_locale}->text('LedgerSMB 1.5 db found.'),
         operation => $request->{_locale}->text('Rebuild/Upgrade?'),
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => '1.6',
-        message => $request->{_locale}->text("LedgerSMB 1.6 db found."),
+        message => $request->{_locale}->text('LedgerSMB 1.6 db found.'),
         operation => $request->{_locale}->text('Rebuild/Upgrade?'),
         next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
         version => undef,
-        message => $request->{_locale}->text("Unsupported LedgerSMB version detected."),
-        operation => $request->{_locale}->text("Cancel"),
+        message => $request->{_locale}->text('Unsupported LedgerSMB version detected.'),
+        operation => $request->{_locale}->text('Cancel'),
         next_action => 'cancel' } );
 }
 
@@ -234,7 +234,7 @@ sub login {
             # we found the current version
             # check we don't have stale migrations around
             my $dbh = $request->{dbh};
-            my $sth = $dbh->prepare(qq(
+            my $sth = $dbh->prepare(q(
                 SELECT count(*)<>0
                   FROM defaults
                  WHERE setting_key = 'migration_ok' and value = 'no'
@@ -329,8 +329,8 @@ sub copy_db {
     my $dbh = LedgerSMB::Database->new(
            +{%$database, (company_name => $request->{new_name})}
     )->connect({ PrintError => 0, AutoCommit => 0 });
-    $dbh->prepare("SELECT setting__set('role_prefix',
-                               coalesce((setting_get('role_prefix')).value, ?))"
+    $dbh->prepare(q{SELECT setting__set('role_prefix',
+                               coalesce((setting_get('role_prefix')).value, ?))}
     )->execute("lsmb_$database->{company_name}__");
     $dbh->commit;
     $dbh->disconnect;
@@ -394,8 +394,8 @@ sub run_backup {
          = my @t = localtime(time);
         $mon++;
         $year += PERL_TIME_EPOCH;
-        $mday = sprintf "%02d", $mday;
-        $mon = sprintf "%02d", $mon;
+        $mday = sprintf '%02d', $mday;
+        $mon = sprintf '%02d', $mon;
         my $date = "$year-$mon-$mday";
 
         $backupfile = $database->backup_globals(
@@ -420,7 +420,7 @@ sub run_backup {
         my $mail = LedgerSMB::Mailer->new(
             from     => $LedgerSMB::Sysconfig::backup_email_from,
             to       => $request->{email},
-            subject  => "Email of Backup",
+            subject  => 'Email of Backup',
             message  => 'The Backup is Attached',
         );
         $mail->attach(
@@ -454,7 +454,7 @@ sub run_backup {
         ];
     }
     else {
-        die $request->{_locale}->text("Don't know what to do with backup");
+        die $request->{_locale}->text('Don\'t know what to do with backup');
     }
 }
 
@@ -468,7 +468,7 @@ sub revert_migration {
     return $reauth if $reauth;
 
     my $dbh = $database->connect({PrintError => 0, AutoCommit => 0});
-    my $sth = $dbh->prepare(qq(
+    my $sth = $dbh->prepare(q(
          SELECT value
            FROM defaults
           WHERE setting_key = 'migration_src_schema'
@@ -476,7 +476,7 @@ sub revert_migration {
     $sth->execute();
     my ($src_schema) = $sth->fetchrow_array();
     $dbh->rollback();
-    $dbh->do("DROP SCHEMA public CASCADE");
+    $dbh->do('DROP SCHEMA public CASCADE');
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
 
@@ -498,7 +498,7 @@ sub _get_template_directories {
     my $subdircount = 0;
     my @dirarray;
     my $locale = $LedgerSMB::App_State::Locale;
-    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
+    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text('Error while opening directory: [_1]',  "./$LedgerSMB::Sysconfig::templates");
     while( my $name = readdir(DIR)){
         next if ($name =~ /\./);
         if (-d "$LedgerSMB::Sysconfig::templates/$name" ) {
@@ -623,13 +623,13 @@ sub upgrade_info {
 
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
-    @{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
+    @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
     unshift @{$request->{ar_accounts}}, {}
             unless scalar(@{$request->{ar_accounts}}) == 1;
     }
 
     if (applicable_for_upgrade('default_ap', $upgrade_type)) {
-    @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
+    @{$request->{ap_accounts}} = _get_linked_accounts($request, 'AP');
     unshift @{$request->{ap_accounts}}, {}
             unless scalar(@{$request->{ap_accounts}}) == 1;
     }
@@ -693,7 +693,7 @@ sub upgrade {
     for my $check (_applicable_upgrade_tests($dbinfo)) {
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
-            or die "Failed to execute pre-migration check " . $check->name;
+            or die 'Failed to execute pre-migration check ' . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
              return _failed_check($request, $check, $sth);
         }
@@ -727,7 +727,7 @@ sub _failed_check {
                 $check->selectable_values->{$column});
 
             $sth->execute()
-                or die "Failed to query drop-down data in " . $check->name;
+                or die 'Failed to query drop-down data in ' . $check->name;
             $selectable_values{$column} = $sth->fetchall_arrayref({});
         }
     }
@@ -839,15 +839,15 @@ sub fix_tests{
         _applicable_upgrade_tests($dbinfo);
 
     die "Inconsistent state fixing data for $request->{check}: "
-        . "found multiple applicable tests by the same identifier"
+        . 'found multiple applicable tests by the same identifier'
         if @fix_tests > 1;
     die "Inconsistent state fixing data for $request->{check}: "
-        . "found no applicable tests for given identifier"
+        . 'found no applicable tests for given identifier'
         if @fix_tests == 0;
 
     my $check = shift @fix_tests;
     die "Inconsistent state fixing date for $request->{check}: "
-        . "found different test by the same name while fixing data"
+        . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
 
@@ -869,7 +869,7 @@ sub fix_tests{
     }
     else {
         my $setters =
-            join(', ', map { $dbh->quote_identifier($_) . " = ?" } @edits);
+            join(', ', map { $dbh->quote_identifier($_) . ' = ?' } @edits);
         $query = "UPDATE $table SET $setters WHERE $where = ?";
     }
     my $sth = $dbh->prepare($query);
@@ -1145,16 +1145,16 @@ sub process_and_run_upgrade_script {
     my $rc;
 
     $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
-    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ")";
+    or die "Failed to create schema $LedgerSMB::Sysconfig::db_namespace (" . $dbh->errstr . ')';
     $dbh->commit;
 
     $database->load_base_schema(
-        log     => $temp . "_stdout",
-        errlog  => $temp . "_stderr",
+        log     => $temp . '_stdout',
+        errlog  => $temp . '_stderr',
         upto_tag=> 'migration-target'
         );
 
-    $dbh->do(qq(
+    $dbh->do(q(
        INSERT INTO defaults (setting_key, value)
                      VALUES ('migration_ok', 'no')
      ));
@@ -1174,12 +1174,12 @@ sub process_and_run_upgrade_script {
         format => 'TXT' );
     $dbtemplate->render($request);
     $database->run_file(
-        file =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
-        log => $temp . "_stdout",
-        errlog => $temp . "_stderr"
+        file =>  $LedgerSMB::Sysconfig::tempdir . '/upgrade.sql',
+        log => $temp . '_stdout',
+        errlog => $temp . '_stderr'
         );
 
-    my $sth = $dbh->prepare(qq(select value='yes'
+    my $sth = $dbh->prepare(q(select value='yes'
                                  from defaults
                                 where setting_key='migration_ok'));
     $sth->execute();
@@ -1192,7 +1192,7 @@ sub process_and_run_upgrade_script {
            ${temp}_stdout and ${temp}_stderr))
     if ! $success;
 
-    $dbh->do("delete from defaults where setting_key like 'migration_%'");
+    $dbh->do(q{delete from defaults where setting_key like 'migration_%'});
 
     # the schema was left incomplete when we created it, in order to provide
     # a frozen (fixed) migration target. Now, however, we need to apply the
@@ -1203,8 +1203,8 @@ sub process_and_run_upgrade_script {
     # If users are added to the user table, and appropriat roles created, this
     # then grants the base_user permission to them.  Note it only affects users
     # found also in pg_roles, so as to avoid errors.  --CT
-    $dbh->do("SELECT admin__add_user_to_role(username, 'base_user')
-                from users WHERE username IN (select rolname from pg_roles)");
+    $dbh->do(q{SELECT admin__add_user_to_role(username, 'base_user')
+                from users WHERE username IN (select rolname from pg_roles)});
 
     $dbh->commit;
     return $dbh->disconnect;
@@ -1261,7 +1261,7 @@ sub run_sl28_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, "sl28",
+    process_and_run_upgrade_script($request, $database, 'sl28',
                    "sl2.8-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
@@ -1281,7 +1281,7 @@ sub run_sl30_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl30');
     $dbh->commit;
 
-    process_and_run_upgrade_script($request, $database, "sl30",
+    process_and_run_upgrade_script($request, $database, 'sl30',
                                    "sl3.0-$CURRENT_MINOR_VERSION");
 
     return create_initial_user($request);
@@ -1442,7 +1442,7 @@ sub rebuild_modules {
     #  e.g. table definitions, etc.
     $database->apply_changes;
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
-        or die "Upgrade failed.";
+        or die 'Upgrade failed.';
     return complete($request);
 }
 

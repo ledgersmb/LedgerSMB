@@ -28,7 +28,7 @@ maintainable.
 =cut
 
 
-my $logger = Log::Log4perl::get_logger("LedgerSMB::DBObject::Account");
+my $logger = Log::Log4perl::get_logger('LedgerSMB::DBObject::Account');
 
 
 =item new
@@ -160,7 +160,7 @@ sub _display_account_screen {
 
     $hiddens->{type} = 'account';
     $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
-    $checked->{ $form->{charttype} } = "checked";
+    $checked->{ $form->{charttype} } = 'checked';
 
     my %button = ();
 

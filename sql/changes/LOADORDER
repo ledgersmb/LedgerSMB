@@ -46,6 +46,9 @@
 1.5/issue-2278-modify-acc_trans-index.sql
 1.5/template_menu3.sql
 1.5/template_menu4.sql
+1.5/fixed-assets-depreciation-sproc.sql
+1.5/fixed-assets-not-null-constraints.sql
+1.5/abstract_tables.sql
 #tag: migration-target
 # Note: the schema as created up to here, is the one as required by
 #   the migration scripts in sql/upgrade/. Don't insert any change

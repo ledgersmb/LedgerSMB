@@ -62,8 +62,8 @@ sub create_batch {
     my ($request) = @_;
     $request->open_form;
     $request->{hidden} = [
-        {name => "batch_type", value => $request->{batch_type}},
-        {name => "form_id",   value => $request->{form_id}},
+        {name => 'batch_type', value => $request->{batch_type}},
+        {name => 'form_id',   value => $request->{form_id}},
         {name => 'overpayment', value => $request->{overpayment}},
     ];
 
@@ -102,7 +102,7 @@ sub create_vouchers {
         return add_vouchers($batch);
     } else {
         $request->{notice} =
-            $request->{_locale}->text("Error creating batch.  Please try again.");
+            $request->{_locale}->text('Error creating batch.  Please try again.');
         return create_batch($request);
     }
 }
@@ -314,7 +314,7 @@ sub batch_approve {
 
     my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{"select_" . $count};
+        next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
@@ -337,7 +337,7 @@ sub batch_unlock {
        $batch->unlock($request->{batch_id});
     } else {
         for my $count (1 .. $batch->{rowcount_}){
-            next unless $batch->{"select_" . $count};
+            next unless $batch->{'select_' . $count};
             $batch->{batch_id} = $batch->{"row_$count"};
             $batch->unlock($request->{"row_$count"});
         }
@@ -362,7 +362,7 @@ sub batch_delete {
 
     my $batch = LedgerSMB::Batch->new(base => $request);
     for my $count (1 .. $batch->{rowcount_}){
-        next unless $batch->{"select_" . $count};
+        next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->delete;
     }

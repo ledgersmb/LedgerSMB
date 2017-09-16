@@ -46,7 +46,7 @@ can be used in this way.
 
 =cut
 
-use overload "bool" => "_bool";
+use overload 'bool' => '_bool';
 
 # function to return boolean value based on the numerical value
 # of the BigFloat (zero being false)
@@ -80,15 +80,14 @@ sub _bool {
 =cut
 
 our $lsmb_formats = {
-      "1000.00" => { thousands_sep => '',  decimal_sep => '.' },
-
-      "1000,00" => { thousands_sep => '',  decimal_sep => ',' },
-     "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' },
-     "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' },
-     "1,000.00" => { thousands_sep => ',', decimal_sep => '.' },
-     "1.000,00" => { thousands_sep => '.', decimal_sep => ',' },
-     "1'000,00" => { thousands_sep => "'", decimal_sep => ',' },
-     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' },
+       '1000.00' => { thousands_sep => '',   decimal_sep => '.' },
+       '1000,00' => { thousands_sep => '',   decimal_sep => ',' },
+      '1 000.00' => { thousands_sep => ' ',  decimal_sep => '.' },
+      '1 000,00' => { thousands_sep => ' ',  decimal_sep => ',' },
+      '1,000.00' => { thousands_sep => ',',  decimal_sep => '.' },
+      '1.000,00' => { thousands_sep => '.',  decimal_sep => ',' },
+     q{1'000,00} => { thousands_sep => q{'}, decimal_sep => ',' },
+     q{1'000.00} => { thousands_sep => q{'}, decimal_sep => '.' },
 
 };
 
