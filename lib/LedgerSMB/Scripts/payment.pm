@@ -1569,18 +1569,18 @@ if (($Payment->{new_entity_id} != $Payment->{entity_credit_id})&& !$Payment->{ne
       $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} = $Selected_entity->{new_accno};
 
       #the "repeated invoice" flag will check if this invoice has already been printed, if it does, do not print the apply discount checkbox in the UI
-      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{'repeated_invoice'}){
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{'repeated_invoice'} = 'false';
+      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice}){
+        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'false';
       } else{
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{'repeated_invoice'} = 'true';
+        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'true';
       }
 
 
-      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{'optional_discount'}){
-        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{'optional_discount'} = 'true';
+      if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount}){
+        $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount} = 'true';
       }
 
-      $invoice_id_amount_to_pay{|$avble_invoices[$ref]->{invoice_id}} += $Selected_entity->{new_amount};
+      $invoice_id_amount_to_pay{qq|$avble_invoices[$ref]->{invoice_id}|} += $Selected_entity->{new_amount};
       $ui_to_use_subtotal += $Selected_entity->{new_amount};
       $amount_to_be_used{$ovp_selected_accno} += $Selected_entity->{new_amount};
 

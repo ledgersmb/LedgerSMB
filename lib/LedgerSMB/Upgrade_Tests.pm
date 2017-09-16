@@ -704,9 +704,9 @@ push @tests, __PACKAGE__->new(
  instructions => marktext(
                    'LedgerSMB customers must be assigned to a valid business.<br>
 Please review the selection or select the proper business from the list'),
-selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
+selectable_values => { business_id => q{SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
-                                        ORDER BY id"},
+                                        ORDER BY id}},
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -727,9 +727,9 @@ push @tests, __PACKAGE__->new(
  instructions => marktext(
                    'LedgerSMB vendors must be assigned to a valid business.<br>
 Please review the selection or select the proper business from the list'),
-selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
+selectable_values => { business_id => q{SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
-                                        ORDER BY id"},
+                                        ORDER BY id}},
     table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -750,9 +750,9 @@ push @tests, __PACKAGE__->new(
  instructions => marktext(
                    'LedgerSMB customers must be assigned to a valid business.<br>
 Please review the selection or select the proper business from the list'),
-selectable_values => { business_id => "SELECT concat(description,' -- ',discount) AS text, id as value
+selectable_values => { business_id => q{SELECT concat(description,' -- ',discount) AS text, id as value
                                         FROM business
-                                        ORDER BY id"},
+                                        ORDER BY id}},
     table => 'customer',
     appname => 'sql-ledger',
     min_version => '2.7',
