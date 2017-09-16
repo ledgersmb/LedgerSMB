@@ -133,7 +133,7 @@ sub prepare_message {
         );
     my $msg_id = "<LSMB-$msg_random\@$domain>";
 
-    $self->{contenttype} = "text/plain" unless $self->{contenttype};
+    $self->{contenttype} = 'text/plain' unless $self->{contenttype};
 
     for (qw(from to cc bcc subject)) {
         next unless $self->{$_};
@@ -178,16 +178,16 @@ sub attach {
     my $self = shift;
     my %args = @_;
 
-    carp "Message not prepared" unless ref $self->{_message};
+    carp 'Message not prepared' unless ref $self->{_message};
     if (defined $args{file}) {
         if (!$args{file}){
-            carp "Invalid filename provided";
+            carp 'Invalid filename provided';
         } elsif (not defined $args{data}
              and not (-f $args{file} and -r $args{file})){
             carp "Cannot access file: $args{file}";
         }
     } else {
-        carp "No attachement supplied" unless defined $args{data};
+        carp 'No attachement supplied' unless defined $args{data};
     }
 
     # strip path from output name
@@ -222,7 +222,7 @@ Sends a prepared message using the method configured in ledgersmb.conf.
 
 sub send {
     my $self = shift;
-    carp "Message not prepared" unless ref $self->{_message};
+    carp 'Message not prepared' unless ref $self->{_message};
 
     # SC: Set the X-Mailer header here so that it will be the last
     #     header set.  This ensures that MIME::Lite will not rewrite
