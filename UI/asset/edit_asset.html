@@ -68,6 +68,7 @@
         value = asset.purchase_date
         type = "date"
         size = 12
+        required = 1
 } ?>
 </span>
 <span class="inputgroup" id="purchasevaluegroup">
@@ -78,6 +79,7 @@
         value = asset.purchase_value
         type = "text"
         size = 16
+        required = 1
 } ?>
 </span>
 </div>
@@ -89,6 +91,7 @@
         value = asset.usable_life
         type = "text"
         size = 10
+        required = 1
 } ?>
 <span class="caption" id="caption-usablelifegroup">
 <!-- 20150621EH This text should be updated upon change of asset class,
@@ -104,6 +107,7 @@
         value = asset.salvage_value
         type = "text"
         size = 16
+        required = 1
 } ?>
 </span>
 </div>
@@ -115,7 +119,8 @@
         value = asset.start_depreciation
         type = "date"
         size = 12
-   class = "date"
+        class = "date"
+        required = 1
 } ?>
 </span>
 </div>
