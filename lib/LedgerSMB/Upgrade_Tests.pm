@@ -291,7 +291,7 @@ push @tests, __PACKAGE__->new(
    test_query => q{SELECT * FROM employee
                    WHERE not name ~ '[[:alnum:]_]'::text},
          name => 'minimal_employee_name_requirements',
- display_name => marktext(q{Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)}),
+ display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
  instructions => marktext(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
