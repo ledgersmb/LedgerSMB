@@ -80,7 +80,7 @@ sub __default {
 
     $request->{_new_session_cookie_value} =
         qq|$LedgerSMB::Sysconfig::cookie_name=Login|;
-    $request->{stylesheet} = "ledgersmb.css";
+    $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
     my $template = LedgerSMB::Template->new_UI(
         $request,
@@ -166,7 +166,7 @@ Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
 
 sub logout {
     my ($request) = @_;
-    $request->{callback}   = "";
+    $request->{callback}   = '';
     $request->{endsession} = 1;
 
     try { # failure only means we clear out the session later
