@@ -50,7 +50,7 @@ sub columns {
     my $script = 'contacts.pl';
 
     my $entity_class_param = '';
-    $entity_class_param = "&entity_class=".$self->entity_class
+    $entity_class_param = '&entity_class='.$self->entity_class
         if $self->entity_class;
 
     return [
@@ -270,7 +270,7 @@ sub run_report {
     $self->contact_info(\@contact_info) if @contact_info;
     my @rows = $self->call_dbmethod(funcname => 'contact__search');
     for my $r(@rows){
-        $r->{meta_number} ||= "";
+        $r->{meta_number} ||= '';
         $r->{name_href_suffix} =
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{meta_number_href_suffix} =
