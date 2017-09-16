@@ -587,7 +587,7 @@ sub report_results {
                    type  => 'submit',
                    class => 'submit',
                    name  => 'action',
-                   value => 'approve'
+                   value => 'report_results_approve'
                    },
     ];
     my $template = LedgerSMB::Template->new(
@@ -602,7 +602,7 @@ sub report_results {
          heading => $header,
          rows    => $rows,
          columns => $cols,
-         hiddens  => $request,
+         hiddens  => $hiddens,
         buttons  => $buttons,
    });
 }
@@ -663,7 +663,7 @@ sub report_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'report_details_approve'
                    },
     ];
     return $template->render_to_psgi({
@@ -671,7 +671,7 @@ sub report_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -732,7 +732,7 @@ sub partial_disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     return $template->render_to_psgi({
@@ -740,7 +740,7 @@ sub partial_disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -797,7 +797,7 @@ sub disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     return $template->render_to_psgi({
@@ -805,14 +805,14 @@ sub disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
 
 =item disposal_details_approve
 
-Pass through function for form-dynatable's action munging.  An lias for
+Pass through function for form-dynatable's action munging.  An alias for
 report_details_approve.
 
 =cut
