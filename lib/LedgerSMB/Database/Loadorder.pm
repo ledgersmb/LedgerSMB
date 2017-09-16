@@ -180,7 +180,7 @@ sub _unlock {
     my ($dbh) = @_;
     return $dbh->do(
                'select pg_advisory_unlock( '
-            . q{db_patches'::regclass::oid::int, 1)});
+            . q{'db_patches'::regclass::oid::int, 1)});
 }
 
 sub _needs_init {
