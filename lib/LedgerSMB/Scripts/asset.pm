@@ -671,7 +671,7 @@ sub report_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -740,7 +740,7 @@ sub partial_disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -805,7 +805,7 @@ sub disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
