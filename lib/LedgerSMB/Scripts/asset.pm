@@ -536,7 +536,10 @@ sub report_results {
                      total => $locale->text('Total'),
     };
     my $rows = [];
-    my $hiddens = {};
+    my $hiddens = {
+        gain_acct => $request->{gain_acct},
+        loss_acct => $request->{loss_acct},
+    };
     my $count = 0;
     my $base_href = "asset.pl?action=report_details&".
                      "expense_acct=$ar->{expense_acct}";
@@ -584,7 +587,7 @@ sub report_results {
                    type  => 'submit',
                    class => 'submit',
                    name  => 'action',
-                   value => 'approve'
+                   value => 'report_results_approve'
                    },
     ];
     my $template = LedgerSMB::Template->new(
@@ -599,7 +602,7 @@ sub report_results {
          heading => $header,
          rows    => $rows,
          columns => $cols,
-         hiddens  => $request,
+         hiddens  => $hiddens,
         buttons  => $buttons,
    });
 }
@@ -662,14 +665,14 @@ sub report_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'report_details_approve'
                    },
     ];
     $template->render({form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id} },
                     buttons => $buttons
     });
 }
@@ -730,14 +733,17 @@ sub partial_disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     $template->render({form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id},
+                          gain_acct => $report->{gain_acct},
+                          loss_acct => $report->{loss_acct},
+                               },
                     buttons => $buttons
     });
 }
@@ -794,14 +800,17 @@ sub disposal_details {
                    type  => 'submit',
                    class => 'submit',
                    name =>  'action',
-                   value => 'approve'
+                   value => 'disposal_details_approve'
                    },
     ];
     $template->render({form => $report,
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => $report,
+                    hiddens => { id => $report->{id},
+                          gain_acct => $report->{gain_acct},
+                          loss_acct => $report->{loss_acct},
+                               },
                     buttons => $buttons
     });
 }
