@@ -44,6 +44,7 @@ sub add_entry {
 }
 
 sub slurp{
+    no warnings 'once';
     local (*ARGV, $/);
     @ARGV = shift;
     open SOURCE, "<:encoding(UTF-8)", $_
