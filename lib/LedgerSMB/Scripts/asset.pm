@@ -429,6 +429,12 @@ sub display_report {
                                             class => 'amount',
                                             value => $request->{"amount_$asset->{id}"},
                                             size  => 20,
+                                            # requiring proceeds works around
+                                            # a problem of NULL amounts ending
+                                            # up in the database, resulting in
+                                            # approval trying to post NULL into
+                                            # the amount field in the gl table
+                                            required => 1,
                                           },
                                 },
               percent        => {input => { name  => "percent_$asset->{id}",
