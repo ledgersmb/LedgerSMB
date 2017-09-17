@@ -291,7 +291,7 @@ push @tests, __PACKAGE__->new(
    test_query => q{SELECT * FROM employee
                    WHERE not name ~ '[[:alnum:]_]'::text},
          name => 'minimal_employee_name_requirements',
- display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
+ display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),    ## no critic (ProhibitInterpolationOfLiteral )
  instructions => marktext(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
@@ -517,7 +517,7 @@ push @tests, __PACKAGE__->new(
          name => 'recon_accounts_exist',
  display_cols => [ 'chart_id', 'account' ],
         table => 'cr_coa_to_account',
- instructions => marktext("Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' table and change it to an existing value"),
+ instructions => marktext(q(Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' table and change it to an existing value)),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.4'
