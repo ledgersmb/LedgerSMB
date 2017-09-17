@@ -32,7 +32,7 @@ use LedgerSMB::Report::Inventory::Activity;
 
 sub search_screen {
     my ($request) = @_;
-    $request->{partsgroups} = $request->call_procedure(
+    @{$request->{partsgroups}} = $request->call_procedure(
        funcname => 'partsgroup__search', args => [undef]
     );
     $request->{report_name} = 'search_goods';
