@@ -536,7 +536,10 @@ sub report_results {
                      total => $locale->text('Total'),
     };
     my $rows = [];
-    my $hiddens = {};
+    my $hiddens = {
+        gain_acct => $request->{gain_acct},
+        loss_acct => $request->{loss_acct},
+    };
     my $count = 0;
     my $base_href = "asset.pl?action=report_details&".
                      "expense_acct=$ar->{expense_acct}";
@@ -737,7 +740,10 @@ sub partial_disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => { id => $report->{id} },
+                    hiddens => { id => $report->{id},
+                          gain_acct => $report->{gain_acct},
+                          loss_acct => $report->{loss_acct},
+                               },
                     buttons => $buttons
     });
 }
@@ -801,7 +807,10 @@ sub disposal_details {
                     columns => \@cols,
                     heading => $header,
                        rows => $rows,
-                    hiddens => { id => $report->{id} },
+                    hiddens => { id => $report->{id},
+                          gain_acct => $report->{gain_acct},
+                          loss_acct => $report->{loss_acct},
+                               },
                     buttons => $buttons
     });
 }
