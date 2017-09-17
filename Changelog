@@ -50,6 +50,11 @@ Changelog for 1.5.12
 * Require fixed asset values needed in depreciation to be entered (Erik H)
 * Fix the Net Book Value report listing assets by the wrong class (Erik H)
 * Fix the Net Book Value report incorrectly excluding some assets (Erik H)
+* Fix Ship To screen reporting server error and staying blank (Erik H, #2516)
+* Fix non-existing entry-point error on 'Approve' in fixed assets (Erik H)
+* Fix errors due to double 'action' field in fixed assets reports (Erik H)
+* Fix disposal-specific fields appearing in depreciation screens (Erik H)
+* Fix Parts Group drop-down and column selector in Goods Search (Erik H, #1581)
 
 Erik H is Erik Huelsmann
 
