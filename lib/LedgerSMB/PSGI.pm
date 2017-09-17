@@ -31,6 +31,7 @@ use Plack::Builder;
 use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
+use Plack::Middleware::ReverseProxy;
 use Plack::Builder::Conditionals;
 
 local $@ = undef; # localizes just for initial load.
@@ -224,6 +225,8 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     return builder {
+        enable match_if addr([qw{ 127.0.0.0/8 ::1 ::ffff:127.0.0.0/108 }]),
+            'ReverseProxy';
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 

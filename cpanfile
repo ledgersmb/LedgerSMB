@@ -42,6 +42,7 @@ requires 'Plack::App::File';
 requires 'Plack::Builder';
 requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
+requires 'Plack::Middleware::ReverseProxy';
 requires 'Plack::Request';
 requires 'Template', '2.14';
 requires 'Template::Parser';
