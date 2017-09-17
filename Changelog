@@ -13,6 +13,7 @@ Changelog for 1.5.12
 * Fix errors due to double 'action' field in fixed assets reports (Erik H)
 * Fix disposal-specific fields appearing in depreciation screens (Erik H)
 * Fix Parts Group drop-down and column selector in Goods Search (Erik H, #1581)
+* Require proceeds on disposal prevents NULL amounts on approval (Erik H)
 
 Erik H is Erik Huelsmann
 
