@@ -1,5 +1,4 @@
-<?lsmb INCLUDE "ui-header.html";
-       PROCESS "report_base.html";
+<?lsmb PROCESS "report_base.html";
        PROCESS "elements.html" ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/Form"
@@ -30,9 +29,12 @@
 </tr>
 <tr>
  <th><label for="partsgroup_id"><?lsmb text('Part Group') ?></label></th>
-  <td><?lsmb PROCESS select element_data = {
+ <td><?lsmb
+        partsgroups.unshift({});
+        PROCESS select element_data = {
           name = 'partsgroup_id'
          class = 'partsgroup'
+       options = partsgroups
 default_values = [partsgroup_id]
      text_attr = 'partsgroup'
     value_attr = 'id'
@@ -233,7 +235,7 @@ default_values = [partsgroup_id]
        } ?></td>
        <td>
        <?lsmb PROCESS input element_data = {
-           name = 'col_partgroup'
+           name = 'col_partsgroup'
            type = 'checkbox'
           value = '1'
           label = text('Part Group') #'
@@ -390,4 +392,3 @@ default_values = [partsgroup_id]
 } ?>
 </form>
 </body>
-</html>

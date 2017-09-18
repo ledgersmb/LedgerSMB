@@ -163,6 +163,43 @@ though the fullversion may give you an idea of what the actual version is run.
 
 =cut
 
+
+sub _stringify_db_ver {
+    my ($ver) = @_;
+    return join('.',
+                reverse
+                map {
+                    my $t = $ver;
+                    $ver = int($ver/100);
+                    ($t % 100); } 1..3);
+}
+
+sub _set_system_info {
+    my ($dbh, $rv) = @_;
+
+    my ($server_encoding) =
+        @{${$dbh->selectall_arrayref('SHOW SERVER_ENCODING;')}[0]};
+    my ($client_encoding) =
+        @{${$dbh->selectall_arrayref('SHOW CLIENT_ENCODING;')}[0]};
+
+    my %utf8_mode_desc = (
+        '-1' => 'Auto-detect',
+        '0'  => 'Never',
+        '1'  => 'Always'
+        );
+    $rv->{system_info} = {
+        'PostgreSQL (client)' => _stringify_db_ver($dbh->{pg_lib_version}),
+        'PostgreSQL (server)' => _stringify_db_ver($dbh->{pg_server_version}),
+        'DBD::Pg (version)' => $DBD::Pg::VERSION->stringify,
+        'DBI (version)' => $DBI::VERSION,
+         'DBD::Pg UTF-8 mode' => $utf8_mode_desc{$dbh->{pg_enable_utf8}},
+        'PostgreSQL server encoding' => $server_encoding,
+        'PostgreSQL client encoding' => $client_encoding,
+    };
+
+    return;
+}
+
 sub get_info {
     my $self = shift @_;
     my $retval = { # defaults
@@ -180,11 +217,13 @@ sub get_info {
             ->connect({PrintError=>0});
         return $retval unless $dbh;
         $logger->debug("DBI->connect dbh=$dbh");
+        _set_system_info($dbh, $retval);
+
         # don't assign to App_State::DBH, since we're a fallback connection,
         #  not one to the company database
 
         my $sth = $dbh->prepare(
-            "select count(*) = 1 from pg_database where datname = ?"
+            'select count(*) = 1 from pg_database where datname = ?'
             );
         $sth->execute($self->{company_name});
         my ($exists) = $sth->fetchrow_array();
@@ -193,7 +232,7 @@ sub get_info {
         } else {
             $retval->{status} = 'does not exist';
         }
-        $sth = $dbh->prepare("SELECT SESSION_USER");
+        $sth = $dbh->prepare('SELECT SESSION_USER');
         $sth->execute;
         $retval->{username} = $sth->fetchrow_array();
         $sth->finish();
@@ -205,9 +244,10 @@ sub get_info {
        $logger->debug("DBI->connect dbh=$dbh");
 
        $retval->{status} = 'exists';
+       _set_system_info($dbh, $retval);
 
        my $sth;
-       $sth = $dbh->prepare("SELECT SESSION_USER");
+       $sth = $dbh->prepare('SELECT SESSION_USER');
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
        $sth->finish();
@@ -215,7 +255,7 @@ sub get_info {
        # Is there a chance this is an SL or LSMB legacy version?
        # (ie. is there a VERSION column to query in the DEFAULTS table?
        $sth = $dbh->prepare(
-       qq|select count(*)=1
+       q{select count(*)=1
             from pg_attribute attr
             join pg_class cls
               on cls.oid = attr.attrelid
@@ -224,7 +264,7 @@ sub get_info {
            where cls.relname = 'defaults'
              and attr.attname='version'
                  and nsp.nspname = 'public'
-             |
+             }
        );
        $sth->execute();
        my ($have_version_column) =
@@ -264,7 +304,7 @@ sub get_info {
            } elsif ($ref->{value} eq '1.2.99'){
                 $retval->{version} = '1.3dev';
            } elsif ($ref->{value} =~ /^1\.3\.999/ or $ref->{value} =~ /^1.4/){
-                $retval->{version} = "1.4";
+                $retval->{version} = '1.4';
            } elsif ($ref->{value} =~ /^(1\.\d+)/){
                 $retval->{version} = $1;
            }
@@ -285,9 +325,7 @@ sub get_info {
        }
        $dbh->rollback;
    }
-   #$logger->debug("DBI->disconnect dbh=$dbh");
-   #$dbh->disconnect;#leave disconnect to upper level
-   return $retval;
+    return $retval;
 }
 
 =head2 $db->copy('new_name')
@@ -302,14 +340,18 @@ sub copy {
               )->create(copy_of => $self->dbname);
 }
 
-=head2 $db->load_base_schema()
+=head2 $db->load_base_schema([ upto_tag => $tag, log => $path, errlog => $path ])
 
-Loads the base schema definition file Pg-database.sql.
+Loads the base schema definition file Pg-database.sql and the
+database schema upgrade scripts.
+
+When an C<upto_tag> argument is provided, only schema changes upto a specific
+tag in the LOADORDER file will be applied (the main use-case being migrations).
 
 =cut
 
 sub load_base_schema {
-    my ($self, $args) = @_;
+    my ($self, %args) = @_;
     my $log = loader_log_filename();
 
     $self->{source_dir} = './'
@@ -318,23 +360,22 @@ sub load_base_schema {
     $self->run_file(
 
         file       => "$self->{source_dir}sql/Pg-database.sql",
-        log_stdout => ($args->{log} || "${log}_stdout"),
-        log_stderr => ($args->{errlog} || "${log}_stderr")
+        log_stdout => ($args{log} || "${log}_stdout"),
+        log_stderr => ($args{errlog} || "${log}_stderr")
     );
 
     if (opendir(LOADDIR, 'sql/on_load')) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
                 file       => "$self->{source_dir}sql/on_load/$fname",
-                log_stdout => ($args->{log} || "${log}_stdout"),
-                log_stderr => ($args->{errlog} || "${log}_stderr")
+                log_stdout => ($args{log} || "${log}_stdout"),
+                log_stderr => ($args{errlog} || "${log}_stderr")
                 ) if -f "sql/on_load/$fname";
         }
         closedir(LOADDIR);
     }
-    $self->apply_changes();
+    $self->apply_changes(upto_tag => $args{upto_tag});
     return 1;
-
 }
 
 
@@ -407,10 +448,10 @@ Creates a database and then loads it.
 sub create_and_load {
     my ($self, $args) = @_;
     $self->create;
-    $self->load_base_schema({
-    log_stdout     => $args->{log},
-    errlog  => $args->{errlog},
-          });
+    $self->load_base_schema(
+        log_stdout     => $args->{log},
+        errlog  => $args->{errlog},
+        );
     $self->load_modules('LOADORDER', {
     log     => $args->{log},
     errlog  => $args->{errlog},
@@ -432,36 +473,38 @@ sub upgrade_modules {
 
     $self->apply_changes();
     $self->load_modules($loadorder, {
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
+    log     => $temp . '_stdout',
+    errlog  => $temp . '_stderr'
                 })
-        or die "Modules failed to be loaded.";
+        or die 'Modules failed to be loaded.';
 
     my $dbh = $self->connect({PrintError=>0});
     my $sth = $dbh->prepare(
-          "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
+          q{UPDATE defaults SET value = ? WHERE setting_key = 'version'}
     );
     $sth->execute($LedgerSMB::VERSION)
-        or die "Version not updated.";
+        or die 'Version not updated.';
 
     return 1;
 }
 
-=head2 apply_changes
+=head2 apply_changes( [upto_tag => $tag] )
 
-Runs fixes if they have not been applied.
+Runs fixes if they have not been applied, optionally up to
+a specific tagged point in the LOADORDER file.
 
 =cut
 
 sub apply_changes {
-    my ($self) = @_;
+    my ($self, %args) = @_;
     my $dbh = $self->connect({
         PrintError=>0,
         AutoCommit => 0,
         pg_server_prepare => 0});
-    $dbh->do("set client_min_messages = 'warning'");
+    $dbh->do(q{set client_min_messages = 'warning'});
     my $loadorder =
-        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER');
+        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER',
+                                            upto_tag => $args{upto_tag});
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     return $dbh->disconnect;

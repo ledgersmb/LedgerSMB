@@ -1,11 +1,5 @@
-<?lsmb INCLUDE "ui-header.html"
-        stylesheet = stylesheet
-        include_stylesheet = [
-                "css/system/global.css"
-        ]
-        titlebar = text('Batch Selection'); #'
-PROCESS "elements.html";
-PROCESS 'report_base.html';
+<?lsmb PROCESS "elements.html";
+       PROCESS 'report_base.html';
 
 IF search_type == 'drafts';
    batch_classes = [
@@ -112,5 +106,3 @@ Commenting this section out.  Does not seem to be used by API. -CT
         } ?> </div>
 </form>
 </body>
-
-</html>

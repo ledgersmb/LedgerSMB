@@ -318,7 +318,7 @@ use LedgerSMB::Template::DBProvider;
 
 use Template::Parser;
 use Log::Log4perl;
-use File::Copy "cp";
+use File::Copy 'cp';
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
@@ -391,7 +391,7 @@ sub new {
     }
 
     if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-        die "Invalid format";
+        die 'Invalid format';
     }
     use_module("LedgerSMB::Template::$self->{format}")
        or die "Failed to load module $self->{format}";
@@ -616,9 +616,9 @@ sub render {
 
     if (!$self->{no_auto_output}) {
         # Clean up
-        $logger->debug("before self output");
+        $logger->debug('before self output');
         $self->output;
-        $logger->debug("after self output");
+        $logger->debug('after self output');
         if ($self->{outputfile}) {
             unlink($self->{outputfile});
         }
@@ -697,7 +697,7 @@ sub output {
         $self->_email_output;
     } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
         cp($self->{outputfile}, $args{OUT});
-        return if "zip" eq lc($method);
+        return if 'zip' eq lc($method);
     } elsif ('print' eq lc $method) {
         $self->_lpr_output;
     } elsif (lc $method eq 'screen') {
@@ -715,11 +715,11 @@ sub _http_output {
     my $data = $self->{output};
     my $cache = 1; # default
 
-    $logger->trace("Entering _http_output()");
+    $logger->trace('Entering _http_output()');
     # the sub below is a performance optimization: we don't want to
     # concatenate the keys for every request when not logging.
     $logger->trace(sub {
-        return "output_options keys: " . join '|', keys %{$self->{output_options}};
+        return 'output_options keys: ' . join '|', keys %{$self->{output_options}};
     });
     if ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.
@@ -734,13 +734,13 @@ sub _http_output {
         open(my $fh, '<:bytes', $self->{outputfile}) or
             die 'Unable to open rendered file';
         $data = <$fh>;
-        close($fh) or warn "Unable to close rendered file";
+        close($fh) or warn 'Unable to close rendered file';
 
         unlink($self->{outputfile}) or
             die 'Unable to delete output file';
     }
 
-    my $disposition = "";
+    my $disposition = '';
     my $name = $self->{output_options}{filename};
     if ($name) {
         $name =~ s#^.*/##;
@@ -752,21 +752,21 @@ sub _http_output {
             print "Cache-Control: no-store, no-cache, must-revalidate\n"
                 . "Cache-Control: post-check=0, pre-check=0, false\n"
                 . "Pragma: no-cache\n"
-                or die "Cannot print to STDOUT";
+                or die 'Cannot print to STDOUT';
         }
         if ($self->{mimetype} =~ /^text/) {
             print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n"
-                or die "Cannot print to STDOUT";
+                or die 'Cannot print to STDOUT';
         } else {
             print "Content-Type: $self->{mimetype}$disposition\n\n"
-                or die "Cannot print to STDOUT";
+                or die 'Cannot print to STDOUT';
         }
     }
     binmode STDOUT, $self->{binmode};
-    print $data or die "Cannot print to STDOUT";;
+    print $data or die 'Cannot print to STDOUT';
     # change global resource back asap
     binmode STDOUT, 'encoding(:UTF-8)';
-    $logger->trace("end print to STDOUT");
+    $logger->trace('end print to STDOUT');
     return;
 }
 
@@ -828,7 +828,7 @@ sub _lpr_output {
     my ($self, $in_args) = shift;
     my $args = $self->{output_options};
     if ($self->{format} ne 'LaTeX') {
-        die "Invalid Format";
+        die 'Invalid Format';
     }
     my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 

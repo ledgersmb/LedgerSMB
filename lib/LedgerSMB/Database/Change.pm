@@ -79,7 +79,7 @@ sub content {
             die 'FileError: ' . Cwd::abs_path($self->path) . ": $!";
         binmode $fh, 'encoding(:UTF-8)';
         $self->{_content} = join '', <$fh>;
-        close $fh or die "Cannot close file " .  $self->path();
+        close $fh or die 'Cannot close file ' .  $self->path();
     }
     my $content = $self->{_content};
     return $self->_wrap_transaction($content, $raw);
@@ -134,8 +134,8 @@ Useful for db updates so you can update version numbers or the like.
 
 sub content_wrapped {
     my ($self, $before, $after) = @_;
-    $before //= "";
-    $after //= "";
+    $before //= '';
+    $after //= '';
     return $self->_wrap_transaction(
         _wrap($self->content(1), $before, $after)
     );
@@ -151,7 +151,7 @@ sub is_applied {
     my ($self, $dbh) = @_;
     my $sha = $self->sha;
     my $sth = $dbh->prepare(
-        "SELECT * FROM db_patches WHERE sha = ?"
+        'SELECT * FROM db_patches WHERE sha = ?'
     );
     $sth->execute($sha);
     my $retval = int $sth->rows;
@@ -179,7 +179,7 @@ Applies the current file to the db in the current dbh.
 sub apply {
     my ($self, $dbh) = @_;
     my $need_commit = _need_commit($dbh);
-    my $before = "";
+    my $before = '';
     my $after;
     my $sha = $dbh->quote($self->sha);
     my $path = $dbh->quote($self->path);
@@ -198,7 +198,7 @@ sub apply {
     }
     if ($no_transactions){
         $dbh->do($after);
-        $after = "";
+        $after = '';
         $dbh->commit if $need_commit;
     }
     my $success = eval {
@@ -230,7 +230,7 @@ Initializes the tracking system
 sub init {
     my ($dbh) = @_;
     return 0 unless needs_init($dbh);
-    my $success = $dbh->prepare("
+    my $success = $dbh->prepare('
     CREATE TABLE db_patch_log (
        when_applied timestamp primary key,
        path text NOT NULL,
@@ -243,7 +243,7 @@ sub init {
        path text not null,
        last_updated timestamp not null
     );
-    ")->execute();
+    ')->execute();
     die "$DBI::state: $DBI::errstr" unless $success;
 
     return 1;
@@ -259,7 +259,7 @@ sub needs_init {
     my ($dbh) = @_;
     local $@ = undef;
     my $rows = eval { $dbh->prepare(
-       "select 1 from db_patches"
+       'select 1 from db_patches'
     )->execute(); };
     $dbh->rollback;
     return 0 if $rows;

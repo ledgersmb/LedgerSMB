@@ -22,7 +22,8 @@ pager = less
 [ValuesAndExpressions::ProhibitMagicNumbers]
     allowed_values = -1 0 1 2 100
     set_themes = lsmb lsmb_wip lsmb_old_wip
-
+[ValuesAndExpressions::ProhibitInterpolationOfLiterals]
+    set_themes = lsmb
 [BuiltinFunctions::ProhibitStringySplit]
     set_themes = lsmb lsmb_new
 [BuiltinFunctions::ProhibitUniversalCan]

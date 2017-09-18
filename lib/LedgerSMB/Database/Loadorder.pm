@@ -5,11 +5,14 @@ LedgerSMB::Database::Loadorder - LOADORDER parsing
 =cut
 
 package LedgerSMB::Database::Loadorder;
+
 use strict;
 use warnings;
 
-use LedgerSMB::Database::Change;
 use Cwd;
+use List::Util qw| any |;
+
+use LedgerSMB::Database::Change;
 
 =head1 SYNOPSIS
 
@@ -26,13 +29,28 @@ But see the notes about locking below
 
 =head2 new
 
-Constructor. LedgerSMB::Database::Loadorder->new($path);
+Constructor. LedgerSMB::Database::Loadorder->new($path [, upto_tag => $tag]);
+
+When a tag is specified, processing the LOADORDER file stops when a line
+with that tag is encountered, e.g. specifying a tag 'the-tag' stops
+processing the following at line 2.
+
+   some/path/to/a/change1.sql
+   #tags: the-tag, the-second-tag
+   some/path/to/a/change2.sql
+   #tag: b-tag
+   some/path/to/a/change3.sql
+
+specifying a tag 'the-second-tag' stops processing at line 2 as well, while
+specifying a tag 'b-tag' stops processing at line 4. Not specifying a tag
+processes all 5 lines
 
 =cut
 
 sub new {
-    my ($package, $path) = @_;
-    return bless {_path => $path }, $package;
+    my ($package, $path, %options) = @_;
+    return bless { _path => $path,
+                   tag => $options{upto_tag} }, $package;
 }
 
 =head2 scripts
@@ -49,10 +67,11 @@ sub scripts {
     open my $fh, '<', $self->{_path} or
         die 'FileError on ' . Cwd::abs_path($self->{_path}) . ": $!";
     my @scripts =
-       map { $self->_process_script($_)}
-       grep { $_ =~ /\S/ }
-       map { my $string = $_; $string =~ s/#.*$//; $string }
-       <$fh>;
+        map { $self->_process_script($_)}
+        grep { $_ =~ /\S/ }
+        map { my $string = $_; $string =~ s/#.*$//; $string }
+        map { $self->_limit_by_tag($_) }
+        <$fh>;
     close $fh or die "Cannot open file $self->{_path}";
     $self->{_scripts} = \@scripts;
     return @scripts;
@@ -73,6 +92,23 @@ sub _process_script {
             no_transactions => $no_transactions
         },
     );
+}
+
+sub _limit_by_tag {
+    my ($self, $line) = @_;
+
+    return $line if !$self->{tag};
+    return '' if $self->{tagged};
+
+    my $tags = $line;
+    return $line unless $tags =~ s/^#tags?://i;
+
+    chomp $tags;
+    $self->{tagged} =
+        any { $_ eq $self->{tag} }
+        map { my $s = $_; $s =~ s/\s//g; $s; }
+        split /,/, $tags;
+    return ($self->{tagged} ? $line : '');
 }
 
 =head2 init_if_needed($dbh)
@@ -136,24 +172,24 @@ sub apply_all {
 sub _lock {
     my ($dbh) = @_;
     return $dbh->do(
-            "select pg_advisory_lock("
-            . "'db_patches'::regclass::oid::int, 1)");
+            q{ select pg_advisory_lock(
+               'db_patches'::regclass::oid::int, 1) });
 }
 
 sub _unlock {
     my ($dbh) = @_;
     return $dbh->do(
-            "select pg_advisory_unlock( "
-            . "'db_patches'::regclass::oid::int, 1)");
+            q{ select pg_advisory_unlock( 
+               'db_patches'::regclass::oid::int, 1) });
 }
 
 sub _needs_init {
     my $dbh = pop @_;
-    my $count = $dbh->prepare("
+    my $count = $dbh->prepare(q{
         select relname from pg_class
          where relname = 'db_patches'
                and pg_table_is_visible(oid)
-    ")->execute();
+    })->execute();
     return !int($count);
 }
 

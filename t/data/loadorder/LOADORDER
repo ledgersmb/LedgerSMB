@@ -7,6 +7,8 @@ test1.sql
 !test2.sql
 test1.sql
 
+#tag: ignore-from-here
+#tags: ignore-me , ignore-me-too
 !test2.sql
     
 !test1.sql

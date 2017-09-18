@@ -1,42 +1,9 @@
-<?lsmb INCLUDE 'ui-header.html'
-      include_stylesheet = ["asset/asset.css"]
-      include_script = ["asset/asset.js"]
-?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
-<!-- These are for Javascript automation of defaults -CT -->
-<?lsmb PROCESS input element_data = {
-        type = "hidden"
-        name = "id"
-        value = id
-} ?>
-<?lsmb FOREACH a_class IN asset_classes -?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "asset_account_default_$a_class.id",
-       value = a_class.asset_account_id,
-} ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "dep_account_default_$a_class.id",
-       value = a_class.dep_account_id,
-} ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "unit_label_$a_class.id",
-       value = dep_method.${a_class.id}.unit_label,
-} ?>
-<?lsmb- END # For a_class ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden"
-       name = "last_class_id"
-       value = asset_class
-} ?>
-<!-- end set for javascript automation -CT -->
 <div class="inputrow" id="daterow">
 <?lsmb PROCESS input element_data = {
      type = "text"
@@ -66,4 +33,3 @@
 </form>
 </div>
 </body>
-</html>

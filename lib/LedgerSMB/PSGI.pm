@@ -26,10 +26,12 @@ use Try::Tiny;
 use List::Util qw{  none };
 
 # To build the URL space
+use Plack;
 use Plack::Builder;
 use Plack::Request;
 use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
+use Plack::Middleware::ReverseProxy;
 use Plack::Builder::Conditionals;
 
 local $@ = undef; # localizes just for initial load.
@@ -69,7 +71,7 @@ sub _internal_server_error {
 
     $title //= 'Error!';
     my @body_lines = ( '<html><body>',
-                       qq|<h2 class="error">Error!</h2>|,
+                       q{<h2 class="error">Error!</h2>},
                        "<p><b>$msg</b></p>" );
     push @body_lines, "<p>dbversion: $dbversion, company: $company</p>"
         if $company || $dbversion;
@@ -186,16 +188,22 @@ sub psgi_app {
 
 sub _run_old {
     if (my $cpid = fork()){
-       wait;
+       waitpid $cpid, 0;
     } else {
-        local ($!, $@) = (undef, undef);
-        my $do_ = 'old/bin/old-handler.pl';
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                warn "Failed to execute $do_ ($!): $@\n";
+        # make 100% sure any "die"-s don't bubble up higher than this point in
+        # the stack: we're a fork()ed process and should under no circumstance
+        # end up acting like another worker. When we are done, we need to
+        # exit() below.
+        try {
+            local ($!, $@) = (undef, undef);
+            my $do_ = 'old/bin/old-handler.pl';
+            unless ( do $do_ ) {
+                if ($! or $@) {
+                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                    warn "Failed to execute $do_ ($!): $@\n";
+                }
             }
-        }
+        };
 
        exit;
     }
@@ -217,6 +225,8 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     return builder {
+        enable match_if addr([qw{ 127.0.0.0/8 ::1 ::ffff:127.0.0.0/108 }]),
+            'ReverseProxy';
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 

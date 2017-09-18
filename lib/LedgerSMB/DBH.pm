@@ -38,11 +38,12 @@ sub connect {
     return undef unless $username && $password;
     return undef if $username eq 'logout';
 
-    my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
+    my $dbh = DBI->connect("dbi:Pg:dbname=$company", $username, $password,
            { PrintError => 0, AutoCommit => 0,
              pg_enable_utf8 => 1, pg_server_prepare => 0 })
         or return undef;
-    $dbh->do("set client_min_messages = 'warning'");
+
+    $dbh->do(q{set client_min_messages = 'warning'});
 
     my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
     if ($dbi_trace) {
@@ -99,7 +100,7 @@ sub require_version {
     return if $ignore_version;
 
     my $version = LedgerSMB::Setting->get('version');
-    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was [_1], expected [_2].  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>", $version, $expected_version)
+    die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was [_1], expected [_2].  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>", $version, $expected_version) ## no critic (ProhibitInterpolationOfLiteral)
        unless $version eq $expected_version;
     return 0;
 }

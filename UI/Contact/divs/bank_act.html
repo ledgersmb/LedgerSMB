@@ -9,8 +9,8 @@
 href_base = request.script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
             '&form_id=' _ form_id _ '&credit_id=' _ credit_id _ '&id=';
 FOREACH ba IN bank_account;
-    ba.iban_href_suffix = '&bic=' _ ba.bic _ '&iban=' _ ba.iban _
-         '&action=edit' _ '&id=' _ ba.id;
+    ba.iban_href_suffix = '&bic=' _ tt_url(ba.bic) _ '&iban='
+         _ tt_url(ba.iban) _ '&action=edit' _ '&id=' _ ba.id;
     ba.delete_href_suffix=ba.id _ '&action=delete_bank_account';
     ba.delete = '[' _ text('Delete') _ ']';
 END;

@@ -1,11 +1,15 @@
+#!perl
+
 =head1 UNIT TESTS FOR
 
 LedgerSMB::Database::Loadorder
 
 =cut
 
+use Data::Dumper;
+
 use LedgerSMB::Database::Loadorder;
-use Test::More tests => 15;
+use Test::More tests => 18;
 
 =head1 TEST PLAN
 
@@ -46,3 +50,23 @@ for my $loop (0 .. 5) {
 
 }
 
+$loadorder =
+    LedgerSMB::Database::Loadorder->new('t/data/loadorder/LOADORDER',
+                                        upto_tag => 'ignore-from-here');
+
+@scripts = map { my $s = $_->path; $s =~ s|t/data/loadorder/||;
+                 $s; } $loadorder->scripts;
+is_deeply(\@scripts, ['test1.sql', 'test2.sql', 'test1.sql'],
+   '3 scripts before "ignore-from-here" tag');
+
+$loadorder =
+    LedgerSMB::Database::Loadorder->new('t/data/loadorder/LOADORDER',
+                                        upto_tag => 'ignore-me');
+
+is(scalar $loadorder->scripts, 3, '3 scripts before "ignore-from-here" tag');
+
+$loadorder =
+    LedgerSMB::Database::Loadorder->new('t/data/loadorder/LOADORDER',
+                                        upto_tag => 'ignore-me-too');
+
+is(scalar $loadorder->scripts, 3, '3 scripts before "ignore-from-here" tag');

@@ -119,7 +119,7 @@ sub attach_file {
         $file->get_mime_type;
         my $fh = $request->upload('upload_data');
         binmode $fh, ':raw';
-        my $fdata = join ("", <$fh>);
+        my $fdata = join ('', <$fh>);
         $file->content($fdata);
     }
     $file->attach;

@@ -18,7 +18,7 @@ Locale::Maketext.
 
 =item marktext ($string)
 
-Identity function. Allows text to me marked for translation so that it 
+Identity function. Allows text to me marked for translation so that it
 will be picked by the PO scanner. The actual translation has to be done
 in the calling module when the page is prepared.
 Note: This isn't a method but a utility function.
@@ -125,9 +125,9 @@ sub date {
     my ( $self, $myconfig, $date, $longformat ) = @_;
     my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
     @longmonth = (
-        "January",   "February", "March",    "April",
-        "May ",      "June",     "July",     "August",
-        "September", "October",  "November", "December"
+        'January',   'February', 'March',    'April',
+        'May ',      'June',     'July',     'August',
+        'September', 'October',  'November', 'December'
     ) if $longformat;
     my $longdate = '';
 
@@ -167,10 +167,10 @@ sub date {
         ( $yy, $mm, $dd ) = ( $date =~ /(..)(..)(..)/ );
     }
 
-    $dd *= 1;
-    $yy = "20" . $yy if length $yy == 2;
-    $dd = "0" . $dd if length $dd == 1;
-    $mm = "0" . $mm if length $mm == 1;
+
+    $yy = '20' . $yy if length $yy == 2;
+    $dd = '0' . $dd if length $dd == 1;
+    $mm = '0' . $mm if length $mm == 1;
 
     if ( $myconfig->{dateformat} =~ /^dd/ ) {
         $longdate = "$dd$spc$mm$spc$yy";

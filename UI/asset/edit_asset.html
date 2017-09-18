@@ -1,9 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html'
-      include_stylesheet = ["asset/asset.css"]
-      include_script = ["asset/asset.js"]
-?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
 <div class="listtop"><?lsmb asset.title ?></div>
 <form data-dojo-type="lsmb/Form" action="<?lsmb request.script ?>" method="post">
@@ -30,14 +26,6 @@
 
 ?>
 
-
-<script>
-window.default_unit_label = {
-<?lsmb FOREACH a_class IN asset.asset_classes -?>
-   "<?lsmb a_class.id ?>": "<?lsmb asset.dep_method.${a_class.id}.unit_label ?>",
-<?lsmb END -?>
-};
-</script>
 
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
@@ -80,6 +68,7 @@ window.default_unit_label = {
         value = asset.purchase_date
         type = "date"
         size = 12
+        required = 1
 } ?>
 </span>
 <span class="inputgroup" id="purchasevaluegroup">
@@ -90,6 +79,7 @@ window.default_unit_label = {
         value = asset.purchase_value
         type = "text"
         size = 16
+        required = 1
 } ?>
 </span>
 </div>
@@ -98,9 +88,10 @@ window.default_unit_label = {
 <?lsmb PROCESS input element_data = {
         label = text("Usable Life") #'
         name = "usable_life"
-        value = usable_life
+        value = asset.usable_life
         type = "text"
         size = 10
+        required = 1
 } ?>
 <span class="caption" id="caption-usablelifegroup">
 <!-- 20150621EH This text should be updated upon change of asset class,
@@ -116,6 +107,7 @@ window.default_unit_label = {
         value = asset.salvage_value
         type = "text"
         size = 16
+        required = 1
 } ?>
 </span>
 </div>
@@ -127,7 +119,8 @@ window.default_unit_label = {
         value = asset.start_depreciation
         type = "date"
         size = 12
-   class = "date"
+        class = "date"
+        required = 1
 } ?>
 </span>
 </div>
@@ -225,4 +218,3 @@ window.default_unit_label = {
 </form>
 </div>
 </body>
-</html>
