@@ -495,7 +495,7 @@ sub merge {
         }
         elsif ( !defined $dst_arg && !defined $src->{$arg} )
         {
-            $logger->trace('LedgerSMB.pm: merge setting \$dst_arg is undefined \$src->{\$arg} is undefined');
+            $logger->trace('LedgerSMB.pm: merge setting $dst_arg is undefined $src->{\$arg} is undefined');
         }
         $self->{$dst_arg} = $src->{$arg};
     }
