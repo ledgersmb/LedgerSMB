@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.12-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-09-12 19:28+0000\n"
+"POT-Creation-Date: 2017-09-18 10:27+0000\n"
 "Last-Translator: Juha Eerola <juhaeerola@outlook.com>, 2016\n"
 "Language-Team: Finnish (https://www.transifex.com/ledgersmb/teams/58325/fi/)\n"
 "Language: fi\n"
@@ -84,7 +84,7 @@ msgstr "Vanhenevat ostolaskut"
 msgid "AP Invoice"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:160
+#: UI/Reports/filters/search_goods.html:163
 msgid "AP Invoices"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr "Vanhenevat myyntilaskut"
 msgid "AR Invoice"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:137
+#: UI/Reports/filters/search_goods.html:140
 msgid "AR Invoices"
 msgstr ""
 
@@ -169,7 +169,7 @@ msgstr ""
 msgid "AR/AP/GL Amount"
 msgstr ""
 
-#: sql/Pg-database.sql:3790
+#: sql/Pg-database.sql:3794
 msgid "Abandonment"
 msgstr ""
 
@@ -322,7 +322,7 @@ msgstr "Varaukset"
 msgid "Accrual Basis:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:770
+#: lib/LedgerSMB/Scripts/asset.pm:782
 msgid "Accum. Depreciation"
 msgstr ""
 
@@ -350,7 +350,7 @@ msgstr "Aktivoi tarkastusjälki"
 #: UI/Reports/filters/contact_search.html:115
 #: UI/Reports/filters/invoice_outstanding.html:86
 #: UI/Reports/filters/invoice_search.html:179
-#: UI/Reports/filters/search_goods.html:92
+#: UI/Reports/filters/search_goods.html:95
 msgid "Active"
 msgstr "Avoin"
 
@@ -619,7 +619,7 @@ msgstr "Osoitteet"
 msgid "Adj"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:772
+#: lib/LedgerSMB/Scripts/asset.pm:784
 msgid "Adjusted Basis"
 msgstr ""
 
@@ -805,11 +805,11 @@ msgstr ""
 msgid "Amount/Rate"
 msgstr ""
 
-#: sql/Pg-database.sql:3759
+#: sql/Pg-database.sql:3763
 msgid "Annual Straight Line Daily"
 msgstr ""
 
-#: sql/Pg-database.sql:3767
+#: sql/Pg-database.sql:3769
 msgid "Annual Straight Line Monthly"
 msgstr ""
 
@@ -835,8 +835,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:116
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:205
-#: lib/LedgerSMB/Scripts/asset.pm:584 lib/LedgerSMB/Scripts/asset.pm:662
-#: lib/LedgerSMB/Scripts/asset.pm:730 lib/LedgerSMB/Scripts/asset.pm:794
+#: lib/LedgerSMB/Scripts/asset.pm:593 lib/LedgerSMB/Scripts/asset.pm:671
+#: lib/LedgerSMB/Scripts/asset.pm:739 lib/LedgerSMB/Scripts/asset.pm:806
 #: lib/LedgerSMB/Scripts/budgets.pm:112 UI/reconciliation/report.html:294
 msgid "Approve"
 msgstr "Hyväksy"
@@ -855,7 +855,7 @@ msgstr "Hyväksytty"
 msgid "Approved By"
 msgstr "Hyväksyjä"
 
-#: lib/LedgerSMB/Scripts/asset.pm:536
+#: lib/LedgerSMB/Scripts/asset.pm:542
 msgid "Approved at"
 msgstr ""
 
@@ -874,12 +874,12 @@ msgstr "Huh"
 msgid "April"
 msgstr "Huhtikuu"
 
-#: lib/LedgerSMB/Scripts/asset.pm:635 lib/LedgerSMB/Scripts/asset.pm:699
-#: lib/LedgerSMB/Scripts/asset.pm:768
+#: lib/LedgerSMB/Scripts/asset.pm:644 lib/LedgerSMB/Scripts/asset.pm:708
+#: lib/LedgerSMB/Scripts/asset.pm:780
 msgid "Aquired Value"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:705
+#: lib/LedgerSMB/Scripts/asset.pm:714
 msgid "Aquired Value Remaining"
 msgstr ""
 
@@ -900,17 +900,17 @@ msgid "Assemblies restocked!"
 msgstr "Tuotteet viety varastoon"
 
 #: UI/accounts/edit.html:183 UI/Reports/filters/gl.html:138
-#: sql/Pg-database.sql:3828
+#: sql/Pg-database.sql:3832
 msgid "Asset"
 msgstr "Vastaavaa"
 
-#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74 UI/asset/edit_asset.html:159
+#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74 UI/asset/edit_asset.html:164
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:143
 #: UI/asset/search_class.html:45
 msgid "Asset Account"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:534 UI/asset/begin_approval.html:16
+#: lib/LedgerSMB/Scripts/asset.pm:540 UI/asset/begin_approval.html:16
 #: UI/asset/begin_report.html:15 UI/asset/search_reports.html:13
 msgid "Asset Class"
 msgstr ""
@@ -927,11 +927,11 @@ msgstr ""
 msgid "Asset Classes"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:454
+#: lib/LedgerSMB/Scripts/asset.pm:460
 msgid "Asset Depreciation Report"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:456
+#: lib/LedgerSMB/Scripts/asset.pm:462
 msgid "Asset Disposal Report"
 msgstr ""
 
@@ -939,7 +939,7 @@ msgstr ""
 msgid "Asset Listing"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:461
+#: lib/LedgerSMB/Scripts/asset.pm:467
 msgid "Asset Partial Disposal Report"
 msgstr ""
 
@@ -1111,7 +1111,7 @@ msgstr ""
 msgid "Available overpayments"
 msgstr ""
 
-#: bin/ic.pl:451 UI/Reports/filters/search_goods.html:267
+#: bin/ic.pl:451 UI/Reports/filters/search_goods.html:270
 msgid "Average Cost"
 msgstr "Keskikustannus"
 
@@ -1302,7 +1302,7 @@ msgstr ""
 #: templates/demo/work_order.html:133 templates/xedemo/bin_list.html:154
 #: templates/xedemo/bin_list.tex:109 templates/xedemo/pick_list.html:116
 #: templates/xedemo/pick_list.tex:102 templates/xedemo/work_order.html:133
-#: UI/io-email.html:105 UI/Reports/filters/search_goods.html:288
+#: UI/io-email.html:105 UI/Reports/filters/search_goods.html:291
 msgid "Bin"
 msgstr "Varastopaikka"
 
@@ -2100,7 +2100,7 @@ msgstr "Valuutat (erotettu kaksoispisteellä)"
 #: UI/Reports/filters/orders.html:187 UI/Reports/filters/overpayments.html:44
 #: UI/Reports/filters/payments.html:107
 #: UI/Reports/filters/purchase_history.html:275
-#: UI/Reports/filters/search_goods.html:360 UI/rp-aging.csv:6
+#: UI/Reports/filters/search_goods.html:363 UI/rp-aging.csv:6
 #: UI/timecards/timecard.html:121 UI/timecards/timecard-week.html:77
 msgid "Currency"
 msgstr "Valuutta"
@@ -2183,7 +2183,7 @@ msgstr ""
 msgid "D"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:769
+#: lib/LedgerSMB/Scripts/asset.pm:781
 msgid "D M"
 msgstr ""
 
@@ -2268,7 +2268,7 @@ msgstr "Tietokanta"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:103
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:99
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:532 lib/LedgerSMB/Scripts/payment.pm:154
+#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/payment.pm:154
 #: lib/LedgerSMB/Scripts/payment.pm:791 templates/demo/ap_transaction.html:73
 #: templates/demo/ap_transaction.html:192 templates/demo/ap_transaction.tex:60
 #: templates/demo/ap_transaction.tex:111 templates/demo/ar_transaction.html:72
@@ -2570,16 +2570,16 @@ msgstr ""
 msgid "Delivery Date"
 msgstr "Toimituspäivä"
 
-#: lib/LedgerSMB/Scripts/asset.pm:638
+#: lib/LedgerSMB/Scripts/asset.pm:647
 msgid "Dep. Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:636
+#: lib/LedgerSMB/Scripts/asset.pm:645
 msgid "Dep. Method"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:634 lib/LedgerSMB/Scripts/asset.pm:698
-#: lib/LedgerSMB/Scripts/asset.pm:766
+#: lib/LedgerSMB/Scripts/asset.pm:643 lib/LedgerSMB/Scripts/asset.pm:707
+#: lib/LedgerSMB/Scripts/asset.pm:778
 msgid "Dep. Starts"
 msgstr ""
 
@@ -2587,16 +2587,16 @@ msgstr ""
 msgid "Dep. Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:642
+#: lib/LedgerSMB/Scripts/asset.pm:651
 msgid "Dep. YTD"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:641
+#: lib/LedgerSMB/Scripts/asset.pm:650
 msgid "Dep. this run"
 msgstr ""
 
 #: bin/aa.pl:452 bin/ir.pl:375 bin/is.pl:351 bin/oe.pl:515
-#: UI/asset/edit_asset.html:152 UI/asset/search_asset.html:136
+#: UI/asset/edit_asset.html:157 UI/asset/search_asset.html:136
 #: UI/ca-list-selector.html:51 UI/payments/payment2.html:77
 #: UI/payments/payments_detail.html:123 UI/payments/payments_filter.html:52
 #: UI/rp-search.html:13
@@ -2619,12 +2619,12 @@ msgstr ""
 msgid "Depreciate Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:575 UI/accounts/edit.html:430
+#: lib/LedgerSMB/Scripts/asset.pm:584 UI/accounts/edit.html:430
 #: sql/Pg-database.sql:2898
 msgid "Depreciation"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:77 UI/asset/edit_asset.html:171
+#: lib/LedgerSMB/Report/Listings/Asset_Class.pm:77 UI/asset/edit_asset.html:176
 #: UI/asset/edit_class.html:47 UI/asset/search_asset.html:153
 #: UI/asset/search_class.html:56
 msgid "Depreciation Account"
@@ -2636,7 +2636,7 @@ msgstr ""
 msgid "Depreciation Method"
 msgstr ""
 
-#: UI/asset/edit_asset.html:125 UI/asset/search_asset.html:109
+#: UI/asset/edit_asset.html:129 UI/asset/search_asset.html:109
 msgid "Depreciation Starts"
 msgstr ""
 
@@ -2678,8 +2678,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:114
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:110
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:100
-#: lib/LedgerSMB/Scripts/asset.pm:397 lib/LedgerSMB/Scripts/asset.pm:697
-#: lib/LedgerSMB/Scripts/asset.pm:765 templates/demo/bin_list.html:148
+#: lib/LedgerSMB/Scripts/asset.pm:397 lib/LedgerSMB/Scripts/asset.pm:706
+#: lib/LedgerSMB/Scripts/asset.pm:777 templates/demo/bin_list.html:148
 #: templates/demo/bin_list.tex:106 templates/demo/invoice.html:141
 #: templates/demo/invoice.tex:140 templates/demo/packing_list.html:120
 #: templates/demo/packing_list.tex:114 templates/demo/pick_list.html:112
@@ -2743,7 +2743,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:138 UI/Reports/filters/orders.html:70
 #: UI/Reports/filters/purchase_history.html:256
 #: UI/Reports/filters/search_goods.html:19
-#: UI/Reports/filters/search_goods.html:205
+#: UI/Reports/filters/search_goods.html:208
 #: UI/rp-search-generate_tax_report.html:150 UI/timecards/timecard.html:46
 #: UI/timecards/timecard-week.html:113 sql/Pg-database.sql:2832
 #: sql/Pg-database.sql:2837
@@ -2817,7 +2817,7 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:702
+#: lib/LedgerSMB/Scripts/asset.pm:711
 msgid "Disp. Aquired Value"
 msgstr ""
 
@@ -2825,12 +2825,12 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:577 sql/Pg-database.sql:2896
+#: lib/LedgerSMB/Scripts/asset.pm:586 sql/Pg-database.sql:2896
 #: sql/Pg-database.sql:2899
 msgid "Disposal"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:767
+#: lib/LedgerSMB/Scripts/asset.pm:779
 msgid "Disposal Date"
 msgstr ""
 
@@ -2838,7 +2838,7 @@ msgstr ""
 msgid "Disposal Method"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:761
+#: lib/LedgerSMB/Scripts/asset.pm:773
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -2895,8 +2895,8 @@ msgid "Drafts"
 msgstr ""
 
 #: bin/ic.pl:509 lib/LedgerSMB/Report/Inventory/Search.pm:262
-#: UI/Reports/filters/search_goods.html:65
-#: UI/Reports/filters/search_goods.html:324
+#: UI/Reports/filters/search_goods.html:68
+#: UI/Reports/filters/search_goods.html:327
 msgid "Drawing"
 msgstr "Piirros"
 
@@ -3276,7 +3276,7 @@ msgstr ""
 msgid "Entered For"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:535
+#: lib/LedgerSMB/Scripts/asset.pm:541
 msgid "Entered at"
 msgstr ""
 
@@ -3356,7 +3356,7 @@ msgstr ""
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:637
+#: lib/LedgerSMB/Scripts/asset.pm:646
 msgid "Est. Life"
 msgstr ""
 
@@ -3402,7 +3402,7 @@ msgstr ""
 msgid "Expense"
 msgstr "Meno"
 
-#: UI/asset/edit_asset.html:191
+#: UI/asset/edit_asset.html:196
 msgid "Expense Account"
 msgstr ""
 
@@ -3547,7 +3547,7 @@ msgstr ""
 msgid "File"
 msgstr "Tiedosto"
 
-#: lib/LedgerSMB/Scripts/asset.pm:993
+#: lib/LedgerSMB/Scripts/asset.pm:1008
 msgid "File Imported"
 msgstr ""
 
@@ -3769,7 +3769,7 @@ msgstr "Pääkirjan viitenumero"
 msgid "Gain"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:773
+#: lib/LedgerSMB/Scripts/asset.pm:785
 msgid "Gain (Loss)"
 msgstr ""
 
@@ -3935,7 +3935,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:93
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:94
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:84
-#: lib/LedgerSMB/Scripts/asset.pm:531 templates/demo/timecard.html:35
+#: lib/LedgerSMB/Scripts/asset.pm:537 templates/demo/timecard.html:35
 #: templates/demo/timecard.tex:23 templates/demo_with_images/timecard.html:35
 #: templates/demo_with_images/timecard.tex:23 templates/xedemo/timecard.html:35
 #: templates/xedemo/timecard.tex:23 UI/business_units/list_classes.html:11
@@ -3967,7 +3967,7 @@ msgid "Ignore year-closing"
 msgstr ""
 
 #: bin/ic.pl:503 lib/LedgerSMB/Report/Inventory/Search.pm:258
-#: UI/Reports/filters/search_goods.html:317
+#: UI/Reports/filters/search_goods.html:320
 msgid "Image"
 msgstr "Kuva"
 
@@ -4037,7 +4037,7 @@ msgstr "Sisällytä maksu"
 #: UI/Reports/filters/invoice_outstanding.html:102
 #: UI/Reports/filters/invoice_search.html:194 UI/Reports/filters/orders.html:82
 #: UI/Reports/filters/purchase_history.html:163
-#: UI/Reports/filters/search_goods.html:180
+#: UI/Reports/filters/search_goods.html:183
 #: UI/rp-search-generate_balance_sheet.html:70
 #: UI/rp-search-generate_income_statement.html:120
 #: UI/rp-search-generate_tax_report.html:104
@@ -4279,7 +4279,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:65
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:88
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:87
-#: lib/LedgerSMB/Report/Taxform/Details.pm:86 UI/asset/edit_asset.html:207
+#: lib/LedgerSMB/Report/Taxform/Details.pm:86 UI/asset/edit_asset.html:212
 #: UI/asset/search_asset.html:175 UI/orders/order.html:78
 #: UI/payments/payments_detail.html:324 UI/payments/use_overpayment2.html:150
 #: UI/Reports/filters/invoice_outstanding.html:142
@@ -4378,7 +4378,7 @@ msgstr "Nimike poistettu!"
 msgid "Item not on file!"
 msgstr "Nimikettä ei ole järjestelmässä!"
 
-#: UI/Reports/filters/search_goods.html:128
+#: UI/Reports/filters/search_goods.html:131
 msgid "Items Found In"
 msgstr ""
 
@@ -4512,7 +4512,7 @@ msgstr ""
 
 #: bin/ic.pl:460 bin/ic.pl:638 lib/LedgerSMB/Report/Inventory/Search.pm:233
 #: UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:32
-#: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:259
+#: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:262
 msgid "Last Cost"
 msgstr "Viimeksi toteutunut kustannus"
 
@@ -4595,7 +4595,7 @@ msgstr ""
 msgid "Line Item COGS Report"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:274
+#: UI/Reports/filters/search_goods.html:277
 msgid "Line Total"
 msgstr "Rivi yhteensä"
 
@@ -4628,7 +4628,7 @@ msgid "List Overpayments"
 msgstr ""
 
 #: bin/ic.pl:443 lib/LedgerSMB/Report/Inventory/Search.pm:223
-#: UI/Reports/filters/search_goods.html:243
+#: UI/Reports/filters/search_goods.html:246
 msgid "List Price"
 msgstr "Listaa hinnat"
 
@@ -4664,7 +4664,7 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/asset/edit_asset.html:142 UI/asset/search_asset.html:126
+#: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:126
 #: UI/payments/payment2.html:38 UI/payments/use_overpayment2.html:34
 msgid "Location"
 msgstr ""
@@ -4734,8 +4734,8 @@ msgid "Mailing"
 msgstr ""
 
 #: bin/ic.pl:981 lib/LedgerSMB/Report/Inventory/Search.pm:250
-#: UI/Reports/filters/search_goods.html:47
-#: UI/Reports/filters/search_goods.html:339
+#: UI/Reports/filters/search_goods.html:50
+#: UI/Reports/filters/search_goods.html:342
 msgid "Make"
 msgstr "Valmistaja"
 
@@ -4793,7 +4793,7 @@ msgid "March"
 msgstr "Maaliskuu"
 
 #: bin/ic.pl:466 bin/ic.pl:644 lib/LedgerSMB/Report/Inventory/Search.pm:242
-#: UI/Reports/filters/search_goods.html:281
+#: UI/Reports/filters/search_goods.html:284
 msgid "Markup"
 msgstr "Hintalisäys"
 
@@ -4843,13 +4843,13 @@ msgstr ""
 msgid "Method"
 msgstr "Tapa"
 
-#: UI/asset/edit_asset.html:108
+#: UI/asset/edit_asset.html:111
 msgid "Method Default"
 msgstr ""
 
 #: bin/ic.pl:505 lib/LedgerSMB/Report/Inventory/Search.pm:266
-#: UI/Reports/filters/search_goods.html:73
-#: UI/Reports/filters/search_goods.html:331
+#: UI/Reports/filters/search_goods.html:76
+#: UI/Reports/filters/search_goods.html:334
 msgid "Microfiche"
 msgstr "Mikrokuva"
 
@@ -4896,8 +4896,8 @@ msgid "Miss."
 msgstr ""
 
 #: bin/ic.pl:982 lib/LedgerSMB/Report/Inventory/Search.pm:254
-#: UI/Reports/filters/search_goods.html:55
-#: UI/Reports/filters/search_goods.html:346
+#: UI/Reports/filters/search_goods.html:58
+#: UI/Reports/filters/search_goods.html:349
 msgid "Model"
 msgstr "Tuotenimi"
 
@@ -5127,7 +5127,7 @@ msgstr ""
 
 #: bin/aa.pl:1616 UI/Reports/filters/invoice_outstanding.html:130
 #: UI/Reports/filters/invoice_search.html:241
-#: UI/Reports/filters/orders.html:110 UI/Reports/filters/search_goods.html:189
+#: UI/Reports/filters/orders.html:110 UI/Reports/filters/search_goods.html:192
 msgid "No."
 msgstr "n:o"
 
@@ -5210,7 +5210,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:252
 #: UI/Reports/filters/invoice_search.html:148
 #: UI/Reports/filters/invoice_search.html:361
-#: UI/Reports/filters/search_goods.html:310 UI/timecards/timecard.html:135
+#: UI/Reports/filters/search_goods.html:313 UI/timecards/timecard.html:135
 msgid "Notes"
 msgstr "Lisätietoja"
 
@@ -5317,7 +5317,7 @@ msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr ""
 
 #: bin/ic.pl:710 lib/LedgerSMB/Scripts/budgets.pm:127 UI/accounts/edit.html:116
-#: UI/Reports/filters/search_goods.html:113
+#: UI/Reports/filters/search_goods.html:116
 msgid "Obsolete"
 msgstr "Vanhentunut"
 
@@ -5346,7 +5346,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:202
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:110
 #: UI/inventory/adjustment_entry.html:30
-#: UI/Reports/filters/search_goods.html:99
+#: UI/Reports/filters/search_goods.html:102
 msgid "On Hand"
 msgstr "Varastossa"
 
@@ -5356,7 +5356,7 @@ msgstr "Varastossa"
 msgid "On Hold"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:213
+#: UI/Reports/filters/search_goods.html:216
 msgid "On hand"
 msgstr ""
 
@@ -5661,7 +5661,7 @@ msgid "Part Description"
 msgstr ""
 
 #: UI/Reports/filters/search_goods.html:29
-#: UI/Reports/filters/search_goods.html:236
+#: UI/Reports/filters/search_goods.html:239
 msgid "Part Group"
 msgstr ""
 
@@ -5678,7 +5678,7 @@ msgstr ""
 #: UI/Reports/filters/inventory_activity.html:11
 #: UI/Reports/filters/purchase_history.html:246
 #: UI/Reports/filters/search_goods.html:9
-#: UI/Reports/filters/search_goods.html:197
+#: UI/Reports/filters/search_goods.html:200
 msgid "Part Number"
 msgstr "Tarvikenumero"
 
@@ -5686,7 +5686,7 @@ msgstr "Tarvikenumero"
 msgid "Partial"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:693
+#: lib/LedgerSMB/Scripts/asset.pm:702
 msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -5830,11 +5830,11 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:700
+#: lib/LedgerSMB/Scripts/asset.pm:709
 msgid "Percent Disposed"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:703
+#: lib/LedgerSMB/Scripts/asset.pm:712
 msgid "Percent Remaining"
 msgstr ""
 
@@ -6093,7 +6093,7 @@ msgid "Price Groups"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:246
-#: UI/Reports/filters/search_goods.html:229
+#: UI/Reports/filters/search_goods.html:232
 msgid "Price Updated"
 msgstr ""
 
@@ -6195,15 +6195,15 @@ msgstr ""
 msgid "Printing Work Order [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:640
+#: lib/LedgerSMB/Scripts/asset.pm:649
 msgid "Prior Dep."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:639
+#: lib/LedgerSMB/Scripts/asset.pm:648
 msgid "Prior Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:400 lib/LedgerSMB/Scripts/asset.pm:771
+#: lib/LedgerSMB/Scripts/asset.pm:400 lib/LedgerSMB/Scripts/asset.pm:783
 msgid "Proceeds"
 msgstr ""
 
@@ -6301,7 +6301,7 @@ msgid "Purchase Order Number"
 msgstr "Ostotilausnumero"
 
 #: bin/am.pl:863 lib/LedgerSMB/Report/Orders.pm:190
-#: lib/LedgerSMB/Report/Orders.pm:290 UI/Reports/filters/search_goods.html:167
+#: lib/LedgerSMB/Report/Orders.pm:290 UI/Reports/filters/search_goods.html:170
 #: sql/Pg-database.sql:2817 sql/Pg-database.sql:2819 sql/Pg-database.sql:2822
 msgid "Purchase Orders"
 msgstr "Ostotilaukset"
@@ -6312,7 +6312,7 @@ msgstr "Ostotilaukset"
 msgid "Purchase Value"
 msgstr ""
 
-#: UI/asset/edit_asset.html:87 UI/asset/search_asset.html:76
+#: UI/asset/edit_asset.html:88 UI/asset/search_asset.html:76
 msgid "Purchase Value:"
 msgstr ""
 
@@ -6438,7 +6438,7 @@ msgstr "Tarjous poistettu"
 
 #: lib/LedgerSMB/Report/Orders.pm:193 lib/LedgerSMB/Report/Orders.pm:292
 #: UI/Reports/filters/purchase_history.html:192
-#: UI/Reports/filters/search_goods.html:151 sql/Pg-database.sql:2829
+#: UI/Reports/filters/search_goods.html:154 sql/Pg-database.sql:2829
 #: sql/Pg-database.sql:2922
 msgid "Quotations"
 msgstr "Tarjoukset"
@@ -6464,12 +6464,12 @@ msgid "RFQ Number"
 msgstr "Tarjouspyynnön numero"
 
 #: lib/LedgerSMB/Report/Orders.pm:196 lib/LedgerSMB/Report/Orders.pm:294
-#: UI/Reports/filters/search_goods.html:174 sql/Pg-database.sql:2830
+#: UI/Reports/filters/search_goods.html:177 sql/Pg-database.sql:2830
 msgid "RFQs"
 msgstr "Tarjouspyynnöt"
 
 #: bin/ic.pl:486 bin/ic.pl:2099 lib/LedgerSMB/Report/Inventory/Search.pm:210
-#: UI/Reports/filters/search_goods.html:295
+#: UI/Reports/filters/search_goods.html:298
 msgid "ROP"
 msgstr "Uudelleentilauspiste"
 
@@ -6660,7 +6660,7 @@ msgstr ""
 msgid "Report Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:525
+#: lib/LedgerSMB/Scripts/asset.pm:531
 msgid "Report Results"
 msgstr ""
 
@@ -6672,7 +6672,7 @@ msgstr ""
 msgid "Report Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:630
+#: lib/LedgerSMB/Scripts/asset.pm:639
 msgid "Report [_1] on date [_2]"
 msgstr ""
 
@@ -6879,7 +6879,7 @@ msgstr "Sosiaaliturvatunnus"
 msgid "Salary"
 msgstr ""
 
-#: sql/Pg-database.sql:3792
+#: sql/Pg-database.sql:3796
 msgid "Sale"
 msgstr "Myynti"
 
@@ -6914,7 +6914,7 @@ msgid "Sales Order Number"
 msgstr "Tilausvahvistuksen numero"
 
 #: bin/am.pl:862 lib/LedgerSMB/Report/Orders.pm:187
-#: lib/LedgerSMB/Report/Orders.pm:288 UI/Reports/filters/search_goods.html:144
+#: lib/LedgerSMB/Report/Orders.pm:288 UI/Reports/filters/search_goods.html:147
 #: sql/Pg-database.sql:2816 sql/Pg-database.sql:2818 sql/Pg-database.sql:2821
 #: sql/Pg-database.sql:2835
 msgid "Sales Orders"
@@ -6959,7 +6959,7 @@ msgstr "Käsittelijä"
 msgid "Salutation"
 msgstr ""
 
-#: UI/asset/edit_asset.html:113 UI/asset/search_asset.html:97
+#: UI/asset/edit_asset.html:116 UI/asset/search_asset.html:97
 msgid "Salvage Value:"
 msgstr ""
 
@@ -6971,11 +6971,11 @@ msgstr ""
 #: bin/am.pl:179 bin/gl.pl:277 bin/ic.pl:833 bin/ic.pl:842 bin/ir.pl:560
 #: bin/is.pl:607 bin/oe.pl:633 bin/oe.pl:855 bin/pe.pl:167 bin/pe.pl:239
 #: bin/pe.pl:607 lib/LedgerSMB/Scripts/account.pm:169
-#: lib/LedgerSMB/Scripts/account.pm:182 lib/LedgerSMB/Scripts/asset.pm:447
+#: lib/LedgerSMB/Scripts/account.pm:182 lib/LedgerSMB/Scripts/asset.pm:453
 #: lib/LedgerSMB/Scripts/budgets.pm:103 t/data/04-complex_template.html:131
 #: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
 #: t/data/04-complex_template.html:644 UI/accounts/edit.html:527
-#: UI/am-taxes.html:77 UI/asset/edit_asset.html:218 UI/asset/edit_class.html:58
+#: UI/am-taxes.html:77 UI/asset/edit_asset.html:223 UI/asset/edit_class.html:58
 #: UI/asset/import_asset.html:58 UI/business_units/edit.html:97
 #: UI/business_units/edit.html:107 UI/business_units/list_classes.html:87
 #: UI/Configuration/sequence.html:10 UI/Configuration/sequence.html:119
@@ -7086,7 +7086,7 @@ msgstr "Näyttö"
 #: UI/Reports/filters/contact_search.html:141
 #: UI/Reports/filters/overpayments.html:61 UI/Reports/filters/payments.html:126
 #: UI/Reports/filters/reconciliation_search.html:103
-#: UI/Reports/filters/search_goods.html:385
+#: UI/Reports/filters/search_goods.html:388
 #: UI/Reports/filters/search_partsgroups.html:18
 #: UI/Reports/filters/search_pricegroups.html:18
 #: UI/Reports/filters/timecards.html:42 UI/Reports/filters/unapproved.html:107
@@ -7188,7 +7188,7 @@ msgstr ""
 msgid "Search for Users"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:498
+#: lib/LedgerSMB/Scripts/asset.pm:504
 msgid "Search reports"
 msgstr ""
 
@@ -7270,7 +7270,7 @@ msgstr "Myynti"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:228 UI/Contact/pricelist.csv:31
 #: UI/Contact/pricelist.html:44 UI/Contact/pricelist.tex:42
 #: UI/Reports/filters/purchase_history.html:266
-#: UI/Reports/filters/search_goods.html:251
+#: UI/Reports/filters/search_goods.html:254
 msgid "Sell Price"
 msgstr "Myyntihinta"
 
@@ -7357,8 +7357,8 @@ msgstr "Sarjan:o"
 #: templates/demo/work_order.tex:126 templates/xedemo/bin_list.tex:107
 #: templates/xedemo/packing_list.tex:115 templates/xedemo/work_order.tex:126
 #: UI/Reports/filters/purchase_history.html:335
-#: UI/Reports/filters/search_goods.html:37
-#: UI/Reports/filters/search_goods.html:367
+#: UI/Reports/filters/search_goods.html:40
+#: UI/Reports/filters/search_goods.html:370
 msgid "Serial Number"
 msgstr "Sarjanumero"
 
@@ -7583,7 +7583,7 @@ msgstr ""
 msgid "Shipping Point"
 msgstr "Toimitusehto"
 
-#: UI/Reports/filters/search_goods.html:106
+#: UI/Reports/filters/search_goods.html:109
 msgid "Short"
 msgstr "Lyhytaikaiset"
 
@@ -7909,8 +7909,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:72
 #: lib/LedgerSMB/Report/Listings/Asset.pm:82
 #: lib/LedgerSMB/Report/Listings/Asset.pm:119
-#: lib/LedgerSMB/Scripts/asset.pm:633 lib/LedgerSMB/Scripts/asset.pm:696
-#: lib/LedgerSMB/Scripts/asset.pm:764
+#: lib/LedgerSMB/Scripts/asset.pm:642 lib/LedgerSMB/Scripts/asset.pm:705
+#: lib/LedgerSMB/Scripts/asset.pm:776
 msgid "Tag"
 msgstr ""
 
@@ -8477,7 +8477,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:299
 #: lib/LedgerSMB/Report/Taxform/Details.pm:98
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:96
-#: lib/LedgerSMB/Scripts/asset.pm:537 lib/LedgerSMB/Scripts/payment.pm:200
+#: lib/LedgerSMB/Scripts/asset.pm:543 lib/LedgerSMB/Scripts/payment.pm:200
 #: lib/LedgerSMB/Scripts/payment.pm:792 templates/demo/ap_transaction.html:126
 #: templates/demo/ap_transaction.html:147
 #: templates/demo/ar_transaction.html:125
@@ -8533,7 +8533,7 @@ msgstr ""
 msgid "Total"
 msgstr "Yhteensä"
 
-#: lib/LedgerSMB/Scripts/asset.pm:643
+#: lib/LedgerSMB/Scripts/asset.pm:652
 msgid "Total Accum. Dep."
 msgstr ""
 
@@ -8686,7 +8686,7 @@ msgstr ""
 #: bin/io.pl:1722 lib/LedgerSMB/Report/Inventory/History.pm:146
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:90
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:80
-#: lib/LedgerSMB/Scripts/asset.pm:533 t/data/04-complex_template.html:384
+#: lib/LedgerSMB/Scripts/asset.pm:539 t/data/04-complex_template.html:384
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/address.html:119
 #: UI/Contact/divs/contact_info.html:29 UI/Contact/divs/credit.html:25
 #: UI/Contact/divs/wage.html:7
@@ -8757,7 +8757,7 @@ msgstr ""
 #: templates/xedemo/invoice.tex:138 templates/xedemo/product_receipt.tex:119
 #: templates/xedemo/purchase_order.tex:119 templates/xedemo/sales_order.tex:120
 #: UI/payroll/income.html:74 UI/Reports/filters/purchase_history.html:296
-#: UI/Reports/filters/search_goods.html:221
+#: UI/Reports/filters/search_goods.html:224
 msgid "Unit"
 msgstr "Yksikkö"
 
@@ -8830,7 +8830,7 @@ msgstr ""
 msgid "Unsupported.  Expect errors"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:120
+#: UI/Reports/filters/search_goods.html:123
 msgid "Unused"
 msgstr ""
 
@@ -8874,7 +8874,7 @@ msgstr ""
 msgid "Url"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Listings/Asset.pm:95 UI/asset/edit_asset.html:99
+#: lib/LedgerSMB/Report/Listings/Asset.pm:95 UI/asset/edit_asset.html:101
 #: UI/asset/search_asset.html:88
 msgid "Usable Life"
 msgstr ""
@@ -9007,7 +9007,7 @@ msgstr ""
 
 #: bin/aa.pl:1607 bin/io.pl:1608 lib/LedgerSMB/Report/Invoices/Payments.pm:113
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:183
-#: lib/LedgerSMB/Scripts/configuration.pm:116 UI/asset/edit_asset.html:197
+#: lib/LedgerSMB/Scripts/configuration.pm:116 UI/asset/edit_asset.html:202
 #: UI/asset/search_asset.html:165 UI/payments/payments_filter.html:64
 #: UI/Reports/filters/invoice_outstanding.html:7
 #: UI/Reports/filters/invoice_search.html:7
@@ -9086,7 +9086,7 @@ msgstr ""
 #: templates/xedemo/bin_list.html:112 templates/xedemo/bin_list.tex:82
 #: templates/xedemo/packing_list.html:83 templates/xedemo/packing_list.tex:90
 #: templates/xedemo/pick_list.html:81 templates/xedemo/pick_list.tex:82
-#: UI/Reports/filters/search_goods.html:353
+#: UI/Reports/filters/search_goods.html:356
 msgid "Warehouse"
 msgstr "Varasto"
 
@@ -9128,7 +9128,7 @@ msgstr "Viikot"
 
 #: bin/ic.pl:550 bin/ic.pl:577 bin/ic.pl:599
 #: lib/LedgerSMB/Report/Inventory/Search.pm:218
-#: UI/Reports/filters/search_goods.html:303
+#: UI/Reports/filters/search_goods.html:306
 msgid "Weight"
 msgstr "Paino"
 
@@ -9144,7 +9144,7 @@ msgstr "Minkä tyyppinen nimike tämä on?"
 msgid "Where shall we send the backup?"
 msgstr ""
 
-#: sql/Pg-database.sql:3763
+#: sql/Pg-database.sql:3766
 msgid "Whole Month Straight Line"
 msgstr ""
 
@@ -9329,11 +9329,11 @@ msgstr ""
 msgid "deposit"
 msgstr ""
 
-#: sql/Pg-database.sql:3837
+#: sql/Pg-database.sql:3841
 msgid "depreciation"
 msgstr ""
 
-#: sql/Pg-database.sql:3838
+#: sql/Pg-database.sql:3842
 msgid "disposal"
 msgstr ""
 
@@ -9357,15 +9357,15 @@ msgstr ""
 msgid "from_date"
 msgstr ""
 
-#: sql/Pg-database.sql:3839
+#: sql/Pg-database.sql:3843
 msgid "import"
 msgstr ""
 
-#: sql/Pg-database.sql:3764
+#: sql/Pg-database.sql:3768
 msgid "in months"
 msgstr ""
 
-#: sql/Pg-database.sql:3759 sql/Pg-database.sql:3767
+#: sql/Pg-database.sql:3765 sql/Pg-database.sql:3771
 msgid "in years"
 msgstr ""
 
@@ -9397,7 +9397,7 @@ msgstr ""
 msgid "other"
 msgstr ""
 
-#: sql/Pg-database.sql:3840
+#: sql/Pg-database.sql:3844
 msgid "partial disposal"
 msgstr ""
 
@@ -9421,7 +9421,7 @@ msgstr "lähetetty"
 msgid "starting_balance"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:375
+#: UI/Reports/filters/search_goods.html:378
 msgid "subtotal"
 msgstr ""
 
