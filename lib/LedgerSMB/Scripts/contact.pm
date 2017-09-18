@@ -276,7 +276,7 @@ sub _main_screen {
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
         for my $ref (@$var){
-            $ref->{description} ||= "";
+            $ref->{description} ||= '';
             $ref->{text} = "$ref->{accno}--$ref->{description}";
         }
     }

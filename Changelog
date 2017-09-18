@@ -44,12 +44,33 @@ David G is David Godfrey
 Changelog for 1.5 Series
 Released 2016-12-24
 
+Changelog for 1.5.12
+* Fix depreciation method listing incorrect stored procedure (Erik H)
+* Fix failure to select business type details from business list (Erik H, #3154)
+* Require fixed asset values needed in depreciation to be entered (Erik H)
+* Fix the Net Book Value report listing assets by the wrong class (Erik H)
+* Fix the Net Book Value report incorrectly excluding some assets (Erik H)
+* Fix Ship To screen reporting server error and staying blank (Erik H, #2516)
+* Fix non-existing entry-point error on 'Approve' in fixed assets (Erik H)
+* Fix errors due to double 'action' field in fixed assets reports (Erik H)
+* Fix disposal-specific fields appearing in depreciation screens (Erik H)
+* Fix Parts Group drop-down and column selector in Goods Search (Erik H, #1581)
+* Require proceeds on disposal prevents NULL amounts on approval (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.5.11
 * Rename lighttpd example configuration file for consistency (Yves L)
 * Fix Net Book Value report shows 'LedgerSMB::Report' as its name (Erik H, #3132)
 * Fix Depreciation screen not showing any assets (Erik H, #3131)
 * Fix fixed asset's 'Usable life' field not showing entered value (Erik H, #3130)
 * Fix Net Book Value report's link to asset details broken (Erik H, #3129)
+* Ensure forked sub-processes to be correctly terminated (Erik H)
+* Fix Form submission sometimes seems to hang (Erik H, #2972)
+* Fix missing content in columns of the outstanding report (Erik H, #2585)
+* Fix contacts search ignores e-mail and phone filters (Erik H, #2821)
+* Fix contacts search by address data doesn't work (Erik H, #2490)
 
 Yves L is Yves Lavoie
 Erik H is Erik Huelsmann
@@ -283,6 +304,10 @@ Changelog for 1.4.42
 * Fix ar/ap not searchable by part number (Chris T, #2926)
 * Round-trip fewer values over web requests during migration (Erik H)
 * Bank account info now properly HTML-escaped (Erik H, #2820)
+* Ensure forked sub-processes to be correctly terminated (Erik H)
+* Fix missing content in columns of the outstanding report (Erik H, #2585)
+* Fix contacts search ignores e-mail and phone filters (Erik H, #2821)
+* Fix contacts search by address data doesn't work (Erik H, #2490)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann

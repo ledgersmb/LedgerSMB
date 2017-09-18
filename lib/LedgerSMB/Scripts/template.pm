@@ -125,9 +125,9 @@ sub upload {
     my @fnames =  $request->upload;
     my $name = $fnames[0];
     my $fh = $request->upload($name);
-    my $fdata = join ("", <$fh>);
-    die "No content" unless $fdata;
-    my $testname = $request->{template_name} . "." . $request->{format};
+    my $fdata = join ('', <$fh>);
+    die 'No content' unless $fdata;
+    my $testname = $request->{template_name} . '.' . $request->{format};
     die LedgerSMB::App_State::Locale->text(
                 'Unexpected file name, expected [_1], got [_2]',
                  $testname, $name)

@@ -400,6 +400,9 @@ CREATE TYPE aa_transactions_line AS (
     entity_name text,
     transdate date,
     invnumber text,
+    ordnumber text,
+    ponumber text,
+    curr char(3),
     amount numeric,
     netamount numeric,
     tax numeric,
@@ -411,7 +414,7 @@ CREATE TYPE aa_transactions_line AS (
     till text,
     salesperson text,
     manager text,
-    shpping_point text,
+    shipping_point text,
     ship_via text,
     business_units text[]
 );
@@ -424,19 +427,19 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount_bc, a.netamount_bc,
+       a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
        a.netamount_bc - a.amount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
-  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+  FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes, till, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
-        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+        SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes, null, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
@@ -494,6 +497,7 @@ RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
        entity_name, null::date as transdate, count(*)::text as invnumber,
+       null::text as ordnumber, null::text as ponumber, curr,
        sum(amount) as amount, sum(netamount) as netamount, sum(tax) as tax,
        sum(paid) as paid, sum(due) as due, max(last_payment) as last_payment,
        null::date as duedate, null::text as notes, null::text as till,
@@ -502,7 +506,7 @@ SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
        null::text[] as business_units
   FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
     $11, $12)
- GROUP BY meta_number, entity_name, entity_id;
+ GROUP BY meta_number, entity_name, entity_id, curr;
 
 $$;
 
@@ -532,15 +536,15 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
-       a.transdate, a.invnumber, a.amount_bc as amount, a.netamount_bc
-                    as netamount,
+       a.transdate, a.invnumber, a.ordnumber, a.ponumber, a.curr,
+       a.amount_bc as amount, a.netamount_bc as netamount,
        a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,
        p.due, p.last_payment,
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'::text[]
 
-  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+  FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
@@ -548,7 +552,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
          WHERE in_entity_class = 2
                and (in_approved is null or (in_approved = approved))
          UNION
-        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+        SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed

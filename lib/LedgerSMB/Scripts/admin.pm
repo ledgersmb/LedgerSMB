@@ -61,8 +61,8 @@ sub list_sessions {
     };
     my $column_heading = _column_heading($request, $column_names);
     my $rows = [];
-    my $rowcount = "0";
-    my $base_url = "admin.pl?action=delete_session";
+    my $rowcount = '0';
+    my $base_url = 'admin.pl?action=delete_session';
     for my $s (@sessions) {
         $s->{i} = $rowcount % 2;
         $s->{drop} = {

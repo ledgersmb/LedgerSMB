@@ -34,7 +34,7 @@ each $line_* is a string that will be output on a separate line:
 
 sub die_pretty {
     my $dieHeader = '==============================================================================';
-    my $msg = "== " . join("\n== ",@_);
+    my $msg = '== ' . join("\n== ",@_);
     die("\n" . $dieHeader . "\n$msg\n" . $dieHeader . "\n" .' Stopped at '); # trailing "<space>" prevents the location hint from being lost when pushing it to a newline
 }
 
@@ -156,95 +156,95 @@ sub def {
 def 'auth',
     section => 'main',
     default => 'DB',
-    doc => qq||;
+    doc => q{};
 
 def 'dojo_theme',
     section => 'main',
     default => 'claro',
-    doc => qq||;
+    doc => q{};
 
 def 'force_username_case',
     section => 'main',
     default => undef,  # don't force case
-    doc => qq||;
+    doc => q{};
 
 def 'max_post_size',
     section => 'main',
     default => 4194304, ## no critic ( ProhibitMagicNumbers)
-    doc => qq||;
+    doc => q{};
 
 def 'cookie_name',
     section => 'main',
-    default => "LedgerSMB-1.3",
-    doc => qq||;
+    default => 'LedgerSMB-1.3',
+    doc => q{};
 
 # Maximum number of invoices that can be printed on a check
 def 'check_max_invoices',
     section => 'main',
     default => 5,
-    doc => qq||;
+    doc => q{};
 
 # set language for login and admin
 def 'language',
     section => 'main',
     default => 'en',
-    doc => qq||;
+    doc => q{};
 
 def 'log_level',
     section => 'main',
     default => 'ERROR',
-    doc => qq||;
+    doc => q{};
 
 def 'DBI_TRACE',
     section => 'main', # SHOULD BE 'debug' ????
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 def 'no_db_str',
     section => 'main',
     default => 'database',
-    doc => qq||;
+    doc => q{};
 
 def 'db_autoupdate',
     section => 'main',
     default => undef,
-    doc => qq||;
+    doc => q{};
 
 def 'cache_templates',
     section => 'main',
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 ### SECTION  ---   paths
 
 def 'pathsep',
     section => 'main', # SHOULD BE 'paths' ????
     default => ':',
-    doc => qq|
-The documentation for the 'main.pathsep' key|;
+    doc => q{
+The documentation for the 'main.pathsep' key};
 
 def 'cssdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => 'css/',
-    doc => qq||;
+    doc => q{};
 
 def 'fs_cssdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => 'css/',
-    doc => qq||;
+    doc => q{};
 
 # Temporary files stored at"
 def 'tempdir',
     section => 'main', # SHOULD BE 'paths' ????
     default => sub { $ENV{TEMP} && "$ENV{TEMP}/ledgersmb" || '/tmp/ledgersmb' }, # We can't specify envvar=>'TEMP' as that would overwrite TEMP with anything set in ledgersmb.conf. Conversely we need to use TEMP as the prefix for the default
     suffix => "-$EUID",
-    doc => qq||;
+    doc => q{};
 
 # Backup files stored at"
 def 'backupdir',
     section => 'paths',
-    default => sub { $ENV{BACKUP} || "/tmp/ledgersmb-backups" },
-    doc => qq||;
+    default => sub { $ENV{BACKUP} || '/tmp/ledgersmb-backups' },
+    doc => q{};
 
 # Path to the translation files
 def 'localepath',
@@ -257,40 +257,40 @@ def 'localepath',
 def 'spool',
     section => 'paths',
     default => 'spool',
-    doc => qq||;
+    doc => q{};
 
 # templates base directory
 def 'templates',
     section => 'paths',
     default => 'templates',
-    doc => qq||;
+    doc => q{};
 
 def 'templates_cache',
     section => 'paths',
     default => 'lsmb_templates',
-    doc => qq|this is a subdir of tempdir, unless it's an absolute path|;
+    doc => q{this is a subdir of tempdir, unless it's an absolute path};
 
 ### SECTION  ---   Template file formats
 
 def 'template_latex',
     section => 'template_format',
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 def 'template_xls',
     section => 'template_format',
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 def 'template_xlsx',
     section => 'template_format',
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 def 'template_ods',
     section => 'template_format',
     default => 0,
-    doc => qq||;
+    doc => q{};
 
 
 ### SECTION  ---   mail
@@ -298,7 +298,7 @@ def 'template_ods',
 def 'sendmail',
     section => 'mail',
     default => '/usr/sbin/sendmail -t',
-    doc => qq|location of sendmail|;
+    doc => q{location of sendmail};
 
 
 def 'smtphost',
@@ -369,7 +369,7 @@ def 'db_sslmode',
 def 'dojo_built',
     section => 'debug',
     default => 1,
-    doc => qq||;
+    doc => q{};
 
 
 
@@ -390,7 +390,7 @@ for ($cfg->Parameters('printers')){
 
 # Programs
 our $zip = $cfg->val('programs', 'zip', 'zip -r %dir %dir');
-our $gzip = $cfg->val('programs', 'gzip', "gzip -S .gz");
+our $gzip = $cfg->val('programs', 'gzip', 'gzip -S .gz');
 
 
 
@@ -432,7 +432,7 @@ our $log4perl_config = qq(
     .
     $modules_loglevel_overrides
     .
-    qq(
+    q(
     log4perl.appender.Screen = Log::Log4perl::Appender::Screen
     log4perl.appender.Screen.layout = SimpleLayout
     # Filter for debug level
@@ -463,7 +463,7 @@ our $log4perl_config = qq(
     log4perl.appender.DebugPanel.layout       = PatternLayout
     log4perl.appender.DebugPanel.layout.ConversionPattern = %r >> %p >> %m >> %c >> at %F line %L%n
     log4perl.appender.DebugPanel.Threshold = TRACE
-);
+    );
 #some examples of loglevel setting for modules
 #FATAL, ERROR, WARN, INFO, DEBUG, TRACE
 #log4perl.logger.LedgerSMB = DEBUG
@@ -477,9 +477,9 @@ our $log4perl_config = qq(
 if(!(-d LedgerSMB::Sysconfig::tempdir())){
      my $rc;
      if ($Config{path_sep} eq ';'){ # We need an actual platform configuration variable
-         $rc = system("mkdir " . LedgerSMB::Sysconfig::tempdir());
+         $rc = system('mkdir ' . LedgerSMB::Sysconfig::tempdir());
      } else {
-         $rc=system("mkdir -p " . LedgerSMB::Sysconfig::tempdir());
+         $rc=system('mkdir -p ' . LedgerSMB::Sysconfig::tempdir());
      }
 }
 
@@ -487,13 +487,14 @@ sub check_permissions {
     use English qw(-no_match_vars);
 
     if($EUID == 0){
-        die_pretty( "Running a Web Service as root is a security problem",
-                    "If you are starting LedgerSMB as a system service",
-                    "please make sure that you drop privlidges as per README.md",
-                    "and the example files in conf/",
-                    "This makes it difficult to run on a privlidged port (<1024)",
-                    "In theory you can pass the --user argument to starman,",
-                    "However starman drops privlidges too late, starting us as root."
+        die_pretty(
+            'Running a Web Service as root is a security problem',
+            'If you are starting LedgerSMB as a system service',
+            'please make sure that you drop privlidges as per README.md',
+            'and the example files in conf/',
+            'This makes it difficult to run on a privlidged port (<1024)',
+            'In theory you can pass the --user argument to starman,',
+            'However starman drops privlidges too late, starting us as root.'
         )
     }
 

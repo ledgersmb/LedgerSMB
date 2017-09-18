@@ -178,9 +178,9 @@ sub _set_system_info {
     my ($dbh, $rv) = @_;
 
     my ($server_encoding) =
-        @{${$dbh->selectall_arrayref("SHOW SERVER_ENCODING;")}[0]};
+        @{${$dbh->selectall_arrayref('SHOW SERVER_ENCODING;')}[0]};
     my ($client_encoding) =
-        @{${$dbh->selectall_arrayref("SHOW CLIENT_ENCODING;")}[0]};
+        @{${$dbh->selectall_arrayref('SHOW CLIENT_ENCODING;')}[0]};
 
     my %utf8_mode_desc = (
         '-1' => 'Auto-detect',
@@ -223,7 +223,7 @@ sub get_info {
         #  not one to the company database
 
         my $sth = $dbh->prepare(
-            "select count(*) = 1 from pg_database where datname = ?"
+            'select count(*) = 1 from pg_database where datname = ?'
             );
         $sth->execute($self->{company_name});
         my ($exists) = $sth->fetchrow_array();
@@ -232,7 +232,7 @@ sub get_info {
         } else {
             $retval->{status} = 'does not exist';
         }
-        $sth = $dbh->prepare("SELECT SESSION_USER");
+        $sth = $dbh->prepare('SELECT SESSION_USER');
         $sth->execute;
         $retval->{username} = $sth->fetchrow_array();
         $sth->finish();
@@ -247,7 +247,7 @@ sub get_info {
        _set_system_info($dbh, $retval);
 
        my $sth;
-       $sth = $dbh->prepare("SELECT SESSION_USER");
+       $sth = $dbh->prepare('SELECT SESSION_USER');
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
        $sth->finish();
@@ -255,7 +255,7 @@ sub get_info {
        # Is there a chance this is an SL or LSMB legacy version?
        # (ie. is there a VERSION column to query in the DEFAULTS table?
        $sth = $dbh->prepare(
-       qq|select count(*)=1
+       q{select count(*)=1
             from pg_attribute attr
             join pg_class cls
               on cls.oid = attr.attrelid
@@ -264,7 +264,7 @@ sub get_info {
            where cls.relname = 'defaults'
              and attr.attname='version'
                  and nsp.nspname = 'public'
-             |
+             }
        );
        $sth->execute();
        my ($have_version_column) =
@@ -304,7 +304,7 @@ sub get_info {
            } elsif ($ref->{value} eq '1.2.99'){
                 $retval->{version} = '1.3dev';
            } elsif ($ref->{value} =~ /^1\.3\.999/ or $ref->{value} =~ /^1.4/){
-                $retval->{version} = "1.4";
+                $retval->{version} = '1.4';
            } elsif ($ref->{value} =~ /^(1\.\d+)/){
                 $retval->{version} = $1;
            }
@@ -473,17 +473,17 @@ sub upgrade_modules {
 
     $self->apply_changes();
     $self->load_modules($loadorder, {
-    log     => $temp . "_stdout",
-    errlog  => $temp . "_stderr"
+    log     => $temp . '_stdout',
+    errlog  => $temp . '_stderr'
                 })
-        or die "Modules failed to be loaded.";
+        or die 'Modules failed to be loaded.';
 
     my $dbh = $self->connect({PrintError=>0});
     my $sth = $dbh->prepare(
-          "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
+          q{UPDATE defaults SET value = ? WHERE setting_key = 'version'}
     );
     $sth->execute($LedgerSMB::VERSION)
-        or die "Version not updated.";
+        or die 'Version not updated.';
 
     return 1;
 }
@@ -501,7 +501,7 @@ sub apply_changes {
         PrintError=>0,
         AutoCommit => 0,
         pg_server_prepare => 0});
-    $dbh->do("set client_min_messages = 'warning'");
+    $dbh->do(q{set client_min_messages = 'warning'});
     my $loadorder =
         LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER',
                                             upto_tag => $args{upto_tag});

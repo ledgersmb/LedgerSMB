@@ -53,7 +53,9 @@ our $return_errors = 0; # override with local only!
 sub requires {
     my $self = shift @_;
     my @error_list = map { { field => $_,
-                               msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } }
+                        msg => LedgerSMB::App_State->Locale->text(
+                        'Required attribute not provided: [_1]', $_)
+                     } }
                      grep {not ($self->{$_} or $self->{$_})} @_;
     # todo, allow error list to be returned
     die LedgerSMB::Request::Error->new(status => 422,
