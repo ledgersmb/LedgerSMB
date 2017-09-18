@@ -2,7 +2,7 @@
 # Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.5.12-dev\n"
+"Project-Id-Version: LedgerSMB 1.5.12\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2017-09-18 10:27+0000\n"
 "Last-Translator: Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2017\n"
