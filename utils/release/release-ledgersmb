@@ -72,6 +72,8 @@ verify_dependencies() {
    verify_dependency "msguniq"
    verify_dependency "curl"
    verify_dependency "jq"
+   verify_dependency "cat"
+   verify_dependency "date"
 }
 
 verify_release_key() {
@@ -349,6 +351,26 @@ if [[ "$tag_release" == "Y" ]]; then
 fi
 
 clear
+
+echo "
+release_branch=$branch
+release_version=$release_version
+release_date=$($date --iso --utc)
+" > ./ledgersmb-release-parameters
+
+$cat <<EOT >>./ledgersmb-release-parameters
+release_sha256sums="\$($cat <<'EOF'
+$extracted_sha256sums
+EOF
+)"
+
+release_changelog="\$($cat <<'EOF'
+$extracted_changelog
+EOF
+)"
+EOT
+
+
 echo "
 Proposed wording for a release mail:
 

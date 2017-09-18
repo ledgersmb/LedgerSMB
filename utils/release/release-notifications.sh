@@ -2,9 +2,15 @@
 
 # import some functions that we need, like reading values from our config file.
 
-ConfigFile=~/.lsmb-release
+[[ -f ./ledgersmb-release-parameters ]] && source ./ledgersmb-release-parameters
 
-libFile=` readlink -f ../lib/bash-functions.sh`
+export release_version release_type release_date release_branch
+export release_changelog release_sha256sums
+
+ConfigFile=~/.lsmb-release
+read -rst1 basedir < <(readlink -f `dirname $0`)
+
+libFile=$basedir/../lib/bash-functions.sh
 [[ -f $libFile ]] && { [[ -r $libFile ]] && source $libFile; } || {
     printf "\n\n\n";
     printf "=====================================================================\n";
@@ -23,12 +29,12 @@ getChangelogEntry() {
 
 updateWikipedia() { # $1 = New Version     $2 = New Date
     # wikipedia-update.pl [boilerplate|Wikipage] [stable|preview] [NewVersion] [NewDate] [UserName Password]
-    ./notification-helpers/release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" \
+    $basedir/notification-helpers/release-wikipedia.pl "${cfgValue[wiki_PageToEdit]}" \
               "$release_type" "$1" "$2" "${cfgValue[wiki_User]}" "${cfgValue[wiki_Password]}"
 }
 
 updateIRC() {
-    ./notification-helpers/release-irc.sh $release_type $release_version
+    $basedir/notification-helpers/release-irc.sh $release_type $release_version
 }
 
 RunAllUpdates() {
@@ -36,7 +42,7 @@ RunAllUpdates() {
         updateWikipedia "$release_version" "$release_date";
         updateIRC;
     fi
-    ./notification-helpers/release-email.sh;
+    $basedir/notification-helpers/release-email.sh;
 }
 
 

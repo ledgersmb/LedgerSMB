@@ -2,7 +2,9 @@
 
 ConfigFile=~/.lsmb-release
 
-libFile=` readlink -f ../lib/bash-functions.sh`
+read -rst1 basedir < <(readlink -f `dirname $0`)
+
+libFile=$basedir/../../lib/bash-functions.sh
 [[ -f $libFile ]] && { [[ -r $libFile ]] && source $libFile; } || {
     printf "\n\n\n";
     printf "=====================================================================\n";
