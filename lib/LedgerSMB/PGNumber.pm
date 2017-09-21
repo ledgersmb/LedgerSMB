@@ -158,10 +158,6 @@ sub from_input {
     if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
         return $string;
     }
-
-    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
-        $pgnum = $string;
-    }
     else {
         my $formatter = Number::Format->new(
             -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
