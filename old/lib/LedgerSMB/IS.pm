@@ -220,7 +220,7 @@ sub invoice_details {
 
     # sort the whole thing by project and group
 
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     my $runningnumber = 1;
     my $sameitem      = "";

@@ -171,7 +171,7 @@ sub _stringify_db_ver {
                 map {
                     my $t = $ver;
                     $ver = int($ver/100);  ## no critic (ProhibitMagicNumbers) sniff
-                    ($t % 100); } 1..3);  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
+                    ($t % 100); } 1..3);  ## no critic (ProhibitMagicNumbers) sniff
 }
 
 sub _set_system_info {

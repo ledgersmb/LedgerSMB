@@ -955,7 +955,7 @@ sub order_details {
     delete $form->{projectnumber};
 
     # sort the whole thing by project and group
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     # if there is a warehouse limit picking
     if ( $form->{warehouse_id} && $form->{formname} =~ /(pick|packing)_list/ ) {

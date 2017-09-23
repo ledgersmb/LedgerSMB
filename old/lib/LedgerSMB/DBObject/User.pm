@@ -46,7 +46,7 @@ sub country_codes {
         $cc{$dir} = code2language( substr( $dir, 0, 2 ) );
         $cc{$dir} .= ( "/" . code2country( substr( $dir, 3, 2 ) ) )  ## no critic (ProhibitMagicNumbers) sniff
           if length($dir) > 2;
-        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
+        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;  ## no critic (ProhibitMagicNumbers) sniff
     }
 
     closedir(DIR);
