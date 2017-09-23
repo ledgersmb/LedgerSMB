@@ -343,7 +343,7 @@ sub save_business {
 
     $form->{description} =~ s/-(-)+/-/g;
     $form->{description} =~ s/ ( )+/ /g;
-    $form->{discount} /= 100;
+    $form->{discount} /= 100;  ## no critic (ProhibitMagicNumbers) sniff
 
     my $sth;
     my @queryargs = ( $form->{description}, $form->{discount} );
@@ -773,9 +773,9 @@ sub recurring_transactions {
             $ref->{unit} = 'months';
             $ref->{repeat} = $ref->{months};
         }
-        elsif ( $ref->{days} && ( $ref->{days} % 7 == 0 )) {
+        elsif ( $ref->{days} && ( $ref->{days} % 7 == 0 )) {  ## no critic (ProhibitMagicNumbers) sniff
             $ref->{unit} = 'weeks';
-            $ref->{repeat} = $ref->{days} / 7;
+            $ref->{repeat} = $ref->{days} / 7;  ## no critic (ProhibitMagicNumbers) sniff
         }
         elsif ( $ref->{days} ) {
             $ref->{unit} = 'days';
@@ -1088,7 +1088,7 @@ sub save_taxes {
 
         my $rate=$form->{"taxrate_$i"};
         $rate=~s/^\s+|\s+$//g;
-        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
+        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
         my $validto=$form->{"validto_$i"};
         $validto=~s/^\s+|\s+$//g;
         my $pass=$form->{"pass_$i"};

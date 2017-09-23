@@ -251,7 +251,7 @@ sub post_invoice {
 
             # undo discount formatting
             $form->{"discount_$i"} =
-              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;
+              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
 
             # keep entered selling price
             my $fxsellprice =
@@ -807,7 +807,7 @@ sub post_invoice {
         $sth = $dbh->prepare(
            'INSERT INTO voucher (batch_id, trans_id, batch_class)
             VALUES (?, ?, ?)');
-        $sth->execute($form->{batch_id}, $form->{id}, 9);
+        $sth->execute($form->{batch_id}, $form->{id}, 9);  ## no critic (ProhibitMagicNumbers) sniff
     }
 
     # add shipto
@@ -1200,7 +1200,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
         $eth1->execute( $var, $form->{transdate} );
         @array = $eth1->fetchrow_array;
     $form->db_parse_numeric(sth=> $eth1, arrayref=>\@array);

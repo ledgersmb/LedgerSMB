@@ -416,7 +416,7 @@ sub print {
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{decimal} = ($check->{amount} - $amt) * 100;
+            $check->{decimal} = ($check->{amount} - $amt) * 100;  ## no critic (ProhibitMagicNumbers) sniff
             $check->{amount} = $check->{amount}->to_output(
                     format => '1000.00',
                     money => 1
@@ -482,14 +482,14 @@ sub display_payments {
                 $payment->{"paid_$_->{contact_id}"} = ''
                     unless defined $payment->{"paid_$_->{contact_id}"};
             }
-            $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_to_pay += $invoice->[6];
-            $invoice->[7] = $invoice->[6]->to_db;
+            $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
+            $contact_to_pay += $invoice->[6];  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->[7] = $invoice->[6]->to_db;  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
 
             my $fld = 'payment_' . $invoice->[0];
             $contact_total += LedgerSMB::PGNumber->from_input($payment->{$fld});
 
-            $invoice->[3] = $invoice->[3]->to_output(money  => 1);
+            $invoice->[3] = $invoice->[3]->to_output(money  => 1);  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
             $invoice->[6] = $invoice->[6]->to_output(money  => 1);

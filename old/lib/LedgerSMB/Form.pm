@@ -300,7 +300,7 @@ sub escape {
         ( $ENV{SERVER_SIGNATURE} =~ /Apache\/2\.(\d+)\.(\d+)/ )
         && !$beenthere
     ) {
-        $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;
+        $str = $self->escape( $str, 1 ) if $1 == 0 && $2 < 44;  ## no critic (ProhibitMagicNumbers) sniff
     }
 
     utf8::encode($str);
@@ -875,7 +875,7 @@ sub db_parse_numeric {
     my @names = @{$sth->{NAME_lc}};
     for (0 .. $#names){
         #   numeric            float4/real
-        if ($types[$_] == 3 or $types[$_] ==2) {
+        if ($types[$_] == 3 or $types[$_] ==2) {  ## no critic (ProhibitMagicNumbers) sniff
             $arrayref->[$_] ||= 0 if defined $arrayref;
             $hashref->{$names[$_]} ||=0 if defined $hashref;
             $arrayref->[$_] = LedgerSMB::PGNumber->new($arrayref->[$_])
@@ -970,10 +970,10 @@ sub datetonum {
 
         $dd *= 1;
         $mm *= 1;
-        $yy += 2000 if length $yy == 2;
+        $yy += 2000 if length $yy == 2;  ## no critic (ProhibitMagicNumbers) sniff
 
-        $dd = substr("0$dd", -2);
-        $mm = substr("0$mm", -2);
+        $dd = substr("0$dd", -2);  ## no critic (ProhibitMagicNumbers) sniff
+        $mm = substr("0$mm", -2);  ## no critic (ProhibitMagicNumbers) sniff
         $date = "$yy$mm$dd";
     }
 
@@ -1025,20 +1025,20 @@ sub add_date {
         }
 
         if ( $unit eq 'days' ) {
-            $diff = $repeat * 86400;
+            $diff = $repeat * 86400;  ## no critic (ProhibitMagicNumbers) sniff
         }
         elsif ( $unit eq 'weeks' ) {
-            $diff = $repeat * 604800;
+            $diff = $repeat * 604800;  ## no critic (ProhibitMagicNumbers) sniff
         }
         elsif ( $unit eq 'months' ) {
             $diff = $mm + $repeat;
 
-            my $whole = int( $diff / 12 );
+            my $whole = int( $diff / 12 );  ## no critic (ProhibitMagicNumbers) sniff
             $yy += $whole;
 
-            $mm = ( $diff % 12 );
+            $mm = ( $diff % 12 );  ## no critic (ProhibitMagicNumbers) sniff
             $mm = '12' if $mm == 0;
-            $yy-- if $mm == 12;
+            $yy-- if $mm == 12;  ## no critic (ProhibitMagicNumbers) sniff
             $diff = 0;
         }
         elsif ( $unit eq 'years' ) {

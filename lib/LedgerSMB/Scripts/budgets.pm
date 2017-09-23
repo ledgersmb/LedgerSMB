@@ -50,8 +50,8 @@ sub new_budget {
 
 sub _render_screen {
     my ($budget) = @_;
-    my $additional_rows = 5;
-    $additional_rows +=20 unless $budget->lines;
+    my $additional_rows = 5;  ## no critic (ProhibitMagicNumbers) sniff
+    $additional_rows +=20 unless $budget->lines;  ## no critic (ProhibitMagicNumbers) sniff
     $additional_rows = 0 if $budget->id;
     my $buc = LedgerSMB::Business_Unit_Class->new(
            control_code => '', class_id => 0
