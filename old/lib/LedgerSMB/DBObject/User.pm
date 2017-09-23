@@ -42,11 +42,11 @@ sub country_codes {
     my @dir = grep !/^\..*$/, readdir DIR;
 
     foreach my $dir (@dir) {
-        $dir = substr( $dir, 0, -3 );
+        $dir = substr( $dir, 0, -3 );  ## no critic (ProhibitMagicNumbers) sniff
         $cc{$dir} = code2language( substr( $dir, 0, 2 ) );
-        $cc{$dir} .= ( "/" . code2country( substr( $dir, 3, 2 ) ) )
+        $cc{$dir} .= ( "/" . code2country( substr( $dir, 3, 2 ) ) )  ## no critic (ProhibitMagicNumbers) sniff
           if length($dir) > 2;
-        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;
+        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;  ## no critic (ProhibitMagicNumbers) sniff  ## no critic (ProhibitMagicNumbers) sniff
     }
 
     closedir(DIR);
@@ -188,7 +188,7 @@ sub save {
                       );
                    } elsif ($_ =~/Duplicate user/){
                       $self->{dbh}->rollback;
-                      $errcode = 8;
+                      $errcode = 8;  ## no critic (ProhibitMagicNumbers) sniff
                    }
                 };
     return $errcode if $errcode;

@@ -181,7 +181,7 @@ sub approve {
         return $code;
     }
     # this is destined to change as we figure out the Error system.
-    elsif ($code == 99) {
+    elsif ($code == 99) {  ## no critic (ProhibitMagicNumbers) sniff
 
         return $self->error(
                 "User $self->{user}->{name} cannot approve report, "
