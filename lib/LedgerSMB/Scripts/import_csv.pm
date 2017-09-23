@@ -114,7 +114,7 @@ sub _aa_multi {
         $acst->execute($acct);
         ($pass) = $acst->fetchrow_array;
         $request->error("Account $acct not found") if !$pass;
-        ($acct) = split /--/, $ref->[3];
+        ($acct) = split /--/, $ref->[3];  ## no critic (ProhibitMagicNumbers) sniff
         $acst->execute($acct);
         ($pass) = $acst->fetchrow_array;
         $request->error("Account $acct not found") if !$pass;

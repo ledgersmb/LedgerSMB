@@ -65,7 +65,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    _http_error(401, $suffix);
+    _http_error(401, $suffix);  ## no critic (ProhibitMagicNumbers) sniff
 }
 
 
@@ -209,7 +209,7 @@ sub _create {
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator
-    my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );
+    my $randomSeed = 1.0 * ( '0.' . ( time() ^ ( $$ + ( $$ << 15 ) ) ) );  ## no critic (ProhibitMagicNumbers) sniff
 
     $seedRandom->execute($randomSeed)
       || $lsmb->dberror(
