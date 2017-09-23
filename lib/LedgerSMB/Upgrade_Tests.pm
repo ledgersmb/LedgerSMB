@@ -459,6 +459,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
+                         and charttype <> 'H'
                          and gifi_accno !~ '^\\s*\$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
