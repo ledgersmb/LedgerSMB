@@ -24,14 +24,8 @@
             # *persistent*
             # http://www.w3.org/TR/html401/present/styles.html#h-14.3.1
         ?>
-        <?lsmb IF dojo_built == 0;
-                DOJO_LOCATION = "js-src";
-            ELSE;
-                DOJO_LOCATION = "js";
-        END ?>
-
-        <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dojo/resources/dojo.css" type="text/css" />
-        <link rel="stylesheet" href="<?lsmb DOJO_LOCATION ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
+        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dojo/resources/dojo.css" type="text/css" />
+        <link rel="stylesheet" href="<?lsmb dojo_location ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
 
     <?lsmb IF form.stylesheet ?>
         <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
@@ -55,8 +49,8 @@
             };
             var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
         </script>
-        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/dojo/dojo.js"></script>
-        <script type="text/javascript" src="<?lsmb DOJO_LOCATION ?>/lsmb/main.js"></script>
+        <script type="text/javascript" src="<?lsmb dojo_location ?>/dojo/dojo.js"></script>
+        <script type="text/javascript" src="<?lsmb dojo_location ?>/lsmb/main.js"></script>
         <?lsmb FOREACH s = include_script ?>
             <script type="text/javascript" src="<?lsmb s ?>" ></script>
         <?lsmb END ?>
