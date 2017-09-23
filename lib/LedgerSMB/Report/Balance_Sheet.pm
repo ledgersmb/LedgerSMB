@@ -146,7 +146,7 @@ sub run_report {
               if ($line->{account_type} eq 'A'
                   && ($line->{account_category} eq 'E'
                       || $line->{account_category} eq 'I')) {
-                  return undef;
+                  return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
               }
               return $line;
          } :

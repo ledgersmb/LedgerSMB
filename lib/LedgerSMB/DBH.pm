@@ -35,13 +35,13 @@ Returns undef on connection failure or lack of credentials.
 sub connect {
     my ($package, $company, $username, $password) = @_;
 
-    return undef unless $username && $password;
-    return undef if $username eq 'logout';
+    return undef unless $username && $password;  ## no critic (ProhibitExplicitReturnUndef) sniff
+    return undef if $username eq 'logout';  ## no critic (ProhibitExplicitReturnUndef) sniff
 
     my $dbh = DBI->connect("dbi:Pg:dbname=$company", $username, $password,
            { PrintError => 0, AutoCommit => 0,
              pg_enable_utf8 => 1, pg_server_prepare => 0 })
-        or return undef;
+        or return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 
     $dbh->do(q{set client_min_messages = 'warning'});
 

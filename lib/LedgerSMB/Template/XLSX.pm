@@ -47,25 +47,25 @@ sub _worksheet_handler {
     $currcol = 0;
 
     $worksheet = $workbook->add_worksheet($elt->att('name'));
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _cell_handler {
     my ($twig, $elt) = @_;
     $worksheet->write($rowcount,$currcol,$elt->att('text'),$format);
     $currcol++;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _formula_handler {
     $currcol++;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _format_handler {
@@ -99,7 +99,7 @@ sub _format_handler {
     }
 
     $format = $workbook->add_format(%properties);
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 # Not yet implemented
@@ -203,7 +203,7 @@ sub postprocess {
     }
     &_xlsx_process($workbook, $$temp_output);
 
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =back

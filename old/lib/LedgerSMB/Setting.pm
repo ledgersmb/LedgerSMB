@@ -76,7 +76,7 @@ sub get {
         $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
         return $hashref->{value};
     }
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub increment {

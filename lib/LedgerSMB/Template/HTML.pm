@@ -31,7 +31,7 @@ Escapes a scalar string and returns the sanitized version.
 
 sub escape {
     my $vars = shift @_;
-    return undef unless defined $vars;
+    return undef unless defined $vars;  ## no critic (ProhibitExplicitReturnUndef) sniff
     $vars = escape_html($vars);
     return $vars;
 }
@@ -70,7 +70,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'text/' . $extension;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =back

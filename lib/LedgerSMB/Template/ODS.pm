@@ -115,13 +115,13 @@ sub _worksheet_handler {
         $sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
         $sheetname = $_->{att}->{name};
     }
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _row_handler {
     $rowcount++;
     $currcol = 0;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _cell_handler {
@@ -143,7 +143,7 @@ sub _cell_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     $currcol++;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _formula_handler {
@@ -164,7 +164,7 @@ sub _formula_handler {
         $ods->cellStyle($cell, $style_stack[0][0]);
     }
     ++$currcol;
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub _border_set {
@@ -196,7 +196,7 @@ sub _border_set {
     } elsif ($format->{att}->{border_color}) {
         return $properties->{cell}{"fo:$border"} =~ s/^(.*) \#......$/$1 $colour/;
     }else{
-        return undef;
+        return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
 }
 
@@ -796,7 +796,7 @@ sub _ods_process {
        $fh->close
          or die "Can't clean up ODS generation temporary file: $!";
     }
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =item escape($string)
@@ -807,7 +807,7 @@ Escapes a scalar string and returns the sanitized version.
 
 sub escape {
     my $vars = shift @_;
-    return undef unless defined $vars;
+    return undef unless defined $vars;  ## no critic (ProhibitExplicitReturnUndef) sniff
     $vars = escape_html($vars);
     return $vars;
 }
@@ -841,7 +841,7 @@ sub postprocess {
     &_ods_process($config->{_output}, $$output);
     $parent->{mimetype} = 'application/vnd.oasis.opendocument.spreadsheet';
 
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =back

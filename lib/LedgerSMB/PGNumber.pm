@@ -143,7 +143,7 @@ sub from_input {
     }
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
     if (!defined $string || $string eq '') {
-        return undef;
+        return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
     my $format = ($args{format}) ? $args{format}

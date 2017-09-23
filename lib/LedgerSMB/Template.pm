@@ -426,7 +426,7 @@ sub new_UI {
 
 sub preprocess {
     my ($rawvars, $escape) = @_;
-    return undef unless defined $rawvars;
+    return undef unless defined $rawvars;  ## no critic (ProhibitExplicitReturnUndef) sniff
 
     local $@ = undef;
     if (eval {$rawvars->can('to_output')}){
@@ -448,7 +448,7 @@ sub preprocess {
     } elsif ($type eq 'CODE'){ # a code reference makes no sense
         return $rawvars;
     } elsif ($type eq 'IO::File'){
-        return undef;
+        return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     } else { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
@@ -602,7 +602,7 @@ sub _render {
     }
 
     if($self->{_no_postprocess}) {
-        return undef;
+        return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
     $format->can('postprocess')->($self, $output, $config);
     return $self->{outputfile};

@@ -249,7 +249,7 @@ sub clear_session {
 
     $self->{cookie} = '';
 
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 sub verify_session {

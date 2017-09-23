@@ -123,7 +123,7 @@ sub initialize_template {
     my %options = ( FORMAT => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
 
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =item postprocess($parent, $output, $config)
@@ -140,7 +140,7 @@ sub postprocess {
     } else {
         $parent->{mimetype} = 'application/postscript';
     }
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =back

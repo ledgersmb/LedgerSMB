@@ -96,7 +96,7 @@ sub _retrieve_template_data {
     }
     $logger->warn("No match found retrieving the template '$name'")
         unless defined $rv->{template};
-    return undef unless defined $rv->{template};
+    return undef unless defined $rv->{template};  ## no critic (ProhibitExplicitReturnUndef) sniff
 
     $logger->info('Match found');
     $rv->{last_modified} = PGObject::Type::DateTime->from_db(
@@ -165,7 +165,7 @@ factor determining the template content (other factors: format, language).
 
 sub _compiled_filename {
     $logger->debug('declining template caching');
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 

@@ -230,13 +230,13 @@ sub open_form {
 
         if(! $rc) {
             $logger->error("select form_open \$self->{form_id}=$self->{form_id} \$self->{session_id}=$self->{session_id} \$rc=$rc,invalid count FROM session?");
-            return undef;
+            return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
         }
         @results = $sth->fetchrow_array();
     }
     else {
         $logger->debug("no \$self->{session_id}!");
-        return undef;
+        return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
 
     $self->{form_id} = $results[0];
@@ -3878,7 +3878,7 @@ key.  It is not generally to be used with code on new templates.
 
 sub sequence_dropdown{
     my ($self, $setting_key) = @_;
-    return undef if $self->{id} and ($setting_key ne 'sinumber');
+    return undef if $self->{id} and ($setting_key ne 'sinumber');  ## no critic (ProhibitExplicitReturnUndef) sniff
     my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
     my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
     $retval .= qq|<option></option>|;
@@ -3896,7 +3896,7 @@ sub sequence_dropdown{
         return $retval;
     }
     else {
-        return undef
+        return undef  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
 }
 #end decrysiption

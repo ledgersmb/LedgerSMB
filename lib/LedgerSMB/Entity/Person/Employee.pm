@@ -141,7 +141,7 @@ sub get {
     my ($self, $id) = @_;
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'employee__get',
                                           args => [$id]);
-    return undef unless $ref->{control_code};
+    return undef unless $ref->{control_code};  ## no critic (ProhibitExplicitReturnUndef) sniff
     $ref->{entity_class} = EC_EMPLOYEE;
     $ref->{name} = "$ref->{first_name} $ref->{last_name}";
     return __PACKAGE__->new(%$ref);
@@ -158,7 +158,7 @@ sub get_by_cc {
     my ($self, $cc) = @_;
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'person__get_by_cc',
                                           args => [$cc]);
-    return undef unless $ref->{control_code};
+    return undef unless $ref->{control_code};  ## no critic (ProhibitExplicitReturnUndef) sniff
     return get($ref->{id});
 }
 

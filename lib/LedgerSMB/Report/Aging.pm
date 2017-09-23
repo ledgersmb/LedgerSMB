@@ -191,7 +191,7 @@ sub template {
            return 'Reports/aging_report';
     }
     else {
-       return undef;
+       return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
     }
 }
 

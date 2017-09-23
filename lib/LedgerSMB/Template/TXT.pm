@@ -71,7 +71,7 @@ Implements the template's post-processing protocol.
 sub postprocess {
     my ($parent, $output, $config) = @_;
     $parent->{mimetype} = 'text/plain';
-    return undef;
+    return undef;  ## no critic (ProhibitExplicitReturnUndef) sniff
 }
 
 =back
