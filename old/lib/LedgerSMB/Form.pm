@@ -100,8 +100,6 @@ nextsub, path, script, and login are filtered to remove some dangerous values.
 $form->error may be called to deny access on some attribute values.
 
 =cut
-# Set this Globally so we only need to do it once
-my $dojo_location = ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js';
 
 sub new {
 
@@ -146,6 +144,7 @@ sub new {
     }
     $self->{action} = "" unless defined $self->{action};
     $self->{dojo_theme} = $dojo_theme;
+    $self->{dojo_location} = $LedgerSMB::Sysconfig::dojo_location;
 
     if($self->{header}) {
         delete $self->{header};
@@ -589,8 +588,8 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     $stylesheet
     $charset
-    <link rel="stylesheet" href="$dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-    <link rel="stylesheet" href="$dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
+    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
+    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
     <script type="text/javascript" language="JavaScript">
       var dojoConfig = {
            async: 1,
@@ -599,8 +598,8 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
        }
        var lsmbConfig = {dateformat: '$dformat'};
     </script>
-    <script type="text/javascript" language="JavaScript" src="$dojo_location/dojo/dojo.js"></script>
-    <script type="text/javascript" language="JavaScript" src="$dojo_location/lsmb/main.js"></script>
+    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/dojo/dojo.js"></script>
+    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/lsmb/main.js"></script>
     <meta name="robots" content="noindex,nofollow" />
     $headeradd
 </head>

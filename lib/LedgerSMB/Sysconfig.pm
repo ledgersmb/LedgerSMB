@@ -150,6 +150,14 @@ sub def {
 
 
 
+### SECTION  ---   debug
+
+def 'dojo_built',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+
 ### SECTION  ---   main
 
 
@@ -161,6 +169,11 @@ def 'auth',
 def 'dojo_theme',
     section => 'main',
     default => 'claro',
+    doc => q{};
+
+def 'dojo_location',
+    section => 'main',
+    default => ($LedgerSMB::Sysconfig::dojo_built == 0) ? 'js-src' : 'js',
     doc => q{};
 
 def 'force_username_case',
@@ -363,16 +376,6 @@ def 'db_sslmode',
     default => 'prefer',
     envvar => 'PGSSLMODE',
     doc => '';
-
-### SECTION  ---   debug
-
-def 'dojo_built',
-    section => 'debug',
-    default => 1,
-    doc => q{};
-
-
-
 
 ### WHAT DOES THIS DO???
 our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
