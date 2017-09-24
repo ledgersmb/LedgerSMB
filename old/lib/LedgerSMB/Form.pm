@@ -452,8 +452,6 @@ sub info {
 
     $msg =~ s/\n/<br>/g;
 
-    delete $self->{pre};
-
     if (!$self->{header}) {
         $self->header;
         print qq| <body>|;
@@ -514,16 +512,8 @@ sub isblank {
 
 Outputs HTML and HTTP headers and sets $form->{header} to indicate that headers
 have been output.  If called with $form->{header} set or in a non-CGI
-environment, does not output anything.  $init is ignored.  $headeradd is data
-to be added to the <head> portion of the output headers.  $form->{stylesheet},
-$form->{title}, $form->{titlebar}, and $form->{pre} all affect the output of
-this function.
-
-If the stylesheet indicated by $form->{stylesheet} exists, output a link tag
-to reference it.  If $form->{title} is false, the title text is the value of
-$form->{titlebar}.  If $form->{title} is true, the title text takes the form of
-"$form->{title} - $form->{titlebar}".  The value of $form->{pre} is output
-immediately after the closing of <head>.
+environment, does not output anything.  $init is ignored.  $headeradd is
+ignored.
 
 =cut
 
@@ -543,69 +533,9 @@ sub header {
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
-    my ( $stylesheet, $charset );
 
-    my $dojo_theme = $self->{dojo_theme};
-    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-    $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
-    if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
-        $stylesheet =
-qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| .
-qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
-    }
-
-    $self->{charset} ||= "utf-8";
-    $charset =
-qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
-
-    $self->{titlebar} =
-          ( $self->{title} )
-          ? "$self->{title} - $self->{titlebar}"
-          : $self->{titlebar};
-    if ($self->{warn_expire}){
-        $headeradd .= qq|
-        <script type="text/javascript" language="JavaScript">
-        window.alert('Warning:  Your password will expire in $self->{pw_expires}');
-    </script>|;
-    }
-    my $dformat = $LedgerSMB::App_State::User->{dateformat};
-
-    print qq|Content-Type: text/html; charset=utf-8\n\n
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>$self->{titlebar}</title> |;
-
-    if (!$cache){
-        print qq|
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="must-revalidate" />
-    <meta http-equiv="Expires" content="-1" /> |;
-    }
-
-    print qq|
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    $stylesheet
-    $charset
-    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
-    <script type="text/javascript" language="JavaScript">
-      var dojoConfig = {
-           async: 1,
-           parseOnLoad: 0,
-           packages: [{"name":"lsmb","location":"../lsmb"}]
-       }
-       var lsmbConfig = {dateformat: '$dformat'};
-    </script>
-    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/dojo/dojo.js"></script>
-    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/lsmb/main.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-    $headeradd
-</head>
-
-        $self->{pre} \n|;
-
+    print qq|Content-Type: text/html; charset=utf-8\n\n|;
+    # We're not sending HTML HEAD, because the client doesn't look at it...
     $self->{header} = 1;
 }
 
