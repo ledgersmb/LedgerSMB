@@ -410,6 +410,7 @@ sub new_UI {
             if $LedgerSMB::App_State::Company_Config;
     my $UI_vars = {
         dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
+        dojo_built => $LedgerSMB::Sysconfig::dojo_built,
         dojo_location => $LedgerSMB::Sysconfig::dojo_location,
     };
 
