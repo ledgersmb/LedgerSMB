@@ -543,69 +543,8 @@ sub header {
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
-    my ( $stylesheet, $charset );
 
-    my $dojo_theme = $self->{dojo_theme};
-    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-    $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
-    if ( $self->{stylesheet} && ( -f "UI/css/$self->{stylesheet}" ) ) {
-        $stylesheet =
-qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| .
-qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
-    }
-
-    $self->{charset} ||= "utf-8";
-    $charset =
-qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}" />\n|;
-
-    $self->{titlebar} =
-          ( $self->{title} )
-          ? "$self->{title} - $self->{titlebar}"
-          : $self->{titlebar};
-    if ($self->{warn_expire}){
-        $headeradd .= qq|
-        <script type="text/javascript" language="JavaScript">
-        window.alert('Warning:  Your password will expire in $self->{pw_expires}');
-    </script>|;
-    }
-    my $dformat = $LedgerSMB::App_State::User->{dateformat};
-
-    print qq|Content-Type: text/html; charset=utf-8\n\n
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>$self->{titlebar}</title> |;
-
-    if (!$cache){
-        print qq|
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Cache-Control" content="must-revalidate" />
-    <meta http-equiv="Expires" content="-1" /> |;
-    }
-
-    print qq|
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    $stylesheet
-    $charset
-    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dijit/themes/$dojo_theme/$dojo_theme.css" type="text/css" title="LedgerSMB stylesheet" />
-    <link rel="stylesheet" href="$LedgerSMB::Sysconfig::dojo_location/dojo/resources/dojo.css" type="text/css" title="LedgerSMB stylesheet" />
-    <script type="text/javascript" language="JavaScript">
-      var dojoConfig = {
-           async: 1,
-           parseOnLoad: 0,
-           packages: [{"name":"lsmb","location":"../lsmb"}]
-       }
-       var lsmbConfig = {dateformat: '$dformat'};
-    </script>
-    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/dojo/dojo.js"></script>
-    <script type="text/javascript" language="JavaScript" src="$LedgerSMB::Sysconfig::dojo_location/lsmb/main.js"></script>
-    <meta name="robots" content="noindex,nofollow" />
-    $headeradd
-</head>
-
-        $self->{pre} \n|;
-
+    print qq|Content-Type: text/html; charset=utf-8\n\n|;
     $self->{header} = 1;
 }
 
