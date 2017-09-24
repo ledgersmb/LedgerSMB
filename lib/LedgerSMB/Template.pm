@@ -411,6 +411,7 @@ sub new_UI {
     my $UI_vars = {
         dojo_theme => $dojo_theme // $LedgerSMB::Sysconfig::dojo_theme,
         dojo_built => $LedgerSMB::Sysconfig::dojo_built,
+        dojo_location => $LedgerSMB::Sysconfig::dojo_location,
     };
 
     return $class->new(
