@@ -4,12 +4,7 @@
         include_script = [ 'login.js' ]
 ?>
 <?lsmb
-   PROCESS elements.html ;
-   IF dojo_built == 0;
-      DOJO_LOCATION = "js-src";
-   ELSE;
-      DOJO_LOCATION = "js";
-   END -?>
+   PROCESS elements.html -?>
 <body class="login, <?lsmb dojo_theme ?>"
       id="app-login">
   <br /><br />
