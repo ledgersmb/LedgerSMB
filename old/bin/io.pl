@@ -1421,8 +1421,6 @@ sub print_form {
         $form->{IN} =~ s/$1$/tex/;
     }
 
-    $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
-
     my %output_options;
     if ($form->{media} eq 'zip'){
         $form->{OUT}       = $form->{zipdir};
@@ -1546,7 +1544,6 @@ sub print_form {
 
         # restore and display form
         for ( keys %$old_form ) { $form->{$_} = $old_form->{$_} }
-        delete $form->{pre};
 
         $form->{rowcount}--;
 

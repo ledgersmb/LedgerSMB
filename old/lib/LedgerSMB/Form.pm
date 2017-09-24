@@ -452,8 +452,6 @@ sub info {
 
     $msg =~ s/\n/<br>/g;
 
-    delete $self->{pre};
-
     if (!$self->{header}) {
         $self->header;
         print qq| <body>|;
@@ -514,16 +512,8 @@ sub isblank {
 
 Outputs HTML and HTTP headers and sets $form->{header} to indicate that headers
 have been output.  If called with $form->{header} set or in a non-CGI
-environment, does not output anything.  $init is ignored.  $headeradd is data
-to be added to the <head> portion of the output headers.  $form->{stylesheet},
-$form->{title}, $form->{titlebar}, and $form->{pre} all affect the output of
-this function.
-
-If the stylesheet indicated by $form->{stylesheet} exists, output a link tag
-to reference it.  If $form->{title} is false, the title text is the value of
-$form->{titlebar}.  If $form->{title} is true, the title text takes the form of
-"$form->{title} - $form->{titlebar}".  The value of $form->{pre} is output
-immediately after the closing of <head>.
+environment, does not output anything.  $init is ignored.  $headeradd is
+ignored.
 
 =cut
 
@@ -545,6 +535,7 @@ sub header {
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
 
     print qq|Content-Type: text/html; charset=utf-8\n\n|;
+    # We're not sending HTML HEAD, because the client doesn't look at it...
     $self->{header} = 1;
 }
 
