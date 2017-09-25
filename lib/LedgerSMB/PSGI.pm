@@ -154,13 +154,14 @@ sub psgi_app {
 
         ($status, $headers, $body) = @{&$action($request)};
         push @$headers, (
-            'Cache-Control' =>
-            'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, false',
+            'Cache-Control' => join(', ',
+                                    qw| no-store  no-cache  must-revalidate
+                                        post-check=0 pre-check=0 false|),
             'Pragma' => 'no-cache'
         ) if $request->{dbh} && LedgerSMB::Setting->get('disable_back');
 
-        my $content_type = header_get($headers, 'content-type');
-        header_set($headers, 'Content-Type', "$content_type; charset: utf-8")
+        my $content_type = Plack::Util::header_get($headers, 'content-type');
+        push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
             if $content_type =~ m|^text/| && $content_type !~ m|charset=|;
 
         $request->{dbh}->commit if defined $request->{dbh};
