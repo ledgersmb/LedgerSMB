@@ -55,14 +55,18 @@ Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 builder {
 
-    enable 'InteractiveDebugger';
+#    enable 'InteractiveDebugger';
 
 #    enable 'ContentLength';
 
     enable 'Debug',  panels => [
             qw(Parameters Environment Response Log4perl Session Timer Memory ModuleVersions PerlConfig),
-              [ 'DBITrace', level => 2 ],
-              [ 'Profiler::NYTProf', exclude => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif .*\.html)], minimal => 1 ],
+              [ 'DBIProfile', profile => 2 ],
+#             [ 'DBITrace', level => 2 ],
+              'LazyLoadModules',
+              [ 'TraceENV', method => [qw/fetch store exists delete clear scalar firstkey nextkey/]],
+              'W3CValidate',
+#              [ 'Profiler::NYTProf', exclude => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif .*\.html)], minimal => 1 ],
 #           qw/Dancer::Settings Dancer::Logger Dancer::Version/
     ] if $ENV{PLACK_ENV} =~ "development";
 

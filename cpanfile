@@ -96,8 +96,13 @@ feature 'debug', "Debug pane" =>
     sub {
         recommends 'Devel::NYTProf';    # No explicit require for debug pane, handled internaly
         recommends 'Module::Versions';  # No explicit require for debug pane, handled internaly
+        recommends 'Plack::Middleware::Debug::DBIProfile';			# Optional
+        recommends 'Plack::Middleware::Debug::DBITrace';			# Optional
+        recommends 'Plack::Middleware::Debug::LazyLoadModules';         # Optional
         recommends 'Plack::Middleware::Debug::Log4perl';                # Optional
         recommends 'Plack::Middleware::Debug::Profiler::NYTProf';       # Optional
+        recommends 'Plack::Middleware::Debug::TraceENV';                # Optional
+        recommends 'Plack::Middleware::Debug::W3CValidate';			# Optional
         recommends 'Plack::Middleware::InteractiveDebugger';            # Optional
 };
 
@@ -123,7 +128,6 @@ on 'develop' => sub {
     requires 'Test::Class::Moose';
     requires 'Test::Class::Moose::Role';
     requires 'Test::Class::Moose::Role::ParameterizedInstances';
-    requires 'Test::Exception';
     requires 'Test::Dependencies', '0.20';
     requires 'Test::Exception';
     requires 'Test::Harness', '3.36';
