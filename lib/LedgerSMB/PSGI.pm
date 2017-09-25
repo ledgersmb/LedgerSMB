@@ -152,13 +152,14 @@ sub psgi_app {
             }
         }
 
+        my $input_dbh = $LedgerSMB::App_State::DBH = $request->{dbh};
         ($status, $headers, $body) = @{&$action($request)};
         push @$headers, (
             'Cache-Control' => join(', ',
                                     qw| no-store  no-cache  must-revalidate
                                         post-check=0 pre-check=0 false|),
             'Pragma' => 'no-cache'
-        ) if $request->{dbh} && LedgerSMB::Setting->get('disable_back');
+        ) if $input_dbh && LedgerSMB::Setting->get('disable_back');
 
         my $content_type = Plack::Util::header_get($headers, 'content-type');
         push @$headers, [ 'Content-Type' => "$content_type; charset: utf-8" ]
