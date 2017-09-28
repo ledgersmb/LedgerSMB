@@ -1074,7 +1074,7 @@ sub save_user {
 
     _init_db($request);
     #We enable transactions, we will have to manage commits and rollbacks ourselves.
-    $request->{dbh}->{AutoCommit} = 0; 
+    $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
     $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
