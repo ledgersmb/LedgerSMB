@@ -291,7 +291,7 @@ push @tests, __PACKAGE__->new(
    test_query => q{SELECT * FROM employee
                    WHERE not name ~ '[[:alnum:]_]'::text},
          name => 'minimal_employee_name_requirements',
- display_name => marktext('Employee name doesn\'t meet minimal requirements (e.g. non-empty, alphanumeric)'),
+ display_name => marktext("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),    ## no critic (ProhibitInterpolationOfLiteral )
  instructions => marktext(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
@@ -397,7 +397,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\s*$'},
+                         and gifi_accno !~ '^\\s*\$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
@@ -415,7 +415,7 @@ push @tests, __PACKAGE__->new(
                                       where gifi.accno = chart.gifi_accno)
                          and gifi_accno is not null
                          and charttype <> 'H'
-                         and gifi_accno !~ '^\s*$'},
+                         and gifi_accno !~ '^\\s*\$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'accno', 'description' ],
@@ -436,7 +436,7 @@ push @tests, __PACKAGE__->new(
                                        from gifi
                                       where gifi.accno = account.gifi_accno)
                          and gifi_accno is not null
-                         and gifi_accno !~ '^\s*$'},
+                         and gifi_accno !~ '^\\s*\$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
  display_cols => [ 'gifi_accno' ],
