@@ -1073,7 +1073,6 @@ sub save_user {
     use LedgerSMB::PGDate;
 
     _init_db($request);
-    #We enable transactions, we will have to manage commits and rollbacks ourselves.
     $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
@@ -1086,7 +1085,7 @@ sub save_user {
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
-           $request->{dbh}->rollback; # Rolling back because of the error
+           $request->{dbh}->rollback;
            $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
             );
@@ -1114,7 +1113,7 @@ sub save_user {
        }
     };
     if ( $duplicate ) {
-        $request->{dbh}->rollback; # Rolling back because of the duplicate
+        $request->{dbh}->rollback;
         return $duplicate;
     }
     if ($request->{perms} == 1){
@@ -1133,7 +1132,6 @@ sub save_user {
                                          ]
         );
    }
-   # Committing the user and employee
    $request->{dbh}->commit;
 
    return rebuild_modules($request);
