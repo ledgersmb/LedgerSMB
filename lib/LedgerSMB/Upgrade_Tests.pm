@@ -24,6 +24,18 @@ use LedgerSMB::Locale qw(marktext);
 
 =over
 
+=item get_presets()
+
+Returns the test array
+
+=cut
+
+sub get_presets {
+    my ($self) = @_;
+    my @presets = $self->_get_presets;
+    return @presets;
+}
+
 =item get_tests()
 
 Returns the test array
@@ -117,6 +129,9 @@ query to execute to retrieve the values to fill the drop-down with.
 Each query needs to return 2 columns: C<text> and C<value>, where
 C<value> is the value to be stored in the (fixed) record and
 C<text> is the textual value to be presented in the UI.
+
+If multiselect is defined, then it is a separator for packing multiple
+selections into a record
 
 =cut
 
@@ -227,6 +242,51 @@ has tooltips => (is => 'ro',
 =head1 Methods
 
 =cut
+
+sub _get_presets {
+    my ($request) = @_;
+
+    my @presets;
+
+    push @presets,
+        q{
+            drop table if exists pg_temp.account_link;
+            create table pg_temp.account_link(
+                value text primary key,
+                text text
+            );
+            insert into pg_temp.account_link(value,text) values
+                    ('AR','AR'),
+                    ('AR_amount','AR Lineitem'),
+                    ('AR_tax','AR Tax'),
+                    ('AR_paid','AR Payment'),
+                    ('AR_discount','AR Discount'),
+                    ('AP','AP'),
+                    ('AP_amount','AP Lineitem'),
+                    ('AP_tax','AP Tax'),
+                    ('AP_paid','AP Payment'),
+                    ('AP_discount','AP Discount'),
+                    ('IC','IC'),
+                    ('IC_income','Service Income'),
+                    ('IC_sale','Goods Sales'),
+                    ('IC_expense','Service Expense'),
+                    ('IC_cogs','Goods cost'),
+                    ('IC_taxpart','Goods Sales Tax'),
+                    ('IC_taxservice','Service Tax');
+            drop table if exists pg_temp.account_category;
+            create table pg_temp.account_category(
+                value text primary key,
+                text text
+            );
+            insert into pg_temp.account_category(value,text) values
+                    ('A','Asset'),
+                    ('L','Liability'),
+                    ('Q','Equity'),
+                    ('I','Income'),
+                    ('E','Expense');
+    };
+    return @presets;
+}
 
 sub _get_tests {
     my ($request) = @_;
@@ -480,6 +540,7 @@ push @tests, __PACKAGE__->new(
 );
 
 
+
 #=pod
 
 #  push @tests, __PACKAGE__->new(
@@ -540,6 +601,104 @@ push @tests,__PACKAGE__->new(
 link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
 number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
    columns => ['link'],
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => q{select *, (select array_agg(x in (
+                            SELECT value FROM pg_temp.account_link
+                           )) from unnest(string_to_array(c.link,':')) x)
+                        from chart c
+                       where ((select array_agg(x in (
+                            SELECT value FROM pg_temp.account_link
+                           )) from unnest(string_to_array(c.link,':')) x) @> ARRAY[0]::bool[]
+                           or c.link is null
+                           or c.link = '')
+                         and charttype = 'A'
+                    order by accno;
+                    },
+    display_name => marktext('No unlinked account'),
+    name => 'no_unlinked_account',
+    display_cols => ['accno', 'category', 'description', 'link'],
+ instructions => marktext(
+                   'Please make sure that all accounts are linked.<br>Multiple links can be selected'),
+   columns => ['link'],
+selectable_values => {
+                        link => {
+                              query => q{SELECT * FROM pg_temp.account_link
+                                         ORDER BY text},
+                        multiselect => ':'
+                      },
+                      category => q{SELECT * FROM pg_temp.account_category
+                                    ORDER BY text}
+                     },
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => q{select *
+                    from chart
+                   where charttype = 'A'
+                     and  category = 'A'
+                     and exists (
+                         select 1 from ap having count(*) > 0
+                     )
+                     and not exists (
+                         select 1 from chart
+                         group by link
+                         having link = 'AR'
+                     )
+                     order by accno
+                     },
+    display_name => marktext('No AR account'),
+    name => 'no_ar_account',
+    display_cols => ['accno', 'description', 'link'],
+ instructions => marktext(
+                   'Please make sure one AR account exists'),
+   columns => ['link'],
+selectable_values => { link => {
+                              query => q{SELECT * FROM pg_temp.account_link
+                                         ORDER BY text},
+                        multiselect => ':' }
+                     },
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '3.0'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => q{select *
+                    from chart
+                   where charttype = 'A'
+                     and  category = 'L'
+                     and exists (
+                         select 1 from ap having count(*) > 0
+                     )
+                     and not exists (
+                         select 1 from chart
+                         group by link
+                         having link = 'AP'
+                     )
+                     order by accno
+                     },
+    display_name => marktext('No AP account'),
+    name => 'no_ap_account',
+    display_cols => ['accno', 'description', 'link'],
+ instructions => marktext(
+                   'Please make sure one AP account exists'),
+   columns => ['link'],
+selectable_values => { link => {
+                              query => q{SELECT * FROM pg_temp.account_link
+                                         ORDER BY text},
+                        multiselect => ':' }
+                     },
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',

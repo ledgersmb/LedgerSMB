@@ -614,6 +614,7 @@ sub upgrade_info {
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
+    $request->{lsmb_info} = $database->stats();
 
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
     @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
@@ -683,6 +684,12 @@ sub upgrade {
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
+    for my $preset (LedgerSMB::Upgrade_Tests->get_presets) {
+        my $sth = $request->{dbh}->prepare($preset);
+        $sth->execute()
+            or die 'Failed to execute pre-migration preset ';
+    }
+
     for my $check (_applicable_upgrade_tests($dbinfo)) {
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute()
@@ -714,14 +721,20 @@ sub _failed_check {
 
     my %selectable_values = ();
     for my $column (@{$check->columns // []}) {
-        if ( $check->selectable_values
-             && $check->selectable_values->{$column} ) {
-            my $sth = $request->{dbh}->prepare(
-                $check->selectable_values->{$column});
-
-            $sth->execute()
-                or die 'Failed to query drop-down data in ' . $check->name;
-            $selectable_values{$column} = $sth->fetchall_arrayref({});
+        if ( $check->selectable_values ) {
+            my $value = $check->selectable_values->{$column};
+            if ( $value ) {
+                my $sth = $request->{dbh}->prepare(
+                                      defined $value->{query} ? $value->{query}
+                                                              : $value
+                );
+                $sth->execute()
+                    or die 'Failed to query drop-down data in ' . $check->name;
+                $selectable_values{$column} = { data     => $sth->fetchall_arrayref({}),
+                                                multiselect => defined $value->{multiselect}
+                                                          ? $value->{multiselect}
+                                                          : '' };
+            }
         }
     }
 
@@ -737,12 +750,17 @@ verify_check => md5_hex($check->test_query),
       for my $column (@{$check->columns // []}) {
         my $selectable_value = $selectable_values{$column};
         $row->{$column} =
-           ( defined $selectable_value && @$selectable_value )
+           ( defined $selectable_value && @{$selectable_value->{data}} )
            ? { select => {
                    name => $column . "_$id",
                    id => $id,
-                   options => $selectable_value,
-                   default_blank => ( 1 != @$selectable_value )
+                   type => $selectable_value->{multiselect} ? 'multiselect' : 'single',
+                   default_values => $selectable_value->{multiselect}
+                                   ? [split $selectable_value->{multiselect}, $row->{link}]
+                                   : $row->{link},
+                   options => $selectable_value->{data},
+                   default_blank => ( 1 != @{$selectable_value->{data}} )
+                                 && (not $selectable_value->{multiselect})
            } }
            : { input => {
                    name => $column . "_$id",
@@ -853,6 +871,7 @@ sub fix_tests{
                 and grep( /^$check->{id_column}$/, @{$check->display_cols} );
 
     my $query;
+
     if ($check->{insert}) {
         my @_edits = @edits;
         unshift @_edits, $check->{id_column} if $id_displayed;
@@ -873,7 +892,11 @@ sub fix_tests{
         push @values, $id
             if $id_displayed;
         for my $edit (@edits) {
-          push @values, $request->{"${edit}_$id"};
+          push @values,
+                'ARRAY' eq ref $request->{"${edit}_$id"}
+                ? join $check->{selectable_values}->{"${edit}"}->{multiselect},
+                       @{$request->{"${edit}_$id"}}
+                : $request->{"${edit}_$id"};
         }
         push @values, $request->{"id_$count"}
            if ! $check->{insert};
