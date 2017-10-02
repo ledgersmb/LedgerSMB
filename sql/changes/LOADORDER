@@ -65,3 +65,4 @@
 1.6/drop-entity-duplicate_constraint.sql
 1.6/fix-entity-primary-key.sql
 1.6/add-eca-business-foreign-key.sql
+1.6/add_empty_salutation.sql
