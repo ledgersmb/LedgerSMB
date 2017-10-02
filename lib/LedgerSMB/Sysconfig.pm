@@ -157,6 +157,122 @@ def 'dojo_built',
     default => 1,
     doc => q{};
 
+    # Debug Panels
+
+def 'DBIProfile',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'DBIProfile_profile',
+    section => 'debug',
+    default => 2,
+    doc => q{};
+
+def 'DBITrace',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'DBITrace_level',
+    section => 'debug',
+    default => 2,
+    doc => q{};
+
+def 'Environment',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'InteractiveDebugger',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'LazyLoadModules',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'Log4perl',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'Log4perl_category',
+    section => 'debug',
+    default => 'plack',
+    doc => q{};
+
+def 'Memory',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'ModuleVersions',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'NYTProf',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'NYTProf_exclude',
+    section => 'debug',
+    default => [qw(.*\.css .*\.png .*\.ico .*\.js .*\.gif .*\.html)],
+    doc => q{};
+
+def 'NYTProf_minimal',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'Parameters',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'PerlConfig',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'Response',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'Session',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+def 'Timer',
+    section => 'debug',
+    default => 0,
+    doc => q{};
+
+#def 'TemplateToolkit',
+#    section => 'debug',
+#    default => 1,
+#    doc => q{};
+
+def 'TraceENV',
+    section => 'debug',
+    default => 1,
+    doc => q{};
+
+def 'TraceENV_method',
+    section => 'debug',
+    default => [qw/fetch store exists delete clear scalar firstkey nextkey/],
+    doc => q{};
+
+def 'W3CValidate',
+    section => 'debug',
+    default => 1,
+    doc => q{};
 
 ### SECTION  ---   main
 
