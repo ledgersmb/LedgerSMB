@@ -50,7 +50,7 @@ sub check_config_option {
     my ($name,$module) = @_;
     return 0 if !eval "\$LedgerSMB::Sysconfig::$name";
     return 1 if !defined $module;
-    unless (eval "use $module") {
+    unless (eval "require $module") {
         warn "$name requires $module";
         return 0;
     }
