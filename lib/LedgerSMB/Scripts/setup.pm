@@ -1085,6 +1085,7 @@ sub save_user {
     try { $user->create($request->{password}); }
     catch {
         if ($_ =~ /duplicate user/i){
+           $request->{dbh}->rollback;
            $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
             );
@@ -1111,7 +1112,10 @@ sub save_user {
            die $_;
        }
     };
-    return $duplicate if $duplicate;
+    if ( $duplicate ) {
+        $request->{dbh}->rollback;
+        return $duplicate;
+    }
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(funcname => 'admin__get_roles')
