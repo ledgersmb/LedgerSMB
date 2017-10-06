@@ -104,8 +104,6 @@ feature 'debug', "Debug pane" =>
         recommends 'Plack::Middleware::Debug::TraceENV';                # Optional
         recommends 'Plack::Middleware::Debug::W3CValidate';             # Optional
         recommends 'Plack::Middleware::InteractiveDebugger';            # Optional
-#        recommends 'Plack::Middleware::TemplateToolkit';                # Optional
-#        recommends 'Plack::Middleware::Debug::TemplateToolkit';         # Optional
 };
 
 # Even with cpanm --notest, 'test' target of --installdeps
