@@ -1,3 +1,4 @@
+SET LOCAL client_min_messages=warning;
 
 -- Views
 
@@ -25,3 +26,4 @@ DROP TYPE IF EXISTS inventory_adjustment_line CASCADE;
 DROP AGGREGATE IF EXISTS product(numeric);
 DROP FUNCTION IF EXISTS product(numeric, numeric);
 
+RESET client_min_messages;
