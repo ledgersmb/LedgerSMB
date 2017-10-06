@@ -73,6 +73,12 @@
     "data-dojo-type" = "dijit/form/Select"
   }
 
+  #multiselect
+  multiselect_defaults = {
+    "data-dojo-type" = "dijit/form/MultiSelect"
+    "multiple" = "true"
+  }
+
   #toggle
   toggle_defaults = {
     type = 'submit',
@@ -223,8 +229,12 @@
           ?>
           <?lsmb PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
-            attribute_defaults = select_defaults
+            attribute_defaults =
+                (element_data.type.defined() && element_data.type == "multiple")
+                ? multiselect_defaults
+                : select_defaults
             # Attributes that apply to selects.
+            # multiple isn't valid for select, only multiselect.
             element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
           ?>
