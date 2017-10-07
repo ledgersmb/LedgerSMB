@@ -230,11 +230,10 @@
           <?lsmb PROCESS attributes  # Process regular attributes.
             attribute_data=element_data
             attribute_defaults =
-                (element_data.type.defined() && element_data.type == "multiple")
+                (element_data.type.defined() && element_data.type == "multiselect")
                 ? multiselect_defaults
                 : select_defaults
-            # Attributes that apply to selects.
-            # multiple isn't valid for select, only multiselect.
+            # Attributes that apply to selects and multiselect.
             element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
             'tabindex', 'required', 'data-dojo-type', 'data-dojo-props']
           ?>
