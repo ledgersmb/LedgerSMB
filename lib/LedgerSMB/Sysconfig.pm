@@ -254,11 +254,6 @@ def 'Timer',
     default => 0,
     doc => q{};
 
-#def 'TemplateToolkit',
-#    section => 'debug',
-#    default => 1,
-#    doc => q{};
-
 def 'TraceENV',
     section => 'debug',
     default => 1,

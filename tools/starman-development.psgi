@@ -72,7 +72,7 @@ builder {
                 enable "Debug::$_";
             }
         }
-        for (qw(LazyLoadModules W3CValidate)) { # TemplateToolkit?
+        for (qw(LazyLoadModules W3CValidate)) {
             enable "Debug::$_"
                 if check_config_option("$_","Plack::Middleware::Debug::$_");
         }
@@ -88,10 +88,6 @@ builder {
             if check_config_option('NYTProf','Plack::Middleware::Debug::Profiler::NYTProf');
     }
 #   qw/Dancer::Settings Dancer::Logger Dancer::Version/
-
-#    enable 'TemplateToolkit',
-#        INCLUDE_PATH => 'UI',     # required
-#        pass_through => 1;        # delegate missing templates to $app
 
     LedgerSMB::PSGI::setup_url_space(
             development => ($ENV{PLACK_ENV} eq 'development'),
