@@ -149,6 +149,7 @@ Returns true if the current sha matches one that has been applied.
 
 sub is_applied {
     my ($self, $dbh) = @_;
+    $dbh->clone({ AutoCommit => 1}); # Clone to isolate ourselves
     my $sha = $self->sha;
     my $sth = $dbh->prepare(
         'SELECT * FROM db_patches WHERE sha = ?'
@@ -179,38 +180,36 @@ Applies the current file to the db in the current dbh.
 sub apply {
     my ($self, $dbh) = @_;
     my $before = '';
-    my $after;
     my $sha = $dbh->quote($self->sha);
     my $path = $dbh->quote($self->path);
     my $no_transactions = $self->{properties}->{no_transactions};
-    if ($self->is_applied($dbh)){
-        $after = "
-              UPDATE db_patches
-                     SET last_updated = now()
-               WHERE sha = $sha;
-        ";
-    } else {
-        $after = "
-           INSERT INTO db_patches (sha, path, last_updated)
-           VALUES ($sha, $path, now());
-        ";
-    }
-    if ($no_transactions){
-        $dbh->do($after);
-        $after = '';
-        $dbh->commit;
-    }
+    $dbh->{AutoCommit} = $no_transactions ? 0 : 1;
+
+    my $after = $self->is_applied($dbh)
+              ? "
+                  UPDATE db_patches
+                         SET last_updated = now()
+                   WHERE sha = $sha;
+              "
+              : "
+                   INSERT INTO db_patches (sha, path, last_updated)
+                   VALUES ($sha, $path, now());
+                ";
     my $success = eval {
          $dbh->prepare($self->content_wrapped($before, $after))->execute();
     };
     die "$DBI::state: $DBI::errstr while applying $path"
         unless $success or $no_transactions;
-    $dbh->commit;
+    $dbh->commit unless !$no_transactions;
+    if ($no_transactions){
+        $dbh->do($after);
+        $dbh->commit;
+    }
     $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
             VALUES(now(), $path, $sha, ?, ?)
     ")->execute($dbh->state, $dbh->errstr);
-    $dbh->commit;
+    $dbh->commit unless !$no_transactions;
     return;
 }
 
