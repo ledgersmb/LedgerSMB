@@ -178,7 +178,6 @@ Applies the current file to the db in the current dbh.
 
 sub apply {
     my ($self, $dbh) = @_;
-    my $need_commit = _need_commit($dbh);
     my $before = '';
     my $after;
     my $sha = $dbh->quote($self->sha);
@@ -199,26 +198,22 @@ sub apply {
     if ($no_transactions){
         $dbh->do($after);
         $after = '';
-        $dbh->commit if $need_commit;
+        $dbh->commit;
     }
     my $success = eval {
          $dbh->prepare($self->content_wrapped($before, $after))->execute();
     };
     die "$DBI::state: $DBI::errstr while applying $path"
         unless $success or $no_transactions;
-    $dbh->commit if $need_commit;
+    $dbh->commit;
     $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
             VALUES(now(), $path, $sha, ?, ?)
     ")->execute($dbh->state, $dbh->errstr);
-    $dbh->commit if $need_commit;
+    $dbh->commit;
     return;
 }
 
-sub _need_commit{
-    my ($dbh) = @_;
-    return 1; # todo, detect existing transactions and autocommit status
-}
 =head1 Package Functions
 
 =head2 init($dbh)
@@ -245,6 +240,7 @@ sub init {
     );
     ')->execute();
     die "$DBI::state: $DBI::errstr" unless $success;
+    $dbh->commit;
 
     return 1;
 }
@@ -256,14 +252,13 @@ Returns true if the tracking system needs to be initialized
 =cut
 
 sub needs_init {
-    my ($dbh) = @_;
-    local $@ = undef;
-    my $rows = eval { $dbh->prepare(
-       'select 1 from db_patches'
-    )->execute(); };
-    $dbh->rollback;
-    return 0 if $rows;
-    return 1;
+    my $dbh = pop @_;
+    my $count = $dbh->prepare(q{
+        select relname from pg_class
+         where relname = 'db_patches'
+               and pg_table_is_visible(oid)
+    })->execute();
+    return !int($count);
 }
 
 =head1 TODO

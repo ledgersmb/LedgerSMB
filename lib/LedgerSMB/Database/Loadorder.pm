@@ -124,7 +124,6 @@ Returns 1 if applied.  Returns 0 if not.
 
 sub init_if_needed {
     my ($self, $dbh) = @_;
-    return 0 unless _needs_init($dbh);
     return LedgerSMB::Database::Change::init($dbh);
 }
 
@@ -179,7 +178,7 @@ sub _lock {
 sub _unlock {
     my ($dbh) = @_;
     return $dbh->do(
-            q{ select pg_advisory_unlock( 
+            q{ select pg_advisory_unlock(
                'db_patches'::regclass::oid::int, 1) });
 }
 
