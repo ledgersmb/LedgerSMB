@@ -471,6 +471,9 @@ sub upgrade_modules {
 
     my $temp = $self->loader_log_filename();
 
+    # The order is important here:
+    #  New modules should be able to depend on the latest changes
+    #  e.g. table definitions, etc.
     $self->apply_changes();
     $self->load_modules($loadorder, {
     log     => $temp . '_stdout',
