@@ -69,7 +69,7 @@ sub scripts {
     my @scripts =
         map { $self->_process_script($_)}
         grep { $_ =~ /\S/ }
-        map { my $string = $_; $string =~ s/#.*$//; $string }
+        map { my $string = $_; $string =~ s/\s*#.*$//; $string }
         map { $self->_limit_by_tag($_) }
         <$fh>;
     close $fh or die "Cannot open file $self->{_path}";
