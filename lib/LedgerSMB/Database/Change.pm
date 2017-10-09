@@ -52,7 +52,7 @@ sub new {
     #This should have been done with '!' in LOADORDER
     if ( $self->content(1) =~ m/^BEGIN;\s*(.+)\s*COMMIT;$/gis ) {
         $self->{_content} = $1;
-        $self->{properties}->{no_transactions} = "";
+        $self->{properties}->{no_transactions} = '';
     }
     return $self;
 }
