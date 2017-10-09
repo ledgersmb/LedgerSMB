@@ -49,6 +49,11 @@ sub new {
     my $self = bless { _path => $path }, $package;
     my @prop_names = qw(no_transactions reload_subsequent);
     $self->{properties} = { map { $_ => $init_properties->{$_} } @prop_names };
+    #This should have been done with '!' in LOADORDER
+    if ( $self->content(1) =~ m/^BEGIN;\s*(.+)\s*COMMIT;$/gis ) {
+        $self->{_content} = $1;
+        $self->{properties}->{no_transactions} = "";
+    }
     return $self;
 }
 
@@ -182,8 +187,8 @@ sub apply {
     my $before = '';
     my $sha = $dbh->quote($self->sha);
     my $path = $dbh->quote($self->path);
-    my $no_transactions = $self->{properties}->{no_transactions};
-    $dbh->{AutoCommit} = $no_transactions ? 0 : 1;
+    my $no_transactions = !!$self->{properties}->{no_transactions};
+    $dbh->{AutoCommit} = !$no_transactions;
 
     my $after = $self->is_applied($dbh)
               ? "
@@ -195,15 +200,13 @@ sub apply {
                    INSERT INTO db_patches (sha, path, last_updated)
                    VALUES ($sha, $path, now());
                 ";
-    my $success = eval {
-         $dbh->prepare($self->content_wrapped($before, $after))->execute();
-    };
+    my $success = $dbh->prepare($self->content_wrapped($before, $after))->execute();
     die "$DBI::state: $DBI::errstr while applying $path"
         unless $success or $no_transactions;
-    $dbh->commit unless !$no_transactions;
+    $dbh->commit unless !$success || !$no_transactions;
     if ($no_transactions){
         $dbh->do($after);
-        $dbh->commit;
+        #$dbh->commit;
     }
     $dbh->prepare("
             INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
