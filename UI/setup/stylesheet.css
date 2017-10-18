@@ -114,3 +114,9 @@ tr.listrow:nth-child(odd) {background: #EEE}
 td.dijitStretch {
     min-width: 125px;
 }
+
+.notice {
+    background-color: red;
+    color: white;
+    margin-left: 1px;
+}

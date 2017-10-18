@@ -1106,6 +1106,16 @@ sub save_user {
            my $template = LedgerSMB::Template->new_UI(
                $request,
                template => 'setup/new_user',
+               hiddens  => {
+                                employeenumber => $request->{employeenumber},
+                                 salutation_id => $request->{salutation_id},
+                                         perms => $request->{perms},
+                                           ssn => $request->{ssn},
+                                    first_name => $request->{first_name},
+                                     last_name => $request->{last_name},
+                                           dob => $request->{dob},
+                                      username => $request->{username},
+                           },
            );
            $duplicate = $template->render_to_psgi($request);
        } else {
