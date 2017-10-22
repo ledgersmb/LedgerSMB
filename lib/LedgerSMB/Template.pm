@@ -322,6 +322,7 @@ use File::Copy 'cp';
 use File::Spec;
 use HTTP::Status qw( HTTP_OK);
 use Module::Runtime qw(use_module);
+use Scalar::Util qw(reftype);
 use Try::Tiny;
 
 use parent qw( Exporter );
@@ -434,23 +435,22 @@ sub preprocess {
         $rawvars = $rawvars->to_output;
     }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
     my $vars;
-    if ( $type eq 'ARRAY' ) {
+    if ( $reftype eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_, $escape );
         }
     } elsif (!$type) {
         return $escape->($rawvars);
-    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+    } elsif ($reftype eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return $escape->($$rawvars);
-    } elsif ($type eq 'CODE'){ # a code reference makes no sense
+    } elsif ($reftype eq 'CODE'){ # a code reference makes no sense
         return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } else { # Hashes and objects
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
             # don't encode the object's internals; TT won't forward anyway...
@@ -460,6 +460,7 @@ sub preprocess {
             $vars->{preprocess($_, $escape)} = preprocess( $rawvars->{$_}, $escape );
         }
     }
+    # return undef for GLOB references (includes IO::File objects)
     return $vars;
 }
 
