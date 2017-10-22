@@ -14,18 +14,22 @@ LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
 
 package LedgerSMB::Scripts::vouchers;
 
+use strict;
+use warnings;
+
 use LedgerSMB::Batch;
-use LedgerSMB::Template;
-use HTTP::Status qw( HTTP_OK);
+use LedgerSMB::Magic qw(BC_AR BC_SALES_INVOICE BC_VENDOR_INVOICE);
 use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
-
-use strict;
-use warnings;
+use LedgerSMB::Template;
 
 use LedgerSMB::old_code qw(dispatch);
+
+
+use HTTP::Status qw( HTTP_OK);
+
 
 our $VERSION = '0.1';
 our $custom_batch_types = {};
