@@ -372,7 +372,7 @@ sub upload {
     my ($self, $name) = @_;
 
     if (! defined $name) {
-        return map { $_->basename } @{$self->{_uploads}};
+        return map { $_->basename } $self->{_uploads}->values;
     }
 
     my $tmpfname = $self->{_uploads}->get_one($name)->path;
