@@ -39,13 +39,13 @@ use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
 
 our $fileclassmap = {
-   FC_TRANSACTION   => 'LedgerSMB::File::Transaction',
-   FC_ORDER         => 'LedgerSMB::File::Order',
-   FC_PART          => 'LedgerSMB::File::Part',
-   FC_ENTITY        => 'LedgerSMB::File::Entity',
-   FC_ECA           => 'LedgerSMB::File::ECA',
-   FC_INTERNAL      => 'LedgerSMB::File::Internal',
-   FC_INCOMING      => 'LedgerSMB::File::Incoming',
+   FC_TRANSACTION()   => 'LedgerSMB::File::Transaction',
+   FC_ORDER()         => 'LedgerSMB::File::Order',
+   FC_PART()          => 'LedgerSMB::File::Part',
+   FC_ENTITY()        => 'LedgerSMB::File::Entity',
+   FC_ECA()           => 'LedgerSMB::File::ECA',
+   FC_INTERNAL()      => 'LedgerSMB::File::Internal',
+   FC_INCOMING()      => 'LedgerSMB::File::Incoming',
 };
 
 sub get {
