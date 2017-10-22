@@ -33,20 +33,23 @@ use LedgerSMB::File::Entity;
 use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
+
 use DBD::Pg qw(:pg_types);
-use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA 
-            FC_INTERNAL FC_INCOMING);
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
 
-our $fileclassmap = {
-   FC_TRANSACTION   => 'LedgerSMB::File::Transaction',
-   FC_ORDER         => 'LedgerSMB::File::Order',
-   FC_PART          => 'LedgerSMB::File::Part',
-   FC_ENTITY        => 'LedgerSMB::File::Entity',
-   FC_ECA           => 'LedgerSMB::File::ECA',
-   FC_INTERNAL      => 'LedgerSMB::File::Internal',
-   FC_INCOMING      => 'LedgerSMB::File::Incoming',
-};
+
+# file classes are "addressed" (submitted) from the web client by number,
+# 1-based; as Perl arrays are 0-based, leave the first entry empty
+my @fileclassmap = (
+   undef,
+   'LedgerSMB::File::Transaction',
+   'LedgerSMB::File::Order',
+   'LedgerSMB::File::Part',
+   'LedgerSMB::File::Entity',
+   'LedgerSMB::File::ECA',
+   'LedgerSMB::File::Internal',
+   'LedgerSMB::File::Incoming',
+);
 
 sub get {
     my ($request) = @_;
@@ -100,7 +103,7 @@ Attaches a file to an object
 
 sub attach_file {
     my ($request) = @_;
-    my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
+    my $file = $fileclassmap[$request->{file_class}]->new(%$request);
     my @fnames =  $request->upload;
     $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){

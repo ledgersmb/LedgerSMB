@@ -394,45 +394,52 @@ sub reverse_overpayment {
     return LedgerSMB::Scripts::reports::search_overpayments($request);
 }
 
-my %print_dispatch = (
-   BC_AR => { script => 'ar.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{ARAP} = 'AR';
-               $lsmb_legacy::form->{arap} = 'ar';
-               $lsmb_legacy::form->{vc} = 'customer';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
-                    if ref $voucher;
-               $lsmb_legacy::form->{formname} = 'ar_transaction';
+my @print_dispatch = (
+    undef, # 0, not used, but arrays are zero-based...
+    undef, # BC_AP
+    { script => 'ar.pl',  # BC_AR
+      entrypoint => sub {
+          my ($voucher, $request) = @_;
+          $lsmb_legacy::form->{ARAP} = 'AR';
+          $lsmb_legacy::form->{arap} = 'ar';
+          $lsmb_legacy::form->{vc} = 'customer';
+          $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+              if ref $voucher;
+          $lsmb_legacy::form->{formname} = 'ar_transaction';
 
-               lsmb_legacy::create_links();
-               $lsmb_legacy::form->{media} = $request->{media};
-               lsmb_legacy::print();
-          }
-        },
-   BC_SALES_INVOICE => { script => 'is.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{formname} = 'invoice';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
-                               if ref $voucher;
+          lsmb_legacy::create_links();
+          $lsmb_legacy::form->{media} = $request->{media};
+          lsmb_legacy::print();
+      }
+    },
+    undef, # BC_PAYMENT
+    undef, # BC_PAYMENT_REVERSAL
+    undef, # BC_GL
+    undef, # BC_RECEIPT
+    undef, # BC_RECEIPT_REVERSAL
+    { script => 'is.pl', # BC_SALES_INVOICE
+      entrypoint => sub {
+          my ($voucher, $request) = @_;
+          $lsmb_legacy::form->{formname} = 'invoice';
+          $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+              if ref $voucher;
 
-               lsmb_legacy::create_links();
-               $lsmb_legacy::form->{media} = $request->{media};
-               lsmb_legacy::print();
-          }
-        },
-   BC_VENDOR_INVOICE => { script => 'is.pl',
-          entrypoint => sub {
-               my ($voucher, $request) = @_;
-               $lsmb_legacy::form->{formname} = 'product_receipt';
-               $lsmb_legacy::form->{id} = $voucher->{transaction_id}
-                               if ref $voucher;
+          lsmb_legacy::create_links();
+          $lsmb_legacy::form->{media} = $request->{media};
+          lsmb_legacy::print();
+      }
+    },
+    { script => 'is.pl', # BC_VENDOR_INVOICE
+      entrypoint => sub {
+          my ($voucher, $request) = @_;
+          $lsmb_legacy::form->{formname} = 'product_receipt';
+          $lsmb_legacy::form->{id} = $voucher->{transaction_id}
+               if ref $voucher;
 
-               lsmb_legacy::create_links();
-               lsmb_legacy::print();
-          }
-        },
+          lsmb_legacy::create_links();
+          lsmb_legacy::print();
+      }
+    },
     );
 
 =item print_batch
@@ -457,7 +464,7 @@ sub print_batch {
 
     my @files =
         map {
-            my $entry = $print_dispatch{lc($_->{batch_class_id})};
+            my $entry = $print_dispatch[$_->{batch_class_id}];
             if ($entry) {
                 dispatch(
                     $entry->{script},

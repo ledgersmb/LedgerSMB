@@ -112,16 +112,19 @@ sub name {
 
 =cut
 
-my %jtype = ( JRNL_GJ => 'gl',
-              JRNL_AR => 'ar',
-              JRNL_AP => 'ap' );
+my @journal_type = (
+    undef,
+    'gl',
+    'ar',
+    'ap',
+    );
 
 sub run_report {
     my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'journal__search');
     for my $ref(@rows){
-       $ref->{journal_type} = $jtype{$ref->{entry_type}};
+       $ref->{journal_type} = $journal_type[$ref->{entry_type}];
        $ref->{row_id} = $ref->{id};
     }
     return $self->rows(\@rows);
