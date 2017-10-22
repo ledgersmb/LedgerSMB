@@ -112,9 +112,11 @@ sub name {
 
 =cut
 
-my %jtype = ( JRNL_GJ => 'gl',
-              JRNL_AR => 'ar',
-              JRNL_AP => 'ap' );
+my %jtype = (
+    JRNL_GJ() => 'gl',
+    JRNL_AR() => 'ar',
+    JRNL_AP() => 'ap'
+    );
 
 sub run_report {
     my ($self) = @_;
