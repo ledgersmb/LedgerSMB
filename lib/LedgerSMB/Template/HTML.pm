@@ -48,6 +48,8 @@ use strict;
 
 use CGI::Simple::Standard qw(:html);
 use File::Spec;
+use Scalar::Util qw(reftype);
+
 use Template;
 use Template::Parser;
 use LedgerSMB::Template::TTI18N;
@@ -75,6 +77,7 @@ sub preprocess {
         }
     }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
 
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $rawvars;
@@ -87,15 +90,7 @@ sub preprocess {
         return escape($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
         return escape($$rawvars);
-    } elsif ($type eq 'CODE'){
-        return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } elsif ($type eq 'Apache2::RequestRec'){
-        # When running in mod_perl2, we might encounter an Apache2::RequestRec
-        # object; escaping its content is nonsense
-        return undef;
-    } else { # Hashes and objects
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );

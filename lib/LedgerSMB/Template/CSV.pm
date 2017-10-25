@@ -47,6 +47,8 @@ use strict;
 
 use Template;
 use Template::Parser;
+use Scalar::Util qw(reftype);
+
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Template::DBProvider;
 
@@ -69,6 +71,7 @@ sub preprocess {
        }
    }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
 
     #XXX fix escaping function
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
@@ -87,9 +90,7 @@ sub preprocess {
             $vars = $rawvars;
         }
         $vars =~ s/(^ +| +$)//g;
-    } elsif ( $type eq 'CODE' ) { # a code reference makes no sense
-        return undef;
-    } else { # hashes and objects
+    } elsif ($reftype eq 'HASH') { # hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
             $vars->{$_} = preprocess( $rawvars->{$_} );
