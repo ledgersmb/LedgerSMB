@@ -44,10 +44,12 @@ package LedgerSMB::Template::TXT;
 use warnings;
 use strict;
 
+use DateTime;
+use Scalar::Util qw(reftype);
 use Template;
 use Template::Parser;
+
 use LedgerSMB::Template::TTI18N;
-use DateTime;
 use LedgerSMB::Template::DBProvider;
 
 # The following are for EDI only
@@ -86,6 +88,7 @@ sub preprocess {
         }
     }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
 
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $rawvars;
@@ -100,9 +103,7 @@ sub preprocess {
         return $$rawvars;
     } elsif ($type eq 'CODE'){
         return $rawvars;
-    } elsif ($type eq 'IO::File'){
-        return undef;
-    } else { # Hashes and objects
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
         $vars = {};
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );

@@ -47,13 +47,15 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
-use Data::Dumper;  ## no critic
 use CGI::Simple::Standard qw(:html);
+use Data::Dumper;  ## no critic
+use OpenOffice::OODoc;
+use OpenOffice::OODoc::Styles;
+use Scalar::Util qw(reftype);
 use Template;
 use Template::Parser;
 use XML::Twig;
-use OpenOffice::OODoc;
-use OpenOffice::OODoc::Styles;
+
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DBProvider;
@@ -822,6 +824,7 @@ sub preprocess {
         }
     }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
 
     #XXX fix escaping function
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
@@ -836,9 +839,7 @@ sub preprocess {
         return escapeHTML($$rawvars);
     } elsif ($type eq 'CODE') {
         return $rawvars;
-    } elsif ($type eq 'IO::File') {
-        return undef;
-    } else { # Hashes and objects
+    } elsif ($reftype eq 'HASH') { # Hashes and objects
         for ( keys %{$rawvars} ) {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} )
                 if $_ !~ /^_/;

@@ -54,13 +54,14 @@ package LedgerSMB::Template::LaTeX;
 use warnings;
 use strict;
 
+use Log::Log4perl;
 use Template::Latex;
 use Template::Parser;
-use LedgerSMB::Template::TTI18N;
-use Log::Log4perl;
-use LedgerSMB::Template::DBProvider;
 use TeX::Encode::charmap;
 use TeX::Encode;
+
+use LedgerSMB::Template::DBProvider;
+use LedgerSMB::Template::TTI18N;
 
 BEGIN {
 delete $TeX::Encode::charmap::ACCENTED_CHARS{chr(0x00c5)};
@@ -98,13 +99,14 @@ sub get_template {
 sub preprocess {
     my $rawvars = shift;
     my $vars;
-   { # pre-5.14 compatibility block
-       local ($@); # pre-5.14, do not die() in this block
-       if (eval {$rawvars->can('to_output')}){
-           $rawvars = $rawvars->to_output;
-       }
-   }
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        if (eval {$rawvars->can('to_output')}){
+            $rawvars = $rawvars->to_output;
+        }
+    }
     my $type = ref $rawvars;
+    my $reftype = reftype $rawvars;
 
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
     return unless defined $type;
@@ -122,7 +124,7 @@ sub preprocess {
         }
         #XXX Fix escaping
         $vars = escape($vars) unless $type eq 'CODE';
-    } else {
+    } elsif ($reftype eq 'HASH') {
         for ( keys %{$rawvars} ) {
             $vars->{$_} = preprocess($rawvars->{$_});
         }
