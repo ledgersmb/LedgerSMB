@@ -55,6 +55,7 @@ use warnings;
 use strict;
 
 use Log::Log4perl;
+use Scalar::Util qw(reftype);
 use Template::Latex;
 use Template::Parser;
 use TeX::Encode::charmap;
