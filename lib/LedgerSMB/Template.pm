@@ -435,11 +435,11 @@ sub preprocess {
         $rawvars = $rawvars->to_output;
     }
     my $type = ref $rawvars;
-    my $reftype = reftype $rawvars;
+    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
     return $rawvars if $type =~ /^LedgerSMB::Locale/;
 
     my $vars;
-    if ( $reftype eq 'ARRAY' ) {
+    if ( $reftype and $reftype eq 'ARRAY' ) {
         $vars = [];
         for (@{$rawvars}) {
             push @{$vars}, preprocess( $_, $escape );
