@@ -5,7 +5,7 @@
 
 use strict;
 use warnings;
-use Test::More 'no_plan';
+use Test::More;
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
