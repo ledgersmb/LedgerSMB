@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.5.13-dev\n"
 "Report-Msgid-Bugs-To: ledger-smb-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2017-09-18 10:27+0000\n"
+"POT-Creation-Date: 2017-10-29 21:39+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2016\n"
 "Language-Team: Spanish (Argentina) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_AR/)\n"
@@ -4565,7 +4565,7 @@ msgstr ""
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
-#: UI/login.html:48 UI/menu/expanding.html:4 UI/setup/credentials.html:34
+#: UI/menu/expanding.html:4
 msgid "LedgerSMB [_1]"
 msgstr ""
 
