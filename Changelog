@@ -50,6 +50,7 @@ Changelog for 1.5.13
 * Fix AR/AP Aging report failing to be generated (Erik H, #3243)
 * Upgrade Dojo from 1.10.8 to 1.10.9 (Erik H)
 * Fix HTML aging statement download not popping up 'Save' dialog (Erik H)
+* Fix date format 'dd/mm/yyyy' being parsed incorrectly (Erik H, #3223)
 
 Erik H is Erik Huelsmann
 
