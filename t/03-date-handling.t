@@ -5,7 +5,7 @@
 
 use strict;
 use warnings;
-use Test::More 'no_plan';
+use Test::More;
 use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
@@ -336,5 +336,61 @@ is(LedgerSMB::PGDate->from_input(undef)->to_output, '',
 is(LedgerSMB::PGDate->from_input('2016-01-01')->to_output, '2016-01-01',
    'round-tripping valid ISO-8601 date returns that date');
 
+foreach my $test (
+    {
+        format => 'dd/mm/yyyy',
+        date => '29/10/2016',
+    },
+    {
+        format => 'dd.mm.yyyy',
+        date => '29.10.2016',
+    },
+    {
+        format => 'dd-mm-yyyy',
+        date => '29-10-2016',
+    },
+    {
+        format => 'ddmmyyyy',
+        date => '29102016',
+    },
+    {
+        format => 'ddmmyy',
+        date => '291016',
+    },
+    {
+        format => 'mm/dd/yyyy',
+        date => '10/29/2016',
+    },
+    {
+        format => 'mm.dd.yyyy',
+        date => '10.29.2016',
+    },
+    {
+        format => 'mm-dd-yyyy',
+        date => '10-29-2016',
+    },
+    {
+        format => 'mmddyyyy',
+        date => '10292016',
+    },
+    {
+        format => 'mmddyy',
+        date => '102916',
+    },
+    {
+        format => 'yyyymmdd',
+        date => '20161029',
+    },
+    {
+        format => 'yymmdd',
+        date => '161029',
+    },
+) {
+   $LedgerSMB::App_State::User = { dateformat => $test->{format} };
+   is(eval { LedgerSMB::PGDate->from_input($test->{date})->to_output },
+      $test->{date},
+      "round-tripping valid '$test->{format}' date returns that date");
+}
 
 
+done_testing;
