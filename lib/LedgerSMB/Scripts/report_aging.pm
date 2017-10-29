@@ -133,6 +133,8 @@ sub generate_statement {
        #TODO -- mailer stuff
     } elsif ($request->{media} eq 'screen'){
         $template->render({statements => \@statements});
+        $template->{rendered} //=
+              'aging_statement.' . lc($request->{print_format});
         $template->output;
     } else {
         $template->render({statements => \@statements});
