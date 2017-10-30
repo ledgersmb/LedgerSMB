@@ -154,9 +154,9 @@ Returns true if the current sha matches one that has been applied.
 
 sub is_applied {
     my ($self, $dbh) = @_;
-    $dbh->clone({ AutoCommit => 1}); # Clone to isolate ourselves
     my $sha = $self->sha;
-    my $sth = $dbh->prepare(
+    # Clone to isolate ourselves
+    my $sth = $dbh->clone({ AutoCommit => 1})->prepare(
         'SELECT * FROM db_patches WHERE sha = ?'
     );
     $sth->execute($sha);
@@ -254,7 +254,7 @@ Returns true if the tracking system needs to be initialized
 =cut
 
 sub needs_init {
-    my $dbh = pop @_;
+    my ($dbh) = @_;
     my $count = $dbh->prepare(q{
         select relname from pg_class
          where relname = 'db_patches'
