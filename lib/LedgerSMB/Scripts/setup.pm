@@ -615,6 +615,7 @@ sub upgrade_info {
     my $dbinfo = $database->get_info();
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
+
     if (applicable_for_upgrade('default_ar', $upgrade_type)) {
     @{$request->{ar_accounts}} = _get_linked_accounts($request, 'AR');
     unshift @{$request->{ar_accounts}}, {}
@@ -901,7 +902,6 @@ sub create_db {
 
     my $version_info = $database->get_info;
     $request->{login_name} = $version_info->{username};
-
     if ($version_info->{status} ne 'does not exist') {
         $request->{message} = $request->{_locale}->text(
             'Database exists.');
@@ -1039,8 +1039,8 @@ sub _render_new_user {
     # here in order to avoid creating objects just to get argument
     # mapping going. --CT
 
-    _init_db($request) unless $request->{dbh};
 
+    _init_db($request) unless $request->{dbh};
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}}
@@ -1096,7 +1096,6 @@ sub save_user {
 
     $request->{control_code} = $request->{employeenumber};
     $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
-
     my $emp = LedgerSMB::Entity::Person::Employee->new(%$request);
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
