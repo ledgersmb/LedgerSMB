@@ -198,7 +198,7 @@ define([
                                 createInput(x, val[i]);
                             }
                         }else{
-                            var n = query("input[name='"+x+"']");
+                            var n = query("input[name='"+x+"']", formNode);
                             if(n.indexOf() == -1){
                                 createInput(x, val);
                             }else{
