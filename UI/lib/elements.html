@@ -442,7 +442,7 @@ END ?>
 
 <?lsmb BLOCK tooltip;
   IF element_data && element_data.id.defined() && element_data.msg.defined();
-     props="connectId:'" _ element_data.ref_id _ "'";
+     props="\"connectId:'" _ element_data.ref_id _ "'\"";
      IF element_data.position.defined();
         positions = [];
         FOREACH position IN element_data.position
