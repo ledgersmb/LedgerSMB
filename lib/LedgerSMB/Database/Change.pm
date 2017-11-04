@@ -155,8 +155,7 @@ Returns true if the current sha matches one that has been applied.
 sub is_applied {
     my ($self, $dbh) = @_;
     my $sha = $self->sha;
-    # Clone to isolate ourselves
-    my $sth = $dbh->clone({ AutoCommit => 1})->prepare(
+    my $sth = $dbh->prepare(
         'SELECT * FROM db_patches WHERE sha = ?'
     );
     $sth->execute($sha);
