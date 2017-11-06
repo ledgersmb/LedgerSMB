@@ -27,14 +27,13 @@
         <link rel="stylesheet" href="<?lsmb dojo_location ?>/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="<?lsmb dojo_location ?>/dijit/themes/<?lsmb dojo_theme ?>/<?lsmb dojo_theme ?>.css" type="text/css" />
 
-    <?lsmb IF form.stylesheet ?>
-        <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
-    <?lsmb ELSIF stylesheet ?>
-        <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
-    <?lsmb ELSE ?>
-    <?lsmb END ?>
-    <?lsmb FOREACH s = include_stylesheet ?>
-        <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
+        <?lsmb IF form.stylesheet ?>
+            <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" />
+        <?lsmb ELSIF stylesheet ?>
+            <link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" />
+        <?lsmb END ?>
+        <?lsmb FOREACH s = include_stylesheet ?>
+            <link rel="stylesheet" href="<?lsmb s ?>" type="text/css" />
         <?lsmb END ?>
         <?lsmb IF warn_expire ?>
         <script type="text/javascript">
