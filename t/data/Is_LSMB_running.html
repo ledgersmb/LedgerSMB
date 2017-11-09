@@ -10,11 +10,11 @@
         <link rel="stylesheet" href="js/dojo/resources/dojo.css" type="text/css" />
         <link rel="stylesheet" href="js/dijit/themes/claro/claro.css" type="text/css" />
 
-    
-        <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
-    
-    
-        <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
+        
+            <link rel="stylesheet" href="css/ledgersmb.css" type="text/css" />
+        
+        
+            <link rel="stylesheet" href="setup/stylesheet.css" type="text/css" />
         
         
         <script type="text/javascript">
@@ -101,13 +101,13 @@
             </form>
         </div>
     </div>
+    <script>
+      require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
+      function(dom, style, ready) {
+        ready(80, function() {
+            style.set(dom.byId('loading'), 'display', 'none');
+        });
+      });
+    </script>
 </body>
 </html>
-<script>
-  require(['dojo/dom', 'dojo/dom-style', 'dojo/ready'],
-  function(dom, style, ready) {
-    ready(80, function() {
-        style.set(dom.byId('loading'), 'display', 'none');
-    });
-  });
-</script>
