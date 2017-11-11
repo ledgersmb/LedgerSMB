@@ -8,7 +8,7 @@ LedgerSMB::Database - Provides the APIs for database creation and management.
 This module wraps both DBI and the PostgreSQL commandline tools.
 
   my $db = LedgerSMB::Database->new({
-       company_name => 'mycompany',
+       dbname => 'mycompany',
        username => 'foo',
        password => 'foospassword'
   });
@@ -225,7 +225,7 @@ sub get_info {
         my $sth = $dbh->prepare(
             'select count(*) = 1 from pg_database where datname = ?'
             );
-        $sth->execute($self->{company_name});
+        $sth->execute($self->{dbname});
         my ($exists) = $sth->fetchrow_array();
         if ($exists){
             $retval->{status} = 'exists';
