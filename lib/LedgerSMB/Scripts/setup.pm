@@ -301,11 +301,11 @@ sub copy_db {
     my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
-           {%$database, (company_name => $request->{new_name})}
+           +{%$database, (dbname => $request->{new_name})}
     )->connect({ PrintError => 0, AutoCommit => 0 });
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
-    )->execute("lsmb_$database->{company_name}__");
+    )->execute("lsmb_$database->{dbname}__");
     $dbh->commit;
     $dbh->disconnect;
     complete($request);
