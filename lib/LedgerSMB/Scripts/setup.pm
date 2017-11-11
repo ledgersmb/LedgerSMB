@@ -305,7 +305,7 @@ sub copy_db {
     )->connect({ PrintError => 0, AutoCommit => 0 });
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
-    )->execute("lsmb_$database->{company_name}__");
+    )->execute("lsmb_$database->{dbname}__");
     $dbh->commit;
     $dbh->disconnect;
     complete($request);
