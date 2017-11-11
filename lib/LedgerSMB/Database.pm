@@ -336,8 +336,19 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    return $self->new($self->export, (dbname => $new_name)
-              )->create(copy_of => $self->dbname);
+    my $rc = $self->new($self->export, (dbname => $new_name)
+        )->create(copy_of => $self->dbname);
+
+    (__PACKAGE__->new(
+         dbname    => $new_name,
+         username  => $self->username,
+         password  => $self->password,
+     ))->connect->do(
+        qq|SELECT setting__set('role_prefix',
+                               coalesce((setting_get('role_prefix')).value,?))|,
+        undef, 'lsmb_' . $self->dbname . '__');
+
+    return $rc;
 }
 
 =head2 $db->load_base_schema([ upto_tag => $tag, log => $path, errlog => $path ])
