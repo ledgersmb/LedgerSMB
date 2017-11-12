@@ -344,8 +344,8 @@ sub copy {
          username  => $self->username,
          password  => $self->password,
      ))->connect->do(
-        qq|SELECT setting__set('role_prefix',
-                               coalesce((setting_get('role_prefix')).value,?))|,
+        q|SELECT setting__set('role_prefix',
+                              coalesce((setting_get('role_prefix')).value,?))|,
         undef, 'lsmb_' . $self->dbname . '__');
 
     return $rc;
