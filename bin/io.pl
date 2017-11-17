@@ -290,10 +290,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         }
         my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
         $dec = length $dec;
-        $dec ||= $moneyplaces;
-        $form->{"precision_$i"} ||= $dec;
-        $dec =  $form->{"precision_$i"};
         $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
+        $form->{"precision_$i"} = $decimalplaces;
 
         # undo formatting
         for (qw(qty oldqty ship discount sellprice)) {
