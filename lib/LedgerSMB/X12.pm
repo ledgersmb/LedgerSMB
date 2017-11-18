@@ -110,11 +110,7 @@ sub _ISA {
 
     my $isa = {};
 
-    my @keys;
-
-    push @keys, sprintf('ISA%02d', $_) for (1 .. 16);  ## no critic (ProhibitMagicNumbers) sniff
-
-    for my $key (@keys){
+    for my $key ( 'ISA01' .. 'ISA16' )){
        $isa->{$key} = shift @segments;
     }
     return $isa;
