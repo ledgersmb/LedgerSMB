@@ -170,7 +170,7 @@ sub _stringify_db_ver {
                 reverse
                 map {
                     my $t = $ver;
-                    $ver = int($ver/100);  ## no critic (ProhibitMagicNumbers) sniff
+                    $ver = int($ver/100);
                     ($t % 100); } 1..3);  ## no critic (ProhibitMagicNumbers) sniff
 }
 
