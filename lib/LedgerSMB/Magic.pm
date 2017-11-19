@@ -55,7 +55,6 @@ our @EXPORT_OK = qw(
     OEC_RFQ
     OEC_SALES_ORDER
     PERL_TIME_EPOCH
-    RATIO_TO_PERCENT
     RC_DEPRECIATION
     RC_DISPOSAL
     RC_IMPORT
@@ -85,6 +84,16 @@ I<LedgerSMB::Magic> is a library of constants used by the
 LedgerSMB system.  Mostly, these are peculiar to LedgerSMB,
 but where a small part of of a published code is used, the
 constants may be found here rather than separate modules.
+
+=head1  ACCEPTED NUMERIC LITERALS
+
+Numeric literal values that are not considered magical in LedgerSMB code.
+
+    -1  for use as a fat minus or array index
+     0
+     1
+     2
+     100 for use finding percentages or shifting monetary values
 
 =head1 CONSTANTS
 
@@ -260,12 +269,10 @@ use constant SATURDAY           => 6;
 =head3  LedgerSMB miscellaneous contants
 
     MONEY_EPSILON       0.001
-    RATIO_TO_PERCENT  100
 
 =cut
 
 use constant MONEY_EPSILON => 0.001;
-use constant RATIO_TO_PERCENT => 100;
 
 =head3 External codes.
 
@@ -291,16 +298,6 @@ use constant EDI_PATHNAME_MAX => 180;    # TODO possible fencepost error
 
 use constant HTTP_454 => 454;
 
-
-=head1  NOTE
-
-Numeric literal values that are not considered magical in LedgerSMB code.
-
-    -1  for use as a fat minus or array index
-     0
-     1
-     2
-     100 for use finding percentages or shifting monetary values
 
 =head1 BUGS
 

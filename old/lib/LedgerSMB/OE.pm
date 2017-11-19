@@ -248,7 +248,7 @@ sub save {
         }
 
         $form->{"discount_$i"} =
-          $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
+          $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;
 
         $form->{"sellprice_$i"} =
           $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
@@ -360,7 +360,7 @@ sub save {
             }
 
         }
-        $form->{"discount_$i"} *= 100;  ## no critic (ProhibitMagicNumbers) sniff
+        $form->{"discount_$i"} *= 100;
 
     }
 
@@ -1092,7 +1092,7 @@ sub order_details {
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
 
             my $discount = $form->round_amount(
-                $sellprice * $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100, $decimalplaces  ## no critic (ProhibitMagicNumbers) sniff
+                $sellprice * $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100, $decimalplaces
             );
 
             # keep a netprice as well, (sellprice - discount)
@@ -1157,7 +1157,7 @@ sub order_details {
               Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
             $taxbase = Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
             foreach my $item (@taxaccounts) {
-                push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;  ## no critic (ProhibitMagicNumbers) sniff
+                push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;
                 if ( $form->{taxincluded} ) {
                     $taxaccounts{ $item->account } += $item->value;
                     $taxbase{ $item->account }     += $taxbase;
@@ -1338,7 +1338,7 @@ sub order_details {
                 $form->{"${item}_description"} );
 
             $form->{"${item}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );  ## no critic (ProhibitMagicNumbers) sniff
+              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
 
             push( @{ $form->{taxrate} }, $form->{"${item}_taxrate"} );
 

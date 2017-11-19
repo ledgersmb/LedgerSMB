@@ -343,7 +343,7 @@ sub save_business {
 
     $form->{description} =~ s/-(-)+/-/g;
     $form->{description} =~ s/ ( )+/ /g;
-    $form->{discount} /= 100;  ## no critic (ProhibitMagicNumbers) sniff
+    $form->{discount} /= 100;
 
     my $sth;
     my @queryargs = ( $form->{description}, $form->{discount} );
@@ -1088,7 +1088,7 @@ sub save_taxes {
 
         my $rate=$form->{"taxrate_$i"};
         $rate=~s/^\s+|\s+$//g;
-        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
+        $rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         my $validto=$form->{"validto_$i"};
         $validto=~s/^\s+|\s+$//g;
         my $pass=$form->{"pass_$i"};

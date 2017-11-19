@@ -124,7 +124,7 @@ sub price_matrix {
             $sellprice = $mref->{sellprice} || $ref->{sellprice};
             if ($mref->{pricebreak}){
         $sellprice = $sellprice
-                           - ($sellprice * ($mref->{pricebreak} / 100));  ## no critic (ProhibitMagicNumbers) sniff
+                           - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
             if ($mref->{qty} > ($form->{qtycache}->{$ref->{id}} // 0)){

@@ -50,7 +50,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
-use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR RATIO_TO_PERCENT );
+use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
@@ -416,7 +416,7 @@ sub print {
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{decimal} = ($check->{amount} - $amt) * RATIO_TO_PERCENT;
+            $check->{decimal} = ($check->{amount} - $amt) * 100;
             $check->{amount} = $check->{amount}->to_output(
                     format => '1000.00',
                     money => 1
