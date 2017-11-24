@@ -120,6 +120,7 @@ on 'develop' => sub {
     requires 'Module::CPANfile'; # for 01.2-deps.t
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
+    requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
     requires 'Pherkin::Extension::Weasel', '0.02';
     requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Selenium::Remote::Driver';
