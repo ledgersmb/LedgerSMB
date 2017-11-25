@@ -52,7 +52,7 @@ sub new_budget {
 
 sub _render_screen {
     my ($budget) = @_;
-    my $additional_rows = EDIT_BUDGET_ROWS; 
+    my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
     my $buc = LedgerSMB::Business_Unit_Class->new(
