@@ -25,6 +25,8 @@ Budget workflow scripts.
 use LedgerSMB::Budget;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
+
 
 =head1 METHODS
 
@@ -50,8 +52,8 @@ sub new_budget {
 
 sub _render_screen {
     my ($budget) = @_;
-    my $additional_rows = 5;  ## no critic (ProhibitMagicNumbers) sniff
-    $additional_rows +=20 unless $budget->lines;  ## no critic (ProhibitMagicNumbers) sniff
+    my $additional_rows = EDIT_BUDGET_ROWS; 
+    $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
     my $buc = LedgerSMB::Business_Unit_Class->new(
            control_code => '', class_id => 0

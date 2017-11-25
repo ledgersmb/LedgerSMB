@@ -17,6 +17,7 @@ our @EXPORT_OK = qw(
     BC_VENDOR_INVOICE
     CENTURY_START_YEAR
     DEFAULT_NUM_PREC
+    DAYS_PER_WEEK
     EC_COLD_LEAD
     EC_CONTACT
     EC_CUSTOMER
@@ -26,6 +27,7 @@ our @EXPORT_OK = qw(
     EC_REFERRAL
     EC_VENDOR
     EDI_PATHNAME_MAX
+    EDIT_BUDGET_ROWS
     FC_ECA
     FC_ENTITY
     FC_INCOMING
@@ -61,6 +63,7 @@ our @EXPORT_OK = qw(
     RC_PARTIAL_DISPOSAL
     SATURDAY
     SEC_PER_HOUR
+    NEW_BUDGET_ROWS 
     SUNDAY
     YEARS_PER_CENTURY
 );
@@ -249,10 +252,12 @@ use constant RC_PARTIAL_DISPOSAL => 4;
     YEARS_PER_CENTURY    100
     SUNDAY                 0    Unixy numeric for day of week.
     SATURDAY               6
+    DAYS_PER_WEEK          7
 
 =cut
 
 use constant CENTURY_START_YEAR => 2000;
+use constant DAYS_PER_WEEK      => 7;
 use constant DEFAULT_NUM_PREC   => 5;
 use constant FUTURE_YEARS_LIMIT => 20;
 use constant SEC_PER_HOUR       => 3600;
@@ -270,9 +275,17 @@ use constant SATURDAY           => 6;
 
     MONEY_EPSILON       0.001
 
+    EDIT_BUDGET_ROWS     5
+    NEW_BUDGET_ROWS     25
+
+    Display lines to allocate for a user to start or add to
+a budget.
+
 =cut
 
-use constant MONEY_EPSILON => 0.001;
+use constant MONEY_EPSILON      => 0.001;
+use constant EDIT_BUDGET_ROWS => 5;
+use constant NEW_BUDGET_ROWS  => 25;
 
 =head3 External codes.
 
