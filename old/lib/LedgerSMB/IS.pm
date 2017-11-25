@@ -339,7 +339,7 @@ sub invoice_details {
             my $discount = $form->round_amount(
                 $sellprice *
                   $form->parse_amount( $myconfig, $form->{"discount_$i"} ) /
-                  100,
+                  100,  ## no critic (ProhibitMagicNumbers) sniff
                 $decimalplaces
             );
 
@@ -419,7 +419,7 @@ sub invoice_details {
             }
 
             foreach my $item (@taxaccounts) {
-                push @taxrates, 100 * $item->rate;
+                push @taxrates, 100 * $item->rate;  ## no critic (ProhibitMagicNumbers) sniff
                 if (defined $form->{"mt_amount_" . $item->account}){
                     $taxaccounts{ $item->account } +=
                         $form->{"mt_amount_" . $item->account};
@@ -595,7 +595,7 @@ sub invoice_details {
                 $form->{"${item}_description"} );
 
             $form->{"${item}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
+              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );  ## no critic (ProhibitMagicNumbers) sniff
             push( @{ $form->{taxrate} },   $form->{"${item}_taxrate"} );
             push( @{ $form->{taxnumber} }, $form->{"${item}_taxnumber"} );
         }
@@ -898,7 +898,7 @@ sub post_invoice {
 
             # undo discount formatting
             $form->{"discount_$i"} =
-              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;
+              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
 
             # deduct discount
             $form->{"sellprice_$i"} = $fxsellprice -

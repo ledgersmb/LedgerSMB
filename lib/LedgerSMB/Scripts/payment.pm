@@ -416,7 +416,7 @@ sub print {
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{decimal} = ($check->{amount} - $amt) * 100;
+            $check->{decimal} = ($check->{amount} - $amt) * 100;  ## no critic (ProhibitMagicNumbers) sniff
             $check->{amount} = $check->{amount}->to_output(
                     format => '1000.00',
                     money => 1
