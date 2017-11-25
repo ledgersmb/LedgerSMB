@@ -110,7 +110,7 @@ sub _ISA {
 
     my $isa = {};
 
-    for my $key ( 'ISA01' .. 'ISA16' )){
+    for my $key ( 'ISA01' .. 'ISA16' ){
        $isa->{$key} = shift @segments;
     }
     return $isa;
