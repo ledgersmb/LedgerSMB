@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Log::Log4perl;
 
-use LedgerSMB::Magic qw(JRNL_GL JRNL_AR JRNL_AP EC_CUSTOMER EC_VENDOR);
+use LedgerSMB::Magic qw(JRNL_GJ JRNL_AR JRNL_AP EC_CUSTOMER EC_VENDOR);
 
 =head1 NAME
 
@@ -38,7 +38,7 @@ sub save {
 
    $self->{is_template} = '1';
    $self->{approved} = 0;
-   $self->{journal} = JRNL_GL;
+   $self->{journal} = JRNL_GJ;
    $self->{journal} = JRNL_AR
        if $self->{entity_class} == EC_CUSTOMER;
    $self->{journal} = JRNL_AP
