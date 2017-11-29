@@ -45,6 +45,8 @@ use LedgerSMB::Setting;
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 
+use LedgerSMB::Magic qw(BC_VENDOR_INVOICE);
+
 =over
 
 =item get_files
@@ -807,7 +809,7 @@ sub post_invoice {
         $sth = $dbh->prepare(
            'INSERT INTO voucher (batch_id, trans_id, batch_class)
             VALUES (?, ?, ?)');
-        $sth->execute($form->{batch_id}, $form->{id}, 9);
+        $sth->execute($form->{batch_id}, $form->{id}, BC_VENDOR_INVOICE);
     }
 
     # add shipto
@@ -1200,7 +1202,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
         $eth1->execute( $var, $form->{transdate} );
         @array = $eth1->fetchrow_array;
     $form->db_parse_numeric(sth=> $eth1, arrayref=>\@array);

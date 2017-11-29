@@ -44,7 +44,10 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Num2text;
 use Log::Log4perl;
 
+use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
+
 my $logger = Log::Log4perl->get_logger('OE');
+
 =over
 
 =item get_files
@@ -124,10 +127,10 @@ sub save {
         $ordnumber = "quonumber";
         if ( $form->{vc} eq 'customer' ) {
         $numberfld = "sqnumber";
-        $class_id = 3;
+        $class_id = OEC_QUOTATION;
     } else {
         $numberfld = "rfqnumber";
-        $class_id = 4;
+        $class_id = OEC_RFQ;
     }
     }
     $form->{"$ordnumber"} =
@@ -793,7 +796,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
         $eth1->execute( $var, $form->{transdate} );
         my @exchangelist;
         @exchangelist = $eth1->fetchrow_array;
@@ -955,7 +958,7 @@ sub order_details {
     delete $form->{projectnumber};
 
     # sort the whole thing by project and group
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     # if there is a warehouse limit picking
     if ( $form->{warehouse_id} && $form->{formname} =~ /(pick|packing)_list/ ) {

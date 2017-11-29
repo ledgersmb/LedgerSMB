@@ -35,7 +35,7 @@ use LedgerSMB::Magic qw( EDI_PATHNAME_MAX );
 use LedgerSMB::Sysconfig;
 use DateTime;
 
-my $counter = 1000; #for 997 generation
+my $counter = 1000; #for 997 generation  ## no critic (ProhibitMagicNumbers) sniff
 my $dt = DateTime->now;
 my $date = sprintf('%04d%02d%02d', $dt->year, $dt->month, $dt->day);
 my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
@@ -110,11 +110,7 @@ sub _ISA {
 
     my $isa = {};
 
-    my @keys;
-
-    push @keys, sprintf('ISA%02d', $_) for (1 .. 16);
-
-    for my $key (@keys){
+    for my $key ( 'ISA01' .. 'ISA16' ){
        $isa->{$key} = shift @segments;
     }
     return $isa;

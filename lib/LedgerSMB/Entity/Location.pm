@@ -111,7 +111,7 @@ $self->set_class_name is called.
 
 our %classes = ( 1 => $locale->text('Billing'),
                  2 => $locale->text('Sales'),
-                 3 => $locale->text('Shipping'),
+                 3 => $locale->text('Shipping'),  ## no critic (ProhibitMagicNumbers) sniff
 );
 
 has 'class_name' => (is => 'rw', isa => 'Str', required => 0);
