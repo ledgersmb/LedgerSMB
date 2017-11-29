@@ -69,7 +69,7 @@ sub scripts {
     my @scripts =
         map { $self->_process_script($_)}
         grep { $_ =~ /\S/ }
-        map { my $string = $_; $string =~ s/#.*$//; $string }
+        map { my $string = $_; $string =~ s/\s*#.*$//; $string }
         map { $self->_limit_by_tag($_) }
         <$fh>;
     close $fh or die "Cannot open file $self->{_path}";
@@ -124,7 +124,6 @@ Returns 1 if applied.  Returns 0 if not.
 
 sub init_if_needed {
     my ($self, $dbh) = @_;
-    return 0 unless _needs_init($dbh);
     return LedgerSMB::Database::Change::init($dbh);
 }
 
@@ -179,7 +178,7 @@ sub _lock {
 sub _unlock {
     my ($dbh) = @_;
     return $dbh->do(
-            q{ select pg_advisory_unlock( 
+            q{ select pg_advisory_unlock(
                'db_patches'::regclass::oid::int, 1) });
 }
 
