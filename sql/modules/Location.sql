@@ -147,16 +147,6 @@ CREATE TYPE location_result AS (
         class text
 );
 
-CREATE OR REPLACE FUNCTION location__deactivate(in_id int)
-RETURNS location AS
-$$
-
-UPDATE location set active = false, inactive_date = now()
- WHERE id = $1;
-
-SELECT * FROM location WHERE id = 1;
-
-$$ language sql;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
