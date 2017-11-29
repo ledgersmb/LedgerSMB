@@ -61,21 +61,21 @@ sub _order {
           if ('ISA' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
-                $sender_idx = $elements[5];
-                $sender_id = $elements[6];
+                $sender_idx = $elements[5];  ## no critic (ProhibitMagicNumbers) sniff
+                $sender_id = $elements[6];  ## no critic (ProhibitMagicNumbers) sniff
           } elsif ('G82' eq $loop) {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
-                $form->{transdate} = $elements[10];
-                $form->{ordnumber} = $elements[9];
+                $form->{transdate} = $elements[10];  ## no critic (ProhibitMagicNumbers) sniff
+                $form->{ordnumber} = $elements[9];  ## no critic (ProhibitMagicNumbers) sniff
           } elsif ('G83' eq $loop) {
                 ++$i;
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{"qty_$i"} = $elements[2];
-                $form->{"unit_$i"} = $elements[3];
-                $form->{"partnumber_$i"} = $elements[5];
-                $form->{"sellprice_$i"} = $elements[9];
+                $form->{"unit_$i"} = $elements[3];  ## no critic (ProhibitMagicNumbers) sniff
+                $form->{"partnumber_$i"} = $elements[5];  ## no critic (ProhibitMagicNumbers) sniff
+                $form->{"sellprice_$i"} = $elements[9];  ## no critic (ProhibitMagicNumbers) sniff
          }
     }
     return $form;

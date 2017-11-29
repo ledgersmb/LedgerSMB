@@ -587,10 +587,10 @@ sub get_payment_detail_data {
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
         for my $invoice (@{$inv->{invoices}}){
-            $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);
-            $invoice->[5] = LedgerSMB::PGNumber->new($invoice->[5]);
-            $invoice->[4] = LedgerSMB::PGNumber->new($invoice->[4]);
-            $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);
+            $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->[5] = LedgerSMB::PGNumber->new($invoice->[5]);  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->[4] = LedgerSMB::PGNumber->new($invoice->[4]);  ## no critic (ProhibitMagicNumbers) sniff
+            $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);  ## no critic (ProhibitMagicNumbers) sniff
         }
     }
     return;
@@ -700,7 +700,7 @@ sub post_bulk {
         $self->{transactions} = $invoice_array;
         $self->{source} = $self->{"source_$contact_id"};
         if ($queue_payments){
-             $self->{batch_class} = 3;
+             $self->{batch_class} = 3;  ## no critic (ProhibitMagicNumbers) sniff
              $self->call_dbmethod(
                  funcname => 'payment_bulk_queue'
              );

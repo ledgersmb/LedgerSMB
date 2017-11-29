@@ -38,7 +38,7 @@ sub save {
    $self->{approved} = 0;
    $self->{journal} = 1; # default gl
    $self->{journal} = 2 if $self->{entity_class} == 2;
-   $self->{journal} = 3 if $self->{entity_class} == 1;
+   $self->{journal} = 3 if $self->{entity_class} == 1;  ## no critic (ProhibitMagicNumbers) sniff
    if (not defined $self->{curr}){
       my ($curr) = $self->call_dbmethod(funcname => 'defaults_get_defaultcurrency');
       ($self->{curr}) = values(%$curr);

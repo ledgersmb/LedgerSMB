@@ -220,7 +220,7 @@ sub invoice_details {
 
     # sort the whole thing by project and group
 
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     my $runningnumber = 1;
     my $sameitem      = "";
@@ -339,7 +339,7 @@ sub invoice_details {
             my $discount = $form->round_amount(
                 $sellprice *
                   $form->parse_amount( $myconfig, $form->{"discount_$i"} ) /
-                  100,
+                  100,  ## no critic (ProhibitMagicNumbers) sniff
                 $decimalplaces
             );
 
@@ -419,7 +419,7 @@ sub invoice_details {
             }
 
             foreach my $item (@taxaccounts) {
-                push @taxrates, 100 * $item->rate;
+                push @taxrates, 100 * $item->rate;  ## no critic (ProhibitMagicNumbers) sniff
                 if (defined $form->{"mt_amount_" . $item->account}){
                     $taxaccounts{ $item->account } +=
                         $form->{"mt_amount_" . $item->account};
@@ -595,7 +595,7 @@ sub invoice_details {
                 $form->{"${item}_description"} );
 
             $form->{"${item}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
+              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );  ## no critic (ProhibitMagicNumbers) sniff
             push( @{ $form->{taxrate} },   $form->{"${item}_taxrate"} );
             push( @{ $form->{taxnumber} }, $form->{"${item}_taxnumber"} );
         }
@@ -898,7 +898,7 @@ sub post_invoice {
 
             # undo discount formatting
             $form->{"discount_$i"} =
-              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;
+              $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
 
             # deduct discount
             $form->{"sellprice_$i"} = $fxsellprice -
@@ -1030,7 +1030,7 @@ sub post_invoice {
                 $sth = $dbh->prepare(
                    'INSERT INTO voucher (batch_id, trans_id, batch_class)
                     VALUES (?, ?, ?)');
-                $sth->execute($form->{batch_id}, $form->{id}, 8);
+                $sth->execute($form->{batch_id}, $form->{id}, 8);  ## no critic (ProhibitMagicNumbers) sniff
             }
 
             for my $cls(@{$form->{bu_class}}){
@@ -1775,7 +1775,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
         $eth1->execute( $var, $form->{transdate} );
         ( $form->{$var} ) = $eth1->fetchrow_array;
 
@@ -1970,7 +1970,7 @@ sub construct_types
     while(my $ref = $sth->fetchrow_hashref(NAME_lc))
     {
 
-      $returnvalue.=qq|<option value="$ref->{id} ">|.substr($ref->{class},0,3).qq|</option>|;
+      $returnvalue.=qq|<option value="$ref->{id} ">|.substr($ref->{class},0,3).qq|</option>|;  ## no critic (ProhibitMagicNumbers) sniff
 
     }
 
@@ -1996,7 +1996,7 @@ sub createlocation
 
    $sth->execute($form->{"customer_id"},
          undef,
-         3,
+         3,  ## no critic (ProhibitMagicNumbers) sniff
          $form->{"shiptoaddress1_new"},
          $form->{"shiptoaddress2_new"},
          $form->{"shiptoaddress3_new"},

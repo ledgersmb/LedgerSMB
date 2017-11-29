@@ -124,10 +124,10 @@ sub save {
         $ordnumber = "quonumber";
         if ( $form->{vc} eq 'customer' ) {
         $numberfld = "sqnumber";
-        $class_id = 3;
+        $class_id = 3;  ## no critic (ProhibitMagicNumbers) sniff
     } else {
         $numberfld = "rfqnumber";
-        $class_id = 4;
+        $class_id = 4;  ## no critic (ProhibitMagicNumbers) sniff
     }
     }
     $form->{"$ordnumber"} =
@@ -248,7 +248,7 @@ sub save {
         }
 
         $form->{"discount_$i"} =
-          $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;
+          $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100;  ## no critic (ProhibitMagicNumbers) sniff
 
         $form->{"sellprice_$i"} =
           $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
@@ -360,7 +360,7 @@ sub save {
             }
 
         }
-        $form->{"discount_$i"} *= 100;
+        $form->{"discount_$i"} *= 100;  ## no critic (ProhibitMagicNumbers) sniff
 
     }
 
@@ -793,7 +793,7 @@ sub exchangerate_defaults {
     my $eth2 = $dbh->prepare($query) || $form->dberror($query);
 
     # get exchange rates for transdate or max
-    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {
+    foreach my $var ( split /:/, substr( $form->{currencies}, 4 ) ) {  ## no critic (ProhibitMagicNumbers) sniff
         $eth1->execute( $var, $form->{transdate} );
         my @exchangelist;
         @exchangelist = $eth1->fetchrow_array;
@@ -955,7 +955,7 @@ sub order_details {
     delete $form->{projectnumber};
 
     # sort the whole thing by project and group
-    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;
+    @sortlist = sort { $a->[5] cmp $b->[5] } @sortlist;  ## no critic (ProhibitMagicNumbers) sniff
 
     # if there is a warehouse limit picking
     if ( $form->{warehouse_id} && $form->{formname} =~ /(pick|packing)_list/ ) {
@@ -1092,7 +1092,7 @@ sub order_details {
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
 
             my $discount = $form->round_amount(
-                $sellprice * $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100, $decimalplaces
+                $sellprice * $form->parse_amount( $myconfig, $form->{"discount_$i"} ) / 100, $decimalplaces  ## no critic (ProhibitMagicNumbers) sniff
             );
 
             # keep a netprice as well, (sellprice - discount)
@@ -1157,7 +1157,7 @@ sub order_details {
               Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
             $taxbase = Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
             foreach my $item (@taxaccounts) {
-                push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;
+                push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;  ## no critic (ProhibitMagicNumbers) sniff
                 if ( $form->{taxincluded} ) {
                     $taxaccounts{ $item->account } += $item->value;
                     $taxbase{ $item->account }     += $taxbase;
@@ -1338,7 +1338,7 @@ sub order_details {
                 $form->{"${item}_description"} );
 
             $form->{"${item}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
+              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );  ## no critic (ProhibitMagicNumbers) sniff
 
             push( @{ $form->{taxrate} }, $form->{"${item}_taxrate"} );
 
