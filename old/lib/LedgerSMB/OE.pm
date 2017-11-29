@@ -44,7 +44,10 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Num2text;
 use Log::Log4perl;
 
+use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
+
 my $logger = Log::Log4perl->get_logger('OE');
+
 =over
 
 =item get_files
@@ -124,10 +127,10 @@ sub save {
         $ordnumber = "quonumber";
         if ( $form->{vc} eq 'customer' ) {
         $numberfld = "sqnumber";
-        $class_id = 3;  ## no critic (ProhibitMagicNumbers) sniff
+        $class_id = OEC_QUOTATION;
     } else {
         $numberfld = "rfqnumber";
-        $class_id = 4;  ## no critic (ProhibitMagicNumbers) sniff
+        $class_id = OEC_RFQ;
     }
     }
     $form->{"$ordnumber"} =

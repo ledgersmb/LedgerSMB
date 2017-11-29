@@ -46,6 +46,9 @@ use LedgerSMB::App_State;
 use LedgerSMB::Num2text;
 use Log::Log4perl;
 
+use LedgerSMB::IS qw(BC_SALES_INVOICE);
+
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
 
 
@@ -1030,7 +1033,7 @@ sub post_invoice {
                 $sth = $dbh->prepare(
                    'INSERT INTO voucher (batch_id, trans_id, batch_class)
                     VALUES (?, ?, ?)');
-                $sth->execute($form->{batch_id}, $form->{id}, 8);  ## no critic (ProhibitMagicNumbers) sniff
+                $sth->execute($form->{batch_id}, $form->{id}, BC_SALES_INVOICE);
             }
 
             for my $cls(@{$form->{bu_class}}){

@@ -24,6 +24,8 @@ use strict;
 use warnings;
 use LedgerSMB::PGNumber;
 
+use LedgerSMB::Magic qw(BC_PAYMENT);
+
 our $VERSION = '0.1.0';
 
 =head1 METHODS
@@ -700,8 +702,8 @@ sub post_bulk {
         $self->{transactions} = $invoice_array;
         $self->{source} = $self->{"source_$contact_id"};
         if ($queue_payments){
-             $self->{batch_class} = 3;  ## no critic (ProhibitMagicNumbers) sniff
-             $self->call_dbmethod(
+            $self->{batch_class} = BC_PAYMENT;
+            $self->call_dbmethod(
                  funcname => 'payment_bulk_queue'
              );
         } else {

@@ -21,6 +21,8 @@ use strict;
 use warnings;
 use Carp;
 
+use HTTP::Status qw(HTTP_UNAUTHORIZED);
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 sub _http_error {
@@ -65,7 +67,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    _http_error(401, $suffix);  ## no critic (ProhibitMagicNumbers) sniff
+    _http_error(HTTP_UNAUTHORIZED, $suffix);
 }
 
 
