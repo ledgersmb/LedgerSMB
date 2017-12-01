@@ -309,7 +309,6 @@ sub _combine_statement_blocks {
        }
    }
    return @blocks;
->>>>>>> d864ba1... * Fix #3289: sql/changes/ infrasturcture incorrectly handling db transactions
 }
 
 =head1 Package Functions
