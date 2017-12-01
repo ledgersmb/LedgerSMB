@@ -205,8 +205,7 @@ sub apply {
         }
         else {
             $dbh->commit;
-    }
- db transactions
+        }
     }
 
     $dbh->do(q{
