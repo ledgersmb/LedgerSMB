@@ -6,7 +6,8 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <div class="setupconsole">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Enter User') ?></div>
-<form data-dojo-type="dijit/form/Form" action="setup.pl" method="POST" name="new_user">
+<form data-dojo-type="lsmb/SimpleForm"
+      action="setup.pl" method="POST" name="new_user">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
@@ -20,7 +21,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
                            label  = text('Username')
                             class = 'username'
                             value = username
-                         required = 'true'
+                         required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -103,7 +104,7 @@ text('Password') ?></label>
     size = '15'
    value = first_name
    label = text('First Name') #'
-required = 'true'
+required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -114,7 +115,7 @@ required = 'true'
     size = '15'
    value = last_name
    label = text('Last name') #'
-required = 'true'
+required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -125,7 +126,7 @@ required = 'true'
     size = '15'
    label = text('Employee Number') #'
    value = employeenumber
-required = 'true'
+required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -136,7 +137,7 @@ required = 'true'
     size = '10'
    label = text('Date of Birth') #'
    value = dob
-required = 'true'
+required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -147,7 +148,7 @@ required = 'true'
     size = '15'
    label = text('Tax ID/SSN') #'
    value = ssn
-required = 'true'
+required = 'required'
 } ?>
 </div>
 <div class="input_row">
@@ -160,7 +161,7 @@ INCLUDE select element_data = {
    default_values = [country_id]
              name = 'country_id'
             label = 'Country'
-         required = 'true'
+         required = 'required'
 } ?>
 </div>
 <div class="input_row">
