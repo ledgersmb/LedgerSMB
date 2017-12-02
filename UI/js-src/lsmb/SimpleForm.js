@@ -17,7 +17,7 @@ define([
               {
                   onSubmit: function(evt) {
                       return this.validate();
-                  },
+                  }
               });
        }
     );
