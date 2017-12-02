@@ -1,6 +1,6 @@
 define([
     "dijit/form/Form",
-    "dojo/_base/declare",
+    "dojo/_base/declare"
     ],
        function(Form, declare) {
            /* The purpose of the SimpleForm is to be a regular dijit/form/Form,
