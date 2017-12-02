@@ -8,7 +8,7 @@ include_stylesheet=["setup/stylesheet.css"] ?>
 <div class="listtop"><?lsmb text('Where shall we send the backup?') ?></div>
 <?lsmb # notice, message, and operation are all localized. ?>
 <div id="notice"><?lsmb notice ?></div>
-<form data-dojo-type="dijit/form/Form" action="setup.pl" method="POST" name="confirm_operation">
+<form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="confirm_operation">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
