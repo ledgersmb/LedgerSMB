@@ -396,7 +396,7 @@ sub load_base_schema {
         log_stderr => ($args{errlog} || "${log}_stderr")
     );
 
-    if (opendir(LOADDIR, 'sql/on_load')) {
+    if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
                 file       => "$self->{source_dir}/on_load/$fname",
@@ -537,8 +537,9 @@ sub apply_changes {
         pg_server_prepare => 0});
     $dbh->do(q{set client_min_messages = 'warning'});
     my $loadorder =
-        LedgerSMB::Database::Loadorder->new('sql/changes/LOADORDER',
-                                            upto_tag => $args{upto_tag});
+        LedgerSMB::Database::Loadorder->new(
+            "$self->{source_dir}/changes/LOADORDER",
+            upto_tag => $args{upto_tag});
     $loadorder->init_if_needed($dbh);
     $loadorder->apply_all($dbh);
     return $dbh->disconnect;
