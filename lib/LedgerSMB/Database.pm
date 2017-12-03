@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Database - Provides the APIs for database creation and management.
+LedgerSMB::Database - APIs for database creation and management.
 
 =head1 SYNOPSIS
 
@@ -15,12 +15,10 @@ This module wraps both DBI and the PostgreSQL commandline tools.
 
   $db->load_modules('LOADORDER');
 
+=head1 DESCRIPTION
 
-=head1 COPYRIGHT
-
-This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
-the GNU General Public License (GPL) version 2, or at your option, any later
-version.  See the COPYRIGHT and LICENSE files for more information.
+LedgerSMB::Database provides methods for database creation and management
+as well as database version detection (for upgrades) and more.
 
 =cut
 
@@ -572,5 +570,13 @@ sub stats {
 
     return $results;
 }
+
+=head1 COPYRIGHT
+
+This module is copyright (C) 2007-2017, the LedgerSMB Core Team and subject to
+the GNU General Public License (GPL) version 2, or at your option, any later
+version.  See the COPYRIGHT and LICENSE files for more information.
+
+=cut
 
 1;
